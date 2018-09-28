@@ -1,8 +1,8 @@
 # CodeIgniter 4 Development
 
-[![Build Status](https://travis-ci.org/lonnieezell/CodeIgniter4.svg?branch=develop)](https://travis-ci.org/lonnieezell/CodeIgniter4)
+[![Build Status](https://travis-ci.org/bcit-ci/CodeIgniter4.svg?branch=develop)](https://travis-ci.org/bcit-ci/CodeIgniter4)
+[![Coverage Status](https://coveralls.io/repos/github/bcit-ci/CodeIgniter4/badge.svg?branch=develop)](https://coveralls.io/github/bcit-ci/CodeIgniter4?branch=develop)
 <br>
-[![StyleCI](https://styleci.io/repos/41463886/shield)](https://styleci.io/repos/41463886)	
 
 ## What is CodeIgniter?
 CodeIgniter is a PHP full-stack web framework that is light, fast, flexible, and secure. 
@@ -15,6 +15,22 @@ while still keeping as many of the things intact that has made people love the f
 **This is pre-release code and should not be used in production sites.**
 
 More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
+
+### Documentation
+
+The current documentation can be found [here](https://bcit-ci.github.io/CodeIgniter4/). As with the rest of the framework, it is currently a work in progress, and will see changes over time to structure, explanations, etc.
+
+## Important Change with index.php
+
+index.php is no longer in the root of the project! It has been moved inside the *public* folder,
+for better security and separation of components.
+
+This means that you should configure your web server to "point" to your project's *public* folder, and
+not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
+framework are exposed.
+
+**Please** read the user guide for a better explanation of how CI4 works!
+The user guide updating and deployment is a bit awkward at the moment, but we are working on it!
 
 ## Repository Management
 We use Github issues to track **BUGS** and to track approved **DEVELOPMENT** work packages.
@@ -39,14 +55,21 @@ Remember that some components that were part of CodeIgniter 3 are being moved
 to optional packages, with their own repository.
 
 ## Contributing
-We are not accepting contributions from the public until a stable enough base has been formed, 
-and our plans fleshed out and things settle down a little bit. 
-At that point, we will welcome your comments and help creating the best framework for our community.
+We **are** accepting contributions from the community, specifically those identified as part of phase 2.
 
-Please read the *Contributing to CodeIgniter* section in the user guide
+We will try to manage the process somewhat, by adding a "Help wanted" label to those that we are 
+specifically interested in at any point in time. Join the discussion for those issues, and let us know 
+if you want to take the lead for one of them.
+
+We are not looking for out-of-scope contributions, only those that would be considered part of our controlled evolution!
+
+Please read the [*Contributing to CodeIgniter*](https://github.com/bcit-ci/CodeIgniter4/blob/develop/contributing.md) section in the user guide
 
 ## Server Requirements
-PHP version 7 or higher is required. 
+PHP version 7.1 or higher is required, with the following extensions installed: 
+
+- intl
+
 
 ## Running CodeIgniter Tests
-Information on running CodeIgniter test suite can be found in the README.md file in the tests directory.
+Information on running CodeIgniter test suite can be found in the [README.md](tests/README.md) file in the tests directory.

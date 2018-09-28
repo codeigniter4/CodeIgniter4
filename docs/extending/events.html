@@ -1,0 +1,379 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Events - Extending the Framework Core &mdash; CodeIgniter4 4.0.0-test documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-test documentation" href="../index.html"/>
+        <link rel="up" title="Extending CodeIgniter" href="index.html"/>
+        <link rel="next" title="The MIT License (MIT)" href="../license.html"/>
+        <link rel="prev" title="Creating Core System Classes" href="core_classes.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Extending CodeIgniter</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core_classes.html">Creating Core System Classes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Events - Extending the Framework Core</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Extending CodeIgniter</a> &raquo;</li>
+        
+      <li>Events - Extending the Framework Core</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="events-extending-the-framework-core">
+<h1>Events - Extending the Framework Core<a class="headerlink" href="#events-extending-the-framework-core" title="Permalink to this headline">¶</a></h1>
+<p>CodeIgniter&#8217;s Events feature provides a means to tap into and modify the inner workings of the framework without hacking
+core files. When CodeIgniter runs it follows a specific execution process. There may be instances, however, when you&#8217;d
+like to cause some action to take place at a particular stage in the execution process. For example, you might want to run
+a script right before your controllers get loaded, or right after, or you might want to trigger one of your own scripts
+in some other location.</p>
+<p>Events work on a <em>publish/subscribe</em> pattern, where an event, is triggered at some point during the script execution.
+Other scripts can &#8220;subscribe&#8221; to that event by registering with the Events class to let it know they want to perform an
+action when that event is triggered.</p>
+<div class="section" id="enabling-events">
+<h2>Enabling Events<a class="headerlink" href="#enabling-events" title="Permalink to this headline">¶</a></h2>
+<p>Events are always enabled, and are available globally.</p>
+</div>
+<div class="section" id="defining-an-event">
+<h2>Defining an Event<a class="headerlink" href="#defining-an-event" title="Permalink to this headline">¶</a></h2>
+<p>Most events are defined within the <strong>application/Config/Events.php</strong> file. You can subscribe an action to an event with
+the Events class&#8217; <code class="docutils literal"><span class="pre">on()</span></code> method. The first parameter is the name of the event to subscribe to. The second parameter is
+a callable that will be run when that event is triggered:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Events\Events</span><span class="p">;</span>
+
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;pre_system&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;MyClass&#39;</span><span class="p">,</span> <span class="s1">&#39;MyFunction&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>In this example, whenever the <strong>pre_controller</strong> event is executed, an instance of <code class="docutils literal"><span class="pre">MyClass</span></code> is created and the
+<code class="docutils literal"><span class="pre">MyFunction</span></code> method is run. Note that the second parameter can be <em>any</em> form of
+<a class="reference external" href="http://php.net/manual/en/function.is-callable.php">callable</a> that PHP recognizes:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Call a standalone function</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;pre_system&#39;</span><span class="p">,</span> <span class="s1">&#39;some_function&#39;</span><span class="p">);</span>
+
+<span class="c1">// Call on an instance method</span>
+<span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">();</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;pre_system&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nv">$user</span><span class="p">,</span> <span class="s1">&#39;some_method&#39;</span><span class="p">]);</span>
+
+<span class="c1">// Call on a static method</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;pre_system&#39;</span><span class="p">,</span> <span class="s1">&#39;SomeClass::someMethod&#39;</span><span class="p">);</span>
+
+<span class="c1">// Use a Closure</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;pre_system&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="o">...</span><span class="nv">$params</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="o">.</span> <span class="o">.</span> <span class="o">.</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<div class="section" id="setting-priorities">
+<h3>Setting Priorities<a class="headerlink" href="#setting-priorities" title="Permalink to this headline">¶</a></h3>
+<p>Since multiple methods can be subscribed to a single event, you will need a way to define in what order those methods
+are called. You can do this by passing a priority value as the third parameter of the <code class="docutils literal"><span class="pre">on()</span></code> method. Lower values
+are executed first, with a value of 1 having the highest priority, and there being no limit on the lower values:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;post_controller_constructor&#39;</span><span class="p">,</span> <span class="s1">&#39;some_function&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Any subscribers with the same priority will be executed in the order they were defined.</p>
+<p>Three constants are defined for your use, that set some helpful ranges on the values. You are not required to use these
+but you might find they aid readability:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nb">define</span><span class="p">(</span><span class="s1">&#39;EVENT_PRIORITY_LOW&#39;</span><span class="p">,</span> <span class="mi">200</span><span class="p">);</span>
+<span class="nb">define</span><span class="p">(</span><span class="s1">&#39;EVENT_PRIORITY_NORMAL&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+<span class="nb">define</span><span class="p">(</span><span class="s1">&#39;EVENT_PRIORITY_HIGH&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Once sorted, all subscribers are executed in order. If any subscriber returns a boolean false value, then execution of
+the subscribers will stop.</p>
+</div>
+</div>
+<div class="section" id="publishing-your-own-events">
+<h2>Publishing your own Events<a class="headerlink" href="#publishing-your-own-events" title="Permalink to this headline">¶</a></h2>
+<p>The Events library makes it simple for you to create events in your own code, also. To use this feature, you would simply
+need to call the <code class="docutils literal"><span class="pre">trigger()</span></code> method on the <strong>Events</strong> class with the name of the event:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">\CodeIgniter\Events\Events</span><span class="o">::</span><span class="na">trigger</span><span class="p">(</span><span class="s1">&#39;some_event&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You can pass any number of arguments to the subscribers by adding them as additional parameters. Subscribers will be
+given the arguments in the same order as defined:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">\CodeIgniter\Events\Events</span><span class="o">::</span><span class="na">trigger</span><span class="p">(</span><span class="s1">&#39;some_events&#39;</span><span class="p">,</span> <span class="nv">$foo</span><span class="p">,</span> <span class="nv">$bar</span><span class="p">,</span> <span class="nv">$baz</span><span class="p">);</span>
+
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;some_event&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$foo</span><span class="p">,</span> <span class="nv">$bar</span><span class="p">,</span> <span class="nv">$baz</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">...</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="simulating-events">
+<h2>Simulating Events<a class="headerlink" href="#simulating-events" title="Permalink to this headline">¶</a></h2>
+<p>During testing, you might not want the events to actually fire, as sending out hundreds of emails a day is both slow
+and counter-productive. You can tell the Events class to only simulate running the events with the <code class="docutils literal"><span class="pre">simulate()</span></code> method.
+When <strong>true</strong>, all events will be skipped over during the trigger method. Everything else will work as normal, though.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">Events</span><span class="o">::</span><span class="na">simulate</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You can stop simulation by passing false:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">Events</span><span class="o">::</span><span class="na">simulate</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="event-points">
+<h2>Event Points<a class="headerlink" href="#event-points" title="Permalink to this headline">¶</a></h2>
+<p>The following is a list of available event points within the CodeIgniter core code:</p>
+<ul class="simple">
+<li><strong>pre_system</strong> Called very early during system execution. Only the benchmark and events class have been loaded at this point. No routing or other processes have happened.</li>
+<li><strong>post_controller_constructor</strong> Called immediately after your controller is instantiated, but prior to any method calls happening.</li>
+<li><strong>post_system</strong> Called after the final rendered page is sent to the browser, at the end of system execution after the finalized data is sent to the browser.</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../license.html" class="btn btn-neutral float-right" title="The MIT License (MIT)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="core_classes.html" class="btn btn-neutral" title="Creating Core System Classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 28, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-test',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

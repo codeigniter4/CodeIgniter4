@@ -3,22 +3,15 @@ General Topics
 ##############
 
 .. toctree::
-	:titlesonly:
+    :titlesonly:
 
-	configuration
-	urls
-	controllers
-	views
-	Helpers <helpers>
-	core_classes
-	hooks
-	common_functions
-	routing
-	logging
-	errors
-	debugging
-	cli
-	managing_apps
-	environments
-	alternative_php
-	testing
+    configuration
+    urls
+    helpers
+    common_functions
+    logging
+    errors
+    caching
+    modules
+    managing_apps
+    environments

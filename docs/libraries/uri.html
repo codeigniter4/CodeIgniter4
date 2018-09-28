@@ -1,0 +1,547 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Working with URIs &mdash; CodeIgniter4 4.0.0-test documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-test documentation" href="../index.html"/>
+        <link rel="up" title="Library Reference" href="index.html"/>
+        <link rel="next" title="User Agent Class" href="user_agent.html"/>
+        <link rel="prev" title="Working with Uploaded Files" href="uploaded_files.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="curlrequest.html">CURLRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="email.html">Email Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="honeypot.html">Honeypot Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html">Image Manipulation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html">Security Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html">Session Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="throttler.html">Throttler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="time.html">Dates and Times</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typography.html">Typography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uploaded_files.html">Working with Uploaded Files</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Working with URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_agent.html">User Agent Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html">Validation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Library Reference</a> &raquo;</li>
+        
+      <li>Working with URIs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="working-with-uris">
+<h1>Working with URIs<a class="headerlink" href="#working-with-uris" title="Permalink to this headline">¶</a></h1>
+<p>CodeIngiter provides an object oriented solution for working with URI&#8217;s in your application. Using this makes it
+simple to ensure that the structure is always correct, no matter how complex the URI might be, as well as adding
+relative URI to an existing one and have it resolved safely and correctly.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#creating-uri-instances" id="id1">Creating URI instances</a><ul>
+<li><a class="reference internal" href="#the-current-uri" id="id2">The Current URI</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#uri-strings" id="id3">URI Strings</a></li>
+<li><a class="reference internal" href="#the-uri-parts" id="id4">The URI Parts</a><ul>
+<li><a class="reference internal" href="#scheme" id="id5">Scheme</a></li>
+<li><a class="reference internal" href="#authority" id="id6">Authority</a></li>
+<li><a class="reference internal" href="#userinfo" id="id7">Userinfo</a></li>
+<li><a class="reference internal" href="#host" id="id8">Host</a></li>
+<li><a class="reference internal" href="#port" id="id9">Port</a></li>
+<li><a class="reference internal" href="#path" id="id10">Path</a></li>
+<li><a class="reference internal" href="#query" id="id11">Query</a></li>
+<li><a class="reference internal" href="#fragment" id="id12">Fragment</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#uri-segments" id="id13">URI Segments</a></li>
+</ul>
+</div>
+<div class="section" id="creating-uri-instances">
+<h2><a class="toc-backref" href="#id1">Creating URI instances</a><a class="headerlink" href="#creating-uri-instances" title="Permalink to this headline">¶</a></h2>
+<p>Creating a URI instance is as simple as creating a new class instance:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Alternatively, you can use the <code class="docutils literal"><span class="pre">service()</span></code> function to return an instance for you:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>When you create the new instance, you can pass a full or partial URL in the constructor and it will be parsed
+into its appropriate sections:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
+<span class="nv">$uri</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">,</span> <span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="section" id="the-current-uri">
+<h3><a class="toc-backref" href="#id2">The Current URI</a><a class="headerlink" href="#the-current-uri" title="Permalink to this headline">¶</a></h3>
+<p>Many times, all you really want is an object representing the current URL of this request. This can be accessed
+in two different ways. The first, is to grab it directly from the current request object. Assuming that you&#8217;re in
+a controller that extends <code class="docutils literal"><span class="pre">CodeIgniter\Controller</span></code> you can get it like:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">uri</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Second, you can use one of the functions available in the <strong>url_helper</strong>:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">current_url</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You must pass <code class="docutils literal"><span class="pre">true</span></code> as the first parameter, otherwise it will return the string representation of the current URL.</p>
+</div>
+</div>
+<div class="section" id="uri-strings">
+<h2><a class="toc-backref" href="#id3">URI Strings</a><a class="headerlink" href="#uri-strings" title="Permalink to this headline">¶</a></h2>
+<p>Many times, all you really want is to get a string representation of a URI. This is easy to do by simply casting
+the URI as a string:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">current_url</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+<span class="k">echo</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span><span class="nv">$uri</span><span class="p">;</span>  <span class="c1">// http://example.com</span>
+</pre></div>
+</div>
+<p>If you know the pieces of the URI and just want to ensure it&#8217;s all formatted correctly, you can generate a string
+using the URI class&#8217; static <code class="docutils literal"><span class="pre">createURIString()</span></code> method:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uriString</span> <span class="o">=</span> <span class="nx">URI</span><span class="o">::</span><span class="na">createURIString</span><span class="p">(</span><span class="nv">$scheme</span><span class="p">,</span> <span class="nv">$authority</span><span class="p">,</span> <span class="nv">$path</span><span class="p">,</span> <span class="nv">$query</span><span class="p">,</span> <span class="nv">$fragment</span><span class="p">);</span>
+
+<span class="c1">// Creates: http://exmample.com/some/path?foo=bar#first-heading</span>
+<span class="k">echo</span> <span class="nx">URI</span><span class="o">::</span><span class="na">createURIString</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">,</span> <span class="s1">&#39;example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;some/path&#39;</span><span class="p">,</span> <span class="s1">&#39;foo=bar&#39;</span><span class="p">,</span> <span class="s1">&#39;first-heading&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-uri-parts">
+<h2><a class="toc-backref" href="#id4">The URI Parts</a><a class="headerlink" href="#the-uri-parts" title="Permalink to this headline">¶</a></h2>
+<p>Once you have a URI instance, you can set or retrieve any of the various parts of the URI. This section will provide
+details on what those parts are, and how to work with them.</p>
+<div class="section" id="scheme">
+<h3><a class="toc-backref" href="#id5">Scheme</a><a class="headerlink" href="#scheme" title="Permalink to this headline">¶</a></h3>
+<p>The scheme is frequently &#8216;http&#8217; or &#8216;https&#8217;, but any scheme is supported, including &#8216;file&#8217;, &#8216;mailto&#8217;, etc.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getScheme</span><span class="p">();</span> <span class="c1">// &#39;http&#39;</span>
+<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setScheme</span><span class="p">(</span><span class="s1">&#39;https&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="authority">
+<h3><a class="toc-backref" href="#id6">Authority</a><a class="headerlink" href="#authority" title="Permalink to this headline">¶</a></h3>
+<p>Many URIs contain several elements that are collectively known as the &#8216;authority&#8217;. This includes any user info,
+the host and the port number. You can retrieve all of these pieces as one single string with the <code class="docutils literal"><span class="pre">getAuthority()</span></code>
+method, or you can manipulate the individual parts.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;ftp://user:password@example.com:21/some/path&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getAuthority</span><span class="p">();</span>  <span class="c1">// user@example.com:21</span>
+</pre></div>
+</div>
+<p>By default, this will not display the password portion since you wouldn&#8217;t want to show that to anyone. If you want
+to show the password, you can use the <code class="docutils literal"><span class="pre">showPassword()</span></code> method. This URI instance will continue to show that password
+until you turn it off again, so always make sure that you turn it off as soon as you are finished with it:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getAuthority</span><span class="p">();</span>  <span class="c1">// user@example.com:21</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">showPassword</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getAuthority</span><span class="p">();</span>   <span class="c1">// user:password@example.com:21</span>
+
+<span class="c1">// Turn password display off again.</span>
+<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">showPassword</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If you do not want to display the port, pass in <code class="docutils literal"><span class="pre">true</span></code> as the only parameter:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getAuthority</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>  <span class="c1">// user@example.com</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the current port is the default port for the scheme it will never be displayed.</p>
+</div>
+</div>
+<div class="section" id="userinfo">
+<h3><a class="toc-backref" href="#id7">Userinfo</a><a class="headerlink" href="#userinfo" title="Permalink to this headline">¶</a></h3>
+<p>The userinfo section is simply the username and password that you might see with an FTP URI. While you can get
+this as part of the Authority, you can also retrieve it yourself:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getUserInfo</span><span class="p">();</span>   <span class="c1">// user</span>
+</pre></div>
+</div>
+<p>By default, it will not display the password, but you can override that with the <code class="docutils literal"><span class="pre">showPassword()</span></code> method:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">showPassword</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getUserInfo</span><span class="p">();</span>   <span class="c1">// user:password</span>
+<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">showPassword</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="host">
+<h3><a class="toc-backref" href="#id8">Host</a><a class="headerlink" href="#host" title="Permalink to this headline">¶</a></h3>
+<p>The host portion of the URI is typically the domain name of the URL. This can be easily set and retrieved with the
+<code class="docutils literal"><span class="pre">getHost()</span></code> and <code class="docutils literal"><span class="pre">setHost()</span></code> methods:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getHost</span><span class="p">();</span>   <span class="c1">// www.example.com</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setHost</span><span class="p">(</span><span class="s1">&#39;anotherexample.com&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getHost</span><span class="p">();</span>    <span class="c1">// anotherexample.com</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="port">
+<h3><a class="toc-backref" href="#id9">Port</a><a class="headerlink" href="#port" title="Permalink to this headline">¶</a></h3>
+<p>The port is an integer number between 0 and 65535. Each sheme has a default value associated with it.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;ftp://user:password@example.com:21/some/path&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getPort</span><span class="p">();</span>   <span class="c1">// 21</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setPort</span><span class="p">(</span><span class="mi">2201</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getPort</span><span class="p">();</span> <span class="c1">// 2201</span>
+</pre></div>
+</div>
+<p>When using the <code class="docutils literal"><span class="pre">setPort()</span></code> method, the port will be checked that it is within the valid range and assigned.</p>
+</div>
+<div class="section" id="path">
+<h3><a class="toc-backref" href="#id10">Path</a><a class="headerlink" href="#path" title="Permalink to this headline">¶</a></h3>
+<p>The path are all of the segments within the site itself. As expected, the <code class="docutils literal"><span class="pre">getPath()</span></code> and <code class="docutils literal"><span class="pre">setPath()</span></code> methods
+can be used to manipulate it:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>   <span class="c1">// &#39;some/path&#39;</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setPath</span><span class="p">(</span><span class="s1">&#39;another/path&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>  <span class="c1">// &#39;another/path&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When setting the path this way, or any other way the class allows, it is sanitized to encode any dangerous
+characters, and remove dot segments for safety.</p>
+</div>
+</div>
+<div class="section" id="query">
+<h3><a class="toc-backref" href="#id11">Query</a><a class="headerlink" href="#query" title="Permalink to this headline">¶</a></h3>
+<p>The query variables can be manipulated through the class using simple string representations. Query values can only
+be set as a string currently.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com?foo=bar&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">();</span>  <span class="c1">// &#39;foo=bar&#39;</span>
+<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setQuery</span><span class="p">(</span><span class="s1">&#39;foo=bar&amp;bar=baz&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Query values cannot contain fragments. An InvalidArgumentException will be thrown if it does.</p>
+</div>
+<p>You can set query values using an array:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setQueryArray</span><span class="p">([</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;baz&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">setQuery()</span></code> and <code class="docutils literal"><span class="pre">setQueryArray()</span></code> methods overwrite any existing query variables. You can add a value to the
+query variables collection without destroying the existing query variables with the <code class="docutils literal"><span class="pre">addQuery()</span></code> method. The first
+parameter is the name of the variable, and the second parameter is the value:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">addQuery</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Filtering Query Values</strong></p>
+<p>You can filter the query values returned by passing an options array to the <code class="docutils literal"><span class="pre">getQuery()</span></code> method, with either an
+<em>only</em> or an <em>except</em> key:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com?foo=bar&amp;bar=baz&amp;baz=foz&#39;</span><span class="p">);</span>
+
+<span class="c1">// Returns &#39;foo=bar&#39;</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">([</span><span class="s1">&#39;only&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]);</span>
+
+<span class="c1">// Returns &#39;foo=bar&amp;baz=foz&#39;</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">([</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;bar&#39;</span><span class="p">]]);</span>
+</pre></div>
+</div>
+<p>This only changes the values returned during this one call. If you need to modify the URI&#8217;s query values more permenantly,
+you can use the <code class="docutils literal"><span class="pre">stripQuery()</span></code> and <code class="docutils literal"><span class="pre">keepQuery()</span></code> methods to change the actual object&#8217;s query variable collection:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com?foo=bar&amp;bar=baz&amp;baz=foz&#39;</span><span class="p">);</span>
+
+<span class="c1">// Leaves just the &#39;baz&#39; variable</span>
+<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">stripQuery</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+
+<span class="c1">// Leaves just the &#39;foo&#39; variable</span>
+<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">keepQuery</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fragment">
+<h3><a class="toc-backref" href="#id12">Fragment</a><a class="headerlink" href="#fragment" title="Permalink to this headline">¶</a></h3>
+<p>Fragments are the portion at the end of the URL, preceded by the pound-sign (#). In HTML URL&#8217;s these are links
+to an on-page anchor. Media URI&#8217;s can make use of them in various other ways.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path#first-heading&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getFragment</span><span class="p">();</span>   <span class="c1">// &#39;first-heading&#39;</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setFragment</span><span class="p">(</span><span class="s1">&#39;second-heading&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getFragment</span><span class="p">();</span>    <span class="c1">// &#39;second-heading&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="uri-segments">
+<h2><a class="toc-backref" href="#id13">URI Segments</a><a class="headerlink" href="#uri-segments" title="Permalink to this headline">¶</a></h2>
+<p>Each section of the path between the slashes are a single segment. The URI class provides a simple way to determine
+what the values of the segments are. The segments start at 1 being the furthest left of the path.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// URI = http://example.com/users/15/profile</span>
+
+<span class="c1">// Prints &#39;15&#39;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">uri</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;users&#39;</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">uri</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can get a count of the total segments:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$total</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">uri</span><span class="o">-&gt;</span><span class="na">getTotalSegments</span><span class="p">();</span> <span class="c1">// 3</span>
+</pre></div>
+</div>
+<p>Finally, you can retrieve an array of all of the segments:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$segments</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">uri</span><span class="o">-&gt;</span><span class="na">getSegments</span><span class="p">();</span>
+
+<span class="c1">// $segments =</span>
+<span class="p">[</span>
+        <span class="mi">0</span> <span class="o">=&gt;</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="o">=&gt;</span> <span class="s1">&#39;15&#39;</span><span class="p">,</span>
+        <span class="mi">2</span> <span class="o">=&gt;</span> <span class="s1">&#39;profile&#39;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="user_agent.html" class="btn btn-neutral float-right" title="User Agent Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="uploaded_files.html" class="btn btn-neutral" title="Working with Uploaded Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 28, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-test',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

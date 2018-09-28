@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Error Handling &mdash; CodeIgniter4 4.0.0-test documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-test documentation" href="../index.html"/>
+        <link rel="up" title="General Topics" href="index.html"/>
+        <link rel="next" title="Web Page Caching" href="caching.html"/>
+        <link rel="prev" title="Logging Information" href="logging.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">General Topics</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Working With Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html">CodeIgniter URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">Logging Information</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Code Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managing_apps.html">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environments.html">Handling Multiple Environments</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">General Topics</a> &raquo;</li>
+        
+      <li>Error Handling</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="error-handling">
+<h1>Error Handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h1>
+<p>CodeIgniter builds error reporting into your system through Exceptions, both the <a class="reference external" href="http://php.net/manual/en/spl.exceptions.php">SPL collection</a>, as
+well as a few custom exceptions that are provided by the framework. Depending on your environment&#8217;s setup, the
+default action when an error or exception is thrown is to display a detailed error report, unless the application
+is running under the <code class="docutils literal"><span class="pre">production</span></code> environment. In this case, a more generic  message is displayed to
+keep the best user experience for your users.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#using-exceptions" id="id1">Using Exceptions</a></li>
+<li><a class="reference internal" href="#configuration" id="id2">Configuration</a><ul>
+<li><a class="reference internal" href="#logging-exceptions" id="id3">Logging Exceptions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#custom-exceptions" id="id4">Custom Exceptions</a><ul>
+<li><a class="reference internal" href="#pagenotfoundexception" id="id5">PageNotFoundException</a></li>
+<li><a class="reference internal" href="#configexception" id="id6">ConfigException</a></li>
+<li><a class="reference internal" href="#databaseexception" id="id7">DatabaseException</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="using-exceptions">
+<h2><a class="toc-backref" href="#id1">Using Exceptions</a><a class="headerlink" href="#using-exceptions" title="Permalink to this headline">¶</a></h2>
+<p>This section is a quick overview for newer programmers, or developers who are not experienced with using exceptions.</p>
+<p>Exceptions are simply events that happen when the exception is &#8220;thrown&#8221;. This halts the current flow of the script, and
+execution is then sent to the error handler which displays the appropriate error page:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">throw</span> <span class="k">new</span> <span class="nx">\Exception</span><span class="p">(</span><span class="s2">&quot;Some message goes here&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If you are calling a method that might throw an exception, you can catch that exception using a <code class="docutils literal"><span class="pre">try/catch</span></code> block:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">try</span> <span class="p">{</span>
+        <span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">catch</span> <span class="p">(</span><span class="nx">\Exception</span> <span class="nv">$e</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">die</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the <code class="docutils literal"><span class="pre">$userModel</span></code> throws an exception, it is caught and the code within the catch block is executed. In this example,
+the scripts dies, echoing the error message that the <code class="docutils literal"><span class="pre">UserModel</span></code> defined.</p>
+<p>In this example, we catch any type of Exception. If we only want to watch for specific types of exceptions, like
+a UnknownFileException, we can specify that in the catch parameter. Any other exceptions that are thrown and are
+not child classes of the caught exception will be passed on to the error handler:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">catch</span> <span class="p">(</span><span class="nx">\CodeIgniter\UnknownFileException</span> <span class="nv">$e</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="c1">// do something here...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This can be handy for handling the error yourself, or for performing cleanup before the script ends. If you want
+the error handler to function as normal, you can throw a new exception within the catch block:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">catch</span> <span class="p">(</span><span class="nx">\CodeIgniter\UnknownFileException</span> <span class="nv">$e</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="c1">// do something here...</span>
+
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">\RuntimeException</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">(),</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getCode</span><span class="p">(),</span> <span class="nv">$e</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuration">
+<h2><a class="toc-backref" href="#id2">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>By default, CodeIgniter will display all errors in the <code class="docutils literal"><span class="pre">development</span></code> and <code class="docutils literal"><span class="pre">testing</span></code> environments, and will not
+display any errors in the <code class="docutils literal"><span class="pre">production</span></code> environment. You can change this by locating the environment configuration
+portion at the top of the main <code class="docutils literal"><span class="pre">index.php</span></code> file.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Disabling error reporting DOES NOT stop logs from being written if there are errors.</p>
+</div>
+<div class="section" id="logging-exceptions">
+<h3><a class="toc-backref" href="#id3">Logging Exceptions</a><a class="headerlink" href="#logging-exceptions" title="Permalink to this headline">¶</a></h3>
+<p>By default, all Exceptions other than 404 - Page Not Found exceptions are logged. This can be turned on and off
+by setting the <strong>$log</strong> value of <code class="docutils literal"><span class="pre">Config\Exceptions</span></code>:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Exceptions</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$log</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>To ignore logging on other status codes, you can set the status code to ignore in the same file:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Exceptions</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$ignoredCodes</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">404</span> <span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is possible that logging still will not happen for exceptions if your current Log settings
+are not setup to log <strong>critical</strong> errors, which all exceptions are logged as.</p>
+</div>
+</div>
+</div>
+<div class="section" id="custom-exceptions">
+<h2><a class="toc-backref" href="#id4">Custom Exceptions</a><a class="headerlink" href="#custom-exceptions" title="Permalink to this headline">¶</a></h2>
+<p>The following custom exceptions are available:</p>
+<div class="section" id="pagenotfoundexception">
+<h3><a class="toc-backref" href="#id5">PageNotFoundException</a><a class="headerlink" href="#pagenotfoundexception" title="Permalink to this headline">¶</a></h3>
+<p>This is used to signal a 404, Page Not Found error. When thrown, the system will show the view found at
+<code class="docutils literal"><span class="pre">/application/views/errors/html/error_404.php</span></code>. You should customize all of the error views for your site.
+If, in <code class="docutils literal"><span class="pre">Config/Routes.php</span></code>, you have specified a 404 Override, that will be called instead of the standard
+404 page:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$page</span> <span class="o">=</span> <span class="nv">$pageModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">))</span>
+<span class="p">{</span>
+        <span class="k">throw</span> <span class="nx">\CodeIgniter\Exceptions\PageNotFoundException</span><span class="o">::</span><span class="na">forPageNotFound</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can pass a message into the exception that will be displayed in place of the default message on the 404 page.</p>
+</div>
+<div class="section" id="configexception">
+<h3><a class="toc-backref" href="#id6">ConfigException</a><a class="headerlink" href="#configexception" title="Permalink to this headline">¶</a></h3>
+<p>This exception should be used when the values from the configuration class are invalid, or when the config class
+is not the right type, etc:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Exceptions\ConfigException</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>This provides an HTTP status code of 500, and an exit code of 3.</p>
+</div>
+<div class="section" id="databaseexception">
+<h3><a class="toc-backref" href="#id7">DatabaseException</a><a class="headerlink" href="#databaseexception" title="Permalink to this headline">¶</a></h3>
+<p>This exception is thrown for database errors, such as when the database connection cannot be created,
+or when it is temporarily lost:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Database\Exceptions\DatabaseException</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>This provides an HTTP status code of 500, and an exit code of 8.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="caching.html" class="btn btn-neutral float-right" title="Web Page Caching" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="logging.html" class="btn btn-neutral" title="Logging Information" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 28, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-test',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

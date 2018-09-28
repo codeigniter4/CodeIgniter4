@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Database;
 
-use CodeIgniter\Database\MockConnection;
+
+use Tests\Support\Database\MockConnection;
 
 class BaseConnectionTest extends \CIUnitTestCase
 {
@@ -23,7 +24,6 @@ class BaseConnectionTest extends \CIUnitTestCase
 		'compress'     => false,
 		'strictOn'     => true,
 		'failover'     => [],
-		'saveQueries' => true,
 	];
 
 	protected $failoverOptions = [
@@ -45,48 +45,47 @@ class BaseConnectionTest extends \CIUnitTestCase
 		'compress'     => false,
 		'strictOn'     => true,
 		'failover'     => [],
-		'saveQueries' => true,
 	];
-	
+
 	//--------------------------------------------------------------------
-	
-	public function testSavesConfigOptions() 
+
+	public function testSavesConfigOptions()
 	{
 		$db = new MockConnection($this->options);
-		
+
 		$this->assertSame('localhost', $db->hostname);
 		$this->assertSame('first', $db->username);
 		$this->assertSame('last', $db->password);
 		$this->assertSame('dbname', $db->database);
 		$this->assertSame('MockDriver', $db->DBDriver);
-		$this->assertSame(true, $db->pConnect);
-		$this->assertSame(true, $db->DBDebug);
-		$this->assertSame(false, $db->cacheOn);
+		$this->assertTrue($db->pConnect);
+		$this->assertTrue($db->DBDebug);
+		$this->assertFalse($db->cacheOn);
 		$this->assertSame('my/cacheDir', $db->cacheDir);
 		$this->assertSame('utf8', $db->charset);
 		$this->assertSame('utf8_general_ci', $db->DBCollat);
 		$this->assertSame('', $db->swapPre);
-		$this->assertSame(false, $db->encrypt);
-		$this->assertSame(false, $db->compress);
-		$this->assertSame(true, $db->strictOn);
+		$this->assertFalse($db->encrypt);
+		$this->assertFalse($db->compress);
+		$this->assertTrue($db->strictOn);
 		$this->assertSame([], $db->failover);
-		$this->assertSame(true, $db->saveQueries);
 	}
-	
+
 	//--------------------------------------------------------------------
-	
-	public function testConnectionThrowExceptionWhenCannotConnect() 
+
+	public function testConnectionThrowExceptionWhenCannotConnect()
 	{
 	    $db = new MockConnection($this->options);
-		
-		$this->setExpectedException('CodeIgniter\DatabaseException', 'Unable to connect to the database.');
-		
+
+		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
+		$this->expectExceptionMessage('Unable to connect to the database.');
+
 		$db->shouldReturn('connect', false)
 			->initialize();
 	}
-	
+
 	//--------------------------------------------------------------------
-	
+
 	public function testCanConnectAndStoreConnection()
 	{
 	    $db = new MockConnection($this->options);
@@ -100,7 +99,7 @@ class BaseConnectionTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 * @group single
 	 */
 	public function testCanConnectToFailoverWhenNoConnectionAvailable()
@@ -127,11 +126,25 @@ class BaseConnectionTest extends \CIUnitTestCase
 
 		$db->initialize();
 
-		$this->assertTrue($db->getConnectStart() > $start);
-		$this->assertTrue($db->getConnectDuration() > 0);
+		$this->assertGreaterThan($start, $db->getConnectStart());
+		$this->assertGreaterThan(0.0, $db->getConnectDuration());
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Ensures we don't have escaped - values...
+	 *
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/606
+	 */
+	public function testEscapeProtectsNegativeNumbers()
+	{
+		$db = new MockConnection($this->options);
+
+		$db->initialize();
+
+		$this->assertEquals("'-100'", $db->escape(-100));
+	}
 
 
 }

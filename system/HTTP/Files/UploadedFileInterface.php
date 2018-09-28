@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -47,6 +47,7 @@
  */
 interface UploadedFileInterface
 {
+
 	/**
 	 * Accepts the file information as would be filled in from the $_FILES array.
 	 *
@@ -89,7 +90,7 @@ interface UploadedFileInterface
 	 * @throws \RuntimeException on any error during the move operation.
 	 * @throws \RuntimeException on the second or subsequent call to the method.
 	 */
-	public function move(string $targetPath, string $name = null): bool;
+	public function move(string $targetPath, string $name = null);
 
 	//--------------------------------------------------------------------
 
@@ -101,24 +102,6 @@ interface UploadedFileInterface
 	 * @return bool
 	 */
 	public function hasMoved(): bool;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Retrieve the file size.
-	 *
-	 * Implementations SHOULD return the value stored in the "size" key of
-	 * the file in the $_FILES array if available, as PHP calculates this based
-	 * on the actual size transmitted.
-	 *
-	 * @param string $unit The unit to return:
-	 *      - b   Bytes
-	 *      - kb  Kilobytes
-	 *      - mb  Megabytes
-	 *
-	 * @return int|null The file size in bytes or null if unknown.
-	 */
-	public function getSize(string $unit='b'): int;
 
 	//--------------------------------------------------------------------
 
@@ -167,26 +150,6 @@ interface UploadedFileInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Generates a random names based on a simple hash and the time, with
-	 * the correct file extension attached.
-	 *
-	 * @return string
-	 */
-	public function getRandomName(): string;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Attempts to determine the file extension based on the trusted
-	 * getMimeType() method. If the mime type is unknown, will return null.
-	 *
-	 * @return string
-	 */
-	public function getExtension(): string;
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Returns the original file extension, based on the file name that
 	 * was uploaded. This is NOT a trusted source.
 	 * For a trusted version, use guessExtension() instead.
@@ -198,25 +161,13 @@ interface UploadedFileInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Retrieve the media type of the file. SHOULD not use information from
-	 * the $_FILES array, but should use other methods to more accurately
-	 * determine the type of file, like finfo, or mime_content_type().
-	 *
-	 * @return string|null The media type sent by the client or null if none
-	 *     was provided.
-	 */
-	public function getType(): string;
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Returns the mime type as provided by the client.
 	 * This is NOT a trusted value.
 	 * For a trusted version, use getMimeType() instead.
 	 *
 	 * @return string|null
 	 */
-	public function getClientType(): string;
+	public function getClientMimeType(): string;
 
 	//--------------------------------------------------------------------
 
@@ -230,4 +181,20 @@ interface UploadedFileInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns the destination path for the move operation where overwriting is not expected.
+	 *
+	 * First, it checks whether the delimiter is present in the filename, if it is, then it checks whether the
+	 * last element is an integer as there may be cases that the delimiter may be present in the filename.
+	 * For the all other cases, it appends an integer starting from zero before the file's extension.
+	 *
+	 * @param string $destination
+	 * @param string $delimiter
+	 * @param int    $i
+	 *
+	 * @return string
+	 */
+	public function getDestination(string $destination, string $delimiter = '_', int $i = 0): string;
+
+	//--------------------------------------------------------------------
 }

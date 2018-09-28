@@ -1,0 +1,621 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Controllers &mdash; CodeIgniter4 4.0.0-test documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-test documentation" href="../index.html"/>
+        <link rel="up" title="Controllers and Routing" href="index.html"/>
+        <link rel="next" title="URI Routing" href="routing.html"/>
+        <link rel="prev" title="Controllers and Routing" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Controllers and Routing</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routing.html">URI Routing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="content_negotiation.html">Content Negotiation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Controllers and Routing</a> &raquo;</li>
+        
+      <li>Controllers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="controllers">
+<h1>Controllers<a class="headerlink" href="#controllers" title="Permalink to this headline">¶</a></h1>
+<p>Controllers are the heart of your application, as they determine how HTTP requests should be handled.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#what-is-a-controller" id="id1">What is a Controller?</a></li>
+<li><a class="reference internal" href="#let-s-try-it-hello-world" id="id2">Let&#8217;s try it: Hello World!</a></li>
+<li><a class="reference internal" href="#methods" id="id3">Methods</a></li>
+<li><a class="reference internal" href="#passing-uri-segments-to-your-methods" id="id4">Passing URI Segments to your methods</a></li>
+<li><a class="reference internal" href="#defining-a-default-controller" id="id5">Defining a Default Controller</a></li>
+<li><a class="reference internal" href="#remapping-method-calls" id="id6">Remapping Method Calls</a></li>
+<li><a class="reference internal" href="#private-methods" id="id7">Private methods</a></li>
+<li><a class="reference internal" href="#organizing-your-controllers-into-sub-directories" id="id8">Organizing Your Controllers into Sub-directories</a></li>
+<li><a class="reference internal" href="#included-properties" id="id9">Included Properties</a><ul>
+<li><a class="reference internal" href="#helpers" id="id10">helpers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#validating-post-data" id="id11">Validating $_POST data</a></li>
+<li><a class="reference internal" href="#that-s-it" id="id12">That&#8217;s it!</a></li>
+</ul>
+</div>
+<div class="section" id="what-is-a-controller">
+<h2><a class="toc-backref" href="#id1">What is a Controller?</a><a class="headerlink" href="#what-is-a-controller" title="Permalink to this headline">¶</a></h2>
+<p>A Controller is simply a class file that is named in a way that it can be associated with a URI.</p>
+<p>Consider this URI:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">blog</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>In the above example, CodeIgniter would attempt to find a controller named Blog.php and load it.</p>
+<p><strong>When a controller&#8217;s name matches the first segment of a URI, it will be loaded.</strong></p>
+</div>
+<div class="section" id="let-s-try-it-hello-world">
+<h2><a class="toc-backref" href="#id2">Let&#8217;s try it: Hello World!</a><a class="headerlink" href="#let-s-try-it-hello-world" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s create a simple controller so you can see it in action. Using your text editor, create a file called Blog.php,
+and put the following code in it:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+<span class="k">class</span> <span class="nc">Blog</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span>
+<span class="p">{</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+        <span class="p">{</span>
+                <span class="k">echo</span> <span class="s1">&#39;Hello World!&#39;</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Then save the file to your <strong>/application/Controllers/</strong> directory.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">The file must be called &#8216;Blog.php&#8217;, with a capital &#8216;B&#8217;.</p>
+</div>
+<p>Now visit your site using a URL similar to this:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">blog</span>
+</pre></div>
+</div>
+<p>If you did it right, you should see:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">Hello</span> <span class="nx">World</span><span class="o">!</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Class names must start with an uppercase letter.</p>
+</div>
+<p>This is valid:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+<span class="k">class</span> <span class="nc">Blog</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span> <span class="p">{</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This is <strong>not</strong> valid:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+<span class="k">class</span> <span class="nc">blog</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span> <span class="p">{</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Also, always make sure your controller extends the parent controller
+class so that it can inherit all its methods.</p>
+</div>
+<div class="section" id="methods">
+<h2><a class="toc-backref" href="#id3">Methods</a><a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<p>In the above example the method name is <code class="docutils literal"><span class="pre">index()</span></code>. The &#8220;index&#8221; method
+is always loaded by default if the <strong>second segment</strong> of the URI is
+empty. Another way to show your &#8220;Hello World&#8221; message would be this:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">blog</span><span class="o">/</span><span class="nx">index</span><span class="o">/</span>
+</pre></div>
+</div>
+<p><strong>The second segment of the URI determines which method in the
+controller gets called.</strong></p>
+<p>Let&#8217;s try it. Add a new method to your controller:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+<span class="k">class</span> <span class="nc">Blog</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span> <span class="p">{</span>
+
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+        <span class="p">{</span>
+                <span class="k">echo</span> <span class="s1">&#39;Hello World!&#39;</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">comments</span><span class="p">()</span>
+        <span class="p">{</span>
+                <span class="k">echo</span> <span class="s1">&#39;Look at this!&#39;</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now load the following URL to see the comment method:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">blog</span><span class="o">/</span><span class="nx">comments</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>You should see your new message.</p>
+</div>
+<div class="section" id="passing-uri-segments-to-your-methods">
+<h2><a class="toc-backref" href="#id4">Passing URI Segments to your methods</a><a class="headerlink" href="#passing-uri-segments-to-your-methods" title="Permalink to this headline">¶</a></h2>
+<p>If your URI contains more than two segments they will be passed to your
+method as parameters.</p>
+<p>For example, let&#8217;s say you have a URI like this:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">products</span><span class="o">/</span><span class="nx">shoes</span><span class="o">/</span><span class="nx">sandals</span><span class="o">/</span><span class="mi">123</span>
+</pre></div>
+</div>
+<p>Your method will be passed URI segments 3 and 4 (&#8220;sandals&#8221; and &#8220;123&#8221;):</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+<span class="k">class</span> <span class="nc">Products</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span> <span class="p">{</span>
+
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">shoes</span><span class="p">(</span><span class="nv">$sandals</span><span class="p">,</span> <span class="nv">$id</span><span class="p">)</span>
+        <span class="p">{</span>
+                <span class="k">echo</span> <span class="nv">$sandals</span><span class="p">;</span>
+                <span class="k">echo</span> <span class="nv">$id</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">If you are using the <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a>
+feature, the segments passed to your method will be the re-routed
+ones.</p>
+</div>
+</div>
+<div class="section" id="defining-a-default-controller">
+<h2><a class="toc-backref" href="#id5">Defining a Default Controller</a><a class="headerlink" href="#defining-a-default-controller" title="Permalink to this headline">¶</a></h2>
+<p>CodeIgniter can be told to load a default controller when a URI is not
+present, as will be the case when only your site root URL is requested.
+To specify a default controller, open your <strong>application/Config/Routes.php</strong>
+file and set this variable:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Blog&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Where &#8216;Blog&#8217; is the name of the controller class you want used. If you now
+load your main index.php file without specifying any URI segments you&#8217;ll
+see your &#8220;Hello World&#8221; message by default.</p>
+<p>For more information, please refer to the &#8220;Routes Configuration Options&#8221; section of the
+<a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a> documentation.</p>
+</div>
+<div class="section" id="remapping-method-calls">
+<h2><a class="toc-backref" href="#id6">Remapping Method Calls</a><a class="headerlink" href="#remapping-method-calls" title="Permalink to this headline">¶</a></h2>
+<p>As noted above, the second segment of the URI typically determines which
+method in the controller gets called. CodeIgniter permits you to override
+this behavior through the use of the <code class="docutils literal"><span class="pre">_remap()</span></code> method:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">_remap</span><span class="p">()</span>
+<span class="p">{</span>
+        <span class="c1">// Some code here...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">If your controller contains a method named _remap(),
+it will <strong>always</strong> get called regardless of what your URI contains. It
+overrides the normal behavior in which the URI determines which method
+is called, allowing you to define your own method routing rules.</p>
+</div>
+<p>The overridden method call (typically the second segment of the URI) will
+be passed as a parameter to the <code class="docutils literal"><span class="pre">_remap()</span></code> method:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">_remap</span><span class="p">(</span><span class="nv">$method</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$method</span> <span class="o">===</span> <span class="s1">&#39;some_method&#39;</span><span class="p">)</span>
+        <span class="p">{</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="nv">$method</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">default_method</span><span class="p">();</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Any extra segments after the method name are passed into <code class="docutils literal"><span class="pre">_remap()</span></code>. These parameters can be passed to the method
+to emulate CodeIgniter&#8217;s default behavior.</p>
+<p>Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">_remap</span><span class="p">(</span><span class="nv">$method</span><span class="p">,</span> <span class="o">...</span><span class="nv">$params</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="nv">$method</span> <span class="o">=</span> <span class="s1">&#39;process_&#39;</span><span class="o">.</span><span class="nv">$method</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">method_exists</span><span class="p">(</span><span class="nv">$this</span><span class="p">,</span> <span class="nv">$method</span><span class="p">))</span>
+        <span class="p">{</span>
+                <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nv">$method</span><span class="p">(</span><span class="o">...</span><span class="nv">$params</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="nx">show_404</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="private-methods">
+<h2><a class="toc-backref" href="#id7">Private methods</a><a class="headerlink" href="#private-methods" title="Permalink to this headline">¶</a></h2>
+<p>In some cases you may want certain methods hidden from public access.
+In order to achieve this, simply declare the method as being private
+or protected and it will not be served via a URL request. For example,
+if you were to have a method like this:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="k">function</span> <span class="nf">utility</span><span class="p">()</span>
+<span class="p">{</span>
+        <span class="c1">// some code</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Trying to access it via the URL, like this, will not work:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">blog</span><span class="o">/</span><span class="nx">utility</span><span class="o">/</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="organizing-your-controllers-into-sub-directories">
+<h2><a class="toc-backref" href="#id8">Organizing Your Controllers into Sub-directories</a><a class="headerlink" href="#organizing-your-controllers-into-sub-directories" title="Permalink to this headline">¶</a></h2>
+<p>If you are building a large application you might want to hierarchically
+organize or structure your controllers into sub-directories. CodeIgniter
+permits you to do this.</p>
+<p>Simply create sub-directories under the main <em>application/Controllers/</em>
+one and place your controller classes within them.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>When using this feature the first segment of your URI must
+specify the folder. For example, let&#8217;s say you have a controller located
+here:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">application</span><span class="o">/</span><span class="nx">controllers</span><span class="o">/</span><span class="nx">products</span><span class="o">/</span><span class="nx">Shoes</span><span class="o">.</span><span class="nx">php</span>
+</pre></div>
+</div>
+<p>To call the above controller your URI will look something like this:</p>
+<div class="last highlight-ci"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">products</span><span class="o">/</span><span class="nx">shoes</span><span class="o">/</span><span class="nx">show</span><span class="o">/</span><span class="mi">123</span>
+</pre></div>
+</div>
+</div>
+<p>Each of your sub-directories may contain a default controller which will be
+called if the URL contains <em>only</em> the sub-directory. Simply put a controller
+in there that matches the name of your &#8216;default_controller&#8217; as specified in
+your <em>application/Config/Routes.php</em> file.</p>
+<p>CodeIgniter also permits you to remap your URIs using its <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a> feature.</p>
+</div>
+<div class="section" id="included-properties">
+<h2><a class="toc-backref" href="#id9">Included Properties</a><a class="headerlink" href="#included-properties" title="Permalink to this headline">¶</a></h2>
+<p>Every controller you create should extend <code class="docutils literal"><span class="pre">CodeIgniter\Controller</span></code> class.
+This class provides several features that are available to all of your controllers.</p>
+<p><strong>Request Object</strong></p>
+<p>The application&#8217;s main <a class="reference internal" href="request.html"><span class="doc">Request Instance</span></a> is always available
+as a class property, <code class="docutils literal"><span class="pre">$this-&gt;request</span></code>.</p>
+<p><strong>Response Object</strong></p>
+<p>The application&#8217;s main <a class="reference internal" href="../outgoing/response.html"><span class="doc">Response Instance</span></a> is always available
+as a class property, <code class="docutils literal"><span class="pre">$this-&gt;response</span></code>.</p>
+<p><strong>Logger Object</strong></p>
+<p>An instance of the <a class="reference internal" href="../general/logging.html"><span class="doc">Logger</span></a> class is available as a class property,
+<code class="docutils literal"><span class="pre">$this-&gt;logger</span></code>.</p>
+<p><strong>forceHTTPS</strong></p>
+<p>A convenience method for forcing a method to be accessed via HTTPS is available within all
+controllers:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">isSecure</span><span class="p">())</span>
+<span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forceHTTPS</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>By default, and in modern browsers that support the HTTP Strict Transport Security header, this
+call should force the browser to convert non-HTTPS calls to HTTPS calls for one year. You can
+modify this by passing the duration (in seconds) as the first parameter:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">isSecure</span><span class="p">())</span>
+<span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forceHTTPS</span><span class="p">(</span><span class="mi">31536000</span><span class="p">);</span>    <span class="c1">// one year</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A number of <a class="reference internal" href="../general/common_functions.html"><span class="doc">time-based constants</span></a> are always available for you to use, including YEAR, MONTH, and more.</p>
+</div>
+<div class="section" id="helpers">
+<h3><a class="toc-backref" href="#id10">helpers</a><a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h3>
+<p>You can define an array of helper files as a class property. Whenever the controller is loaded,
+these helper files will be automatically loaded into memory so that you can use their methods anywhere
+inside the controller:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyController</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span>
+<span class="p">{</span>
+        <span class="k">protected</span> <span class="nv">$helpers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">,</span> <span class="s1">&#39;form&#39;</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="validating-post-data">
+<h2><a class="toc-backref" href="#id11">Validating $_POST data</a><a class="headerlink" href="#validating-post-data" title="Permalink to this headline">¶</a></h2>
+<p>The controller also provides a convenience method to make validating $_POST data a little simpler, <code class="docutils literal"><span class="pre">validate()</span></code> that
+takes an array of rules to test against as the first parameter, and, optionally,
+an array of custom error messages to display if the items don&#8217;t pass. Internally, this uses the controller&#8217;s
+<strong>$this-&gt;request</strong> instance to get the POST data through. The <a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation Library docs</span></a>
+has details on the format of the rules and messages arrays, as well as available rules.:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">updateUser</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$userID</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
+        <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;required|is_unique[users.email,id,</span><span class="si">{</span><span class="nv">$userID</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|alpha_numeric_spaces&#39;</span>
+    <span class="p">]))</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;users/update&#39;</span><span class="p">,</span> <span class="p">[</span>
+            <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">errors</span>
+        <span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// do something here if successful...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you find it simpler to keep the rules in the configuration file, you can replace the $rules array with the
+name of the group, as defined in <code class="docutils literal"><span class="pre">Config\Validation.php</span></code>:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">updateUser</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$userID</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">(</span><span class="s1">&#39;userRules&#39;</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;users/update&#39;</span><span class="p">,</span> <span class="p">[</span>
+            <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">errors</span>
+        <span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// do something here if successful...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Validation can also be handled automatically in the model. Where you handle validation is up to you,
+and you will find that some situations are simpler in the controller than then model, and vice versa.</p>
+</div>
+</div>
+<div class="section" id="that-s-it">
+<h2><a class="toc-backref" href="#id12">That&#8217;s it!</a><a class="headerlink" href="#that-s-it" title="Permalink to this headline">¶</a></h2>
+<p>That, in a nutshell, is all there is to know about controllers.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="routing.html" class="btn btn-neutral float-right" title="URI Routing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Controllers and Routing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 28, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-test',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

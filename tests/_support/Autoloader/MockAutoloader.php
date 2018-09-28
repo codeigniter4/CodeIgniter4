@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Autoloader;
+<?php namespace Tests\Support\Autoloader;
+
+use CodeIgniter\Autoloader\Autoloader;
 
 class MockAutoloader extends Autoloader
 {
@@ -14,11 +16,10 @@ class MockAutoloader extends Autoloader
 
 	//--------------------------------------------------------------------
 
-	protected function requireFile($file)
+	protected function requireFile(string $file)
 	{
 		return in_array($file, $this->files) ? $file : false;
 	}
 
 	//--------------------------------------------------------------------
-
 }

@@ -5,8 +5,10 @@ Global Functions and Constants
 CodeIgniter uses provides a few functions and variables that are globally defined, and are available to you at any point.
 These do not require loading any additional libraries or helpers.
 
-.. contents:: Page Contents
-	:local:
+.. contents::
+    :local:
+    :depth: 2
+
 
 ================
 Global Functions
@@ -15,73 +17,140 @@ Global Functions
 Service Accessors
 =================
 
+.. php:function:: cache ( [$key] )
+
+    :param  string $key: The cache name of the item to retrieve from cache (Optional)
+    :returns: Either the cache object, or the item retrieved from the cache
+    :rtype: mixed
+
+    If no $key is provided, will return the Cache engine instance. If a $key
+    is provided, will return the value of $key as stored in the cache currently,
+    or false if no value is found.
+
+    Examples::
+
+     	$foo = cache('foo');
+    	$cache = cache();
+
+.. php:function:: env ( $key[, $default=null])
+
+	:param string $key: The name of the environment variable to retrieve
+	:param mixed  $default: The default value to return if no value is found.
+	:returns: The environment variable, the default value, or null.
+	:rtype: mixed
+
+	Used to retrieve values that have previously been set to the environment,
+	or return a default value if it is not found. Will format boolean values
+	to actual booleans instead of string representations.
+
+	Especially useful when used in conjunction with .env files for setting
+	values that are specific to the environment itself, like database
+	settings, API keys, etc.
+
 .. php:function:: esc ( $data, $context='html' [, $encoding])
 
 	:param   string|array   $data: The information to be escaped.
-			:param   string   $context: The escaping context. Default is 'html'.
-			:param   string   $encoding: The character encoding of the string.
-			:returns: The escaped data.
-			:rtype: string
+	:param   string   $context: The escaping context. Default is 'html'.
+	:param   string   $encoding: The character encoding of the string.
+	:returns: The escaped data.
+	:rtype: string
 
-			Escapes data for inclusion in web pages, to help prevent XSS attacks.
-			This uses the Zend Escaper library to handle the actual filtering of the data.
+	Escapes data for inclusion in web pages, to help prevent XSS attacks.
+	This uses the Zend Escaper library to handle the actual filtering of the data.
 
-			If $data is a string, then it simply escapes and returns it.
-			If $data is an array, then it loops over it, escaping each 'value' of the key/value pairs.
+	If $data is a string, then it simply escapes and returns it.
+	If $data is an array, then it loops over it, escaping each 'value' of the key/value pairs.
 
-			Valid context values: html, js, css, url, attr, raw, null
+	Valid context values: html, js, css, url, attr, raw, null
 
 .. php:function:: helper( $filename )
 
-	:param   string   $filename: The name of the helper file to load.
+	:param   string|array  $filename: The name of the helper file to load, or an array of names.
 
-				Loads a helper file.
+	Loads a helper file.
 
-				For full details, see the :doc:`helpers` page.
+	For full details, see the :doc:`helpers` page.
+
+.. php:function:: lang(string $line[, array $args]): string
+
+	:param string $line: The line of text to retrieve
+	:param array  $args: An array of data to substitute for placeholders.
+
+	Retrieves a locale-specific file based on an alias string.
+
+	For more information, see the :doc:`Localization </outgoing/localization>` page.
+
+.. php:function:: old( $key[, $default = null, [, $escape = 'html' ]] )
+
+	:param string $key: The name of the old form data to check for.
+	:param mixed  $default: The default value to return if $key doesn't exist.
+	:param mixed  $escape: An `escape <#esc>`_ context or false to disable it.
+	:returns: The value of the defined key, or the default value.
+	:rtype: mixed
+
+	Provides a simple way to access "old input data" from submitting a form.
+
+	Example::
+
+		// in controller, checking form submittal
+		if (! $model->save($user))
+		{
+			// 'withInput' is what specifies "old data"
+			// should be saved.
+			return redirect()->back()->withInput();
+		}
+
+		// In the view
+		<input type="email" name="email" value="<?= old('email') ?>">
+		// Or with arrays
+		<input type="email" name="user[email]" value="<?= old('user.email') ?>">
+
+.. note:: If you are using the :doc:`form helper </helpers/form_helper>`, this feature is built-in. You only
+		need to use this function when not using the form helper.
 
 .. php:function:: session( [$key] )
 
 	:param string $key: The name of the session item to check for.
-		:returns: An instance of the Session object if no $key,
-				  the value found in the session for $key, or null.
-		:rtype: mixed
+	:returns: An instance of the Session object if no $key, the value found in the session for $key, or null.
+	:rtype: mixed
 
-		Provides a convenient way to access the session class and to retrieve a
-		stored value. For more information, see the :doc:`Sessions </libraries/sessions>` page.
+	Provides a convenient way to access the session class and to retrieve a
+	stored value. For more information, see the :doc:`Sessions </libraries/sessions>` page.
 
 .. php:function:: timer( [$name] )
 
 	:param string $name: The name of the benchmark point.
-		:returns: The Timer instance
-		:rtype: CodeIgniter\Debug\Timer
+	:returns: The Timer instance
+	:rtype: CodeIgniter\Debug\Timer
 
-		A convenience method that provides quick access to the Timer class. You can pass in the name
-		of a benchmark point as the only parameter. This will start timing from this point, or stop
-		timing if a timer with this name is already running.
-		::
+	A convenience method that provides quick access to the Timer class. You can pass in the name
+	of a benchmark point as the only parameter. This will start timing from this point, or stop
+	timing if a timer with this name is already running.
 
-	// Get an instance
-	$timer = timer();
+	Example::
 
-	// Set timer start and stop points
-	timer('controller_loading');    // Will start the timer
-	. . .
-	timer('controller_loading');    // Will stop the running timer
+		// Get an instance
+		$timer = timer();
+
+		// Set timer start and stop points
+		timer('controller_loading');    // Will start the timer
+		. . .
+		timer('controller_loading');    // Will stop the running timer
 
 .. php:function:: view ($name [, $data [, $options ]])
 
 	:param   string   $name: The name of the file to load
-		:param   array    $data: An array of key/value pairs to make available within the view.
-		:param   array    $options: An array of options that will be passed to the rendering class.
-		:returns: The output from the view.
-		:rtype: string
+	:param   array    $data: An array of key/value pairs to make available within the view.
+	:param   array    $options: An array of options that will be passed to the rendering class.
+	:returns: The output from the view.
+	:rtype: string
 
-		Grabs the current RenderableInterface-compatible class
-		and tells it to render the specified view. Simply provides
-		a convenience method that can be used in Controllers,
-		libraries, and routed closures.
+	Grabs the current RendererInterface-compatible class
+	and tells it to render the specified view. Simply provides
+	a convenience method that can be used in Controllers,
+	libraries, and routed closures.
 
-		Currently, only one option is available for use within the `$options` array, `saveData` which specifies
+	Currently, only one option is available for use within the `$options` array, `saveData` which specifies
 	that data will persistent between multiple calls to `view()` within the same request. By default, the
 	data for that view is forgotten after displaying that single view file.
 
@@ -94,7 +163,7 @@ Service Accessors
 
 		echo view('user_profile', $data);
 
-	For more details, see the :doc:`Views <views>` page.
+	For more details, see the :doc:`Views </outgoing/views>` page.
 
 Miscellaneous Functions
 =======================
@@ -102,32 +171,41 @@ Miscellaneous Functions
 .. php:function:: csrf_token ()
 
 	:returns: The name of the current CSRF token.
-		:rtype: string
+	:rtype: string
 
-		Returns the name of the current CSRF token.
+	Returns the name of the current CSRF token.
 
 .. php:function:: csrf_hash ()
 
 	:returns: The current value of the CSRF hash.
-		:rtype: string
+	:rtype: string
 
-		Returns the current CSRF hash value.
+	Returns the current CSRF hash value.
+
+.. php:function:: csrf_field ()
+
+	:returns: A string with the HTML for hidden input with all required CSRF information.
+	:rtype: string
+
+	Returns a hidden input with the CSRF information already inserted:
+
+		<input type="hidden" name="{csrf_token}" value="{csrf_hash}">
 
 .. php:function:: force_https ( $duration = 31536000 [, $request = null [, $response = null]] )
 
 	:param  int  $duration: The number of seconds browsers should convert links to this resource to HTTPS.
-			:param  RequestInterface $request: An instance of the current Request object.
-			:param  ResponseInterface $response: An instance of the current Response object.
+	:param  RequestInterface $request: An instance of the current Request object.
+	:param  ResponseInterface $response: An instance of the current Response object.
 
-			Checks to see if the page is currently being accessed via HTTPS. If it is, then
-			nothing happens. If it is not, then the user is redirected back to the current URI
-			but through HTTPS. Will set the HTTP Strict Transport Security header, which instructs
-			modern browsers to automatically modify any HTTP requests to HTTPS requests for the $duration.
+	Checks to see if the page is currently being accessed via HTTPS. If it is, then
+	nothing happens. If it is not, then the user is redirected back to the current URI
+	but through HTTPS. Will set the HTTP Strict Transport Security header, which instructs
+	modern browsers to automatically modify any HTTP requests to HTTPS requests for the $duration.
 
 .. php:function:: is_cli ()
 
 	:returns: TRUE if the script is being executed from the command line or FALSE otherwise.
-		:rtype: bool
+	:rtype: bool
 
 .. php:function:: log_message ($level, $message [, array $context])
 
@@ -145,33 +223,41 @@ Miscellaneous Functions
 	Context can be used to substitute values in the message string. For full details, see the
 	:doc:`Logging Information <logging>` page.
 
-.. php:function:: redirect( $uri[, ...$params ] )
+.. php:function:: redirect( string $uri )
 
 	:param  string  $uri: The URI to redirect the user to.
-		:param  mixed   $params: one or more additional parameters that can be used with the :meth:`RouteCollection::reverseRoute` method.
 
-	Convenience method that works with the current global ``$request`` and
-	``$router`` instances to redirect using named/reverse-routed routes
-	to determine the URL to go to. If nothing is found, will treat
-	as a traditional redirect and pass the string in, letting
-	``$response->redirect()`` determine the correct method and code.
+	Returns a RedirectResponse instance allowing you to easily create redirects::
 
-	If more control is needed, you must use ``$response->redirect()`` explicitly.
+		// Go back to the previous page
+		return redirect()->back();
+
+		// Go to specific UI
+		return redirect()->to('/admin');
+
+		// Go to a named/reverse-routed URI
+		return redirect()->route('named_route');
+
+		// Keep the old input values upon redirect so they can be used by the `old()` function
+		return redirect()->back()->withInput();
+
+		// Set a flash message
+		return redirect()->back()->with('foo', 'message');
 
 .. php:function:: remove_invisible_characters($str[, $url_encoded = TRUE])
 
 	:param	string	$str: Input string
-        :param	bool	$url_encoded: Whether to remove URL-encoded characters as well
-        :returns:	Sanitized string
-        :rtype:	string
+	:param	bool	$url_encoded: Whether to remove URL-encoded characters as well
+	:returns:	Sanitized string
+	:rtype:	string
 
-        This function prevents inserting NULL characters between ASCII
-        characters, like Java\\0script.
+	This function prevents inserting NULL characters between ASCII
+	characters, like Java\\0script.
 
-        Example::
+	Example::
 
-            remove_invisible_characters('Java\\0script');
-            // Returns: 'Javascript'
+		remove_invisible_characters('Java\\0script');
+		// Returns: 'Javascript'
 
 .. php:function:: route_to ( $method [, ...$params] )
 
@@ -181,7 +267,7 @@ Miscellaneous Functions
 	Generates a relative URI for you based on either a named route alias, or a controller::method
 	combination. Will take parameters into effect, if provided.
 
-	For full details, see the :doc:`routing` page.
+	For full details, see the :doc:`/incoming/routing` page.
 
 .. php:function:: service ( $name [, ...$params] )
 
@@ -191,13 +277,15 @@ Miscellaneous Functions
 	:rtype: mixed
 
 	Provides easy access to any of the :doc:`Services <../concepts/services>` defined in the system.
+	This will always return a shared instance of the class, so no matter how many times this is called
+	during a single request, only one class instance will be created.
 
 	Example::
 
 		$logger = service('logger');
 		$renderer = service('renderer', APPPATH.'views/');
 
-.. php:function:: shared_service ( $name [, ...$params] )
+.. php:function:: single_service ( $name [, ...$params] )
 
 	:param   string   $name: The name of the service to load
 	:param   mixed    $params: One or more parameters to pass to the service method.
@@ -205,9 +293,17 @@ Miscellaneous Functions
 	:rtype: mixed
 
 	Identical to the **service()** function described above, except that all calls to this
-	function will share the same instance of the service, where **service** returns a new
+	function will return a new instance of the class, where **service** returns the same
 	instance every time.
 
+.. php:function:: stringify_attributes ( $attributes [, $js] )
+
+	:param   mixed    $attributes: string, array of key value pairs, or object
+	:param   boolean  $js: TRUE if values do not need quotes (Javascript-style)
+	:returns: String containing the attribute key/value pairs, comma-separated
+	:rtype: string
+
+	Helper function used to convert a string, array, or object of attributes to a string.
 
 ================
 Global Constants
@@ -216,7 +312,11 @@ Global Constants
 The following constants are always available anywhere within your application.
 
 Core Constants
---------------
+==============
+
+.. php:const:: ROOTPATH
+
+	The path to the main application directory. Just above ``public``.
 
 .. php:const:: APPPATH
 
@@ -238,9 +338,8 @@ Core Constants
 
 	The path to the **writable** directory.
 
-
 Time Constants
---------------
+==============
 
 .. php:const:: SECOND
 
@@ -269,3 +368,7 @@ Time Constants
 .. php:const:: YEAR
 
 	Equals 31536000.
+
+.. php:const:: DECADE
+
+	Equals 315360000.

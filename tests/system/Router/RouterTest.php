@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Router;
 
+use Tests\Support\Autoloader\MockFileLocator;
+
 class RouterTest extends \CIUnitTestCase
 {
 
@@ -16,7 +18,11 @@ class RouterTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-		$this->collection = new RouteCollection();
+		parent::setUp();
+
+		$moduleConfig = new \Config\Modules;
+		$moduleConfig->enabled = false;
+		$this->collection = new RouteCollection(new MockFileLocator(new \Config\Autoload()), $moduleConfig);
 
 		$routes = [
 			'users'                        => 'Users::index',
@@ -26,6 +32,10 @@ class RouterTest extends \CIUnitTestCase
 			'posts/(:num)/edit'            => 'Blog::edit/$1',
 			'books/(:num)/(:alpha)/(:num)' => 'Blog::show/$3/$1',
 			'closure/(:num)/(:alpha)'      => function ($num, $str) { return $num.'-'.$str; },
+			'{locale}/pages'			   => 'App\Pages::list_all',
+			'Admin/Admins'		   		   => 'App\Admin\Admins::list_all',
+            '/some/slash'                  => 'App\Slash::index',
+			'objects/(:segment)/sort/(:segment)/([A-Z]{3,7})'   => 'AdminList::objectsSortCreate/$1/$2/$3'
 		];
 
 		$this->collection->map($routes);
@@ -123,6 +133,21 @@ class RouterTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/672
+	 */
+	public function testURIMapsParamsWithMany()
+	{
+		$router = new Router($this->collection);
+
+		$router->handle('objects/123/sort/abc/FOO');
+
+		$this->assertEquals('objectsSortCreate', $router->methodName());
+		$this->assertEquals([123, 'abc', 'FOO'], $router->params());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testClosures()
 	{
 		$router = new Router($this->collection);
@@ -131,9 +156,9 @@ class RouterTest extends \CIUnitTestCase
 
 		$closure = $router->controllerName();
 
-		$expects = call_user_func_array($closure, $router->params());
+		$expects = $closure(...$router->params());
 
-		$this->assertTrue(is_callable($router->controllerName()));
+		$this->assertInternalType('callable', $router->controllerName());
 		$this->assertEquals($expects, '123-alpha');
 	}
 
@@ -167,14 +192,81 @@ class RouterTest extends \CIUnitTestCase
 	{
 		$router = new Router($this->collection);
 
-		mkdir(APPPATH.'Controllers/subfolder');
+		mkdir(APPPATH.'Controllers/Subfolder');
 
 		$router->autoRoute('subfolder/myController/someMethod');
 
-		rmdir(APPPATH.'Controllers/subfolder');
+		rmdir(APPPATH.'Controllers/Subfolder');
 
 		$this->assertEquals('MyController', $router->controllerName());
 		$this->assertEquals('someMethod', $router->methodName());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDetectsLocales()
+	{
+	    $router = new Router($this->collection);
+
+		$router->handle('fr/pages');
+
+		$this->assertTrue($router->hasLocale());
+		$this->assertEquals('fr', $router->getLocale());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRouteResource()
+	{
+		$router = new Router($this->collection);
+
+		$router->handle('Admin/Admins');
+
+		$this->assertEquals('\App\Admin\Admins', $router->controllerName());
+		$this->assertEquals('list_all', $router->methodName());
+	}
+
+	//--------------------------------------------------------------------
+
+    public function testRouteWithLeadingSlash()
+    {
+        $router = new Router($this->collection);
+
+        $router->handle('some/slash');
+
+        $this->assertEquals('\App\Slash', $router->controllerName());
+        $this->assertEquals('index', $router->methodName());
+    }
+
+    //--------------------------------------------------------------------
+
+    public function testMatchedRouteOptions()
+    {
+    	$this->collection->add('foo', function() {}, ['as' => 'login', 'foo' => 'baz']);
+    	$this->collection->add('baz', function() {}, ['as' => 'admin', 'foo' => 'bar']);
+
+    	$router = new Router($this->collection);
+
+    	$router->handle('foo');
+
+    	$this->assertEquals($router->getMatchedRouteOptions(), ['as' => 'login', 'foo' => 'baz']);
+    }
+
+	public function testRouteWorksWithFilters()
+	{
+		$collection = $this->collection;
+
+		$collection->group('foo', ['filter' => 'test'], function($routes) {
+			$routes->add('bar', 'TestController::foobar');
+		});
+
+		$router = new Router($collection);
+
+		$router->handle('foo/bar');
+
+		$this->assertEquals('\TestController', $router->controllerName());
+		$this->assertEquals('foobar', $router->methodName());
+		$this->assertEquals('test', $router->getFilter());
 	}
 
 	//--------------------------------------------------------------------

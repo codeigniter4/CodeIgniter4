@@ -17,7 +17,7 @@ system.
 
 .. contents::
     :local:
-    :depth: 1
+    :depth: 2
 
 *************************
 Loading the Query Builder
@@ -27,7 +27,7 @@ The Query Builder is loaded through the ``table()`` method on the
 database connection. This sets the ``FROM`` portion of the query for you
 and returns a new instance of the Query Builder class::
 
-    $db = \Config\Database::connect();
+    $db      = \Config\Database::connect();
     $builder = $db->table('users');
 
 The Query Builder is only loaded into memory when you specifically request
@@ -45,7 +45,7 @@ Runs the selection query and returns the result. Can be used by itself
 to retrieve all records from a table::
 
     $builder = $db->table('mytable');
-	$query = $builder->get();  // Produces: SELECT * FROM mytable
+    $query   = $builder->get();  // Produces: SELECT * FROM mytable
 
 The first and second parameters enable you to set a limit and offset
 clause::
@@ -128,7 +128,7 @@ escaping of fields may break them.
 
 ::
 
-	$builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4') AS amount_paid', FALSE);
+	$builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid', FALSE);
 	$query = $builder->get();
 
 **$builder->selectMax()**
@@ -144,7 +144,6 @@ include a second parameter to rename the resulting field.
 	$builder->selectMax('age', 'member_age');
 	$query = $builder->get(); // Produces: SELECT MAX(age) as member_age FROM mytable
 
-
 **$builder->selectMin()**
 
 Writes a "SELECT MIN(field)" portion for your query. As with
@@ -156,7 +155,6 @@ the resulting field.
 	$builder->selectMin('age');
 	$query = $builder->get(); // Produces: SELECT MIN(age) as age FROM mytable
 
-
 **$builder->selectAvg()**
 
 Writes a "SELECT AVG(field)" portion for your query. As with
@@ -167,7 +165,6 @@ the resulting field.
 
 	$builder->selectAvg('age');
 	$query = $builder->get(); // Produces: SELECT AVG(age) as age FROM mytable
-
 
 **$builder->selectSum()**
 
@@ -197,12 +194,12 @@ Permits you to write the FROM portion of your query::
 Permits you to write the JOIN portion of your query::
 
     $builder->db->table('blog');
-	$builder->select('*');
-	$builder->join('comments', 'comments.id = blogs.id');
-	$query = $builder->get();
+    $builder->select('*');
+    $builder->join('comments', 'comments.id = blogs.id');
+    $query = $builder->get();
 
-	// Produces:
-	// SELECT * FROM blogs JOIN comments ON comments.id = blogs.id
+    // Produces:
+    // SELECT * FROM blogs JOIN comments ON comments.id = blogs.id
 
 Multiple function calls can be made if you need several joins in one
 query.
@@ -277,7 +274,6 @@ methods:
 		$where = "name='Joe' AND status='boss' OR status='active'";
 		$builder->where($where);
 
-
 ``$builder->where()`` accepts an optional third parameter. If you set it to
 FALSE, CodeIgniter will not try to protect your field or table names.
 
@@ -304,7 +300,6 @@ appropriate
 	$builder->whereIn('username', $names);
 	// Produces: WHERE username IN ('Frank', 'Todd', 'James')
 
-
 **$builder->orWhereIn()**
 
 Generates a WHERE field IN ('item', 'item') SQL query joined with OR if
@@ -327,7 +322,6 @@ AND if appropriate
 	$builder->whereNotIn('username', $names);
 	// Produces: WHERE username NOT IN ('Frank', 'Todd', 'James')
 
-
 **$builder->orWhereNotIn()**
 
 Generates a WHERE field NOT IN ('item', 'item') SQL query joined with OR
@@ -349,6 +343,11 @@ This method enables you to generate **LIKE** clauses, useful for doing
 searches.
 
 .. note:: All values passed to this method are escaped automatically.
+
+.. note:: All ``like*`` method variations can be forced to be perform case-insensitive searches by passing
+        a fifth parameter of ``true`` to the method. This will use platform-specific features where available
+        otherwise, will force the values to be lowercase, i.e. ``WHERE LOWER(column) LIKE '%search%'``. This
+        may require indexes to be made for ``LOWER(column)`` instead of ``column`` to be effective.
 
 #. **Simple key/value method:**
 
@@ -381,7 +380,6 @@ searches.
 		$array = ['title' => $match, 'page1' => $match, 'page2' => $match];
 		$builder->like($array);
 		// WHERE `title` LIKE '%match%' ESCAPE '!' AND  `page1` LIKE '%match%' ESCAPE '!' AND  `page2` LIKE '%match%' ESCAPE '!'
-
 
 **$builder->orLike()**
 
@@ -417,7 +415,6 @@ You can also pass an array of multiple values as well::
 
 	$builder->groupBy(array("title", "date"));  // Produces: GROUP BY title, date
 
-
 **$builder->distinct()**
 
 Adds the "DISTINCT" keyword to a query
@@ -440,7 +437,6 @@ You can also pass an array of multiple values as well::
 	$builder->having(['title =' => 'My Title', 'id <' => $id]);
 	// Produces: HAVING title = 'My Title', id < 45
 
-
 If you are using a database that CodeIgniter escapes queries for, you
 can prevent escaping content by passing an optional third argument, and
 setting it to FALSE.
@@ -449,7 +445,6 @@ setting it to FALSE.
 
 	$builder->having('user_id',  45);  // Produces: HAVING `user_id` = 45 in some databases such as MySQL
 	$builder->having('user_id',  45, FALSE);  // Produces: HAVING user_id = 45
-
 
 **$builder->orHaving()**
 
@@ -518,8 +513,8 @@ The second parameter lets you set a result offset.
 
 **$builder->countAllResults()**
 
-Permits you to determine the number of rows in a particular Active
-Record query. Queries will accept Query Builder restrictors such as
+Permits you to determine the number of rows in a particular Query
+Builder query. Queries will accept Query Builder restrictors such as
 ``where()``, ``orWhere()``, ``like()``, ``orLike()``, etc. Example::
 
 	echo $builder->countAllResults('my_table');  // Produces an integer, like 25
@@ -548,7 +543,7 @@ Query grouping allows you to create groups of WHERE clauses by enclosing them in
 you to create queries with complex WHERE clauses. Nested groups are supported. Example::
 
 	$builder->select('*')->from('my_table')
-		->group_start()
+		->groupStart()
 			->where('a', 'a')
 			->orGroupStart()
 				->where('b', 'b')
@@ -561,7 +556,7 @@ you to create queries with complex WHERE clauses. Nested groups are supported. E
 	// Generates:
 	// SELECT * FROM (`my_table`) WHERE ( `a` = 'a' OR ( `b` = 'b' AND `c` = 'c' ) ) AND `d` = 'd'
 
-.. note:: groups need to be balanced, make sure every group_start() is matched by a group_end().
+.. note:: groups need to be balanced, make sure every groupStart() is matched by a groupEnd().
 
 **$builder->groupStart()**
 
@@ -595,8 +590,8 @@ function. Here is an example using an array::
 
 	$data = array(
 		'title' => 'My title',
-		'name' => 'My Name',
-		'date' => 'My date'
+		'name'  => 'My Name',
+		'date'  => 'My date'
 	);
 
 	$builder->insert($data);
@@ -608,9 +603,9 @@ Here is an example using an object::
 
 	/*
 	class Myclass {
-		public $title = 'My Title';
+		public $title   = 'My Title';
 		public $content = 'My Content';
-		public $date = 'My Date';
+		public $date    = 'My Date';
 	}
 	*/
 
@@ -618,8 +613,7 @@ Here is an example using an object::
 	$builder->insert($object);
 	// Produces: INSERT INTO mytable (title, content, date) VALUES ('My Title', 'My Content', 'My Date')
 
-The first parameter will contain the table name, the second is an
-object.
+The first parameter is an object.
 
 .. note:: All values are escaped automatically producing safer queries.
 
@@ -653,7 +647,7 @@ will be reset (by default it will be--just like $builder->insert())::
 	// Produces string: INSERT INTO mytable (`title`, `content`) VALUES ('My Title', 'My Content')
 
 The key thing to notice in the above example is that the second query did not
-utlize `$builder->from()` nor did it pass a table name into the first
+utilize `$builder->from()` nor did it pass a table name into the first
 parameter. The reason this worked is because the query has not been executed
 using `$builder->insert()` which resets values or reset directly using
 `$builder->resetQuery()`.
@@ -669,13 +663,13 @@ function. Here is an example using an array::
 	$data = array(
 		array(
 			'title' => 'My title',
-			'name' => 'My Name',
-			'date' => 'My date'
+			'name'  => 'My Name',
+			'date'  => 'My date'
 		),
 		array(
 			'title' => 'Another title',
-			'name' => 'Another Name',
-			'date' => 'Another date'
+			'name'  => 'Another Name',
+			'date'  => 'Another date'
 		)
 	);
 
@@ -747,7 +741,7 @@ parameter.
 
 	$builder->set('field', 'field+1', FALSE);
 	$builder->where('id', 2);
-	$builder->update(); // gives UPDATE mytable SET field = field+1 WHERE id = 2
+	$builder->update(); // gives UPDATE mytable SET field = field+1 WHERE `id` = 2
 
 	$builder->set('field', 'field+1');
 	$builder->where('id', 2);
@@ -756,8 +750,8 @@ parameter.
 You can also pass an associative array to this function::
 
 	$array = array(
-		'name' => $name,
-		'title' => $title,
+		'name'   => $name,
+		'title'  => $title,
 		'status' => $status
 	);
 
@@ -768,9 +762,9 @@ Or an object::
 
 	/*
 	class Myclass {
-		public $title = 'My Title';
+		public $title   = 'My Title';
 		public $content = 'My Content';
-		public $date = 'My Date';
+		public $date    = 'My Date';
 	}
 	*/
 
@@ -786,8 +780,8 @@ is an example using an array::
 
 	$data = array(
 		'title' => $title,
-		'name' => $name,
-		'date' => $date
+		'name'  => $name,
+		'date'  => $date
 	);
 
 	$builder->where('id', $id);
@@ -802,9 +796,9 @@ Or you can supply an object::
 
 	/*
 	class Myclass {
-		public $title = 'My Title';
+		public $title   = 'My Title';
 		public $content = 'My Content';
-		public $date = 'My Date';
+		public $date    = 'My Date';
 	}
 	*/
 
@@ -841,13 +835,13 @@ Here is an example using an array::
 	$data = array(
 	   array(
 	      'title' => 'My title' ,
-	      'name' => 'My Name 2' ,
-	      'date' => 'My date 2'
+	      'name'  => 'My Name 2' ,
+	      'date'  => 'My date 2'
 	   ),
 	   array(
 	      'title' => 'Another title' ,
-	      'name' => 'Another Name 2' ,
-	      'date' => 'Another date 2'
+	      'name'  => 'Another Name 2' ,
+	      'date'  => 'Another date 2'
 	   )
 	);
 
@@ -893,9 +887,9 @@ Generates a delete SQL string and runs the query.
 
 	$builder->delete(array('id' => $id));  // Produces: // DELETE FROM mytable  // WHERE id = $id
 
-The first parameter is the table name, the second is the where clause.
+The first parameter is the where clause.
 You can also use the where() or or_where() functions instead of passing
-the data to the second parameter of the function::
+the data to the first parameter of the function::
 
 	$builder->where('id', $id);
 	$builder->delete();
@@ -910,7 +904,7 @@ function, or empty_table().
 **$builder->emptyTable()**
 
 Generates a delete SQL string and runs the
-query.::
+query::
 
 	  $builder->emptyTable('mytable'); // Produces: DELETE FROM mytable
 
@@ -943,12 +937,11 @@ Method chaining allows you to simplify your syntax by connecting
 multiple functions. Consider this example::
 
 	$query = $builder->select('title')
-			->where('id', $id)
-			->limit(10, 20)
-			->get();
+			 ->where('id', $id)
+			 ->limit(10, 20)
+			 ->get();
 
 .. _ar-caching:
-
 
 ***********************
 Resetting Query Builder
@@ -963,20 +956,20 @@ This is useful in situations where you are using Query Builder to generate SQL
 (ex. ``$builder->getCompiledSelect()``) but then choose to, for instance,
 run the query::
 
-	// Note that the second parameter of the get_compiled_select method is FALSE
-	$sql = $builder->select(array('field1','field2'))
-					->where('field3',5)
-					->getCompiledSelect(false);
+    // Note that the second parameter of the get_compiled_select method is FALSE
+    $sql = $builder->select(array('field1','field2'))
+                   ->where('field3',5)
+                   ->getCompiledSelect(false);
 
-	// ...
-	// Do something crazy with the SQL code... like add it to a cron script for
-	// later execution or something...
-	// ...
+    // ...
+    // Do something crazy with the SQL code... like add it to a cron script for
+    // later execution or something...
+    // ...
 
-	$data = $builder->get()->getResultArray();
+    $data = $builder->get()->getResultArray();
 
-	// Would execute and return an array of results of the following query:
-	// SELECT field1, field1 from mytable where field3 = 5;
+    // Would execute and return an array of results of the following query:
+    // SELECT field1, field1 from mytable where field3 = 5;
 
 ***************
 Class Reference
@@ -990,7 +983,7 @@ Class Reference
 		:rtype:	BaseBuilder
 
 		Resets the current Query Builder state.  Useful when you want
-		to build a query that can be cancelled under certain conditions.
+		to build a query that can be canceled under certain conditions.
 
 	.. php:method:: countAllResults([$reset = TRUE])
 
@@ -1005,8 +998,8 @@ Class Reference
 
 		:param	int	$limit: The LIMIT clause
 		:param	int	$offset: The OFFSET clause
-		:returns:	CI_DB_result instance (method chaining)
-		:rtype:	CI_DB_result
+		:returns:	\CodeIgniter\Database\ResultInterface instance (method chaining)
+		:rtype:	\CodeIgniter\Database\ResultInterface
 
 		Compiles and runs SELECT statement based on the already
 		called Query Builder methods.
@@ -1016,8 +1009,8 @@ Class Reference
 		:param	string	$where: The WHERE clause
 		:param	int	$limit: The LIMIT clause
 		:param	int	$offset: The OFFSET clause
-		:returns:	CI_DB_result instance (method chaining)
-		:rtype:	CI_DB_result
+		:returns:	\CodeIgniter\Database\ResultInterface instance (method chaining)
+		:rtype:	\CodeIgniter\Database\ResultInterface
 
 		Same as ``get()``, but also allows the WHERE to be added directly.
 

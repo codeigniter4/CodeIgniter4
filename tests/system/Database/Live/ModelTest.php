@@ -1,65 +1,32 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
+use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\ReflectionHelper;
+use Tests\Support\Models\EntityModel;
+use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
+use Tests\Support\Models\SimpleEntity;
 use Tests\Support\Models\UserModel;
+use Tests\Support\Models\ValidModel;
 
 /**
  * @group DatabaseLive
  */
-class ModelTest extends \CIDatabaseTestCase
+class ModelTest extends CIDatabaseTestCase
 {
+	use ReflectionHelper;
+
 	protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	public function setUp()
 	{
 	    parent::setUp();
 
 		$this->model = new Model($this->db);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testHashIDsWithNumber()
-	{
-	    $expected = '123';
-
-		$str = $this->model->encodeID($expected);
-
-		$this->assertNotEquals($expected, $str);
-
-		$this->assertEquals($expected, $this->model->decodeID($str));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testHashIDsWithString()
-	{
-		$expected = 'my test hash';
-
-		$str = $this->model->encodeID($expected);
-
-		$this->assertNotEquals($expected, $str);
-
-		$this->assertEquals($expected, $this->model->decodeID($str));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testHashedIdsWithFind()
-	{
-		$hash = $this->model->encodeId(4);
-
-		$this->model->setTable('job')
-					->withDeleted();
-
-		$user = $this->model->asObject()
-							->findByHashedID($hash);
-
-		$this->assertNotEmpty($user);
-		$this->assertEquals(4, $user->id);
 	}
 
 	//--------------------------------------------------------------------
@@ -87,13 +54,30 @@ class ModelTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testFindActsAsGetWithNoParams()
+	{
+		$model = new JobModel($this->db);
+
+		$jobs = $model->asArray()->find();
+
+		$this->assertCount(4, $jobs);
+
+		$names = array_column($jobs, 'name');
+		$this->assertTrue(in_array('Developer', $names));
+		$this->assertTrue(in_array('Politician', $names));
+		$this->assertTrue(in_array('Accountant', $names));
+		$this->assertTrue(in_array('Musician', $names));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testFindRespectsReturnArray()
 	{
 		$model = new JobModel($this->db);
 
 		$job = $model->asArray()->find(4);
 
-		$this->assertTrue(is_array($job));
+		$this->assertInternalType('array', $job);
 	}
 
 	//--------------------------------------------------------------------
@@ -104,7 +88,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$job = $model->asObject()->find(4);
 
-		$this->assertTrue(is_object($job));
+		$this->assertInternalType('object', $job);
 	}
 
 	//--------------------------------------------------------------------
@@ -117,53 +101,13 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$user = $model->asObject()->find(4);
 
-		$this->assertTrue(empty($user));
+		$this->assertEmpty($user);
 
 		$user = $model->withDeleted()->find(4);
 
-		$this->assertEquals(1, count($user));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testFindWhereSimple()
-	{
-	    $model = new JobModel($this->db);
-
-		$jobs = $model->asObject()->findWhere('id >', 2);
-
-		$this->assertEquals(2, count($jobs));
-		$this->assertEquals('Accountant', $jobs[0]->name);
-		$this->assertEquals('Musician',   $jobs[1]->name);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testFindWhereWithArrayWhere()
-	{
-		$model = new JobModel($this->db);
-
-		$jobs = $model->asArray()->findWhere(['id' => 1]);
-
-		$this->assertEquals(1, count($jobs));
-		$this->assertEquals('Developer', $jobs[0]['name']);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testFindWhereRespectsSoftDeletes()
-	{
-		$this->db->table('user')->where('id', 4)->update(['deleted' => 1]);
-
-		$model = new UserModel($this->db);
-
-		$user = $model->findWhere('id >', '2');
-
-		$this->assertEquals(1, count($user));
-
-		$user = $model->withDeleted()->findWhere('id >', 2);
-
-		$this->assertEquals(2, count($user));
+        // fix for PHP7.2
+        $count = is_array($user) ? count($user) : 1;
+		$this->assertEquals(1, $count);
 	}
 
 	//--------------------------------------------------------------------
@@ -174,7 +118,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$users = $model->findAll();
 
-		$this->assertEquals(4, count($users));
+		$this->assertCount(4, $users);
 	}
 
 	//--------------------------------------------------------------------
@@ -185,7 +129,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$users = $model->findAll(2);
 
-		$this->assertEquals(2, count($users));
+		$this->assertCount(2, $users);
 		$this->assertEquals('Derek Jones', $users[0]->name);
 	}
 
@@ -197,7 +141,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$users = $model->findAll(2, 2);
 
-		$this->assertEquals(2, count($users));
+		$this->assertCount(2, $users);
 		$this->assertEquals('Richard A Causey', $users[0]->name);
 	}
 
@@ -211,11 +155,11 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$user = $model->findAll();
 
-		$this->assertEquals(3, count($user));
+		$this->assertCount(3, $user);
 
 		$user = $model->withDeleted()->findAll();
 
-		$this->assertEquals(4, count($user));
+		$this->assertCount(4, $user);
 	}
 
 	//--------------------------------------------------------------------
@@ -226,7 +170,9 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$user = $model->where('id >', 2)->first();
 
-		$this->assertEquals(1, count($user));
+        // fix for PHP7.2
+        $count = is_array($user) ? count($user) : 1;
+		$this->assertEquals(1, $count);
 		$this->assertEquals(3, $user->id);
 	}
 
@@ -240,7 +186,9 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$user = $model->first();
 
-		$this->assertEquals(1, count($user));
+        // fix for PHP7.2
+        $count = is_array($user) ? count($user) : 1;
+		$this->assertEquals(1, $count);
 		$this->assertEquals(2, $user->id);
 
 		$user = $model->withDeleted()->first();
@@ -250,9 +198,6 @@ class ModelTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testSaveNewRecordObject()
 	{
 	    $model = new JobModel();
@@ -260,7 +205,7 @@ class ModelTest extends \CIDatabaseTestCase
 		$data = new \stdClass();
 		$data->name = 'Magician';
 		$data->description = 'Makes peoples things dissappear.';
-		
+
 		$model->protect(false)->save($data);
 
 		$this->seeInDatabase('job', ['name' => 'Magician']);
@@ -327,10 +272,11 @@ class ModelTest extends \CIDatabaseTestCase
 		$data->id = 1;
 		$data->name = 'Engineer';
 		$data->description = 'A fancier term for Developer.';
+		$data->random_thing = 'Something wicked'; // If not protected, this would kill the script.
 
-		$this->setExpectedException('CodeIgniter\DatabaseException');
+		$result = $model->protect(true)->save($data);
 
-		$model->protect(true)->save($data);
+        $this->assertTrue($result);
 	}
 
 	//--------------------------------------------------------------------
@@ -374,28 +320,32 @@ class ModelTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testDeleteWhereWithSoftDeletes()
+	public function testDeleteMultiple()
 	{
-		$model = new UserModel();
+		$model = new JobModel();
 
-		$this->seeInDatabase('user', ['name' =>'Derek Jones', 'deleted' => 0]);
 
-		$model->deleteWhere('name', 'Derek Jones');
+		$this->seeInDatabase('job', ['name' =>'Developer']);
+		$this->seeInDatabase('job', ['name' =>'Politician']);
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 1]);
+		$model->delete([1, 2]);
+
+		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
+		$this->dontSeeInDatabase('job', ['name' => 'Politician']);
+		$this->seeInDatabase('job', ['name' =>'Accountant']);
 	}
 
 	//--------------------------------------------------------------------
 
-	public function testDeleteWhereWithSoftDeletesPurge()
+	public function testDeleteNoParams()
 	{
-		$model = new UserModel();
+		$model = new JobModel();
 
-		$this->seeInDatabase('user', ['name' =>'Derek Jones', 'deleted' => 0]);
+		$this->seeInDatabase('job', ['name' =>'Developer']);
 
-		$model->deleteWhere('name', 'Derek Jones', true);
+		$model->where('id', 1)->delete();
 
-		$this->dontSeeInDatabase('user', ['name' => 'Derek Jones']);
+		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
 	}
 
 	//--------------------------------------------------------------------
@@ -410,7 +360,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$users = $model->withDeleted()->findAll();
 
-		$this->assertEquals(3, count($users));
+		$this->assertCount(3, $users);
 	}
 
 	//--------------------------------------------------------------------
@@ -423,7 +373,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$users = $model->onlyDeleted()->findAll();
 
-		$this->assertEquals(1, count($users));
+		$this->assertCount(1, $users);
 	}
 
 	//--------------------------------------------------------------------
@@ -443,5 +393,323 @@ class ModelTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+    public function testValidationBasics()
+    {
+        $model = new ValidModel($this->db);
 
+        $data = [
+            'description' => 'some great marketing stuff'
+        ];
+
+        $this->assertFalse($model->insert($data));
+
+        $errors = $model->errors();
+
+        $this->assertEquals('You forgot to name the baby.', $errors['name']);
+    }
+
+    //--------------------------------------------------------------------
+
+	public function testValidationPlaceholdersSuccess()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name' => 'abc',
+			'id' => 13,
+			'token' => 13
+		];
+
+		$this->assertTrue($model->validate($data));
+	}
+
+	public function testValidationPlaceholdersFail()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name' => 'abc',
+			'id' => 13,
+			'token' => 12
+		];
+
+		$this->assertFalse($model->validate($data));
+	}
+
+	public function testSkipValidation()
+    {
+        $model = new ValidModel($this->db);
+
+        $data = [
+            'name' => '2',
+            'description' => 'some great marketing stuff'
+        ];
+
+        $this->assertInternalType('numeric', $model->skipValidation(true)->insert($data));
+    }
+
+    //--------------------------------------------------------------------
+
+    public function testCanCreateAndSaveEntityClasses()
+    {
+        $model = new EntityModel($this->db);
+
+        $entity = $model->where('name', 'Developer')->first();
+
+        $this->assertInstanceOf(SimpleEntity::class, $entity);
+        $this->assertEquals('Developer', $entity->name);
+        $this->assertEquals('Awesome job, but sometimes makes you bored', $entity->description);
+
+        $entity->name = 'Senior Developer';
+        $entity->created_at = '2017-07-15';
+
+        $date = $this->getPrivateProperty($entity, 'created_at');
+        $this->assertInstanceOf(Time::class, $date);
+
+        $this->assertTrue($model->save($entity));
+
+        $this->seeInDatabase('job', ['name' => 'Senior Developer', 'created_at' => '2017-07-15 00:00:00']);
+    }
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/580
+	 */
+	public function testPasswordsStoreCorrectly()
+    {
+		$model = new UserModel();
+
+		$pass = password_hash('secret123', PASSWORD_BCRYPT);
+
+		$data = [
+			'name'  => 	$pass,
+			'email' => 'foo@example.com',
+			'country' => 'US',
+			'deleted' => 0
+		];
+
+		$model->insert($data);
+
+		$this->seeInDatabase('user', $data);
+    }
+
+	public function testInsertEvent()
+	{
+		$model = new EventModel();
+
+		$data = [
+			'name'  => 	'Foo',
+			'email' => 'foo@example.com',
+			'country' => 'US',
+			'deleted' => 0
+		];
+
+		$model->insert($data);
+
+		$this->assertTrue($model->hasToken('beforeInsert'));
+		$this->assertTrue($model->hasToken('afterInsert'));
+    }
+
+	public function testUpdateEvent()
+	{
+		$model = new EventModel();
+
+		$data = [
+			'name'  => 	'Foo',
+			'email' => 'foo@example.com',
+			'country' => 'US',
+			'deleted' => 0
+		];
+
+		$id = $model->insert($data);
+		$model->update($id, $data);
+
+		$this->assertTrue($model->hasToken('beforeUpdate'));
+		$this->assertTrue($model->hasToken('afterUpdate'));
+	}
+
+	public function testFindEvent()
+	{
+		$model = new EventModel();
+
+		$model->find(1);
+
+		$this->assertTrue($model->hasToken('afterFind'));
+	}
+
+	public function testDeleteEvent()
+	{
+		$model = new EventModel();
+
+		$model->delete(1);
+
+		$this->assertTrue($model->hasToken('afterDelete'));
+	}
+
+	public function testSetWorksWithInsert()
+	{
+		$model = new EventModel();
+
+		$this->dontSeeInDatabase('user', [
+			'email' => 'foo@example.com'
+		]);
+
+		$model->set([
+			'email' => 'foo@example.com',
+			'name' => 'Foo Bar',
+			'country' => 'US'
+		])->insert();
+
+		$this->seeInDatabase('user', [
+			'email' => 'foo@example.com'
+		]);
+	}
+
+	public function testSetWorksWithUpdate()
+	{
+		$model = new EventModel();
+
+		$this->dontSeeInDatabase('user', [
+			'email' => 'foo@example.com'
+		]);
+
+		$userId = $model->insert([
+			'email' => 'foo@example.com',
+			'name' => 'Foo Bar',
+			'country' => 'US'
+		]);
+
+		$model->set([
+			'name' => 'Fred Flintstone'
+		])->update($userId);
+
+		$this->seeInDatabase('user', [
+			'id' => $userId,
+			'email' => 'foo@example.com',
+			'name' => 'Fred Flintstone'
+		]);
+	}
+
+	public function testSetWorksWithUpdateNoId()
+	{
+		$model = new EventModel();
+
+		$this->dontSeeInDatabase('user', [
+			'email' => 'foo@example.com'
+		]);
+
+		$userId = $model->insert([
+			'email' => 'foo@example.com',
+			'name' => 'Foo Bar',
+			'country' => 'US'
+		]);
+
+		$model
+			->where('id', $userId)
+			->set([
+			'name' => 'Fred Flintstone'
+		])->update();
+
+		$this->seeInDatabase('user', [
+			'id' => $userId,
+			'email' => 'foo@example.com',
+			'name' => 'Fred Flintstone'
+		]);
+	}
+
+	public function testUpdateArray()
+	{
+		$model = new EventModel();
+
+		$data = [
+			'name'  => 	'Foo',
+			'email' => 'foo@example.com',
+			'country' => 'US',
+			'deleted' => 0
+		];
+
+		$id = $model->insert($data);
+		$model->update([1,2], ['name' => 'Foo Bar']);
+
+		$this->seeInDatabase('user', ['id' => 1, 'name' => 'Foo Bar']);
+		$this->seeInDatabase('user', ['id' => 2, 'name' => 'Foo Bar']);
+	}
+
+	public function testInsertBatchSuccess()
+	{
+		$job_data = [
+			['name' => 'Comedian', 'description' => 'Theres something in your teeth'],
+			['name' => 'Cab Driver', 'description' => 'Iam yellow'],
+		];
+
+		$model = new JobModel($this->db);
+		$model->insertBatch($job_data);
+
+		$this->seeInDatabase('job', ['name' => 'Comedian']);
+		$this->seeInDatabase('job', ['name' => 'Cab Driver']);
+	}
+
+	public function testInsertBatchValidationFail()
+	{
+		$job_data = [
+			['name' => 'Comedian', 'description' => null],
+		];
+
+		$model = new JobModel($this->db);
+
+		$this->setPrivateProperty($model, 'validationRules', ['description' => 'required']);
+
+		$this->assertFalse($model->insertBatch($job_data));
+
+		$error = $model->errors();
+		$this->assertTrue(isset($error['description']));
+	}
+
+	public function testUpdateBatchSuccess()
+	{
+		$data = [
+			[
+				'name' => 'Derek Jones',
+				'country' => 'Greece'
+			],
+			[
+				'name' => 'Ahmadinejad',
+				'country' => 'Greece'
+			],
+		];
+
+		$model = new EventModel($this->db);
+
+		$model->updateBatch($data, 'name');
+
+		$this->seeInDatabase('user', [
+			'name' => 'Derek Jones',
+			'country' => 'Greece'
+		]);
+		$this->seeInDatabase('user', [
+			'name' => 'Ahmadinejad',
+			'country' => 'Greece'
+		]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUpdateBatchValidationFail()
+	{
+		$data = [
+			[
+				'name' => 'Derek Jones',
+				'country' => null
+			],
+		];
+
+		$model = new EventModel($this->db);
+		$this->setPrivateProperty($model, 'validationRules', ['country' => 'required']);
+
+		$this->assertFalse($model->updateBatch($data, 'name'));
+
+		$error = $model->errors();
+		$this->assertTrue(isset($error['country']));
+	}
+
+	//--------------------------------------------------------------------
 }

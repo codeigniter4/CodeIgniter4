@@ -1,0 +1,390 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Upgrading from 3.x to 4.x &mdash; CodeIgniter4 4.0.0-test documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-test documentation" href="../index.html"/>
+        <link rel="up" title="Upgrading From a Previous Version" href="upgrading.html"/>
+        <link rel="next" title="Troubleshooting" href="troubleshooting.html"/>
+        <link rel="prev" title="Upgrading From a Previous Version" href="upgrading.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="downloads.html">Downloading CodeIgniter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html">Installation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Upgrading from 3.x to 4.x</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="local_server.html">Local Development Server</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Installation</a> &raquo;</li>
+        
+          <li><a href="upgrading.html">Upgrading From a Previous Version</a> &raquo;</li>
+        
+      <li>Upgrading from 3.x to 4.x</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="upgrading-from-3-x-to-4-x">
+<h1>Upgrading from 3.x to 4.x<a class="headerlink" href="#upgrading-from-3-x-to-4-x" title="Permalink to this headline">¶</a></h1>
+<p>CodeIgniter 4 is a rewrite of the framework, and is not backwards compatible.
+It is more appropriate to think of converting your app, rather than upgrading it.
+Once you have done that, upgrading from one version of CodeIgniter 4 to the next
+will be straightforward.</p>
+<p>The &#8220;lean, mean and simple&#8221; philosophy has been retained, but the
+implementation has a lot of differences, compared to CodeIgniter 3.</p>
+<p>There is no 12-step checklist for upgrading. Instead, start with a copy
+of CodeIgniter 4 in a new project folder,
+<a class="reference internal" href="index.html"><span class="doc">however you wish to install and use it</span></a>,
+and then convert and integrate your app components.
+We&#8217;ll try to point out the most important considerations here.</p>
+<p>Not all of the CI3 libraries have been ported or rewritten for CI4!
+See the threads in the <a class="reference external" href="https://forum.codeigniter.com/forum-33.html">CodeIgniter 4 Roadmap</a>
+subforum for an uptodate list!</p>
+<p><strong>Do read the user guide</strong> before embarking on a project conversion!</p>
+<p><strong>Downloads</strong></p>
+<ul class="simple">
+<li>CI4 is still available as a ready-to-run zip or tarball, which
+includes the user guide (though in the <cite>docs</cite> subfolder</li>
+<li>It can also be installed using Composer</li>
+</ul>
+<p><strong>Namespaces</strong></p>
+<ul class="simple">
+<li>CI4 is built for PHP7.1+, and everything in the framework is namespaced, even the helpers</li>
+</ul>
+<p><strong>Application Structure</strong></p>
+<ul class="simple">
+<li>The framework still has <code class="docutils literal"><span class="pre">application</span></code> and <code class="docutils literal"><span class="pre">system</span></code> folders, with the same
+interpretation as before</li>
+<li>The framework now provides for a <code class="docutils literal"><span class="pre">public</span></code> folder, intended as the document
+root for your app</li>
+<li>There is also a <code class="docutils literal"><span class="pre">writable</span></code> folder, to hold cache data, logs, and session data</li>
+<li>The <code class="docutils literal"><span class="pre">application</span></code> folder looks very similar to that for CI3, with some
+name changes, and some subfolders
+moved to the <code class="docutils literal"><span class="pre">writable</span></code> folder</li>
+<li>There is no longer a nested <code class="docutils literal"><span class="pre">application/core</span></code> folder, as we have
+a different mechanism for extending framework components (see below)</li>
+</ul>
+<p><strong>Class loading</strong></p>
+<ul class="simple">
+<li>There is no longer a CodeIgniter &#8220;superobject&#8221;, with framework component
+references magically injected as properties of your controller</li>
+<li>Classes are instantiated where needed, and components are managed
+by <code class="docutils literal"><span class="pre">Services</span></code></li>
+<li>The class loader automatically handles PSR4 style class locating,
+within the <code class="docutils literal"><span class="pre">App</span></code> (application) and <code class="docutils literal"><span class="pre">CodeIgniter</span></code> (i.e. system) top level
+namespaces; with composer autoloading support, and even using educated
+guessing to find your models and libraries if they are in the right
+folder even though not namespaced</li>
+<li>You can configure the class loading to support whatever application structure
+you are most comfortable with, including the &#8220;HMVC&#8221; style</li>
+</ul>
+<p><strong>Controllers</strong></p>
+<ul class="simple">
+<li>Controllers extend CodeIgniterController instead of CI_Controller</li>
+<li>They don&#8217;t use a constructor any more (to invoke CI &#8220;magic&#8221;) unless
+that is part of a base controller you make</li>
+<li>CI provides <code class="docutils literal"><span class="pre">Request</span></code> and <code class="docutils literal"><span class="pre">Response</span></code> objects for you to work with -
+more powerful than the CI3-way</li>
+<li>If you want a base controller (MY_Controller in CI3), make it
+where you like, e.g. BaseController extends Controller, and then
+have your controllers extend it</li>
+</ul>
+<p><strong>Models</strong></p>
+<ul class="simple">
+<li>Models extend CodeIgniterModel instead of CI_Model</li>
+<li>The CI4 model has much more functionality, including automatic
+database connection, basic CRUD, in-model validation, and
+automatic pagination</li>
+<li>CI4 also has the <code class="docutils literal"><span class="pre">Entity</span></code> class you can build on, for
+richer data mapping to your database tables</li>
+<li>Instead of CI3&#8217;s <code class="docutils literal"><span class="pre">$this-&gt;load-&gt;model(x);</span></code>, you would now use
+<code class="docutils literal"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your component</li>
+</ul>
+<p><strong>Views</strong></p>
+<ul class="simple">
+<li>Your views look much like before, but they are invoked differently ...
+instead of CI3&#8217;s <code class="docutils literal"><span class="pre">$this-&gt;load-&gt;view(x);</span></code> you can use <code class="docutils literal"><span class="pre">echo</span> <span class="pre">view(x);</span></code></li>
+<li>CI4 supports view &#8220;cells&#8221;, to build your response in pieces</li>
+<li>The template parser is still there, but substantially
+enhanced</li>
+</ul>
+<p><strong>Libraries</strong></p>
+<ul class="simple">
+<li>Your app classes can still go inside <code class="docutils literal"><span class="pre">application\Libraries</span></code>, but they
+don&#8217;t have to</li>
+<li>Instead of CI3&#8217;s <code class="docutils literal"><span class="pre">$this-&gt;load-&gt;library(x);</span></code> you can now use
+<code class="docutils literal"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your
+component</li>
+</ul>
+<p><strong>Helpers</strong></p>
+<ul class="simple">
+<li>Helpers are pretty much the same as before, though some have been simplified</li>
+</ul>
+<p><strong>Extending the framework</strong></p>
+<ul class="simple">
+<li>You don&#8217;t need a <code class="docutils literal"><span class="pre">core</span></code> folder to hold <code class="docutils literal"><span class="pre">MY_...</span></code> framework
+component extensions or replacements</li>
+<li>You don&#8217;t need <code class="docutils literal"><span class="pre">MY_x</span></code> classes inside your libraries folder
+to extend or replace CI4 pieces</li>
+<li>Make any such classes where you like, and add appropriate
+service methods in <code class="docutils literal"><span class="pre">application/Config/Services.php</span></code> to load
+your components instead of the default ones</li>
+</ul>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="troubleshooting.html" class="btn btn-neutral float-right" title="Troubleshooting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="upgrading.html" class="btn btn-neutral" title="Upgrading From a Previous Version" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 28, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-test',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

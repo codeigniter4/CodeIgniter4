@@ -2,12 +2,12 @@
 
 /**
  * CodeIgniter
- * 
+ *
  * An open source application development framework for PHP
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,14 +29,13 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
-use CodeIgniter\DatabaseException;
+use \CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Class BaseBuilder
@@ -46,9 +45,11 @@ use CodeIgniter\DatabaseException;
  * certain methods to make them work.
  *
  * @package CodeIgniter\Database
+ * @mixin \CodeIgniter\Model
  */
 class BaseBuilder
 {
+
 	/**
 	 * Reset DELETE data flag
 	 *
@@ -141,13 +142,6 @@ class BaseBuilder
 	protected $QBSet = [];
 
 	/**
-	 * QB aliased tables list
-	 *
-	 * @var    array
-	 */
-	protected $QBAliasedTables = [];
-
-	/**
 	 * QB WHERE group started flag
 	 *
 	 * @var    bool
@@ -164,7 +158,7 @@ class BaseBuilder
 	/**
 	 * A reference to the database connection.
 	 *
-	 * @var ConnectionInterface
+	 * @var BaseConnection
 	 */
 	protected $db;
 
@@ -194,12 +188,27 @@ class BaseBuilder
 	 */
 	protected $binds = [];
 
+	/**
+	 * Some databases, like SQLite, do not by default
+	 * allow limiting of delete clauses.
+	 *
+	 * @var bool
+	 */
+	protected $canLimitDeletes = true;
+
+	/**
+	 * Some databases do not by default
+	 * allow limit update queries with WHERE.
+	 * @var bool
+	 */
+	protected $canLimitWhereUpdates = true;
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
-	 * 
-	 * @param type $tableName
+	 *
+	 * @param string|array $tableName
 	 * @param \CodeIgniter\Database\ConnectionInterface $db
 	 * @param array $options
 	 * @throws DatabaseException
@@ -213,10 +222,9 @@ class BaseBuilder
 
 		$this->db = $db;
 
-		$this->trackAliases($tableName);
 		$this->from($tableName);
 
-		if (count($options))
+		if (! empty($options))
 		{
 			foreach ($options as $key => $value)
 			{
@@ -245,8 +253,8 @@ class BaseBuilder
 	 *
 	 * Generates the SELECT portion of the query
 	 *
-	 * @param    string|array
-	 * @param    mixed
+	 * @param    string|array $select
+	 * @param    mixed        $escape
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -266,7 +274,20 @@ class BaseBuilder
 
 			if ($val !== '')
 			{
-				$this->QBSelect[]   = $val;
+				$this->QBSelect[] = $val;
+
+				/*
+				 * When doing 'SELECT NULL as field_alias FROM table'
+				 * null gets taken as a field, and therefore escaped
+				 * with backticks.
+				 * This prevents NULL being escaped
+				 * @see https://github.com/bcit-ci/CodeIgniter4/issues/1169
+				 */
+				if ( strtoupper(mb_substr(trim($val), 0, 4)) == 'NULL')
+				{
+					$escape = false;
+				}
+
 				$this->QBNoEscape[] = $escape;
 			}
 		}
@@ -281,8 +302,8 @@ class BaseBuilder
 	 *
 	 * Generates a SELECT MAX(field) portion of a query
 	 *
-	 * @param    string    the field
-	 * @param    string    an alias
+	 * @param    string $select The field
+	 * @param    string $alias  An alias
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -298,8 +319,8 @@ class BaseBuilder
 	 *
 	 * Generates a SELECT MIN(field) portion of a query
 	 *
-	 * @param    string    the field
-	 * @param    string    an alias
+	 * @param    string $select The field
+	 * @param    string $alias  An alias
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -315,8 +336,8 @@ class BaseBuilder
 	 *
 	 * Generates a SELECT AVG(field) portion of a query
 	 *
-	 * @param    string    the field
-	 * @param    string    an alias
+	 * @param    string $select The field
+	 * @param    string $alias  An alias
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -332,8 +353,8 @@ class BaseBuilder
 	 *
 	 * Generates a SELECT SUM(field) portion of a query
 	 *
-	 * @param    string    the field
-	 * @param    string    an alias
+	 * @param    string $select The field
+	 * @param    string $alias  An alias
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -357,6 +378,7 @@ class BaseBuilder
 	 * @param    string $type
 	 *
 	 * @return    BaseBuilder
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	protected function maxMinAvgSum($select = '', $alias = '', $type = 'MAX')
 	{
@@ -369,7 +391,7 @@ class BaseBuilder
 
 		if ( ! in_array($type, ['MAX', 'MIN', 'AVG', 'SUM']))
 		{
-			throw new DatabaseException('Invalid function type: '.$type);
+			throw new DatabaseException('Invalid function type: ' . $type);
 		}
 
 		if ($alias === '')
@@ -377,9 +399,9 @@ class BaseBuilder
 			$alias = $this->createAliasFromTable(trim($select));
 		}
 
-		$sql = $type.'('.$this->db->protectIdentifiers(trim($select)).') AS '.$this->db->escapeIdentifiers(trim($alias));
+		$sql = $type . '(' . $this->db->protectIdentifiers(trim($select)) . ') AS ' . $this->db->escapeIdentifiers(trim($alias));
 
-		$this->QBSelect[]   = $sql;
+		$this->QBSelect[] = $sql;
 		$this->QBNoEscape[] = null;
 
 		return $this;
@@ -440,11 +462,11 @@ class BaseBuilder
 	{
 		if ($overwrite === true)
 		{
-			$this->QBFrom          = [];
-			$this->QBAliasedTables = [];
+			$this->QBFrom = [];
+			$this->db->setAliasedTables([]);
 		}
 
-		foreach ((array)$from as $val)
+		foreach ((array) $from as $val)
 		{
 			if (strpos($val, ',') !== false)
 			{
@@ -478,10 +500,10 @@ class BaseBuilder
 	 *
 	 * Generates the JOIN portion of the query
 	 *
-	 * @param    string
-	 * @param    string    the join condition
-	 * @param    string    the type of join
-	 * @param    string    whether not to try to escape identifiers
+	 * @param    string $table
+	 * @param    string $cond   The join condition
+	 * @param    string $type   The type of join
+	 * @param    string $escape Whether not to try to escape identifiers
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -509,11 +531,11 @@ class BaseBuilder
 
 		if ( ! $this->hasOperator($cond))
 		{
-			$cond = ' USING ('.($escape ? $this->db->escapeIdentifiers($cond) : $cond).')';
+			$cond = ' USING (' . ($escape ? $this->db->escapeIdentifiers($cond) : $cond) . ')';
 		}
 		elseif ($escape === false)
 		{
-			$cond = ' ON '.$cond;
+			$cond = ' ON ' . $cond;
 		}
 		else
 		{
@@ -521,31 +543,29 @@ class BaseBuilder
 			if (preg_match_all('/\sAND\s|\sOR\s/i', $cond, $joints, PREG_OFFSET_CAPTURE))
 			{
 				$conditions = [];
-				$joints     = $joints[0];
+				$joints = $joints[0];
 				array_unshift($joints, ['', 0]);
 
-				for ($i = count($joints) - 1, $pos = strlen($cond); $i >= 0; $i--)
+				for ($i = count($joints) - 1, $pos = strlen($cond); $i >= 0; $i -- )
 				{
 					$joints[$i][1] += strlen($joints[$i][0]); // offset
 					$conditions[$i] = substr($cond, $joints[$i][1], $pos - $joints[$i][1]);
-					$pos            = $joints[$i][1] - strlen($joints[$i][0]);
-					$joints[$i]     = $joints[$i][0];
+					$pos = $joints[$i][1] - strlen($joints[$i][0]);
+					$joints[$i] = $joints[$i][0];
 				}
 			}
 			else
 			{
 				$conditions = [$cond];
-				$joints     = [''];
+				$joints = [''];
 			}
 
 			$cond = ' ON ';
-			for ($i = 0, $c = count($conditions); $i < $c; $i++)
+			for ($i = 0, $c = count($conditions); $i < $c; $i ++ )
 			{
 				$operator = $this->getOperator($conditions[$i]);
 				$cond .= $joints[$i];
-				$cond .= preg_match("/(\(*)?([\[\]\w\.'-]+)".preg_quote($operator)."(.*)/i", $conditions[$i], $match)
-					? $match[1].$this->db->protectIdentifiers($match[2]).$operator.$this->db->protectIdentifiers($match[3])
-					: $conditions[$i];
+				$cond .= preg_match("/(\(*)?([\[\]\w\.'-]+)" . preg_quote($operator) . "(.*)/i", $conditions[$i], $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $conditions[$i];
 			}
 		}
 
@@ -556,7 +576,7 @@ class BaseBuilder
 		}
 
 		// Assemble the JOIN statement
-		$this->QBJoin[] = $join = $type.'JOIN '.$table.$cond;
+		$this->QBJoin[] = $join = $type . 'JOIN ' . $table . $cond;
 
 		return $this;
 	}
@@ -569,9 +589,9 @@ class BaseBuilder
 	 * Generates the WHERE portion of the query.
 	 * Separates multiple calls with 'AND'.
 	 *
-	 * @param    mixed
-	 * @param    mixed
-	 * @param    bool
+	 * @param    mixed $key
+	 * @param    mixed $value
+	 * @param    bool  $escape
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -588,9 +608,9 @@ class BaseBuilder
 	 * Generates the WHERE portion of the query.
 	 * Separates multiple calls with 'OR'.
 	 *
-	 * @param    mixed
-	 * @param    mixed
-	 * @param    bool
+	 * @param    mixed $key
+	 * @param    mixed $value
+	 * @param    bool  $escape
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -629,14 +649,12 @@ class BaseBuilder
 
 		foreach ($key as $k => $v)
 		{
-			$prefix = (count($this->$qb_key) === 0)
-				? $this->groupGetType('')
-				: $this->groupGetType($type);
+			$prefix = empty($this->$qb_key) ? $this->groupGetType('') : $this->groupGetType($type);
 
 			if ($v !== null)
 			{
 				$op = $this->getOperator($k);
-				$k  = trim(str_replace($op, '', $k));
+				$k = trim(str_replace($op, '', $k));
 
 				$bind = $this->setBind($k, $v);
 
@@ -656,12 +674,12 @@ class BaseBuilder
 			}
 			elseif (preg_match('/\s*(!?=|<>|IS(?:\s+NOT)?)\s*$/i', $k, $match, PREG_OFFSET_CAPTURE))
 			{
-				$k = substr($k, 0, $match[0][1]).($match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL');
+				$k = substr($k, 0, $match[0][1]) . ($match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL');
 			}
 
-			$v = ! is_null($v) ? ' :'.$bind : $v;
+			$v = ! is_null($v) ? " :$bind:" : $v;
 
-			$this->{$qb_key}[] = ['condition' => $prefix.$k.$v, 'escape' => $escape];
+			$this->{$qb_key}[] = ['condition' => $prefix . $k . $v, 'escape' => $escape];
 		}
 
 		return $this;
@@ -763,7 +781,7 @@ class BaseBuilder
 	 */
 	protected function _whereIn($key = null, $values = null, $not = false, $type = 'AND ', $escape = null)
 	{
-		if ($key === null OR $values === null)
+		if ($key === null || $values === null)
 		{
 			return $this;
 		}
@@ -784,16 +802,14 @@ class BaseBuilder
 
 		$not = ($not) ? ' NOT' : '';
 
-		$where_in         = array_values($values);
+		$where_in = array_values($values);
 		$this->binds[$ok] = $where_in;
 
-		$prefix = (count($this->QBWhere) === 0)
-			? $this->groupGetType('')
-			: $this->groupGetType($type);
+		$prefix = empty($this->QBWhere) ? $this->groupGetType('') : $this->groupGetType($type);
 
 		$where_in = [
-			'condition' => $prefix.$key.$not.' IN :'.$ok,
-			'escape'    => false,
+			'condition'	 => $prefix . $key . $not . " IN :{$ok}:",
+			'escape'	 => false,
 		];
 
 		$this->QBWhere[] = $where_in;
@@ -813,12 +829,13 @@ class BaseBuilder
 	 * @param    string $match
 	 * @param    string $side
 	 * @param    bool   $escape
+	 * @param    bool   $insensitiveSearch	IF true, will force a case-insensitive search
 	 *
 	 * @return    BaseBuilder
 	 */
-	public function like($field, $match = '', $side = 'both', $escape = null)
+	public function like($field, $match = '', $side = 'both', $escape = null, $insensitiveSearch = false)
 	{
-		return $this->_like($field, $match, 'AND ', $side, '', $escape);
+		return $this->_like($field, $match, 'AND ', $side, '', $escape, $insensitiveSearch);
 	}
 
 	//--------------------------------------------------------------------
@@ -833,12 +850,13 @@ class BaseBuilder
 	 * @param    string $match
 	 * @param    string $side
 	 * @param    bool   $escape
+	 * @param    bool   $insensitiveSearch	IF true, will force a case-insensitive search
 	 *
 	 * @return    BaseBuilder
 	 */
-	public function notLike($field, $match = '', $side = 'both', $escape = null)
+	public function notLike($field, $match = '', $side = 'both', $escape = null, $insensitiveSearch = false)
 	{
-		return $this->_like($field, $match, 'AND ', $side, 'NOT', $escape);
+		return $this->_like($field, $match, 'AND ', $side, 'NOT', $escape, $insensitiveSearch);
 	}
 
 	//--------------------------------------------------------------------
@@ -853,12 +871,13 @@ class BaseBuilder
 	 * @param    string $match
 	 * @param    string $side
 	 * @param    bool   $escape
+	 * @param    bool   $insensitiveSearch	IF true, will force a case-insensitive search
 	 *
 	 * @return    BaseBuilder
 	 */
-	public function orLike($field, $match = '', $side = 'both', $escape = null)
+	public function orLike($field, $match = '', $side = 'both', $escape = null, $insensitiveSearch = false)
 	{
-		return $this->_like($field, $match, 'OR ', $side, '', $escape);
+		return $this->_like($field, $match, 'OR ', $side, '', $escape, $insensitiveSearch);
 	}
 
 	//--------------------------------------------------------------------
@@ -873,12 +892,13 @@ class BaseBuilder
 	 * @param    string $match
 	 * @param    string $side
 	 * @param    bool   $escape
+	 * @param    bool   $insensitiveSearch	IF true, will force a case-insensitive search
 	 *
 	 * @return    BaseBuilder
 	 */
-	public function orNotLike($field, $match = '', $side = 'both', $escape = null)
+	public function orNotLike($field, $match = '', $side = 'both', $escape = null, $insensitiveSearch = false)
 	{
-		return $this->_like($field, $match, 'OR ', $side, 'NOT', $escape);
+		return $this->_like($field, $match, 'OR ', $side, 'NOT', $escape, $insensitiveSearch);
 	}
 
 	//--------------------------------------------------------------------
@@ -897,10 +917,11 @@ class BaseBuilder
 	 * @param    string $side
 	 * @param    string $not
 	 * @param    bool   $escape
+	 * @param    bool   $insensitiveSearch	IF true, will force a case-insensitive search
 	 *
 	 * @return    BaseBuilder
 	 */
-	protected function _like($field, $match = '', $type = 'AND ', $side = 'both', $not = '', $escape = null)
+	protected function _like($field, $match = '', $type = 'AND ', $side = 'both', $not = '', $escape = null, $insensitiveSearch = false)
 	{
 		if ( ! is_array($field))
 		{
@@ -914,8 +935,12 @@ class BaseBuilder
 
 		foreach ($field as $k => $v)
 		{
-			$prefix = (count($this->QBWhere) === 0)
-				? $this->groupGetType('') : $this->groupGetType($type);
+			$prefix = empty($this->QBWhere) ? $this->groupGetType('') : $this->groupGetType($type);
+
+			if ($insensitiveSearch === true)
+			{
+				$v = strtolower($v);
+			}
 
 			if ($side === 'none')
 			{
@@ -934,7 +959,7 @@ class BaseBuilder
 				$bind = $this->setBind($k, "%$v%");
 			}
 
-			$like_statement = "{$prefix} {$k} {$not} LIKE :{$bind}";
+			$like_statement = $this->_like_statement($prefix, $k, $not, $bind, $insensitiveSearch);
 
 			// some platforms require an escape sequence definition for LIKE wildcards
 			if ($escape === true && $this->db->likeEscapeStr !== '')
@@ -946,6 +971,31 @@ class BaseBuilder
 		}
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Platform independent LIKE statement builder.
+	 *
+	 * @param string|null $prefix
+	 * @param string      $column
+	 * @param string|null $not
+	 * @param string      $bind
+	 * @param bool        $insensitiveSearch
+	 *
+	 * @return string     $like_statement
+	 */
+	public function _like_statement(string $prefix = null, string $column, string $not = null, string $bind, bool $insensitiveSearch = false): string
+	{
+		$like_statement = "{$prefix} {$column} {$not} LIKE :{$bind}:";
+
+		if ($insensitiveSearch === true)
+		{
+			$like_statement = "{$prefix} LOWER({$column}) {$not} LIKE :{$bind}:";
+		}
+
+		return $like_statement;
 	}
 
 	//--------------------------------------------------------------------
@@ -963,11 +1013,10 @@ class BaseBuilder
 		$type = $this->groupGetType($type);
 
 		$this->QBWhereGroupStarted = true;
-		$prefix                    = count($this->QBWhere) === 0 ? ''
-			: $type;
-		$where                     = [
-			'condition' => $prefix.$not.str_repeat(' ', ++$this->QBWhereGroupCount).' (',
-			'escape'    => false,
+		$prefix = empty($this->QBWhere) ? '' : $type;
+		$where = [
+			'condition'	 => $prefix . $not . str_repeat(' ', ++ $this->QBWhereGroupCount) . ' (',
+			'escape'	 => false,
 		];
 
 		$this->QBWhere[] = $where;
@@ -1021,9 +1070,9 @@ class BaseBuilder
 	public function groupEnd()
 	{
 		$this->QBWhereGroupStarted = false;
-		$where                     = [
-			'condition' => str_repeat(' ', $this->QBWhereGroupCount--).')',
-			'escape'    => false,
+		$where = [
+			'condition'	 => str_repeat(' ', $this->QBWhereGroupCount -- ) . ')',
+			'escape'	 => false,
 		];
 
 		$this->QBWhere[] = $where;
@@ -1049,7 +1098,7 @@ class BaseBuilder
 	{
 		if ($this->QBWhereGroupStarted)
 		{
-			$type                      = '';
+			$type = '';
 			$this->QBWhereGroupStarted = false;
 		}
 
@@ -1072,9 +1121,7 @@ class BaseBuilder
 
 		if (is_string($by))
 		{
-			$by = ($escape === true)
-				? explode(',', $by)
-				: [$by];
+			$by = ($escape === true) ? explode(',', $by) : [$by];
 		}
 
 		foreach ($by as $val)
@@ -1148,9 +1195,7 @@ class BaseBuilder
 			$direction = '';
 
 			// Do we have a seed value?
-			$orderby = ctype_digit((string)$orderby)
-				? sprintf($this->randomKeyword[1], $orderby)
-				: $this->randomKeyword[0];
+			$orderby = ctype_digit((string) $orderby) ? sprintf($this->randomKeyword[1], $orderby) : $this->randomKeyword[0];
 		}
 		elseif (empty($orderby))
 		{
@@ -1158,7 +1203,7 @@ class BaseBuilder
 		}
 		elseif ($direction !== '')
 		{
-			$direction = in_array($direction, ['ASC', 'DESC'], true) ? ' '.$direction : '';
+			$direction = in_array($direction, ['ASC', 'DESC'], true) ? ' ' . $direction : '';
 		}
 
 		is_bool($escape) || $escape = $this->db->protectIdentifiers;
@@ -1173,13 +1218,11 @@ class BaseBuilder
 			foreach (explode(',', $orderby) as $field)
 			{
 				$qb_orderby[] = ($direction === '' &&
-				                 preg_match('/\s+(ASC|DESC)$/i', rtrim($field), $match, PREG_OFFSET_CAPTURE))
-					? [
-						'field'     => ltrim(substr($field, 0, $match[0][1])),
-						'direction' => ' '.$match[1][0],
-						'escape'    => true,
-					]
-					: ['field' => trim($field), 'direction' => $direction, 'escape' => true];
+						preg_match('/\s+(ASC|DESC)$/i', rtrim($field), $match, PREG_OFFSET_CAPTURE)) ? [
+					'field'		 => ltrim(substr($field, 0, $match[0][1])),
+					'direction'	 => ' ' . $match[1][0],
+					'escape'	 => true,
+						] : ['field' => trim($field), 'direction' => $direction, 'escape' => true];
 			}
 		}
 
@@ -1198,16 +1241,16 @@ class BaseBuilder
 	 *
 	 * @return    BaseBuilder
 	 */
-	public function limit($value, $offset = 0)
+	public function limit(int $value = null, int $offset = 0)
 	{
-		if (! is_null($value))
+		if ( ! is_null($value))
 		{
-			$this->QBLimit = (int)$value;
+			$this->QBLimit = $value;
 		}
 
-		if (! empty($offset))
+		if ( ! empty($offset))
 		{
-			$this->QBOffset = (int)$offset;
+			$this->QBOffset = $offset;
 		}
 
 		return $this;
@@ -1224,9 +1267,9 @@ class BaseBuilder
 	 */
 	public function offset($offset)
 	{
-		if (! empty($offset))
+		if ( ! empty($offset))
 		{
-			$this->QBOffset = (int)$offset;
+			$this->QBOffset = (int) $offset;
 		}
 
 		return $this;
@@ -1245,7 +1288,7 @@ class BaseBuilder
 	 */
 	protected function _limit($sql)
 	{
-		return $sql.' LIMIT '.($this->QBOffset ? $this->QBOffset.', ' : '').$this->QBLimit;
+		return $sql . ' LIMIT ' . ($this->QBOffset ? $this->QBOffset . ', ' : '') . $this->QBLimit;
 	}
 
 	//--------------------------------------------------------------------
@@ -1253,11 +1296,11 @@ class BaseBuilder
 	/**
 	 * The "set" function.
 	 *
-	 * Allows key/value pairs to be set for inserting or updating
+	 * Allows key/value pairs to be set for insert(), update() or replace().
 	 *
-	 * @param    mixed
-	 * @param    string
-	 * @param    bool
+	 * @param    string|array|object $key    Field name, or an array of field/value pairs
+	 * @param    string              $value  Field value, if $key is a single field
+	 * @param    bool                $escape Whether to escape values and identifiers
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -1274,11 +1317,40 @@ class BaseBuilder
 
 		foreach ($key as $k => $v)
 		{
-			$this->binds[$k]                                            = $v;
-			$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ':'.$k;
+			if ($escape)
+			{
+				$bind = $this->setBind($k, $v);
+				$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ":$bind:";
+			}
+			else
+			{
+				$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = $v;
+			}
 		}
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the previously set() data, alternatively resetting it
+	 * if needed.
+	 *
+	 * @param bool $clean
+	 *
+	 * @return array
+	 */
+	public function getSetData(bool $clean = false)
+	{
+		$data = $this->QBSet;
+
+		if ($clean)
+		{
+			$this->QBSet = [];
+		}
+
+		return $data;
 	}
 
 	//--------------------------------------------------------------------
@@ -1288,7 +1360,7 @@ class BaseBuilder
 	 *
 	 * Compiles a SELECT query string and returns the sql.
 	 *
-	 * @param    bool      TRUE: resets QB values; FALSE: leave QB values alone
+	 * @param    bool $reset TRUE: resets QB values; FALSE: leave QB values alone
 	 *
 	 * @return    string
 	 */
@@ -1312,21 +1384,19 @@ class BaseBuilder
 	 * Compiles the select statement based on the other functions called
 	 * and runs the query
 	 *
-	 * @param    string    the limit clause
-	 * @param    string    the offset clause
-	 * @param    bool      If true, returns the generate SQL, otherwise executes the query.
+	 * @param    int $limit     The limit clause
+	 * @param    int $offset    The offset clause
+	 * @param    bool   $returnSQL If true, returns the generate SQL, otherwise executes the query.
 	 *
-	 * @return    CI_DB_result
+	 * @return    ResultInterface
 	 */
-	public function get($limit = null, $offset = null, $returnSQL = false)
+	public function get(int $limit = null, int $offset = 0, $returnSQL = false)
 	{
-		if ( ! empty($limit))
+		if ( ! is_null($limit))
 		{
 			$this->limit($limit, $offset);
 		}
-		$result = $returnSQL
-			? $this->getCompiledSelect()
-			: $this->db->query($this->compileSelect(), $this->binds);
+		$result = $returnSQL ? $this->getCompiledSelect() : $this->db->query($this->compileSelect(), $this->binds);
 
 		$this->resetSelect();
 
@@ -1349,8 +1419,8 @@ class BaseBuilder
 	{
 		$table = $this->QBFrom[0];
 
-		$sql = $this->countString.$this->db->escapeIdentifiers('numrows').' FROM '.
-		       $this->db->protectIdentifiers($table, true, null, false);
+		$sql = $this->countString . $this->db->escapeIdentifiers('numrows') . ' FROM ' .
+				$this->db->protectIdentifiers($table, true, null, false);
 
 		if ($test)
 		{
@@ -1358,7 +1428,7 @@ class BaseBuilder
 		}
 
 		$query = $this->db->query($sql);
-		if (count($query->getResult()) === 0)
+		if (empty($query->getResult()))
 		{
 			return 0;
 		}
@@ -1366,7 +1436,7 @@ class BaseBuilder
 		$query = $query->getRow();
 		$this->resetSelect();
 
-		return (int)$query->numrows;
+		return (int) $query->numrows;
 	}
 
 	//--------------------------------------------------------------------
@@ -1377,8 +1447,8 @@ class BaseBuilder
 	 * Generates a platform-specific query string that counts all records
 	 * returned by an Query Builder query.
 	 *
-	 * @param    string
-	 * @param    bool    the reset clause
+	 * @param    bool $reset
+	 * @param    bool $test The reset clause
 	 *
 	 * @return    int
 	 */
@@ -1389,14 +1459,12 @@ class BaseBuilder
 		// for selecting COUNT(*) ...
 		if ( ! empty($this->QBOrderBy))
 		{
-			$orderby         = $this->QBOrderBy;
+			$orderby = $this->QBOrderBy;
 			$this->QBOrderBy = null;
 		}
 
-		$sql = ($this->QBDistinct === true)
-			? $this->countString.$this->db->protectIdentifiers('numrows')."\nFROM (\n".
-			  $this->compileSelect()."\n) CI_count_all_results"
-			: $this->compileSelect($this->countString.$this->db->protectIdentifiers('numrows'));
+		$sql = ($this->QBDistinct === true) ? $this->countString . $this->db->protectIdentifiers('numrows') . "\nFROM (\n" .
+				$this->compileSelect() . "\n) CI_count_all_results" : $this->compileSelect($this->countString . $this->db->protectIdentifiers('numrows'));
 
 		if ($test)
 		{
@@ -1415,14 +1483,16 @@ class BaseBuilder
 			$this->QBOrderBy = $orderby;
 		}
 
-		$row = $result->getRow();
+		$row = (! $result instanceof ResultInterface)
+			? null
+			: $result->getRow();
 
 		if (empty($row))
 		{
 			return 0;
 		}
 
-		return (int)$row->numrows;
+		return (int) $row->numrows;
 	}
 
 	//--------------------------------------------------------------------
@@ -1436,7 +1506,7 @@ class BaseBuilder
 	 * @param    int    $limit
 	 * @param    int    $offset
 	 *
-	 * @return    CI_DB_result
+	 * @return    ResultInterface
 	 */
 	public function getWhere($where = null, $limit = null, $offset = null)
 	{
@@ -1466,13 +1536,13 @@ class BaseBuilder
 	 * @param    array $set    An associative array of insert values
 	 * @param    bool  $escape Whether to escape values and identifiers
 	 *
-	 * @param int      $batch_size
+	 * @param int      $batchSize
 	 * @param bool     $testing
 	 *
 	 * @return int Number of rows inserted or FALSE on failure
 	 * @throws DatabaseException
 	 */
-	public function insertBatch($set = null, $escape = null, $batch_size = 100, $testing = false)
+	public function insertBatch($set = null, $escape = null, $batchSize = 100, $testing = false)
 	{
 		if ($set === null)
 		{
@@ -1505,14 +1575,13 @@ class BaseBuilder
 
 		// Batch this baby
 		$affected_rows = 0;
-		for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batch_size)
+		for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batchSize)
 		{
-			$sql = $this->_insertBatch($this->db->protectIdentifiers($table, true, $escape, false), $this->QBKeys,
-				array_slice($this->QBSet, $i, $batch_size));
+			$sql = $this->_insertBatch($this->db->protectIdentifiers($table, true, $escape, false), $this->QBKeys, array_slice($this->QBSet, $i, $batchSize));
 
 			if ($testing)
 			{
-				++$affected_rows;
+				++ $affected_rows;
 			}
 			else
 			{
@@ -1544,7 +1613,7 @@ class BaseBuilder
 	 */
 	protected function _insertBatch($table, $keys, $values)
 	{
-		return 'INSERT INTO '.$table.' ('.implode(', ', $keys).') VALUES '.implode(', ', $values);
+		return 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
 	}
 
 	//--------------------------------------------------------------------
@@ -1552,9 +1621,9 @@ class BaseBuilder
 	/**
 	 * The "setInsertBatch" function.  Allows key/value pairs to be set for batch inserts
 	 *
-	 * @param    mixed
-	 * @param    string
-	 * @param    bool
+	 * @param    mixed  $key
+	 * @param    string $value
+	 * @param    bool   $escape
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -1588,12 +1657,12 @@ class BaseBuilder
 			$clean = [];
 			foreach ($row as $k => $value)
 			{
-				$clean[] = ':'.$this->setBind($k, $value);
+				$clean[] = ':' . $this->setBind($k, $value) .':';
 			}
 
 			$row = $clean;
 
-			$this->QBSet[] = '('.implode(',', $row).')';
+			$this->QBSet[] = '(' . implode(',', $row) . ')';
 		}
 
 		foreach ($keys as $k)
@@ -1611,7 +1680,7 @@ class BaseBuilder
 	 *
 	 * Compiles an insert query and returns the sql
 	 *
-	 * @param    bool      TRUE: reset QB values; FALSE: leave QB values alone
+	 * @param    bool $reset TRUE: reset QB values; FALSE: leave QB values alone
 	 *
 	 * @return    string
 	 */
@@ -1623,11 +1692,9 @@ class BaseBuilder
 		}
 
 		$sql = $this->_insert(
-			$this->db->protectIdentifiers(
-				$this->QBFrom[0], true, null, false
-			),
-			array_keys($this->QBSet),
-			array_values($this->QBSet)
+				$this->db->protectIdentifiers(
+						$this->QBFrom[0], true, null, false
+				), array_keys($this->QBSet), array_values($this->QBSet)
 		);
 
 		if ($reset === true)
@@ -1645,9 +1712,9 @@ class BaseBuilder
 	 *
 	 * Compiles an insert string and runs the query
 	 *
-	 * @param         array     an associative array of insert values
-	 * @param    bool $escape   Whether to escape values and identifiers
-	 * @param    bool $test     Used when running tests
+	 * @param    array $set    An associative array of insert values
+	 * @param    bool  $escape Whether to escape values and identifiers
+	 * @param    bool  $test   Used when running tests
 	 *
 	 * @return    bool    TRUE on success, FALSE on failure
 	 */
@@ -1664,11 +1731,9 @@ class BaseBuilder
 		}
 
 		$sql = $this->_insert(
-			$this->db->protectIdentifiers(
-				$this->QBFrom[0], true, $escape, false
-			),
-			array_keys($this->QBSet),
-			array_values($this->QBSet)
+				$this->db->protectIdentifiers(
+						$this->QBFrom[0], true, $escape, false
+				), array_keys($this->QBSet), array_values($this->QBSet)
 		);
 
 		if ($test === false)
@@ -1688,13 +1753,12 @@ class BaseBuilder
 	 * validate that the there data is actually being set and that table
 	 * has been chosen to be inserted into.
 	 *
-	 * @param    string    the table to insert data into
-	 *
 	 * @return    string
+	 * @throws DatabaseException
 	 */
 	protected function validateInsert()
 	{
-		if (count($this->QBSet) === 0)
+		if (empty($this->QBSet))
 		{
 			if (CI_DEBUG)
 			{
@@ -1714,15 +1778,15 @@ class BaseBuilder
 	 *
 	 * Generates a platform-specific insert string from the supplied data
 	 *
-	 * @param    string    the table name
-	 * @param    array     the insert keys
-	 * @param    array     the insert values
+	 * @param    string $table         The table name
+	 * @param    array  $keys          The insert keys
+	 * @param    array  $unescapedKeys The insert values
 	 *
 	 * @return    string
 	 */
 	protected function _insert($table, array $keys, array $unescapedKeys)
 	{
-		return 'INSERT INTO '.$table.' ('.implode(', ', $keys).') VALUES ('.implode(', ', $unescapedKeys).')';
+		return 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $unescapedKeys) . ')';
 	}
 
 	//--------------------------------------------------------------------
@@ -1732,13 +1796,11 @@ class BaseBuilder
 	 *
 	 * Compiles an replace into string and runs the query
 	 *
-	 * @param      array     an associative array of insert values
-	 * @param bool $returnSQL
+	 * @param      array $set An associative array of insert values
+	 * @param bool       $returnSQL
 	 *
 	 * @return bool TRUE on success, FALSE on failure
 	 * @throws DatabaseException
-	 * @internal param true $bool returns the generated SQL, false executes the query.
-	 *
 	 */
 	public function replace($set = null, $returnSQL = false)
 	{
@@ -1747,7 +1809,7 @@ class BaseBuilder
 			$this->set($set);
 		}
 
-		if (count($this->QBSet) === 0)
+		if (empty($this->QBSet))
 		{
 			if (CI_DEBUG)
 			{
@@ -1758,8 +1820,7 @@ class BaseBuilder
 
 		$table = $this->QBFrom[0];
 
-		$sql = $this->_replace($table, array_keys($this->QBSet),
-			array_values($this->QBSet));
+		$sql = $this->_replace($table, array_keys($this->QBSet), array_values($this->QBSet));
 
 		$this->resetWrite();
 
@@ -1773,15 +1834,15 @@ class BaseBuilder
 	 *
 	 * Generates a platform-specific replace string from the supplied data
 	 *
-	 * @param    string    the table name
-	 * @param    array     the insert keys
-	 * @param    array     the insert values
+	 * @param    string $table  The table name
+	 * @param    array  $keys   The insert keys
+	 * @param    array  $values The insert values
 	 *
 	 * @return    string
 	 */
 	protected function _replace($table, $keys, $values)
 	{
-		return 'REPLACE INTO '.$table.' ('.implode(', ', $keys).') VALUES ('.implode(', ', $values).')';
+		return 'REPLACE INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $values) . ')';
 	}
 
 	//--------------------------------------------------------------------
@@ -1808,7 +1869,7 @@ class BaseBuilder
 	 *
 	 * Compiles an update query and returns the sql
 	 *
-	 * @param    bool      TRUE: reset QB values; FALSE: leave QB values alone
+	 * @param    bool $reset TRUE: reset QB values; FALSE: leave QB values alone
 	 *
 	 * @return    string
 	 */
@@ -1843,7 +1904,7 @@ class BaseBuilder
 	 *
 	 * @return    bool    TRUE on success, FALSE on failure
 	 */
-	public function update($set = null, $where = null, $limit = null, $test = false)
+	public function update($set = null, $where = null, int $limit = null, $test = false)
 	{
 		if ($set !== null)
 		{
@@ -1862,6 +1923,11 @@ class BaseBuilder
 
 		if ( ! empty($limit))
 		{
+			if (! $this->canLimitWhereUpdates)
+			{
+				throw new DatabaseException('This driver does not allow LIMITs on UPDATE queries using WHERE.');
+			}
+
 			$this->limit($limit);
 		}
 
@@ -1875,7 +1941,11 @@ class BaseBuilder
 			{
 				return true;
 			}
+
+			return false;
 		}
+
+		return true;
 	}
 
 	//--------------------------------------------------------------------
@@ -1885,8 +1955,8 @@ class BaseBuilder
 	 *
 	 * Generates a platform-specific update string from the supplied data
 	 *
-	 * @param    string    the table name
-	 * @param    array     the update data
+	 * @param    string $table  the Table name
+	 * @param    array  $values the Update data
 	 *
 	 * @return    string
 	 */
@@ -1894,13 +1964,13 @@ class BaseBuilder
 	{
 		foreach ($values as $key => $val)
 		{
-			$valstr[] = $key.' = '.$val;
+			$valstr[] = $key . ' = ' . $val;
 		}
 
-		return 'UPDATE '.$table.' SET '.implode(', ', $valstr)
-		       .$this->compileWhereHaving('QBWhere')
-		       .$this->compileOrderBy()
-		       .($this->QBLimit ? $this->_limit(' ') : '');
+		return 'UPDATE ' . $table . ' SET ' . implode(', ', $valstr)
+				. $this->compileWhereHaving('QBWhere')
+				. $this->compileOrderBy()
+				. ($this->QBLimit ? $this->_limit(' ') : '');
 	}
 
 	//--------------------------------------------------------------------
@@ -1914,10 +1984,11 @@ class BaseBuilder
 	 *
 	 *
 	 * @return    bool
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	protected function validateUpdate()
 	{
-		if (count($this->QBSet) === 0)
+		if (empty($this->QBSet))
 		{
 			if (CI_DEBUG)
 			{
@@ -1937,14 +2008,15 @@ class BaseBuilder
 	 *
 	 * Compiles an update string and runs the query
 	 *
-	 * @param    array     an associative array of update values
-	 * @param    string    the where key
-	 * @param    int       The size of the batch to run
-	 * @param    bool      true means SQL is returned, false will execute the query
+	 * @param    array  $set       An associative array of update values
+	 * @param    string $index     The where key
+	 * @param    int    $batchSize The size of the batch to run
+	 * @param    bool   $returnSQL True means SQL is returned, false will execute the query
 	 *
-	 * @return    int    number of rows affected or FALSE on failure
+	 * @return    mixed    Number of rows affected or FALSE on failure
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function updateBatch($set = null, $index = null, $batch_size = 100, $returnSQL = false)
+	public function updateBatch($set = null, $index = null, $batchSize = 100, $returnSQL = false)
 	{
 		if ($index === null)
 		{
@@ -1986,11 +2058,9 @@ class BaseBuilder
 		// Batch this baby
 		$affected_rows = 0;
 		$savedSQL = [];
-		for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batch_size)
+		for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batchSize)
 		{
-			$sql = $this->_updateBatch($table,
-				array_slice($this->QBSet, $i, $batch_size),
-				$this->db->protectIdentifiers($index)
+			$sql = $this->_updateBatch($table, array_slice($this->QBSet, $i, $batchSize), $this->db->protectIdentifiers($index)
 			);
 
 			if ($returnSQL)
@@ -2035,7 +2105,7 @@ class BaseBuilder
 			{
 				if ($field !== $index)
 				{
-					$final[$field][] = 'WHEN '.$index.' = '.$val[$index].' THEN '.$val[$field];
+					$final[$field][] = 'WHEN ' . $index . ' = ' . $val[$index] . ' THEN ' . $val[$field];
 				}
 			}
 		}
@@ -2043,14 +2113,14 @@ class BaseBuilder
 		$cases = '';
 		foreach ($final as $k => $v)
 		{
-			$cases .= $k." = CASE \n"
-			          .implode("\n", $v)."\n"
-			          .'ELSE '.$k.' END, ';
+			$cases .= $k . " = CASE \n"
+					. implode("\n", $v) . "\n"
+					. 'ELSE ' . $k . ' END, ';
 		}
 
-		$this->where($index.' IN('.implode(',', $ids).')', null, false);
+		$this->where($index . ' IN(' . implode(',', $ids) . ')', null, false);
 
-		return 'UPDATE '.$table.' SET '.substr($cases, 0, -2).$this->compileWhereHaving('QBWhere');
+		return 'UPDATE ' . $table . ' SET ' . substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
 	}
 
 	//--------------------------------------------------------------------
@@ -2058,11 +2128,12 @@ class BaseBuilder
 	/**
 	 * The "setUpdateBatch" function.  Allows key/value pairs to be set for batch updating
 	 *
-	 * @param    array
-	 * @param    string
-	 * @param    bool
+	 * @param    array  $key
+	 * @param    string $index
+	 * @param    bool   $escape
 	 *
 	 * @return    BaseBuilder
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function setUpdateBatch($key, $index = '', $escape = null)
 	{
@@ -2078,7 +2149,7 @@ class BaseBuilder
 		foreach ($key as $k => $v)
 		{
 			$index_set = false;
-			$clean     = [];
+			$clean = [];
 			foreach ($v as $k2 => $v2)
 			{
 				if ($k2 === $index)
@@ -2088,7 +2159,7 @@ class BaseBuilder
 
 				$bind = $this->setBind($k2, $v2);
 
-				$clean[$this->db->protectIdentifiers($k2, false, $escape)] = ':'.$bind;
+				$clean[$this->db->protectIdentifiers($k2, false, $escape)] = ":$bind:";
 			}
 
 			if ($index_set === false)
@@ -2137,7 +2208,7 @@ class BaseBuilder
 	 * If the database does not support the truncate() command
 	 * This function maps to "DELETE FROM table"
 	 *
-	 * @param    bool    Whether we're in test mode or not.
+	 * @param    bool $test Whether we're in test mode or not.
 	 *
 	 * @return    bool    TRUE on success, FALSE on failure
 	 */
@@ -2167,13 +2238,13 @@ class BaseBuilder
 	 * If the database does not support the truncate() command,
 	 * then this method maps to 'DELETE FROM table'
 	 *
-	 * @param    string    the table name
+	 * @param    string $table The table name
 	 *
 	 * @return    string
 	 */
 	protected function _truncate($table)
 	{
-		return 'TRUNCATE '.$table;
+		return 'TRUNCATE ' . $table;
 	}
 
 	//--------------------------------------------------------------------
@@ -2183,8 +2254,7 @@ class BaseBuilder
 	 *
 	 * Compiles a delete query string and returns the sql
 	 *
-	 * @param    string    the table to delete from
-	 * @param    bool      TRUE: reset QB values; FALSE: leave QB values alone
+	 * @param    bool $reset TRUE: reset QB values; FALSE: leave QB values alone
 	 *
 	 * @return    string
 	 */
@@ -2193,7 +2263,7 @@ class BaseBuilder
 		$table = $this->QBFrom[0];
 
 		$this->returnDeleteSQL = true;
-		$sql                   = $this->delete($table, '', null, $reset);
+		$sql = $this->delete($table, '', null, $reset);
 		$this->returnDeleteSQL = false;
 
 		return $sql;
@@ -2206,12 +2276,13 @@ class BaseBuilder
 	 *
 	 * Compiles a delete string and runs the query
 	 *
-	 * @param    mixed $where    the where clause
-	 * @param    mixed $limit    the limit clause
+	 * @param    mixed $where The where clause
+	 * @param    mixed $limit The limit clause
 	 * @param    bool  $reset_data
 	 * @param    bool  $returnSQL
 	 *
 	 * @return    mixed
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function delete($where = '', $limit = null, $reset_data = true, $returnSQL = false)
 	{
@@ -2222,7 +2293,7 @@ class BaseBuilder
 			$this->where($where);
 		}
 
-		if (count($this->QBWhere) === 0)
+		if (empty($this->QBWhere))
 		{
 			if (CI_DEBUG)
 			{
@@ -2239,11 +2310,16 @@ class BaseBuilder
 			$this->QBLimit = $limit;
 		}
 
-		if (! empty($this->QBLimit))
+		if ( ! empty($this->QBLimit))
 		{
+			if (! $this->canLimitDeletes)
+			{
+				throw new DatabaseException('SQLite3 does not allow LIMITs on DELETE queries.');
+			}
+
 			$sql = $this->_limit($sql);
 		}
-		
+
 		if ($reset_data)
 		{
 			$this->resetWrite();
@@ -2297,14 +2373,14 @@ class BaseBuilder
 	 *
 	 * Generates a platform-specific delete string from the supplied data
 	 *
-	 * @param    string    the table name
+	 * @param    string $table The table name
 	 *
 	 * @return    string
 	 */
 	protected function _delete($table)
 	{
-		return 'DELETE FROM '.$table.$this->compileWhereHaving('QBWhere')
-		       .($this->QBLimit ? ' LIMIT '.$this->QBLimit : '');
+		return 'DELETE FROM ' . $table . $this->compileWhereHaving('QBWhere')
+				. ($this->QBLimit ? ' LIMIT ' . $this->QBLimit : '');
 	}
 
 	//--------------------------------------------------------------------
@@ -2314,7 +2390,7 @@ class BaseBuilder
 	 *
 	 * Used to track SQL statements written with aliased tables.
 	 *
-	 * @param    string    The table to inspect
+	 * @param    string $table The table to inspect
 	 *
 	 * @return    string
 	 */
@@ -2347,10 +2423,7 @@ class BaseBuilder
 			$table = trim(strrchr($table, ' '));
 
 			// Store the alias, if it doesn't already exist
-			if ( ! in_array($table, $this->QBAliasedTables))
-			{
-				$this->QBAliasedTables[] = $table;
-			}
+			$this->db->addTableAlias($table);
 		}
 	}
 
@@ -2377,7 +2450,7 @@ class BaseBuilder
 		{
 			$sql = ( ! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
 
-			if (count($this->QBSelect) === 0)
+			if (empty($this->QBSelect))
 			{
 				$sql .= '*';
 			}
@@ -2388,7 +2461,7 @@ class BaseBuilder
 				// is because until the user calls the from() function we don't know if there are aliases
 				foreach ($this->QBSelect as $key => $val)
 				{
-					$no_escape            = isset($this->QBNoEscape[$key]) ? $this->QBNoEscape[$key] : null;
+					$no_escape = $this->QBNoEscape[$key] ?? null;
 					$this->QBSelect[$key] = $this->db->protectIdentifiers($val, false, $no_escape);
 				}
 
@@ -2397,26 +2470,25 @@ class BaseBuilder
 		}
 
 		// Write the "FROM" portion of the query
-		if (count($this->QBFrom) > 0)
+		if (! empty($this->QBFrom))
 		{
-			$sql .= "\nFROM ".$this->_fromTables();
+			$sql .= "\nFROM " . $this->_fromTables();
 		}
 
 		// Write the "JOIN" portion of the query
-		if (count($this->QBJoin) > 0)
+		if (! empty($this->QBJoin))
 		{
-			$sql .= "\n".implode("\n", $this->QBJoin);
+			$sql .= "\n" . implode("\n", $this->QBJoin);
 		}
 
 		$sql .= $this->compileWhereHaving('QBWhere')
-		        .$this->compileGroupBy()
-		        .$this->compileWhereHaving('QBHaving')
-		        .$this->compileOrderBy(); // ORDER BY
-
+				. $this->compileGroupBy()
+				. $this->compileWhereHaving('QBHaving')
+				. $this->compileOrderBy(); // ORDER BY
 		// LIMIT
 		if ($this->QBLimit)
 		{
-			return $this->_limit($sql."\n");
+			return $this->_limit($sql . "\n");
 		}
 
 		return $sql;
@@ -2439,9 +2511,9 @@ class BaseBuilder
 	 */
 	protected function compileWhereHaving($qb_key)
 	{
-		if (count($this->$qb_key) > 0)
+		if (! empty($this->$qb_key))
 		{
-			for ($i = 0, $c = count($this->$qb_key); $i < $c; $i++)
+			for ($i = 0, $c = count($this->$qb_key); $i < $c; $i ++ )
 			{
 				// Is this condition already compiled?
 				if (is_string($this->{$qb_key}[$i]))
@@ -2456,18 +2528,13 @@ class BaseBuilder
 
 				// Split multiple conditions
 				$conditions = preg_split(
-					'/((?:^|\s+)AND\s+|(?:^|\s+)OR\s+)/i',
-					$this->{$qb_key}[$i]['condition'],
-					-1,
-					PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
+						'/((?:^|\s+)AND\s+|(?:^|\s+)OR\s+)/i', $this->{$qb_key}[$i]['condition'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
 				);
 
-				for ($ci = 0, $cc = count($conditions); $ci < $cc; $ci++)
+				for ($ci = 0, $cc = count($conditions); $ci < $cc; $ci ++ )
 				{
 					if (($op = $this->getOperator($conditions[$ci])) === false
-					    OR
-					    ! preg_match('/^(\(?)(.*)('.preg_quote($op, '/').')\s*(.*(?<!\)))?(\)?)$/i', $conditions[$ci],
-						    $matches)
+							|| ! preg_match('/^(\(?)(.*)(' . preg_quote($op, '/') . ')\s*(.*(?<!\)))?(\)?)$/i', $conditions[$ci], $matches)
 					)
 					{
 						continue;
@@ -2485,18 +2552,18 @@ class BaseBuilder
 					if ( ! empty($matches[4]))
 					{
 //						$this->isLiteral($matches[4]) OR $matches[4] = $this->db->protectIdentifiers(trim($matches[4]));
-						$matches[4] = ' '.$matches[4];
+						$matches[4] = ' ' . $matches[4];
 					}
 
-					$conditions[$ci] = $matches[1].$this->db->protectIdentifiers(trim($matches[2]))
-					                   .' '.trim($matches[3]).$matches[4].$matches[5];
+					$conditions[$ci] = $matches[1] . $this->db->protectIdentifiers(trim($matches[2]))
+							. ' ' . trim($matches[3]) . $matches[4] . $matches[5];
 				}
 
 				$this->{$qb_key}[$i] = implode('', $conditions);
 			}
 
 			return ($qb_key === 'QBHaving' ? "\nHAVING " : "\nWHERE ")
-			       .implode("\n", $this->$qb_key);
+					. implode("\n", $this->$qb_key);
 		}
 
 		return '';
@@ -2517,9 +2584,9 @@ class BaseBuilder
 	 */
 	protected function compileGroupBy()
 	{
-		if (count($this->QBGroupBy) > 0)
+		if (! empty($this->QBGroupBy))
 		{
-			for ($i = 0, $c = count($this->QBGroupBy); $i < $c; $i++)
+			for ($i = 0, $c = count($this->QBGroupBy); $i < $c; $i ++ )
 			{
 				// Is it already compiled?
 				if (is_string($this->QBGroupBy[$i]))
@@ -2528,12 +2595,10 @@ class BaseBuilder
 				}
 
 				$this->QBGroupBy[$i] = ($this->QBGroupBy[$i]['escape'] === false OR
-				                        $this->isLiteral($this->QBGroupBy[$i]['field']))
-					? $this->QBGroupBy[$i]['field']
-					: $this->db->protectIdentifiers($this->QBGroupBy[$i]['field']);
+						$this->isLiteral($this->QBGroupBy[$i]['field'])) ? $this->QBGroupBy[$i]['field'] : $this->db->protectIdentifiers($this->QBGroupBy[$i]['field']);
 			}
 
-			return "\nGROUP BY ".implode(', ', $this->QBGroupBy);
+			return "\nGROUP BY " . implode(', ', $this->QBGroupBy);
 		}
 
 		return '';
@@ -2554,19 +2619,19 @@ class BaseBuilder
 	 */
 	protected function compileOrderBy()
 	{
-		if (is_array($this->QBOrderBy) && count($this->QBOrderBy) > 0)
+		if (is_array($this->QBOrderBy) && ! empty($this->QBOrderBy))
 		{
-			for ($i = 0, $c = count($this->QBOrderBy); $i < $c; $i++)
+			for ($i = 0, $c = count($this->QBOrderBy); $i < $c; $i ++ )
 			{
 				if ($this->QBOrderBy[$i]['escape'] !== false && ! $this->isLiteral($this->QBOrderBy[$i]['field']))
 				{
 					$this->QBOrderBy[$i]['field'] = $this->db->protectIdentifiers($this->QBOrderBy[$i]['field']);
 				}
 
-				$this->QBOrderBy[$i] = $this->QBOrderBy[$i]['field'].$this->QBOrderBy[$i]['direction'];
+				$this->QBOrderBy[$i] = $this->QBOrderBy[$i]['field'] . $this->QBOrderBy[$i]['direction'];
 			}
 
-			return $this->QBOrderBy = "\nORDER BY ".implode(', ', $this->QBOrderBy);
+			return $this->QBOrderBy = "\nORDER BY " . implode(', ', $this->QBOrderBy);
 		}
 		elseif (is_string($this->QBOrderBy))
 		{
@@ -2583,7 +2648,7 @@ class BaseBuilder
 	 *
 	 * Takes an object as input and converts the class variables to array key/vals
 	 *
-	 * @param    object
+	 * @param    object $object
 	 *
 	 * @return    array
 	 */
@@ -2614,7 +2679,7 @@ class BaseBuilder
 	 *
 	 * Takes an object as input and converts the class variables to array key/vals
 	 *
-	 * @param    object
+	 * @param    object $object
 	 *
 	 * @return    array
 	 */
@@ -2625,8 +2690,8 @@ class BaseBuilder
 			return $object;
 		}
 
-		$array  = [];
-		$out    = get_object_vars($object);
+		$array = [];
+		$out = get_object_vars($object);
 		$fields = array_keys($out);
 
 		foreach ($fields as $val)
@@ -2637,7 +2702,7 @@ class BaseBuilder
 				$i = 0;
 				foreach ($out[$val] as $data)
 				{
-					$array[$i++][$val] = $data;
+					$array[$i ++][$val] = $data;
 				}
 			}
 		}
@@ -2660,8 +2725,8 @@ class BaseBuilder
 	{
 		$str = trim($str);
 
-		if (empty($str) || ctype_digit($str) || (string)(float)$str === $str ||
-		    in_array(strtoupper($str), ['TRUE', 'FALSE'], true)
+		if (empty($str) || ctype_digit($str) || (string) (float) $str === $str ||
+				in_array(strtoupper($str), ['TRUE', 'FALSE'], true)
 		)
 		{
 			return true;
@@ -2671,8 +2736,7 @@ class BaseBuilder
 
 		if (empty($_str))
 		{
-			$_str = ($this->db->escapeChar !== '"')
-				? ['"', "'"] : ["'"];
+			$_str = ($this->db->escapeChar !== '"') ? ['"', "'"] : ["'"];
 		}
 
 		return in_array($str[0], $_str, true);
@@ -2700,9 +2764,7 @@ class BaseBuilder
 	/**
 	 * Resets the query builder values.  Called by the get() function
 	 *
-	 * @param    array    An array of fields to reset
-	 *
-	 * @return    void
+	 * @param    array $qb_reset_items An array of fields to reset
 	 */
 	protected function resetRun($qb_reset_items)
 	{
@@ -2716,24 +2778,26 @@ class BaseBuilder
 
 	/**
 	 * Resets the query builder values.  Called by the get() function
-	 *
-	 * @return    void
 	 */
 	protected function resetSelect()
 	{
 		$this->resetRun([
-			'QBSelect'        => [],
-			'QBJoin'          => [],
-			'QBWhere'         => [],
-			'QBGroupBy'       => [],
-			'QBHaving'        => [],
-			'QBOrderBy'       => [],
-			'QBAliasedTables' => [],
-			'QBNoEscape'      => [],
-			'QBDistinct'      => false,
-			'QBLimit'         => false,
-			'QBOffset'        => false,
+			'QBSelect'			 => [],
+			'QBJoin'			 => [],
+			'QBWhere'			 => [],
+			'QBGroupBy'			 => [],
+			'QBHaving'			 => [],
+			'QBOrderBy'			 => [],
+			'QBNoEscape'		 => [],
+			'QBDistinct'		 => false,
+			'QBLimit'			 => false,
+			'QBOffset'			 => false,
 		]);
+
+		if (! empty($this->db))
+		{
+			$this->db->setAliasedTables([]);
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -2742,18 +2806,16 @@ class BaseBuilder
 	 * Resets the query builder "write" values.
 	 *
 	 * Called by the insert() update() insertBatch() updateBatch() and delete() functions
-	 *
-	 * @return    void
 	 */
 	protected function resetWrite()
 	{
 		$this->resetRun([
-			'QBSet'     => [],
-			'QBJoin'    => [],
-			'QBWhere'   => [],
-			'QBOrderBy' => [],
-			'QBKeys'    => [],
-			'QBLimit'   => false,
+			'QBSet'		 => [],
+			'QBJoin'	 => [],
+			'QBWhere'	 => [],
+			'QBOrderBy'	 => [],
+			'QBKeys'	 => [],
+			'QBLimit'	 => false,
 		]);
 	}
 
@@ -2762,14 +2824,13 @@ class BaseBuilder
 	/**
 	 * Tests whether the string has an SQL operator
 	 *
-	 * @param    string
+	 * @param    string $str
 	 *
 	 * @return    bool
 	 */
 	protected function hasOperator($str)
 	{
-		return (bool)preg_match('/(<|>|!|=|\sIS NULL|\sIS NOT NULL|\sEXISTS|\sBETWEEN|\sLIKE|\sIN\s*\(|\s)/i',
-			trim($str));
+		return (bool) preg_match('/(<|>|!|=|\sIS NULL|\sIS NOT NULL|\sEXISTS|\sBETWEEN|\sLIKE|\sIN\s*\(|\s)/i', trim($str));
 	}
 
 	// --------------------------------------------------------------------
@@ -2777,7 +2838,7 @@ class BaseBuilder
 	/**
 	 * Returns the SQL string operator
 	 *
-	 * @param    string
+	 * @param    string $str
 	 *
 	 * @return    string
 	 */
@@ -2787,27 +2848,24 @@ class BaseBuilder
 
 		if (empty($_operators))
 		{
-			$_les       = ($this->db->likeEscapeStr !== '')
-				? '\s+'.preg_quote(trim(sprintf($this->db->likeEscapeStr, $this->db->likeEscapeChar)), '/')
-				: '';
+			$_les = ($this->db->likeEscapeStr !== '') ? '\s+' . preg_quote(trim(sprintf($this->db->likeEscapeStr, $this->db->likeEscapeChar)), '/') : '';
 			$_operators = [
-				'\s*(?:<|>|!)?=\s*',             // =, <=, >=, !=
-				'\s*<>?\s*',                     // <, <>
-				'\s*>\s*',                       // >
-				'\s+IS NULL',                    // IS NULL
-				'\s+IS NOT NULL',                // IS NOT NULL
-				'\s+EXISTS\s*\(.*\)',        // EXISTS(sql)
-				'\s+NOT EXISTS\s*\(.*\)',    // NOT EXISTS(sql)
-				'\s+BETWEEN\s+',                 // BETWEEN value AND value
-				'\s+IN\s*\(.*\)',            // IN(list)
-				'\s+NOT IN\s*\(.*\)',        // NOT IN (list)
-				'\s+LIKE\s+\S.*('.$_les.')?',    // LIKE 'expr'[ ESCAPE '%s']
-				'\s+NOT LIKE\s+\S.*('.$_les.')?' // NOT LIKE 'expr'[ ESCAPE '%s']
+				'\s*(?:<|>|!)?=\s*', // =, <=, >=, !=
+				'\s*<>?\s*', // <, <>
+				'\s*>\s*', // >
+				'\s+IS NULL', // IS NULL
+				'\s+IS NOT NULL', // IS NOT NULL
+				'\s+EXISTS\s*\(.*\)', // EXISTS(sql)
+				'\s+NOT EXISTS\s*\(.*\)', // NOT EXISTS(sql)
+				'\s+BETWEEN\s+', // BETWEEN value AND value
+				'\s+IN\s*\(.*\)', // IN(list)
+				'\s+NOT IN\s*\(.*\)', // NOT IN (list)
+				'\s+LIKE\s+\S.*(' . $_les . ')?', // LIKE 'expr'[ ESCAPE '%s']
+				'\s+NOT LIKE\s+\S.*(' . $_les . ')?' // NOT LIKE 'expr'[ ESCAPE '%s']
 			];
 		}
 
-		return preg_match('/'.implode('|', $_operators).'/i', $str, $match)
-			? $match[0] : false;
+		return preg_match('/' . implode('|', $_operators) . '/i', $str, $match) ? $match[0] : false;
 	}
 
 	// --------------------------------------------------------------------
@@ -2831,16 +2889,15 @@ class BaseBuilder
 
 		$count = 0;
 
-		while (array_key_exists($key.$count, $this->binds))
+		while (array_key_exists($key . $count, $this->binds))
 		{
-			++$count;
+			++ $count;
 		}
 
-		$this->binds[$key.$count] = $value;
+		$this->binds[$key . $count] = $value;
 
-		return $key.$count;
+		return $key . $count;
 	}
 
 	//--------------------------------------------------------------------
-
 }

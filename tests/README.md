@@ -40,7 +40,7 @@ You can run the tests without running the live database tests.
 
 To generate coverage information, including HTML reports you can view in your browser, you can use the following command: 
 
-	> phpunit --colors --coverage-text=tests/coverage.txt --coverage-html=tests/coverage/
+	> ./phpunit --colors --coverage-text=tests/coverage.txt --coverage-html=tests/coverage/
 
 This runs all of the tests again, collecting information about how many lines, functions, and files are tested, and the percent of the code that is covered by the tests. It is collected in two formats: a simple text file that provides an overview, as well as comprehensive collection of HTML files that show the status of every line of code in the project. 
 

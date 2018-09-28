@@ -1,0 +1,454 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Logging Information &mdash; CodeIgniter4 4.0.0-test documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-test documentation" href="../index.html"/>
+        <link rel="up" title="General Topics" href="index.html"/>
+        <link rel="next" title="Error Handling" href="errors.html"/>
+        <link rel="prev" title="Global Functions and Constants" href="common_functions.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">General Topics</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Working With Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html">CodeIgniter URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Logging Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="errors.html">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Code Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managing_apps.html">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environments.html">Handling Multiple Environments</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">General Topics</a> &raquo;</li>
+        
+      <li>Logging Information</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="logging-information">
+<h1>Logging Information<a class="headerlink" href="#logging-information" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#configuration" id="id1">Configuration</a><ul>
+<li><a class="reference internal" href="#using-multiple-log-handlers" id="id2">Using Multiple Log Handlers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#modifying-the-message-with-context" id="id3">Modifying the Message With Context</a></li>
+<li><a class="reference internal" href="#using-third-party-loggers" id="id4">Using Third-Party Loggers</a></li>
+<li><a class="reference internal" href="#loggeraware-trait" id="id5">LoggerAware Trait</a></li>
+</ul>
+</div>
+<p>You can log information to the local log files by using the <code class="docutils literal"><span class="pre">log_message()</span></code> method. You must supply
+the &#8220;level&#8221; of the error in the first parameter, indicating what type of message it is (debug, error, etc).
+The second parameter is the message itself:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$some_var</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="nx">log_message</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;Some variable did not contain a value.&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>There are eight different log levels, matching to the <a class="reference external" href="http://tools.ietf.org/html/rfc5424">RFC 5424</a> levels, and they are as follows:</p>
+<ul class="simple">
+<li><strong>debug</strong> - Detailed debug information.</li>
+<li><strong>info</strong> - Interesting events in your application, like a user logging in, logging SQL queries, etc.</li>
+<li><strong>notice</strong> - Normal, but significant events in your application.</li>
+<li><strong>warning</strong> - Exceptional occurrences that are not errors, like the user of deprecated APIs, poor use of an API, or other undesirable things that are not necessarily wrong.</li>
+<li><strong>error</strong> - Runtime errors that do not require immediate action but should typically be logged and monitored.</li>
+<li><strong>critical</strong> - Critical conditions, like an application component not available, or an unexpected exception.</li>
+<li><strong>alert</strong> - Action must be taken immediately, like when an entire website is down, the database unavailable, etc.</li>
+<li><strong>emergency</strong> - The system is unusable.</li>
+</ul>
+<p>The logging system does not provide ways to alert sysadmins or webmasters about these events, they solely log
+the information. For many of the more critical event levels, the logging happens automatically by the
+Error Handler, described above.</p>
+<div class="section" id="configuration">
+<h2><a class="toc-backref" href="#id1">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can modify which levels are actually logged, as well as assign different Loggers to handle different levels, within
+the <code class="docutils literal"><span class="pre">/application/Config/Logger.php</span></code> configuration file.</p>
+<p>The <code class="docutils literal"><span class="pre">threshold</span></code> value of the config file determines which levels are logged across your application. If any levels
+are requested to be logged by the application, but the threshold doesn&#8217;t allow them to log currently, they will be
+ignored. The simplest method to use is to set this value to the minimum level that you want to have logged. For example,
+if you want to log debug messages, and not information messages, you would set the threshold to <code class="docutils literal"><span class="pre">5</span></code>. Any log requests with
+a level of 5 or less (which includes runtime errors, system errors, etc) would be logged and info, notices, and warnings
+would be ignored:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$threshold</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>A complete list of levels and their corresponding threshold value is in the configuration file for your reference.</p>
+<p>You can pick and choose the specific levels that you would like logged by assigning an array of log level numbers
+to the threshold value:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Log only debug and info type messages</span>
+<span class="k">public</span> <span class="nv">$threshold</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">];</span>
+</pre></div>
+</div>
+<div class="section" id="using-multiple-log-handlers">
+<h3><a class="toc-backref" href="#id2">Using Multiple Log Handlers</a><a class="headerlink" href="#using-multiple-log-handlers" title="Permalink to this headline">¶</a></h3>
+<p>The logging system can support multiple methods of handling logging running at the same time. Each handler can
+be set to handle specific levels and ignore the rest. Currently, two handlers come with a default install:</p>
+<ul class="simple">
+<li><strong>File Handler</strong> is the default handler and will create a single file for every day locally. This is the
+recommended method of logging.</li>
+<li><strong>ChromeLogger Handler</strong> If you have the <a class="reference external" href="https://craig.is/writing/chrome-logger">ChromeLogger extension</a>
+installed in the Chrome web browser, you can use this handler to display the log information in
+Chrome&#8217;s console window.</li>
+</ul>
+<p>The handlers are configured in the main configuration file, in the <code class="docutils literal"><span class="pre">$handlers</span></code> property, which is simply
+an array of handlers and their configuration. Each handler is specified with the key being the fully
+name-spaced class name. The value will be an array of varying properties, specific to each handler.
+Each handler&#8217;s section will have one property in common: <code class="docutils literal"><span class="pre">handles</span></code>, which is an array of log level
+<em>names</em> that the handler will log information for.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$handlers</span> <span class="o">=</span> <span class="p">[</span>
+
+        <span class="c1">//--------------------------------------------------------------------</span>
+        <span class="c1">// File Handler</span>
+        <span class="c1">//--------------------------------------------------------------------</span>
+
+        <span class="s1">&#39;CodeIgniter\Log\Handlers\FileHandler&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+
+                <span class="s1">&#39;handles&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;critical&#39;</span><span class="p">,</span> <span class="s1">&#39;alert&#39;</span><span class="p">,</span> <span class="s1">&#39;emergency&#39;</span><span class="p">,</span> <span class="s1">&#39;debug&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="s1">&#39;notice&#39;</span><span class="p">,</span> <span class="s1">&#39;warning&#39;</span><span class="p">],</span>
+        <span class="p">]</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="modifying-the-message-with-context">
+<h2><a class="toc-backref" href="#id3">Modifying the Message With Context</a><a class="headerlink" href="#modifying-the-message-with-context" title="Permalink to this headline">¶</a></h2>
+<p>You will often want to modify the details of your message based on the context of the event being logged.
+You might need to log a user id, an IP address, the current POST variables, etc. You can do this by use
+placeholders in your message. Each placeholder must be wrapped in curly braces. In the third parameter,
+you must provide an array of placeholder names (without the braces) and their values. These will be inserted
+into the message string:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Generates a message like: User 123 logged into the system from 127.0.0.1</span>
+<span class="nv">$info</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">,</span>
+        <span class="s1">&#39;ip_address&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">ip_address</span><span class="p">()</span>
+<span class="p">];</span>
+
+<span class="nx">log_message</span><span class="p">(</span><span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="s1">&#39;User {id} logged into the system from {ip_address}&#39;</span><span class="p">,</span> <span class="nv">$info</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If you want to log an Exception or an Error, you can use the key of &#8216;exception&#8217;, and the value being the
+Exception or Error itself. A string will be generated from that object containing the error message, the
+file name and line number.  You must still provide the exception placeholder in the message:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">try</span>
+<span class="p">{</span>
+        <span class="o">...</span> <span class="nx">Something</span> <span class="nx">throws</span> <span class="nx">error</span> <span class="nx">here</span>
+<span class="p">}</span>
+<span class="k">catch</span> <span class="p">(</span><span class="nx">\Exception</span> <span class="nv">$e</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="nx">log_message</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;[ERROR] {exception}&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;exception&#39;</span> <span class="o">=&gt;</span> <span class="nv">$e</span><span class="p">]);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Several core placeholders exist that will be automatically expanded for you based on the current page request:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Placeholder</th>
+<th class="head">Inserted value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>{post_vars}</td>
+<td>$_POST variables</td>
+</tr>
+<tr class="row-odd"><td>{get_vars}</td>
+<td>$_GET variables</td>
+</tr>
+<tr class="row-even"><td>{session_vars}</td>
+<td>$_SESSION variables</td>
+</tr>
+<tr class="row-odd"><td>{env}</td>
+<td>Current environment name, i.e. development</td>
+</tr>
+<tr class="row-even"><td>{file}</td>
+<td>The name of file calling the logger</td>
+</tr>
+<tr class="row-odd"><td>{line}</td>
+<td>The line in {file} where the logger was called</td>
+</tr>
+<tr class="row-even"><td>{env:foo}</td>
+<td>The value of &#8216;foo&#8217; in $_ENV</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="using-third-party-loggers">
+<h2><a class="toc-backref" href="#id4">Using Third-Party Loggers</a><a class="headerlink" href="#using-third-party-loggers" title="Permalink to this headline">¶</a></h2>
+<p>You can use any other logger that you might like as long as it extends from either
+<code class="docutils literal"><span class="pre">Psr\Log\LoggerInterface</span></code> and is <a class="reference external" href="http://www.php-fig.org/psr/psr-3/">PSR3</a> compatible. This means
+that you can easily drop in use for any PSR3-compatible logger, or create your own.</p>
+<p>You must ensure that the third-party logger can be found by the system, by adding it to either
+the <code class="docutils literal"><span class="pre">/application/Config/Autoload.php</span></code> configuration file, or through another autoloader,
+like Composer. Next, you should modify <code class="docutils literal"><span class="pre">/application/Config/Services.php</span></code> to point the <code class="docutils literal"><span class="pre">logger</span></code>
+alias to your new class name.</p>
+<p>Now, any call that is done through the <code class="docutils literal"><span class="pre">log_message()</span></code> function will use your library instead.</p>
+</div>
+<div class="section" id="loggeraware-trait">
+<h2><a class="toc-backref" href="#id5">LoggerAware Trait</a><a class="headerlink" href="#loggeraware-trait" title="Permalink to this headline">¶</a></h2>
+<p>If you would like to implement your libraries in a framework-agnostic method, you can use
+the <code class="docutils literal"><span class="pre">CodeIgniter\Log\LoggerAwareTrait</span></code> which implements the <code class="docutils literal"><span class="pre">setLogger()</span></code> method for you.
+Then, when you use your library under different environments for frameworks, your library should
+still be able to log as it would expect, as long as it can find a PSR3 compatible logger.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="errors.html" class="btn btn-neutral float-right" title="Error Handling" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="common_functions.html" class="btn btn-neutral" title="Global Functions and Constants" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 28, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-test',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

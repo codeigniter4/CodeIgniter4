@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,21 +29,21 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license      http://opensource.org/licenses/MIT	MIT License
- * @link         http://codeigniter.com
+ * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
  * @since        Version 4.0.0
  * @filesource
  */
-
-use CodeIgniter\Services;
-use CodeIgniter\View\RenderableInterface;
+use CodeIgniter\Config\Services;
+use CodeIgniter\View\RendererInterface;
 
 /**
  * Views collector
  */
 class Views extends BaseCollector
 {
+
 	/**
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
@@ -59,6 +59,14 @@ class Views extends BaseCollector
 	 * @var bool
 	 */
 	protected $hasTabContent = false;
+
+	/**
+	 * Whether this collector needs to display
+	 * a label or not.
+	 *
+	 * @var bool
+	 */
+	protected $hasLabel = true;
 
 	/**
 	 * Whether this collector has data that
@@ -78,9 +86,16 @@ class Views extends BaseCollector
 
 	/**
 	 * Instance of the Renderer service
-	 * @var RenderableInterface
+	 * @var RendererInterface
 	 */
 	protected $viewer;
+
+	/**
+	 * Views counter
+	 *
+	 * @var array
+	 */
+	protected $views = [];
 
 	//--------------------------------------------------------------------
 
@@ -89,11 +104,10 @@ class Views extends BaseCollector
 	 */
 	public function __construct()
 	{
-	    $this->viewer = Services::renderer(null, true);
+		$this->viewer = Services::renderer(null, true);
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Child classes should implement this to return the timeline data
@@ -110,10 +124,10 @@ class Views extends BaseCollector
 		foreach ($rows as $name => $info)
 		{
 			$data[] = [
-				'name' => 'View: '.$info['view'],
-				'component' => 'Views',
-				'start'     => $info['start'],
-				'duration'  => $info['end'] - $info['start']
+				'name'		 => 'View: ' . $info['view'],
+				'component'	 => 'Views',
+				'start'		 => $info['start'],
+				'duration'	 => $info['end'] - $info['start']
 			];
 		}
 
@@ -149,5 +163,26 @@ class Views extends BaseCollector
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns a count of all views.
+	 *
+	 * @return int
+	 */
+	public function getBadgeValue()
+	{
+		return count($this->viewer->getPerformanceData());
+	}
 
+	/**
+	 * Display the icon.
+	 *
+	 * Icon from https://icons8.com - 1em package
+	 *
+	 * @return string
+	 */
+	public function icon(): string
+	{
+		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADeSURBVEhL7ZSxDcIwEEWNYA0YgGmgyAaJLTcUaaBzQQEVjMEabBQxAdw53zTHiThEovGTfnE/9rsoRUxhKLOmaa6Uh7X2+UvguLCzVxN1XW9x4EYHzik033Hp3X0LO+DaQG8MDQcuq6qao4qkHuMgQggLvkPLjqh00ZgFDBacMJYFkuwFlH1mshdkZ5JPJERA9JpI6xNCBESvibQ+IURA9JpI6xNCBESvibQ+IURA9DTsuHTOrVFFxixgB/eUFlU8uKJ0eDBFOu/9EvoeKnlJS2/08Tc8NOwQ8sIfMeYFjqKDjdU2sp4AAAAASUVORK5CYII=';
+
+	}
 }

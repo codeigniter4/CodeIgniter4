@@ -1,19 +1,20 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\DatabaseException;
+use \CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Test\CIDatabaseTestCase;
 
 /**
  * @group DatabaseLive
  */
-class DeleteTest extends \CIDatabaseTestCase
+class DeleteTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	public function testDeleteThrowExceptionWithNoCriteria()
 	{
-	    $this->setExpectedException('CodeIgniter\DatabaseException');
+	    $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
 
 		$this->db->table('job')->delete();
 	}
@@ -44,7 +45,7 @@ class DeleteTest extends \CIDatabaseTestCase
 
 	/**
 	 * @group single
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function testDeleteWithLimit()
 	{

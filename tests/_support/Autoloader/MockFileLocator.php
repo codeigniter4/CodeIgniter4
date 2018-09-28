@@ -1,7 +1,10 @@
-<?php namespace CodeIgniter\Autoloader;
+<?php namespace Tests\Support\Autoloader;
+
+use CodeIgniter\Autoloader\FileLocator;
 
 class MockFileLocator extends FileLocator
 {
+
 	protected $files = [];
 
 	//--------------------------------------------------------------------

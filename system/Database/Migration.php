@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -41,6 +41,7 @@
  */
 abstract class Migration
 {
+
 	/**
 	 * The name of the database group to use.
 	 * @var string
@@ -58,23 +59,21 @@ abstract class Migration
 	 * @var Forge
 	 */
 	protected $forge;
-	
+
 	//--------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor.
 	 * 
 	 * @param \CodeIgniter\Database\Forge $forge
 	 */
-	public function __construct(Forge $forge = null) 
+	public function __construct(Forge $forge = null)
 	{
-	    $this->forge = ! is_null($forge)
-		    ? $forge 
-		    : \Config\Database::forge($this->DBGroup);
+		$this->forge = ! is_null($forge) ? $forge : \Config\Database::forge($this->DBGroup);
 
 		$this->db = $this->forge->getConnection();
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -84,7 +83,7 @@ abstract class Migration
 	 */
 	public function getDBGroup()
 	{
-	    return $this->DBGroup;
+		return $this->DBGroup;
 	}
 
 	//--------------------------------------------------------------------
@@ -102,5 +101,4 @@ abstract class Migration
 	abstract public function down();
 
 	//--------------------------------------------------------------------
-
 }

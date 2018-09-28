@@ -42,7 +42,9 @@ $RECYCLE.BIN/
 # These should never be under version control,
 # as it poses a security risk.
 .env
+.vagrant
 application/.env
+Vagrantfile
 
 #-------------------------
 # Temporary Files
@@ -55,9 +57,19 @@ writable/logs/*
 !writable/logs/index.html
 !writable/logs/.htaccess
 
+writable/session/*
+!writable/session/index.html
+!writable/session/.htaccess
+
 writable/uploads/*
 !writable/uploads/index.html
 !writable/uploads/.htaccess
+
+writable/debugbar/*
+
+application/Database/Migrations/2*
+
+php_errors.log
 
 #-------------------------
 # User Guide Temp Files
@@ -88,6 +100,9 @@ composer.lock
 # Modules Testing
 _modules/*
 
+# phpenv local config
+.php-version
+
 # Jetbrains editors (PHPStorm, etc)
 .idea/
 *.iml
@@ -102,10 +117,47 @@ nbactions.xml
 nb-configuration.xml
 .nb-gradle/
 
-## Sublime Text
+# Sublime Text
 *.tmlanguage.cache
 *.tmPreferences.cache
 *.stTheme.cache
 *.sublime-workspace
 *.sublime-project
+.phpintel
 /api/
+
+# Visual Studio Code
+.vscode/
+
+/results/
+/phpunit*.xml
+
+.github/ISSUE_TEMPLATE
+admin/docbot
+admin/docbot.md
+admin/post_release
+admin/previous-gitignore
+admin/README.md
+admin/release
+admin/release.md
+build/CodeIgniter-UserGuide-4.0.0-alpha.1.epub
+build/logs
+contributing/DCO.rst
+contributing/documentation.rst
+contributing/ELDocs.tmbundle.zip
+contributing/guidelines.rst
+contributing/index.rst
+contributing/internals.rst
+contributing/signing.rst
+contributing/styleguide.rst
+contributing/workflow.rst
+user_guide_src/build
+user_guide_src/cilexer
+user_guide_src/ghpages.rst
+user_guide_src/Makefile
+user_guide_src/README.rst
+user_guide_src/source
+CODE_OF_CONDUCT.md
+\
+DCO.txt
+PULL_REQUEST_TEMPLATE.md

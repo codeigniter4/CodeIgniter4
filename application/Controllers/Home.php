@@ -1,11 +1,12 @@
-<?php
+<?php namespace App\Controllers;
 
-class Home extends \CodeIgniter\Controller
+use CodeIgniter\Controller;
+
+class Home extends Controller
 {
-
 	public function index()
 	{
-		echo view('welcome_message');
+		return view('welcome_message');
 	}
 
 	//--------------------------------------------------------------------

@@ -1,0 +1,659 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Queries &mdash; CodeIgniter4 4.0.0-test documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-test documentation" href="../index.html"/>
+        <link rel="up" title="Working With Databases" href="index.html"/>
+        <link rel="next" title="Generating Query Results" href="results.html"/>
+        <link rel="prev" title="Connecting to your Database" href="connecting.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Working With Databases</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Query Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="query_builder.html">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transactions.html">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html">Getting MetaData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">Database Events</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Working With Databases</a> &raquo;</li>
+        
+      <li>Queries</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="queries">
+<h1>Queries<a class="headerlink" href="#queries" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#query-basics" id="id1">Query Basics</a><ul>
+<li><a class="reference internal" href="#regular-queries" id="id2">Regular Queries</a></li>
+<li><a class="reference internal" href="#simplified-queries" id="id3">Simplified Queries</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#working-with-database-prefixes-manually" id="id4">Working with Database prefixes manually</a></li>
+<li><a class="reference internal" href="#protecting-identifiers" id="id5">Protecting identifiers</a></li>
+<li><a class="reference internal" href="#escaping-queries" id="id6">Escaping Queries</a></li>
+<li><a class="reference internal" href="#query-bindings" id="id7">Query Bindings</a><ul>
+<li><a class="reference internal" href="#named-bindings" id="id8">Named Bindings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#handling-errors" id="id9">Handling Errors</a></li>
+<li><a class="reference internal" href="#prepared-queries" id="id10">Prepared Queries</a><ul>
+<li><a class="reference internal" href="#preparing-the-query" id="id11">Preparing the Query</a></li>
+<li><a class="reference internal" href="#executing-the-query" id="id12">Executing the Query</a></li>
+<li><a class="reference internal" href="#other-methods" id="id13">Other Methods</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#working-with-query-objects" id="id14">Working with Query Objects</a><ul>
+<li><a class="reference internal" href="#the-query-class" id="id15">The Query Class</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="query-basics">
+<h2><a class="toc-backref" href="#id1">Query Basics</a><a class="headerlink" href="#query-basics" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="regular-queries">
+<h3><a class="toc-backref" href="#id2">Regular Queries</a><a class="headerlink" href="#regular-queries" title="Permalink to this headline">¶</a></h3>
+<p>To submit a query, use the <strong>query</strong> function:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;YOUR QUERY HERE&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The query() function returns a database result <strong>object</strong> when &#8220;read&#8221;
+type queries are run which you can use to <a class="reference internal" href="results.html"><span class="doc">show your
+results</span></a>. When &#8220;write&#8221; type queries are run it simply
+returns TRUE or FALSE depending on success or failure. When retrieving
+data you will typically assign the query to your own variable, like
+this:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;YOUR QUERY HERE&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="simplified-queries">
+<h3><a class="toc-backref" href="#id3">Simplified Queries</a><a class="headerlink" href="#simplified-queries" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>simpleQuery</strong> method is a simplified version of the
+$db-&gt;query() method. It DOES
+NOT return a database result set, nor does it set the query timer, or
+compile bind data, or store your query for debugging. It simply lets you
+submit a query. Most users will rarely use this function.</p>
+<p>It returns whatever the database drivers&#8217; &#8220;execute&#8221; function returns.
+That typically is TRUE/FALSE on success or failure for write type queries
+such as INSERT, DELETE or UPDATE statements (which is what it really
+should be used for) and a resource/object on success for queries with
+fetchable results.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">simpleQuery</span><span class="p">(</span><span class="s1">&#39;YOUR QUERY&#39;</span><span class="p">))</span>
+<span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">&quot;Success!&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">else</span>
+<span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">&quot;Query failed!&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">PostgreSQL&#8217;s <code class="docutils literal"><span class="pre">pg_exec()</span></code> function (for example) always
+returns a resource on success even for write type queries.
+So keep that in mind if you&#8217;re looking for a boolean value.</p>
+</div>
+</div>
+</div>
+<div class="section" id="working-with-database-prefixes-manually">
+<h2><a class="toc-backref" href="#id4">Working with Database prefixes manually</a><a class="headerlink" href="#working-with-database-prefixes-manually" title="Permalink to this headline">¶</a></h2>
+<p>If you have configured a database prefix and would like to prepend it to
+a table name for use in a native SQL query for example, then you can use
+the following:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prefixTable</span><span class="p">(</span><span class="s1">&#39;tablename&#39;</span><span class="p">);</span> <span class="c1">// outputs prefix_tablename</span>
+</pre></div>
+</div>
+<p>If for any reason you would like to change the prefix programmatically
+without needing to create a new connection you can use this method:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">setPrefix</span><span class="p">(</span><span class="s1">&#39;newprefix&#39;</span><span class="p">);</span>
+<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prefixTable</span><span class="p">(</span><span class="s1">&#39;tablename&#39;</span><span class="p">);</span> <span class="c1">// outputs newprefix_tablename</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="protecting-identifiers">
+<h2><a class="toc-backref" href="#id5">Protecting identifiers</a><a class="headerlink" href="#protecting-identifiers" title="Permalink to this headline">¶</a></h2>
+<p>In many databases it is advisable to protect table and field names - for
+example with backticks in MySQL. <strong>Query Builder queries are
+automatically protected</strong>, but if you need to manually protect an
+identifier you can use:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">protectIdentifiers</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Although the Query Builder will try its best to properly
+quote any field and table names that you feed it. Note that it
+is NOT designed to work with arbitrary user input. DO NOT feed it
+with unsanitized user data.</p>
+</div>
+<p>This function will also add a table prefix to your table, assuming you
+have a prefix specified in your database config file. To enable the
+prefixing set TRUE (boolean) via the second parameter:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">protectIdentifiers</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="escaping-queries">
+<h2><a class="toc-backref" href="#id6">Escaping Queries</a><a class="headerlink" href="#escaping-queries" title="Permalink to this headline">¶</a></h2>
+<p>It&#8217;s a very good security practice to escape your data before submitting
+it into your database. CodeIgniter has three methods that help you do
+this:</p>
+<ol class="arabic">
+<li><p class="first"><strong>$db-&gt;escape()</strong> This function determines the data type so
+that it can escape only string data. It also automatically adds
+single quotes around the data so you don&#8217;t have to:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO table (title) VALUES(&quot;</span><span class="o">.</span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$title</span><span class="p">)</span><span class="o">.</span><span class="s2">&quot;)&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>$db-&gt;escapeString()</strong> This function escapes the data passed to
+it, regardless of type. Most of the time you&#8217;ll use the above
+function rather than this one. Use the function like this:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO table (title) VALUES(&#39;&quot;</span><span class="o">.</span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">escapeString</span><span class="p">(</span><span class="nv">$title</span><span class="p">)</span><span class="o">.</span><span class="s2">&quot;&#39;)&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>$db-&gt;escapeLikeString()</strong> This method should be used when
+strings are to be used in LIKE conditions so that LIKE wildcards
+(&#8216;%&#8217;, &#8216;_&#8217;) in the string are also properly escaped.</p>
+</li>
+</ol>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$search</span> <span class="o">=</span> <span class="s1">&#39;20% raise&#39;</span><span class="p">;</span>
+<span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT id FROM table WHERE column LIKE &#39;%&quot;</span> <span class="o">.</span>
+<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">escapeLikeString</span><span class="p">(</span><span class="nv">$search</span><span class="p">)</span><span class="o">.</span><span class="s2">&quot;%&#39; ESCAPE &#39;!&#39;&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">The <code class="docutils literal"><span class="pre">escapeLikeString()</span></code> method uses &#8216;!&#8217; (exclamation mark)
+to escape special characters for <em>LIKE</em> conditions. Because this
+method escapes partial strings that you would wrap in quotes
+yourself, it cannot automatically add the <code class="docutils literal"><span class="pre">ESCAPE</span> <span class="pre">'!'</span></code>
+condition for you, and so you&#8217;ll have to manually do that.</p>
+</div>
+</div>
+<div class="section" id="query-bindings">
+<h2><a class="toc-backref" href="#id7">Query Bindings</a><a class="headerlink" href="#query-bindings" title="Permalink to this headline">¶</a></h2>
+<p>Bindings enable you to simplify your query syntax by letting the system
+put the queries together for you. Consider the following example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM some_table WHERE id = ? AND status = ? AND author = ?&quot;</span><span class="p">;</span>
+<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;live&#39;</span><span class="p">,</span> <span class="s1">&#39;Rick&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>The question marks in the query are automatically replaced with the
+values in the array in the second parameter of the query function.</p>
+<p>Binding also work with arrays, which will be transformed to IN sets:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM some_table WHERE id IN ? AND status = ? AND author = ?&quot;</span><span class="p">;</span>
+<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="s1">&#39;live&#39;</span><span class="p">,</span> <span class="s1">&#39;Rick&#39;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The resulting query will be:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">SELECT</span> <span class="o">*</span> <span class="nx">FROM</span> <span class="nx">some_table</span> <span class="nx">WHERE</span> <span class="nx">id</span> <span class="nx">IN</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span> <span class="k">AND</span> <span class="nx">status</span> <span class="o">=</span> <span class="s1">&#39;live&#39;</span> <span class="k">AND</span> <span class="nx">author</span> <span class="o">=</span> <span class="s1">&#39;Rick&#39;</span>
+</pre></div>
+</div>
+<p>The secondary benefit of using binds is that the values are
+automatically escaped producing safer queries.
+You don&#8217;t have to remember to manually escape data — the engine does it automatically for you.</p>
+<div class="section" id="named-bindings">
+<h3><a class="toc-backref" href="#id8">Named Bindings</a><a class="headerlink" href="#named-bindings" title="Permalink to this headline">¶</a></h3>
+<p>Instead of using the question mark to mark the location of the bound values,
+you can name the bindings, allowing the keys of the values passed in to match
+placeholders in the query:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM some_table WHERE id = :id: AND status = :status: AND author = :name:&quot;</span><span class="p">;</span>
+<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">,</span> <span class="p">[</span>
+        <span class="s1">&#39;id&#39;</span>     <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;live&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Rick&#39;</span>
+<span class="p">]);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Each name in the query MUST be surrounded by colons.</p>
+</div>
+</div>
+</div>
+<div class="section" id="handling-errors">
+<h2><a class="toc-backref" href="#id9">Handling Errors</a><a class="headerlink" href="#handling-errors" title="Permalink to this headline">¶</a></h2>
+<p><strong>$db-&gt;error();</strong></p>
+<p>If you need to get the last error that has occurred, the error() method
+will return an array containing its code and message. Here&#8217;s a quick
+example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">simpleQuery</span><span class="p">(</span><span class="s1">&#39;SELECT `example_field` FROM `example_table`&#39;</span><span class="p">))</span>
+<span class="p">{</span>
+        <span class="nv">$error</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">error</span><span class="p">();</span> <span class="c1">// Has keys &#39;code&#39; and &#39;message&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="prepared-queries">
+<h2><a class="toc-backref" href="#id10">Prepared Queries</a><a class="headerlink" href="#prepared-queries" title="Permalink to this headline">¶</a></h2>
+<p>Most database engines support some form of prepared statements, that allow you to prepare a query once, and then run
+that query multiple times with new sets of data. This eliminates the possibility of SQL injection since the data is
+passed to the database in a different format than the query itself. When you need to run the same query multiple times
+it can be quite a bit faster, too. However, to use it for every query can have major performance hits, since you&#8217;re calling
+out to the database twice as often. Since the Query Builder and Database connections already handle escaping the data
+for you, the safety aspect is already taken care of for you. There will be times, though, when you need to ability
+to optimize the query by running a prepared statement, or prepared query.</p>
+<div class="section" id="preparing-the-query">
+<h3><a class="toc-backref" href="#id11">Preparing the Query</a><a class="headerlink" href="#preparing-the-query" title="Permalink to this headline">¶</a></h3>
+<p>This can be easily done with the <code class="docutils literal"><span class="pre">prepare()</span></code> method. This takes a single parameter, which is a Closure that returns
+a query object. Query objects are automatically generated by any of the &#8220;final&#8221; type queries, including <strong>insert</strong>,
+<strong>update</strong>, <strong>delete</strong>, <strong>replace</strong>, and <strong>get</strong>. This is handled the easiest by using the Query Builder to
+run a query. The query is not actually run, and the values don&#8217;t matter since they&#8217;re never applied, acting instead
+as placeholders. This returns a PreparedQuery object:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="nv">$db</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span>
+               <span class="o">-&gt;</span><span class="na">insert</span><span class="p">([</span>
+                    <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;US&#39;</span>
+               <span class="p">]);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>If you don&#8217;t want to use the Query Builder you can create the Query object manually using question marks for
+value placeholders:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="nv">$db</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO user (name, email, country) VALUES (?, ?, ?)&quot;</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Query</span><span class="p">(</span><span class="nv">$db</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setQuery</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>If the database requires an array of options passed to it during the prepare statement phase you can pass that
+array through in the second parameter:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="nv">$db</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO user (name, email, country) VALUES (?, ?, ?)&quot;</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Query</span><span class="p">(</span><span class="nv">$db</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setQuery</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+<span class="p">},</span> <span class="nv">$options</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="executing-the-query">
+<h3><a class="toc-backref" href="#id12">Executing the Query</a><a class="headerlink" href="#executing-the-query" title="Permalink to this headline">¶</a></h3>
+<p>Once you have a prepared query you can use the <code class="docutils literal"><span class="pre">execute()</span></code> method to actually run the query. You can pass in as
+many variables as you need in the query parameters. The number of parameters you pass must match the number of
+placeholders in the query. They must also be passed in the same order as the placeholders appear in the original
+query:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Prepare the Query</span>
+<span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="nv">$db</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span>
+               <span class="o">-&gt;</span><span class="na">insert</span><span class="p">([</span>
+                    <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;US&#39;</span>
+               <span class="p">]);</span>
+<span class="p">});</span>
+
+<span class="c1">// Collect the Data</span>
+<span class="nv">$name</span>    <span class="o">=</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">;</span>
+<span class="nv">$email</span>   <span class="o">=</span> <span class="s1">&#39;j.doe@example.com&#39;</span><span class="p">;</span>
+<span class="nv">$country</span> <span class="o">=</span> <span class="s1">&#39;US&#39;</span><span class="p">;</span>
+
+<span class="c1">// Run the Query</span>
+<span class="nv">$results</span> <span class="o">=</span> <span class="nv">$pQuery</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$email</span><span class="p">,</span> <span class="nv">$country</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This returns a standard <a class="reference internal" href="results.html"><span class="doc">result set</span></a>.</p>
+</div>
+<div class="section" id="other-methods">
+<h3><a class="toc-backref" href="#id13">Other Methods</a><a class="headerlink" href="#other-methods" title="Permalink to this headline">¶</a></h3>
+<p>In addition to these two primary methods, the prepared query object also has the following methods:</p>
+<p><strong>close()</strong></p>
+<p>While PHP does a pretty good job of closing all open statements with the database it&#8217;s always a good idea to
+close out the prepared statement when you&#8217;re done with it:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$pQuery</span><span class="o">-&gt;</span><span class="na">close</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><strong>getQueryString()</strong></p>
+<p>This returns the prepared query as a string.</p>
+<p><strong>hasError()</strong></p>
+<p>Returns boolean true/false if the last execute() call created any errors.</p>
+<p><strong>getErrorCode()</strong>
+<strong>getErrorMessage()</strong></p>
+<p>If any errors were encountered these methods can be used to retrieve the error code and string.</p>
+</div>
+</div>
+<div class="section" id="working-with-query-objects">
+<h2><a class="toc-backref" href="#id14">Working with Query Objects</a><a class="headerlink" href="#working-with-query-objects" title="Permalink to this headline">¶</a></h2>
+<p>Internally, all queries are processed and stored as instances of
+CodeIgniterDatabaseQuery. This class is responsible for binding
+the parameters, otherwise preparing the query, and storing performance
+data about its query.</p>
+<p><strong>getLastQuery()</strong></p>
+<p>When you just need to retrieve the last Query object, use the
+getLastQuery() method:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getLastQuery</span><span class="p">();</span>
+<span class="k">echo</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span><span class="nv">$query</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="section" id="the-query-class">
+<h3><a class="toc-backref" href="#id15">The Query Class</a><a class="headerlink" href="#the-query-class" title="Permalink to this headline">¶</a></h3>
+<p>Each query object stores several pieces of information about the query itself.
+This is used, in part, by the Timeline feature, but is available for your use
+as well.</p>
+<p><strong>getQuery()</strong></p>
+<p>Returns the final query after all processing has happened. This is the exact
+query that was sent to the database:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>This same value can be retrieved by casting the Query object to a string:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$sql</span> <span class="o">=</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span><span class="nv">$query</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>getOriginalQuery()</strong></p>
+<p>Returns the raw SQL that was passed into the object. This will not have any
+binds in it, or prefixes swapped out, etc:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getOriginalQuery</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><strong>hasError()</strong></p>
+<p>If an error was encountered during the execution of this query this method
+will return true:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">hasError</span><span class="p">())</span>
+<span class="p">{</span>
+        <span class="k">echo</span> <span class="s1">&#39;Code: &#39;</span><span class="o">.</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getErrorCode</span><span class="p">();</span>
+        <span class="k">echo</span> <span class="s1">&#39;Error: &#39;</span><span class="o">.</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getErrorMessage</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>isWriteType()</strong></p>
+<p>Returns true if the query was determined to be a write-type query (i.e.
+INSERT, UPDATE, DELETE, etc):</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">isWriteType</span><span class="p">())</span>
+<span class="p">{</span>
+        <span class="o">...</span> <span class="k">do</span> <span class="nx">something</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>swapPrefix()</strong></p>
+<p>Replaces one table prefix with another value in the final SQL. The first
+parameter is the original prefix that you want replaced, and the second
+parameter is the value you want it replaced with:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">swapPrefix</span><span class="p">(</span><span class="s1">&#39;ci3_&#39;</span><span class="p">,</span> <span class="s1">&#39;ci4_&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>getStartTime()</strong></p>
+<p>Gets the time the query was executed in seconds with microseconds:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$microtime</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getStartTime</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><strong>getDuration()</strong></p>
+<p>Returns a float with the duration of the query in seconds with microseconds:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$microtime</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getDuration</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="results.html" class="btn btn-neutral float-right" title="Generating Query Results" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="connecting.html" class="btn btn-neutral" title="Connecting to your Database" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 28, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-test',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

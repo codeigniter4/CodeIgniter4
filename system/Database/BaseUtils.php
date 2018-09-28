@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,20 +29,20 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
-use CodeIgniter\DatabaseException;
+use \CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Class BaseUtils
  */
 abstract class BaseUtils
 {
+
 	/**
 	 * Database object
 	 *
@@ -57,21 +57,21 @@ abstract class BaseUtils
 	 *
 	 * @var	string
 	 */
-	protected $listDatabases		= FALSE;
+	protected $listDatabases = FALSE;
 
 	/**
 	 * OPTIMIZE TABLE statement
 	 *
 	 * @var	string
 	 */
-	protected $optimizeTable	= FALSE;
+	protected $optimizeTable = FALSE;
 
 	/**
 	 * REPAIR TABLE statement
 	 *
 	 * @var	string
 	 */
-	protected $repairTable	= FALSE;
+	protected $repairTable = FALSE;
 
 	//--------------------------------------------------------------------
 
@@ -82,7 +82,7 @@ abstract class BaseUtils
 	 */
 	public function __construct(ConnectionInterface &$db)
 	{
-		$this->db =& $db;
+		$this->db = & $db;
 	}
 
 	//--------------------------------------------------------------------
@@ -90,7 +90,8 @@ abstract class BaseUtils
 	/**
 	 * List databases
 	 *
-	 * @return	array
+	 * @return	array|bool
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function listDatabases()
 	{
@@ -108,7 +109,7 @@ abstract class BaseUtils
 			return false;
 		}
 
-		$this->db->dataCache['db_names'] = array();
+		$this->db->dataCache['db_names'] = [];
 
 		$query = $this->db->query($this->listDatabases);
 		if ($query === FALSE)
@@ -116,7 +117,7 @@ abstract class BaseUtils
 			return $this->db->dataCache['db_names'];
 		}
 
-		for ($i = 0, $query = $query->getResultArray(), $c = count($query); $i < $c; $i++)
+		for ($i = 0, $query = $query->getResultArray(), $c = count($query); $i < $c; $i ++ )
 		{
 			$this->db->dataCache['db_names'][] = current($query[$i]);
 		}
@@ -143,7 +144,8 @@ abstract class BaseUtils
 	 * Optimize Table
 	 *
 	 * @param	string	$table_name
-	 * @return	mixed
+	 * @return bool|mixed
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function optimizeTable($table_name)
 	{
@@ -171,7 +173,8 @@ abstract class BaseUtils
 	/**
 	 * Optimize Database
 	 *
-	 * @return	mixed
+	 * @return mixed
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function optimizeDatabase()
 	{
@@ -184,7 +187,7 @@ abstract class BaseUtils
 			return false;
 		}
 
-		$result = array();
+		$result = [];
 		foreach ($this->db->listTables() as $table_name)
 		{
 			$res = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($table_name)));
@@ -196,7 +199,7 @@ abstract class BaseUtils
 			// Build the result array...
 			$res = $res->getResultArray();
 			$res = current($res);
-			$key = str_replace($this->db->database.'.', '', current($res));
+			$key = str_replace($this->db->database . '.', '', current($res));
 			$keys = array_keys($res);
 			unset($res[$keys[0]]);
 
@@ -213,6 +216,7 @@ abstract class BaseUtils
 	 *
 	 * @param	string	$table_name
 	 * @return	mixed
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function repairTable($table_name)
 	{
@@ -240,11 +244,12 @@ abstract class BaseUtils
 	/**
 	 * Generate CSV from a query result object
 	 *
-	 * @param	object	$query		Query result object
-	 * @param	string	$delim		Delimiter (default: ,)
-	 * @param	string	$newline	Newline character (default: \n)
-	 * @param	string	$enclosure	Enclosure (default: ")
-	 * @return	string
+	 * @param    ResultInterface $query     Query result object
+	 * @param    string          $delim     Delimiter (default: ,)
+	 * @param    string          $newline   Newline character (default: \n)
+	 * @param    string          $enclosure Enclosure (default: ")
+	 *
+	 * @return    string
 	 */
 	public function getCSVFromResult(ResultInterface $query, $delim = ',', $newline = "\n", $enclosure = '"')
 	{
@@ -252,20 +257,20 @@ abstract class BaseUtils
 		// First generate the headings from the table column names
 		foreach ($query->getFieldNames() as $name)
 		{
-			$out .= $enclosure.str_replace($enclosure, $enclosure.$enclosure, $name).$enclosure.$delim;
+			$out .= $enclosure . str_replace($enclosure, $enclosure . $enclosure, $name) . $enclosure . $delim;
 		}
 
-		$out = substr($out, 0, -strlen($delim)).$newline;
+		$out = substr($out, 0, -strlen($delim)) . $newline;
 
 		// Next blast through the result array and build out the rows
 		while ($row = $query->getUnbufferedRow('array'))
 		{
-			$line = array();
+			$line = [];
 			foreach ($row as $item)
 			{
-				$line[] = $enclosure.str_replace($enclosure, $enclosure.$enclosure, $item).$enclosure;
+				$line[] = $enclosure . str_replace($enclosure, $enclosure . $enclosure, $item) . $enclosure;
 			}
-			$out .= implode($delim, $line).$newline;
+			$out .= implode($delim, $line) . $newline;
 		}
 
 		return $out;
@@ -276,14 +281,15 @@ abstract class BaseUtils
 	/**
 	 * Generate XML data from a query result object
 	 *
-	 * @param	object	$query	Query result object
-	 * @param	array	$params	Any preferences
-	 * @return	string
+	 * @param    ResultInterface $query  Query result object
+	 * @param    array           $params Any preferences
+	 *
+	 * @return    string
 	 */
-	public function getXMLFromResult(ResultInterface $query, $params = array())
+	public function getXMLFromResult(ResultInterface $query, $params = [])
 	{
 		// Set our default values
-		foreach (array('root' => 'root', 'element' => 'element', 'newline' => "\n", 'tab' => "\t") as $key => $val)
+		foreach (['root' => 'root', 'element' => 'element', 'newline' => "\n", 'tab' => "\t"] as $key => $val)
 		{
 			if ( ! isset($params[$key]))
 			{
@@ -296,20 +302,19 @@ abstract class BaseUtils
 
 		// Load the xml helper
 //		get_instance()->load->helper('xml');
-
 		// Generate the result
-		$xml = '<'.$root.'>'.$newline;
+		$xml = '<' . $root . '>' . $newline;
 		while ($row = $query->getUnbufferedRow())
 		{
-			$xml .= $tab.'<'.$element.'>'.$newline;
+			$xml .= $tab . '<' . $element . '>' . $newline;
 			foreach ($row as $key => $val)
 			{
-				$xml .= $tab.$tab.'<'.$key.'>'.xml_convert($val).'</'.$key.'>'.$newline;
+				$xml .= $tab . $tab . '<' . $key . '>' . xml_convert($val) . '</' . $key . '>' . $newline;
 			}
-			$xml .= $tab.'</'.$element.'>'.$newline;
+			$xml .= $tab . '</' . $element . '>' . $newline;
 		}
 
-		return $xml.'</'.$root.'>'.$newline;
+		return $xml . '</' . $root . '>' . $newline;
 	}
 
 	//--------------------------------------------------------------------
@@ -318,32 +323,33 @@ abstract class BaseUtils
 	 * Database Backup
 	 *
 	 * @param	array	$params
-	 * @return	string
+	 * @return	mixed
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function backup($params = array())
+	public function backup($params = [])
 	{
 		// If the parameters have not been submitted as an
 		// array then we know that it is simply the table
 		// name, which is a valid short cut.
 		if (is_string($params))
 		{
-			$params = array('tables' => $params);
+			$params = ['tables' => $params];
 		}
 
 		// Set up our default preferences
-		$prefs = array(
-			'tables'		=> array(),
-			'ignore'		=> array(),
-			'filename'		=> '',
-			'format'		=> 'gzip', // gzip, zip, txt
-			'add_drop'		=> TRUE,
-			'add_insert'		=> TRUE,
-			'newline'		=> "\n",
-			'foreign_key_checks'	=> TRUE
-		);
+		$prefs = [
+			'tables'			 => [],
+			'ignore'			 => [],
+			'filename'			 => '',
+			'format'			 => 'gzip', // gzip, zip, txt
+			'add_drop'			 => TRUE,
+			'add_insert'		 => TRUE,
+			'newline'			 => "\n",
+			'foreign_key_checks' => TRUE
+		];
 
 		// Did the user submit any preferences? If so set them....
-		if (count($params) > 0)
+		if (! empty($params))
 		{
 			foreach ($prefs as $key => $val)
 			{
@@ -356,13 +362,13 @@ abstract class BaseUtils
 
 		// Are we backing up a complete database or individual tables?
 		// If no table names were submitted we'll fetch the entire table list
-		if (count($prefs['tables']) === 0)
+		if (empty($prefs['tables']))
 		{
 			$prefs['tables'] = $this->db->listTables();
 		}
 
 		// Validate the format
-		if ( ! in_array($prefs['format'], array('gzip', 'zip', 'txt'), TRUE))
+		if ( ! in_array($prefs['format'], ['gzip', 'zip', 'txt'], TRUE))
 		{
 			$prefs['format'] = 'txt';
 		}
@@ -370,7 +376,7 @@ abstract class BaseUtils
 		// Is the encoder supported? If not, we'll either issue an
 		// error or use plain text depending on the debug settings
 		if (($prefs['format'] === 'gzip' && ! function_exists('gzencode'))
-		    OR ($prefs['format'] === 'zip' && ! function_exists('gzcompress')))
+				OR ( $prefs['format'] === 'zip' && ! function_exists('gzcompress')))
 		{
 			if ($this->db->DBDebug)
 			{
@@ -387,7 +393,7 @@ abstract class BaseUtils
 			if ($prefs['filename'] === '')
 			{
 				$prefs['filename'] = (count($prefs['tables']) === 1 ? $prefs['tables'] : $this->db->database)
-				                     .date('Y-m-d_H-i', time()).'.sql';
+						. date('Y-m-d_H-i', time()) . '.sql';
 			}
 			else
 			{
@@ -434,5 +440,4 @@ abstract class BaseUtils
 	abstract public function _backup(array $prefs = null);
 
 	//--------------------------------------------------------------------
-
 }

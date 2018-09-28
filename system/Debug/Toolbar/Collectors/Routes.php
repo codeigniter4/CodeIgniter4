@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,20 +29,20 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license      http://opensource.org/licenses/MIT	MIT License
- * @link         http://codeigniter.com
+ * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
  * @since        Version 4.0.0
  * @filesource
  */
-
-use CodeIgniter\Services;
+use CodeIgniter\Config\Services;
 
 /**
  * Routes collector
  */
 class Routes extends BaseCollector
 {
+
 	/**
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
@@ -70,52 +70,91 @@ class Routes extends BaseCollector
 	//--------------------------------------------------------------------
 
 	/**
-	* Builds and returns the HTML needed to fill a tab to display
-	* within the Debug Bar
-	*
-	* @return string
-	*/
-	public function display(): string
+	 * Returns the data of this collector to be formatted in the toolbar
+	 *
+	 * @return array
+	 */
+	public function display(): array
 	{
-		$routes = Services::routes(true);
+		$rawRoutes = Services::routes(true);
 		$router = Services::router(null, true);
 
-		$output = "<h3>Matched Route</h3>";
+		/*
+		 * Matched Route
+		 */
+		$route = $router->getMatchedRoute();
 
-		$output .= "<table><tbody>";
+		// Get our parameters
+		$method = is_callable($router->controllerName()) ? new \ReflectionFunction($router->controllerName()) : new \ReflectionMethod($router->controllerName(), $router->methodName());
+		$rawParams = $method->getParameters();
 
-		if ($match = $router->getMatchedRoute())
+		$params = [];
+		foreach ($rawParams as $key => $param)
 		{
-			$output .= "<tr><td>{$match[0]}</td>";
-			$output .= "<td>{$match[1]}</td></tr>";
+			$params[] = [
+				'name'	 => $param->getName(),
+				'value'	 => $router->params()[$key] ??
+				"&lt;empty&gt;&nbsp| default: " . var_export($param->getDefaultValue(), true)
+			];
 		}
 
+		$matchedRoute = [
+			[
+				'directory'	 => $router->directory(),
+				'controller' => $router->controllerName(),
+				'method'	 => $router->methodName(),
+				'paramCount' => count($router->params()),
+				'truePCount' => count($params),
+				'params'	 => $params ?? []
+			]
+		];
 
-		$output .= "<tr><td>Directory:</td><td>".htmlspecialchars($router->directory())."</td></tr>";
-		$output .= "<tr><td>Controller:</td><td>".htmlspecialchars($router->controllerName())."</td></tr>";
-		$output .= "<tr><td>Method:</td><td>".htmlspecialchars($router->methodName())."</td></tr>";
-		$output .= "<tr><td>Params:</td><td>".print_r($router->params(), true)."</td></tr>";
+		/*
+		 * Defined Routes
+		 */
+		$rawRoutes = $rawRoutes->getRoutes();
+		$routes = [];
 
-		$output .= "</table></tbody>";
-
-		$output .= "<h3>Defined Routes</h3>";
-
-		$output .= "<table><tbody>";
-
-		$routes = $routes->getRoutes();
-
-		foreach ($routes as $from => $to)
+		foreach ($rawRoutes as $from => $to)
 		{
-			$output .= "<tr>";
-			$output .= "<td>".htmlspecialchars($from)."</td>";
-			$output .= "<td>".htmlspecialchars($to)."</td>";
-			$output .= "</tr>";
+			$routes[] = [
+				'from'	 => $from,
+				'to'	 => $to
+			];
 		}
 
-		$output .= "</tbody></table>";
-
-		return $output;
+		return [
+			'matchedRoute' => $matchedRoute,
+			'routes'       => $routes
+		];
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a count of all the routes in the system.
+	 *
+	 * @return int
+	 */
+	public function getBadgeValue()
+	{
+		$rawRoutes = Services::routes(true);
+
+		return count($rawRoutes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Display the icon.
+	 *
+	 * Icon from https://icons8.com - 1em package
+	 *
+	 * @return string
+	 */
+	public function icon(): string
+	{
+		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFDSURBVEhL7ZRNSsNQFIUjVXSiOFEcuQIHDpzpxC0IGYeE/BEInbWlCHEDLsSiuANdhKDjgm6ggtSJ+l25ldrmmTwIgtgDh/t37r1J+16cX0dRFMtpmu5pWAkrvYjjOB7AETzStBFW+inxu3KUJMmhludQpoflS1zXban4LYqiO224h6VLTHr8Z+z8EpIHFF9gG78nDVmW7UgTHKjsCyY98QP+pcq+g8Ku2s8G8X3f3/I8b038WZTp+bO38zxfFd+I6YY6sNUvFlSDk9CRhiAI1jX1I9Cfw7GG1UB8LAuwbU0ZwQnbRDeEN5qqBxZMLtE1ti9LtbREnMIuOXnyIf5rGIb7Wq8HmlZgwYBH7ORTcKH5E4mpjeGt9fBZcHE2GCQ3Vt7oTNPNg+FXLHnSsHkw/FR+Gg2bB8Ptzrst/v6C/wrH+QB+duli6MYJdQAAAABJRU5ErkJggg==';
+
+	}
 }

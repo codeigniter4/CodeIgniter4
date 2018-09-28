@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -43,6 +43,7 @@
  */
 interface ConnectionInterface
 {
+
 	/**
 	 * Initializes the database connection/settings.
 	 *
@@ -55,7 +56,7 @@ interface ConnectionInterface
 	/**
 	 * Connect to the database.
 	 *
-	 * @param $persistent
+	 * @param bool $persistent
 	 * @return mixed
 	 */
 	public function connect($persistent = false);
@@ -91,7 +92,7 @@ interface ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function getConnection(string $alias=null);
+	public function getConnection(string $alias = null);
 
 	//--------------------------------------------------------------------
 
@@ -143,15 +144,6 @@ interface ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Specifies whether this connection should keep queries objects or not.
-	 *
-	 * @param bool $doLog
-	 */
-	public function saveQueries($doLog = false);
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Orchestrates a query against the database. Queries must use
 	 * Database\Statement objects to store the query and build it.
 	 * This method works with the cache.
@@ -184,30 +176,11 @@ interface ConnectionInterface
 	/**
 	 * Returns an instance of the query builder for this connection.
 	 *
-	 * @param string|array $tableName
+	 * @param string|array $tableName Table name.
 	 *
-	 * @return QueryBuilder
+	 * @return BaseBuilder Builder.
 	 */
 	public function table($tableName);
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns an array containing all of the
-	 *
-	 * @return array
-	 */
-	public function getQueries(): array;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the total number of queries that have been performed
-	 * on this connection.
-	 *
-	 * @return mixed
-	 */
-	public function getQueryCount();
 
 	//--------------------------------------------------------------------
 
@@ -226,7 +199,7 @@ interface ConnectionInterface
 	 * Escapes data based on type.
 	 * Sets boolean and null types.
 	 *
-	 * @param $str
+	 * @param string $str
 	 *
 	 * @return mixed
 	 */
@@ -246,5 +219,4 @@ interface ConnectionInterface
 	public function callFunction(string $functionName, ...$params);
 
 	//--------------------------------------------------------------------
-
 }

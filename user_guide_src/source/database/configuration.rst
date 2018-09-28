@@ -2,6 +2,10 @@
 Database Configuration
 ######################
 
+.. contents::
+    :local:
+    :depth: 2
+
 CodeIgniter has a config file that lets you store your database
 connection values (username, password, database name, etc.). The config
 file is located at application/Config/Database.php. You can also set
@@ -11,7 +15,7 @@ The config settings are stored in a class property that is an array with this
 prototype::
 
 	public $default = [
-		'DSN'	=> '',
+		'DSN'	   => '',
 		'hostname' => 'localhost',
 		'username' => 'root',
 		'password' => '',
@@ -29,7 +33,6 @@ prototype::
 		'compress' => FALSE,
 		'strictOn' => FALSE,
 		'failover' => array(),
-		'saveQueries' => true
 	];
 
 The name of the class property is the connection name, and can be used
@@ -104,7 +107,7 @@ connection group for each, then switch between groups as needed. For
 example, to set up a "test" environment you would do this::
 
 	public $test = [
-		'DSN'	=> '',
+		'DSN'	   => '',
 		'hostname' => 'localhost',
 		'username' => 'root',
 		'password' => '',
@@ -174,7 +177,7 @@ Explanation of Values:
 **username**		The username used to connect to the database.
 **password**		The password used to connect to the database.
 **database**		The name of the database you want to connect to.
-**DBDiver**		The database type. eg: MySQLi, Postgre, etc. The case must match the driver name
+**DBDriver**		The database type. eg: MySQLi, Postgre, etc. The case must match the driver name
 **DBPrefix**		An optional table prefix which will added to the table name when running
 			:doc:`Query Builder <query_builder>` queries. This permits multiple CodeIgniter
 			installations to share one database.
@@ -195,11 +198,11 @@ Explanation of Values:
 
 			  - 'sqlsrv' and 'pdo/sqlsrv' drivers accept TRUE/FALSE
 			  - 'MySQLi' and 'pdo/mysql' drivers accept an array with the following options:
-			  
+
 			    - 'ssl_key'    - Path to the private key file
 			    - 'ssl_cert'   - Path to the public key certificate file
 			    - 'ssl_ca'     - Path to the certificate authority file
-			    - 'ssl_capath' - Path to a directory containing trusted CA certificats in PEM format
+			    - 'ssl_capath' - Path to a directory containing trusted CA certificates in PEM format
 			    - 'ssl_cipher' - List of *allowed* ciphers to be used for the encryption, separated by colons (':')
 			    - 'ssl_verify' - TRUE/FALSE; Whether to verify the server certificate or not ('MySQLi' only)
 
