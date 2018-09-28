@@ -1,0 +1,463 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Static pages &mdash; CodeIgniter4 4.0.0-test documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-test documentation" href="../index.html"/>
+        <link rel="up" title="Tutorial" href="index.html"/>
+        <link rel="next" title="News section" href="news_section.html"/>
+        <link rel="prev" title="Tutorial" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorial</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Static pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news_section.html">News section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_news_items.html">Create news items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conclusion.html">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Tutorial</a> &raquo;</li>
+        
+      <li>Static pages</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="static-pages">
+<h1>Static pages<a class="headerlink" href="#static-pages" title="Permalink to this headline">¶</a></h1>
+<p><strong>Note:</strong> This tutorial assumes you&#8217;ve downloaded CodeIgniter and
+<a class="reference internal" href="../installation/index.html"><span class="doc">installed the framework</span></a> in your
+development environment.</p>
+<p>The first thing you&#8217;re going to do is set up a <strong>controller</strong> to handle
+static pages. A controller is simply a class that helps delegate work.
+It is the glue of your web application.</p>
+<p>For example, when a call is made to:</p>
+<blockquote>
+<div><a class="reference external" href="http://example.com/news/latest/10">http://example.com/news/latest/10</a></div></blockquote>
+<p>We might imagine that there is a controller named &#8220;news&#8221;. The method
+being called on news would be &#8220;latest&#8221;. The news method&#8217;s job could be to
+grab 10 news items, and render them on the page. Very often in MVC,
+you&#8217;ll see URL patterns that match:</p>
+<blockquote>
+<div><a class="reference external" href="http://example.com/[controller-class]/[controller-method]/[arguments">http://example.com/[controller-class]/[controller-method]/[arguments</a>]</div></blockquote>
+<p>As URL schemes become more complex, this may change. But for now, this
+is all we will need to know.</p>
+<p>Create a file at <em>application/Controllers/Pages.php</em> with the following
+code.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">Pages</span> <span class="k">extends</span> <span class="nx">CodeIgniter\Controller</span> <span class="p">{</span>
+
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">view</span><span class="p">(</span><span class="nv">$page</span> <span class="o">=</span> <span class="s1">&#39;home&#39;</span><span class="p">)</span>
+        <span class="p">{</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You have created a class named <code class="docutils literal"><span class="pre">Pages</span></code>, with a view method that accepts
+one argument named <code class="docutils literal"><span class="pre">$page</span></code>. The <code class="docutils literal"><span class="pre">Pages</span></code> class is extending the
+<code class="docutils literal"><span class="pre">CodeIgniter\Controller</span></code> class. This means that the new Pages class can access the
+methods and variables defined in the <code class="docutils literal"><span class="pre">CodeIgniter\Controller</span></code> class
+(<em>system/Controller.php</em>).</p>
+<p>The <strong>controller is what will become the center of every request</strong> to
+your web application. Like any php class, you refer to
+it within your controllers as <code class="docutils literal"><span class="pre">$this</span></code>.</p>
+<p>Now that you&#8217;ve created your first method, it&#8217;s time to make some basic page
+templates. We will be creating two &#8220;views&#8221; (page templates) that act as
+our page footer and header.</p>
+<p>Create the header at <em>application/Views/templates/header.php</em> and add
+the following code:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;!</span><span class="nx">doctype</span> <span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">CodeIgniter</span> <span class="nx">Tutorial</span><span class="o">&lt;/</span><span class="nx">title</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="nx">head</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+
+        <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;&lt;?=</span> <span class="nv">$title</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>The header contains the basic HTML code that you&#8217;ll want to display
+before loading the main view, together with a heading. It will also
+output the <code class="docutils literal"><span class="pre">$title</span></code> variable, which we&#8217;ll define later in the controller.
+Now, create a footer at <em>application/Views/templates/footer.php</em> that
+includes the following code:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span>        <span class="o">&lt;</span><span class="nx">em</span><span class="o">&gt;&amp;</span><span class="nb">copy</span><span class="p">;</span> <span class="mi">2016</span><span class="o">&lt;/</span><span class="nx">em</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="nx">body</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="nx">html</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="adding-logic-to-the-controller">
+<h2>Adding logic to the controller<a class="headerlink" href="#adding-logic-to-the-controller" title="Permalink to this headline">¶</a></h2>
+<p>Earlier you set up a controller with a <code class="docutils literal"><span class="pre">view()</span></code> method. The method
+accepts one parameter, which is the name of the page to be loaded. The
+static page templates will be located in the <em>application/Views/pages/</em>
+directory.</p>
+<p>In that directory, create two files named <em>home.php</em> and <em>about.php</em>.
+Within those files, type some text − anything you&#8217;d like − and save them.
+If you like to be particularly un-original, try &#8220;Hello World!&#8221;.</p>
+<p>In order to load those pages, you&#8217;ll have to check whether the requested
+page actually exists:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">view</span><span class="p">(</span><span class="nv">$page</span> <span class="o">=</span> <span class="s1">&#39;home&#39;</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nb">file_exists</span><span class="p">(</span><span class="nx">APPPATH</span><span class="o">.</span><span class="s1">&#39;/Views/pages/&#39;</span><span class="o">.</span><span class="nv">$page</span><span class="o">.</span><span class="s1">&#39;.php&#39;</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="c1">// Whoops, we don&#39;t have a page for that!</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Exceptions\PageNotFoundException</span><span class="p">(</span><span class="nv">$page</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ucfirst</span><span class="p">(</span><span class="nv">$page</span><span class="p">);</span> <span class="c1">// Capitalize the first letter</span>
+
+        <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/header&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+        <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;pages/&#39;</span><span class="o">.</span><span class="nv">$page</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+        <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/footer&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now, when the page does exist, it is loaded, including the header and
+footer, and displayed to the user. If the page doesn&#8217;t exist, a &#8220;404
+Page not found&#8221; error is shown.</p>
+<p>The first line in this method checks whether the page actually exists.
+PHP&#8217;s native <code class="docutils literal"><span class="pre">file_exists()</span></code> function is used to check whether the file
+is where it&#8217;s expected to be. The <code class="docutils literal"><span class="pre">PageNotFoundException</span></code> is a CodeIgniter
+exception that causes the default error page to show.</p>
+<p>In the header template, the <code class="docutils literal"><span class="pre">$title</span></code> variable was used to customize the
+page title. The value of title is defined in this method, but instead of
+assigning the value to a variable, it is assigned to the title element
+in the <code class="docutils literal"><span class="pre">$data</span></code> array.</p>
+<p>The last thing that has to be done is loading the views in the order
+they should be displayed. The second parameter in the <code class="docutils literal"><span class="pre">view()</span></code> method is
+used to pass values to the view. Each value in the <code class="docutils literal"><span class="pre">$data</span></code> array is
+assigned to a variable with the name of its key. So the value of
+<code class="docutils literal"><span class="pre">$data['title']</span></code> in the controller is equivalent to <code class="docutils literal"><span class="pre">$title</span></code> in the
+view.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Any files and directory names passed into the <strong>view()</strong> function MUST
+match the case of the actual directory and file itself or the system will
+throw errors on case-sensitive platforms.</p>
+</div>
+</div>
+<div class="section" id="running-the-app">
+<h2>Running the App<a class="headerlink" href="#running-the-app" title="Permalink to this headline">¶</a></h2>
+<p>Ready to test? You cannot run the app using PHP&#8217;s built-in server,
+since it will not properly process the <code class="docutils literal"><span class="pre">.htaccess</span></code> rules that are provided in
+<code class="docutils literal"><span class="pre">public</span></code>, and which eliminate the need to specify &#8220;index.php/&#8221;
+as part of a URL. CodeIgniter has its own command that you can use though.</p>
+<p>From the command line, at the root of your project:</p>
+<blockquote>
+<div>php spark serve</div></blockquote>
+<p>will start a web server, accessible on port 8080. If you set the location field
+in your browser to <code class="docutils literal"><span class="pre">localhost:8080</span></code>, you should see the CodeIgniter welcome page.</p>
+<p>You can now try several URLs in the browser location field, to see what the <cite>Pages</cite>
+controller you made above produces...</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">localhost:8080/pages</span></code> will show the results from the <cite>index</cite> method
+inside our <cite>Pages</cite> controller, which is to display the CodeIgniter &#8220;welcome&#8221; page,
+because &#8220;index&#8221; is the default controller method</li>
+<li><code class="docutils literal"><span class="pre">localhost:8080/pages/index</span></code> will also show the CodeIgniter &#8220;welcome&#8221; page,
+because we explicitly asked for the &#8220;index&#8221; methid</li>
+<li><code class="docutils literal"><span class="pre">localhost:8080/pages/view</span></code> will show the &#8220;home&#8221; page that you made above,
+because it is the default &#8220;page&#8221; parameter to the <cite>view()</cite> method.</li>
+<li><code class="docutils literal"><span class="pre">localhost:8080/pages/view/home</span></code> will also show the &#8220;home&#8221; page that you made above,
+because we explicitly asked for it</li>
+<li><code class="docutils literal"><span class="pre">localhost:8080/pages/view/about</span></code> will show the &#8220;about&#8221; page that you made above,
+because we explicitly asked for it</li>
+<li><code class="docutils literal"><span class="pre">localhost:8080/pages/view/shop</span></code> will show a &#8220;404 - File Not Found&#8221; error page,
+because there is no <cite>application/Views/pages/shop.php</cite></li>
+</ul>
+</div>
+<div class="section" id="routing">
+<h2>Routing<a class="headerlink" href="#routing" title="Permalink to this headline">¶</a></h2>
+<p>The controller is now functioning!</p>
+<p>Using custom routing rules, you have the power to map any URI to any
+controller and method, and break free from the normal convention:
+<code class="docutils literal"><span class="pre">http://example.com/[controller-class]/[controller-method]/[arguments]</span></code></p>
+<p>Let&#8217;s do that. Open the routing file located at
+<em>application/Config/Routes.php</em> and look for the &#8220;Route Definitions&#8221;
+section of the configuration file.</p>
+<p>The only uncommented line there to start with should be::</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This directive says that any incoming request without any content
+specified should be handled by the <code class="docutils literal"><span class="pre">index</span></code> method inside the <code class="docutils literal"><span class="pre">Home</span></code> controller.</p>
+<p>Add the following two lines, in front of the route directive for &#8216;/&#8217;.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Pages/view&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::view/$1&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>CodeIgniter reads its routing rules from top to bottom and routes the
+request to the first matching rule. Each rule is a regular expression
+(left-side) mapped to a controller and method name separated by slashes
+(right-side). When a request comes in, CodeIgniter looks for the first
+match, and calls the appropriate controller and method, possibly with
+arguments.</p>
+<p>More information about routing can be found in the URI Routing
+<a class="reference internal" href="../incoming/routing.html"><span class="doc">documentation</span></a>.</p>
+<p>Here, the second rule in the <code class="docutils literal"><span class="pre">$routes</span></code> array matches <strong>any</strong> request
+using the wildcard string <code class="docutils literal"><span class="pre">(:any)</span></code>. and passes the parameter to the
+<code class="docutils literal"><span class="pre">view()</span></code> method of the <code class="docutils literal"><span class="pre">Pages</span></code> class.</p>
+<p>In order for the default controller to be used, though, you have to make
+sure that no other routes are defined that handle the route. By default,
+the Routes file <strong>does</strong> have a route that handles the site root (/).
+Delete the following route to make sure that the Pages controller handles
+our home page:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Now visit <code class="docutils literal"><span class="pre">index.php/about</span></code>. Did it get routed correctly to the <code class="docutils literal"><span class="pre">view()</span></code>
+method in the pages controller? Awesome!</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="news_section.html" class="btn btn-neutral float-right" title="News section" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 28, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-test',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

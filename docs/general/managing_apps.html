@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Managing your Applications &mdash; CodeIgniter4 4.0.0-test documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-test documentation" href="../index.html"/>
+        <link rel="up" title="General Topics" href="index.html"/>
+        <link rel="next" title="Handling Multiple Environments" href="environments.html"/>
+        <link rel="prev" title="Code Modules" href="modules.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">General Topics</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Working With Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html">CodeIgniter URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">Logging Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="errors.html">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Code Modules</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environments.html">Handling Multiple Environments</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">General Topics</a> &raquo;</li>
+        
+      <li>Managing your Applications</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="managing-your-applications">
+<h1>Managing your Applications<a class="headerlink" href="#managing-your-applications" title="Permalink to this headline">¶</a></h1>
+<p>By default it is assumed that you only intend to use CodeIgniter to
+manage one application, which you will build in your <strong>application</strong>
+directory. It is possible, however, to have multiple sets of
+applications that share a single CodeIgniter installation, or even to
+rename or relocate your application directory.</p>
+<div class="section" id="renaming-the-application-directory">
+<h2>Renaming the Application Directory<a class="headerlink" href="#renaming-the-application-directory" title="Permalink to this headline">¶</a></h2>
+<p>If you would like to rename your application directory you may do so
+as long as you open <strong>application/Config/Paths.php</strong> file and set its name using
+the <code class="docutils literal"><span class="pre">$application_directory</span></code> variable:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$application_directory</span> <span class="o">=</span> <span class="s1">&#39;application&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="relocating-your-application-directory">
+<h2>Relocating your Application Directory<a class="headerlink" href="#relocating-your-application-directory" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to move your application directory to a different
+location on your server than your web root. To do so open
+your main <strong>index.php</strong> and set a <em>full server path</em> in the
+<code class="docutils literal"><span class="pre">$application_directory</span></code> variable:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$application_directory</span> <span class="o">=</span> <span class="s1">&#39;/path/to/your/application&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-multiple-applications-with-one-codeigniter-installation">
+<h2>Running Multiple Applications with one CodeIgniter Installation<a class="headerlink" href="#running-multiple-applications-with-one-codeigniter-installation" title="Permalink to this headline">¶</a></h2>
+<p>If you would like to share a common CodeIgniter installation to manage
+several different applications simply put all of the directories located
+inside your application directory into their own sub-directory.</p>
+<p>For example, let&#8217;s say you want to create two applications, named &#8220;foo&#8221;
+and &#8220;bar&#8221;. You could structure your application directories like this:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">applications</span><span class="o">/</span><span class="nx">foo</span><span class="o">/</span>
+<span class="nx">applications</span><span class="o">/</span><span class="nx">foo</span><span class="o">/</span><span class="nx">config</span><span class="o">/</span>
+<span class="nx">applications</span><span class="o">/</span><span class="nx">foo</span><span class="o">/</span><span class="nx">controllers</span><span class="o">/</span>
+<span class="nx">applications</span><span class="o">/</span><span class="nx">foo</span><span class="o">/</span><span class="nx">libraries</span><span class="o">/</span>
+<span class="nx">applications</span><span class="o">/</span><span class="nx">foo</span><span class="o">/</span><span class="nx">models</span><span class="o">/</span>
+<span class="nx">applications</span><span class="o">/</span><span class="nx">foo</span><span class="o">/</span><span class="nx">views</span><span class="o">/</span>
+<span class="nx">applications</span><span class="o">/</span><span class="nx">bar</span><span class="o">/</span>
+<span class="nx">applications</span><span class="o">/</span><span class="nx">bar</span><span class="o">/</span><span class="nx">config</span><span class="o">/</span>
+<span class="nx">applications</span><span class="o">/</span><span class="nx">bar</span><span class="o">/</span><span class="nx">controllers</span><span class="o">/</span>
+<span class="nx">applications</span><span class="o">/</span><span class="nx">bar</span><span class="o">/</span><span class="nx">libraries</span><span class="o">/</span>
+<span class="nx">applications</span><span class="o">/</span><span class="nx">bar</span><span class="o">/</span><span class="nx">models</span><span class="o">/</span>
+<span class="nx">applications</span><span class="o">/</span><span class="nx">bar</span><span class="o">/</span><span class="nx">views</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>To select a particular application for use requires that you open your
+main index.php file and set the <code class="docutils literal"><span class="pre">$application_directory</span></code> variable. For
+example, to select the &#8220;foo&#8221; application for use you would do this:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$application_directory</span> <span class="o">=</span> <span class="s1">&#39;applications/foo&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Each of your applications will need its own <strong>index.php</strong> file
+which calls the desired application. The <strong>index.php</strong> file can be named
+anything you want.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="environments.html" class="btn btn-neutral float-right" title="Handling Multiple Environments" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="modules.html" class="btn btn-neutral" title="Code Modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 28, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-test',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

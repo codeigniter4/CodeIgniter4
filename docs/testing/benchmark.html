@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Benchmarking &mdash; CodeIgniter4 4.0.0-test documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-test documentation" href="../index.html"/>
+        <link rel="up" title="Testing" href="index.html"/>
+        <link rel="next" title="Debugging Your Application" href="debugging.html"/>
+        <link rel="prev" title="HTTP Feature Testing" href="feature.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Testing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controllers.html">Controller Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature.html">HTTP Testing</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html">Debugging Your Application</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Testing</a> &raquo;</li>
+        
+      <li>Benchmarking</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="benchmarking">
+<h1>Benchmarking<a class="headerlink" href="#benchmarking" title="Permalink to this headline">¶</a></h1>
+<p>CodeIgniter provides two separate tools to help you benchmark your code and test different options:
+the Timer and the Iterator. The Timer allows you to easily calculate the time between two points in the
+execution of your script. The Iterator allows you to setup several variations and run those tests, recording
+performance and memory statistics to help you decide which version is the best.</p>
+<p>The Timer class is always active, being started from the moment the framework is invoked until right before
+sending the output to the user, enabling a very accurate timing of the entire system execution.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#using-the-timer" id="id1">Using the Timer</a><ul>
+<li><a class="reference internal" href="#viewing-your-benchmark-points" id="id2">Viewing Your Benchmark Points</a></li>
+<li><a class="reference internal" href="#displaying-execution-time" id="id3">Displaying Execution Time</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-the-iterator" id="id4">Using the Iterator</a><ul>
+<li><a class="reference internal" href="#creating-tasks-to-run" id="id5">Creating Tasks To Run</a></li>
+<li><a class="reference internal" href="#running-the-tasks" id="id6">Running the Tasks</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="using-the-timer">
+<h2><a class="toc-backref" href="#id1">Using the Timer</a><a class="headerlink" href="#using-the-timer" title="Permalink to this headline">¶</a></h2>
+<p>With the Timer, you can measure the time between two moments in the execution of your application. This makes
+it simple to measure the performance of different aspects of your application. All measurement is done using
+the <code class="docutils literal"><span class="pre">start()</span></code> and <code class="docutils literal"><span class="pre">stop()</span></code> methods.</p>
+<p>The <code class="docutils literal"><span class="pre">start()</span></code> methods takes a single parameter: the name of this timer. You can use any string as the name
+of the timer. It is only used for you to reference later to know which measurement is which:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$benchmark</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">timer</span><span class="p">();</span>
+<span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">start</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">stop()</span></code> method takes the name of the timer that you want to stop as the only parameter, also:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">stop</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The name is not case-sensitive, but otherwise must match the name you gave it when you started the timer.</p>
+<p>Alternatively, you can use the <a class="reference internal" href="../general/common_functions.html"><span class="doc">global function</span></a> <code class="docutils literal"><span class="pre">timer()</span></code> to start
+and stop timers:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Start the timer</span>
+<span class="nx">timer</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
+<span class="c1">// Stop a running timer,</span>
+<span class="c1">// if one of this name has been started</span>
+<span class="nx">timer</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="section" id="viewing-your-benchmark-points">
+<h3><a class="toc-backref" href="#id2">Viewing Your Benchmark Points</a><a class="headerlink" href="#viewing-your-benchmark-points" title="Permalink to this headline">¶</a></h3>
+<p>When your application runs, all of the timers that you have set are collected by the Timer class. It does
+not automatically display them, though. You can retrieve all of your timers by calling the <code class="docutils literal"><span class="pre">getTimers()</span></code> method.
+This returns an array of benchmark information, including start, end, and duration:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$timers</span> <span class="o">=</span> <span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">getTimers</span><span class="p">();</span>
+
+<span class="c1">// Timers =</span>
+<span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;render view&#39;</span>  <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;start&#39;</span>    <span class="o">=&gt;</span> <span class="mi">1234567890</span><span class="p">,</span>
+                <span class="s1">&#39;end&#39;</span>      <span class="o">=&gt;</span> <span class="mi">1345678920</span><span class="p">,</span>
+                <span class="s1">&#39;duration&#39;</span> <span class="o">=&gt;</span> <span class="mf">15.4315</span>      <span class="c1">// number of seconds</span>
+        <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>You can change the precision of the calculated duration by passing in the number of decimal places you want shown as
+the only parameter. The default value is 4 numbers behind the decimal point:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$timers</span> <span class="o">=</span> <span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">getTimers</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The timers are automatically displayed in the <a class="reference internal" href="debugging.html"><span class="doc">Debub Toolbar</span></a>.</p>
+</div>
+<div class="section" id="displaying-execution-time">
+<h3><a class="toc-backref" href="#id3">Displaying Execution Time</a><a class="headerlink" href="#displaying-execution-time" title="Permalink to this headline">¶</a></h3>
+<p>While the <code class="docutils literal"><span class="pre">getTimers()</span></code> method will give you the raw data for all of the timers in your project, you can retrieve
+the duration of a single timer, in seconds, with the <cite>getElapsedTime()</cite> method. The first parameter is the name of
+the timer to display. The second is the number of decimal places to display. This defaults to 4:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getElapsedTime</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
+<span class="c1">// Displays: 0.0234</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="using-the-iterator">
+<h2><a class="toc-backref" href="#id4">Using the Iterator</a><a class="headerlink" href="#using-the-iterator" title="Permalink to this headline">¶</a></h2>
+<p>The Iterator is a simple tool that is designed to allow you to try out multiple variations on a solution to
+see the speed differences and different memory usage patterns. You can add any number of &#8220;tasks&#8221; for it to
+run and the class will run the task hundreds or thousands of times to get a clearer picture of performance.
+The results can then be retrieved and used by your script, or displayed as an HTML table.</p>
+<div class="section" id="creating-tasks-to-run">
+<h3><a class="toc-backref" href="#id5">Creating Tasks To Run</a><a class="headerlink" href="#creating-tasks-to-run" title="Permalink to this headline">¶</a></h3>
+<p>Tasks are defined within Closures. Any output the task creates will be discarded automatically. They are
+added to the Iterator class through the <cite>add()</cite> method. The first parameter is a name you want to refer to
+this test by. The second parameter is the Closure, itself:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$iterator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Benchmark\Iterator</span><span class="p">();</span>
+
+<span class="c1">// Add a new task</span>
+<span class="nv">$iterator</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;single_concat&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">()</span>
+        <span class="p">{</span>
+                <span class="nv">$str</span> <span class="o">=</span> <span class="s1">&#39;Some basic&#39;</span><span class="o">.</span><span class="s1">&#39;little&#39;</span><span class="o">.</span><span class="s1">&#39;string concatenation test.&#39;</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">);</span>
+
+<span class="c1">// Add another task</span>
+<span class="nv">$iterator</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;double&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$a</span><span class="o">=</span><span class="s1">&#39;little&#39;</span><span class="p">)</span>
+        <span class="p">{</span>
+                <span class="nv">$str</span> <span class="o">=</span> <span class="s2">&quot;Some basic </span><span class="si">{</span><span class="nv">$little</span><span class="si">}</span><span class="s2"> string test.&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-the-tasks">
+<h3><a class="toc-backref" href="#id6">Running the Tasks</a><a class="headerlink" href="#running-the-tasks" title="Permalink to this headline">¶</a></h3>
+<p>Once you&#8217;ve added the tasks to run, you can use the <code class="docutils literal"><span class="pre">run()</span></code> method to loop over the tasks many times.
+By default, it will run each task 1000 times. This is probably sufficient for most simple tests. If you need
+to run the tests more times than that, you can pass the number as the first parameter:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Run the tests 3000 times.</span>
+<span class="nv">$iterator</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Once it has run, it will return an HTML table with the results of the test. If you don&#8217;t want the results
+displayed, you can pass in <cite>false</cite> as the second parameter:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Don&#39;t display the results.</span>
+<span class="nv">$iterator</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="debugging.html" class="btn btn-neutral float-right" title="Debugging Your Application" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="feature.html" class="btn btn-neutral" title="HTTP Feature Testing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 28, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-test',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

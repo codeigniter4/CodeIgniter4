@@ -1,0 +1,467 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Number Helper &mdash; CodeIgniter4 4.0.0-test documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-test documentation" href="../index.html"/>
+        <link rel="up" title="Helpers" href="index.html"/>
+        <link rel="next" title="Security Helper" href="security_helper.html"/>
+        <link rel="prev" title="Inflector Helper" href="inflector_helper.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Helpers</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="array_helper.html">Array Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cookie_helper.html">Cookie Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="date_helper.html">Date Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filesystem_helper.html">Filesystem Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="form_helper.html">Form Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="html_helper.html">HTML Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inflector_helper.html">Inflector Helper</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Number Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security_helper.html">Security Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_helper.html">Text Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="url_helper.html">URL Helper</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Helpers</a> &raquo;</li>
+        
+      <li>Number Helper</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="number-helper">
+<h1>Number Helper<a class="headerlink" href="#number-helper" title="Permalink to this headline">¶</a></h1>
+<p>The Number Helper file contains functions that help you work with
+numeric data in a locale-aware manner.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></li>
+<li><a class="reference internal" href="#when-things-go-wrong" id="id2">When Things Go Wrong</a></li>
+<li><a class="reference internal" href="#available-functions" id="id3">Available Functions</a></li>
+</ul>
+</div>
+<div class="custom-index container"></div><div class="section" id="loading-this-helper">
+<h2><a class="toc-backref" href="#id1">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline">¶</a></h2>
+<p>This helper is loaded using the following code:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;number&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="when-things-go-wrong">
+<h2><a class="toc-backref" href="#id2">When Things Go Wrong</a><a class="headerlink" href="#when-things-go-wrong" title="Permalink to this headline">¶</a></h2>
+<p>If PHP&#8217;s internationalization and localization logic cannot handle
+a value provided, for the given locale and options, then a
+<code class="docutils literal"><span class="pre">BadFunctionCallException()</span></code> will be thrown.</p>
+</div>
+<div class="section" id="available-functions">
+<h2><a class="toc-backref" href="#id3">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this headline">¶</a></h2>
+<p>The following functions are available:</p>
+<dl class="function">
+<dt id="number_to_size">
+<code class="descname">number_to_size</code><span class="sig-paren">(</span><em>$num[, $precision = 1[, $locale = null]</em><span class="sig-paren">)</span><a class="headerlink" href="#number_to_size" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$num</strong> (<em>mixed</em>) &#8211; Number of bytes</li>
+<li><strong>$precision</strong> (<em>int</em>) &#8211; Floating point precision</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Formatted data size string, or false if the provided value is not numeric</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Formats numbers as bytes, based on size, and adds the appropriate
+suffix. Examples:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">456</span><span class="p">);</span> <span class="c1">// Returns 456 Bytes</span>
+<span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">4567</span><span class="p">);</span> <span class="c1">// Returns 4.5 KB</span>
+<span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">45678</span><span class="p">);</span> <span class="c1">// Returns 44.6 KB</span>
+<span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">456789</span><span class="p">);</span> <span class="c1">// Returns 447.8 KB</span>
+<span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">3456789</span><span class="p">);</span> <span class="c1">// Returns 3.3 MB</span>
+<span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">12345678912345</span><span class="p">);</span> <span class="c1">// Returns 1.8 GB</span>
+<span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">123456789123456789</span><span class="p">);</span> <span class="c1">// Returns 11,228.3 TB</span>
+</pre></div>
+</div>
+<p>An optional second parameter allows you to set the precision of the result:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">45678</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// Returns 44.61 KB</span>
+</pre></div>
+</div>
+<p>An optional third parameter allows you to specify the locale that should
+be used when generating the number, and can affect the formatting. If no
+locale is specified, the Request will be analyzed and an appropriate
+locale taken from the headers, or the app-default:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Generates 11.2 TB</span>
+<span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">12345678912345</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
+<span class="c1">// Generates 11,2 TB</span>
+<span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">12345678912345</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;fr_FR&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The text generated by this function is found in the following
+language file: <em>language/&lt;your_lang&gt;/Number.php</em></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="number_to_amount">
+<code class="descname">number_to_amount</code><span class="sig-paren">(</span><em>$num[, $precision = 1[, $locale = null]</em><span class="sig-paren">)</span><a class="headerlink" href="#number_to_amount" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$num</strong> (<em>mixed</em>) &#8211; Number to format</li>
+<li><strong>$precision</strong> (<em>int</em>) &#8211; Floating point precision</li>
+<li><strong>$locale</strong> (<em>string</em>) &#8211; The locale to use for formatting</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A human-readable version of the string, or false if the provided value is not numeric</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Converts a number into a human-readable version, like <strong>123.4 trillion</strong>
+for numbers up to the quadrillions. Examples:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="mi">123456</span><span class="p">);</span> <span class="c1">// Returns 123 thousand</span>
+<span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="mi">123456789</span><span class="p">);</span> <span class="c1">// Returns 123 million</span>
+<span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="mi">1234567890123</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// Returns 1.23 trillion</span>
+<span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="s1">&#39;123,456,789,012&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// Returns 123.46 billion</span>
+</pre></div>
+</div>
+<p>An optional second parameter allows you to set the precision of the result:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="mi">45678</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// Returns 45.68 thousand</span>
+</pre></div>
+</div>
+<p>An optional third parameter allows the locale to be specified:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="s1">&#39;123,456,789,012&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;de_DE&#39;</span><span class="p">);</span> <span class="c1">// Returns 123,46 billion</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="number_to_currency">
+<code class="descname">number_to_currency</code><span class="sig-paren">(</span><em>$num</em>, <em>$currency</em><span class="optional">[</span>, <em>$locale = null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#number_to_currency" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$num</strong> (<em>mixed</em>) &#8211; Number to format</li>
+<li><strong>$currency</strong> (<em>string</em>) &#8211; The currency type, i.e. USD, EUR, etc</li>
+<li><strong>$locale</strong> (<em>string</em>) &#8211; The locale to use for formatting</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The number as the appropriate currency for the locale</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Converts a number in common currency formats, like USD, EUR, GBP, etc:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;USD&#39;</span><span class="p">);</span>  <span class="c1">// Returns $1,234.56</span>
+<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;EUR&#39;</span><span class="p">);</span>  <span class="c1">// Returns £1,234.56</span>
+<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;GBP&#39;</span><span class="p">);</span>  <span class="c1">// Returns £1,234.56</span>
+<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;YEN&#39;</span><span class="p">);</span>  <span class="c1">// Returns YEN1,234.56</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="number_to_roman">
+<code class="descname">number_to_roman</code><span class="sig-paren">(</span><em>$num</em><span class="sig-paren">)</span><a class="headerlink" href="#number_to_roman" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$num</strong> (<em>string</em>) &#8211; The number want to convert</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The roman number converted from given parameter</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Converts a number into roman:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_roman</span><span class="p">(</span><span class="mi">23</span><span class="p">);</span>  <span class="c1">// Returns XXIII</span>
+<span class="k">echo</span> <span class="nx">number_to_roman</span><span class="p">(</span><span class="mi">324</span><span class="p">);</span>  <span class="c1">// Returns CCCXXIV</span>
+<span class="k">echo</span> <span class="nx">number_to_roman</span><span class="p">(</span><span class="mi">2534</span><span class="p">);</span>  <span class="c1">// Returns MMDXXXIV</span>
+</pre></div>
+</div>
+<p>This function only handles numbers in the range 1 through 3999.
+It will return null for any value outside that range .</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="security_helper.html" class="btn btn-neutral float-right" title="Security Helper" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="inflector_helper.html" class="btn btn-neutral" title="Inflector Helper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 28, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-test',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,435 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Helper Functions &mdash; CodeIgniter4 4.0.0-test documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-test documentation" href="../index.html"/>
+        <link rel="up" title="General Topics" href="index.html"/>
+        <link rel="next" title="Global Functions and Constants" href="common_functions.html"/>
+        <link rel="prev" title="CodeIgniter URLs" href="urls.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">General Topics</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Working With Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urls.html">CodeIgniter URLs</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">Logging Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="errors.html">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Code Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managing_apps.html">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environments.html">Handling Multiple Environments</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">General Topics</a> &raquo;</li>
+        
+      <li>Helper Functions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="helper-functions">
+<h1>Helper Functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">¶</a></h1>
+<p>Helpers, as the name suggests, help you with tasks. Each helper file is
+simply a collection of functions in a particular category. There are <strong>URL
+Helpers</strong>, that assist in creating links, there are <strong>Form Helpers</strong> that help
+you create form elements, <strong>Text Helpers</strong> perform various text formatting
+routines, <strong>Cookie Helpers</strong> set and read cookies, <strong>File Helpers</strong> help you
+deal with files, etc.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#loading-a-helper" id="id1">Loading a Helper</a><ul>
+<li><a class="reference internal" href="#loading-from-non-standard-locations" id="id2">Loading from Non-standard Locations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-a-helper" id="id3">Using a Helper</a></li>
+<li><a class="reference internal" href="#extending-helpers" id="id4">&#8220;Extending&#8221; Helpers</a></li>
+<li><a class="reference internal" href="#now-what" id="id5">Now What?</a></li>
+</ul>
+</div>
+<p>Unlike most other systems in CodeIgniter, Helpers are not written in an
+Object Oriented format. They are simple, procedural functions. Each
+helper function performs one specific task, with no dependence on other
+functions.</p>
+<p>CodeIgniter does not load Helper Files by default, so the first step in
+using a Helper is to load it. Once loaded, it becomes globally available
+in your <a class="reference internal" href="../incoming/controllers.html"><span class="doc">controller</span></a> and
+<a class="reference internal" href="../outgoing/views.html"><span class="doc">views</span></a>.</p>
+<p>Helpers are typically stored in your <strong>system/Helpers</strong>, or
+<strong>application/Helpers directory</strong>. CodeIgniter will look first in your
+<strong>application/Helpers directory</strong>. If the directory does not exist or the
+specified helper is not located there CI will instead look in your
+global <em>system/Helpers/</em> directory.</p>
+<div class="section" id="loading-a-helper">
+<h2><a class="toc-backref" href="#id1">Loading a Helper</a><a class="headerlink" href="#loading-a-helper" title="Permalink to this headline">¶</a></h2>
+<p>Loading a helper file is quite simple using the following method:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Where <strong>name</strong> is the file name of the helper, without the .php file
+extension or the &#8220;helper&#8221; part.</p>
+<p>For example, to load the <strong>Cookie Helper</strong> file, which is named
+<strong>cookie_helper.php</strong>, you would do this:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;cookie&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If you need to load more than one helper at a time, you can pass
+an array of file names in and all of them will be loaded:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">([</span><span class="s1">&#39;cookie&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>A helper can be loaded anywhere within your controller methods (or
+even within your View files, although that&#8217;s not a good practice), as
+long as you load it before you use it. You can load your helpers in your
+controller constructor so that they become available automatically in
+any function, or you can load a helper in a specific function that needs
+it.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The Helper loading method above does not return a value, so
+don&#8217;t try to assign it to a variable. Just use it as shown.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The URL helper is always loaded so you do not need to load it yourself.</p>
+</div>
+<div class="section" id="loading-from-non-standard-locations">
+<h3><a class="toc-backref" href="#id2">Loading from Non-standard Locations</a><a class="headerlink" href="#loading-from-non-standard-locations" title="Permalink to this headline">¶</a></h3>
+<p>Helpers can be loaded from directories outside of <strong>application/Helpers</strong> and
+<strong>system/Helpers</strong>, as long as that path can be found through a namespace that
+has been setup within the PSR-4 section of the <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">Autoloader config file</span></a>.
+You would prefix the name of the Helper with the namespace that it can be located
+in. Within that namespaced directory, the loader expects it to live within a
+sub-directory named <code class="docutils literal"><span class="pre">Helpers</span></code>. An example will help understand this.</p>
+<p>For this example, assume that we have grouped together all of our Blog-related
+code into its own namespace, <code class="docutils literal"><span class="pre">Example\Blog</span></code>. The files exist on our server at
+<strong>/Modules/Blog/</strong>. So, we would put our Helper files for the blog module in
+<strong>/Modules/Blog/Helpers/</strong>. A <strong>blog_helper</strong> file would be at
+<strong>/Modules/Blog/Helpers/blog_helper.php</strong>. Within our controller we could
+use the following command to load the helper for us:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;Modules\Blog\blog&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The functions within files loaded this way are not truly namespaced.
+The namespace is simply used as a convenient way to locate the files.</p>
+</div>
+</div>
+</div>
+<div class="section" id="using-a-helper">
+<h2><a class="toc-backref" href="#id3">Using a Helper</a><a class="headerlink" href="#using-a-helper" title="Permalink to this headline">¶</a></h2>
+<p>Once you&#8217;ve loaded the Helper File containing the function you intend to
+use, you&#8217;ll call it the way you would a standard PHP function.</p>
+<p>For example, to create a link using the <code class="docutils literal"><span class="pre">anchor()</span></code> function in one of
+your view files you would do this:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;blog/comments&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Here&#39;</span><span class="p">);</span><span class="cp">?&gt;</span>
+</pre></div>
+</div>
+<p>Where &#8220;Click Here&#8221; is the name of the link, and &#8220;blog/comments&#8221; is the
+URI to the controller/method you wish to link to.</p>
+</div>
+<div class="section" id="extending-helpers">
+<h2><a class="toc-backref" href="#id4">&#8220;Extending&#8221; Helpers</a><a class="headerlink" href="#extending-helpers" title="Permalink to this headline">¶</a></h2>
+<p>&#64;todo: Determine how these can be extended... namespaces, etc?</p>
+<p>To &#8220;extend&#8221; Helpers, create a file in your <strong>application/helpers/</strong> folder
+with an identical name to the existing Helper, but prefixed with <strong>MY_</strong>
+(this item is configurable. See below.).</p>
+<p>If all you need to do is add some functionality to an existing helper -
+perhaps add a function or two, or change how a particular helper
+function operates - then it&#8217;s overkill to replace the entire helper with
+your version. In this case it&#8217;s better to simply &#8220;extend&#8221; the Helper.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The term &#8220;extend&#8221; is used loosely since Helper functions are
+procedural and discrete and cannot be extended in the traditional
+programmatic sense. Under the hood, this gives you the ability to
+add to or or to replace the functions a Helper provides.</p>
+</div>
+<p>For example, to extend the native <strong>Array Helper</strong> you&#8217;ll create a file
+named <strong>application/helpers/MY_array_helper.php</strong>, and add or override
+functions:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// any_in_array() is not in the Array Helper, so it defines a new function</span>
+<span class="k">function</span> <span class="nf">any_in_array</span><span class="p">(</span><span class="nv">$needle</span><span class="p">,</span> <span class="nv">$haystack</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="nv">$needle</span> <span class="o">=</span> <span class="nb">is_array</span><span class="p">(</span><span class="nv">$needle</span><span class="p">)</span> <span class="o">?</span> <span class="nv">$needle</span> <span class="o">:</span> <span class="k">array</span><span class="p">(</span><span class="nv">$needle</span><span class="p">);</span>
+
+        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$needle</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span>
+        <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nb">in_array</span><span class="p">(</span><span class="nv">$item</span><span class="p">,</span> <span class="nv">$haystack</span><span class="p">))</span>
+                <span class="p">{</span>
+                        <span class="k">return</span> <span class="k">TRUE</span><span class="p">;</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="k">FALSE</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// random_element() is included in Array Helper, so it overrides the native function</span>
+<span class="k">function</span> <span class="nf">random_element</span><span class="p">(</span><span class="nv">$array</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="nb">shuffle</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">array_pop</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="now-what">
+<h2><a class="toc-backref" href="#id5">Now What?</a><a class="headerlink" href="#now-what" title="Permalink to this headline">¶</a></h2>
+<p>In the Table of Contents you&#8217;ll find a list of all the available Helper
+Files. Browse each one to see what they do.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="common_functions.html" class="btn btn-neutral float-right" title="Global Functions and Constants" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="urls.html" class="btn btn-neutral" title="CodeIgniter URLs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 28, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-test',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

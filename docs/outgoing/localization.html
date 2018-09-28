@@ -1,0 +1,552 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Localization &mdash; CodeIgniter4 4.0.0-test documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-test documentation" href="../index.html"/>
+        <link rel="up" title="Building Responses" href="index.html"/>
+        <link rel="next" title="Alternate PHP Syntax for View Files" href="alternative_php.html"/>
+        <link rel="prev" title="API Response Trait" href="api_responses.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Building Responses</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="views.html">Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="view_cells.html">View Cells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="view_renderer.html">View Renderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="view_parser.html">View Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alternative_php.html">Alternate PHP Syntax for View Files</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Building Responses</a> &raquo;</li>
+        
+      <li>Localization</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="localization">
+<h1>Localization<a class="headerlink" href="#localization" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#working-with-locales" id="id1">Working With Locales</a><ul>
+<li><a class="reference internal" href="#configuring-the-locale" id="id2">Configuring the Locale</a></li>
+<li><a class="reference internal" href="#locale-detection" id="id3">Locale Detection</a></li>
+<li><a class="reference internal" href="#retrieving-the-current-locale" id="id4">Retrieving the Current Locale</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#language-localization" id="id5">Language Localization</a><ul>
+<li><a class="reference internal" href="#creating-language-files" id="id6">Creating Language Files</a></li>
+<li><a class="reference internal" href="#basic-usage" id="id7">Basic Usage</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="working-with-locales">
+<h2><a class="toc-backref" href="#id1">Working With Locales</a><a class="headerlink" href="#working-with-locales" title="Permalink to this headline">¶</a></h2>
+<p>CodeIgniter provides several tools to help you localize your application for different languages. While full
+localization of an application is a complex subject, it&#8217;s simple to swap out strings in your application
+with different supported languages.</p>
+<p>Language strings are stored in the <strong>application/Language</strong> directory, with a sub-directory for each
+supported language:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">/</span><span class="nx">application</span>
+    <span class="o">/</span><span class="nx">Language</span>
+        <span class="o">/</span><span class="nx">en</span>
+            <span class="nx">app</span><span class="o">.</span><span class="nx">php</span>
+        <span class="o">/</span><span class="nx">fr</span>
+            <span class="nx">app</span><span class="o">.</span><span class="nx">php</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Locale detection only works for web-based requests that use the IncomingRequest class.
+Command-line requests will not have these features.</p>
+</div>
+<div class="section" id="configuring-the-locale">
+<h3><a class="toc-backref" href="#id2">Configuring the Locale</a><a class="headerlink" href="#configuring-the-locale" title="Permalink to this headline">¶</a></h3>
+<p>Every site will have a default language/locale they operate in. This can be set in <strong>Config/App.php</strong>:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$defaultLocale</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The value can be any string that your application uses to manage text strings and other formats. It is
+recommended that a <a class="reference external" href="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> language code is used. This results in
+language codes like en-US for American English, or fr-FR, for French/France. A more readable introduction
+to this can be found on the <a class="reference external" href="https://www.w3.org/International/articles/language-tags/">W3C&#8217;s site</a>.</p>
+<p>The system is smart enough to fallback to more generic language codes if an exact match
+cannot be found. If the locale code was set to <strong>en-US</strong> and we only have language files setup for <strong>en</strong>
+then those will be used since nothing exists for the more specific <strong>en-US</strong>. If, however, a language
+directory existed at <strong>application/Language/en-US</strong> then that would be used first.</p>
+</div>
+<div class="section" id="locale-detection">
+<h3><a class="toc-backref" href="#id3">Locale Detection</a><a class="headerlink" href="#locale-detection" title="Permalink to this headline">¶</a></h3>
+<p>There are two methods supported to detect the correct locale during the request. The first is a &#8220;set and forget&#8221;
+method that will automatically perform <a class="reference internal" href="../incoming/content_negotiation.html"><span class="doc">content negotiation</span></a> for you to
+determine the correct locale to use. The second method allows you to specify a segment in your routes that
+will be used to set the locale.</p>
+<div class="section" id="content-negotiation">
+<h4>Content Negotiation<a class="headerlink" href="#content-negotiation" title="Permalink to this headline">¶</a></h4>
+<p>You can setup content negotiation to happen automatically by setting two additional settings in Config/App.
+The first value tells the Request class that we do want to negotiate a locale, so simply set it to true:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$negotiateLocale</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Once this is enabled, the system will automatically negotiate the correct language based upon an array
+of locales that you have defined in <code class="docutils literal"><span class="pre">$supportLocales</span></code>. If no match is found between the languages
+that you support, and the requested language, the first item in $supportedLocales will be used. In
+the following example, the <strong>en</strong> locale would be used if no match is found:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$supportedLocales</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;es&#39;</span><span class="p">,</span> <span class="s1">&#39;fr-FR&#39;</span><span class="p">];</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="in-routes">
+<h4>In Routes<a class="headerlink" href="#in-routes" title="Permalink to this headline">¶</a></h4>
+<p>The second method uses a custom placeholder to detect the desired locale and set it on the Request. The
+placeholder <code class="docutils literal"><span class="pre">{locale}</span></code> can be placed as a segment in your route. If present, the contents of the matching
+segment will be your locale:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;{locale}/books&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Books::index&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>In this example, if the user tried to visit <code class="docutils literal"><span class="pre">http://example.com/fr/books</span></code>, then the locale would be
+set to <code class="docutils literal"><span class="pre">fr</span></code>, assuming it was configured as a valid locale.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the value doesn&#8217;t match a valid locale as defined in the App configuration file, the default
+locale will be used in it&#8217;s place.</p>
+</div>
+</div>
+</div>
+<div class="section" id="retrieving-the-current-locale">
+<h3><a class="toc-backref" href="#id4">Retrieving the Current Locale</a><a class="headerlink" href="#retrieving-the-current-locale" title="Permalink to this headline">¶</a></h3>
+<p>The current locale can always be retrieved from the IncomingRequest object, through the <code class="docutils literal"><span class="pre">getLocale()</span></code> method.
+If your controller is extending <code class="docutils literal"><span class="pre">CodeIgniter\Controller</span></code>, this will be available through <code class="docutils literal"><span class="pre">$this-&gt;request</span></code>:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$locale</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getLocale</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Alternatively, you can use the <a class="reference internal" href="../concepts/services.html"><span class="doc">Services class</span></a> to retrieve the current request:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$locale</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getLocale</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="language-localization">
+<h2><a class="toc-backref" href="#id5">Language Localization</a><a class="headerlink" href="#language-localization" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="creating-language-files">
+<h3><a class="toc-backref" href="#id6">Creating Language Files</a><a class="headerlink" href="#creating-language-files" title="Permalink to this headline">¶</a></h3>
+<p>Languages do not have any specific naming convention that are required. The file should be named logically to
+describe the type of content it holds. For example, let&#8217;s say you want to create a file containing error messages.
+You might name it simply: <strong>Errors.php</strong>.</p>
+<p>Within the file you would return an array, where each element in the array has a language key and the string to return:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="s1">&#39;language_key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The actual message to be shown.&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It&#8217;s good practice to use a common prefix for all messages in a given file to avoid collisions with
+similarly named items in other files. For example, if you are creating error messages you might prefix them
+with error_</p>
+</div>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="p">[</span>
+    <span class="s1">&#39;errorEmailMissing&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;You must submit an email address&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;errorURLMissing&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;You must submit a URL&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;errorUsernameMissing&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;You must submit a username&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="basic-usage">
+<h3><a class="toc-backref" href="#id7">Basic Usage</a><a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h3>
+<p>You can use the <code class="docutils literal"><span class="pre">lang()</span></code> helper function to retrieve text from any of the language files, by passing the
+filename and the language key as the first paremeter, separated by a period (.). For example, to load the
+<code class="docutils literal"><span class="pre">errorEmailMissing</span></code> string from the <code class="docutils literal"><span class="pre">Errors</span></code> language file, you would do the following:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Errors.errorEmailMissing&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If the requested language key doesn&#8217;t exist in the file for the current locale, the string will be passed
+back, unchanged. In this example, it would return &#8216;Errors.errorEmailMissing&#8217; if it didn&#8217;t exist.</p>
+<div class="section" id="replacing-parameters">
+<h4>Replacing Parameters<a class="headerlink" href="#replacing-parameters" title="Permalink to this headline">¶</a></h4>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The following functions all require the <a class="reference external" href="http://php.net/manual/en/book.intl.php">intl</a> extension to
+be loaded on your system in order to work. If the extension is not loaded, no replacement will be attempted.
+A great overview can be found over at <a class="reference external" href="https://www.sitepoint.com/localization-demystified-understanding-php-intl/">Sitepoint</a>.</p>
+</div>
+<p>You can pass an array of values to replace placeholders in the language string as the second parameter to the
+<code class="docutils literal"><span class="pre">lang()</span></code> function. This allows for very simple number translations and formatting:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// The language file, Tests.php:</span>
+<span class="k">return</span> <span class="p">[</span>
+    <span class="s2">&quot;apples&quot;</span>      <span class="o">=&gt;</span> <span class="s2">&quot;I have {0, number} apples.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;men&quot;</span>         <span class="o">=&gt;</span> <span class="s2">&quot;I have {1, number} men out-performed the remaining {0, number}&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;namedApples&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;I have {number_apples, number, integer} apples.&quot;</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="c1">// Displays &quot;I have 3 apples.&quot;</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.apples&#39;</span><span class="p">,</span> <span class="p">[</span> <span class="mi">3</span> <span class="p">]);</span>
+</pre></div>
+</div>
+<p>The first item in the placeholder corresponds to the index of the item in the array, if it&#8217;s numerical:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Displays &quot;The top 23 men out-performed the remaining 20&quot;</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.men&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">23</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>You can also use named keys to make it easier to keep things straight, if you&#8217;d like:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Displays &quot;I have 3 apples.&quot;</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s2">&quot;Tests.namedApples&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;number_apples&#39;</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>Obviously, you can do more than just number replacement. According to the
+<a class="reference external" href="http://icu-project.org/apiref/icu4c/classMessageFormat.html#details">official ICU docs</a> for the underlying
+library, the following types of data can be replaced:</p>
+<ul class="simple">
+<li>numbers - integer, currency, percent</li>
+<li>dates - short, medium, long, full</li>
+<li>time - short, medium, long, full</li>
+<li>spellout - spells out numbers (i.e. 34 becomes thirty-four)</li>
+<li>ordinal</li>
+<li>duration</li>
+</ul>
+<p>Here are a few examples:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// The language file, Tests.php</span>
+<span class="k">return</span> <span class="p">[</span>
+    <span class="s1">&#39;shortTime&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;The time is now {0, time, short}.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;mediumTime&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The time is now {0, time, medium}.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;longTime&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;The time is now {0, time, long}.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fullTime&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;The time is now {0, time, full}.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;shortDate&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;The date is now {0, date, short}.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;mediumDate&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The date is now {0, date, medium}.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;longDate&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;The date is now {0, date, long}.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fullDate&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;The date is now {0, date, full}.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;spelledOut&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;34 is {0, spellout}&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ordinal&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;The ordinal is {0, ordinal}&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;duration&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;It has been {0, duration}&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="c1">// Displays &quot;The time is now 11:18 PM&quot;</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.shortTime&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+<span class="c1">// Displays &quot;The time is now 11:18:50 PM&quot;</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.mediumTime&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+<span class="c1">// Displays &quot;The time is now 11:19:09 PM CDT&quot;</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.longTime&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+<span class="c1">// Displays &quot;The time is now 11:19:26 PM Central Daylight Time&quot;</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.fullTime&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+
+<span class="c1">// Displays &quot;The date is now 8/14/16&quot;</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.shortDate&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+<span class="c1">// Displays &quot;The date is now Aug 14, 2016&quot;</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.mediumDate&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+<span class="c1">// Displays &quot;The date is now August 14, 2016&quot;</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.longDate&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+<span class="c1">// Displays &quot;The date is now Sunday, August 14, 2016&quot;</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.fullDate&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+
+<span class="c1">// Displays &quot;34 is thirty-four&quot;</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.spelledOut&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">34</span><span class="p">]);</span>
+
+<span class="c1">// Displays &quot;It has been 408,676:24:35&quot;</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.ordinal&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()]);</span>
+</pre></div>
+</div>
+<p>You should be sure to read up on the MessageFormatter class and the underlying ICU formatting to get a better
+idea on what capabilities it has, like permorming conditional replacement, pluralization, and more. Both of the links provided
+earlier will give you an excellent idea as to the options available.</p>
+</div>
+<div class="section" id="specifying-locale">
+<h4>Specifying Locale<a class="headerlink" href="#specifying-locale" title="Permalink to this headline">¶</a></h4>
+<p>To specify a different locale to be used when replacing parameters, you can pass the locale in as the
+third parameter to the <code class="docutils literal"><span class="pre">lang()</span></code> method.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Displays &quot;The time is now 23:21:28 GMT-5&quot;</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Test.longTime&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()],</span> <span class="s1">&#39;ru-RU&#39;</span><span class="p">);</span>
+
+<span class="c1">// Displays &quot;£7.41&quot;</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;{price, number, currency}&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;price&#39;</span> <span class="o">=&gt;</span> <span class="mf">7.41</span><span class="p">],</span> <span class="s1">&#39;en-GB&#39;</span><span class="p">);</span>
+<span class="c1">// Displays &quot;$7.41&quot;</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;{price, number, currency}&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;price&#39;</span> <span class="o">=&gt;</span> <span class="mf">7.41</span><span class="p">],</span> <span class="s1">&#39;en-US&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="nested-arrays">
+<h4>Nested Arrays<a class="headerlink" href="#nested-arrays" title="Permalink to this headline">¶</a></h4>
+<p>Language files also allow nested arrays to make working with lists, etc... easier.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Language/en/Fruit.php</span>
+
+<span class="k">return</span> <span class="p">[</span>
+    <span class="s1">&#39;list&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;Apples&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Bananas&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Grapes&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Lemons&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Oranges&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Strawberries&#39;</span>
+    <span class="p">]</span>
+<span class="p">];</span>
+
+<span class="c1">// Displays &quot;Apples, Bananas, Grapes, Lemons, Oranges, Strawberries&quot;</span>
+<span class="k">echo</span> <span class="nb">implode</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">,</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Fruit.list&#39;</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="alternative_php.html" class="btn btn-neutral float-right" title="Alternate PHP Syntax for View Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="api_responses.html" class="btn btn-neutral" title="API Response Trait" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 28, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-test',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

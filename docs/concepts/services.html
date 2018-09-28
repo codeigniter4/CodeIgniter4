@@ -1,0 +1,452 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Services &mdash; CodeIgniter4 4.0.0-test documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-test documentation" href="../index.html"/>
+        <link rel="up" title="CodeIgniter4 Overview" href="index.html"/>
+        <link rel="next" title="Working With HTTP Requests" href="http.html"/>
+        <link rel="prev" title="Autoloading Files" href="autoloader.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">CodeIgniter4 Overview</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoloader.html">Autoloading Files</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http.html">Working With HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html">Security Guidelines</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">CodeIgniter4 Overview</a> &raquo;</li>
+        
+      <li>Services</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="services">
+<h1>Services<a class="headerlink" href="#services" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#introduction" id="id1">Introduction</a><ul>
+<li><a class="reference internal" href="#convenience-functions" id="id2">Convenience Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#defining-services" id="id3">Defining Services</a><ul>
+<li><a class="reference internal" href="#allowing-parameters" id="id4">Allowing Parameters</a></li>
+<li><a class="reference internal" href="#shared-classes" id="id5">Shared Classes</a></li>
+<li><a class="reference internal" href="#service-discovery" id="id6">Service Discovery</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id1">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>All of the classes within CodeIgniter are provided as &#8220;services&#8221;. This simply means that, instead
+of hard-coding a class name to load, the classes to call are defined within a very simple
+configuration file. This file acts as a type of factory to create new instances of the required class.</p>
+<p>A quick example will probably make things clearer, so imagine that you need to pull in an instance
+of the Timer class. The simplest method would simply be to create a new instance of that class:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$timer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Debug\Timer</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>And this works great. Until you decide that you want to use a different timer class in its place.
+Maybe this one has some advanced reporting the default timer does not provide. In order to do this,
+you now have to locate all of the locations in your application that you have used the timer class.
+Since you might have left them in place to keep a performance log of your application constantly
+running, this might be a time-consuming and error-prone way to handle this. That&#8217;s where services
+come in handy.</p>
+<p>Instead of creating the instance ourself, we let a central class create an instance of the
+class for us. This class is kept very simple. It only contains a method for each class that we want
+to use as a service. The method typically returns a shared instance of that class, passing any dependencies
+it might have into it. Then, we would replace our timer creation code with code that calls this new class:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$timer</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">timer</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>When you need to change the implementation used, you can modify the services configuration file, and
+the change happens automatically throughout your application without you having to do anything. Now
+you just need to take advantage of any new functionality and you&#8217;re good to go. Very simple and
+error-resistant.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is recommended to only create services within controllers. Other files, like models and libraries should have the dependencies either passed into the constructor or through a setter method.</p>
+</div>
+<div class="section" id="convenience-functions">
+<h3><a class="toc-backref" href="#id2">Convenience Functions</a><a class="headerlink" href="#convenience-functions" title="Permalink to this headline">¶</a></h3>
+<p>Two functions have been provided for getting a service. These functions are always available.</p>
+<p>The first is <code class="docutils literal"><span class="pre">service()</span></code> which returns a new instance of the requested service. The only
+required parameter is the service name. This is the same as the method name within the Services
+file always returns a SHARED instance of the class, so calling the function multiple times should
+always return the same instance:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$logger</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If the creation method requires additional parameters, they can be passed after the service name:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;renderer&#39;</span><span class="p">,</span> <span class="nx">APPPATH</span><span class="o">.</span><span class="s1">&#39;views/&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The second function, <code class="docutils literal"><span class="pre">single_service()</span></code> works just like <code class="docutils literal"><span class="pre">service()</span></code> but returns a new instance of
+the class:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$logger</span> <span class="o">=</span> <span class="nx">single_service</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="defining-services">
+<h2><a class="toc-backref" href="#id3">Defining Services</a><a class="headerlink" href="#defining-services" title="Permalink to this headline">¶</a></h2>
+<p>To make services work well, you have to be able to rely on each class having a constant API, or
+<a class="reference external" href="http://php.net/manual/en/language.oop5.interfaces.php">interface</a>, to use. Almost all of
+CodeIgniter&#8217;s classes provide an interface that they adhere to. When you want to extend or replace
+core classes, you only need to ensure you meet the requirements of the interface and you know that
+the classes are compatible.</p>
+<p>For example, the <code class="docutils literal"><span class="pre">RouterCollection</span></code> class implements the <code class="docutils literal"><span class="pre">RouterCollectionInterface</span></code>. When you
+want to create a replacement that provides a different way to create routes, you just need to
+create a new class that implements the <code class="docutils literal"><span class="pre">RouterCollectionInterface</span></code>:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyRouter</span> <span class="k">implements</span> <span class="nx">\CodeIgniter\Router\RouteCollectionInterface</span>
+<span class="p">{</span>
+        <span class="c1">// Implement required methods here.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Finally, modify <strong>/application/Config/Services.php</strong> to create a new instance of <code class="docutils literal"><span class="pre">MyRouter</span></code>
+instead of <code class="docutils literal"><span class="pre">CodeIgniter\Router\RouterCollection</span></code>:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">routes</span><span class="p">()</span>
+<span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">\App\Router\MyRouter</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="allowing-parameters">
+<h3><a class="toc-backref" href="#id4">Allowing Parameters</a><a class="headerlink" href="#allowing-parameters" title="Permalink to this headline">¶</a></h3>
+<p>In some instances, you will want the option to pass a setting to the class during instantiation.
+Since the services file is a very simple class, it is easy to make this work.</p>
+<p>A good example is the <code class="docutils literal"><span class="pre">renderer</span></code> service. By default, we want this class to be able
+to find the views at <code class="docutils literal"><span class="pre">APPPATH.views/</span></code>. We want the developer to have the option of
+changing that path, though, if their needs require it. So the class accepts the <code class="docutils literal"><span class="pre">$viewPath</span></code>
+as a constructor parameter. The service method looks like this:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">renderer</span><span class="p">(</span><span class="nv">$viewPath</span><span class="o">=</span><span class="nx">APPPATH</span><span class="o">.</span><span class="s1">&#39;views/&#39;</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\View</span><span class="p">(</span><span class="nv">$viewPath</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This sets the default path in the constructor method, but allows for easily changing
+the path it uses:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">renderer</span><span class="p">(</span><span class="s1">&#39;/shared/views&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="shared-classes">
+<h3><a class="toc-backref" href="#id5">Shared Classes</a><a class="headerlink" href="#shared-classes" title="Permalink to this headline">¶</a></h3>
+<p>There are occasions where you need to require that only a single instance of a service
+is created. This is easily handled with the <code class="docutils literal"><span class="pre">getSharedInstance()</span></code> method that is called from within the
+factory method. This handles checking if an instance has been created and saved
+within the class, and, if not, creates a new one. All of the factory methods provide a
+<code class="docutils literal"><span class="pre">$getShared</span> <span class="pre">=</span> <span class="pre">true</span></code> value as the last parameter. You should stick to the method also:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Services</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">routes</span><span class="p">(</span><span class="nv">$getShared</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$getShared</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Router\RouteCollection</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nx">self</span><span class="o">::</span><span class="na">getSharedInstance</span><span class="p">(</span><span class="s1">&#39;routes&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="service-discovery">
+<h3><a class="toc-backref" href="#id6">Service Discovery</a><a class="headerlink" href="#service-discovery" title="Permalink to this headline">¶</a></h3>
+<p>CodeIgniter can automatically discover any ConfigServices.php files you may have created within any defined namespaces.
+This allows simple use of any module Services files. In order for custom Services files to be discovered, they must
+meet these requirements:</p>
+<ul class="simple">
+<li>It&#8217;s namespace must be defined <code class="docutils literal"><span class="pre">Config\Autoload.php</span></code></li>
+<li>Inside the namespace, the file must be found at <code class="docutils literal"><span class="pre">Config\Services.php</span></code></li>
+<li>It must extend <code class="docutils literal"><span class="pre">CodeIgniter\Config\BaseService</span></code></li>
+</ul>
+<p>A small example should clarify this.</p>
+<p>Imagine that you&#8217;ve created a new directory, <code class="docutils literal"><span class="pre">Blog</span></code> in your root directory. This will hold a blog module with controllers,
+models, etc, and you&#8217;d like to make some of the classes available as a service. The first step is to create a new file:
+<code class="docutils literal"><span class="pre">Blog\Config\Services.php</span></code>. The skeleton of the file should be:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">Blog\Config</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseService</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Services</span> <span class="k">extends</span> <span class="nx">BaseService</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">postManager</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="o">...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now you can use this file as described above. When you want to grab the posts service from any controller, you
+would simply use the framework&#8217;s <code class="docutils literal"><span class="pre">Config\Services</span></code> class to grab your service:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$postManager</span> <span class="o">=</span> <span class="nx">Config\Services</span><span class="o">::</span><span class="na">postManager</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If multiple Services file have the same method name, the first one found will be the instance returned.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="http.html" class="btn btn-neutral float-right" title="Working With HTTP Requests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="autoloader.html" class="btn btn-neutral" title="Autoloading Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 28, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-test',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
