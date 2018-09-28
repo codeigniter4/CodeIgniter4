@@ -46,6 +46,10 @@ The `release` bash script does the first six workflow steps,
 and the `post-release` script does the other three between
 the manual steps.
 
+For now, everything past the release branch build will be done
+nanually, until the condidence level is high enough to
+automate some/all of those steps.
+
 ## Assumptions
 
 You (a maintainer) have forked the main CodeIgniter4 repo,
@@ -92,3 +96,9 @@ Once the release branch has been vetted, and you have
 completed the manual steps, clean up with:
 
     `admin/post_release version [qualifier]`
+
+## Release notes
+
+On launch of a new release, a release notes post should be made in the
+announcements subforum. The planned text for it (so it can be previewed
+by admins) is in `admin/release_notes`.
