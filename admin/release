@@ -11,7 +11,7 @@ version=4
 qualifier=
 
 branch=release-
-devonly='.github/* admin/ build/ contributing/ user_guide_src/ CODE_OF_CONDUCT.md \
+devonly='admin/ build/ contributing/ user_guide_src/ CODE_OF_CONDUCT.md \
 DCO.txt PULL_REQUEST_TEMPLATE.md'
 which=release
 
@@ -80,12 +80,16 @@ sed -i "/Release Date/s/Not Released/$(date +'%B %d, %Y')/" user_guide_src/sourc
 #---------------------------------------------------
 # Generate the user guide
 echo -e "${BOLD}Generate the user guide${NORMAL}"
+
+if [ -d docs ]; then
+    rm -rf docs/
+fi
+
 cd user_guide_src
 
 # make the UG & embed it in the project root
 rm -rf build/*
 make html
-rm -Rf ../docs
 mv build/html ../docs
 touch ../docs/.nojekyll
 
@@ -98,13 +102,6 @@ cd ..
 # Hide stuff from the release bundle
 echo -e "${BOLD}Hide stuff from the release bundle${NORMAL}"
 
-# Restore the old .gitignore 
-if [ -f admin/previous-gitignore ]; then
-    cp -r admin/previous-gitignore .gitignore
-fi
-cp -r .gitignore admin/previous-gitignore
-
-# Add the dev only folders/files to .gitignore
 for f in $devonly; do
     echo $f >> .gitignore
 done
