@@ -126,7 +126,7 @@ mv user_guide_src/build/epub/CodeIgniter4.epub dist/CodeIgniter-${version}${qual
 
 cd build
 zip -r  ../dist/v${version}${qualifier}.zip *
-tar -zcvf  ../dist/v${version}${qualifier}.tar.gz *
+tar -zcf  ../dist/v${version}${qualifier}.tar.gz *
 
 #---------------------------------------------------
 # Done for now
