@@ -45,7 +45,7 @@ branch="release-$version$qualifier"
 echo -e "${BOLD}Creating $which $branch to $action ${NORMAL}"
 
 git checkout develop
-git branch -d $branch     # remove the branch if there
+git branch -d $branch &>/dev/null    # remove the branch if there
 git checkout -b $branch
 composer update
 
@@ -96,11 +96,14 @@ echo -e "${BOLD}Generate the user guide${NORMAL}"
 
 cd user_guide_src
 
-# make the UG & embed it in the project root
+# make the UG 
 rm -rf build/*
 make html
+make epub
 
 cd ..
+
+mv user_guide_src/build/html /docs
 
 #---------------------------------------------------
 # And finally, get ready for merging
@@ -118,18 +121,11 @@ for f in $release_empty; do
     mkdir build/$f
 done
 
-zip -r v${version}${qualifier}.zip dist/
-tar -zcvf v${version}${qualifier}.tar.gz dist/
-rm -rf dist/*
-mv *.zip dist/
-mv *.tar.gz dist/
-
-# Can't forget the epub
-cd user_guide_src
-make epub
-cd ..
+# add the docs
 mv user_guide_src/build/epub/CodeIgniter4.epub dist/CodeIgniter-${version}${qualifier}.epub
-mv user_guide_src/build/html /dist/docs
+
+zip -r  dist/v${version}${qualifier}.zip build/
+tar -zcvf  dist/v${version}${qualifier}.tar.gz build/
 
 #---------------------------------------------------
 # Done for now
