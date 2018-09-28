@@ -11,7 +11,7 @@ version=4
 qualifier=
 
 branch=release-
-devonly='.github/* admin/* build/* contributing/* user_guide_src/* CODE_OF_CONDUCT.md \
+devonly='.github/* admin/ build/ contributing/ user_guide_src/ CODE_OF_CONDUCT.md \
 DCO.txt PULL_REQUEST_TEMPLATE.md'
 which=release
 
