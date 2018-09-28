@@ -314,18 +314,51 @@ match the case of the actual directory and file itself or the system will
 throw errors on case-sensitive platforms.</p>
 </div>
 </div>
+<div class="section" id="running-the-app">
+<h2>Running the App<a class="headerlink" href="#running-the-app" title="Permalink to this headline">¶</a></h2>
+<p>Ready to test? You cannot run the app using PHP&#8217;s built-in server,
+since it will not properly process the <code class="docutils literal"><span class="pre">.htaccess</span></code> rules that are provided in
+<code class="docutils literal"><span class="pre">public</span></code>, and which eliminate the need to specify &#8220;index.php/&#8221;
+as part of a URL. CodeIgniter has its own command that you can use though.</p>
+<p>From the command line, at the root of your project:</p>
+<blockquote>
+<div>php spark serve</div></blockquote>
+<p>will start a web server, accessible on port 8080. If you set the location field
+in your browser to <code class="docutils literal"><span class="pre">localhost:8080</span></code>, you should see the CodeIgniter welcome page.</p>
+<p>You can now try several URLs in the browser location field, to see what the <cite>Pages</cite>
+controller you made above produces...</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">localhost:8080/pages</span></code> will show the results from the <cite>index</cite> method
+inside our <cite>Pages</cite> controller, which is to display the CodeIgniter &#8220;welcome&#8221; page,
+because &#8220;index&#8221; is the default controller method</li>
+<li><code class="docutils literal"><span class="pre">localhost:8080/pages/index</span></code> will also show the CodeIgniter &#8220;welcome&#8221; page,
+because we explicitly asked for the &#8220;index&#8221; methid</li>
+<li><code class="docutils literal"><span class="pre">localhost:8080/pages/view</span></code> will show the &#8220;home&#8221; page that you made above,
+because it is the default &#8220;page&#8221; parameter to the <cite>view()</cite> method.</li>
+<li><code class="docutils literal"><span class="pre">localhost:8080/pages/view/home</span></code> will also show the &#8220;home&#8221; page that you made above,
+because we explicitly asked for it</li>
+<li><code class="docutils literal"><span class="pre">localhost:8080/pages/view/about</span></code> will show the &#8220;about&#8221; page that you made above,
+because we explicitly asked for it</li>
+<li><code class="docutils literal"><span class="pre">localhost:8080/pages/view/shop</span></code> will show a &#8220;404 - File Not Found&#8221; error page,
+because there is no <cite>application/Views/pages/shop.php</cite></li>
+</ul>
+</div>
 <div class="section" id="routing">
 <h2>Routing<a class="headerlink" href="#routing" title="Permalink to this headline">¶</a></h2>
-<p>The controller is now functioning! Point your browser to
-<code class="docutils literal"><span class="pre">[your-site-url]index.php/pages/view</span></code> to see your page. When you visit
-<code class="docutils literal"><span class="pre">index.php/pages/view/about</span></code> you&#8217;ll see the about page, again including
-the header and footer.</p>
+<p>The controller is now functioning!</p>
 <p>Using custom routing rules, you have the power to map any URI to any
 controller and method, and break free from the normal convention:
 <code class="docutils literal"><span class="pre">http://example.com/[controller-class]/[controller-method]/[arguments]</span></code></p>
 <p>Let&#8217;s do that. Open the routing file located at
-<em>application/Config/Routes.php</em> and add the following two lines.
-Remove all other code that adds any element in the <code class="docutils literal"><span class="pre">$route</span></code> items.</p>
+<em>application/Config/Routes.php</em> and look for the &#8220;Route Definitions&#8221;
+section of the configuration file.</p>
+<p>The only uncommented line there to start with should be::</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This directive says that any incoming request without any content
+specified should be handled by the <code class="docutils literal"><span class="pre">index</span></code> method inside the <code class="docutils literal"><span class="pre">Home</span></code> controller.</p>
+<p>Add the following two lines, in front of the route directive for &#8216;/&#8217;.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Pages/view&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::view/$1&#39;</span><span class="p">);</span>
 </pre></div>
@@ -377,7 +410,7 @@ method in the pages controller? Awesome!</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Sep 26, 2018.
+      Last updated on Sep 28, 2018.
 
     </p>
   </div>

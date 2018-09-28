@@ -206,105 +206,112 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <p>TODO: rewrite for CodeIgniter4</p>
-<div class="section" id="upgrading-from-3-x-to-4-x">
+  <div class="section" id="upgrading-from-3-x-to-4-x">
 <h1>Upgrading from 3.x to 4.x<a class="headerlink" href="#upgrading-from-3-x-to-4-x" title="Permalink to this headline">¶</a></h1>
-<p>Before performing an update you should take your site offline by
-replacing the index.php file with a static one.</p>
-<div class="section" id="step-1-update-your-codeigniter-files">
-<h2>Step 1: Update your CodeIgniter files<a class="headerlink" href="#step-1-update-your-codeigniter-files" title="Permalink to this headline">¶</a></h2>
-<p>Replace all files and directories in your <em>system/</em> directory.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you have any custom developed files in these directories,
-please make copies of them first.</p>
-</div>
-</div>
-<div class="section" id="step-2-change-database-connection-handling">
-<h2>Step 2: Change database connection handling<a class="headerlink" href="#step-2-change-database-connection-handling" title="Permalink to this headline">¶</a></h2>
-<p>&#8220;Loading&#8221; a database, whether by using the <em>config/autoload.php</em> settings
-or manually via calling <code class="docutils literal"><span class="pre">$this-&gt;load-&gt;database()</span></code> or the less-known
-<code class="docutils literal"><span class="pre">DB()</span></code> function, will now throw a <code class="docutils literal"><span class="pre">RuntimeException</span></code> in case of a
-failure.</p>
-<p>In addition, being unable to set the configured character set is now also
-considered a connection failure.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This has been the case for most database drivers in the in the
-past as well (i.e. all but the &#8216;mysql&#8217;, &#8216;mysqli&#8217; and &#8216;postgre&#8217;
-drivers).</p>
-</div>
-<p>What this means is that if you&#8217;re unable to connect to a database, or
-have an erroneous character set configured, CodeIgniter will no longer
-fail silently, but will throw an exception instead.</p>
-<p>You may choose to explicitly catch it (and for that purpose you can&#8217;t use
-<em>config/autoload.php</em> to load the <a class="reference internal" href="../database/index.html"><span class="doc">Database Class</span></a>)</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">try</span>
-<span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">database</span><span class="p">();</span>
-<span class="p">}</span>
-<span class="k">catch</span> <span class="p">(</span><span class="nx">RuntimeException</span> <span class="nv">$e</span><span class="p">)</span>
-<span class="p">{</span>
-        <span class="c1">// Handle the failure</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>Or you may leave it to CodeIgniter&#8217;s default exception handler, which would
-log the error message and display an error screen if you&#8217;re running in
-development mode.</p>
-<div class="section" id="remove-db-set-charset-calls">
-<h3>Remove db_set_charset() calls<a class="headerlink" href="#remove-db-set-charset-calls" title="Permalink to this headline">¶</a></h3>
-<p>With the above-mentioned changes, the purpose of the <code class="docutils literal"><span class="pre">db_set_charset()</span></code>
-method would now only be to change the connection character set at runtime.
-That doesn&#8217;t make sense and that&#8217;s the reason why most database drivers
-don&#8217;t support it at all.
-Thus, <code class="docutils literal"><span class="pre">db_set_charset()</span></code> is no longer necessary and is removed.</p>
-</div>
-</div>
-<div class="section" id="step-3-check-logic-related-to-uri-parsing-of-cli-requests">
-<h2>Step 3: Check logic related to URI parsing of CLI requests<a class="headerlink" href="#step-3-check-logic-related-to-uri-parsing-of-cli-requests" title="Permalink to this headline">¶</a></h2>
-<p>When running a CodeIgniter application from the CLI, the
-<a class="reference internal" href="../libraries/uri.html"><span class="doc">URI Library</span></a> will now ignore the
-<code class="docutils literal"><span class="pre">$config['url_suffix']</span></code> and <code class="docutils literal"><span class="pre">$config['permitted_uri_chars']</span></code>
-configuration settings.</p>
-<p>These two options don&#8217;t make sense under the command line (which is why
-this change was made) and therefore you shouldn&#8217;t be affected by this, but
-if you&#8217;ve relied on them for some reason, you&#8217;d probably have to make some
-changes to your code.</p>
-</div>
-<div class="section" id="step-4-check-cache-library-configurations-for-redis-memcache-d">
-<h2>Step 4: Check Cache Library configurations for Redis, Memcache(d)<a class="headerlink" href="#step-4-check-cache-library-configurations-for-redis-memcache-d" title="Permalink to this headline">¶</a></h2>
-<p>The new improvements for the &#8216;redis&#8217; and &#8216;memcached&#8217; drivers of the
-<a class="reference internal" href="../libraries/caching.html"><span class="doc">Cache Library</span></a> may require some small
-adjustments to your configuration values ...</p>
-<div class="section" id="redis">
-<h3>Redis<a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h3>
-<p>If you&#8217;re using the &#8216;redis&#8217; driver with a UNIX socket connection, you&#8217;ll
-have to move the socket path from <code class="docutils literal"><span class="pre">$config['socket']</span></code> to
-<code class="docutils literal"><span class="pre">$config['host']</span></code> instead.</p>
-<p>The <code class="docutils literal"><span class="pre">$config['socket_type']</span></code> option is also removed, although that won&#8217;t
-affect your application - it will be ignored and the connection type will
-be determined by the format used for <code class="docutils literal"><span class="pre">$config['host']</span></code> instead.</p>
-</div>
-<div class="section" id="memcache-d">
-<h3>Memcache(d)<a class="headerlink" href="#memcache-d" title="Permalink to this headline">¶</a></h3>
-<p>The &#8216;memcached&#8217; will now ignore configurations that don&#8217;t specify a <code class="docutils literal"><span class="pre">host</span></code>
-value (previously, it just set the host to the default &#8216;127.0.0.1&#8217;).</p>
-<p>Therefore, if you&#8217;ve added a configuration that only sets e.g. a <code class="docutils literal"><span class="pre">port</span></code>,
-you will now have to explicitly set the <code class="docutils literal"><span class="pre">host</span></code> to &#8216;127.0.0.1&#8217; as well.</p>
-</div>
-</div>
-<div class="section" id="step-5-check-usage-of-doctype-html-helper">
-<h2>Step 5: Check usage of doctype() HTML helper<a class="headerlink" href="#step-5-check-usage-of-doctype-html-helper" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference internal" href="../helpers/html_helper.html"><span class="doc">HTML Helper</span></a> function
-<a class="reference internal" href="../helpers/html_helper.html#doctype" title="doctype"><code class="xref php php-func docutils literal"><span class="pre">doctype()</span></code></a> used to default to &#8216;xhtml1-strict&#8217; (XHTML 1.0 Strict)
-when no document type was specified. That default value is now changed to
-&#8216;html5&#8217;, which obviously stands for the modern HTML 5 standard.</p>
-<p>Nothing should be really broken by this change, but if your application
-relies on the default value, you should double-check it and either
-explicitly set the desired format, or adapt your front-end to use proper
-HTML 5 formatting.</p>
-</div>
+<p>CodeIgniter 4 is a rewrite of the framework, and is not backwards compatible.
+It is more appropriate to think of converting your app, rather than upgrading it.
+Once you have done that, upgrading from one version of CodeIgniter 4 to the next
+will be straightforward.</p>
+<p>The &#8220;lean, mean and simple&#8221; philosophy has been retained, but the
+implementation has a lot of differences, compared to CodeIgniter 3.</p>
+<p>There is no 12-step checklist for upgrading. Instead, start with a copy
+of CodeIgniter 4 in a new project folder,
+<a class="reference internal" href="index.html"><span class="doc">however you wish to install and use it</span></a>,
+and then convert and integrate your app components.
+We&#8217;ll try to point out the most important considerations here.</p>
+<p>Not all of the CI3 libraries have been ported or rewritten for CI4!
+See the threads in the <a class="reference external" href="https://forum.codeigniter.com/forum-33.html">CodeIgniter 4 Roadmap</a>
+subforum for an uptodate list!</p>
+<p><strong>Do read the user guide</strong> before embarking on a project conversion!</p>
+<p><strong>Downloads</strong></p>
+<ul class="simple">
+<li>CI4 is still available as a ready-to-run zip or tarball, which
+includes the user guide (though in the <cite>docs</cite> subfolder</li>
+<li>It can also be installed using Composer</li>
+</ul>
+<p><strong>Namespaces</strong></p>
+<ul class="simple">
+<li>CI4 is built for PHP7.1+, and everything in the framework is namespaced, even the helpers</li>
+</ul>
+<p><strong>Application Structure</strong></p>
+<ul class="simple">
+<li>The framework still has <code class="docutils literal"><span class="pre">application</span></code> and <code class="docutils literal"><span class="pre">system</span></code> folders, with the same
+interpretation as before</li>
+<li>The framework now provides for a <code class="docutils literal"><span class="pre">public</span></code> folder, intended as the document
+root for your app</li>
+<li>There is also a <code class="docutils literal"><span class="pre">writable</span></code> folder, to hold cache data, logs, and session data</li>
+<li>The <code class="docutils literal"><span class="pre">application</span></code> folder looks very similar to that for CI3, with some
+name changes, and some subfolders
+moved to the <code class="docutils literal"><span class="pre">writable</span></code> folder</li>
+<li>There is no longer a nested <code class="docutils literal"><span class="pre">application/core</span></code> folder, as we have
+a different mechanism for extending framework components (see below)</li>
+</ul>
+<p><strong>Class loading</strong></p>
+<ul class="simple">
+<li>There is no longer a CodeIgniter &#8220;superobject&#8221;, with framework component
+references magically injected as properties of your controller</li>
+<li>Classes are instantiated where needed, and components are managed
+by <code class="docutils literal"><span class="pre">Services</span></code></li>
+<li>The class loader automatically handles PSR4 style class locating,
+within the <code class="docutils literal"><span class="pre">App</span></code> (application) and <code class="docutils literal"><span class="pre">CodeIgniter</span></code> (i.e. system) top level
+namespaces; with composer autoloading support, and even using educated
+guessing to find your models and libraries if they are in the right
+folder even though not namespaced</li>
+<li>You can configure the class loading to support whatever application structure
+you are most comfortable with, including the &#8220;HMVC&#8221; style</li>
+</ul>
+<p><strong>Controllers</strong></p>
+<ul class="simple">
+<li>Controllers extend CodeIgniterController instead of CI_Controller</li>
+<li>They don&#8217;t use a constructor any more (to invoke CI &#8220;magic&#8221;) unless
+that is part of a base controller you make</li>
+<li>CI provides <code class="docutils literal"><span class="pre">Request</span></code> and <code class="docutils literal"><span class="pre">Response</span></code> objects for you to work with -
+more powerful than the CI3-way</li>
+<li>If you want a base controller (MY_Controller in CI3), make it
+where you like, e.g. BaseController extends Controller, and then
+have your controllers extend it</li>
+</ul>
+<p><strong>Models</strong></p>
+<ul class="simple">
+<li>Models extend CodeIgniterModel instead of CI_Model</li>
+<li>The CI4 model has much more functionality, including automatic
+database connection, basic CRUD, in-model validation, and
+automatic pagination</li>
+<li>CI4 also has the <code class="docutils literal"><span class="pre">Entity</span></code> class you can build on, for
+richer data mapping to your database tables</li>
+<li>Instead of CI3&#8217;s <code class="docutils literal"><span class="pre">$this-&gt;load-&gt;model(x);</span></code>, you would now use
+<code class="docutils literal"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your component</li>
+</ul>
+<p><strong>Views</strong></p>
+<ul class="simple">
+<li>Your views look much like before, but they are invoked differently ...
+instead of CI3&#8217;s <code class="docutils literal"><span class="pre">$this-&gt;load-&gt;view(x);</span></code> you can use <code class="docutils literal"><span class="pre">echo</span> <span class="pre">view(x);</span></code></li>
+<li>CI4 supports view &#8220;cells&#8221;, to build your response in pieces</li>
+<li>The template parser is still there, but substantially
+enhanced</li>
+</ul>
+<p><strong>Libraries</strong></p>
+<ul class="simple">
+<li>Your app classes can still go inside <code class="docutils literal"><span class="pre">application\Libraries</span></code>, but they
+don&#8217;t have to</li>
+<li>Instead of CI3&#8217;s <code class="docutils literal"><span class="pre">$this-&gt;load-&gt;library(x);</span></code> you can now use
+<code class="docutils literal"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your
+component</li>
+</ul>
+<p><strong>Helpers</strong></p>
+<ul class="simple">
+<li>Helpers are pretty much the same as before, though some have been simplified</li>
+</ul>
+<p><strong>Extending the framework</strong></p>
+<ul class="simple">
+<li>You don&#8217;t need a <code class="docutils literal"><span class="pre">core</span></code> folder to hold <code class="docutils literal"><span class="pre">MY_...</span></code> framework
+component extensions or replacements</li>
+<li>You don&#8217;t need <code class="docutils literal"><span class="pre">MY_x</span></code> classes inside your libraries folder
+to extend or replace CI4 pieces</li>
+<li>Make any such classes where you like, and add appropriate
+service methods in <code class="docutils literal"><span class="pre">application/Config/Services.php</span></code> to load
+your components instead of the default ones</li>
+</ul>
 </div>
 
 
@@ -330,7 +337,7 @@ HTML 5 formatting.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Sep 26, 2018.
+      Last updated on Sep 28, 2018.
 
     </p>
   </div>

@@ -245,6 +245,11 @@ is more fully described on the <a class="reference internal" href="../general/en
 By default, the application will run using the &#8220;production&#8221; environment. To
 take advantage of the debugging tools provided, you should set the environment
 to &#8220;develop&#8221;.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">Using PHP&#8217;s built-in web server is likely to cause problems,
+as it does not process the <cite>.htaccess</cite> file used to properly handle requests.</p>
+</div>
 <p>That&#8217;s it!</p>
 <p>If you&#8217;re new to CodeIgniter, please read the <a class="reference internal" href="../intro/index.html"><span class="doc">Getting
 Started</span></a> section of the User Guide
@@ -277,7 +282,7 @@ to begin learning how to build dynamic PHP applications. Enjoy!</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Sep 26, 2018.
+      Last updated on Sep 28, 2018.
 
     </p>
   </div>
