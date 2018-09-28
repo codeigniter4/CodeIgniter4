@@ -83,6 +83,7 @@ echo -e "${BOLD}Generate the user guide${NORMAL}"
 cd user_guide_src
 
 # make the UG & embed it in the project root
+rm -rf build/*
 make html
 rm -Rf ../docs
 mv build/html ../docs
@@ -112,7 +113,6 @@ done
 # And finally, get ready for merging
 git add .
 git commit -m "Release ${version}${qualifier}"
-
 
 #---------------------------------------------------
 # Done for now

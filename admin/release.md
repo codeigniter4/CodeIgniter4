@@ -91,4 +91,4 @@ Complete the next few steps of the release manually:
 Once the release branch has been vetted, and you have
 completed the manual steps, clean up with:
 
-    `admin/post_release`
+    `admin/post_release version [qualifier]`
