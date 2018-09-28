@@ -11,8 +11,7 @@ version=4
 qualifier=
 
 branch=release-
-devonly='admin/ build/ contributing/ user_guide_src/ CODE_OF_CONDUCT.md \
-DCO.txt PULL_REQUEST_TEMPLATE.md'
+devonly='admin/ build/ contributing/ user_guide_src/ CODE_OF_CONDUCT.md DCO.txt PULL_REQUEST_TEMPLATE.md'
 which=release
 
 BOLD='\033[1m'
