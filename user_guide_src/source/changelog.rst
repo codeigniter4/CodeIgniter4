@@ -3,7 +3,7 @@ Change Log
 ##########
 
 Version |release|
-=================
+=================================
 
 Release Date: Not Released
 
