@@ -103,7 +103,7 @@ make epub
 
 cd ..
 
-mv user_guide_src/build/html /docs
+mv user_guide_src/build/html build/docs
 
 #---------------------------------------------------
 # And finally, get ready for merging
@@ -124,8 +124,8 @@ done
 # add the docs
 mv user_guide_src/build/epub/CodeIgniter4.epub dist/CodeIgniter-${version}${qualifier}.epub
 
-zip -r  dist/v${version}${qualifier}.zip build/
-tar -zcvf  dist/v${version}${qualifier}.tar.gz build/
+zip -r  dist/v${version}${qualifier}.zip build/*
+tar -zcvf  dist/v${version}${qualifier}.tar.gz build/*
 
 #---------------------------------------------------
 # Done for now
