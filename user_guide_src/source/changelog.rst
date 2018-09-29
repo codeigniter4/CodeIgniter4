@@ -2,10 +2,10 @@
 Change Log
 ##########
 
-Version |release|
+Version 4.0.0-alpha.1
 =================================
 
-Release Date: Not Released
+Release Date: September 28, 2018
 
 **Rewrite of the CodeIgniter framework**
 
