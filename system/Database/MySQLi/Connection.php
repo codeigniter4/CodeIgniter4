@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,22 +29,22 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
-use CodeIgniter\DatabaseException;
+use \CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Connection for MySQLi
  */
 class Connection extends BaseConnection implements ConnectionInterface
 {
+
 	/**
 	 * Database driver
 	 *
@@ -79,9 +79,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * Has to be preserved without being assigned to $conn_id.
 	 *
-	 * @var    MySQLi
+	 * @var \MySQLi
 	 */
-	protected $mysqli;
+	public $mysqli;
 
 	//--------------------------------------------------------------------
 
@@ -89,7 +89,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Connect to the database.
 	 *
 	 * @param bool $persistent
+	 *
 	 * @return mixed
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function connect($persistent = false)
 	{
@@ -97,20 +99,20 @@ class Connection extends BaseConnection implements ConnectionInterface
 		if ($this->hostname[0] === '/')
 		{
 			$hostname = null;
-			$port     = null;
-			$socket   = $this->hostname;
+			$port = null;
+			$socket = $this->hostname;
 		}
 		else
 		{
-			$hostname = ($persistent === true)
-				? 'p:'.$this->hostname
-				: $this->hostname;
-			$port     = empty($this->port) ? null : $this->port;
-			$socket   = null;
+			$hostname = ($persistent === true) ? 'p:' . $this->hostname : $this->hostname;
+			$port = empty($this->port) ? null : $this->port;
+			$socket = null;
 		}
 
 		$client_flags = ($this->compress === true) ? MYSQLI_CLIENT_COMPRESS : 0;
 		$this->mysqli = mysqli_init();
+
+		mysqli_report(MYSQLI_REPORT_ALL & ~MYSQLI_REPORT_INDEX);
 
 		$this->mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
 
@@ -118,21 +120,19 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			if ($this->strictOn)
 			{
-				$this->mysqli->options(MYSQLI_INIT_COMMAND,
-					'SET SESSION sql_mode = CONCAT(@@sql_mode, ",", "STRICT_ALL_TABLES")');
+				$this->mysqli->options(MYSQLI_INIT_COMMAND, 'SET SESSION sql_mode = CONCAT(@@sql_mode, ",", "STRICT_ALL_TABLES")');
 			}
 			else
 			{
-				$this->mysqli->options(MYSQLI_INIT_COMMAND,
-					'SET SESSION sql_mode =
-					REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
-					@@sql_mode,
-					"STRICT_ALL_TABLES,", ""),
-					",STRICT_ALL_TABLES", ""),
-					"STRICT_ALL_TABLES", ""),
-					"STRICT_TRANS_TABLES,", ""),
-					",STRICT_TRANS_TABLES", ""),
-					"STRICT_TRANS_TABLES", "")'
+				$this->mysqli->options(MYSQLI_INIT_COMMAND, 'SET SESSION sql_mode =
+						REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
+												@@sql_mode,
+												"STRICT_ALL_TABLES,", ""),
+											",STRICT_ALL_TABLES", ""),
+										"STRICT_ALL_TABLES", ""),
+									"STRICT_TRANS_TABLES,", ""),
+								",STRICT_TRANS_TABLES", ""),
+							"STRICT_TRANS_TABLES", "")'
 				);
 			}
 		}
@@ -140,11 +140,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 		if (is_array($this->encrypt))
 		{
 			$ssl = [];
-			empty($this->encrypt['ssl_key']) OR $ssl['key'] = $this->encrypt['ssl_key'];
-			empty($this->encrypt['ssl_cert']) OR $ssl['cert'] = $this->encrypt['ssl_cert'];
-			empty($this->encrypt['ssl_ca']) OR $ssl['ca'] = $this->encrypt['ssl_ca'];
-			empty($this->encrypt['ssl_capath']) OR $ssl['capath'] = $this->encrypt['ssl_capath'];
-			empty($this->encrypt['ssl_cipher']) OR $ssl['cipher'] = $this->encrypt['ssl_cipher'];
+			empty($this->encrypt['ssl_key']) || $ssl['key'] = $this->encrypt['ssl_key'];
+			empty($this->encrypt['ssl_cert']) || $ssl['cert'] = $this->encrypt['ssl_cert'];
+			empty($this->encrypt['ssl_ca']) || $ssl['ca'] = $this->encrypt['ssl_ca'];
+			empty($this->encrypt['ssl_capath']) || $ssl['capath'] = $this->encrypt['ssl_capath'];
+			empty($this->encrypt['ssl_cipher']) || $ssl['cipher'] = $this->encrypt['ssl_cipher'];
 
 			if ( ! empty($ssl))
 			{
@@ -153,7 +153,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 					if ($this->encrypt['ssl_verify'])
 					{
 						defined('MYSQLI_OPT_SSL_VERIFY_SERVER_CERT') &&
-						$this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
+								$this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
 					}
 					// Apparently (when it exists), setting MYSQLI_OPT_SSL_VERIFY_SERVER_CERT
 					// to FALSE didn't do anything, so PHP 5.6.16 introduced yet another
@@ -169,32 +169,25 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 				$client_flags |= MYSQLI_CLIENT_SSL;
 				$this->mysqli->ssl_set(
-					isset($ssl['key']) ? $ssl['key'] : null,
-					isset($ssl['cert']) ? $ssl['cert'] : null,
-					isset($ssl['ca']) ? $ssl['ca'] : null,
-					isset($ssl['capath']) ? $ssl['capath'] : null,
-					isset($ssl['cipher']) ? $ssl['cipher'] : null
+						$ssl['key'] ?? null, $ssl['cert'] ?? null, $ssl['ca'] ?? null, $ssl['capath'] ?? null, $ssl['cipher'] ?? null
 				);
 			}
 		}
 
-		if ($this->mysqli->real_connect($hostname, $this->username, $this->password, $this->database, $port, $socket,
-			$client_flags)
+		if ($this->mysqli->real_connect($hostname, $this->username, $this->password, $this->database, $port, $socket, $client_flags)
 		)
 		{
 			// Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
 			if (
-				($client_flags & MYSQLI_CLIENT_SSL)
-				&& version_compare($this->mysqli->client_info, '5.7.3', '<=')
-				&& empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")
-				                      ->fetch_object()->Value)
+					($client_flags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, '5.7.3', '<=') && empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")
+									->fetch_object()->Value)
 			)
 			{
 				$this->mysqli->close();
 				$message = 'MySQLi was configured for an SSL connection, but got an unencrypted connection instead!';
 				log_message('error', $message);
 
-				if ($this->db->db_debug)
+				if ($this->DBDebug)
 				{
 					throw new DatabaseException($message);
 				}
@@ -208,7 +201,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 				if ($this->db->debug)
 				{
-					throw new DatabaseException('Unable to set client connection character set: '.$this->charset);
+					throw new DatabaseException('Unable to set client connection character set: ' . $this->charset);
 				}
 				return false;
 			}
@@ -225,14 +218,22 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Keep or establish the connection if no queries have been sent for
 	 * a length of time exceeding the server's idle timeout.
 	 *
-	 * @return mixed
+	 * @return void
 	 */
 	public function reconnect()
 	{
-		if ($this->connID !== false && $this->connID->ping() === false)
-		{
-			$this->connID = false;
-		}
+		$this->close();
+		$this->initialize();
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Close the database connection.
+	 */
+	protected function _close()
+	{
+		$this->connID->close();
 	}
 
 	//--------------------------------------------------------------------
@@ -249,6 +250,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 		if ($databaseName === '')
 		{
 			$databaseName = $this->database;
+		}
+
+		if (empty($this->connID))
+		{
+			$this->initialize();
 		}
 
 		if ($this->connID->select_db($databaseName))
@@ -275,6 +281,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 			return $this->dataCache['version'];
 		}
 
+		if (empty($this->mysqli))
+		{
+			$this->initialize();
+		}
+
 		return $this->dataCache['version'] = $this->mysqli->server_info;
 	}
 
@@ -283,12 +294,21 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Executes the query against the database.
 	 *
-	 * @param $sql
+	 * @param string $sql
 	 *
 	 * @return mixed
 	 */
 	public function execute($sql)
 	{
+		while($this->connID->more_results())
+		{
+			$this->connID->next_result();
+			if($res = $this->connID->store_result())
+			{
+				$res->free();
+			}
+		}
+
 		return $this->connID->query($this->prepQuery($sql));
 	}
 
@@ -309,7 +329,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		// modifies the query so that it a proper number of affected rows is returned.
 		if ($this->deleteHack === true && preg_match('/^\s*DELETE\s+FROM\s+(\S+)\s*$/i', $sql))
 		{
-			return trim($sql).' WHERE 1=1';
+			return trim($sql) . ' WHERE 1=1';
 		}
 
 		return $sql;
@@ -337,6 +357,16 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function _escapeString(string $str): string
 	{
+		if (is_bool($str))
+		{
+			return $str;
+		}
+
+		if (! $this->connID)
+		{
+			$this->initialize();
+		}
+
 		return $this->connID->real_escape_string($str);
 	}
 
@@ -351,11 +381,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function _listTables($prefixLimit = false): string
 	{
-		$sql = 'SHOW TABLES FROM '.$this->escapeIdentifiers($this->database);
+		$sql = 'SHOW TABLES FROM ' . $this->escapeIdentifiers($this->database);
 
 		if ($prefixLimit !== FALSE && $this->DBPrefix !== '')
 		{
-			return $sql." LIKE '".$this->escapeLikeStr($this->DBPrefix)."%'";
+			return $sql . " LIKE '" . $this->escapeLikeStr($this->DBPrefix) . "%'";
 		}
 
 		return $sql;
@@ -372,7 +402,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function _listColumns(string $table = ''): string
 	{
-		return 'SHOW COLUMNS FROM '.$this->protectIdentifiers($table, TRUE, NULL, FALSE);
+		return 'SHOW COLUMNS FROM ' . $this->protectIdentifiers($table, TRUE, NULL, FALSE);
 	}
 
 	//--------------------------------------------------------------------
@@ -383,27 +413,127 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @param	string	$table
 	 * @return	array
 	 */
-	public function fieldData(string $table)
+	public function _fieldData(string $table)
 	{
-		if (($query = $this->query('SHOW COLUMNS FROM '.$this->protectIdentifiers($table, TRUE, NULL, FALSE))) === FALSE)
+		if (($query = $this->query('SHOW COLUMNS FROM ' . $this->protectIdentifiers($table, TRUE, NULL, FALSE))) === FALSE)
 		{
 			return FALSE;
 		}
 		$query = $query->getResultObject();
 
-		$retval = array();
-		for ($i = 0, $c = count($query); $i < $c; $i++)
+		$retval = [];
+		for ($i = 0, $c = count($query); $i < $c; $i ++ )
 		{
-			$retval[$i]			= new \stdClass();
-			$retval[$i]->name		= $query[$i]->Field;
+			$retval[$i] = new \stdClass();
+			$retval[$i]->name = $query[$i]->Field;
 
-			sscanf($query[$i]->Type, '%[a-z](%d)',
-				$retval[$i]->type,
-				$retval[$i]->max_length
+			sscanf($query[$i]->Type, '%[a-z](%d)', $retval[$i]->type, $retval[$i]->max_length
 			);
 
-			$retval[$i]->default		= $query[$i]->Default;
-			$retval[$i]->primary_key	= (int) ($query[$i]->Key === 'PRI');
+			$retval[$i]->default = $query[$i]->Default;
+			$retval[$i]->primary_key = (int) ($query[$i]->Key === 'PRI');
+		}
+
+		return $retval;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns an object with index data
+	 *
+	 * @param	string	$table
+	 * @return	array
+	 */
+	public function _indexData(string $table)
+	{
+		if (($query = $this->query('SHOW CREATE TABLE ' . $this->protectIdentifiers($table, TRUE, NULL, FALSE))) === FALSE)
+		{
+			return FALSE;
+		}
+		$row = $query->getRowArray();
+		if ( ! $row)
+		{
+			return FALSE;
+		}
+
+		$retval = [];
+		foreach (explode("\n", $row['Create Table']) as $line)
+		{
+			$line = trim($line);
+			if (strpos($line, 'PRIMARY KEY') === 0)
+			{
+				$obj = new \stdClass();
+				$obj->name = 'PRIMARY KEY';
+				$_fields = explode(',', preg_replace('/^.*\((.+)\).*$/', '$1', $line));
+				$obj->fields = array_map(function($v) {
+					return trim($v, '`');
+				}, $_fields);
+				$obj->type = 'PRIMARY';
+
+				$retval[] = $obj;
+			}
+			elseif (($unique = strpos($line, 'UNIQUE KEY') === 0) || strpos($line, 'KEY') === 0)
+			{
+				if (preg_match('/KEY `([^`]+)` \((.+)\)/', $line, $matches))
+				{
+					$obj = new \stdClass();
+					$obj->name = $matches[1];
+					$obj->fields = array_map(function($v) {
+						return trim($v, '`');
+					}, explode(',', $matches[2]));
+					$obj->type = $unique ? 'UNIQUE' : 'INDEX';
+
+					$retval[] = $obj;
+				}
+				else
+				{
+					throw new \LogicException('parsing key string failed.');
+				}
+			}
+		}
+
+		return $retval;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns an object with Foreign key data
+	 *
+	 * @param	string	$table
+	 * @return	array
+	 */
+	public function _foreignKeyData(string $table)
+	{
+		$sql = '
+                    SELECT
+                        tc.CONSTRAINT_NAME,
+                        tc.TABLE_NAME,
+                        rc.REFERENCED_TABLE_NAME
+                    FROM information_schema.TABLE_CONSTRAINTS AS tc
+                    INNER JOIN information_schema.REFERENTIAL_CONSTRAINTS AS rc
+                        ON tc.CONSTRAINT_NAME = rc.CONSTRAINT_NAME
+                    WHERE
+                        tc.CONSTRAINT_TYPE = '.$this->escape('FOREIGN KEY').' AND
+                        tc.TABLE_SCHEMA = '.$this->escape($this->database).' AND
+                        tc.TABLE_NAME = '.$this->escape($table);
+
+		if (($query = $this->query($sql)) === false)
+		{
+			return false;
+		}
+		$query = $query->getResultObject();
+
+		$retval = [];
+		foreach ($query as $row)
+		{
+			$obj = new \stdClass();
+			$obj->constraint_name = $row->CONSTRAINT_NAME;
+                        $obj->table_name = $row->TABLE_NAME;
+                        $obj->foreign_table_name = $row->REFERENCED_TABLE_NAME;
+
+			$retval[] = $obj;
 		}
 
 		return $retval;
@@ -424,13 +554,13 @@ class Connection extends BaseConnection implements ConnectionInterface
 	{
 		if ( ! empty($this->mysqli->connect_errno))
 		{
-			return array(
-				'code' => $this->mysqli->connect_errno,
-				'message' => $this->_mysqli->connect_error
-			);
+			return [
+				'code'		 => $this->mysqli->connect_errno,
+				'message'	 => $this->_mysqli->connect_error
+			];
 		}
 
-		return array('code' => $this->connID->errno, 'message' => $this->connID->error);
+		return ['code' => $this->connID->errno, 'message' => $this->connID->error];
 	}
 
 	//--------------------------------------------------------------------
@@ -447,5 +577,53 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Begin Transaction
+	 *
+	 * @return	bool
+	 */
+	protected function _transBegin(): bool
+	{
+		$this->connID->autocommit(false);
 
+		return $this->connID->begin_transaction();
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Commit Transaction
+	 *
+	 * @return	bool
+	 */
+	protected function _transCommit(): bool
+	{
+		if ($this->connID->commit())
+		{
+			$this->connID->autocommit(true);
+			return true;
+		}
+
+		return false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Rollback Transaction
+	 *
+	 * @return	bool
+	 */
+	protected function _transRollback(): bool
+	{
+		if ($this->connID->rollback())
+		{
+			$this->connID->autocommit(true);
+			return true;
+		}
+
+		return false;
+	}
+
+	//--------------------------------------------------------------------
 }

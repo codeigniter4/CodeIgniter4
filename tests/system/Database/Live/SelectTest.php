@@ -1,19 +1,22 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\Database\BaseResult;
+use CodeIgniter\Test\CIDatabaseTestCase;
+
 
 /**
  * @group DatabaseLive
  */
-class SelectTest extends \CIDatabaseTestCase
+class SelectTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+
+	//--------------------------------------------------------------------
 
 	public function testSelectAllByDefault()
 	{
-	    $row = $this->db->table('job')->get()->getRowArray();
+		$row = $this->db->table('job')->get()->getRowArray();
 
 		$this->assertArrayHasKey('id', $row);
 		$this->assertArrayHasKey('name', $row);
@@ -26,9 +29,9 @@ class SelectTest extends \CIDatabaseTestCase
 	{
 		$row = $this->db->table('job')->select('name')->get()->getRowArray();
 
-		$this->assertFalse(array_key_exists('id', $row));
+		$this->assertArrayNotHasKey('id', $row);
 		$this->assertArrayHasKey('name', $row);
-		$this->assertFalse(array_key_exists('description', $row));
+		$this->assertArrayNotHasKey('description', $row);
 	}
 
 	//--------------------------------------------------------------------
@@ -37,7 +40,7 @@ class SelectTest extends \CIDatabaseTestCase
 	{
 		$row = $this->db->table('job')->select('name, description')->get()->getRowArray();
 
-		$this->assertFalse(array_key_exists('id', $row));
+		$this->assertArrayNotHasKey('id', $row);
 		$this->assertArrayHasKey('name', $row);
 		$this->assertArrayHasKey('description', $row);
 	}
@@ -120,7 +123,7 @@ class SelectTest extends \CIDatabaseTestCase
 	{
 	    $users = $this->db->table('user')->select('country')->distinct()->get()->getResult();
 
-		$this->assertEquals(3, count($users));
+		$this->assertCount(3, $users);
 	}
 
 	//--------------------------------------------------------------------
@@ -129,7 +132,7 @@ class SelectTest extends \CIDatabaseTestCase
 	{
 		$users = $this->db->table('user')->select('country')->distinct(false)->get()->getResult();
 
-		$this->assertEquals(4, count($users));
+		$this->assertCount(4, $users);
 	}
 
 	//--------------------------------------------------------------------

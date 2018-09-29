@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,20 +29,20 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license      http://opensource.org/licenses/MIT	MIT License
- * @link         http://codeigniter.com
+ * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
  * @since        Version 4.0.0
  * @filesource
  */
-
-use CodeIgniter\Services;
+use CodeIgniter\Config\Services;
 
 /**
  * Timers collector
  */
 class Timers extends BaseCollector
 {
+
 	/**
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
@@ -84,19 +84,18 @@ class Timers extends BaseCollector
 
 		foreach ($rows as $name => $info)
 		{
-			if ($name == 'total_execution') continue;
+			if ($name == 'total_execution')
+				continue;
 
 			$data[] = [
-				'name' => ucwords(str_replace('_', ' ', $name)),
-			    'component' => 'Timer',
-			    'start'     => $info['start'],
-			    'duration'  => $info['end'] - $info['start']
+				'name'		 => ucwords(str_replace('_', ' ', $name)),
+				'component'	 => 'Timer',
+				'start'		 => $info['start'],
+				'duration'	 => $info['end'] - $info['start']
 			];
 		}
 
 		return $data;
 	}
-
-	//--------------------------------------------------------------------
 
 }

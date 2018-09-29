@@ -10,7 +10,7 @@ Information From Executing a Query
 The insert ID number when performing database inserts.
 
 .. note:: If using the PDO driver with PostgreSQL, or using the Interbase
-	driver, this function requires a $name parameter, which specifies the 
+	driver, this function requires a $name parameter, which specifies the
 	appropriate sequence to check for the insert id.
 
 **$db->affectedRows()**
@@ -27,17 +27,6 @@ Displays the number of affected rows, when doing "write" type queries
 
 Returns a Query object that represents the last query that was run (the query string, not the result).
 
-
-.. note:: Disabling the **saveQueries** setting in your database
-	configuration will render this function useless.
-
-**$db->getQueries()**
-
-Returns an array of Query objects that represent all of the queries ran on this connection.
-
-.. note:: Disabling the **saveQueries** setting in your database
-	configuration will render this function useless.
-
 Information About Your Database
 ===============================
 
@@ -47,8 +36,8 @@ Permits you to determine the number of rows in a particular table.
 Submit the table name in the first parameter. This is part of Query Builder.
 Example::
 
-	echo $db->table('my_table')->count_all();
-	
+	echo $db->table('my_table')->countAll();
+
 	// Produces an integer, like 25
 
 **$db->getPlatform()**

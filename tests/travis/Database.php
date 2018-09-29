@@ -9,7 +9,7 @@ $dbconfig = [
 		'password'     => '',
 		'database'     => 'test',
 		'DBDriver'     => 'MySQLi',
-		'DBPrefix'     => '',
+		'DBPrefix'     => 'db_',
 		'pConnect'     => false,
 		'DBDebug'     => (ENVIRONMENT !== 'production'),
 		'cacheOn'     => false,
@@ -21,7 +21,6 @@ $dbconfig = [
 		'compress'     => false,
 		'strictOn'     => false,
 		'failover'     => [],
-		'saveQueries' => true,
 	],
 
     'postgres' => [
@@ -31,7 +30,7 @@ $dbconfig = [
 	    'password'     => '',
 	    'database'     => 'test',
 	    'DBDriver'     => 'Postgre',
-	    'DBPrefix'     => '',
+	    'DBPrefix'     => 'db_',
 	    'pConnect'     => false,
 	    'DBDebug'     => (ENVIRONMENT !== 'production'),
 	    'cacheOn'     => false,
@@ -43,7 +42,27 @@ $dbconfig = [
 	    'compress'     => false,
 	    'strictOn'     => false,
 	    'failover'     => [],
-	    'saveQueries' => true,
-    ]
+    ],
+
+	'sqlite' => [
+		'DSN'          => '',
+		'hostname'     => 'localhost',
+		'username'     => '',
+		'password'     => '',
+		'database'     => ':memory:',
+		'DBDriver'     => 'SQLite3',
+		'DBPrefix'     => 'db_',
+		'pConnect'     => false,
+		'DBDebug'     => (ENVIRONMENT !== 'production'),
+		'cacheOn'     => false,
+		'cacheDir'     => '',
+		'charset'      => 'utf8',
+		'DBCollat'     => 'utf8_general_ci',
+		'swapPre'      => '',
+		'encrypt'      => false,
+		'compress'     => false,
+		'strictOn'     => false,
+		'failover'     => [],
+	]
 
 ];

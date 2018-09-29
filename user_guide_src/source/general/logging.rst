@@ -2,6 +2,10 @@
 Logging Information
 ###################
 
+.. contents::
+    :local:
+    :depth: 2
+
 You can log information to the local log files by using the ``log_message()`` method. You must supply
 the "level" of the error in the first parameter, indicating what type of message it is (debug, error, etc).
 The second parameter is the message itself::
@@ -13,14 +17,14 @@ The second parameter is the message itself::
 
 There are eight different log levels, matching to the `RFC 5424 <http://tools.ietf.org/html/rfc5424>`_ levels, and they are as follows:
 
-* debug - Detailed debug information
-* info - Interesting events in your application, like a user logging in, logging SQL queries, etc. 
-* notice - Normal, but significant events in your application.
-* warning - Exceptional occurrences that are not errors, like the user of deprecated APIs, poor use of an API, or other undesirable things that are not necessarily wrong.
-* error - Runtime errors that do not require immediate action but should typically be logged and monitored.
-* critical - Critical conditions, like an application component not available, or an unexpected exception.
-* alert - Action must be taken immediately, like when an entire website is down, the database unavailable, etc. 
-* emergency - The system is unusable.
+* **debug** - Detailed debug information.
+* **info** - Interesting events in your application, like a user logging in, logging SQL queries, etc.
+* **notice** - Normal, but significant events in your application.
+* **warning** - Exceptional occurrences that are not errors, like the user of deprecated APIs, poor use of an API, or other undesirable things that are not necessarily wrong.
+* **error** - Runtime errors that do not require immediate action but should typically be logged and monitored.
+* **critical** - Critical conditions, like an application component not available, or an unexpected exception.
+* **alert** - Action must be taken immediately, like when an entire website is down, the database unavailable, etc.
+* **emergency** - The system is unusable.
 
 The logging system does not provide ways to alert sysadmins or webmasters about these events, they solely log
 the information. For many of the more critical event levels, the logging happens automatically by the
@@ -37,7 +41,7 @@ are requested to be logged by the application, but the threshold doesn't allow t
 ignored. The simplest method to use is to set this value to the minimum level that you want to have logged. For example,
 if you want to log debug messages, and not information messages, you would set the threshold to ``5``. Any log requests with
 a level of 5 or less (which includes runtime errors, system errors, etc) would be logged and info, notices, and warnings
-would be ignored.::
+would be ignored::
 
 	public $threshold = 5;
 
@@ -56,16 +60,16 @@ The logging system can support multiple methods of handling logging running at t
 be set to handle specific levels and ignore the rest. Currently, two handlers come with a default install:
 
 - **File Handler** is the default handler and will create a single file for every day locally. This is the
-	recommended method of logging.
+  recommended method of logging.
 - **ChromeLogger Handler** If you have the `ChromeLogger extension <https://craig.is/writing/chrome-logger>`_
-	installed in the Chrome web browser, you can use this handler to display the log information in
-	Chrome's console window.
+  installed in the Chrome web browser, you can use this handler to display the log information in
+  Chrome's console window.
 
 The handlers are configured in the main configuration file, in the ``$handlers`` property, which is simply
 an array of handlers and their configuration. Each handler is specified with the key being the fully
 name-spaced class name. The value will be an array of varying properties, specific to each handler.
 Each handler's section will have one property in common: ``handles``, which is an array of log level
-__names__ that the handler will log information for.
+*names* that the handler will log information for.
 ::
 
 	public $handlers = [
@@ -79,8 +83,6 @@ __names__ that the handler will log information for.
 			'handles' => ['critical', 'alert', 'emergency', 'debug', 'error', 'info', 'notice', 'warning'],
 		]
 	];
-
-
 
 Modifying the Message With Context
 ==================================
@@ -103,11 +105,11 @@ If you want to log an Exception or an Error, you can use the key of 'exception',
 Exception or Error itself. A string will be generated from that object containing the error message, the
 file name and line number.  You must still provide the exception placeholder in the message::
 
-	try 
+	try
 	{
 		... Something throws error here
 	}
-	catch (\Exception #e)
+	catch (\Exception $e)
 	{
 		log_message('error', '[ERROR] {exception}', ['exception' => $e]);
 	}
@@ -132,7 +134,6 @@ Several core placeholders exist that will be automatically expanded for you base
 | {env:foo}      | The value of 'foo' in $_ENV                       |
 +----------------+---------------------------------------------------+
 
-
 Using Third-Party Loggers
 =========================
 
@@ -141,8 +142,8 @@ You can use any other logger that you might like as long as it extends from eith
 that you can easily drop in use for any PSR3-compatible logger, or create your own.
 
 You must ensure that the third-party logger can be found by the system, by adding it to either
-the ``/application/config/autoload.php`` configuration file, or through another autoloader,
-like Composer. Next, you should modify ``/application/config/services.php`` to point the ``logger``
+the ``/application/Config/Autoload.php`` configuration file, or through another autoloader,
+like Composer. Next, you should modify ``/application/Config/Services.php`` to point the ``logger``
 alias to your new class name.
 
 Now, any call that is done through the ``log_message()`` function will use your library instead.
@@ -154,7 +155,4 @@ If you would like to implement your libraries in a framework-agnostic method, yo
 the ``CodeIgniter\Log\LoggerAwareTrait`` which implements the ``setLogger()`` method for you.
 Then, when you use your library under different environments for frameworks, your library should
 still be able to log as it would expect, as long as it can find a PSR3 compatible logger.
-
-
-
 

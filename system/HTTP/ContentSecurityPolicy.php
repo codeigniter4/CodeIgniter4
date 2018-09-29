@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,14 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
-use Config\ContentSecurityPolicy;
 
 /**
  * Class ContentSecurityPolicy
@@ -52,119 +50,142 @@ use Config\ContentSecurityPolicy;
  */
 class ContentSecurityPolicy
 {
+
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $baseURI = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $childSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $connectSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $defaultSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $fontSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $formAction = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var type
 	 */
 	protected $frameAncestors = null;
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $imageSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $mediaSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $objectSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var type
 	 */
 	protected $pluginTypes = null;
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var string
 	 */
 	protected $reportURI = null;
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var bool
 	 */
 	protected $sandbox = false;
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $scriptSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $styleSrc = [];
+	
+	/**
+	 * Used for security enforcement
+	 * @var array
+	 */
+	protected $manifestSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var bool
 	 */
 	protected $upgradeInsecureRequests = false;
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var bool
 	 */
 	protected $reportOnly = false;
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $validSources = ['self', 'none', 'unsafe-inline', 'unsafe-eval'];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $nonces = [];
+
+	/**
+	 * An array of header info since we have
+	 * to build ourself before passing to Response.
+	 *
+	 * @var array
+	 */
+	protected $tempHeaders = [];
+
+	/**
+	 * An array of header info to build
+	 * that should only be reported.
+	 *
+	 * @var array
+	 */
+	protected $reportOnlyHeaders = [];
 
 	//--------------------------------------------------------------------
 
@@ -173,9 +194,9 @@ class ContentSecurityPolicy
 	 *
 	 * Stores our default values from the Config file.
 	 *
-	 * @param ContentSecurityPolicy $config
+	 * @param \Config\ContentSecurityPolicy $config
 	 */
-	public function __construct(ContentSecurityPolicy $config)
+	public function __construct(\Config\ContentSecurityPolicy $config)
 	{
 		foreach ($config as $setting => $value)
 		{
@@ -203,7 +224,6 @@ class ContentSecurityPolicy
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Setters
 	//--------------------------------------------------------------------
@@ -242,7 +262,7 @@ class ContentSecurityPolicy
 	 */
 	public function setBaseURI($uri, bool $reportOnly)
 	{
-		$this->baseURI = [(string)$uri => $reportOnly];
+		$this->baseURI = [(string) $uri => $reportOnly];
 
 		return $this;
 	}
@@ -312,7 +332,7 @@ class ContentSecurityPolicy
 	 */
 	public function setDefaultSrc($uri, bool $reportOnly = false)
 	{
-		$this->defaultSrc = [(string)$uri => $reportOnly];
+		$this->defaultSrc = [(string) $uri => $reportOnly];
 
 		return $this;
 	}
@@ -418,6 +438,26 @@ class ContentSecurityPolicy
 
 		return $this;
 	}
+	
+	//--------------------------------------------------------------------
+
+	/**
+	 * Adds a new valid endpoint for manifest sources. Can be either
+	 * a URI class or simple string.
+	 *
+	 * @see https://www.w3.org/TR/CSP/#directive-manifest-src
+	 *
+	 * @param	   $uri
+	 * @param bool $reportOnly
+	 *
+	 * @return $this
+	 */
+	public function addManifestSrc($uri, bool $reportOnly = false)
+	{
+		$this->addOption($uri, 'manifestSrc', $reportOnly);
+
+		return $this;
+	}
 
 	//--------------------------------------------------------------------
 
@@ -473,7 +513,7 @@ class ContentSecurityPolicy
 	 */
 	public function setReportURI($uri)
 	{
-		$this->reportURI = (string)$uri;
+		$this->reportURI = (string) $uri;
 
 		return $this;
 	}
@@ -493,7 +533,7 @@ class ContentSecurityPolicy
 	 */
 	public function setSandbox(bool $value = true, array $flags = null)
 	{
-		if (empty($this->sandbox) && ! count($flags))
+		if (empty($this->sandbox) && empty($flags))
 		{
 			$this->sandbox = $value;
 		}
@@ -563,7 +603,6 @@ class ContentSecurityPolicy
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Utility
 	//--------------------------------------------------------------------
@@ -577,6 +616,12 @@ class ContentSecurityPolicy
 	 */
 	protected function addOption($options, string $target, bool $reportOnly = false)
 	{
+		// Ensure we have an array to work with...
+		if (is_string($this->{$target}))
+		{
+			$this->{$target} = [$this->{$target}];
+		}
+
 		if (is_array($options))
 		{
 			$newOptions = [];
@@ -590,7 +635,7 @@ class ContentSecurityPolicy
 		}
 		else
 		{
-			$this->{$target}[] = [$options => $reportOnly];
+			$this->{$target}[$options] = $reportOnly;
 		}
 	}
 
@@ -601,43 +646,40 @@ class ContentSecurityPolicy
 	 * placeholders with actual nonces, that we'll then add to our
 	 * headers.
 	 *
-	 * @param ResponseInterface $response
+	 * @param ResponseInterface|\CodeIgniter\HTTP\Response $response
 	 */
 	protected function generateNonces(ResponseInterface &$response)
 	{
 		$body = $response->getBody();
 
-		if (empty($body)) return;
+		if (empty($body))
+			return;
 
-		if (! is_array($this->styleSrc)) $this->styleSrc = [$this->styleSrc];
-		if (! is_array($this->scriptSrc)) $this->scriptSrc = [$this->scriptSrc];
+		if ( ! is_array($this->styleSrc))
+			$this->styleSrc = [$this->styleSrc];
+		if ( ! is_array($this->scriptSrc))
+			$this->scriptSrc = [$this->scriptSrc];
 
 		// Replace style placeholders with nonces
 		$body = preg_replace_callback(
-			'/{csp-style-nonce}/',
-			function ($matches)
-			{
-				$nonce = bin2hex(random_bytes(12));
+				'/{csp-style-nonce}/', function ($matches) {
+			$nonce = bin2hex(random_bytes(12));
 
-				$this->styleSrc[] = 'nonce-'. $nonce;
+			$this->styleSrc[] = 'nonce-' . $nonce;
 
-				return 'nonce='.$nonce;
-			},
-			$body
+			return "nonce={$nonce}";
+		}, $body
 		);
 
 		// Replace script placeholders with nonces
 		$body = preg_replace_callback(
-				'/{csp-script-nonce}/',
-				function ($matches)
-				{
-					$nonce = bin2hex(random_bytes(12));
+				'/{csp-script-nonce}/', function ($matches) {
+			$nonce = bin2hex(random_bytes(12));
 
-					$this->scriptSrc[] = 'nonce-'. $nonce;
+			$this->scriptSrc[] = 'nonce-' . $nonce;
 
-					return 'nonce='.$nonce;
-				},
-				$body
+			return "nonce={$nonce}";
+		}, $body
 		);
 
 		$response->setBody($body);
@@ -650,7 +692,7 @@ class ContentSecurityPolicy
 	 * Content-Security-Policy and Content-Security-Policy-Report-Only headers
 	 * with their values to the response object.
 	 *
-	 * @param ResponseInterface $response
+	 * @param ResponseInterface|\CodeIgniter\HTTP\Response $response
 	 */
 	protected function buildHeaders(ResponseInterface &$response)
 	{
@@ -659,21 +701,22 @@ class ContentSecurityPolicy
 		$response->setHeader('Content-Security-Policy-Report-Only', []);
 
 		$directives = [
-			'base-uri' => 'baseURI',
-		    'child-src' => 'childSrc',
-		    'connect-src' => 'connectSrc',
-		    'default-src' => 'defaultSrc',
-		    'font-src' => 'fontSrc',
-		    'form-action' => 'formAction',
-		    'frame-ancestors' => 'frameAncestors',
-		    'img-src' => 'imageSrc',
-		    'media-src' => 'mediaSrc',
-		    'object-src' => 'objectSrc',
-		    'plugin-types' => 'pluginTypes',
-		    'script-src' => 'scriptSrc',
-		    'style-src' => 'styleSrc',
-		    'sandbox' => 'sandbox',
-		    'report-uri' => 'reportURI'
+			'base-uri'			 => 'baseURI',
+			'child-src'			 => 'childSrc',
+			'connect-src'		 => 'connectSrc',
+			'default-src'		 => 'defaultSrc',
+			'font-src'			 => 'fontSrc',
+			'form-action'		 => 'formAction',
+			'frame-ancestors'	 => 'frameAncestors',
+			'img-src'			 => 'imageSrc',
+			'media-src'			 => 'mediaSrc',
+			'object-src'		 => 'objectSrc',
+			'plugin-types'		 => 'pluginTypes',
+			'script-src'		 => 'scriptSrc',
+			'style-src'			 => 'styleSrc',
+			'manifest-src'		 => 'manifestSrc',
+			'sandbox'			 => 'sandbox',
+			'report-uri'		 => 'reportURI'
 		];
 
 		foreach ($directives as $name => $property)
@@ -681,10 +724,35 @@ class ContentSecurityPolicy
 			// base_uri
 			if ( ! empty($this->{$property}))
 			{
-				$this->addToHeader($name, $this->{$property}, $response);
+				$this->addToHeader($name, $this->{$property});
 			}
 		}
 
+		// Compile our own header strings here since if we just
+		// append it to the response, it will be joined with
+		// commas, not semi-colons as we need.
+		if (! empty($this->tempHeaders))
+		{
+			$header = '';
+			foreach ($this->tempHeaders as $name => $value)
+			{
+				$header .= " {$name} {$value};";
+			}
+			$response->appendHeader('Content-Security-Policy', $header);
+		}
+
+		if (! empty($this->reportOnlyHeaders))
+		{
+			$header = '';
+			foreach ($this->reportOnlyHeaders as $name => $value)
+			{
+				$header .= " {$name} {$value};";
+			}
+			$response->appendHeader('Content-Security-Policy-Report-Only', $header);
+		}
+
+		$this->tempHeaders = [];
+		$this->reportOnlyHeaders = [];
 	}
 
 	//--------------------------------------------------------------------
@@ -696,15 +764,14 @@ class ContentSecurityPolicy
 	 *
 	 * @param string            $name
 	 * @param array|string|null $values
-	 * @param ResponseInterface $response
 	 */
-	protected function addToHeader(string $name, $values = null, ResponseInterface &$response)
+	protected function addToHeader(string $name, $values = null)
 	{
-		if ( empty($values))
+		if (empty($values))
 		{
 			// It's possible that directives like 'sandbox' will not
 			// have any values passed in, so add them to the main policy.
-			$response->appendHeader('Content-Security-Policy', $name);
+			$this->tempHeaders[$name] = null;
 			return;
 		}
 
@@ -713,22 +780,20 @@ class ContentSecurityPolicy
 			$values = [$values => 0];
 		}
 
-		$sources       = [];
+		$sources = [];
 		$reportSources = [];
 
 		foreach ($values as $value => $reportOnly)
 		{
 			if (is_numeric($value) && is_string($reportOnly) && ! empty($reportOnly))
 			{
-				$value      = $reportOnly;
+				$value = $reportOnly;
 				$reportOnly = 0;
 			}
 
 			if ($reportOnly === true)
 			{
-				$reportSources[] = in_array($value, $this->validSources)
-					? "'{$value}'"
-					: $value;
+				$reportSources[] = in_array($value, $this->validSources) ? "'{$value}'" : $value;
 			}
 			else
 			{
@@ -738,24 +803,21 @@ class ContentSecurityPolicy
 				}
 				else
 				{
-					$sources[] = in_array($value, $this->validSources)
-							? "'{$value}'"
-							: $value;
+					$sources[] = in_array($value, $this->validSources) ? "'{$value}'" : $value;
 				}
 			}
 		}
 
-		if (count($sources))
+		if (! empty($sources))
 		{
-			$response->appendHeader('Content-Security-Policy', $name.' '.implode(' ', $sources));
+			$this->tempHeaders[$name] = implode(' ', $sources);
 		}
 
-		if (count($reportSources))
+		if (! empty($reportSources))
 		{
-			$response->appendHeader('Content-Security-Policy-Report-Only', $name.' '.implode(' ', $reportSources));
+			$this->reportOnlyHeaders[$name] = implode(' ', $reportSources);
 		}
 	}
 
 	//--------------------------------------------------------------------
-
 }

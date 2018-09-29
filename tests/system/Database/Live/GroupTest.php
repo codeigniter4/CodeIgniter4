@@ -1,13 +1,15 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Test\CIDatabaseTestCase;
+
 /**
  * @group DatabaseLive
  */
-class GroupTest extends \CIDatabaseTestCase
+class GroupTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	public function testGroupBy()
 	{
@@ -17,7 +19,7 @@ class GroupTest extends \CIDatabaseTestCase
 						->get()
 						->getResult();
 
-		$this->assertEquals(4, count($result));
+		$this->assertCount(4, $result);
 	}
 
 	//--------------------------------------------------------------------
@@ -31,7 +33,7 @@ class GroupTest extends \CIDatabaseTestCase
 		                ->get()
 		                ->getResultArray();
 
-		$this->assertEquals(2, count($result));
+		$this->assertCount(2, $result);
 	}
 
 	//--------------------------------------------------------------------
@@ -45,7 +47,7 @@ class GroupTest extends \CIDatabaseTestCase
 						->get()
 						->getResult();
 
-		$this->assertEquals(2, count($result));
+		$this->assertCount(2, $result);
 	}
 
 	//--------------------------------------------------------------------
@@ -61,7 +63,7 @@ class GroupTest extends \CIDatabaseTestCase
 				->get()
 				->getResult();
 
-		$this->assertEquals(1, count($result));
+		$this->assertCount(1, $result);
 		$this->assertEquals('Richard A Causey', $result[0]->name);
 	}
 
@@ -78,7 +80,7 @@ class GroupTest extends \CIDatabaseTestCase
 				->get()
 				->getResult();
 
-		$this->assertEquals(2, count($result));
+		$this->assertCount(2, $result);
 		$this->assertEquals('Ahmadinejad', $result[0]->name);
 		$this->assertEquals('Chris Martin', $result[1]->name);
 	}
@@ -96,7 +98,7 @@ class GroupTest extends \CIDatabaseTestCase
 				->get()
 				->getResult();
 
-		$this->assertEquals(1, count($result));
+		$this->assertCount(1, $result);
 		$this->assertEquals('Derek Jones', $result[0]->name);
 	}
 
@@ -113,7 +115,7 @@ class GroupTest extends \CIDatabaseTestCase
 				->get()
 				->getResult();
 
-		$this->assertEquals(3, count($result));
+		$this->assertCount(3, $result);
 		$this->assertEquals('Derek Jones', $result[0]->name);
 		$this->assertEquals('Richard A Causey', $result[1]->name);
 		$this->assertEquals('Chris Martin', $result[2]->name);

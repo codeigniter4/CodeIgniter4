@@ -1,5 +1,7 @@
-<?php namespace CodeIgniter\HTTP\Files;
+<?php
+namespace CodeIgniter\HTTP\Files;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 /**
  * CodeIgniter
  *
@@ -7,7 +9,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +31,13 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
+use CodeIgniter\Files\File;
 
 /**
  * Value object representing a single file uploaded through an
@@ -45,8 +48,9 @@
  *
  * @package CodeIgniter\HTTP
  */
-class UploadedFile implements UploadedFileInterface
+class UploadedFile extends File implements UploadedFileInterface
 {
+
 	/**
 	 * The path to the temporary file.
 	 *
@@ -76,21 +80,6 @@ class UploadedFile implements UploadedFileInterface
 	protected $originalMimeType;
 
 	/**
-	 * The type of file based on
-	 * our inspections.
-	 *
-	 * @var string
-	 */
-	protected $mimeType;
-
-	/**
-	 * The files size in bytes
-	 *
-	 * @var int
-	 */
-	protected $size;
-
-	/**
 	 * The error constant of the upload
 	 * (one of PHP's UPLOADERRXXX constants)
 	 *
@@ -118,12 +107,14 @@ class UploadedFile implements UploadedFileInterface
 	 */
 	public function __construct(string $path, string $originalName, string $mimeType = null, int $size = null, int $error = null)
 	{
-		$this->path             = $path;
-		$this->name             = $originalName;
-		$this->originalName     = $originalName;
-		$this->originalMimeType = $mimeType;
-		$this->size             = $size;
-		$this->error            = $error;
+		$this->path				 = $path;
+		$this->name				 = $originalName;
+		$this->originalName		 = $originalName;
+		$this->originalMimeType	 = $mimeType;
+		$this->size				 = $size;
+		$this->error			 = $error;
+
+		parent::__construct($path, false);
 	}
 
 	//--------------------------------------------------------------------
@@ -152,41 +143,74 @@ class UploadedFile implements UploadedFileInterface
 	 *
 	 * @param string $targetPath Path to which to move the uploaded file.
 	 * @param string $name       the name to rename the file to.
+	 * @param bool   $overwrite  State for indicating whether to overwrite the previously generated file with the same
+	 *                           name or not.
+	 *
 	 * @return bool
 	 *
 	 * @throws \InvalidArgumentException if the $path specified is invalid.
 	 * @throws \RuntimeException on any error during the move operation.
 	 * @throws \RuntimeException on the second or subsequent call to the method.
 	 */
-	public function move(string $targetPath, string $name = null): bool
+	public function move(string $targetPath, string $name = null, bool $overwrite = false)
 	{
+		$targetPath = $this->setPath($targetPath); //set the target path
+
 		if ($this->hasMoved)
 		{
-			throw new \RuntimeException('The file has already been moved.');
+			throw HTTPException::forAlreadyMoved();
 		}
 
-		if (! $this->isValid())
+		if ( ! $this->isValid())
 		{
-			throw new \RuntimeException('The original file is not a valid file.');
+			throw HTTPException::forInvalidFile();
 		}
 
-		$targetPath = rtrim($targetPath, '/').'/';
-		$name = is_null($name) ? $this->getName() : $name;
+		$targetPath	 = rtrim($targetPath, '/') . '/';
+		$name		 = is_null($name) ? $this->getName() : $name;
+		$destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
-		if (! @move_uploaded_file($this->path, $targetPath.$name))
+		try
+		{
+			@move_uploaded_file($this->path, $destination);
+		}
+		catch (\Exception $e)
 		{
 			$error = error_get_last();
-			throw new \RuntimeException(sprintf('Could not move file %s to %s (%s)', basename($this->path), $targetPath, strip_tags($error['message'])));
+			throw HTTPException::forMoveFailed(basename($this->path), $targetPath, strip_tags($error['message']));
 		}
 
-		@chmod($targetPath, 0666 & ~umask());
-
-		unlink($this->path);
+		@chmod($targetPath, 0777 & ~umask());
 
 		// Success, so store our new information
-		$this->path = $targetPath;
-		$this->name = $name;
-		$this->hasMoved = true;
+		$this->path		 = $targetPath;
+		$this->name		 = basename($destination);
+		$this->hasMoved	 = true;
+
+		return true;
+	}
+
+	/**
+	 * create file target path if
+	 * the set path does not exist
+	 *
+	 * @param string $path
+	 *
+	 * @return string The path set or created.
+	 */
+	protected function setPath($path)
+	{
+		if ( ! is_dir($path))
+		{
+			mkdir($path, 0777, true);
+			//create the index.html file
+			if ( ! file_exists($path . 'index.html'))
+			{
+				$file = fopen($path . 'index.html', 'x+');
+				fclose($file);
+			}
+		}
+		return $path;
 	}
 
 	//--------------------------------------------------------------------
@@ -201,43 +225,6 @@ class UploadedFile implements UploadedFileInterface
 	public function hasMoved(): bool
 	{
 		return $this->hasMoved;
-	}
-
-	//--------------------------------------------------------------------
-
-
-	/**
-	 * Retrieve the file size.
-	 *
-	 * Implementations SHOULD return the value stored in the "size" key of
-	 * the file in the $_FILES array if available, as PHP calculates this based
-	 * on the actual size transmitted.
-	 *
-	 * @param string $unit The unit to return:
-	 *      - b   Bytes
-	 *      - kb  Kilobytes
-	 *      - mb  Megabytes
-	 *
-	 * @return int|null The file size in bytes or null if unknown.
-	 */
-	public function getSize(string $unit='b'): int
-	{
-		if (is_null($this->size))
-		{
-			$this->size = filesize($this->path);
-		}
-
-		switch (strtolower($unit))
-		{
-			case 'kb':
-				return number_format($this->size / 1024, 3);
-				break;
-			case 'mb':
-				return number_format(($this->size / 1024) / 1024, 3);
-				break;
-		}
-
-		return $this->size;
 	}
 
 	//--------------------------------------------------------------------
@@ -270,31 +257,45 @@ class UploadedFile implements UploadedFileInterface
 
 	/**
 	 * Get error string
-	 * 
+	 *
 	 * @staticvar array $errors
-	 * @return type
+	 *
+	 * @return string
 	 */
 	public function getErrorString()
 	{
 		static $errors = [
-			UPLOAD_ERR_INI_SIZE   => 'The file "%s" exceeds your upload_max_filesize ini directive.',
-			UPLOAD_ERR_FORM_SIZE  => 'The file "%s" exceeds the upload limit defined in your form.',
-			UPLOAD_ERR_PARTIAL    => 'The file "%s" was only partially uploaded.',
-			UPLOAD_ERR_NO_FILE    => 'No file was uploaded.',
-			UPLOAD_ERR_CANT_WRITE => 'The file "%s" could not be written on disk.',
-			UPLOAD_ERR_NO_TMP_DIR => 'File could not be uploaded: missing temporary directory.',
-			UPLOAD_ERR_EXTENSION  => 'File upload was stopped by a PHP extension.',
+			UPLOAD_ERR_OK			 => 'The file uploaded with success.',
+			UPLOAD_ERR_INI_SIZE		 => 'The file "%s" exceeds your upload_max_filesize ini directive.',
+			UPLOAD_ERR_FORM_SIZE	 => 'The file "%s" exceeds the upload limit defined in your form.',
+			UPLOAD_ERR_PARTIAL		 => 'The file "%s" was only partially uploaded.',
+			UPLOAD_ERR_NO_FILE		 => 'No file was uploaded.',
+			UPLOAD_ERR_CANT_WRITE	 => 'The file "%s" could not be written on disk.',
+			UPLOAD_ERR_NO_TMP_DIR	 => 'File could not be uploaded: missing temporary directory.',
+			UPLOAD_ERR_EXTENSION	 => 'File upload was stopped by a PHP extension.',
 		];
 
-	    $error = is_null($this->error) ? UPLOAD_ERR_OK : $this->error;
+		$error = is_null($this->error) ? UPLOAD_ERR_OK : $this->error;
 
-		return isset($errors[$error])
-			? sprintf($errors[$error], $this->getName())
-			: sprintf('The file "%s" was not uploaded due to an unknown error.', $this->getName());
+		return sprintf($errors[$error] ?? 'The file "%s" was not uploaded due to an unknown error.', $this->getName());
 	}
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns the mime type as provided by the client.
+	 * This is NOT a trusted value.
+	 * For a trusted version, use getMimeType() instead.
+	 *
+	 * @return string|null The media type sent by the client or null if none
+	 *                     was provided.
+	 */
+	public function getClientMimeType(): string
+	{
+		return $this->originalMimeType;
+	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Retrieve the filename. This will typically be the filename sent
@@ -312,6 +313,18 @@ class UploadedFile implements UploadedFileInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the name of the file as provided by the client during upload.
+	 *
+	 * @return string
+	 */
+	public function getClientName(): string
+	{
+		return $this->originalName;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Gets the temporary filename where the file was uploaded to.
 	 *
 	 * @return string
@@ -324,30 +337,16 @@ class UploadedFile implements UploadedFileInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Generates a random names based on a simple hash and the time, with
-	 * the correct file extension attached.
+	 * Overrides SPLFileInfo's to work with uploaded files, since
+	 * the temp file that's been uploaded doesn't have an extension.
 	 *
-	 * @return string
+	 * Is simply an alias for guessExtension for a safer method
+	 * than simply relying on the provided extension.
 	 */
-	public function getRandomName(): string
+	public function getExtension()
 	{
-		return time().'_'.random_bytes(10).'.'.$this->$this->getExtension();
+		return $this->guessExtension();
 	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Attempts to determine the file extension based on the trusted
-	 * getType() method. If the mime type is unknown, will return null.
-	 *
-	 * @return string
-	 */
-	public function getExtension(): string
-	{
-		return \Config\Mimes::guessExtensionFromType($this->getType());
-	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the original file extension, based on the file name that
@@ -358,52 +357,7 @@ class UploadedFile implements UploadedFileInterface
 	 */
 	public function getClientExtension(): string
 	{
-		return pathinfo($this->path, PATHINFO_EXTENSION);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Retrieve the media type of the file. SHOULD not use information from
-	 * the $_FILES array, but should use other methods to more accurately
-	 * determine the type of file, like finfo, or mime_content_type().
-	 *
-	 * @return string|null The media type we determined it to be.
-	 */
-	public function getType(): string
-	{
-		if (! is_null($this->mimeType))
-		{
-			return $this->mimeType;
-		}
-
-		if (function_exists('finfo_file'))
-		{
-			$finfo          = finfo_open(FILEINFO_MIME_TYPE);
-			$this->mimeType = finfo_file($finfo, $this->path);
-			finfo_close($finfo);
-		}
-		else
-		{
-			$this->mimeType = mime_content_type($this->path);
-		}
-
-		return $this->mimeType;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the mime type as provided by the client.
-	 * This is NOT a trusted value.
-	 * For a trusted version, use getMimeType() instead.
-	 *
-	 * @return string|null The media type sent by the client or null if none
-	 *                     was provided.
-	 */
-	public function getClientType(): string
-	{
-		return $this->originalMimeType;
+		return pathinfo($this->originalName, PATHINFO_EXTENSION);
 	}
 
 	//--------------------------------------------------------------------
@@ -420,5 +374,4 @@ class UploadedFile implements UploadedFileInterface
 	}
 
 	//--------------------------------------------------------------------
-
 }

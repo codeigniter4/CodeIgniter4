@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,23 +29,23 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
-use CodeIgniter\ConfigException;
+use Config\Services;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\MigrationRunner;
-use Config\Services;
+use CodeIgniter\Exceptions\ConfigException;
 
 /**
  * CIDatabaseTestCase
  */
 class CIDatabaseTestCase extends CIUnitTestCase
 {
+
 	/**
 	 * Should the db be refreshed before
 	 * each test?
@@ -69,7 +69,14 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 *
 	 * @var string
 	 */
-	protected $basePath = APPPATH.'../tests/_support/_database';
+	protected $basePath = TESTPATH . '_support/Database';
+
+	/**
+	 * The namespace to help us fird the migration classes.
+	 *
+	 * @var string
+	 */
+	protected $namespace = 'Tests\Support';
 
 	/**
 	 * The name of the database group to connect to.
@@ -81,20 +88,20 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 	/**
 	 * Our database connection.
-	 * 
+	 *
 	 * @var BaseConnection
 	 */
 	protected $db;
 
 	/**
 	 * Migration Runner instance.
-	 * 
+	 *
 	 * @var MigrationRunner|mixed
 	 */
 	protected $migrations;
 
 	/**
-	 * Seeder instance 
+	 * Seeder instance
 	 *
 	 * @var \CodeIgniter\Database\Seeder
 	 */
@@ -125,7 +132,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			$config->enabled = true;
 
 			$this->migrations = Services::migrations($config, $this->db);
-			$this->migrations->setSilent(true);
+			$this->migrations->setSilent(false);
 		}
 
 		if ($this->seeder === null)
@@ -145,27 +152,43 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->loadDependencies();
 
 		if ($this->refresh === true)
 		{
-			if (! empty($this->basePath))
+			if ( ! empty($this->namespace))
 			{
-				$this->migrations->setPath(rtrim($this->basePath, '/').'/migrations');
+				$this->migrations->setNamespace($this->namespace);
 			}
 
-			$this->db->table('migrations')->truncate();
-			$this->migrations->version(0, 'tests');
-			$this->migrations->latest('tests');
+			// Delete all of the tables to ensure we're at a clean start.
+			$tables = $this->db->listTables();
+
+			if (is_array($tables))
+			{
+				$forge = \Config\Database::forge('tests');
+
+				foreach ($tables as $table)
+				{
+					if ($table == $this->db->DBPrefix.'migrations') continue;
+
+					$forge->dropTable($table, true);
+				}
+			}
+
+			$this->migrations->version(0, null, 'tests');
+			$this->migrations->latest(null, 'tests');
 		}
 
-		if (! empty($this->seed))
+		if ( ! empty($this->seed))
 		{
-			if (! empty($this->basePath))
+			if ( ! empty($this->basePath))
 			{
-				$this->seeder->setPath(rtrim($this->basePath, '/').'/seeds');
+				$this->seeder->setPath(rtrim($this->basePath, '/') . '/seeds');
 			}
-			
+
 			$this->seed($this->seed);
 		}
 	}
@@ -178,19 +201,18 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function tearDown()
 	{
-	    if (! empty($this->insertCache))
-	    {
-		    foreach ($this->insertCache as $row)
-		    {
-			    $this->db->table($row[0])
-				         ->where($row[1])
-				         ->delete();
-		    }
-	    }
+		if ( ! empty($this->insertCache))
+		{
+			foreach ($this->insertCache as $row)
+			{
+				$this->db->table($row[0])
+						->where($row[1])
+						->delete();
+			}
+		}
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Seeds that database with a specific seeder.
@@ -199,11 +221,10 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function seed(string $name)
 	{
-        return $this->seeder->call($name);
+		return $this->seeder->call($name);
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Database Test Helpers
 	//--------------------------------------------------------------------
@@ -220,31 +241,31 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	public function dontSeeInDatabase(string $table, array $where)
 	{
 		$count = $this->db->table($table)
-				        ->where($where)
-				        ->countAllResults();
+				->where($where)
+				->countAllResults();
 
-	    $this->assertTrue($count == 0, 'Row was found in database');
+		$this->assertTrue($count == 0, 'Row was found in database');
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Asserts that records that match the conditions in $where DO
 	 * exist in the database.
-	 * 
+	 *
 	 * @param string $table
 	 * @param array  $where
 	 *
 	 * @return bool
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function seeInDatabase(string $table, array $where)
 	{
 		$count = $this->db->table($table)
-		                  ->where($where)
-		                  ->countAllResults();
+				->where($where)
+				->countAllResults();
 
-		$this->assertTrue($count > 0, 'Row not found in database');
+		$this->assertTrue($count > 0, 'Row not found in database: ' . $this->db->showLastQuery());
 	}
 
 	//--------------------------------------------------------------------
@@ -258,20 +279,20 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param array  $where
 	 *
 	 * @return bool
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function grabFromDatabase(string $table, string $column, array $where)
 	{
-	    $query = $this->db->table($table)
-		                  ->select($column)
-		                  ->where($where)
-		                  ->get();
+		$query = $this->db->table($table)
+				->select($column)
+				->where($where)
+				->get();
 
 		$query = $query->getRow();
 
 		return $query->$column ?? false;
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -281,7 +302,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param string $table
 	 * @param array  $data
 	 *
-	 * @throws \CodeIgniter\DatabaseException
+	 * @return bool
 	 */
 	public function hasInDatabase(string $table, array $data)
 	{
@@ -289,8 +310,8 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			$table, $data
 		];
 
-	    $this->db->table($table)
-		         ->insert($data);
+		return $this->db->table($table)
+					->insert($data);
 	}
 
 	//--------------------------------------------------------------------
@@ -304,17 +325,16 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param array  $where
 	 *
 	 * @return bool
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function seeNumRecords(int $expected, string $table, array $where)
 	{
-	    $count = $this->db->table($table)
-		                  ->where($where)
-		                  ->countAllResults();
+		$count = $this->db->table($table)
+				->where($where)
+				->countAllResults();
 
 		$this->assertEquals($expected, $count, 'Wrong number of matching rows in database.');
 	}
-	
+
 	//--------------------------------------------------------------------
-	
 }

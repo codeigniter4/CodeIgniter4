@@ -2,69 +2,107 @@
 Change Log
 ##########
 
-Version 4.0-Pre-Alpha1
-======================
+Version 4.0.0-alpha.1
+=================================
+
+Release Date: September 28, 2018
 
 **Rewrite of the CodeIgniter framework**
 
-Release Date: Not Released
+Non-code changes:
+    - User Guide adapted or rewritten
+    - [System message translations repository](https://github.com/bcit-ci/CodeIgniter4-translations)
+    - [Roadmap subforum](https://forum.codeigniter.com/forum-33.html) for more transparent planning
 
 New core classes:
-
     - CodeIgniter (bootstrap)
     - Common (shared functions)
     - ComposerScripts (integrate third party tools)
     - Controller (base controller)
     - Model (base model)
+    - Entity (entity encapsulation)
 
 New packages:
-
-    - Autoloader \\ AutoLoader, FileLocator
-    - CLI \\ CLI
-    - Commands \\ MigrationsCommand
-    - Config \\ AutoloadConfig, BaseConfig, DotEnv, Routes
-    - Database 
-
-        -   \\ BaseBuilder, BaseConnection, BaseResult, BaseUtils, Config,
-            ConnectionInterface, Database, Forge, Migration, MigrationRunner, Query, 
+    - API 
+        - \\ ResponseTrait
+    - Autoloader 
+        - \\ AutoLoader, FileLocator
+    - CLI 
+        - \\ BaseCommand, CLI, CommandRunner, Console
+    - Cache 
+        - \\ CacheFactory, CacheInterface
+        - \\ Handlers ... Dummy, File, Memcached, Predis, Redis, Wincache
+    - Commands 
+        - \\ Help, ListCommands
+        - \\ Database \\ CreateMigration, MigrateCurrent, MigrateLatest, MigrateRefresh,
+          MigrateRollback, MigrateStatus, MigrateVersion, Seed
+        - \\ Server \\ Serve
+        - \\ Sessions \\ CreateMigration
+        - \\ Utilities \\ Namespaces, Routes
+    - Config 
+        -   \\ AutoloadConfig, BaseConfig, BaseService, Config, DotEnv, ForeignCharacters, 
+            Routes, Services, View
+    - Database
+        -   \\ BaseBuilder, BaseConnection, BasePreparedQuery, BaseResult, BaseUtils, Config,
+            ConnectionInterface, Database, Forge, Migration, MigrationRunner, PreparedQueryInterface, Query,
             QueryInterface, ResultInterface, Seeder
-        -   \\ MySQLi \\ Builder, Connection, Forge, Result
-        -   \\ Postgre \\ Builder, Connection, Forge, Result, Utils
-
-
-    - Debug 
-
-        - \\ CustomExceptions, Exceptions, Iterator, Timer, Toolbar
-        - Kint \\ Kint **third party**
-
+        -   \\ MySQLi \\ Builder, Connection, Forge, PreparedQuery, Result
+        -   \\ Postgre \\ Builder, Connection, Forge, PreparedQuery, Result, Utils
+        -   \\ SQLite3 \\ Builder, Connection, Forge, PreparedQuery, Result, Utils
+    - Debug
+        - \\ Exceptions, Iterator, Timer, Toolbar
+        - \\ Toolbar \\ Collectors...
+    - Email
+        - \\ Email
+    - Events
+        - \\ Events
+    - Files
+        - \\ File
+    - Filters
+        - \\ FilterInterface, Filters  
+    - Format
+        - \\ FormatterInterface, JSONFormatter, XMLFormatter
     - HTTP
-
-        -   \\ CLIRequest, CURLRequest, ContentSecurityPolicy, Header, 
+        -   \\ CLIRequest, CURLRequest, ContentSecurityPolicy, Header,
             IncomingRequest, Message, Negotiate, Request, RequestInterface,
-            Response, ResponseInterface, URI
+            Response, ResponseInterface, URI, UserAgent
         -   \\ Files \\ FileCollection, UploadedFile, UploadedFileInterface
-
-    - Helpers ... uri
-    - Hooks \\ Hooks
-    - Log 
-
+    - Helpers 
+        -   ... array, cookie, date, filesystem, form, html, inflector, number,
+            security, text, url
+    - Honeypot 
+        - \\ Honeypot
+    - I18n
+        - \\ Time, TimeDifference
+    - Images
+        - \\ Image, ImageHandlerInterface
+        - \\ Handlers ... Base, GD, ImageMagick
+    - Language
+        - \\ Language
+    - Log
         -   Logger, LoggerAwareTrait
-        -   \\ Handlers \\  BaseHandler, ChromeLoggerHandler, FileHandler, HandlerInterface
-        -   Psr \\ Log **third party**
-
-    - Router \\ RouteCollection, RouteCollectionInterface, Router, RouterInterface
-    - Security \\ Security
+        -   \\ Handlers ...  Base, ChromeLogger, File, HandlerInterface
+    - Pager
+        - \\ Pager, PagerInterface, PagerRenderer
+    - Router 
+        - \\ RouteCollection, RouteCollectionInterface, Router, RouterInterface
+    - Security 
+        - \\ Security
     - Session
-
         -   \\ Session, SessionInterface
-        -   \\ Handlers \\ BaseHandler, FileHandler, MemcachedHandler, RedisHandler
-
-    - Test \\ CIDatabaseTestCase, CIUnitTestCase, ReflectionHelper
+        -   \\ Handlers ... Base, File, Memcached, Redis
+    - Test 
+        - \\ CIDatabaseTestCase, CIUnitTestCase, FeatureResponse, FeatureTestCase, ReflectionHelper
+        - \\ Filters \\ CITestStreamFilter
+    - ThirdParty (bundled)
+        - \\ Kint (for \\Debug)
+        - \\ PSR \\ Log (for \\Log)
+        - \\ ZendEscaper \\ Escaper (for \\View)
+    - Throttle
+        - \\ Throttler, ThrottlerInterface
+    - Typography
+        - \\ Typography
+    - Validation
+        - \\ CreditCardRules, FileRules, FormatRules, Rules, Validation, ValidationInterface
     - View
-
-        -   Zend \\ Escaper, Exception \\ ... **third party**
-        -   RenderableInterface, View
-        
-
-User Guide adapted or rewritten.
-
+        -   \\ Cell, Filters, Parser, Plugins, RendererInterface, View

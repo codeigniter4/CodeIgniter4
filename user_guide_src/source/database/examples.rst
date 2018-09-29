@@ -33,7 +33,7 @@ Standard Query With Multiple Results (Object Version)
 		echo $row->name;
 		echo $row->email;
 	}
-	
+
 	echo 'Total Results: ' . count($results);
 
 The above getResult() function returns an array of **objects**. Example:
@@ -44,7 +44,7 @@ Standard Query With Multiple Results (Array Version)
 
 ::
 
-	$query = $db->query('SELECT name, title, email FROM my_table');
+	$query   = $db->query('SELECT name, title, email FROM my_table');
 	$results = $query->getResultArray();
 
 	foreach ($results as $row)
@@ -63,7 +63,7 @@ Standard Query With Single Result
 ::
 
 	$query = $db->query('SELECT name FROM my_table LIMIT 1');
-	$row = $query->getRow();
+	$row   = $query->getRow();
 	echo $row->name;
 
 The above getRow() function returns an **object**. Example: $row->name
@@ -74,7 +74,7 @@ Standard Query With Single Result (Array version)
 ::
 
 	$query = $db->query('SELECT name FROM my_table LIMIT 1');
-	$row = $query->getRowArray();
+	$row   = $query->getRowArray();
 	echo $row['name'];
 
 The above getRowArray() function returns an **array**. Example:
@@ -87,7 +87,7 @@ Standard Insert
 
 	$sql = "INSERT INTO mytable (title, name) VALUES (".$db->escape($title).", ".$db->escape($name).")";
 	$db->query($sql);
-	echo $this->db->getAffectedRows();
+	echo $db->getAffectedRows();
 
 Query Builder Query
 ===================
@@ -95,8 +95,8 @@ Query Builder Query
 The :doc:`Query Builder Pattern <query_builder>` gives you a simplified
 means of retrieving data::
 
-	$query = $this->db->table('table_name')->get();
-	
+	$query = $db->table('table_name')->get();
+
 	foreach ($query->getResult() as $row)
 	{
 		echo $row->title;
@@ -113,9 +113,9 @@ Query Builder Insert
 
 	$data = array(
 		'title' => $title,
-		'name' => $name,
-		'date' => $date
+		'name'  => $name,
+		'date'  => $date
 	);
-	
-	$this->db->table('mytable')->insert($data);  // Produces: INSERT INTO mytable (title, name, date) VALUES ('{$title}', '{$name}', '{$date}')
+
+	$db->table('mytable')->insert($data);  // Produces: INSERT INTO mytable (title, name, date) VALUES ('{$title}', '{$name}', '{$date}')
 

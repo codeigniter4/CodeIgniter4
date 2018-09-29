@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="tests/_support/_bootstrap.php"
+        backupGlobals="false"
         colors="true"
         convertErrorsToExceptions="true"
         convertNoticesToExceptions="true"
@@ -9,9 +10,16 @@
         stopOnIncomplete="false"
         stopOnSkipped="false">
     <testsuites>
+        <testsuite name="app">
+            <directory>./tests</directory>
+            <exclude>./tests/system</exclude>
+        </testsuite>
         <testsuite name="system">
             <directory>./tests/system</directory>
-            <!-- <exclude>./tests/system/Database/Live</exclude> -->
+            <exclude>./tests/system/Database</exclude>
+        </testsuite>
+        <testsuite name="database">
+            <directory>./tests/system/Database</directory>
         </testsuite>
     </testsuites>
 
@@ -19,12 +27,19 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./system</directory>
             <exclude>
+                <directory>./system/Debug/Toolbar/Views</directory>
+                <directory>./system/Pager/Views</directory>
+                <directory>./system/ThirdParty</directory>
+                <directory>./system/Validation/Views</directory>
+                <file>./system/bootstrap.php</file>
+                <file>./system/Commands/Sessions/Views/migration.tpl.php</file>
                 <file>./system/ComposerScripts.php</file>
-                <file>./system/View/Escaper.php</file>
-                <directory suffix=".php">./system/View/Exception</directory>
-                <directory suffix=".php">./system/Debug/Toolbar/View</directory>
-                <directory>./system/Debug/Kint</directory>
+                <file>./system/Config/Routes.php</file>
             </exclude>
         </whitelist>
     </filter>
+
+    <logging>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+    </logging>
 </phpunit>

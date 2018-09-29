@@ -3,7 +3,7 @@
 # ----------------------------------------------------------------------
 
 # Sets the environment that CodeIgniter runs under.
-# SetEnv CI_ENV development
+ SetEnv CI_ENVIRONMENT development
 
 # ----------------------------------------------------------------------
 # UTF-8 encoding
@@ -33,7 +33,7 @@ AddDefaultCharset utf-8
 	RewriteBase /
 
 	# Redirect Trailing Slashes...
-    RewriteRule ^(.*)/$ /public/$1 [L,R=301]
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
 
 	# Rewrite "www.example.com -> example.com"
 	RewriteCond %{HTTPS} !=on

@@ -18,10 +18,9 @@ The segments in the URL, in following with the Model-View-Controller approach, u
 2. The second segment represents the class **method** that should be called.
 3. The third, and any additional segments, represent the ID and any variables that will be passed to the controller.
 
-The :doc:`URL Library <../libraries/url>` and the :doc:`URL Helper <../helpers/url>` contain functions that make it easy
-to work with your URI data. In addition, your URLs can be remapped using the :doc:`URI Routing <routing>`
+The :doc:`URI Library <../libraries/uri>` and the :doc:`URL Helper <../helpers/url_helper>` contain functions that make it easy
+to work with your URI data. In addition, your URLs can be remapped using the :doc:`URI Routing </incoming/routing>`
 feature for more flexibility.
-
 
 Removing the index.php file
 ===========================
@@ -38,7 +37,9 @@ Apache Web Server
 
 Apache must have the *mod_rewrite* extension enabled. If it does, you can use a ``.htaccess`` file with some simple rules.
 Here is an example of such a file, using the "negative" method in which everything is redirected except the specified
-items::
+items:
+
+.. code-block:: apache
 
 	RewriteEngine On
 	RewriteCond %{REQUEST_FILENAME} !-f
@@ -56,10 +57,12 @@ NGINX
 -----
 
 Under NGINX, you can define a location block and use the ``try_files`` directive to get the same effect as we did with
-the above Apache configuration::
+the above Apache configuration:
+
+.. code-block:: nginx
 
 	location / {
-        try_files $uri $uri/ /index.php/$args;
+		try_files $uri $uri/ /index.php/$args;
 	}
 
 This will first look for a file or directory matching the URI (constructing the full path to each file from the

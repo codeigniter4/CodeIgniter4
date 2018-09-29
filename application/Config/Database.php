@@ -1,7 +1,5 @@
 <?php namespace Config;
 
-use phpDocumentor\Reflection\DocBlock\Tag\VarTag;
-
 /**
  * Database Configuration
  *
@@ -48,7 +46,7 @@ class Database extends \CodeIgniter\Database\Config
 		'compress'     => false,
 		'strictOn'     => false,
 		'failover'     => [],
-		'saveQueries' => true,
+		'port'         => 3306
 	];
 
 	/**
@@ -64,7 +62,7 @@ class Database extends \CodeIgniter\Database\Config
 		'password'     => '',
 		'database'     => '',
 		'DBDriver'     => '',
-		'DBPrefix'     => '',
+		'DBPrefix'     => 'db_',  // Needed to ensure we're working correctly with prefixes live. DO NOT REMOVE.
 		'pConnect'     => false,
 		'DBDebug'     => (ENVIRONMENT !== 'production'),
 		'cacheOn'     => false,
@@ -76,7 +74,7 @@ class Database extends \CodeIgniter\Database\Config
 		'compress'     => false,
 		'strictOn'     => false,
 		'failover'     => [],
-		'saveQueries' => true,
+		'port'         => 3306
 	];
 
 	//--------------------------------------------------------------------
@@ -93,8 +91,8 @@ class Database extends \CodeIgniter\Database\Config
 			$this->defaultGroup = 'tests';
 
 			// Under Travis-CI, we can set an ENV var named 'DB_GROUP'
-			// so that we can test against multiple databases. 
-			if ($group = getenv('DB_GROUP'))
+			// so that we can test against multiple databases.
+			if ($group = getenv('DB'))
 			{
 				if (is_file(TESTPATH.'travis/Database.php'))
 				{

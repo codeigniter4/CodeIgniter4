@@ -15,19 +15,30 @@ define('APP_NAMESPACE', 'App');
 
 /*
 |--------------------------------------------------------------------------
+| Composer Path
+|--------------------------------------------------------------------------
+|
+| The path that Composer's autoload file is expected to live. By default,
+| the vendor folder is in the Root directory, but you can customize that here.
+*/
+define('COMPOSER_PATH', ROOTPATH.'vendor/autoload.php');
+
+/*
+|--------------------------------------------------------------------------
 | Timing Constants
 |--------------------------------------------------------------------------
 |
 | Provide simple ways to work with the myriad of PHP functions that
 | require information to be in seconds.
 */
-defined('SECOND')   || define('SECOND',      1);
-defined('MINUTE')   || define('MINUTE',     60);
-defined('HOUR')     || define('HOUR',     3600);
-defined('DAY')      || define('DAY',     86400);
-defined('WEEK')     || define('WEEK',   604800);
-defined('MONTH')    || define('MONTH', 2592000);
-defined('YEAR')     || define('YEAR', 31536000);
+defined('SECOND')   || define('SECOND',                 1);
+defined('MINUTE')   || define('MINUTE',                60);
+defined('HOUR')     || define('HOUR',                3600);
+defined('DAY')      || define('DAY',                86400);
+defined('WEEK')     || define('WEEK',              604800);
+defined('MONTH')    || define('MONTH',            2592000);
+defined('YEAR')     || define('YEAR',            31536000);
+defined('DECADE')   || define('DECADE',         315360000);
 
 /*
 |--------------------------------------------------------------------------

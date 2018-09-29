@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,23 +27,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
- * @since	Version 3.0.0
+ * @package      CodeIgniter
+ * @author       CodeIgniter Dev Team
+ * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
+ * @since        Version 3.0.0
  * @filesource
  */
-
 use Config\App;
-use Config\ContentSecurityPolicy;
+use Config\Mimes;
+use Config\Format;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 /**
  * Redirect exception
- * 
+ *
  */
-class RedirectException extends \Exception {}
+class RedirectException extends \Exception
+{
+
+}
 
 /**
  * Representation of an outgoing, getServer-side response.
@@ -60,16 +64,18 @@ class RedirectException extends \Exception {}
  */
 class Response extends Message implements ResponseInterface
 {
+
 	/**
 	 * HTTP status codes
-	 * @var type 
+	 *
+	 * @var array
 	 */
 	protected static $statusCodes = [
 		// 1xx: Informational
 		100 => 'Continue',
 		101 => 'Switching Protocols',
-		102 => 'Processing',    // http://www.iana.org/go/rfc2518
-
+		102 => 'Processing', // http://www.iana.org/go/rfc2518
+		103 => 'Early Hints', // http://www.ietf.org/rfc/rfc8297.txt
 		// 2xx: Success
 		200 => 'OK',
 		201 => 'Created',
@@ -78,21 +84,19 @@ class Response extends Message implements ResponseInterface
 		204 => 'No Content',
 		205 => 'Reset Content',
 		206 => 'Partial Content',
-		207 => 'Multi-Status',                  // http://www.iana.org/go/rfc4918
-		208 => 'Already Reported',              // http://www.iana.org/go/rfc5842
-		226 => 'IM Used',                       // 1.1; http://www.ietf.org/rfc/rfc3229.txt
-
+		207 => 'Multi-Status', // http://www.iana.org/go/rfc4918
+		208 => 'Already Reported', // http://www.iana.org/go/rfc5842
+		226 => 'IM Used', // 1.1; http://www.ietf.org/rfc/rfc3229.txt
 		// 3xx: Redirection
 		300 => 'Multiple Choices',
 		301 => 'Moved Permanently',
-		302 => 'Found',              // Formerly 'Moved Temporarily'
-		303 => 'See Other',          // 1.1
+		302 => 'Found', // Formerly 'Moved Temporarily'
+		303 => 'See Other', // 1.1
 		304 => 'Not Modified',
-		305 => 'Use Proxy',          // 1.1
-		306 => 'Switch Proxy',       // No longer used
+		305 => 'Use Proxy', // 1.1
+		306 => 'Switch Proxy', // No longer used
 		307 => 'Temporary Redirect', // 1.1
 		308 => 'Permanent Redirect', // 1.1; Experimental; http://www.ietf.org/rfc/rfc7238.txt
-
 		// 4xx: Client error
 		400 => 'Bad Request',
 		401 => 'Unauthorized',
@@ -112,18 +116,19 @@ class Response extends Message implements ResponseInterface
 		415 => 'Unsupported Media Type',
 		416 => 'Requested Range Not Satisfiable',
 		417 => 'Expectation Failed',
-		418 => "I'm a teapot",                    // April's Fools joke; http://www.ietf.org/rfc/rfc2324.txt
+		418 => "I'm a teapot", // April's Fools joke; http://www.ietf.org/rfc/rfc2324.txt
 		// 419 (Authentication Timeout) is a non-standard status code with unknown origin
-		421 => 'Misdirected Request',             // http://www.iana.org/go/rfc7540 Section 9.1.2
-		422 => 'Unprocessable Entity',            // http://www.iana.org/go/rfc4918
-		423 => 'Locked',                          // http://www.iana.org/go/rfc4918
-		424 => 'Failed Dependency',               // http://www.iana.org/go/rfc4918
+		421 => 'Misdirected Request', // http://www.iana.org/go/rfc7540 Section 9.1.2
+		422 => 'Unprocessable Entity', // http://www.iana.org/go/rfc4918
+		423 => 'Locked', // http://www.iana.org/go/rfc4918
+              424 => 'Failed Dependency', // http://www.iana.org/go/rfc4918
+              425 => 'Too Early', // https://datatracker.ietf.org/doc/draft-ietf-httpbis-replay/
 		426 => 'Upgrade Required',
-		428 => 'Precondition Required',           // 1.1; http://www.ietf.org/rfc/rfc6585.txt
-		429 => 'Too Many Requests',               // 1.1; http://www.ietf.org/rfc/rfc6585.txt
+		428 => 'Precondition Required', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
+		429 => 'Too Many Requests', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
 		431 => 'Request Header Fields Too Large', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
-	    451 => 'Unavailable For Legal Reasons',    // http://tools.ietf.org/html/rfc7725
-
+		451 => 'Unavailable For Legal Reasons', // http://tools.ietf.org/html/rfc7725
+		499 => 'Client Closed Request', // http://lxr.nginx.org/source/src/http/ngx_http_request.h#0133
 		// 5xx: Server error
 		500 => 'Internal Server Error',
 		501 => 'Not Implemented',
@@ -131,11 +136,12 @@ class Response extends Message implements ResponseInterface
 		503 => 'Service Unavailable',
 		504 => 'Gateway Timeout',
 		505 => 'HTTP Version Not Supported',
-		506 => 'Variant Also Negotiates',        // 1.1; http://www.ietf.org/rfc/rfc2295.txt
-		507 => 'Insufficient Storage',           // http://www.iana.org/go/rfc4918
-		508 => 'Loop Detected',                  // http://www.iana.org/go/rfc5842
-		510 => 'Not Extended',                   // http://www.ietf.org/rfc/rfc2774.txt
-		511 => 'Network Authentication Required' // http://www.ietf.org/rfc/rfc6585.txt
+		506 => 'Variant Also Negotiates', // 1.1; http://www.ietf.org/rfc/rfc2295.txt
+		507 => 'Insufficient Storage', // http://www.iana.org/go/rfc4918
+		508 => 'Loop Detected', // http://www.iana.org/go/rfc5842
+		510 => 'Not Extended', // http://www.ietf.org/rfc/rfc2774.txt
+		511 => 'Network Authentication Required', // http://www.ietf.org/rfc/rfc6585.txt
+		599 => 'Network Connect Timeout Error', // https://httpstatuses.com/599
 	];
 
 	/**
@@ -151,17 +157,18 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @var int
 	 */
-	protected $statusCode;
+	protected $statusCode = 200;
 
 	/**
 	 * Whether Content Security Policy is being enforced.
+	 *
 	 * @var bool
 	 */
 	protected $CSPEnabled = false;
 
 	/**
 	 * Content security policy handler
-	 * 
+	 *
 	 * @var \CodeIgniter\HTTP\ContentSecurityPolicy
 	 */
 	public $CSP;
@@ -201,23 +208,45 @@ class Response extends Message implements ResponseInterface
 	 */
 	protected $cookieHTTPOnly = false;
 
+	/**
+	 * Stores all cookies that were set in the response.
+	 *
+	 * @var array
+	 */
+	protected $cookies = [];
+
+	/**
+	 * If true, will not write output. Useful during testing.
+	 *
+	 * @var bool
+	 */
+	protected $pretend = false;
+
+	/**
+	 * Type of format the body is in.
+	 * Valid: html, json, xml
+	 *
+	 * @var string
+	 */
+	protected $bodyFormat = 'html';
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param App $config
 	 */
-	public function __construct(App $config)
+	public function __construct($config)
 	{
-	    // Default to a non-caching page.
+		// Default to a non-caching page.
 		// Also ensures that a Cache-control header exists.
 		$this->noCache();
 
 		// Are we enforcing a Content Security Policy?
 		if ($config->CSPEnabled === true)
 		{
-			$this->CSP = new ContentSecurityPolicy(new ContentSecurityPolicy());
+			$this->CSP        = new ContentSecurityPolicy(new \Config\ContentSecurityPolicy());
 			$this->CSPEnabled = true;
 		}
 
@@ -226,9 +255,26 @@ class Response extends Message implements ResponseInterface
 		$this->cookiePath     = $config->cookiePath;
 		$this->cookieSecure   = $config->cookieSecure;
 		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
+
+		// Default to an HTML Content-Type. Devs can override if needed.
+		$this->setContentType('text/html');
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Turns "pretend" mode on or off to aid in testing.
+	 *
+	 * @param bool $pretend
+	 *
+	 * @return $this
+	 */
+	public function pretend(bool $pretend = true)
+	{
+		$this->pretend = $pretend;
+
+		return $this;
+	}
 
 	/**
 	 * Gets the response status code.
@@ -242,7 +288,7 @@ class Response extends Message implements ResponseInterface
 	{
 		if (empty($this->statusCode))
 		{
-			throw new \BadMethodCallException('HTTP Response is missing a status code');
+			throw HTTPException::forMissingResponseStatus();
 		}
 
 		return $this->statusCode;
@@ -267,18 +313,18 @@ class Response extends Message implements ResponseInterface
 	 * @return self
 	 * @throws \InvalidArgumentException For invalid status code arguments.
 	 */
-	public function setStatusCode(int $code, string $reason = ''): self
+	public function setStatusCode(int $code, string $reason = '')
 	{
 		// Valid range?
 		if ($code < 100 || $code > 599)
 		{
-			throw new \InvalidArgumentException($code.' is not a valid HTTP return status code');
+			throw HTTPException::forInvalidStatusCode($code);
 		}
 
 		// Unknown and no message?
 		if (! array_key_exists($code, static::$statusCodes) && empty($reason))
 		{
-			throw new \InvalidArgumentException('Unknown HTTP status code provided with no message');
+			throw HTTPException::forUnkownStatusCode($code);
 		}
 
 		$this->statusCode = $code;
@@ -309,16 +355,13 @@ class Response extends Message implements ResponseInterface
 	{
 		if (empty($this->reason))
 		{
-			return ! empty($this->statusCode)
-				? static::$statusCodes[$this->statusCode]
-				: '';
+			return ! empty($this->statusCode) ? static::$statusCodes[$this->statusCode] : '';
 		}
 
 		return $this->reason;
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Convenience Methods
 	//--------------------------------------------------------------------
@@ -330,7 +373,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function setDate(\DateTime $date): self
+	public function setDate(\DateTime $date)
 	{
 		$date->setTimezone(new \DateTimeZone('UTC'));
 
@@ -350,13 +393,15 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function setContentType(string $mime, string $charset='UTF-8'): self
+	public function setContentType(string $mime, string $charset = 'UTF-8')
 	{
-	    if (! empty($charset))
-	    {
-		    $mime .= '; charset='. $charset;
-	    }
+		// add charset attribute if not already there and provided as parm
+		if ((strpos($mime, 'charset=') < 1) && ! empty($charset))
+		{
+			$mime .= '; charset='.$charset;
+		}
 
+		$this->removeHeader('Content-Type'); // replace existing content type
 		$this->setHeader('Content-Type', $mime);
 
 		return $this;
@@ -364,6 +409,110 @@ class Response extends Message implements ResponseInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Converts the $body into JSON and sets the Content Type header.
+	 *
+	 * @param $body
+	 *
+	 * @return $this
+	 */
+	public function setJSON($body)
+	{
+		$this->body = $this->formatBody($body, 'json');
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the current body, converted to JSON is it isn't already.
+	 *
+	 * @return mixed|string
+	 */
+	public function getJSON()
+	{
+		$body = $this->body;
+
+		if ($this->bodyFormat != 'json')
+		{
+			$config = config(Format::class);
+			$formatter = $config->getFormatter('application/json');
+
+			$body = $formatter->format($body);
+		}
+
+		return $body ?: null;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Converts $body into XML, and sets the correct Content-Type.
+	 *
+	 * @param $body
+	 *
+	 * @return $this
+	 */
+	public function setXML($body)
+	{
+		$this->body = $this->formatBody($body, 'xml');
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Retrieves the current body into XML and returns it.
+	 *
+	 * @return mixed|string
+	 */
+	public function getXML()
+	{
+		$body = $this->body;
+
+		if ($this->bodyFormat != 'xml')
+		{
+			$config = config(Format::class);
+			$formatter = $config->getFormatter('application/xml');
+
+			$body = $formatter->format($body);
+		}
+
+		return $body;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Handles conversion of the of the data into the appropriate format,
+	 * and sets the correct Content-Type header for our response.
+	 *
+	 * @param        $body
+	 * @param string $format Valid: json, xml
+	 *
+	 * @return mixed
+	 */
+	protected function formatBody($body, string $format)
+	{
+		$mime = "application/{$format}";
+		$this->setContentType($mime);
+		$this->bodyFormat = $format;
+
+		// Nothing much to do for a string...
+		if (! is_string($body))
+		{
+			$config    = config(Format::class);
+			$formatter = $config->getFormatter($mime);
+
+			$body = $formatter->format($body);
+		}
+
+		return $body;
+	}
+
+	//--------------------------------------------------------------------
 
 	//--------------------------------------------------------------------
 	// Cache Control Methods
@@ -374,10 +523,12 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Sets the appropriate headers to ensure this response
 	 * is not cached by the browsers.
+	 *
+	 * @return Response
 	 */
 	public function noCache(): self
 	{
-	    $this->removeHeader('Cache-control');
+		$this->removeHeader('Cache-control');
 
 		$this->setHeader('Cache-control', ['no-store', 'max-age=0', 'no-cache']);
 
@@ -412,9 +563,9 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @param array $options
 	 *
-	 * @return $this
+	 * @return Response
 	 */
-	public function setCache(array $options=[]): self
+	public function setCache(array $options = [])
 	{
 		if (empty($options))
 		{
@@ -452,9 +603,11 @@ class Response extends Message implements ResponseInterface
 	 * $date can be either a string representation of the date or,
 	 * preferably, an instance of DateTime.
 	 *
-	 * @param $date
+	 * @param \DateTime|string $date
+	 *
+	 * @return Response
 	 */
-	public function setLastModified($date): self
+	public function setLastModified($date)
 	{
 		if ($date instanceof \DateTime)
 		{
@@ -470,8 +623,6 @@ class Response extends Message implements ResponseInterface
 	}
 
 	//--------------------------------------------------------------------
-
-
 	//--------------------------------------------------------------------
 	// Output Methods
 	//--------------------------------------------------------------------
@@ -481,17 +632,21 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function send(): self
+	public function send()
 	{
 		// If we're enforcing a Content Security Policy,
 		// we need to give it a chance to build out it's headers.
 		if ($this->CSPEnabled === true)
 		{
 			$this->CSP->finalize($this);
+		}else{
+		    
+			$this->body = str_replace(['{csp-style-nonce}','{csp-script-nonce}'], '', $this->body);
 		}
 
-	    $this->sendHeaders();
+		$this->sendHeaders();
 		$this->sendBody();
+		$this->sendCookies();
 
 		return $this;
 	}
@@ -503,10 +658,10 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function sendHeaders(): self
+	public function sendHeaders()
 	{
-	    // Have the headers already been sent?
-		if (headers_sent())
+		// Have the headers already been sent?
+		if ($this->pretend || headers_sent())
 		{
 			return $this;
 		}
@@ -519,7 +674,8 @@ class Response extends Message implements ResponseInterface
 		}
 
 		// HTTP Status
-		header(sprintf('HTTP/%s %s %s', $this->protocolVersion, $this->statusCode, $this->reason), true, $this->statusCode);
+		header(sprintf('HTTP/%s %s %s', $this->protocolVersion, $this->statusCode, $this->reason), true,
+			$this->statusCode);
 
 		// Send all of our headers
 		foreach ($this->getHeaders() as $name => $values)
@@ -535,11 +691,11 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Sends the Body of the message to the browser.
 	 *
-	 * @return $this
+	 * @return Response
 	 */
 	public function sendBody()
 	{
-	    echo $this->body;
+		echo $this->body;
 
 		return $this;
 	}
@@ -547,25 +703,39 @@ class Response extends Message implements ResponseInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Grabs the current body.
+	 *
+	 * @return mixed|string
+	 */
+	public function getBody()
+	{
+		return $this->body;
+	}
+
+	/**
 	 * Perform a redirect to a new URL, in two flavors: header or location.
 	 *
-	 * @param string $uri    The URI to redirect to
+	 * @param string $uri  The URI to redirect to
 	 * @param string $method
-	 * @param int    $code   The type of redirection, defaults to 302
+	 * @param int    $code The type of redirection, defaults to 302
+	 *
+	 * @return $this
+	 * @throws \CodeIgniter\HTTP\RedirectException
 	 */
 	public function redirect(string $uri, string $method = 'auto', int $code = null)
 	{
 		// IIS environment likely? Use 'refresh' for better compatibility
-		if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== FALSE)
+		if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE'])
+		    && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false)
 		{
 			$method = 'refresh';
 		}
 		elseif ($method !== 'refresh' && (empty($code) || ! is_numeric($code)))
 		{
-			if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $_SERVER['SERVER_PROTOCOL'] === 'HTTP/1.1')
+			if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $this->getProtocolVersion() >= 1.1)
 			{
-				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET')
-					? 303	// reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
+				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303
+					// reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
 					: 307;
 			}
 			else
@@ -588,8 +758,7 @@ class Response extends Message implements ResponseInterface
 
 		$this->sendHeaders();
 
-		// CodeIgniter will catch this exception and exit.
-		throw new RedirectException('Redirect to ' . $uri, $code);
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -600,14 +769,14 @@ class Response extends Message implements ResponseInterface
 	 * Accepts an arbitrary number of binds (up to 7) or an associateive
 	 * array in the first parameter containing all the values.
 	 *
-	 * @param            $name      Cookie name or array containing binds
-	 * @param string     $value     Cookie value
-	 * @param string     $expire    Cookie expiration time in seconds
-	 * @param string     $domain    Cookie domain (e.g.: '.yourdomain.com')
-	 * @param string     $path      Cookie path (default: '/')
-	 * @param string     $prefix    Cookie name prefix
-	 * @param bool|false $secure    Whether to only transfer cookies via SSL
-	 * @param bool|false $httponly  Whether only make the cookie accessible via HTTP (no javascript)
+	 * @param string|array $name     Cookie name or array containing binds
+	 * @param string       $value    Cookie value
+	 * @param string       $expire   Cookie expiration time in seconds
+	 * @param string       $domain   Cookie domain (e.g.: '.yourdomain.com')
+	 * @param string       $path     Cookie path (default: '/')
+	 * @param string       $prefix   Cookie name prefix
+	 * @param bool|false   $secure   Whether to only transfer cookies via SSL
+	 * @param bool|false   $httponly Whether only make the cookie accessible via HTTP (no javascript)
 	 */
 	public function setCookie(
 		$name,
@@ -618,8 +787,7 @@ class Response extends Message implements ResponseInterface
 		$prefix = '',
 		$secure = false,
 		$httponly = false
-	)
-	{
+	) {
 		if (is_array($name))
 		{
 			// always leave 'name' in last place, as the loop will break otherwise, due to $$item
@@ -627,7 +795,7 @@ class Response extends Message implements ResponseInterface
 			{
 				if (isset($name[$item]))
 				{
-					$item = $name[$item];
+					$$item = $name[$item];
 				}
 			}
 		}
@@ -657,18 +825,208 @@ class Response extends Message implements ResponseInterface
 			$httponly = $this->cookieHTTPOnly;
 		}
 
-		if ( ! is_numeric($expire))
+		if (! is_numeric($expire))
 		{
-			$expire = time() - 86500;
+			$expire = time()-86500;
 		}
 		else
 		{
-			$expire = ($expire > 0) ? time() + $expire : 0;
+			$expire = ($expire > 0) ? time()+$expire : 0;
 		}
 
-		setcookie($prefix.$name, $value, $expire, $path, $domain, $secure, $httponly);
+		$this->cookies[] = [
+			'name'     => $prefix.$name,
+			'value'    => $value,
+			'expires'  => $expire,
+			'path'     => $path,
+			'domain'   => $domain,
+			'secure'   => $secure,
+			'httponly' => $httponly,
+		];
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Checks to see if the Response has a specified cookie or not.
+	 *
+	 * @param string $name
+	 * @param null   $value
+	 * @param string $prefix
+	 *
+	 * @return bool
+	 */
+	public function hasCookie(string $name, $value = null, string $prefix = '')
+	{
+		if ($prefix === '' && $this->cookiePrefix !== '')
+		{
+			$prefix = $this->cookiePrefix;
+		}
+
+		$name = $prefix.$name;
+
+		foreach ($this->cookies as $cookie)
+		{
+			if ($cookie['name'] != $prefix.$name)
+			{
+				continue;
+			}
+
+			if ($value === null)
+			{
+				return true;
+			}
+
+			return $cookie['value'] == $value;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Returns the cookie
+	 *
+	 * @param string $name
+	 * @param string $prefix
+	 *
+	 * @return mixed
+	 */
+	public function getCookie(string $name, string $prefix = '')
+	{
+		if ($prefix === '' && $this->cookiePrefix !== '')
+		{
+			$prefix = $this->cookiePrefix;
+		}
+
+		$name = $prefix.$name;
+
+		foreach ($this->cookies as $cookie)
+		{
+			if ($cookie['name'] == $name)
+			{
+				return $cookie;
+			}
+		}
+	}
+
+	/**
+	 * Actually sets the cookies.
+	 */
+	protected function sendCookies()
+	{
+		if ($this->pretend)
+		{
+			return;
+		}
+
+		foreach ($this->cookies as $params)
+		{
+			// PHP cannot unpack array with string keys
+			$params = array_values($params);
+
+			setcookie(...$params);
+		}
+	}
+
+	/**
+	 * Force a download.
+	 *
+	 * Generates the headers that force a download to happen. And
+	 * sends the file to the browser.
+	 *
+	 * @param string $filename The path to the file to send
+	 * @param string $data     The data to be downloaded
+	 * @param bool   $setMime  Whether to try and send the actual MIME type
+	 */
+	public function download(string $filename = '', $data = '', bool $setMime = false)
+	{
+		if ($filename === '' || $data === '')
+		{
+			return;
+		}
+		elseif ($data === null)
+		{
+			if (! @is_file($filename) || ($filesize = @filesize($filename)) === false)
+			{
+				return;
+			}
+
+			$filepath = $filename;
+			$filename = explode('/', str_replace(DIRECTORY_SEPARATOR, '/', $filename));
+			$filename = end($filename);
+		}
+		else
+		{
+			$filesize = strlen($data);
+		}
+
+		// Set the default MIME type to send
+		$mime = 'application/octet-stream';
+
+		$x         = explode('.', $filename);
+		$extension = end($x);
+
+		if ($setMime === true)
+		{
+			if (count($x) === 1 || $extension === '')
+			{
+				/* If we're going to detect the MIME type,
+				 * we'll need a file extension.
+				 */
+				return;
+			}
+
+			$mime = Mimes::guessTypeFromExtension($extension);
+		}
+
+		/* It was reported that browsers on Android 2.1 (and possibly older as well)
+		 * need to have the filename extension upper-cased in order to be able to
+		 * download it.
+		 *
+		 * Reference: http://digiblog.de/2011/04/19/android-and-the-download-file-headers/
+		 */
+		if (count($x) !== 1 && isset($_SERVER['HTTP_USER_AGENT'])
+		    && preg_match('/Android\s(1|2\.[01])/', $_SERVER['HTTP_USER_AGENT']))
+		{
+			$x[count($x)-1] = strtoupper($extension);
+			$filename       = implode('.', $x);
+		}
+
+		if ($data === null && ($fp = @fopen($filepath, 'rb')) === false)
+		{
+			return;
+		}
+
+		// Clean output buffer
+		if (ob_get_level() !== 0 && @ob_end_clean() === false)
+		{
+			@ob_clean();
+		}
+
+		// Generate the server headers
+		header('Content-Type: '.$mime);
+		header('Content-Disposition: attachment; filename="'.$filename.'"');
+		header('Expires: 0');
+		header('Content-Transfer-Encoding: binary');
+		header('Content-Length: '.$filesize);
+		header('Cache-Control: private, no-transform, no-store, must-revalidate');
+
+		// If we have raw data - just dump it
+		if ($data !== null)
+		{
+			exit($data);
+		}
+
+		// Flush 1MB chunks of data
+		while (! feof($fp) && ($data = fread($fp, 1048576)) !== false)
+		{
+			echo $data;
+		}
+
+		fclose($fp);
+		exit;
+	}
 
 }

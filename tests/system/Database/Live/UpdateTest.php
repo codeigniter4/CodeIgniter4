@@ -1,15 +1,16 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\DatabaseException;
+use \CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Test\CIDatabaseTestCase;
 
 /**
  * @group DatabaseLive
  */
-class UpdateTest extends \CIDatabaseTestCase
+class UpdateTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	public function testUpdateSetsAllWithoutWhere()
 	{
@@ -45,6 +46,9 @@ class UpdateTest extends \CIDatabaseTestCase
 		}
 		catch (DatabaseException $e)
 		{
+			// This DB doesn't support Where and Limit together
+			// but we don't want it called a "Risky" test.
+			$this->assertTrue(true);
 			return;
 		}
 	}
@@ -68,7 +72,7 @@ class UpdateTest extends \CIDatabaseTestCase
 			}
 		}
 
-		$this->assertEquals(2, count($rows));
+		$this->assertCount(2, $rows);
 	}
 
 	//--------------------------------------------------------------------
@@ -91,6 +95,9 @@ class UpdateTest extends \CIDatabaseTestCase
 		}
 		catch (DatabaseException $e)
 		{
+			// This DB doesn't support Where and Limit together
+			// but we don't want it called a "Risky" test.
+			$this->assertTrue(true);
 			return;
 		}
 	}
@@ -125,5 +132,109 @@ class UpdateTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testUpdateWithWhereSameColumn()
+	{
+		$this->db->table('user')
+		         ->update(['country' => 'CA'], ['country' => 'US']);
+
+		$result = $this->db->table('user')->get()->getResultArray();
+
+		$rows = [];
+
+		foreach ($result as $row)
+		{
+			if ($row['country'] == 'CA')
+			{
+				$rows[] = $row;
+			}
+		}
+
+		$this->assertCount(2, $rows);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUpdateWithWhereSameColumn2()
+	{
+		// calling order: set() -> where()
+		$this->db->table('user')
+		         ->set('country', 'CA')
+		         ->where('country', 'US')
+		         ->update();
+
+		$result = $this->db->table('user')->get()->getResultArray();
+
+		$rows = [];
+
+		foreach ($result as $row)
+		{
+			if ($row['country'] == 'CA')
+			{
+				$rows[] = $row;
+			}
+		}
+
+		$this->assertCount(2, $rows);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUpdateWithWhereSameColumn3()
+	{
+		// calling order: where() -> set() in update()
+		$this->db->table('user')
+		         ->where('country', 'US')
+		         ->update(['country' => 'CA']);
+
+		$result = $this->db->table('user')->get()->getResultArray();
+
+		$rows = [];
+
+		foreach ($result as $row)
+		{
+			if ($row['country'] == 'CA')
+			{
+				$rows[] = $row;
+			}
+		}
+
+		$this->assertCount(2, $rows);
+	}
+
+	//--------------------------------------------------------------------
+
+    /**
+     * @group single
+     * @see https://github.com/bcit-ci/CodeIgniter4/issues/324
+     */
+    public function testUpdatePeriods()
+    {
+        $this->db->table('misc')
+            ->where('key', 'spaces and tabs')
+            ->update([
+                'value' => '30.192'
+            ]);
+
+        $this->seeInDatabase('misc', [
+            'value' => '30.192'
+        ]);
+    }
+
+	//--------------------------------------------------------------------
+
+	// @see https://bcit-ci.github.io/CodeIgniter4/database/query_builder.html#updating-data
+	public function testSetWithoutEscape()
+	{
+		$this->db->table('job')
+		         ->set('description', 'name', false)
+		         ->update();
+
+		$result = $this->db->table('user')->get()->getResultArray();
+
+		$this->seeInDatabase('job', [
+			'name' => 'Developer',
+			'description' => 'Developer',
+		]);
+	}
 
 }

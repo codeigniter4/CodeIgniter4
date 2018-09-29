@@ -8,6 +8,9 @@ default action when an error or exception is thrown is to display a detailed err
 is running under the ``production`` environment. In this case, a more generic  message is displayed to
 keep the best user experience for your users.
 
+.. contents::
+    :local:
+    :depth: 2
 
 Using Exceptions
 ================
@@ -19,7 +22,7 @@ execution is then sent to the error handler which displays the appropriate error
 
 	throw new \Exception("Some message goes here");
 
-If you are calling a method that might throw an exception, you can catch that exception using a ``try/catch block``::
+If you are calling a method that might throw an exception, you can catch that exception using a ``try/catch`` block::
 
 	try {
 		$user = $userModel->find($id);
@@ -41,14 +44,14 @@ not child classes of the caught exception will be passed on to the error handler
 		// do something here...
 	}
 
-This can be handy for handling the error yourself, or for performaing cleanup before the script ends. If you want
+This can be handy for handling the error yourself, or for performing cleanup before the script ends. If you want
 the error handler to function as normal, you can throw a new exception within the catch block::
 
 	catch (\CodeIgniter\UnknownFileException $e)
 	{
 		// do something here...
 
-		throw new \RuntimeException($e->getMessage(), $e->getCode());
+		throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
 	}
 
 Configuration
@@ -59,6 +62,27 @@ display any errors in the ``production`` environment. You can change this by loc
 portion at the top of the main ``index.php`` file.
 
 .. important:: Disabling error reporting DOES NOT stop logs from being written if there are errors.
+
+Logging Exceptions
+------------------
+
+By default, all Exceptions other than 404 - Page Not Found exceptions are logged. This can be turned on and off
+by setting the **$log** value of ``Config\Exceptions``::
+
+    class Exceptions
+    {
+        public $log = true;
+    }
+
+To ignore logging on other status codes, you can set the status code to ignore in the same file::
+
+    class Exceptions
+    {
+        public $ignoredCodes = [ 404 ];
+    }
+
+.. note:: It is possible that logging still will not happen for exceptions if your current Log settings
+    are not setup to log **critical** errors, which all exceptions are logged as.
 
 Custom Exceptions
 =================
@@ -71,11 +95,11 @@ PageNotFoundException
 This is used to signal a 404, Page Not Found error. When thrown, the system will show the view found at
 ``/application/views/errors/html/error_404.php``. You should customize all of the error views for your site.
 If, in ``Config/Routes.php``, you have specified a 404 Override, that will be called instead of the standard
-404 page.::
+404 page::
 
 	if (! $page = $pageModel->find($id))
 	{
-		throw new \CodeIgniter\PageNotFoundException();
+		throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 	}
 
 You can pass a message into the exception that will be displayed in place of the default message on the 404 page.
@@ -84,47 +108,11 @@ ConfigException
 ---------------
 
 This exception should be used when the values from the configuration class are invalid, or when the config class
-is not the right type, etc.::
+is not the right type, etc::
 
-	throw new \CodeIgniter\ConfigException();
+	throw new \CodeIgniter\Exceptions\ConfigException();
 
 This provides an HTTP status code of 500, and an exit code of 3.
-
-UnknownFileException
---------------------
-
-Use this exception when a file cannot be found.::
-
-	throw new \CodeIgniter\UnknownFileException();
-
-This provides an HTTP status code of 500, and an exit code of 4.
-
-UnknownClassException
----------------------
-
-Use this exception when a class cannot be found.::
-
-	throw new \CodeIgniter\UnknownClassException($className);
-
-This provides an HTTP status code of 500, and an exit code of 5.
-
-UnknownMethodException
-----------------------
-
-Use this exception when a class' method does not exist::
-
-	throw new \CodeIgniter\UnknownMethodException();
-
-This provides an HTTP status code of 500, and an exit code of 6.
-
-UserInputException
-------------------
-
-Use this exception when the user's input is not valid.::
-
-	throw new \CodeIgniter\UserInputException();
-
-This provides an HTTP status code of 500, and an exit code of 7.
 
 DatabaseException
 -----------------
@@ -132,6 +120,6 @@ DatabaseException
 This exception is thrown for database errors, such as when the database connection cannot be created,
 or when it is temporarily lost::
 
-	throw new \CodeIgniter\DatabaseException();
+	throw new \CodeIgniter\Database\Exceptions\DatabaseException();
 
-This provides an HTTP status code of 500, and an exit code of 4.
+This provides an HTTP status code of 500, and an exit code of 8.

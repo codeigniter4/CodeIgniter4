@@ -1,6 +1,8 @@
 <?php namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Services;
 use Config\App;
+use Tests\Support\HTTP\MockCURLRequest;
 
 class CURLRequestTest extends \CIUnitTestCase
 {
@@ -8,7 +10,51 @@ class CURLRequestTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-	    $this->request = new MockCURLRequest(new App(), new URI(), new Response(new \Config\App()));
+		parent::setUp();
+
+		Services::reset();
+	    $this->request = $this->getRequest();
+	}
+
+	protected function getRequest(array $options = [])
+	{
+		$uri = isset($options['base_uri'])
+			? new URI($options['base_uri'])
+			: new URI();
+
+		return new MockCURLRequest(new App(), $uri, new Response(new \Config\App()), $options);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/1029
+	 */
+	public function testGetRemembersBaseURI()
+	{
+		$request = $this->getRequest([
+			'base_uri' => 'http://www.foo.com/api/v1/'
+		]);
+
+		$response = $request->get('products');
+
+		$options = $request->curl_options;
+
+		$this->assertEquals('http://www.foo.com/api/v1/products', $options[CURLOPT_URL]);
+	}
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/1029
+	 */
+	public function testGetRemembersBaseURIWithHelperMethod()
+	{
+		$request = Services::curlrequest([
+			'base_uri' => 'http://www.foo.com/api/v1/'
+		]);
+
+		$uri = $this->getPrivateProperty($request, 'baseURI');
+		$this->assertEquals('www.foo.com', $uri->getHost());
+		$this->assertEquals('/api/v1/', $uri->getPath());
 	}
 
 	//--------------------------------------------------------------------
@@ -34,7 +80,7 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_CUSTOMREQUEST]));
+		$this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
 		$this->assertEquals('GET', $options[CURLOPT_CUSTOMREQUEST]);
 	}
 
@@ -48,7 +94,7 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_CUSTOMREQUEST]));
+		$this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
 		$this->assertEquals('DELETE', $options[CURLOPT_CUSTOMREQUEST]);
 	}
 
@@ -62,7 +108,7 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_CUSTOMREQUEST]));
+		$this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
 		$this->assertEquals('HEAD', $options[CURLOPT_CUSTOMREQUEST]);
 	}
 
@@ -76,7 +122,7 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_CUSTOMREQUEST]));
+		$this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
 		$this->assertEquals('OPTIONS', $options[CURLOPT_CUSTOMREQUEST]);
 	}
 
@@ -90,7 +136,7 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_CUSTOMREQUEST]));
+		$this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
 		$this->assertEquals('PATCH', $options[CURLOPT_CUSTOMREQUEST]);
 	}
 
@@ -104,7 +150,7 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_CUSTOMREQUEST]));
+		$this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
 		$this->assertEquals('POST', $options[CURLOPT_CUSTOMREQUEST]);
 	}
 
@@ -118,7 +164,7 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_CUSTOMREQUEST]));
+		$this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
 		$this->assertEquals('PUT', $options[CURLOPT_CUSTOMREQUEST]);
 	}
 
@@ -132,7 +178,7 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_CUSTOMREQUEST]));
+		$this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
 		$this->assertEquals('CUSTOM', $options[CURLOPT_CUSTOMREQUEST]);
 	}
 
@@ -146,7 +192,7 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_CUSTOMREQUEST]));
+		$this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
 		$this->assertEquals('CUSTOM', $options[CURLOPT_CUSTOMREQUEST]);
 	}
 
@@ -158,22 +204,22 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_URL]));
+		$this->assertArrayHasKey(CURLOPT_URL, $options);
 		$this->assertEquals('http://example.com', $options[CURLOPT_URL]);
 
-		$this->assertTrue(isset($options[CURLOPT_RETURNTRANSFER]));
-		$this->assertEquals(true, $options[CURLOPT_RETURNTRANSFER]);
+		$this->assertArrayHasKey(CURLOPT_RETURNTRANSFER, $options);
+		$this->assertTrue($options[CURLOPT_RETURNTRANSFER]);
 
-		$this->assertTrue(isset($options[CURLOPT_HEADER]));
-		$this->assertEquals(true, $options[CURLOPT_HEADER]);
+		$this->assertArrayHasKey(CURLOPT_HEADER, $options);
+		$this->assertTrue($options[CURLOPT_HEADER]);
 
-		$this->assertTrue(isset($options[CURLOPT_FRESH_CONNECT]));
-		$this->assertEquals(true, $options[CURLOPT_FRESH_CONNECT]);
+		$this->assertArrayHasKey(CURLOPT_FRESH_CONNECT, $options);
+		$this->assertTrue($options[CURLOPT_FRESH_CONNECT]);
 
-		$this->assertTrue(isset($options[CURLOPT_TIMEOUT_MS]));
+		$this->assertArrayHasKey(CURLOPT_TIMEOUT_MS, $options);
 		$this->assertEquals(0.0, $options[CURLOPT_TIMEOUT_MS]);
 
-		$this->assertTrue(isset($options[CURLOPT_CONNECTTIMEOUT_MS]));
+		$this->assertArrayHasKey(CURLOPT_CONNECTTIMEOUT_MS, $options);
 		$this->assertEquals(150 * 1000, $options[CURLOPT_CONNECTTIMEOUT_MS]);
 	}
 
@@ -187,10 +233,10 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_USERPWD]));
+		$this->assertArrayHasKey(CURLOPT_USERPWD, $options);
 		$this->assertEquals('username:password', $options[CURLOPT_USERPWD]);
 
-		$this->assertTrue(isset($options[CURLOPT_HTTPAUTH]));
+		$this->assertArrayHasKey(CURLOPT_HTTPAUTH, $options);
 		$this->assertEquals(CURLAUTH_BASIC, $options[CURLOPT_HTTPAUTH]);
 	}
 
@@ -204,10 +250,10 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_USERPWD]));
+		$this->assertArrayHasKey(CURLOPT_USERPWD, $options);
 		$this->assertEquals('username:password', $options[CURLOPT_USERPWD]);
 
-		$this->assertTrue(isset($options[CURLOPT_HTTPAUTH]));
+		$this->assertArrayHasKey(CURLOPT_HTTPAUTH, $options);
 		$this->assertEquals(CURLAUTH_BASIC, $options[CURLOPT_HTTPAUTH]);
 	}
 
@@ -221,10 +267,10 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_USERPWD]));
+		$this->assertArrayHasKey(CURLOPT_USERPWD, $options);
 		$this->assertEquals('username:password', $options[CURLOPT_USERPWD]);
 
-		$this->assertTrue(isset($options[CURLOPT_HTTPAUTH]));
+		$this->assertArrayHasKey(CURLOPT_HTTPAUTH, $options);
 		$this->assertEquals(CURLAUTH_DIGEST, $options[CURLOPT_HTTPAUTH]);
 	}
 
@@ -240,7 +286,7 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_SSLCERT]));
+		$this->assertArrayHasKey(CURLOPT_SSLCERT, $options);
 		$this->assertEquals($file, $options[CURLOPT_SSLCERT]);
 	}
 
@@ -256,10 +302,10 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_SSLCERT]));
+		$this->assertArrayHasKey(CURLOPT_SSLCERT, $options);
 		$this->assertEquals($file, $options[CURLOPT_SSLCERT]);
 
-		$this->assertTrue(isset($options[CURLOPT_SSLCERTPASSWD]));
+		$this->assertArrayHasKey(CURLOPT_SSLCERTPASSWD, $options);
 		$this->assertEquals('password', $options[CURLOPT_SSLCERTPASSWD]);
 	}
 
@@ -273,10 +319,10 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_VERBOSE]));
+		$this->assertArrayHasKey(CURLOPT_VERBOSE, $options);
 		$this->assertEquals(1, $options[CURLOPT_VERBOSE]);
 
-		$this->assertTrue(isset($options[CURLOPT_STDERR]));
+		$this->assertArrayHasKey(CURLOPT_STDERR, $options);
 	}
 
 	//--------------------------------------------------------------------
@@ -289,11 +335,11 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_FOLLOWLOCATION]));
+		$this->assertArrayHasKey(CURLOPT_FOLLOWLOCATION, $options);
 		$this->assertEquals(0, $options[CURLOPT_FOLLOWLOCATION]);
 
-		$this->assertFalse(isset($options[CURLOPT_MAXREDIRS]));
-		$this->assertFalse(isset($options[CURLOPT_REDIR_PROTOCOLS]));
+		$this->assertArrayNotHasKey(CURLOPT_MAXREDIRS, $options);
+		$this->assertArrayNotHasKey(CURLOPT_REDIR_PROTOCOLS, $options);
 	}
 
 	//--------------------------------------------------------------------
@@ -306,12 +352,12 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_FOLLOWLOCATION]));
+		$this->assertArrayHasKey(CURLOPT_FOLLOWLOCATION, $options);
 		$this->assertEquals(1, $options[CURLOPT_FOLLOWLOCATION]);
 
-		$this->assertTrue(isset($options[CURLOPT_MAXREDIRS]));
+		$this->assertArrayHasKey(CURLOPT_MAXREDIRS, $options);
 		$this->assertEquals(5, $options[CURLOPT_MAXREDIRS]);
-		$this->assertTrue(isset($options[CURLOPT_REDIR_PROTOCOLS]));
+		$this->assertArrayHasKey(CURLOPT_REDIR_PROTOCOLS, $options);
 		$this->assertEquals(CURLPROTO_HTTP|CURLPROTO_HTTPS, $options[CURLOPT_REDIR_PROTOCOLS]);
 	}
 
@@ -325,11 +371,11 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertTrue(isset($options[CURLOPT_FOLLOWLOCATION]));
+		$this->assertArrayHasKey(CURLOPT_FOLLOWLOCATION, $options);
 		$this->assertEquals(1, $options[CURLOPT_FOLLOWLOCATION]);
 
-		$this->assertTrue(isset($options[CURLOPT_MAXREDIRS]));
-		$this->assertTrue(isset($options[CURLOPT_REDIR_PROTOCOLS]));
+		$this->assertArrayHasKey(CURLOPT_MAXREDIRS, $options);
+		$this->assertArrayHasKey(CURLOPT_REDIR_PROTOCOLS, $options);
 	}
 
 	//--------------------------------------------------------------------

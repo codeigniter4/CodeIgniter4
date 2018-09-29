@@ -1,16 +1,24 @@
 <?php namespace CodeIgniter\Security;
 
-use Config\MockAppConfig;
-use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\HTTP\IncomingRequest;
+use Tests\Support\Config\MockAppConfig;
+use CodeIgniter\Security\Exceptions\SecurityException;
+use Tests\Support\Security\MockSecurity;
 
 //--------------------------------------------------------------------
 
+/**
+ * @backupGlobals enabled
+ */
 class SecurityTest extends \CIUnitTestCase {
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$_COOKIE = [];
 	}
 
@@ -54,29 +62,10 @@ class SecurityTest extends \CIUnitTestCase {
 
 	//--------------------------------------------------------------------
 
-	public function testCSRFVerifyAllowsWhitelistedURLs()
-	{
-		$white_uri = 'http://example.com';
-
-		$security = new MockSecurity(new MockAppConfig());
-		$request  = new IncomingRequest(new MockAppConfig(), new URI($white_uri));
-
-		// Post will get us to the check.
-		// Invalid matching fields should throw error or return false.
-		$_SERVER['REQUEST_METHOD'] = 'POST';
-		$_COOKIE = [
-			'csrf_cookie_name' => '8b9218a55906f9dcc1dc263dce7f005a'
-		];
-
-		$this->assertInstanceOf('CodeIgniter\Security\Security', $security->CSRFVerify($request));
-	}
-
-	//--------------------------------------------------------------------
-
 	public function testCSRFVerifyThrowsExceptionOnNoMatch()
 	{
 		$security = new MockSecurity(new MockAppConfig());
-		$request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'));
+		$request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
 
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$_POST['csrf_test_name']  = '8b9218a55906f9dcc1dc263dce7f005a';
@@ -84,7 +73,7 @@ class SecurityTest extends \CIUnitTestCase {
 			'csrf_cookie_name' => '8b9218a55906f9dcc1dc263dce7f005b'
 		];
 
-		$this->setExpectedException('LogicException');
+		$this->expectException(SecurityException::class);
 		$security->CSRFVerify($request);
 	}
 
@@ -93,7 +82,7 @@ class SecurityTest extends \CIUnitTestCase {
 	public function testCSRFVerifyReturnsSelfOnMatch()
 	{
 		$security = new MockSecurity(new MockAppConfig());
-		$request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'));
+		$request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
 
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$_POST['csrf_test_name']  = '8b9218a55906f9dcc1dc263dce7f005a';

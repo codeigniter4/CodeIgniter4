@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -41,12 +41,20 @@
  */
 class Forge extends \CodeIgniter\Database\Forge
 {
+
 	/**
 	 * CREATE DATABASE statement
 	 *
 	 * @var    string
 	 */
 	protected $createDatabaseStr = 'CREATE DATABASE %s CHARACTER SET %s COLLATE %s';
+
+	/**
+	 * DROP CONSTRAINT statement
+	 *
+	 * @var    string
+	 */
+	protected $dropConstraintStr = 'ALTER TABLE %s DROP FOREIGN KEY %s';
 
 	/**
 	 * CREATE TABLE keys flag
@@ -101,18 +109,18 @@ class Forge extends \CodeIgniter\Database\Forge
 		{
 			if (is_string($key))
 			{
-				$sql .= ' '.strtoupper($key).' = '.$attributes[$key];
+				$sql .= ' ' . strtoupper($key) . ' = ' . $this->db->escape($attributes[$key]);
 			}
 		}
 
 		if ( ! empty($this->db->charset) && ! strpos($sql, 'CHARACTER SET') && ! strpos($sql, 'CHARSET'))
 		{
-			$sql .= ' DEFAULT CHARACTER SET = '.$this->db->charset;
+			$sql .= ' DEFAULT CHARACTER SET = ' . $this->db->escape($this->db->charset);
 		}
 
 		if ( ! empty($this->db->DBCollat) && ! strpos($sql, 'COLLATE'))
 		{
-			$sql .= ' COLLATE = '.$this->db->DBCollat;
+			$sql .= ' COLLATE = ' . $this->db->escape($this->db->DBCollat);
 		}
 
 		return $sql;
@@ -135,14 +143,12 @@ class Forge extends \CodeIgniter\Database\Forge
 			return parent::_alterTable($alter_type, $table, $field);
 		}
 
-		$sql = 'ALTER TABLE '.$this->db->escapeIdentifiers($table);
-		for ($i = 0, $c = count($field); $i < $c; $i++)
+		$sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
+		for ($i = 0, $c = count($field); $i < $c; $i ++ )
 		{
 			if ($field[$i]['_literal'] !== FALSE)
 			{
-				$field[$i] = ($alter_type === 'ADD')
-					? "\n\tADD ".$field[$i]['_literal']
-					: "\n\tMODIFY ".$field[$i]['_literal'];
+				$field[$i] = ($alter_type === 'ADD') ? "\n\tADD " . $field[$i]['_literal'] : "\n\tMODIFY " . $field[$i]['_literal'];
 			}
 			else
 			{
@@ -155,11 +161,11 @@ class Forge extends \CodeIgniter\Database\Forge
 					$field[$i]['_literal'] = empty($field[$i]['new_name']) ? "\n\tMODIFY " : "\n\tCHANGE ";
 				}
 
-				$field[$i] = $field[$i]['_literal'].$this->_processColumn($field[$i]);
+				$field[$i] = $field[$i]['_literal'] . $this->_processColumn($field[$i]);
 			}
 		}
 
-		return array($sql.implode(',', $field));
+		return [$sql . implode(',', $field)];
 	}
 
 	//--------------------------------------------------------------------
@@ -172,8 +178,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 */
 	protected function _processColumn($field)
 	{
-		$extra_clause = isset($field['after'])
-			? ' AFTER '.$this->db->escapeIdentifiers($field['after']) : '';
+		$extra_clause = isset($field['after']) ? ' AFTER ' . $this->db->escapeIdentifiers($field['after']) : '';
 
 		if (empty($extra_clause) && isset($field['first']) && $field['first'] === TRUE)
 		{
@@ -181,15 +186,15 @@ class Forge extends \CodeIgniter\Database\Forge
 		}
 
 		return $this->db->escapeIdentifiers($field['name'])
-		       .(empty($field['new_name']) ? '' : ' '.$this->db->escapeIdentifiers($field['new_name']))
-		       .' '.$field['type'].$field['length']
-		       .$field['unsigned']
-		       .$field['null']
-		       .$field['default']
-		       .$field['auto_increment']
-		       .$field['unique']
-		       .(empty($field['comment']) ? '' : ' COMMENT '.$field['comment'])
-		       .$extra_clause;
+				. (empty($field['new_name']) ? '' : ' ' . $this->db->escapeIdentifiers($field['new_name']))
+				. ' ' . $field['type'] . $field['length']
+				. $field['unsigned']
+				. $field['null']
+				. $field['default']
+				. $field['auto_increment']
+				. $field['unique']
+				. (empty($field['comment']) ? '' : ' COMMENT ' . $field['comment'])
+				. $extra_clause;
 	}
 
 	//--------------------------------------------------------------------
@@ -204,11 +209,11 @@ class Forge extends \CodeIgniter\Database\Forge
 	{
 		$sql = '';
 
-		for ($i = 0, $c = count($this->keys); $i < $c; $i++)
+		for ($i = 0, $c = count($this->keys); $i < $c; $i ++ )
 		{
 			if (is_array($this->keys[$i]))
 			{
-				for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
+				for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2 ++ )
 				{
 					if ( ! isset($this->fields[$this->keys[$i][$i2]]))
 					{
@@ -223,17 +228,18 @@ class Forge extends \CodeIgniter\Database\Forge
 				continue;
 			}
 
-			is_array($this->keys[$i]) OR $this->keys[$i] = array($this->keys[$i]);
+			is_array($this->keys[$i]) || $this->keys[$i] = [$this->keys[$i]];
 
-			$sql .= ",\n\tKEY ".$this->db->escapeIdentifiers(implode('_', $this->keys[$i]))
-			        .' ('.implode(', ', $this->db->escapeIdentifiers($this->keys[$i])).')';
+			$unique = in_array($i, $this->uniqueKeys) ? 'UNIQUE ' : '';
+
+			$sql .= ",\n\t{$unique}KEY " . $this->db->escapeIdentifiers(implode('_', $this->keys[$i]))
+					. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
 		}
 
-		$this->keys = array();
+		$this->keys = [];
 
 		return $sql;
 	}
 
 	//--------------------------------------------------------------------
-
 }

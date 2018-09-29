@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\HTTP\Files;
+<?php
+namespace CodeIgniter\HTTP\Files;
 
 /**
  * CodeIgniter
@@ -7,7 +8,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +30,9 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license      http://opensource.org/licenses/MIT	MIT License
- * @link         http://codeigniter.com
+ * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
  * @since        Version 3.0.0
  * @filesource
  */
@@ -45,6 +46,7 @@
  */
 class FileCollection
 {
+
 	/**
 	 * An array of UploadedFile instances for any files
 	 * uploaded as part of this request.
@@ -78,17 +80,39 @@ class FileCollection
 	 *
 	 * @param string $name
 	 *
-	 * @return null
+	 * @return UploadedFile|null
 	 */
 	public function getFile(string $name)
 	{
 		$this->populateFiles();
 
-		$name = strtolower($name);
-
-		if (array_key_exists($name, $this->files))
+		if ($this->hasFile($name))
 		{
-			return $this->files[$name];
+
+			if (strpos($name, '.') !== false)
+			{
+				$name = explode('.', $name);
+				$uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
+				if ($uploadedFile instanceof \CodeIgniter\HTTP\Files\UploadedFile)
+				{
+					return $uploadedFile;
+				}
+
+				return null;
+			}
+
+			if (array_key_exists($name, $this->files))
+			{
+				$uploadedFile = $this->files[$name];
+				if ($uploadedFile instanceof \CodeIgniter\HTTP\Files\UploadedFile)
+				{
+					return $uploadedFile;
+				}
+
+				return null;
+			}
+
+			return null;
 		}
 
 		return null;
@@ -116,7 +140,7 @@ class FileCollection
 
 			foreach ($segments as $segment)
 			{
-				if (! array_key_exists($segment, $el))
+				if ( ! array_key_exists($segment, $el))
 				{
 					return false;
 				}
@@ -145,12 +169,12 @@ class FileCollection
 			return;
 		}
 
+		$this->files = [];
+
 		if (empty($_FILES))
 		{
 			return;
 		}
-
-		$this->files = [];
 
 		$files = $this->fixFilesArray($_FILES);
 
@@ -168,17 +192,20 @@ class FileCollection
 	 *
 	 * @param array $array
 	 *
-	 * @return array
+	 * @return array|UploadedFile
 	 */
 	protected function createFileObject(array $array)
 	{
-		if (! isset($array['name']))
+		if ( ! isset($array['name']))
 		{
 			$output = [];
 
 			foreach ($array as $key => $values)
 			{
-				if (! is_array($values)) continue;
+				if ( ! is_array($values))
+				{
+					continue;
+				}
 
 				$output[$key] = $this->createFileObject($values);
 			}
@@ -187,12 +214,8 @@ class FileCollection
 		}
 
 		return new UploadedFile(
-				$array['tmp_name'] ?? null,
-				$array['name'] ?? null,
-				$array['type'] ?? null,
-				$array['size'] ?? null,
-				$array['error'] ?? null
-			);
+				$array['tmp_name'] ?? null, $array['name'] ?? null, $array['type'] ?? null, $array['size'] ?? null, $array['error'] ?? null
+		);
 	}
 
 	//--------------------------------------------------------------------
@@ -220,16 +243,15 @@ class FileCollection
 			{
 				$pointer = &$output[$name];
 
-				if (! is_array($value))
+				if ( ! is_array($value))
 				{
 					$pointer[$field] = $value;
 					continue;
 				}
 
-				$stack    = [&$pointer];
+				$stack = [&$pointer];
 				$iterator = new \RecursiveIteratorIterator(
-					new \RecursiveArrayIterator($value),
-					\RecursiveIteratorIterator::SELF_FIRST
+						new \RecursiveArrayIterator($value), \RecursiveIteratorIterator::SELF_FIRST
 				);
 
 				foreach ($iterator as $key => $value)
@@ -250,4 +272,32 @@ class FileCollection
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Navigate through a array looking for a particular index
+	 *
+	 * @param array $index The index sequence we are navigating down
+	 * @param array $value The portion of the array to process
+	 *
+	 * @return mixed
+	 */
+	protected function getValueDotNotationSyntax($index, $value)
+	{
+		if (is_array($index) && ! empty($index))
+		{
+			$current_index = array_shift($index);
+		}
+		if (is_array($index) && $index && is_array($value[$current_index]) && $value[$current_index])
+		{
+			return $this->getValueDotNotationSyntax($index, $value[$current_index]);
+		}
+
+		if (isset($value[$current_index]))
+		{
+			return $value[$current_index];
+		}
+
+		return null;
+	}
+
 }
