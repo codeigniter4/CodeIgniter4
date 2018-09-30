@@ -1,13 +1,20 @@
-<?php namespace CodeIgniter\Debug;
+<?php
+namespace CodeIgniter\Debug;
 
 class TimerTest extends \CIUnitTestCase
 {
 
-	public function setUp() { }
+	public function setUp()
+	{
+		
+	}
 
 	//--------------------------------------------------------------------
 
-	public function tearDown() { }
+	public function tearDown()
+	{
+		
+	}
 
 	//--------------------------------------------------------------------
 
@@ -83,38 +90,38 @@ class TimerTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-    public function testLongExecutionTime()
-    {
-        $timer = new Timer();
+	public function testLongExecutionTime()
+	{
+		$timer = new Timer();
 
-        $timer->start('longjohn', strtotime('-11 minutes'));
+		$timer->start('longjohn', strtotime('-11 minutes'));
 
-        // Use floor here to account for fractional differences in seconds.
-        $this->assertEquals(11 * 60, (int)$timer->getElapsedTime('longjohn'));
-    }
+		// Use floor here to account for fractional differences in seconds.
+		$this->assertEquals(11 * 60, (int) floor($timer->getElapsedTime('longjohn')));
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    public function testLongExecutionTimeThroughCommonFunc()
-    {
-        timer()->start('longjohn', strtotime('-11 minutes'));
+	public function testLongExecutionTimeThroughCommonFunc()
+	{
+		timer()->start('longjohn', strtotime('-11 minutes'));
 
-        // Use floor here to account for fractional differences in seconds.
-        $this->assertEquals(11 * 60, (int)timer()->getElapsedTime('longjohn'));
-    }
+		// Use floor here to account for fractional differences in seconds.
+		$this->assertEquals(11 * 60, (int) floor(timer()->getElapsedTime('longjohn')));
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    public function testCommonStartStop()
-    {
-        timer('test1');
-        sleep(1);
-        timer('test1');
+	public function testCommonStartStop()
+	{
+		timer('test1');
+		sleep(1);
+		timer('test1');
 
-        $this->assertGreaterThanOrEqual(1.0, timer()->getElapsedTime('test1'));
-    }
+		$this->assertGreaterThanOrEqual(1.0, timer()->getElapsedTime('test1'));
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function testReturnsNullGettingElapsedTimeOfNonTimer()
 	{
@@ -123,5 +130,5 @@ class TimerTest extends \CIUnitTestCase
 		$this->assertNull($timer->getElapsedTime('test1'));
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 }
