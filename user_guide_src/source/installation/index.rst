@@ -7,6 +7,13 @@ CodeIgniter4 can be installed manually, or using Composer.
 Manual Installation
 ===================
 
+PHP Extension Needed
+====================
+#. php-mbstring
+#. php-json
+#. php-mysqlnd
+#. php-xml
+
 CodeIgniter is installed via manual download and unzip the package.
 
 Composer Installation
