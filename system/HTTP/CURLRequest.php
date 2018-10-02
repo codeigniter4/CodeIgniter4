@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+namespace CodeIgniter\HTTP;
 
 /**
  * CodeIgniter
@@ -114,7 +115,10 @@ class CURLRequest extends Request
 	{
 		if ( ! function_exists('curl_version'))
 		{
+			// we won't see this during travis-CI
+			// @codeCoverageIgnoreStart
 			throw HTTPException::forMissingCurl();
+			// @codeCoverageIgnoreEnd
 		}
 
 		parent::__construct($config);
@@ -571,7 +575,7 @@ class CURLRequest extends Request
 				$cert = $cert[0];
 			}
 
-			if (! file_exists($cert))
+			if ( ! file_exists($cert))
 			{
 				throw HTTPException::forSSLCertNotFound($cert);
 			}
@@ -586,7 +590,7 @@ class CURLRequest extends Request
 			{
 				$file = realpath($config['ssl_key']);
 
-				if (! $file)
+				if ( ! $file)
 				{
 					throw HTTPException::forInvalidSSLKey($config['ssl_key']);
 				}
@@ -722,6 +726,8 @@ class CURLRequest extends Request
 	/**
 	 * Does the actual work of initializing cURL, setting the options,
 	 * and grabbing the output.
+	 *
+	 * @codeCoverageIgnore
 	 *
 	 * @param array $curl_options
 	 *
