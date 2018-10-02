@@ -219,9 +219,9 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 *
 	 * @param string $name
 	 */
-	public function seed(string $name)
+	public function seed(string $name): void
 	{
-		return $this->seeder->call($name);
+		$this->seeder->call($name);
 	}
 
 	//--------------------------------------------------------------------
@@ -235,10 +235,8 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 *
 	 * @param string $table
 	 * @param array  $where
-	 *
-	 * @return bool
 	 */
-	public function dontSeeInDatabase(string $table, array $where)
+	public function dontSeeInDatabase(string $table, array $where): void
 	{
 		$count = $this->db->table($table)
 				->where($where)
@@ -255,11 +253,9 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 *
 	 * @param string $table
 	 * @param array  $where
-	 *
-	 * @return bool
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function seeInDatabase(string $table, array $where)
+	public function seeInDatabase(string $table, array $where): void
 	{
 		$count = $this->db->table($table)
 				->where($where)
@@ -324,10 +320,9 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param string $table
 	 * @param array  $where
 	 *
-	 * @return bool
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function seeNumRecords(int $expected, string $table, array $where)
+	public function seeNumRecords(int $expected, string $table, array $where): void
 	{
 		$count = $this->db->table($table)
 				->where($where)
