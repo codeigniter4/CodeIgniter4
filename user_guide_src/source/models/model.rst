@@ -100,7 +100,8 @@ what table to use and how we can find the required records::
 
 Specifies the database table that this model primarily works with. This only applies to the
 built-in CRUD methods. You are not restricted to using only this table in your own
-queries.
+queries. In case you'd like to change ``$table`` you could use ``setTable(string $table)``
+method with your new table name as the first parameter.
 
 **$primaryKey**
 
@@ -113,8 +114,9 @@ is used with methods like ``find()`` to know what column to match the specified 
 The Model's CRUD methods will take a step of work away from you and automatically return
 the resulting data, instead of the Result object. This setting allows you to define
 the type of data that is returned. Valid values are 'array', 'object', or the fully
-qualified name of a class that can be used with the Result object's getCustomResultObject()
-method.
+qualified name of a class that can be used with the Result object's ``getCustomResultObject()``
+method. In case you'd like to change ``$returnType`` you could use 
+``setReturnType(string $returnType)`` method with new return type as the first parameter.
 
 **$useSoftDeletes**
 

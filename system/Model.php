@@ -1142,6 +1142,22 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Specify the returnType associated with a model
+	 *
+	 * @param string $table
+	 *
+	 * @return Model
+	 */
+	public function setReturnType(string $returnType)
+	{
+		$this->tempReturnType = $this->returnType = $returnType;
+
+		return $this;
+	}
+	
+	//--------------------------------------------------------------------
+
+	/**
 	 * Grabs the last error(s) that occurred. If data was validated,
 	 * it will first check for errors there, otherwise will try to
 	 * grab the last error from the Database connection.
