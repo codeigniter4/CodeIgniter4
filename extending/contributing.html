@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PSR Compliance &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
+  <title>Contributing to CodeIgniter &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
   
 
   
@@ -35,9 +35,9 @@
 
   
     <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
-        <link rel="up" title="Welcome to CodeIgniter4" href="index.html"/>
-        <link rel="next" title="Installation" href="../installation/index.html"/>
-        <link rel="prev" title="Credits" href="credits.html"/> 
+        <link rel="up" title="Extending CodeIgniter" href="index.html"/>
+        <link rel="next" title="The MIT License (MIT)" href="../license.html"/>
+        <link rel="prev" title="Events - Extending the Framework Core" href="events.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -83,14 +83,8 @@
               
             
             
-              <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Welcome to CodeIgniter4</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="index.html">Welcome to CodeIgniter4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="requirements.html">Server Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="credits.html">Credits</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">PSR Compliance</a></li>
-</ul>
-</li>
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
@@ -131,8 +125,13 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Extending CodeIgniter</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core_classes.html">Creating Core System Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">Events - Extending the Framework Core</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Contributing to CodeIgniter</a></li>
+</ul>
+</li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
@@ -181,9 +180,9 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">Welcome to CodeIgniter4</a> &raquo;</li>
+          <li><a href="index.html">Extending CodeIgniter</a> &raquo;</li>
         
-      <li>PSR Compliance</li>
+      <li>Contributing to CodeIgniter</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -200,34 +199,57 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="psr-compliance">
-<h1>PSR Compliance<a class="headerlink" href="#psr-compliance" title="Permalink to this headline">¶</a></h1>
-<p>The <a class="reference external" href="http://www.php-fig.org/">PHP-FIG</a> was created in 2009 to help make code more interoperable between frameworks
-by ratifying Interfaces, style guides, and more that members were free to implement or not. While CodeIgniter is
-not a member of the FIG, we are compatible with a number of their proposals. This guide is meant to list the
-status of our compliance with the various accepted, and some draft, proposals.</p>
-<p><strong>PSR-1: Basic Coding Standard</strong></p>
-<p>This recommendation covers basic class, method, and file-naming standards. Our
-<cite>style guide &lt;https://github.com/bcit-ci/CodeIgniter4/blob/develop/contributing/styleguide.rst&gt;_</cite>
-meets PSR-1 and adds its own requirements on top of it.</p>
-<p><strong>PSR-2: Coding Style Guide</strong></p>
-<p>This PSR was fairly controversial when it first came out. CodeIgniter meets many of the recommendations within,
-but does not, and will not, meet all of them.</p>
-<p><strong>PSR-3: Logger Interface</strong></p>
-<p>CodeIgniter&#8217;s <a class="reference internal" href="../general/logging.html"><span class="doc">Logger</span></a> implements all of the interfaces provided by this PSR.</p>
-<p><strong>PSR-4: Autoloading Standard</strong></p>
-<p>This PSR provides a method for organizing file and namespaces to allow for a standard method of autoloading
-classes. Our <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">Autoloader</span></a> meets the PSR-4 recommendations.</p>
-<p><strong>PSR-6: Caching Interface</strong></p>
-<p>CodeIgniter will not be trying to meet this PSR, as we believe it oversteps its needs. The newly proposed
-<a class="reference external" href="https://github.com/dragoonis/fig-standards/blob/psr-simplecache/proposed/simplecache.md">SimpleCache Interfaces</a>
-do look like something we would consider.</p>
-<p><strong>PSR-7: HTTP Message Interface</strong></p>
-<p>This PSR standardizes a way of representing the HTTP interactions. While many of the concepts became part of our
-HTTP layer, CodeIgniter does not strive for compatibility with this recommendation.</p>
-<p>&#8212;</p>
-<p>If you find any places that we claim to meet a PSR but have failed to execute it correctly, please let us know
-and we will get it fixed, or submit a pull request with the required changes.</p>
+  <div class="section" id="contributing-to-codeigniter">
+<h1>Contributing to CodeIgniter<a class="headerlink" href="#contributing-to-codeigniter" title="Permalink to this headline">¶</a></h1>
+<p>CodeIgniter is a community driven project and accepts contributions of code
+and documentation from the community. These contributions are made in the form
+of Issues or <a class="reference external" href="https://help.github.com/articles/using-pull-requests/">Pull Requests</a>
+on the <a class="reference external" href="https://github.com/bcit-ci/CodeIgniter4">CodeIgniter4 repository</a> on GitHub.</p>
+<p>Issues are a quick way to point out a bug. If you find a bug or documentation
+error in CodeIgniter then please check a few things first:</p>
+<ul class="simple">
+<li>There is not already an open Issue</li>
+<li>The issue has already been fixed (check the develop branch, or look for
+closed Issues)</li>
+<li>Is it something really obvious that you fix it yourself?</li>
+</ul>
+<p>Reporting issues is helpful but an even better approach is to send a Pull
+Request, which is done by &#8220;Forking&#8221; the main repository and committing to your
+own copy. This will require you to use the version control system called Git.</p>
+<p>Please see the <a class="reference external" href="https://github.com/bcit-ci/CodeIgniter4/tree/develop/contributing">Contributing to CodeIgniter4</a>
+section of our code repository.</p>
+<div class="section" id="support">
+<h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
+<p>Please note that GitHub is not for general support questions! If you are
+having trouble using a feature of CodeIgniter, ask for help on our
+<a class="reference external" href="http://forum.codeigniter.com/">forums</a> instead.</p>
+<p>If you are not sure whether you are using something correctly or if you
+have found a bug, again - please ask on the forums first.</p>
+</div>
+<div class="section" id="security">
+<h2>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h2>
+<p>Did you find a security issue in CodeIgniter?</p>
+<p>Please <em>don&#8217;t</em> disclose it publicly, but e-mail us at <a class="reference external" href="mailto:security&#37;&#52;&#48;codeigniter&#46;com">security<span>&#64;</span>codeigniter<span>&#46;</span>com</a>,
+or report it via our page on <a class="reference external" href="https://hackerone.com/codeigniter">HackerOne</a>.</p>
+<p>If you&#8217;ve found a critical vulnerability, we&#8217;d be happy to credit you in our
+<a class="reference external" href="https://bcit-ci.github.io/CodeIgniter4/changelog.html">ChangeLog</a>.</p>
+</div>
+<div class="section" id="tips-for-a-good-issue-report">
+<h2>Tips for a Good Issue Report<a class="headerlink" href="#tips-for-a-good-issue-report" title="Permalink to this headline">¶</a></h2>
+<p>Use a descriptive subject line (eg parser library chokes on commas) rather than a vague one (eg. your code broke).</p>
+<p>Address a single issue in a report.</p>
+<p>Identify the CodeIgniter version (eg 4.0.1) and the component if you know it (eg. parser library)</p>
+<p>Explain what you expected to happen, and what did happen.
+Include error messages and stacktrace, if any.</p>
+<p>Include short code segments if they help to explain.
+Use a pastebin or dropbox facility to include longer segments of code or screenshots - do not include them in the issue report itself.
+This means setting a reasonable expiry for those, until the issue is resolved or closed.</p>
+<p>If you know how to fix the issue, you can do so in your own fork &amp; branch, and submit a pull request.
+The issue report information above should be part of that.</p>
+<p>If your issue report can describe the steps to reproduce the problem, that is great.
+If you can include a unit test that reproduces the problem, that is even better, as it gives whoever is fixing
+it a clearer target!</p>
+</div>
 </div>
 
 
@@ -240,10 +262,10 @@ and we will get it fixed, or submit a pull request with the required changes.</p
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../installation/index.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../license.html" class="btn btn-neutral float-right" title="The MIT License (MIT)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="credits.html" class="btn btn-neutral" title="Credits" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="events.html" class="btn btn-neutral" title="Events - Extending the Framework Core" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

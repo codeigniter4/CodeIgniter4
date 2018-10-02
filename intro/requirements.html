@@ -202,7 +202,13 @@
             
   <div class="section" id="server-requirements">
 <h1>Server Requirements<a class="headerlink" href="#server-requirements" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="http://php.net/">PHP</a> version 7.1 or newer is required, with the <em>intl</em> extension installed. <a class="reference external" href="https://gophp71.org/">Why 7.1</a>?</p>
+<p><a class="reference external" href="http://php.net/">PHP</a> version 7.1 or newer is required, with the
+<a class="reference external" href="http://php.net/manual/en/intl.requirements.php">*intl* extension</a>
+installed. <a class="reference external" href="https://gophp71.org/">Why 7.1</a>?</p>
+<p>The following PHP extensions should be enabled on your server:
+<code class="docutils literal"><span class="pre">php-json</span></code>, <code class="docutils literal"><span class="pre">php-mbstring</span></code>, <code class="docutils literal"><span class="pre">php-mysqlnd</span></code>, <cite>php-xml`</cite></p>
+<p>In order to use the <a class="reference internal" href="../libraries/curlrequest.html"><span class="doc">CURLRequest</span></a>, you will need
+<a class="reference external" href="http://php.net/manual/en/curl.requirements.php">libcurl</a> installed.</p>
 <p>A database is required for most web application programming.
 Currently supported databases are:</p>
 <blockquote>
@@ -251,7 +257,7 @@ The list below shows the outstanding ones.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Sep 28, 2018.
+      Last updated on Oct 02, 2018.
 
     </p>
   </div>
