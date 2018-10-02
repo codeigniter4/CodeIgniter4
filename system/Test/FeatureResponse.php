@@ -187,6 +187,8 @@ class FeatureResponse extends TestCase
 	 * Assert the Response does not have the specified cookie set.
 	 *
 	 * @param string $key
+	 * @param null   $value
+	 * @param string $prefix
 	 *
 	 * @throws \Exception
 	 */

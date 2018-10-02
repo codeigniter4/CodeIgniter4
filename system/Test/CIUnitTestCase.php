@@ -79,7 +79,6 @@ class CIUnitTestCase extends TestCase
 	 * @param null   $expectedMessage
 	 *
 	 * @throws \Exception
-     * @return bool
 	 */
 	public function assertLogged(string $level, $expectedMessage = null)
 	{
@@ -126,7 +125,7 @@ class CIUnitTestCase extends TestCase
 		$systemPath = realpath(__DIR__.'/../');
 
 		require_once $systemPath.'/'.$this->configPath.'/Paths.php';
-		$this->adjustPaths(new Paths());
+		$paths = $this->adjustPaths(new \Config\Paths());
 
 		$app = require $systemPath.'/bootstrap.php';
 		return $app;
