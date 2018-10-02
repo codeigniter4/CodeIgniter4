@@ -187,12 +187,10 @@ class FeatureResponse extends TestCase
 	 * Assert the Response does not have the specified cookie set.
 	 *
 	 * @param string $key
-	 * @param null   $value
-	 * @param string $prefix
 	 *
 	 * @throws \Exception
 	 */
-	public function assertCookieMissing(string $key)
+	public function assertCookieMissing(string $key): void
 	{
 		$this->assertFalse($this->response->hasCookie($key), "Cookie named '{$key}' should not be set.");
 	}
