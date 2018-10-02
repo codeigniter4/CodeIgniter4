@@ -4,6 +4,9 @@ Installation
 
 CodeIgniter4 can be installed manually, or using Composer.
 
+.. note:: Before using CodeIgniter, make sure that your server meets the
+          :doc:`requirements </intro/requirements>`.
+
 Manual Installation
 ===================
 
