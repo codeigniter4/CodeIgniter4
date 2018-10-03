@@ -162,12 +162,14 @@ class Events
 	 *  a) All subscribers have finished or
 	 *  b) a method returns false, at which point execution of subscribers stops.
 	 *
+	 * Note: All arguments are passed by reference. This is so the listeners can modify them if necessary.
+	 *
 	 * @param $eventName
 	 * @param $arguments
 	 *
 	 * @return bool
 	 */
-	public static function trigger($eventName, ...$arguments): bool
+	public static function trigger($eventName,&...$arguments): bool
 	{
 		// Read in our Config/events file so that we have them all!
 		if ( ! self::$initialized)
