@@ -518,7 +518,9 @@ class RouteCollection implements RouteCollectionInterface
 
 		if (isset($this->routes[$verb]))
 		{
-			$collection = array_merge($this->routes['*'], $this->routes[$verb]);
+			// Keep current verb's routes at the beginning so they're matched
+			// before any of the generic, "add" routes.
+			$collection = array_merge($this->routes[$verb], $this->routes['*']);
 
 			foreach ($collection as $r)
 			{
@@ -557,6 +559,21 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the current HTTP verb.
+	 * Used primarily for testing.
+	 *
+	 * @param string $verb
+	 *
+	 * @return $this
+	 */
+	public function setHTTPVerb(string $verb)
+	{
+		$this->HTTPVerb = $verb;
+
+		return $this;
+	}
 
 	/**
 	 * A shortcut method to add a number of routes at a single time.
