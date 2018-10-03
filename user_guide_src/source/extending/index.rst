@@ -9,3 +9,4 @@ CodeIgniter 4 has been designed to be easy to extend or build upon.
 
     core_classes
     events
+    contributing

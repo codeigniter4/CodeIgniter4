@@ -2,7 +2,15 @@
 Server Requirements
 ###################
 
-`PHP <http://php.net/>`_ version 7.1 or newer is required, with the *intl* extension installed. `Why 7.1 <https://gophp71.org/>`_?
+`PHP <http://php.net/>`_ version 7.1 or newer is required, with the 
+`*intl* extension <http://php.net/manual/en/intl.requirements.php>`_ 
+installed. `Why 7.1 <https://gophp71.org/>`_?
+
+The following PHP extensions should be enabled on your server:
+``php-json``, ``php-mbstring``, ``php-mysqlnd``, `php-xml``
+
+In order to use the :doc:`CURLRequest </libraries/curlrequest>`, you will need 
+`libcurl <http://php.net/manual/en/curl.requirements.php>`_ installed.
 
 A database is required for most web application programming.
 Currently supported databases are:
