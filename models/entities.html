@@ -217,7 +217,7 @@ be used directly with the <a class="reference internal" href="model.html"><span 
 <li><a class="reference internal" href="#mutators" id="id8">Mutators</a><ul>
 <li><a class="reference internal" href="#date-mutators" id="id9">Date Mutators</a></li>
 <li><a class="reference internal" href="#property-casting" id="id10">Property Casting</a></li>
-<li><a class="reference internal" href="#array-casting" id="id11">Array Casting</a></li>
+<li><a class="reference internal" href="#array-json-casting" id="id11">Array/Json Casting</a></li>
 </ul>
 </li>
 </ul>
@@ -527,11 +527,21 @@ data types: <strong>integer</strong>, <strong>float</strong>, <strong>double</st
 </pre></div>
 </div>
 </div>
-<div class="section" id="array-casting">
-<h3><a class="toc-backref" href="#id11">Array Casting</a><a class="headerlink" href="#array-casting" title="Permalink to this headline">¶</a></h3>
-<p>Array casting is especially useful with fields that store serialized arrays or json in them. When cast as an array,
-they will automatically be unserialized when you read the property&#8217;s value. Unlike the rest of the data types that
-you can cast properties into, the <strong>array</strong> cast type will serialize the value whenever the property is set:</p>
+<div class="section" id="array-json-casting">
+<h3><a class="toc-backref" href="#id11">Array/Json Casting</a><a class="headerlink" href="#array-json-casting" title="Permalink to this headline">¶</a></h3>
+<p>Array/Json casting is especially useful with fields that store serialized arrays or json in them. When cast as:</p>
+<ul class="simple">
+<li>an <strong>array</strong>, they will automatically be unserialized,</li>
+<li>a <strong>json</strong>, they will automatically be set as an value of json_decode($value, false),</li>
+<li>a <strong>json-array</strong>, they will automatically be set as an value of  json_decode($value, true),</li>
+</ul>
+<p>when you read the property&#8217;s value.
+Unlike the rest of the data types that you can cast properties into, the:</p>
+<ul class="simple">
+<li><strong>array</strong> cast type will serialize,</li>
+<li><strong>json</strong> and <strong>json-array</strong> cast will use json_encode function on</li>
+</ul>
+<p>the value whenever the property is set:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Entity</span><span class="p">;</span>
@@ -542,7 +552,9 @@ you can cast properties into, the <strong>array</strong> cast type will serializ
 
     <span class="k">protected</span> <span class="nv">$_options</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;casts&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-            <span class="s1">&#39;options&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;array&#39;</span>
+            <span class="s1">&#39;options&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;options_object&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;options_array&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;json-array&#39;</span>
         <span class="p">],</span>
          <span class="s1">&#39;dates&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="s1">&#39;deleted_at&#39;</span><span class="p">],</span>
         <span class="s1">&#39;datamap&#39;</span> <span class="o">=&gt;</span> <span class="p">[]</span>
