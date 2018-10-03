@@ -126,7 +126,7 @@ if ( ! function_exists('delete_cookie'))
 	 */
 	function delete_cookie($name, string $domain = '', string $path = '/', string $prefix = '')
 	{
-		set_cookie($name, '', '', $domain, $path, $prefix);
+		\Config\Services::response()->deleteCookie($name, $domain, $path, $prefix);
 	}
 
 }
