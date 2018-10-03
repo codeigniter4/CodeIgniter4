@@ -339,7 +339,7 @@ For example, if you had a User entity with an **is_banned** property, you can ca
     }
 
 Array/Json Casting
--------------
+------------------
 
 Array/Json casting is especially useful with fields that store serialized arrays or json in them. When cast as:
 
