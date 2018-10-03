@@ -410,7 +410,7 @@ going directly to the <code class="docutils literal"><span class="pre">Pages</sp
 with a slug to the <code class="docutils literal"><span class="pre">view()</span></code> method in the <code class="docutils literal"><span class="pre">News</span></code> controller.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;News::view/$1&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="s1">&#39;News::index&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::view/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::view/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Point your browser to your document root, followed by index.php/news and

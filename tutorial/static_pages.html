@@ -353,14 +353,17 @@ controller and method, and break free from the normal convention:
 <em>application/Config/Routes.php</em> and look for the &#8220;Route Definitions&#8221;
 section of the configuration file.</p>
 <p>The only uncommented line there to start with should be::</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This directive says that any incoming request without any content
 specified should be handled by the <code class="docutils literal"><span class="pre">index</span></code> method inside the <code class="docutils literal"><span class="pre">Home</span></code> controller.</p>
-<p>Add the following two lines, in front of the route directive for &#8216;/&#8217;.</p>
+<p>Set the default controller to run your new method:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Pages/view&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::view/$1&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Add the following line, <strong>after</strong> the route directive for &#8216;/&#8217;.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::view/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>CodeIgniter reads its routing rules from top to bottom and routes the
@@ -374,14 +377,6 @@ arguments.</p>
 <p>Here, the second rule in the <code class="docutils literal"><span class="pre">$routes</span></code> array matches <strong>any</strong> request
 using the wildcard string <code class="docutils literal"><span class="pre">(:any)</span></code>. and passes the parameter to the
 <code class="docutils literal"><span class="pre">view()</span></code> method of the <code class="docutils literal"><span class="pre">Pages</span></code> class.</p>
-<p>In order for the default controller to be used, though, you have to make
-sure that no other routes are defined that handle the route. By default,
-the Routes file <strong>does</strong> have a route that handles the site root (/).
-Delete the following route to make sure that the Pages controller handles
-our home page:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
 <p>Now visit <code class="docutils literal"><span class="pre">index.php/about</span></code>. Did it get routed correctly to the <code class="docutils literal"><span class="pre">view()</span></code>
 method in the pages controller? Awesome!</p>
 </div>
