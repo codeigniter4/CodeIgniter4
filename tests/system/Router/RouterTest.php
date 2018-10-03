@@ -270,4 +270,35 @@ class RouterTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/1240
+	 */
+	public function testMatchesCorrectlyWithMixedVerbs()
+	{
+		$this->collection->setHTTPVerb('get');
+
+		$this->collection->add('/', 'Home::index');
+		$this->collection->get('news', 'News::index');
+		$this->collection->get('news/(:segment)', 'News::view/$1');
+		$this->collection->add('(:any)', 'Pages::view/$1');
+
+		$router = new Router($this->collection);
+
+		$router->handle('/');
+		$this->assertEquals('\Home', $router->controllerName());
+		$this->assertEquals('index', $router->methodName());
+
+		$router->handle('news');
+		$this->assertEquals('\News', $router->controllerName());
+		$this->assertEquals('index', $router->methodName());
+
+		$router->handle('news/daily');
+		$this->assertEquals('\News', $router->controllerName());
+		$this->assertEquals('view', $router->methodName());
+
+		$router->handle('about');
+		$this->assertEquals('\Pages', $router->controllerName());
+		$this->assertEquals('view', $router->methodName());
+	}
 }
