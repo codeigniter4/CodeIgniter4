@@ -671,7 +671,7 @@ will default to ASC instead.</p>
 <p>Permits you to determine the number of rows in a particular Query
 Builder query. Queries will accept Query Builder restrictors such as
 <code class="docutils literal"><span class="pre">where()</span></code>, <code class="docutils literal"><span class="pre">orWhere()</span></code>, <code class="docutils literal"><span class="pre">like()</span></code>, <code class="docutils literal"><span class="pre">orLike()</span></code>, etc. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAllResults</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">);</span>  <span class="c1">// Produces an integer, like 25</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAllResults</span><span class="p">();</span>  <span class="c1">// Produces an integer, like 25</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAllResults</span><span class="p">();</span> <span class="c1">// Produces an integer, like 17</span>
@@ -679,16 +679,18 @@ Builder query. Queries will accept Query Builder restrictors such as
 </div>
 <p>However, this method also resets any field values that you may have passed
 to <code class="docutils literal"><span class="pre">select()</span></code>. If you need to keep them, you can pass <code class="docutils literal"><span class="pre">FALSE</span></code> as the
-second parameter:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAllResults</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">);</span>
-</pre></div>
-</div>
+first parameter.</p>
+<blockquote>
+<div>echo $builder-&gt;countAllResults(false); // Produces an integer, like 17</div></blockquote>
 <p><strong>$builder-&gt;countAll()</strong></p>
 <p>Permits you to determine the number of rows in a particular table.
-Submit the table name in the first parameter. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAll</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">);</span>  <span class="c1">// Produces an integer, like 25</span>
+Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAll</span><span class="p">();</span>  <span class="c1">// Produces an integer, like 25</span>
 </pre></div>
 </div>
+<p>As is in countAllResult method, this method resets any field values that you may have passed
+to <code class="docutils literal"><span class="pre">select()</span></code> as well. If you need to keep them, you can pass <code class="docutils literal"><span class="pre">FALSE</span></code> as the
+first parameter.</p>
 </div>
 <div class="section" id="query-grouping">
 <h2><a class="toc-backref" href="#id7">Query grouping</a><a class="headerlink" href="#query-grouping" title="Permalink to this headline">¶</a></h2>
@@ -1114,6 +1116,30 @@ to build a query that can be canceled under certain conditions.</p>
 <dl class="method">
 <dt id="CodeIgniterDatabaseBaseBuilder::countAllResults">
 <code class="descname">countAllResults</code><span class="sig-paren">(</span><span class="optional">[</span><em>$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::countAllResults" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$reset</strong> (<em>bool</em>) &#8211; Whether to reset values for SELECTs</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Number of rows in the query result</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Generates a platform-specific query string that counts
+all records returned by an Query Builder query.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::countAll">
+<code class="descname">countAll</code><span class="sig-paren">(</span><span class="optional">[</span><em>$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::countAll" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2296,7 +2322,7 @@ a DELETE statement will be used instead.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 02, 2018.
+      Last updated on Oct 03, 2018.
 
     </p>
   </div>
