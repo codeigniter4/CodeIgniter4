@@ -18,9 +18,9 @@ class DownloadException extends \RuntimeException implements ExceptionInterface
 		return new static(lang('HTTP.cannotSetBinary'));
 	}
 
-	public static function forNotFoundDownloadSource(string $extension)
+	public static function forNotFoundDownloadSource()
 	{
-		return new static(lang('HTTP.notFoundDownloadSource', [$extension]));
+		return new static(lang('HTTP.notFoundDownloadSource'));
 	}
 
 }
