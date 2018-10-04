@@ -100,11 +100,8 @@ URI to the controller/method you wish to link to.
 "Extending" Helpers
 ===================
 
-@todo: Determine how these can be extended... namespaces, etc?
-
-To "extend" Helpers, create a file in your **application/helpers/** folder
-with an identical name to the existing Helper, but prefixed with **MY\_**
-(this item is configurable. See below.).
+To "extend" Helpers, create a file in your **application/Helpers/** folder
+with an identical name to the existing Helper.
 
 If all you need to do is add some functionality to an existing helper -
 perhaps add a function or two, or change how a particular helper
@@ -117,7 +114,7 @@ your version. In this case it's better to simply "extend" the Helper.
 	add to or or to replace the functions a Helper provides.
 
 For example, to extend the native **Array Helper** you'll create a file
-named **application/helpers/MY_array_helper.php**, and add or override
+named **application/Helpers/array_helper.php**, and add or override
 functions::
 
 	// any_in_array() is not in the Array Helper, so it defines a new function
@@ -132,7 +129,7 @@ functions::
 				return TRUE;
 			}
 	        }
-
+git pu
 		return FALSE;
 	}
 
@@ -142,6 +139,15 @@ functions::
 		shuffle($array);
 		return array_pop($array);
 	}
+
+The **helper()** method will scan through all PSR-4 namespaces defined in **application/Config/Autoload.php**
+and load in ALL matching helpers of the same name. This allows any module's helpers
+to be loaded, as well as any helpers you've created specifically for this application. The load order
+is as follows:
+
+1. application/Helpers - Files loaded here are always loaded first.
+2. {namespace}/Helpers - All namespaces are looped through in the order they are defined.
+3. system/Helpers - The base file is loaded last
 
 Now What?
 =========
