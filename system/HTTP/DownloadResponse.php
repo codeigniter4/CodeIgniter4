@@ -36,8 +36,7 @@
  * @filesource
  */
 use CodeIgniter\HTTP\Exceptions\HTTPException;
-use BadMethodCallException;
-use LogicException;
+use CodeIgniter\Exceptions\DownloadException;
 use CodeIgniter\Files\File;
 use Config\Mimes;
 
@@ -107,7 +106,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	{
 		if ($this->file !== null)
 		{
-			throw new BadMethodCallException('When setting filepath can not set binary.');
+			throw DownloadException::forCannotSetBinary();
 		}
 
 		$this->binary = $binary;
@@ -122,7 +121,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	{
 		if ($this->binary !== null)
 		{
-			throw new BadMethodCallException('When setting binary can not set filepath.');
+			throw DownloadException::forCannotSetFilePath($filepath);
 		}
 
 		$this->file = new File($filepath, true);
@@ -368,8 +367,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	public function setCache(array $options = [])
 	{
-		// @todo: Should I make exceptions?
-		throw new BadMethodCallException('It does not supported caching for downloading.');
+		throw DownloadException::forCannotSetCache();
 	}
 
 	//--------------------------------------------------------------------
@@ -489,7 +487,7 @@ class DownloadResponse extends Message implements ResponseInterface
 			return $this->sendBodyByFilePath();
 		}
 
-		throw new LogicException('Not found download body source.');
+		throw DownloadException::forNotFoundDownloadSource();
 	}
 
 	/**

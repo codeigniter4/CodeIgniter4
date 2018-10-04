@@ -4,9 +4,7 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use DateTime;
 use DateTimeZone;
-use BadMethodCallException;
-use InvalidArgumentException;
-use LogicException;
+use CodeIgniter\Exceptions\DownloadException;
 
 class DownloadResponseTest extends \CIUnitTestCase
 {
@@ -119,7 +117,7 @@ class DownloadResponseTest extends \CIUnitTestCase
 	{
 		$response = new DownloadResponse('unit-test.txt', true);
 
-		$this->expectException(BadMethodCallException::class);
+		$this->expectException(DownloadException::class);
 		$response->setCache();
 	}
 
@@ -127,7 +125,7 @@ class DownloadResponseTest extends \CIUnitTestCase
 	{
 		$response = new DownloadResponse('unit-test.txt', true);
 
-		$this->expectException(BadMethodCallException::class);
+		$this->expectException(DownloadException::class);
 		$response->setFilePath(__FILE__);
 		$response->setBinary('test');
 	}
@@ -136,7 +134,7 @@ class DownloadResponseTest extends \CIUnitTestCase
 	{
 		$response = new DownloadResponse('unit-test.txt', true);
 
-		$this->expectException(BadMethodCallException::class);
+		$this->expectException(DownloadException::class);
 		$response->setBinary('test');
 		$response->setFilePath(__FILE__);
 	}
@@ -248,7 +246,7 @@ class DownloadResponseTest extends \CIUnitTestCase
 	{
 		$response = new DownloadResponse('unit-test.php', false);
 
-		$this->expectException(LogicException::class);
+		$this->expectException(DownloadException::class);
 		$response->sendBody();
 	}
 }
