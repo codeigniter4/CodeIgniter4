@@ -144,13 +144,13 @@ if ( ! function_exists('form_hidden'))
 	 * Generates hidden fields. You can pass a simple key/value string or
 	 * an associative array with multiple values.
 	 *
-	 * @param    mixed        $name  Field name
+	 * @param    string|array $name  Field name or associative array to create multiple fields
 	 * @param    string|array $value Field value
 	 * @param    bool         $recursing
 	 *
 	 * @return    string
 	 */
-	function form_hidden($name, $value, bool $recursing = false): string
+	function form_hidden($name, $value = '', bool $recursing = false): string
 	{
 		static $form;
 
