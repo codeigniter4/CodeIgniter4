@@ -32,6 +32,12 @@ return [
 	// RedirectResponse
 	'invalidRoute'               => '{0, string} is not a valid route.',
 
+	// DownloadResponse
+	'cannotSetBinary'            => 'When setting filepath can not set binary.',
+	'cannotSetFilepath'          => 'When setting binary can not set filepath.',
+	'notFoundDownloadSource'     => 'Not found download body source.',
+	'cannotSetCache'             => 'It does not supported caching for downloading.',
+
 	// Response
 	'missingResponseStatus'      => 'HTTP Response is missing a status code',
 	'invalidStatusCode'          => '{0, string} is not a valid HTTP return status code',
