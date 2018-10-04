@@ -10,7 +10,7 @@
  * @link         https://codeigniter.com
  * @since        Version 3.0.0
  * @filesource
- * 
+ *
  * @codeCoverageIgnore
  */
 return [
@@ -57,7 +57,7 @@ return [
 
 	// CSRF
 	'disallowedAction'           => 'The action you requested is not allowed.',
-	
+
 	// Uploaded file moving
 	'alreadyMoved'				 => 'The uploaded file has already been moved.',
 	'invalidFile'				 => 'The original file is not a valid file.',
