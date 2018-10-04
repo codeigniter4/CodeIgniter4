@@ -34,7 +34,7 @@ return [
 
 	// DownloadResponse
 	'cannotSetBinary'            => 'When setting filepath can not set binary.',
-	'cannotSetFilepath'          => 'When setting binary can not set filepath.',
+	'cannotSetFilepath'          => 'When setting binary can not set filepath: {0}',
 	'notFoundDownloadSource'     => 'Not found download body source.',
 	'cannotSetCache'             => 'It does not supported caching for downloading.',
 
