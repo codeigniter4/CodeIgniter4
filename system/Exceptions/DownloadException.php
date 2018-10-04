@@ -23,4 +23,9 @@ class DownloadException extends \RuntimeException implements ExceptionInterface
 		return new static(lang('HTTP.notFoundDownloadSource'));
 	}
 
+	public static function forCannotSetCache()
+	{
+		return new static(lang('HTTP.cannotSetCache'));
+	}
+
 }
