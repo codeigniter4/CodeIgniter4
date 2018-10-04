@@ -640,7 +640,7 @@ class Response extends Message implements ResponseInterface
 		{
 			$this->CSP->finalize($this);
 		}else{
-		    
+
 			$this->body = str_replace(['{csp-style-nonce}','{csp-script-nonce}'], '', $this->body);
 		}
 
@@ -909,6 +909,37 @@ class Response extends Message implements ResponseInterface
 				return $cookie;
 			}
 		}
+	}
+
+	/**
+	 * Sets a cookie to be deleted when the response is sent.
+	 *
+	 * @param        $name
+	 * @param string $domain
+	 * @param string $path
+	 * @param string $prefix
+	 */
+	public function deleteCookie($name, string $domain = '', string $path = '/', string $prefix = '')
+	{
+		if ($prefix === '' && $this->cookiePrefix !== '')
+		{
+			$prefix = $this->cookiePrefix;
+		}
+
+		$name = $prefix.$name;
+
+		foreach ($this->cookies as &$cookie)
+		{
+			if ($cookie['name'] == $name)
+			{
+				$cookie['value'] = '';
+				$cookie['expires'] = '';
+
+				break;
+			}
+		}
+
+		return $this;
 	}
 
 	/**
