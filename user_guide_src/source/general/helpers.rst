@@ -129,7 +129,7 @@ functions::
 				return TRUE;
 			}
 	        }
-git pu
+
 		return FALSE;
 	}
 
