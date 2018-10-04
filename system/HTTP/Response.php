@@ -934,6 +934,8 @@ class Response extends Message implements ResponseInterface
 			{
 				$cookie['value'] = '';
 				$cookie['expires'] = '';
+
+				break;
 			}
 		}
 
