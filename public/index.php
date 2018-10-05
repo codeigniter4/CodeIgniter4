@@ -32,6 +32,6 @@ $app = require FCPATH . '../system/bootstrap.php';
  * LAUNCH THE APPLICATION
  *---------------------------------------------------------------
  * Now that everything is setup, it's time to actually fire
- * up the engines and make this app do it's thang.
+ * up the engines and make this app do its thang.
  */
 $app->run();
