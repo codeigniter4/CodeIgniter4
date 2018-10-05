@@ -55,8 +55,8 @@ validation <../libraries/validation>` library to do this.
         helper('form');
         $model = new NewsModel();
 
-        if (! $this->validate($this->request, [
-            'title' => 'required|min[3]|max[255]',
+        if (! $this->validate([
+            'title' => 'required|min_length[3]|max_length[255]',
             'text'  => 'required'
         ]))
         {
@@ -139,10 +139,10 @@ as a method instead of a news item's slug.
 
 ::
 
-    $routes->post('news/create', 'News::create');
-    $routes->add('news/(:segment)', 'News::view/$1');
+    $routes->match(['get', 'post'], 'news/create', 'News::create');
+    $routes->get('news/(:segment)', 'News::view/$1');
     $routes->get('news', 'News::index');
-    $routes->add('(:any)', 'Pages::view/$1');
+    $routes->get('(:any)', 'Pages::view/$1');
 
 Now point your browser to your local development environment where you
 installed CodeIgniter and add index.php/news/create to the URL.
