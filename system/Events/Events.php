@@ -162,7 +162,8 @@ class Events
 	 *  a) All subscribers have finished or
 	 *  b) a method returns false, at which point execution of subscribers stops.
 	 *
-	 * Note: All arguments are passed by reference. This is so the listeners can modify them if necessary.
+	 * Note: All arguments are passed by reference.
+	 * This is so the listeners can modify them if necessary.
 	 *
 	 * @param $eventName
 	 * @param $arguments
