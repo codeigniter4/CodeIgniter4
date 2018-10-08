@@ -5,8 +5,10 @@ Global Functions and Constants
 CodeIgniter uses provides a few functions and variables that are globally defined, and are available to you at any point.
 These do not require loading any additional libraries or helpers.
 
-.. contents:: Page Contents
-	:local:
+.. contents::
+    :local:
+    :depth: 2
+
 
 ================
 Global Functions
@@ -76,7 +78,7 @@ Service Accessors
 
 	Retrieves a locale-specific file based on an alias string.
 
-	For more information, see the :doc:`Localization </libraries/localization>` page.
+	For more information, see the :doc:`Localization </outgoing/localization>` page.
 
 .. php:function:: old( $key[, $default = null, [, $escape = 'html' ]] )
 
@@ -161,7 +163,7 @@ Service Accessors
 
 		echo view('user_profile', $data);
 
-	For more details, see the :doc:`Views <views>` page.
+	For more details, see the :doc:`Views </outgoing/views>` page.
 
 Miscellaneous Functions
 =======================
@@ -242,6 +244,17 @@ Miscellaneous Functions
 		// Set a flash message
 		return redirect()->back()->with('foo', 'message');
 
+		// Include Query vars from the current request
+		return redirect()->back()->withQuery();
+
+		// Include only a specific query var from the current request
+		return redirect()->back()->withQuery(['only' => 'foo']);
+		return redirect()->back()->withQuery(['only' => ['foo', 'bar']]);
+
+		// Include all query vars except specified vars from the current request
+		return redirect()->back()->withQuery(['except' => 'foo']);
+		return redirect()->back()->withQuery(['except' => ['foo', 'bar']]);
+
 .. php:function:: remove_invisible_characters($str[, $url_encoded = TRUE])
 
 	:param	string	$str: Input string
@@ -265,7 +278,7 @@ Miscellaneous Functions
 	Generates a relative URI for you based on either a named route alias, or a controller::method
 	combination. Will take parameters into effect, if provided.
 
-	For full details, see the :doc:`routing` page.
+	For full details, see the :doc:`/incoming/routing` page.
 
 .. php:function:: service ( $name [, ...$params] )
 

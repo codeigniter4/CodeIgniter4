@@ -2,7 +2,9 @@
 Queries
 #######
 
-.. contents:: Table of Contents
+.. contents::
+    :local:
+    :depth: 2
 
 ************
 Query Basics

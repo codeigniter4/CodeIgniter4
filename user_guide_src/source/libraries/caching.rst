@@ -7,8 +7,9 @@ fast and dynamic caching. All but file-based caching require specific
 server requirements, and a Fatal Exception will be thrown if server
 requirements are not met.
 
-.. contents:: Page Contents
-	:local:
+.. contents::
+    :local:
+    :depth: 2
 
 *************
 Example Usage

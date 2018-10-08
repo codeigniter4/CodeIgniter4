@@ -1,7 +1,11 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+namespace CodeIgniter\Helpers;
 
 use Config\App;
 use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\UserAgent;
 use Tests\Support\HTTP\MockResponse;
 
 final class CookieHelperTest extends \CIUnitTestCase
@@ -49,7 +53,7 @@ final class CookieHelperTest extends \CIUnitTestCase
             'expire' => $this->expire
         ];
         set_cookie($cookieAttr);
- 
+
         $this->assertTrue($this->response->hasCookie($this->name, $this->value));
 
         delete_cookie($this->name);
@@ -80,12 +84,15 @@ final class CookieHelperTest extends \CIUnitTestCase
 
     public function testDeleteCookie()
     {
-        set_cookie($this->name, $this->value, $this->expire);
-        //$this->response->setCookie($this->name, $this->value, $this->expire);
+        $this->response->setCookie($this->name, $this->value, $this->expire);
 
         delete_cookie($this->name);
 
-        $this->assertEmpty($this->response->getCookie($this->name));
+        $cookie = $this->response->getCookie($this->name);
+
+        // The cookie is set to be cleared when the request is sent....
+        $this->assertEquals('', $cookie['value']);
+        $this->assertEquals('', $cookie['expires']);
     }
 
     //--------------------------------------------------------------------

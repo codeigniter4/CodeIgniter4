@@ -57,6 +57,10 @@ writable/logs/*
 !writable/logs/index.html
 !writable/logs/.htaccess
 
+writable/session/*
+!writable/session/index.html
+!writable/session/.htaccess
+
 writable/uploads/*
 !writable/uploads/index.html
 !writable/uploads/.htaccess
@@ -127,3 +131,4 @@ nb-configuration.xml
 
 /results/
 /phpunit*.xml
+

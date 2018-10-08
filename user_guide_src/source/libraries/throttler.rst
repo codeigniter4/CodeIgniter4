@@ -4,6 +4,7 @@ Throttler
 
 .. contents::
     :local:
+    :depth: 2
 
 The Throttler class provides a very simple way to limit an activity to be performed to a certain number of attempts
 within a set period of time. This is most often used for performing rate limiting on API's, or restricting the number
@@ -41,7 +42,7 @@ Rate Limiting
 *************
 
 The Throttler class does not do any rate limiting or request throttling on its own, but is the key to making
-one work. An example :doc:`Filter </general/filters>` is provided that implements very simple rate limiting at
+one work. An example :doc:`Filter </incoming/filters>` is provided that implements very simple rate limiting at
 one request per second per IP address. Here we will run through how it works, and how you could set it up and
 start using it in your application.
 

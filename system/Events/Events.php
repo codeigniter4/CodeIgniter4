@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Events;
 
+use Config\Services;
+
 /**
  * CodeIgniter
  *
@@ -53,19 +55,12 @@ class Events
 	protected static $listeners = [];
 
 	/**
-	 * Flag to let us know if we've read from the Config file
+	 * Flag to let us know if we've read from the Config file(s)
 	 * and have all of the defined events.
 	 *
 	 * @var bool
 	 */
-	protected static $haveReadFromFile = false;
-
-	/**
-	 * The path to the file containing the events to load in.
-	 *
-	 * @var string
-	 */
-	protected static $eventsFile = '';
+	protected static $initialized = false;
 
 	/**
 	 * If true, events will not actually be fired.
@@ -82,28 +77,48 @@ class Events
 	 */
 	protected static $performanceLog = [];
 
+	/**
+	 * A list of found files.
+	 * @var array
+	 */
+	protected static $files = [];
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Ensures that we have a events file ready.
-	 *
-	 * @param string|null $file
 	 */
-	public static function initialize(string $file = null)
+	public static function initialize()
 	{
 		// Don't overwrite anything....
-		if ( ! empty(self::$eventsFile))
+		if (static::$initialized)
 		{
 			return;
 		}
 
-		// Default value
-		if (empty($file))
+		$config = config('Modules');
+
+		$files = [APPPATH.'Config/Events.php'];
+
+		if ($config->shouldDiscover('events'))
 		{
-			$file = APPPATH . 'Config/Events.php';
+			$locator = Services::locator();
+			$files = $locator->search('Config/Events.php');
 		}
 
-		self::$eventsFile = $file;
+		static::$files = $files;
+
+		foreach (static::$files as $file)
+		{
+			if (! file_exists($file))
+			{
+				continue;
+			}
+
+			include $file;
+		}
+
+		static::$initialized = true;
 	}
 
 	//--------------------------------------------------------------------
@@ -155,15 +170,9 @@ class Events
 	public static function trigger($eventName, ...$arguments): bool
 	{
 		// Read in our Config/events file so that we have them all!
-		if ( ! self::$haveReadFromFile)
+		if ( ! self::$initialized)
 		{
 			self::initialize();
-
-			if (is_file(self::$eventsFile))
-			{
-				include self::$eventsFile;
-			}
-			self::$haveReadFromFile = true;
 		}
 
 		$listeners = self::listeners($eventName);
@@ -288,11 +297,23 @@ class Events
 	/**
 	 * Sets the path to the file that routes are read from.
 	 *
-	 * @param string $path
+	 * @param array $files
 	 */
-	public static function setFile(string $path)
+	public static function setFiles(array $files)
 	{
-		self::$eventsFile = $path;
+		static::$files = $files;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the files that were found/loaded during this request.
+	 *
+	 * @return mixed
+	 */
+	public function getFiles()
+	{
+		return static::$files;
 	}
 
 	//--------------------------------------------------------------------

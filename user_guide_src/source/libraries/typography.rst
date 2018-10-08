@@ -2,7 +2,7 @@
 Typography
 ##########
 
-The Typography libary contains methods that help your format text
+The Typography libary contains methods that help you format text
 in semantically relevant ways.
 
 *******************

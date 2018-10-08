@@ -6,6 +6,10 @@ The ``CURLRequest`` class is a lightweight HTTP client based on CURL that allows
 web sites and servers. It can be used to get the contents of a Google search, retrieve a web page or image,
 or communicate with an API, among many other things.
 
+.. contents::
+    :local:
+    :depth: 2
+
 This class is modelled after the `Guzzle HTTP Client <http://docs.guzzlephp.org/en/latest/>`_ library since
 it is one of the more widely used libraries. Where possible, the syntax has been kept the same so that if
 your application needs something a little more powerful than what this library provides, you will have
@@ -50,7 +54,7 @@ Working with the Library
 ************************
 
 Working with CURL requests is simply a matter of creating the Request and getting a
-:doc:`Response object </libraries/response>` back. It is meant to handle the communications. After that
+:doc:`Response object </outgoing/response>` back. It is meant to handle the communications. After that
 you have complete control over how the information is handled.
 
 Making Requests

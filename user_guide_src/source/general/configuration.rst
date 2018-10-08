@@ -8,6 +8,10 @@ hold a class that contains its settings as public properties. Unlike in many oth
 there is no single class that you need to use to access your settings. Instead, you simply
 create an instance of the class and all your settings are there for you.
 
+.. contents::
+    :local:
+    :depth: 2
+
 Accessing Config Files
 ======================
 
@@ -68,7 +72,7 @@ you will have settings that might change depending on the server it's running on
 database settings, API credentials, and other settings that will vary between deploys.
 
 You can store values in a **.env** file in the root directory, alongside the system and application directories.
-It is simply a collection of name/value pairs separated by an equal sign, much like a .ini file::
+It is simply a collection of name/value pairs separated by an equal sign, much like a ".ini" file::
 
 	S3_BUCKET="dotenv"
 	SECRET_KEY="super_secret_key"
@@ -104,7 +108,7 @@ variable name within ``${...}``::
 Namespaced Variables
 ====================
 
-There will be times when you will have several variables of the same name. When this happens, the
+There will be times when you will have several variables with the same name. When this happens, the
 system has no way of knowing what the correct value should be. You can protect against this by
 "namespacing" the variables.
 
@@ -169,6 +173,8 @@ held instead::
 
 then the result would be the same as above.
 
+.. _registrars:
+
 Registrars
 ==========
 
@@ -221,4 +227,3 @@ by treating `RegionalSalesModel` as a "registrar". The resulting configuration p
 
     $target   = 45;
     $campaign = "Winter Wonderland";
-

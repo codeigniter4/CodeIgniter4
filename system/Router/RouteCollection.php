@@ -188,34 +188,37 @@ class RouteCollection implements RouteCollectionInterface
 	protected $currentOptions = null;
 
 	/**
-	 * Determines whether locally specified, PSR4
-	 * compatible code is automatically scanned
-	 * for addition routes in a {namespace}/Config/Routes.php file.
-	 *
-	 * @var bool
-	 */
-	protected $discoverLocal = false;
-
-	/**
 	 * A little performance booster.
 	 * @var bool
 	 */
 	protected $didDiscover = false;
+
+	/**
+	 * @var \CodeIgniter\Autoloader\FileLocator
+	 */
 	protected $fileLocator;
+
+	/**
+	 * @var \Config\Modules
+	 */
+	protected $moduleConfig;
 
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
 	 *
-	 * @param FileLocator $locator
+	 * @param FileLocator    $locator
+	 * @param Config/Modules $moduleConfig
 	 */
-	public function __construct(FileLocator $locator)
+	public function __construct(FileLocator $locator, $moduleConfig)
 	{
 		// Get HTTP verb
 		$this->HTTPVerb = strtolower($_SERVER['REQUEST_METHOD'] ?? 'cli');
 
 		$this->fileLocator = $locator;
+
+		$this->moduleConfig = $moduleConfig;
 	}
 
 	//--------------------------------------------------------------------
@@ -374,32 +377,13 @@ class RouteCollection implements RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * If true, will attempt to auto-discover new route files
-	 * based on any PSR4 namespaces that have been set
-	 * in Config/Autoload.php.
-	 *
-	 * @param bool $discover
-	 *
-	 * @return $this
-	 */
-	public function discoverLocal(bool $discover)
-	{
-		$this->discoverLocal = $discover;
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Will attempt to discover any additional routes, either through
 	 * the local PSR4 namespaces, or through selected Composer packages.
 	 * (Composer coming soon...)
 	 */
 	protected function discoverRoutes()
 	{
-		if ($this->didDiscover)
-			return;
+		if ($this->didDiscover) return;
 
 		// We need this var in local scope
 		// so route files can access it.
@@ -408,7 +392,7 @@ class RouteCollection implements RouteCollectionInterface
 		/*
 		 * Discover Local Files
 		 */
-		if ($this->discoverLocal === true)
+		if ($this->moduleConfig->shouldDiscover('routes'))
 		{
 			$files = $this->fileLocator->search('Config/Routes.php');
 
@@ -534,7 +518,9 @@ class RouteCollection implements RouteCollectionInterface
 
 		if (isset($this->routes[$verb]))
 		{
-			$collection = array_merge($this->routes['*'], $this->routes[$verb]);
+			// Keep current verb's routes at the beginning so they're matched
+			// before any of the generic, "add" routes.
+			$collection = array_merge($this->routes[$verb], $this->routes['*']);
 
 			foreach ($collection as $r)
 			{
@@ -573,6 +559,21 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the current HTTP verb.
+	 * Used primarily for testing.
+	 *
+	 * @param string $verb
+	 *
+	 * @return $this
+	 */
+	public function setHTTPVerb(string $verb)
+	{
+		$this->HTTPVerb = $verb;
+
+		return $this;
+	}
 
 	/**
 	 * A shortcut method to add a number of routes at a single time.
@@ -1102,6 +1103,46 @@ class RouteCollection implements RouteCollectionInterface
 
 		// If we're still here, then we did not find a match.
 		return false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Checks a route (using the "from") to see if it's filtered or not.
+	 *
+	 * @param string $search
+	 *
+	 * @return bool
+	 */
+	public function isFiltered(string $search): bool
+	{
+		return isset($this->routesOptions[$search]['filter']);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the filter that should be applied for a single route, along
+	 * with any parameters it might have. Parameters are found by splitting
+	 * the parameter name on a colon to separate the filter name from the parameter list,
+	 * and the splitting the result on commas. So:
+	 *
+	 *    'role:admin,manager'
+	 *
+	 * has a filter of "role", with parameters of ['admin', 'manager'].
+	 *
+	 * @param string $search
+	 *
+	 * @return string
+	 */
+	public function getFilterForRoute(string $search): string
+	{
+		if (! $this->isFiltered($search))
+		{
+			return '';
+		}
+
+		return $this->routesOptions[$search]['filter'];
 	}
 
 	//--------------------------------------------------------------------

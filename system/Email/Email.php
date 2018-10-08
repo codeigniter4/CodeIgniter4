@@ -38,7 +38,7 @@
  */
 
 use Config\Mimes;
-
+use Psr\Log\LoggerAwareTrait;
 
 /**
  * CodeIgniter Email Class
@@ -53,6 +53,7 @@ use Config\Mimes;
  */
 class Email
 {
+	use LoggerAwareTrait;
 	/**
 	 * @var string
 	 */
@@ -386,6 +387,12 @@ class Email
 	 * @var bool
 	 */
 	protected static $func_overload;
+
+	/**
+	 * Logger instance to record error messages and awarnings.
+	 * @var \PSR\Log\LoggerInterface
+	 */
+	protected $logger;
 
 	//--------------------------------------------------------------------
 
@@ -1922,10 +1929,18 @@ class Email
 
 		$protocol = $this->getProtocol();
 		$method   = 'sendWith'.ucfirst($protocol);
-		if (! $this->$method())
+		try
+		{
+			$success = $this->$method();
+		} catch(\ErrorException $e)
+		{
+			$success = false;
+			$this->logger->error('Email: '.$method.' throwed '.$e->getMessage());
+		}
+
+		if (! $success)
 		{
 			$this->setErrorMessage(lang('email.sendFailure'.($protocol === 'mail' ? 'PHPMail' : ucfirst($protocol))));
-
 			return false;
 		}
 

@@ -2,6 +2,10 @@
 Database Configuration
 ######################
 
+.. contents::
+    :local:
+    :depth: 2
+
 CodeIgniter has a config file that lets you store your database
 connection values (username, password, database name, etc.). The config
 file is located at application/Config/Database.php. You can also set

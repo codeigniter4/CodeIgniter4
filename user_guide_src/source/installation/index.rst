@@ -4,6 +4,9 @@ Installation
 
 CodeIgniter4 can be installed manually, or using Composer.
 
+.. note:: Before using CodeIgniter, make sure that your server meets the
+          :doc:`requirements </intro/requirements>`.
+
 Manual Installation
 ===================
 
@@ -53,6 +56,9 @@ is more fully described on the :doc:`environments page </general/environments>`.
 By default, the application will run using the "production" environment. To
 take advantage of the debugging tools provided, you should set the environment
 to "develop".
+
+.. caution:: Using PHP's built-in web server is likely to cause problems,
+	as it does not process the `.htaccess` file used to properly handle requests.
 
 That's it!
 

@@ -38,8 +38,8 @@ library. This will make the database class available through the
 Before querying the database, a database schema has to be created.
 Connect to your database and run the SQL command below (MySQL).
 Also add some seed records. For now, we'll just show you the query needed
-to create the table, but you should read about :doc:`Migrations <../database/migration>`
-and :doc:`Seeds <../database/seeds>` to create more useful database setups.
+to create the table, but you should read about :doc:`Migrations <../dbmgmt/migration>`
+and :doc:`Seeds <../dbmgmt/seeds>` to create more useful database setups.
 
 ::
 
@@ -183,7 +183,7 @@ and add the next piece of code.
 Here, each news item is looped and displayed to the user. You can see we
 wrote our template in PHP mixed with HTML. If you prefer to use a template
 language, you can use CodeIgniter's :doc:`View
-Parser <../general/view_parser>` or a third party parser.
+Parser </outgoing/view_parser>` or a third party parser.
 
 The news overview page is now done, but a page to display individual
 news items is still absent. The model created earlier is made in such
@@ -236,7 +236,7 @@ with a slug to the ``view()`` method in the ``News`` controller.
 
 	$routes->get('news/(:segment)', 'News::view/$1');
 	$routes->get('news', 'News::index');
-	$routes->add('(:any)', 'Pages::view/$1');
+	$routes->get('(:any)', 'Pages::view/$1');
 
 Point your browser to your document root, followed by index.php/news and
 watch your news page.

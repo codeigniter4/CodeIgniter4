@@ -12,8 +12,9 @@ CodeIgniter comes with a few session storage drivers:
   - redis
   - memcached
 
-.. contents:: Page Contents
-  :local:
+.. contents::
+    :local:
+    :depth: 2
 
 .. raw:: html
 
@@ -176,8 +177,8 @@ you need it.
 You can simply assign data to the ``$_SESSION`` array, as with any other
 variable. Or as a property of ``$session``.
 
-userdata method is deprecated.
- That however passing an array containing your new sessiondata to the
+The former userdata method is deprecated,
+but you can pass an array containing your new session data to the
 ``set()`` method::
 
 	$session->set($array);
@@ -193,7 +194,7 @@ an example::
 
 	$session->set($newdata);
 
-If you want to add sessiondata one value at a time, ``set()`` also
+If you want to add session data one value at a time, ``set()`` also
 supports this syntax::
 
 	$session->set('some_name', 'some_value');
@@ -463,7 +464,7 @@ Preference                     Default         Options                          
 	everything properly.
 
 In addition to the values above, the cookie and native drivers apply the
-following configuration values shared by the :doc:`IncomingRequest <incomingrequest>` and
+following configuration values shared by the :doc:`IncomingRequest </incoming/incomingrequest>` and
 :doc:`Security <security>` classes:
 
 ================== =============== ===========================================================================

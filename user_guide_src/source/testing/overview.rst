@@ -17,18 +17,18 @@ System Setup
 Installing phpUnit
 ==================
 
-CodeIgniter uses `phpUnit <https://phpunit.de/>`_ as the basis for all of its testing. There are two ways to install
+CodeIgniter uses `phpUnit <https://phpunit.de/>`__ as the basis for all of its testing. There are two ways to install
 phpUnit to use within your system.
 
 Composer
 --------
 
-The recommended method is to install it in your project using `Composer <https://getcomposer.org/>`_. While it's possible
+The recommended method is to install it in your project using `Composer <https://getcomposer.org/>`__. While it's possible
 to install it globally we do not recommend it, since it can cause compatibility issues with other projects on your
 system as time goes on.
 
 Ensure that you have Composer installed on your system. From the project root (the directory that contains the
-application and system directories) type the followin from the command line::
+application and system directories) type the following from the command line::
 
     > composer require --dev phpunit/phpunit
 
@@ -40,21 +40,13 @@ tests for this project by typing::
 Phar
 ----
 
-The other option is to download the .phar file from the `phpUnit <https://phpunit.de/getting-started/phpunit-7.html>`_ site.
+The other option is to download the .phar file from the `phpUnit <https://phpunit.de/getting-started/phpunit-7.html>`__ site.
 This is standalone file that should be placed within your project root.
 
 
-phpunit.xml
-===========
-
-A basic configuration for phpUnit has already been defined in ``phpunit.xml.dist``. Any project-specific changes to
-this file should be done in a separate file so that it doesn't get overwritten by any framework updates. Copying the file
-to ``phpunit.xml`` will create a file that phpUnit will use instead of the original file.
-
-
-========================
+************************
 Testing Your Application
-========================
+************************
 
 PHPUnit Configuration
 =====================
@@ -205,10 +197,7 @@ Removes all mocked classes from the Services class, bringing it back to its orig
 Stream Filters
 ==============
 
-Some stream filters have been provided as an alternate to these helper methods.
-
-CITestStreamFilter
-------------------
+**CITestStreamFilter** provides an alternate to these helper methods.
 
 You may need to test things that are difficult to test. Sometimes, capturing a stream, like PHP's own STDOUT, or STDERR,
 might be helpful. The ``CITestStreamFilter`` helps you capture the output from the stream of your choice.
@@ -232,4 +221,3 @@ An example demonstrating this inside one of your test cases::
         $expected = "first.\n";
         $this->assertEquals($expected, CITestStreamFilter::$buffer);
     }
-

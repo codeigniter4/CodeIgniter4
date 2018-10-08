@@ -26,7 +26,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->config = new App();
 		$this->config->baseURL = 'http://example.com';
 
-		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()));
+		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()), new \Config\Modules());
 		Services::injectMock('routes', $this->routes);
 
 		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
@@ -120,5 +120,38 @@ class RedirectResponseTest extends \CIUnitTestCase
 
 		$this->assertSame($response, $returned);
 		$this->assertArrayHasKey('foo', $_SESSION);
+	}
+
+	public function testRedirectWithQueryIncludesAllVars()
+	{
+		$this->request->uri->setQueryArray(['foo' => 'bar', 'bar' => 'baz']);
+		$response = new RedirectResponse(new App());
+
+		$response = $response->to('http://example.com/foo')->withQuery();
+
+		$this->assertTrue($response->hasHeader('Location'));
+		$this->assertEquals('http://example.com/foo?foo=bar&bar=baz', $response->getHeaderLine('Location'));
+	}
+
+	public function testRedirectWithQueryExcept()
+	{
+		$this->request->uri->setQueryArray(['foo' => 'bar', 'bar' => 'baz']);
+		$response = new RedirectResponse(new App());
+
+		$response = $response->to('http://example.com/foo')->withQuery(['except' => 'foo']);
+
+		$this->assertTrue($response->hasHeader('Location'));
+		$this->assertEquals('http://example.com/foo?bar=baz', $response->getHeaderLine('Location'));
+	}
+
+	public function testRedirectWithQueryOnly()
+	{
+		$this->request->uri->setQueryArray(['foo' => 'bar', 'bar' => 'baz']);
+		$response = new RedirectResponse(new App());
+
+		$response = $response->to('http://example.com/foo')->withQuery(['only' => 'foo']);
+
+		$this->assertTrue($response->hasHeader('Location'));
+		$this->assertEquals('http://example.com/foo?foo=bar', $response->getHeaderLine('Location'));
 	}
 }

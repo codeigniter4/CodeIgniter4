@@ -134,26 +134,70 @@ view.
 	match the case of the actual directory and file itself or the system will
 	throw errors on case-sensitive platforms.
 
+Running the App
+---------------
+
+Ready to test? You cannot run the app using PHP's built-in server,
+since it will not properly process the ``.htaccess`` rules that are provided in
+``public``, and which eliminate the need to specify "index.php/"
+as part of a URL. CodeIgniter has its own command that you can use though.
+
+From the command line, at the root of your project:
+
+    php spark serve
+
+will start a web server, accessible on port 8080. If you set the location field
+in your browser to ``localhost:8080``, you should see the CodeIgniter welcome page.
+
+You can now try several URLs in the browser location field, to see what the `Pages`
+controller you made above produces...
+
+- ``localhost:8080/pages`` will show the results from the `index` method
+  inside our `Pages` controller, which is to display the CodeIgniter "welcome" page,
+  because "index" is the default controller method
+- ``localhost:8080/pages/index`` will also show the CodeIgniter "welcome" page,
+  because we explicitly asked for the "index" methid
+- ``localhost:8080/pages/view`` will show the "home" page that you made above,
+  because it is the default "page" parameter to the `view()` method.
+- ``localhost:8080/pages/view/home`` will also show the "home" page that you made above,
+  because we explicitly asked for it
+- ``localhost:8080/pages/view/about`` will show the "about" page that you made above,
+  because we explicitly asked for it
+- ``localhost:8080/pages/view/shop`` will show a "404 - File Not Found" error page,
+  because there is no `application/Views/pages/shop.php`
+
+
 Routing
 -------
 
-The controller is now functioning! Point your browser to
-``[your-site-url]index.php/pages/view`` to see your page. When you visit
-``index.php/pages/view/about`` you'll see the about page, again including
-the header and footer.
+The controller is now functioning!
 
 Using custom routing rules, you have the power to map any URI to any
 controller and method, and break free from the normal convention:
 ``http://example.com/[controller-class]/[controller-method]/[arguments]``
 
 Let's do that. Open the routing file located at
-*application/Config/Routes.php* and add the following two lines.
-Remove all other code that adds any element in the ``$route`` items.
+*application/Config/Routes.php* and look for the "Route Definitions"
+section of the configuration file.
+
+The only uncommented line there to start with should be:::
+
+    $routes->get('/', 'Home::index');
+
+This directive says that any incoming request without any content
+specified should be handled by the ``index`` method inside the ``Home`` controller.
+
+Set the default controller to run your new method:
 
 ::
 
-	$routes->setDefaultController('Pages/view');
-	$routes->add('(:any)', 'Pages::view/$1');
+$routes->setDefaultController('Pages/view');
+
+Add the following line, **after** the route directive for '/'.
+
+::
+
+	$routes->get('(:any)', 'Pages::view/$1');
 
 CodeIgniter reads its routing rules from top to bottom and routes the
 request to the first matching rule. Each rule is a regular expression
@@ -163,19 +207,11 @@ match, and calls the appropriate controller and method, possibly with
 arguments.
 
 More information about routing can be found in the URI Routing
-:doc:`documentation <../general/routing>`.
+:doc:`documentation </incoming/routing>`.
 
 Here, the second rule in the ``$routes`` array matches **any** request
 using the wildcard string ``(:any)``. and passes the parameter to the
 ``view()`` method of the ``Pages`` class.
-
-In order for the default controller to be used, though, you have to make
-sure that no other routes are defined that handle the route. By default,
-the Routes file **does** have a route that handles the site root (/).
-Delete the following route to make sure that the Pages controller handles
-our home page::
-
-	$routes->add('/', 'Home::index');
 
 Now visit ``index.php/about``. Did it get routed correctly to the ``view()``
 method in the pages controller? Awesome!

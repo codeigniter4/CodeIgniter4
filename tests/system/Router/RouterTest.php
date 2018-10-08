@@ -20,7 +20,9 @@ class RouterTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->collection = new RouteCollection(new MockFileLocator(new \Config\Autoload()));
+		$moduleConfig = new \Config\Modules;
+		$moduleConfig->enabled = false;
+		$this->collection = new RouteCollection(new MockFileLocator(new \Config\Autoload()), $moduleConfig);
 
 		$routes = [
 			'users'                        => 'Users::index',
@@ -249,4 +251,54 @@ class RouterTest extends \CIUnitTestCase
 
     	$this->assertEquals($router->getMatchedRouteOptions(), ['as' => 'login', 'foo' => 'baz']);
     }
+
+	public function testRouteWorksWithFilters()
+	{
+		$collection = $this->collection;
+
+		$collection->group('foo', ['filter' => 'test'], function($routes) {
+			$routes->add('bar', 'TestController::foobar');
+		});
+
+		$router = new Router($collection);
+
+		$router->handle('foo/bar');
+
+		$this->assertEquals('\TestController', $router->controllerName());
+		$this->assertEquals('foobar', $router->methodName());
+		$this->assertEquals('test', $router->getFilter());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/1240
+	 */
+	public function testMatchesCorrectlyWithMixedVerbs()
+	{
+		$this->collection->setHTTPVerb('get');
+
+		$this->collection->add('/', 'Home::index');
+		$this->collection->get('news', 'News::index');
+		$this->collection->get('news/(:segment)', 'News::view/$1');
+		$this->collection->add('(:any)', 'Pages::view/$1');
+
+		$router = new Router($this->collection);
+
+		$router->handle('/');
+		$this->assertEquals('\Home', $router->controllerName());
+		$this->assertEquals('index', $router->methodName());
+
+		$router->handle('news');
+		$this->assertEquals('\News', $router->controllerName());
+		$this->assertEquals('index', $router->methodName());
+
+		$router->handle('news/daily');
+		$this->assertEquals('\News', $router->controllerName());
+		$this->assertEquals('view', $router->methodName());
+
+		$router->handle('about');
+		$this->assertEquals('\Pages', $router->controllerName());
+		$this->assertEquals('view', $router->methodName());
+	}
 }

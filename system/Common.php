@@ -569,6 +569,11 @@ if ( ! function_exists('helper'))
 	 * Loads a helper file into memory. Supports namespaced helpers,
 	 * both in and out of the 'helpers' directory of a namespaced directory.
 	 *
+	 * Will load ALL helpers of the matching name, in the following order:
+	 *   1. application/Helpers
+	 *   2. {namespace}/Helpers
+	 *   3. system/Helpers
+	 *
 	 * @param string|array $filenames
 	 */
 	function helper($filenames)
@@ -580,18 +585,65 @@ if ( ! function_exists('helper'))
 			$filenames = [$filenames];
 		}
 
+		// Store a list of all files to include...
+		$includes = [];
+
 		foreach ($filenames as $filename)
 		{
+			// Store our system and application helper
+			// versions so that we can control the load ordering.
+			$systemHelper = null;
+			$appHelper = null;
+			$localIncludes = [];
+
 			if (strpos($filename, '_helper') === false)
 			{
 				$filename .= '_helper';
 			}
 
-			$path = $loader->locateFile($filename, 'Helpers');
+			$paths = $loader->search('Helpers/'.$filename);
 
-			if ( ! empty($path))
+			if ( ! empty($paths))
 			{
-				include_once $path;
+				foreach ($paths as $path)
+				{
+					if (strpos($path, APPPATH) === 0)
+					{
+						$appHelper = $path;
+					}
+					elseif (strpos($path, BASEPATH) === 0)
+					{
+						$systemHelper = $path;
+					}
+					else
+					{
+						$localIncludes[] = $path;
+					}
+				}
+			}
+
+			// App-level helpers should override all others
+			if (! empty($appHelper))
+			{
+				$includes[] = $appHelper;
+			}
+
+			// All namespaced files get added in next
+			$includes = array_merge($includes, $localIncludes);
+
+			// And the system default one should be added in last.
+			if (! empty($systemHelper))
+			{
+				$includes[] = $systemHelper;
+			}
+		}
+
+		// Now actually include all of the files
+		if (! empty($includes))
+		{
+			foreach ($includes as $path)
+			{
+				include_once($path);
 			}
 		}
 	}

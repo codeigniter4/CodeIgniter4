@@ -188,6 +188,21 @@ class BaseBuilder
 	 */
 	protected $binds = [];
 
+	/**
+	 * Some databases, like SQLite, do not by default
+	 * allow limiting of delete clauses.
+	 *
+	 * @var bool
+	 */
+	protected $canLimitDeletes = true;
+
+	/**
+	 * Some databases do not by default
+	 * allow limit update queries with WHERE.
+	 * @var bool
+	 */
+	protected $canLimitWhereUpdates = true;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1371,11 +1386,12 @@ class BaseBuilder
 	 *
 	 * @param    int $limit     The limit clause
 	 * @param    int $offset    The offset clause
-	 * @param    bool   $returnSQL If true, returns the generate SQL, otherwise executes the query.
+	 * @param    bool $returnSQL If true, returns the generate SQL, otherwise executes the query.
+	 * @param    bool $reset     Are we want to clear query builder values?
 	 *
 	 * @return    ResultInterface
 	 */
-	public function get(int $limit = null, int $offset = 0, $returnSQL = false)
+	public function get(int $limit = null, int $offset = 0, $returnSQL = false, $reset = true)
 	{
 		if ( ! is_null($limit))
 		{
@@ -1383,7 +1399,10 @@ class BaseBuilder
 		}
 		$result = $returnSQL ? $this->getCompiledSelect() : $this->db->query($this->compileSelect(), $this->binds);
 
-		$this->resetSelect();
+		if($reset == true)
+		{
+			$this->resetSelect();
+		}
 
 		return $result;
 	}
@@ -1396,11 +1415,12 @@ class BaseBuilder
 	 * Generates a platform-specific query string that counts all records in
 	 * the specified database
 	 *
-	 * @param    bool $test Are we running automated tests?
+	 * @param    bool $reset Are we want to clear query builder values?
+	 * @param    bool $test  Are we running automated tests?
 	 *
 	 * @return    int
 	 */
-	public function countAll($test = false)
+	public function countAll($reset = true, $test = false)
 	{
 		$table = $this->QBFrom[0];
 
@@ -1419,7 +1439,11 @@ class BaseBuilder
 		}
 
 		$query = $query->getRow();
-		$this->resetSelect();
+		
+		if ($reset === true)
+		{
+			$this->resetSelect();
+		}
 
 		return (int) $query->numrows;
 	}
@@ -1442,6 +1466,7 @@ class BaseBuilder
 		// ORDER BY usage is often problematic here (most notably
 		// on Microsoft SQL Server) and ultimately unnecessary
 		// for selecting COUNT(*) ...
+		$orderby = [];
 		if ( ! empty($this->QBOrderBy))
 		{
 			$orderby = $this->QBOrderBy;
@@ -1465,7 +1490,7 @@ class BaseBuilder
 		// If we've previously reset the QBOrderBy values, get them back
 		elseif ( ! isset($this->QBOrderBy))
 		{
-			$this->QBOrderBy = $orderby;
+			$this->QBOrderBy = $orderby??[];
 		}
 
 		$row = (! $result instanceof ResultInterface)
@@ -1908,6 +1933,11 @@ class BaseBuilder
 
 		if ( ! empty($limit))
 		{
+			if (! $this->canLimitWhereUpdates)
+			{
+				throw new DatabaseException('This driver does not allow LIMITs on UPDATE queries using WHERE.');
+			}
+
 			$this->limit($limit);
 		}
 
@@ -2292,6 +2322,11 @@ class BaseBuilder
 
 		if ( ! empty($this->QBLimit))
 		{
+			if (! $this->canLimitDeletes)
+			{
+				throw new DatabaseException('SQLite3 does not allow LIMITs on DELETE queries.');
+			}
+
 			$sql = $this->_limit($sql);
 		}
 

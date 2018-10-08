@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+namespace CodeIgniter\Helpers;
 
 use Config\App;
 use CodeIgniter\Config\Services;
@@ -31,7 +32,7 @@ final class DateHelperTest extends \CIUnitTestCase
 	public function testNowSpecific()
 	{
 		// Chicago should be two hours ahead of Vancouver
-		$this->assertEquals(7200,now('America/Chicago')-now('America/Vancouver'));
+		$this->assertEquals(7200, now('America/Chicago') - now('America/Vancouver'));
 	}
 
 }

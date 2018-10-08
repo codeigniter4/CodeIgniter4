@@ -6,7 +6,6 @@ use Config\Database;
 
 class RulesTest extends \CIUnitTestCase
 {
-
     /**
      * @var Validation
      */

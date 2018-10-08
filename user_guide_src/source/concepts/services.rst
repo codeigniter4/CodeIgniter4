@@ -2,6 +2,10 @@
 Services
 ########
 
+.. contents::
+    :local:
+    :depth: 2
+
 Introduction
 ============
 

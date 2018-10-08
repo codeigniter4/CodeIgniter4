@@ -8,6 +8,10 @@ default action when an error or exception is thrown is to display a detailed err
 is running under the ``production`` environment. In this case, a more generic  message is displayed to
 keep the best user experience for your users.
 
+.. contents::
+    :local:
+    :depth: 2
+
 Using Exceptions
 ================
 

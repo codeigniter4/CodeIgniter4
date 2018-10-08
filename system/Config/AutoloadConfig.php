@@ -113,7 +113,6 @@ class AutoloadConfig
 		$this->classmap = [
 			'CodeIgniter\CodeIgniter'						 => BASEPATH . 'CodeIgniter.php',
 			'CodeIgniter\CLI\CLI'							 => BASEPATH . 'CLI/CLI.php',
-			'CodeIgniter\Loader'							 => BASEPATH . 'Loader.php',
 			'CodeIgniter\Cache\CacheFactory'				 => BASEPATH . 'Cache/CacheFactory.php',
 			'CodeIgniter\Cache\CacheInterface'				 => BASEPATH . 'Cache/CacheInterface.php',
 			'CodeIgniter\Cache\Handlers\DummyHandler'		 => BASEPATH . 'Cache/Handlers/DummyHandler.php',

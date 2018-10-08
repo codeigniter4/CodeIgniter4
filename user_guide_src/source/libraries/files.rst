@@ -6,8 +6,9 @@ CodeIgniter provides a File class that wraps the `SplFileInfo <http://php.net/ma
 and provides some additional convenience methods. This class is the base class for :doc:`uploaded files </libraries/uploaded_files>`
 and :doc:`images </libraries/images>`.
 
-.. contents:: Page Contents
+.. contents::
     :local:
+    :depth: 2
 
 Getting a File instance
 =======================

@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIDatabaseTestCase;
 
 /**
@@ -22,7 +23,7 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->dropTable('forge_test_table', true);
 
 		$this->forge->addField([
-			'id'       => [
+			'id' => [
 				'type'           => 'INTEGER',
 				'constraint'     => 11,
 				'unsigned'       => false,
@@ -41,6 +42,11 @@ class ForgeTest extends CIDatabaseTestCase
 
 	public function testCreateTableWithAttributes()
 	{
+		if ($this->db->DBDriver == 'SQLite3')
+		{
+			$this->markTestSkipped('SQLite3 does not support comments on tables or columns.');
+		}
+
 		$this->forge->dropTable('forge_test_attributes', true);
 
 		$this->forge->addField('id');
@@ -86,7 +92,7 @@ class ForgeTest extends CIDatabaseTestCase
 		]);
 
 		$this->forge->addKey('id', true);
-		$this->forge->addKey(['username', 'active'], false, true);
+		$this->forge->addUniqueKey(['username', 'active']);
 		$create = $this->forge->createTable('forge_test_fields', true);
 
 		//Check Field names
@@ -95,7 +101,6 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->assertContains('username', $fieldsNames);
 		$this->assertContains('name', $fieldsNames);
 		$this->assertContains('active', $fieldsNames);
-
 
 		$fieldsData = $this->db->getFieldData('forge_test_fields');
 
@@ -129,6 +134,13 @@ class ForgeTest extends CIDatabaseTestCase
 
 			$this->assertEquals($fieldsData[1]->max_length, 255);
 		}
+		elseif ($this->db->DBDriver === 'SQLite3')
+		{
+			$this->assertEquals(strtolower($fieldsData[0]->type), 'integer');
+			$this->assertEquals(strtolower($fieldsData[1]->type), 'varchar');
+
+			$this->assertEquals($fieldsData[1]->default, null);
+		}
 		else
 		{
 			$this->assertTrue(false, "DB Driver not supported");
@@ -140,11 +152,14 @@ class ForgeTest extends CIDatabaseTestCase
 
 	public function testCompositeKey()
 	{
+		// SQLite3 uses auto increment different
+		$unique_or_auto = $this->db->DBDriver == 'SQLite3' ? 'unique' : 'auto_increment';
+
 		$this->forge->addField([
 			'id'      => [
-				'type'           => 'INTEGER',
-				'constraint'     => 3,
-				'auto_increment' => true,
+				'type'          => 'INTEGER',
+				'constraint'    => 3,
+				$unique_or_auto => true,
 			],
 			'code'    => [
 				'type'       => 'VARCHAR',
@@ -196,7 +211,6 @@ class ForgeTest extends CIDatabaseTestCase
 
 	public function testForeignKey()
 	{
-
 		$attributes = [];
 
 		if ($this->db->DBDriver == 'MySQLi')
@@ -238,8 +252,14 @@ class ForgeTest extends CIDatabaseTestCase
 
 		$foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices');
 
-		$this->assertEquals($foreignKeyData[0]->constraint_name,
-			$this->db->DBPrefix.'forge_test_invoices_users_id_foreign');
+		if ($this->db->DBDriver == 'SQLite3')
+		{
+			$this->assertEquals($foreignKeyData[0]->constraint_name, 'users_id to db_forge_test_users.id');
+		}
+		else
+		{
+			$this->assertEquals($foreignKeyData[0]->constraint_name,$this->db->DBPrefix.'forge_test_invoices_users_id_foreign');
+		}
 		$this->assertEquals($foreignKeyData[0]->table_name, $this->db->DBPrefix.'forge_test_invoices');
 		$this->assertEquals($foreignKeyData[0]->foreign_table_name, $this->db->DBPrefix.'forge_test_users');
 
@@ -256,6 +276,10 @@ class ForgeTest extends CIDatabaseTestCase
 		if ($this->db->DBDriver == 'MySQLi')
 		{
 			$attributes = ['ENGINE' => 'InnoDB'];
+		}
+		if ($this->db->DBDriver == 'SQLite3')
+		{
+			$this->expectException(DatabaseException::class);
 		}
 
 		$this->forge->addField([
