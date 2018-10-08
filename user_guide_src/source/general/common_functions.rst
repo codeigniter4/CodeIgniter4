@@ -244,6 +244,17 @@ Miscellaneous Functions
 		// Set a flash message
 		return redirect()->back()->with('foo', 'message');
 
+		// Include Query vars from the current request
+		return redirect()->back()->withQuery();
+
+		// Include only a specific query var from the current request
+		return redirect()->back()->withQuery(['only' => 'foo']);
+		return redirect()->back()->withQuery(['only' => ['foo', 'bar']]);
+
+		// Include all query vars except specified vars from the current request
+		return redirect()->back()->withQuery(['except' => 'foo']);
+		return redirect()->back()->withQuery(['except' => ['foo', 'bar']]);
+
 .. php:function:: remove_invisible_characters($str[, $url_encoded = TRUE])
 
 	:param	string	$str: Input string

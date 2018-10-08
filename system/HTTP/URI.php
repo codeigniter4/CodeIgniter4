@@ -401,6 +401,11 @@ class URI
 
 		if (array_key_exists('except', $options))
 		{
+			if (! is_array($options['except']))
+			{
+				$options['except'] = [$options['except']];
+			}
+
 			foreach ($options['except'] as $var)
 			{
 				unset($vars[$var]);
@@ -409,6 +414,11 @@ class URI
 		elseif (array_key_exists('only', $options))
 		{
 			$temp = [];
+
+			if (! is_array($options['only']))
+			{
+				$options['only'] = [$options['only']];
+			}
 
 			foreach ($options['only'] as $var)
 			{
