@@ -91,6 +91,11 @@ class Filters
 	{
 		$this->config = $config;
 		$this->request = & $request;
+		$this->setResponse($response);
+	}
+
+	public function setResponse(ResponseInterface $response)
+	{
 		$this->response = & $response;
 	}
 
