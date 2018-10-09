@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
 /**
@@ -72,10 +73,10 @@ class CURLRequest extends Request
 	 * @var array
 	 */
 	protected $config = [
-		'timeout'			 => 0.0,
-		'connect_timeout'	 => 150,
-		'debug'				 => false,
-		'verify'			 => true
+		'timeout' => 0.0,
+		'connect_timeout' => 150,
+		'debug' => false,
+		'verify' => true
 	];
 
 	/**
@@ -85,9 +86,9 @@ class CURLRequest extends Request
 	 * @var array
 	 */
 	protected $redirectDefaults = [
-		'max'		 => 5,
-		'strict'	 => true,
-		'protocols'	 => ['http', 'https'],
+		'max' => 5,
+		'strict' => true,
+		'protocols' => ['http', 'https'],
 	];
 
 	/**
