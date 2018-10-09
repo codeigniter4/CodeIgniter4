@@ -94,7 +94,7 @@ class CodeIgniter
 
 	/**
 	 * Current response.
-	 * @var HTTP\Response
+	 * @var HTTP\ResponseInterface
 	 */
 	protected $response;
 
@@ -321,23 +321,13 @@ class CodeIgniter
 
 			$this->callExit(EXIT_SUCCESS);
 		}
-		elseif ($returned instanceof DownloadResponse)
-		{
-			$returned->pretend($this->useSafeOutput)->send();
-
-			if ($returnResponse)
-			{
-				return $returned;
-			}
-
-			$this->callExit(EXIT_SUCCESS);
-		}
 
 		// If $returned is a string, then the controller output something,
 		// probably a view, instead of echoing it directly. Send it along
 		// so it can be used with the output.
 		$this->gatherOutput($cacheConfig, $returned);
 
+		$filters->setResponse($this->response);
 		// Run "after" filters
 		$response = $filters->run($uri, 'after');
 
@@ -902,6 +892,10 @@ class CodeIgniter
 			ob_end_clean();
 		}
 
+		if ($returned instanceof DownloadResponse) {
+			$this->response = $returned;
+			return;
+		}
 		// If the controller returned a response object,
 		// we need to grab the body from it so it can
 		// be added to anything else that might have been
