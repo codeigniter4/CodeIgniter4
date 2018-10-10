@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Conclusion &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
+  <title>CLIRequest Class &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
   
 
   
@@ -35,9 +35,9 @@
 
   
     <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
-        <link rel="up" title="Tutorial" href="index.html"/>
-        <link rel="next" title="CodeIgniter4 Overview" href="../concepts/index.html"/>
-        <link rel="prev" title="Create news items" href="create_news_items.html"/> 
+        <link rel="up" title="Command Line Usage" href="index.html"/>
+        <link rel="next" title="Extending CodeIgniter" href="../extending/index.html"/>
+        <link rel="prev" title="CLI Library" href="cli_library.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -89,14 +89,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorial</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="static_pages.html">Static pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="news_section.html">News section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="create_news_items.html">Create news items</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Conclusion</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
@@ -128,8 +122,14 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Command Line Usage</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="cli.html">Running via the Command Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli_commands.html">Custom CLI Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli_library.html">CLI Library</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">CLIRequest Class</a></li>
+</ul>
+</li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
@@ -181,9 +181,9 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">Tutorial</a> &raquo;</li>
+          <li><a href="index.html">Command Line Usage</a> &raquo;</li>
         
-      <li>Conclusion</li>
+      <li>CLIRequest Class</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -200,27 +200,45 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="conclusion">
-<h1>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h1>
-<p>This tutorial did not cover all of the things you might expect of a
-full-fledged content management system, but it introduced you to the
-more important topics of routing, writing controllers, and models. We
-hope this tutorial gave you an insight into some of CodeIgniter&#8217;s basic
-design patterns, which you can expand upon.</p>
-<p>Now that you&#8217;ve completed this tutorial, we recommend you check out the
-rest of the documentation. CodeIgniter is often praised because of its
-comprehensive documentation. Use this to your advantage and read the
-&#8220;Introduction&#8221; and &#8220;General Topics&#8221; sections thoroughly. You should read
-the class and helper references when needed.</p>
-<p>Every intermediate PHP programmer should be able to get the hang of
-CodeIgniter within a few days.</p>
-<p>If you still have questions about the framework or your own CodeIgniter
-code, you can:</p>
-<ul class="simple">
-<li>Check out our <a class="reference external" href="http://forum.codeigniter.com/">forums</a></li>
-<li>Visit our <a class="reference external" href="https://github.com/bcit-ci/CodeIgniter/wiki/IRC">IRC chatroom</a></li>
-<li>Explore the <a class="reference external" href="https://github.com/bcit-ci/CodeIgniter/wiki/">Wiki</a></li>
-</ul>
+  <div class="section" id="clirequest-class">
+<h1>CLIRequest Class<a class="headerlink" href="#clirequest-class" title="Permalink to this headline">¶</a></h1>
+<p>If a request comes from a command line invocation, the request object is actually a
+<code class="docutils literal"><span class="pre">CLIRequest</span></code>. It behaves the same as a <a class="reference internal" href="../incoming/request.html"><span class="doc">conventional request</span></a>
+but adds some accessor methods for convenience.</p>
+<div class="section" id="additional-accessors">
+<h2>Additional Accessors<a class="headerlink" href="#additional-accessors" title="Permalink to this headline">¶</a></h2>
+<p><strong>getSegments()</strong></p>
+<p>Returns an array of the command line arguments deemed to be part of a path:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// command line: php index.php users 21 profile -foo bar</span>
+<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getSegments</span><span class="p">();</span>  <span class="c1">// [&#39;users&#39;, &#39;21&#39;, &#39;profile&#39;]</span>
+</pre></div>
+</div>
+<p><strong>getPath()</strong></p>
+<p>Returns the reconstructed path as a string:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// command line: php index.php users 21 profile -foo bar</span>
+<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>  <span class="c1">// users/21/profile</span>
+</pre></div>
+</div>
+<p><strong>getOptions()</strong></p>
+<p>Returns an array of the command line arguments deemed to be options:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// command line: php index.php users 21 profile -foo bar</span>
+<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getOptions</span><span class="p">();</span>  <span class="c1">// [&#39;foo&#39; =&gt; &#39;bar&#39;]</span>
+</pre></div>
+</div>
+<p><strong>getOption($which)</strong></p>
+<p>Returns the value of a specific command line argument deemed to be an option:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// command line: php index.php users 21 profile -foo bar</span>
+<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getOption</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>  <span class="c1">// bar</span>
+<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getOption</span><span class="p">(</span><span class="s1">&#39;notthere&#39;</span><span class="p">);</span> <span class="c1">// NULL</span>
+</pre></div>
+</div>
+<p><strong>getOptionString()</strong></p>
+<p>Returns the reconstructed command line string for the options:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// command line: php index.php users 21 profile -foo bar</span>
+<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getOptionPath</span><span class="p">();</span>  <span class="c1">// -foo bar</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -233,10 +251,10 @@ code, you can:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../concepts/index.html" class="btn btn-neutral float-right" title="CodeIgniter4 Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../extending/index.html" class="btn btn-neutral float-right" title="Extending CodeIgniter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="create_news_items.html" class="btn btn-neutral" title="Create news items" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="cli_library.html" class="btn btn-neutral" title="CLI Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
