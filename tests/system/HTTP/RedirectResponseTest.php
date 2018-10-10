@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+
+namespace CodeIgniter\HTTP;
 
 use Config\App;
 use Config\Autoload;
@@ -10,11 +12,10 @@ use Tests\Support\HTTP\MockIncomingRequest;
 
 class RedirectResponseTest extends \CIUnitTestCase
 {
+
 	/** @var RouteCollection */
 	protected $routes;
-
 	protected $request;
-
 	protected $config;
 
 	public function setUp()
@@ -47,12 +48,23 @@ class RedirectResponseTest extends \CIUnitTestCase
 	{
 		$response = new RedirectResponse(new App());
 
-		$this->routes->add( 'exampleRoute', 'Home::index' );
+		$this->routes->add('exampleRoute', 'Home::index');
 
-		$response->route( 'exampleRoute' );
+		$response->route('exampleRoute');
 
 		$this->assertTrue($response->hasHeader('Location'));
 		$this->assertEquals('http://example.com/exampleRoute', $response->getHeaderLine('Location'));
+	}
+
+	public function testRedirectRouteBad()
+	{
+		$this->expectException(Exceptions\HTTPException::class);
+
+		$response = new RedirectResponse(new App());
+
+		$this->routes->add('exampleRoute', 'Home::index');
+
+		$response->route('differentRoute');
 	}
 
 	public function testRedirectRelativeConvertsToFullURI()
@@ -97,7 +109,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 
 		$validation = $this->createMock(Validation::class);
 		$validation->method('getErrors')
-		           ->willReturn(['foo' =>'bar']);
+				->willReturn(['foo' => 'bar']);
 
 		Services::injectMock('validation', $validation);
 
@@ -154,4 +166,36 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->assertTrue($response->hasHeader('Location'));
 		$this->assertEquals('http://example.com/foo?foo=bar', $response->getHeaderLine('Location'));
 	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function testRedirectBack()
+	{
+		$_SERVER['HTTP_REFERER'] = 'http://somewhere.com';
+		$this->request = new MockIncomingRequest($this->config, new URI('http://somewhere.com'), null, new UserAgent());
+		Services::injectMock('request', $this->request);
+
+		$response = new RedirectResponse(new App());
+		
+		$returned = $response->back();
+		$this->assertEquals('http://somewhere.com', $returned->getHeader('location')->getValue());
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function testRedirectBackMissing()
+	{
+		$_SESSION = [];
+
+		$response = new RedirectResponse(new App());
+
+		$returned = $response->back();
+
+		$this->assertSame($response, $returned);
+	}
+
 }
