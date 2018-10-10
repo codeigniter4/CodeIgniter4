@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+
+namespace CodeIgniter\HTTP;
 
 /**
  * CodeIgniter
@@ -35,7 +37,6 @@
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 /**
@@ -211,13 +212,6 @@ class Negotiate
 
 		$acceptable = $this->parseHeader($header);
 
-		// If no acceptable values exist, return the
-		// first that we support.
-		if (count($acceptable) === 0)
-		{
-			return $supported[0];
-		}
-
 		foreach ($acceptable as $accept)
 		{
 			// if acceptable quality is zero, skip it.
@@ -290,8 +284,8 @@ class Negotiate
 			}
 
 			$results[] = [
-				'value'	 => trim($value),
-				'q'		 => (float) $quality,
+				'value' => trim($value),
+				'q' => (float) $quality,
 				'params' => $parameters
 			];
 		}
