@@ -37,7 +37,7 @@
  */
 
 /**
- * Utils for Postgre
+ * Utils for MySQLi
  */
 class Utils extends \CodeIgniter\Database\BaseUtils
 {
