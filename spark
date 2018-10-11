@@ -40,7 +40,7 @@ $public = trim($paths->publicDirectory, '/');
 define('FCPATH', realpath($public).DIRECTORY_SEPARATOR);
 
 // Ensure the current directory is pointing to the front controller's directory
-chdir('public');
+chdir($public);
 
 $app = require rtrim($paths->systemDirectory,'/ ').'/bootstrap.php';
 
