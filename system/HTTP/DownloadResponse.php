@@ -365,7 +365,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	/**
 	 * Sends the headers of this HTTP request to the browser.
 	 *
-	 * @return Response
+	 * @return DownloadResponse
 	 */
 	public function sendHeaders()
 	{
