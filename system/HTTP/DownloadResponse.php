@@ -242,15 +242,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	public function setStatusCode(int $code, string $reason = '')
 	{
-		if ($code !== 200)
-		{
-			throw HTTPException::forInvalidStatusCode($code);
-		}
-
-		if ( ! empty($reason) && $this->reason !== $reason)
-		{
-			$this->reason = $reason;
-		}
+		throw DownloadException::forCannotSetStatusCode($code, $reason);
 	}
 
 	//--------------------------------------------------------------------

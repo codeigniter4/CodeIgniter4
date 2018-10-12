@@ -23,21 +23,12 @@ class DownloadResponseTest extends \CIUnitTestCase
 		$this->assertSame(200, $response->getStatusCode());
 	}
 
-	public function testCanSetCustomReasonCode()
+	public function testCantSetStatusCode()
 	{
 		$response = new DownloadResponse('unit-test.txt', true);
 
-		$response->setStatusCode(200, 'Not the mama');
-
-		$this->assertSame('Not the mama', $response->getReason());
-	}
-
-	public function testCantSet200OtherThanStatusCode()
-	{
-		$response = new DownloadResponse('unit-test.txt', true);
-
-		$this->expectException(HTTPException::class);
-		$response->setStatusCode(999);
+		$this->expectException(DownloadException::class);
+		$response->setStatusCode(200);
 	}
 
 	public function testSetDateRemembersDateInUTC()
