@@ -28,4 +28,8 @@ class DownloadException extends \RuntimeException implements ExceptionInterface
 		return new static(lang('HTTP.cannotSetCache'));
 	}
 
+	public static function forCannotSetStatusCode(int $code, string $reason)
+	{
+		return new static(lang('HTTP.cannotSetStatusCode', [$code, $reason]));
+	}
 }
