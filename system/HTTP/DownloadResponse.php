@@ -295,6 +295,7 @@ class DownloadResponse extends Message implements ResponseInterface
 
 	/**
 	 * {@inheritDoc}
+	 * @throws DownloadException
 	 */
 	public function setCache(array $options = [])
 	{
@@ -398,6 +399,8 @@ class DownloadResponse extends Message implements ResponseInterface
 	/**
 	 * output donload file text.
 	 *
+	 * @throws DownloadException
+	 *
 	 * @return DownloadResponse
 	 */
 	public function sendBody()
@@ -417,7 +420,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	/**
 	 * output download text by file.
 	 *
-	 * @return string
+	 * @return DownloadResponse
 	 */
 	private function sendBodyByFilePath()
 	{
@@ -435,7 +438,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	/**
 	 * output download text by binary
 	 *
-	 * @return string
+	 * @return DownloadResponse
 	 */
 	private function sendBodyByBinary()
 	{
