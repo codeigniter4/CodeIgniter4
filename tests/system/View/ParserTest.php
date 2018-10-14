@@ -213,7 +213,7 @@ class ParserTest extends \CIUnitTestCase
 		$power = new class extends \CodeIgniter\Entity {
 			public $foo = 'bar';
 			protected $bar = 'baz';
-			public function toArray(): array
+			public function toArray(bool $onlyChanged = false): array
 			{
 				return [
 					'foo' => $this->foo,
