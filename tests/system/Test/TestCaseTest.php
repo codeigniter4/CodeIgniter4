@@ -1,10 +1,14 @@
-<?php namespace CodeIgniter\Test;
+<?php
+
+namespace CodeIgniter\Test;
 
 use CodeIgniter\Events\Events;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\Filters\CITestKeyboardFilter;
+use CodeIgniter\HTTP\Response;
+use Config\App;
 
-class TestTest extends \CIUnitTestCase
+class TestCaseTest extends \CIUnitTestCase
 {
 
 	public function testGetPrivatePropertyWithObject()
@@ -46,6 +50,5 @@ class TestTest extends \CIUnitTestCase
 		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 		stream_filter_remove($this->stream_filter);
 	}
-
 
 }

@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Test;
+<?php
+
+namespace CodeIgniter\Test;
 
 /**
  * CodeIgniter
@@ -45,6 +47,7 @@ use Tests\Support\Log\TestLogger;
  */
 class CIUnitTestCase extends TestCase
 {
+
 	use ReflectionHelper;
 
 	/**
@@ -63,7 +66,7 @@ class CIUnitTestCase extends TestCase
 	{
 		parent::setUp();
 
-		if (! $this->app)
+		if ( ! $this->app)
 		{
 			$this->app = $this->createApplication();
 		}
@@ -104,7 +107,8 @@ class CIUnitTestCase extends TestCase
 
 		foreach (Events::getPerformanceLogs() as $log)
 		{
-			if ($log['event'] !== $eventName) continue;
+			if ($log['event'] !== $eventName)
+				continue;
 
 			$found = true;
 			break;
@@ -115,6 +119,59 @@ class CIUnitTestCase extends TestCase
 	}
 
 	/**
+	 * Hooks into xdebug's headers capture, looking for a specific header
+	 * emitted
+	 *
+	 * @param string $header The leading portion of the header we are looking for
+	 * @param bool $ignoreCase
+	 *
+	 * @return bool
+	 * @throws \Exception
+	 */
+	public function assertHeaderEmitted(string $header, bool $ignoreCase = false): bool
+	{
+		$found = false;
+
+		foreach (xdebug_get_headers() as $emitted)
+		{
+			$found = $ignoreCase ?
+					(stripos($emitted, $header) === 0) :
+					(strpos($emitted, $header) === 0);
+			if ($found)
+				break;
+		}
+
+		return $found ? $found : $this->fail("Didn't find header for {$header}");
+	}
+
+	/**
+	 * Hooks into xdebug's headers capture, looking for a specific header
+	 * emitted
+	 *
+	 * @param string $header The leading portion of the header we don't want to find
+	 * @param bool $ignoreCase
+	 *
+	 * @return bool
+	 * @throws \Exception
+	 */
+	public function assertHeaderNotEmitted(string $header, bool $ignoreCase = false): bool
+	{
+		$found = false;
+
+		foreach (xdebug_get_headers() as $emitted)
+		{
+			$found = $ignoreCase ?
+					(stripos($emitted, $header) === 0) :
+					(strpos($emitted, $header) === 0);
+			if ($found)
+				break;
+		}
+
+		$success = ! $found;
+		return $success ? $success : $this->fail("Found header for {$header}");
+	}
+
+	/**
 	 * Loads up an instance of CodeIgniter
 	 * and gets the environment setup.
 	 *
@@ -122,12 +179,12 @@ class CIUnitTestCase extends TestCase
 	 */
 	protected function createApplication()
 	{
-		$systemPath = realpath(__DIR__.'/../');
+		$systemPath = realpath(__DIR__ . '/../');
 
-		require_once $systemPath.'/'.$this->configPath.'/Paths.php';
+		require_once $systemPath . '/' . $this->configPath . '/Paths.php';
 		$paths = $this->adjustPaths(new \Config\Paths());
 
-		$app = require $systemPath.'/bootstrap.php';
+		$app = require $systemPath . '/bootstrap.php';
 		return $app;
 	}
 
@@ -162,4 +219,5 @@ class CIUnitTestCase extends TestCase
 
 		return $paths;
 	}
+
 }
