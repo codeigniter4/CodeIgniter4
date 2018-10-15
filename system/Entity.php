@@ -65,12 +65,35 @@ class Entity
 	];
 
 	/**
+	 * Holds original copies of all class vars so
+	 * we can determine what's actually been changed
+	 * and not accidentally write nulls where we shouldn't.
+	 *
+	 * @var array
+	 */
+	protected $_original = [];
+
+	/**
 	 * Allows filling in Entity parameters during construction.
 	 *
 	 * @param array|null $data
 	 */
 	public function __construct(array $data = null)
 	{
+		// Collect any original values of things
+		// so we can compare later to see what's changed
+		$properties = get_object_vars($this);
+
+		foreach ($properties as $key => $value)
+		{
+			if (substr($key, 0, 1) == '_')
+			{
+				unset($properties[$key]);
+			}
+		}
+
+		$this->_original = $properties;
+
 		if (is_array($data))
 		{
 			$this->fill($data);
@@ -108,8 +131,12 @@ class Entity
 	 * values of this entity as an array. All values are accessed
 	 * through the __get() magic method so will have any casts, etc
 	 * applied to them.
+	 *
+	 * @param bool $onlyChanged     If true, only return values that have changed since object creation
+	 *
+	 * @return array
 	 */
-	public function toArray(): array
+	public function toArray(bool $onlyChanged = false): array
 	{
 		$return = [];
 
@@ -119,7 +146,12 @@ class Entity
 
 		foreach ($properties as $key => $value)
 		{
-			if ($key == '_options') continue;
+			if (substr($key, 0, 1) == '_') continue;
+
+			if ($onlyChanged && $this->_original[$key] === null && $value === null)
+			{
+				continue;
+			}
 
 			$return[$key] = $this->__get($key);
 		}
@@ -368,7 +400,7 @@ class Entity
 	 *
 	 * @return mixed
 	 */
-	
+
 	protected function castAs($value, string $type)
 	{
 		switch($type)
@@ -422,7 +454,7 @@ class Entity
 	 * Cast as JSON
 	 *
 	 * @param mixed $value
-	 * @param bool $asArray 
+	 * @param bool $asArray
 	 *
 	 * @return mixed
 	 */
