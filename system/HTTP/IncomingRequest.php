@@ -254,7 +254,7 @@ class IncomingRequest extends Request
 			}
 		} catch (\Exception $e)
 		{
-			
+
 		}
 		// @codeCoverageIgnoreEnd
 
@@ -591,7 +591,7 @@ class IncomingRequest extends Request
 			// @codeCoverageIgnoreStart
 			if ( ! is_cli())
 			{
-				throw FrameworkException::forEmptyBaseURL();
+				die('You have an empty or invalid base URL. The baseURL value must be set in Config\App.php, or through the .env file.');
 			}
 			// @codeCoverageIgnoreEnd
 		}
