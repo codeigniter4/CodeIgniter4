@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Honeypot;
+<?php
+
+namespace CodeIgniter\Honeypot;
 
 /**
  * CodeIgniter
@@ -35,108 +37,85 @@
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Config\BaseConfig;
-use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 
-class Honeypot 
+class Honeypot
 {
 
-    /**
-	 * Honeypot Template
-	 * @var String
+	/**
+	 * @var BaseConfig
 	 */
-    protected $template;
+	protected $config;
 
-    /**
-	 * Honeypot text field name
-	 * @var String
-	 */
-    protected $name;
+	//--------------------------------------------------------------------
 
-    /**
-	 * Honeypot lable content
-	 * @var String
-	 */
-    protected $label;
+	function __construct(BaseConfig $config)
+	{
+		$this->config = $config;
 
-    /**
-	 * Self Instance of Class
-	 * @var Honeypot
-	 */
-    protected $config;
+		if ($this->config->hidden === '')
+		{
+			throw HoneypotException::forNoHiddenValue();
+		}
 
-    //--------------------------------------------------------------------
+		if ($this->config->template === '')
+		{
+			throw HoneypotException::forNoTemplate();
+		}
 
-    function __construct (BaseConfig $config) {
-        $this->config = $config;
+		if ($this->config->name === '')
+		{
+			throw HoneypotException::forNoNameField();
+		}
+	}
 
-        if($this->config->hidden === '')
-        {
-            throw HoneypotException::forNoHiddenValue();
-        }
+	//--------------------------------------------------------------------
 
-        if($this->config->template === '')
-        {
-            throw HoneypotException::forNoTemplate();
-        }
-
-        if($this->config->name === '')
-        {
-            throw HoneypotException::forNoNameField();
-        }
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
+	/**
 	 * Checks the request if honeypot field has data.
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface $request
+	 * @param \CodeIgniter\HTTP\IncomingRequest $request
 	 * 
 	 */
-    public function hasContent(RequestInterface $request) 
-    {
-        if($request->getVar($this->config->name))
-        {
-            return true;
-        }
-        return false;
-    }
+	public function hasContent(IncomingRequest $request)
+	{
+		return ( ! empty($request->getPost($this->config->name))) ? true : false;
+	}
 
-    /**
-	 * Attachs Honeypot template to response.
+	/**
+	 * Attaches Honeypot template to response.
 	 *
-	 * @param \CodeIgniter\HTTP\ResponseInterface $response
+	 * @param \CodeIgniter\HTTP\Response $response
 	 */
-    public function attachHoneypot(ResponseInterface $response)
-    {
-        $prep_field = $this->prepareTemplate($this->config->template);  
-        
-        $body = $response->getBody();
-        $body = str_ireplace('</form>', $prep_field, $body);
-        $response->setBody($body);
-    }
+	public function attachHoneypot(Response $response)
+	{
+		$prep_field = $this->prepareTemplate($this->config->template);
 
-    /**
+		$body = $response->getBody();
+		$body = str_ireplace('</form>', $prep_field, $body);
+		$response->setBody($body);
+	}
+
+	/**
 	 * Prepares the template by adding label
-     * content and field name.
+	 * content and field name.
 	 *
 	 * @param string $template
 	 * @return string
 	 */
-    protected function prepareTemplate($template): string
-    {
-        $template = str_ireplace('{label}', $this->config->label, $template);
-        $template = str_ireplace('{name}', $this->config->name, $template);
+	protected function prepareTemplate($template): string
+	{
+		$template = str_ireplace('{label}', $this->config->label, $template);
+		$template = str_ireplace('{name}', $this->config->name, $template);
 
-        if($this->config->hidden)
-        {
-            $template = '<div style="display:none">'. $template . '</div>';
-        }
-        return $template;
-    }
-    
+		if ($this->config->hidden)
+		{
+			$template = '<div style="display:none">' . $template . '</div>';
+		}
+		return $template;
+	}
+
 }

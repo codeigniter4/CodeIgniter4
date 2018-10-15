@@ -1,26 +1,25 @@
 <?php
-
-namespace App\Filters;
+namespace CodeIgniter\Honeypot\fixtures;
 
 use CodeIgniter\Filters\FilterInterface;
-use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\Honeypot\Honeypot;
 
-class Honeypot implements FilterInterface
+class HoneyTrap implements FilterInterface
 {
 
 	/**
 	 * Checks if Honeypot field is empty; if not
 	 * then the requester is a bot
 	 *
-	 * @param CodeIgniter\HTTP\IncomingRequest $request
+	 * @param CodeIgniter\HTTP\RequestInterface $request
 	 *
 	 * @return mixed
 	 */
-	public function before(IncomingRequest $request)
+	public function before(RequestInterface $request)
 	{
 		$honeypot = new Honeypot(new \Config\Honeypot());
 		if ($honeypot->hasContent($request))
@@ -32,11 +31,11 @@ class Honeypot implements FilterInterface
 	/**
 	 * Attach a honypot to the current response.
 	 *
-	 * @param CodeIgniter\HTTP\IncomingRequest $request
-	 * @param CodeIgniter\HTTP\Response $response
+	 * @param CodeIgniter\HTTP\RequestInterface $request
+	 * @param CodeIgniter\HTTP\ResponseInterface $response
 	 * @return mixed
 	 */
-	public function after(IncomingRequest $request, Response $response)
+	public function after(RequestInterface $request, ResponseInterface $response)
 	{
 		$honeypot = new Honeypot(new \Config\Honeypot());
 		$honeypot->attachHoneypot($response);

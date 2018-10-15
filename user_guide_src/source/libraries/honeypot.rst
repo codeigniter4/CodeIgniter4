@@ -3,9 +3,9 @@ Honeypot Class
 =====================
 
 The Honeypot Class makes it possible to determine when a Bot makes a request to a CodeIgniter4 application,
-If it's enabled in ``Application\Config\Filters.php`` file. This is done by attaching form fields to any form,
-and this form field is hidden from human but accessible to Bot. When data is entered into the field it's 
-assumed the request is coming from a Bot, then an execption is thrown.
+if it's enabled in ``Application\Config\Filters.php`` file. This is done by attaching form fields to any form,
+and this form field is hidden from a human but accessible to a Bot. When data is entered into the field ,it's 
+assumed the request is coming from a Bot, and you can thro a ``HoneypotException``.
 
 .. contents::
     :local:
@@ -14,76 +14,29 @@ assumed the request is coming from a Bot, then an execption is thrown.
 Enabling Honeypot
 =====================
 
-To enable Honeypot changes has to be made to the ``Application\Config\Filters.php``. Just uncomment honeypot
-from the ``$globals`` Array.::
+To enable a Honeypot, changes have to be made to the ``application/Config/Filters.php``. Just uncomment honeypot
+from the ``$globals`` array, like...::
 
     public $globals = [
             'before' => [
-                //'honeypot'
+                'honeypot'
                 // 'csrf',
             ],
             'after'  => [
                 'toolbar',
-                //'honeypot'
+                'honeypot'
             ]
         ];
+
+A sample Honeypot filter is bundled, as ``application/Filters/Honeypot.php``.
 
 Customizing Honeypot
 =====================
 
-Honeypot can be customized. It allows the following customization. Customization file can found in 
-``Application\Config\Honeypot.php`` and ``.env``.
+Honeypot can be customized. The fields below can be set either in 
+``application/Config/Honeypot.php`` or in ``.env``.
 
-* ``Display``
-* ``Label``
-* ``Field Name``
-* ``Template``
-
-**Display**
-
-Display can contain values of ``True`` or ``False``, meaning display the template and hide the template
-respectively. The value for display is called ``hidden``.::
-
-    public $hidden = true;
-
-The above is for ``Application\Config\Honeypot.php``.::
-
-    honeypot.hidden = 'true'
-
-The above is for ``.env``
-
-**Label**
-
-This the label for the input field. The value for label is called ``label``.::
-
-    public $label = 'Fill This Field';
-
-The above is for ``Application\Config\Honeypot.php``.::
-
-    honeypot.label = 'Fill This Field'
-
-The above is for ``.env``
-
-**Field Name**
-
-This the field name for the input field. The value for the field name is called ``name``.::
-
-    public $name = 'honeypot';
-
-The above is for ``Application\Config\Honeypot.php``.::
-
-    honeypot.name = 'honeypot'
-
-The above is for ``.env``
-
-**Template**
-
-This is the template of the honeypot. The value for the template is called ``template``.::
-
-    public $template = '<label>{label}</label><input type="text" name="{name}" value=""/>';
-
-The above is for ``Application\Config\Honeypot.php``.::
-
-    honeypot.template = '<label>{label}</label><input type="text" name="{name}" value=""/>'
-
-The above is for ``.env``
+* ``hidden`` - true|false to control visibility of the honeypot field; default is ``true``
+* ``label`` - HTML label for the honeypot field, default is 'Fill This Field'
+* ``name`` - name of the HTML form field used for the template; default is 'honeypot'
+* ``template`` - form field template used for the honeypot; default is '<label>{label}</label><input type="text" name="{name}" value=""/>'
