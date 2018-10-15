@@ -11,11 +11,6 @@
 class FrameworkException extends \RuntimeException implements ExceptionInterface
 {
 
-	public static function forEmptyBaseURL(): self
-	{
-		return new static('You have an empty or invalid base URL. The baseURL value must be set in Config\App.php, or through the .env file.');
-	}
-
 	public static function forInvalidFile(string $path)
 	{
 		return new static(lang('Core.invalidFile', [$path]));
