@@ -1,5 +1,13 @@
 <?php
 
+// Valid PHP Version?
+$minPHPVersion = '7.1';
+if (phpversion() < $minPHPVersion)
+{
+	die("You PHP version must be {$minPHPVersion} or higher to run CodeIgniter. Current version: ". phpversion());
+}
+unset($minPHPVersion);
+
 // Path to the front controller (this file)
 define('FCPATH', __DIR__.DIRECTORY_SEPARATOR);
 
