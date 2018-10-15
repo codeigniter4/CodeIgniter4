@@ -46,16 +46,12 @@ class TestCaseEmissionsTest extends \CIUnitTestCase
 
 		// send it
 		$response->setBody($body);
-
-		ob_start();
 		$response->send();
-		$output = ob_get_clean(); // what really was sent
+		
 		// and what actually got sent?; test both ways
 		$actual = $response->getBody(); // what we thought was sent
 
 		$this->assertEquals($expected, $actual);
-		$this->assertEquals($expected, $output);
-
 		$this->assertHeaderEmitted("Set-Cookie: foo=bar;");
 		$this->assertHeaderEmitted("set-cookie: FOO=bar", true);
 	}
