@@ -75,12 +75,13 @@ class CIUnitTestCase extends TestCase
 	 * Custom function to hook into CodeIgniter's Logging mechanism
 	 * to check if certain messages were logged during code execution.
 	 *
-	 * @param string $level
-	 * @param null   $expectedMessage
+	 * @param string      $level
+	 * @param string|null $expectedMessage
 	 *
+	 * @return bool
 	 * @throws \Exception
 	 */
-	public function assertLogged(string $level, $expectedMessage = null)
+	public function assertLogged(string $level, string $expectedMessage = null): bool
 	{
 		$result = TestLogger::didLog($level, $expectedMessage);
 
@@ -125,7 +126,7 @@ class CIUnitTestCase extends TestCase
 		$systemPath = realpath(__DIR__.'/../');
 
 		require_once $systemPath.'/'.$this->configPath.'/Paths.php';
-		$paths = $this->adjustPaths(new \Config\Paths());
+		$this->adjustPaths(new Paths());
 
 		$app = require $systemPath.'/bootstrap.php';
 		return $app;

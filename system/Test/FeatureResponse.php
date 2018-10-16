@@ -19,6 +19,7 @@ class FeatureResponse extends TestCase
 
 	public function __construct(Response $response = null)
 	{
+		parent::__construct();
 		$this->response = $response;
 
 		if (is_string($this->response->getBody()))
@@ -187,8 +188,6 @@ class FeatureResponse extends TestCase
 	 * Assert the Response does not have the specified cookie set.
 	 *
 	 * @param string $key
-	 * @param null   $value
-	 * @param string $prefix
 	 *
 	 * @throws \Exception
 	 */
