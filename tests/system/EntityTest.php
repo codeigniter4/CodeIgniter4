@@ -370,6 +370,35 @@ class EntityTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testCastAsJSON()
+	{
+		$entity = $this->getCastEntity();
+
+		$entity->tenth = ['foo' => 'bar'];
+
+		// Should be a JSON-encoded string now...
+		$check = $this->getPrivateProperty($entity, 'tenth');
+		$this->assertEquals('{"foo":"bar"}', $check);
+
+		$this->assertEquals((object) ['foo' => 'bar'], $entity->tenth);
+	}
+
+	public function testCastAsJSONArray()
+	{
+		$entity = $this->getCastEntity();
+
+		$data = ['Sun', 'Mon', 'Tue'];
+		$entity->eleventh = $data;
+
+		// Should be a JSON-encoded string now...
+		$check = $this->getPrivateProperty($entity, 'eleventh');
+		$this->assertEquals('["Sun","Mon","Tue"]', $check);
+
+		$this->assertEquals($data, $entity->eleventh);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testAsArray()
 	{
 		$entity = $this->getEntity();
@@ -417,14 +446,14 @@ class EntityTest extends \CIUnitTestCase
 	public function testChangedArray()
 	{
 		$data = [
-			'bar'	 => 'baz'
+			'bar' => 'baz'
 		];
 
 		$something = new SomeEntity($data);
 		$whatsnew = $something->toArray(true);
 		$expected = $data;
 		$this->assertEquals($expected, $whatsnew);
-		
+
 		$something->magic = 'rockin';
 		$expected['magic'] = 'rockin';
 		$expected['foo'] = null;
@@ -508,6 +537,8 @@ class EntityTest extends \CIUnitTestCase
 			protected $seventh;
 			protected $eighth;
 			protected $ninth;
+			protected $tenth;
+			protected $eleventh;
 			// 'bar' is db column, 'foo' is internal representation
 			protected $_options = [
 				'casts'		 => [
@@ -519,7 +550,9 @@ class EntityTest extends \CIUnitTestCase
 					'sixth'		 => 'object',
 					'seventh'	 => 'array',
 					'eighth'	 => 'datetime',
-					'ninth'		 => 'timestamp'
+					'ninth'		 => 'timestamp',
+					'tenth'		 => 'json',
+					'eleventh'	 => 'json-array'
 				],
 				'dates'		 => [],
 				'datamap'	 => []
