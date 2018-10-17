@@ -38,8 +38,8 @@ namespace CodeIgniter\Honeypot;
  * @filesource
  */
 use CodeIgniter\Config\BaseConfig;
-use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 
 class Honeypot
@@ -77,10 +77,10 @@ class Honeypot
 	/**
 	 * Checks the request if honeypot field has data.
 	 *
-	 * @param \CodeIgniter\HTTP\IncomingRequest $request
+	 * @param \CodeIgniter\HTTP\RequestInterface $request
 	 * 
 	 */
-	public function hasContent(IncomingRequest $request)
+	public function hasContent(RequestInterface $request)
 	{
 		return ( ! empty($request->getPost($this->config->name))) ? true : false;
 	}
@@ -88,9 +88,9 @@ class Honeypot
 	/**
 	 * Attaches Honeypot template to response.
 	 *
-	 * @param \CodeIgniter\HTTP\Response $response
+	 * @param \CodeIgniter\HTTP\ResponseInterface $response
 	 */
-	public function attachHoneypot(Response $response)
+	public function attachHoneypot(ResponseInterface $response)
 	{
 		$prep_field = $this->prepareTemplate($this->config->template);
 
