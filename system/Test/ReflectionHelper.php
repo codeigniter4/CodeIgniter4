@@ -74,7 +74,7 @@ trait ReflectionHelper
 	 * @return \ReflectionProperty
 	 * @throws \ReflectionException
 	 */
-	private static function getAccessibleRefProperty($obj, string $property)
+	private static function getAccessibleRefProperty($obj, string $property): \ReflectionProperty
 	{
 		$ref_class = is_object($obj) ? new ReflectionObject($obj) : new ReflectionClass($obj);
 		$ref_property = $ref_class->getProperty($property);

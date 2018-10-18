@@ -126,7 +126,7 @@ class CIUnitTestCase extends TestCase
 		$systemPath = realpath(__DIR__.'/../');
 
 		require_once $systemPath.'/'.$this->configPath.'/Paths.php';
-		$this->adjustPaths(new Paths());
+		$paths = $this->adjustPaths(new Paths());
 
 		$app = require $systemPath.'/bootstrap.php';
 		return $app;
