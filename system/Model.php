@@ -669,7 +669,7 @@ class Model
 	{
 		$escape = null;
 
-		if (is_numeric($id))
+		if (is_numeric($id) || (!empty($id) && is_string($id)))
 		{
 			$id = [$id];
 		}
