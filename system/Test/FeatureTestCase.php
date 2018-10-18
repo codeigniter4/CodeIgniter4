@@ -237,6 +237,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null                $params
 	 *
 	 * @return \CodeIgniter\HTTP\Request
+	 * @throws \ReflectionException
 	 */
 	protected function populateGlobals(string $method, Request $request, array $params = null)
 	{

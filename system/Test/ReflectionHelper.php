@@ -51,8 +51,9 @@ trait ReflectionHelper
 	 * @param object|string $obj    object or class name
 	 * @param string        $method method name
 	 * @return \Closure
+	 * @throws \ReflectionException
 	 */
-	public static function getPrivateMethodInvoker($obj, $method)
+	public static function getPrivateMethodInvoker($obj, string $method): \Closure
 	{
 		$ref_method = new ReflectionMethod($obj, $method);
 		$ref_method->setAccessible(true);
@@ -71,18 +72,11 @@ trait ReflectionHelper
 	 * @param string $property
 	 *
 	 * @return \ReflectionProperty
+	 * @throws \ReflectionException
 	 */
-	private static function getAccessibleRefProperty($obj, $property)
+	private static function getAccessibleRefProperty($obj, string $property): \ReflectionProperty
 	{
-		if (is_object($obj))
-		{
-			$ref_class = new ReflectionObject($obj);
-		}
-		else
-		{
-			$ref_class = new ReflectionClass($obj);
-		}
-
+		$ref_class = is_object($obj) ? new ReflectionObject($obj) : new ReflectionClass($obj);
 		$ref_property = $ref_class->getProperty($property);
 		$ref_property->setAccessible(true);
 
@@ -95,8 +89,10 @@ trait ReflectionHelper
 	 * @param object|string $obj      object or class name
 	 * @param string        $property property name
 	 * @param mixed         $value    value
+	 * @return void
+	 * @throws \ReflectionException
 	 */
-	public static function setPrivateProperty($obj, $property, $value)
+	public static function setPrivateProperty($obj, string $property, $value): void
 	{
 		$ref_property = self::getAccessibleRefProperty($obj, $property);
 		$ref_property->setValue($obj, $value);
@@ -108,11 +104,11 @@ trait ReflectionHelper
 	 * @param object|string $obj      object or class name
 	 * @param string        $property property name
 	 * @return mixed value
+	 * @throws \ReflectionException
 	 */
-	public static function getPrivateProperty($obj, $property)
+	public static function getPrivateProperty($obj, string $property)
 	{
 		$ref_property = self::getAccessibleRefProperty($obj, $property);
 		return $ref_property->getValue($obj);
 	}
-
 }
