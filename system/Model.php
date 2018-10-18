@@ -660,7 +660,7 @@ class Model
 	 * Updates a single record in $this->table. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
-	 * @param int|array|string   $id
+	 * @param int|array|string   $id  if int | string | associative array updete will use where(); if indexed array update will use whereIn()
 	 * @param array|object $data
 	 *
 	 * @return bool
@@ -668,11 +668,6 @@ class Model
 	public function update($id = null, $data = null)
 	{
 		$escape = null;
-
-		if (is_numeric($id) || (!empty($id) && is_string($id)))
-		{
-			$id = [$id];
-		}
 
 		if (empty($data))
 		{
@@ -729,10 +724,25 @@ class Model
 
 		$builder = $this->builder();
 
-		if ($id)
+		if (is_numeric($id) || (!empty($id) && is_string($id)))
 		{
-			$builder = $builder->whereIn($this->table.'.'.$this->primaryKey, $id);
+			$builder = $builder->where($this->table.'.'.$this->primaryKey, $id);
 		}
+		elseif (!empty($id) && is_array($id))
+		{
+			if(array_keys($id) === range(0, count($id) -1))
+			{
+				$builder = $builder->whereIn($this->table.'.'.$this->primaryKey, $id);
+			}
+			else
+			{
+				foreach ($id as $key => $value)
+				{
+					$builder = $builder->where($this->table.'.'.$key, $value);
+				}
+			}
+		}
+
 
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $builder
