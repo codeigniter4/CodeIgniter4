@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Contributing to CodeIgniter &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
+  <title>Utilities &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
   
 
   
@@ -35,9 +35,9 @@
 
   
     <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
-        <link rel="up" title="Extending CodeIgniter" href="index.html"/>
-        <link rel="next" title="The MIT License (MIT)" href="../license.html"/>
-        <link rel="prev" title="Events - Extending the Framework Core" href="events.html"/> 
+        <link rel="up" title="Working With Databases" href="index.html"/>
+        <link rel="next" title="Modeling Data" href="../models/index.html"/>
+        <link rel="prev" title="Database Events" href="events.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -104,8 +104,22 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Working With Databases</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="queries.html">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Query Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="query_builder.html">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transactions.html">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html">Getting MetaData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">Database Events</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Database Utilities</a></li>
+</ul>
+</li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
@@ -125,13 +139,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Extending CodeIgniter</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="core_classes.html">Creating Core System Classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="events.html">Events - Extending the Framework Core</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Contributing to CodeIgniter</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
@@ -180,9 +189,9 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">Extending CodeIgniter</a> &raquo;</li>
+          <li><a href="index.html">Working With Databases</a> &raquo;</li>
         
-      <li>Contributing to CodeIgniter</li>
+      <li>Utilities</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -199,56 +208,39 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="contributing-to-codeigniter">
-<h1>Contributing to CodeIgniter<a class="headerlink" href="#contributing-to-codeigniter" title="Permalink to this headline">¶</a></h1>
-<p>CodeIgniter is a community driven project and accepts contributions of code
-and documentation from the community. These contributions are made in the form
-of Issues or <a class="reference external" href="https://help.github.com/articles/using-pull-requests/">Pull Requests</a>
-on the <a class="reference external" href="https://github.com/bcit-ci/CodeIgniter4">CodeIgniter4 repository</a> on GitHub.</p>
-<p>Issues are a quick way to point out a bug. If you find a bug or documentation
-error in CodeIgniter then please check a few things first:</p>
+  <div class="section" id="utilities">
+<h1>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h1>
+<p>The Database Utility Class contains methods that help you manage your database.</p>
+<div class="contents local topic" id="contents">
 <ul class="simple">
-<li>There is not already an open Issue</li>
-<li>The issue has already been fixed (check the develop branch, or look for
-closed Issues)</li>
-<li>Is it something really obvious that you fix it yourself?</li>
+<li><a class="reference internal" href="#get-xml-from-result" id="id1">Get XML FROM Result</a></li>
 </ul>
-<p>Reporting issues is helpful but an even better approach is to send a Pull
-Request, which is done by &#8220;Forking&#8221; the main repository and committing to your
-own copy. This will require you to use the version control system called Git.</p>
-<p>Please see the <a class="reference external" href="https://github.com/bcit-ci/CodeIgniter4/tree/develop/contributing">Contributing to CodeIgniter4</a>
-section of our code repository.</p>
-<div class="section" id="support">
-<h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
-<p>Please note that GitHub is not for general support questions! If you are
-having trouble using a feature of CodeIgniter, ask for help on our
-<a class="reference external" href="http://forum.codeigniter.com/">forums</a> instead.</p>
-<p>If you are not sure whether you are using something correctly or if you
-have found a bug, again - please ask on the forums first.</p>
 </div>
-<div class="section" id="security">
-<h2>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h2>
-<p>Did you find a security issue in CodeIgniter?</p>
-<p>Please <em>don&#8217;t</em> disclose it publicly, but e-mail us at <a class="reference external" href="mailto:security&#37;&#52;&#48;codeigniter&#46;com">security<span>&#64;</span>codeigniter<span>&#46;</span>com</a>,
-or report it via our page on <a class="reference external" href="https://hackerone.com/codeigniter">HackerOne</a>.</p>
-<p>If you&#8217;ve found a critical vulnerability, we&#8217;d be happy to credit you in our
-<a class="reference external" href="https://bcit-ci.github.io/CodeIgniter4/changelog.html">ChangeLog</a>.</p>
+<div class="section" id="get-xml-from-result">
+<h2><a class="toc-backref" href="#id1">Get XML FROM Result</a><a class="headerlink" href="#get-xml-from-result" title="Permalink to this headline">¶</a></h2>
+<p><strong>getXMLFromResult()</strong></p>
+<p>This method returns the xml result from database result. You can do like this:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="k">class</span> <span class="nc">extends</span> <span class="nx">\CodeIgniter\Model</span> <span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$table</span>      <span class="o">=</span> <span class="s1">&#39;foo&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$primaryKey</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="nv">$db</span> <span class="o">=</span> <span class="nx">\Closure</span><span class="o">::</span><span class="na">bind</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nv">$model</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">db</span><span class="p">;</span>
+<span class="p">},</span> <span class="k">null</span><span class="p">,</span> <span class="nv">$model</span><span class="p">)(</span><span class="nv">$model</span><span class="p">);</span>
+
+<span class="nv">$util</span> <span class="o">=</span> <span class="p">(</span><span class="k">new</span> <span class="nx">\CodeIgniter\Database\Database</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">loadUtils</span><span class="p">(</span><span class="nv">$db</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$util</span><span class="o">-&gt;</span><span class="na">getXMLFromResult</span><span class="p">(</span><span class="nv">$model</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">());</span>
+</pre></div>
 </div>
-<div class="section" id="tips-for-a-good-issue-report">
-<h2>Tips for a Good Issue Report<a class="headerlink" href="#tips-for-a-good-issue-report" title="Permalink to this headline">¶</a></h2>
-<p>Use a descriptive subject line (eg parser library chokes on commas) rather than a vague one (eg. your code broke).</p>
-<p>Address a single issue in a report.</p>
-<p>Identify the CodeIgniter version (eg 4.0.1) and the component if you know it (eg. parser library)</p>
-<p>Explain what you expected to happen, and what did happen.
-Include error messages and stacktrace, if any.</p>
-<p>Include short code segments if they help to explain.
-Use a pastebin or dropbox facility to include longer segments of code or screenshots - do not include them in the issue report itself.
-This means setting a reasonable expiry for those, until the issue is resolved or closed.</p>
-<p>If you know how to fix the issue, you can do so in your own fork &amp; branch, and submit a pull request.
-The issue report information above should be part of that.</p>
-<p>If your issue report can describe the steps to reproduce the problem, that is great.
-If you can include a unit test that reproduces the problem, that is even better, as it gives whoever is fixing
-it a clearer target!</p>
+<p>and it will get the following xml result:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">root</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">element</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">id</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="nx">id</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">name</span><span class="o">&gt;</span><span class="nx">bar</span><span class="o">&lt;/</span><span class="nx">name</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="nx">element</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="nx">root</span><span class="o">&gt;</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -262,10 +254,10 @@ it a clearer target!</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../license.html" class="btn btn-neutral float-right" title="The MIT License (MIT)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../models/index.html" class="btn btn-neutral float-right" title="Modeling Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="events.html" class="btn btn-neutral" title="Events - Extending the Framework Core" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="events.html" class="btn btn-neutral" title="Database Events" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

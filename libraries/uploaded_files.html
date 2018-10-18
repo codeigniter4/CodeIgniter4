@@ -233,6 +233,7 @@ interface to the uploaded files with a few small features.</p>
 <li><a class="reference internal" href="#file-names" id="id6">File Names</a></li>
 <li><a class="reference internal" href="#other-file-info" id="id7">Other File Info</a></li>
 <li><a class="reference internal" href="#moving-files" id="id8">Moving Files</a></li>
+<li><a class="reference internal" href="#store-files" id="id9">Store Files</a></li>
 </ul>
 </li>
 </ul>
@@ -451,6 +452,30 @@ the <code class="docutils literal"><span class="pre">hasMoved()</span></code> me
 <li>the file move operation fails (eg. improper permissions)</li>
 </ul>
 </div>
+<div class="section" id="store-files">
+<h3><a class="toc-backref" href="#id9">Store Files</a><a class="headerlink" href="#store-files" title="Permalink to this headline">¶</a></h3>
+<p>Each file can be moved to its new location with the aptly named <code class="docutils literal"><span class="pre">store()</span></code> method.</p>
+<p>With the simplest usage, a single file might be submitted like:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;userfile&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>By default, Upload files are saved in writable/uploads directory. the YYYYMMDD folder
+and random file name will be created. return a file path:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$path</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">store</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>You can specify directory to movethe file to as the first parameter.a new filename by
+passing it as thesecond parameter:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$path</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">store</span><span class="p">(</span><span class="s1">&#39;head_img/&#39;</span><span class="p">,</span> <span class="s1">&#39;user_name.jpg&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Moving an uploaded file can fail, with an HTTPException, under several circumstances:</p>
+<ul class="simple">
+<li>the file has already been moved</li>
+<li>the file did not upload successfully</li>
+<li>the file move operation fails (eg. improper permissions)</li>
+</ul>
+</div>
 </div>
 </div>
 
@@ -477,7 +502,7 @@ the <code class="docutils literal"><span class="pre">hasMoved()</span></code> me
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 10, 2018.
+      Last updated on Oct 18, 2018.
 
     </p>
   </div>
