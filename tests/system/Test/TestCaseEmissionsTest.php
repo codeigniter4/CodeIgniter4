@@ -15,19 +15,19 @@ use Config\App;
 class TestCaseEmissionsTest extends \CIUnitTestCase
 {
 
-	public function setUp()
-	{
-//		while( count( ob_list_handlers() ) > 0 )
+//	public function setUp()
+//	{
+//		while( count( ob_list_handlers() ) > 1 )
 //		{
 //			ob_end_clean();
 //		}
-		ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE);
-	}
-
-	public function tearDown()
-	{
-		ob_end_clean();
-	}
+//		ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE);
+//	}
+//
+//	public function tearDown()
+//	{
+//		ob_end_clean();
+//	}
 
 	//--------------------------------------------------------------------
 	/**
@@ -57,18 +57,24 @@ class TestCaseEmissionsTest extends \CIUnitTestCase
 		$response->setCookie('foo', 'bar');
 		$this->assertTrue($response->hasCookie('foo'));
 		$this->assertTrue($response->hasCookie('foo', 'bar'));
-
-		// send it
+		
 		$response->setBody($body);
+		
+//echo 'ob level at '.ob_get_level();
+ob_end_clean();
+ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE);
+//$buffer = ob_get_clean(); // flush previous
+		// send it
+//		$buffer = ob_get_clean();
 		$response->send();
-
+		$buffer = ob_end_clean();
 		// and what actually got sent?; test both ways
 		$actual = $response->getBody(); // what we thought was sent
-//		$buffer = ob_get_clean();
 
 		$this->assertEquals($expected, $actual);
 		$this->assertHeaderEmitted("Set-Cookie: foo=bar;");
 		$this->assertHeaderEmitted("set-cookie: FOO=bar", true);
+
 	}
 
 	/**
