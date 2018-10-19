@@ -1,6 +1,5 @@
 <?php
-
-namespace App\Filters;
+namespace CodeIgniter\Honeypot\fixtures;
 
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
@@ -9,7 +8,7 @@ use Config\Services;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\Honeypot\Honeypot;
 
-class Honeypot implements FilterInterface
+class HoneyTrap implements FilterInterface
 {
 
 	/**
