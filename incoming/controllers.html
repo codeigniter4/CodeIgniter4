@@ -399,7 +399,7 @@ to emulate CodeIgniter&#8217;s default behavior.</p>
         <span class="p">{</span>
                 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nv">$method</span><span class="p">(</span><span class="o">...</span><span class="nv">$params</span><span class="p">);</span>
         <span class="p">}</span>
-        <span class="nx">show_404</span><span class="p">();</span>
+        <span class="k">throw</span> <span class="nx">\CodeIgniter\Exceptions\PageNotFoundException</span><span class="o">::</span><span class="na">forPageNotFound</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -568,7 +568,7 @@ and you will find that some situations are simpler in the controller than then m
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 18, 2018.
+      Last updated on Oct 19, 2018.
 
     </p>
   </div>
