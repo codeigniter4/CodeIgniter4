@@ -738,7 +738,14 @@ class Model
 			{
 				foreach ($id as $key => $value)
 				{
-					$builder = $builder->where($this->table.'.'.$key, $value);
+					if(!empty($value) && is_array($value))
+					{
+						$builder = $builder->whereIn($this->table.'.'.$key, $value);
+					}
+					else
+					{
+						$builder = $builder->where($this->table.'.'.$key, $value);
+					}
 				}
 			}
 		}
