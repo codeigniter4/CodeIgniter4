@@ -275,20 +275,14 @@ of the columns in $table, while the array's values are the values to save for th
 
 Multiple records may be updated with a single call by passing an array of primary keys as the first parameter::
 
-    $data = [
-		'active' => 1
-	];
-
+	$data = ['active' => 1];
 	$userModel->update([1, 2, 3], $data);
 
 When you need a more flexible solution, you have two options:
 
 - you can pass as associative array as the first parameter:
 
-    $data = [
-		'active' => 1
-	];
-	
+	$data = ['active' => 1];
 	$userModel->update(['id' => [2,3,4], 'name' => 'Foo'], $data);
 	
 	// UPDATE `table` SET `active` = 1 WHERE `table`.`id` IN(2,3,4) AND `table`.`name` = 'Foo';
