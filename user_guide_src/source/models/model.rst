@@ -281,12 +281,24 @@ Multiple records may be updated with a single call by passing an array of primar
 
 	$userModel->update([1, 2, 3], $data);
 
-When you need a more flexible solution, you can leaven the parameters empty and it functions like the Query Builder's
-update command, with the added benefit of validation, events, etc::
+When you need a more flexible solution, you have two options:
+
+- you can pass as associative array as the first parameter:
+
+    $data = [
+		'active' => 1
+	];
+	
+	$userModel->update(['id' => [2,3,4], 'name' => 'Foo'], $data);
+	
+	// UPDATE `table` SET `active` = 1 WHERE `table`.`id` IN(2,3,4) AND `table`.`name` = 'Foo';
+
+
+- you can leave the parameters empty and it functions like the Query Builder's update command, with the added benefit of validation, events, etc::
 
     $userModel
         ->whereIn('id', [1,2,3])
-        ->set(['active' => 1]
+        ->set(['active' => 1])
         ->update();
 
 **save()**
