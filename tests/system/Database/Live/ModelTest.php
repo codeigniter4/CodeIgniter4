@@ -564,7 +564,7 @@ class ModelTest extends CIDatabaseTestCase
 		]);
 	}
 
-	public function testSetWorksWithUpdate()
+	public function testSetWorksWithUpdateNumeric()
 	{
 		$model = new EventModel();
 
@@ -584,6 +584,38 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->seeInDatabase('user', [
 			'id' => $userId,
+			'email' => 'foo@example.com',
+			'name' => 'Fred Flintstone'
+		]);
+	}
+
+
+	public function testSetWorksWithUpdateString()
+	{
+		$model = new EventModel();
+
+		$this->dontSeeInDatabase('user', [
+			'email' => 'foo@example.com'
+		]);
+
+		$userId = $model->insert([
+			'email' => 'foo@example.com',
+			'name' => 'Foo Bar',
+			'country' => 'US'
+		]);
+
+		$model->set([
+			'name' => 'Fred Flintstone'
+		])->update('a');
+
+		$this->seeInDatabase('user', [
+			'id' => $userId,
+			'email' => 'foo@example.com',
+			'name' => 'Fred Flintstone'
+		]);
+		
+		$this->dontSeeInDatabase('user', [
+			'id' => 'a',
 			'email' => 'foo@example.com',
 			'name' => 'Fred Flintstone'
 		]);
@@ -616,12 +648,12 @@ class ModelTest extends CIDatabaseTestCase
 		]);
 	}
 
-	public function testUpdateArray()
+	public function testUpdateArrayIndexed()
 	{
 		$model = new EventModel();
 
 		$data = [
-			'name'  => 	'Foo',
+			'name'  => 'Foo',
 			'email' => 'foo@example.com',
 			'country' => 'US',
 			'deleted' => 0
@@ -634,6 +666,24 @@ class ModelTest extends CIDatabaseTestCase
 		$this->seeInDatabase('user', ['id' => 2, 'name' => 'Foo Bar']);
 	}
 
+	public function testUpdateArrayAssoc()
+	{
+		$model = new EventModel();
+
+		$data = [
+			'name'  => 'Foo',
+			'email' => 'foobar@example.com',
+			'country' => 'PL',
+			'deleted' => 0
+		];
+
+		$id = $model->insert($data);
+		$model->update(['name' => 'Foo', 'country' => 'PL', 'email' => 'foobar@example.com', 'id' => $id], ['name' => 'Foo-Bar', 'email' => 'foo-bar@example.com']);
+
+		$this->seeInDatabase('user', ['id' => $id, 'country' => 'PL', 'name' => 'Foo-Bar', 'email' => 'foo-bar@example.com']);
+
+	}
+	
 	public function testInsertBatchSuccess()
 	{
 		$job_data = [
