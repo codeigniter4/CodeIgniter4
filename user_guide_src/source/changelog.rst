@@ -2,6 +2,133 @@
 Change Log
 ##########
 
+Version |next|
+=================================
+
+Release Date: Not Released
+
+**Second alpha release of CodeIgniter4**
+
+The list of changed files follows, with PR numbers shown.
+If you open this page on the repo github site, they will link
+to the PRs in question.
+
+application /
+    - Config/Routes #1281
+    - Filters/Honeypot #1314
+    - Views/errors/cli/error_404 #1272
+
+public /
+    - .htaccess #1281
+    - index #1295, #1313
+
+system /
+    - Commands/
+        - Server/Serve #1313 
+    - Config/
+        - AutoloadConfig #1271
+    - Database/
+        - BaseBuilder #1217
+        - BaseUtils #1209, #1329
+        - MySQLi/Utils #1209
+    - Exceptions/
+        - CastException #1283
+        - DownloadException #1239
+        - FrameworkException #1313
+    - Filters/
+        - Filters #1239
+    - Helpers/
+        - cookie_helper #1286
+        - form_helper #1244, #1327
+        - url_helper #1321
+        - xml_helper #1209
+    - Honeypot/
+        - Honeypot #1314
+    - HTTP/
+        - CliRequest #1303
+        - CURLRequest #1303
+        - DownloadResponse #1239
+        - Exceptions/HTTPException #1303
+        - IncomingRequest #1304, #1313
+        - Negotiate #1306
+        - RedirectResponse #1300, #1306, #1329
+        - Response #1239, #1286
+        - ResponseInterface #1239
+        - URI #1300
+    - Language/en/
+        - Cast #1283
+        - HTTP #1239
+    - Router/
+        - RouteCollection #1285
+    - Test/
+        - FeatureTestCase #1282
+    - CodeIgniter #1239
+    - Common #1291
+    - Entity #1283, #1311
+    - Model #1311
+
+tests /
+    - API/
+        - ResponseTraitTest #1302
+    - Database/
+        - BaseBuilderTest #1217
+        - Live/ModelTest #1311
+    - Debug/
+        - TimerTest #1273
+    - Helpers/
+        - CookieHelperTest #1286
+    - Honeypot/
+        - HoneypotTest #1314
+    - HTTP/
+        - Files/
+            - FileMovingTest #1302
+            - UploadedFileTest #1302
+        - CLIRequestTest #1303
+        - CURLRequestTest #1303
+        - DownloadResponseTest #1239
+        - NegotiateTest #1306
+        - RedirectResponseTest #1300, #1306, #1329
+        - ResponseTest #1239
+    - I18n/
+        - TimeTest #1273, #1316
+    - Router/
+        - RouteTest #1285
+    - View/
+        - ParserTest #1311
+    - EntityTest #1319
+
+
+user_guide_src /source/
+    - cli/
+        - cli_request #1303
+    - database/
+        - query_builder #1217
+        - utilities #1209
+    - extending/
+        - contributing #1280
+    - general/
+        - common_functions #1300, #1329
+        - helpers #1291
+    - helpers/
+        - xml_helper #1321
+    - incoming/
+        - controllers #1323
+    - intro/
+        - requirements #1280, #1303
+    - installation/ #1280, #1303
+        - troubleshooting #1265
+    - libraries/
+        - curlrequest #1303
+        - honeypot #1314
+        - uploaded_files #1302
+    - models/
+        - entities #1283
+    - tutorial... #1265, #1281, #1294
+
+/
+    - spark #1305
+
+
 Version 4.0.0-alpha.1
 =================================
 
