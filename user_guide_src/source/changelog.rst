@@ -2,7 +2,7 @@
 Change Log
 ##########
 
-Version |next|
+Version |release|
 =================================
 
 Release Date: Not Released
