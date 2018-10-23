@@ -345,7 +345,7 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Initializes the database connection/settings.
 	 *
-	 * @return mixed
+	 * @return mixed|void
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function initialize()
@@ -1652,7 +1652,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Returns an object with key data
 	 *
 	 * @param	string	$table	the table name
-	 * @return	array
+	 * @return	array|false
 	 */
 	public function getIndexData(string $table)
 	{
@@ -1667,7 +1667,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Returns an object with foreign key data
 	 *
 	 * @param	string	$table	the table name
-	 * @return	array
+	 * @return	array|false
 	 */
 	public function getForeignKeyData(string $table)
 	{
@@ -1738,6 +1738,39 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @return string
 	 */
 	abstract protected function _listColumns(string $table = ''): string;
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Platform-specific field data information.
+	 *
+	 * @param string $table
+	 * @see getFieldData()
+	 * @return array
+	 */
+	abstract protected function _fieldData(string $table): array;
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Platform-specific index data.
+	 *
+	 * @param string $table
+	 * @see getIndexData()
+	 * @return array
+	 */
+	abstract protected function _indexData(string $table): array;
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Platform-specific foreign keys data.
+	 *
+	 * @param string $table
+	 * @see getForeignKeyData()
+	 * @return array
+	 */
+	abstract protected function _foreignKeyData(string $table): array;
 
 	//--------------------------------------------------------------------
 

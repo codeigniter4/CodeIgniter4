@@ -37,6 +37,7 @@
  */
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Connection for Postgre
@@ -290,12 +291,13 @@ class Connection extends BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns an object with field data
+	 * Returns an array of objects with field data
 	 *
 	 * @param	string	$table
-	 * @return	array
+	 * @return	\stdClass[]
+	 * @throws DatabaseException
 	 */
-	public function _fieldData(string $table)
+	public function _fieldData(string $table): array
 	{
 		$sql = 'SELECT "column_name", "data_type", "character_maximum_length", "numeric_precision", "column_default"
 			FROM "information_schema"."columns"
@@ -304,7 +306,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if (($query = $this->query($sql)) === false)
 		{
-			return false;
+			throw new DatabaseException('Failed to get field data from PostgreSQL.');
 		}
 		$query = $query->getResultObject();
 
@@ -324,12 +326,13 @@ class Connection extends BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns an object with index data
+	 * Returns an array of objects with index data
 	 *
 	 * @param	string	$table
-	 * @return	array
+	 * @return	\stdClass[]
+	 * @throws DatabaseException
 	 */
-	public function _indexData(string $table)
+	public function _indexData(string $table): array
 	{
 		$sql = 'SELECT "indexname", "indexdef"
 			FROM "pg_indexes"
@@ -338,7 +341,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if (($query = $this->query($sql)) === false)
 		{
-			return false;
+			throw new DatabaseException('Failed to get index data from PostgreSQL.');
 		}
 		$query = $query->getResultObject();
 
@@ -369,13 +372,14 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
-/**
-	 * Returns an object with Foreign key data
+	/**
+	 * Returns an array of objects with Foreign key data
 	 *
-	 * @param	string	$table
-	 * @return	array
+	 * @param	string $table
+	 * @return	\stdClass[]
+	 * @throws DatabaseException
 	 */
-	public function _foreignKeyData(string $table)
+	public function _foreignKeyData(string $table): array
 	{
 		$sql = 'SELECT
                             tc.constraint_name, tc.table_name, kcu.column_name,
@@ -386,11 +390,12 @@ class Connection extends BaseConnection implements ConnectionInterface
                             ON tc.constraint_name = kcu.constraint_name
                         JOIN information_schema.constraint_column_usage AS ccu
                             ON ccu.constraint_name = tc.constraint_name
-                        WHERE constraint_type = '.$this->escape('FOREIGN KEY').' AND tc.table_name = '.$this->escape($table);
+                        WHERE constraint_type = '.$this->escape('FOREIGN KEY').' AND
+                            tc.table_name = '.$this->escape($table);
 
 		if (($query = $this->query($sql)) === false)
 		{
-			return false;
+			throw new DatabaseException('Failed to get foreign key data from PostgreSQL.');
 		}
 		$query = $query->getResultObject();
 
@@ -399,9 +404,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			$obj = new \stdClass();
 			$obj->constraint_name = $row->constraint_name;
-                        $obj->table_name = $row->table_name;
-                        $obj->foreign_table_name = $row->foreign_table_name;
-
+			$obj->table_name = $row->table_name;
+			$obj->foreign_table_name = $row->foreign_table_name;
 			$retval[] = $obj;
 		}
 

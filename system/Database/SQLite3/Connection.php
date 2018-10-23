@@ -291,24 +291,23 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 
 	/**
-	 * Returns an object with field data
+	 * Returns an array of objects with field data
 	 *
-	 * @param    string $table
-	 *
-	 * @return    array
+	 * @param	string $table
+	 * @return	\stdClass[]
+	 * @throws DatabaseException
 	 */
-	public function _fieldData(string $table)
+	public function _fieldData(string $table): array
 	{
-
 		if (($query = $this->query('PRAGMA TABLE_INFO('.$this->protectIdentifiers($table, true, null,
 					false).')')) === false)
 		{
-			return false;
+			throw new DatabaseException('Failed to get field data from SQLite.');
 		}
 		$query = $query->getResultObject();
 		if (empty($query))
 		{
-			return false;
+			return [];
 		}
 		$retval = [];
 		for ($i = 0, $c = count($query); $i < $c; $i++)
@@ -327,20 +326,20 @@ class Connection extends BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns an object with index data
+	 * Returns an array of objects with index data
 	 *
-	 * @param    string $table
-	 *
-	 * @return    array
+	 * @param	string $table
+	 * @return	\stdClass[]
+	 * @throws DatabaseException
 	 */
-	public function _indexData(string $table)
+	public function _indexData(string $table): array
 	{
 		// Get indexes
 		// Don't use PRAGMA index_list, so we can preserve index order
-		$sql = "SELECT name FROM sqlite_master WHERE type='index' AND tbl_name=".$this->escape(strtolower($table))."";
+		$sql = "SELECT name FROM sqlite_master WHERE type='index' AND tbl_name=".$this->escape(strtolower($table));
 		if (($query = $this->query($sql)) === false)
 		{
-			return false;
+			throw new DatabaseException('Failed to get index data from SQLite.');
 		}
 		$query = $query->getResultObject();
 
@@ -354,7 +353,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$obj->fields = [];
 			if (($fields = $this->query('PRAGMA index_info('.$this->escape(strtolower($row->name)).')')) === false)
 			{
-				return false;
+				throw new DatabaseException('Failed to get index_info() from SQLite.');
 			}
 			$fields = $fields->getResultObject();
 
@@ -364,6 +363,48 @@ class Connection extends BaseConnection implements ConnectionInterface
 			}
 
 			$retval[] = $obj;
+		}
+
+		return $retval;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns an array of objects with Foreign key data
+	 *
+	 * @param	string	$table
+	 * @return	\stdClass[]
+	 */
+	public function _foreignKeyData(string $table): array
+	{
+		if ($this->supportsForeignKeys() !== true)
+		{
+			return [];
+		}
+
+		$tables = $this->listTables();
+
+		if (empty($tables))
+		{
+			return [];
+		}
+
+		$retval = [];
+
+		foreach ($tables as $table)
+		{
+			$query = $this->query("PRAGMA foreign_key_list({$table})")->getResult();
+
+			foreach ($query as $row)
+			{
+				$obj = new \stdClass();
+				$obj->constraint_name = $row->from.' to '. $row->table.'.'.$row->to;
+				$obj->table_name = $table;
+				$obj->foreign_table_name = $row->table;
+
+				$retval[] = $obj;
+			}
 		}
 
 		return $retval;
@@ -460,46 +501,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$result = $this->simpleQuery("PRAGMA foreign_keys");
 
 		return (bool)$result;
-	}
-
-	/**
-	 * Returns an object with Foreign key data
-	 *
-	 * @param	string	$table
-	 * @return	array
-	 */
-	public function _foreignKeyData(string $table)
-	{
-		if ($this->supportsForeignKeys() !== true)
-		{
-			return [];
-		}
-
-		$tables = $this->listTables();
-
-		if (empty($tables))
-		{
-			return [];
-		}
-
-		$retval = [];
-
-		foreach ($tables as $table)
-		{
-			$query = $this->query("PRAGMA foreign_key_list({$table})")->getResult();
-
-			foreach ($query as $row)
-			{
-				$obj = new \stdClass();
-				$obj->constraint_name = $row->from.' to '. $row->table.'.'.$row->to;
-				$obj->table_name = $table;
-				$obj->foreign_table_name = $row->table;
-
-				$retval[] = $obj;
-			}
-		}
-
-		return $retval;
 	}
 
 	//--------------------------------------------------------------------

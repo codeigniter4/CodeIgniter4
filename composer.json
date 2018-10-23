@@ -24,7 +24,8 @@
     "require-dev": {
         "phpunit/phpunit": "^7.0",
         "mikey179/vfsStream": "1.6.*",
-        "codeigniter4/codeigniter4-standard": "^1.0"
+        "codeigniter4/codeigniter4-standard": "^1.0",
+        "ext-mysqli": "*"
     },
     "scripts": {
         "post-update-cmd": [
