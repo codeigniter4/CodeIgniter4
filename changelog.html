@@ -129,6 +129,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="license.html">The MIT License (MIT)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-next">Version |next|</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-4-0-0-alpha-1">Version 4.0.0-alpha.1</a></li>
 </ul>
 </li>
@@ -195,6 +196,330 @@
             
   <div class="section" id="change-log">
 <h1>Change Log<a class="headerlink" href="#change-log" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="version-next">
+<h2>Version <a href="#id1"><span class="problematic" id="id2">|next|</span></a><a class="headerlink" href="#version-next" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: Not Released</p>
+<p><strong>Second alpha release of CodeIgniter4</strong></p>
+<p>The list of changed files follows, with PR numbers shown.
+If you open this page on the repo github site, they will link
+to the PRs in question.</p>
+<dl class="docutils">
+<dt>application /</dt>
+<dd><ul class="first last simple">
+<li>Config/Routes #1281</li>
+<li>Filters/Honeypot #1314</li>
+<li>Views/errors/cli/error_404 #1272</li>
+</ul>
+</dd>
+<dt>public /</dt>
+<dd><ul class="first last simple">
+<li>.htaccess #1281</li>
+<li>index #1295, #1313</li>
+</ul>
+</dd>
+<dt>system /</dt>
+<dd><ul class="first last simple">
+<li><dl class="first docutils">
+<dt>Commands/</dt>
+<dd><ul class="first last">
+<li>Server/Serve #1313</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Config/</dt>
+<dd><ul class="first last">
+<li>AutoloadConfig #1271</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Database/</dt>
+<dd><ul class="first last">
+<li>BaseBuilder #1217</li>
+<li>BaseUtils #1209, #1329</li>
+<li>MySQLi/Utils #1209</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Exceptions/</dt>
+<dd><ul class="first last">
+<li>CastException #1283</li>
+<li>DownloadException #1239</li>
+<li>FrameworkException #1313</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Filters/</dt>
+<dd><ul class="first last">
+<li>Filters #1239</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Helpers/</dt>
+<dd><ul class="first last">
+<li>cookie_helper #1286</li>
+<li>form_helper #1244, #1327</li>
+<li>url_helper #1321</li>
+<li>xml_helper #1209</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Honeypot/</dt>
+<dd><ul class="first last">
+<li>Honeypot #1314</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>HTTP/</dt>
+<dd><ul class="first last">
+<li>CliRequest #1303</li>
+<li>CURLRequest #1303</li>
+<li>DownloadResponse #1239</li>
+<li>Exceptions/HTTPException #1303</li>
+<li>IncomingRequest #1304, #1313</li>
+<li>Negotiate #1306</li>
+<li>RedirectResponse #1300, #1306, #1329</li>
+<li>Response #1239, #1286</li>
+<li>ResponseInterface #1239</li>
+<li>URI #1300</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Language/en/</dt>
+<dd><ul class="first last">
+<li>Cast #1283</li>
+<li>HTTP #1239</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Router/</dt>
+<dd><ul class="first last">
+<li>RouteCollection #1285</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Test/</dt>
+<dd><ul class="first last">
+<li>FeatureTestCase #1282</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>CodeIgniter #1239</li>
+<li>Common #1291</li>
+<li>Entity #1283, #1311</li>
+<li>Model #1311</li>
+</ul>
+</dd>
+<dt>tests /</dt>
+<dd><ul class="first last simple">
+<li><dl class="first docutils">
+<dt>API/</dt>
+<dd><ul class="first last">
+<li>ResponseTraitTest #1302</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Database/</dt>
+<dd><ul class="first last">
+<li>BaseBuilderTest #1217</li>
+<li>Live/ModelTest #1311</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Debug/</dt>
+<dd><ul class="first last">
+<li>TimerTest #1273</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Helpers/</dt>
+<dd><ul class="first last">
+<li>CookieHelperTest #1286</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Honeypot/</dt>
+<dd><ul class="first last">
+<li>HoneypotTest #1314</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>HTTP/</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Files/</dt>
+<dd><ul class="first last">
+<li>FileMovingTest #1302</li>
+<li>UploadedFileTest #1302</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>CLIRequestTest #1303</li>
+<li>CURLRequestTest #1303</li>
+<li>DownloadResponseTest #1239</li>
+<li>NegotiateTest #1306</li>
+<li>RedirectResponseTest #1300, #1306, #1329</li>
+<li>ResponseTest #1239</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>I18n/</dt>
+<dd><ul class="first last">
+<li>TimeTest #1273, #1316</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Router/</dt>
+<dd><ul class="first last">
+<li>RouteTest #1285</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>View/</dt>
+<dd><ul class="first last">
+<li>ParserTest #1311</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>EntityTest #1319</li>
+</ul>
+</dd>
+<dt>user_guide_src /source/</dt>
+<dd><ul class="first last simple">
+<li><dl class="first docutils">
+<dt>cli/</dt>
+<dd><ul class="first last">
+<li>cli_request #1303</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>database/</dt>
+<dd><ul class="first last">
+<li>query_builder #1217</li>
+<li>utilities #1209</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>extending/</dt>
+<dd><ul class="first last">
+<li>contributing #1280</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>general/</dt>
+<dd><ul class="first last">
+<li>common_functions #1300, #1329</li>
+<li>helpers #1291</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>helpers/</dt>
+<dd><ul class="first last">
+<li>xml_helper #1321</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>incoming/</dt>
+<dd><ul class="first last">
+<li>controllers #1323</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>intro/</dt>
+<dd><ul class="first last">
+<li>requirements #1280, #1303</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>installation/ #1280, #1303</dt>
+<dd><ul class="first last">
+<li>troubleshooting #1265</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>libraries/</dt>
+<dd><ul class="first last">
+<li>curlrequest #1303</li>
+<li>honeypot #1314</li>
+<li>uploaded_files #1302</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>models/</dt>
+<dd><ul class="first last">
+<li>entities #1283</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>tutorial... #1265, #1281, #1294</li>
+</ul>
+</dd>
+</dl>
+<dl class="docutils">
+<dt>/</dt>
+<dd><ul class="first last simple">
+<li>spark #1305</li>
+</ul>
+</dd>
+</dl>
+</div>
 <div class="section" id="version-4-0-0-alpha-1">
 <h2>Version 4.0.0-alpha.1<a class="headerlink" href="#version-4-0-0-alpha-1" title="Permalink to this headline">¶</a></h2>
 <p>Release Date: September 28, 2018</p>
@@ -509,7 +834,7 @@ security, text, url</li>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 19, 2018.
+      Last updated on Oct 22, 2018.
 
     </p>
   </div>
