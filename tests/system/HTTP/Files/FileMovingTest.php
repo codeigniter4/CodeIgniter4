@@ -160,6 +160,38 @@ class FileMovingTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testStore()
+	{
+		$finalFilename = 'fileA';
+
+		$_FILES = [
+			'userfile1' => [
+				'name'		 => $finalFilename . '.txt',
+				'type'		 => 'text/plain',
+				'size'		 => 124,
+				'tmp_name'	 => '/tmp/fileA.txt',
+				'error'		 => 0
+			],
+		];
+
+		$collection = new FileCollection();
+
+		$this->assertTrue($collection->hasFile('userfile1'));
+
+		$destination = 'destination/';
+
+		// Create the destination if not exists
+		is_dir($destination) || mkdir($destination, 0777, true);
+
+		$file = $collection->getFile('userfile1');
+
+		$this->assertInstanceOf(UploadedFile::class, $file);
+		$path = $file->store($destination, $file->getName(), false);
+		$this->assertEquals($destination . '/fileA.txt', $path);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testAlreadyMoved()
 	{
 		$finalFilename = 'fileA';

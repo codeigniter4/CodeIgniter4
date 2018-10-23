@@ -254,7 +254,7 @@ class IncomingRequest extends Request
 			}
 		} catch (\Exception $e)
 		{
-			
+
 		}
 		// @codeCoverageIgnoreEnd
 
@@ -299,10 +299,12 @@ class IncomingRequest extends Request
 		if ( ! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
 		{
 			return true;
-		} elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+		}
+		elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
 		{
 			return true;
-		} elseif ( ! empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off')
+		}
+		elseif ( ! empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off')
 		{
 			return true;
 		}
@@ -586,12 +588,13 @@ class IncomingRequest extends Request
 			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
 			$this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
 			$this->uri->resolveRelativeURI(parse_url($baseURL, PHP_URL_PATH));
-		} else
+		}
+		else
 		{
 			// @codeCoverageIgnoreStart
 			if ( ! is_cli())
 			{
-				throw FrameworkException::forEmptyBaseURL();
+				die('You have an empty or invalid base URL. The baseURL value must be set in Config\App.php, or through the .env file.');
 			}
 			// @codeCoverageIgnoreEnd
 		}
@@ -690,16 +693,13 @@ class IncomingRequest extends Request
 		{
 			// strip the script name from the beginning of the URI
 			if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0)
-			{
 				$uri = (string) substr($uri, strlen($_SERVER['SCRIPT_NAME']));
-			} elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0)
 			// if the script is nested, strip the parent folder & script from the URI
-				if (strpos($uri, $_SERVER['SCRIPT_NAME']) > 0)
-					$uri = (string) substr($uri, strpos($uri, $_SERVER['SCRIPT_NAME']) + strlen($_SERVER['SCRIPT_NAME']));
-				elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) > 0)
-					$uri = (string) substr($uri, strpos($uri, dirname($_SERVER['SCRIPT_NAME'])));
-				else
-					$uri = (string) substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
+			elseif (strpos($uri, $_SERVER['SCRIPT_NAME']) > 0)
+				$uri = (string) substr($uri, strpos($uri, $_SERVER['SCRIPT_NAME']) + strlen($_SERVER['SCRIPT_NAME']));
+			// or if index.php is implied
+			elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0)
+				$uri = (string) substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
 		}
 
 		// This section ensures that even on servers that require the URI to contain the query string (Nginx) a correct
@@ -709,7 +709,8 @@ class IncomingRequest extends Request
 			$query = explode('?', $query, 2);
 			$uri = $query[0];
 			$_SERVER['QUERY_STRING'] = $query[1] ?? '';
-		} else
+		}
+		else
 		{
 			$_SERVER['QUERY_STRING'] = $query;
 		}
@@ -740,7 +741,8 @@ class IncomingRequest extends Request
 		if (trim($uri, '/') === '')
 		{
 			return '';
-		} elseif (strncmp($uri, '/', 1) === 0)
+		}
+		elseif (strncmp($uri, '/', 1) === 0)
 		{
 			$uri = explode('?', $uri, 2);
 			$_SERVER['QUERY_STRING'] = $uri[1] ?? '';

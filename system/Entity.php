@@ -65,12 +65,35 @@ class Entity
 	];
 
 	/**
+	 * Holds original copies of all class vars so
+	 * we can determine what's actually been changed
+	 * and not accidentally write nulls where we shouldn't.
+	 *
+	 * @var array
+	 */
+	protected $_original = [];
+
+	/**
 	 * Allows filling in Entity parameters during construction.
 	 *
 	 * @param array|null $data
 	 */
 	public function __construct(array $data = null)
 	{
+		// Collect any original values of things
+		// so we can compare later to see what's changed
+		$properties = get_object_vars($this);
+
+		foreach ($properties as $key => $value)
+		{
+			if (substr($key, 0, 1) == '_')
+			{
+				unset($properties[$key]);
+			}
+		}
+
+		$this->_original = $properties;
+
 		if (is_array($data))
 		{
 			$this->fill($data);
@@ -108,8 +131,12 @@ class Entity
 	 * values of this entity as an array. All values are accessed
 	 * through the __get() magic method so will have any casts, etc
 	 * applied to them.
+	 *
+	 * @param bool $onlyChanged     If true, only return values that have changed since object creation
+	 *
+	 * @return array
 	 */
-	public function toArray(): array
+	public function toArray(bool $onlyChanged = false): array
 	{
 		$return = [];
 
@@ -119,7 +146,12 @@ class Entity
 
 		foreach ($properties as $key => $value)
 		{
-			if ($key == '_options') continue;
+			if (substr($key, 0, 1) == '_') continue;
+
+			if ($onlyChanged && $this->_original[$key] === null && $value === null)
+			{
+				continue;
+			}
 
 			$return[$key] = $this->__get($key);
 		}
@@ -219,6 +251,14 @@ class Entity
 		if (array_key_exists($key, $this->_options['casts']) && $this->_options['casts'][$key] === 'array')
 		{
 			$value = serialize($value);
+		}
+
+		// JSON casting requires that we JSONize the value
+		// when setting it so that it can easily be stored
+		// back to the database.
+		if (function_exists('json_encode') && array_key_exists($key, $this->_options['casts']) && ($this->_options['casts'][$key] === 'json' || $this->_options['casts'][$key] === 'json-array'))
+		{
+			$value = json_encode($value);
 		}
 
 		// if a set* method exists for this key, 
@@ -360,6 +400,7 @@ class Entity
 	 *
 	 * @return mixed
 	 */
+
 	protected function castAs($value, string $type)
 	{
 		switch($type)
@@ -390,6 +431,12 @@ class Entity
 
 				$value = (array)$value;
 				break;
+			case 'json':
+				$value = $this->castAsJson($value, false);
+				break;
+			case 'json-array':
+				$value = $this->castAsJson($value, true);
+				break;
 			case 'datetime':
 				return new \DateTime($value);
 				break;
@@ -399,5 +446,33 @@ class Entity
 		}
 
 		return $value;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Cast as JSON
+	 *
+	 * @param mixed $value
+	 * @param bool $asArray
+	 *
+	 * @return mixed
+	 */
+	private function castAsJson($value, bool $asArray = false)
+	{
+		$tmp = !is_null($value) ? ($asArray ? [] : new \stdClass) : null;
+		if(function_exists('json_decode'))
+		{
+			if((is_string($value) && (strpos($value, '[') === 0 || strpos($value, '{') === 0 || (strpos($value, '"') === 0 && strrpos($value, '"') === 0 ))) || is_numeric($value))
+			{
+				$tmp = json_decode($value, $asArray);
+
+				if(json_last_error() !== JSON_ERROR_NONE)
+				{
+					throw CastException::forInvalidJsonFormatException(json_last_error());
+				}
+			}
+		}
+		return $tmp;
 	}
 }

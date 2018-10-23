@@ -14,8 +14,6 @@ class TimeTest extends \CIUnitTestCase
 
 	public function testNewTimeNow()
 	{
-		$time = new Time(null, 'America/Chicago');
-
 		$formatter = new IntlDateFormatter(
 			'en_US',
 			IntlDateFormatter::SHORT,
@@ -25,13 +23,13 @@ class TimeTest extends \CIUnitTestCase
 			'yyyy-MM-dd HH:mm:ss'
 		);
 
-		$this->assertEquals($formatter->format(strtotime('now')), (string)$time);
+		$time = new Time(null, 'America/Chicago');
+
+		$this->assertEquals($formatter->format($time), (string)$time);
 	}
 
 	public function testTimeWithTimezone()
 	{
-		$time = new Time('now', 'Europe/London');
-
 		$formatter = new IntlDateFormatter(
 			'en_US',
 			IntlDateFormatter::SHORT,
@@ -41,13 +39,13 @@ class TimeTest extends \CIUnitTestCase
 			'yyyy-MM-dd HH:mm:ss'
 		);
 
-		$this->assertEquals($formatter->format(strtotime('now')), (string)$time);
+		$time = new Time('now', 'Europe/London');
+
+		$this->assertEquals($formatter->format($time), (string)$time);
 	}
 
 	public function testTimeWithTimezoneAndLocale()
 	{
-		$time = new Time('now', 'Europe/London', 'fr_FR');
-
 		$formatter = new IntlDateFormatter(
 			'fr_FR',
 			IntlDateFormatter::SHORT,
@@ -57,13 +55,13 @@ class TimeTest extends \CIUnitTestCase
 			'yyyy-MM-dd HH:mm:ss'
 		);
 
-		$this->assertEquals($formatter->format(strtotime('now')), (string)$time);
+		$time = new Time('now', 'Europe/London', 'fr_FR');
+
+		$this->assertEquals($formatter->format($time), (string)$time);
 	}
 
 	public function testTimeWithDateTimeZone()
 	{
-		$time = new Time('now', new \DateTimeZone('Europe/London'), 'fr_FR');
-
 		$formatter = new IntlDateFormatter(
 			'fr_FR',
 			IntlDateFormatter::SHORT,
@@ -73,7 +71,9 @@ class TimeTest extends \CIUnitTestCase
 			'yyyy-MM-dd HH:mm:ss'
 		);
 
-		$this->assertEquals($formatter->format(strtotime('now')), (string)$time);
+		$time = new Time('now', new \DateTimeZone('Europe/London'), 'fr_FR');
+
+		$this->assertEquals($formatter->format($time), (string)$time);
 	}
 
 	public function testToDateTime()

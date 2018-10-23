@@ -346,7 +346,7 @@ trait ResponseTrait
 
 		// Determine correct response type through content negotiation
 		$config = new Format();
-		$format = $this->request->negotiate('media', $config->supportedResponseFormats, true);
+		$format = $this->request->negotiate('media', $config->supportedResponseFormats, false);
 
 		$this->response->setContentType($format);
 

@@ -511,29 +511,34 @@ The second parameter lets you set a result offset.
 
 	$builder->limit(10, 20);  // Produces: LIMIT 20, 10 (in MySQL.  Other databases have slightly different syntax)
 
+
 **$builder->countAllResults()**
 
 Permits you to determine the number of rows in a particular Query
 Builder query. Queries will accept Query Builder restrictors such as
 ``where()``, ``orWhere()``, ``like()``, ``orLike()``, etc. Example::
 
-	echo $builder->countAllResults('my_table');  // Produces an integer, like 25
+	echo $builder->countAllResults();  // Produces an integer, like 25
 	$builder->like('title', 'match');
 	$builder->from('my_table');
 	echo $builder->countAllResults(); // Produces an integer, like 17
 
 However, this method also resets any field values that you may have passed
 to ``select()``. If you need to keep them, you can pass ``FALSE`` as the
-second parameter::
+first parameter.
 
-	echo $builder->countAllResults('my_table', FALSE);
+	echo $builder->countAllResults(false); // Produces an integer, like 17
 
 **$builder->countAll()**
 
 Permits you to determine the number of rows in a particular table.
-Submit the table name in the first parameter. Example::
+Example::
 
-	echo $builder->countAll('my_table');  // Produces an integer, like 25
+	echo $builder->countAll();  // Produces an integer, like 25
+	
+As is in countAllResult method, this method resets any field values that you may have passed
+to ``select()`` as well. If you need to keep them, you can pass ``FALSE`` as the
+first parameter.
 
 **************
 Query grouping
@@ -986,6 +991,15 @@ Class Reference
 		to build a query that can be canceled under certain conditions.
 
 	.. php:method:: countAllResults([$reset = TRUE])
+
+		:param	bool	$reset: Whether to reset values for SELECTs
+		:returns:	Number of rows in the query result
+		:rtype:	int
+
+		Generates a platform-specific query string that counts
+		all records returned by an Query Builder query.
+
+	.. php:method:: countAll([$reset = TRUE])
 
 		:param	bool	$reset: Whether to reset values for SELECTs
 		:returns:	Number of rows in the query result

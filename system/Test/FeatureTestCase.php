@@ -208,10 +208,11 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 *
 	 * @param string      $method
 	 * @param string|null $path
+	 * @param string|null $params
 	 *
 	 * @return \CodeIgniter\HTTP\IncomingRequest
 	 */
-	protected function setupRequest(string $method, string $path=null, $params = null)
+	protected function setupRequest(string $method, string $path = null, string $params = null): IncomingRequest
 	{
 		$config = config(App::class);
 		$uri    = new URI($config->baseURL .'/'. trim($path, '/ '));

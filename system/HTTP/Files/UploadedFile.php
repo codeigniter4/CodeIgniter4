@@ -373,5 +373,26 @@ class UploadedFile extends File implements UploadedFileInterface
 		return is_uploaded_file($this->path) && $this->error === UPLOAD_ERR_OK;
 	}
 
+	/**
+     * Save the uploaded file to a new location.
+     *
+     * By default.upload files are saved in writable/uploads directory. the YYYYMMDD folder
+     * and random file name will be created.
+     *
+     * @param string $folderName the folder name to writable/uploads directory.
+     * @param string $fileName   the name to rename the file to.
+     * @return string file full path
+     */
+    public function store($folderName = null, $fileName = null) : string
+    {
+        $folderName = $folderName ?? date('Ymd');
+        $fileName = $fileName ?? $this->getRandomName();
+
+        // Move the uploaded file to a new location.
+        if ($this->move(WRITEPATH . 'uploads/' . $folderName, $fileName)) {
+            return $folderName . DIRECTORY_SEPARATOR . $this->name;
+        }
+	}
+
 	//--------------------------------------------------------------------
 }

@@ -11,6 +11,9 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 * For CurlRequest
 	 *
 	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * 
+	 * Not testable with travis-ci
+	 * @codeCoverageIgnore		
 	 */
 	public static function forMissingCurl()
 	{
@@ -48,6 +51,9 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 * @param string $error
 	 *
 	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 * 
+	 * Not testable with travis-ci; we over-ride the method which triggers it
+	 * @codeCoverageIgnore		
 	 */
 	public static function forCurlError(string $errorNum, string $error)
 	{

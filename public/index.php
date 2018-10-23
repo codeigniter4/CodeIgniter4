@@ -1,5 +1,13 @@
 <?php
 
+// Valid PHP Version?
+$minPHPVersion = '7.1';
+if (phpversion() < $minPHPVersion)
+{
+	die("You PHP version must be {$minPHPVersion} or higher to run CodeIgniter. Current version: ". phpversion());
+}
+unset($minPHPVersion);
+
 // Path to the front controller (this file)
 define('FCPATH', __DIR__.DIRECTORY_SEPARATOR);
 
@@ -32,6 +40,6 @@ $app = require FCPATH . '../system/bootstrap.php';
  * LAUNCH THE APPLICATION
  *---------------------------------------------------------------
  * Now that everything is setup, it's time to actually fire
- * up the engines and make this app do it's thang.
+ * up the engines and make this app do its thang.
  */
 $app->run();

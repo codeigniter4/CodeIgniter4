@@ -712,4 +712,28 @@ class ModelTest extends CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testSelectAndEntitiesSaveOnlyChangedValues()
+	{
+		$this->hasInDatabase('job', [
+			'name' => 'Rocket Scientist',
+			'description' => 'Plays guitar for Queen',
+			'created_at' => date('Y-m-d H:i:s')
+		]);
+
+		$model = new EntityModel();
+
+		$job = $model->select('id, name')->where('name', 'Rocket Scientist')->first();
+
+		$this->assertNull($job->description);
+		$this->assertEquals('Rocket Scientist', $job->name);
+
+		$model->save($job);
+
+		$this->seeInDatabase('job', [
+			'id' => $job->id,
+			'name' => 'Rocket Scientist',
+			'description' => 'Plays guitar for Queen',
+		]);
+	}
 }

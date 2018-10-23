@@ -166,7 +166,7 @@ interface ResponseInterface
 	 *
 	 * @param \DateTime $date
 	 *
-	 * @return Response
+	 * @return ResponseInterface
 	 */
 	public function setDate(\DateTime $date);
 
@@ -179,7 +179,7 @@ interface ResponseInterface
 	 * @param string $mime
 	 * @param string $charset
 	 *
-	 * @return Response
+	 * @return ResponseInterface
 	 */
 	public function setContentType(string $mime, string $charset = 'UTF-8');
 
@@ -224,7 +224,7 @@ interface ResponseInterface
 	 *
 	 * @param array $options
 	 *
-	 * @return Response
+	 * @return ResponseInterface
 	 */
 	public function setCache(array $options = []);
 
@@ -248,7 +248,7 @@ interface ResponseInterface
 	/**
 	 * Sends the output to the browser.
 	 *
-	 * @return Response
+	 * @return ResponseInterface
 	 */
 	public function send();
 

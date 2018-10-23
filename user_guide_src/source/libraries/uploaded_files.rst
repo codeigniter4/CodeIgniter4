@@ -6,7 +6,7 @@ CodeIgniter makes working with files uploaded through a form much simpler and mo
 array directly. This extends the :doc:`File class </libraries/files>` and thus gains all of the features of that class.
 
 .. note:: This is not the same as the File Uploading class in previous versions of CodeIgniter. This provides a raw
-	interface to the uploaded files with a few small features. 
+	interface to the uploaded files with a few small features.
 
 .. contents::
     :local:
@@ -229,6 +229,31 @@ the ``hasMoved()`` method, which returns a boolean::
     {
         $file->move($path);
     }
+
+Moving an uploaded file can fail, with an HTTPException, under several circumstances:
+
+- the file has already been moved
+- the file did not upload successfully
+- the file move operation fails (eg. improper permissions)
+
+Store Files
+------------
+
+Each file can be moved to its new location with the aptly named ``store()`` method.
+
+With the simplest usage, a single file might be submitted like::
+
+	<input type="file" name="userfile" />
+
+By default, Upload files are saved in writable/uploads directory. the YYYYMMDD folder
+and random file name will be created. return a file path::
+
+	$path = $this->request->getFile('userfile')->store();
+
+You can specify directory to movethe file to as the first parameter.a new filename by
+passing it as thesecond parameter::
+
+	$path = $this->request->getFile('userfile')->store('head_img/', 'user_name.jpg');
 
 Moving an uploaded file can fail, with an HTTPException, under several circumstances:
 

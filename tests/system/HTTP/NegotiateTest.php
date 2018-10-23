@@ -146,28 +146,44 @@ class NegotiateTest extends \CIUnitTestCase
 
 	public function testBestMatchNoHeader()
 	{
-		$this->request->setHeader('Accept','');
+		$this->request->setHeader('Accept', '');
 		$this->assertEquals('', $this->negotiate->media(['apple', 'banana'], true));
 		$this->assertEquals('apple/mac', $this->negotiate->media(['apple/mac', 'banana/yellow'], false));
 	}
 
 	public function testBestMatchNotAcceptable()
 	{
-		$this->request->setHeader('Accept','popcorn/cheddar');
-		$this->assertEquals('apple/mac', $this->negotiate->media(['apple/mac', 'banana/yellow'],false));
+		$this->request->setHeader('Accept', 'popcorn/cheddar');
+		$this->assertEquals('apple/mac', $this->negotiate->media(['apple/mac', 'banana/yellow'], false));
+		$this->assertEquals('banana/yellow', $this->negotiate->media(['banana/yellow', 'apple/mac'], false));
 	}
 
 	public function testBestMatchFirstSupported()
 	{
-		$this->request->setHeader('Accept','popcorn/cheddar, */*');
-		$this->assertEquals('apple/mac', $this->negotiate->media(['apple/mac', 'banana/yellow'],false));
+		$this->request->setHeader('Accept', 'popcorn/cheddar, */*');
+		$this->assertEquals('apple/mac', $this->negotiate->media(['apple/mac', 'banana/yellow'], false));
 	}
 
 	public function testBestMatchLowQuality()
 	{
-		$this->request->setHeader('Accept','popcorn/cheddar;q=0, apple/mac, */*');
-		$this->assertEquals('apple/mac', $this->negotiate->media(['apple/mac', 'popcorn/cheddar'],false));
-		$this->assertEquals('apple/mac', $this->negotiate->media(['popcorn/cheddar','apple/mac'],false));
+		$this->request->setHeader('Accept', 'popcorn/cheddar;q=0, apple/mac, */*');
+		$this->assertEquals('apple/mac', $this->negotiate->media(['apple/mac', 'popcorn/cheddar'], false));
+		$this->assertEquals('apple/mac', $this->negotiate->media(['popcorn/cheddar', 'apple/mac'], false));
+	}
+
+	public function testBestMatchOnlyLowQuality()
+	{
+		$this->request->setHeader('Accept', 'popcorn/cheddar;q=0');
+		// the first supported should be returned, since nothing will make us happy
+		$this->assertEquals('apple/mac', $this->negotiate->media(['apple/mac', 'popcorn/cheddar'], false));
+		$this->assertEquals('popcorn/cheddar', $this->negotiate->media(['popcorn/cheddar', 'apple/mac'], false));
+	}
+
+	public function testParameterMatching()
+	{
+		$this->request->setHeader('Accept', 'popcorn/cheddar;a=0;b=1');
+		$this->assertEquals('popcorn/cheddar;a=2', $this->negotiate->media(['popcorn/cheddar;a=2'], false));
+		$this->assertEquals('popcorn/cheddar;a=0', $this->negotiate->media(['popcorn/cheddar;a=0', 'popcorn/cheddar;a=2;b=1'], false));
 	}
 
 }
