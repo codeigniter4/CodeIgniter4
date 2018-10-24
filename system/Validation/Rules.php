@@ -157,7 +157,7 @@ class Rules
 		// Break the table and field apart
 		sscanf($field, '%[^.].%[^.]', $table, $field);
 
-		$db = Database::connect();
+		$db = Database::connect($data['DBGroup'] ?? null);
 		
 		$row = $db->table($table)
 				  ->select('1')
