@@ -603,12 +603,19 @@ class ModelTest extends CIDatabaseTestCase
 			'name' => 'Foo Bar',
 			'country' => 'US'
 		]);
-
+		
+		// Trying to set name = 'Fred Flinston' (where id = 'a')
 		$model->set([
 			'name' => 'Fred Flintstone'
 		])->update('a');
-
+		
 		$this->seeInDatabase('user', [
+			'id' => $userId,
+			'email' => 'foo@example.com',
+			'name' => 'Foo Bar'
+		]);
+		
+		$this->dontSeeInDatabase('user', [
 			'id' => $userId,
 			'email' => 'foo@example.com',
 			'name' => 'Fred Flintstone'
