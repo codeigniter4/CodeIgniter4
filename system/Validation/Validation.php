@@ -123,9 +123,12 @@ class Validation implements ValidationInterface
 	 *
 	 * @return bool
 	 */
-	public function run(array $data = null, string $group = null): bool
+	public function run(array $data = null, string $group = null, ?string $db_group = null): bool
 	{
 		$data = $data ?? $this->data;
+
+		// i.e. is_unique
+		$data['DBGroup'] = $db_group;
 
 		$this->loadRuleSets();
 
