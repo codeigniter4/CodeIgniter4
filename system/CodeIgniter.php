@@ -273,10 +273,11 @@ class CodeIgniter
 		$filters = Services::filters();
 
 		// If any filters were specified within the routes file,
-		// we need to ensure it's active for the current request (before only)
+		// we need to ensure it's active for the current request
 		if (! is_null($routeFilter))
 		{
 			$filters->enableFilter($routeFilter, 'before');
+            $filters->enableFilter($routeFilter, 'after');
 		}
 
 		$uri = $this->request instanceof CLIRequest ? $this->request->getPath() : $this->request->uri->getPath();
