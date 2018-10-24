@@ -482,7 +482,7 @@ class Services extends BaseService
 	 *
 	 * @return \CodeIgniter\View\View
 	 */
-	public static function renderer($viewPath = APPPATH.'Views/', $config = null, bool $getShared = true)
+	public static function renderer($viewPath = null, $config = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -492,6 +492,13 @@ class Services extends BaseService
 		if (is_null($config))
 		{
 			$config = new \Config\View();
+		}
+
+		if (is_null($viewPath))
+		{
+			$paths = config('Paths');
+
+			$viewPath = $paths->viewDirectory;
 		}
 
 		return new \CodeIgniter\View\View($config, $viewPath, self::locator(true), CI_DEBUG, self::logger(true));
