@@ -150,6 +150,7 @@ class CommandRunner extends Controller
 			}
 
 			$class = new \ReflectionClass($className);
+
 			if ( ! $class->isInstantiable() || ! $class->isSubclassOf(BaseCommand::class))
 			{
 				continue;
