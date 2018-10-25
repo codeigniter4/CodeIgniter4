@@ -301,4 +301,23 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals('\Pages', $router->controllerName());
 		$this->assertEquals('view', $router->methodName());
 	}
+	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/1354
+	 */
+	public function testRouteOrder()
+	{
+		$this->collection->setHTTPVerb('post');
+
+		$this->collection->post('auth', 'Main::auth_post');
+		$this->collection->add('auth', 'Main::index');
+
+		$router = new Router($this->collection);
+
+		$router->handle('auth');
+		$this->assertEquals('\Main', $router->controllerName());
+		$this->assertEquals('auth_post', $router->methodName());
+
+	}
 }
