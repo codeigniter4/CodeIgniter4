@@ -457,7 +457,7 @@ Preference                     Default                                   Options
                                                                                                                         session ID. Setting it to 0 will disable session ID regeneration.
 **sessionRegenerateDestroy**   FALSE                                     TRUE/FALSE (boolean)                           Whether to destroy session data associated with the old session ID when auto-regenerating
                                                                                                                         the session ID. When set to FALSE, the data will be later deleted by the garbage collector.
-============================== =============== ======================================== ============================================================================================
+============================== ========================================= ============================================== ============================================================================================
 
 .. note:: As a last resort, the Session library will try to fetch PHP's
 	session related INI settings, as well as legacy CI settings such as
@@ -504,7 +504,7 @@ Have it in mind though, every driver has different caveats, so be sure to
 get yourself familiar with them (below) before you make that choice.
 
 FileHandler Driver
-------------
+------------------
 
 The 'FileHandler' driver uses your file system for storing session data.
 
@@ -557,7 +557,7 @@ into using `tmpfs <http://eddmann.com/posts/storing-php-sessions-file-caches-in-
 (warning: external resource), which can make your sessions blazing fast.
 
 DatabaseHandler Driver
----------------
+---------------------
 
 The 'DatabaseHandler' driver uses a relational database such as MySQL or
 PostgreSQL to store sessions. This is a popular choice among many users,
@@ -636,7 +636,7 @@ when it generates the code.
 	issues.
 
 RedisHandler Driver
-------------
+------------------
 
 .. note:: Since Redis doesn't have a locking mechanism exposed, locks for
 	this driver are emulated by a separate value that is kept for up
@@ -673,7 +673,7 @@ sufficient::
 	public $sessionSavePath = 'tcp://localhost:6379';
 
 MemcachedHandler Driver
-----------------
+----------------------
 
 .. note:: Since Memcached doesn't have a locking mechanism exposed, locks
 	for this driver are emulated by a separate value that is kept for
