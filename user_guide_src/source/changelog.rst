@@ -14,9 +14,11 @@ If you open this page on the repo github site, they will link
 to the PRs in question.
 
 application /
+    - Config/Paths #1341
     - Config/Routes #1281
     - Filters/Honeypot #1314
     - Views/errors/cli/error_404 #1272
+    - Views/welcome_message #1342
 
 public /
     - .htaccess #1281
@@ -27,10 +29,14 @@ system /
         - Server/Serve #1313 
     - Config/
         - AutoloadConfig #1271
+        - Services #1341
     - Database/
         - BaseBuilder #1217
         - BaseUtils #1209, #1329
+        - Database #1339
         - MySQLi/Utils #1209
+    - Debug/Toolbar/
+        - Views/toolbar.css #1342
     - Exceptions/
         - CastException #1283
         - DownloadException #1239
@@ -62,7 +68,7 @@ system /
         - RouteCollection #1285
     - Test/
         - FeatureTestCase #1282
-    - CodeIgniter #1239
+    - CodeIgniter #1239 #1337
     - Common #1291
     - Entity #1283, #1311
     - Model #1311
@@ -109,10 +115,12 @@ user_guide_src /source/
     - general/
         - common_functions #1300, #1329
         - helpers #1291
+        - managing_apps #1341
     - helpers/
         - xml_helper #1321
     - incoming/
         - controllers #1323
+        - routing #1337
     - intro/
         - requirements #1280, #1303
     - installation/ #1280, #1303
@@ -120,13 +128,64 @@ user_guide_src /source/
     - libraries/
         - curlrequest #1303
         - honeypot #1314
+        - sessions #1333
         - uploaded_files #1302
     - models/
         - entities #1283
+    - outgoing/
+        - response #1340
     - tutorial... #1265, #1281, #1294
 
 /
     - spark #1305
+
+PRs merged:
+-----------
+
+- #1348 Fix sphinx formatting in sessions
+- #1347 Fix sphinx formatting in sessions
+- #1342 Toolbar Styles
+- #1341 Make viewpath configurable in Paths.php. Fixes #1296
+- #1340 Update docs for downloads to reflect the need to return it. Fixes #1331
+- #1339 Fix error where Forge class might not be returned. Fixes #1225
+- #1337 Filter in the router Fixes #1315
+- #1336 Revert alpha.2
+- #1334 Proposed changelog for alpha.2
+- #1333 Error in user guide for session config. Fixes #1330
+- #1329 Tweaks
+- #1327 FIX form_hidden and form_open - value escaping as is in form_input.
+- #1323 Fix doc error : show_404() doesn't exist any more
+- #1321 Added missing xml_helper UG page
+- #1319 Testing/entity
+- #1316 Refactor TimeTest
+- #1314 Fix & expand Honeypot & its tests
+- #1313 Clean exception
+- #1311 Entities store an original stack of values to compare against so we d…
+- #1306 Testing3/http
+- #1305 Change chdir('public') to chdir($public)
+- #1304 Refactor script name stripping in parseRequestURI()
+- #1303 Testing/http
+- #1302 Exception：No Formatter defined for mime type ''
+- #1300 Allow redirect with Query Vars from the current request.
+- #1295 Fix grammar in front controller comment.
+- #1294 Updated final tutorial page. Fixes #1292
+- #1291 Allows extending of helpers. Fixes #1264
+- #1286 Cookies
+- #1285 Ensure current HTTP verb routes are matched prior to any * matched ro…
+- #1283 Entities
+- #1282 system/Test/FeatureTestCase::setupRequest(), minor fixes phpdoc block…
+- #1281 Tut
+- #1280 Add contributing reference to user guide
+- #1273 Fix/timing
+- #1272 Fix undefined variable "heading" in cli 404
+- #1271 remove inexistent "CodeIgniter\Loader" from AutoloadConfig::classmap
+- #1269 Release notes & process
+- #1266 Adjusting the release build scripts
+- #1265 WIP Fix docs re PHP server
+- #1245 Fix #1244 (form_hidden declaration)
+- #1239 【Unsolicited PR】I changed the download method to testable.
+- #1217 Optional parameter for resetSelect() call in Builder's countAll();
+- #1209 Fix undefined function xml_convert at Database\BaseUtils
 
 
 Version 4.0.0-alpha.1
