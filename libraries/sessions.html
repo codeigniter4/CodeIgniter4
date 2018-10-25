@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Session Library &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
+  <title>Session Library &mdash; CodeIgniter4 4.0.0-alpha.2 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.2 documentation" href="../index.html"/>
         <link rel="up" title="Library Reference" href="index.html"/>
         <link rel="next" title="Throttler" href="throttler.html"/>
         <link rel="prev" title="Security Class" href="security.html"/> 
@@ -219,10 +219,10 @@ activity while they browse your site.</p>
 <p>CodeIgniter comes with a few session storage drivers:</p>
 <blockquote>
 <div><ul class="simple">
-<li>files (default; file-system based)</li>
-<li>database</li>
-<li>redis</li>
-<li>memcached</li>
+<li>CodeIgniterSessionHandlersFileHandler (default; file-system based)</li>
+<li>CodeIgniterSessionHandlersDatabaseHandler</li>
+<li>CodeIgniterSessionHandlersMemcachedHandler</li>
+<li>CodeIgniterSessionHandlersRedisHandler</li>
 </ul>
 </div></blockquote>
 <div class="contents local topic" id="contents">
@@ -652,10 +652,10 @@ all of the options and their effects.</p>
 <strong>application/Config/App.php</strong> file:</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="17%" />
-<col width="8%" />
-<col width="23%" />
-<col width="52%" />
+<col width="14%" />
+<col width="20%" />
+<col width="22%" />
+<col width="44%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Preference</th>
@@ -666,8 +666,11 @@ all of the options and their effects.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><strong>sessionDriver</strong></td>
-<td>files</td>
-<td>files/database/redis/memcached/<em>custom</em></td>
+<td>CodeIgniterSessionHandlersFileHandler</td>
+<td>CodeIgniterSessionHandlersFileHandler
+CodeIgniterSessionHandlersDatabaseHandler
+CodeIgniterSessionHandlersMemcachedHandler
+CodeIgniterSessionHandlersRedisHandler</td>
 <td>The session storage driver to use.</td>
 </tr>
 <tr class="row-odd"><td><strong>sessionCookieName</strong></td>
@@ -760,22 +763,22 @@ ignored.</p>
 engines, that you can use:</p>
 <blockquote>
 <div><ul class="simple">
-<li>files</li>
-<li>database</li>
-<li>redis</li>
-<li>memcached</li>
+<li>CodeIgniterSessionHandlersFileHandler</li>
+<li>CodeIgniterSessionHandlersDatabaseHandler</li>
+<li>CodeIgniterSessionHandlersMemcachedHandler</li>
+<li>CodeIgniterSessionHandlersRedisHandler</li>
 </ul>
 </div></blockquote>
-<p>By default, the <a class="reference internal" href="#files-driver">Files Driver</a> will be used when a session is initialized,
+<p>By default, the <a class="reference internal" href="#filehandler-driver">FileHandler Driver</a> will be used when a session is initialized,
 because it is the most safe choice and is expected to work everywhere
 (virtually every environment has a file system).</p>
 <p>However, any other driver may be selected via the <code class="docutils literal"><span class="pre">public</span> <span class="pre">$sessionDriver</span></code>
 line in your <strong>application/Config/App.php</strong> file, if you chose to do so.
 Have it in mind though, every driver has different caveats, so be sure to
 get yourself familiar with them (below) before you make that choice.</p>
-<div class="section" id="files-driver">
-<h4>Files Driver<a class="headerlink" href="#files-driver" title="Permalink to this headline">¶</a></h4>
-<p>The &#8216;files&#8217; driver uses your file system for storing session data.</p>
+<div class="section" id="filehandler-driver">
+<h4>FileHandler Driver<a class="headerlink" href="#filehandler-driver" title="Permalink to this headline">¶</a></h4>
+<p>The &#8216;FileHandler&#8217; driver uses your file system for storing session data.</p>
 <p>It can safely be said that it works exactly like PHP&#8217;s own default session
 implementation, but in case this is an important detail for you, have it
 mind that it is in fact not the same code and it has some limitations
@@ -816,9 +819,9 @@ into using <a class="reference external" href="http://eddmann.com/posts/storing-
 (warning: external resource), which can make your sessions blazing fast.</p>
 </div>
 </div>
-<div class="section" id="database-driver">
-<h4>Database Driver<a class="headerlink" href="#database-driver" title="Permalink to this headline">¶</a></h4>
-<p>The &#8216;database&#8217; driver uses a relational database such as MySQL or
+<div class="section" id="databasehandler-driver">
+<h4>DatabaseHandler Driver<a class="headerlink" href="#databasehandler-driver" title="Permalink to this headline">¶</a></h4>
+<p>The &#8216;DatabaseHandler&#8217; driver uses a relational database such as MySQL or
 PostgreSQL to store sessions. This is a popular choice among many users,
 because it allows the developer easy access to the session data within
 an application - it is just another table in your database.</p>
@@ -829,12 +832,12 @@ an application - it is just another table in your database.</p>
 <li>You can NOT use a connection with the <em>cacheOn</em> setting enabled.</li>
 </ul>
 </div></blockquote>
-<p>In order to use the &#8216;database&#8217; session driver, you must also create this
+<p>In order to use the &#8216;DatabaseHandler&#8217; session driver, you must also create this
 table that we already mentioned and then set it as your
 <code class="docutils literal"><span class="pre">$sessionSavePath</span></code> value.
 For example, if you would like to use &#8216;ci_sessions&#8217; as your table name,
 you would do this:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$sessionDriver</span>   <span class="o">=</span> <span class="s1">&#39;database&#39;</span><span class="p">;</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$sessionDriver</span>   <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\DatabaseHandler&#39;</span><span class="p">;</span>
 <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;ci_sessions&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -896,8 +899,8 @@ done processing session data if you&#8217;re having performance
 issues.</p>
 </div>
 </div>
-<div class="section" id="redis-driver">
-<h4>Redis Driver<a class="headerlink" href="#redis-driver" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="redishandler-driver">
+<h4>RedisHandler Driver<a class="headerlink" href="#redishandler-driver" title="Permalink to this headline">¶</a></h4>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Since Redis doesn&#8217;t have a locking mechanism exposed, locks for
@@ -911,9 +914,9 @@ of its high performance, which is also probably your reason to use the
 requires the <a class="reference external" href="https://github.com/phpredis/phpredis">phpredis</a> PHP
 extension to be installed on your system, and that one doesn&#8217;t come
 bundled with PHP.
-Chances are, you&#8217;re only be using the Redis driver only if you&#8217;re already
+Chances are, you&#8217;re only be using the RedisHandler driver only if you&#8217;re already
 both familiar with Redis and using it for other purposes.</p>
-<p>Just as with the &#8216;files&#8217; and &#8216;database&#8217; drivers, you must also configure
+<p>Just as with the &#8216;FileHandler&#8217; and &#8216;DatabaseHandler&#8217; drivers, you must also configure
 the storage location for your sessions via the
 <code class="docutils literal"><span class="pre">$sessionSavePath</span></code> setting.
 The format here is a bit different and complicated at the same time. It is
@@ -929,20 +932,20 @@ the link above.</p>
 </div>
 <p>For the most common case however, a simple <code class="docutils literal"><span class="pre">host:port</span></code> pair should be
 sufficient:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$sessionDiver</span>    <span class="o">=</span> <span class="s1">&#39;redis&#39;</span><span class="p">;</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$sessionDiver</span>    <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\RedisHandler&#39;</span><span class="p">;</span>
 <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;tcp://localhost:6379&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="memcached-driver">
-<h4>Memcached Driver<a class="headerlink" href="#memcached-driver" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="memcachedhandler-driver">
+<h4>MemcachedHandler Driver<a class="headerlink" href="#memcachedhandler-driver" title="Permalink to this headline">¶</a></h4>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Since Memcached doesn&#8217;t have a locking mechanism exposed, locks
 for this driver are emulated by a separate value that is kept for
 up to 300 seconds.</p>
 </div>
-<p>The &#8216;MemcachedHandler&#8217; driver is very similar to the &#8216;redis&#8217; one in all of its
+<p>The &#8216;MemcachedHandler&#8217; driver is very similar to the &#8216;RedisHandler&#8217; one in all of its
 properties, except perhaps for availability, because PHP&#8217;s <a class="reference external" href="http://php.net/memcached">Memcached</a> extension is distributed via PECL and some
 Linux distributions make it available as an easy to install package.</p>
 <p>Other than that, and without any intentional bias towards Redis, there&#8217;s
@@ -955,7 +958,7 @@ expire earlier than that time). This happens very rarely, but should be
 considered as it may result in loss of sessions.</p>
 <p>The <code class="docutils literal"><span class="pre">$sessionSavePath</span></code> format is fairly straightforward here,
 being just a <code class="docutils literal"><span class="pre">host:port</span></code> pair:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$sessionDriver</span>   <span class="o">=</span> <span class="s1">&#39;memcached&#39;</span><span class="p">;</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$sessionDriver</span>   <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\MemcachedHandler&#39;</span><span class="p">;</span>
 <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;localhost:11211&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -1000,7 +1003,7 @@ separate the multiple server paths with commas:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 22, 2018.
+      Last updated on Oct 24, 2018.
 
     </p>
   </div>
@@ -1022,7 +1025,7 @@ separate the multiple server paths with commas:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-alpha.1',
+            VERSION:'4.0.0-alpha.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Managing your Applications &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
+  <title>Managing your Applications &mdash; CodeIgniter4 4.0.0-alpha.2 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.2 documentation" href="../index.html"/>
         <link rel="up" title="General Topics" href="index.html"/>
         <link rel="next" title="Handling Multiple Environments" href="environments.html"/>
         <link rel="prev" title="Code Modules" href="modules.html"/> 
@@ -217,8 +217,8 @@ rename or relocate your application directory.</p>
 <h2>Renaming the Application Directory<a class="headerlink" href="#renaming-the-application-directory" title="Permalink to this headline">¶</a></h2>
 <p>If you would like to rename your application directory you may do so
 as long as you open <strong>application/Config/Paths.php</strong> file and set its name using
-the <code class="docutils literal"><span class="pre">$application_directory</span></code> variable:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$application_directory</span> <span class="o">=</span> <span class="s1">&#39;application&#39;</span><span class="p">;</span>
+the <code class="docutils literal"><span class="pre">$applicationDirectory</span></code> variable:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$applicationDirectory</span> <span class="o">=</span> <span class="s1">&#39;application&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
@@ -227,8 +227,8 @@ the <code class="docutils literal"><span class="pre">$application_directory</spa
 <p>It is possible to move your application directory to a different
 location on your server than your web root. To do so open
 your main <strong>index.php</strong> and set a <em>full server path</em> in the
-<code class="docutils literal"><span class="pre">$application_directory</span></code> variable:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$application_directory</span> <span class="o">=</span> <span class="s1">&#39;/path/to/your/application&#39;</span><span class="p">;</span>
+<code class="docutils literal"><span class="pre">$applicationDirectory</span></code> variable:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$applicationDirectory</span> <span class="o">=</span> <span class="s1">&#39;/path/to/your/application&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
@@ -291,7 +291,7 @@ anything you want.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 22, 2018.
+      Last updated on Oct 24, 2018.
 
     </p>
   </div>
@@ -313,7 +313,7 @@ anything you want.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-alpha.1',
+            VERSION:'4.0.0-alpha.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,

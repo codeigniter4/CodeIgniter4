@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>URI Routing &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
+  <title>URI Routing &mdash; CodeIgniter4 4.0.0-alpha.2 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.2 documentation" href="../index.html"/>
         <link rel="up" title="Controllers and Routing" href="index.html"/>
         <link rel="next" title="Controller Filters" href="filters.html"/>
         <link rel="prev" title="Controllers" href="controllers.html"/> 
@@ -454,8 +454,8 @@ It is possible to nest groups within groups for finer organization if you need i
 </pre></div>
 </div>
 <p>This would handle a resource route to the <code class="docutils literal"><span class="pre">App\API\v1\Users</span></code> controller with the <code class="docutils literal"><span class="pre">/api/users</span></code> URI.</p>
-<p>You can also use ensure that a specific <a class="reference external" href="/general/filters">filter</a> gets ran for a group of routes. This will always
-run the filter before the controller. This is especially handy during authentication:</p>
+<p>You can also use ensure that a specific <a class="reference external" href="/incoming/filters.html">filter</a> gets ran for a group of routes. This will always
+run the filter before or after the controller. This is especially handy during authentication or api logging:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;api-auth&#39;</span><span class="p">],</span> <span class="k">function</span><span class="p">(</span><span class="nv">$routes</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
@@ -796,7 +796,7 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 22, 2018.
+      Last updated on Oct 24, 2018.
 
     </p>
   </div>
@@ -818,7 +818,7 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-alpha.1',
+            VERSION:'4.0.0-alpha.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
