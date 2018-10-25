@@ -129,7 +129,10 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="license.html">The MIT License (MIT)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Change Log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#version-release">Version 4.0.0-alpha.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-release">Version 4.0.0-alpha.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prs-merged">PRs merged:</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#version-4-0-0-alpha-1">Version 4.0.0-alpha.1</a></li>
 </ul>
 </li>
@@ -206,9 +209,11 @@ to the PRs in question.</p>
 <dl class="docutils">
 <dt>application /</dt>
 <dd><ul class="first last simple">
+<li>Config/Paths #1341</li>
 <li>Config/Routes #1281</li>
 <li>Filters/Honeypot #1314</li>
 <li>Views/errors/cli/error_404 #1272</li>
+<li>Views/welcome_message #1342</li>
 </ul>
 </dd>
 <dt>public /</dt>
@@ -231,6 +236,7 @@ to the PRs in question.</p>
 <dt>Config/</dt>
 <dd><ul class="first last">
 <li>AutoloadConfig #1271</li>
+<li>Services #1341</li>
 </ul>
 </dd>
 </dl>
@@ -240,7 +246,16 @@ to the PRs in question.</p>
 <dd><ul class="first last">
 <li>BaseBuilder #1217</li>
 <li>BaseUtils #1209, #1329</li>
+<li>Database #1339</li>
 <li>MySQLi/Utils #1209</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Debug/Toolbar/</dt>
+<dd><ul class="first last">
+<li>Views/toolbar.css #1342</li>
 </ul>
 </dd>
 </dl>
@@ -324,7 +339,7 @@ to the PRs in question.</p>
 </dd>
 </dl>
 </li>
-<li>CodeIgniter #1239</li>
+<li>CodeIgniter #1239 #1337</li>
 <li>Common #1291</li>
 <li>Entity #1283, #1311</li>
 <li>Model #1311</li>
@@ -454,6 +469,7 @@ to the PRs in question.</p>
 <dd><ul class="first last">
 <li>common_functions #1300, #1329</li>
 <li>helpers #1291</li>
+<li>managing_apps #1341</li>
 </ul>
 </dd>
 </dl>
@@ -470,6 +486,7 @@ to the PRs in question.</p>
 <dt>incoming/</dt>
 <dd><ul class="first last">
 <li>controllers #1323</li>
+<li>routing #1337</li>
 </ul>
 </dd>
 </dl>
@@ -495,6 +512,7 @@ to the PRs in question.</p>
 <dd><ul class="first last">
 <li>curlrequest #1303</li>
 <li>honeypot #1314</li>
+<li>sessions #1333</li>
 <li>uploaded_files #1302</li>
 </ul>
 </dd>
@@ -504,6 +522,14 @@ to the PRs in question.</p>
 <dt>models/</dt>
 <dd><ul class="first last">
 <li>entities #1283</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>outgoing/</dt>
+<dd><ul class="first last">
+<li>response #1340</li>
 </ul>
 </dd>
 </dl>
@@ -519,6 +545,55 @@ to the PRs in question.</p>
 </ul>
 </dd>
 </dl>
+<div class="section" id="prs-merged">
+<h3>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>#1348 Fix sphinx formatting in sessions</li>
+<li>#1347 Fix sphinx formatting in sessions</li>
+<li>#1342 Toolbar Styles</li>
+<li>#1341 Make viewpath configurable in Paths.php. Fixes #1296</li>
+<li>#1340 Update docs for downloads to reflect the need to return it. Fixes #1331</li>
+<li>#1339 Fix error where Forge class might not be returned. Fixes #1225</li>
+<li>#1337 Filter in the router Fixes #1315</li>
+<li>#1336 Revert alpha.2</li>
+<li>#1334 Proposed changelog for alpha.2</li>
+<li>#1333 Error in user guide for session config. Fixes #1330</li>
+<li>#1329 Tweaks</li>
+<li>#1327 FIX form_hidden and form_open - value escaping as is in form_input.</li>
+<li>#1323 Fix doc error : show_404() doesn&#8217;t exist any more</li>
+<li>#1321 Added missing xml_helper UG page</li>
+<li>#1319 Testing/entity</li>
+<li>#1316 Refactor TimeTest</li>
+<li>#1314 Fix &amp; expand Honeypot &amp; its tests</li>
+<li>#1313 Clean exception</li>
+<li>#1311 Entities store an original stack of values to compare against so we d…</li>
+<li>#1306 Testing3/http</li>
+<li>#1305 Change chdir(&#8216;public&#8217;) to chdir($public)</li>
+<li>#1304 Refactor script name stripping in parseRequestURI()</li>
+<li>#1303 Testing/http</li>
+<li>#1302 Exception：No Formatter defined for mime type &#8216;&#8217;</li>
+<li>#1300 Allow redirect with Query Vars from the current request.</li>
+<li>#1295 Fix grammar in front controller comment.</li>
+<li>#1294 Updated final tutorial page. Fixes #1292</li>
+<li>#1291 Allows extending of helpers. Fixes #1264</li>
+<li>#1286 Cookies</li>
+<li>#1285 Ensure current HTTP verb routes are matched prior to any * matched ro…</li>
+<li>#1283 Entities</li>
+<li>#1282 system/Test/FeatureTestCase::setupRequest(), minor fixes phpdoc block…</li>
+<li>#1281 Tut</li>
+<li>#1280 Add contributing reference to user guide</li>
+<li>#1273 Fix/timing</li>
+<li>#1272 Fix undefined variable &#8220;heading&#8221; in cli 404</li>
+<li>#1271 remove inexistent &#8220;CodeIgniterLoader&#8221; from AutoloadConfig::classmap</li>
+<li>#1269 Release notes &amp; process</li>
+<li>#1266 Adjusting the release build scripts</li>
+<li>#1265 WIP Fix docs re PHP server</li>
+<li>#1245 Fix #1244 (form_hidden declaration)</li>
+<li>#1239 【Unsolicited PR】I changed the download method to testable.</li>
+<li>#1217 Optional parameter for resetSelect() call in Builder&#8217;s countAll();</li>
+<li>#1209 Fix undefined function xml_convert at DatabaseBaseUtils</li>
+</ul>
+</div>
 </div>
 <div class="section" id="version-4-0-0-alpha-1">
 <h2>Version 4.0.0-alpha.1<a class="headerlink" href="#version-4-0-0-alpha-1" title="Permalink to this headline">¶</a></h2>
@@ -834,7 +909,7 @@ security, text, url</li>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 24, 2018.
+      Last updated on Oct 25, 2018.
 
     </p>
   </div>
