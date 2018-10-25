@@ -149,6 +149,13 @@ class CommandRunner extends Controller
 				continue;
 			}
 
+			$class = new \ReflectionClass($className);
+
+			if ( ! $class->isInstantiable() || ! $class->isSubclassOf(BaseCommand::class))
+			{
+				continue;
+			}
+
 			$class = new $className($this->logger, $this);
 
 			// Store it!
