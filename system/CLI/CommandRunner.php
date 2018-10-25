@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\CLI;
+<?php
+namespace CodeIgniter\CLI;
 
 /**
  * CodeIgniter
@@ -39,6 +40,7 @@ use CodeIgniter\Controller;
 
 class CommandRunner extends Controller
 {
+
 	/**
 	 * Stores the info about found Commands.
 	 *
@@ -72,7 +74,6 @@ class CommandRunner extends Controller
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * @param array $params
@@ -143,8 +144,13 @@ class CommandRunner extends Controller
 		foreach ($files as $file)
 		{
 			$className = service('locator')->findQualifiedNameFromPath($file);
-
 			if (empty($className) || ! class_exists($className))
+			{
+				continue;
+			}
+
+			$class = new \ReflectionClass($className);
+			if ( ! $class->isInstantiable() || ! $class->isSubclassOf(BaseCommand::class))
 			{
 				continue;
 			}
