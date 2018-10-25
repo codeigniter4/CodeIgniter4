@@ -557,7 +557,7 @@ into using `tmpfs <http://eddmann.com/posts/storing-php-sessions-file-caches-in-
 (warning: external resource), which can make your sessions blazing fast.
 
 DatabaseHandler Driver
----------------------
+----------------------
 
 The 'DatabaseHandler' driver uses a relational database such as MySQL or
 PostgreSQL to store sessions. This is a popular choice among many users,
@@ -636,7 +636,7 @@ when it generates the code.
 	issues.
 
 RedisHandler Driver
-------------------
+-------------------
 
 .. note:: Since Redis doesn't have a locking mechanism exposed, locks for
 	this driver are emulated by a separate value that is kept for up
@@ -673,7 +673,7 @@ sufficient::
 	public $sessionSavePath = 'tcp://localhost:6379';
 
 MemcachedHandler Driver
-----------------------
+-----------------------
 
 .. note:: Since Memcached doesn't have a locking mechanism exposed, locks
 	for this driver are emulated by a separate value that is kept for
