@@ -25,6 +25,8 @@ public /
     - index #1295, #1313
 
 system /
+    - CLI/
+        - CommandRunner #1350, #1356
     - Commands/
         - Server/Serve #1313 
     - Config/
@@ -65,7 +67,7 @@ system /
         - Cast #1283
         - HTTP #1239
     - Router/
-        - RouteCollection #1285
+        - RouteCollection #1285, #1355
     - Test/
         - FeatureTestCase #1282
     - CodeIgniter #1239 #1337
@@ -76,6 +78,8 @@ system /
 tests /
     - API/
         - ResponseTraitTest #1302
+    - Commands/
+        - CommandsTest #1356
     - Database/
         - BaseBuilderTest #1217
         - Live/ModelTest #1311
@@ -98,7 +102,7 @@ tests /
     - I18n/
         - TimeTest #1273, #1316
     - Router/
-        - RouteTest #1285
+        - RouteTest #1285, #1355
     - View/
         - ParserTest #1311
     - EntityTest #1319
@@ -142,6 +146,9 @@ user_guide_src /source/
 PRs merged:
 -----------
 
+- #1356 Testing/commands
+- #1355 Handle duplicate HTTP verb and generic rules properly
+- #1350 Checks if class is instantiable and is a command
 - #1348 Fix sphinx formatting in sessions
 - #1347 Fix sphinx formatting in sessions
 - #1342 Toolbar Styles
