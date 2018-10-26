@@ -668,6 +668,8 @@ required_with           Yes         The field is required if any of the fields i
 required_without        Yes         The field is required when any of the fields in the parameter are not set.                      required_without[field1,field2]
 is_unique               Yes         Checks if this field value exists in the database. Optionally set a                             is_unique[table.field,ignore_field,ignore_value]
                                     column and value to ignore, useful when updating records to ignore itself.
+is_unique_empty         Yes         Checks if this field value is empty (null or empty string) or exists in the database.           is_unique_empty[table.field,ignore_field,ignore_value]
+                                    Optionally set a column and value to ignore, useful when updating records to ignore itself.
 timezone                No          Fails if field does match a timezone per ``timezone_identifiers_list``
 valid_base64            No          Fails if field contains anything other than valid Base64 characters.
 valid_json              No          Fails if field does not contain a valid JSON string.
