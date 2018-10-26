@@ -174,6 +174,29 @@ class Rules
 	}
 
 	//--------------------------------------------------------------------
+	
+	/**
+	 * Checks the database to see if the given value is unique or empty.
+	 *
+	 * Example:
+	 *    is_unique_empty[table.field,ignore_field,ignore_value]
+	 *    is_unique_empty[users.email,id,5]
+	 *
+	 * @param string $str
+	 * @param string $field
+	 * @param array  $data
+	 *
+	 * @return bool
+	 */
+	public function is_unique_empty(string $str = null, string $field, array $data): bool
+	{
+		if(is_null($str) || $str == '')
+			return true;
+
+		return $this->is_unique($str, $field, $data);
+	}
+	
+	//--------------------------------------------------------------------
 
 	/**
 	 * Less than
