@@ -43,8 +43,7 @@ use Config\Autoload;
  * Allows loading non-class files in a namespaced manner.
  * Works with Helpers, Views, etc.
  *
- * @todo sanitize filenames prior to checking them...
- *
+  *
  * @package CodeIgniter
  */
 class FileLocator
@@ -133,7 +132,6 @@ class FileLocator
 		// IF we have a folder name, then the calling function
 		// expects this file to be within that folder, like 'Views',
 		// or 'libraries'.
-		// @todo Allow it to check with and without the nested folder.
 		if ( ! empty($folder) && strpos($filename, $folder) === false)
 		{
 			$filename = $folder . '/' . $filename;

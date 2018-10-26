@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Router;
+<?php
+namespace CodeIgniter\Router;
 
 /**
  * CodeIgniter
@@ -132,16 +133,16 @@ class RouteCollection implements RouteCollectionInterface
 	 * @var array
 	 */
 	protected $routes = [
-		'*'       => [],
-		'options' => [],
-		'get'     => [],
-		'head'    => [],
-		'post'    => [],
-		'put'     => [],
-		'delete'  => [],
-		'trace'   => [],
-		'connect' => [],
-		'cli'     => [],
+		'*'			 => [],
+		'options'	 => [],
+		'get'		 => [],
+		'head'		 => [],
+		'post'		 => [],
+		'put'		 => [],
+		'delete'	 => [],
+		'trace'		 => [],
+		'connect'	 => [],
+		'cli'		 => [],
 	];
 
 	/**
@@ -383,7 +384,8 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	protected function discoverRoutes()
 	{
-		if ($this->didDiscover) return;
+		if ($this->didDiscover)
+			return;
 
 		// We need this var in local scope
 		// so route files can access it.
@@ -520,8 +522,11 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			// Keep current verb's routes at the beginning so they're matched
 			// before any of the generic, "add" routes.
-			$collection = array_merge($this->routes[$verb], $this->routes['*']);
-
+			if (isset($this->routes['*']))
+			{
+				$extraRules = array_diff_key($this->routes['*'], $this->routes[$verb]);
+				$collection = array_merge($this->routes[$verb], $extraRules);
+			}
 			foreach ($collection as $r)
 			{
 				$key = key($r['route']);
@@ -806,13 +811,13 @@ class RouteCollection implements RouteCollectionInterface
 
 		$methods = isset($options['only']) ? is_string($options['only']) ? explode(',', $options['only']) : $options['only'] : ['index', 'show', 'create', 'update', 'delete', 'new', 'edit'];
 
-		if(isset($options['except']))
+		if (isset($options['except']))
 		{
 			$options['except'] = is_array($options['except']) ? $options['except'] : explode(',', $options['except']);
 			$c = count($methods);
-			for($i = 0; $i < $c; $i++)
+			for ($i = 0; $i < $c; $i ++)
 			{
-				if(in_array($methods[$i], $options['except']))
+				if (in_array($methods[$i], $options['except']))
 				{
 					unset($methods[$i]);
 				}
@@ -822,16 +827,16 @@ class RouteCollection implements RouteCollectionInterface
 		if (in_array('index', $methods))
 			$this->get($name, $new_name . '::index', $options);
 		if (in_array('new', $methods))
-			$this->get($name. '/new', $new_name . '::new', $options);
+			$this->get($name . '/new', $new_name . '::new', $options);
 		if (in_array('edit', $methods))
-			$this->get($name . '/' . $id. '/edit', $new_name . '::edit/$1', $options);
+			$this->get($name . '/' . $id . '/edit', $new_name . '::edit/$1', $options);
 		if (in_array('show', $methods))
 			$this->get($name . '/' . $id, $new_name . '::show/$1', $options);
 		if (in_array('create', $methods))
 			$this->post($name, $new_name . '::create', $options);
 		if (in_array('update', $methods))
 			$this->put($name . '/' . $id, $new_name . '::update/$1', $options);
-			$this->patch($name . '/' . $id, $new_name . '::update/$1', $options);
+		$this->patch($name . '/' . $id, $new_name . '::update/$1', $options);
 		if (in_array('delete', $methods))
 			$this->delete($name . '/' . $id, $new_name . '::delete/$1', $options);
 
@@ -1137,7 +1142,7 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function getFilterForRoute(string $search): string
 	{
-		if (! $this->isFiltered($search))
+		if ( ! $this->isFiltered($search))
 		{
 			return '';
 		}
@@ -1211,10 +1216,10 @@ class RouteCollection implements RouteCollectionInterface
 			$from = trim($from, '/');
 		}
 
-		$options = array_merge((array)$this->currentOptions, (array)$options);
+		$options = array_merge((array) $this->currentOptions, (array) $options);
 
 		// Hostname limiting?
-		if (! empty($options['hostname']))
+		if ( ! empty($options['hostname']))
 		{
 			// @todo determine if there's a way to whitelist hosts?
 			if (strtolower($_SERVER['HTTP_HOST']) != strtolower($options['hostname']))
@@ -1245,7 +1250,8 @@ class RouteCollection implements RouteCollectionInterface
 			for ($i = (int) $options['offset'] + 1; $i < (int) $options['offset'] + 7; $i ++ )
 			{
 				$to = preg_replace_callback(
-						'/\$X/', function ($m) use ($i) {
+						'/\$X/', function ($m) use ($i)
+				{
 					return '$' . $i;
 				}, $to, 1
 				);
