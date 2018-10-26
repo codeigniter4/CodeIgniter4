@@ -99,7 +99,7 @@ class Database
 	 */
 	public function loadForge(ConnectionInterface $db)
 	{
-		$className = strpos($db->DBDriver, '\\') === false ? '\CodeIgniter\Database\\' . $db->DBDriver . '\\Forge' : $db->DBDriver . '\\Connection';
+		$className = strpos($db->DBDriver, '\\') === false ? '\CodeIgniter\Database\\' . $db->DBDriver . '\\Forge' : $db->DBDriver . '\\Forge';
 
 		// Make sure a connection exists
 		if ( ! $db->connID)

@@ -92,13 +92,16 @@ Example::
 
 	$data = 'Here is some text!';
 	$name = 'mytext.txt';
-	$response->download($name, $data);
+	return $response->download($name, $data);
 
 If you want to download an existing file from your server you'll need to
 do the following::
 
 	// Contents of photo.jpg will be automatically read
-	$response->download('/path/to/photo.jpg', NULL);
+	return $response->download('/path/to/photo.jpg', NULL);
+
+.. note:: The response object MUST be returned for the download to be sent to the client. This allows the response
+    to be passed through all **after** filters before being sent to the client.
 
 HTTP Caching
 ============
