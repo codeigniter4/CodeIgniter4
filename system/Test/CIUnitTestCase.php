@@ -1,5 +1,4 @@
 <?php
-
 namespace CodeIgniter\Test;
 
 /**
@@ -125,10 +124,9 @@ class CIUnitTestCase extends TestCase
 	 * @param string $header The leading portion of the header we are looking for
 	 * @param bool $ignoreCase
 	 *
-	 * @return bool
 	 * @throws \Exception
 	 */
-	public function assertHeaderEmitted(string $header, bool $ignoreCase = false): bool
+	public function assertHeaderEmitted(string $header, bool $ignoreCase = false): void
 	{
 		$found = false;
 
@@ -141,7 +139,7 @@ class CIUnitTestCase extends TestCase
 				break;
 		}
 
-		return $found ? $found : $this->fail("Didn't find header for {$header}");
+		$this->assertTrue($found,"Didn't find header for {$header}");
 	}
 
 	/**
@@ -151,10 +149,9 @@ class CIUnitTestCase extends TestCase
 	 * @param string $header The leading portion of the header we don't want to find
 	 * @param bool $ignoreCase
 	 *
-	 * @return bool
 	 * @throws \Exception
 	 */
-	public function assertHeaderNotEmitted(string $header, bool $ignoreCase = false): bool
+	public function assertHeaderNotEmitted(string $header, bool $ignoreCase = false): void
 	{
 		$found = false;
 
@@ -168,7 +165,7 @@ class CIUnitTestCase extends TestCase
 		}
 
 		$success = ! $found;
-		return $success ? $success : $this->fail("Found header for {$header}");
+		$this->assertTrue($success,"Found header for {$header}");
 	}
 
 	/**

@@ -1,5 +1,4 @@
 <?php
-
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Events\Events;
@@ -30,7 +29,8 @@ class TestCaseTest extends \CIUnitTestCase
 
 	public function testEventTriggering()
 	{
-		Events::on('foo', function($arg) use(&$result) {
+		Events::on('foo', function($arg) use(&$result)
+		{
 			$result = $arg;
 		});
 
@@ -49,6 +49,32 @@ class TestCaseTest extends \CIUnitTestCase
 		$expected = "first.\n";
 		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 		stream_filter_remove($this->stream_filter);
+	}
+
+	//--------------------------------------------------------------------
+	/**
+	 * PHPunit emits headers before we get nominal control of
+	 * the output stream, making header testing awkward, to say
+	 * the least. This test is intended to make sure that this
+	 * is happening as expected.
+	 * 
+	 * TestCaseEmissionsTest is intended to circumvent PHPunit,
+	 * and allow us to test our own header emissions.
+	 * 
+	 */
+	public function testPHPUnitHeadersEmitted()
+	{
+		$response = new Response(new App());
+		$response->pretend(TRUE);
+
+		$body = 'Hello';
+		$response->setBody($body);
+
+		$response->send();
+
+		// Did PHPunit do its thing?
+		$this->assertHeaderEmitted("Content-type: text/html;");
+		$this->assertHeaderNotEmitted("Set-Cookie: foo=bar;");
 	}
 
 }

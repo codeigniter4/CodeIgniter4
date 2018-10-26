@@ -1,5 +1,4 @@
 <?php
-
 namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\Response;
@@ -14,20 +13,6 @@ use Config\App;
  */
 class TestCaseEmissionsTest extends \CIUnitTestCase
 {
-
-//	public function setUp()
-//	{
-//		while( count( ob_list_handlers() ) > 1 )
-//		{
-//			ob_end_clean();
-//		}
-//		ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE);
-//	}
-//
-//	public function tearDown()
-//	{
-//		ob_end_clean();
-//	}
 
 	//--------------------------------------------------------------------
 	/**
@@ -44,37 +29,32 @@ class TestCaseEmissionsTest extends \CIUnitTestCase
 	 * the body we thought would be sent actually was.
 	 * 
 	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
 	 */
-	public function testHeaderEmitted()
+	public function testHeadersEmitted()
 	{
+
 		$response = new Response(new App());
 		$response->pretend(FALSE);
 
 		$body = 'Hello';
-		$expected = $body;
+		$response->setBody($body);
 
-		// what do we think we're about to send?
 		$response->setCookie('foo', 'bar');
 		$this->assertTrue($response->hasCookie('foo'));
 		$this->assertTrue($response->hasCookie('foo', 'bar'));
-		
-		$response->setBody($body);
-		
-//echo 'ob level at '.ob_get_level();
-ob_end_clean();
-ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE);
-//$buffer = ob_get_clean(); // flush previous
-		// send it
-//		$buffer = ob_get_clean();
-		$response->send();
-		$buffer = ob_end_clean();
-		// and what actually got sent?; test both ways
-		$actual = $response->getBody(); // what we thought was sent
 
-		$this->assertEquals($expected, $actual);
+		// send it
+		ob_start();
+		$response->send();
+
+		$buffer = ob_clean();
+		if (ob_get_level() > 0)
+			ob_end_clean();
+
+		// and what actually got sent?; test both ways
 		$this->assertHeaderEmitted("Set-Cookie: foo=bar;");
 		$this->assertHeaderEmitted("set-cookie: FOO=bar", true);
-
 	}
 
 	/**
@@ -91,32 +71,29 @@ ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE);
 	 * the body we thought would be sent actually was.
 	 * 
 	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
 	 */
-//	public function testHeaderNotEmitted()
-//	{
-//		$response = new Response(new App());
-//		$response->pretend(FALSE);
-//
-//		$body = 'Hello';
-//		$expected = $body;
-//
-//		// what do we think we're about to send?
-//		$response->setCookie('foo', 'bar');
-//		$this->assertTrue($response->hasCookie('foo'));
-//		$this->assertTrue($response->hasCookie('foo', 'bar'));
-//
-//		// send it
-//		$response->setBody($body);
-//
-//		ob_start();
-//		$response->send();
-//		$output = ob_get_clean(); // what really was sent
-//		// and what actually got sent?; test both ways
-//		$actual = $response->getBody(); // what we thought was sent
-//
-//		$this->assertEquals($expected, $actual);
-//		$this->assertEquals($expected, $output);
-//
-//		$this->assertHeaderNotEmitted("Set-Cookie: pop=corn", true);
-//	}
+	public function testHeadersNotEmitted()
+	{
+		$response = new Response(new App());
+		$response->pretend(FALSE);
+
+		$body = 'Hello';
+		$response->setBody($body);
+
+		// what do we think we're about to send?
+		$response->setCookie('foo', 'bar');
+		$this->assertTrue($response->hasCookie('foo'));
+		$this->assertTrue($response->hasCookie('foo', 'bar'));
+
+		// send it
+		ob_start();
+		$response->send();
+		$output = ob_clean(); // what really was sent
+		if (ob_get_level() > 0)
+			ob_end_clean();
+
+		$this->assertHeaderNotEmitted("Set-Cookie: pop=corn", true);
+	}
+
 }
