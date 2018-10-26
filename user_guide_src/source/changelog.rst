@@ -2,10 +2,16 @@
 Change Log
 ##########
 
+Version |version|
+====================================================
+
+Release Date: Not Released
+
+
 Version 4.0.0-alpha.2
 =================================
 
-Release Date: Not released
+Release Date: Oct 26, 2018
 
 **Second alpha release of CodeIgniter4**
 
