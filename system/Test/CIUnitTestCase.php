@@ -139,7 +139,7 @@ class CIUnitTestCase extends TestCase
 				break;
 		}
 
-		$this->assertTrue($found,"Didn't find header for {$header}");
+		$this->assertTrue($found, "Didn't find header for {$header}");
 	}
 
 	/**
@@ -165,7 +165,27 @@ class CIUnitTestCase extends TestCase
 		}
 
 		$success = ! $found;
-		$this->assertTrue($success,"Found header for {$header}");
+		$this->assertTrue($success, "Found header for {$header}");
+	}
+
+	/**
+	 * Custom function to test that two values are "close enough".
+	 * This is intended for extended execution time testing,
+	 * where the result is close but not exactly equal to the
+	 * expected time, for reasons beyond our control.
+	 *
+	 * @param int $expected
+	 * @param mixed $actual
+	 * @param string   $message
+	 * @param int $tolerance
+	 *
+	 * @throws \Exception
+	 */
+	public function assertCloseEnough(int $expected, $actual, string $message = '', int $tolerance = 1)
+	{
+		$difference = abs($expected - (int) floor($actual));
+
+		$this->assertLessThanOrEqual($tolerance, $difference, $message);
 	}
 
 	/**
