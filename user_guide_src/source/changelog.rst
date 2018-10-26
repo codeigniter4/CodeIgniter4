@@ -71,7 +71,7 @@ system /
     - Router/
         - RouteCollection #1285, #1355
     - Test/
-        - CIUnitTestCase #1312
+        - CIUnitTestCase #1312, #1361
         - FeatureTestCase #1282
     - CodeIgniter #1239 #1337
     - Common #1291
@@ -154,6 +154,7 @@ user_guide_src /source/
 PRs merged:
 -----------
 
+- #1361 Add timing assertion to CIUnitTestCase
 - #1312 Add headerEmitted assertions to CIUnitTestCase
 - #1356 Testing/commands
 - #1355 Handle duplicate HTTP verb and generic rules properly
