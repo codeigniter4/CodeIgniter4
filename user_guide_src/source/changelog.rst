@@ -2,7 +2,7 @@
 Change Log
 ##########
 
-Version |release|
+Version 4.0.0-alpha.2
 =================================
 
 Release Date: Not released
