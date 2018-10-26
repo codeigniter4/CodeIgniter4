@@ -209,23 +209,23 @@ Support for <code class="docutils literal"><span class="pre">PHPUnit</span></cod
 helper methods to make testing every aspect of your application as painless as possible.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#system-setup" id="id1">System Setup</a><ul>
-<li><a class="reference internal" href="#installing-phpunit" id="id2">Installing phpUnit</a></li>
+<li><a class="reference internal" href="#system-setup" id="id2">System Setup</a><ul>
+<li><a class="reference internal" href="#installing-phpunit" id="id3">Installing phpUnit</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#testing-your-application" id="id3">Testing Your Application</a><ul>
-<li><a class="reference internal" href="#phpunit-configuration" id="id4">PHPUnit Configuration</a></li>
-<li><a class="reference internal" href="#the-test-class" id="id5">The Test Class</a></li>
-<li><a class="reference internal" href="#mocking-services" id="id6">Mocking Services</a></li>
-<li><a class="reference internal" href="#stream-filters" id="id7">Stream Filters</a></li>
+<li><a class="reference internal" href="#testing-your-application" id="id4">Testing Your Application</a><ul>
+<li><a class="reference internal" href="#phpunit-configuration" id="id5">PHPUnit Configuration</a></li>
+<li><a class="reference internal" href="#the-test-class" id="id6">The Test Class</a></li>
+<li><a class="reference internal" href="#mocking-services" id="id7">Mocking Services</a></li>
+<li><a class="reference internal" href="#stream-filters" id="id8">Stream Filters</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="system-setup">
-<h2><a class="toc-backref" href="#id1">System Setup</a><a class="headerlink" href="#system-setup" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id2">System Setup</a><a class="headerlink" href="#system-setup" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="installing-phpunit">
-<h3><a class="toc-backref" href="#id2">Installing phpUnit</a><a class="headerlink" href="#installing-phpunit" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id3">Installing phpUnit</a><a class="headerlink" href="#installing-phpunit" title="Permalink to this headline">¶</a></h3>
 <p>CodeIgniter uses <a class="reference external" href="https://phpunit.de/">phpUnit</a> as the basis for all of its testing. There are two ways to install
 phpUnit to use within your system.</p>
 <div class="section" id="composer">
@@ -252,9 +252,9 @@ This is standalone file that should be placed within your project root.</p>
 </div>
 </div>
 <div class="section" id="testing-your-application">
-<h2><a class="toc-backref" href="#id3">Testing Your Application</a><a class="headerlink" href="#testing-your-application" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4">Testing Your Application</a><a class="headerlink" href="#testing-your-application" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="phpunit-configuration">
-<h3><a class="toc-backref" href="#id4">PHPUnit Configuration</a><a class="headerlink" href="#phpunit-configuration" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id5">PHPUnit Configuration</a><a class="headerlink" href="#phpunit-configuration" title="Permalink to this headline">¶</a></h3>
 <p>The framework has a <code class="docutils literal"><span class="pre">phpunit.xml.dist</span></code> file in the project root. This controls unit
 testing of the framework itself. If you provide your own <code class="docutils literal"><span class="pre">phpunit.xml</span></code>, it will
 over-ride this.</p>
@@ -262,7 +262,7 @@ over-ride this.</p>
 <code class="docutils literal"><span class="pre">ThirdParty</span></code> folders, if you are unit testing your application.</p>
 </div>
 <div class="section" id="the-test-class">
-<h3><a class="toc-backref" href="#id5">The Test Class</a><a class="headerlink" href="#the-test-class" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id6">The Test Class</a><a class="headerlink" href="#the-test-class" title="Permalink to this headline">¶</a></h3>
 <p>In order to take advantage of the additional tools provided, your tests must extend <code class="docutils literal"><span class="pre">\CIUnitTestCase</span></code>. All tests
 are expected to be located in the <strong>tests/</strong> directory by default.</p>
 <p>To test a new library, <strong>Foo</strong>, you would create a new file at <strong>tests/TestFoo.php</strong>:</p>
@@ -300,7 +300,7 @@ have the correct namespace relative to <code class="docutils literal"><span clas
 </pre></div>
 </div>
 <p><strong>assertEventTriggered($eventName)</strong></p>
-<p>Ensure that an event you excpected to be triggered actually was:</p>
+<p>Ensure that an event you expected to be triggered actually was:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$arg</span><span class="p">)</span> <span class="k">use</span><span class="p">(</span><span class="o">&amp;</span><span class="nv">$result</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$arg</span><span class="p">;</span>
 <span class="p">});</span>
@@ -310,6 +310,32 @@ have the correct namespace relative to <code class="docutils literal"><span clas
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEventTriggered</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<p><strong>assertHeaderEmitted($header, $ignoreCase=false)</strong></p>
+<p>Ensure that a header or cookie was actually emitted:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+
+<span class="nb">ob_start</span><span class="p">();</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
+<span class="nv">$output</span> <span class="o">=</span> <span class="nb">ob_get_clean</span><span class="p">();</span> <span class="c1">// in case you want to check the adtual body</span>
+
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeaderEmitted</span><span class="p">(</span><span class="s2">&quot;Set-Cookie: foo=bar&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Note: the test case with this should be <a class="reference external" href="https://phpunit.readthedocs.io/en/7.4/annotations.html#runinseparateprocess">run as a separate process
+in PHPunit</a>.</p>
+<p><strong>assertHeaderNotEmitted($header, $ignoreCase=false)</strong></p>
+<p>Ensure that a header or cookie was actually emitted:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+
+<span class="nb">ob_start</span><span class="p">();</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
+<span class="nv">$output</span> <span class="o">=</span> <span class="nb">ob_get_clean</span><span class="p">();</span> <span class="c1">// in case you want to check the adtual body</span>
+
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeaderNotEmitted</span><span class="p">(</span><span class="s2">&quot;Set-Cookie: banana&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Note: the test case with this should be <a class="reference external" href="https://phpunit.readthedocs.io/en/7.4/annotations.html#runinseparateprocess">run as a separate process
+in PHPunit</a>.</p>
 </div>
 <div class="section" id="accessing-protected-private-properties">
 <h4>Accessing Protected/Private Properties<a class="headerlink" href="#accessing-protected-private-properties" title="Permalink to this headline">¶</a></h4>
@@ -353,7 +379,7 @@ parameter is the name of the property to set the value of. The third parameter i
 </div>
 </div>
 <div class="section" id="mocking-services">
-<h3><a class="toc-backref" href="#id6">Mocking Services</a><a class="headerlink" href="#mocking-services" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7">Mocking Services</a><a class="headerlink" href="#mocking-services" title="Permalink to this headline">¶</a></h3>
 <p>You will often find that you need to mock one of the services defined in <strong>application/Config/Services.php</strong> to limit
 your tests to only the code in question, while simulating various responses from the services. This is especially
 true when testing controllers and other integration testing. The <strong>Services</strong> class provides two methods to make this
@@ -378,7 +404,7 @@ class exactly. The second parameter is the instance to replace it with.</p>
 <p>Removes all mocked classes from the Services class, bringing it back to its original state.</p>
 </div>
 <div class="section" id="stream-filters">
-<h3><a class="toc-backref" href="#id7">Stream Filters</a><a class="headerlink" href="#stream-filters" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8">Stream Filters</a><a class="headerlink" href="#stream-filters" title="Permalink to this headline">¶</a></h3>
 <p><strong>CITestStreamFilter</strong> provides an alternate to these helper methods.</p>
 <p>You may need to test things that are difficult to test. Sometimes, capturing a stream, like PHP&#8217;s own STDOUT, or STDERR,
 might be helpful. The <code class="docutils literal"><span class="pre">CITestStreamFilter</span></code> helps you capture the output from the stream of your choice.</p>
@@ -429,7 +455,7 @@ might be helpful. The <code class="docutils literal"><span class="pre">CITestStr
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 25, 2018.
+      Last updated on Oct 26, 2018.
 
     </p>
   </div>

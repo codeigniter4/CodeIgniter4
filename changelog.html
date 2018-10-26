@@ -209,6 +209,8 @@ to the PRs in question.</p>
 <dl class="docutils">
 <dt>application /</dt>
 <dd><ul class="first last simple">
+<li>composer.json #1312</li>
+<li>Config/Boot/development, production, testing #1312</li>
 <li>Config/Paths #1341</li>
 <li>Config/Routes #1281</li>
 <li>Filters/Honeypot #1314</li>
@@ -224,6 +226,14 @@ to the PRs in question.</p>
 </dd>
 <dt>system /</dt>
 <dd><ul class="first last simple">
+<li><dl class="first docutils">
+<dt>CLI/</dt>
+<dd><ul class="first last">
+<li>CommandRunner #1350, #1356</li>
+</ul>
+</dd>
+</dl>
+</li>
 <li><dl class="first docutils">
 <dt>Commands/</dt>
 <dd><ul class="first last">
@@ -326,7 +336,7 @@ to the PRs in question.</p>
 <li><dl class="first docutils">
 <dt>Router/</dt>
 <dd><ul class="first last">
-<li>RouteCollection #1285</li>
+<li>RouteCollection #1285, #1355</li>
 </ul>
 </dd>
 </dl>
@@ -334,6 +344,7 @@ to the PRs in question.</p>
 <li><dl class="first docutils">
 <dt>Test/</dt>
 <dd><ul class="first last">
+<li>CIUnitTestCase #1312</li>
 <li>FeatureTestCase #1282</li>
 </ul>
 </dd>
@@ -351,6 +362,14 @@ to the PRs in question.</p>
 <dt>API/</dt>
 <dd><ul class="first last">
 <li>ResponseTraitTest #1302</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Commands/</dt>
+<dd><ul class="first last">
+<li>CommandsTest #1356</li>
 </ul>
 </dd>
 </dl>
@@ -421,7 +440,16 @@ to the PRs in question.</p>
 <li><dl class="first docutils">
 <dt>Router/</dt>
 <dd><ul class="first last">
-<li>RouteTest #1285</li>
+<li>RouteTest #1285, #1355</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Test/</dt>
+<dd><ul class="first last">
+<li>TestCaseEmissionsTest #1312</li>
+<li>TestCaseTest #1312</li>
 </ul>
 </dd>
 </dl>
@@ -534,6 +562,14 @@ to the PRs in question.</p>
 </dd>
 </dl>
 </li>
+<li><dl class="first docutils">
+<dt>testing/</dt>
+<dd><ul class="first last">
+<li>overview #1312</li>
+</ul>
+</dd>
+</dl>
+</li>
 <li>tutorial... #1265, #1281, #1294</li>
 </ul>
 </dd>
@@ -548,6 +584,10 @@ to the PRs in question.</p>
 <div class="section" id="prs-merged">
 <h3>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
+<li>#1312 Add headerEmitted assertions to CIUnitTestCase</li>
+<li>#1356 Testing/commands</li>
+<li>#1355 Handle duplicate HTTP verb and generic rules properly</li>
+<li>#1350 Checks if class is instantiable and is a command</li>
 <li>#1348 Fix sphinx formatting in sessions</li>
 <li>#1347 Fix sphinx formatting in sessions</li>
 <li>#1342 Toolbar Styles</li>
@@ -909,7 +949,7 @@ security, text, url</li>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 25, 2018.
+      Last updated on Oct 26, 2018.
 
     </p>
   </div>
