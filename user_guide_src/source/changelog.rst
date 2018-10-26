@@ -14,6 +14,8 @@ If you open this page on the repo github site, they will link
 to the PRs in question.
 
 application /
+    - composer.json #1312
+    - Config/Boot/development, production, testing #1312
     - Config/Paths #1341
     - Config/Routes #1281
     - Filters/Honeypot #1314
@@ -69,6 +71,7 @@ system /
     - Router/
         - RouteCollection #1285, #1355
     - Test/
+        - CIUnitTestCase #1312
         - FeatureTestCase #1282
     - CodeIgniter #1239 #1337
     - Common #1291
@@ -103,6 +106,9 @@ tests /
         - TimeTest #1273, #1316
     - Router/
         - RouteTest #1285, #1355
+    - Test/
+        - TestCaseEmissionsTest #1312
+        - TestCaseTest #1312
     - View/
         - ParserTest #1311
     - EntityTest #1319
@@ -138,6 +144,8 @@ user_guide_src /source/
         - entities #1283
     - outgoing/
         - response #1340
+    - testing/
+        - overview #1312
     - tutorial... #1265, #1281, #1294
 
 /
@@ -146,6 +154,7 @@ user_guide_src /source/
 PRs merged:
 -----------
 
+- #1312 Add headerEmitted assertions to CIUnitTestCase
 - #1356 Testing/commands
 - #1355 Handle duplicate HTTP verb and generic rules properly
 - #1350 Checks if class is instantiable and is a command
