@@ -342,10 +342,12 @@ class UploadedFile extends File implements UploadedFileInterface
 	 *
 	 * Is simply an alias for guessExtension for a safer method
 	 * than simply relying on the provided extension.
+	 * Additionaly it will return clientExtension in case if there are
+	 * other extensions withe the same mime type. 
 	 */
 	public function getExtension()
 	{
-		return $this->guessExtension();
+		return \Config\Mimes::guessExtensionFromType($this->getMimeType(), $this->getClientExtension());
 	}
 
 	/**
