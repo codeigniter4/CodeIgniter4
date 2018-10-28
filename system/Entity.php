@@ -144,7 +144,7 @@ class Entity
 	 *
 	 * @return array
 	 */
-	public function toArray(bool $onlyChanged = falsebool $cast = true): array
+	public function toArray(bool $onlyChanged = false, bool $cast = true): array
 	{
 		$this->_cast = $cast;
 		$return = [];
