@@ -261,8 +261,8 @@ class Entity
 			$value = json_encode($value);
 		}
 
-		// if a set* method exists for this key, 
-		// use that method to insert this value. 
+		// if a set* method exists for this key,
+		// use that method to insert this value.
 		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 		if (method_exists($this, $method))
 		{
