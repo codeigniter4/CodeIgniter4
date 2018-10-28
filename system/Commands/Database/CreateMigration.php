@@ -38,6 +38,7 @@
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Autoload;
+use Config\Migrations;
 
 /**
  * Creates a new migration file.
@@ -140,7 +141,35 @@ class CreateMigration extends BaseCommand
 			$ns = "App";
 		}
 
-		$path = $homepath . '/Database/Migrations/' . date('YmdHis_') . $name . '.php';
+		// Migrations Config
+        $config = new Migrations();
+
+        if ($config->type != 'timestamp' && $config->type != 'sequential')
+        {
+            CLI::error(lang('Migrations.invalidType', [$config->type]));
+            return;
+        }
+
+        // migration Type
+        if ($config->type === 'timestamp')
+        {
+            $name = date('YmdHis_') . $name;
+        } else if ($config->type === 'sequential')
+        {
+            // default with 001
+            $sequence = $params[0] ?? '001';
+            // number must be three digits
+            if (! is_numeric($sequence) || strlen($sequence) != 3)
+            {
+                CLI::error(lang('Migrations.migNumberError'));
+                return;
+            }
+
+            $name = $sequence . '_' . $name;
+        }
+
+        // full path
+		$path = $homepath . '/Database/Migrations/' . $name . '.php';
 
 		$template = <<<EOD
 <?php namespace $ns\Database\Migrations;
