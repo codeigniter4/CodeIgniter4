@@ -288,7 +288,9 @@ class DownloadResponse extends Message implements ResponseInterface
 
 		$this->removeHeader('Content-Type'); // replace existing content type
 		$this->setHeader('Content-Type', $mime);
-		$this->charset = $charset;
+		if (!empty($charset)) {
+			$this->charset = $charset;
+		}
 
 		return $this;
 	}
