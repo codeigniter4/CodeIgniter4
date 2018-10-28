@@ -191,8 +191,8 @@ class Entity
 		// Convert to CamelCase for the method
 		$method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 
-		// if a set* method exists for this key, 
-		// use that method to insert this value. 
+		// if a set* method exists for this key,
+		// use that method to insert this value.
 		if (method_exists($this, $method))
 		{
 			$result = $this->$method();
