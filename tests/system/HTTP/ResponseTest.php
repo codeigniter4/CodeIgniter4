@@ -328,7 +328,7 @@ class ResponseTest extends \CIUnitTestCase
 
 		$this->assertInstanceOf(DownloadResponse::class, $actual);
 		$actual->buildHeaders();
-		$this->assertSame('attachment; filename="unit-test.txt"', $actual->getHeaderLine('Content-Disposition'));
+		$this->assertSame('attachment; filename="unit-test.txt"; filename*=UTF-8\'\'unit-test.txt', $actual->getHeaderLine('Content-Disposition'));
 
 		ob_start();
 		$actual->sendBody();
@@ -346,7 +346,7 @@ class ResponseTest extends \CIUnitTestCase
 
 		$this->assertInstanceOf(DownloadResponse::class, $actual);
 		$actual->buildHeaders();
-		$this->assertSame('attachment; filename="'.basename(__FILE__).'"', $actual->getHeaderLine('Content-Disposition'));
+		$this->assertSame('attachment; filename="'.basename(__FILE__).'"; filename*=UTF-8\'\''.basename(__FILE__), $actual->getHeaderLine('Content-Disposition'));
 
 		ob_start();
 		$actual->sendBody();

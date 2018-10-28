@@ -158,13 +158,13 @@ class DownloadResponseTest extends \CIUnitTestCase
 
 	public function testIsSetDownloadableHeadlersFromBinary()
 	{
-		$response = new DownloadResponse('unit-test.txt', false);
+		$response = new DownloadResponse('unit test.txt', false);
 
 		$response->setBinary('test');
 		$response->buildHeaders();
 
 		$this->assertEquals('application/octet-stream', $response->getHeaderLine('Content-Type'));
-		$this->assertEquals('attachment; filename="unit-test.txt"', $response->getHeaderLine('Content-Disposition'));
+		$this->assertEquals('attachment; filename="unit test.txt"; filename*=UTF-8\'\'unit%20test.txt', $response->getHeaderLine('Content-Disposition'));
 		$this->assertEquals('0', $response->getHeaderLine('Expires-Disposition'));
 		$this->assertEquals('binary', $response->getHeaderLine('Content-Transfer-Encoding'));
 		$this->assertEquals('4', $response->getHeaderLine('Content-Length'));
@@ -178,7 +178,7 @@ class DownloadResponseTest extends \CIUnitTestCase
 		$response->buildHeaders();
 
 		$this->assertEquals('application/octet-stream', $response->getHeaderLine('Content-Type'));
-		$this->assertEquals('attachment; filename="unit-test.php"', $response->getHeaderLine('Content-Disposition'));
+		$this->assertEquals('attachment; filename="unit-test.php"; filename*=UTF-8\'\'unit-test.php', $response->getHeaderLine('Content-Disposition'));
 		$this->assertEquals('0', $response->getHeaderLine('Expires-Disposition'));
 		$this->assertEquals('binary', $response->getHeaderLine('Content-Transfer-Encoding'));
 		$this->assertEquals(filesize(__FILE__), $response->getHeaderLine('Content-Length'));
@@ -192,7 +192,7 @@ class DownloadResponseTest extends \CIUnitTestCase
 		$response->setFilePath(__FILE__);
 		$response->buildHeaders();
 
-		$this->assertEquals('attachment; filename="unit-test.PHP"', $response->getHeaderLine('Content-Disposition'));
+		$this->assertEquals('attachment; filename="unit-test.PHP"; filename*=UTF-8\'\'unit-test.PHP', $response->getHeaderLine('Content-Disposition'));
 	}
 
 	public function testIsSetContentTypeFromFilename()

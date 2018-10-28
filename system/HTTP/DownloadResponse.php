@@ -210,7 +210,21 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	private function getContentDisponsition() : string
 	{
-		return sprintf('attachment; filename="%s"', $this->getDownloadFileName());
+		$download_filename = $this->getDownloadFileName();
+
+		$utf8_filename = $download_filename;
+
+		if (strtoupper($this->charset) !== 'UTF-8') {
+			$utf8_filename = mb_convert_encoding($download_filename, 'UTF-8', $this->charset);
+		}
+
+		$result = sprintf('attachment; filename="%s"', $download_filename);
+
+		if (isset($utf8_filename)) {
+			$result .= '; filename*=UTF-8\'\''.rawurlencode($utf8_filename);
+		}
+
+		return $result;
 	}
 
 	/**
