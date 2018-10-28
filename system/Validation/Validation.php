@@ -123,7 +123,7 @@ class Validation implements ValidationInterface
 	 *
 	 * @return bool
 	 */
-	public function run(array $data = null, string $group = null, ?string $db_group = null): bool
+	public function run(array $data = null, string $group = null, string $db_group = null): bool
 	{
 		$data = $data ?? $this->data;
 
