@@ -227,7 +227,7 @@ class MigrationRunner
 		}
 
 		// Check Migration consistency
-		$this->CheckMigrations($migrations, $method, $targetVersion);
+		$this->checkMigrations($migrations, $method, $targetVersion);
 
 		// loop migration for each namespace (module)
 		foreach ($migrations as $version => $migration)
@@ -426,7 +426,7 @@ class MigrationRunner
 	 *
 	 * @return    bool
 	 */
-	protected function CheckMigrations($migrations, $method, $targetversion)
+	protected function checkMigrations($migrations, $method, $targetversion)
 	{
 		// Check if no migrations found
 		if (empty($migrations))
