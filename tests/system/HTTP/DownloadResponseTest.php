@@ -184,6 +184,17 @@ class DownloadResponseTest extends \CIUnitTestCase
 		$this->assertEquals(filesize(__FILE__), $response->getHeaderLine('Content-Length'));
 	}
 
+	public function testIfTheCharacterCodeIsOtherThanUtf8ReplaceItWithUtf8AndRawurlencode()
+	{
+		$response = new DownloadResponse(mb_convert_encoding('テスト.php', 'Shift-JIS', 'UTF-8'), false);
+
+		$response->setFilePath(__FILE__);
+		$response->setContentType('application/octet-stream', 'Shift-JIS');
+		$response->buildHeaders();
+
+		$this->assertEquals('attachment; filename="'.mb_convert_encoding('テスト.php', 'Shift-JIS', 'UTF-8').'"; filename*=UTF-8\'\'%E3%83%86%E3%82%B9%E3%83%88.php', $response->getHeaderLine('Content-Disposition'));
+	}
+
 	public function testFileExtensionIsUpperCaseWhenAndroidOSIs2()
 	{
 		$_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Linux; U; Android 2.0.3; ja-jp; SC-02C Build/IML74K) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30';
