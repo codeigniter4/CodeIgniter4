@@ -129,9 +129,12 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="license.html">The MIT License (MIT)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Change Log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#version-version">Version 4.0-dev</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#version-4-0-0-alpha-2">Version 4.0.0-alpha.2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-version">Version 4.0-dev</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#prs-merged">PRs merged:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-4-0-0-alpha-2">Version 4.0.0-alpha.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">PRs merged:</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#version-4-0-0-alpha-1">Version 4.0.0-alpha.1</a></li>
@@ -203,14 +206,179 @@
 <div class="section" id="version-version">
 <h2>Version 4.0-dev<a class="headerlink" href="#version-version" title="Permalink to this headline">¶</a></h2>
 <p>Release Date: Not Released</p>
+<p><strong>Next alpha release of CodeIgniter4</strong></p>
+<p>The list of changed files follows, with PR numbers shown.</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>application /</dt>
+<dd><ul class="first last">
+<li>Config/Mimes #1368</li>
+<li>Filters/Honeypot #1376</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>public /</li>
+<li><dl class="first docutils">
+<dt>system /</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Commands/</dt>
+<dd><ul class="first last">
+<li>Database/CreateMigration #1374</li>
+<li>Sessions/CrateMigration #1357</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Database/</dt>
+<dd><ul class="first last">
+<li>Forge #1343</li>
+<li>MigrationRunner #1371</li>
+<li>MySQLi/Forge #1343, #1344</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Debug</dt>
+<dd><ul class="first last">
+<li>Toolbar #1370</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>HTTP/</dt>
+<dd><ul class="first last">
+<li>DownloadResponse #1375</li>
+<li>ResponseInterface #1384</li>
+<li>UploadedFile #1368</li>
+<li>URI #1213</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Language/en/</dt>
+<dd><ul class="first last">
+<li>Filters #1378</li>
+<li>Migrations #1374</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Pager/</dt>
+<dd><ul class="first last">
+<li>Pager #1213</li>
+<li>PagerRenderer #1213</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Validation /</dt>
+<dd><ul class="first last">
+<li>Rules #1345</li>
+<li>Validation #1345</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>View/</dt>
+<dd><ul class="first last">
+<li>View #1357, #1377</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Entity #1369</li>
+<li>Model #1345, #1380</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>tests /</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>HTTP/</dt>
+<dd><ul class="first last">
+<li>DownloadResponseTest #1375</li>
+<li>ResponseTest #1375</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Pager/</dt>
+<dd><ul class="first last">
+<li>PagerRendererTest #1213</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>user_guide_src /source/</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>dbmgmt/</dt>
+<dd><ul class="first last">
+<li>migration #1374</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>libraries/</dt>
+<dd><ul class="first last">
+<li>pagination #1213</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>/</li>
+</ul>
+<div class="section" id="prs-merged">
+<h3>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>#1384 add missing ResponseInterface contants</li>
+<li>#1381 Remove unused use statements</li>
+<li>#1380 count() improvement, use truthy check</li>
+<li>#1378 Update Filters language file</li>
+<li>#1377 fix monolog will cause an error</li>
+<li>#1376 Fix cannot use class Honeypot because already in use in AppFiltersHoneypot</li>
+<li>#1375 Give download a header conforming to RFC 6266</li>
+<li>#1374 Missing feature migration.</li>
+<li>#1371 update method name in coding style</li>
+<li>#1370 Toolbar needs logging. Fixes #1258</li>
+<li>#1369 Remove invisible character</li>
+<li>#1368 UploadedFile-&gt;guessExtenstion()...</li>
+<li>#1360 rm &#8211;cached php_errors.log file</li>
+<li>#1357 Update template file is not .php compatibility</li>
+<li>#1345 is_unique tried to connect to default database instead of defined in DBGroup</li>
+<li>#1344 Not to quote unecessary table options</li>
+<li>#1343 Avoid add two single quote to constraint</li>
+<li>#1213 URI segment as page number in Pagination</li>
+</ul>
+</div>
 </div>
 <div class="section" id="version-4-0-0-alpha-2">
 <h2>Version 4.0.0-alpha.2<a class="headerlink" href="#version-4-0-0-alpha-2" title="Permalink to this headline">¶</a></h2>
 <p>Release Date: Oct 26, 2018</p>
 <p><strong>Second alpha release of CodeIgniter4</strong></p>
-<p>The list of changed files follows, with PR numbers shown.
-If you open this page on the repo github site, they will link
-to the PRs in question.</p>
+<p>The list of changed files follows, with PR numbers shown.</p>
 <dl class="docutils">
 <dt>application /</dt>
 <dd><ul class="first last simple">
@@ -586,8 +754,8 @@ to the PRs in question.</p>
 </ul>
 </dd>
 </dl>
-<div class="section" id="prs-merged">
-<h3>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h3>PRs merged:<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>#1361 Add timing assertion to CIUnitTestCase</li>
 <li>#1312 Add headerEmitted assertions to CIUnitTestCase</li>
@@ -955,7 +1123,7 @@ security, text, url</li>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 26, 2018.
+      Last updated on Oct 29, 2018.
 
     </p>
   </div>

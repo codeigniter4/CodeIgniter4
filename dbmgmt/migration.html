@@ -449,10 +449,19 @@ for the version.</p>
 <li>(-g) to chose database group, otherwise default database group will be used.</li>
 </ul>
 <p><strong>create</strong></p>
-<p>Creates a skeleton migration file in <strong>application/Database/Migrations</strong> using the timestamp format:</p>
+<p>Creates a skeleton migration file in <strong>application/Database/Migrations</strong>.</p>
+<ul>
+<li><p class="first">When migration type is timestamp, using the YYYYMMDDHHIISS format:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span><span class="o">:</span><span class="nx">create</span> <span class="p">[</span><span class="nx">filename</span><span class="p">]</span>
 </pre></div>
 </div>
+</li>
+<li><p class="first">When migration type is sequential, using the numbered in sequence, default with 001:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span><span class="o">:</span><span class="nx">create</span> <span class="p">[</span><span class="nx">filename</span><span class="p">]</span> <span class="mo">001</span>
+</pre></div>
+</div>
+</li>
+</ul>
 <p>You can use (create) with the following options:</p>
 <ul class="simple">
 <li>(-n) to choose namespace, otherwise (App) namespace will be used.</li>
@@ -711,7 +720,7 @@ specific versions. It works just like <code class="docutils literal"><span class
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 26, 2018.
+      Last updated on Oct 29, 2018.
 
     </p>
   </div>
