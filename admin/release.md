@@ -47,7 +47,7 @@ and the `post-release` script does the other three between
 the manual steps.
 
 For now, everything past the release branch build will be done
-nanually, until the condidence level is high enough to
+manually, until the condidence level is high enough to
 automate some/all of those steps.
 
 ## Assumptions
