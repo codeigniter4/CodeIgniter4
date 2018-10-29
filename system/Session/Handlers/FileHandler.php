@@ -83,7 +83,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 * Constructor
 	 * @param BaseConfig $config
 	 */
-	public function __construct($config, string $ipAddress = null)
+	public function __construct($config, string $ipAddress)
 	{
 		parent::__construct($config);
 

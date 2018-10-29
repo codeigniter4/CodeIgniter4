@@ -93,7 +93,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @throws \Exception
 	 */
-	public function __construct(BaseConfig $config, string $ipAddress = null)
+	public function __construct(BaseConfig $config, string $ipAddress)
 	{
 		parent::__construct($config);
 
