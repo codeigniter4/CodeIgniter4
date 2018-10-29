@@ -1,6 +1,5 @@
 <?php namespace CodeIgniter\HTTP;
 
-use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use DateTime;
 use DateTimeZone;

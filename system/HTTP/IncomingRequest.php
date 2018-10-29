@@ -37,7 +37,6 @@ namespace CodeIgniter\HTTP;
  * @since        Version 3.0.0
  * @filesource
  */
-use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;

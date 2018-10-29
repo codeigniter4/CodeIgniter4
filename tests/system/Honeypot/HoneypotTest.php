@@ -2,13 +2,9 @@
 
 namespace CodeIgniter\Honeypot;
 
-use Config\App;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
-use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\URI;
-use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 
 require_once __DIR__ . '/fixtures/HoneyTrap.php';

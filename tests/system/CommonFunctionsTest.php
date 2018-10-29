@@ -5,7 +5,6 @@ use Config\App;
 use Config\Autoload;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Router\RouteCollection;
-use CodeIgniter\HTTP\RequestResponse;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;

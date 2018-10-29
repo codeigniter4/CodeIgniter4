@@ -35,7 +35,6 @@
  * @since        Version 4.0.0
  * @filesource
  */
-use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Exceptions\DownloadException;
 use CodeIgniter\Files\File;
 use Config\Mimes;

@@ -1,9 +1,6 @@
 <?php
 namespace CodeIgniter\Helpers;
 
-use Config\App;
-use CodeIgniter\Config\Services;
-use Tests\Support\HTTP\MockResponse;
 
 final class DateHelperTest extends \CIUnitTestCase
 {

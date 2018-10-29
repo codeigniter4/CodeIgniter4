@@ -1,6 +1,5 @@
 <?php namespace Tests\Support\Log\Handlers;
 
-use CodeIgniter\Log\Handlers\HandlerInterface;
 
 /**
  * Class TestHandler

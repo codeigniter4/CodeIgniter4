@@ -3,7 +3,6 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\Events\Events;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
-use CodeIgniter\Test\Filters\CITestKeyboardFilter;
 use CodeIgniter\HTTP\Response;
 use Config\App;
 
