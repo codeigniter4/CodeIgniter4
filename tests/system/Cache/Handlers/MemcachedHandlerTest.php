@@ -22,7 +22,7 @@ class MemcachedHandlerTest extends \CIUnitTestCase
 
 		$this->config = new \Config\Cache();
 
-		$this->memcachedHandler = new MemcachedHandler($this->config->memcached, '127.0.0.1');
+		$this->memcachedHandler = new MemcachedHandler($this->config);
 		if (!$this->memcachedHandler->isSupported()) {
 			$this->markTestSkipped('Not support memcached and memcache');
 		}
