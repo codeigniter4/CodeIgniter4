@@ -265,12 +265,14 @@ You can use (refresh) with the following options:
 
 **create**
 
-Creates a skeleton migration file in **application/Database/Migrations** ::
+Creates a skeleton migration file in **application/Database/Migrations**.
 
-- When migration type is timestamp, using the YYYYMMDDHHIISS format.
+- When migration type is timestamp, using the YYYYMMDDHHIISS format::
+
   > php spark migrate:create [filename]
 
-- When migration type is sequential, using the numbered in sequence, default with 001.
+- When migration type is sequential, using the numbered in sequence, default with 001::
+
   > php spark migrate:create [filename] 001
 
 You can use (create) with the following options:
