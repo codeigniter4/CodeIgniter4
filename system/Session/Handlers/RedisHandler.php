@@ -37,7 +37,6 @@
  */
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
-use Config\Services;
 
 /**
  * Session handler using Redis for persistence
@@ -94,7 +93,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @throws \Exception
 	 */
-	public function __construct(BaseConfig $config)
+	public function __construct(BaseConfig $config, string $ipAddress = null)
 	{
 		parent::__construct($config);
 
@@ -121,7 +120,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 			throw SessionException::forInvalidSavePathFormat($this->savePath);
 		}
 
-                $this->ipAdddress = Services::request()->getIpAddress();
+                $this->ipAdddress = $ipAddress;
 		if ($this->matchIP === true)
 		{
 			$this->keyPrefix .= $this->ipAddress . ':';

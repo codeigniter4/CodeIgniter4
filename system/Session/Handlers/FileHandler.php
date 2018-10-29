@@ -37,7 +37,6 @@
  */
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
-use Config\Services;
 
 /**
  * Session handler using file system for storage
@@ -84,7 +83,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 * Constructor
 	 * @param BaseConfig $config
 	 */
-	public function __construct($config)
+	public function __construct($config, string $ipAddress = null)
 	{
 		parent::__construct($config);
 
@@ -104,7 +103,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
                        $this->savePath = $sessionPath;
 		}
 
-                $this->ipAdddress = Services::request()->getIpAddress();
+                $this->ipAdddress = $ipAddress;
 	}
 
 	//--------------------------------------------------------------------

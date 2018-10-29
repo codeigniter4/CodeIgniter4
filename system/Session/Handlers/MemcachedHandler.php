@@ -37,7 +37,6 @@
  */
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
-use Config\Services;
 
 /**
  * Session handler using Memcache for persistence
@@ -86,7 +85,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 * @param BaseConfig $config
 	 * @throws \CodeIgniter\Session\Exceptions\SessionException
 	 */
-	public function __construct(BaseConfig $config)
+	public function __construct(BaseConfig $config, string $ipAddress = null)
 	{
 		parent::__construct($config);
 
@@ -95,7 +94,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 			throw SessionException::forEmptySavepath();
 		}
 
-                $this->ipAdddress = Services::request()->getIpAddress();
+                $this->ipAdddress = $ipAddress;
 		if ($this->matchIP === true)
 		{
 			$this->keyPrefix .= $this->ipAddress . ':';

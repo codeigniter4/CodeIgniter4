@@ -39,7 +39,6 @@ use CodeIgniter\Session\Exceptions\SessionException;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Database\BaseConnection;
 use Config\Database;
-use Config\Services;
 
 /**
  * Session handler using current Database for storage
@@ -93,7 +92,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	 * Constructor
 	 * @param BaseConfig $config
 	 */
-	public function __construct(BaseConfig $config)
+	public function __construct(BaseConfig $config, string $ipAddress = null)
 	{
 		parent::__construct($config);
 
@@ -121,7 +120,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 			$this->platform = 'postgre';
 		}
 
-                $this->ipAddress = Services::request()->getIpAddress();
+                $this->ipAddress = $ipAddress;
 	}
 
 	//--------------------------------------------------------------------
