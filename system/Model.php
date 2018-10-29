@@ -509,7 +509,7 @@ class Model
 		}
 
 		// Convert any Time instances to appropriate $dateFormat
-		if (count($properties))
+		if ($properties)
 		{
 			foreach ($properties as $key => $value)
 			{
