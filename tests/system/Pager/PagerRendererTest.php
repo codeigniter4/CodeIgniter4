@@ -227,4 +227,192 @@ class PagerRendererTest extends \CIUnitTestCase
 		$this->assertEquals(null, $pager->getNext());
 	}
 
+
+
+
+	//--------------------------------------------------------------------
+
+	public function testHasPreviousReturnsFalseWhenFirstIsOneSegment()
+	{
+		$details = [
+			'uri'			 => $this->uri,
+			'pageCount'		 => 5,
+			'currentPage'	 => 1,
+			'total'			 => 100,
+			'segment'		 => 2,
+		];
+
+		$pager = new PagerRenderer($details);
+
+		$this->assertFalse($pager->hasPrevious());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testHasPreviousReturnsTrueWhenFirstIsMoreThanOneSegment()
+	{
+		$uri = $this->uri;
+		$uri->addQuery('foo', 'bar');
+
+		$details = [
+			'uri'			 => $uri,
+			'pageCount'		 => 10,
+			'currentPage'	 => 5,
+			'total'			 => 100,
+			'segment'		 => 2
+		];
+
+		$pager = new PagerRenderer($details);
+		$pager->setSurroundCount(2);
+
+		$this->assertTrue($pager->hasPrevious());
+		$this->assertEquals('http://example.com/foo/2?foo=bar', $pager->getPrevious());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetPreviousWhenSurroundCountIsZeroSegment()
+	{
+		$uri = $this->uri;
+		$uri->addQuery('foo', 'bar');
+
+		$details = [
+			'uri'			 => $uri,
+			'pageCount'		 => 50,
+			'currentPage'	 => 4,
+			'total'			 => 100,
+			'segment'		 => 2,
+		];
+
+		$pager = new PagerRenderer($details);
+		$pager->setSurroundCount(0);
+
+		$this->assertTrue($pager->hasPrevious());
+		$this->assertEquals('http://example.com/foo/3?foo=bar', $pager->getPrevious());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testHasNextReturnsFalseWhenLastIsTotalSegment()
+	{
+		$uri = $this->uri;
+		$uri->addQuery('foo', 'bar');
+
+		$details = [
+			'uri'			 => $uri,
+			'pageCount'		 => 5,
+			'currentPage'	 => 4,
+			'total'			 => 100,
+			'segment'		 => 2,
+		];
+
+		$pager = new PagerRenderer($details);
+		$pager->setSurroundCount(2);
+
+		$this->assertFalse($pager->hasNext());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testHasNextReturnsTrueWhenLastIsSmallerThanTotalSegment()
+	{
+		$uri = $this->uri;
+		$uri->addQuery('foo', 'bar');
+
+		$details = [
+			'uri'			 => $uri,
+			'pageCount'		 => 50,
+			'currentPage'	 => 4,
+			'total'			 => 100,
+			'segment'		 => 2
+		];
+
+		$pager = new PagerRenderer($details);
+		$pager->setSurroundCount(2);
+
+		$this->assertTrue($pager->hasNext());
+		$this->assertEquals('http://example.com/foo/7?foo=bar', $pager->getNext());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetNextWhenSurroundCountIsZeroSegment()
+	{
+		$uri = $this->uri;
+		$uri->addQuery('foo', 'bar');
+
+		$details = [
+			'uri'			 => $uri,
+			'pageCount'		 => 50,
+			'currentPage'	 => 4,
+			'total'			 => 100,
+			'segment'		 => 2,
+		];
+
+		$pager = new PagerRenderer($details);
+		$pager->setSurroundCount(0);
+
+		$this->assertTrue($pager->hasNext());
+		$this->assertEquals('http://example.com/foo/5?foo=bar', $pager->getNext());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testLinksBasicsSegment()
+	{
+		$details = [
+			'uri'			 => $this->uri,
+			'pageCount'		 => 50,
+			'currentPage'	 => 4,
+			'total'			 => 100,
+			'segment'		 => 2
+		];
+
+		$pager = new PagerRenderer($details);
+		$pager->setSurroundCount(1);
+
+		$expected = [
+			[
+				'uri'	 => 'http://example.com/foo/3',
+				'title'	 => 3,
+				'active' => false
+			],
+			[
+				'uri'	 => 'http://example.com/foo/4',
+				'title'	 => 4,
+				'active' => true
+			],
+			[
+				'uri'	 => 'http://example.com/foo/5',
+				'title'	 => 5,
+				'active' => false
+			],
+		];
+
+		$this->assertEquals($expected, $pager->links());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetFirstAndGetLastSegment()
+	{
+		$uri = $this->uri;
+		$uri->addQuery('foo', 'bar');
+
+		$details = [
+			'uri'			 => $uri,
+			'pageCount'		 => 50,
+			'currentPage'	 => 4,
+			'total'			 => 100,
+			'segment'		 => 2
+		];
+
+		$pager = new PagerRenderer($details);
+
+		$this->assertEquals('http://example.com/foo/1?foo=bar', $pager->getFirst());
+		$this->assertEquals('http://example.com/foo/50?foo=bar', $pager->getLast());
+	}
+
+
+
 }
