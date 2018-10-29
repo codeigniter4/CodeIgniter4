@@ -72,11 +72,6 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	protected $fileNew;
 
-        /**
-         * @var string
-         */
-        protected $ipAddress;
-
 	//--------------------------------------------------------------------
 
 	/**
@@ -85,7 +80,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	public function __construct($config, string $ipAddress)
 	{
-		parent::__construct($config);
+		parent::__construct($config, $ipAddress);
 
 		if ( ! empty($config->sessionSavePath))
 		{
@@ -102,8 +97,6 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 
                        $this->savePath = $sessionPath;
 		}
-
-                $this->ipAdddress = $ipAddress;
 	}
 
 	//--------------------------------------------------------------------

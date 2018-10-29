@@ -81,11 +81,6 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	protected $rowExists = false;
 
-        /**
-         * @var string
-         */
-        protected $ipAddress;
-
 	//--------------------------------------------------------------------
 
 	/**
@@ -94,7 +89,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	public function __construct(BaseConfig $config, string $ipAddress)
 	{
-		parent::__construct($config);
+		parent::__construct($config, $ipAddress);
 
 		// Determine Table
 		$this->table = $config->sessionSavePath;
@@ -119,8 +114,6 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			$this->platform = 'postgre';
 		}
-
-                $this->ipAddress = $ipAddress;
 	}
 
 	//--------------------------------------------------------------------

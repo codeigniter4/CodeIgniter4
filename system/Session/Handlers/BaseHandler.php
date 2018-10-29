@@ -113,13 +113,18 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 */
 	protected $savePath;
 
+	/**
+        * @var string
+        */
+       protected $ipAddress;
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
 	 * @param BaseConfig $config
 	 */
-	public function __construct($config)
+	public function __construct($config, string $ipAddress)
 	{
 		$this->cookiePrefix = $config->cookiePrefix;
 		$this->cookieDomain = $config->cookieDomain;
@@ -128,6 +133,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 		$this->cookieName = $config->sessionCookieName;
 		$this->matchIP = $config->sessionMatchIP;
 		$this->savePath = $config->sessionSavePath;
+		$this->ipAdddress = $ipAddress;
 	}
 
 	//--------------------------------------------------------------------

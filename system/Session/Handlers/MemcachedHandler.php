@@ -87,14 +87,13 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	public function __construct(BaseConfig $config, string $ipAddress)
 	{
-		parent::__construct($config);
+		parent::__construct($config, $ipAddress);
 
 		if (empty($this->savePath))
 		{
 			throw SessionException::forEmptySavepath();
 		}
 
-                $this->ipAdddress = $ipAddress;
 		if ($this->matchIP === true)
 		{
 			$this->keyPrefix .= $this->ipAddress . ':';

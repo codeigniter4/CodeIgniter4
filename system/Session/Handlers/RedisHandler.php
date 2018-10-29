@@ -95,7 +95,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	public function __construct(BaseConfig $config, string $ipAddress)
 	{
-		parent::__construct($config);
+		parent::__construct($config, $ipAddress);
 
 		if (empty($this->savePath))
 		{
@@ -120,7 +120,6 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 			throw SessionException::forInvalidSavePathFormat($this->savePath);
 		}
 
-                $this->ipAdddress = $ipAddress;
 		if ($this->matchIP === true)
 		{
 			$this->keyPrefix .= $this->ipAddress . ':';
