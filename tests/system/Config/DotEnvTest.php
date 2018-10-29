@@ -2,7 +2,6 @@
 namespace CodeIgniter\Config;
 
 use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
 
 //require_once 'system/Benchmark/Timer.php';
 

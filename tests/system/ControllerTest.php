@@ -3,7 +3,6 @@
 use CodeIgniter\Log\Logger;
 use Config\App;
 use CodeIgniter\HTTP\UserAgent;
-use Tests\Support\Config\MockLogger;
 use Tests\Support\MockCodeIgniter;
 
 /**

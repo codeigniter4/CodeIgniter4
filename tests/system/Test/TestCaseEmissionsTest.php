@@ -2,7 +2,6 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 
 /**

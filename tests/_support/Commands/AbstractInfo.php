@@ -2,8 +2,6 @@
 namespace Tests\Support\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
-use CodeIgniter\CodeIgniter;
 
 abstract class AbstractInfo extends BaseCommand
 {
