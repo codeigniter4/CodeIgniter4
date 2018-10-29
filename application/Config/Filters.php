@@ -9,7 +9,7 @@ class Filters extends BaseConfig
 	public $aliases = [
 		'csrf' 	  => \App\Filters\CSRF::class,
 		'toolbar' => \App\Filters\DebugToolbar::class,
-		'honeypot' => \App\Filters\HoneypotFilter::class
+		'honeypot' => \App\Filters\Honeypot::class
 	];
 
 	// Always applied before every request
