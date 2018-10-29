@@ -1233,7 +1233,7 @@ class Model
 		// or an array of rules.
 		if (is_string($this->validationRules))
 		{
-			$valid = $this->validation->run($data, $this->validationRules);
+			$valid = $this->validation->run($data, $this->validationRules, $this->DBGroup);
 		}
 		else
 		{
@@ -1241,7 +1241,7 @@ class Model
 			// the value found in $data, if exists.
 			$rules = $this->fillPlaceholders($this->validationRules, $data);
 
-			$this->validation->setRules($rules, $this->validationMessages);
+			$this->validation->setRules($rules, $this->validationMessages, $this->DBGroup);
 			$valid = $this->validation->run($data);
 		}
 
