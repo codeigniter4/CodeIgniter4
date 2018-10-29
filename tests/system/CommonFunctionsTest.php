@@ -320,7 +320,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 		$config = (object)$defaults;
 
-		$session = new MockSession(new FileHandler($config), $config);
+		$session = new MockSession(new FileHandler($config, '127.0.0.1'), $config);
 		$session->setLogger(new TestLogger(new Logger()));
 		\CodeIgniter\Config\BaseService::injectMock('session', $session);
 	}
