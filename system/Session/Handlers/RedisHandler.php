@@ -79,11 +79,6 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
         protected $sessionExpiration = 7200;
 
-        /**
-         * @var string
-         */
-        protected $ipAddress;
-
 	//--------------------------------------------------------------------
 
 	/**
