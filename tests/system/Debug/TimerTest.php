@@ -93,21 +93,17 @@ class TimerTest extends \CIUnitTestCase
 	public function testLongExecutionTime()
 	{
 		$timer = new Timer();
-
 		$timer->start('longjohn', strtotime('-11 minutes'));
-
-		// Use floor here to account for fractional differences in seconds.
-		$this->assertEquals(11 * 60, (int) floor($timer->getElapsedTime('longjohn')));
+		$this->assertCloseEnough(11 * 60, $timer->getElapsedTime('longjohn'));
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testLongExecutionTimeThroughCommonFunc()
 	{
-		timer()->start('longjohn', strtotime('-11 minutes'));
-
-		// Use floor here to account for fractional differences in seconds.
-		$this->assertEquals(11 * 60, (int) floor(timer()->getElapsedTime('longjohn')));
+		$timer = new Timer();
+		$timer->start('longjohn', strtotime('-11 minutes'));
+		$this->assertCloseEnough(11 * 60, $timer->getElapsedTime('longjohn'));
 	}
 
 	//--------------------------------------------------------------------

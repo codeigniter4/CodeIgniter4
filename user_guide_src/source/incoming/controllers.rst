@@ -189,7 +189,7 @@ Example::
 		{
 			return $this->$method(...$params);
 		}
-		show_404();
+		throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 	}
 
 Private methods

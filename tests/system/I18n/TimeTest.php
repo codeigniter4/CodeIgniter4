@@ -25,7 +25,7 @@ class TimeTest extends \CIUnitTestCase
 
 		$time = new Time(null, 'America/Chicago');
 
-		$this->assertEquals($formatter->format(strtotime('now')), (string)$time);
+		$this->assertEquals($formatter->format($time), (string)$time);
 	}
 
 	public function testTimeWithTimezone()
@@ -41,7 +41,7 @@ class TimeTest extends \CIUnitTestCase
 
 		$time = new Time('now', 'Europe/London');
 
-		$this->assertEquals($formatter->format(strtotime('now')), (string)$time);
+		$this->assertEquals($formatter->format($time), (string)$time);
 	}
 
 	public function testTimeWithTimezoneAndLocale()
@@ -57,7 +57,7 @@ class TimeTest extends \CIUnitTestCase
 
 		$time = new Time('now', 'Europe/London', 'fr_FR');
 
-		$this->assertEquals($formatter->format(strtotime('now')), (string)$time);
+		$this->assertEquals($formatter->format($time), (string)$time);
 	}
 
 	public function testTimeWithDateTimeZone()
@@ -73,7 +73,7 @@ class TimeTest extends \CIUnitTestCase
 
 		$time = new Time('now', new \DateTimeZone('Europe/London'), 'fr_FR');
 
-		$this->assertEquals($formatter->format(strtotime('now')), (string)$time);
+		$this->assertEquals($formatter->format($time), (string)$time);
 	}
 
 	public function testToDateTime()

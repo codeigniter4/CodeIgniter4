@@ -234,6 +234,15 @@ You can pass 0 to wait indefinitely::
 
 	$response->request('GET', 'http://example.com', ['connect_timeout' => 0]);
 
+cookie
+======
+
+This specifies the filename that CURL should use to read cookie values from, and
+to save cookie values to. This is done using the CURL_COOKIEJAR and CURL_COOKIEFILE options.
+An example::
+
+	$response->request('GET', 'http://example.com', ['cookie' => WRITEPATH . 'CookieSaver.txt']);
+
 debug
 =====
 
@@ -326,7 +335,7 @@ has been disabled. Any files that you want to send must be passed as instances o
 
 	$post_data = [
 		'foo'      => 'bar',
-		'userfile' => new CURLFile('/path/to/file.txt')
+		'userfile' => new \CURLFile('/path/to/file.txt')
 	];
 
 .. note:: ``multipart`` cannot be used with the ``form_params`` option. You can only use one or the other. Use

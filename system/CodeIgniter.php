@@ -35,6 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
+use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -59,7 +60,7 @@ class CodeIgniter
 	/**
 	 * The current version of CodeIgniter Framework
 	 */
-	const CI_VERSION = '4.0.0-alpha.1';
+	const CI_VERSION = '4.0.0-alpha.2';
 
 	/**
 	 * App startup time.
@@ -93,7 +94,7 @@ class CodeIgniter
 
 	/**
 	 * Current response.
-	 * @var HTTP\Response
+	 * @var HTTP\ResponseInterface
 	 */
 	protected $response;
 
@@ -327,6 +328,7 @@ class CodeIgniter
 		// so it can be used with the output.
 		$this->gatherOutput($cacheConfig, $returned);
 
+		$filters->setResponse($this->response);
 		// Run "after" filters
 		$response = $filters->run($uri, 'after');
 
@@ -891,6 +893,10 @@ class CodeIgniter
 			ob_end_clean();
 		}
 
+		if ($returned instanceof DownloadResponse) {
+			$this->response = $returned;
+			return;
+		}
 		// If the controller returned a response object,
 		// we need to grab the body from it so it can
 		// be added to anything else that might have been

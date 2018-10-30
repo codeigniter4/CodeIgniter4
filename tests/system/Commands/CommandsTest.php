@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Commands;
+<?php
+namespace CodeIgniter\Commands;
 
 use Config\Services;
 use Tests\Support\Config\MockAppConfig;
@@ -6,7 +7,6 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\CommandRunner;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
-use Tests\Support\Config\MockLogger;
 
 class CommandsTest extends \CIUnitTestCase
 {
@@ -18,7 +18,6 @@ class CommandsTest extends \CIUnitTestCase
 	protected $response;
 	protected $logger;
 	protected $runner;
-
 
 	public function setUp()
 	{
@@ -71,6 +70,36 @@ class CommandsTest extends \CIUnitTestCase
 		// make sure the result looks like a command list
 		$this->assertContains('Lists the available commands.', $result);
 		$this->assertContains('Displays basic usage information.', $result);
+	}
+
+	public function testCustomCommand()
+	{
+		$this->runner->index(['app:info']);
+		$result = CITestStreamFilter::$buffer;
+
+		$this->assertContains('CI Version:', $result);
+	}
+
+	public function testNonexistantCommand()
+	{
+		// catch errors too
+		$this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
+
+		$this->runner->index(['app:oops']);
+		$result = CITestStreamFilter::$buffer;
+
+		$this->assertContains('not found', $result);
+	}
+
+	public function testAbstractCommand()
+	{
+		// catch errors too
+		$this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
+
+		$this->runner->index(['app:pablo']);
+		$result = CITestStreamFilter::$buffer;
+
+		$this->assertContains('not found', $result);
 	}
 
 }

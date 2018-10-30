@@ -1,4 +1,6 @@
-<?php namespace App\Filters;
+<?php
+
+namespace App\Filters;
 
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
@@ -6,46 +8,37 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 
-class Honeypot implements FilterInterface 
+class Honeypot implements FilterInterface
 {
 
-    /**
-	 * Checks if Honeypot field is empty, if so
-     * then the requester is a bot,show a blank
-     * page
+	/**
+	 * Checks if Honeypot field is empty; if not
+	 * then the requester is a bot
 	 *
-	 * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
+	 * @param CodeIgniter\HTTP\RequestInterface $request
 	 *
 	 * @return mixed
 	 */
+	public function before(RequestInterface $request)
+	{
+		$honeypot = Services::honeypot(new \Config\Honeypot());
+		if ($honeypot->hasContent($request))
+		{
+			throw HoneypotException::isBot();
+		}
+	}
 
-    public function before (RequestInterface $request) 
-    {
-
-        // Checks honeypot field if value was entered then show blank if so.
-    
-        $honeypot = Services::honeypot(new \Config\Honeypot());
-        if($honeypot->hasContent($request))
-        {
-            throw HoneypotException::isBot();
-        }
-        
-    }
-
-    /**
-	 * Checks if Honeypot field is empty, if so
-     * then the requester is a bot,show a blank
-     * page
+	/**
+	 * Attach a honypot to the current response.
 	 *
-	 * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
-	 * @param ResponseInterface|\CodeIgniter\HTTP\Response $response
+	 * @param CodeIgniter\HTTP\RequestInterface $request
+	 * @param CodeIgniter\HTTP\ResponseInterface $response
 	 * @return mixed
 	 */
+	public function after(RequestInterface $request, ResponseInterface $response)
+	{
+		$honeypot = Services::honeypot(new \Config\Honeypot());
+		$honeypot->attachHoneypot($response);
+	}
 
-    public function after (RequestInterface $request, ResponseInterface $response) 
-    {
-        
-        $honeypot = Services::honeypot(new \Config\Honeypot());
-        $honeypot->attachHoneypot($response);
-    }
 }

@@ -20,3 +20,4 @@ patterns. The database functions offer clear, simple syntax.
     Getting MetaData <metadata>
     Custom Function Calls <call_function>
     Database Events <events>
+    Database Utilities <utilities>

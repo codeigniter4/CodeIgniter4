@@ -10,10 +10,10 @@
  * @link         https://codeigniter.com
  * @since        Version 3.0.0
  * @filesource
- * 
+ *
  * @codeCoverageIgnore
  */
 return [
-	'noFilter'           => '\'{0}\' filter must have a matching alias defined.',
+	'noFilter'           => '{0} filter must have a matching alias defined.',
 	'incorrectInterface' => '{0} must implement CodeIgniter\Filters\FilterInterface.',
 ];

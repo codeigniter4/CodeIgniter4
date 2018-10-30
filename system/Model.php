@@ -38,7 +38,6 @@
 use Config\Database;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
-use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
@@ -479,45 +478,59 @@ class Model
 	 * properties as an array suitable for use in creates and updates.
 	 *
 	 * @param string|object $data
-	 * @param string $dateFormat
+	 * @param string        $dateFormat
 	 *
 	 * @return array
+	 * @throws \ReflectionException
 	 */
 	public static function classToArray($data, string $dateFormat = 'datetime'): array
 	{
-		$mirror = new \ReflectionClass($data);
-		$props = $mirror->getProperties(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED);
-
-		$properties = [];
-
-		// Loop over each property,
-		// saving the name/value in a new array we can return.
-		foreach ($props as $prop)
+		if (method_exists($data, 'toArray'))
 		{
-			// Must make protected values accessible.
-			$prop->setAccessible(true);
-			$propName = $prop->getName();
-			$properties[$propName] = $prop->getValue($data);
+			$properties = $data->toArray(true);
+		}
+		else
+		{
+			$mirror = new \ReflectionClass($data);
+			$props  = $mirror->getProperties(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED);
 
-			// Convert any Time instances to appropriate $dateFormat
-			if ($properties[$propName] instanceof Time)
+			$properties = [];
+
+			// Loop over each property,
+			// saving the name/value in a new array we can return.
+			foreach ($props as $prop)
 			{
-				$converted = (string)$properties[$propName];
+				// Must make protected values accessible.
+				$prop->setAccessible(true);
+				$propName              = $prop->getName();
+				$properties[$propName] = $prop->getValue($data);
+			}
+		}
 
-				switch($dateFormat)
+		// Convert any Time instances to appropriate $dateFormat
+		if ($properties)
+		{
+			foreach ($properties as $key => $value)
+			{
+				if ($value instanceof Time)
 				{
-					case 'datetime':
-						$converted = $properties[$propName]->format('Y-m-d H:i:s');
-						break;
-					case 'date':
-						$converted = $properties[$propName]->format('Y-m-d');
-						break;
-					case 'int':
-						$converted = $properties[$propName]->getTimestamp();
-						break;
-				}
+					switch ($dateFormat)
+					{
+						case 'datetime':
+							$converted = $value->format('Y-m-d H:i:s');
+							break;
+						case 'date':
+							$converted = $value->format('Y-m-d');
+							break;
+						case 'int':
+							$converted = $value->getTimestamp();
+							break;
+						default:
+							$converted = (string)$value;
+					}
 
-				$properties[$prop->getName()] = $converted;
+					$properties[$key] = $converted;
+				}
 			}
 		}
 
@@ -1077,11 +1090,14 @@ class Model
 			throw DataException::forInvalidAllowedFields(get_class($this));
 		}
 
-		foreach ($data as $key => $val)
+		if (is_array($data) && count($data))
 		{
-			if ( ! in_array($key, $this->allowedFields))
+			foreach ($data as $key => $val)
 			{
-				unset($data[$key]);
+				if (! in_array($key, $this->allowedFields))
+				{
+					unset($data[$key]);
+				}
 			}
 		}
 
@@ -1216,7 +1232,7 @@ class Model
 		// or an array of rules.
 		if (is_string($this->validationRules))
 		{
-			$valid = $this->validation->run($data, $this->validationRules);
+			$valid = $this->validation->run($data, $this->validationRules, $this->DBGroup);
 		}
 		else
 		{
@@ -1224,7 +1240,7 @@ class Model
 			// the value found in $data, if exists.
 			$rules = $this->fillPlaceholders($this->validationRules, $data);
 
-			$this->validation->setRules($rules, $this->validationMessages);
+			$this->validation->setRules($rules, $this->validationMessages, $this->DBGroup);
 			$valid = $this->validation->run($data);
 		}
 

@@ -103,7 +103,7 @@ Ensure that something you expected to be logged actually was::
 
 **assertEventTriggered($eventName)**
 
-Ensure that an event you excpected to be triggered actually was::
+Ensure that an event you expected to be triggered actually was::
 
     Events::on('foo', function($arg) use(&$result) {
         $result = $arg;
@@ -112,6 +112,47 @@ Ensure that an event you excpected to be triggered actually was::
     Events::trigger('foo', 'bar');
 
     $this->assertEventTriggered('foo');
+
+**assertHeaderEmitted($header, $ignoreCase=false)**
+
+Ensure that a header or cookie was actually emitted::
+
+    $response->setCookie('foo', 'bar');
+
+    ob_start();
+    $this->response->send();
+    $output = ob_get_clean(); // in case you want to check the adtual body
+
+    $this->assertHeaderEmitted("Set-Cookie: foo=bar");
+
+Note: the test case with this should be `run as a separate process
+in PHPunit <https://phpunit.readthedocs.io/en/7.4/annotations.html#runinseparateprocess>`_.
+
+**assertHeaderNotEmitted($header, $ignoreCase=false)**
+
+Ensure that a header or cookie was actually emitted::
+
+    $response->setCookie('foo', 'bar');
+
+    ob_start();
+    $this->response->send();
+    $output = ob_get_clean(); // in case you want to check the adtual body
+
+    $this->assertHeaderNotEmitted("Set-Cookie: banana");
+
+Note: the test case with this should be `run as a separate process
+in PHPunit <https://phpunit.readthedocs.io/en/7.4/annotations.html#runinseparateprocess>`_.
+
+**assertCloseEnough($expected, $actual, $message='', $tolerance=1)**
+
+For extended execution time testing, tests that the absolute difference
+between expected and actual time is within the prescribed tolerance.::
+
+    $timer = new Timer();
+    $timer->start('longjohn', strtotime('-11 minutes'));
+    $this->assertCloseEnough(11 * 60, $timer->getElapsedTime('longjohn'));
+
+The above test will allow the actual time to be either 600 or 601 seconds.
 
 Accessing Protected/Private Properties
 --------------------------------------

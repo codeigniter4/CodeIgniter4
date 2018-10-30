@@ -92,7 +92,7 @@ if ( ! function_exists('form_open'))
 		{
 			foreach ($hidden as $name => $value)
 			{
-				$form .= '<input type="hidden" name="' . $name . '" value="' . $value . '" style="display: none;" />' . "\n";
+				$form .= '<input type="hidden" name="' . $name . '" value="' . esc($value,'html') . '" style="display: none;" />' . "\n";
 			}
 		}
 
@@ -171,7 +171,7 @@ if ( ! function_exists('form_hidden'))
 
 		if ( ! is_array($value))
 		{
-			$form .= '<input type="hidden" name="' . $name . '" value="' . $value . "\" />\n";
+			$form .= '<input type="hidden" name="' . $name . '" value="' . esc($value,'html') . "\" />\n";
 		}
 		else
 		{

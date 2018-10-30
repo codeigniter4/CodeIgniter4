@@ -301,7 +301,7 @@ abstract class BaseUtils
 		extract($params);
 
 		// Load the xml helper
-//		get_instance()->load->helper('xml');
+              helper('xml');
 		// Generate the result
 		$xml = '<' . $root . '>' . $newline;
 		while ($row = $query->getUnbufferedRow())

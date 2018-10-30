@@ -60,6 +60,13 @@ class Pager implements PagerInterface
 	protected $groups = [];
 
 	/**
+	 * URI segment for groups if provided.
+	 *
+	 * @var array
+	 */
+	protected $segment = [];
+
+	/**
 	 * Our configuration instance.
 	 *
 	 * @var \Config\Pager
@@ -132,14 +139,15 @@ class Pager implements PagerInterface
 	 * @param int    $perPage
 	 * @param int    $total
 	 * @param string $template The output template alias to render.
+	 * @param int    $segment (if page number is provided by URI segment)
 	 *
 	 * @return string
 	 */
-	public function makeLinks(int $page, int $perPage, int $total, string $template = 'default_full'): string
+	public function makeLinks(int $page, int $perPage, int $total, string $template = 'default_full', int $segment = 0): string
 	{
 		$name = time();
 
-		$this->store($name, $page, $perPage, $total);
+		$this->store($name, $page, $perPage, $total, $segment);
 
 		return $this->displayLinks($name, $template);
 	}
@@ -178,11 +186,14 @@ class Pager implements PagerInterface
 	 * @param int    $page
 	 * @param int    $perPage
 	 * @param int    $total
+	 * @param int	 $segment
 	 *
 	 * @return mixed
 	 */
-	public function store(string $group, int $page, int $perPage, int $total)
+	public function store(string $group, int $page, int $perPage, int $total, int $segment = 0)
 	{
+		$this->segment[$group] = $segment;
+
 		$this->ensureGroup($group);
 
 		$this->groups[$group]['currentPage'] = $page;
@@ -315,17 +326,36 @@ class Pager implements PagerInterface
 
 		$uri = $this->groups[$group]['uri'];
 
+
+		$segment = $this->segment[$group]??0;
+
 		if ($this->only)
 		{
+
 			$query = array_intersect_key($_GET, array_flip($this->only));
 
-			$query['page'] = $page;
+			if($segment > 0)
+			{
+				$uri->setSegment($segment, $page);
+			}
+			else
+			{
+				$query['page'] = $page;
+			}
 
 			$uri->setQueryArray($query);
 		}
 		else
 		{
-			$uri->addQuery('page', $page);
+			if($segment > 0)
+			{
+				$uri->setSegment($segment, $page);
+			}
+			else
+			{
+				$uri->addQuery('page', $page);
+			}
+
 		}
 
 		return $returnObject === true ? $uri : (string) $uri;
@@ -432,6 +462,7 @@ class Pager implements PagerInterface
 
 		$newGroup['next'] = $this->getNextPageURI($group);
 		$newGroup['previous'] = $this->getPreviousPageURI($group);
+		$newGroup['segment'] = $this->segment[$group]??0;
 
 		return $newGroup;
 	}
@@ -470,10 +501,25 @@ class Pager implements PagerInterface
 			'uri'			 => clone Services::request()->uri,
 			'hasMore'		 => false,
 			'total'			 => null,
-			'currentPage'	 => $_GET['page_' . $group] ?? $_GET['page'] ?? 1,
 			'perPage'		 => $this->config->perPage,
 			'pageCount'		 => 1,
 		];
+
+		if(array_key_exists($group, $this->segment))
+		{
+			try
+			{
+				$this->groups[$group]['currentPage'] = $this->groups[$group]['uri']->getSegment($this->segment[$group]);
+			}
+			catch (\CodeIgniter\HTTP\Exceptions\HTTPException $e)
+			{
+				$this->groups[$group]['currentPage'] = 1;
+			}
+		}
+		else
+		{
+			$this->groups[$group]['currentPage'] = $_GET['page_' . $group] ?? $_GET['page'] ?? 1;
+		}
 
 		if ($_GET)
 		{

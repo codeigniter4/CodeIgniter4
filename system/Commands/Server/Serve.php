@@ -41,12 +41,13 @@ use CodeIgniter\CLI\CLI;
 
 /**
  * Launch the PHP development server
- * 
+ *
  * Not testable, as it throws phpunit for a loop :-/
  * @codeCoverageIgnore
  */
 class Serve extends BaseCommand
 {
+	protected $minPHPVersion = '7.1';
 
 	protected $group = 'CodeIgniter';
 	protected $name = 'serve';
@@ -61,6 +62,12 @@ class Serve extends BaseCommand
 
 	public function run(array $params)
 	{
+		// Valid PHP Version?
+		if (phpversion() < $this->minPHPVersion)
+		{
+			die("You PHP version must be {$this->minPHPVersion} or higher to run CodeIgniter. Current version: ". phpversion());
+		}
+
 		// Collect any user-supplied options and apply them
 		$php = CLI::getOption('php') ?? PHP_BINARY;
 		$host = CLI::getOption('host') ?? 'localhost';

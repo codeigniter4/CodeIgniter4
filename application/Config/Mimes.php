@@ -302,12 +302,21 @@ class Mimes
 	 * Attempts to determine the best file extension for a given mime type.
 	 *
 	 * @param string $type
+	 * @param string $proposed_extension - default extension (in case there is more than one with the same mime type)
 	 *
 	 * @return string|null The extension determined, or null if unable to match.
 	 */
-	public static function guessExtensionFromType(string $type)
+	public static function guessExtensionFromType(string $type, ?string $proposed_extension = null)
 	{
+
 		$type = trim(strtolower($type), '. ');
+
+		$proposed_extension = trim(strtolower($proposed_extension));
+
+		if(!is_null($proposed_extension) && array_key_exists($proposed_extension, self::$mimes) && in_array($type, self::$mimes[$proposed_extension]))
+		{
+			return $proposed_extension;
+		}
 
 		foreach (self::$mimes as $ext => $types)
 		{
@@ -323,6 +332,7 @@ class Mimes
 
 		return null;
 	}
+
 
 	//--------------------------------------------------------------------
 

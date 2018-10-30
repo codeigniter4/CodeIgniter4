@@ -10,7 +10,7 @@
  * @link         https://codeigniter.com
  * @since        Version 3.0.0
  * @filesource
- * 
+ *
  * @codeCoverageIgnore
  */
 return [
@@ -32,6 +32,13 @@ return [
 	// RedirectResponse
 	'invalidRoute'               => '{0, string} is not a valid route.',
 
+	// DownloadResponse
+	'cannotSetBinary'            => 'When setting filepath can not set binary.',
+	'cannotSetFilepath'          => 'When setting binary can not set filepath: {0}',
+	'notFoundDownloadSource'     => 'Not found download body source.',
+	'cannotSetCache'             => 'It does not supported caching for downloading.',
+	'cannotSetStatusCode'        => 'It does not supported chnage status code for downloading. code: {0}, reason: {1}',
+
 	// Response
 	'missingResponseStatus'      => 'HTTP Response is missing a status code',
 	'invalidStatusCode'          => '{0, string} is not a valid HTTP return status code',
@@ -51,7 +58,7 @@ return [
 
 	// CSRF
 	'disallowedAction'           => 'The action you requested is not allowed.',
-	
+
 	// Uploaded file moving
 	'alreadyMoved'				 => 'The uploaded file has already been moved.',
 	'invalidFile'				 => 'The original file is not a valid file.',

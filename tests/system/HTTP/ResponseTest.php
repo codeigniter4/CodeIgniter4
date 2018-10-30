@@ -319,4 +319,40 @@ class ResponseTest extends \CIUnitTestCase
 
 		$this->assertEquals($expected, $response->getXML());
 	}
+
+	public function testGetDownloadResponseByData()
+	{
+		$response = new Response(new App());
+
+		$actual = $response->download('unit-test.txt', 'data');
+
+		$this->assertInstanceOf(DownloadResponse::class, $actual);
+		$actual->buildHeaders();
+		$this->assertSame('attachment; filename="unit-test.txt"; filename*=UTF-8\'\'unit-test.txt', $actual->getHeaderLine('Content-Disposition'));
+
+		ob_start();
+		$actual->sendBody();
+		$actual_output = ob_get_contents();
+		ob_end_clean();
+
+		$this->assertSame('data', $actual_output);
+	}
+
+	public function testGetDownloadResponseByFilePath()
+	{
+		$response = new Response(new App());
+
+		$actual = $response->download(__FILE__, null);
+
+		$this->assertInstanceOf(DownloadResponse::class, $actual);
+		$actual->buildHeaders();
+		$this->assertSame('attachment; filename="'.basename(__FILE__).'"; filename*=UTF-8\'\''.basename(__FILE__), $actual->getHeaderLine('Content-Disposition'));
+
+		ob_start();
+		$actual->sendBody();
+		$actual_output = ob_get_contents();
+		ob_end_clean();
+
+		$this->assertSame(file_get_contents(__FILE__), $actual_output);
+	}
 }

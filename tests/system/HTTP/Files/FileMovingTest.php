@@ -2,7 +2,6 @@
 namespace CodeIgniter\HTTP\Files;
 
 use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 class FileMovingTest extends \CIUnitTestCase

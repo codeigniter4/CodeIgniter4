@@ -140,30 +140,6 @@ class RedirectResponse extends Response
 	}
 
 	/**
-	 * Makes it so that the URL used for the redirect will include
-	 * the Query variables in the current request.
-	 *
-	 * Using the $options array, can specify either only certain
-	 * keys, or all except some vars.
-	 *
-	 * NOTE: Should be called after either to() or route()
-	 *
-	 * @param array $options
-	 *
-	 * @return \CodeIgniter\HTTP\RedirectResponse
-	 */
-	public function withQuery(array $options = [])
-	{
-		$queryVars = service('request')->uri->getQuery($options);
-
-		$url = $this->getHeaderLine('Location');
-
-		$this->setHeader('Location', $url.'?'.$queryVars);
-
-		return $this;
-	}
-
-	/**
 	 * Adds a key and message to the session as Flashdata.
 	 *
 	 * @param string       $key
@@ -190,10 +166,13 @@ class RedirectResponse extends Response
 		$session = Services::session();
 
 		// Ensure we have the session started up.
+		// true for travis-ci, so not coverable
+		// @codeCoverageIgnoreStart
 		if ( ! isset($_SESSION))
 		{
 			$session->start();
 		}
+		// @codeCoverageIgnoreEnd
 
 		return $session;
 	}

@@ -17,4 +17,9 @@ class SimpleEntity extends Entity
     protected $description;
     protected $created_at;
 
+	protected $_options = [
+		'datamap' => [],
+		'dates' => ['created_at', 'updated_at', 'deleted_at'],
+		'casts' => []
+	];
 }

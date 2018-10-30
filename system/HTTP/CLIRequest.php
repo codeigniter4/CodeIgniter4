@@ -125,6 +125,18 @@ class CLIRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the path segments.
+	 *
+	 * @return array
+	 */
+	public function getSegments(): array
+	{
+		return $this->segments;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the value for a single CLI option that was passed in.
 	 *
 	 * @param string $key
@@ -178,7 +190,7 @@ class CLIRequest extends Request
 			$out .= "-{$name} $value ";
 		}
 
-		return $out;
+		return trim($out);
 	}
 
 	//--------------------------------------------------------------------

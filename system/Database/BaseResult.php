@@ -344,7 +344,7 @@ abstract class BaseResult implements ResultInterface
 
 		if ($n !== $this->currentRow && isset($this->customResultObject[$className][$n]))
 		{
-			$this->current_row = $n;
+			$this->currentRow = $n;
 		}
 
 		return $this->customResultObject[$className][$this->currentRow];

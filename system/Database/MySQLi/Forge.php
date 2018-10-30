@@ -87,6 +87,21 @@ class Forge extends \CodeIgniter\Database\Forge
 	];
 
 	/**
+	 * Table Options list which required to be quoted
+	 * 
+	 * @var    array
+	 */
+	protected $_quoted_table_options = [
+		'COMMENT',
+		'COMPRESSION',
+		'CONNECTION',
+		'DATA DIRECTORY',
+		'INDEX DIRECTORY',
+		'ENCRYPTION',
+		'PASSWORD',
+	];
+
+	/**
 	 * NULL value representation in CREATE/ALTER TABLE statements
 	 *
 	 * @var    string
@@ -109,18 +124,27 @@ class Forge extends \CodeIgniter\Database\Forge
 		{
 			if (is_string($key))
 			{
-				$sql .= ' ' . strtoupper($key) . ' = ' . $this->db->escape($attributes[$key]);
+				$sql .= ' ' . strtoupper($key) . ' = ';
+				
+				if (in_array(strtoupper($key), $this->_quoted_table_options))
+				{
+					$sql .= $this->db->escape($attributes[$key]);
+				}
+				else
+				{
+					$sql .= $this->db->escapeString($attributes[$key]);
+				}
 			}
 		}
 
 		if ( ! empty($this->db->charset) && ! strpos($sql, 'CHARACTER SET') && ! strpos($sql, 'CHARSET'))
 		{
-			$sql .= ' DEFAULT CHARACTER SET = ' . $this->db->escape($this->db->charset);
+			$sql .= ' DEFAULT CHARACTER SET = ' . $this->db->escapeString($this->db->charset);
 		}
 
 		if ( ! empty($this->db->DBCollat) && ! strpos($sql, 'COLLATE'))
 		{
-			$sql .= ' COLLATE = ' . $this->db->escape($this->db->DBCollat);
+			$sql .= ' COLLATE = ' . $this->db->escapeString($this->db->DBCollat);
 		}
 
 		return $sql;

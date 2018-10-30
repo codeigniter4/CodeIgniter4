@@ -107,11 +107,26 @@ interface ResponseInterface
 	const HTTP_UNPROCESSABLE_ENTITY = 422;
 	const HTTP_LOCKED = 423;
 	const HTTP_FAILED_DEPENDENCY = 424;
+	const HTTP_TOO_EARLY = 425;
 	const HTTP_UPGRADE_REQUIRED = 426;
 	const HTTP_PRECONDITION_REQUIRED = 428;
 	const HTTP_TOO_MANY_REQUESTS = 429;
 	const HTTP_REQUEST_HEADER_FIELDS_TOO_LARGE = 431;
 	const HTTP_UNAVAILABLE_FOR_LEGAL_REASONS = 451;
+	const HTTP_CLIENT_CLOSED_REQUEST = 499;
+	// Server Error
+	const HTTP_INTERNAL_SERVER_ERROR = 500;
+	const HTTP_NOT_IMPLEMENTED = 501;
+	const HTTP_BAD_GATEWAY = 502;
+	const HTTP_SERVICE_UNAVAILABLE = 503;
+	const HTTP_GATEWAY_TIMEOUT = 504;
+	const HTTP_HTTP_VERSION_NOT_SUPPORTED = 505;
+	const HTTP_VARIANT_ALSO_NEGOTIATES = 506;
+	const HTTP_INSUFFICIENT_STORAGE = 507;
+	const HTTP_LOOP_DETECTED = 508;
+	const HTTP_NOT_EXTENDED = 510;
+	const HTTP_NETWORK_AUTHENTICATION_REQUIRED = 511;
+	const HTTP_NETWORK_CONNECT_TIMEOUT_ERROR = 599;
 
 	/**
 	 * Gets the response status code.
@@ -166,7 +181,7 @@ interface ResponseInterface
 	 *
 	 * @param \DateTime $date
 	 *
-	 * @return Response
+	 * @return ResponseInterface
 	 */
 	public function setDate(\DateTime $date);
 
@@ -179,7 +194,7 @@ interface ResponseInterface
 	 * @param string $mime
 	 * @param string $charset
 	 *
-	 * @return Response
+	 * @return ResponseInterface
 	 */
 	public function setContentType(string $mime, string $charset = 'UTF-8');
 
@@ -224,7 +239,7 @@ interface ResponseInterface
 	 *
 	 * @param array $options
 	 *
-	 * @return Response
+	 * @return ResponseInterface
 	 */
 	public function setCache(array $options = []);
 
@@ -248,7 +263,7 @@ interface ResponseInterface
 	/**
 	 * Sends the output to the browser.
 	 *
-	 * @return Response
+	 * @return ResponseInterface
 	 */
 	public function send();
 

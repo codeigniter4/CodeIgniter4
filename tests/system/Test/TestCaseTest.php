@@ -1,10 +1,12 @@
-<?php namespace CodeIgniter\Test;
+<?php
+namespace CodeIgniter\Test;
 
 use CodeIgniter\Events\Events;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
-use CodeIgniter\Test\Filters\CITestKeyboardFilter;
+use CodeIgniter\HTTP\Response;
+use Config\App;
 
-class TestTest extends \CIUnitTestCase
+class TestCaseTest extends \CIUnitTestCase
 {
 
 	public function testGetPrivatePropertyWithObject()
@@ -26,7 +28,8 @@ class TestTest extends \CIUnitTestCase
 
 	public function testEventTriggering()
 	{
-		Events::on('foo', function($arg) use(&$result) {
+		Events::on('foo', function($arg) use(&$result)
+		{
 			$result = $arg;
 		});
 
@@ -47,5 +50,30 @@ class TestTest extends \CIUnitTestCase
 		stream_filter_remove($this->stream_filter);
 	}
 
+	//--------------------------------------------------------------------
+	/**
+	 * PHPunit emits headers before we get nominal control of
+	 * the output stream, making header testing awkward, to say
+	 * the least. This test is intended to make sure that this
+	 * is happening as expected.
+	 * 
+	 * TestCaseEmissionsTest is intended to circumvent PHPunit,
+	 * and allow us to test our own header emissions.
+	 * 
+	 */
+	public function testPHPUnitHeadersEmitted()
+	{
+		$response = new Response(new App());
+		$response->pretend(TRUE);
+
+		$body = 'Hello';
+		$response->setBody($body);
+
+		$response->send();
+
+		// Did PHPunit do its thing?
+		$this->assertHeaderEmitted("Content-type: text/html;");
+		$this->assertHeaderNotEmitted("Set-Cookie: foo=bar;");
+	}
 
 }
