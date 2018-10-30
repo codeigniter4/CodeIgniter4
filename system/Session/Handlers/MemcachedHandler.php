@@ -80,9 +80,9 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 * @param BaseConfig $config
 	 * @throws \CodeIgniter\Session\Exceptions\SessionException
 	 */
-	public function __construct(BaseConfig $config)
+	public function __construct(BaseConfig $config, string $ipAddress)
 	{
-		parent::__construct($config);
+		parent::__construct($config, $ipAddress);
 
 		if (empty($this->savePath))
 		{
@@ -91,7 +91,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 
 		if ($this->matchIP === true)
 		{
-			$this->keyPrefix .= $_SERVER['REMOTE_ADDR'] . ':';
+			$this->keyPrefix .= $this->ipAddress . ':';
 		}
 
 		$this->sessionExpiration = $config->sessionExpiration;

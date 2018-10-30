@@ -78,9 +78,9 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 * Constructor
 	 * @param BaseConfig $config
 	 */
-	public function __construct($config)
+	public function __construct($config, string $ipAddress)
 	{
-		parent::__construct($config);
+		parent::__construct($config, $ipAddress);
 
 		if ( ! empty($config->sessionSavePath))
 		{
@@ -129,7 +129,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		$this->savePath = $savePath;
 		$this->filePath = $this->savePath . '/'
 				. $name // we'll use the session cookie name as a prefix to avoid collisions
-				. ($this->matchIP ? md5($_SERVER['REMOTE_ADDR']) : '');
+				. ($this->matchIP ? md5($this->ipAddress) : '');
 
 		return true;
 	}
