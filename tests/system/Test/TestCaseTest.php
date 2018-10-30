@@ -69,7 +69,9 @@ class TestCaseTest extends \CIUnitTestCase
 		$body = 'Hello';
 		$response->setBody($body);
 
+		ob_start();
 		$response->send();
+		ob_end_clean();
 
 		// Did PHPunit do its thing?
 		$this->assertHeaderEmitted("Content-type: text/html;");
