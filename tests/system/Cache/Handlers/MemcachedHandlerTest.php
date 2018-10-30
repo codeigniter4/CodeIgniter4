@@ -74,7 +74,7 @@ class MemcachedHandlerTest extends \CIUnitTestCase
 
 		$config = new \Config\Cache();
 		$config->memcached['raw'] = true;
-		$memcachedHandler = new MemcachedHandler($config->memcached, '127.0.0.1');
+		$memcachedHandler = new MemcachedHandler($config);
 		$memcachedHandler->initialize();
 
 		$memcachedHandler->save(self::$key1, 1);
@@ -93,7 +93,7 @@ class MemcachedHandlerTest extends \CIUnitTestCase
 
 		$config = new \Config\Cache();
 		$config->memcached['raw'] = true;
-		$memcachedHandler = new MemcachedHandler($config->memcached, '127.0.0.1');
+		$memcachedHandler = new MemcachedHandler($config);
 		$memcachedHandler->initialize();
 
 		$memcachedHandler->save(self::$key1, 10);
