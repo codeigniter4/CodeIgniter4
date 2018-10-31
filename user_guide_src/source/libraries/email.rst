@@ -379,7 +379,7 @@ Class Reference
 
 		.. note:: Content-ID for each e-mail must be re-created for it to be unique.
 
-	.. php:method:: printDebugger($include = array('headers', 'subject', 'body'))
+	.. php:method:: printDebugger($include = ['headers', 'subject', 'body'])
 
 		:param	array	$include: Which parts of the message to print out
 		:returns:	Formatted debug data

@@ -120,7 +120,7 @@ functions::
 	// any_in_array() is not in the Array Helper, so it defines a new function
 	function any_in_array($needle, $haystack)
 	{
-		$needle = is_array($needle) ? $needle : array($needle);
+		$needle = is_array($needle) ? $needle : [$needle];
 
 		foreach ($needle as $item)
 		{

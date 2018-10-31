@@ -52,7 +52,7 @@ The following functions are available:
 
     Example::
 
-        $imageProperties = array(
+        $imageProperties = [
             'src'    => 'images/picture.jpg',
             'alt'    => 'Me, demonstrating how to eat 4 slices of pizza at one time',
             'class'  => 'post_images',
@@ -60,7 +60,7 @@ The following functions are available:
             'height' => '200',
             'title'  => 'That was quite a night',
             'rel'    => 'lightbox'
-        );
+        ];
 
         img($imageProperties);
         // <img src="http://site.com/index.php/images/picture.jpg" alt="Me, demonstrating how to eat 4 slices of pizza at one time" class="post_images" width="200" height="200" title="That was quite a night" rel="lightbox" />
@@ -99,12 +99,12 @@ The following functions are available:
     Alternately, an associative array can be passed to the ``link_tag()`` function
     for complete control over all attributes and values::
 
-        $link = array(
+        $link = [
             'href'  => 'css/printer.css',
             'rel'   => 'stylesheet',
             'type'  => 'text/css',
             'media' => 'print'
-        );
+        ];
 
         echo link_tag($link);
         // <link href="http://site.com/css/printer.css" rel="stylesheet" type="text/css" media="print" />
@@ -129,7 +129,7 @@ The following functions are available:
     Alternately, an associative array can be passed to the ``script_tag()`` function
     for complete control over all attributes and values::
 
-        $script = array('src'  => 'js/printer.js');
+        $script = ['src'  => 'js/printer.js'];
 
         echo script_tag($script);
         // <script src="http://site.com/js/printer.js" type="text/javascript"></script>
@@ -144,17 +144,17 @@ The following functions are available:
     Permits you to generate unordered HTML lists from simple or
     multi-dimensional arrays. Example::
 
-        $list = array(
+        $list = [
             'red',
             'blue',
             'green',
             'yellow'
-        );
+        ];
 
-        $attributes = array(
+        $attributes = [
             'class' => 'boldlist',
             'id'    => 'mylist'
-        );
+        ];
 
         echo ul($list, $attributes);
 
@@ -171,40 +171,40 @@ The following functions are available:
 
     Here is a more complex example, using a multi-dimensional array::
 
-        $attributes = array(
+        $attributes = [
             'class' => 'boldlist',
             'id'    => 'mylist'
-        );
+        ];
 
-        $list = array(
-            'colors' => array(
+        $list = [
+            'colors' => [
                 'red',
                 'blue',
                 'green'
-            ),
-            'shapes' => array(
+            ],
+            'shapes' => [
                 'round',
                 'square',
-                'circles' => array(
+                'circles' => [
                     'ellipse',
                     'oval',
                     'sphere'
-                )
-            ),
-            'moods'  => array(
+                ]
+            ],
+            'moods'  => [
                 'happy',
-                'upset'   => array(
-                    'defeated' => array(
+                'upset'   => [
+                    'defeated' => [
                         'dejected',
                         'disheartened',
                         'depressed'
-                    ),
+                    ],
                     'annoyed',
                     'cross',
                     'angry'
-                )
-            )
-        );
+                ]
+            ]
+        ];
 
         echo ul($list, $attributes);
 
@@ -452,7 +452,7 @@ The following functions are available:
         echo doctype('html4-trans');
         // <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
-    The following is a list of the pre-defined doctype choices. These are configurable, 
+    The following is a list of the pre-defined doctype choices. These are configurable,
     pulled from `application/Config/DocTypes.php`, or they could be over-ridden in your `.env` configuration.
 
     =============================== =================== ==================================================================================================================================================

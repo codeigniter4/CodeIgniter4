@@ -184,17 +184,17 @@ Parsing variable pairs is done using the identical code shown above to
 parse single variables, except, you will add a multi-dimensional array
 corresponding to your variable pair data. Consider this example::
 
-	$data = array(
+	$data = [
 		'blog_title'   => 'My Blog Title',
 		'blog_heading' => 'My Blog Heading',
-		'blog_entries' => array(
+		'blog_entries' => [
 			['title' => 'Title 1', 'body' => 'Body 1'],
 			['title' => 'Title 2', 'body' => 'Body 2'],
 			['title' => 'Title 3', 'body' => 'Body 3'],
 			['title' => 'Title 4', 'body' => 'Body 4'],
 			['title' => 'Title 5', 'body' => 'Body 5']
-		)
-	);
+		]
+	];
 
 	echo $parser->setData($data)
 	             ->render('blog_template');
@@ -209,11 +209,11 @@ method::
 
 	$query = $db->query("SELECT * FROM blog");
 
-	$data = array(
+	$data = [
 		'blog_title'   => 'My Blog Title',
 		'blog_heading' => 'My Blog Heading',
 		'blog_entries' => $query->getResultArray()
-	);
+	];
 
 	echo $parser->setData($data)
 	             ->render('blog_template');
@@ -234,13 +234,13 @@ Nested Substitutions
 A nested substitution happens when the value for a pseudo-variable is
 an associative array of values, like a record from a database::
 
-	$data = array(
+	$data = [
 		'blog_title'   => 'My Blog Title',
 		'blog_heading' => 'My Blog Heading',
-		'blog_entry'   => array(
+		'blog_entry'   => [
 			'title' => 'Title 1', 'body' => 'Body 1'
-		)
-	);
+		]
+	];
 
 	echo $parser->setData($data)
 	             ->render('blog_template');
@@ -544,11 +544,11 @@ If you include substitution parameters that are not referenced in your
 template, they are ignored::
 
 	$template = 'Hello, {firstname} {lastname}';
-	$data = array(
+	$data = [
 		'title' => 'Mr',
 		'firstname' => 'John',
 		'lastname' => 'Doe'
-	);
+	];
 	echo $parser->setData($data)
 	             ->renderString($template);
 
@@ -558,11 +558,11 @@ If you do not include a substitution parameter that is referenced in your
 template, the original pseudo-variable is shown in the result::
 
 	$template = 'Hello, {firstname} {initials} {lastname}';
-	$data = array(
+	$data = [
 		'title'     => 'Mr',
 		'firstname' => 'John',
 		'lastname'  => 'Doe'
-	);
+	];
 	echo $parser->setData($data)
 	             ->renderString($template);
 
@@ -573,15 +573,15 @@ i.e. for a variable pair, the substitution is done for the opening variable
 pair tag, but the closing variable pair tag is not rendered properly::
 
 	$template = 'Hello, {firstname} {lastname} ({degrees}{degree} {/degrees})';
-	$data = array(
+	$data = [
 		'degrees'   => 'Mr',
 		'firstname' => 'John',
 		'lastname'  => 'Doe',
-		'titles'    => array(
-			array('degree' => 'BSc'),
-			array('degree' => 'PhD')
-		)
-	);
+		'titles'    => [
+			['degree' => 'BSc'],
+			['degree' => 'PhD']
+		]
+	];
 	echo $parser->setData($data)
 	             ->renderString($template);
 
@@ -601,12 +601,12 @@ An example with the iteration controlled in the view::
 		<li><a href="{link}">{title}</a></li>
 	{/menuitems}</ul>';
 
-	$data = array(
-		'menuitems' => array(
-			array('title' => 'First Link', 'link' => '/first'),
-			array('title' => 'Second Link', 'link' => '/second'),
-		)
-	);
+	$data = [
+		'menuitems' => [
+			['title' => 'First Link', 'link' => '/first'],
+			['title' => 'Second Link', 'link' => '/second'],
+		]
+	];
 	echo $parser->setData($data)
 	             ->renderString($template);
 
@@ -622,10 +622,10 @@ using a view fragment::
 
 	$temp = '';
 	$template1 = '<li><a href="{link}">{title}</a></li>';
-	$data1 = array(
-		array('title' => 'First Link', 'link' => '/first'),
-		array('title' => 'Second Link', 'link' => '/second'),
-	);
+	$data1 = [
+		['title' => 'First Link', 'link' => '/first'],
+		['title' => 'Second Link', 'link' => '/second'],
+	];
 
 	foreach ($data1 as $menuitem)
 	{
@@ -633,9 +633,9 @@ using a view fragment::
 	}
 
 	$template = '<ul>{menuitems}</ul>';
-	$data = array(
+	$data = [
 		'menuitems' => $temp
-	);
+	];
 	echo $parser->setData($data)
 	             ->renderString($template);
 
