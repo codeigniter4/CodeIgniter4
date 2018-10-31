@@ -420,7 +420,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if (($query = $this->query('SHOW COLUMNS FROM ' . $table)) === FALSE)
 		{
-			throw new DatabaseException('Failed to get field data from MySQL.');
+			throw new DatabaseException(lang('Database.failGetFieldData'));
 		}
 		$query = $query->getResultObject();
 
@@ -455,7 +455,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if (($query = $this->query('SHOW CREATE TABLE ' . $table)) === FALSE)
 		{
-			throw new DatabaseException('Failed to get index data from MySQL.');
+			throw new DatabaseException(lang('Database.failGetIndexData'));
 		}
 
 		if (! $row = $query->getRowArray())
@@ -494,7 +494,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 				}
 				else
 				{
-					throw new \LogicException('Parsing key string failed.');
+					throw new \LogicException(lang('Database.parseStringFail'));
 				}
 			}
 		}
@@ -528,7 +528,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if (($query = $this->query($sql)) === false)
 		{
-			throw new DatabaseException('Failed to get foreign key data from MySQL');
+			throw new DatabaseException(lang('Database.failGetForeignKeyData'));
 		}
 		$query = $query->getResultObject();
 

@@ -306,7 +306,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if (($query = $this->query($sql)) === false)
 		{
-			throw new DatabaseException('Failed to get field data from PostgreSQL.');
+			throw new DatabaseException(lang('Database.failGetFieldData'));
 		}
 		$query = $query->getResultObject();
 
@@ -341,7 +341,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if (($query = $this->query($sql)) === false)
 		{
-			throw new DatabaseException('Failed to get index data from PostgreSQL.');
+			throw new DatabaseException(lang('Database.failGetIndexData'));
 		}
 		$query = $query->getResultObject();
 
@@ -395,7 +395,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if (($query = $this->query($sql)) === false)
 		{
-			throw new DatabaseException('Failed to get foreign key data from PostgreSQL.');
+			throw new DatabaseException(lang('Database.failGetForeignKeyData'));
 		}
 		$query = $query->getResultObject();
 

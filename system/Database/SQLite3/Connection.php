@@ -248,13 +248,13 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			if ($this->DBDebug)
 			{
-				throw new DatabaseException('This feature is not available for the database you are using.');
+				throw new DatabaseException(lang('Database.featureUnavailable'));
 			}
 
 			return false;
 		}
 
-		$query                                  = $this->query($sql);
+		$query = $this->query($sql);
 		$this->dataCache['field_names'][$table] = [];
 
 		foreach ($query->getResultArray() as $row)
@@ -302,7 +302,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		if (($query = $this->query('PRAGMA TABLE_INFO('.$this->protectIdentifiers($table, true, null,
 					false).')')) === false)
 		{
-			throw new DatabaseException('Failed to get field data from SQLite.');
+			throw new DatabaseException(lang('Database.failGetFieldData'));
 		}
 		$query = $query->getResultObject();
 		if (empty($query))
@@ -339,7 +339,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$sql = "SELECT name FROM sqlite_master WHERE type='index' AND tbl_name=".$this->escape(strtolower($table));
 		if (($query = $this->query($sql)) === false)
 		{
-			throw new DatabaseException('Failed to get index data from SQLite.');
+			throw new DatabaseException(lang('Database.failGetIndexData'));
 		}
 		$query = $query->getResultObject();
 
@@ -353,7 +353,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$obj->fields = [];
 			if (($fields = $this->query('PRAGMA index_info('.$this->escape(strtolower($row->name)).')')) === false)
 			{
-				throw new DatabaseException('Failed to get index_info() from SQLite.');
+				throw new DatabaseException(lang('Database.failGetIndexData'));
 			}
 			$fields = $fields->getResultObject();
 
