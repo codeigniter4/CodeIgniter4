@@ -487,7 +487,7 @@ class Model
 	{
 		if (method_exists($data, 'toArray'))
 		{
-			$properties = $data->toArray(true);
+			$properties = $data->toArray(true, false);
 		}
 		else
 		{
