@@ -75,4 +75,16 @@ class Paths
 	 * with your host's needs.
 	 */
 	public $publicDirectory = 'public';
+
+	/*
+	 * ---------------------------------------------------------------
+	 * VIEW DIRECTORY NAME
+	 * ---------------------------------------------------------------
+	 *
+	 * This variable must contain the name of the directory that
+	 * contains the view files used by your application. By
+	 * default this is in `application/Views`. This value
+	 * is used when no value is provided to `Services::renderer()`.
+	 */
+	public $viewDirectory = 'application/Views';
 }

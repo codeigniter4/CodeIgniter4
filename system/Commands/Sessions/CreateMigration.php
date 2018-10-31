@@ -115,7 +115,7 @@ class CreateMigration extends BaseCommand
 			'matchIP'	 => $config->sessionMatchIP ?? false,
 		];
 
-		$template = view('\CodeIgniter\Commands\Sessions\Views\migration.tpl', $data, ['debug' => false]);
+		$template = view('\CodeIgniter\Commands\Sessions\Views\migration.tpl.php', $data, ['debug' => false]);
 		$template = str_replace('@php', '<?php', $template);
 
 		// Write the file out.

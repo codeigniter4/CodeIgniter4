@@ -1,12 +1,8 @@
 <?php namespace CodeIgniter\Images;
 
-use CodeIgniter\Images\BaseHandler;
 use CodeIgniter\Images\Exceptions\ImageException;
-use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Config\Services;
 use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
-use DirectoryIterator;
 
 /**
  * Unit testing for the GD image handler.

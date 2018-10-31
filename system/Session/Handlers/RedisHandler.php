@@ -77,7 +77,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @var int
 	 */
-	protected $sessionExpiration = 7200;
+        protected $sessionExpiration = 7200;
 
 	//--------------------------------------------------------------------
 
@@ -88,9 +88,9 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @throws \Exception
 	 */
-	public function __construct(BaseConfig $config)
+	public function __construct(BaseConfig $config, string $ipAddress)
 	{
-		parent::__construct($config);
+		parent::__construct($config, $ipAddress);
 
 		if (empty($this->savePath))
 		{
@@ -117,10 +117,10 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 
 		if ($this->matchIP === true)
 		{
-			$this->keyPrefix .= $_SERVER['REMOTE_ADDR'] . ':';
+			$this->keyPrefix .= $this->ipAddress . ':';
 		}
 
-		$this->sessionExpiration = $config->sessionExpiration;
+                $this->sessionExpiration = $config->sessionExpiration;
 	}
 
 	//--------------------------------------------------------------------

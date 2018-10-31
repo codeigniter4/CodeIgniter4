@@ -3,7 +3,6 @@
 use CodeIgniter\View\Cell;
 use CodeIgniter\View\Exceptions\ViewException;
 use Tests\Support\Cache\Handlers\MockHandler;
-use Tests\Support\View\SampleClass;
 
 class CellTest extends \CIUnitTestCase
 {

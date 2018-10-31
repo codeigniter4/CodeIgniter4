@@ -6,7 +6,6 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\CommandRunner;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
-use Tests\Support\Config\MockLogger;
 
 class SessionsCommandsTest extends \CIUnitTestCase
 {

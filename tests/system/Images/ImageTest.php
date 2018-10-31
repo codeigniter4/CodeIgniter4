@@ -1,9 +1,7 @@
 <?php namespace CodeIgniter\Images;
 
 use CodeIgniter\Images\Exceptions\ImageException;
-use CodeIgniter\Files\Exceptions\FileException;
 use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
 
 class ImageTest extends \CIUnitTestCase
 {

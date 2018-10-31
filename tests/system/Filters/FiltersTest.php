@@ -2,7 +2,6 @@
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Exceptions\FilterException;
-use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
 require_once __DIR__ . '/fixtures/GoogleMe.php';

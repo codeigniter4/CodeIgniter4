@@ -38,7 +38,6 @@
 use Config\Database;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
-use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
@@ -509,7 +508,7 @@ class Model
 		}
 
 		// Convert any Time instances to appropriate $dateFormat
-		if (count($properties))
+		if ($properties)
 		{
 			foreach ($properties as $key => $value)
 			{
@@ -1233,7 +1232,7 @@ class Model
 		// or an array of rules.
 		if (is_string($this->validationRules))
 		{
-			$valid = $this->validation->run($data, $this->validationRules);
+			$valid = $this->validation->run($data, $this->validationRules, $this->DBGroup);
 		}
 		else
 		{
@@ -1241,7 +1240,7 @@ class Model
 			// the value found in $data, if exists.
 			$rules = $this->fillPlaceholders($this->validationRules, $data);
 
-			$this->validation->setRules($rules, $this->validationMessages);
+			$this->validation->setRules($rules, $this->validationMessages, $this->DBGroup);
 			$valid = $this->validation->run($data);
 		}
 

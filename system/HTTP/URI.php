@@ -482,6 +482,33 @@ class URI
 		return $this->segments[$number] ?? '';
 	}
 
+
+	/**
+	 * Set the value of a specific segment of the URI path.
+	 * Allows to set only existing segments or add new one.
+	 *
+	 * @param int 	$number
+	 * @param mixed	$value (string or int)
+	 *
+	 * @return $this
+	 */
+	public function setSegment(int $number, $value)
+	{
+		// The segment should treat the array as 1-based for the user
+		// but we still have to deal with a zero-based array.
+		$number -= 1;
+
+		if ($number > count($this->segments) + 1)
+		{
+			throw HTTPException::forURISegmentOutOfRange($number);
+		}
+
+		$this->segments[$number] = $value;
+		$this->refreshPath();
+
+		return $this;
+	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -672,6 +699,22 @@ class URI
 	public function setPath(string $path)
 	{
 		$this->path = $this->filterPath($path);
+
+		$this->segments = explode('/', $this->path);
+
+		return $this;
+	}
+
+	/**
+	 * Sets the path portion of the URI based on segments.
+	 *
+	 * @param string $path
+	 *
+	 * @return $this
+	 */
+	public function refreshPath()
+	{
+		$this->path = $this->filterPath(implode('/', $this->segments));
 
 		$this->segments = explode('/', $this->path);
 

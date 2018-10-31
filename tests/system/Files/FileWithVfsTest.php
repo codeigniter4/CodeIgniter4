@@ -1,7 +1,6 @@
 <?php namespace CodeIgniter\Files;
 
 use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
 
 class FileWithVfsTest extends \CIUnitTestCase
 {

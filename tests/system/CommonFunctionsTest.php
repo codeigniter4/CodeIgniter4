@@ -5,7 +5,6 @@ use Config\App;
 use Config\Autoload;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Router\RouteCollection;
-use CodeIgniter\HTTP\RequestResponse;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
@@ -321,7 +320,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 		$config = (object)$defaults;
 
-		$session = new MockSession(new FileHandler($config), $config);
+		$session = new MockSession(new FileHandler($config, '127.0.0.1'), $config);
 		$session->setLogger(new TestLogger(new Logger()));
 		\CodeIgniter\Config\BaseService::injectMock('session', $session);
 	}

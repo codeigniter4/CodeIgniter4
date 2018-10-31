@@ -10,7 +10,7 @@
  * @link         https://codeigniter.com
  * @since        Version 3.0.0
  * @filesource
- * 
+ *
  * @codeCoverageIgnore
  */
 return [
@@ -35,6 +35,7 @@ return [
 	'nameMigration'   => "Name the migration file",
 	'badCreateName'   => 'You must provide a migration file name.',
 	'writeError'      => 'Error trying to create file.',
+	'migNumberError'  => 'Migration number must be three digits, and there must not be any gaps in the sequence.',
 
 	'toLatest'          => 'Migrating to latest version...',
 	'migInvalidVersion' => 'Invalid version number provided.',

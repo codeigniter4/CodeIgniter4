@@ -35,7 +35,6 @@
  * @since        Version 4.0.0
  * @filesource
  */
-use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Exceptions\DownloadException;
 use CodeIgniter\Files\File;
 use Config\Mimes;
@@ -210,7 +209,21 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	private function getContentDisponsition() : string
 	{
-		return sprintf('attachment; filename="%s"', $this->getDownloadFileName());
+		$download_filename = $this->getDownloadFileName();
+
+		$utf8_filename = $download_filename;
+
+		if (strtoupper($this->charset) !== 'UTF-8') {
+			$utf8_filename = mb_convert_encoding($download_filename, 'UTF-8', $this->charset);
+		}
+
+		$result = sprintf('attachment; filename="%s"', $download_filename);
+
+		if (isset($utf8_filename)) {
+			$result .= '; filename*=UTF-8\'\''.rawurlencode($utf8_filename);
+		}
+
+		return $result;
 	}
 
 	/**
@@ -274,7 +287,9 @@ class DownloadResponse extends Message implements ResponseInterface
 
 		$this->removeHeader('Content-Type'); // replace existing content type
 		$this->setHeader('Content-Type', $mime);
-		$this->charset = $charset;
+		if ( ! empty($charset)) {
+			$this->charset = $charset;
+		}
 
 		return $this;
 	}

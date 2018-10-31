@@ -3,9 +3,6 @@
 use Tests\Support\Config\MockLogger as LoggerConfig;
 use Tests\Support\Log\Handlers\MockFileHandler as MockFileHandler;
 use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
-use org\bovigo\vfs\visitor\vfsStreamPrintVisitor;
-use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
 
 class FileHandlerTest extends \CIUnitTestCase
 {

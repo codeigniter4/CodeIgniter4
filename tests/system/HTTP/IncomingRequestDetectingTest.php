@@ -3,7 +3,6 @@
 namespace CodeIgniter\HTTP;
 
 use Config\App;
-use CodeIgniter\HTTP\Files\UploadedFile;
 
 /**
  * @backupGlobals enabled

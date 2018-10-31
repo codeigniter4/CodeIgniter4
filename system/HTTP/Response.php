@@ -36,7 +36,6 @@
  * @filesource
  */
 use Config\App;
-use Config\Mimes;
 use Config\Format;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 

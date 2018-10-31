@@ -37,7 +37,7 @@
  */
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\Services;
-use CodeIgniter\Log\Logger;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class View
@@ -123,13 +123,13 @@ class View implements RendererInterface
 	/**
 	 * Constructor
 	 *
-	 * @param \Config\View  $config
-	 * @param string        $viewPath
-	 * @param mixed          $loader
-	 * @param bool          $debug
-	 * @param Logger        $logger
+	 * @param \Config\View           $config
+	 * @param string                 $viewPath
+	 * @param mixed                  $loader
+	 * @param bool                   $debug
+	 * @param LoggerInterface        $logger
 	 */
-	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, Logger $logger = null)
+	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, LoggerInterface $logger = null)
 	{
 		$this->config = $config;
 		$this->viewPath = rtrim($viewPath, '/ ') . '/';
@@ -188,7 +188,7 @@ class View implements RendererInterface
 
 		if ( ! file_exists($this->renderVars['file']))
 		{
-			$this->renderVars['file'] = $this->loader->locateFile($this->renderVars['view'], 'Views');
+			$this->renderVars['file'] = $this->loader->locateFile($this->renderVars['view'], 'Views', empty($fileExt) ? 'php' : $fileExt);
 		}
 
 		// locateFile will return an empty string if the file cannot be found.

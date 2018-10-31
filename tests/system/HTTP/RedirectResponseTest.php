@@ -54,6 +54,13 @@ class RedirectResponseTest extends \CIUnitTestCase
 
 		$this->assertTrue($response->hasHeader('Location'));
 		$this->assertEquals('http://example.com/exampleRoute', $response->getHeaderLine('Location'));
+
+		$this->routes->add('exampleRoute', 'Home::index', ['as' => 'home']);
+
+		$response->route('home');
+
+		$this->assertTrue($response->hasHeader('Location'));
+		$this->assertEquals('http://example.com/exampleRoute', $response->getHeaderLine('Location'));
 	}
 
 	public function testRedirectRouteBad()
