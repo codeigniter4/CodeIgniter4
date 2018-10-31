@@ -32,7 +32,7 @@ prototype::
 		'encrypt'  => FALSE,
 		'compress' => FALSE,
 		'strictOn' => FALSE,
-		'failover' => array(),
+		'failover' => [],
 	];
 
 The name of the class property is the connection name, and can be used
@@ -124,7 +124,7 @@ example, to set up a "test" environment you would do this::
 		'compress' => FALSE,
 		'encrypt'  => FALSE,
 		'strictOn' => FALSE,
-		'failover' => array()
+		'failover' => []
 	);
 
 Then, to globally tell the system to use that group you would set this

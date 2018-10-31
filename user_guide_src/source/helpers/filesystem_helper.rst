@@ -176,7 +176,7 @@ The following functions are available:
 
 		$models_info = get_dir_file_info(APPPATH.'models/');
 
-.. php:function:: get_file_info($file[, $returned_values = array('name', 'server_path', 'size', 'date')])
+.. php:function:: get_file_info($file[, $returned_values = ['name', 'server_path', 'size', 'date']])
 
 	:param	string	$file: File path
 	:param	array	$returned_values: What type of info to return

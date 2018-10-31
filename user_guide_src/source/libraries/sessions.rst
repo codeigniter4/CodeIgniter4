@@ -186,11 +186,11 @@ but you can pass an array containing your new session data to the
 Where ``$array`` is an associative array containing your new data. Here's
 an example::
 
-	$newdata = array(
+	$newdata = [
 		'username'  => 'johndoe',
 		'email'     => 'johndoe@some-site.com',
 		'logged_in' => TRUE
-	);
+	];
 
 	$session->set($newdata);
 
@@ -242,7 +242,7 @@ session data array::
 
 This method also accepts an array of item keys to unset::
 
-	$array_items = array('username', 'email');
+	$array_items = ['username', 'email'];
 	$session->remove($array_items);
 
 Flashdata
@@ -264,7 +264,7 @@ To mark an existing item as "flashdata"::
 If you want to mark multiple items as flashdata, simply pass the keys as an
 array::
 
-	$session->markAsFlashdata(array('item', 'item2'));
+	$session->markAsFlashdata(['item', 'item2']);
 
 To add flashdata::
 
@@ -306,7 +306,7 @@ You can either pass a single item or an array of flashdata items to keep.
 ::
 
 	$session->keepFlashdata('item');
-	$session->keepFlashdata(array('item1', 'item2', 'item3'));
+	$session->keepFlashdata(['item1', 'item2', 'item3']);
 
 Tempdata
 ========
@@ -328,14 +328,14 @@ You can mark multiple items as tempdata in two ways, depending on whether
 you want them all to have the same expiry time or not::
 
 	// Both 'item' and 'item2' will expire after 300 seconds
-	$session->markAsTempdata(array('item', 'item2'), 300);
+	$session->markAsTempdata(['item', 'item2'], 300);
 
 	// 'item' will be erased after 300 seconds, while 'item2'
 	// will do so after only 240 seconds
-	$session->markAsTempdata(array(
+	$session->markAsTempdata([
 		'item'	=> 300,
 		'item2'	=> 240
-	));
+	]);
 
 To add tempdata::
 
@@ -348,7 +348,7 @@ Or alternatively, using the ``setTempdata()`` method::
 
 You can also pass an array to ``set_tempdata()``::
 
-	$tempdata = array('newuser' => TRUE, 'message' => 'Thanks for joining!');
+	$tempdata = ['newuser' => TRUE, 'message' => 'Thanks for joining!'];
 	$session->setTempdata($tempdata, NULL, $expire);
 
 .. note:: If the expiration is omitted or set to 0, the default

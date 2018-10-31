@@ -382,7 +382,7 @@ The methods provided by the parent class that are available are:
 		Using this method, an associative array is passed to the first
 		parameter::
 
-			$cookie = array(
+			$cookie = [
 				'name'   => 'The Cookie Name',
 				'value'  => 'The Value',
 				'expire' => '86500',
@@ -390,7 +390,7 @@ The methods provided by the parent class that are available are:
 				'path'   => '/',
 				'prefix' => 'myprefix_',
 				'secure' => TRUE
-			);
+			];
 
 			$response->setCookie($cookie);
 
