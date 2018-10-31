@@ -988,6 +988,7 @@ class BaseBuilder
 	 */
 	public function _like_statement(string $prefix = null, string $column, string $not = null, string $bind, bool $insensitiveSearch = false): string
 	{
+		// TODO fmertins: $column param seems to require a default value? Because $prefix has...
 		$like_statement = "{$prefix} {$column} {$not} LIKE :{$bind}:";
 
 		if ($insensitiveSearch === true)

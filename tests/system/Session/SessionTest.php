@@ -43,7 +43,7 @@ class SessionTest extends \CIUnitTestCase
         $config = array_merge($defaults, $options);
         $config = (object)$config;
 
-        $session = new MockSession(new FileHandler($config), $config);
+        $session = new MockSession(new FileHandler($config, '127.0.0.1'), $config);
         $session->setLogger(new TestLogger(new Logger()));
 
         return $session;

@@ -385,7 +385,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if ($prefixLimit !== FALSE && $this->DBPrefix !== '')
 		{
-			return $sql . " LIKE '" . $this->escapeLikeStr($this->DBPrefix) . "%'";
+			return $sql . " LIKE '" . $this->escapeLikeString($this->DBPrefix) . "%'";
 		}
 
 		return $sql;
@@ -408,16 +408,19 @@ class Connection extends BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns an object with field data
+	 * Returns an array of objects with field data
 	 *
 	 * @param	string	$table
-	 * @return	array
+	 * @return	\stdClass[]
+	 * @throws DatabaseException
 	 */
-	public function _fieldData(string $table)
+	public function _fieldData(string $table): array
 	{
-		if (($query = $this->query('SHOW COLUMNS FROM ' . $this->protectIdentifiers($table, TRUE, NULL, FALSE))) === FALSE)
+		$table = $this->protectIdentifiers($table, TRUE, NULL, FALSE);
+
+		if (($query = $this->query('SHOW COLUMNS FROM ' . $table)) === FALSE)
 		{
-			return FALSE;
+			throw new DatabaseException(lang('Database.failGetFieldData'));
 		}
 		$query = $query->getResultObject();
 
@@ -427,8 +430,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$retval[$i] = new \stdClass();
 			$retval[$i]->name = $query[$i]->Field;
 
-			sscanf($query[$i]->Type, '%[a-z](%d)', $retval[$i]->type, $retval[$i]->max_length
-			);
+			sscanf($query[$i]->Type, '%[a-z](%d)', $retval[$i]->type, $retval[$i]->max_length);
 
 			$retval[$i]->default = $query[$i]->Default;
 			$retval[$i]->primary_key = (int) ($query[$i]->Key === 'PRI');
@@ -440,21 +442,25 @@ class Connection extends BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns an object with index data
+	 * Returns an array of objects with index data
 	 *
 	 * @param	string	$table
-	 * @return	array
+	 * @return	\stdClass[]
+	 * @throws DatabaseException
+	 * @throws \LogicException
 	 */
-	public function _indexData(string $table)
+	public function _indexData(string $table): array
 	{
-		if (($query = $this->query('SHOW CREATE TABLE ' . $this->protectIdentifiers($table, TRUE, NULL, FALSE))) === FALSE)
+		$table = $this->protectIdentifiers($table, TRUE, NULL, FALSE);
+
+		if (($query = $this->query('SHOW CREATE TABLE ' . $table)) === FALSE)
 		{
-			return FALSE;
+			throw new DatabaseException(lang('Database.failGetIndexData'));
 		}
-		$row = $query->getRowArray();
-		if ( ! $row)
+
+		if (! $row = $query->getRowArray())
 		{
-			return FALSE;
+			return [];
 		}
 
 		$retval = [];
@@ -488,7 +494,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 				}
 				else
 				{
-					throw new \LogicException('parsing key string failed.');
+					throw new \LogicException(lang('Database.parseStringFail'));
 				}
 			}
 		}
@@ -499,12 +505,13 @@ class Connection extends BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns an object with Foreign key data
+	 * Returns an array of objects with Foreign key data
 	 *
 	 * @param	string	$table
-	 * @return	array
+	 * @return	\stdClass[]
+	 * @throws DatabaseException
 	 */
-	public function _foreignKeyData(string $table)
+	public function _foreignKeyData(string $table): array
 	{
 		$sql = '
                     SELECT
@@ -521,7 +528,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if (($query = $this->query($sql)) === false)
 		{
-			return false;
+			throw new DatabaseException(lang('Database.failGetForeignKeyData'));
 		}
 		$query = $query->getResultObject();
 
@@ -555,8 +562,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 		if ( ! empty($this->mysqli->connect_errno))
 		{
 			return [
-				'code'		 => $this->mysqli->connect_errno,
-				'message'	 => $this->_mysqli->connect_error
+				'code'		=> $this->mysqli->connect_errno,
+				'message'	=> $this->mysqli->connect_error
 			];
 		}
 

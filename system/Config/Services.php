@@ -683,7 +683,7 @@ class Services extends BaseService
 		$logger = self::logger(true);
 
 		$driverName = $config->sessionDriver;
-		$driver     = new $driverName($config);
+		$driver     = new $driverName($config, self::request()->getIpAddress());
 		$driver->setLogger($logger);
 
 		$session = new \CodeIgniter\Session\Session($driver, $config);

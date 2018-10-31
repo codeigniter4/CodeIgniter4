@@ -74,6 +74,13 @@ class Entity
 	protected $_original = [];
 
 	/**
+	* Holds info whenever prperties have to be casted
+	*
+	* @var boolean
+	**/
+	private $_cast = true;
+	
+	/**
 	 * Allows filling in Entity parameters during construction.
 	 *
 	 * @param array|null $data
@@ -133,11 +140,13 @@ class Entity
 	 * applied to them.
 	 *
 	 * @param bool $onlyChanged     If true, only return values that have changed since object creation
+	 * @param bool $cast            If true, properties will be casted.
 	 *
 	 * @return array
 	 */
-	public function toArray(bool $onlyChanged = false): array
+	public function toArray(bool $onlyChanged = false, bool $cast = true): array
 	{
+		$this->_cast = $cast;
 		$return = [];
 
 		// we need to loop over our properties so that we
@@ -164,7 +173,7 @@ class Entity
 				$return[$from] = $this->__get($to);
 			}
 		}
-
+		$this->_cast = true;
 		return $return;
 	}
 
@@ -211,7 +220,7 @@ class Entity
 			$result = $this->mutateDate($result);
 		}
 		// Or cast it as something?
-		else if (isset($this->_options['casts'][$key]) && ! empty($this->_options['casts'][$key]))
+		else if ($this->_cast && isset($this->_options['casts'][$key]) && ! empty($this->_options['casts'][$key]))
 		{
 			$result = $this->castAs($result, $this->_options['casts'][$key]);
 		}

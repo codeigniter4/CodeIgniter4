@@ -21,6 +21,9 @@ While not required, CodeIgniter can be installed via `composer <https://getcompo
 
     composer create-project codeigniter4/framework
 
+.. note:: When installing via composer, a pre-commit hook is installed for this repo that automatically runs
+     PHP Code Sniffer and fixes any fixable issues on commit.
+
 Running
 =======
 

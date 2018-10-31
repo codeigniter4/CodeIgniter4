@@ -199,6 +199,33 @@ class MockConnection extends BaseConnection
 		return '';
 	}
 
+	/**
+	 * @param string $table
+	 * @return array
+	 */
+	protected function _fieldData(string $table): array
+	{
+		return [];
+	}
+
+	/**
+	 * @param string $table
+	 * @return array
+	 */
+	protected function _indexData(string $table): array
+	{
+		return [];
+	}
+
+	/**
+	 * @param string $table
+	 * @return array
+	 */
+	protected function _foreignKeyData(string $table): array
+	{
+		return [];
+	}
+
 	//--------------------------------------------------------------------
 
     /**
