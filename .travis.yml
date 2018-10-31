@@ -18,7 +18,7 @@ global:
 
 # Recommended by Travis support
 sudo: required
-dist: precise
+dist: trusty
 
 env:
   - DB=mysqli
