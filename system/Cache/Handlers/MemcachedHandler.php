@@ -68,13 +68,14 @@ class MemcachedHandler implements CacheInterface
 
 	//--------------------------------------------------------------------
 
-	public function __construct(array $config)
+	public function __construct($config)
 	{
+		$config = (array)$config;
 		$this->prefix = $config['prefix'] ?? '';
 
 		if ( ! empty($config))
 		{
-			$this->config = array_merge($this->config, $config);
+			$this->config = array_merge($this->config, $config['memcached']);
 		}
 	}
 
