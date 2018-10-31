@@ -4,12 +4,12 @@
 $minPHPVersion = '7.1';
 if (phpversion() < $minPHPVersion)
 {
-	die("You PHP version must be {$minPHPVersion} or higher to run CodeIgniter. Current version: ". phpversion());
+	die("Your PHP version must be {$minPHPVersion} or higher to run CodeIgniter. Current version: " . phpversion());
 }
 unset($minPHPVersion);
 
 // Path to the front controller (this file)
-define('FCPATH', __DIR__.DIRECTORY_SEPARATOR);
+define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
 
 // Location of the Paths config file.
 // This is the first of two lines that might need to be changed, depending on your folder structure.
