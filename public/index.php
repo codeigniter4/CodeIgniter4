@@ -4,7 +4,7 @@
 $minPHPVersion = '7.1';
 if (phpversion() < $minPHPVersion)
 {
-	die("You PHP version must be {$minPHPVersion} or higher to run CodeIgniter. Current version: " . phpversion());
+	die("Your PHP version must be {$minPHPVersion} or higher to run CodeIgniter. Current version: " . phpversion());
 }
 unset($minPHPVersion);
 

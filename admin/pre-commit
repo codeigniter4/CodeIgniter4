@@ -30,11 +30,6 @@ if [ "$FILES" != "" ]
 then
 	echo "Running Code Sniffer..."
 	./vendor/bin/phpcbf --standard=./vendor/codeigniter4/codeigniter4-standard/CodeIgniter4 --encoding=utf-8 -n -p $FILES
-	if [ $? != 0 ]
-	then
-		echo "Fix the error before commit."
-		exit 1
-	fi
 fi
 
 exit $?
