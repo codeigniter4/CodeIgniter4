@@ -108,9 +108,9 @@ class File extends SplFileInfo
 	 * Attempts to determine the file extension based on the trusted
 	 * getType() method. If the mime type is unknown, will return null.
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	public function guessExtension(): string
+	public function guessExtension(): ?string
 	{
 		return \Config\Mimes::guessExtensionFromType($this->getMimeType());
 	}
