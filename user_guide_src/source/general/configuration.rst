@@ -51,9 +51,11 @@ If you need to create a new configuration file you would create a new file at yo
 **/application/Config** by default. Then create the class and fill it with public properties that
 represent your settings::
 
-    <?php namespace Config;
+    namespace Config;
+    
+    use CodeIgniter\Config\BaseConfig ;
 
-    class App extends \CodeIgniter\Config\BaseConfig
+    class App extends BaseConfig
     {
     	public $siteName  = 'My Great Site';
     	public $siteEmail = 'webmaster@example.com';
@@ -200,7 +202,8 @@ A sample configuration class setup for this::
 
     namespace App\Config;
 
-    class MySalesConfig extends \CodeIgniter\Config\BaseConfig
+    use CodeIgniter\Config\BaseConfig
+    class MySalesConfig extends BaseConfig
     {
         public $target        = 100;
         public $campaign      = "Winter Wonderland";

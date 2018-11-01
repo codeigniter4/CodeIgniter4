@@ -24,8 +24,9 @@ your database properly as described :doc:`here <../database/configuration>`.
 	<?php
 
 	namespace App\Models;
+        use CodeIgniter\Model;
 
-	class NewsModel extends \CodeIgniter\Model
+	class NewsModel extends Model
 	{
 		protected $table = 'news';
 	}

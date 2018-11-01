@@ -50,7 +50,9 @@ the core system class, you would create your class like this::
 
     namespace App\Libraries;
 
-    class RouteCollection implements \CodeIgniter\Router\RouteCollectionInterface
+    use CodeIgniter\Router\RouteCollectionInterface;
+
+    class RouteCollection implements RouteCollectionInterface
     {
 
     }
@@ -78,14 +80,22 @@ identical to replacing a class with a one exception:
 
 For example, to extend the native RouteCollection class, you would declare your class with::
 
-    class RouteCollection extends \CodeIgniter\Router\RouteCollection
+    namespace App\Libraries;
+
+    use CodeIgniter\Router\RouteCollection;
+
+    class RouteCollection extends RouteCollection
     {
 
     }
 
 If you need to use a constructor in your class make sure you extend the parent constructor::
 
-        class RouteCollection implements \CodeIgniter\Router\RouteCollection
+    namespace App\Libraries;
+
+    use CodeIgniter\Router\RouteCollection;
+
+       class RouteCollection implements RouteCollection
         {
             public function __construct()
             {
@@ -99,7 +109,11 @@ instead of the native ones (this is known as “method overriding”). This allo
 If you are extending the Controller core class, then be sure to extend your new class in your application controller’s
 constructors::
 
-	class Home extends App\BaseController {
+    namespace App\Controllers;
 
-	}
+    use App\BaseController;
+
+    class Home extends BaseController {
+
+    }
 

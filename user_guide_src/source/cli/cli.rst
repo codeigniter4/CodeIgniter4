@@ -38,8 +38,9 @@ Let's create a simple controller so you can see it in action. Using your
 text editor, create a file called Tools.php, and put the following code
 in it::
 
-	<?php
-	class Tools extends \CodeIgniter\Controller {
+	<?php namespace CodeIgniter;
+
+	class Tools extends Controller {
 
 		public function message($to = 'World')
 		{

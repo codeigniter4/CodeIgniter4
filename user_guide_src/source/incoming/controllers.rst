@@ -28,8 +28,10 @@ Let's try it: Hello World!
 Let's create a simple controller so you can see it in action. Using your text editor, create a file called Blog.php,
 and put the following code in it::
 
-	<?php
-	class Blog extends \CodeIgniter\Controller
+	<?php namespace App\Controllers;
+        user CodeIgniter\Controller;
+
+	class Blog extends Controller
 	{
 		public function index()
 		{
@@ -53,15 +55,19 @@ If you did it right, you should see::
 
 This is valid::
 
-	<?php
-	class Blog extends \CodeIgniter\Controller {
+	<?php namespace App\Controllers;
+        user CodeIgniter\Controller;
+
+	class Blog extends Controller {
 
 	}
 
 This is **not** valid::
 
-	<?php
-	class blog extends \CodeIgniter\Controller {
+	<?php namespace App\Controllers;
+        user CodeIgniter\Controller;
+
+	class blog extends Controller {
 
 	}
 
@@ -83,7 +89,10 @@ controller gets called.**
 Let's try it. Add a new method to your controller::
 
 	<?php
-	class Blog extends \CodeIgniter\Controller {
+	<?php namespace App\Controllers;
+        user CodeIgniter\Controller;
+
+	class Blog extends Controller {
 
 		public function index()
 		{
@@ -286,7 +295,10 @@ You can define an array of helper files as a class property. Whenever the contro
 these helper files will be automatically loaded into memory so that you can use their methods anywhere
 inside the controller::
 
-	class MyController extends \CodeIgniter\Controller
+	<?php namespace App\Controllers;
+        user CodeIgniter\Controller;
+
+	class MyController extends Controller {
 	{
 		protected $helpers = ['url', 'form'];
 	}

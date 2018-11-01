@@ -115,8 +115,10 @@ fields in the ``$allowedFields`` property.
 
 ::
 
-    <?php
-    class NewsModel extends \CodeIgniter\Model
+    <?php namespace App\Models;
+    use CodeIgniter\Model;
+
+    class NewsModel extends Model
     {
         protected $table = 'news';
 

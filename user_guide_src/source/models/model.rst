@@ -14,6 +14,7 @@ instance of the database connection and you're good to go.
 
 ::
 
+        namespace App\Models;
 	use \CodeIgniter\Database\ConnectionInterface;
 
 	class UserModel
@@ -46,7 +47,10 @@ Creating Your Model
 To take advantage of CodeIgniter's model, you would simply create a new model class
 that extends ``CodeIgniter\Model``::
 
-	class UserModel extends \CodeIgniter\Model
+        namespace App\Models;
+        user CodeIgniter\Model;
+
+	class UserModel extends Model
 	{
 
 	}
@@ -64,6 +68,9 @@ This ensures that within the model any references to ``$this->db`` are made thro
 connection.
 ::
 
+        namespace App\Models;
+        user CodeIgniter\Model;
+
 	class UserModel extends \CodeIgniter\Model
 	{
 		protected $DBGroup = 'group_name';
@@ -78,6 +85,9 @@ Configuring Your Model
 The model class has a few configuration options that can be set to allow the class' methods
 to work seamlessly for you. The first two are used by all of the CRUD methods to determine
 what table to use and how we can find the required records::
+
+        namespace App\Models;
+        user CodeIgniter\Model;
 
 	class UserModel extends \CodeIgniter\Model
 	{

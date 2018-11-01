@@ -30,7 +30,9 @@ code.
 ::
 
 	<?php namespace App\Controllers;
-	class Pages extends CodeIgniter\Controller {
+        use CodeIgniter\Controller;
+
+	class Pages extends Controller {
 
 		public function view($page = 'home')
 		{

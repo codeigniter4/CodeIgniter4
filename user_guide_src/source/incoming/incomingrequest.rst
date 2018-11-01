@@ -16,7 +16,10 @@ Accessing the Request
 An instance of the request class already populated for you if the current class is a descendant of
 ``CodeIgniter\Controller`` and can be accessed as a class property::
 
-	class UserController extends CodeIgniter\Controller
+        namespace App\Controllers;
+        user CodeIgniter\Controller;
+
+	class UserController extends Controller
 	{
 		public function index()
 		{
