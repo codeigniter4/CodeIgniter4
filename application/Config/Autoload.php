@@ -57,11 +57,7 @@ class Autoload extends \CodeIgniter\Config\AutoloadConfig
 
 		if (defined('ENVIRONMENT') && ENVIRONMENT === 'testing')
 		{
-			$psr4 = array_merge(
-				$psr4,
-				[
-					'Tests\Support' => TESTPATH . '_support',    // So custom migrations can run during testing
-				]);
+			$psr4['Tests\Support'] = TESTPATH . '_support'; // So custom migrations can run during testing
 		}
 
 		/**
