@@ -7,8 +7,8 @@ ini_set('display_startup_errors', '1');
 $_SERVER['CI_ENVIRONMENT'] = 'testing';
 define('ENVIRONMENT', 'testing');
 
-// Path to the front controller (this file)
-define('FCPATH', getcwd().'/public'.DIRECTORY_SEPARATOR);
+// path to the directory that holds the front controller (index.php)
+define('FCPATH', realpath(__DIR__.'/../../') . '/public'.DIRECTORY_SEPARATOR);
 
 // The path to the "tests" directory
 define('TESTPATH', realpath(__DIR__.'/../').'/');
