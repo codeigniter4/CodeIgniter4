@@ -261,7 +261,7 @@ array. Here is a string example:</p>
 <p>The above example would return something like:
 <em>http://example.com/index.php/news/local/123</em></p>
 <p>Here is an example of segments passed as an array:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$segments</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;123&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$segments</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;123&#39;</span><span class="p">];</span>
 <span class="k">echo</span> <span class="nx">site_url</span><span class="p">(</span><span class="nv">$segments</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -467,7 +467,7 @@ associative array.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;My News&#39;</span><span class="p">,</span> <span class="s1">&#39;title=&quot;News title&quot;&#39;</span><span class="p">);</span>
 <span class="c1">// Prints: &lt;a href=&quot;http://example.com/index.php/news/local/123&quot; title=&quot;News title&quot;&gt;My News&lt;/a&gt;</span>
 
-<span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;My News&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The best news!&#39;</span><span class="p">));</span>
+<span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;My News&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The best news!&#39;</span><span class="p">]);</span>
 <span class="c1">// Prints: &lt;a href=&quot;http://example.com/index.php/news/local/123&quot; title=&quot;The best news!&quot;&gt;My News&lt;/a&gt;</span>
 
 <span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;Click here&#39;</span><span class="p">);</span>
@@ -513,7 +513,7 @@ attributes in the third parameter to control how the window is opened.
 If the third parameter is not set it will simply open a new window with
 your own browser settings.</p>
 <p>Here is an example with attributes:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$atts</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$atts</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;width&#39;</span>       <span class="o">=&gt;</span> <span class="mi">800</span><span class="p">,</span>
         <span class="s1">&#39;height&#39;</span>      <span class="o">=&gt;</span> <span class="mi">600</span><span class="p">,</span>
         <span class="s1">&#39;scrollbars&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span>
@@ -522,7 +522,7 @@ your own browser settings.</p>
         <span class="s1">&#39;screenx&#39;</span>     <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
         <span class="s1">&#39;screeny&#39;</span>     <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
         <span class="s1">&#39;window_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;_blank&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">anchor_popup</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Me!&#39;</span><span class="p">,</span> <span class="nv">$atts</span><span class="p">);</span>
 </pre></div>
@@ -533,7 +533,7 @@ your own browser settings.</p>
 set the ones that are different from what you need. If you want the
 function to use all of its defaults simply pass an empty array in the
 third parameter:</p>
-<div class="last highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">anchor_popup</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Me!&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">());</span>
+<div class="last highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">anchor_popup</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Me!&#39;</span><span class="p">,</span> <span class="p">[]);</span>
 </pre></div>
 </div>
 </div>
@@ -586,7 +586,7 @@ We use this for unit testing the framework itself.</p>
 </div>
 <p>As with the <a class="reference internal" href="#anchor" title="anchor"><code class="xref php php-func docutils literal"><span class="pre">anchor()</span></code></a> tab above, you can set attributes using the
 third parameter:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mail me&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mail me&#39;</span><span class="p">];</span>
 <span class="k">echo</span> <span class="nx">mailto</span><span class="p">(</span><span class="s1">&#39;me@my-site.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Contact Me&#39;</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -775,7 +775,7 @@ is missing from a URL.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 29, 2018.
+      Last updated on Oct 31, 2018.
 
     </p>
   </div>

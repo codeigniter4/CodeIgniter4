@@ -268,7 +268,7 @@ Presumably, this would be if you were using a media controller:</p>
 for complete control over all attributes and values. If an <em>alt</em> attribute
 is not provided, CodeIgniter will generate an empty string.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$imageProperties</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$imageProperties</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;src&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;images/picture.jpg&#39;</span><span class="p">,</span>
     <span class="s1">&#39;alt&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;Me, demonstrating how to eat 4 slices of pizza at one time&#39;</span><span class="p">,</span>
     <span class="s1">&#39;class&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;post_images&#39;</span><span class="p">,</span>
@@ -276,7 +276,7 @@ is not provided, CodeIgniter will generate an empty string.</p>
     <span class="s1">&#39;height&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;200&#39;</span><span class="p">,</span>
     <span class="s1">&#39;title&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;That was quite a night&#39;</span><span class="p">,</span>
     <span class="s1">&#39;rel&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;lightbox&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="nx">img</span><span class="p">(</span><span class="nv">$imageProperties</span><span class="p">);</span>
 <span class="c1">// &lt;img src=&quot;http://site.com/index.php/images/picture.jpg&quot; alt=&quot;Me, demonstrating how to eat 4 slices of pizza at one time&quot; class=&quot;post_images&quot; width=&quot;200&quot; height=&quot;200&quot; title=&quot;That was quite a night&quot; rel=&quot;lightbox&quot; /&gt;</span>
@@ -329,12 +329,12 @@ the page specified by <code class="docutils literal"><span class="pre">$config['
 </div>
 <p>Alternately, an associative array can be passed to the <code class="docutils literal"><span class="pre">link_tag()</span></code> function
 for complete control over all attributes and values:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$link</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$link</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;href&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;css/printer.css&#39;</span><span class="p">,</span>
     <span class="s1">&#39;rel&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;stylesheet&#39;</span><span class="p">,</span>
     <span class="s1">&#39;type&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;text/css&#39;</span><span class="p">,</span>
     <span class="s1">&#39;media&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;print&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">link_tag</span><span class="p">(</span><span class="nv">$link</span><span class="p">);</span>
 <span class="c1">// &lt;link href=&quot;http://site.com/css/printer.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;print&quot; /&gt;</span>
@@ -373,7 +373,7 @@ the page specified by <code class="docutils literal"><span class="pre">$config['
 </div>
 <p>Alternately, an associative array can be passed to the <code class="docutils literal"><span class="pre">script_tag()</span></code> function
 for complete control over all attributes and values:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$script</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;src&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;js/printer.js&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$script</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;src&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;js/printer.js&#39;</span><span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">script_tag</span><span class="p">(</span><span class="nv">$script</span><span class="p">);</span>
 <span class="c1">// &lt;script src=&quot;http://site.com/js/printer.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</span>
@@ -404,17 +404,17 @@ for complete control over all attributes and values:</p>
 </table>
 <p>Permits you to generate unordered HTML lists from simple or
 multi-dimensional arrays. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$list</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$list</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;red&#39;</span><span class="p">,</span>
     <span class="s1">&#39;blue&#39;</span><span class="p">,</span>
     <span class="s1">&#39;green&#39;</span><span class="p">,</span>
     <span class="s1">&#39;yellow&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
-<span class="nv">$attributes</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;boldlist&#39;</span><span class="p">,</span>
     <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;mylist&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">ul</span><span class="p">(</span><span class="nv">$list</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
 </pre></div>
@@ -429,40 +429,40 @@ multi-dimensional arrays. Example:</p>
 </pre></div>
 </div>
 <p>Here is a more complex example, using a multi-dimensional array:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;boldlist&#39;</span><span class="p">,</span>
     <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;mylist&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
-<span class="nv">$list</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
-    <span class="s1">&#39;colors&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+<span class="nv">$list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;colors&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;red&#39;</span><span class="p">,</span>
         <span class="s1">&#39;blue&#39;</span><span class="p">,</span>
         <span class="s1">&#39;green&#39;</span>
-    <span class="p">),</span>
-    <span class="s1">&#39;shapes&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;shapes&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;round&#39;</span><span class="p">,</span>
         <span class="s1">&#39;square&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;circles&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;circles&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;ellipse&#39;</span><span class="p">,</span>
             <span class="s1">&#39;oval&#39;</span><span class="p">,</span>
             <span class="s1">&#39;sphere&#39;</span>
-        <span class="p">)</span>
-    <span class="p">),</span>
-    <span class="s1">&#39;moods&#39;</span>  <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="p">]</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;moods&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;happy&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;upset&#39;</span>   <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
-            <span class="s1">&#39;defeated&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;upset&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;defeated&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;dejected&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;disheartened&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;depressed&#39;</span>
-            <span class="p">),</span>
+            <span class="p">],</span>
             <span class="s1">&#39;annoyed&#39;</span><span class="p">,</span>
             <span class="s1">&#39;cross&#39;</span><span class="p">,</span>
             <span class="s1">&#39;angry&#39;</span>
-        <span class="p">)</span>
-    <span class="p">)</span>
-<span class="p">);</span>
+        <span class="p">]</span>
+    <span class="p">]</span>
+<span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">ul</span><span class="p">(</span><span class="nv">$list</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
 </pre></div>
@@ -967,7 +967,7 @@ pulled from <cite>application/Config/DocTypes.php</cite>, or they could be over-
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 29, 2018.
+      Last updated on Oct 31, 2018.
 
     </p>
   </div>

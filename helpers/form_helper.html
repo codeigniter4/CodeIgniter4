@@ -258,7 +258,7 @@ form elements, which you would pass as strings.</p>
 <p>The following functions are available:</p>
 <dl class="function">
 <dt id="form_open">
-<code class="descname">form_open</code><span class="sig-paren">(</span><span class="optional">[</span><em>$action = ''</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">[</span>, <em>$hidden = array()</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_open" title="Permalink to this definition">¶</a></dt>
+<code class="descname">form_open</code><span class="sig-paren">(</span><span class="optional">[</span><em>$action = ''</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">[</span>, <em>$hidden = []</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_open" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -297,7 +297,7 @@ it permits your site to be more portable in the event your URLs ever change.</p>
 <blockquote>
 <div><p>Attributes can be added by passing an associative array to the second
 parameter, like this:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;myform&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;myform&#39;</span><span class="p">];</span>
 <span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;email/send&#39;</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -314,7 +314,7 @@ parameter, like this:</p>
 <blockquote>
 <div><p>Hidden fields can be added by passing an associative array to the
 third parameter, like this:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$hidden</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Joe&#39;</span><span class="p">,</span> <span class="s1">&#39;member_id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;234&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$hidden</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Joe&#39;</span><span class="p">,</span> <span class="s1">&#39;member_id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;234&#39;</span><span class="p">];</span>
 <span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;email/send&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nv">$hidden</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -330,7 +330,7 @@ third parameter, like this:</p>
 
 <dl class="function">
 <dt id="form_open_multipart">
-<code class="descname">form_open_multipart</code><span class="sig-paren">(</span><span class="optional">[</span><em>$action = ''</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">[</span>, <em>$hidden = array()</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_open_multipart" title="Permalink to this definition">¶</a></dt>
+<code class="descname">form_open_multipart</code><span class="sig-paren">(</span><span class="optional">[</span><em>$action = ''</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">[</span>, <em>$hidden = []</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_open_multipart" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -383,11 +383,11 @@ name/value string to create one field:</p>
 </pre></div>
 </div>
 <p>... or you can submit an associative array to create multiple fields:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
         <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john@example.com&#39;</span><span class="p">,</span>
         <span class="s1">&#39;url&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;http://example.com&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">form_hidden</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 
@@ -400,11 +400,11 @@ name/value string to create one field:</p>
 </pre></div>
 </div>
 <p>You can also pass an associative array to the value field:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
         <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john@example.com&#39;</span><span class="p">,</span>
         <span class="s1">&#39;url&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;http://example.com&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">form_hidden</span><span class="p">(</span><span class="s1">&#39;my_array&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 
@@ -418,13 +418,13 @@ name/value string to create one field:</p>
 </pre></div>
 </div>
 <p>If you want to create hidden input fields with extra attributes:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;type&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;hidden&#39;</span><span class="p">,</span>
         <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span>
         <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;hiddenemail&#39;</span><span class="p">,</span>
         <span class="s1">&#39;value&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john@example.com&#39;</span><span class="p">,</span>
         <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;hiddenemail&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 
@@ -467,14 +467,14 @@ the field name and value in the first and second parameter:</p>
 </div>
 <p>Or you can pass an associative array containing any data you wish your
 form to contain:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;name&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span>
         <span class="s1">&#39;id&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span>
         <span class="s1">&#39;value&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;johndoe&#39;</span><span class="p">,</span>
         <span class="s1">&#39;maxlength&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
         <span class="s1">&#39;size&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;50&#39;</span><span class="p">,</span>
         <span class="s1">&#39;style&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;width:50%&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 
@@ -492,7 +492,7 @@ JavaScript, you can pass it as a string in the third parameter:</p>
 </pre></div>
 </div>
 <p>Or you can pass it as an array:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$js</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;onClick&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;some_function();&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$js</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;onClick&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;some_function();&#39;</span><span class="p">];</span>
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;johndoe&#39;</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -594,7 +594,7 @@ you will instead specify <em>rows</em> and <em>cols</em>.</p>
 
 <dl class="function">
 <dt id="form_dropdown">
-<code class="descname">form_dropdown</code><span class="sig-paren">(</span><span class="optional">[</span><em>$name = ''</em><span class="optional">[</span>, <em>$options = array()</em><span class="optional">[</span>, <em>$selected = array()</em><span class="optional">[</span>, <em>$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_dropdown" title="Permalink to this definition">¶</a></dt>
+<code class="descname">form_dropdown</code><span class="sig-paren">(</span><span class="optional">[</span><em>$name = ''</em><span class="optional">[</span>, <em>$options = []</em><span class="optional">[</span>, <em>$selected = []</em><span class="optional">[</span>, <em>$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_dropdown" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -622,14 +622,14 @@ value you wish to be selected. You can also pass an array of multiple
 items through the third parameter, and the helper will create a
 multiple select for you.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$options</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;small&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Small Shirt&#39;</span><span class="p">,</span>
         <span class="s1">&#39;med&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;Medium Shirt&#39;</span><span class="p">,</span>
         <span class="s1">&#39;large&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Large Shirt&#39;</span><span class="p">,</span>
         <span class="s1">&#39;xlarge&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Extra Large Shirt&#39;</span><span class="p">,</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
-<span class="nv">$shirts_on_sale</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;small&#39;</span><span class="p">,</span> <span class="s1">&#39;large&#39;</span><span class="p">);</span>
+<span class="nv">$shirts_on_sale</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;small&#39;</span><span class="p">,</span> <span class="s1">&#39;large&#39;</span><span class="p">];</span>
 <span class="k">echo</span> <span class="nx">form_dropdown</span><span class="p">(</span><span class="s1">&#39;shirts&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="s1">&#39;large&#39;</span><span class="p">);</span>
 
 <span class="cm">/*</span>
@@ -665,10 +665,10 @@ parameter:</p>
 </pre></div>
 </div>
 <p>Or you can pass it as an array:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$js</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$js</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;id&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;shirts&#39;</span><span class="p">,</span>
         <span class="s1">&#39;onChange&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;some_function();&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 <span class="k">echo</span> <span class="nx">form_dropdown</span><span class="p">(</span><span class="s1">&#39;shirts&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="s1">&#39;large&#39;</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -679,7 +679,7 @@ label.</p>
 
 <dl class="function">
 <dt id="form_multiselect">
-<code class="descname">form_multiselect</code><span class="sig-paren">(</span><span class="optional">[</span><em>$name = ''</em><span class="optional">[</span>, <em>$options = array()</em><span class="optional">[</span>, <em>$selected = array()</em><span class="optional">[</span>, <em>$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_multiselect" title="Permalink to this definition">¶</a></dt>
+<code class="descname">form_multiselect</code><span class="sig-paren">(</span><span class="optional">[</span><em>$name = ''</em><span class="optional">[</span>, <em>$options = []</em><span class="optional">[</span>, <em>$selected = []</em><span class="optional">[</span>, <em>$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_multiselect" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -711,7 +711,7 @@ syntax, e.g. foo[].</p>
 
 <dl class="function">
 <dt id="form_fieldset">
-<code class="descname">form_fieldset</code><span class="sig-paren">(</span><span class="optional">[</span><em>$legend_text = ''</em><span class="optional">[</span>, <em>$attributes = array()</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_fieldset" title="Permalink to this definition">¶</a></dt>
+<code class="descname">form_fieldset</code><span class="sig-paren">(</span><span class="optional">[</span><em>$legend_text = ''</em><span class="optional">[</span>, <em>$attributes = []</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_fieldset" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -748,10 +748,10 @@ syntax, e.g. foo[].</p>
 </div>
 <p>Similar to other functions, you can submit an associative array in the
 second parameter if you prefer to set additional attributes:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;address_info&#39;</span><span class="p">,</span>
         <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;address_info&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">form_fieldset</span><span class="p">(</span><span class="s1">&#39;Address Information&#39;</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
 <span class="k">echo</span> <span class="s2">&quot;&lt;p&gt;fieldset content here&lt;/p&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
@@ -831,13 +831,13 @@ the tag. For example</p>
 the box should be checked or not.</p>
 <p>Similar to the other form functions in this helper, you can also pass an
 array of attributes to the function:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;newsletter&#39;</span><span class="p">,</span>
         <span class="s1">&#39;id&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;newsletter&#39;</span><span class="p">,</span>
         <span class="s1">&#39;value&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;accept&#39;</span><span class="p">,</span>
         <span class="s1">&#39;checked&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
         <span class="s1">&#39;style&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;margin:10px&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">form_checkbox</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="c1">// Would produce: &lt;input type=&quot;checkbox&quot; name=&quot;newsletter&quot; id=&quot;newsletter&quot; value=&quot;accept&quot; checked=&quot;checked&quot; style=&quot;margin:10px&quot; /&gt;</span>
@@ -851,7 +851,7 @@ fourth parameter:</p>
 </pre></div>
 </div>
 <p>Or you can pass it as an array:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$js</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;onClick&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;some_function();&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$js</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;onClick&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;some_function();&#39;</span><span class="p">];</span>
 <span class="k">echo</span> <span class="nx">form_checkbox</span><span class="p">(</span><span class="s1">&#39;newsletter&#39;</span><span class="p">,</span> <span class="s1">&#39;accept&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -886,7 +886,7 @@ function above except that it uses the &#8220;radio&#8221; input type.</p>
 
 <dl class="function">
 <dt id="form_label">
-<code class="descname">form_label</code><span class="sig-paren">(</span><span class="optional">[</span><em>$label_text = ''</em><span class="optional">[</span>, <em>$id = ''</em><span class="optional">[</span>, <em>$attributes = array()</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_label" title="Permalink to this definition">¶</a></dt>
+<code class="descname">form_label</code><span class="sig-paren">(</span><span class="optional">[</span><em>$label_text = ''</em><span class="optional">[</span>, <em>$id = ''</em><span class="optional">[</span>, <em>$attributes = []</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_label" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -914,10 +914,10 @@ function above except that it uses the &#8220;radio&#8221; input type.</p>
 <p>Similar to other functions, you can submit an associative array in the
 third parameter if you prefer to set additional attributes.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;mycustomclass&#39;</span><span class="p">,</span>
         <span class="s1">&#39;style&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;color: #000;&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">form_label</span><span class="p">(</span><span class="s1">&#39;What is your Name&#39;</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
 <span class="c1">// Would produce:  &lt;label for=&quot;username&quot; class=&quot;mycustomclass&quot; style=&quot;color: #000;&quot;&gt;What is your Name&lt;/label&gt;</span>
@@ -1013,13 +1013,13 @@ button name and content in the first and second parameter:</p>
 </div>
 <p>Or you can pass an associative array containing any data you wish your
 form to contain:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;button&#39;</span><span class="p">,</span>
         <span class="s1">&#39;id&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;button&#39;</span><span class="p">,</span>
         <span class="s1">&#39;value&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
         <span class="s1">&#39;type&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;reset&#39;</span><span class="p">,</span>
         <span class="s1">&#39;content&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Reset&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">form_button</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="c1">// Would produce: &lt;button name=&quot;button&quot; id=&quot;button&quot; value=&quot;true&quot; type=&quot;reset&quot;&gt;Reset&lt;/button&gt;</span>
@@ -1241,7 +1241,7 @@ class instead of the generic helper function.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 29, 2018.
+      Last updated on Oct 31, 2018.
 
     </p>
   </div>

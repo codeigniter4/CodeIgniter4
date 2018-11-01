@@ -277,12 +277,12 @@ mechanism for this.</p>
 include a &#8216;type&#8217; key that relates to the datatype of the field. For
 example, INT, VARCHAR, TEXT, etc. Many datatypes (for example VARCHAR)
 also require a &#8216;constraint&#8217; key.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
-        <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
-        <span class="p">),</span>
-<span class="p">);</span>
+        <span class="p">],</span>
+<span class="p">];</span>
 <span class="c1">// will translate to &quot;users VARCHAR(100)&quot; when the field is added.</span>
 </pre></div>
 </div>
@@ -297,28 +297,28 @@ field. Note that the field type must be a type that supports this,
 such as integer.</li>
 <li>unique/true : to generate a unique key for the field definition.</li>
 </ul>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
-        <span class="s1">&#39;blog_id&#39;</span>          <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;blog_id&#39;</span>          <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
                 <span class="s1">&#39;unsigned&#39;</span>       <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
                 <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span>
-        <span class="p">),</span>
-        <span class="s1">&#39;blog_title&#39;</span>       <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="p">],</span>
+        <span class="s1">&#39;blog_title&#39;</span>       <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;unique&#39;</span>         <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
-        <span class="p">),</span>
-        <span class="s1">&#39;blog_author&#39;</span>      <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="p">],</span>
+        <span class="s1">&#39;blog_author&#39;</span>      <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span><span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;default&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;King of Town&#39;</span><span class="p">,</span>
-        <span class="p">),</span>
-        <span class="s1">&#39;blog_description&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="p">],</span>
+        <span class="s1">&#39;blog_description&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;null&#39;</span>           <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
-        <span class="p">),</span>
-<span class="p">);</span>
+        <span class="p">],</span>
+<span class="p">];</span>
 </pre></div>
 </div>
 <p>After the fields have been defined, they can be added using
@@ -372,10 +372,10 @@ below is for MySQL.</p>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;blog_name&#39;</span><span class="p">);</span>
 <span class="c1">// gives KEY `blog_name` (`blog_name`)</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;blog_name&#39;</span><span class="p">,</span> <span class="s1">&#39;blog_label&#39;</span><span class="p">));</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">([</span><span class="s1">&#39;blog_name&#39;</span><span class="p">,</span> <span class="s1">&#39;blog_label&#39;</span><span class="p">]);</span>
 <span class="c1">// gives KEY `blog_name_blog_label` (`blog_name`, `blog_label`)</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="s1">&#39;uri&#39;</span><span class="p">),</span> <span class="k">FALSE</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">([</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="s1">&#39;uri&#39;</span><span class="p">],</span> <span class="k">FALSE</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
 <span class="c1">// gives UNIQUE KEY `blog_id_uri` (`blog_id`, `uri`)</span>
 </pre></div>
 </div>
@@ -387,7 +387,7 @@ and unique keys with specific methods:</p>
 </div>
 <p>Foreign Keys help to enforce relationships and actions across your tables. For tables that support Foreign Keys,
 you may add them directly in forge:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addUniqueKey</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="s1">&#39;uri&#39;</span><span class="p">));</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addUniqueKey</span><span class="p">([</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="s1">&#39;uri&#39;</span><span class="p">]);</span>
 <span class="c1">// gives UNIQUE KEY `blog_id_uri` (`blog_id`, `uri`)</span>
 </pre></div>
 </div>
@@ -419,7 +419,7 @@ into the definition</p>
 </pre></div>
 </div>
 <p>You could also pass optional table attributes, such as MySQL&#8217;s <code class="docutils literal"><span class="pre">ENGINE</span></code>:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;ENGINE&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;InnoDB&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ENGINE&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;InnoDB&#39;</span><span class="p">];</span>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
 <span class="c1">// produces: CREATE TABLE `table_name` (...) ENGINE = InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci</span>
 </pre></div>
@@ -471,9 +471,9 @@ and <em>DBCollat</em> values, as long as they are not empty (MySQL only).</p>
 <p>The <code class="docutils literal"><span class="pre">addColumn()</span></code> method is used to modify an existing table. It
 accepts the same field array as above, and can be used for an unlimited
 number of additional fields.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
-        <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">)</span>
-<span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">]</span>
+<span class="p">];</span>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addColumn</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="nv">$fields</span><span class="p">);</span>
 <span class="c1">// Executes: ALTER TABLE table_name ADD preferences TEXT</span>
 </pre></div>
@@ -482,14 +482,14 @@ number of additional fields.</p>
 AFTER and FIRST clauses to position the new column.</p>
 <p>Examples:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Will place the new column after the `another_field` column:</span>
-<span class="nv">$fields</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
-        <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;another_field&#39;</span><span class="p">)</span>
-<span class="p">);</span>
+<span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;another_field&#39;</span><span class="p">]</span>
+<span class="p">];</span>
 
 <span class="c1">// Will place the new column at the start of the table definition:</span>
-<span class="nv">$fields</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
-        <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">)</span>
-<span class="p">);</span>
+<span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">]</span>
+<span class="p">];</span>
 </pre></div>
 </div>
 </div>
@@ -507,12 +507,12 @@ AFTER and FIRST clauses to position the new column.</p>
 <p>The usage of this method is identical to <code class="docutils literal"><span class="pre">add_column()</span></code>, except it
 alters an existing column rather than adding a new one. In order to
 change the name you can add a &#8220;name&#8221; key into the field defining array.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
-        <span class="s1">&#39;old_name&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;old_name&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;new_name&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span>
-        <span class="p">),</span>
-<span class="p">);</span>
+        <span class="p">],</span>
+<span class="p">];</span>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">modifyColumn</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="nv">$fields</span><span class="p">);</span>
 <span class="c1">// gives ALTER TABLE table_name CHANGE old_name new_name TEXT</span>
 </pre></div>
@@ -526,7 +526,7 @@ change the name you can add a &#8220;name&#8221; key into the field defining arr
 <em class="property">class </em><code class="descname">CodeIgniterDatabaseForge</code><a class="headerlink" href="#CodeIgniterDatabaseForge" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="CodeIgniterDatabaseForge::addColumn">
-<code class="descname">addColumn</code><span class="sig-paren">(</span><em>$table</em><span class="optional">[</span>, <em>$field = array()</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseForge::addColumn" title="Permalink to this definition">¶</a></dt>
+<code class="descname">addColumn</code><span class="sig-paren">(</span><em>$table</em><span class="optional">[</span>, <em>$field = []</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseForge::addColumn" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -667,7 +667,7 @@ change the name you can add a &#8220;name&#8221; key into the field defining arr
 
 <dl class="method">
 <dt id="CodeIgniterDatabaseForge::createTable">
-<code class="descname">createTable</code><span class="sig-paren">(</span><em>$table</em><span class="optional">[</span>, <em>$if_not_exists = FALSE</em><span class="optional">[</span>, <em>array $attributes = array()</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseForge::createTable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">createTable</code><span class="sig-paren">(</span><em>$table</em><span class="optional">[</span>, <em>$if_not_exists = FALSE</em><span class="optional">[</span>, <em>array $attributes = []</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseForge::createTable" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -837,7 +837,7 @@ change the name you can add a &#8220;name&#8221; key into the field defining arr
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 29, 2018.
+      Last updated on Oct 31, 2018.
 
     </p>
   </div>

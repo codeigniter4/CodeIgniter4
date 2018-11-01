@@ -374,7 +374,7 @@ put the queries together for you. Consider the following example:</p>
 values in the array in the second parameter of the query function.</p>
 <p>Binding also work with arrays, which will be transformed to IN sets:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM some_table WHERE id IN ? AND status = ? AND author = ?&quot;</span><span class="p">;</span>
-<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="s1">&#39;live&#39;</span><span class="p">,</span> <span class="s1">&#39;Rick&#39;</span><span class="p">));</span>
+<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">,</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="s1">&#39;live&#39;</span><span class="p">,</span> <span class="s1">&#39;Rick&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>The resulting query will be:</p>
@@ -607,7 +607,7 @@ parameter is the value you want it replaced with:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 29, 2018.
+      Last updated on Oct 31, 2018.
 
     </p>
   </div>

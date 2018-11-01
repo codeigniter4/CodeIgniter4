@@ -482,7 +482,7 @@ instances are joined by OR:</p>
 <p><strong>$builder-&gt;whereIn()</strong></p>
 <p>Generates a WHERE field IN (&#8216;item&#8217;, &#8216;item&#8217;) SQL query joined with AND if
 appropriate</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
 <span class="c1">// Produces: WHERE username IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
 </pre></div>
@@ -490,7 +490,7 @@ appropriate</p>
 <p><strong>$builder-&gt;orWhereIn()</strong></p>
 <p>Generates a WHERE field IN (&#8216;item&#8217;, &#8216;item&#8217;) SQL query joined with OR if
 appropriate</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
 <span class="c1">// Produces: OR username IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
 </pre></div>
@@ -498,7 +498,7 @@ appropriate</p>
 <p><strong>$builder-&gt;whereNotIn()</strong></p>
 <p>Generates a WHERE field NOT IN (&#8216;item&#8217;, &#8216;item&#8217;) SQL query joined with
 AND if appropriate</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereNotIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
 <span class="c1">// Produces: WHERE username NOT IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
 </pre></div>
@@ -506,7 +506,7 @@ AND if appropriate</p>
 <p><strong>$builder-&gt;orWhereNotIn()</strong></p>
 <p>Generates a WHERE field NOT IN (&#8216;item&#8217;, &#8216;item&#8217;) SQL query joined with OR
 if appropriate</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereNotIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
 <span class="c1">// Produces: OR username NOT IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
 </pre></div>
@@ -589,7 +589,7 @@ instances are joined by OR:</p>
 </pre></div>
 </div>
 <p>You can also pass an array of multiple values as well:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">));</span>  <span class="c1">// Produces: GROUP BY title, date</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">([</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">]);</span>  <span class="c1">// Produces: GROUP BY title, date</span>
 </pre></div>
 </div>
 <p><strong>$builder-&gt;distinct()</strong></p>
@@ -733,11 +733,11 @@ you to create queries with complex WHERE clauses. Nested groups are supported. E
 <p>Generates an insert string based on the data you supply, and runs the
 query. You can either pass an <strong>array</strong> or an <strong>object</strong> to the
 function. Here is an example using an array:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
         <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
         <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My date&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="c1">// Produces: INSERT INTO mytable (title, name, date) VALUES (&#39;My title&#39;, &#39;My name&#39;, &#39;My date&#39;)</span>
@@ -767,11 +767,11 @@ function. Here is an example using an array:</p>
 <p>Compiles the insertion query just like $builder-&gt;insert() but does not
 <em>run</em> the query. This method simply returns the SQL query as a string.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
         <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
         <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My date&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getCompiledInsert</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$sql</span><span class="p">;</span>
@@ -803,18 +803,18 @@ using <cite>$builder-&gt;insert()</cite> which resets values or reset directly u
 <p>Generates an insert string based on the data you supply, and runs the
 query. You can either pass an <strong>array</strong> or an <strong>object</strong> to the
 function. Here is an example using an array:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
-        <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span>
                 <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My date&#39;</span>
-        <span class="p">),</span>
-        <span class="k">array</span><span class="p">(</span>
+        <span class="p">],</span>
+        <span class="p">[</span>
                 <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Another title&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Another Name&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Another date&#39;</span>
-        <span class="p">)</span>
-<span class="p">);</span>
+        <span class="p">]</span>
+<span class="p">];</span>
 
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">insertBatch</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="c1">// Produces: INSERT INTO mytable (title, name, date) VALUES (&#39;My title&#39;, &#39;My name&#39;, &#39;My date&#39;),  (&#39;Another title&#39;, &#39;Another name&#39;, &#39;Another date&#39;)</span>
@@ -836,11 +836,11 @@ In our case, it will save you from the need to implement complex
 logics with different combinations of  <code class="docutils literal"><span class="pre">select()</span></code>, <code class="docutils literal"><span class="pre">update()</span></code>,
 <code class="docutils literal"><span class="pre">delete()</span></code> and <code class="docutils literal"><span class="pre">insert()</span></code> calls.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
         <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
         <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My date&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">replace</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 
@@ -882,11 +882,11 @@ parameter.</p>
 </pre></div>
 </div>
 <p>You can also pass an associative array to this function:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;name&#39;</span>   <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span>
         <span class="s1">&#39;title&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
         <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="nv">$status</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">();</span>
@@ -910,11 +910,11 @@ parameter.</p>
 <p>Generates an update string and runs the query based on the data you
 supply. You can pass an <strong>array</strong> or an <strong>object</strong> to the function. Here
 is an example using an array:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
         <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span>
         <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$date</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
@@ -955,7 +955,7 @@ directly into the update function as a string:</p>
 </pre></div>
 </div>
 <p>Or as an array:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">));</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>You may also use the $builder-&gt;set() function described above when
@@ -964,18 +964,18 @@ performing updates.</p>
 <p>Generates an update string based on the data you supply, and runs the query.
 You can either pass an <strong>array</strong> or an <strong>object</strong> to the function.
 Here is an example using an array:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
-   <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+   <span class="p">[</span>
       <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span> <span class="p">,</span>
       <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name 2&#39;</span> <span class="p">,</span>
       <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My date 2&#39;</span>
-   <span class="p">),</span>
-   <span class="k">array</span><span class="p">(</span>
+   <span class="p">],</span>
+   <span class="p">[</span>
       <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Another title&#39;</span> <span class="p">,</span>
       <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Another Name 2&#39;</span> <span class="p">,</span>
       <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Another date 2&#39;</span>
-   <span class="p">)</span>
-<span class="p">);</span>
+   <span class="p">]</span>
+<span class="p">];</span>
 
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">updateBatch</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">);</span>
 
@@ -1015,7 +1015,7 @@ that it produces an UPDATE SQL string instead of an INSERT SQL string.</p>
 <h2><a class="toc-backref" href="#id10">Deleting Data</a><a class="headerlink" href="#deleting-data" title="Permalink to this headline">¶</a></h2>
 <p><strong>$builder-&gt;delete()</strong></p>
 <p>Generates a delete SQL string and runs the query.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">));</span>  <span class="c1">// Produces: // DELETE FROM mytable  // WHERE id = $id</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">([</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>  <span class="c1">// Produces: // DELETE FROM mytable  // WHERE id = $id</span>
 </pre></div>
 </div>
 <p>The first parameter is the where clause.
@@ -1075,7 +1075,7 @@ executing it first using a method like $builder-&gt;get() or $builder-&gt;insert
 (ex. <code class="docutils literal"><span class="pre">$builder-&gt;getCompiledSelect()</span></code>) but then choose to, for instance,
 run the query:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Note that the second parameter of the get_compiled_select method is FALSE</span>
-<span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">,</span><span class="s1">&#39;field2&#39;</span><span class="p">))</span>
+<span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">([</span><span class="s1">&#39;field1&#39;</span><span class="p">,</span><span class="s1">&#39;field2&#39;</span><span class="p">])</span>
                <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;field3&#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
                <span class="o">-&gt;</span><span class="na">getCompiledSelect</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 
@@ -2323,7 +2323,7 @@ a DELETE statement will be used instead.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 29, 2018.
+      Last updated on Oct 31, 2018.
 
     </p>
   </div>

@@ -303,11 +303,11 @@ compliment of functions for working with data.</p>
 </div>
 <div class="section" id="query-builder-insert">
 <h2>Query Builder Insert<a class="headerlink" href="#query-builder-insert" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
         <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span>
         <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$date</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>  <span class="c1">// Produces: INSERT INTO mytable (title, name, date) VALUES (&#39;{$title}&#39;, &#39;{$name}&#39;, &#39;{$date}&#39;)</span>
 </pre></div>
@@ -338,7 +338,7 @@ compliment of functions for working with data.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 29, 2018.
+      Last updated on Oct 31, 2018.
 
     </p>
   </div>

@@ -395,19 +395,19 @@ found in URL protocol prefixes (e.g. http&amp;#58;//).</p>
 </table>
 <p>Removes any slashes from an array of strings.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;question&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Is your name O\&#39;reilly?&#39;</span><span class="p">,</span>
         <span class="s1">&#39;answer&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;No, my name is O\&#39;connor.&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="nv">$str</span> <span class="o">=</span> <span class="nx">strip_slashes</span><span class="p">(</span><span class="nv">$str</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above will return the following array:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="p">[</span>
         <span class="s1">&#39;question&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Is your name O&#39;reilly?&quot;</span><span class="p">,</span>
         <span class="s1">&#39;answer&#39;</span>   <span class="o">=&gt;</span> <span class="s2">&quot;No, my name is O&#39;connor.&quot;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -702,7 +702,7 @@ words which you disallow. The third (optional) parameter can contain
 a replacement value for the words. If not specified they are replaced
 with pound signs: ####.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$disallowed</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;darn&#39;</span><span class="p">,</span> <span class="s1">&#39;shucks&#39;</span><span class="p">,</span> <span class="s1">&#39;golly&#39;</span><span class="p">,</span> <span class="s1">&#39;phooey&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$disallowed</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;darn&#39;</span><span class="p">,</span> <span class="s1">&#39;shucks&#39;</span><span class="p">,</span> <span class="s1">&#39;golly&#39;</span><span class="p">,</span> <span class="s1">&#39;phooey&#39;</span><span class="p">];</span>
 <span class="nv">$string</span>     <span class="o">=</span> <span class="nx">word_censor</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="nv">$disallowed</span><span class="p">,</span> <span class="s1">&#39;Beep!&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -944,7 +944,7 @@ at the end.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 29, 2018.
+      Last updated on Oct 31, 2018.
 
     </p>
   </div>

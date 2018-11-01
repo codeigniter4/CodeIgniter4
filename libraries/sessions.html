@@ -393,11 +393,11 @@ but you can pass an array containing your new session data to the
 </div>
 <p>Where <code class="docutils literal"><span class="pre">$array</span></code> is an associative array containing your new data. Here&#8217;s
 an example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$newdata</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$newdata</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;username&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;johndoe&#39;</span><span class="p">,</span>
         <span class="s1">&#39;email&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;johndoe@some-site.com&#39;</span><span class="p">,</span>
         <span class="s1">&#39;logged_in&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$newdata</span><span class="p">);</span>
 </pre></div>
@@ -449,7 +449,7 @@ session data array:</p>
 </pre></div>
 </div>
 <p>This method also accepts an array of item keys to unset:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$array_items</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$array_items</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">];</span>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="nv">$array_items</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -468,7 +468,7 @@ managed inside the CodeIgniter session handler.</p>
 </div>
 <p>If you want to mark multiple items as flashdata, simply pass the keys as an
 array:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsFlashdata</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;item2&#39;</span><span class="p">));</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsFlashdata</span><span class="p">([</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;item2&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>To add flashdata:</p>
@@ -511,7 +511,7 @@ found.</p>
 additional request, you can do so using the <code class="docutils literal"><span class="pre">keepFlashdata()</span></code> method.
 You can either pass a single item or an array of flashdata items to keep.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">keepFlashdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">keepFlashdata</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;item1&#39;</span><span class="p">,</span> <span class="s1">&#39;item2&#39;</span><span class="p">,</span> <span class="s1">&#39;item3&#39;</span><span class="p">));</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">keepFlashdata</span><span class="p">([</span><span class="s1">&#39;item1&#39;</span><span class="p">,</span> <span class="s1">&#39;item2&#39;</span><span class="p">,</span> <span class="s1">&#39;item3&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </div>
@@ -531,14 +531,14 @@ CodeIgniter session handler.</p>
 <p>You can mark multiple items as tempdata in two ways, depending on whether
 you want them all to have the same expiry time or not:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Both &#39;item&#39; and &#39;item2&#39; will expire after 300 seconds</span>
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;item2&#39;</span><span class="p">),</span> <span class="mi">300</span><span class="p">);</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">([</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;item2&#39;</span><span class="p">],</span> <span class="mi">300</span><span class="p">);</span>
 
 <span class="c1">// &#39;item&#39; will be erased after 300 seconds, while &#39;item2&#39;</span>
 <span class="c1">// will do so after only 240 seconds</span>
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">([</span>
         <span class="s1">&#39;item&#39;</span>  <span class="o">=&gt;</span> <span class="mi">300</span><span class="p">,</span>
         <span class="s1">&#39;item2&#39;</span> <span class="o">=&gt;</span> <span class="mi">240</span>
-<span class="p">));</span>
+<span class="p">]);</span>
 </pre></div>
 </div>
 <p>To add tempdata:</p>
@@ -551,7 +551,7 @@ you want them all to have the same expiry time or not:</p>
 </pre></div>
 </div>
 <p>You can also pass an array to <code class="docutils literal"><span class="pre">set_tempdata()</span></code>:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$tempdata</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;newuser&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Thanks for joining!&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$tempdata</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;newuser&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Thanks for joining!&#39;</span><span class="p">];</span>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">setTempdata</span><span class="p">(</span><span class="nv">$tempdata</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> <span class="nv">$expire</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -1003,7 +1003,7 @@ separate the multiple server paths with commas:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 29, 2018.
+      Last updated on Oct 31, 2018.
 
     </p>
   </div>

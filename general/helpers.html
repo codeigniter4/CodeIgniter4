@@ -328,7 +328,7 @@ functions:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// any_in_array() is not in the Array Helper, so it defines a new function</span>
 <span class="k">function</span> <span class="nf">any_in_array</span><span class="p">(</span><span class="nv">$needle</span><span class="p">,</span> <span class="nv">$haystack</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="nv">$needle</span> <span class="o">=</span> <span class="nb">is_array</span><span class="p">(</span><span class="nv">$needle</span><span class="p">)</span> <span class="o">?</span> <span class="nv">$needle</span> <span class="o">:</span> <span class="k">array</span><span class="p">(</span><span class="nv">$needle</span><span class="p">);</span>
+        <span class="nv">$needle</span> <span class="o">=</span> <span class="nb">is_array</span><span class="p">(</span><span class="nv">$needle</span><span class="p">)</span> <span class="o">?</span> <span class="nv">$needle</span> <span class="o">:</span> <span class="p">[</span><span class="nv">$needle</span><span class="p">];</span>
 
         <span class="k">foreach</span> <span class="p">(</span><span class="nv">$needle</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span>
         <span class="p">{</span>
@@ -389,7 +389,7 @@ Files. Browse each one to see what they do.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 29, 2018.
+      Last updated on Oct 31, 2018.
 
     </p>
   </div>
