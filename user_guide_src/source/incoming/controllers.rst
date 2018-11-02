@@ -28,11 +28,11 @@ Let's try it: Hello World!
 Let's create a simple controller so you can see it in action. Using your text editor, create a file called Blog.php,
 and put the following code in it::
 
-	<?php namespace App\Controllers;
-        user CodeIgniter\Controller;
+	namespace App\Controllers;
+        use CodeIgniter\Controller;
 
-	class Blog extends Controller
-	{
+	class Blog extends Controller 
+        {
 		public function index()
 		{
 			echo 'Hello World!';
@@ -55,8 +55,8 @@ If you did it right, you should see::
 
 This is valid::
 
-	<?php namespace App\Controllers;
-        user CodeIgniter\Controller;
+	namespace App\Controllers;
+        use CodeIgniter\Controller;
 
 	class Blog extends Controller {
 
@@ -64,8 +64,8 @@ This is valid::
 
 This is **not** valid::
 
-	<?php namespace App\Controllers;
-        user CodeIgniter\Controller;
+	namespace App\Controllers;
+        use CodeIgniter\Controller;
 
 	class blog extends Controller {
 
@@ -88,11 +88,11 @@ controller gets called.**
 
 Let's try it. Add a new method to your controller::
 
-	<?php
-	<?php namespace App\Controllers;
-        user CodeIgniter\Controller;
+	namespace App\Controllers;
+        use CodeIgniter\Controller;
 
-	class Blog extends Controller {
+	class Blog extends Controller 
+        {
 
 		public function index()
 		{
@@ -123,8 +123,11 @@ For example, let's say you have a URI like this::
 
 Your method will be passed URI segments 3 and 4 ("sandals" and "123")::
 
-	<?php
-	class Products extends \CodeIgniter\Controller {
+	namespace App\Controllers;
+        use CodeIgniter\Controller;
+
+	class Products extends Controller 
+        {
 
 		public function shoes($sandals, $id)
 		{
@@ -295,10 +298,10 @@ You can define an array of helper files as a class property. Whenever the contro
 these helper files will be automatically loaded into memory so that you can use their methods anywhere
 inside the controller::
 
-	<?php namespace App\Controllers;
-        user CodeIgniter\Controller;
+	namespace App\Controllers;
+        use CodeIgniter\Controller;
 
-	class MyController extends Controller {
+	class MyController extends Controller 
 	{
 		protected $helpers = ['url', 'form'];
 	}

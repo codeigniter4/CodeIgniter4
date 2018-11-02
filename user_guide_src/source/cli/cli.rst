@@ -38,7 +38,8 @@ Let's create a simple controller so you can see it in action. Using your
 text editor, create a file called Tools.php, and put the following code
 in it::
 
-	<?php namespace CodeIgniter;
+	namespace App\Controller;
+        use CodeIgniter\Controller;
 
 	class Tools extends Controller {
 

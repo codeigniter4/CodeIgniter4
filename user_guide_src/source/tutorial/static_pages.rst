@@ -29,7 +29,7 @@ code.
 
 ::
 
-	<?php namespace App\Controllers;
+	namespace App\Controllers;
         use CodeIgniter\Controller;
 
 	class Pages extends Controller {
