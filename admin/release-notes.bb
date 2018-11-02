@@ -6,7 +6,7 @@ and the core implementation in place!
 This is an early pre-release of 4.0.0. It is not suitable for production!
 
 There are several possible downloads, that you can see on the 
-[release page](https://github.com/bcit-ci/CodeIgniter4/releases/tag/v4.0.0-alpha.1) 
+[url=https://github.com/bcit-ci/CodeIgniter4/releases/tag/v4.0.0-alpha.1]release page[/url]) 
 
 - the runnable versions as a 
 [zip](https://github.com/bcit-ci/CodeIgniter4/releases/download/v4.0.0-alpha.1/CodeIgniter-4.0.0-alpha.1.zip) or a 
@@ -26,12 +26,12 @@ and issues. See ...
 
 What we need now is feedback from the community ...
 
-- What doesn't work well (raise a post in [CodeIgniter 4 Development](https://forum.codeigniter.com/forum-27.html))  
+- What doesn't work well (raise a post in [url=https://forum.codeigniter.com/forum-27.html]CodeIgniter 4 Development[/url]).
 If you have found a bug, then by all means create a new issue on the repo.
-- What you think is missing (raise a post in [CodeIgniter 4 Feature Requests](https://forum.codeigniter.com/forum-29.html))  
-We will soon start the [candidate new feature](https://forum.codeigniter.com/forum-33.html) posts, 
+- What you think is missing (raise a post in [url=https://forum.codeigniter.com/forum-29.html]CodeIgniter 4 Feature Requests[/url])  
+We will soon start the [url=https://forum.codeigniter.com/forum-33.html]candidate new feature[/url] posts, 
 for those items in the feature requests forum that appear to have traction
-- Problems that you are having using the release (raise a post in [CodeIgniter 4 Support](https://forum.codeigniter.com/forum-30.html))  
+- Problems that you are having using the release (raise a post in [url=https://forum.codeigniter.com/forum-30.html]CodeIgniter 4 Support[/url])  
 Do NOT create repo issues with support questions - we are using github for bug and work package tracking
 
 Do NOT post support questions or feature requests in response to this thread - those
