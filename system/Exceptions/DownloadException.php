@@ -5,12 +5,13 @@
  *
  * @package CodeIgniter\Exceptions
  */
+
 class DownloadException extends \RuntimeException implements ExceptionInterface
 {
 
 	public static function forCannotSetFilePath(string $path)
 	{
-		return new static(lang('HTTP.cannotSetFilePath', [$path]));
+		return new static(lang('HTTP.cannotSetFilepath', [$path]));
 	}
 
 	public static function forCannotSetBinary()
