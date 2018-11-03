@@ -15,7 +15,6 @@ class URITest extends \CIUnitTestCase
 
 	public function tearDown()
 	{
-		
 	}
 
 	//--------------------------------------------------------------------
@@ -57,7 +56,7 @@ class URITest extends \CIUnitTestCase
 	public function testSegmentOutOfRange()
 	{
 		$this->expectException(HTTPException::class);
-		$url = "http://abc.com/a123/b/c";
+		$url = 'http://abc.com/a123/b/c';
 		$uri = new URI($url);
 		$uri->getSegment(22);
 	}
@@ -104,7 +103,7 @@ class URITest extends \CIUnitTestCase
 	public function testMalformedUri()
 	{
 		$this->expectException(HTTPException::class);
-		$url = "http://abc:a123";
+		$url = 'http://abc:a123';
 		$uri = new URI($url);
 	}
 
@@ -275,12 +274,30 @@ class URITest extends \CIUnitTestCase
 	public function invalidPaths()
 	{
 		return [
-			'dot-segment'	 => ['/./path/to/nowhere', '/path/to/nowhere'],
-			'double-dots'	 => ['/../path/to/nowhere', '/path/to/nowhere'],
-			'start-dot'		 => ['./path/to/nowhere', '/path/to/nowhere'],
-			'start-double'	 => ['../path/to/nowhere', '/path/to/nowhere'],
-			'decoded'		 => ['../%41path', '/Apath'],
-			'encoded'		 => ['/path^here', '/path%5Ehere'],
+			'dot-segment'  => [
+				'/./path/to/nowhere',
+				'/path/to/nowhere',
+			],
+			'double-dots'  => [
+				'/../path/to/nowhere',
+				'/path/to/nowhere',
+			],
+			'start-dot'    => [
+				'./path/to/nowhere',
+				'/path/to/nowhere',
+			],
+			'start-double' => [
+				'../path/to/nowhere',
+				'/path/to/nowhere',
+			],
+			'decoded'      => [
+				'../%41path',
+				'/Apath',
+			],
+			'encoded'      => [
+				'/path^here',
+				'/path%5Ehere',
+			],
 		];
 	}
 
@@ -356,10 +373,22 @@ class URITest extends \CIUnitTestCase
 	public function authorityInfo()
 	{
 		return [
-			'host-only'		 => ['http://foo.com/bar', 'foo.com'],
-			'host-port'		 => ['http://foo.com:3000/bar', 'foo.com:3000'],
-			'user-host'		 => ['http://me@foo.com/bar', 'me@foo.com'],
-			'user-host-port' => ['http://me@foo.com:3000/bar', 'me@foo.com:3000'],
+			'host-only'      => [
+				'http://foo.com/bar',
+				'foo.com',
+			],
+			'host-port'      => [
+				'http://foo.com:3000/bar',
+				'foo.com:3000',
+			],
+			'user-host'      => [
+				'http://me@foo.com/bar',
+				'me@foo.com',
+			],
+			'user-host-port' => [
+				'http://me@foo.com:3000/bar',
+				'me@foo.com:3000',
+			],
 		];
 	}
 
@@ -379,8 +408,14 @@ class URITest extends \CIUnitTestCase
 	public function defaultPorts()
 	{
 		return [
-			'http'	 => ['http', 80],
-			'https'	 => ['https', 443],
+			'http'  => [
+				'http',
+				80,
+			],
+			'https' => [
+				'https',
+				443,
+			],
 		];
 	}
 
@@ -416,22 +451,70 @@ class URITest extends \CIUnitTestCase
 	public function defaultDots()
 	{
 		return [
-			['/foo/..', '/'],
-			['//foo//..', '/'],
-			['/foo/../..', '/'],
-			['/foo/../.', '/'],
-			['/./foo/..', '/'],
-			['/./foo', '/foo'],
-			['/./foo/', '/foo/'],
-			['/./foo/bar/baz/pho/../..', '/foo/bar'],
-			['*', '*'],
-			['/foo', '/foo'],
-			['/abc/123/../foo/', '/abc/foo/'],
-			['/a/b/c/./../../g', '/a/g'],
-			['/b/c/./../../g', '/g'],
-			['/b/c/./../../g', '/g'],
-			['/c/./../../g', '/g'],
-			['/./../../g', '/g'],
+			[
+				'/foo/..',
+				'/',
+			],
+			[
+				'//foo//..',
+				'/',
+			],
+			[
+				'/foo/../..',
+				'/',
+			],
+			[
+				'/foo/../.',
+				'/',
+			],
+			[
+				'/./foo/..',
+				'/',
+			],
+			[
+				'/./foo',
+				'/foo',
+			],
+			[
+				'/./foo/',
+				'/foo/',
+			],
+			[
+				'/./foo/bar/baz/pho/../..',
+				'/foo/bar',
+			],
+			[
+				'*',
+				'*',
+			],
+			[
+				'/foo',
+				'/foo',
+			],
+			[
+				'/abc/123/../foo/',
+				'/abc/foo/',
+			],
+			[
+				'/a/b/c/./../../g',
+				'/a/g',
+			],
+			[
+				'/b/c/./../../g',
+				'/g',
+			],
+			[
+				'/b/c/./../../g',
+				'/g',
+			],
+			[
+				'/c/./../../g',
+				'/g',
+			],
+			[
+				'/./../../g',
+				'/g',
+			],
 		];
 	}
 
@@ -451,12 +534,30 @@ class URITest extends \CIUnitTestCase
 	public function defaultResolutions()
 	{
 		return [
-			['g', 'http://a/b/c/g'],
-			['g/', 'http://a/b/c/g/'],
-			['/g', 'http://a/g'],
-			['#s', 'http://a/b/c/d#s'],
-			['http://abc.com/x', 'http://abc.com/x'],
-			['?fruit=banana', 'http://a/b/c/d?fruit=banana'],
+			[
+				'g',
+				'http://a/b/c/g',
+			],
+			[
+				'g/',
+				'http://a/b/c/g/',
+			],
+			[
+				'/g',
+				'http://a/g',
+			],
+			[
+				'#s',
+				'http://a/b/c/d#s',
+			],
+			[
+				'http://abc.com/x',
+				'http://abc.com/x',
+			],
+			[
+				'?fruit=banana',
+				'http://a/b/c/d?fruit=banana',
+			],
 		];
 	}
 
@@ -476,7 +577,7 @@ class URITest extends \CIUnitTestCase
 
 	/**
 	 * @dataProvider defaultResolutions
-	 * @group single
+	 * @group        single
 	 */
 	public function testResolveRelativeURIHTTPS($rel, $expected)
 	{
@@ -507,13 +608,13 @@ class URITest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/pull/954
+	 * @see https://github.com/codeigniter4/CodeIgniter4/pull/954
 	 */
 	public function testSetQueryDecode()
 	{
 		$base = 'http://example.com/foo';
 
-		$uri = new URI($base);
+		$uri     = new URI($base);
 		$encoded = urlencode('you+alice+to+the+little');
 
 		$uri->setQuery("q={$encoded}");
@@ -596,7 +697,7 @@ class URITest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/331
+	 * @see   https://github.com/codeigniter4/CodeIgniter4/issues/331
 	 * @group single
 	 */
 	public function testNoExtraSlashes()

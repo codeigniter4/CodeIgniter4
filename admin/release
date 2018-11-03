@@ -5,7 +5,7 @@
 #---------------------------------------------------
 # Setup variables
 
-UPSTREAM=https://github.com/bcit-ci/CodeIgniter4.git
+UPSTREAM=https://github.com/codeigniter4/CodeIgniter4.git
 action=test
 version=4
 qualifier=
