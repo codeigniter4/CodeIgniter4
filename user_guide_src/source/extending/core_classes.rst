@@ -49,8 +49,9 @@ For example, if you have a new ``App\Libraries\RouteCollection`` class that you 
 the core system class, you would create your class like this::
 
     namespace App\Libraries;
+    use CodeIgniter\Router\RouteCollectionInterface;
 
-    class RouteCollection implements \CodeIgniter\Router\RouteCollectionInterface
+    class RouteCollection implements RouteCollectionInterface
     {
 
     }
@@ -78,20 +79,26 @@ identical to replacing a class with a one exception:
 
 For example, to extend the native RouteCollection class, you would declare your class with::
 
-    class RouteCollection extends \CodeIgniter\Router\RouteCollection
+    namespace App\Libraries;
+    use CodeIgniter\Router\RouteCollection;
+
+    class RouteCollection extends RouteCollection
     {
 
     }
 
 If you need to use a constructor in your class make sure you extend the parent constructor::
 
-        class RouteCollection implements \CodeIgniter\Router\RouteCollection
-        {
-            public function __construct()
-            {
-                parent::__construct();
-            }
-        }
+    namespace App\Libraries;
+    use CodeIgniter\Router\RouteCollection;
+
+    class RouteCollection extends RouteCollection
+    {
+         public function __construct()
+         {
+             parent::__construct();
+         }
+     }
 
 **Tip:**  Any functions in your class that are named identically to the methods in the parent class will be used
 instead of the native ones (this is known as “method overriding”). This allows you to substantially alter the CodeIgniter core.
@@ -99,7 +106,10 @@ instead of the native ones (this is known as “method overriding”). This allo
 If you are extending the Controller core class, then be sure to extend your new class in your application controller’s
 constructors::
 
-	class Home extends App\BaseController {
+    namespace App\Controllers;
+    use App\BaseController;
 
-	}
+    class Home extends BaseController {
+
+    }
 
