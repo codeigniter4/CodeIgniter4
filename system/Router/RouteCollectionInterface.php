@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -54,12 +54,13 @@ interface RouteCollectionInterface
 	/**
 	 * Adds a single route to the collection.
 	 *
-	 * @param string $from
+	 * @param string       $from
 	 * @param array|string $to
+	 * @param array        $options
 	 *
 	 * @return mixed
 	 */
-	public function add(string $from, $to);
+	public function add(string $from, $to, array $options = null);
 
 	//--------------------------------------------------------------------
 
@@ -123,7 +124,7 @@ interface RouteCollectionInterface
 	 * find words and meaning in the URI for better SEO. But it
 	 * doesn't work well with PHP method names....
 	 *
-	 * @param bool $value
+	 * @param boolean $value
 	 *
 	 * @return mixed
 	 */
@@ -139,7 +140,7 @@ interface RouteCollectionInterface
 	 *
 	 * If FALSE, will stop searching and do NO automatic routing.
 	 *
-	 * @param bool $value
+	 * @param boolean $value
 	 *
 	 * @return RouteCollectionInterface
 	 */
@@ -202,7 +203,7 @@ interface RouteCollectionInterface
 	/**
 	 * Returns the flag that tells whether to autoRoute URI against Controllers.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function shouldAutoRoute();
 
@@ -253,7 +254,7 @@ interface RouteCollectionInterface
 	 *
 	 * @param string $from
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isRedirect(string $from): bool;
 
@@ -264,7 +265,7 @@ interface RouteCollectionInterface
 	 *
 	 * @param string $from
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function getRedirectCode(string $from): int;
 
