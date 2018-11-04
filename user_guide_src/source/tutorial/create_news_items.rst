@@ -24,15 +24,19 @@ the slug from our title in the model. Create the new view at
 
     <?= form_open('news/create'); ?>
 
-        <label for="title">Title</label>
-        <input type="input" name="title" /><br />
+        <?= form_label('Title', '', ['for' => 'title']); ?>
+        <?= form_input('title', '', '', 'text'); ?>
 
-        <label for="text">Text</label>
-        <textarea name="text"></textarea><br />
+        <br />
 
-        <input type="submit" name="submit" value="Create news item" />
+        <?= form_label('Text', '', ['for' => 'text']); ?>
+        <?= form_textarea('text'); ?>
 
-    </form>
+        <br />
+
+        <?= form_submit('submit', 'Create news item'); ?>
+
+    <?= form_close(); ?>
 
 There are only two things here that probably look unfamiliar to you: the
 ``form_open()`` function and the ``\Config\Services::validation()->listErrors()`` function.

@@ -1,9 +1,12 @@
 <br><br><br>
 
+<?php
+\Config\Services::validation()->listErrors();
 
-<form method="post" action="" enctype="multipart/form-data">
+helper('form');
+echo form_open('form/process',['enctype' => 'multipart/form-data']);
 
-	<input type="file" name="avatar" id="">
-	
-	<input type="submit" value="Send" name="Send">
-</form>
+echo form_input('avatar', '', '', 'file');
+
+echo form_submit('Send', 'Send');
+echo form_close();
