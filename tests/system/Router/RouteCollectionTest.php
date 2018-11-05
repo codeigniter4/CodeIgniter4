@@ -258,9 +258,9 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 
 		$routes->group(
-			'admin', function ($routes) {
-				$routes->add('users/list', '\Users::list');
-			}
+				'admin', function ($routes) {
+					$routes->add('users/list', '\Users::list');
+				}
 		);
 
 		$expected = [
@@ -277,9 +277,9 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 
 		$routes->group(
-			'<script>admin', function ($routes) {
-				$routes->add('users/list', '\Users::list');
-			}
+				'<script>admin', function ($routes) {
+					$routes->add('users/list', '\Users::list');
+				}
 		);
 
 		$expected = [
@@ -296,9 +296,9 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 
 		$routes->group(
-			'admin', ['namespace' => 'Admin'], function ($routes) {
-				$routes->add('users/list', 'Users::list');
-			}
+				'admin', ['namespace' => 'Admin'], function ($routes) {
+					$routes->add('users/list', 'Users::list');
+				}
 		);
 
 		$expected = [
@@ -603,15 +603,15 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$expected = ['here' => '\there'];
 
 		$routes->environment(
-			'testing', function ($routes) {
-				$routes->get('here', 'there');
-			}
+				'testing', function ($routes) {
+					$routes->get('here', 'there');
+				}
 		);
 
 		$routes->environment(
-			'badenvironment', function ($routes) {
-				$routes->get('from', 'to');
-			}
+				'badenvironment', function ($routes) {
+					$routes->get('from', 'to');
+				}
 		);
 
 		$this->assertEquals($expected, $routes->getRoutes());
@@ -699,12 +699,12 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$routes->get('user/insert', 'myController::goto/$1/$2', ['as' => 'namedRoute1']);
 		$routes->post(
-			'user/insert', function () {
-			}, ['as' => 'namedRoute2']
+				'user/insert', function () {
+				}, ['as' => 'namedRoute2']
 		);
 		$routes->put(
-			'user/insert', function () {
-			}, ['as' => 'namedRoute3']
+				'user/insert', function () {
+				}, ['as' => 'namedRoute3']
 		);
 
 		$match1 = $routes->reverseRoute('namedRoute1');
@@ -774,8 +774,8 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 
 		$routes->add(
-			'login', function () {
-			}
+				'login', function () {
+				}
 		);
 
 		$match = $routes->reverseRoute('login');
@@ -825,31 +825,32 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	//  public function testRoutesOptions()
-	//  {
-	//      $routes = $this->getCollector();
-	//
-	//      $routes->add(
-	//          'administrator', function () {
-	//          }, [
-	//   'as'  => 'admin',
-	//   'foo' => 'baz',
-	//    ]);
-	//
-	//      $options = $routes->getRoutesOptions('administrator');
-	//
-	//      $this->assertEquals($options, ['as' => 'admin', 'foo' => 'baz']);
-	//  }
-	//
+	public function testRoutesOptions()
+	{
+		$routes = $this->getCollector();
+
+		$options = [
+			'as'  => 'admin',
+			'foo' => 'baz',
+		];
+		$routes->add(
+				'administrator', function () {
+				}, $options);
+
+		$options = $routes->getRoutesOptions('administrator');
+
+		$this->assertEquals($options, ['as' => 'admin', 'foo' => 'baz']);
+	}
+
 	public function testRouteGroupWithFilterSimple()
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes                    = $this->getCollector();
 
 		$routes->group(
-			'admin', ['filter' => 'role'], function ($routes) {
-				$routes->add('users', '\Users::list');
-			}
+				'admin', ['filter' => 'role'], function ($routes) {
+					$routes->add('users', '\Users::list');
+				}
 		);
 
 		$this->assertTrue($routes->isFiltered('admin/users'));
@@ -863,9 +864,9 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes                    = $this->getCollector();
 
 		$routes->group(
-			'admin', ['filter' => 'role:admin,manager'], function ($routes) {
-				$routes->add('users', '\Users::list');
-			}
+				'admin', ['filter' => 'role:admin,manager'], function ($routes) {
+					$routes->add('users', '\Users::list');
+				}
 		);
 
 		$this->assertTrue($routes->isFiltered('admin/users'));
