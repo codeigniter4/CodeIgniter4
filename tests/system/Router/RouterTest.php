@@ -96,7 +96,7 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals('list_all', $router->methodName());
 	}
 
-		//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function testURIMapsParamsToBackReferences()
 	{
@@ -108,7 +108,7 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals([123], $router->params());
 	}
 
-		//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function testURIMapsParamsToRearrangedBackReferences()
 	{
@@ -120,7 +120,7 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals([123], $router->params());
 	}
 
-		//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function testURIMapsParamsToBackReferencesWithUnused()
 	{
@@ -132,11 +132,11 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals([456, 123], $router->params());
 	}
 
-		//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-		/**
-		 * @see https://github.com/codeigniter4/CodeIgniter4/issues/672
-		 */
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/672
+	 */
 	public function testURIMapsParamsWithMany()
 	{
 		$router = new Router($this->collection);
@@ -147,7 +147,7 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals([123, 'abc', 'FOO'], $router->params());
 	}
 
-		//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function testClosures()
 	{
@@ -163,7 +163,7 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals($expects, '123-alpha');
 	}
 
-		//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function testAutoRouteFindsControllerWithFileAndMethod()
 	{
@@ -175,7 +175,7 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals('someMethod', $router->methodName());
 	}
 
-		//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function testAutoRouteFindsControllerWithFile()
 	{
@@ -187,7 +187,7 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals('index', $router->methodName());
 	}
 
-		//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function testAutoRouteFindsControllerWithSubfolder()
 	{
@@ -203,7 +203,7 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals('someMethod', $router->methodName());
 	}
 
-		//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function testDetectsLocales()
 	{
@@ -215,7 +215,7 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals('fr', $router->getLocale());
 	}
 
-		//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function testRouteResource()
 	{
@@ -227,7 +227,7 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals('list_all', $router->methodName());
 	}
 
-		//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function testRouteWithLeadingSlash()
 	{
@@ -239,40 +239,39 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals('index', $router->methodName());
 	}
 
-		//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-	//    public function testMatchedRouteOptions()
-	//    {
-	//        $this->collection->add(
-	//            'foo', function () {
-	//            }, [
-	//            'as'  => 'login',
-	//            'foo' => 'baz',
-	//            ]
-	//        );
-	//        $this->collection->add(
-	//            'baz', function () {
-	//            }, [
-	//            'as'  => 'admin',
-	//            'foo' => 'bar',
-	//            ]
-	//        );
-	//
-	//        $router = new Router($this->collection);
-	//
-	//        $router->handle('foo');
-	//
-	//        $this->assertEquals($router->getMatchedRouteOptions(), ['as' => 'login', 'foo' => 'baz']);
-	//    }
-	//
+	public function testMatchedRouteOptions()
+	{
+		$options = [
+			'as'  => 'login',
+			'foo' => 'baz',
+		];
+		$this->collection->add('foo', function () {
+		}, $options);
+		//          $this->collection->add(
+		//              'baz', function () {
+		//              }, [
+		//              'as'  => 'admin',
+		//              'foo' => 'bar',
+		//              ]
+		//          );
+
+		$router = new Router($this->collection);
+
+		$router->handle('foo');
+
+		$this->assertEquals($router->getMatchedRouteOptions(), ['as' => 'login', 'foo' => 'baz']);
+	}
+
 	public function testRouteWorksWithFilters()
 	{
 		$collection = $this->collection;
 
 		$collection->group(
-			'foo', ['filter' => 'test'], function ($routes) {
-				$routes->add('bar', 'TestController::foobar');
-			}
+				'foo', ['filter' => 'test'], function ($routes) {
+					$routes->add('bar', 'TestController::foobar');
+				}
 		);
 
 		$router = new Router($collection);
@@ -284,11 +283,11 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals('test', $router->getFilter());
 	}
 
-		//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-		/**
-		 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1240
-		 */
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1240
+	 */
 	public function testMatchesCorrectlyWithMixedVerbs()
 	{
 		$this->collection->setHTTPVerb('get');
@@ -317,11 +316,11 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals('view', $router->methodName());
 	}
 
-		//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-		/**
-		 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1354
-		 */
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1354
+	 */
 	public function testRouteOrder()
 	{
 		$this->collection->setHTTPVerb('post');
@@ -335,4 +334,5 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals('\Main', $router->controllerName());
 		$this->assertEquals('auth_post', $router->methodName());
 	}
+
 }
