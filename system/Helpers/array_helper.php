@@ -22,7 +22,7 @@ if (! function_exists('dot_array_search'))
 if (! function_exists('_array_search_dot'))
 {
 	/**
-	 * Used by array_value_dot to recursively search the
+	 * Used by dot_array_search to recursively search the
 	 * array with wildcards.
 	 *
 	 * @param array $indexes
