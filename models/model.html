@@ -264,7 +264,9 @@ rapidly build out your application&#8217;s model layer.</p>
 <h2><a class="toc-backref" href="#id3">Creating Your Model</a><a class="headerlink" href="#creating-your-model" title="Permalink to this headline">¶</a></h2>
 <p>To take advantage of CodeIgniter&#8217;s model, you would simply create a new model class
 that extends <code class="docutils literal"><span class="pre">CodeIgniter\Model</span></code>:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Model</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
 
 <span class="p">}</span>
@@ -279,7 +281,9 @@ it will automatically connect to the default database group, as set in the confi
 modify which group is used on a per-model basis by adding the DBGroup property to your class.
 This ensures that within the model any references to <code class="docutils literal"><span class="pre">$this-&gt;db</span></code> are made through the appropriate
 connection.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Model</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
         <span class="k">protected</span> <span class="nv">$DBGroup</span> <span class="o">=</span> <span class="s1">&#39;group_name&#39;</span><span class="p">;</span>
 <span class="p">}</span>
@@ -293,7 +297,9 @@ configuration file.</p>
 <p>The model class has a few configuration options that can be set to allow the class&#8217; methods
 to work seamlessly for you. The first two are used by all of the CRUD methods to determine
 what table to use and how we can find the required records:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Model</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
         <span class="k">protected</span> <span class="nv">$table</span>      <span class="o">=</span> <span class="s1">&#39;users&#39;</span><span class="p">;</span>
         <span class="k">protected</span> <span class="nv">$primaryKey</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span><span class="p">;</span>
@@ -526,7 +532,9 @@ simplest, they might look like this:</p>
 </pre></div>
 </div>
 <p>A very simple model to work with this might look like:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">JobModel</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Model</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">JobModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
         <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">&#39;jobs&#39;</span><span class="p">;</span>
         <span class="k">protected</span> <span class="nv">$returnType</span> <span class="o">=</span> <span class="s1">&#39;\App\Entities\Job&#39;</span><span class="p">;</span>
@@ -885,7 +893,7 @@ insert method, it is first converted to an array.</td>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 31, 2018.
+      Last updated on Nov 04, 2018.
 
     </p>
   </div>

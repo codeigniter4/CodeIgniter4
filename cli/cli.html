@@ -242,8 +242,10 @@ random C++ script could call one command and run code in your models!</li>
 <p>Let&#8217;s create a simple controller so you can see it in action. Using your
 text editor, create a file called Tools.php, and put the following code
 in it:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-<span class="k">class</span> <span class="nc">Tools</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span> <span class="p">{</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Controller</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Tools</span> <span class="k">extends</span> <span class="nx">Controller</span> <span class="p">{</span>
 
         <span class="k">public</span> <span class="k">function</span> <span class="nf">message</span><span class="p">(</span><span class="nv">$to</span> <span class="o">=</span> <span class="s1">&#39;World&#39;</span><span class="p">)</span>
         <span class="p">{</span>
@@ -325,7 +327,7 @@ allows you to prompt a user for information, making it easy to build flexible, s
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 31, 2018.
+      Last updated on Nov 04, 2018.
 
     </p>
   </div>

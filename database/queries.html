@@ -445,21 +445,25 @@ as placeholders. This returns a PreparedQuery object:</p>
 </div>
 <p>If you don&#8217;t want to use the Query Builder you can create the Query object manually using question marks for
 value placeholders:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="nv">$db</span><span class="p">)</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Database\Query</span><span class="p">;</span>
+
+<span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="nv">$db</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO user (name, email, country) VALUES (?, ?, ?)&quot;</span><span class="p">;</span>
 
-    <span class="k">return</span> <span class="k">new</span> <span class="nx">Query</span><span class="p">(</span><span class="nv">$db</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setQuery</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+    <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">Query</span><span class="p">(</span><span class="nv">$db</span><span class="p">))</span><span class="o">-&gt;</span><span class="na">setQuery</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 </div>
 <p>If the database requires an array of options passed to it during the prepare statement phase you can pass that
 array through in the second parameter:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="nv">$db</span><span class="p">)</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Database\Query</span><span class="p">;</span>
+
+<span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="nv">$db</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO user (name, email, country) VALUES (?, ?, ?)&quot;</span><span class="p">;</span>
 
-    <span class="k">return</span> <span class="k">new</span> <span class="nx">Query</span><span class="p">(</span><span class="nv">$db</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setQuery</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+    <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">Query</span><span class="p">(</span><span class="nv">$db</span><span class="p">))</span><span class="o">-&gt;</span><span class="na">setQuery</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
 <span class="p">},</span> <span class="nv">$options</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -607,7 +611,7 @@ parameter is the value you want it replaced with:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 31, 2018.
+      Last updated on Nov 04, 2018.
 
     </p>
   </div>

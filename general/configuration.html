@@ -260,9 +260,10 @@ the web-accessible space at all, while keeping it under <strong>/application</st
 <p>If you need to create a new configuration file you would create a new file at your desired location,
 <strong>/application/Config</strong> by default. Then create the class and fill it with public properties that
 represent your settings:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Config\BaseConfig</span>
+<span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$siteName</span>  <span class="o">=</span> <span class="s1">&#39;My Great Site&#39;</span><span class="p">;</span>
     <span class="k">public</span> <span class="nv">$siteEmail</span> <span class="o">=</span> <span class="s1">&#39;webmaster@example.com&#39;</span><span class="p">;</span>
@@ -396,8 +397,9 @@ the configuration class, it will invoke that method, and incorporate any returne
 the same way as described for namespaced variables.</p>
 <p>A sample configuration class setup for this:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Config</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">MySalesConfig</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Config\BaseConfig</span>
+<span class="k">class</span> <span class="nc">MySalesConfig</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$target</span>        <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
     <span class="k">public</span> <span class="nv">$campaign</span>      <span class="o">=</span> <span class="s2">&quot;Winter Wonderland&quot;</span><span class="p">;</span>
@@ -452,7 +454,7 @@ by treating <cite>RegionalSalesModel</cite> as a &#8220;registrar&#8221;. The re
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 31, 2018.
+      Last updated on Nov 04, 2018.
 
     </p>
   </div>

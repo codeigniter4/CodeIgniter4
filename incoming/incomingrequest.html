@@ -229,7 +229,10 @@ classes, in addition to the methods listed below.</p>
 <h2><a class="toc-backref" href="#id1">Accessing the Request</a><a class="headerlink" href="#accessing-the-request" title="Permalink to this headline">¶</a></h2>
 <p>An instance of the request class already populated for you if the current class is a descendant of
 <code class="docutils literal"><span class="pre">CodeIgniter\Controller</span></code> and can be accessed as a class property:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">CodeIgniter\Controller</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+<span class="nx">user</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">Controller</span>
 <span class="p">{</span>
         <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
         <span class="p">{</span>
@@ -841,7 +844,7 @@ as an array.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 31, 2018.
+      Last updated on Nov 04, 2018.
 
     </p>
   </div>

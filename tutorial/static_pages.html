@@ -221,8 +221,10 @@ you&#8217;ll see URL patterns that match:</p>
 is all we will need to know.</p>
 <p>Create a file at <em>application/Controllers/Pages.php</em> with the following
 code.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
-<span class="k">class</span> <span class="nc">Pages</span> <span class="k">extends</span> <span class="nx">CodeIgniter\Controller</span> <span class="p">{</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Pages</span> <span class="k">extends</span> <span class="nx">Controller</span> <span class="p">{</span>
 
         <span class="k">public</span> <span class="k">function</span> <span class="nf">view</span><span class="p">(</span><span class="nv">$page</span> <span class="o">=</span> <span class="s1">&#39;home&#39;</span><span class="p">)</span>
         <span class="p">{</span>
@@ -405,7 +407,7 @@ method in the pages controller? Awesome!</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 31, 2018.
+      Last updated on Nov 04, 2018.
 
     </p>
   </div>

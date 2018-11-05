@@ -299,8 +299,10 @@ so it will insert a new row into it&#8217;s table, <strong>news</strong>.</p>
 not actually save any data because it doesn&#8217;t know what fields are
 safe to be updated. Edit the model to provide it a list of updatable
 fields in the <code class="docutils literal"><span class="pre">$allowedFields</span></code> property.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-<span class="k">class</span> <span class="nc">NewsModel</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Model</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">NewsModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">&#39;news&#39;</span><span class="p">;</span>
 
@@ -356,7 +358,7 @@ Add some news and check out the different pages you made.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 31, 2018.
+      Last updated on Nov 04, 2018.
 
     </p>
   </div>

@@ -245,8 +245,9 @@ can find your class, that  your new class extends the appropriate interface, and
 <p>For example, if you have a new <code class="docutils literal"><span class="pre">App\Libraries\RouteCollection</span></code> class that you would like to use in place of
 the core system class, you would create your class like this:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Libraries</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Router\RouteCollectionInterface</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">RouteCollection</span> <span class="k">implements</span> <span class="nx">\CodeIgniter\Router\RouteCollectionInterface</span>
+<span class="k">class</span> <span class="nc">RouteCollection</span> <span class="k">implements</span> <span class="nx">RouteCollectionInterface</span>
 <span class="p">{</span>
 
 <span class="p">}</span>
@@ -274,27 +275,36 @@ identical to replacing a class with a one exception:</p>
 <li>The class declaration must extend the parent class.</li>
 </ul>
 <p>For example, to extend the native RouteCollection class, you would declare your class with:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RouteCollection</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Router\RouteCollection</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Libraries</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Router\RouteCollection</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">RouteCollection</span> <span class="k">extends</span> <span class="nx">RouteCollection</span>
 <span class="p">{</span>
 
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>If you need to use a constructor in your class make sure you extend the parent constructor:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RouteCollection</span> <span class="k">implements</span> <span class="nx">\CodeIgniter\Router\RouteCollection</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Libraries</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Router\RouteCollection</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">RouteCollection</span> <span class="k">extends</span> <span class="nx">RouteCollection</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="k">parent</span><span class="o">::</span><span class="na">__construct</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+     <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">()</span>
+     <span class="p">{</span>
+         <span class="k">parent</span><span class="o">::</span><span class="na">__construct</span><span class="p">();</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
 </pre></div>
 </div>
 <p><strong>Tip:</strong>  Any functions in your class that are named identically to the methods in the parent class will be used
 instead of the native ones (this is known as “method overriding”). This allows you to substantially alter the CodeIgniter core.</p>
 <p>If you are extending the Controller core class, then be sure to extend your new class in your application controller’s
 constructors:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Home</span> <span class="k">extends</span> <span class="nx">App\BaseController</span> <span class="p">{</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">App\BaseController</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Home</span> <span class="k">extends</span> <span class="nx">BaseController</span> <span class="p">{</span>
 
 <span class="p">}</span>
 </pre></div>
@@ -325,7 +335,7 @@ constructors:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Oct 31, 2018.
+      Last updated on Nov 04, 2018.
 
     </p>
   </div>
