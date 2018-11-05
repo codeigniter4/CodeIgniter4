@@ -223,21 +223,25 @@ as placeholders. This returns a PreparedQuery object::
 If you don't want to use the Query Builder you can create the Query object manually using question marks for
 value placeholders::
 
+    use CodeIgniter\Database\Query;
+
     $pQuery = $db->prepare(function($db)
     {
         $sql = "INSERT INTO user (name, email, country) VALUES (?, ?, ?)";
 
-        return new Query($db)->setQuery($sql);
+        return (new Query($db))->setQuery($sql);
     });
 
 If the database requires an array of options passed to it during the prepare statement phase you can pass that
 array through in the second parameter::
 
+    use CodeIgniter\Database\Query;
+
     $pQuery = $db->prepare(function($db)
     {
         $sql = "INSERT INTO user (name, email, country) VALUES (?, ?, ?)";
 
-        return new Query($db)->setQuery($sql);
+        return (new Query($db))->setQuery($sql);
     }, $options);
 
 Executing the Query
