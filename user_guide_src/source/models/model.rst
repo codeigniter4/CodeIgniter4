@@ -46,7 +46,9 @@ Creating Your Model
 To take advantage of CodeIgniter's model, you would simply create a new model class
 that extends ``CodeIgniter\Model``::
 
-	class UserModel extends \CodeIgniter\Model
+        use CodeIgniter\Model;
+
+	class UserModel extends Model
 	{
 
 	}
@@ -64,7 +66,9 @@ This ensures that within the model any references to ``$this->db`` are made thro
 connection.
 ::
 
-	class UserModel extends \CodeIgniter\Model
+        use CodeIgniter\Model;
+
+	class UserModel extends Model
 	{
 		protected $DBGroup = 'group_name';
 	}
@@ -79,7 +83,9 @@ The model class has a few configuration options that can be set to allow the cla
 to work seamlessly for you. The first two are used by all of the CRUD methods to determine
 what table to use and how we can find the required records::
 
-	class UserModel extends \CodeIgniter\Model
+        use CodeIgniter\Model;
+
+	class UserModel extends Model
 	{
 		protected $table      = 'users';
 		protected $primaryKey = 'id';
@@ -348,7 +354,9 @@ simplest, they might look like this::
 
 A very simple model to work with this might look like::
 
-	class JobModel extends \CodeIgniter\Model
+        use CodeIgniter\Model;
+
+	class JobModel extends Model
 	{
 		protected $table = 'jobs';
 		protected $returnType = '\App\Entities\Job';

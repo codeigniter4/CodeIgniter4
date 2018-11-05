@@ -29,8 +29,10 @@ code.
 
 ::
 
-	<?php namespace App\Controllers;
-	class Pages extends CodeIgniter\Controller {
+	namespace App\Controllers;
+        use CodeIgniter\Controller;
+
+	class Pages extends Controller {
 
 		public function view($page = 'home')
 		{
