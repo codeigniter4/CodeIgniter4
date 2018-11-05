@@ -249,13 +249,14 @@ class RouterTest extends \CIUnitTestCase
 		];
 		$this->collection->add('foo', function () {
 		}, $options);
-		//          $this->collection->add(
-		//              'baz', function () {
-		//              }, [
-		//              'as'  => 'admin',
-		//              'foo' => 'bar',
-		//              ]
-		//          );
+		$options = [
+			'as'  => 'admin',
+			'foo' => 'bar',
+		];
+		$this->collection->add(
+				'baz', function () {
+				}, $options
+		);
 
 		$router = new Router($this->collection);
 
