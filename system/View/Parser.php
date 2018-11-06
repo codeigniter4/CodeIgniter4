@@ -371,6 +371,7 @@ class Parser extends View
 				}
 
 				$temp = [];
+				$pairs = [];
 				$out = $match[1];
 				foreach ($row as $key => $val)
 				{
@@ -382,6 +383,7 @@ class Parser extends View
 
 						if ( ! empty($pair))
 						{
+							$pairs[array_keys( $pair )[0]] = true;
 							$temp = array_merge($temp, $pair);
 						}
 
@@ -402,7 +404,7 @@ class Parser extends View
 				// Now replace our placeholders with the new content.
 				foreach ($temp as $pattern => $content)
 				{
-					$out = $this->replaceSingle($pattern, $content, $out, true);
+					$out = $this->replaceSingle($pattern, $content, $out, !isset( $pairs[$pattern] ) );
 				}
 
 				$str .= $out;
