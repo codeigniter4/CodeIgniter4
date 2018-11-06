@@ -181,9 +181,13 @@ class AutoloadConfig
 			'CodeIgniter\View\Parser'                       => BASEPATH . 'View/Parser.php',
 			'CodeIgniter\View\Cell'                         => BASEPATH . 'View/Cell.php',
 			'Zend\Escaper\Escaper'                          => BASEPATH . 'ThirdParty/ZendEscaper/Escaper.php',
-			'CodeIgniter\Log\TestLogger'                    => SUPPORTPATH . 'Log/TestLogger.php',
-			'CIDatabaseTestCase'                            => SUPPORTPATH . 'CIDatabaseTestCase.php',
 		];
+
+		if (isset($_SERVER['CI_ENVIRONMENT']) && $_SERVER['CI_ENVIRONMENT'] === 'testing')
+		{
+			$this->classmap['CodeIgniter\Log\TestLogger'] = SUPPORTPATH . 'Log/TestLogger.php';
+			$this->classmap['CIDatabaseTestCase']         = SUPPORTPATH . 'CIDatabaseTestCase.php';
+		}
 	}
 
 	//--------------------------------------------------------------------
