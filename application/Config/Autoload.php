@@ -55,11 +55,6 @@ class Autoload extends \CodeIgniter\Config\AutoloadConfig
 			'App'         => APPPATH,                // To ensure filters, etc still found,
 		];
 
-		if (defined('ENVIRONMENT') && ENVIRONMENT === 'testing')
-		{
-			$psr4['Tests\Support'] = TESTPATH . '_support'; // So custom migrations can run during testing
-		}
-
 		/**
 		 * -------------------------------------------------------------------
 		 * Class Map
