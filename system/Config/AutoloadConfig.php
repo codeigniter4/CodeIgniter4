@@ -91,7 +91,7 @@ class AutoloadConfig
 
 		if (isset($_SERVER['CI_ENVIRONMENT']) && $_SERVER['CI_ENVIRONMENT'] === 'testing')
 		{
-			$this->psr4['Tests\Support'] = BASEPATH . '../tests/_support';
+			$this->psr4['Tests\Support'] = SUPPORTPATH;
 		}
 
 		/**
