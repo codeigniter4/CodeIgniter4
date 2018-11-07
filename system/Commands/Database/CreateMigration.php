@@ -153,7 +153,7 @@ class CreateMigration extends BaseCommand
         // migration Type
         if ($config->type === 'timestamp')
         {
-            $name = date('YmdHis_') . $name;
+            $fileName = date('YmdHis_') . $name;
         } else if ($config->type === 'sequential')
         {
             // default with 001
@@ -165,11 +165,11 @@ class CreateMigration extends BaseCommand
                 return;
             }
 
-            $name = $sequence . '_' . $name;
+            $fileName = $sequence . '_' . $name;
         }
 
         // full path
-		$path = $homepath . '/Database/Migrations/' . $name . '.php';
+		$path = $homepath . '/Database/Migrations/' . $fileName . '.php';
 
 		$template = <<<EOD
 <?php namespace $ns\Database\Migrations;
