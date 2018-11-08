@@ -6,6 +6,7 @@ use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\HTTP\IncomingRequest;
 use Config\App;
+use Config\Services;
 
 /**
  * Class FeatureTestCase
@@ -20,6 +21,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	/**
 	 * If present, will override application
 	 * routes when using call().
+	 *
 	 * @var \CodeIgniter\Router\RouteCollection
 	 */
 	protected $routes;
@@ -27,6 +29,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	/**
 	 * Values to be set in the SESSION global
 	 * before running the test.
+	 *
 	 * @var array
 	 */
 	protected $session = [];
@@ -100,12 +103,22 @@ class FeatureTestCase extends CIDatabaseTestCase
 		$_SESSION = [];
 
 		$request = $this->setupRequest($method, $path, $params);
-
 		$request = $this->populateGlobals($method, $request, $params);
+
+		// Make sure any other classes that might call the request
+		// instance get the right one.
+		Services::injectMock('request', $request);
+		$_SERVER['REQUEST_METHOD'] = $method;
 
 		$response = $this->app
 			->setRequest($request)
 			->run($this->routes, true);
+
+		// Clean up any open output buffers
+		if (ob_get_level() > 0)
+		{
+			ob_end_clean();
+		}
 
 		$featureResponse = new FeatureResponse($response);
 
@@ -199,7 +212,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 */
 	public function options(string $path, array $params = null)
 	{
-		return $this->call('delete', $path, $params);
+		return $this->call('options', $path, $params);
 	}
 
 	/**
@@ -208,16 +221,16 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 *
 	 * @param string      $method
 	 * @param string|null $path
-	 * @param string|null $params
+	 * @param array|null  $params
 	 *
 	 * @return \CodeIgniter\HTTP\IncomingRequest
 	 */
-	protected function setupRequest(string $method, string $path = null, string $params = null): IncomingRequest
+	protected function setupRequest(string $method, string $path = null, array $params = null): IncomingRequest
 	{
 		$config = config(App::class);
-		$uri    = new URI($config->baseURL .'/'. trim($path, '/ '));
+		$uri    = new URI($config->baseURL . '/' . trim($path, '/ '));
 
-		$request = new IncomingRequest($config, clone($uri), $params, new UserAgent());
+		$request      = new IncomingRequest($config, clone($uri), $params, new UserAgent());
 		$request->uri = $uri;
 
 		$request->setMethod($method);

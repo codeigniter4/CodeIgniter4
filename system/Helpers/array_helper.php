@@ -1,6 +1,6 @@
 <?php
 
-if (! function_exists('array_value_dot'))
+if (! function_exists('dot_array_search'))
 {
 	/**
 	 * Searches an array through dot syntax. Supports
@@ -19,10 +19,10 @@ if (! function_exists('array_value_dot'))
 	}
 }
 
-if (! function_exists('array_search_dot'))
+if (! function_exists('_array_search_dot'))
 {
 	/**
-	 * Used by array_value_dot to recursively search the
+	 * Used by dot_array_search to recursively search the
 	 * array with wildcards.
 	 *
 	 * @param array $indexes
@@ -37,13 +37,13 @@ if (! function_exists('array_search_dot'))
 			? array_shift($indexes)
 			: null;
 
-		if (empty($currentIndex) || (! isset($array[$currentIndex]) && $currentIndex != '*'))
+		if (empty($currentIndex) || (! isset($array[$currentIndex]) && $currentIndex !== '*'))
 		{
 			return null;
 		}
 
 		// Handle Wildcard (*)
-		if ($currentIndex == '*')
+		if ($currentIndex === '*')
 		{
 			// If $array has more than 1 item, we have to loop over each.
 			if (is_array($array))
@@ -80,5 +80,3 @@ if (! function_exists('array_search_dot'))
 		return $array[$currentIndex];
 	}
 }
-
-

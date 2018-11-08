@@ -773,7 +773,7 @@ class Email
 			if ($this->attachments[$i]['name'][0] === $filename)
 			{
 				$this->attachments[$i]['multipart'] = 'related';
-				$this->attachments[$i]['cid']       = uniqid(basename($this->attachments[$i]['name'][0]).'@');
+				$this->attachments[$i]['cid']       = uniqid(basename($this->attachments[$i]['name'][0]).'@', true);
 
 				return $this->attachments[$i]['cid'];
 			}
@@ -943,7 +943,7 @@ class Email
 	{
 		$from = str_replace(['>', '<'], '', $this->headers['Return-Path']);
 
-		return '<'.uniqid('').strstr($from, '@').'>';
+		return '<'.uniqid('', true).strstr($from, '@').'>';
 	}
 
 	//--------------------------------------------------------------------
@@ -1336,7 +1336,7 @@ class Email
 				}
 				else
 				{
-					$boundary = uniqid('B_ALT_');
+					$boundary = uniqid('B_ALT_', true);
 					$hdr      .= 'Content-Type: multipart/alternative; boundary="'.$boundary.'"';
 
 					$body .= $this->getMimeMessage().$this->newline.$this->newline
@@ -1371,7 +1371,7 @@ class Email
 
 			case 'plain-attach':
 
-				$boundary = uniqid('B_ATC_');
+				$boundary = uniqid('B_ATC_', true);
 				$hdr      .= 'Content-Type: multipart/mixed; boundary="'.$boundary.'"';
 
 				if ($this->getProtocol() === 'mail')
@@ -1392,19 +1392,19 @@ class Email
 				break;
 			case 'html-attach':
 
-				$alt_boundary  = uniqid('B_ALT_');
+				$alt_boundary  = uniqid('B_ALT_', true);
 				$last_boundary = null;
 
 				if ($this->attachmentsHaveMultipart('mixed'))
 				{
-					$atc_boundary  = uniqid('B_ATC_');
+					$atc_boundary  = uniqid('B_ATC_', true);
 					$hdr           .= 'Content-Type: multipart/mixed; boundary="'.$atc_boundary.'"';
 					$last_boundary = $atc_boundary;
 				}
 
 				if ($this->attachmentsHaveMultipart('related'))
 				{
-					$rel_boundary        = uniqid('B_REL_');
+					$rel_boundary        = uniqid('B_REL_', true);
 					$rel_boundary_header = 'Content-Type: multipart/related; boundary="'.$rel_boundary.'"';
 
 					if (isset($last_boundary))
