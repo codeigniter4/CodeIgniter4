@@ -199,7 +199,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 */
 	public function options(string $path, array $params = null)
 	{
-		return $this->call('delete', $path, $params);
+		return $this->call('options', $path, $params);
 	}
 
 	/**
