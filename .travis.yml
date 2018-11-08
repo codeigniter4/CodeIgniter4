@@ -3,11 +3,13 @@ language: php
 php:
   - 7.1
   - 7.2
+  - 7.3
   - nightly
 
 matrix:
   fast_finish: true
   allow_failures:
+    - php: 7.3
     - php: nightly
 
 global:
@@ -16,7 +18,8 @@ global:
 
 # Recommended by Travis support
 sudo: required
-dist: precise
+dist: trusty
+group: edge
 
 env:
   - DB=mysqli
