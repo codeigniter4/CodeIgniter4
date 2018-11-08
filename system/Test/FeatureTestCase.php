@@ -103,12 +103,12 @@ class FeatureTestCase extends CIDatabaseTestCase
 		$_SESSION = [];
 
 		$request = $this->setupRequest($method, $path, $params);
-
 		$request = $this->populateGlobals($method, $request, $params);
 
 		// Make sure any other classes that might call the request
 		// instance get the right one.
 		Services::injectMock('request', $request);
+		$_SERVER['REQUEST_METHOD'] = $method;
 
 		$response = $this->app
 			->setRequest($request)
