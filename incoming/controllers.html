@@ -525,7 +525,7 @@ has details on the format of the rules and messages arrays, as well as available
     <span class="p">]))</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;users/update&#39;</span><span class="p">,</span> <span class="p">[</span>
-            <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">errors</span>
+            <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">()</span>
         <span class="p">]);</span>
     <span class="p">}</span>
 
@@ -540,7 +540,7 @@ name of the group, as defined in <code class="docutils literal"><span class="pre
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">(</span><span class="s1">&#39;userRules&#39;</span><span class="p">))</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;users/update&#39;</span><span class="p">,</span> <span class="p">[</span>
-            <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">errors</span>
+            <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">()</span>
         <span class="p">]);</span>
     <span class="p">}</span>
 
@@ -583,7 +583,7 @@ and you will find that some situations are simpler in the controller than then m
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Nov 04, 2018.
+      Last updated on Nov 08, 2018.
 
     </p>
   </div>
