@@ -222,7 +222,7 @@ abstract class BaseResult implements ResultInterface
 		{
 			foreach ($this->resultObject as $row)
 			{
-				$this->resultArray[$i] = (array) $row;
+				$this->resultArray[] = (array) $row;
 			}
 
 			return $this->resultArray;
@@ -265,7 +265,7 @@ abstract class BaseResult implements ResultInterface
 		{
 			foreach ($this->resultArray as $row)
 			{
-				$this->resultObject[$i] = (object) $row;
+				$this->resultObject[] = (object) $row;
 			}
 
 			return $this->resultObject;
