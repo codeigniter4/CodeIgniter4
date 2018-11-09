@@ -34,7 +34,7 @@ the slug from our title in the model. Create the new view at
 
     </form>
 
-There is only one things here that probably look unfamiliar to you: the ``\Config\Services::validation()->listErrors()`` function. It is used to report
+There is only one thing here that probably look unfamiliar to you: the ``\Config\Services::validation()->listErrors()`` function. It is used to report
 errors related to form validation.
 
 Go back to your news controller. You're going to do two things here,
