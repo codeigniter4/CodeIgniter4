@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
@@ -120,18 +121,18 @@ class MigrateVersion extends BaseCommand
 
 		CLI::write(sprintf(lang('Migrations.toVersionPH'), $version), 'yellow');
 
-		$namespace = CLI::getOption('n');
-		$group = CLI::getOption('g');
+		$namespace = $params['-n'] ?? CLI::getOption('n');
+		$group     = $params['-g'] ?? CLI::getOption('g');
+
 		try
 		{
 			$runner->version($version, $namespace, $group);
 			CLI::write('Done');
-		} catch (\Exception $e)
+		}
+		catch (\Exception $e)
 		{
 			$this->showError($e);
 		}
-
-
 	}
 
 }

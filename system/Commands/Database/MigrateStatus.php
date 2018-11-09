@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
@@ -96,7 +97,7 @@ class MigrateStatus extends BaseCommand
 	protected $ignoredNamespaces = [
 		'CodeIgniter',
 		'Config',
-		'Tests\Support'
+		'Tests\Support',
 	];
 
 	/**
@@ -108,13 +109,15 @@ class MigrateStatus extends BaseCommand
 	{
 		$runner = Services::migrations();
 
-		if ( ! is_null(CLI::getOption('g')))
+		$group = $params['-g'] ?? CLI::getOption('g');
+
+		if (! is_null($group))
 		{
-			$runner->setGroup(CLI::getOption('g'));
+			$runner->setGroup($group);
 		}
 
 		// Get all namespaces form  PSR4 paths.
-		$config = new Autoload();
+		$config     = new Autoload();
 		$namespaces = $config->psr4;
 
 		// Loop for all $namespaces
@@ -127,7 +130,7 @@ class MigrateStatus extends BaseCommand
 
 			$runner->setNamespace($namespace);
 			$migrations = $runner->findMigrations();
-			$history = $runner->getHistory();
+			$history    = $runner->getHistory();
 
 			CLI::write($namespace);
 
@@ -142,28 +145,27 @@ class MigrateStatus extends BaseCommand
 			$max = 0;
 			foreach ($migrations as $version => $migration)
 			{
-				$file = substr($migration->name, strpos($migration->name, $version . '_'));
+				$file                       = substr($migration->name, strpos($migration->name, $version . '_'));
 				$migrations[$version]->name = $file;
 
 				$max = max($max, strlen($file));
 			}
 
-			CLI::write('  '. str_pad(lang('Migrations.filename'), $max + 4) . lang('Migrations.on'), 'yellow');
-
+			CLI::write('  ' . str_pad(lang('Migrations.filename'), $max + 4) . lang('Migrations.on'), 'yellow');
 
 			foreach ($migrations as $version => $migration)
 			{
 				$date = '';
 				foreach ($history as $row)
 				{
-					if ($row['version'] != $version)
+					if ($row['version'] !== $version)
 					{
 						continue;
 					}
 
-					$date = date("Y-m-d H:i:s", $row['time']);
+					$date = date('Y-m-d H:i:s', $row['time']);
 				}
-				CLI::write(str_pad('  '.$migration->name, $max + 6) . ($date ? $date : '---'));
+				CLI::write(str_pad('  ' . $migration->name, $max + 6) . ($date ? $date : '---'));
 			}
 		}
 	}

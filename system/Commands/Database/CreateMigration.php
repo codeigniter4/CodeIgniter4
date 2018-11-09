@@ -99,8 +99,6 @@ class CreateMigration extends BaseCommand
 	/**
 	 * Creates a new migration file with the current timestamp.
 	 *
-	 * @todo Have this check the settings and see what type of file it should create (timestamp or sequential)
-	 *
 	 * @param array $params
 	 */
 	public function run(array $params = [])
@@ -117,7 +115,7 @@ class CreateMigration extends BaseCommand
 			CLI::error(lang('Migrations.badCreateName'));
 			return;
 		}
-		$ns       = CLI::getOption('n');
+		$ns       = $params['-n'] ?? CLI::getOption('n');
 		$homepath = APPPATH;
 
 		if (! empty($ns))
