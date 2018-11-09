@@ -84,7 +84,9 @@ class BootstrapFCPATHTest extends \CIUnitTestCase
 	}
 
 	private function readOutput($file){
-		return  system('php -f ' . $file);
+		ob_start();
+		system('php -f ' . $file);
+		return ob_get_clean();
 	}
 
 
