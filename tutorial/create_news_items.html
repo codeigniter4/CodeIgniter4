@@ -217,7 +217,7 @@ the slug from our title in the model. Create the new view at
 
 <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">validation</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">listErrors</span><span class="p">();</span> <span class="cp">?&gt;</span>
 
-<span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;news/create&#39;</span><span class="p">);</span> <span class="cp">?&gt;</span>
+<span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;title&quot;</span><span class="p">&gt;</span>Title<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;input&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;title&quot;</span> <span class="p">/&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
@@ -230,12 +230,7 @@ the slug from our title in the model. Create the new view at
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </pre></div>
 </div>
-<p>There are only two things here that probably look unfamiliar to you: the
-<code class="docutils literal"><span class="pre">form_open()</span></code> function and the <code class="docutils literal"><span class="pre">\Config\Services::validation()-&gt;listErrors()</span></code> function.</p>
-<p>The first function is provided by the <a class="reference internal" href="../helpers/form_helper.html"><span class="doc">form
-helper</span></a> and renders the form element and
-adds extra functionality, like adding a hidden <a class="reference internal" href="../libraries/security.html"><span class="doc">CSRF prevention
-field</span></a>. The latter is used to report
+<p>There is only one thing here that probably look unfamiliar to you: the <code class="docutils literal"><span class="pre">\Config\Services::validation()-&gt;listErrors()</span></code> function. It is used to report
 errors related to form validation.</p>
 <p>Go back to your news controller. You&#8217;re going to do two things here,
 check whether the form was submitted and whether the submitted data
@@ -358,7 +353,7 @@ Add some news and check out the different pages you made.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Nov 08, 2018.
+      Last updated on Nov 09, 2018.
 
     </p>
   </div>
