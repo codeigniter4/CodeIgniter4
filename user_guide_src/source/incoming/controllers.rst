@@ -323,7 +323,7 @@ has details on the format of the rules and messages arrays, as well as available
         ]))
         {
             return view('users/update', [
-                'errors' => $this->errors
+                'errors' => $this->validator->getErrors()
             ]);
         }
 
@@ -338,7 +338,7 @@ name of the group, as defined in ``Config\Validation.php``::
         if (! $this->validate('userRules'))
         {
             return view('users/update', [
-                'errors' => $this->errors
+                'errors' => $this->validator->getErrors()
             ]);
         }
 

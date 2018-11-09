@@ -229,7 +229,7 @@ class RouteCollection implements RouteCollectionInterface
 	public function __construct(FileLocator $locator, $moduleConfig)
 	{
 		// Get HTTP verb
-		$this->HTTPVerb = Services::request()->getMethod() ?? 'cli';
+		$this->HTTPVerb = strtolower($_SERVER['REQUEST_METHOD'] ?? 'cli');
 
 		$this->fileLocator = $locator;
 

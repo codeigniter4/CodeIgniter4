@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Log\Logger;
 use CodeIgniter\View\Exceptions\ViewException;
 
@@ -71,6 +72,7 @@ class Parser extends View
 
 	/**
 	 * Stores any plugins registered at run-time.
+	 *
 	 * @var array
 	 */
 	protected $plugins = [];
@@ -88,11 +90,11 @@ class Parser extends View
 	/**
 	 * Constructor
 	 *
-	 * @param \Config\View  $config
-	 * @param string $viewPath
-	 * @param mixed $loader
-	 * @param bool $debug
-	 * @param Logger $logger
+	 * @param \Config\View $config
+	 * @param string       $viewPath
+	 * @param mixed        $loader
+	 * @param boolean      $debug
+	 * @param Logger       $logger
 	 */
 	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, Logger $logger = null)
 	{
@@ -110,9 +112,9 @@ class Parser extends View
 	 * Parses pseudo-variables contained in the specified template view,
 	 * replacing them with any data that has already been set.
 	 *
-	 * @param string $view
-	 * @param array  $options
-	 * @param bool $saveData
+	 * @param string  $view
+	 * @param array   $options
+	 * @param boolean $saveData
 	 *
 	 * @return string
 	 */
@@ -141,7 +143,7 @@ class Parser extends View
 		$view = $view . '.php';
 		$file = $this->viewPath . $view;
 
-		if ( ! file_exists($file))
+		if (! file_exists($file))
 		{
 			$file = $this->loader->locateFile($view, 'Views');
 		}
@@ -153,10 +155,10 @@ class Parser extends View
 		}
 
 		$template = file_get_contents($file);
-		$output = $this->parse($template, $this->data, $options);
+		$output   = $this->parse($template, $this->data, $options);
 		$this->logPerformance($start, microtime(true), $view);
 
-		if ( ! $saveData)
+		if (! $saveData)
 		{
 			$this->data = [];
 		}
@@ -177,11 +179,11 @@ class Parser extends View
 	 * Parses pseudo-variables contained in the specified string,
 	 * replacing them with any data that has already been set.
 	 *
-	 * @param string $template
-	 * @param array  $options
-	 * @param bool $saveData
+	 * @param string  $template
+	 * @param array   $options
+	 * @param boolean $saveData
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function renderString(string $template, array $options = null, $saveData = null): string
 	{
@@ -195,7 +197,7 @@ class Parser extends View
 
 		$this->logPerformance($start, microtime(true), $this->excerpt($template));
 
-		if ( ! $saveData)
+		if (! $saveData)
 		{
 			$this->data = [];
 		}
@@ -210,7 +212,7 @@ class Parser extends View
 	 * so that the variable is correctly handled within the
 	 * parsing itself, and contexts (including raw) are respected.
 	 *
-	 * @param array $data
+	 * @param array  $data
 	 * @param string $context The context to escape it for: html, css, js, url, raw
 	 *                        If 'raw', no escaping will happen
 	 *
@@ -218,7 +220,7 @@ class Parser extends View
 	 */
 	public function setData(array $data = [], string $context = null): RendererInterface
 	{
-		if ( ! empty($context))
+		if (! empty($context))
 		{
 			foreach ($data as $key => &$value)
 			{
@@ -251,10 +253,10 @@ class Parser extends View
 	 * Parses pseudo-variables contained in the specified template,
 	 * replacing them with the data in the second param
 	 *
-	 * @param string $template
-	 * @param array  $data
-	 * @param array $options	Future options
-	 * @return	string
+	 * @param  string $template
+	 * @param  array  $data
+	 * @param  array  $options  Future options
+	 * @return string
 	 */
 	protected function parse(string $template, array $data = [], array $options = null): string
 	{
@@ -285,7 +287,7 @@ class Parser extends View
 
 			if (is_array($val))
 			{
-				$escape = false;
+				$escape  = false;
 				$replace = $this->parsePair($key, $val, $template);
 			}
 			else
@@ -309,9 +311,9 @@ class Parser extends View
 	/**
 	 * Parse a single key/value, extracting it
 	 *
-	 * @param	string $key
-	 * @param	string $val
-	 * @return	array
+	 * @param  string $key
+	 * @param  string $val
+	 * @return array
 	 */
 	protected function parseSingle(string $key, string $val): array
 	{
@@ -327,10 +329,10 @@ class Parser extends View
 	 *
 	 * Parses tag pairs: {some_tag} string... {/some_tag}
 	 *
-	 * @param	string $variable
-	 * @param	array	$data
-	 * @param	string	$template
-	 * @return	array
+	 * @param  string $variable
+	 * @param  array  $data
+	 * @param  string $template
+	 * @return array
 	 */
 	protected function parsePair(string $variable, array $data, string $template): array
 	{
@@ -370,19 +372,20 @@ class Parser extends View
 					$row = (array)$row;
 				}
 
-				$temp = [];
-				$out = $match[1];
+				$temp  = [];
+				$pairs = [];
+				$out   = $match[1];
 				foreach ($row as $key => $val)
 				{
-
 					// For nested data, send us back through this method...
 					if (is_array($val))
 					{
 						$pair = $this->parsePair($key, $val, $match[1]);
 
-						if ( ! empty($pair))
+						if (! empty($pair))
 						{
-							$temp = array_merge($temp, $pair);
+							$pairs[array_keys( $pair )[0]] = true;
+							$temp                          = array_merge($temp, $pair);
 						}
 
 						continue;
@@ -402,7 +405,7 @@ class Parser extends View
 				// Now replace our placeholders with the new content.
 				foreach ($temp as $pattern => $content)
 				{
-					$out = $this->replaceSingle($pattern, $content, $out, true);
+					$out = $this->replaceSingle($pattern, $content, $out, ! isset( $pairs[$pattern] ) );
 				}
 
 				$str .= $out;
@@ -453,9 +456,9 @@ class Parser extends View
 			foreach ($matches as $match)
 			{
 				// Create a hash of the contents to insert in its place.
-				$hash = md5($match[1]);
+				$hash                       = md5($match[1]);
 				$this->noparseBlocks[$hash] = $match[1];
-				$template = str_replace($match[0], "noparse_{$hash}", $template);
+				$template                   = str_replace($match[0], "noparse_{$hash}", $template);
 			}
 		}
 
@@ -515,8 +518,8 @@ class Parser extends View
 			// Build the string to replace the `if` statement with.
 			$condition = $match[2];
 
-			$statement = $match[1] == 'elseif' ? '<?php elseif (' . $condition . '): ?>' : '<?php if (' . $condition . '): ?>';
-			$template = str_replace($match[0], $statement, $template);
+			$statement = $match[1] === 'elseif' ? '<?php elseif (' . $condition . '): ?>' : '<?php if (' . $condition . '): ?>';
+			$template  = str_replace($match[0], $statement, $template);
 		}
 
 		$template = preg_replace('/\{\s*else\s*\}/ms', '<?php else: ?>', $template);
@@ -528,7 +531,8 @@ class Parser extends View
 		try
 		{
 			$result = eval('?>' . $template . '<?php ');
-		} catch (\ParseError $e)
+		}
+		catch (\ParseError $e)
 		{
 			ob_end_clean();
 			throw ViewException::forTagSyntaxError(str_replace(['?>', '<?php '], '', $template));
@@ -541,13 +545,13 @@ class Parser extends View
 	/**
 	 * Over-ride the substitution field delimiters.
 	 *
-	 * @param	string $leftDelimiter
-	 * @param	string $rightDelimiter
-	 * @return	RendererInterface
+	 * @param  string $leftDelimiter
+	 * @param  string $rightDelimiter
+	 * @return RendererInterface
 	 */
 	public function setDelimiters($leftDelimiter = '{', $rightDelimiter = '}'): RendererInterface
 	{
-		$this->leftDelimiter = $leftDelimiter;
+		$this->leftDelimiter  = $leftDelimiter;
 		$this->rightDelimiter = $rightDelimiter;
 		return $this;
 	}
@@ -558,10 +562,10 @@ class Parser extends View
 	 * Handles replacing a pseudo-variable with the actual content. Will double-check
 	 * for escaping brackets.
 	 *
-	 * @param      $pattern
-	 * @param      $content
-	 * @param      $template
-	 * @param bool $escape
+	 * @param $pattern
+	 * @param $content
+	 * @param $template
+	 * @param boolean  $escape
 	 *
 	 * @return string
 	 */
@@ -572,9 +576,8 @@ class Parser extends View
 
 		// Replace the content in the template
 		$template = preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
-
 			// Check for {! !} syntax to not-escape this one.
-			if (strpos($matches[0], '{!') === 0 && substr($matches[0], -2) == '!}')
+			if (strpos($matches[0], '{!') === 0 && substr($matches[0], -2) === '!}')
 			{
 				$escape = false;
 			}
@@ -590,9 +593,9 @@ class Parser extends View
 	/**
 	 * Callback used during parse() to apply any filters to the value.
 	 *
-	 * @param array  $matches
-	 * @param string $replace
-	 * @param bool   $escape
+	 * @param array   $matches
+	 * @param string  $replace
+	 * @param boolean $escape
 	 *
 	 * @return string
 	 */
@@ -652,7 +655,7 @@ class Parser extends View
 			$escape = false;
 		}
 		// If no `esc` filter is found, then we'll need to add one.
-		elseif ( ! preg_match('/\s+esc/', $key))
+		elseif (! preg_match('/\s+esc/', $key))
 		{
 			$escape = 'html';
 		}
@@ -683,7 +686,7 @@ class Parser extends View
 			$param = ! empty($param) ? trim($param[0], '() ') : null;
 
 			// Params can be separated by commas to allow multiple parameters for the filter
-			if ( ! empty($param))
+			if (! empty($param))
 			{
 				$param = explode(',', $param);
 
@@ -701,8 +704,10 @@ class Parser extends View
 			// Get our filter name
 			$filter = ! empty($param) ? trim(strtolower(substr($filter, 0, strpos($filter, '(')))) : trim($filter);
 
-			if ( ! array_key_exists($filter, $this->config->filters))
+			if (! array_key_exists($filter, $this->config->filters))
+			{
 				continue;
+			}
 
 			// Filter it....
 			$replace = $this->config->filters[$filter]($replace, ...$param);
@@ -730,7 +735,7 @@ class Parser extends View
 		foreach ($this->plugins as $plugin => $callable)
 		{
 			// Paired tags are enclosed in an array in the config array.
-			$isPair = is_array($callable);
+			$isPair   = is_array($callable);
 			$callable = $isPair ? array_shift($callable) : $callable;
 
 			$pattern = $isPair ? '#{\+\s*' . $plugin . '([\w\d=-_:\+\s()/\"@.]*)?\s*\+}(.+?){\+\s*/' . $plugin . '\s*\+}#ims' : '#{\+\s*' . $plugin . '([\w\d=-_:\+\s()/\"@.]*)?\s*\+}#ims';
@@ -761,12 +766,14 @@ class Parser extends View
 				foreach ($parts as $part)
 				{
 					if (empty($part))
+					{
 						continue;
+					}
 
 					if (strpos($part, '=') !== false)
 					{
 						list($a, $b) = explode('=', $part);
-						$params[$a] = $b;
+						$params[$a]  = $b;
 					}
 					else
 					{
@@ -788,7 +795,7 @@ class Parser extends View
 	 * @param string   $alias
 	 * @param callable $callback
 	 *
-	 * @param bool     $isPair
+	 * @param boolean  $isPair
 	 *
 	 * @return $this
 	 */
