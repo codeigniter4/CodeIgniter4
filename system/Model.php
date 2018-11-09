@@ -788,17 +788,39 @@ class Model
 	 */
 	public function delete($id = null, $purge = false)
 	{
-		if (! empty($id) && is_numeric($id))
-		{
-			$id = [$id];
-		}
-
 		$builder = $this->builder();
-		if (! empty($id))
+	
+		// $id is numeric or non-empty string
+		if (is_numeric($id) || (!empty($id) && is_string($id)))
 		{
-			$builder = $builder->whereIn($this->primaryKey, $id);
+			$builder = $builder->where($this->table.'.'.$this->primaryKey, $id);
 		}
-
+		elseif (!empty($id) && is_array($id))
+		{
+			// $id is an indexed array 
+			if(array_keys($id) === range(0, count($id) -1))
+			{
+				$builder = $builder->whereIn($this->table.'.'.$this->primaryKey, $id);
+			}
+			else
+			{
+				// $id is an array ['key' => 'value'];
+				foreach ($id as $key => $value)
+				{
+					// 'value' is an array
+					if(!empty($value) && is_array($value))
+					{
+						$builder = $builder->whereIn($this->table.'.'.$key, $value);
+					}
+					// 'value' == 5 || 'value' == 'bar' || 'value' IS NULL
+					else
+					{
+						$builder = $builder->where($this->table.'.'.$key, $value);
+					}
+				}
+			}
+		}
+		
 		$this->trigger('beforeDelete', ['id' => $id, 'purge' => $purge]);
 
 		if ($this->useSoftDeletes && ! $purge)
