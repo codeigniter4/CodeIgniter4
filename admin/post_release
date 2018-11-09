@@ -1,4 +1,5 @@
-#~/bin/bash
+#!/bin/bash
+#######################DO NOT USE YET########################
 
 ## Cleanup after a framework release
 

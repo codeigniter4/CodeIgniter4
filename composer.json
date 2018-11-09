@@ -32,7 +32,7 @@
     },
     "support": {
         "forum": "http://forum.codeigniter.com/",
-        "source": "https://github.com/bcit-ci/CodeIgniter4",
+        "source": "https://github.com/codeigniter4/CodeIgniter4",
         "slack": "https://codeigniterchat.slack.com"
     }
 }
