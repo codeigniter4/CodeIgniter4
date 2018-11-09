@@ -1,7 +1,7 @@
 # CodeIgniter 4 Development
 
-[![Build Status](https://travis-ci.org/bcit-ci/CodeIgniter4.svg?branch=develop)](https://travis-ci.org/bcit-ci/CodeIgniter4)
-[![Coverage Status](https://coveralls.io/repos/github/bcit-ci/CodeIgniter4/badge.svg?branch=develop)](https://coveralls.io/github/bcit-ci/CodeIgniter4?branch=develop)
+[![Build Status](https://travis-ci.orgcodeigniter4/CodeIgniter4.svg?branch=develop)](https://travis-ci.orgcodeigniter4/CodeIgniter4)
+[![Coverage Status](https://coveralls.io/repos/githubcodeigniter4/CodeIgniter4/badge.svg?branch=develop)](https://coveralls.io/githubcodeigniter4/CodeIgniter4?branch=develop)
 <br>
 
 ## What is CodeIgniter?
@@ -63,7 +63,7 @@ if you want to take the lead for one of them.
 
 We are not looking for out-of-scope contributions, only those that would be considered part of our controlled evolution!
 
-Please read the [*Contributing to CodeIgniter*](https://github.com/bcit-ci/CodeIgniter4/blob/develop/contributing.md) section in the user guide
+Please read the [*Contributing to CodeIgniter*](https://github.comcodeigniter4/CodeIgniter4/blob/develop/contributing.md) section in the user guide
 
 ## Server Requirements
 PHP version 7.1 or higher is required, with the following extensions installed: 

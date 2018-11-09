@@ -68,11 +68,11 @@ Once the maintainer handling your pull request is happy with it they will merge 
 
 ### Keeping your fork up-to-date
 
-Unlike systems like Subversion, Git can have multiple remotes. A remote is the name for a URL of a Git repository. By default your fork will have a remote named "origin" which points to your fork, but you can add another remote named "codeigniter" which points to `git://github.com/bcit-ci/CodeIgniter4.git`. This is a read-only remote but you can pull from this develop branch to update your own.
+Unlike systems like Subversion, Git can have multiple remotes. A remote is the name for a URL of a Git repository. By default your fork will have a remote named "origin" which points to your fork, but you can add another remote named "codeigniter" which points to `git://github.comcodeigniter4/CodeIgniter4.git`. This is a read-only remote but you can pull from this develop branch to update your own.
 
 If you are using command-line you can do the following:
 
-1. `git remote add codeigniter git://github.com/bcit-ci/CodeIgniter4.git`
+1. `git remote add codeigniter git://github.comcodeigniter4/CodeIgniter4.git`
 2. `git pull codeigniter develop`
 3. `git push origin develop`
 

@@ -6,23 +6,23 @@ and the core implementation in place!
 This is an early pre-release of 4.0.0. It is not suitable for production!
 
 There are several possible downloads, that you can see on the 
-[release page](https://github.com/bcit-ci/CodeIgniter4/releases/tag/v4.0.0-alpha.1) 
+[release page](https://github.comcodeigniter4/CodeIgniter4/releases/tag/v4.0.0-alpha.1) 
 
 - the runnable versions as a 
-[zip](https://github.com/bcit-ci/CodeIgniter4/releases/download/v4.0.0-alpha.1/CodeIgniter-4.0.0-alpha.1.zip) or a 
-[tarball](https://github.com/bcit-ci/CodeIgniter4/releases/download/v4.0.0-alpha.1/CodeIgniter-4.0.0-alpha.1.tar.gz)/
+[zip](https://github.comcodeigniter4/CodeIgniter4/releases/download/v4.0.0-alpha.1/CodeIgniter-4.0.0-alpha.1.zip) or a 
+[tarball](https://github.comcodeigniter4/CodeIgniter4/releases/download/v4.0.0-alpha.1/CodeIgniter-4.0.0-alpha.1.tar.gz)/
 - the developer versions of the framework (with contributor components) as
-a [zip](https://github.com/bcit-ci/CodeIgniter4/archive/v4.0.0-alpha.1.zip) or a 
-[tarball](https://github.com/bcit-ci/CodeIgniter4/archive/v4.0.0-alpha.1.tar.gz)/
-- and finally the [epub](https://github.com/bcit-ci/CodeIgniter4/releases/download/v4.0.0-alpha.1/CodeIgniter-4.0.0-alpha.1.epub) version of the user guide for this release.
+a [zip](https://github.comcodeigniter4/CodeIgniter4/archive/v4.0.0-alpha.1.zip) or a 
+[tarball](https://github.comcodeigniter4/CodeIgniter4/archive/v4.0.0-alpha.1.tar.gz)/
+- and finally the [epub](https://github.comcodeigniter4/CodeIgniter4/releases/download/v4.0.0-alpha.1/CodeIgniter-4.0.0-alpha.1.epub) version of the user guide for this release.
 
 The release has all the major features in place, but there are still gaps
 and issues. See ...
 
-- [Bugs in the 4.0.0-alpha.1](https://github.com/bcit-ci/CodeIgniter4/issues?q=is%3Aopen+is%3Aissue+milestone%3A4.0.0-alpha)
-- [Things that we definitely want to see fixed before first proper release](https://github.com/bcit-ci/CodeIgniter4/issues?q=is%3Aopen+is%3Aissue+milestone%3A4.0.0)
+- [Bugs in the 4.0.0-alpha.1](https://github.comcodeigniter4/CodeIgniter4/issues?q=is%3Aopen+is%3Aissue+milestone%3A4.0.0-alpha)
+- [Things that we definitely want to see fixed before first proper release](https://github.comcodeigniter4/CodeIgniter4/issues?q=is%3Aopen+is%3Aissue+milestone%3A4.0.0)
 - [Features we would like to see in the initial proper release](), if possible, else the next update to it
-- [Features that we are consciously deferring to later](https://github.com/bcit-ci/CodeIgniter4/issues?q=is%3Aopen+is%3Aissue+milestone%3A4.1.0)
+- [Features that we are consciously deferring to later](https://github.comcodeigniter4/CodeIgniter4/issues?q=is%3Aopen+is%3Aissue+milestone%3A4.1.0)
 
 What we need now is feedback from the community ...
 
