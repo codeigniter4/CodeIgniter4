@@ -168,7 +168,7 @@ class FormatRules
 	 */
 	public function is_natural_no_zero(string $str = null): bool
 	{
-		return ($str !== 0 && ctype_digit($str));
+		return ($str !== '0' && ctype_digit($str));
 	}
 
 	//--------------------------------------------------------------------
