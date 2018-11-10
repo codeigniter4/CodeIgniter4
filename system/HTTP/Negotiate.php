@@ -216,7 +216,7 @@ class Negotiate
 		foreach ($acceptable as $accept)
 		{
 			// if acceptable quality is zero, skip it.
-			if ($accept['q'] === 0)
+			if ($accept['q'] === 0.0)
 			{
 				continue;
 			}
