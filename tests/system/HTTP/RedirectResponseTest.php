@@ -13,7 +13,9 @@ use Tests\Support\HTTP\MockIncomingRequest;
 class RedirectResponseTest extends \CIUnitTestCase
 {
 
-	/** @var RouteCollection */
+	/**
+	 * @var RouteCollection
+	 */
 	protected $routes;
 	protected $request;
 	protected $config;
@@ -24,7 +26,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$this->config = new App();
+		$this->config          = new App();
 		$this->config->baseURL = 'http://example.com';
 
 		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()), new \Config\Modules());
@@ -86,13 +88,13 @@ class RedirectResponseTest extends \CIUnitTestCase
 
 	/**
 	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
+	 * @preserveGlobalState  disabled
 	 */
 	public function testWithInput()
 	{
 		$_SESSION = [];
-		$_GET = ['foo' => 'bar'];
-		$_POST = ['bar' => 'baz'];
+		$_GET     = ['foo' => 'bar'];
+		$_POST    = ['bar' => 'baz'];
 
 		$response = new RedirectResponse(new App());
 
@@ -106,7 +108,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 
 	/**
 	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
+	 * @preserveGlobalState  disabled
 	 */
 	public function testWithValidationErrors()
 	{
@@ -127,7 +129,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 
 	/**
 	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
+	 * @preserveGlobalState  disabled
 	 */
 	public function testWith()
 	{
@@ -143,12 +145,12 @@ class RedirectResponseTest extends \CIUnitTestCase
 
 	/**
 	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
+	 * @preserveGlobalState  disabled
 	 */
 	public function testRedirectBack()
 	{
 		$_SERVER['HTTP_REFERER'] = 'http://somewhere.com';
-		$this->request = new MockIncomingRequest($this->config, new URI('http://somewhere.com'), null, new UserAgent());
+		$this->request           = new MockIncomingRequest($this->config, new URI('http://somewhere.com'), null, new UserAgent());
 		Services::injectMock('request', $this->request);
 
 		$response = new RedirectResponse(new App());
@@ -159,7 +161,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 
 	/**
 	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
+	 * @preserveGlobalState  disabled
 	 */
 	public function testRedirectBackMissing()
 	{

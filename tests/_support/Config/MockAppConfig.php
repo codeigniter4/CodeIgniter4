@@ -26,5 +26,8 @@ class MockAppConfig
 
 	public $defaultLocale    = 'en';
 	public $negotiateLocale  = false;
-	public $supportedLocales = ['en', 'es'];
+	public $supportedLocales = [
+		'en',
+		'es',
+	];
 }

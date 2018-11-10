@@ -61,9 +61,9 @@ class EntityTest extends \CIUnitTestCase
 		$entity = $this->getEntity();
 
 		$entity->fill([
-			'foo'	 => 123,
-			'bar'	 => 234,
-			'baz'	 => 4556
+			'foo' => 123,
+			'bar' => 234,
+			'baz' => 4556,
 		]);
 
 		$this->assertEquals(123, $entity->foo);
@@ -162,7 +162,7 @@ class EntityTest extends \CIUnitTestCase
 
 	public function testDateMutationFromDatetime()
 	{
-		$dt = new \DateTime('now');
+		$dt     = new \DateTime('now');
 		$entity = $this->getEntity();
 		$this->setPrivateProperty($entity, 'created_at', $dt);
 
@@ -174,7 +174,7 @@ class EntityTest extends \CIUnitTestCase
 
 	public function testDateMutationFromTime()
 	{
-		$dt = Time::now();
+		$dt     = Time::now();
 		$entity = $this->getEntity();
 		$this->setPrivateProperty($entity, 'created_at', $dt);
 
@@ -198,7 +198,7 @@ class EntityTest extends \CIUnitTestCase
 
 	public function testDateMutationTimestampToTime()
 	{
-		$stamp = time();
+		$stamp  = time();
 		$entity = $this->getEntity();
 
 		$entity->created_at = $stamp;
@@ -211,7 +211,7 @@ class EntityTest extends \CIUnitTestCase
 
 	public function testDateMutationDatetimeToTime()
 	{
-		$dt = new \DateTime('now');
+		$dt     = new \DateTime('now');
 		$entity = $this->getEntity();
 
 		$entity->created_at = $dt;
@@ -224,7 +224,7 @@ class EntityTest extends \CIUnitTestCase
 
 	public function testDateMutationTimeToTime()
 	{
-		$dt = Time::now();
+		$dt     = Time::now();
 		$entity = $this->getEntity();
 
 		$entity->created_at = $dt;
@@ -387,7 +387,11 @@ class EntityTest extends \CIUnitTestCase
 	{
 		$entity = $this->getCastEntity();
 
-		$data = ['Sun', 'Mon', 'Tue'];
+		$data             = [
+			'Sun',
+			'Mon',
+			'Tue',
+		];
 		$entity->eleventh = $data;
 
 		// Should be a JSON-encoded string now...
@@ -406,10 +410,10 @@ class EntityTest extends \CIUnitTestCase
 		$result = $entity->toArray();
 
 		$this->assertEquals($result, [
-			'foo'		 => null,
-			'bar'		 => ':bar',
-			'default'	 => 'sumfin',
-			'created_at' => null
+			'foo'        => null,
+			'bar'        => ':bar',
+			'default'    => 'sumfin',
+			'created_at' => null,
 		]);
 	}
 
@@ -420,10 +424,10 @@ class EntityTest extends \CIUnitTestCase
 		$result = $entity->toArray();
 
 		$this->assertEquals($result, [
-			'foo'	 => null,
+			'foo'    => null,
 			'simple' => ':oo',
-			'bar'	 => null,
-			'orig'	 => ':oo'
+			'bar'    => null,
+			'orig'   => ':oo',
 		]);
 	}
 
@@ -432,8 +436,8 @@ class EntityTest extends \CIUnitTestCase
 	public function testFilledConstruction()
 	{
 		$data = [
-			'foo'	 => 'bar',
-			'bar'	 => 'baz'
+			'foo' => 'bar',
+			'bar' => 'baz',
 		];
 
 		$something = new SomeEntity($data);
@@ -446,18 +450,18 @@ class EntityTest extends \CIUnitTestCase
 	public function testChangedArray()
 	{
 		$data = [
-			'bar' => 'baz'
+			'bar' => 'baz',
 		];
 
 		$something = new SomeEntity($data);
-		$whatsnew = $something->toArray(true);
-		$expected = $data;
+		$whatsnew  = $something->toArray(true);
+		$expected  = $data;
 		$this->assertEquals($expected, $whatsnew);
 
-		$something->magic = 'rockin';
+		$something->magic  = 'rockin';
 		$expected['magic'] = 'rockin';
-		$expected['foo'] = null;
-		$whatsnew = $something->toArray(false);
+		$expected['foo']   = null;
+		$whatsnew          = $something->toArray(false);
 		$this->assertEquals($expected, $whatsnew);
 	}
 
@@ -468,23 +472,19 @@ class EntityTest extends \CIUnitTestCase
 		return new class extends Entity
 		{
 
-		protected $foo;
-		protected $bar;
-		protected $default = 'sumfin';
-		protected $created_at;
+			protected $foo;
+			protected $bar;
+			protected $default = 'sumfin';
+			protected $created_at;
 
-		public
+			public function setBar($value)
+			{
+				$this->bar = "bar:{$value}";
 
-		function setBar($value)
-		{
-			$this->bar = "bar:{$value}";
-
-			return $this;
+				return $this;
 			}
 
-			public
-
-			function getBar()
+			public function getBar()
 			{
 				return "{$this->bar}:bar";
 			}
@@ -503,12 +503,12 @@ class EntityTest extends \CIUnitTestCase
 			protected $simple;
 			// 'bar' is db column, 'foo' is internal representation
 			protected $_options = [
-				'dates'		 => [],
-				'casts'		 => [],
-				'datamap'	 => [
-					'bar'	 => 'foo',
-					'orig'	 => 'simple'
-				]
+				'dates'   => [],
+				'casts'   => [],
+				'datamap' => [
+					'bar'  => 'foo',
+					'orig' => 'simple',
+				],
 			];
 
 			protected function setSimple(string $val)
@@ -541,21 +541,21 @@ class EntityTest extends \CIUnitTestCase
 			protected $eleventh;
 			// 'bar' is db column, 'foo' is internal representation
 			protected $_options = [
-				'casts'		 => [
-					'first'		 => 'integer',
-					'second'	 => 'float',
-					'third'		 => 'double',
-					'fourth'	 => 'string',
-					'fifth'		 => 'boolean',
-					'sixth'		 => 'object',
-					'seventh'	 => 'array',
-					'eighth'	 => 'datetime',
-					'ninth'		 => 'timestamp',
-					'tenth'		 => 'json',
-					'eleventh'	 => 'json-array'
+				'casts'   => [
+					'first'    => 'integer',
+					'second'   => 'float',
+					'third'    => 'double',
+					'fourth'   => 'string',
+					'fifth'    => 'boolean',
+					'sixth'    => 'object',
+					'seventh'  => 'array',
+					'eighth'   => 'datetime',
+					'ninth'    => 'timestamp',
+					'tenth'    => 'json',
+					'eleventh' => 'json-array',
 				],
-				'dates'		 => [],
-				'datamap'	 => []
+				'dates'   => [],
+				'datamap' => [],
 			];
 
 			public function setSeventh($seventh)

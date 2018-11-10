@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Database\PreparedQueryInterface;
 use \CodeIgniter\Database\BasePreparedQuery;
 
@@ -49,8 +50,8 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 * override this method.
 	 *
 	 * @param string $sql
-	 * @param array  $options  Passed to the connection's prepare statement.
-	 *                         Unused in the MySQLi driver.
+	 * @param array  $options Passed to the connection's prepare statement.
+	 *                        Unused in the MySQLi driver.
 	 *
 	 * @return mixed
 	 */
@@ -60,9 +61,9 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		// with terminating semicolons.
 		$sql = rtrim($sql, ';');
 
-		if ( ! $this->statement = $this->db->mysqli->prepare($sql))
+		if (! $this->statement = $this->db->mysqli->prepare($sql))
 		{
-			$this->errorCode = $this->db->mysqli->errno;
+			$this->errorCode   = $this->db->mysqli->errno;
 			$this->errorString = $this->db->mysqli->error;
 		}
 

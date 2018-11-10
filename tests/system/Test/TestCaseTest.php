@@ -11,7 +11,7 @@ class TestCaseTest extends \CIUnitTestCase
 
 	public function testGetPrivatePropertyWithObject()
 	{
-		$obj = new __TestForReflectionHelper();
+		$obj    = new __TestForReflectionHelper();
 		$actual = $this->getPrivateProperty($obj, 'private');
 		$this->assertEquals('secret', $actual);
 	}
@@ -28,8 +28,7 @@ class TestCaseTest extends \CIUnitTestCase
 
 	public function testEventTriggering()
 	{
-		Events::on('foo', function($arg) use(&$result)
-		{
+		Events::on('foo', function ($arg) use (&$result) {
 			$result = $arg;
 		});
 
@@ -43,7 +42,7 @@ class TestCaseTest extends \CIUnitTestCase
 	public function testStreamFilter()
 	{
 		CITestStreamFilter::$buffer = '';
-		$this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
+		$this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
 		\CodeIgniter\CLI\CLI::write('first.');
 		$expected = "first.\n";
 		$this->assertEquals($expected, CITestStreamFilter::$buffer);
@@ -56,15 +55,14 @@ class TestCaseTest extends \CIUnitTestCase
 	 * the output stream, making header testing awkward, to say
 	 * the least. This test is intended to make sure that this
 	 * is happening as expected.
-	 * 
+	 *
 	 * TestCaseEmissionsTest is intended to circumvent PHPunit,
 	 * and allow us to test our own header emissions.
-	 * 
 	 */
 	public function testPHPUnitHeadersEmitted()
 	{
 		$response = new Response(new App());
-		$response->pretend(TRUE);
+		$response->pretend(true);
 
 		$body = 'Hello';
 		$response->setBody($body);
@@ -74,8 +72,8 @@ class TestCaseTest extends \CIUnitTestCase
 		ob_end_clean();
 
 		// Did PHPunit do its thing?
-		$this->assertHeaderEmitted("Content-type: text/html;");
-		$this->assertHeaderNotEmitted("Set-Cookie: foo=bar;");
+		$this->assertHeaderEmitted('Content-type: text/html;');
+		$this->assertHeaderNotEmitted('Set-Cookie: foo=bar;');
 	}
 
 }

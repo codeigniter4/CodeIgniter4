@@ -12,8 +12,8 @@ class ArrayHelperTest extends \CIUnitTestCase
 	{
 		$data = [
 			'foo' => [
-				'bar' => 23
-			]
+				'bar' => 23,
+			],
 		];
 
 		$this->assertEquals(23, dot_array_search('foo.bar', $data));
@@ -21,8 +21,7 @@ class ArrayHelperTest extends \CIUnitTestCase
 
 	public function testArrayDotReturnNullEmptyArray()
 	{
-		$data = [
-		];
+		$data = [];
 
 		$this->assertNull(dot_array_search('foo.bar', $data));
 	}
@@ -31,8 +30,8 @@ class ArrayHelperTest extends \CIUnitTestCase
 	{
 		$data = [
 			'foo' => [
-				'bar' => 23
-			]
+				'bar' => 23,
+			],
 		];
 
 		$this->assertNull(dot_array_search('foo.baz', $data));
@@ -42,8 +41,8 @@ class ArrayHelperTest extends \CIUnitTestCase
 	{
 		$data = [
 			'foo' => [
-				'bar' => 23
-			]
+				'bar' => 23,
+			],
 		];
 
 		$this->assertNull(dot_array_search('', $data));
@@ -53,8 +52,8 @@ class ArrayHelperTest extends \CIUnitTestCase
 	{
 		$data = [
 			'foo' => [
-				'bar' => 23
-			]
+				'bar' => 23,
+			],
 		];
 
 		$this->assertEquals(['bar' => 23], dot_array_search('foo', $data));
@@ -65,9 +64,9 @@ class ArrayHelperTest extends \CIUnitTestCase
 		$data = [
 			'foo' => [
 				'bar' => [
-					'baz' => 23
-				]
-			]
+					'baz' => 23,
+				],
+			],
 		];
 
 		$this->assertEquals(23, dot_array_search('foo.*.baz', $data));
@@ -78,12 +77,12 @@ class ArrayHelperTest extends \CIUnitTestCase
 		$data = [
 			'foo' => [
 				'buzz' => [
-					'fizz' => 11
+					'fizz' => 11,
 				],
-				'bar' => [
-					'baz' => 23
-				]
-			]
+				'bar'  => [
+					'baz' => 23,
+				],
+			],
 		];
 
 		$this->assertEquals(11, dot_array_search('foo.*.fizz', $data));
@@ -95,12 +94,12 @@ class ArrayHelperTest extends \CIUnitTestCase
 		$data = [
 			'foo' => [
 				'buzz' => [
-					'fizz' => 11
+					'fizz' => 11,
 				],
-				'bar' => [
-					'baz' => 23
-				]
-			]
+				'bar'  => [
+					'baz' => 23,
+				],
+			],
 		];
 
 		$this->assertNull(dot_array_search('foo.*.notthere', $data));
@@ -111,9 +110,9 @@ class ArrayHelperTest extends \CIUnitTestCase
 		$data = [
 			'foo' => [
 				'bar' => [
-					'baz' => 23
-				]
-			]
+					'baz' => 23,
+				],
+			],
 		];
 
 		$this->assertEquals(['baz' => 23], dot_array_search('foo.bar.*', $data));

@@ -17,7 +17,7 @@ class TestLogger extends Logger
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function log($level, $message, array $context = []): bool
 	{
@@ -28,11 +28,11 @@ class TestLogger extends Logger
 		// Determine the file and line by finding the first
 		// backtrace that is not part of our logging system.
 		$trace = debug_backtrace();
-		$file = null;
+		$file  = null;
 
 		foreach ($trace as $row)
 		{
-			if ( ! in_array($row['function'], ['log', 'log_message']))
+			if (! in_array($row['function'], ['log', 'log_message']))
 			{
 				$file = basename($row['file'] ?? '');
 				break;
@@ -40,10 +40,10 @@ class TestLogger extends Logger
 		}
 
 		self::$op_logs[] = [
-			'level'		 => $level,
-			'message'	 => $log_message,
-			'file'		 => $file,
-		];
+				  'level'   => $level,
+				  'message' => $log_message,
+				  'file'    => $file,
+			  ];
 
 		// Let the parent do it's thing.
 		return parent::log($level, $message, $context);
@@ -54,16 +54,16 @@ class TestLogger extends Logger
 	/**
 	 * Used by CIUnitTestCase class to provide ->assertLogged() methods.
 	 *
-	 * @param string  $level
-	 * @param  string $message
+	 * @param string $level
+	 * @param string $message
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function didLog(string $level, $message)
 	{
 		foreach (self::$op_logs as $log)
 		{
-			if (strtolower($log['level']) == strtolower($level) && $message == $log['message'])
+			if (strtolower($log['level']) === strtolower($level) && $message === $log['message'])
 			{
 				return true;
 			}

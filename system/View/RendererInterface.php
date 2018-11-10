@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -50,13 +50,13 @@ interface RendererInterface
 	 * Builds the output based upon a file name and any
 	 * data that has already been set.
 	 *
-	 * @param string $view
-	 * @param array  $options  Reserved for 3rd-party uses since
-	 *                         it might be needed to pass additional info
-	 *                         to other template engines.
-	 * @param bool   $saveData If true, will save data for use with any other calls,
-	 *                         if false, will clean the data after displaying the view,
-	 * 						   if not specified, use the config setting.
+	 * @param string  $view
+	 * @param array   $options  Reserved for 3rd-party uses since
+	 *                          it might be needed to pass additional info
+	 *                          to other template engines.
+	 * @param boolean $saveData If true, will save data for use with any other calls,
+	 *                          if false, will clean the data after displaying the view,
+	 *                             if not specified, use the config setting.
 	 *
 	 * @return string
 	 */
@@ -68,13 +68,13 @@ interface RendererInterface
 	 * Builds the output based upon a string and any
 	 * data that has already been set.
 	 *
-	 * @param string $view	The view contents
-	 * @param array  $options  Reserved for 3rd-party uses since
-	 *                         it might be needed to pass additional info
-	 *                         to other template engines.
-	 * @param bool   $saveData If true, will save data for use with any other calls,
-	 *                         if false, will clean the data after displaying the view,
-	 * 						   if not specified, use the config setting.
+	 * @param string  $view     The view contents
+	 * @param array   $options  Reserved for 3rd-party uses since
+	 *                          it might be needed to pass additional info
+	 *                          to other template engines.
+	 * @param boolean $saveData If true, will save data for use with any other calls,
+	 *                          if false, will clean the data after displaying the view,
+	 *                             if not specified, use the config setting.
 	 *
 	 * @return string
 	 */
@@ -85,7 +85,7 @@ interface RendererInterface
 	/**
 	 * Sets several pieces of view data at once.
 	 *
-	 * @param array $data
+	 * @param array  $data
 	 * @param string $context The context to escape it for: html, css, js, url
 	 *                        If 'raw', no escaping will happen
 	 *
@@ -99,7 +99,7 @@ interface RendererInterface
 	 * Sets a single piece of view data.
 	 *
 	 * @param string $name
-	 * @param mixed   $value
+	 * @param mixed  $value
 	 * @param string $context The context to escape it for: html, css, js, url
 	 *                        If 'raw' no escaping will happen
 	 *

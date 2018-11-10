@@ -58,7 +58,6 @@ class UserAgents extends BaseConfig
 		'symbian'         => 'Symbian OS',
 	];
 
-
 	// The order of this array should NOT be changed. Many browsers return
 	// multiple browser types so we want to identify the sub-type first.
 	public $browsers = [
@@ -97,19 +96,19 @@ class UserAgents extends BaseConfig
 	public $mobiles = [
 		// legacy array, old values commented out
 		'mobileexplorer'       => 'Mobile Explorer',
-		//  'openwave'			=> 'Open Wave',
-		//	'opera mini'		=> 'Opera Mini',
-		//	'operamini'			=> 'Opera Mini',
-		//	'elaine'			=> 'Palm',
+		// 'openwave'             => 'Open Wave',
+		// 'opera mini'           => 'Opera Mini',
+		// 'operamini'            => 'Opera Mini',
+		// 'elaine'               => 'Palm',
 		'palmsource'           => 'Palm',
-		//	'digital paths'		=> 'Palm',
-		//	'avantgo'			=> 'Avantgo',
-		//	'xiino'				=> 'Xiino',
+		// 'digital paths'        => 'Palm',
+		// 'avantgo'              => 'Avantgo',
+		// 'xiino'                => 'Xiino',
 		'palmscape'            => 'Palmscape',
-		//	'nokia'				=> 'Nokia',
-		//	'ericsson'			=> 'Ericsson',
-		//	'blackberry'		=> 'BlackBerry',
-		//	'motorola'			=> 'Motorola'
+		// 'nokia'                => 'Nokia',
+		// 'ericsson'             => 'Ericsson',
+		// 'blackberry'           => 'BlackBerry',
+		// 'motorola'             => 'Motorola'
 
 		// Phones and Manufacturers
 		'motorola'             => 'Motorola',

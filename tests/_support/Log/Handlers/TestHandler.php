@@ -1,17 +1,18 @@
 <?php namespace Tests\Support\Log\Handlers;
 
-
 /**
  * Class TestHandler
  *
  * A simple LogHandler that stores the logs in memory.
  * Only used for testing purposes.
  */
+
 class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
 {
 
 	/**
 	 * Local storage for logs.
+	 *
 	 * @var array
 	 */
 	protected static $logs = [];
@@ -24,7 +25,7 @@ class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
 	public function __construct(array $config)
 	{
 		parent::__construct($config);
-		$this->handles = $config['handles'] ?? [];
+		$this->handles     = $config['handles'] ?? [];
 		$this->destination = $this->path . 'log-' . date('Y-m-d') . '.' . $this->fileExtension;
 
 		self::$logs = [];
@@ -41,7 +42,7 @@ class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
 	 * @param $level
 	 * @param $message
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function handle($level, $message): bool
 	{

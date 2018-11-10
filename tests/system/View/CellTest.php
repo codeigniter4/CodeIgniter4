@@ -21,7 +21,7 @@ class CellTest extends \CIUnitTestCase
 		parent::setUp();
 
 		$this->cache = new MockHandler();
-		$this->cell = new Cell($this->cache);
+		$this->cell  = new Cell($this->cache);
 	}
 
 	//--------------------------------------------------------------------
@@ -42,7 +42,10 @@ class CellTest extends \CIUnitTestCase
 
 	public function testPrepareParamsReturnsSelfWhenArray()
 	{
-		$object = ['one' => 'two', 'three' => 'four'];
+		$object = [
+			'one'   => 'two',
+			'three' => 'four',
+		];
 
 		$this->assertEquals($object, $this->cell->prepareParams($object));
 	}
@@ -58,8 +61,11 @@ class CellTest extends \CIUnitTestCase
 
 	public function testPrepareParamsReturnsArrayWithString()
 	{
-		$params = 'one=two three=four';
-		$expected = ['one' => 'two', 'three' => 'four'];
+		$params   = 'one=two three=four';
+		$expected = [
+			'one'   => 'two',
+			'three' => 'four',
+		];
 
 		$this->assertEquals($expected, $this->cell->prepareParams($params));
 	}
@@ -68,8 +74,11 @@ class CellTest extends \CIUnitTestCase
 
 	public function testPrepareParamsHandlesCommas()
 	{
-		$params = 'one=2, three=4.15';
-		$expected = ['one' => 2, 'three' => 4.15];
+		$params   = 'one=2, three=4.15';
+		$expected = [
+			'one'   => 2,
+			'three' => 4.15,
+		];
 
 		$this->assertEquals($expected, $this->cell->prepareParams($params));
 	}
@@ -78,8 +87,11 @@ class CellTest extends \CIUnitTestCase
 
 	public function testPrepareParamsWorksWithoutSpaces()
 	{
-		$params = 'one=two,three=four';
-		$expected = ['one' => 'two', 'three' => 'four'];
+		$params   = 'one=two,three=four';
+		$expected = [
+			'one'   => 'two',
+			'three' => 'four',
+		];
 
 		$this->assertEquals($expected, $this->cell->prepareParams($params));
 	}
@@ -88,8 +100,12 @@ class CellTest extends \CIUnitTestCase
 
 	public function testPrepareParamsWorksWithOddEqualsSpaces()
 	{
-		$params = 'one= two,three =four, five = six';
-		$expected = ['one' => 'two', 'three' => 'four', 'five' => 'six'];
+		$params   = 'one= two,three =four, five = six';
+		$expected = [
+			'one'   => 'two',
+			'three' => 'four',
+			'five'  => 'six',
+		];
 
 		$this->assertEquals($expected, $this->cell->prepareParams($params));
 	}
@@ -110,8 +126,11 @@ class CellTest extends \CIUnitTestCase
 
 	public function testDisplayRendersWithValidParamString()
 	{
-		$params = 'one=two,three=four';
-		$expected = ['one' => 'two', 'three' => 'four'];
+		$params   = 'one=two,three=four';
+		$expected = [
+			'one'   => 'two',
+			'three' => 'four',
+		];
 
 		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params));
 	}
@@ -120,8 +139,11 @@ class CellTest extends \CIUnitTestCase
 
 	public function testDisplayRendersWithStaticMethods()
 	{
-		$params = 'one=two,three=four';
-		$expected = ['one' => 'two', 'three' => 'four'];
+		$params   = 'one=two,three=four';
+		$expected = [
+			'one'   => 'two',
+			'three' => 'four',
+		];
 
 		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::staticEcho', $params));
 	}
@@ -130,7 +152,7 @@ class CellTest extends \CIUnitTestCase
 
 	public function testOptionsEmptyArray()
 	{
-		$params = [];
+		$params   = [];
 		$expected = [];
 
 		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::staticEcho', $params));
@@ -145,7 +167,7 @@ class CellTest extends \CIUnitTestCase
 
 	public function testCellEmptyParams()
 	{
-		$params = ',';
+		$params   = ',';
 		$expected = 'Hello World';
 
 		$this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::index', $params));
@@ -156,8 +178,11 @@ class CellTest extends \CIUnitTestCase
 	public function testCellClassMissing()
 	{
 		$this->expectException(ViewException::class);
-		$params = 'one=two,three=four';
-		$expected = ['one' => 'two', 'three' => 'four'];
+		$params   = 'one=two,three=four';
+		$expected = [
+			'one'   => 'two',
+			'three' => 'four',
+		];
 
 		$this->assertEquals(implode(',', $expected), $this->cell->render('::echobox', $params));
 	}
@@ -165,8 +190,11 @@ class CellTest extends \CIUnitTestCase
 	public function testCellMethodMissing()
 	{
 		$this->expectException(ViewException::class);
-		$params = 'one=two,three=four';
-		$expected = ['one' => 'two', 'three' => 'four'];
+		$params   = 'one=two,three=four';
+		$expected = [
+			'one'   => 'two',
+			'three' => 'four',
+		];
 
 		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::', $params));
 	}
@@ -174,7 +202,7 @@ class CellTest extends \CIUnitTestCase
 	public function testCellBadClass()
 	{
 		$this->expectException(ViewException::class);
-		$params = 'one=two,three=four';
+		$params   = 'one=two,three=four';
 		$expected = 'Hello World';
 
 		$this->assertEquals($expected, $this->cell->render('\CodeIgniter\View\GoodQuestion::', $params));
@@ -183,7 +211,7 @@ class CellTest extends \CIUnitTestCase
 	public function testCellBadMethod()
 	{
 		$this->expectException(ViewException::class);
-		$params = 'one=two,three=four';
+		$params   = 'one=two,three=four';
 		$expected = 'Hello World';
 
 		$this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::notThere', $params));
@@ -193,8 +221,11 @@ class CellTest extends \CIUnitTestCase
 
 	public function testRenderCached()
 	{
-		$params = 'one=two,three=four';
-		$expected = ['one' => 'two', 'three' => 'four'];
+		$params   = 'one=two,three=four';
+		$expected = [
+			'one'   => 'two',
+			'three' => 'four',
+		];
 
 		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params, 60, 'rememberme'));
 		$params = 'one=six,three=five';
@@ -205,7 +236,11 @@ class CellTest extends \CIUnitTestCase
 
 	public function testParametersMatch()
 	{
-		$params = ['p1' => 'one', 'p2' => 'two', 'p4' => 'three'];
+		$params   = [
+			'p1' => 'one',
+			'p2' => 'two',
+			'p4' => 'three',
+		];
 		$expected = 'Right on';
 
 		$this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::work', $params));
@@ -214,7 +249,7 @@ class CellTest extends \CIUnitTestCase
 	public function testParametersDontMatch()
 	{
 		$this->expectException(ViewException::class);
-		$params = 'p1=one,p2=two,p3=three';
+		$params   = 'p1=one,p2=two,p3=three';
 		$expected = 'Right on';
 
 		$this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::work', $params));

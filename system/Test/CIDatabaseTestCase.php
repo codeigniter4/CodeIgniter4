@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use Config\Services;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\MigrationRunner;
@@ -50,7 +51,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * Should the db be refreshed before
 	 * each test?
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $refresh = true;
 
@@ -128,7 +129,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 		if ($this->migrations === null)
 		{
 			// Ensure that we can run migrations
-			$config = new \Config\Migrations();
+			$config          = new \Config\Migrations();
 			$config->enabled = true;
 
 			$this->migrations = Services::migrations($config, $this->db);
@@ -158,7 +159,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 		if ($this->refresh === true)
 		{
-			if ( ! empty($this->namespace))
+			if (! empty($this->namespace))
 			{
 				$this->migrations->setNamespace($this->namespace);
 			}
@@ -172,7 +173,10 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 				foreach ($tables as $table)
 				{
-					if ($table == $this->db->DBPrefix.'migrations') continue;
+					if ($table === $this->db->DBPrefix . 'migrations')
+					{
+						continue;
+					}
 
 					$forge->dropTable($table, true);
 				}
@@ -182,9 +186,9 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			$this->migrations->latest(null, 'tests');
 		}
 
-		if ( ! empty($this->seed))
+		if (! empty($this->seed))
 		{
-			if ( ! empty($this->basePath))
+			if (! empty($this->basePath))
 			{
 				$this->seeder->setPath(rtrim($this->basePath, '/') . '/seeds');
 			}
@@ -201,7 +205,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function tearDown()
 	{
-		if ( ! empty($this->insertCache))
+		if (! empty($this->insertCache))
 		{
 			foreach ($this->insertCache as $row)
 			{
@@ -236,7 +240,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param string $table
 	 * @param array  $where
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function dontSeeInDatabase(string $table, array $where)
 	{
@@ -244,7 +248,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 				->where($where)
 				->countAllResults();
 
-		$this->assertTrue($count == 0, 'Row was found in database');
+		$this->assertTrue($count === 0, 'Row was found in database');
 	}
 
 	//--------------------------------------------------------------------
@@ -256,7 +260,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param string $table
 	 * @param array  $where
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function seeInDatabase(string $table, array $where)
@@ -278,7 +282,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param string $column
 	 * @param array  $where
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function grabFromDatabase(string $table, string $column, array $where)
@@ -302,12 +306,13 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param string $table
 	 * @param array  $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function hasInDatabase(string $table, array $data)
 	{
 		$this->insertCache[] = [
-			$table, $data
+			$table,
+			$data,
 		];
 
 		return $this->db->table($table)
@@ -320,11 +325,11 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * Asserts that the number of rows in the database that match $where
 	 * is equal to $expected.
 	 *
-	 * @param int    $expected
-	 * @param string $table
-	 * @param array  $where
+	 * @param integer $expected
+	 * @param string  $table
+	 * @param array   $where
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function seeNumRecords(int $expected, string $table, array $where)

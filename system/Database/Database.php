@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -64,9 +64,8 @@ class Database
 	 * @param array  $params
 	 * @param string $alias
 	 *
-	 * @return mixed
+	 * @return   mixed
 	 * @internal param bool $useBuilder
-	 *
 	 */
 	public function load(array $params = [], string $alias)
 	{
@@ -102,7 +101,7 @@ class Database
 		$className = strpos($db->DBDriver, '\\') === false ? '\CodeIgniter\Database\\' . $db->DBDriver . '\\Forge' : $db->DBDriver . '\\Forge';
 
 		// Make sure a connection exists
-		if ( ! $db->connID)
+		if (! $db->connID)
 		{
 			$db->initialize();
 		}
@@ -126,7 +125,7 @@ class Database
 		$className = strpos($db->DBDriver, '\\') === false ? '\CodeIgniter\Database\\' . $db->DBDriver . '\\Utils' : $db->DBDriver . '\\Utils';
 
 		// Make sure a connection exists
-		if ( ! $db->connID)
+		if (! $db->connID)
 		{
 			$db->initialize();
 		}

@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Autoload;
@@ -111,11 +112,15 @@ class Namespaces extends BaseCommand
 			$tbody[] = [
 				$ns,
 				realpath($path) ?? $path,
-				is_dir($path) ? "Yes" : "MISSING"
+				is_dir($path) ? 'Yes' : 'MISSING',
 			];
 		}
 
-		$thead = ['Namespace', 'Path', 'Found?'];
+		$thead = [
+			'Namespace',
+			'Path',
+			'Found?',
+		];
 
 		CLI::table($tbody, $thead);
 	}

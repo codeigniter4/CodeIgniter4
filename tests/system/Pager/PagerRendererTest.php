@@ -13,7 +13,7 @@ class PagerRendererTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->uri = new URI('http://example.com/foo');
+		$this->uri    = new URI('http://example.com/foo');
 		$this->expect = 'http://example.com/foo?page=';
 	}
 
@@ -22,10 +22,10 @@ class PagerRendererTest extends \CIUnitTestCase
 	public function testHasPreviousReturnsFalseWhenFirstIsOne()
 	{
 		$details = [
-			'uri'			 => $this->uri,
-			'pageCount'		 => 5,
-			'currentPage'	 => 1,
-			'total'			 => 100
+			'uri'         => $this->uri,
+			'pageCount'   => 5,
+			'currentPage' => 1,
+			'total'       => 100,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -41,10 +41,10 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri'			 => $uri,
-			'pageCount'		 => 10,
-			'currentPage'	 => 5,
-			'total'			 => 100
+			'uri'         => $uri,
+			'pageCount'   => 10,
+			'currentPage' => 5,
+			'total'       => 100,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -62,10 +62,10 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri'			 => $uri,
-			'pageCount'		 => 50,
-			'currentPage'	 => 4,
-			'total'			 => 100
+			'uri'         => $uri,
+			'pageCount'   => 50,
+			'currentPage' => 4,
+			'total'       => 100,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -83,10 +83,10 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri'			 => $uri,
-			'pageCount'		 => 5,
-			'currentPage'	 => 4,
-			'total'			 => 100
+			'uri'         => $uri,
+			'pageCount'   => 5,
+			'currentPage' => 4,
+			'total'       => 100,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -103,10 +103,10 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri'			 => $uri,
-			'pageCount'		 => 50,
-			'currentPage'	 => 4,
-			'total'			 => 100
+			'uri'         => $uri,
+			'pageCount'   => 50,
+			'currentPage' => 4,
+			'total'       => 100,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -124,10 +124,10 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri'			 => $uri,
-			'pageCount'		 => 50,
-			'currentPage'	 => 4,
-			'total'			 => 100
+			'uri'         => $uri,
+			'pageCount'   => 50,
+			'currentPage' => 4,
+			'total'       => 100,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -142,10 +142,10 @@ class PagerRendererTest extends \CIUnitTestCase
 	public function testLinksBasics()
 	{
 		$details = [
-			'uri'			 => $this->uri,
-			'pageCount'		 => 50,
-			'currentPage'	 => 4,
-			'total'			 => 100
+			'uri'         => $this->uri,
+			'pageCount'   => 50,
+			'currentPage' => 4,
+			'total'       => 100,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -153,19 +153,19 @@ class PagerRendererTest extends \CIUnitTestCase
 
 		$expected = [
 			[
-				'uri'	 => 'http://example.com/foo?page=3',
-				'title'	 => 3,
-				'active' => false
+				'uri'    => 'http://example.com/foo?page=3',
+				'title'  => 3,
+				'active' => false,
 			],
 			[
-				'uri'	 => 'http://example.com/foo?page=4',
-				'title'	 => 4,
-				'active' => true
+				'uri'    => 'http://example.com/foo?page=4',
+				'title'  => 4,
+				'active' => true,
 			],
 			[
-				'uri'	 => 'http://example.com/foo?page=5',
-				'title'	 => 5,
-				'active' => false
+				'uri'    => 'http://example.com/foo?page=5',
+				'title'  => 5,
+				'active' => false,
 			],
 		];
 
@@ -180,10 +180,10 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri'			 => $uri,
-			'pageCount'		 => 50,
-			'currentPage'	 => 4,
-			'total'			 => 100
+			'uri'         => $uri,
+			'pageCount'   => 50,
+			'currentPage' => 4,
+			'total'       => 100,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -199,10 +199,10 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri = $this->uri;
 
 		$details = [
-			'uri'			 => $uri,
-			'pageCount'		 => 10, // 10 pages
-			'currentPage'	 => 4,
-			'total'			 => 100 // 100 records, so 10 per page
+			'uri'         => $uri,
+			'pageCount'   => 10, // 10 pages
+			'currentPage' => 4,
+			'total'       => 100,// 100 records, so 10 per page
 		];
 
 		$pager = new PagerRenderer($details);
@@ -227,19 +227,16 @@ class PagerRendererTest extends \CIUnitTestCase
 		$this->assertEquals(null, $pager->getNext());
 	}
 
-
-
-
 	//--------------------------------------------------------------------
 
 	public function testHasPreviousReturnsFalseWhenFirstIsOneSegment()
 	{
 		$details = [
-			'uri'			 => $this->uri,
-			'pageCount'		 => 5,
-			'currentPage'	 => 1,
-			'total'			 => 100,
-			'segment'		 => 2,
+			'uri'         => $this->uri,
+			'pageCount'   => 5,
+			'currentPage' => 1,
+			'total'       => 100,
+			'segment'     => 2,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -255,11 +252,11 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri'			 => $uri,
-			'pageCount'		 => 10,
-			'currentPage'	 => 5,
-			'total'			 => 100,
-			'segment'		 => 2
+			'uri'         => $uri,
+			'pageCount'   => 10,
+			'currentPage' => 5,
+			'total'       => 100,
+			'segment'     => 2,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -277,11 +274,11 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri'			 => $uri,
-			'pageCount'		 => 50,
-			'currentPage'	 => 4,
-			'total'			 => 100,
-			'segment'		 => 2,
+			'uri'         => $uri,
+			'pageCount'   => 50,
+			'currentPage' => 4,
+			'total'       => 100,
+			'segment'     => 2,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -299,11 +296,11 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri'			 => $uri,
-			'pageCount'		 => 5,
-			'currentPage'	 => 4,
-			'total'			 => 100,
-			'segment'		 => 2,
+			'uri'         => $uri,
+			'pageCount'   => 5,
+			'currentPage' => 4,
+			'total'       => 100,
+			'segment'     => 2,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -320,11 +317,11 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri'			 => $uri,
-			'pageCount'		 => 50,
-			'currentPage'	 => 4,
-			'total'			 => 100,
-			'segment'		 => 2
+			'uri'         => $uri,
+			'pageCount'   => 50,
+			'currentPage' => 4,
+			'total'       => 100,
+			'segment'     => 2,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -342,11 +339,11 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri'			 => $uri,
-			'pageCount'		 => 50,
-			'currentPage'	 => 4,
-			'total'			 => 100,
-			'segment'		 => 2,
+			'uri'         => $uri,
+			'pageCount'   => 50,
+			'currentPage' => 4,
+			'total'       => 100,
+			'segment'     => 2,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -361,11 +358,11 @@ class PagerRendererTest extends \CIUnitTestCase
 	public function testLinksBasicsSegment()
 	{
 		$details = [
-			'uri'			 => $this->uri,
-			'pageCount'		 => 50,
-			'currentPage'	 => 4,
-			'total'			 => 100,
-			'segment'		 => 2
+			'uri'         => $this->uri,
+			'pageCount'   => 50,
+			'currentPage' => 4,
+			'total'       => 100,
+			'segment'     => 2,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -373,19 +370,19 @@ class PagerRendererTest extends \CIUnitTestCase
 
 		$expected = [
 			[
-				'uri'	 => 'http://example.com/foo/3',
-				'title'	 => 3,
-				'active' => false
+				'uri'    => 'http://example.com/foo/3',
+				'title'  => 3,
+				'active' => false,
 			],
 			[
-				'uri'	 => 'http://example.com/foo/4',
-				'title'	 => 4,
-				'active' => true
+				'uri'    => 'http://example.com/foo/4',
+				'title'  => 4,
+				'active' => true,
 			],
 			[
-				'uri'	 => 'http://example.com/foo/5',
-				'title'	 => 5,
-				'active' => false
+				'uri'    => 'http://example.com/foo/5',
+				'title'  => 5,
+				'active' => false,
 			],
 		];
 
@@ -400,11 +397,11 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri'			 => $uri,
-			'pageCount'		 => 50,
-			'currentPage'	 => 4,
-			'total'			 => 100,
-			'segment'		 => 2
+			'uri'         => $uri,
+			'pageCount'   => 50,
+			'currentPage' => 4,
+			'total'       => 100,
+			'segment'     => 2,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -412,7 +409,5 @@ class PagerRendererTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com/foo/1?foo=bar', $pager->getFirst());
 		$this->assertEquals('http://example.com/foo/50?foo=bar', $pager->getLast());
 	}
-
-
 
 }

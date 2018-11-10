@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -51,11 +51,11 @@ interface UploadedFileInterface
 	/**
 	 * Accepts the file information as would be filled in from the $_FILES array.
 	 *
-	 * @param string $path         The temporary location of the uploaded file.
-	 * @param string $originalName The client-provided filename.
-	 * @param string $mimeType     The type of file as provided by PHP
-	 * @param int    $size         The size of the file, in bytes
-	 * @param int    $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
+	 * @param string  $path         The temporary location of the uploaded file.
+	 * @param string  $originalName The client-provided filename.
+	 * @param string  $mimeType     The type of file as provided by PHP
+	 * @param integer $size         The size of the file, in bytes
+	 * @param integer $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
 	 */
 	public function __construct(string $path, string $originalName, string $mimeType = null, int $size = null, int $error = null);
 
@@ -99,7 +99,7 @@ interface UploadedFileInterface
 	 * the move() method will not work and certain properties, like
 	 * the tempName, will no longer be available.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function hasMoved(): bool;
 
@@ -116,8 +116,8 @@ interface UploadedFileInterface
 	 * Implementations SHOULD return the value stored in the "error" key of
 	 * the file in the $_FILES array.
 	 *
-	 * @see http://php.net/manual/en/features.file-upload.errors.php
-	 * @return int One of PHP's UPLOAD_ERR_XXX constants.
+	 * @see    http://php.net/manual/en/features.file-upload.errors.php
+	 * @return integer One of PHP's UPLOAD_ERR_XXX constants.
 	 */
 	public function getError(): int;
 
@@ -175,7 +175,7 @@ interface UploadedFileInterface
 	 * Returns whether the file was uploaded successfully, based on whether
 	 * it was uploaded via HTTP and has no errors.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isValid(): bool;
 
@@ -188,9 +188,9 @@ interface UploadedFileInterface
 	 * last element is an integer as there may be cases that the delimiter may be present in the filename.
 	 * For the all other cases, it appends an integer starting from zero before the file's extension.
 	 *
-	 * @param string $destination
-	 * @param string $delimiter
-	 * @param int    $i
+	 * @param string  $destination
+	 * @param string  $delimiter
+	 * @param integer $i
 	 *
 	 * @return string
 	 */

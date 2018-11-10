@@ -19,22 +19,21 @@ class TestCaseEmissionsTest extends \CIUnitTestCase
 	 * has already captured the "normal" output, and we will get
 	 * a "Cannot modify headers" message if we try to change
 	 * headers or cookies now.
-	 * 
+	 *
 	 * Furthermore, this test needs to flush the output buffering
 	 * that might be in progress, and start our own output buffer
 	 * capture.
-	 * 
+	 *
 	 * This test includes a basic sanity check, to make sure that
 	 * the body we thought would be sent actually was.
-	 * 
+	 *
 	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
+	 * @preserveGlobalState  disabled
 	 */
 	public function testHeadersEmitted()
 	{
-
 		$response = new Response(new App());
-		$response->pretend(FALSE);
+		$response->pretend(false);
 
 		$body = 'Hello';
 		$response->setBody($body);
@@ -49,11 +48,13 @@ class TestCaseEmissionsTest extends \CIUnitTestCase
 
 		$buffer = ob_clean();
 		if (ob_get_level() > 0)
+		{
 			ob_end_clean();
+		}
 
 		// and what actually got sent?; test both ways
-		$this->assertHeaderEmitted("Set-Cookie: foo=bar;");
-		$this->assertHeaderEmitted("set-cookie: FOO=bar", true);
+		$this->assertHeaderEmitted('Set-Cookie: foo=bar;');
+		$this->assertHeaderEmitted('set-cookie: FOO=bar', true);
 	}
 
 	/**
@@ -61,21 +62,21 @@ class TestCaseEmissionsTest extends \CIUnitTestCase
 	 * has already captured the "normal" output, and we will get
 	 * a "Cannot modify headers" message if we try to change
 	 * headers or cookies now.
-	 * 
+	 *
 	 * Furthermore, this test needs to flush the output buffering
 	 * that might be in progress, and start our own output buffer
 	 * capture.
-	 * 
+	 *
 	 * This test includes a basic sanity check, to make sure that
 	 * the body we thought would be sent actually was.
-	 * 
+	 *
 	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
+	 * @preserveGlobalState  disabled
 	 */
 	public function testHeadersNotEmitted()
 	{
 		$response = new Response(new App());
-		$response->pretend(FALSE);
+		$response->pretend(false);
 
 		$body = 'Hello';
 		$response->setBody($body);
@@ -90,9 +91,11 @@ class TestCaseEmissionsTest extends \CIUnitTestCase
 		$response->send();
 		$output = ob_clean(); // what really was sent
 		if (ob_get_level() > 0)
+		{
 			ob_end_clean();
+		}
 
-		$this->assertHeaderNotEmitted("Set-Cookie: pop=corn", true);
+		$this->assertHeaderNotEmitted('Set-Cookie: pop=corn', true);
 	}
 
 }

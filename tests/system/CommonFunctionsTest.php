@@ -35,9 +35,9 @@ class CommomFunctionsTest extends \CIUnitTestCase
 	{
 		$this->assertEquals(' class="foo" id="bar"', stringify_attributes(['class' => 'foo', 'id' => 'bar']));
 
-		$atts = new stdClass;
+		$atts        = new stdClass;
 		$atts->class = 'foo';
-		$atts->id = 'bar';
+		$atts->id    = 'bar';
 		$this->assertEquals(' class="foo" id="bar"', stringify_attributes($atts));
 
 		$atts = new stdClass;
@@ -52,12 +52,12 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 	public function testStringifyJsAttributes()
 	{
-		$this->assertEquals('width=800,height=600', stringify_attributes(['width' => '800', 'height' => '600'], TRUE));
+		$this->assertEquals('width=800,height=600', stringify_attributes(['width' => '800', 'height' => '600'], true));
 
-		$atts = new stdClass;
-		$atts->width = 800;
+		$atts         = new stdClass;
+		$atts->width  = 800;
 		$atts->height = 600;
-		$this->assertEquals('width=800,height=600', stringify_attributes($atts, TRUE));
+		$this->assertEquals('width=800,height=600', stringify_attributes($atts, true));
 	}
 
 	// ------------------------------------------------------------------------
@@ -101,7 +101,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$response = $this->createMock(\CodeIgniter\HTTP\Response::class);
-		$routes = new \CodeIgniter\Router\RouteCollection(new \Tests\Support\Autoloader\MockFileLocator(new \Config\Autoload()), new \Config\Modules());
+		$routes   = new \CodeIgniter\Router\RouteCollection(new \Tests\Support\Autoloader\MockFileLocator(new \Config\Autoload()), new \Config\Modules());
 		\CodeIgniter\Services::injectMock('response', $response);
 		\CodeIgniter\Services::injectMock('routes', $routes);
 
@@ -122,9 +122,9 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 	public function testView()
 	{
-		$data = [
+		$data     = [
 			'testString' => 'bar',
-			'bar'		 => 'baz',
+			'bar'        => 'baz',
 		];
 		$expected = '<h1>bar</h1>';
 		$this->assertContains($expected, view('\Tests\Support\View\Views\simple', $data, []));
@@ -132,9 +132,9 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 	public function testViewSavedData()
 	{
-		$data = [
+		$data     = [
 			'testString' => 'bar',
-			'bar'		 => 'baz',
+			'bar'        => 'baz',
 		];
 		$expected = '<h1>bar</h1>';
 		$this->assertContains($expected, view('\Tests\Support\View\Views\simple', $data, ['saveData' => true]));
@@ -161,7 +161,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 	/**
 	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
+	 * @preserveGlobalState  disabled
 	 */
 	public function testSessionInstance()
 	{
@@ -172,7 +172,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 	/**
 	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
+	 * @preserveGlobalState  disabled
 	 */
 	public function testSessionVariable()
 	{
@@ -185,7 +185,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 	/**
 	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
+	 * @preserveGlobalState  disabled
 	 */
 	public function testSessionVariableNotThere()
 	{
@@ -224,7 +224,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 	public function testInvisibleEncoded()
 	{
-		$this->assertEquals('Javascript', remove_invisible_characters("Java%0cscript", true));
+		$this->assertEquals('Javascript', remove_invisible_characters('Java%0cscript', true));
 	}
 
 	// ------------------------------------------------------------------------
@@ -255,7 +255,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 	/**
 	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
+	 * @preserveGlobalState  disabled
 	 */
 	public function testOldInput()
 	{
@@ -263,7 +263,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 		// setup from RedirectResponseTest...
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$this->config = new App();
+		$this->config          = new App();
 		$this->config->baseURL = 'http://example.com';
 
 		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()), new \Config\Modules());
@@ -274,8 +274,11 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 		// setup & ask for a redirect...
 		$_SESSION = [];
-		$_GET = ['foo' => 'bar'];
-		$_POST = ['bar' => 'baz', 'zibble' => serialize('fritz')];
+		$_GET     = ['foo' => 'bar'];
+		$_POST    = [
+			'bar'    => 'baz',
+			'zibble' => serialize('fritz'),
+		];
 
 		$response = new RedirectResponse(new App());
 		$returned = $response->withInput();
@@ -305,17 +308,17 @@ class CommomFunctionsTest extends \CIUnitTestCase
 	protected function injectSessionMock()
 	{
 		$defaults = [
-			'sessionDriver' => 'CodeIgniter\Session\Handlers\FileHandler',
-			'sessionCookieName' => 'ci_session',
-			'sessionExpiration' => 7200,
-			'sessionSavePath' => null,
-			'sessionMatchIP' => false,
-			'sessionTimeToUpdate' => 300,
+			'sessionDriver'            => 'CodeIgniter\Session\Handlers\FileHandler',
+			'sessionCookieName'        => 'ci_session',
+			'sessionExpiration'        => 7200,
+			'sessionSavePath'          => null,
+			'sessionMatchIP'           => false,
+			'sessionTimeToUpdate'      => 300,
 			'sessionRegenerateDestroy' => false,
-			'cookieDomain' => '',
-			'cookiePrefix' => '',
-			'cookiePath' => '/',
-			'cookieSecure' => false,
+			'cookieDomain'             => '',
+			'cookiePrefix'             => '',
+			'cookiePath'               => '/',
+			'cookieSecure'             => false,
 		];
 
 		$config = (object)$defaults;

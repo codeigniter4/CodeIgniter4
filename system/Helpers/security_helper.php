@@ -35,11 +35,11 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
 use Config\Services;
 
-if ( ! function_exists('sanitize_filename'))
+if (! function_exists('sanitize_filename'))
 {
-
 	/**
 	 * @param string $filename
 	 *
@@ -49,48 +49,42 @@ if ( ! function_exists('sanitize_filename'))
 	{
 		return Services::security()->sanitizeFilename($filename);
 	}
-
 }
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('strip_image_tags'))
+if (! function_exists('strip_image_tags'))
 {
-
 	/**
 	 * Strip Image Tags
 	 *
-	 * @param	string	$str
-	 * @return	string
+	 * @param  string $str
+	 * @return string
 	 */
 	function strip_image_tags(string $str)
 	{
-		return preg_replace(
-				[
+		return preg_replace([
 			'#<img[\s/]+.*?src\s*=\s*(["\'])([^\\1]+?)\\1.*?\>#i',
-			'#<img[\s/]+.*?src\s*=\s*?(([^\s"\'=<>`]+)).*?\>#i'
-				], '\\2', $str
+			'#<img[\s/]+.*?src\s*=\s*?(([^\s"\'=<>`]+)).*?\>#i',
+		], '\\2', $str
 		);
 	}
-
 }
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('encode_php_tags'))
+if (! function_exists('encode_php_tags'))
 {
-
 	/**
 	 * Convert PHP tags to entities
 	 *
-	 * @param	string
-	 * @return	string
+	 * @param  string
+	 * @return string
 	 */
 	function encode_php_tags(string $str): string
 	{
 		return str_replace(['<?', '?>'], ['&lt;?', '?&gt;'], $str);
 	}
-
 }
 
 //--------------------------------------------------------------------

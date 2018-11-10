@@ -204,10 +204,10 @@ class App extends BaseConfig
 	|       'cookie_httponly') will also affect sessions.
 	|
 	*/
-	public $cookiePrefix = '';
-	public $cookieDomain = '';
-	public $cookiePath = '/';
-	public $cookieSecure = false;
+	public $cookiePrefix   = '';
+	public $cookieDomain   = '';
+	public $cookiePath     = '/';
+	public $cookieSecure   = false;
 	public $cookieHTTPOnly = false;
 
 	/*
@@ -242,11 +242,11 @@ class App extends BaseConfig
 	| CSRFRegenerate  = Regenerate token on every submission
 	| CSRFRedirect    = Redirect to previous page with error on failure
 	*/
-	public $CSRFTokenName   = 'csrf_test_name';
-	public $CSRFCookieName  = 'csrf_cookie_name';
-	public $CSRFExpire      = 7200;
-	public $CSRFRegenerate  = true;
-	public $CSRFRedirect    = true;
+	public $CSRFTokenName  = 'csrf_test_name';
+	public $CSRFCookieName = 'csrf_cookie_name';
+	public $CSRFExpire     = 7200;
+	public $CSRFRegenerate = true;
+	public $CSRFRedirect   = true;
 
 	/*
 	|--------------------------------------------------------------------------
@@ -281,7 +281,7 @@ class App extends BaseConfig
 		'CodeIgniter\Debug\Toolbar\Collectors\Database',
 		'CodeIgniter\Debug\Toolbar\Collectors\Logs',
 		'CodeIgniter\Debug\Toolbar\Collectors\Views',
-//		'CodeIgniter\Debug\Toolbar\Collectors\Cache',
+		// 'CodeIgniter\Debug\Toolbar\Collectors\Cache',
 		'CodeIgniter\Debug\Toolbar\Collectors\Files',
 		'CodeIgniter\Debug\Toolbar\Collectors\Routes',
 		'CodeIgniter\Debug\Toolbar\Collectors\Events',
@@ -302,6 +302,5 @@ class App extends BaseConfig
 	public $salt = '';
 
 	//--------------------------------------------------------------------
-
 
 }

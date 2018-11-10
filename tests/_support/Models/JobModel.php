@@ -12,5 +12,8 @@ class JobModel extends Model
 
 	protected $dateFormat = 'integer';
 
-	protected $allowedFields = ['name', 'description'];
+	protected $allowedFields = [
+		'name',
+		'description',
+	];
 }

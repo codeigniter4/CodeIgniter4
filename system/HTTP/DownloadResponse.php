@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 4.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 4.0.0
  * @filesource
  */
+
 use CodeIgniter\Exceptions\DownloadException;
 use CodeIgniter\Files\File;
 use Config\Mimes;
@@ -93,7 +94,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	public function __construct(string $filename, bool $setMime)
 	{
 		$this->filename = $filename;
-		$this->setMime = $setMime;
+		$this->setMime  = $setMime;
 	}
 
 	/**
@@ -129,7 +130,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	/**
 	 * get content length.
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function getContentLength() : int
 	{
@@ -152,22 +153,22 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	private function setContentTypeByMimeType()
 	{
-		$mime = null;
+		$mime    = null;
 		$charset = '';
 
 		if ($this->setMime === true)
 		{
 			if (($last_dot_position = strrpos($this->filename, '.')) !== false)
 			{
-				$mime = Mimes::guessTypeFromExtension(substr($this->filename, $last_dot_position + 1));
+				$mime    = Mimes::guessTypeFromExtension(substr($this->filename, $last_dot_position + 1));
 				$charset = $this->charset;
 			}
 		}
 
-		if ( ! is_string($mime))
+		if (! is_string($mime))
 		{
 			// Set the default MIME type to send
-			$mime = 'application/octet-stream';
+			$mime    = 'application/octet-stream';
 			$charset = '';
 		}
 
@@ -181,8 +182,8 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	private function getDownloadFileName(): string
 	{
-		$filename = $this->filename;
-		$x = explode('.', $this->filename);
+		$filename  = $this->filename;
+		$x         = explode('.', $this->filename);
 		$extension = end($x);
 
 		/* It was reported that browsers on Android 2.1 (and possibly older as well)
@@ -195,8 +196,8 @@ class DownloadResponse extends Message implements ResponseInterface
 		if (count($x) !== 1 && isset($_SERVER['HTTP_USER_AGENT'])
 				&& preg_match('/Android\s(1|2\.[01])/', $_SERVER['HTTP_USER_AGENT']))
 		{
-			$x[count($x)-1] = strtoupper($extension);
-			$filename       = implode('.', $x);
+			$x[count($x) - 1] = strtoupper($extension);
+			$filename         = implode('.', $x);
 		}
 
 		return $filename;
@@ -213,14 +214,16 @@ class DownloadResponse extends Message implements ResponseInterface
 
 		$utf8_filename = $download_filename;
 
-		if (strtoupper($this->charset) !== 'UTF-8') {
+		if (strtoupper($this->charset) !== 'UTF-8')
+		{
 			$utf8_filename = mb_convert_encoding($download_filename, 'UTF-8', $this->charset);
 		}
 
 		$result = sprintf('attachment; filename="%s"', $download_filename);
 
-		if (isset($utf8_filename)) {
-			$result .= '; filename*=UTF-8\'\''.rawurlencode($utf8_filename);
+		if (isset($utf8_filename))
+		{
+			$result .= '; filename*=UTF-8\'\'' . rawurlencode($utf8_filename);
 		}
 
 		return $result;
@@ -238,6 +241,7 @@ class DownloadResponse extends Message implements ResponseInterface
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @throws DownloadException
 	 */
 	public function setStatusCode(int $code, string $reason = '')
@@ -267,7 +271,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	{
 		$date->setTimezone(new \DateTimeZone('UTC'));
 
-		$this->setHeader('Date', $date->format('D, d M Y H:i:s').' GMT');
+		$this->setHeader('Date', $date->format('D, d M Y H:i:s') . ' GMT');
 
 		return $this;
 	}
@@ -282,12 +286,13 @@ class DownloadResponse extends Message implements ResponseInterface
 		// add charset attribute if not already there and provided as parm
 		if ((strpos($mime, 'charset=') < 1) && ! empty($charset))
 		{
-			$mime .= '; charset='.$charset;
+			$mime .= '; charset=' . $charset;
 		}
 
 		$this->removeHeader('Content-Type'); // replace existing content type
 		$this->setHeader('Content-Type', $mime);
-		if ( ! empty($charset)) {
+		if (! empty($charset))
+		{
 			$this->charset = $charset;
 		}
 
@@ -310,6 +315,7 @@ class DownloadResponse extends Message implements ResponseInterface
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @throws DownloadException
 	 */
 	public function setCache(array $options = [])
@@ -327,7 +333,7 @@ class DownloadResponse extends Message implements ResponseInterface
 		if ($date instanceof \DateTime)
 		{
 			$date->setTimezone(new \DateTimeZone('UTC'));
-			$this->setHeader('Last-Modified', $date->format('D, d M Y H:i:s').' GMT');
+			$this->setHeader('Last-Modified', $date->format('D, d M Y H:i:s') . ' GMT');
 		}
 		elseif (is_string($date))
 		{
@@ -366,7 +372,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	public function buildHeaders()
 	{
-		if ( ! $this->hasHeader('Content-Type'))
+		if (! $this->hasHeader('Content-Type'))
 		{
 			$this->setContentTypeByMimeType();
 		}
@@ -405,7 +411,7 @@ class DownloadResponse extends Message implements ResponseInterface
 		// Send all of our headers
 		foreach ($this->getHeaders() as $name => $values)
 		{
-			header($name.': '.$this->getHeaderLine($name), false, $this->getStatusCode());
+			header($name . ': ' . $this->getHeaderLine($name), false, $this->getStatusCode());
 		}
 
 		return $this;
@@ -442,7 +448,7 @@ class DownloadResponse extends Message implements ResponseInterface
 		$spl_file_object = $this->file->openFile('rb');
 
 		// Flush 1MB chunks of data
-		while ( ! $spl_file_object->eof() && ($data = $spl_file_object->fread(1048576)) !== false)
+		while (! $spl_file_object->eof() && ($data = $spl_file_object->fread(1048576)) !== false)
 		{
 			echo $data;
 		}

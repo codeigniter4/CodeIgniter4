@@ -15,9 +15,9 @@ class ViewTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->loader = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
+		$this->loader   = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
 		$this->viewsDir = __DIR__ . '/Views';
-		$this->config = new Config\View();
+		$this->config   = new Config\View();
 	}
 
 	//--------------------------------------------------------------------
@@ -48,8 +48,8 @@ class ViewTest extends \CIUnitTestCase
 		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$expected = [
-			'foo'	 => 'bar',
-			'bar'	 => 'baz'
+			'foo' => 'bar',
+			'bar' => 'baz',
 		];
 
 		$view->setData($expected);
@@ -62,15 +62,15 @@ class ViewTest extends \CIUnitTestCase
 		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$expected = [
-			'fee'	 => 'fi',
-			'foo'	 => 'bar',
-			'bar'	 => 'baz'
+			'fee' => 'fi',
+			'foo' => 'bar',
+			'bar' => 'baz',
 		];
 
 		$view->setVar('fee', 'fi');
 		$view->setData([
-			'foo'	 => 'bar',
-			'bar'	 => 'baz'
+			'foo' => 'bar',
+			'bar' => 'baz',
 		]);
 
 		$this->assertEquals($expected, $view->getData());
@@ -81,14 +81,14 @@ class ViewTest extends \CIUnitTestCase
 		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$expected = [
-			'foo'	 => 'bar',
-			'bar'	 => 'baz'
+			'foo' => 'bar',
+			'bar' => 'baz',
 		];
 
 		$view->setVar('foo', 'fi');
 		$view->setData([
-			'foo'	 => 'bar',
-			'bar'	 => 'baz'
+			'foo' => 'bar',
+			'bar' => 'baz',
 		]);
 
 		$this->assertEquals($expected, $view->getData());
@@ -110,14 +110,14 @@ class ViewTest extends \CIUnitTestCase
 		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$expected = [
-			'foo'	 => 'bar&amp;',
-			'bar'	 => 'baz&lt;'
+			'foo' => 'bar&amp;',
+			'bar' => 'baz&lt;',
 		];
 
 		$view->setData([
-			'foo'	 => 'bar&',
-			'bar'	 => 'baz<'
-				], 'html');
+			'foo' => 'bar&',
+			'bar' => 'baz<',
+		], 'html');
 
 		$this->assertEquals($expected, $view->getData());
 	}

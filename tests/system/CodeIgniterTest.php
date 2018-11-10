@@ -27,7 +27,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
 
-		$config = new App();
+		$config            = new App();
 		$this->codeigniter = new MockCodeIgniter($config);
 	}
 
@@ -35,7 +35,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 	{
 		parent::tearDown();
 
-		if( count( ob_list_handlers() ) > 1 )
+		if (count( ob_list_handlers() ) > 1)
 		{
 			ob_end_clean();
 		}
@@ -78,16 +78,16 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	public function testRunClosureRoute()
 	{
-		$_SERVER['argv'] = [
+		$_SERVER['argv']        = [
 			'index.php',
 			'pages/about',
 		];
-		$_SERVER['argc'] = 2;
+		$_SERVER['argc']        = 2;
 		$_SERVER['REQUEST_URI'] = '/pages/about';
 
 		// Inject mock router.
 		$routes = Services::routes();
-		$routes->add('pages/(:segment)', function($segment) {
+		$routes->add('pages/(:segment)', function ($segment) {
 			echo 'You want to see "' . esc($segment) . '" page.';
 		});
 		$router = Services::router($routes);
@@ -137,7 +137,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		// Inject mock router.
 		$routes = new RouteCollection(new MockFileLocator(new \Config\Autoload()), new \Config\Modules());
 		$routes->setAutoRoute(false);
-		$routes->set404Override(function() {
+		$routes->set404Override(function () {
 			echo '404 Override by Closure.';
 		});
 		$router = Services::router($routes);
@@ -154,16 +154,16 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	public function testControllersCanReturnString()
 	{
-		$_SERVER['argv'] = [
+		$_SERVER['argv']        = [
 			'index.php',
 			'pages/about',
 		];
-		$_SERVER['argc'] = 2;
+		$_SERVER['argc']        = 2;
 		$_SERVER['REQUEST_URI'] = '/pages/about';
 
 		// Inject mock router.
 		$routes = Services::routes();
-		$routes->add('pages/(:segment)', function($segment) {
+		$routes->add('pages/(:segment)', function ($segment) {
 			return 'You want to see "' . esc($segment) . '" page.';
 		});
 		$router = Services::router($routes);
@@ -180,18 +180,18 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	public function testControllersCanReturnResponseObject()
 	{
-		$_SERVER['argv'] = [
+		$_SERVER['argv']        = [
 			'index.php',
 			'pages/about',
 		];
-		$_SERVER['argc'] = 2;
+		$_SERVER['argc']        = 2;
 		$_SERVER['REQUEST_URI'] = '/pages/about';
 
 		// Inject mock router.
 		$routes = Services::routes();
-		$routes->add('pages/(:segment)', function($segment) {
+		$routes->add('pages/(:segment)', function ($segment) {
 			$response = Services::response();
-			$string = "You want to see 'about' page.";
+			$string   = "You want to see 'about' page.";
 			return $response->setBody($string);
 		});
 		$router = Services::router($routes);
@@ -206,7 +206,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-    public function testResponseConfigEmpty()
+	public function testResponseConfigEmpty()
 	{
 		$_SERVER['argv'] = [
 			'index.php',
@@ -242,11 +242,11 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	public function testTransfersCorrectHTTPVersion()
 	{
-		$_SERVER['argv'] = [
+		$_SERVER['argv']            = [
 			'index.php',
 			'/',
 		];
-		$_SERVER['argc'] = 2;
+		$_SERVER['argc']            = 2;
 		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/2';
 
 		ob_start();
@@ -257,6 +257,5 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 		$this->assertEquals(2, $response->getProtocolVersion());
 	}
-
 
 }

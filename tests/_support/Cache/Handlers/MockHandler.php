@@ -13,6 +13,7 @@ class MockHandler implements CacheInterface
 
 	/**
 	 * Mock cache storage.
+	 *
 	 * @var array
 	 */
 	protected $cache = [];
@@ -38,7 +39,7 @@ class MockHandler implements CacheInterface
 	 */
 	public function get(string $key)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		return array_key_exists($key, $this->cache)
 			? $this->cache[$key]
@@ -53,16 +54,16 @@ class MockHandler implements CacheInterface
 	 * The $raw parameter is only utilized by Mamcache in order to
 	 * allow usage of increment() and decrement().
 	 *
-	 * @param string $key    Cache item name
-	 * @param        $value  the data to save
-	 * @param null   $ttl    Time To Live, in seconds (default 60)
-	 * @param bool   $raw    Whether to store the raw value.
+	 * @param string                  $key Cache item name
+	 * @param $value  the data to save
+	 * @param null                    $ttl Time To Live, in seconds (default 60)
+	 * @param boolean                 $raw Whether to store the raw value.
 	 *
 	 * @return mixed
 	 */
 	public function save(string $key, $value, int $ttl = 60, bool $raw = false)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		$this->cache[$key] = $value;
 
@@ -88,14 +89,14 @@ class MockHandler implements CacheInterface
 	/**
 	 * Performs atomic incrementation of a raw stored value.
 	 *
-	 * @param string $key    Cache ID
-	 * @param int    $offset Step/value to increase by
+	 * @param string  $key    Cache ID
+	 * @param integer $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		$data = $this->cache[$key] ?: null;
 
@@ -108,7 +109,7 @@ class MockHandler implements CacheInterface
 			return false;
 		}
 
-		return $this->save($key, $data+$offset);
+		return $this->save($key, $data + $offset);
 	}
 
 	//--------------------------------------------------------------------
@@ -116,14 +117,14 @@ class MockHandler implements CacheInterface
 	/**
 	 * Performs atomic decrementation of a raw stored value.
 	 *
-	 * @param string $key    Cache ID
-	 * @param int    $offset Step/value to increase by
+	 * @param string  $key    Cache ID
+	 * @param integer $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		$data = $this->cache[$key] ?: null;
 
@@ -136,7 +137,7 @@ class MockHandler implements CacheInterface
 			return false;
 		}
 
-		return $this->save($key, $data-$offset);
+		return $this->save($key, $data - $offset);
 	}
 
 	//--------------------------------------------------------------------

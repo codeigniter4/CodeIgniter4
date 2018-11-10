@@ -12,6 +12,7 @@ class RouterTest extends \CIUnitTestCase
 
 	/**
 	 * vfsStream root directory
+	 *
 	 * @var
 	 */
 	protected $root;
@@ -20,22 +21,24 @@ class RouterTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		$moduleConfig = new \Config\Modules;
+		$moduleConfig          = new \Config\Modules;
 		$moduleConfig->enabled = false;
-		$this->collection = new RouteCollection(new MockFileLocator(new \Config\Autoload()), $moduleConfig);
+		$this->collection      = new RouteCollection(new MockFileLocator(new \Config\Autoload()), $moduleConfig);
 
 		$routes = [
-			'users'                        => 'Users::index',
-			'posts'                        => 'Blog::posts',
-			'pages'                        => 'App\Pages::list_all',
-			'posts/(:num)'                 => 'Blog::show/$1',
-			'posts/(:num)/edit'            => 'Blog::edit/$1',
-			'books/(:num)/(:alpha)/(:num)' => 'Blog::show/$3/$1',
-			'closure/(:num)/(:alpha)'      => function ($num, $str) { return $num.'-'.$str; },
-			'{locale}/pages'			   => 'App\Pages::list_all',
-			'Admin/Admins'		   		   => 'App\Admin\Admins::list_all',
-            '/some/slash'                  => 'App\Slash::index',
-			'objects/(:segment)/sort/(:segment)/([A-Z]{3,7})'   => 'AdminList::objectsSortCreate/$1/$2/$3'
+			'users'                                           => 'Users::index',
+			'posts'                                           => 'Blog::posts',
+			'pages'                                           => 'App\Pages::list_all',
+			'posts/(:num)'                                    => 'Blog::show/$1',
+			'posts/(:num)/edit'                               => 'Blog::edit/$1',
+			'books/(:num)/(:alpha)/(:num)'                    => 'Blog::show/$3/$1',
+			'closure/(:num)/(:alpha)'                         => function ($num, $str) {
+				return $num . '-' . $str;
+			},
+			'{locale}/pages'                                  => 'App\Pages::list_all',
+			'Admin/Admins'                                    => 'App\Admin\Admins::list_all',
+			'/some/slash'                                     => 'App\Slash::index',
+			'objects/(:segment)/sort/(:segment)/([A-Z]{3,7})' => 'AdminList::objectsSortCreate/$1/$2/$3',
 		];
 
 		$this->collection->map($routes);
@@ -166,7 +169,7 @@ class RouterTest extends \CIUnitTestCase
 
 	public function testAutoRouteFindsControllerWithFileAndMethod()
 	{
-	    $router = new Router($this->collection);
+		$router = new Router($this->collection);
 
 		$router->autoRoute('myController/someMethod');
 
@@ -192,11 +195,11 @@ class RouterTest extends \CIUnitTestCase
 	{
 		$router = new Router($this->collection);
 
-		mkdir(APPPATH.'Controllers/Subfolder');
+		mkdir(APPPATH . 'Controllers/Subfolder');
 
 		$router->autoRoute('subfolder/myController/someMethod');
 
-		rmdir(APPPATH.'Controllers/Subfolder');
+		rmdir(APPPATH . 'Controllers/Subfolder');
 
 		$this->assertEquals('MyController', $router->controllerName());
 		$this->assertEquals('someMethod', $router->methodName());
@@ -206,7 +209,7 @@ class RouterTest extends \CIUnitTestCase
 
 	public function testDetectsLocales()
 	{
-	    $router = new Router($this->collection);
+		$router = new Router($this->collection);
 
 		$router->handle('fr/pages');
 
@@ -228,35 +231,43 @@ class RouterTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-    public function testRouteWithLeadingSlash()
-    {
-        $router = new Router($this->collection);
+	public function testRouteWithLeadingSlash()
+	{
+		$router = new Router($this->collection);
 
-        $router->handle('some/slash');
+		$router->handle('some/slash');
 
-        $this->assertEquals('\App\Slash', $router->controllerName());
-        $this->assertEquals('index', $router->methodName());
-    }
+		$this->assertEquals('\App\Slash', $router->controllerName());
+		$this->assertEquals('index', $router->methodName());
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    public function testMatchedRouteOptions()
-    {
-    	$this->collection->add('foo', function() {}, ['as' => 'login', 'foo' => 'baz']);
-    	$this->collection->add('baz', function() {}, ['as' => 'admin', 'foo' => 'bar']);
+	public function testMatchedRouteOptions()
+	{
+		$this->collection->add('foo', function () {
+		}, [
+		'as'  => 'login',
+   'foo' => 'baz',
+    ]);
+		$this->collection->add('baz', function () {
+		}, [
+		'as'  => 'admin',
+   'foo' => 'bar',
+    ]);
 
-    	$router = new Router($this->collection);
+		$router = new Router($this->collection);
 
-    	$router->handle('foo');
+		$router->handle('foo');
 
-    	$this->assertEquals($router->getMatchedRouteOptions(), ['as' => 'login', 'foo' => 'baz']);
-    }
+		$this->assertEquals($router->getMatchedRouteOptions(), ['as' => 'login', 'foo' => 'baz']);
+	}
 
 	public function testRouteWorksWithFilters()
 	{
 		$collection = $this->collection;
 
-		$collection->group('foo', ['filter' => 'test'], function($routes) {
+		$collection->group('foo', ['filter' => 'test'], function ($routes) {
 			$routes->add('bar', 'TestController::foobar');
 		});
 
@@ -318,6 +329,5 @@ class RouterTest extends \CIUnitTestCase
 		$router->handle('auth');
 		$this->assertEquals('\Main', $router->controllerName());
 		$this->assertEquals('auth_post', $router->methodName());
-
 	}
 }

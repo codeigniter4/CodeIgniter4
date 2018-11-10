@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -50,7 +50,7 @@ class CacheFactory
 	/**
 	 * Attempts to create the desired cache handler, based upon the
 	 *
-	 * @param        $config
+	 * @param $config
 	 * @param string $handler
 	 * @param string $backup
 	 *
@@ -58,20 +58,20 @@ class CacheFactory
 	 */
 	public static function getHandler($config, string $handler = null, string $backup = null)
 	{
-		if ( ! isset($config->validHandlers) || ! is_array($config->validHandlers))
+		if (! isset($config->validHandlers) || ! is_array($config->validHandlers))
 		{
 			throw CacheException::forInvalidHandlers();
 		}
 
-		if ( ! isset($config->handler) || ! isset($config->backupHandler))
+		if (! isset($config->handler) || ! isset($config->backupHandler))
 		{
 			throw CacheException::forNoBackup();
 		}
 
 		$handler = ! empty($handler) ? $handler : $config->handler;
-		$backup = ! empty($backup) ? $backup : $config->backupHandler;
+		$backup  = ! empty($backup) ? $backup : $config->backupHandler;
 
-		if ( ! array_key_exists($handler, $config->validHandlers) || ! array_key_exists($backup, $config->validHandlers))
+		if (! array_key_exists($handler, $config->validHandlers) || ! array_key_exists($backup, $config->validHandlers))
 		{
 			throw CacheException::forHandlerNotFound();
 		}
@@ -79,11 +79,11 @@ class CacheFactory
 		// Get an instance of our handler.
 		$adapter = new $config->validHandlers[$handler]($config);
 
-		if ( ! $adapter->isSupported())
+		if (! $adapter->isSupported())
 		{
 			$adapter = new $config->validHandlers[$backup]($config);
 
-			if ( ! $adapter->isSupported())
+			if (! $adapter->isSupported())
 			{
 				// Log stuff here, don't throw exception. No need to raise a fuss.
 				// Fall back to the dummy adapter.

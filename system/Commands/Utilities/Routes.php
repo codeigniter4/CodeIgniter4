@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
@@ -102,7 +103,17 @@ class Routes extends BaseCommand
 	public function run(array $params)
 	{
 		$collection = Services::routes(true);
-		$methods = ['get', 'head', 'post', 'put', 'delete', 'options', 'trace', 'connect', 'cli'];
+		$methods    = [
+			'get',
+			'head',
+			'post',
+			'put',
+			'delete',
+			'options',
+			'trace',
+			'connect',
+			'cli',
+		];
 
 		$tbody = [];
 		foreach ($methods as $method)
@@ -110,14 +121,20 @@ class Routes extends BaseCommand
 			$routes = $collection->getRoutes($method);
 
 			foreach ($routes as $from => $to)
-			$tbody[] = [
-				$from,
-				$method,
-				$to
-			];
+			{
+				$tbody[] = [
+					$from,
+					$method,
+					$to,
+				];
+			}
 		}
 
-		$thead = ['Route', 'Method', 'Command'];
+		$thead = [
+			'Route',
+			'Method',
+			'Command',
+		];
 
 		CLI::table($tbody, $thead);
 	}

@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Config\BaseConfig;
 use Psr\Log\LoggerAwareTrait;
 
@@ -49,7 +50,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	/**
 	 * The Data fingerprint.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $fingerprint;
 
@@ -76,6 +77,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 
 	/**
 	 * Cookie path
+	 *
 	 * @var type
 	 */
 	protected $cookiePath = '/';
@@ -89,6 +91,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 
 	/**
 	 * Cookie name to use
+	 *
 	 * @var type
 	 */
 	protected $cookieName;
@@ -102,6 +105,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 
 	/**
 	 * Current session ID
+	 *
 	 * @var type
 	 */
 	protected $sessionID;
@@ -109,31 +113,33 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	/**
 	 * The 'save path' for the session
 	 * varies between
+	 *
 	 * @var mixed
 	 */
 	protected $savePath;
 
 	/**
-        * @var string
-        */
-       protected $ipAddress;
+	 * @var string
+	 */
+	protected $ipAddress;
 
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
+	 *
 	 * @param BaseConfig $config
 	 */
 	public function __construct($config, string $ipAddress)
 	{
 		$this->cookiePrefix = $config->cookiePrefix;
 		$this->cookieDomain = $config->cookieDomain;
-		$this->cookiePath = $config->cookiePath;
+		$this->cookiePath   = $config->cookiePath;
 		$this->cookieSecure = $config->cookieSecure;
-		$this->cookieName = $config->sessionCookieName;
-		$this->matchIP = $config->sessionMatchIP;
-		$this->savePath = $config->sessionSavePath;
-		$this->ipAdddress = $ipAddress;
+		$this->cookieName   = $config->sessionCookieName;
+		$this->matchIP      = $config->sessionMatchIP;
+		$this->savePath     = $config->sessionSavePath;
+		$this->ipAdddress   = $ipAddress;
 	}
 
 	//--------------------------------------------------------------------
@@ -142,7 +148,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 * Internal method to force removal of a cookie by the client
 	 * when session_destroy() is called.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function destroyCookie(): bool
 	{
@@ -160,7 +166,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @param string $sessionID
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function lockSession(string $sessionID): bool
 	{
@@ -173,7 +179,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Releases the lock, if any.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function releaseLock(): bool
 	{
@@ -195,7 +201,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 * so that the INI is set just in time for the error message to
 	 * be properly generated.
 	 *
-	 * @return	mixed
+	 * @return mixed
 	 */
 	protected function fail()
 	{

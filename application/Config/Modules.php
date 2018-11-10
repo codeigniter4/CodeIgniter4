@@ -41,11 +41,14 @@ class Modules
 	 *
 	 * @param string $alias
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function shouldDiscover(string $alias)
 	{
-		if (! $this->enabled) return false;
+		if (! $this->enabled)
+		{
+			return false;
+		}
 
 		$alias = strtolower($alias);
 

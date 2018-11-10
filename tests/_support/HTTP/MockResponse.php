@@ -10,7 +10,7 @@ class MockResponse extends Response
 	/**
 	 * If true, will not write output. Useful during testing.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $pretend = true;
 

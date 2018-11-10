@@ -19,15 +19,13 @@ use CodeIgniter\Events\Events;
  *      Events::on('create', [$myInstance, 'myMethod']);
  */
 
-
-
 /*
  * --------------------------------------------------------------------
  * Debug Toolbar Listeners.
  * --------------------------------------------------------------------
  * If you delete, they will no longer be collected.
  */
-if (ENVIRONMENT != 'production')
+if (ENVIRONMENT !== 'production')
 {
 	Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
 
