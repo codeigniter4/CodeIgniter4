@@ -163,17 +163,6 @@ class RedirectResponse extends Response
 	 */
 	protected function ensureSession()
 	{
-		$session = Services::session();
-
-		// Ensure we have the session started up.
-		// true for travis-ci, so not coverable
-		// @codeCoverageIgnoreStart
-		if ( ! isset($_SESSION))
-		{
-			$session->start();
-		}
-		// @codeCoverageIgnoreEnd
-
-		return $session;
+		return Services::session();
 	}
 }
