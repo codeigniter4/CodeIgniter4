@@ -179,14 +179,14 @@ class MigrationRunner
 	 * Calls each migration step required to get to the schema version of
 	 * choice
 	 *
-	 * @param string $targetVersion Target schema version
-	 * @param string $namespace
-	 * @param string $group
+	 * @param integer     $targetVersion Target schema version
+	 * @param string|null $namespace
+	 * @param string|null $group
 	 *
 	 * @return mixed TRUE if no migrations are found, current version string on success, FALSE on failure
 	 * @throws ConfigException
 	 */
-	public function version(string $targetVersion, $namespace = null, $group = null)
+	public function version(int $targetVersion, string $namespace = null, string $group = null)
 	{
 		if (! $this->enabled)
 		{
@@ -423,7 +423,7 @@ class MigrationRunner
 	 *
 	 * @return boolean
 	 */
-	protected function checkMigrations($migrations, $method, $targetversion)
+	protected function checkMigrations(array $migrations, string $method, int $targetversion)
 	{
 		// Check if no migrations found
 		if (empty($migrations))
