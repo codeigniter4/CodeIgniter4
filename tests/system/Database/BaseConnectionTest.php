@@ -1,50 +1,49 @@
 <?php namespace CodeIgniter\Database;
 
-
 use Tests\Support\Database\MockConnection;
 
 class BaseConnectionTest extends \CIUnitTestCase
 {
 	protected $options = [
-		'DSN'          => '',
-		'hostname'     => 'localhost',
-		'username'     => 'first',
-		'password'     => 'last',
-		'database'     => 'dbname',
-		'DBDriver'     => 'MockDriver',
-		'DBPrefix'     => 'test_',
-		'pConnect'     => true,
-		'DBDebug'     => (ENVIRONMENT !== 'production'),
-		'cacheOn'     => false,
-		'cacheDir'     => 'my/cacheDir',
-		'charset'      => 'utf8',
-		'DBCollat'     => 'utf8_general_ci',
-		'swapPre'      => '',
-		'encrypt'      => false,
-		'compress'     => false,
-		'strictOn'     => true,
-		'failover'     => [],
+		'DSN'      => '',
+		'hostname' => 'localhost',
+		'username' => 'first',
+		'password' => 'last',
+		'database' => 'dbname',
+		'DBDriver' => 'MockDriver',
+		'DBPrefix' => 'test_',
+		'pConnect' => true,
+		'DBDebug'  => (ENVIRONMENT !== 'production'),
+		'cacheOn'  => false,
+		'cacheDir' => 'my/cacheDir',
+		'charset'  => 'utf8',
+		'DBCollat' => 'utf8_general_ci',
+		'swapPre'  => '',
+		'encrypt'  => false,
+		'compress' => false,
+		'strictOn' => true,
+		'failover' => [],
 	];
 
 	protected $failoverOptions = [
-		'DSN'          => '',
-		'hostname'     => 'localhost',
-		'username'     => 'failover',
-		'password'     => 'one',
-		'database'     => 'failover',
-		'DBDriver'     => 'MockDriver',
-		'DBPrefix'     => 'test_',
-		'pConnect'     => true,
-		'DBDebug'     => (ENVIRONMENT !== 'production'),
-		'cacheOn'     => false,
-		'cacheDir'     => 'my/cacheDir',
-		'charset'      => 'utf8',
-		'DBCollat'     => 'utf8_general_ci',
-		'swapPre'      => '',
-		'encrypt'      => false,
-		'compress'     => false,
-		'strictOn'     => true,
-		'failover'     => [],
+		'DSN'      => '',
+		'hostname' => 'localhost',
+		'username' => 'failover',
+		'password' => 'one',
+		'database' => 'failover',
+		'DBDriver' => 'MockDriver',
+		'DBPrefix' => 'test_',
+		'pConnect' => true,
+		'DBDebug'  => (ENVIRONMENT !== 'production'),
+		'cacheOn'  => false,
+		'cacheDir' => 'my/cacheDir',
+		'charset'  => 'utf8',
+		'DBCollat' => 'utf8_general_ci',
+		'swapPre'  => '',
+		'encrypt'  => false,
+		'compress' => false,
+		'strictOn' => true,
+		'failover' => [],
 	];
 
 	//--------------------------------------------------------------------
@@ -75,7 +74,7 @@ class BaseConnectionTest extends \CIUnitTestCase
 
 	public function testConnectionThrowExceptionWhenCannotConnect()
 	{
-	    $db = new MockConnection($this->options);
+		$db = new MockConnection($this->options);
 
 		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
 		$this->expectExceptionMessage('Unable to connect to the database.');
@@ -88,7 +87,7 @@ class BaseConnectionTest extends \CIUnitTestCase
 
 	public function testCanConnectAndStoreConnection()
 	{
-	    $db = new MockConnection($this->options);
+		$db = new MockConnection($this->options);
 
 		$db->shouldReturn('connect', 123)
 			->initialize();
@@ -100,11 +99,11 @@ class BaseConnectionTest extends \CIUnitTestCase
 
 	/**
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
-	 * @group single
+	 * @group  single
 	 */
 	public function testCanConnectToFailoverWhenNoConnectionAvailable()
 	{
-		$options = $this->options;
+		$options             = $this->options;
 		$options['failover'] = [$this->failoverOptions];
 
 		$db = new MockConnection($options);
@@ -120,7 +119,7 @@ class BaseConnectionTest extends \CIUnitTestCase
 
 	public function testStoresConnectionTimings()
 	{
-	    $start = microtime(true);
+		$start = microtime(true);
 
 		$db = new MockConnection($this->options);
 
@@ -135,7 +134,7 @@ class BaseConnectionTest extends \CIUnitTestCase
 	/**
 	 * Ensures we don't have escaped - values...
 	 *
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/606
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/606
 	 */
 	public function testEscapeProtectsNegativeNumbers()
 	{
@@ -145,6 +144,5 @@ class BaseConnectionTest extends \CIUnitTestCase
 
 		$this->assertEquals("'-100'", $db->escape(-100));
 	}
-
 
 }
