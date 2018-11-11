@@ -217,6 +217,7 @@ class CreditCardRules
 			if ($card['name'] === $type)
 			{
 				$info = $card;
+				break;
 			}
 		}
 

@@ -592,6 +592,17 @@ class URITest extends \CIUnitTestCase
 		$this->assertEquals($expected, (string) $new);
 	}
 
+	public function testResolveRelativeURIWithNoBase()
+	{
+		$base = 'http://a';
+
+		$uri = new URI($base);
+
+		$new = $uri->resolveRelativeURI('x');
+
+		$this->assertEquals('http://a/x', (string) $new);
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testAddQueryVar()
@@ -608,7 +619,7 @@ class URITest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/pull/954
+	 * @see https://github.com/codeigniter4/CodeIgniter4/pull/954
 	 */
 	public function testSetQueryDecode()
 	{
@@ -692,12 +703,24 @@ class URITest extends \CIUnitTestCase
 		$uri = new URI($base);
 
 		$this->assertEquals('bar=baz', $uri->getQuery(['only' => ['bar']]));
+		$this->assertEquals('foo=bar&baz=foz', $uri->getQuery(['except' => 'bar']));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetQueryWithStrings()
+	{
+		$base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
+
+		$uri = new URI($base);
+
+		$this->assertEquals('bar=baz', $uri->getQuery(['only' => 'bar']));
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * @see   https://github.com/bcit-ci/CodeIgniter4/issues/331
+	 * @see   https://github.com/codeigniter4/CodeIgniter4/issues/331
 	 * @group single
 	 */
 	public function testNoExtraSlashes()
@@ -705,6 +728,27 @@ class URITest extends \CIUnitTestCase
 		$this->assertEquals('http://entirely.different.com/subfolder', (string) (new URI('entirely.different.com/subfolder')));
 		$this->assertEquals('http://localhost/subfolder', (string) (new URI('localhost/subfolder')));
 		$this->assertEquals('http://localtest.me/subfolder', (string) (new URI('localtest.me/subfolder')));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetSegment()
+	{
+		$base = 'http://example.com/foo/bar/baz';
+
+		$uri = new URI($base);
+		$uri->setSegment(2, 'banana');
+
+		$this->assertEquals('foo/banana/baz', $uri->getPath());
+	}
+
+	public function testSetBadSegment()
+	{
+		$this->expectException(HTTPException::class);
+		$base = 'http://example.com/foo/bar/baz';
+
+		$uri = new URI($base);
+		$uri->setSegment(6, 'banana');
 	}
 
 }

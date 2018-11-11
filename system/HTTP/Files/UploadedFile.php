@@ -345,12 +345,12 @@ class UploadedFile extends File implements UploadedFileInterface
 	 * Additionaly it will return clientExtension in case if there are
 	 * other extensions withe the same mime type.
 	 */
-	public function getExtension() : string
+	public function getExtension(): string
 	{
 		return $this->guessExtension();
 	}
 
-	public function guessExtension() : ?string
+	public function guessExtension(): ?string
 	{
 		return \Config\Mimes::guessExtensionFromType($this->getMimeType(), $this->getClientExtension());
 	}
@@ -392,16 +392,14 @@ class UploadedFile extends File implements UploadedFileInterface
 	 * @param  string $fileName   the name to rename the file to.
 	 * @return string file full path
 	 */
-	public function store($folderName = null, $fileName = null) : string
+	public function store($folderName = null, $fileName = null): string
 	{
 		$folderName = $folderName ?? date('Ymd');
 		$fileName   = $fileName ?? $this->getRandomName();
 
 		// Move the uploaded file to a new location.
-		if ($this->move(WRITEPATH . 'uploads/' . $folderName, $fileName))
-		{
-			return $folderName . DIRECTORY_SEPARATOR . $this->name;
-		}
+		return ($this->move(WRITEPATH . 'uploads/' . $folderName, $fileName)) ?
+				$folderName . DIRECTORY_SEPARATOR . $this->name : null;
 	}
 
 	//--------------------------------------------------------------------

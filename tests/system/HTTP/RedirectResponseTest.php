@@ -36,6 +36,8 @@ class RedirectResponseTest extends \CIUnitTestCase
 		Services::injectMock('request', $this->request);
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testRedirectToFullURI()
 	{
 		$response = new RedirectResponse(new App());
@@ -45,6 +47,8 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->assertTrue($response->hasHeader('Location'));
 		$this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testRedirectRoute()
 	{
@@ -76,6 +80,8 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$response->route('differentRoute');
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testRedirectRelativeConvertsToFullURI()
 	{
 		$response = new RedirectResponse($this->config);
@@ -85,6 +91,8 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->assertTrue($response->hasHeader('Location'));
 		$this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * @runInSeparateProcess
@@ -105,6 +113,8 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->assertEquals('bar', $_SESSION['_ci_old_input']['get']['foo']);
 		$this->assertEquals('baz', $_SESSION['_ci_old_input']['post']['bar']);
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * @runInSeparateProcess
@@ -127,6 +137,8 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->assertArrayHasKey('_ci_validation_errors', $_SESSION);
 	}
 
+	//--------------------------------------------------------------------
+
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -142,6 +154,8 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->assertSame($response, $returned);
 		$this->assertArrayHasKey('foo', $_SESSION);
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * @runInSeparateProcess

@@ -89,7 +89,7 @@ class LanguageTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/891
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/891
 	 */
 	public function testLangAllowsOtherLocales()
 	{

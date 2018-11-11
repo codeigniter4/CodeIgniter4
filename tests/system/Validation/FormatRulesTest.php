@@ -110,7 +110,7 @@ class FormatRulesTest extends \CIUnitTestCase
 				'http://reject_underscores',
 				false,
 			],
-			// https://github.com/bcit-ci/CodeIgniter/issues/4415
+			// https://github.com/codeigniter4/CodeIgniter/issues/4415
 			[
 				'http://[::1]/ipv6',
 				true,

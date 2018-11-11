@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Router;
+<?php
+namespace CodeIgniter\Router;
 
 use Tests\Support\Autoloader\MockFileLocator;
 use CodeIgniter\Router\Exceptions\RouterException;
@@ -8,6 +9,7 @@ use CodeIgniter\Router\Exceptions\RouterException;
  */
 class RouteCollectionTest extends \CIUnitTestCase
 {
+
 	public function tearDown()
 	{
 	}
@@ -255,9 +257,11 @@ class RouteCollectionTest extends \CIUnitTestCase
 	{
 		$routes = $this->getCollector();
 
-		$routes->group('admin', function ($routes) {
-			$routes->add('users/list', '\Users::list');
-		});
+		$routes->group(
+			'admin', function ($routes) {
+				$routes->add('users/list', '\Users::list');
+			}
+		);
 
 		$expected = [
 			'admin/users/list' => '\Users::list',
@@ -272,9 +276,11 @@ class RouteCollectionTest extends \CIUnitTestCase
 	{
 		$routes = $this->getCollector();
 
-		$routes->group('<script>admin', function ($routes) {
-			$routes->add('users/list', '\Users::list');
-		});
+		$routes->group(
+			'<script>admin', function ($routes) {
+				$routes->add('users/list', '\Users::list');
+			}
+		);
 
 		$expected = [
 			'admin/users/list' => '\Users::list',
@@ -289,9 +295,11 @@ class RouteCollectionTest extends \CIUnitTestCase
 	{
 		$routes = $this->getCollector();
 
-		$routes->group('admin', ['namespace' => 'Admin'], function ($routes) {
-			$routes->add('users/list', 'Users::list');
-		});
+		$routes->group(
+			'admin', ['namespace' => 'Admin'], function ($routes) {
+				$routes->add('users/list', 'Users::list');
+			}
+		);
 
 		$expected = [
 			'admin/users/list' => '\Admin\Users::list',
@@ -594,13 +602,17 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$expected = ['here' => '\there'];
 
-		$routes->environment('testing', function ($routes) {
-			$routes->get('here', 'there');
-		});
+		$routes->environment(
+			'testing', function ($routes) {
+				$routes->get('here', 'there');
+			}
+		);
 
-		$routes->environment('badenvironment', function ($routes) {
-			$routes->get('from', 'to');
-		});
+		$routes->environment(
+			'badenvironment', function ($routes) {
+				$routes->get('from', 'to');
+			}
+		);
 
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
@@ -679,17 +691,21 @@ class RouteCollectionTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/642
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/642
 	 */
 	public function testNamedRoutesWithSameURIDifferentMethods()
 	{
 		$routes = $this->getCollector();
 
 		$routes->get('user/insert', 'myController::goto/$1/$2', ['as' => 'namedRoute1']);
-		$routes->post('user/insert', function () {
-		}, ['as' => 'namedRoute2']);
-		$routes->put('user/insert', function () {
-		}, ['as' => 'namedRoute3']);
+		$routes->post(
+			'user/insert', function () {
+			}, ['as' => 'namedRoute2']
+		);
+		$routes->put(
+			'user/insert', function () {
+			}, ['as' => 'namedRoute3']
+		);
 
 		$match1 = $routes->reverseRoute('namedRoute1');
 		$match2 = $routes->reverseRoute('namedRoute2');
@@ -731,7 +747,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/497
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/497
 	 */
 	public function testWithSubdomain()
 	{
@@ -751,14 +767,16 @@ class RouteCollectionTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/568
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/568
 	 */
 	public function testReverseRoutingWithClosure()
 	{
 		$routes = $this->getCollector();
 
-		$routes->add('login', function () {
-		});
+		$routes->add(
+			'login', function () {
+			}
+		);
 
 		$match = $routes->reverseRoute('login');
 
@@ -811,11 +829,15 @@ class RouteCollectionTest extends \CIUnitTestCase
 	{
 		$routes = $this->getCollector();
 
-		$routes->add('administrator', function () {
-		}, [
-		'as'  => 'admin',
-   'foo' => 'baz',
-    ]);
+		// options need to be declared separately, to not confuse PHPCBF
+		$options = [
+			'as'  => 'admin',
+			'foo' => 'baz',
+		];
+		$routes->add(
+			'administrator', function () {
+			}, $options
+		);
 
 		$options = $routes->getRoutesOptions('administrator');
 
@@ -827,13 +849,15 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes                    = $this->getCollector();
 
-		$routes->group('admin', ['filter' => 'role'], function ($routes) {
-			$routes->add('users', '\Users::list');
-		});
+		$routes->group(
+			'admin', ['filter' => 'role'], function ($routes) {
+				$routes->add('users', '\Users::list');
+			}
+		);
 
 		$this->assertTrue($routes->isFiltered('admin/users'));
-			   $this->assertFalse($routes->isFiltered('admin/franky'));
-			   $this->assertEquals('role', $routes->getFilterForRoute('admin/users'));
+		$this->assertFalse($routes->isFiltered('admin/franky'));
+		$this->assertEquals('role', $routes->getFilterForRoute('admin/users'));
 	}
 
 	public function testRouteGroupWithFilterWithParams()
@@ -841,12 +865,15 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes                    = $this->getCollector();
 
-		$routes->group('admin', ['filter' => 'role:admin,manager'], function ($routes) {
-			$routes->add('users', '\Users::list');
-		});
+		$routes->group(
+			'admin', ['filter' => 'role:admin,manager'], function ($routes) {
+				$routes->add('users', '\Users::list');
+			}
+		);
 
 		$this->assertTrue($routes->isFiltered('admin/users'));
 		$this->assertFalse($routes->isFiltered('admin/franky'));
 		$this->assertEquals('role:admin,manager', $routes->getFilterForRoute('admin/users'));
 	}
+
 }

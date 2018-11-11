@@ -1,13 +1,27 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 use Config\Format;
 use DateTime;
 use DateTimeZone;
+use Tests\Support\HTTP\MockResponse;
 
 class ResponseTest extends \CIUnitTestCase
 {
+
+	public function setUp()
+	{
+		parent::setUp();
+		$this->server = $_SERVER;
+	}
+
+	public function tearDown()
+	{
+		$_SERVER = $this->server;
+	}
+
 	public function testCanSetStatusCode()
 	{
 		$response = new Response(new App());
@@ -25,6 +39,17 @@ class ResponseTest extends \CIUnitTestCase
 
 		$this->expectException(HTTPException::class);
 		$response->setStatusCode(54322);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testConstructWithCSPEnabled()
+	{
+		$config             = new App();
+		$config->CSPEnabled = true;
+		$response           = new Response($config);
+
+		$this->assertTrue($response instanceof Response);
 	}
 
 	//--------------------------------------------------------------------
@@ -173,6 +198,19 @@ class ResponseTest extends \CIUnitTestCase
 		$this->assertEquals('max-age=300, must-revalidate', $response->getHeaderLine('Cache-Control'));
 	}
 
+	public function testSetCacheNoOptions()
+	{
+		$response = new Response(new App());
+
+		$date = date('r');
+
+		$options = [];
+
+		$response->setCache($options);
+
+		$this->assertEquals('no-store, max-age=0, no-cache', $response->getHeaderLine('Cache-Control'));
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testSetLastModifiedWithDateTimeObject()
@@ -217,6 +255,16 @@ class ResponseTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testRedirectWithIIS()
+	{
+		$_SERVER['SERVER_SOFTWARE'] = 'Microsoft-IIS';
+		$response                   = new Response(new App());
+		$response->redirect('example.com', 'auto', 307);
+		$this->assertEquals('0;url=example.com', $response->getHeaderLine('Refresh'));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testSetCookieFails()
 	{
 		$response = new Response(new App());
@@ -248,6 +296,8 @@ class ResponseTest extends \CIUnitTestCase
 
 		$this->assertFalse($response->hasCookie('foo', null, 'ack'));
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testJSONWithArray()
 	{
@@ -292,6 +342,8 @@ class ResponseTest extends \CIUnitTestCase
 		$this->assertEquals($expected, $response->getJSON());
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testXMLWithArray()
 	{
 		$response  = new Response(new App());
@@ -335,6 +387,8 @@ class ResponseTest extends \CIUnitTestCase
 		$this->assertEquals($expected, $response->getXML());
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testGetDownloadResponseByData()
 	{
 		$response = new Response(new App());
@@ -370,4 +424,60 @@ class ResponseTest extends \CIUnitTestCase
 
 		$this->assertSame(file_get_contents(__FILE__), $actual_output);
 	}
+
+	public function testVagueDownload()
+	{
+		$response = new Response(new App());
+
+		$actual = $response->download();
+
+		$this->assertNull($actual);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testPretendMode()
+	{
+		$response = new MockResponse(new App());
+		$response->pretend(true);
+		$this->assertTrue($response->getPretend());
+		$response->pretend(false);
+		$this->assertFalse($response->getPretend());
+	}
+
+	public function testMisbehaving()
+	{
+		$response = new MockResponse(new App());
+		$response->misbehave();
+
+		$this->expectException(HTTPException::class);
+		$response->getStatusCode();
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testTemporaryRedirect11()
+	{
+		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+		$_SERVER['REQUEST_METHOD']  = 'POST';
+		$response                   = new Response(new App());
+
+		$response->setProtocolVersion('HTTP/1.1');
+		$response->redirect('/foo');
+
+		$this->assertEquals(303, $response->getStatusCode());
+	}
+
+	public function testTemporaryRedirectGet11()
+	{
+		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+		$_SERVER['REQUEST_METHOD']  = 'GET';
+		$response                   = new Response(new App());
+
+		$response->setProtocolVersion('HTTP/1.1');
+		$response->redirect('/foo');
+
+		$this->assertEquals(307, $response->getStatusCode());
+	}
+
 }

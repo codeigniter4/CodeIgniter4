@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Router;
+<?php
+namespace CodeIgniter\Router;
 
 use Tests\Support\Autoloader\MockFileLocator;
 
@@ -137,7 +138,7 @@ class RouterTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/672
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/672
 	 */
 	public function testURIMapsParamsWithMany()
 	{
@@ -242,19 +243,21 @@ class RouterTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
-
+	// options need to be declared separately, to not confuse PHPCBF
 	public function testMatchedRouteOptions()
 	{
+		$optionsFoo = [
+			'as'  => 'login',
+			'foo' => 'baz',
+		];
 		$this->collection->add('foo', function () {
-		}, [
-		'as'  => 'login',
-   'foo' => 'baz',
-    ]);
+		}, $optionsFoo);
+		$optionsBaz = [
+			'as'  => 'admin',
+			'foo' => 'bar',
+		];
 		$this->collection->add('baz', function () {
-		}, [
-		'as'  => 'admin',
-   'foo' => 'bar',
-    ]);
+		}, $optionsBaz);
 
 		$router = new Router($this->collection);
 
@@ -283,7 +286,7 @@ class RouterTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/1240
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1240
 	 */
 	public function testMatchesCorrectlyWithMixedVerbs()
 	{
@@ -312,10 +315,11 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals('\Pages', $router->controllerName());
 		$this->assertEquals('view', $router->methodName());
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/1354
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1354
 	 */
 	public function testRouteOrder()
 	{
@@ -330,4 +334,5 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals('\Main', $router->controllerName());
 		$this->assertEquals('auth_post', $router->methodName());
 	}
+
 }

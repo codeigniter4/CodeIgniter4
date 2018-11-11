@@ -351,7 +351,7 @@ class ParserTest extends \CIUnitTestCase
 	//------------------------------------------------------------------------
 
 	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/788
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/788
 	 */
 	public function testEscapingRespectsSetDataRaw()
 	{
@@ -779,7 +779,7 @@ class ParserTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/705
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/705
 	 */
 	public function testParseLoopWithDollarSign()
 	{

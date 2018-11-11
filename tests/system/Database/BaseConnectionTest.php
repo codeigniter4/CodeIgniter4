@@ -134,7 +134,7 @@ class BaseConnectionTest extends \CIUnitTestCase
 	/**
 	 * Ensures we don't have escaped - values...
 	 *
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/606
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/606
 	 */
 	public function testEscapeProtectsNegativeNumbers()
 	{

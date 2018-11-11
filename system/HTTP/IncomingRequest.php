@@ -271,7 +271,7 @@ class IncomingRequest extends Request
 	 */
 	public function isCLI(): bool
 	{
-		return (PHP_SAPI === 'cli' || defined('STDIN'));
+		return is_cli();
 	}
 
 	//--------------------------------------------------------------------

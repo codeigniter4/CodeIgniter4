@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+namespace CodeIgniter\HTTP;
 
 /**
  * CodeIgniter
@@ -361,7 +362,6 @@ class Response extends Message implements ResponseInterface
 	}
 
 	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
 	// Convenience Methods
 	//--------------------------------------------------------------------
 
@@ -512,7 +512,6 @@ class Response extends Message implements ResponseInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Cache Control Methods
 	//
@@ -674,8 +673,7 @@ class Response extends Message implements ResponseInterface
 		}
 
 		// HTTP Status
-		header(sprintf('HTTP/%s %s %s', $this->protocolVersion, $this->statusCode, $this->reason), true,
-			$this->statusCode);
+		header(sprintf('HTTP/%s %s %s', $this->protocolVersion, $this->statusCode, $this->reason), true, $this->statusCode);
 
 		// Send all of our headers
 		foreach ($this->getHeaders() as $name => $values)
@@ -724,23 +722,25 @@ class Response extends Message implements ResponseInterface
 	 */
 	public function redirect(string $uri, string $method = 'auto', int $code = null)
 	{
+		// Assume 302 status code response; override if needed
+		if (empty($code))
+		{
+			$code = 302;
+		}
+
 		// IIS environment likely? Use 'refresh' for better compatibility
-		if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE'])
-			&& strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false)
+		if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false)
 		{
 			$method = 'refresh';
 		}
-		elseif ($method !== 'refresh' && (empty($code) || ! is_numeric($code)))
+
+		// override status code for HTTP/1.1 & higher
+		// reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
+		if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $this->getProtocolVersion() >= 1.1)
 		{
-			if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $this->getProtocolVersion() >= 1.1)
+			if ($method !== 'refresh')
 			{
-				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303
-					// reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
-					: 307;
-			}
-			else
-			{
-				$code = 302;
+				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303 : 307;
 			}
 		}
 
@@ -976,8 +976,7 @@ class Response extends Message implements ResponseInterface
 	{
 		if ($filename === '' || $data === '')
 		{
-			// @todo: Should I throw an exception?
-			return;
+			return null;
 		}
 
 		$filepath = '';

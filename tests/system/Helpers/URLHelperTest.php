@@ -169,7 +169,7 @@ class URLHelperTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/240
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/240
 	 */
 	public function testSiteURLWithSegments()
 	{
@@ -188,7 +188,7 @@ class URLHelperTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/240
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/240
 	 */
 	public function testSiteURLWithSegmentsAgain()
 	{
@@ -267,7 +267,7 @@ class URLHelperTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/240
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/240
 	 */
 	public function testBaseURLWithSegments()
 	{
@@ -286,7 +286,7 @@ class URLHelperTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/867
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/867
 	 */
 	public function testBaseURLHTTPS()
 	{
@@ -298,7 +298,7 @@ class URLHelperTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/240
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/240
 	 */
 	public function testBaseURLWithSegmentsAgain()
 	{

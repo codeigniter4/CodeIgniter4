@@ -205,7 +205,7 @@ class UpdateTest extends CIDatabaseTestCase
 
 	/**
 	 * @group single
-	 * @see   https://github.com/bcit-ci/CodeIgniter4/issues/324
+	 * @see   https://github.com/codeigniter4/CodeIgniter4/issues/324
 	 */
 	public function testUpdatePeriods()
 	{
