@@ -82,7 +82,7 @@ class Honeypot
 	 */
 	public function hasContent(RequestInterface $request)
 	{
-		return ( ! empty($request->getPost($this->config->name))) ? true : false;
+		return ! empty($request->getPost($this->config->name));
 	}
 
 	/**
