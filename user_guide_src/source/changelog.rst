@@ -407,7 +407,7 @@ Release Date: September 28, 2018
 
 Non-code changes:
     - User Guide adapted or rewritten
-    - [System message translations repository](https://github.com/bcit-ci/CodeIgniter4-translations)
+    - [System message translations repository](https://github.com/codeigniter4/CodeIgniter4-translations)
     - [Roadmap subforum](https://forum.codeigniter.com/forum-33.html) for more transparent planning
 
 New core classes:

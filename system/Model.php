@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use Config\Database;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
@@ -60,7 +61,7 @@ use CodeIgniter\Database\Exceptions\DataException;
  *      - ensure validation is run against objects when saving items
  *
  * @package CodeIgniter
- * @mixin BaseBuilder
+ * @mixin   BaseBuilder
  */
 class Model
 {
@@ -88,6 +89,13 @@ class Model
 	protected $primaryKey = 'id';
 
 	/**
+	 * Last insert ID
+	 *
+	 * @var integer
+	 */
+	protected $insertID = 0;
+
+	/**
 	 * The Database connection group that
 	 * should be instantiated.
 	 *
@@ -108,7 +116,7 @@ class Model
 	 * simply set a flag when rows are deleted, or
 	 * do hard deletes.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $useSoftDeletes = false;
 
@@ -124,7 +132,7 @@ class Model
 	 * If true, will set created_at, and updated_at
 	 * values during insert and update routines.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $useTimestamps = false;
 
@@ -158,11 +166,11 @@ class Model
 	 * Used by withDeleted to override the
 	 * model's softDelete setting.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $tempUseSoftDeletes;
 
-    /**
+	/**
 	 * The column used to save soft delete state
 	 *
 	 * @var string
@@ -181,7 +189,7 @@ class Model
 	 * Whether we should limit fields in inserts
 	 * and updates to those available in $allowedFields or not.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $protectFields = true;
 
@@ -220,7 +228,7 @@ class Model
 	 * Skip the model's validation. Used in conjunction with skipValidation()
 	 * to skip data validation for any future calls.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $skipValidation = false;
 
@@ -242,12 +250,12 @@ class Model
 	 * @var array
 	 */
 	protected $beforeInsert = [];
-	protected $afterInsert = [];
+	protected $afterInsert  = [];
 	protected $beforeUpdate = [];
-	protected $afterUpdate = [];
-	protected $afterFind = [];
+	protected $afterUpdate  = [];
+	protected $afterFind    = [];
 	protected $beforeDelete = [];
-	protected $afterDelete = [];
+	protected $afterDelete  = [];
 
 	/**
 	 * Holds information passed in via 'set'
@@ -277,7 +285,7 @@ class Model
 			$this->db = Database::connect($this->DBGroup);
 		}
 
-		$this->tempReturnType = $this->returnType;
+		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
 		if (is_null($validation))
@@ -297,7 +305,7 @@ class Model
 	 * Fetches the row of database from $this->table with a primary key
 	 * matching $id.
 	 *
-	 * @param mixed|array|null   $id One primary key or an array of primary keys
+	 * @param mixed|array|null $id One primary key or an array of primary keys
 	 *
 	 * @return array|object|null    The resulting row of data, or null.
 	 */
@@ -312,13 +320,13 @@ class Model
 
 		if (is_array($id))
 		{
-			$row = $builder->whereIn($this->table.'.'.$this->primaryKey, $id)
+			$row = $builder->whereIn($this->table . '.' . $this->primaryKey, $id)
 					->get();
 			$row = $row->getResult($this->tempReturnType);
 		}
 		elseif (is_numeric($id) || is_string($id))
 		{
-			$row = $builder->where($this->table.'.'.$this->primaryKey, $id)
+			$row = $builder->where($this->table . '.' . $this->primaryKey, $id)
 					->get();
 
 			$row = $row->getFirstRow($this->tempReturnType);
@@ -332,7 +340,7 @@ class Model
 
 		$row = $this->trigger('afterFind', ['id' => $id, 'data' => $row]);
 
-		$this->tempReturnType = $this->returnType;
+		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
 		return $row['data'];
@@ -344,8 +352,8 @@ class Model
 	 * Works with the current Query Builder instance to return
 	 * all results, while optionally limiting them.
 	 *
-	 * @param int $limit
-	 * @param int $offset
+	 * @param integer $limit
+	 * @param integer $offset
 	 *
 	 * @return array|null
 	 */
@@ -365,7 +373,7 @@ class Model
 
 		$row = $this->trigger('afterFind', ['data' => $row, 'limit' => $limit, 'offset' => $offset]);
 
-		$this->tempReturnType = $this->returnType;
+		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
 		return $row['data'];
@@ -392,7 +400,7 @@ class Model
 		// information to consistently return correct results.
 		if (empty($builder->QBOrderBy))
 		{
-			$builder->orderBy($this->table.'.'.$this->primaryKey, 'asc');
+			$builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
 		}
 
 		$row = $builder->limit(1, 0)
@@ -414,9 +422,9 @@ class Model
 	 * data here. This allows it to be used with any of the other
 	 * builder methods and still get validated data, like replace.
 	 *
-	 * @param           $key
-	 * @param string    $value
-	 * @param bool|null $escape
+	 * @param $key
+	 * @param string       $value
+	 * @param boolean|null $escape
 	 *
 	 * @return $this
 	 */
@@ -427,7 +435,7 @@ class Model
 			: [$key => $value];
 
 		$this->tempData['escape'] = $escape;
-		$this->tempData['data'] = array_merge($this->tempData['data'] ?? [], $data);
+		$this->tempData['data']   = array_merge($this->tempData['data'] ?? [], $data);
 
 		return $this;
 	}
@@ -443,7 +451,7 @@ class Model
 	 *
 	 * @param array|object $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function save($data)
 	{
@@ -540,22 +548,36 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns last insert ID or 0.
+	 *
+	 * @return integer
+	 */
+	public function getInsertID()
+	{
+		return $this->insertID;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Inserts data into the current table. If an object is provided,
 	 * it will attempt to convert it to an array.
 	 *
 	 * @param array|object $data
-	 * @param bool         $returnID Whether insert ID should be returned or not.
+	 * @param boolean      $returnID Whether insert ID should be returned or not.
 	 *
-	 * @return int|string|bool
+	 * @return integer|string|boolean
 	 */
 	public function insert($data = null, bool $returnID = true)
 	{
 		$escape = null;
 
+		$this->insertID = 0;
+
 		if (empty($data))
 		{
-			$data   = $this->tempData['data'] ?? null;
-			$escape = $this->tempData['escape'] ?? null;
+			$data           = $this->tempData['data'] ?? null;
+			$escape         = $this->tempData['escape'] ?? null;
 			$this->tempData = [];
 		}
 
@@ -595,7 +617,7 @@ class Model
 
 		if ($this->useTimestamps && ! array_key_exists($this->createdField, $data))
 		{
-			$date = $this->setDate();
+			$date                      = $this->setDate();
 			$data[$this->createdField] = $date;
 			$data[$this->updatedField] = $date;
 		}
@@ -615,13 +637,15 @@ class Model
 		$this->trigger('afterInsert', ['data' => $originalData, 'result' => $result]);
 
 		// If insertion failed, get our of here
-		if ( ! $result)
+		if (! $result)
 		{
 			return $result;
 		}
 
+		$this->insertID = $this->db->insertID();
+
 		// otherwise return the insertID, if requested.
-		return $returnID ? $this->db->insertID() : $result;
+		return $returnID ? $this->insertID : $result;
 	}
 
 	//--------------------------------------------------------------------
@@ -629,13 +653,13 @@ class Model
 	/**
 	 * Compiles batch insert strings and runs the queries, validating each row prior.
 	 *
-	 * @param    array $set    An associative array of insert values
-	 * @param    bool  $escape Whether to escape values and identifiers
+	 * @param array   $set       An associative array of insert values
+	 * @param boolean $escape    Whether to escape values and identifiers
 	 *
-	 * @param int      $batchSize
-	 * @param bool     $testing
+	 * @param integer $batchSize
+	 * @param boolean $testing
 	 *
-	 * @return int Number of rows inserted or FALSE on failure
+	 * @return integer Number of rows inserted or FALSE on failure
 	 */
 	public function insertBatch($set = null, $escape = null, $batchSize = 100, $testing = false)
 	{
@@ -659,10 +683,10 @@ class Model
 	 * Updates a single record in $this->table. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
-	 * @param int|array|string   $id
-	 * @param array|object $data
+	 * @param integer|array|string $id
+	 * @param array|object         $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function update($id = null, $data = null)
 	{
@@ -675,8 +699,8 @@ class Model
 
 		if (empty($data))
 		{
-			$data   = $this->tempData['data'] ?? null;
-			$escape = $this->tempData['escape'] ?? null;
+			$data           = $this->tempData['data'] ?? null;
+			$escape         = $this->tempData['escape'] ?? null;
 			$this->tempData = [];
 		}
 
@@ -730,7 +754,7 @@ class Model
 
 		if ($id)
 		{
-			$builder = $builder->whereIn($this->table.'.'.$this->primaryKey, $id);
+			$builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays
@@ -750,12 +774,12 @@ class Model
 	 *
 	 * Compiles an update string and runs the query
 	 *
-	 * @param    array  $set       An associative array of update values
-	 * @param    string $index     The where key
-	 * @param    int    $batchSize The size of the batch to run
-	 * @param    bool   $returnSQL True means SQL is returned, false will execute the query
+	 * @param array   $set       An associative array of update values
+	 * @param string  $index     The where key
+	 * @param integer $batchSize The size of the batch to run
+	 * @param boolean $returnSQL True means SQL is returned, false will execute the query
 	 *
-	 * @return    mixed    Number of rows affected or FALSE on failure
+	 * @return mixed    Number of rows affected or FALSE on failure
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function updateBatch($set = null, $index = null, $batchSize = 100, $returnSQL = false)
@@ -780,8 +804,8 @@ class Model
 	 * Deletes a single record from $this->table where $id matches
 	 * the table's primaryKey
 	 *
-	 * @param int|array|null $id    The rows primary key(s)
-	 * @param bool           $purge Allows overriding the soft deletes setting.
+	 * @param integer|array|null $id    The rows primary key(s)
+	 * @param boolean            $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
@@ -803,12 +827,12 @@ class Model
 
 		if ($this->useSoftDeletes && ! $purge)
 		{
-            $set[$this->deletedField] = 1;
+			$set[$this->deletedField] = 1;
 
-            if ($this->useTimestamps)
-            {
-                $set[$this->updatedField] = $this->setDate();
-            }
+			if ($this->useTimestamps)
+			{
+				$set[$this->updatedField] = $this->setDate();
+			}
 
 			$result = $builder->update($set);
 		}
@@ -828,11 +852,11 @@ class Model
 	 * Permanently deletes all rows that have been marked as deleted
 	 * through soft deletes (deleted = 1)
 	 *
-	 * @return bool|mixed
+	 * @return boolean|mixed
 	 */
 	public function purgeDeleted()
 	{
-		if ( ! $this->useSoftDeletes)
+		if (! $this->useSoftDeletes)
 		{
 			return true;
 		}
@@ -848,7 +872,7 @@ class Model
 	 * Sets $useSoftDeletes value so that we can temporarily override
 	 * the softdeletes settings. Can be used for all find* methods.
 	 *
-	 * @param bool $val
+	 * @param boolean $val
 	 *
 	 * @return Model
 	 */
@@ -884,10 +908,10 @@ class Model
 	 *
 	 * Compiles an replace into string and runs the query
 	 *
-	 * @param null $data
-	 * @param bool $returnSQL
+	 * @param null    $data
+	 * @param boolean $returnSQL
 	 *
-	 * @return bool TRUE on success, FALSE on failure
+	 * @return boolean TRUE on success, FALSE on failure
 	 */
 	public function replace($data = null, $returnSQL = false)
 	{
@@ -945,7 +969,7 @@ class Model
 	 * Works with $this->builder to get the Compiled select to
 	 * determine the rows to operate on.
 	 *
-	 * @param int      $size
+	 * @param integer  $size
 	 * @param \Closure $userFunc
 	 *
 	 * @throws \CodeIgniter\Database\Exceptions\DataException
@@ -994,10 +1018,10 @@ class Model
 	 * Expects a GET variable (?page=2) that specifies the page of results
 	 * to display.
 	 *
-	 * @param int    $perPage
-	 * @param string $group    Will be used by the pagination library
+	 * @param integer $perPage
+	 * @param string  $group   Will be used by the pagination library
 	 *                         to identify a unique pagination set.
-	 * @param int    $page     Optional page number (useful when the page number is provided in different way)
+	 * @param integer $page    Optional page number (useful when the page number is provided in different way)
 	 *
 	 * @return array|null
 	 */
@@ -1010,7 +1034,7 @@ class Model
 
 		// Store it in the Pager library so it can be
 		// paginated in the views.
-		$pager = \Config\Services::pager();
+		$pager       = \Config\Services::pager();
 		$this->pager = $pager->store($group, $page, $perPage, $total);
 
 		$offset = ($page - 1) * $perPage;
@@ -1024,7 +1048,7 @@ class Model
 	 * Sets whether or not we should whitelist data set during
 	 * updates or inserts against $this->availableFields.
 	 *
-	 * @param bool $protect
+	 * @param boolean $protect
 	 *
 	 * @return Model
 	 */
@@ -1054,7 +1078,7 @@ class Model
 		$table = empty($table) ? $this->table : $table;
 
 		// Ensure we have a good db connection
-		if ( ! $this->db instanceof BaseConnection)
+		if (! $this->db instanceof BaseConnection)
 		{
 			$this->db = Database::connect($this->DBGroup);
 		}
@@ -1117,7 +1141,7 @@ class Model
 	 *  - 'datetime' - Stores the data in the SQL datetime format
 	 *  - 'date'     - Stores the date (only) in the SQL date format.
 	 *
-	 * @param int $userData An optional PHP timestamp to be converted.
+	 * @param integer $userData An optional PHP timestamp to be converted.
 	 *
 	 * @return mixed
 	 */
@@ -1162,7 +1186,7 @@ class Model
 	 * it will first check for errors there, otherwise will try to
 	 * grab the last error from the Database connection.
 	 *
-	 * @param bool $forceDB Always grab the db error, not validation
+	 * @param boolean $forceDB Always grab the db error, not validation
 	 *
 	 * @return array|null
 	 */
@@ -1173,7 +1197,7 @@ class Model
 		{
 			$errors = $this->validation->getErrors();
 
-			if ( ! empty($errors))
+			if (! empty($errors))
 			{
 				return $errors;
 			}
@@ -1193,7 +1217,7 @@ class Model
 	/**
 	 * Set the value of the skipValidation flag.
 	 *
-	 * @param bool $skip
+	 * @param boolean $skip
 	 *
 	 * @return Model
 	 */
@@ -1212,7 +1236,7 @@ class Model
 	 *
 	 * @param array $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function validate($data): bool
 	{
@@ -1306,7 +1330,7 @@ class Model
 	 *
 	 * @return array
 	 */
-	public function getValidationRules(array $options=[])
+	public function getValidationRules(array $options = [])
 	{
 		$rules = $this->validationRules;
 
@@ -1359,14 +1383,14 @@ class Model
 	protected function trigger(string $event, array $data)
 	{
 		// Ensure it's a valid event
-		if ( ! isset($this->{$event}) || empty($this->{$event}))
+		if (! isset($this->{$event}) || empty($this->{$event}))
 		{
 			return $data;
 		}
 
 		foreach ($this->{$event} as $callback)
 		{
-			if ( ! method_exists($this, $callback))
+			if (! method_exists($this, $callback))
 			{
 				throw DataException::forInvalidMethodTriggered($callback);
 			}
@@ -1392,7 +1416,7 @@ class Model
 	 */
 	public function __get(string $name)
 	{
-		if(in_array($name, ['primaryKey', 'table', 'returnType']))
+		if (in_array($name, ['primaryKey', 'table', 'returnType']))
 		{
 			return $this->{$name};
 		}

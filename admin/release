@@ -3,7 +3,11 @@
 
 ## Build the distributable repo branches
 
-UPSTREAM=https://github.com/codeigniter4/CodeIgniter4.git
+#---------------------------------------------------
+# Setup variables
+
+UPSTREAM=https://github.comcodeigniter4/CodeIgniter4.git
+action=test
 version=4
 qualifier=
 
