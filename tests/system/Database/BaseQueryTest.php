@@ -239,7 +239,7 @@ class QueryTest extends \CIUnitTestCase
 	/**
 	 * @group single
 	 *
-	 * @see https://github.comcodeigniter4/CodeIgniter4/issues/201
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/201
 	 */
 	public function testSimilarNamedBinds()
 	{

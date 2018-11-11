@@ -471,7 +471,7 @@ class ModelTest extends CIDatabaseTestCase
 	}
 
 	/**
-	 * @see https://github.comcodeigniter4/CodeIgniter4/issues/580
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/580
 	 */
 	public function testPasswordsStoreCorrectly()
 	{

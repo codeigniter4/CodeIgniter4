@@ -608,7 +608,7 @@ class URITest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @see https://github.comcodeigniter4/CodeIgniter4/pull/954
+	 * @see https://github.com/codeigniter4/CodeIgniter4/pull/954
 	 */
 	public function testSetQueryDecode()
 	{
@@ -697,7 +697,7 @@ class URITest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @see   https://github.comcodeigniter4/CodeIgniter4/issues/331
+	 * @see   https://github.com/codeigniter4/CodeIgniter4/issues/331
 	 * @group single
 	 */
 	public function testNoExtraSlashes()

@@ -538,7 +538,7 @@ class ValidationTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @see https://github.comcodeigniter4/CodeIgniter4/issues/1201
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1201
 	 */
 	public function testSplitNotRegex()
 	{

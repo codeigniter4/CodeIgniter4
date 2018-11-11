@@ -286,7 +286,7 @@ class BaseBuilder
 				 * null gets taken as a field, and therefore escaped
 				 * with backticks.
 				 * This prevents NULL being escaped
-				 * @see https://github.comcodeigniter4/CodeIgniter4/issues/1169
+				 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1169
 				 */
 				if (strtoupper(mb_substr(trim($val), 0, 4)) === 'NULL')
 				{

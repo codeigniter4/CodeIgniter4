@@ -29,7 +29,7 @@ class CURLRequestTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @see https://github.comcodeigniter4/CodeIgniter4/issues/1029
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1029
 	 */
 	public function testGetRemembersBaseURI()
 	{
@@ -45,7 +45,7 @@ class CURLRequestTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @see https://github.comcodeigniter4/CodeIgniter4/issues/1029
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1029
 	 */
 	public function testGetRemembersBaseURIWithHelperMethod()
 	{

@@ -164,7 +164,7 @@ class RequestTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @see https://github.comcodeigniter4/CodeIgniter4/issues/353
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/353
 	 */
 	public function testFetchGlobalReturnsArrayValues()
 	{
