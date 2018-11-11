@@ -67,8 +67,6 @@ writable/uploads/*
 
 writable/debugbar/*
 
-application/Database/Migrations/2*
-
 php_errors.log
 
 #-------------------------
