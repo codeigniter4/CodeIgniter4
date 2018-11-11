@@ -67,7 +67,7 @@ Not all changes will need an entry in it, but new classes, major or BC changes
 to existing classes, and bug fixes should.
 
 See the `CodeIgniter 4 change log
-<https://github.comcodeigniter4/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_
+<https://github.com/codeigniter4/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_
 for an example.
 
 PHP Compatibility
