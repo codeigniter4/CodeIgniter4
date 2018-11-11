@@ -51,6 +51,7 @@ class SessionsCommandsTest extends \CIUnitTestCase
 	public function tearDown()
 	{
 		stream_filter_remove($this->stream_filter);
+		system('rm ' . APPPATH . '/Database/Migrations/*.php');
 	}
 
 	public function testCreateMigrationCommand()
