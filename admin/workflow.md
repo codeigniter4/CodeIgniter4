@@ -1,21 +1,4 @@
-# release
-
-Builds the branches needed for a framework release.
-
-This tool is meant to help automate the process of
-launching a new release, by creating the release
-distribution files, (tagging everything properly), 
-and getting/keeping the repo branches in order.
-
-## Audience
-
-This script is intended for use by framework maintainers,
-i.e. someone with commit rights on the CI4 repository.
-
-You will be prompted for your github credentials and
-GPG-signing key as appropriate.
-
-## Workflow
+# Workflow
 
 The repo has two branches of interest: "master" (stable) and "develop" (in progress).
 There might be other feature branches, but they are not relevant to this process.
@@ -35,6 +18,11 @@ Once "develop" is ready for a new release, the general workflow is to
 - **manually** delete the release branches in the repo
 - **manually** post a sticky announcement thread on the forum
 - **manually** tweet the release announcement
+
+
+    This would be manually merged to the `master` and `develop` branches.  
+    Creating a release is done on github.com manually, so that additional
+    binaries can be added to the release if appropriate.
 
 Visually:
 
@@ -102,3 +90,12 @@ completed the manual steps, clean up with:
 On launch of a new release, a release notes post should be made in the
 announcements subforum. The planned text for it (so it can be previewed
 by admins) is in `admin/release_notes`.
+
+## Audience
+
+These scripts are intended for use by framework maintainers,
+i.e. someone with commit rights on the CI4 repositories.
+
+You will be prompted for your github credentials and
+GPG-signing key as appropriate.
+

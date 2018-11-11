@@ -81,7 +81,7 @@ Backwards Compatibility
 Generally, we aim to maintain backwards compatibility between minor
 versions of the framework. Any changes that break compatibility need
 a good reason to do so, and need to be pointed out in the
-`Upgrading <https://bcit-ci.github.io/CodeIgniter4/installation/upgrading.html>`_ guide.
+`Upgrading <https://codeigniter4.github.io/userguide/installation/upgrading.html>`_ guide.
 
 CodeIgniter4 itself represents a significant backwards compatibility break
 with earlier versions of the framework.
