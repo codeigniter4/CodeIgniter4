@@ -758,14 +758,14 @@ class Email
 		}
 
 		// declare names on their own, to make phpcbf happy
-		$names               = [
+		$namesAttached       = [
 			$file,
 			$newname,
 		];
 		$this->attachments[] = [
-			'name'        => $names,
+			'name'        => $namesAttached,
 			'disposition' => empty($disposition) ? 'attachment' : $disposition,
-			// Can also be 'inline'  Not sure if it matters
+		// Can also be 'inline'  Not sure if it matters
 			'type'        => $mime,
 			'content'     => chunk_split(base64_encode($fileContent)),
 			'multipart'   => 'mixed',
@@ -994,6 +994,7 @@ class Email
 			if (strpos($this->charset, $charset) === 0)
 			{
 				$this->encoding = '7bit';
+				break;
 			}
 		}
 
@@ -1340,7 +1341,7 @@ class Email
 					$this->finalBody = $hdr . $this->newline . $this->newline . $this->body;
 				}
 
-				return;
+			return;
 
 			case 'html':
 
@@ -1368,7 +1369,7 @@ class Email
 
 				if ($this->getProtocol() === 'mail')
 				{
-					$this->headerStr .= $hdr;
+					  $this->headerStr .= $hdr;
 				}
 				else
 				{
@@ -1380,7 +1381,7 @@ class Email
 					$this->finalBody .= '--' . $boundary . '--';
 				}
 
-				return;
+			return;
 
 			case 'plain-attach':
 
@@ -1389,7 +1390,7 @@ class Email
 
 				if ($this->getProtocol() === 'mail')
 				{
-					$this->headerStr .= $hdr;
+					  $this->headerStr .= $hdr;
 				}
 
 				$body .= $this->getMimeMessage() . $this->newline
@@ -1402,7 +1403,7 @@ class Email
 
 				$this->appendAttachments($body, $boundary);
 
-				break;
+			break;
 			case 'html-attach':
 
 				$alt_boundary  = uniqid('B_ALT_', true);
@@ -1434,7 +1435,7 @@ class Email
 
 				if ($this->getProtocol() === 'mail')
 				{
-					$this->headerStr .= $hdr;
+					  $this->headerStr .= $hdr;
 				}
 
 				self::strlen($body) && $body .= $this->newline . $this->newline;
@@ -1464,7 +1465,7 @@ class Email
 					$this->appendAttachments($body, $atc_boundary, 'mixed');
 				}
 
-				break;
+			break;
 		}
 
 		$this->finalBody = ($this->getProtocol() === 'mail') ? $body : $hdr . $this->newline . $this->newline . $body;
@@ -1539,7 +1540,7 @@ class Email
 		// used literally, without encoding, as described in RFC 2049.
 		// http://www.ietf.org/rfc/rfc2049.txt
 		static $ascii_safe_chars = [
-			// ' (  )   +   ,   -   .   /   :   =   ?
+		// ' (  )   +   ,   -   .   /   :   =   ?
 			39,
 			40,
 			41,
@@ -1551,7 +1552,7 @@ class Email
 			58,
 			61,
 			63,
-			// numbers
+		// numbers
 			48,
 			49,
 			50,
@@ -1562,7 +1563,7 @@ class Email
 			55,
 			56,
 			57,
-			// upper-case letters
+		// upper-case letters
 			65,
 			66,
 			67,
@@ -1589,7 +1590,7 @@ class Email
 			88,
 			89,
 			90,
-			// lower-case letters
+		// lower-case letters
 			97,
 			98,
 			99,
@@ -1734,10 +1735,10 @@ class Email
 				// There are reports that iconv_mime_encode() might fail and return FALSE
 				if ($output !== false)
 				{
-					// iconv_mime_encode() will always put a header field name.
-					// We've passed it an empty one, but it still prepends our
-					// encoded string with ': ', so we need to strip it.
-					return self::substr($output, 2);
+						  // iconv_mime_encode() will always put a header field name.
+						  // We've passed it an empty one, but it still prepends our
+						  // encoded string with ': ', so we need to strip it.
+						  return self::substr($output, 2);
 				}
 
 				$chars = iconv_strlen($str, 'UTF-8');
@@ -2226,15 +2227,15 @@ class Email
 				}
 
 				$resp = 250;
-				break;
+			break;
 			case 'starttls':
 				$this->sendData('STARTTLS');
 				$resp = 220;
-				break;
+			break;
 			case 'from':
 				$this->sendData('MAIL FROM:<' . $data . '>');
 				$resp = 250;
-				break;
+			break;
 			case 'to':
 				if ($this->DSN)
 				{
@@ -2245,19 +2246,19 @@ class Email
 					$this->sendData('RCPT TO:<' . $data . '>');
 				}
 				$resp = 250;
-				break;
+			break;
 			case 'data':
 				$this->sendData('DATA');
 				$resp = 354;
-				break;
+			break;
 			case 'reset':
 				$this->sendData('RSET');
 				$resp = 250;
-				break;
+			break;
 			case 'quit':
 				$this->sendData('QUIT');
 				$resp = 221;
-				break;
+			break;
 		}
 
 		$reply = $this->getSMTPData();

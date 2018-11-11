@@ -13,7 +13,7 @@ Contributing to CodeIgniter
 CodeIgniter is a community driven project and accepts contributions of code
 and documentation from the community. These contributions are made in the form
 of Issues or `Pull Requests <https://help.github.com/articles/using-pull-requests/>`_
-on the `CodeIgniter4 repository <https://github.com/bcit-ci/CodeIgniter4>`_ on GitHub.
+on the `CodeIgniter4 repository <https://github.com/codeigniter4/CodeIgniter4>`_ on GitHub.
 
 Issues are a quick way to point out a bug. If you find a bug or documentation
 error in CodeIgniter then please check a few things first:

@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -59,28 +59,133 @@ class CreditCardRules
 	 * @var array
 	 */
 	protected $cards = [
-		'American Express'			 => ['name' => 'amex', 'length' => '15', 'prefixes' => '34,37', 'checkdigit' => true],
-		'China UnionPay'			 => ['name' => 'unionpay', 'length' => '16,17,18,19', 'prefixes' => '62', 'checkdigit' => true],
-		'Dankort'				 => ['name' => 'dankort', 'length' => '16', 'prefixes' => '5019,4175,4571,4', 'checkdigit' => true],
-		'DinersClub'				 => ['name' => 'dinersclub', 'length' => '14,16', 'prefixes' => '300,301,302,303,304,305,309,36,38,39,54,55', 'checkdigit' => true],
-		'DinersClub CarteBlanche'		 => ['name' => 'carteblanche', 'length' => '14', 'prefixes' => '300,301,302,303,304,305', 'checkdigit' => true],
-		'Discover Card'				 => ['name' => 'discover', 'length' => '16,19', 'prefixes' => '6011,622,644,645,656,647,648,649,65', 'checkdigit' => true],
-		'InterPayment'				 => ['name' => 'interpayment', 'length' => '16,17,18,19', 'prefixes' => '4', 'checkdigit' => true],
-		'JCB'					 => ['name' => 'jcb', 'length' => '16,17,18,19', 'prefixes' => '352,353,354,355,356,357,358', 'checkdigit' => true],
-		'Maestro'				 => ['name' => 'maestro', 'length' => '12,13,14,15,16,18,19', 'prefixes' => '50,56,57,58,59,60,61,62,63,64,65,66,67,68,69', 'checkdigit' => true],
-		'MasterCard'				 => ['name' => 'mastercard', 'length' => '16', 'prefixes' => '51,52,53,54,55,22,23,24,25,26,27', 'checkdigit' => true],
-		'NSPK MIR'				 => ['name' => 'mir', 'length' => '16', 'prefixes' => '2200,2201,2202,2203,2204', 'checkdigit' => true],
-		'Troy'					 => ['name' => 'troy', 'length' => '16', 'prefixes' => '979200,979289', 'checkdigit' => true],
-		'UATP'					 => ['name' => 'uatp', 'length' => '15', 'prefixes' => '1', 'checkdigit' => true],
-		'Verve'					 => ['name' => 'verve', 'length' => '16,19', 'prefixes' => '506,650', 'checkdigit' => true],
-		'Visa'					 => ['name' => 'visa', 'length' => '13,16,19', 'prefixes' => '4', 'checkdigit' => true],
+		'American Express'                 => [
+			'name'       => 'amex',
+			'length'     => '15',
+			'prefixes'   => '34,37',
+			'checkdigit' => true,
+		],
+		'China UnionPay'                   => [
+			'name'       => 'unionpay',
+			'length'     => '16,17,18,19',
+			'prefixes'   => '62',
+			'checkdigit' => true,
+		],
+		'Dankort'                          => [
+			'name'       => 'dankort',
+			'length'     => '16',
+			'prefixes'   => '5019,4175,4571,4',
+			'checkdigit' => true,
+		],
+		'DinersClub'                       => [
+			'name'       => 'dinersclub',
+			'length'     => '14,16',
+			'prefixes'   => '300,301,302,303,304,305,309,36,38,39,54,55',
+			'checkdigit' => true,
+		],
+		'DinersClub CarteBlanche'          => [
+			'name'       => 'carteblanche',
+			'length'     => '14',
+			'prefixes'   => '300,301,302,303,304,305',
+			'checkdigit' => true,
+		],
+		'Discover Card'                    => [
+			'name'       => 'discover',
+			'length'     => '16,19',
+			'prefixes'   => '6011,622,644,645,656,647,648,649,65',
+			'checkdigit' => true,
+		],
+		'InterPayment'                     => [
+			'name'       => 'interpayment',
+			'length'     => '16,17,18,19',
+			'prefixes'   => '4',
+			'checkdigit' => true,
+		],
+		'JCB'                              => [
+			'name'       => 'jcb',
+			'length'     => '16,17,18,19',
+			'prefixes'   => '352,353,354,355,356,357,358',
+			'checkdigit' => true,
+		],
+		'Maestro'                          => [
+			'name'       => 'maestro',
+			'length'     => '12,13,14,15,16,18,19',
+			'prefixes'   => '50,56,57,58,59,60,61,62,63,64,65,66,67,68,69',
+			'checkdigit' => true,
+		],
+		'MasterCard'                       => [
+			'name'       => 'mastercard',
+			'length'     => '16',
+			'prefixes'   => '51,52,53,54,55,22,23,24,25,26,27',
+			'checkdigit' => true,
+		],
+		'NSPK MIR'                         => [
+			'name'       => 'mir',
+			'length'     => '16',
+			'prefixes'   => '2200,2201,2202,2203,2204',
+			'checkdigit' => true,
+		],
+		'Troy'                             => [
+			'name'       => 'troy',
+			'length'     => '16',
+			'prefixes'   => '979200,979289',
+			'checkdigit' => true,
+		],
+		'UATP'                             => [
+			'name'       => 'uatp',
+			'length'     => '15',
+			'prefixes'   => '1',
+			'checkdigit' => true,
+		],
+		'Verve'                            => [
+			'name'       => 'verve',
+			'length'     => '16,19',
+			'prefixes'   => '506,650',
+			'checkdigit' => true,
+		],
+		'Visa'                             => [
+			'name'       => 'visa',
+			'length'     => '13,16,19',
+			'prefixes'   => '4',
+			'checkdigit' => true,
+		],
 		// Canadian Cards
-		'BMO ABM Card'				 => ['name' => 'bmoabm', 'length' => '16', 'prefixes' => '500', 'checkdigit' => false],
-		'CIBC Convenience Card'			 => ['name' => 'cibc', 'length' => '16', 'prefixes' => '4506', 'checkdigit' => false],
-		'HSBC Canada Card'			 => ['name' => 'hsbc', 'length' => '16', 'prefixes' => '56', 'checkdigit' => false],
-		'Royal Bank of Canada Client Card'	 => ['name' => 'rbc', 'length' => '16', 'prefixes' => '45', 'checkdigit' => false],
-		'Scotiabank Scotia Card'		 => ['name' => 'scotia', 'length' => '16', 'prefixes' => '4536', 'checkdigit' => false],
-		'TD Canada Trust Access Card'		 => ['name' => 'tdtrust', 'length' => '16', 'prefixes' => '589297', 'checkdigit' => false],
+		'BMO ABM Card'                     => [
+			'name'       => 'bmoabm',
+			'length'     => '16',
+			'prefixes'   => '500',
+			'checkdigit' => false,
+		],
+		'CIBC Convenience Card'            => [
+			'name'       => 'cibc',
+			'length'     => '16',
+			'prefixes'   => '4506',
+			'checkdigit' => false,
+		],
+		'HSBC Canada Card'                 => [
+			'name'       => 'hsbc',
+			'length'     => '16',
+			'prefixes'   => '56',
+			'checkdigit' => false,
+		],
+		'Royal Bank of Canada Client Card' => [
+			'name'       => 'rbc',
+			'length'     => '16',
+			'prefixes'   => '45',
+			'checkdigit' => false,
+		],
+		'Scotiabank Scotia Card'           => [
+			'name'       => 'scotia',
+			'length'     => '16',
+			'prefixes'   => '4536',
+			'checkdigit' => false,
+		],
+		'TD Canada Trust Access Card'      => [
+			'name'       => 'tdtrust',
+			'length'     => '16',
+			'prefixes'   => '589297',
+			'checkdigit' => false,
+		],
 	];
 
 	//--------------------------------------------------------------------
@@ -99,7 +204,7 @@ class CreditCardRules
 	 * @param string $type
 	 * @param array  $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function valid_cc_number(string $ccNumber = null, string $type, array $data): bool
 	{
@@ -109,9 +214,10 @@ class CreditCardRules
 		// Get our card info based on provided name.
 		foreach ($this->cards as $card)
 		{
-			if ($card['name'] == $type)
+			if ($card['name'] === $type)
 			{
 				$info = $card;
+				break;
 			}
 		}
 
@@ -131,7 +237,7 @@ class CreditCardRules
 		$ccNumber = str_replace([' ', '-'], '', $ccNumber);
 
 		// Non-numeric values cannot be a number...duh
-		if ( ! is_numeric($ccNumber))
+		if (! is_numeric($ccNumber))
 		{
 			return false;
 		}
@@ -139,7 +245,7 @@ class CreditCardRules
 		// Make sure it's a valid length for this card
 		$lengths = explode(',', $info['length']);
 
-		if ( ! in_array(mb_strlen($ccNumber), $lengths))
+		if (! in_array(mb_strlen($ccNumber), $lengths))
 		{
 			return false;
 		}
@@ -153,8 +259,8 @@ class CreditCardRules
 		{
 			if (mb_strpos($ccNumber, $prefix) === 0)
 			{
-                              $validPrefix = true;
-                              break;
+							  $validPrefix = true;
+							  break;
 			}
 		}
 
@@ -181,21 +287,43 @@ class CreditCardRules
 	 *
 	 * @param string $number
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function isValidLuhn(string $number = null): bool
 	{
 		settype($number, 'string');
 
 		$sumTable = [
-			[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-			[0, 2, 4, 6, 8, 1, 3, 5, 7, 9]
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+			],
+			[
+				0,
+				2,
+				4,
+				6,
+				8,
+				1,
+				3,
+				5,
+				7,
+				9,
+			],
 		];
 
-		$sum = 0;
+		$sum  = 0;
 		$flip = 0;
 
-		for ($i = strlen($number) - 1; $i >= 0; $i -- )
+		for ($i = strlen($number) - 1; $i >= 0; $i --)
 		{
 			$sum += $sumTable[$flip ++ & 0x1][$number[$i]];
 		}

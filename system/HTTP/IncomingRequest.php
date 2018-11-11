@@ -29,14 +29,15 @@ namespace CodeIgniter\HTTP;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
@@ -76,7 +77,7 @@ class IncomingRequest extends Request
 	 * Enables a CSRF cookie token to be set.
 	 * Set automatically based on Config setting.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $enableCSRF = false;
 
@@ -131,6 +132,7 @@ class IncomingRequest extends Request
 
 	/**
 	 * Holds the old data from a redirect.
+	 *
 	 * @var array
 	 */
 	protected $oldInput = [];
@@ -153,13 +155,13 @@ class IncomingRequest extends Request
 	public function __construct($config, $uri = null, $body = 'php://input', UserAgent $userAgent)
 	{
 		// Get our body from php://input
-		if ($body == 'php://input')
+		if ($body === 'php://input')
 		{
 			$body = file_get_contents('php://input');
 		}
 
-		$this->body = $body;
-		$this->config = $config;
+		$this->body      = $body;
+		$this->config    = $config;
 		$this->userAgent = $userAgent;
 
 		parent::__construct($config);
@@ -187,7 +189,7 @@ class IncomingRequest extends Request
 	{
 		$this->locale = $this->defaultLocale = $config->defaultLocale;
 
-		if ( ! $config->negotiateLocale)
+		if (! $config->negotiateLocale)
 		{
 			return;
 		}
@@ -233,7 +235,7 @@ class IncomingRequest extends Request
 	{
 		// If it's not a valid locale, set it
 		// to the default locale for the site.
-		if ( ! in_array($locale, $this->validLocales))
+		if (! in_array($locale, $this->validLocales))
 		{
 			$locale = $this->defaultLocale;
 		}
@@ -251,9 +253,9 @@ class IncomingRequest extends Request
 			{
 				\Locale::setDefault($locale);
 			}
-		} catch (\Exception $e)
+		}
+		catch (\Exception $e)
 		{
-
 		}
 		// @codeCoverageIgnoreEnd
 
@@ -265,11 +267,11 @@ class IncomingRequest extends Request
 	/**
 	 * Determines if this request was made from the command line (CLI).
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isCLI(): bool
 	{
-		return (PHP_SAPI === 'cli' || defined('STDIN'));
+		return is_cli();
 	}
 
 	//--------------------------------------------------------------------
@@ -277,7 +279,7 @@ class IncomingRequest extends Request
 	/**
 	 * Test to see if a request contains the HTTP_X_REQUESTED_WITH header.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isAJAX(): bool
 	{
@@ -291,11 +293,11 @@ class IncomingRequest extends Request
 	 * Attempts to detect if the current connection is secure through
 	 * a few different methods.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isSecure(): bool
 	{
-		if ( ! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
+		if (! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
 		{
 			return true;
 		}
@@ -303,7 +305,7 @@ class IncomingRequest extends Request
 		{
 			return true;
 		}
-		elseif ( ! empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off')
+		elseif (! empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off')
 		{
 			return true;
 		}
@@ -338,9 +340,9 @@ class IncomingRequest extends Request
 	 * If $assoc == true, then all objects in the response will be converted
 	 * to associative arrays.
 	 *
-	 * @param bool $assoc   Whether to return objects as associative arrays
-	 * @param int  $depth   How many levels deep to decode
-	 * @param int  $options Bitmask of options
+	 * @param boolean $assoc   Whether to return objects as associative arrays
+	 * @param integer $depth   How many levels deep to decode
+	 * @param integer $options Bitmask of options
 	 *
 	 * @see http://php.net/manual/en/function.json-decode.php
 	 *
@@ -504,7 +506,7 @@ class IncomingRequest extends Request
 		if (isset($_SESSION['_ci_old_input']['post']))
 		{
 			$value = dot_array_search($key, $_SESSION['_ci_old_input']['post']);
-			if ( ! is_null($value))
+			if (! is_null($value))
 			{
 				return $value;
 			}
@@ -514,7 +516,7 @@ class IncomingRequest extends Request
 		if (isset($_SESSION['_ci_old_input']['get']))
 		{
 			$value = dot_array_search($key, $_SESSION['_ci_old_input']['get']);
-			if ( ! is_null($value))
+			if (! is_null($value))
 			{
 				return $value;
 			}
@@ -577,7 +579,7 @@ class IncomingRequest extends Request
 
 		// Based on our baseURL provided by the developer (if set)
 		// set our current domain name, scheme
-		if ( ! empty($baseURL))
+		if (! empty($baseURL))
 		{
 			// We cannot add the path here, otherwise it's possible
 			// that the routing will not work correctly if we are
@@ -591,7 +593,7 @@ class IncomingRequest extends Request
 		else
 		{
 			// @codeCoverageIgnoreStart
-			if ( ! is_cli())
+			if (! is_cli())
 			{
 				die('You have an empty or invalid base URL. The baseURL value must be set in Config\App.php, or through the .env file.');
 			}
@@ -639,9 +641,9 @@ class IncomingRequest extends Request
 	 * Provides a convenient way to work with the Negotiate class
 	 * for content negotiation.
 	 *
-	 * @param string $type
-	 * @param array  $supported
-	 * @param bool   $strictMatch
+	 * @param string  $type
+	 * @param array   $supported
+	 * @param boolean $strictMatch
 	 *
 	 * @return string
 	 */
@@ -677,7 +679,7 @@ class IncomingRequest extends Request
 	 */
 	protected function parseRequestURI(): string
 	{
-		if ( ! isset($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']))
+		if (! isset($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']))
 		{
 			return '';
 		}
@@ -686,27 +688,33 @@ class IncomingRequest extends Request
 		// contains a colon followed by a number
 		$parts = parse_url('http://dummy' . $_SERVER['REQUEST_URI']);
 		$query = $parts['query'] ?? '';
-		$uri = $parts['path'] ?? '';
+		$uri   = $parts['path'] ?? '';
 
 		if (isset($_SERVER['SCRIPT_NAME'][0]))
 		{
 			// strip the script name from the beginning of the URI
 			if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0)
+			{
 				$uri = (string) substr($uri, strlen($_SERVER['SCRIPT_NAME']));
+			}
 			// if the script is nested, strip the parent folder & script from the URI
 			elseif (strpos($uri, $_SERVER['SCRIPT_NAME']) > 0)
+			{
 				$uri = (string) substr($uri, strpos($uri, $_SERVER['SCRIPT_NAME']) + strlen($_SERVER['SCRIPT_NAME']));
+			}
 			// or if index.php is implied
 			elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0)
+			{
 				$uri = (string) substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
+			}
 		}
 
 		// This section ensures that even on servers that require the URI to contain the query string (Nginx) a correct
 		// URI is found, and also fixes the QUERY_STRING getServer var and $_GET array.
 		if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0)
 		{
-			$query = explode('?', $query, 2);
-			$uri = $query[0];
+			$query                   = explode('?', $query, 2);
+			$uri                     = $query[0];
 			$_SERVER['QUERY_STRING'] = $query[1] ?? '';
 		}
 		else
@@ -731,7 +739,7 @@ class IncomingRequest extends Request
 	 *
 	 * Will parse QUERY_STRING and automatically detect the URI from it.
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	protected function parseQueryString(): string
 	{
@@ -743,9 +751,9 @@ class IncomingRequest extends Request
 		}
 		elseif (strncmp($uri, '/', 1) === 0)
 		{
-			$uri = explode('?', $uri, 2);
+			$uri                     = explode('?', $uri, 2);
 			$_SERVER['QUERY_STRING'] = $uri[1] ?? '';
-			$uri = $uri[0];
+			$uri                     = $uri[0];
 		}
 
 		parse_str($_SERVER['QUERY_STRING'], $_GET);
@@ -760,14 +768,14 @@ class IncomingRequest extends Request
 	 *
 	 * Do some final cleaning of the URI and return it, currently only used in self::_parse_request_uri()
 	 *
-	 * @param    string $uri
+	 * @param string $uri
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	protected function removeRelativeDirectory($uri)
 	{
 		$uris = [];
-		$tok = strtok($uri, '/');
+		$tok  = strtok($uri, '/');
 		while ($tok !== false)
 		{
 			if (( ! empty($tok) || $tok === '0') && $tok !== '..')
