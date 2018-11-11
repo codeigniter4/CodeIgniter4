@@ -86,7 +86,14 @@ class Model
 	 * @var string
 	 */
 	protected $primaryKey = 'id';
-
+	
+	/**
+	 * Last insert ID
+	 *
+	 * @var int
+	 */
+	protected $insertID = 0;
+	
 	/**
 	 * The Database connection group that
 	 * should be instantiated.
@@ -540,6 +547,18 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns last insert ID or 0.
+	 *
+	 * @return int
+	 */
+	public function getInsertID()
+	{
+		return $this->insertID;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Inserts data into the current table. If an object is provided,
 	 * it will attempt to convert it to an array.
 	 *
@@ -551,6 +570,8 @@ class Model
 	public function insert($data = null, bool $returnID = true)
 	{
 		$escape = null;
+		
+		$this->insertID = 0;
 
 		if (empty($data))
 		{
@@ -620,8 +641,10 @@ class Model
 			return $result;
 		}
 
+		$this->insertID = $this->db->insertID();
+
 		// otherwise return the insertID, if requested.
-		return $returnID ? $this->db->insertID() : $result;
+		return $returnID ? $this->insertID : $result;
 	}
 
 	//--------------------------------------------------------------------
