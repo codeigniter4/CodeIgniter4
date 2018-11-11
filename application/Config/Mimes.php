@@ -51,15 +51,29 @@ class Mimes
 		'dms'   => 'application/octet-stream',
 		'lha'   => 'application/octet-stream',
 		'lzh'   => 'application/octet-stream',
-		'exe'   => ['application/octet-stream', 'application/x-msdownload'],
+		'exe'   => [
+			'application/octet-stream',
+			'application/x-msdownload',
+		],
 		'class' => 'application/octet-stream',
-		'psd'   => ['application/x-photoshop', 'image/vnd.adobe.photoshop'],
+		'psd'   => [
+			'application/x-photoshop',
+			'image/vnd.adobe.photoshop',
+		],
 		'so'    => 'application/octet-stream',
 		'sea'   => 'application/octet-stream',
 		'dll'   => 'application/octet-stream',
 		'oda'   => 'application/oda',
-		'pdf'   => ['application/pdf', 'application/force-download', 'application/x-download', 'binary/octet-stream'],
-		'ai'    => ['application/pdf', 'application/postscript'],
+		'pdf'   => [
+			'application/pdf',
+			'application/force-download',
+			'application/x-download',
+			'binary/octet-stream',
+		],
+		'ai'    => [
+			'application/pdf',
+			'application/postscript',
+		],
 		'eps'   => 'application/postscript',
 		'ps'    => 'application/postscript',
 		'smi'   => 'application/smil',
@@ -111,11 +125,17 @@ class Mimes
 		'php3'  => 'application/x-httpd-php',
 		'phtml' => 'application/x-httpd-php',
 		'phps'  => 'application/x-httpd-php-source',
-		'js'    => ['application/x-javascript', 'text/plain'],
+		'js'    => [
+			'application/x-javascript',
+			'text/plain',
+		],
 		'swf'   => 'application/x-shockwave-flash',
 		'sit'   => 'application/x-stuffit',
 		'tar'   => 'application/x-tar',
-		'tgz'   => ['application/x-tar', 'application/x-gzip-compressed'],
+		'tgz'   => [
+			'application/x-tar',
+			'application/x-gzip-compressed',
+		],
 		'z'     => 'application/x-compress',
 		'xhtml' => 'application/xhtml+xml',
 		'xht'   => 'application/xhtml+xml',
@@ -126,21 +146,40 @@ class Mimes
 			'application/s-compressed',
 			'multipart/x-zip',
 		],
-		'rar'   => ['application/x-rar', 'application/rar', 'application/x-rar-compressed'],
+		'rar'   => [
+			'application/x-rar',
+			'application/rar',
+			'application/x-rar-compressed',
+		],
 		'mid'   => 'audio/midi',
 		'midi'  => 'audio/midi',
 		'mpga'  => 'audio/mpeg',
 		'mp2'   => 'audio/mpeg',
-		'mp3'   => ['audio/mpeg', 'audio/mpg', 'audio/mpeg3', 'audio/mp3'],
-		'aif'   => ['audio/x-aiff', 'audio/aiff'],
-		'aiff'  => ['audio/x-aiff', 'audio/aiff'],
+		'mp3'   => [
+			'audio/mpeg',
+			'audio/mpg',
+			'audio/mpeg3',
+			'audio/mp3',
+		],
+		'aif'   => [
+			'audio/x-aiff',
+			'audio/aiff',
+		],
+		'aiff'  => [
+			'audio/x-aiff',
+			'audio/aiff',
+		],
 		'aifc'  => 'audio/x-aiff',
 		'ram'   => 'audio/x-pn-realaudio',
 		'rm'    => 'audio/x-pn-realaudio',
 		'rpm'   => 'audio/x-pn-realaudio-plugin',
 		'ra'    => 'audio/x-realaudio',
 		'rv'    => 'video/vnd.rn-realvideo',
-		'wav'   => ['audio/x-wav', 'audio/wave', 'audio/wav'],
+		'wav'   => [
+			'audio/x-wav',
+			'audio/wave',
+			'audio/wav',
+		],
 		'bmp'   => [
 			'image/bmp',
 			'image/x-bmp',
@@ -155,46 +194,132 @@ class Mimes
 			'application/x-win-bitmap',
 		],
 		'gif'   => 'image/gif',
-		'jpg'   => ['image/jpeg', 'image/pjpeg'],
-		'jpeg'  => ['image/jpeg', 'image/pjpeg'],
-		'jpe'   => ['image/jpeg', 'image/pjpeg'],
-		'jp2'   => ['image/jp2', 'video/mj2', 'image/jpx', 'image/jpm'],
-		'j2k'   => ['image/jp2', 'video/mj2', 'image/jpx', 'image/jpm'],
-		'jpf'   => ['image/jp2', 'video/mj2', 'image/jpx', 'image/jpm'],
-		'jpg2'  => ['image/jp2', 'video/mj2', 'image/jpx', 'image/jpm'],
-		'jpx'   => ['image/jp2', 'video/mj2', 'image/jpx', 'image/jpm'],
-		'jpm'   => ['image/jp2', 'video/mj2', 'image/jpx', 'image/jpm'],
-		'mj2'   => ['image/jp2', 'video/mj2', 'image/jpx', 'image/jpm'],
-		'mjp2'  => ['image/jp2', 'video/mj2', 'image/jpx', 'image/jpm'],
-		'png'   => ['image/png', 'image/x-png'],
+		'jpg'   => [
+			'image/jpeg',
+			'image/pjpeg',
+		],
+		'jpeg'  => [
+			'image/jpeg',
+			'image/pjpeg',
+		],
+		'jpe'   => [
+			'image/jpeg',
+			'image/pjpeg',
+		],
+		'jp2'   => [
+			'image/jp2',
+			'video/mj2',
+			'image/jpx',
+			'image/jpm',
+		],
+		'j2k'   => [
+			'image/jp2',
+			'video/mj2',
+			'image/jpx',
+			'image/jpm',
+		],
+		'jpf'   => [
+			'image/jp2',
+			'video/mj2',
+			'image/jpx',
+			'image/jpm',
+		],
+		'jpg2'  => [
+			'image/jp2',
+			'video/mj2',
+			'image/jpx',
+			'image/jpm',
+		],
+		'jpx'   => [
+			'image/jp2',
+			'video/mj2',
+			'image/jpx',
+			'image/jpm',
+		],
+		'jpm'   => [
+			'image/jp2',
+			'video/mj2',
+			'image/jpx',
+			'image/jpm',
+		],
+		'mj2'   => [
+			'image/jp2',
+			'video/mj2',
+			'image/jpx',
+			'image/jpm',
+		],
+		'mjp2'  => [
+			'image/jp2',
+			'video/mj2',
+			'image/jpx',
+			'image/jpm',
+		],
+		'png'   => [
+			'image/png',
+			'image/x-png',
+		],
 		'tif'   => 'image/tiff',
 		'tiff'  => 'image/tiff',
-		'css'   => ['text/css', 'text/plain'],
-		'html'  => ['text/html', 'text/plain'],
-		'htm'   => ['text/html', 'text/plain'],
-		'shtml' => ['text/html', 'text/plain'],
+		'css'   => [
+			'text/css',
+			'text/plain',
+		],
+		'html'  => [
+			'text/html',
+			'text/plain',
+		],
+		'htm'   => [
+			'text/html',
+			'text/plain',
+		],
+		'shtml' => [
+			'text/html',
+			'text/plain',
+		],
 		'txt'   => 'text/plain',
 		'text'  => 'text/plain',
-		'log'   => ['text/plain', 'text/x-log'],
+		'log'   => [
+			'text/plain',
+			'text/x-log',
+		],
 		'rtx'   => 'text/richtext',
 		'rtf'   => 'text/rtf',
-		'xml'   => ['application/xml', 'text/xml', 'text/plain'],
-		'xsl'   => ['application/xml', 'text/xsl', 'text/xml'],
+		'xml'   => [
+			'application/xml',
+			'text/xml',
+			'text/plain',
+		],
+		'xsl'   => [
+			'application/xml',
+			'text/xsl',
+			'text/xml',
+		],
 		'mpeg'  => 'video/mpeg',
 		'mpg'   => 'video/mpeg',
 		'mpe'   => 'video/mpeg',
 		'qt'    => 'video/quicktime',
 		'mov'   => 'video/quicktime',
-		'avi'   => ['video/x-msvideo', 'video/msvideo', 'video/avi', 'application/x-troff-msvideo'],
+		'avi'   => [
+			'video/x-msvideo',
+			'video/msvideo',
+			'video/avi',
+			'application/x-troff-msvideo',
+		],
 		'movie' => 'video/x-sgi-movie',
-		'doc'   => ['application/msword', 'application/vnd.ms-office'],
+		'doc'   => [
+			'application/msword',
+			'application/vnd.ms-office',
+		],
 		'docx'  => [
 			'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 			'application/zip',
 			'application/msword',
 			'application/x-zip',
 		],
-		'dot'   => ['application/msword', 'application/vnd.ms-office'],
+		'dot'   => [
+			'application/msword',
+			'application/vnd.ms-office',
+		],
 		'dotx'  => [
 			'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 			'application/zip',
@@ -207,20 +332,46 @@ class Mimes
 			'application/msword',
 			'application/x-zip',
 		],
-		'word'  => ['application/msword', 'application/octet-stream'],
+		'word'  => [
+			'application/msword',
+			'application/octet-stream',
+		],
 		'xl'    => 'application/excel',
 		'eml'   => 'message/rfc822',
-		'json'  => ['application/json', 'text/json'],
-		'pem'   => ['application/x-x509-user-cert', 'application/x-pem-file', 'application/octet-stream'],
-		'p10'   => ['application/x-pkcs10', 'application/pkcs10'],
+		'json'  => [
+			'application/json',
+			'text/json',
+		],
+		'pem'   => [
+			'application/x-x509-user-cert',
+			'application/x-pem-file',
+			'application/octet-stream',
+		],
+		'p10'   => [
+			'application/x-pkcs10',
+			'application/pkcs10',
+		],
 		'p12'   => 'application/x-pkcs12',
 		'p7a'   => 'application/x-pkcs7-signature',
-		'p7c'   => ['application/pkcs7-mime', 'application/x-pkcs7-mime'],
-		'p7m'   => ['application/pkcs7-mime', 'application/x-pkcs7-mime'],
+		'p7c'   => [
+			'application/pkcs7-mime',
+			'application/x-pkcs7-mime',
+		],
+		'p7m'   => [
+			'application/pkcs7-mime',
+			'application/x-pkcs7-mime',
+		],
 		'p7r'   => 'application/x-pkcs7-certreqresp',
 		'p7s'   => 'application/pkcs7-signature',
-		'crt'   => ['application/x-x509-ca-cert', 'application/x-x509-user-cert', 'application/pkix-cert'],
-		'crl'   => ['application/pkix-crl', 'application/pkcs-crl'],
+		'crt'   => [
+			'application/x-x509-ca-cert',
+			'application/x-x509-user-cert',
+			'application/pkix-cert',
+		],
+		'crl'   => [
+			'application/pkix-crl',
+			'application/pkcs-crl',
+		],
 		'der'   => 'application/x-x509-ca-cert',
 		'kdb'   => 'application/octet-stream',
 		'pgp'   => 'application/pgp',
@@ -228,12 +379,21 @@ class Mimes
 		'sst'   => 'application/octet-stream',
 		'csr'   => 'application/octet-stream',
 		'rsa'   => 'application/x-pkcs7',
-		'cer'   => ['application/pkix-cert', 'application/x-x509-ca-cert'],
+		'cer'   => [
+			'application/pkix-cert',
+			'application/x-x509-ca-cert',
+		],
 		'3g2'   => 'video/3gpp2',
-		'3gp'   => ['video/3gp', 'video/3gpp'],
+		'3gp'   => [
+			'video/3gp',
+			'video/3gpp',
+		],
 		'mp4'   => 'video/mp4',
 		'm4a'   => 'audio/x-m4a',
-		'f4v'   => ['video/mp4', 'video/x-f4v'],
+		'f4v'   => [
+			'video/mp4',
+			'video/x-f4v',
+		],
 		'flv'   => 'video/x-flv',
 		'webm'  => 'video/webm',
 		'aac'   => 'audio/x-acc',
@@ -241,17 +401,37 @@ class Mimes
 		'm3u'   => 'text/plain',
 		'xspf'  => 'application/xspf+xml',
 		'vlc'   => 'application/videolan',
-		'wmv'   => ['video/x-ms-wmv', 'video/x-ms-asf'],
+		'wmv'   => [
+			'video/x-ms-wmv',
+			'video/x-ms-asf',
+		],
 		'au'    => 'audio/x-au',
 		'ac3'   => 'audio/ac3',
 		'flac'  => 'audio/x-flac',
-		'ogg'   => ['audio/ogg', 'video/ogg', 'application/ogg'],
-		'kmz'   => ['application/vnd.google-earth.kmz', 'application/zip', 'application/x-zip'],
-		'kml'   => ['application/vnd.google-earth.kml+xml', 'application/xml', 'text/xml'],
+		'ogg'   => [
+			'audio/ogg',
+			'video/ogg',
+			'application/ogg',
+		],
+		'kmz'   => [
+			'application/vnd.google-earth.kmz',
+			'application/zip',
+			'application/x-zip',
+		],
+		'kml'   => [
+			'application/vnd.google-earth.kml+xml',
+			'application/xml',
+			'text/xml',
+		],
 		'ics'   => 'text/calendar',
 		'ical'  => 'text/calendar',
 		'zsh'   => 'text/x-scriptzsh',
-		'7zip'  => ['application/x-compressed', 'application/x-zip-compressed', 'application/zip', 'multipart/x-zip'],
+		'7zip'  => [
+			'application/x-compressed',
+			'application/x-zip-compressed',
+			'application/zip',
+			'multipart/x-zip',
+		],
 		'cdr'   => [
 			'application/cdr',
 			'application/coreldraw',
@@ -261,18 +441,35 @@ class Mimes
 			'image/x-cdr',
 			'zz-application/zz-winassoc-cdr',
 		],
-		'wma'   => ['audio/x-ms-wma', 'video/x-ms-asf'],
+		'wma'   => [
+			'audio/x-ms-wma',
+			'video/x-ms-asf',
+		],
 		'jar'   => [
 			'application/java-archive',
 			'application/x-java-application',
 			'application/x-jar',
 			'application/x-compressed',
 		],
-		'svg'   => ['image/svg+xml', 'application/xml', 'text/xml'],
+		'svg'   => [
+			'image/svg+xml',
+			'application/xml',
+			'text/xml',
+		],
 		'vcf'   => 'text/x-vcard',
-		'srt'   => ['text/srt', 'text/plain'],
-		'vtt'   => ['text/vtt', 'text/plain'],
-		'ico'   => ['image/x-icon', 'image/x-ico', 'image/vnd.microsoft.icon'],
+		'srt'   => [
+			'text/srt',
+			'text/plain',
+		],
+		'vtt'   => [
+			'text/vtt',
+			'text/plain',
+		],
+		'ico'   => [
+			'image/x-icon',
+			'image/x-ico',
+			'image/vnd.microsoft.icon',
+		],
 	];
 
 	//--------------------------------------------------------------------
@@ -308,19 +505,18 @@ class Mimes
 	 */
 	public static function guessExtensionFromType(string $type, ?string $proposed_extension = null)
 	{
-
 		$type = trim(strtolower($type), '. ');
 
 		$proposed_extension = trim(strtolower($proposed_extension));
 
-		if(!is_null($proposed_extension) && array_key_exists($proposed_extension, self::$mimes) && in_array($type, self::$mimes[$proposed_extension]))
+		if (! is_null($proposed_extension) && array_key_exists($proposed_extension, self::$mimes) && in_array($type, is_string(self::$mimes[$proposed_extension]) ? [self::$mimes[$proposed_extension]] : self::$mimes[$proposed_extension]))
 		{
 			return $proposed_extension;
 		}
 
 		foreach (self::$mimes as $ext => $types)
 		{
-			if (is_string($types) && $types == $type)
+			if (is_string($types) && $types === $type)
 			{
 				return $ext;
 			}
@@ -333,8 +529,6 @@ class Mimes
 		return null;
 	}
 
-
 	//--------------------------------------------------------------------
-
 
 }

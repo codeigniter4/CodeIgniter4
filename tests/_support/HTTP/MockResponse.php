@@ -1,4 +1,5 @@
-<?php namespace Tests\Support\HTTP;
+<?php
+namespace Tests\Support\HTTP;
 
 use CodeIgniter\HTTP\Response;
 
@@ -7,11 +8,24 @@ use CodeIgniter\HTTP\Response;
  */
 class MockResponse extends Response
 {
+
 	/**
 	 * If true, will not write output. Useful during testing.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $pretend = true;
+
+	// for testing
+	public function getPretend()
+	{
+		return $this->pretend;
+	}
+
+	// artificial error for testing
+	public function misbehave()
+	{
+		$this->statusCode = 0;
+	}
 
 }

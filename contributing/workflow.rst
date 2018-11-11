@@ -46,7 +46,7 @@ you cannot do the same with the shared one - you have to submit pull requests
 to it instead.
 
 `Creating a fork <https://help.github.com/articles/fork-a-repo/>`_ is done through the Github website. Navigate to `our
-repository <https://github.com/bcit-ci/CodeIgniter4>`_,
+repository <https://github.com/codeigniter4/CodeIgniter4>`_,
 click the **Fork** button in the top-right of the page, and choose which account or
 organization of yours should contain that fork.
 
