@@ -11,6 +11,10 @@ class ForgeTest extends CIDatabaseTestCase
 	protected $refresh = true;
 
 	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+	/**
+	 * @var \CodeIgniter\Database\Forge
+	 */
+	protected $forge;
 
 	public function setUp()
 	{
@@ -317,5 +321,38 @@ class ForgeTest extends CIDatabaseTestCase
 
 		$this->forge->dropTable('forge_test_invoices', true);
 		$this->forge->dropTable('forge_test_users', true);
+	}
+
+	public function testCreateTableWithArrayFieldConstraints()
+	{
+		if ($this->db->DBDriver === 'MySQLi')
+		{
+			$this->forge->addField([
+				'enum_string' => [
+					'type' => 'ENUM("a","b")',
+				],
+				'enum_array'  => [
+					'type'       => 'ENUM',
+					'constraint' => [
+						'a',
+						'b',
+					],
+				],
+			]);
+			$this->forge->createTable('forge_test_enum');
+
+			$fields = $this->db->getFieldData('forge_test_enum');
+
+			$this->forge->dropTable('forge_test_enum');
+
+			$this->assertEquals('enum_string', $fields[0]->name);
+			$this->assertEquals('enum', $fields[0]->type);
+			$this->assertEquals('enum_array', $fields[1]->name);
+			$this->assertEquals('enum', $fields[1]->type);
+		}
+		else
+		{
+			$this->expectNotToPerformAssertions();
+		}
 	}
 }
