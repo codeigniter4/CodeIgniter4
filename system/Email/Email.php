@@ -1097,8 +1097,8 @@ class Email
 	{
 		if (function_exists('idn_to_ascii') && defined('INTL_IDNA_VARIANT_UTS46') && $atpos = strpos($email, '@'))
 		{
-			$email = self::substr($email, 0, ++ $atpos) . idn_to_ascii(
-							self::substr($email, $atpos), 0, INTL_IDNA_VARIANT_UTS46
+			$email = static::substr($email, 0, ++ $atpos) . idn_to_ascii(
+							static::substr($email, $atpos), 0, INTL_IDNA_VARIANT_UTS46
 			);
 		}
 
@@ -1214,7 +1214,7 @@ class Email
 		{
 			// Is the line within the allowed character count?
 			// If so we'll join it to the output and continue
-			if (self::strlen($line) <= $charlim)
+			if (static::strlen($line) <= $charlim)
 			{
 				$output .= $line . $this->newline;
 				continue;
@@ -1230,10 +1230,10 @@ class Email
 				}
 
 				// Trim the word down
-				$temp .= self::substr($line, 0, $charlim - 1);
-				$line  = self::substr($line, $charlim - 1);
+				$temp .= static::substr($line, 0, $charlim - 1);
+				$line  = static::substr($line, $charlim - 1);
 			}
-			while (self::strlen($line) > $charlim);
+			while (static::strlen($line) > $charlim);
 
 			// If $temp contains data it means we had to split up an over-length
 			// word into smaller chunks so we'll add it back to our current line
@@ -1438,8 +1438,8 @@ class Email
 					  $this->headerStr .= $hdr;
 				}
 
-				self::strlen($body) && $body .= $this->newline . $this->newline;
-				$body                        .= $this->getMimeMessage() . $this->newline . $this->newline
+				static::strlen($body) && $body .= $this->newline . $this->newline;
+				$body                          .= $this->getMimeMessage() . $this->newline . $this->newline
 						. '--' . $last_boundary . $this->newline
 						. 'Content-Type: multipart/alternative; boundary="' . $alt_boundary . '"' . $this->newline . $this->newline
 						. '--' . $alt_boundary . $this->newline
@@ -1646,7 +1646,7 @@ class Email
 
 		foreach (explode("\n", $str) as $line)
 		{
-			$length = self::strlen($line);
+			$length = static::strlen($line);
 			$temp   = '';
 
 			// Loop through each character in the line to add soft-wrap
@@ -1681,7 +1681,7 @@ class Email
 
 				// If we're at the character limit, add the line to the output,
 				// reset our temp variable, and keep on chuggin'
-				if ((self::strlen($temp) + self::strlen($char)) >= 76)
+				if ((static::strlen($temp) + static::strlen($char)) >= 76)
 				{
 					$output .= $temp . $escape . $this->CRLF;
 					$temp    = '';
@@ -1696,7 +1696,7 @@ class Email
 		}
 
 		// get rid of extra CRLF tacked onto the end
-		return self::substr($output, 0, self::strlen($this->CRLF) * -1);
+		return static::substr($output, 0, static::strlen($this->CRLF) * -1);
 	}
 
 	//--------------------------------------------------------------------
@@ -1738,7 +1738,7 @@ class Email
 						  // iconv_mime_encode() will always put a header field name.
 						  // We've passed it an empty one, but it still prepends our
 						  // encoded string with ': ', so we need to strip it.
-						  return self::substr($output, 2);
+						  return static::substr($output, 2);
 				}
 
 				$chars = iconv_strlen($str, 'UTF-8');
@@ -1750,20 +1750,20 @@ class Email
 		}
 
 		// We might already have this set for UTF-8
-		isset($chars) || $chars = self::strlen($str);
+		isset($chars) || $chars = static::strlen($str);
 
 		$output = '=?' . $this->charset . '?Q?';
-		for ($i = 0, $length = self::strlen($output); $i < $chars; $i ++)
+		for ($i = 0, $length = static::strlen($output); $i < $chars; $i ++)
 		{
 			$chr = ($this->charset === 'UTF-8' && ICONV_ENABLED === true) ? '=' . implode('=', str_split(strtoupper(bin2hex(iconv_substr($str, $i, 1, $this->charset))), 2)) : '=' . strtoupper(bin2hex($str[$i]));
 
 			// RFC 2045 sets a limit of 76 characters per line.
 			// We'll append ?= to the end of each line though.
-			if ($length + ($l = self::strlen($chr)) > 74)
+			if ($length + ($l = static::strlen($chr)) > 74)
 			{
 				$output .= '?=' . $this->CRLF // EOL
 						. ' =?' . $this->charset . '?Q?' . $chr; // New line
-				$length  = 6 + self::strlen($this->charset) + $l; // Reset the length for the new line
+				$length  = 6 + static::strlen($this->charset) + $l; // Reset the length for the new line
 			}
 			else
 			{
@@ -1857,14 +1857,14 @@ class Email
 
 			if ($i === $float)
 			{
-				$chunk[] = self::substr($set, 1);
+				$chunk[] = static::substr($set, 1);
 				$float  += $this->BCCBatchSize;
 				$set     = '';
 			}
 
 			if ($i === $c - 1)
 			{
-				$chunk[] = self::substr($set, 1);
+				$chunk[] = static::substr($set, 1);
 			}
 		}
 
@@ -1978,8 +1978,8 @@ class Email
 	{
 		if (function_exists('idn_to_ascii') && $atpos = strpos($email, '@'))
 		{
-			$email = self::substr($email, 0, ++ $atpos) . idn_to_ascii(
-							self::substr($email, $atpos), 0, INTL_IDNA_VARIANT_UTS46
+			$email = static::substr($email, 0, ++ $atpos) . idn_to_ascii(
+							static::substr($email, $atpos), 0, INTL_IDNA_VARIANT_UTS46
 			);
 		}
 
@@ -2265,7 +2265,7 @@ class Email
 
 		$this->debugMessage[] = '<pre>' . $cmd . ': ' . $reply . '</pre>';
 
-		if ((int) self::substr($reply, 0, 3) !== $resp)
+		if ((int) static::substr($reply, 0, 3) !== $resp)
 		{
 			$this->setErrorMessage(lang('Email.SMTPError', [$reply]));
 
@@ -2355,9 +2355,9 @@ class Email
 	protected function sendData($data)
 	{
 		$data .= $this->newline;
-		for ($written = $timestamp = 0, $length = self::strlen($data); $written < $length; $written += $result)
+		for ($written = $timestamp = 0, $length = static::strlen($data); $written < $length; $written += $result)
 		{
-			if (($result = fwrite($this->SMTPConnect, self::substr($data, $written))) === false)
+			if (($result = fwrite($this->SMTPConnect, static::substr($data, $written))) === false)
 			{
 				break;
 			}

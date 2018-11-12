@@ -102,7 +102,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?= self::renderTimeline($collectors, $startTime, $segmentCount, $segmentDuration, $styles) ?>
+				<?= static::renderTimeline($collectors, $startTime, $segmentCount, $segmentDuration, $styles) ?>
 			</tbody>
 		</table>
 	</div>

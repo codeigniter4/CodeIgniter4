@@ -30,11 +30,11 @@
 
 	<!-- Source -->
 	<div class="container">
-		<p><b><?= self::cleanPath($file, $line) ?></b> at line <b><?= $line ?></b></p>
+		<p><b><?= static::cleanPath($file, $line) ?></b> at line <b><?= $line ?></b></p>
 
 		<?php if (is_file($file)) : ?>
 			<div class="source">
-				<?= self::highlightFile($file, $line, 15); ?>
+				<?= static::highlightFile($file, $line, 15); ?>
 			</div>
 		<?php endif; ?>
 	</div>
@@ -66,11 +66,11 @@
 								<?php
 									if (isset($row['function']) && in_array($row['function'], ['include', 'include_once', 'require', 'require_once']))
 									{
-										echo $row['function'].' '. self::cleanPath($row['file']);
+										echo $row['function'].' '. static::cleanPath($row['file']);
 									}
 									else
 									{
-										echo self::cleanPath($row['file']).' : '.$row['line'];
+										echo static::cleanPath($row['file']).' : '.$row['line'];
 									}
 								?>
 							<?php else : ?>
@@ -116,7 +116,7 @@
 						<!-- Source? -->
 						<?php if (isset($row['file']) && is_file($row['file']) &&  isset($row['class'])) : ?>
 							<div class="source">
-								<?= self::highlightFile($row['file'], $row['line']) ?>
+								<?= static::highlightFile($row['file'], $row['line']) ?>
 							</div>
 						<?php endif; ?>
 					</li>
@@ -342,7 +342,7 @@
 
 				<ol>
 				<?php foreach ($files as $file) :?>
-					<li><?= htmlspecialchars( self::cleanPath($file), ENT_SUBSTITUTE, 'UTF-8') ?></li>
+					<li><?= htmlspecialchars( static::cleanPath($file), ENT_SUBSTITUTE, 'UTF-8') ?></li>
 				<?php endforeach ?>
 				</ol>
 			</div>
@@ -354,11 +354,11 @@
 					<tbody>
 						<tr>
 							<td>Memory Usage</td>
-							<td><?= self::describeMemory(memory_get_usage(true)) ?></td>
+							<td><?= static::describeMemory(memory_get_usage(true)) ?></td>
 						</tr>
 						<tr>
 							<td style="width: 12em">Peak Memory Usage:</td>
-							<td><?= self::describeMemory(memory_get_peak_usage(true)) ?></td>
+							<td><?= static::describeMemory(memory_get_peak_usage(true)) ?></td>
 						</tr>
 						<tr>
 							<td>Memory Limit:</td>

@@ -126,7 +126,7 @@ within the class, and, if not, creates a new one. All of the factory methods pro
                 return new \CodeIgniter\Router\RouteCollection();
             }
 
-            return self::getSharedInstance('routes');
+            return static::getSharedInstance('routes');
         }
     }
 

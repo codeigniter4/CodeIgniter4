@@ -131,7 +131,7 @@ class BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('locator');
+			return static::getSharedInstance('locator');
 		}
 
 		return new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());

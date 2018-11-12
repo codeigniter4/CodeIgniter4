@@ -315,7 +315,7 @@ class Toolbar
 	protected static function renderTimeline(array $collectors, $startTime, int $segmentCount, int $segmentDuration, array& $styles): string
 	{
 		$displayTime = $segmentCount * $segmentDuration;
-		$rows        = self::collectTimelineData($collectors);
+		$rows        = static::collectTimelineData($collectors);
 		$output      = '';
 		$styleCount  = 0;
 
@@ -460,7 +460,7 @@ class Toolbar
 			// Show the toolbar
 			if (file_exists($filename))
 			{
-				$contents = self::format(file_get_contents($filename), $format);
+				$contents = static::format(file_get_contents($filename), $format);
 				exit($contents);
 			}
 

@@ -97,7 +97,7 @@ class Config extends BaseConfig
 			return static::$instances[$group];
 		}
 
-		self::ensureFactory();
+		static::ensureFactory();
 
 		if (isset($config->$group))
 		{
@@ -137,7 +137,7 @@ class Config extends BaseConfig
 	{
 		$config = new \Config\Database();
 
-		self::ensureFactory();
+		static::ensureFactory();
 
 		if (empty($group))
 		{
@@ -151,7 +151,7 @@ class Config extends BaseConfig
 
 		if (! isset(static::$instances[$group]))
 		{
-			$db = self::connect($group);
+			$db = static::connect($group);
 		}
 		else
 		{
@@ -174,7 +174,7 @@ class Config extends BaseConfig
 	{
 		$config = new \Config\Database();
 
-		self::ensureFactory();
+		static::ensureFactory();
 
 		if (empty($group))
 		{
@@ -188,7 +188,7 @@ class Config extends BaseConfig
 
 		if (! isset(static::$instances[$group]))
 		{
-			$db = self::connect($group);
+			$db = static::connect($group);
 		}
 		else
 		{
@@ -211,7 +211,7 @@ class Config extends BaseConfig
 	{
 		$config = new \Config\Database();
 
-		return new Seeder($config, self::connect($group));
+		return new Seeder($config, static::connect($group));
 	}
 
 	//--------------------------------------------------------------------

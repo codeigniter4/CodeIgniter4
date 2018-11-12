@@ -25,7 +25,7 @@ class Services extends CoreServices
 	//    {
 	//        if ($getShared)
 	//        {
-	//            return self::getSharedInstance('example');
+	//            return static::getSharedInstance('example');
 	//        }
 	//
 	//        return new \CodeIgniter\Example();
@@ -35,7 +35,7 @@ class Services extends CoreServices
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('honeypot', $config);
+			return static::getSharedInstance('honeypot', $config);
 		}
 
 		if (is_null($config))

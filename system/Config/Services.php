@@ -72,7 +72,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('autoloader');
+			return static::getSharedInstance('autoloader');
 		}
 
 		return new \CodeIgniter\Autoloader\Autoloader();
@@ -93,7 +93,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('cache', $config);
+			return static::getSharedInstance('cache', $config);
 		}
 
 		if (! is_object($config))
@@ -119,7 +119,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('clirequest', $config);
+			return static::getSharedInstance('clirequest', $config);
 		}
 
 		if (! is_object($config))
@@ -147,7 +147,7 @@ class Services extends BaseService
 	{
 		if ($getShared === true)
 		{
-			return self::getSharedInstance('curlrequest', $options, $response, $config);
+			return static::getSharedInstance('curlrequest', $options, $response, $config);
 		}
 
 		if (! is_object($config))
@@ -182,7 +182,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('email', $config);
+			return static::getSharedInstance('email', $config);
 		}
 
 		if (empty($config))
@@ -191,7 +191,7 @@ class Services extends BaseService
 		}
 
 		$email = new \CodeIgniter\Email\Email($config);
-		$email->setLogger(self::logger(true));
+		$email->setLogger(static::logger(true));
 
 		return $email;
 	}
@@ -221,7 +221,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('exceptions', $config, $request, $response);
+			return static::getSharedInstance('exceptions', $config, $request, $response);
 		}
 
 		if (empty($config))
@@ -259,7 +259,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('filters', $config);
+			return static::getSharedInstance('filters', $config);
 		}
 
 		if (empty($config))
@@ -267,7 +267,7 @@ class Services extends BaseService
 			$config = new \Config\Filters();
 		}
 
-		return new \CodeIgniter\Filters\Filters($config, self::request(), self::response());
+		return new \CodeIgniter\Filters\Filters($config, static::request(), static::response());
 	}
 
 	//--------------------------------------------------------------------
@@ -286,7 +286,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('image', $handler, $config);
+			return static::getSharedInstance('image', $handler, $config);
 		}
 
 		if (empty($config))
@@ -316,7 +316,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('iterator');
+			return static::getSharedInstance('iterator');
 		}
 
 		return new \CodeIgniter\Debug\Iterator();
@@ -336,13 +336,13 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('language', $locale)
+			return static::getSharedInstance('language', $locale)
 					   ->setLocale($locale);
 		}
 
 		$locale = ! empty($locale)
 			? $locale
-			: self::request()
+			: static::request()
 				  ->getLocale();
 
 		return new \CodeIgniter\Language\Language($locale);
@@ -362,7 +362,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('logger');
+			return static::getSharedInstance('logger');
 		}
 
 		return new \CodeIgniter\Log\Logger(new \Config\Logger());
@@ -381,7 +381,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('migrations', $config, $db);
+			return static::getSharedInstance('migrations', $config, $db);
 		}
 
 		$config = empty($config) ? new \Config\Migrations() : $config;
@@ -405,12 +405,12 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('negotiator', $request);
+			return static::getSharedInstance('negotiator', $request);
 		}
 
 		if (is_null($request))
 		{
-			$request = self::request();
+			$request = static::request();
 		}
 
 		return new \CodeIgniter\HTTP\Negotiate($request);
@@ -429,7 +429,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('pager', $config, $view);
+			return static::getSharedInstance('pager', $config, $view);
 		}
 
 		if (empty($config))
@@ -439,7 +439,7 @@ class Services extends BaseService
 
 		if (! $view instanceof RendererInterface)
 		{
-			$view = self::renderer();
+			$view = static::renderer();
 		}
 
 		return new \CodeIgniter\Pager\Pager($config, $view);
@@ -460,7 +460,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('parser', $viewPath, $config);
+			return static::getSharedInstance('parser', $viewPath, $config);
 		}
 
 		if (is_null($config))
@@ -468,7 +468,7 @@ class Services extends BaseService
 			$config = new \Config\View();
 		}
 
-		return new \CodeIgniter\View\Parser($config, $viewPath, self::locator(true), CI_DEBUG, self::logger(true));
+		return new \CodeIgniter\View\Parser($config, $viewPath, static::locator(true), CI_DEBUG, static::logger(true));
 	}
 
 	//--------------------------------------------------------------------
@@ -488,7 +488,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('renderer', $viewPath, $config);
+			return static::getSharedInstance('renderer', $viewPath, $config);
 		}
 
 		if (is_null($config))
@@ -503,7 +503,7 @@ class Services extends BaseService
 			$viewPath = $paths->viewDirectory;
 		}
 
-		return new \CodeIgniter\View\View($config, $viewPath, self::locator(true), CI_DEBUG, self::logger(true));
+		return new \CodeIgniter\View\View($config, $viewPath, static::locator(true), CI_DEBUG, static::logger(true));
 	}
 
 	//--------------------------------------------------------------------
@@ -520,7 +520,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('request', $config);
+			return static::getSharedInstance('request', $config);
 		}
 
 		if (! is_object($config))
@@ -550,7 +550,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('response', $config);
+			return static::getSharedInstance('response', $config);
 		}
 
 		if (! is_object($config))
@@ -575,7 +575,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('redirectResponse', $config);
+			return static::getSharedInstance('redirectResponse', $config);
 		}
 
 		if (! is_object($config))
@@ -584,7 +584,7 @@ class Services extends BaseService
 		}
 
 		$response = new \CodeIgniter\HTTP\RedirectResponse($config);
-		$response->setProtocolVersion(self::request()
+		$response->setProtocolVersion(static::request()
 										  ->getProtocolVersion());
 
 		return $response;
@@ -604,10 +604,10 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('routes');
+			return static::getSharedInstance('routes');
 		}
 
-		return new \CodeIgniter\Router\RouteCollection(self::locator(), config('Modules'));
+		return new \CodeIgniter\Router\RouteCollection(static::locator(), config('Modules'));
 	}
 
 	//--------------------------------------------------------------------
@@ -625,12 +625,12 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('router', $routes);
+			return static::getSharedInstance('router', $routes);
 		}
 
 		if (empty($routes))
 		{
-			$routes = self::routes(true);
+			$routes = static::routes(true);
 		}
 
 		return new \CodeIgniter\Router\Router($routes);
@@ -651,7 +651,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('security', $config);
+			return static::getSharedInstance('security', $config);
 		}
 
 		if (! is_object($config))
@@ -674,7 +674,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('session', $config);
+			return static::getSharedInstance('session', $config);
 		}
 
 		if (! is_object($config))
@@ -682,10 +682,10 @@ class Services extends BaseService
 			$config = config(App::class);
 		}
 
-		$logger = self::logger(true);
+		$logger = static::logger(true);
 
 		$driverName = $config->sessionDriver;
-		$driver     = new $driverName($config, self::request()->getIpAddress());
+		$driver     = new $driverName($config, static::request()->getIpAddress());
 		$driver->setLogger($logger);
 
 		$session = new \CodeIgniter\Session\Session($driver, $config);
@@ -713,10 +713,10 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('throttler');
+			return static::getSharedInstance('throttler');
 		}
 
-		return new \CodeIgniter\Throttle\Throttler(self::cache());
+		return new \CodeIgniter\Throttle\Throttler(static::cache());
 	}
 
 	//--------------------------------------------------------------------
@@ -733,7 +733,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('timer');
+			return static::getSharedInstance('timer');
 		}
 
 		return new \CodeIgniter\Debug\Timer();
@@ -751,7 +751,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('toolbar', $config);
+			return static::getSharedInstance('toolbar', $config);
 		}
 
 		if (! is_object($config))
@@ -776,7 +776,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('uri', $uri);
+			return static::getSharedInstance('uri', $uri);
 		}
 
 		return new \CodeIgniter\HTTP\URI($uri);
@@ -796,7 +796,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('validation', $config);
+			return static::getSharedInstance('validation', $config);
 		}
 
 		if (is_null($config))
@@ -804,7 +804,7 @@ class Services extends BaseService
 			$config = new \Config\Validation();
 		}
 
-		return new \CodeIgniter\Validation\Validation($config, self::renderer());
+		return new \CodeIgniter\Validation\Validation($config, static::renderer());
 	}
 
 	//--------------------------------------------------------------------
@@ -821,10 +821,10 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('viewcell');
+			return static::getSharedInstance('viewcell');
 		}
 
-		return new \CodeIgniter\View\Cell(self::cache());
+		return new \CodeIgniter\View\Cell(static::cache());
 	}
 
 	//--------------------------------------------------------------------
@@ -840,7 +840,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('typography');
+			return static::getSharedInstance('typography');
 		}
 
 		return new \CodeIgniter\Typography\Typography();
