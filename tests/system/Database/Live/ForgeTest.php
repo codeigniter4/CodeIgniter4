@@ -11,6 +11,10 @@ class ForgeTest extends CIDatabaseTestCase
 	protected $refresh = true;
 
 	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+	/**
+	 * @var \CodeIgniter\Database\Forge
+	 */
+	protected $forge;
 
 	public function setUp()
 	{
@@ -42,7 +46,7 @@ class ForgeTest extends CIDatabaseTestCase
 
 	public function testCreateTableWithAttributes()
 	{
-		if ($this->db->DBDriver == 'SQLite3')
+		if ($this->db->DBDriver === 'SQLite3')
 		{
 			$this->markTestSkipped('SQLite3 does not support comments on tables or columns.');
 		}
@@ -52,7 +56,7 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->addField('id');
 
 		$attributes = [
-			'comment' => "Forge's Test"
+			'comment' => "Forge's Test",
 		];
 
 		$this->forge->createTable('forge_test_attributes', false, $attributes);
@@ -65,7 +69,6 @@ class ForgeTest extends CIDatabaseTestCase
 
 	public function testAddFields()
 	{
-
 		$this->forge->dropTable('forge_test_fields', true);
 
 		$this->forge->addField([
@@ -121,7 +124,6 @@ class ForgeTest extends CIDatabaseTestCase
 			$this->assertEquals($fieldsData[0]->primary_key, 1);
 
 			$this->assertEquals($fieldsData[1]->max_length, 255);
-
 		}
 		elseif ($this->db->DBDriver === 'Postgre')
 		{
@@ -143,17 +145,16 @@ class ForgeTest extends CIDatabaseTestCase
 		}
 		else
 		{
-			$this->assertTrue(false, "DB Driver not supported");
+			$this->assertTrue(false, 'DB Driver not supported');
 		}
 
 		$this->forge->dropTable('forge_test_fields', true);
-
 	}
 
 	public function testCompositeKey()
 	{
 		// SQLite3 uses auto increment different
-		$unique_or_auto = $this->db->DBDriver == 'SQLite3' ? 'unique' : 'auto_increment';
+		$unique_or_auto = $this->db->DBDriver === 'SQLite3' ? 'unique' : 'auto_increment';
 
 		$this->forge->addField([
 			'id'      => [
@@ -169,7 +170,7 @@ class ForgeTest extends CIDatabaseTestCase
 				'type'       => 'VARCHAR',
 				'constraint' => 40,
 			],
-			'active' => [
+			'active'  => [
 				'type'       => 'INTEGER',
 				'constraint' => 1,
 			],
@@ -181,29 +182,29 @@ class ForgeTest extends CIDatabaseTestCase
 
 		$keys = $this->db->getIndexData('forge_test_1');
 
-		if ($this->db->DBDriver == 'MySQLi')
+		if ($this->db->DBDriver === 'MySQLi')
 		{
-			$this->assertEquals($keys[0]->name, 'PRIMARY KEY');
-			$this->assertEquals($keys[0]->fields, ['id']);
-			$this->assertEquals($keys[0]->type, 'PRIMARY');
-			$this->assertEquals($keys[2]->name, 'code_company');
-			$this->assertEquals($keys[2]->fields, ['code', 'company']);
-			$this->assertEquals($keys[2]->type, 'INDEX');
-			$this->assertEquals($keys[1]->name, 'code_active');
-			$this->assertEquals($keys[1]->fields, ['code', 'active']);
-			$this->assertEquals($keys[1]->type, 'UNIQUE');
+			$this->assertEquals($keys['PRIMARY']->name, 'PRIMARY');
+			$this->assertEquals($keys['PRIMARY']->fields, ['id']);
+			$this->assertEquals($keys['PRIMARY']->type, 'PRIMARY');
+			$this->assertEquals($keys['code_company']->name, 'code_company');
+			$this->assertEquals($keys['code_company']->fields, ['code', 'company']);
+			$this->assertEquals($keys['code_company']->type, 'INDEX');
+			$this->assertEquals($keys['code_active']->name, 'code_active');
+			$this->assertEquals($keys['code_active']->fields, ['code', 'active']);
+			$this->assertEquals($keys['code_active']->type, 'UNIQUE');
 		}
-		elseif($this->db->DBDriver == 'Postgre')
+		elseif ($this->db->DBDriver === 'Postgre')
 		{
-			$this->assertEquals($keys[0]->name, 'pk_db_forge_test_1');
-			$this->assertEquals($keys[0]->fields, ['id']);
-			$this->assertEquals($keys[0]->type, 'PRIMARY');
-			$this->assertEquals($keys[1]->name, 'db_forge_test_1_code_company');
-			$this->assertEquals($keys[1]->fields, ['code', 'company']);
-			$this->assertEquals($keys[1]->type, 'INDEX');
-			$this->assertEquals($keys[2]->name, 'db_forge_test_1_code_active');
-			$this->assertEquals($keys[2]->fields, ['code', 'active']);
-			$this->assertEquals($keys[2]->type, 'UNIQUE');
+			$this->assertEquals($keys['pk_db_forge_test_1']->name, 'pk_db_forge_test_1');
+			$this->assertEquals($keys['pk_db_forge_test_1']->fields, ['id']);
+			$this->assertEquals($keys['pk_db_forge_test_1']->type, 'PRIMARY');
+			$this->assertEquals($keys['db_forge_test_1_code_company']->name, 'db_forge_test_1_code_company');
+			$this->assertEquals($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
+			$this->assertEquals($keys['db_forge_test_1_code_company']->type, 'INDEX');
+			$this->assertEquals($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
+			$this->assertEquals($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+			$this->assertEquals($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
 		}
 
 		$this->forge->dropTable('forge_test_1', true);
@@ -213,7 +214,7 @@ class ForgeTest extends CIDatabaseTestCase
 	{
 		$attributes = [];
 
-		if ($this->db->DBDriver == 'MySQLi')
+		if ($this->db->DBDriver === 'MySQLi')
 		{
 			$attributes = ['ENGINE' => 'InnoDB'];
 		}
@@ -252,32 +253,30 @@ class ForgeTest extends CIDatabaseTestCase
 
 		$foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices');
 
-		if ($this->db->DBDriver == 'SQLite3')
+		if ($this->db->DBDriver === 'SQLite3')
 		{
 			$this->assertEquals($foreignKeyData[0]->constraint_name, 'users_id to db_forge_test_users.id');
 		}
 		else
 		{
-			$this->assertEquals($foreignKeyData[0]->constraint_name,$this->db->DBPrefix.'forge_test_invoices_users_id_foreign');
+			$this->assertEquals($foreignKeyData[0]->constraint_name, $this->db->DBPrefix . 'forge_test_invoices_users_id_foreign');
 		}
-		$this->assertEquals($foreignKeyData[0]->table_name, $this->db->DBPrefix.'forge_test_invoices');
-		$this->assertEquals($foreignKeyData[0]->foreign_table_name, $this->db->DBPrefix.'forge_test_users');
+		$this->assertEquals($foreignKeyData[0]->table_name, $this->db->DBPrefix . 'forge_test_invoices');
+		$this->assertEquals($foreignKeyData[0]->foreign_table_name, $this->db->DBPrefix . 'forge_test_users');
 
 		$this->forge->dropTable('forge_test_invoices', true);
 		$this->forge->dropTable('forge_test_users', true);
-
 	}
 
 	public function testDropForeignKey()
 	{
-
 		$attributes = [];
 
-		if ($this->db->DBDriver == 'MySQLi')
+		if ($this->db->DBDriver === 'MySQLi')
 		{
 			$attributes = ['ENGINE' => 'InnoDB'];
 		}
-		if ($this->db->DBDriver == 'SQLite3')
+		if ($this->db->DBDriver === 'SQLite3')
 		{
 			$this->expectException(DatabaseException::class);
 		}
@@ -322,6 +321,5 @@ class ForgeTest extends CIDatabaseTestCase
 
 		$this->forge->dropTable('forge_test_invoices', true);
 		$this->forge->dropTable('forge_test_users', true);
-
 	}
 }
