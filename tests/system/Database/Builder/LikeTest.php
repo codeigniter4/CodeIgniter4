@@ -85,7 +85,10 @@ class LikeTest extends \CIUnitTestCase
 		$builder->like('name', 'veloper')->orLike('name', 'ian');
 
 		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name: ESCAPE '!' OR  \"name\" LIKE :name0: ESCAPE '!'";
-		$expectedBinds = ['name' => '%veloper%', 'name0' => '%ian%'];
+		$expectedBinds = [
+			'name'  => '%veloper%',
+			'name0' => '%ian%',
+		];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
@@ -115,7 +118,10 @@ class LikeTest extends \CIUnitTestCase
 		$builder->like('name', 'veloper')->orNotLike('name', 'ian');
 
 		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name: ESCAPE '!' OR  \"name\" NOT LIKE :name0: ESCAPE '!'";
-		$expectedBinds = ['name' => '%veloper%', 'name0' => '%ian%'];
+		$expectedBinds = [
+			'name'  => '%veloper%',
+			'name0' => '%ian%',
+		];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());

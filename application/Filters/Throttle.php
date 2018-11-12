@@ -34,7 +34,7 @@ class Throttle implements FilterInterface
 	 * We don't have anything to do here.
 	 *
 	 * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
-	 * @param ResponseInterface|\CodeIgniter\HTTP\Response $response
+	 * @param ResponseInterface|\CodeIgniter\HTTP\Response       $response
 	 *
 	 * @return mixed
 	 */

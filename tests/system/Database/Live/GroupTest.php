@@ -15,7 +15,7 @@ class GroupTest extends CIDatabaseTestCase
 	{
 		$result = $this->db->table('user')
 						->select('name')
-		                ->groupBy('name')
+						->groupBy('name')
 						->get()
 						->getResult();
 
@@ -26,12 +26,12 @@ class GroupTest extends CIDatabaseTestCase
 
 	public function testHavingBy()
 	{
-	    $result = $this->db->table('job')
-		                ->select('name')
-		                ->groupBy('name')
-		                ->having('SUM(id) > 2')
-		                ->get()
-		                ->getResultArray();
+		$result = $this->db->table('job')
+						->select('name')
+						->groupBy('name')
+						->having('SUM(id) > 2')
+						->get()
+						->getResultArray();
 
 		$this->assertCount(2, $result);
 	}
@@ -41,9 +41,9 @@ class GroupTest extends CIDatabaseTestCase
 	public function testOrHavingBy()
 	{
 		$result = $this->db->table('user')
-		                ->groupBy('id')
-		                ->having('id >', 3)
-		                ->orHaving('SUM(id) > 2')
+						->groupBy('id')
+						->having('id >', 3)
+						->orHaving('SUM(id) > 2')
 						->get()
 						->getResult();
 
@@ -56,10 +56,10 @@ class GroupTest extends CIDatabaseTestCase
 	{
 		$result = $this->db->table('user')
 				->groupStart()
-		        ->where('id >=', 3)
-		        ->where('name !=', 'Chris Martin')
-		        ->groupEnd()
-		        ->where('country', 'US')
+				->where('id >=', 3)
+				->where('name !=', 'Chris Martin')
+				->groupEnd()
+				->where('country', 'US')
 				->get()
 				->getResult();
 
@@ -73,10 +73,10 @@ class GroupTest extends CIDatabaseTestCase
 	{
 		$result = $this->db->table('user')
 				->where('country', 'Iran')
-		        ->orGroupStart()
-		        ->where('id >=', 3)
-		        ->where('name !=', 'Richard A Causey')
-		        ->groupEnd()
+				->orGroupStart()
+				->where('id >=', 3)
+				->where('name !=', 'Richard A Causey')
+				->groupEnd()
 				->get()
 				->getResult();
 
@@ -91,10 +91,10 @@ class GroupTest extends CIDatabaseTestCase
 	{
 		$result = $this->db->table('user')
 				->where('country', 'US')
-		        ->notGroupStart()
-		        ->where('id >=', 3)
-		        ->where('name !=', 'Chris Martin')
-		        ->groupEnd()
+				->notGroupStart()
+				->where('id >=', 3)
+				->where('name !=', 'Chris Martin')
+				->groupEnd()
 				->get()
 				->getResult();
 
@@ -108,10 +108,10 @@ class GroupTest extends CIDatabaseTestCase
 	{
 		$result = $this->db->table('user')
 				->where('country', 'US')
-		        ->orNotGroupStart()
-		        ->where('id >=', 2)
-		        ->where('country', 'Iran')
-		        ->groupEnd()
+				->orNotGroupStart()
+				->where('id >=', 2)
+				->where('country', 'Iran')
+				->groupEnd()
 				->get()
 				->getResult();
 

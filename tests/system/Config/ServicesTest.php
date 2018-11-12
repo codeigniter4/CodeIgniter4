@@ -11,10 +11,10 @@ class ServicesTest extends \CIUnitTestCase
 		parent::setUp();
 
 		$this->original = $_SERVER;
-//		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'es; q=1.0, en; q=0.5';
+		//      $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'es; q=1.0, en; q=0.5';
 		$this->config = new App();
-//		$this->config->negotiateLocale = true;
-//		$this->config->supportedLocales = ['en', 'es'];
+		//      $this->config->negotiateLocale = true;
+		//      $this->config->supportedLocales = ['en', 'es'];
 	}
 
 	public function tearDown()
@@ -52,17 +52,17 @@ class ServicesTest extends \CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\Images\ImageHandlerInterface::class, $actual);
 	}
 
-//	public function testNewMigrationRunner()
-//	{
-//		//FIXME - docs aren't clear about setting this up to just make sure that the service
-//		// returns a MigrationRunner
-//		$config = new \Config\Migrations();
-//		$db = new \CodeIgniter\Database\MockConnection([]);
-//		$this->expectException('InvalidArgumentException');
-//		$actual = Services::migrations($config, $db);
-//		$this->assertInstanceOf(\CodeIgniter\Database\MigrationRunner::class, $actual);
-//	}
-//
+	//  public function testNewMigrationRunner()
+	//  {
+	//      //FIXME - docs aren't clear about setting this up to just make sure that the service
+	//      // returns a MigrationRunner
+	//      $config = new \Config\Migrations();
+	//      $db = new \CodeIgniter\Database\MockConnection([]);
+	//      $this->expectException('InvalidArgumentException');
+	//      $actual = Services::migrations($config, $db);
+	//      $this->assertInstanceOf(\CodeIgniter\Database\MigrationRunner::class, $actual);
+	//  }
+	//
 	public function testNewNegotiatorWithNullConfig()
 	{
 		$actual = Services::negotiator(null);
@@ -131,7 +131,7 @@ class ServicesTest extends \CIUnitTestCase
 
 	/**
 	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
+	 * @preserveGlobalState  disabled
 	 */
 	public function testNewSession()
 	{
@@ -141,7 +141,7 @@ class ServicesTest extends \CIUnitTestCase
 
 	/**
 	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
+	 * @preserveGlobalState  disabled
 	 */
 	public function testNewSessionWithNullConfig()
 	{
@@ -151,7 +151,7 @@ class ServicesTest extends \CIUnitTestCase
 
 	/**
 	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
+	 * @preserveGlobalState  disabled
 	 */
 	public function testCallStatic()
 	{

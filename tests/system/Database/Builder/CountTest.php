@@ -22,7 +22,7 @@ class CountTest extends \CIUnitTestCase
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
 
-		$expectedSQL   = "SELECT COUNT(*) AS \"numrows\" FROM \"jobs\"";
+		$expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "jobs"';
 
 		$this->assertEquals($expectedSQL, $builder->countAll(true, true));
 	}
@@ -35,7 +35,7 @@ class CountTest extends \CIUnitTestCase
 
 		$answer = $builder->where('id >', 3)->countAllResults(false, true);
 
-		$expectedSQL   = "SELECT COUNT(*) AS \"numrows\" FROM \"jobs\" WHERE \"id\" > :id:";
+		$expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "jobs" WHERE "id" > :id:';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
 	}

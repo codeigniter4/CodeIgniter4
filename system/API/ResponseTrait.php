@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use Config\Format;
 use CodeIgniter\HTTP\Response;
 
@@ -60,32 +61,32 @@ trait ResponseTrait
 	 * @var array
 	 */
 	protected $codes = [
-		'created'					 => 201,
-		'deleted'					 => 200,
-		'invalid_request'			 => 400,
-		'unsupported_response_type'	 => 400,
-		'invalid_scope'				 => 400,
-		'temporarily_unavailable'	 => 400,
-		'invalid_grant'				 => 400,
-		'invalid_credentials'		 => 400,
-		'invalid_refresh'			 => 400,
-		'no_data'					 => 400,
-		'invalid_data'				 => 400,
-		'access_denied'				 => 401,
-		'unauthorized'				 => 401,
-		'invalid_client'			 => 401,
-		'forbidden'					 => 403,
-		'resource_not_found'		 => 404,
-		'not_acceptable'			 => 406,
-		'resource_exists'			 => 409,
-		'conflict'					 => 409,
-		'resource_gone'				 => 410,
-		'payload_too_large'			 => 413,
-		'unsupported_media_type'	 => 415,
-		'too_many_requests'			 => 429,
-		'server_error'				 => 500,
-		'unsupported_grant_type'	 => 501,
-		'not_implemented'			 => 501,
+		'created'                   => 201,
+		'deleted'                   => 200,
+		'invalid_request'           => 400,
+		'unsupported_response_type' => 400,
+		'invalid_scope'             => 400,
+		'temporarily_unavailable'   => 400,
+		'invalid_grant'             => 400,
+		'invalid_credentials'       => 400,
+		'invalid_refresh'           => 400,
+		'no_data'                   => 400,
+		'invalid_data'              => 400,
+		'access_denied'             => 401,
+		'unauthorized'              => 401,
+		'invalid_client'            => 401,
+		'forbidden'                 => 403,
+		'resource_not_found'        => 404,
+		'not_acceptable'            => 406,
+		'resource_exists'           => 409,
+		'conflict'                  => 409,
+		'resource_gone'             => 410,
+		'payload_too_large'         => 413,
+		'unsupported_media_type'    => 415,
+		'too_many_requests'         => 429,
+		'server_error'              => 500,
+		'unsupported_grant_type'    => 501,
+		'not_implemented'           => 501,
 	];
 
 	//--------------------------------------------------------------------
@@ -94,9 +95,9 @@ trait ResponseTrait
 	 * Provides a single, simple method to return an API response, formatted
 	 * to match the requested format, with proper content-type and status code.
 	 *
-	 * @param null   $data
-	 * @param int    $status
-	 * @param string $message
+	 * @param null    $data
+	 * @param integer $status
+	 * @param string  $message
 	 *
 	 * @return mixed
 	 */
@@ -130,23 +131,23 @@ trait ResponseTrait
 	 * Used for generic failures that no custom methods exist for.
 	 *
 	 * @param string|array $messages
-	 * @param int|null     $status HTTP status code
-	 * @param string|null  $code   Custom, API-specific, error code
+	 * @param integer|null $status        HTTP status code
+	 * @param string|null  $code          Custom, API-specific, error code
 	 * @param string       $customMessage
 	 *
 	 * @return mixed
 	 */
 	public function fail($messages, int $status = 400, string $code = null, string $customMessage = '')
 	{
-		if ( ! is_array($messages))
+		if (! is_array($messages))
 		{
 			$messages = ['error' => $messages];
 		}
 
 		$response = [
-			'status'	 => $status,
-			'error'		 => $code === null ? $status : $code,
-			'messages'	 => $messages,
+			'status'   => $status,
+			'error'    => $code === null ? $status : $code,
+			'messages' => $messages,
 		];
 
 		return $this->respond($response, $status, $customMessage);
@@ -351,7 +352,7 @@ trait ResponseTrait
 		$this->response->setContentType($format);
 
 		// if we don't have a formatter, make one
-		if ( ! isset($this->formatter))
+		if (! isset($this->formatter))
 		{
 			// if no formatter, use the default
 			$this->formatter = $config->getFormatter($format);

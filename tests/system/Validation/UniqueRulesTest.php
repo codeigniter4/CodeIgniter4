@@ -5,7 +5,7 @@ use CodeIgniter\Test\CIDatabaseTestCase;
 
 class UniqueRulesTest extends CIDatabaseTestCase
 {
-	protected $refresh =true;
+	protected $refresh = true;
 
 	/**
 	 * @var Validation
@@ -47,8 +47,8 @@ class UniqueRulesTest extends CIDatabaseTestCase
 	public function testIsUniqueFalse()
 	{
 		$this->hasInDatabase('user', [
-			'name' => 'Derek',
-			'email' => 'derek@world.com',
+			'name'    => 'Derek',
+			'email'   => 'derek@world.com',
 			'country' => 'USA',
 		]);
 
@@ -89,16 +89,16 @@ class UniqueRulesTest extends CIDatabaseTestCase
 	public function testIsUniqueIgnoresParams()
 	{
 		$this->hasInDatabase('user', [
-			'name' => 'Derek',
-			'email' => 'derek@world.co.uk',
+			'name'    => 'Derek',
+			'email'   => 'derek@world.co.uk',
 			'country' => 'GB',
 		]);
 
 		$db  = Database::connect();
 		$row = $db->table('user')
-		          ->limit(1)
-		          ->get()
-		          ->getRow();
+				  ->limit(1)
+				  ->get()
+				  ->getRow();
 
 		$data = [
 			'email' => 'derek@world.co.uk',

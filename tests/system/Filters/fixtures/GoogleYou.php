@@ -10,7 +10,7 @@ class GoogleYou implements FilterInterface
 
 	public function before(RequestInterface $request)
 	{
-		$response = Services::response();
+		$response      = Services::response();
 		$response->csp = 'http://google.com';
 		return $response;
 	}

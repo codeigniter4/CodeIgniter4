@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -58,7 +58,7 @@ interface ResultInterface
 	/**
 	 * Returns the results as an array of custom objects.
 	 *
-	 * @param string $className  The name of the class to use.
+	 * @param string $className The name of the class to use.
 	 *
 	 * @return mixed
 	 */
@@ -94,8 +94,8 @@ interface ResultInterface
 	 *
 	 * If row doesn't exist, returns null.
 	 *
-	 * @param int    $n     The index of the results to return
-	 * @param string $type  The type of result object. 'array', 'object' or class name.
+	 * @param integer $n    The index of the results to return
+	 * @param string  $type The type of result object. 'array', 'object' or class name.
 	 *
 	 * @return mixed
 	 */
@@ -108,8 +108,8 @@ interface ResultInterface
 	 *
 	 * If row doesn't exists, returns null.
 	 *
-	 * @param int $n
-	 * @param string $className
+	 * @param integer $n
+	 * @param string  $className
 	 *
 	 * @return mixed
 	 */
@@ -122,7 +122,7 @@ interface ResultInterface
 	 *
 	 * If row doesn't exist, returns null.
 	 *
-	 * @param int $n
+	 * @param integer $n
 	 *
 	 * @return mixed
 	 */
@@ -135,7 +135,7 @@ interface ResultInterface
 	 *
 	 * If row doesn't exist, returns null.
 	 *
-	 * @param int $n
+	 * @param integer $n
 	 *
 	 * @return mixed
 	 */
@@ -146,7 +146,7 @@ interface ResultInterface
 	/**
 	 * Assigns an item into a particular column slot.
 	 *
-	 * @param      $key
+	 * @param $key
 	 * @param null $value
 	 *
 	 * @return mixed
@@ -213,7 +213,7 @@ interface ResultInterface
 	/**
 	 * Gets the number of fields in the result set.
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function getFieldCount(): int;
 
@@ -251,7 +251,7 @@ interface ResultInterface
 	 * internally before fetching results to make sure the result set
 	 * starts at zero.
 	 *
-	 * @param int $n
+	 * @param integer $n
 	 *
 	 * @return mixed
 	 */

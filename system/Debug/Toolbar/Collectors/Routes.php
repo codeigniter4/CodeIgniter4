@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 4.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 4.0.0
  * @filesource
  */
+
 use CodeIgniter\Config\Services;
 
 /**
@@ -47,7 +48,7 @@ class Routes extends BaseCollector
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $hasTimeline = false;
 
@@ -55,7 +56,7 @@ class Routes extends BaseCollector
 	 * Whether this collector needs to display
 	 * content in a tab or not.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $hasTabContent = true;
 
@@ -77,7 +78,7 @@ class Routes extends BaseCollector
 	public function display(): array
 	{
 		$rawRoutes = Services::routes(true);
-		$router = Services::router(null, true);
+		$router    = Services::router(null, true);
 
 		/*
 		 * Matched Route
@@ -85,47 +86,47 @@ class Routes extends BaseCollector
 		$route = $router->getMatchedRoute();
 
 		// Get our parameters
-		$method = is_callable($router->controllerName()) ? new \ReflectionFunction($router->controllerName()) : new \ReflectionMethod($router->controllerName(), $router->methodName());
+		$method    = is_callable($router->controllerName()) ? new \ReflectionFunction($router->controllerName()) : new \ReflectionMethod($router->controllerName(), $router->methodName());
 		$rawParams = $method->getParameters();
 
 		$params = [];
 		foreach ($rawParams as $key => $param)
 		{
 			$params[] = [
-				'name'	 => $param->getName(),
-				'value'	 => $router->params()[$key] ??
-				"&lt;empty&gt;&nbsp| default: " . var_export($param->getDefaultValue(), true)
+				'name'  => $param->getName(),
+				'value' => $router->params()[$key] ??
+				'&lt;empty&gt;&nbsp| default: ' . var_export($param->getDefaultValue(), true),
 			];
 		}
 
 		$matchedRoute = [
 			[
-				'directory'	 => $router->directory(),
+				'directory'  => $router->directory(),
 				'controller' => $router->controllerName(),
-				'method'	 => $router->methodName(),
+				'method'     => $router->methodName(),
 				'paramCount' => count($router->params()),
 				'truePCount' => count($params),
-				'params'	 => $params ?? []
-			]
+				'params'     => $params ?? [],
+			],
 		];
 
 		/*
 		 * Defined Routes
 		 */
 		$rawRoutes = $rawRoutes->getRoutes();
-		$routes = [];
+		$routes    = [];
 
 		foreach ($rawRoutes as $from => $to)
 		{
 			$routes[] = [
-				'from'	 => $from,
-				'to'	 => $to
+				'from' => $from,
+				'to'   => $to,
 			];
 		}
 
 		return [
 			'matchedRoute' => $matchedRoute,
-			'routes'       => $routes
+			'routes'       => $routes,
 		];
 	}
 
@@ -134,7 +135,7 @@ class Routes extends BaseCollector
 	/**
 	 * Returns a count of all the routes in the system.
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function getBadgeValue()
 	{
@@ -155,6 +156,5 @@ class Routes extends BaseCollector
 	public function icon(): string
 	{
 		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFDSURBVEhL7ZRNSsNQFIUjVXSiOFEcuQIHDpzpxC0IGYeE/BEInbWlCHEDLsSiuANdhKDjgm6ggtSJ+l25ldrmmTwIgtgDh/t37r1J+16cX0dRFMtpmu5pWAkrvYjjOB7AETzStBFW+inxu3KUJMmhludQpoflS1zXban4LYqiO224h6VLTHr8Z+z8EpIHFF9gG78nDVmW7UgTHKjsCyY98QP+pcq+g8Ku2s8G8X3f3/I8b038WZTp+bO38zxfFd+I6YY6sNUvFlSDk9CRhiAI1jX1I9Cfw7GG1UB8LAuwbU0ZwQnbRDeEN5qqBxZMLtE1ti9LtbREnMIuOXnyIf5rGIb7Wq8HmlZgwYBH7ORTcKH5E4mpjeGt9fBZcHE2GCQ3Vt7oTNPNg+FXLHnSsHkw/FR+Gg2bB8Ptzrst/v6C/wrH+QB+duli6MYJdQAAAABJRU5ErkJggg==';
-
 	}
 }

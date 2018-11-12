@@ -13,9 +13,9 @@ class HoneypotException extends ConfigException implements ExceptionInterface
 	public static function forNoNameField()
 	{
 		return new static(lang('Honeypot.noNameField'));
-    }
-    
-    public static function forNoHiddenValue()
+	}
+
+	public static function forNoHiddenValue()
 	{
 		return new static(lang('Honeypot.noHiddenValue'));
 	}

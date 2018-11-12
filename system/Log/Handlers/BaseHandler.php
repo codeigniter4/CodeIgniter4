@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -44,14 +44,14 @@ abstract class BaseHandler implements HandlerInterface
 
 	/**
 	 * Handles
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $handles;
 
 	/**
 	 * Date format for logging
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $dateFormat = 'Y-m-d H:i:s';
@@ -60,7 +60,7 @@ abstract class BaseHandler implements HandlerInterface
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param array $config
 	 */
 	public function __construct(array $config)
@@ -76,7 +76,7 @@ abstract class BaseHandler implements HandlerInterface
 	 *
 	 * @param $level
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function canHandle(string $level): bool
 	{
@@ -94,7 +94,7 @@ abstract class BaseHandler implements HandlerInterface
 	 * @param $level
 	 * @param $message
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	abstract public function handle($level, $message): bool;
 

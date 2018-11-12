@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -121,7 +121,7 @@ class Validation implements ValidationInterface
 	 * @param array  $data  The array of data to validate.
 	 * @param string $group The pre-defined group of rules to apply.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function run(array $data = null, string $group = null, string $db_group = null): bool
 	{
@@ -174,7 +174,7 @@ class Validation implements ValidationInterface
 	 * @param string   $rule   Rule.
 	 * @param string[] $errors Errors.
 	 *
-	 * @return bool True if valid, else false.
+	 * @return boolean True if valid, else false.
 	 */
 	public function check($value, string $rule, array $errors = []): bool
 	{
@@ -198,9 +198,9 @@ class Validation implements ValidationInterface
 	 * @param string|null $label
 	 * @param string      $value
 	 * @param array|null  $rules
-	 * @param array       $data // All of the fields to check.
+	 * @param array       $data  // All of the fields to check.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function processRules(string $field, string $label = null, $value, $rules = null, array $data)
 	{
@@ -284,7 +284,6 @@ class Validation implements ValidationInterface
 				return false;
 			}
 		}
-
 
 		return true;
 	}
@@ -413,7 +412,7 @@ class Validation implements ValidationInterface
 	 *
 	 * @param string $field
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function hasRule(string $field): bool
 	{
@@ -453,7 +452,6 @@ class Validation implements ValidationInterface
 	 *
 	 * @param string $group Group.
 	 *
-	 *
 	 * @throws \InvalidArgumentException If group not found.
 	 */
 	public function setRuleGroup(string $group)
@@ -461,7 +459,7 @@ class Validation implements ValidationInterface
 		$rules       = $this->getRuleGroup($group);
 		$this->rules = $rules;
 
-		$errorName = $group.'_errors';
+		$errorName = $group . '_errors';
 		if (isset($this->config->$errorName))
 		{
 			$this->customErrors = $this->config->$errorName;
@@ -483,7 +481,7 @@ class Validation implements ValidationInterface
 		}
 
 		return $this->view->setVar('errors', $this->getErrors())
-		                  ->render($this->config->templates[$template]);
+						  ->render($this->config->templates[$template]);
 	}
 
 	//--------------------------------------------------------------------
@@ -498,7 +496,7 @@ class Validation implements ValidationInterface
 	 */
 	public function showError(string $field, string $template = 'single'): string
 	{
-		if ( ! array_key_exists($field, $this->getErrors()))
+		if (! array_key_exists($field, $this->getErrors()))
 		{
 			return '';
 		}
@@ -509,7 +507,7 @@ class Validation implements ValidationInterface
 		}
 
 		return $this->view->setVar('error', $this->getError($field))
-		                  ->render($this->config->templates[$template]);
+						  ->render($this->config->templates[$template]);
 	}
 
 	//--------------------------------------------------------------------
@@ -564,7 +562,7 @@ class Validation implements ValidationInterface
 
 		// If {group}_errors exists in the config file,
 		// then override our custom errors with them.
-		$errorName = $group.'_errors';
+		$errorName = $group . '_errors';
 
 		if (isset($this->config->$errorName))
 		{
@@ -582,7 +580,7 @@ class Validation implements ValidationInterface
 	 *
 	 * @param string $field
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function hasError(string $field): bool
 	{
@@ -626,7 +624,6 @@ class Validation implements ValidationInterface
 	 * Excluded from code coverage because that it always run as cli
 	 *
 	 * @codeCoverageIgnore
-	 *
 	 */
 	public function getErrors(): array
 	{
@@ -691,7 +688,7 @@ class Validation implements ValidationInterface
 			// Try to grab a localized version of the message...
 			// lang() will return the rule name back if not found,
 			// so there will always be a string being returned.
-			$message = lang('Validation.'.$rule);
+			$message = lang('Validation.' . $rule);
 		}
 
 		$message = str_replace('{field}', $label ?? $field, $message);
@@ -701,7 +698,6 @@ class Validation implements ValidationInterface
 	}
 
 	/**
-	 *
 	 * Split rules string by pipe operator.
 	 *
 	 * @param string $rules
@@ -710,7 +706,7 @@ class Validation implements ValidationInterface
 	 */
 	protected function splitRules(string $rules): array
 	{
-		$non_escape_bracket = '((?<!\\\\)(?:\\\\\\\\)*[\[\]])';
+		$non_escape_bracket  = '((?<!\\\\)(?:\\\\\\\\)*[\[\]])';
 		$pipe_not_in_bracket = sprintf(
 			'/\|(?=(?:[^\[\]]*%s[^\[\]]*%s)*(?![^\[\]]*%s))/',
 			$non_escape_bracket,

@@ -3,24 +3,25 @@
 /**
  * Database language strings.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  *
  * @codeCoverageIgnore
  */
+
 return [
-	'invalidEvent'          => '{0} is not a valid Model Event callback.',
-	'invalidArgument'       => 'You must provide a valid {0}.',
-	'invalidAllowedFields'  => 'Allowed fields must be specified for model: {0}',
-	'emptyDataset'          => 'There is no data to {0}.',
-	'failGetFieldData'      => 'Failed to get field data from database.',
-	'failGetIndexData'      => 'Failed to get index data from database.',
-	'failGetForeignKeyData' => 'Failed to get foreign key data from database.',
-	'parseStringFail'       => 'Parsing key string failed.',
-	'featureUnavailable'    => 'This feature is not available for the database you are using.',
+   'invalidEvent'          => '{0} is not a valid Model Event callback.',
+   'invalidArgument'       => 'You must provide a valid {0}.',
+   'invalidAllowedFields'  => 'Allowed fields must be specified for model: {0}',
+   'emptyDataset'          => 'There is no data to {0}.',
+   'failGetFieldData'      => 'Failed to get field data from database.',
+   'failGetIndexData'      => 'Failed to get index data from database.',
+   'failGetForeignKeyData' => 'Failed to get foreign key data from database.',
+   'parseStringFail'       => 'Parsing key string failed.',
+   'featureUnavailable'    => 'This feature is not available for the database you are using.',
 ];

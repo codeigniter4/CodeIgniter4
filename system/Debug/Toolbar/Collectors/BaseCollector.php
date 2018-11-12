@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 4.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -46,7 +46,7 @@ class BaseCollector
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $hasTimeline = false;
 
@@ -54,7 +54,7 @@ class BaseCollector
 	 * Whether this collector needs to display
 	 * content in a tab or not.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $hasTabContent = false;
 
@@ -62,7 +62,7 @@ class BaseCollector
 	 * Whether this collector needs to display
 	 * a label or not.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $hasLabel = false;
 
@@ -70,7 +70,7 @@ class BaseCollector
 	 * Whether this collector has data that
 	 * should be shown in the Vars tab.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $hasVarData = false;
 
@@ -87,7 +87,7 @@ class BaseCollector
 	/**
 	 * Gets the Collector's title.
 	 *
-	 * @param bool $safe
+	 * @param  boolean $safe
 	 * @return string
 	 */
 	public function getTitle($safe = false): string
@@ -117,7 +117,7 @@ class BaseCollector
 	/**
 	 * Does this collector need it's own tab?
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function hasTabContent(): bool
 	{
@@ -129,7 +129,7 @@ class BaseCollector
 	/**
 	 * Does this collector have a label?
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function hasLabel(): bool
 	{
@@ -141,7 +141,7 @@ class BaseCollector
 	/**
 	 * Does this collector have information for the timeline?
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function hasTimelineData(): bool
 	{
@@ -158,7 +158,7 @@ class BaseCollector
 	 */
 	public function timelineData(): array
 	{
-		if ( ! $this->hasTimeline)
+		if (! $this->hasTimeline)
 		{
 			return [];
 		}
@@ -245,9 +245,9 @@ class BaseCollector
 	 *
 	 * This makes nicer looking paths for the error output.
 	 *
-	 * @param    string $file
+	 * @param string $file
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	public function cleanPath($file)
 	{
@@ -282,7 +282,7 @@ class BaseCollector
 	 *
 	 * If not, then the toolbar button won't get shown.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isEmpty()
 	{

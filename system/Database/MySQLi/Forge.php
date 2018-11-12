@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -45,14 +45,14 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * CREATE DATABASE statement
 	 *
-	 * @var    string
+	 * @var string
 	 */
 	protected $createDatabaseStr = 'CREATE DATABASE %s CHARACTER SET %s COLLATE %s';
 
 	/**
 	 * DROP CONSTRAINT statement
 	 *
-	 * @var    string
+	 * @var string
 	 */
 	protected $dropConstraintStr = 'ALTER TABLE %s DROP FOREIGN KEY %s';
 
@@ -62,14 +62,14 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * Whether table keys are created from within the
 	 * CREATE TABLE statement.
 	 *
-	 * @var    bool
+	 * @var boolean
 	 */
 	protected $createTableKeys = true;
 
 	/**
 	 * UNSIGNED support
 	 *
-	 * @var    array
+	 * @var array
 	 */
 	protected $_unsigned = [
 		'TINYINT',
@@ -88,8 +88,8 @@ class Forge extends \CodeIgniter\Database\Forge
 
 	/**
 	 * Table Options list which required to be quoted
-	 * 
-	 * @var    array
+	 *
+	 * @var array
 	 */
 	protected $_quoted_table_options = [
 		'COMMENT',
@@ -104,7 +104,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * NULL value representation in CREATE/ALTER TABLE statements
 	 *
-	 * @var    string
+	 * @var string
 	 */
 	protected $_null = 'NULL';
 
@@ -113,8 +113,8 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * CREATE TABLE attributes
 	 *
-	 * @param	array	$attributes	Associative array of table attributes
-	 * @return	string
+	 * @param  array $attributes Associative array of table attributes
+	 * @return string
 	 */
 	protected function _createTableAttributes($attributes)
 	{
@@ -125,7 +125,7 @@ class Forge extends \CodeIgniter\Database\Forge
 			if (is_string($key))
 			{
 				$sql .= ' ' . strtoupper($key) . ' = ';
-				
+
 				if (in_array(strtoupper($key), $this->_quoted_table_options))
 				{
 					$sql .= $this->db->escape($attributes[$key]);
@@ -137,12 +137,12 @@ class Forge extends \CodeIgniter\Database\Forge
 			}
 		}
 
-		if ( ! empty($this->db->charset) && ! strpos($sql, 'CHARACTER SET') && ! strpos($sql, 'CHARSET'))
+		if (! empty($this->db->charset) && ! strpos($sql, 'CHARACTER SET') && ! strpos($sql, 'CHARSET'))
 		{
 			$sql .= ' DEFAULT CHARACTER SET = ' . $this->db->escapeString($this->db->charset);
 		}
 
-		if ( ! empty($this->db->DBCollat) && ! strpos($sql, 'COLLATE'))
+		if (! empty($this->db->DBCollat) && ! strpos($sql, 'COLLATE'))
 		{
 			$sql .= ' COLLATE = ' . $this->db->escapeString($this->db->DBCollat);
 		}
@@ -155,10 +155,10 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * ALTER TABLE
 	 *
-	 * @param	string	$alter_type	ALTER type
-	 * @param	string	$table		Table name
-	 * @param	mixed	$field		Column definition
-	 * @return	string|string[]
+	 * @param  string $alter_type ALTER type
+	 * @param  string $table      Table name
+	 * @param  mixed  $field      Column definition
+	 * @return string|string[]
 	 */
 	protected function _alterTable($alter_type, $table, $field)
 	{
@@ -168,9 +168,9 @@ class Forge extends \CodeIgniter\Database\Forge
 		}
 
 		$sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
-		for ($i = 0, $c = count($field); $i < $c; $i ++ )
+		for ($i = 0, $c = count($field); $i < $c; $i ++)
 		{
-			if ($field[$i]['_literal'] !== FALSE)
+			if ($field[$i]['_literal'] !== false)
 			{
 				$field[$i] = ($alter_type === 'ADD') ? "\n\tADD " . $field[$i]['_literal'] : "\n\tMODIFY " . $field[$i]['_literal'];
 			}
@@ -197,14 +197,14 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Process column
 	 *
-	 * @param	array	$field
-	 * @return	string
+	 * @param  array $field
+	 * @return string
 	 */
 	protected function _processColumn($field)
 	{
 		$extra_clause = isset($field['after']) ? ' AFTER ' . $this->db->escapeIdentifiers($field['after']) : '';
 
-		if (empty($extra_clause) && isset($field['first']) && $field['first'] === TRUE)
+		if (empty($extra_clause) && isset($field['first']) && $field['first'] === true)
 		{
 			$extra_clause = ' FIRST';
 		}
@@ -226,27 +226,27 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Process indexes
 	 *
-	 * @param	string	$table	(ignored)
-	 * @return	string
+	 * @param  string $table (ignored)
+	 * @return string
 	 */
 	protected function _processIndexes($table)
 	{
 		$sql = '';
 
-		for ($i = 0, $c = count($this->keys); $i < $c; $i ++ )
+		for ($i = 0, $c = count($this->keys); $i < $c; $i ++)
 		{
 			if (is_array($this->keys[$i]))
 			{
-				for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2 ++ )
+				for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2 ++)
 				{
-					if ( ! isset($this->fields[$this->keys[$i][$i2]]))
+					if (! isset($this->fields[$this->keys[$i][$i2]]))
 					{
 						unset($this->keys[$i][$i2]);
 						continue;
 					}
 				}
 			}
-			elseif ( ! isset($this->fields[$this->keys[$i]]))
+			elseif (! isset($this->fields[$this->keys[$i]]))
 			{
 				unset($this->keys[$i]);
 				continue;

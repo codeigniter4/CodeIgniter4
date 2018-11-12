@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Config\BaseConfig;
 use Config\Database;
 
@@ -65,9 +66,9 @@ class Config extends BaseConfig
 	/**
 	 * Creates the default
 	 *
-	 * @param string|array  $group     The name of the connection group to use,
-	 *                                 or an array of configuration settings.
-	 * @param bool          $getShared Whether to return a shared instance of the connection.
+	 * @param string|array $group     The name of the connection group to use,
+	 *                                or an array of configuration settings.
+	 * @param boolean      $getShared Whether to return a shared instance of the connection.
 	 *
 	 * @return BaseConnection
 	 */
@@ -76,17 +77,17 @@ class Config extends BaseConfig
 		if (is_array($group))
 		{
 			$config = $group;
-			$group = 'custom';
+			$group  = 'custom';
 		}
 
 		$config = $config ?? new \Config\Database();
 
 		if (empty($group))
 		{
-			$group = ENVIRONMENT == 'testing' ? 'tests' : $config->defaultGroup;
+			$group = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
 		}
 
-		if (is_string($group) && ! isset($config->$group) && $group != 'custom')
+		if (is_string($group) && ! isset($config->$group) && $group !== 'custom')
 		{
 			throw new \InvalidArgumentException($group . ' is not a valid database connection group.');
 		}
@@ -140,15 +141,15 @@ class Config extends BaseConfig
 
 		if (empty($group))
 		{
-			$group = ENVIRONMENT == 'testing' ? 'tests' : $config->defaultGroup;
+			$group = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
 		}
 
-		if ( ! isset($config->$group))
+		if (! isset($config->$group))
 		{
 			throw new \InvalidArgumentException($group . ' is not a valid database connection group.');
 		}
 
-		if ( ! isset(self::$instances[$group]))
+		if (! isset(self::$instances[$group]))
 		{
 			$db = self::connect($group);
 		}
@@ -180,12 +181,12 @@ class Config extends BaseConfig
 			$group = $config->defaultGroup;
 		}
 
-		if ( ! isset($config->group))
+		if (! isset($config->group))
 		{
 			throw new \InvalidArgumentException($group . ' is not a valid database connection group.');
 		}
 
-		if ( ! isset(self::$instances[$group]))
+		if (! isset(self::$instances[$group]))
 		{
 			$db = self::connect($group);
 		}

@@ -16,7 +16,10 @@ class ImageTest extends \CIUnitTestCase
 		$this->origin = '_support/Images/';
 		vfsStream::copyFromFileSystem(TESTPATH . $this->origin, $this->root);
 		// make subfolders
-		$structure = ['work' => [], 'wontwork' => []];
+		$structure = [
+			'work'     => [],
+			'wontwork' => [],
+		];
 		vfsStream::create($structure);
 		// with one of them read only
 		$wont = $this->root->getChild('wontwork')->chmod(0400);
@@ -37,11 +40,11 @@ class ImageTest extends \CIUnitTestCase
 	public function testGetProperties()
 	{
 		$expected = [
-			'width'		 => 155,
-			'height'	 => 200,
+			'width'      => 155,
+			'height'     => 200,
 			'image_type' => IMAGETYPE_PNG,
-			'size_str'	 => 'width="155" height="200"',
-			'mime_type'	 => "image/png",
+			'size_str'   => 'width="155" height="200"',
+			'mime_type'  => 'image/png',
 		];
 
 		$this->assertEquals($expected, $this->image->getProperties(true));
@@ -56,7 +59,7 @@ class ImageTest extends \CIUnitTestCase
 		$this->assertEquals(200, $this->image->origHeight);
 		$this->assertEquals(IMAGETYPE_PNG, $this->image->imageType);
 		$this->assertEquals('width="155" height="200"', $this->image->sizeStr);
-		$this->assertEquals("image/png", $this->image->mime);
+		$this->assertEquals('image/png', $this->image->mime);
 	}
 
 	public function testCopyDefaultName()

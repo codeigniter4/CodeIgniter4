@@ -11,7 +11,7 @@ class LoggerTest extends \CIUnitTestCase
 
 	public function testThrowsExceptionWithBadHandlerSettings()
 	{
-		$config = new LoggerConfig();
+		$config           = new LoggerConfig();
 		$config->handlers = null;
 
 		$this->expectException(FrameworkException::class);
@@ -38,7 +38,7 @@ class LoggerTest extends \CIUnitTestCase
 
 	public function testLogReturnsFalseWhenLogNotHandled()
 	{
-		$config = new LoggerConfig();
+		$config            = new LoggerConfig();
 		$config->threshold = 3;
 
 		$logger = new Logger($config);
@@ -51,7 +51,7 @@ class LoggerTest extends \CIUnitTestCase
 	public function testLogActuallyLogs()
 	{
 		$config = new LoggerConfig();
-//		$Config->handlers['TestHandler']['handles'] =  [LogLevel::CRITICAL];
+		//      $Config->handlers['TestHandler']['handles'] =  [LogLevel::CRITICAL];
 
 		$logger = new Logger($config);
 
@@ -69,7 +69,7 @@ class LoggerTest extends \CIUnitTestCase
 
 	public function testLogDoesnotLogUnhandledLevels()
 	{
-		$config = new LoggerConfig();
+		$config                                                                = new LoggerConfig();
 		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
 
 		$logger = new Logger($config);
@@ -107,7 +107,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logger = new Logger($config);
 
-		$_POST = ['foo' => 'bar'];
+		$_POST    = ['foo' => 'bar'];
 		$expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message $_POST: ' . print_r($_POST, true);
 
 		$logger->log('debug', 'Test message {post_vars}');
@@ -126,7 +126,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logger = new Logger($config);
 
-		$_GET = ['bar' => 'baz'];
+		$_GET     = ['bar' => 'baz'];
 		$expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message $_GET: ' . print_r($_GET, true);
 
 		$logger->log('debug', 'Test message {get_vars}');
@@ -228,7 +228,8 @@ class LoggerTest extends \CIUnitTestCase
 		try
 		{
 			throw new Exception('These are not the droids you are looking for');
-		} catch (\Exception $e)
+		}
+		catch (\Exception $e)
 		{
 			$logger->log('error', '[ERROR] {exception}', ['exception' => $e]);
 		}
@@ -415,7 +416,7 @@ class LoggerTest extends \CIUnitTestCase
 		$config = new LoggerConfig();
 		$logger = new \Tests\Support\Log\TestLogger($config);
 
-		$ohoh = APPPATH . 'LoggerTest';
+		$ohoh     = APPPATH . 'LoggerTest';
 		$expected = 'APPPATH/LoggerTest';
 
 		$this->assertEquals($expected, $logger->cleanup($ohoh));

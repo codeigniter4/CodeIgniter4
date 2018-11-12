@@ -2,13 +2,13 @@
 
 class TestRules {
 
-    public function customError(string $str, string &$error=null)
-    {
-        $error = 'My lovely error';
+	public function customError(string $str, string &$error = null)
+	{
+		$error = 'My lovely error';
 
-        return false;
-    }
+		return false;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 }

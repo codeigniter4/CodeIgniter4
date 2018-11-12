@@ -17,13 +17,13 @@ class FileLocatorTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		$config = new MockAutoload();
+		$config       = new MockAutoload();
 		$config->psr4 = [
-			'App\Libraries'	 => '/application/somewhere',
-			'App'			 => '/application',
-			'Sys'			 => BASEPATH,
-			'Blog'			 => '/modules/blog',
-			'Tests/Support' => TESTPATH.'_support/',
+			'App\Libraries' => '/application/somewhere',
+			'App'           => '/application',
+			'Sys'           => BASEPATH,
+			'Blog'          => '/modules/blog',
+			'Tests/Support' => TESTPATH . '_support/',
 		];
 
 		$this->loader = new MockFileLocator($config);
@@ -33,7 +33,7 @@ class FileLocatorTest extends \CIUnitTestCase
 			APPPATH . 'Views/index.php',
 			APPPATH . 'Views/admin/users/create.php',
 			'/modules/blog/Views/index.php',
-			'/modules/blog/Views/admin/posts.php'
+			'/modules/blog/Views/admin/posts.php',
 		]);
 	}
 
@@ -223,7 +223,7 @@ class FileLocatorTest extends \CIUnitTestCase
 	public function testFindQNameFromPathSimple()
 	{
 		$ClassName = $this->loader->findQualifiedNameFromPath('system/HTTP/Header.php');
-		$expected = '\Sys\HTTP\Header';
+		$expected  = '\Sys\HTTP\Header';
 
 		$this->assertEquals($expected, $ClassName);
 	}

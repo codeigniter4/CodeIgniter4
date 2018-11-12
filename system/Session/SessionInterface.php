@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -45,7 +45,7 @@ interface SessionInterface
 	/**
 	 * Regenerates the session ID.
 	 *
-	 * @param bool $destroy Should old session data be destroyed?
+	 * @param boolean $destroy Should old session data be destroyed?
 	 */
 	public function regenerate(bool $destroy = false);
 
@@ -83,7 +83,7 @@ interface SessionInterface
 	 *
 	 * Replaces the legacy method $session->userdata();
 	 *
-	 * @param  string $key Identifier of the session property to retrieve
+	 * @param string $key Identifier of the session property to retrieve
 	 *
 	 * @return array|null    The property value(s)
 	 */
@@ -94,9 +94,9 @@ interface SessionInterface
 	/**
 	 * Returns whether an index exists in the session array.
 	 *
-	 * @param string	$key	Identifier of the session property we are interested in.
+	 * @param string $key Identifier of the session property we are interested in.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function has(string $key);
 
@@ -109,7 +109,7 @@ interface SessionInterface
 	 * identifiers to remove. Otherwise, it is interpreted as the identifier
 	 * of a specific session property to remove.
 	 *
-	 * @param  string|array $key Identifier of the session property or properties to remove.
+	 * @param string|array $key Identifier of the session property or properties to remove.
 	 */
 	public function remove($key);
 
@@ -124,8 +124,8 @@ interface SessionInterface
 	 * Otherwise, it is interpreted as the identifier of a specific
 	 * flashdata property, with $value containing the property value.
 	 *
-	 * @param  string|array $data  Property identifier or associative array of properties
-	 * @param null          $value Property value if $data is a scalar
+	 * @param string|array $data  Property identifier or associative array of properties
+	 * @param null         $value Property value if $data is a scalar
 	 */
 	public function setFlashdata($data, $value = null);
 
@@ -136,9 +136,9 @@ interface SessionInterface
 	 *
 	 * If the item key is null, return all flashdata.
 	 *
-	 * @param string $key	Property identifier
+	 * @param  string $key Property identifier
 	 * @return array|null	The requested property value, or an associative
-	 * 	array  of them
+	 *     array  of them
 	 */
 	public function getFlashdata(string $key = null);
 
@@ -147,7 +147,7 @@ interface SessionInterface
 	/**
 	 * Keeps a single piece of flash data alive for one more request.
 	 *
-	 * @param string $key	Property identifier or array of them
+	 * @param string $key Property identifier or array of them
 	 */
 	public function keepFlashdata(string $key);
 
@@ -188,7 +188,7 @@ interface SessionInterface
 	 *
 	 * @param string|array $data  Session data key or associative array of items
 	 * @param mixed        $value Value to store
-	 * @param int          $ttl   Time-to-live in seconds
+	 * @param integer      $ttl   Time-to-live in seconds
 	 */
 	public function setTempdata($data, $value = null, $ttl = 300);
 
@@ -198,7 +198,7 @@ interface SessionInterface
 	 * Returns either a single piece of tempdata, or all temp data currently
 	 * in the session.
 	 *
-	 * @param  string $key   Session data key
+	 * @param  string $key Session data key
 	 * @return mixed        Session data value or null if not found.
 	 */
 	public function getTempdata($key = null);
@@ -218,10 +218,10 @@ interface SessionInterface
 	 * Mark one of more pieces of data as being temporary, meaning that
 	 * it has a set lifespan within the session.
 	 *
-	 * @param  string|array $key Property identifier or array of them
-	 * @param int           $ttl Time to live, in seconds
+	 * @param string|array $key Property identifier or array of them
+	 * @param integer      $ttl Time to live, in seconds
 	 *
-	 * @return bool    False if any of the properties were not set
+	 * @return boolean    False if any of the properties were not set
 	 */
 	public function markAsTempdata($key, $ttl = 300);
 

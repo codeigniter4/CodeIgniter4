@@ -6,6 +6,7 @@
  *
  * catch (\CodeIgniter\Cache\Exceptions\ExceptionInterface) { ... }
  */
+
 interface ExceptionInterface
 {
 }

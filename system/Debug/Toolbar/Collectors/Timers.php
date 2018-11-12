@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 4.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 4.0.0
  * @filesource
  */
+
 use CodeIgniter\Config\Services;
 
 /**
@@ -47,7 +48,7 @@ class Timers extends BaseCollector
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $hasTimeline = true;
 
@@ -55,7 +56,7 @@ class Timers extends BaseCollector
 	 * Whether this collector needs to display
 	 * content in a tab or not.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $hasTabContent = false;
 
@@ -80,18 +81,20 @@ class Timers extends BaseCollector
 		$data = [];
 
 		$benchmark = Services::timer(true);
-		$rows = $benchmark->getTimers(6);
+		$rows      = $benchmark->getTimers(6);
 
 		foreach ($rows as $name => $info)
 		{
-			if ($name == 'total_execution')
+			if ($name === 'total_execution')
+			{
 				continue;
+			}
 
 			$data[] = [
-				'name'		 => ucwords(str_replace('_', ' ', $name)),
-				'component'	 => 'Timer',
-				'start'		 => $info['start'],
-				'duration'	 => $info['end'] - $info['start']
+				'name'      => ucwords(str_replace('_', ' ', $name)),
+				'component' => 'Timer',
+				'start'     => $info['start'],
+				'duration'  => $info['end'] - $info['start'],
 			];
 		}
 

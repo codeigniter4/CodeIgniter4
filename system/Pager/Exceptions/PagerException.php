@@ -5,7 +5,7 @@ use CodeIgniter\Exceptions\FrameworkException;
 
 class PagerException extends FrameworkException implements ExceptionInterface
 {
-	public static function forInvalidTemplate(string $template=null)
+	public static function forInvalidTemplate(string $template = null)
 	{
 		return new static(lang('Pager.invalidTemplate', [$template]));
 	}

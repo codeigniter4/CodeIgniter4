@@ -7,14 +7,14 @@ class TimeDifference
 	/**
 	 * The timestamp of the "current" time.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	protected $currentTime;
 
 	/**
 	 * The timestamp to compare the current time to.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	protected $testTime;
 
@@ -32,29 +32,30 @@ class TimeDifference
 	 */
 	protected $months = 0;
 	/**
-	 * @var int
+	 * @var integer
 	 */
 	protected $weeks = 0;
 	/**
-	 * @var int
+	 * @var integer
 	 */
 	protected $days = 0;
 	/**
-	 * @var int
+	 * @var integer
 	 */
 	protected $hours = 0;
 	/**
-	 * @var int
+	 * @var integer
 	 */
 	protected $minutes = 0;
 	/**
-	 * @var int
+	 * @var integer
 	 */
 	protected $seconds = 0;
 
 	/**
 	 * Difference in seconds.
-	 * @var int
+	 *
+	 * @var integer
 	 */
 	protected $difference;
 
@@ -71,7 +72,7 @@ class TimeDifference
 
 		$current = \IntlCalendar::fromDateTime($currentTime->format('Y-m-d H:i:s'));
 		$time    = \IntlCalendar::fromDateTime($testTime->format('Y-m-d H:i:s'))
-		                ->getTime();
+						->getTime();
 
 		$this->currentTime = $current;
 		$this->testTime    = $time;
@@ -82,11 +83,11 @@ class TimeDifference
 	/**
 	 * Returns the number of years of difference between the two.
 	 *
-	 * @param bool $raw
+	 * @param boolean $raw
 	 *
-	 * @return float|int
+	 * @return float|integer
 	 */
-	public function getYears(bool $raw=false)
+	public function getYears(bool $raw = false)
 	{
 		if ($raw)
 		{
@@ -100,11 +101,11 @@ class TimeDifference
 	/**
 	 * Returns the number of months difference between the two dates.
 	 *
-	 * @param bool $raw
+	 * @param boolean $raw
 	 *
-	 * @return float|int
+	 * @return float|integer
 	 */
-	public function getMonths(bool $raw=false)
+	public function getMonths(bool $raw = false)
 	{
 		if ($raw)
 		{
@@ -118,11 +119,11 @@ class TimeDifference
 	/**
 	 * Returns the number of weeks difference between the two dates.
 	 *
-	 * @param bool $raw
+	 * @param boolean $raw
 	 *
-	 * @return float|int
+	 * @return float|integer
 	 */
-	public function getWeeks(bool $raw=false)
+	public function getWeeks(bool $raw = false)
 	{
 		if ($raw)
 		{
@@ -136,11 +137,11 @@ class TimeDifference
 	/**
 	 * Returns the number of days difference between the two dates.
 	 *
-	 * @param bool $raw
+	 * @param boolean $raw
 	 *
-	 * @return float|int
+	 * @return float|integer
 	 */
-	public function getDays(bool $raw=false)
+	public function getDays(bool $raw = false)
 	{
 		if ($raw)
 		{
@@ -154,11 +155,11 @@ class TimeDifference
 	/**
 	 * Returns the number of hours difference between the two dates.
 	 *
-	 * @param bool $raw
+	 * @param boolean $raw
 	 *
-	 * @return float|int
+	 * @return float|integer
 	 */
-	public function getHours(bool $raw=false)
+	public function getHours(bool $raw = false)
 	{
 		if ($raw)
 		{
@@ -172,11 +173,11 @@ class TimeDifference
 	/**
 	 * Returns the number of minutes difference between the two dates.
 	 *
-	 * @param bool $raw
+	 * @param boolean $raw
 	 *
-	 * @return float|int
+	 * @return float|integer
 	 */
-	public function getMinutes(bool $raw=false)
+	public function getMinutes(bool $raw = false)
 	{
 		if ($raw)
 		{
@@ -190,11 +191,11 @@ class TimeDifference
 	/**
 	 * Returns the number of seconds difference between the two dates.
 	 *
-	 * @param bool $raw
+	 * @param boolean $raw
 	 *
-	 * @return int
+	 * @return integer
 	 */
-	public function getSeconds(bool $raw=false)
+	public function getSeconds(bool $raw = false)
 	{
 		if ($raw)
 		{
@@ -205,14 +206,14 @@ class TimeDifference
 		return $time->fieldDifference($this->testTime, \IntlCalendar::FIELD_SECOND);
 	}
 
-	public function humanize( string $locale = null ): string
+	public function humanize(string $locale = null): string
 	{
 		$current = clone($this->currentTime);
 
-		$years = $current->fieldDifference($this->testTime, \IntlCalendar::FIELD_YEAR);
-		$months = $current->fieldDifference($this->testTime, \IntlCalendar::FIELD_MONTH);
-		$days = $current->fieldDifference($this->testTime, \IntlCalendar::FIELD_DAY_OF_YEAR);
-		$hours = $current->fieldDifference($this->testTime, \IntlCalendar::FIELD_HOUR_OF_DAY);
+		$years   = $current->fieldDifference($this->testTime, \IntlCalendar::FIELD_YEAR);
+		$months  = $current->fieldDifference($this->testTime, \IntlCalendar::FIELD_MONTH);
+		$days    = $current->fieldDifference($this->testTime, \IntlCalendar::FIELD_DAY_OF_YEAR);
+		$hours   = $current->fieldDifference($this->testTime, \IntlCalendar::FIELD_HOUR_OF_DAY);
 		$minutes = $current->fieldDifference($this->testTime, \IntlCalendar::FIELD_MINUTE);
 
 		$phrase = null;
@@ -229,7 +230,7 @@ class TimeDifference
 		}
 		else if ($days !== 0 && (abs($days) >= 7))
 		{
-			$weeks = ceil($days / 7);
+			$weeks  = ceil($days / 7);
 			$phrase = lang('Time.weeks', [abs($weeks)], $locale);
 			$before = $days < 0;
 		}
@@ -267,7 +268,7 @@ class TimeDifference
 	 */
 	public function __get($name)
 	{
-		$name = ucfirst(strtolower($name));
+		$name   = ucfirst(strtolower($name));
 		$method = "get{$name}";
 
 		if (method_exists($this, $method))

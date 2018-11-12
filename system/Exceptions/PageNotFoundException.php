@@ -4,7 +4,8 @@ class PageNotFoundException extends \OutOfBoundsException implements ExceptionIn
 {
 	/**
 	 * Error code
-	 * @var int
+	 *
+	 * @var integer
 	 */
 	protected $code = 404;
 

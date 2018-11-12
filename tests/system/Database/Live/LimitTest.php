@@ -13,10 +13,10 @@ class LimitTest extends CIDatabaseTestCase
 
 	public function testLimit()
 	{
-	    $jobs = $this->db->table('job')
-		                ->limit(2)
-		                ->get()
-		                ->getResult();
+		$jobs = $this->db->table('job')
+						->limit(2)
+						->get()
+						->getResult();
 
 		$this->assertCount(2, $jobs);
 		$this->assertEquals('Developer', $jobs[0]->name);
@@ -27,10 +27,10 @@ class LimitTest extends CIDatabaseTestCase
 
 	public function testLimitAndOffset()
 	{
-	    $jobs = $this->db->table('job')
-		                ->limit(2, 2)
-		                ->get()
-		                ->getResult();
+		$jobs = $this->db->table('job')
+						->limit(2, 2)
+						->get()
+						->getResult();
 
 		$this->assertCount(2, $jobs);
 		$this->assertEquals('Accountant', $jobs[0]->name);

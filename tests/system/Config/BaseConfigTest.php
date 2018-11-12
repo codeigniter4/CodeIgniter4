@@ -15,11 +15,11 @@ class BaseConfigTest extends CIUnitTestCase
 
 		$this->fixturesFolder = __DIR__ . '/fixtures';
 
-		if ( ! class_exists('SimpleConfig', false))
+		if (! class_exists('SimpleConfig', false))
 		{
 			require $this->fixturesFolder . '/SimpleConfig.php';
 		}
-		if ( ! class_exists('RegistrarConfig', false))
+		if (! class_exists('RegistrarConfig', false))
 		{
 			require $this->fixturesFolder . '/RegistrarConfig.php';
 		}
@@ -129,8 +129,8 @@ class BaseConfigTest extends CIUnitTestCase
 		$config = new \SimpleConfig();
 
 		$this->assertEquals(0, $config->QZERO);
-		$this->assertSame("0", $config->QZEROSTR);
-		$this->assertEquals(" ", $config->QEMPTYSTR);
+		$this->assertSame('0', $config->QZEROSTR);
+		$this->assertEquals(' ', $config->QEMPTYSTR);
 		$this->assertFalse($config->QFALSE);
 	}
 
@@ -138,7 +138,7 @@ class BaseConfigTest extends CIUnitTestCase
 
 	public function testRegistrars()
 	{
-		$config = new \RegistrarConfig();
+		$config              = new \RegistrarConfig();
 		$config::$registrars = ['\Tests\Support\Config\Registrar'];
 		$this->setPrivateProperty($config, 'didDiscovery', true);
 		$method = $this->getPrivateMethodInvoker($config, 'registerProperties');
@@ -157,7 +157,7 @@ class BaseConfigTest extends CIUnitTestCase
 	public function testBadRegistrar()
 	{
 		// Shouldn't change any values.
-		$config = new \RegistrarConfig();
+		$config              = new \RegistrarConfig();
 		$config::$registrars = ['\Tests\Support\Config\BadRegistrar'];
 		$this->setPrivateProperty($config, 'didDiscovery', true);
 		$method = $this->getPrivateMethodInvoker($config, 'registerProperties');

@@ -14,18 +14,21 @@ class ConsoleTest extends \CIUnitTestCase
 		parent::setUp();
 
 		CITestStreamFilter::$buffer = '';
-		$this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
+		$this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
 
 		$this->env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
 		$this->env->load();
 
 		// Set environment values that would otherwise stop the framework from functioning during tests.
-		if ( ! isset($_SERVER['app.baseURL']))
+		if (! isset($_SERVER['app.baseURL']))
 		{
 			$_SERVER['app.baseURL'] = 'http://example.com';
 		}
 
-		$_SERVER['argv'] = ['spark', 'list'];
+		$_SERVER['argv'] = [
+			'spark',
+			'list',
+		];
 		$_SERVER['argc'] = 2;
 		CLI::init();
 

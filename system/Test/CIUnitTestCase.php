@@ -28,14 +28,15 @@ namespace CodeIgniter\Test;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use Config\Paths;
 use CodeIgniter\Events\Events;
 use PHPUnit\Framework\TestCase;
@@ -57,6 +58,7 @@ class CIUnitTestCase extends TestCase
 	/**
 	 * Path to Config folder, relative
 	 * to the system folder.
+	 *
 	 * @var string
 	 */
 	protected $configPath = '../application/Config';
@@ -65,7 +67,7 @@ class CIUnitTestCase extends TestCase
 	{
 		parent::setUp();
 
-		if ( ! $this->app)
+		if (! $this->app)
 		{
 			$this->app = $this->createApplication();
 		}
@@ -96,18 +98,20 @@ class CIUnitTestCase extends TestCase
 	 *
 	 * @param string $eventName
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws \Exception
 	 */
 	public function assertEventTriggered(string $eventName): bool
 	{
-		$found = false;
+		$found     = false;
 		$eventName = strtolower($eventName);
 
 		foreach (Events::getPerformanceLogs() as $log)
 		{
 			if ($log['event'] !== $eventName)
+			{
 				continue;
+			}
 
 			$found = true;
 			break;
@@ -121,8 +125,8 @@ class CIUnitTestCase extends TestCase
 	 * Hooks into xdebug's headers capture, looking for a specific header
 	 * emitted
 	 *
-	 * @param string $header The leading portion of the header we are looking for
-	 * @param bool $ignoreCase
+	 * @param string  $header     The leading portion of the header we are looking for
+	 * @param boolean $ignoreCase
 	 *
 	 * @throws \Exception
 	 */
@@ -136,7 +140,9 @@ class CIUnitTestCase extends TestCase
 					(stripos($emitted, $header) === 0) :
 					(strpos($emitted, $header) === 0);
 			if ($found)
+			{
 				break;
+			}
 		}
 
 		$this->assertTrue($found, "Didn't find header for {$header}");
@@ -146,8 +152,8 @@ class CIUnitTestCase extends TestCase
 	 * Hooks into xdebug's headers capture, looking for a specific header
 	 * emitted
 	 *
-	 * @param string $header The leading portion of the header we don't want to find
-	 * @param bool $ignoreCase
+	 * @param string  $header     The leading portion of the header we don't want to find
+	 * @param boolean $ignoreCase
 	 *
 	 * @throws \Exception
 	 */
@@ -161,7 +167,9 @@ class CIUnitTestCase extends TestCase
 					(stripos($emitted, $header) === 0) :
 					(strpos($emitted, $header) === 0);
 			if ($found)
+			{
 				break;
+			}
 		}
 
 		$success = ! $found;
@@ -174,10 +182,10 @@ class CIUnitTestCase extends TestCase
 	 * where the result is close but not exactly equal to the
 	 * expected time, for reasons beyond our control.
 	 *
-	 * @param int $expected
-	 * @param mixed $actual
-	 * @param string   $message
-	 * @param int $tolerance
+	 * @param integer $expected
+	 * @param mixed   $actual
+	 * @param string  $message
+	 * @param integer $tolerance
 	 *
 	 * @throws \Exception
 	 */
@@ -217,7 +225,10 @@ class CIUnitTestCase extends TestCase
 	protected function adjustPaths(Paths $paths)
 	{
 		$tests = [
-			'systemDirectory', 'applicationDirectory', 'writableDirectory', 'testsDirectory'
+			'systemDirectory',
+			'applicationDirectory',
+			'writableDirectory',
+			'testsDirectory',
 		];
 
 		foreach ($tests as $test)

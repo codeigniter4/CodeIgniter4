@@ -23,12 +23,12 @@ class InsertTest extends \CIUnitTestCase
 		$builder = $this->db->table('jobs');
 
 		$insertData = [
-			'id' => 1,
-		    'name' => 'Grocery Sales'
+			'id'   => 1,
+			'name' => 'Grocery Sales',
 		];
 		$builder->insert($insertData, true, true);
 
-		$expectedSQL   = "INSERT INTO \"jobs\" (\"id\", \"name\") VALUES (:id:, :name:)";
+		$expectedSQL   = 'INSERT INTO "jobs" ("id", "name") VALUES (:id:, :name:)';
 		$expectedBinds = $insertData;
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
@@ -54,8 +54,16 @@ class InsertTest extends \CIUnitTestCase
 		$builder = $this->db->table('jobs');
 
 		$insertData = [
-			['id' => 2, 'name' => 'Commedian', 'description' => 'Theres something in your teeth'],
-			['id' => 3, 'name' => 'Cab Driver', 'description' => 'Iam yellow'],
+			[
+				'id'          => 2,
+				'name'        => 'Commedian',
+				'description' => 'Theres something in your teeth',
+			],
+			[
+				'id'          => 3,
+				'name'        => 'Cab Driver',
+				'description' => 'Iam yellow',
+			],
 		];
 
 		$this->db->shouldReturn('execute', 1)
@@ -67,11 +75,11 @@ class InsertTest extends \CIUnitTestCase
 
 		$this->assertInstanceOf(Query::class, $query);
 
-		$raw = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES (:description0:,:id0:,:name0:)";
+		$raw = 'INSERT INTO "jobs" ("description", "id", "name") VALUES (:description0:,:id0:,:name0:)';
 
 		$this->assertEquals($raw, str_replace("\n", ' ', $query->getOriginalQuery() ));
 
-		$expected   = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('Iam yellow',3,'Cab Driver')";
+		$expected = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('Iam yellow',3,'Cab Driver')";
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $query->getQuery() ));
 	}
@@ -80,7 +88,7 @@ class InsertTest extends \CIUnitTestCase
 
 	public function testInsertBatchThrowsExceptionOnNoData()
 	{
-	    $builder = $this->db->table('jobs');
+		$builder = $this->db->table('jobs');
 
 		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException', 'You must use the "set" method to update an entry.');
 		$this->expectExceptionMessage('You must use the "set" method to update an entry.');

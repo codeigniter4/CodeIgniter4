@@ -41,7 +41,7 @@ class DownloadResponseTest extends \CIUnitTestCase
 
 		$header = $response->getHeaderLine('Date');
 
-		$this->assertEquals($date->format('D, d M Y H:i:s').' GMT', $header);
+		$this->assertEquals($date->format('D, d M Y H:i:s') . ' GMT', $header);
 	}
 
 	public function testSetLastModifiedWithDateTimeObject()
@@ -55,7 +55,7 @@ class DownloadResponseTest extends \CIUnitTestCase
 
 		$header = $response->getHeaderLine('Last-Modified');
 
-		$this->assertEquals($date->format('D, d M Y H:i:s').' GMT', $header);
+		$this->assertEquals($date->format('D, d M Y H:i:s') . ' GMT', $header);
 	}
 
 	public function testSetLastModifiedWithString()
@@ -191,13 +191,13 @@ class DownloadResponseTest extends \CIUnitTestCase
 		$response->setContentType('application/octet-stream', 'Shift-JIS');
 		$response->buildHeaders();
 
-		$this->assertEquals('attachment; filename="'.mb_convert_encoding('テスト.php', 'Shift-JIS', 'UTF-8').'"; filename*=UTF-8\'\'%E3%83%86%E3%82%B9%E3%83%88.php', $response->getHeaderLine('Content-Disposition'));
+		$this->assertEquals('attachment; filename="' . mb_convert_encoding('テスト.php', 'Shift-JIS', 'UTF-8') . '"; filename*=UTF-8\'\'%E3%83%86%E3%82%B9%E3%83%88.php', $response->getHeaderLine('Content-Disposition'));
 	}
 
 	public function testFileExtensionIsUpperCaseWhenAndroidOSIs2()
 	{
 		$_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Linux; U; Android 2.0.3; ja-jp; SC-02C Build/IML74K) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30';
-		$response = new DownloadResponse('unit-test.php', false);
+		$response                   = new DownloadResponse('unit-test.php', false);
 
 		$response->setFilePath(__FILE__);
 		$response->buildHeaders();

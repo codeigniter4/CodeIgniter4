@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use ReflectionMethod;
 use ReflectionObject;
 use ReflectionClass;
@@ -48,8 +49,8 @@ trait ReflectionHelper
 	/**
 	 * Find a private method invoker.
 	 *
-	 * @param object|string $obj    object or class name
-	 * @param string        $method method name
+	 * @param  object|string $obj    object or class name
+	 * @param  string        $method method name
 	 * @return \Closure
 	 */
 	public static function getPrivateMethodInvoker($obj, $method)
@@ -105,8 +106,8 @@ trait ReflectionHelper
 	/**
 	 * Retrieve a private property.
 	 *
-	 * @param object|string $obj      object or class name
-	 * @param string        $property property name
+	 * @param  object|string $obj      object or class name
+	 * @param  string        $property property name
 	 * @return mixed value
 	 */
 	public static function getPrivateProperty($obj, $property)

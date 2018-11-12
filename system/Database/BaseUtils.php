@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use \CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
@@ -46,7 +47,7 @@ abstract class BaseUtils
 	/**
 	 * Database object
 	 *
-	 * @var	object
+	 * @var object
 	 */
 	protected $db;
 
@@ -55,23 +56,23 @@ abstract class BaseUtils
 	/**
 	 * List databases statement
 	 *
-	 * @var	string
+	 * @var string
 	 */
-	protected $listDatabases = FALSE;
+	protected $listDatabases = false;
 
 	/**
 	 * OPTIMIZE TABLE statement
 	 *
-	 * @var	string
+	 * @var string
 	 */
-	protected $optimizeTable = FALSE;
+	protected $optimizeTable = false;
 
 	/**
 	 * REPAIR TABLE statement
 	 *
-	 * @var	string
+	 * @var string
 	 */
-	protected $repairTable = FALSE;
+	protected $repairTable = false;
 
 	//--------------------------------------------------------------------
 
@@ -90,7 +91,7 @@ abstract class BaseUtils
 	/**
 	 * List databases
 	 *
-	 * @return	array|bool
+	 * @return array|boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function listDatabases()
@@ -100,7 +101,7 @@ abstract class BaseUtils
 		{
 			return $this->db->dataCache['db_names'];
 		}
-		elseif ($this->listDatabases === FALSE)
+		elseif ($this->listDatabases === false)
 		{
 			if ($this->db->DBDebug)
 			{
@@ -112,12 +113,12 @@ abstract class BaseUtils
 		$this->db->dataCache['db_names'] = [];
 
 		$query = $this->db->query($this->listDatabases);
-		if ($query === FALSE)
+		if ($query === false)
 		{
 			return $this->db->dataCache['db_names'];
 		}
 
-		for ($i = 0, $query = $query->getResultArray(), $c = count($query); $i < $c; $i ++ )
+		for ($i = 0, $query = $query->getResultArray(), $c = count($query); $i < $c; $i ++)
 		{
 			$this->db->dataCache['db_names'][] = current($query[$i]);
 		}
@@ -130,8 +131,8 @@ abstract class BaseUtils
 	/**
 	 * Determine if a particular database exists
 	 *
-	 * @param	string	$database_name
-	 * @return	bool
+	 * @param  string $database_name
+	 * @return boolean
 	 */
 	public function databaseExists($database_name)
 	{
@@ -143,13 +144,13 @@ abstract class BaseUtils
 	/**
 	 * Optimize Table
 	 *
-	 * @param	string	$table_name
-	 * @return bool|mixed
+	 * @param  string $table_name
+	 * @return boolean|mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function optimizeTable($table_name)
 	{
-		if ($this->optimizeTable === FALSE)
+		if ($this->optimizeTable === false)
 		{
 			if ($this->db->DBDebug)
 			{
@@ -159,13 +160,13 @@ abstract class BaseUtils
 		}
 
 		$query = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($table_name)));
-		if ($query !== FALSE)
+		if ($query !== false)
 		{
 			$query = $query->getResultArray();
 			return current($query);
 		}
 
-		return FALSE;
+		return false;
 	}
 
 	//--------------------------------------------------------------------
@@ -178,7 +179,7 @@ abstract class BaseUtils
 	 */
 	public function optimizeDatabase()
 	{
-		if ($this->optimizeTable === FALSE)
+		if ($this->optimizeTable === false)
 		{
 			if ($this->db->DBDebug)
 			{
@@ -197,9 +198,9 @@ abstract class BaseUtils
 			}
 
 			// Build the result array...
-			$res = $res->getResultArray();
-			$res = current($res);
-			$key = str_replace($this->db->database . '.', '', current($res));
+			$res  = $res->getResultArray();
+			$res  = current($res);
+			$key  = str_replace($this->db->database . '.', '', current($res));
 			$keys = array_keys($res);
 			unset($res[$keys[0]]);
 
@@ -214,13 +215,13 @@ abstract class BaseUtils
 	/**
 	 * Repair Table
 	 *
-	 * @param	string	$table_name
-	 * @return	mixed
+	 * @param  string $table_name
+	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function repairTable($table_name)
 	{
-		if ($this->repairTable === FALSE)
+		if ($this->repairTable === false)
 		{
 			if ($this->db->DBDebug)
 			{
@@ -244,12 +245,12 @@ abstract class BaseUtils
 	/**
 	 * Generate CSV from a query result object
 	 *
-	 * @param    ResultInterface $query     Query result object
-	 * @param    string          $delim     Delimiter (default: ,)
-	 * @param    string          $newline   Newline character (default: \n)
-	 * @param    string          $enclosure Enclosure (default: ")
+	 * @param ResultInterface $query     Query result object
+	 * @param string          $delim     Delimiter (default: ,)
+	 * @param string          $newline   Newline character (default: \n)
+	 * @param string          $enclosure Enclosure (default: ")
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	public function getCSVFromResult(ResultInterface $query, $delim = ',', $newline = "\n", $enclosure = '"')
 	{
@@ -281,17 +282,17 @@ abstract class BaseUtils
 	/**
 	 * Generate XML data from a query result object
 	 *
-	 * @param    ResultInterface $query  Query result object
-	 * @param    array           $params Any preferences
+	 * @param ResultInterface $query  Query result object
+	 * @param array           $params Any preferences
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	public function getXMLFromResult(ResultInterface $query, $params = [])
 	{
 		// Set our default values
 		foreach (['root' => 'root', 'element' => 'element', 'newline' => "\n", 'tab' => "\t"] as $key => $val)
 		{
-			if ( ! isset($params[$key]))
+			if (! isset($params[$key]))
 			{
 				$params[$key] = $val;
 			}
@@ -301,7 +302,7 @@ abstract class BaseUtils
 		extract($params);
 
 		// Load the xml helper
-              helper('xml');
+			  helper('xml');
 		// Generate the result
 		$xml = '<' . $root . '>' . $newline;
 		while ($row = $query->getUnbufferedRow())
@@ -322,8 +323,8 @@ abstract class BaseUtils
 	/**
 	 * Database Backup
 	 *
-	 * @param	array	$params
-	 * @return	mixed
+	 * @param  array $params
+	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function backup($params = [])
@@ -338,14 +339,14 @@ abstract class BaseUtils
 
 		// Set up our default preferences
 		$prefs = [
-			'tables'			 => [],
-			'ignore'			 => [],
-			'filename'			 => '',
-			'format'			 => 'gzip', // gzip, zip, txt
-			'add_drop'			 => TRUE,
-			'add_insert'		 => TRUE,
-			'newline'			 => "\n",
-			'foreign_key_checks' => TRUE
+			'tables'             => [],
+			'ignore'             => [],
+			'filename'           => '',
+			'format'             => 'gzip', // gzip, zip, txt
+			'add_drop'           => true,
+			'add_insert'         => true,
+			'newline'            => "\n",
+			'foreign_key_checks' => true,
 		];
 
 		// Did the user submit any preferences? If so set them....
@@ -368,7 +369,7 @@ abstract class BaseUtils
 		}
 
 		// Validate the format
-		if ( ! in_array($prefs['format'], ['gzip', 'zip', 'txt'], TRUE))
+		if (! in_array($prefs['format'], ['gzip', 'zip', 'txt'], true))
 		{
 			$prefs['format'] = 'txt';
 		}
@@ -376,7 +377,7 @@ abstract class BaseUtils
 		// Is the encoder supported? If not, we'll either issue an
 		// error or use plain text depending on the debug settings
 		if (($prefs['format'] === 'gzip' && ! function_exists('gzencode'))
-				OR ( $prefs['format'] === 'zip' && ! function_exists('gzcompress')))
+				|| ( $prefs['format'] === 'zip' && ! function_exists('gzcompress')))
 		{
 			if ($this->db->DBDebug)
 			{
@@ -404,17 +405,17 @@ abstract class BaseUtils
 				}
 
 				// Tack on the ".sql" file extension if needed
-				if ( ! preg_match('|.+?\.sql$|', $prefs['filename']))
+				if (! preg_match('|.+?\.sql$|', $prefs['filename']))
 				{
 					$prefs['filename'] .= '.sql';
 				}
 			}
 
 			// Load the Zip class and output it
-//			$CI =& get_instance();
-//			$CI->load->library('zip');
-//			$CI->zip->add_data($prefs['filename'], $this->_backup($prefs));
-//			return $CI->zip->get_zip();
+			//          $CI =& get_instance();
+			//          $CI->load->library('zip');
+			//          $CI->zip->add_data($prefs['filename'], $this->_backup($prefs));
+			//          return $CI->zip->get_zip();
 		}
 		elseif ($prefs['format'] === 'txt') // Was a text file requested?
 		{
