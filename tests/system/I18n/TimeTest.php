@@ -198,7 +198,7 @@ class TimeTest extends \CIUnitTestCase
 	{
 		$time = Time::createFromFormat('F j, Y', 'January 15, 2017', 'Europe/London');
 
-		$this->assertEquals(date('2017-01-15 H:i:s'), $time->toDateTimeString());
+		$this->assertCloseEnoughString(date('2017-01-15 H:i:s'), $time->toDateTimeString());
 	}
 
 	public function testCreateFromFormatWithTimezoneObject()
@@ -207,7 +207,7 @@ class TimeTest extends \CIUnitTestCase
 
 		$time = Time::createFromFormat('F j, Y', 'January 15, 2017', $tz);
 
-		$this->assertEquals(date('2017-01-15 H:i:s'), $time->toDateTimeString());
+		$this->assertCloseEnoughString(date('2017-01-15 H:i:s'), $time->toDateTimeString());
 	}
 
 	public function testCreateFromTimestamp()

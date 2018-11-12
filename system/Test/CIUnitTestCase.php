@@ -197,6 +197,42 @@ class CIUnitTestCase extends TestCase
 	}
 
 	/**
+	 * Custom function to test that two values are "close enough".
+	 * This is intended for extended execution time testing,
+	 * where the result is close but not exactly equal to the
+	 * expected time, for reasons beyond our control.
+	 *
+	 * @param integer $expected
+	 * @param mixed   $actual
+	 * @param string  $message
+	 * @param integer $tolerance
+	 *
+	 * @throws \Exception
+	 */
+	public function assertCloseEnoughString($expected, $actual, string $message = '', int $tolerance = 1)
+	{
+		$expected = (string) $expected;
+		$actual   = (string) $actual;
+		if (strlen($expected) !== strlen($actual))
+		{
+			return false;
+		}
+
+		try
+		{
+			$expected   = (int) substr($expected, -2);
+			$actual     = (int) substr($actual, -2);
+			$difference = abs($expected - $actual);
+
+			$this->assertLessThanOrEqual($tolerance, $difference, $message);
+		}
+		catch (\Exception $e)
+		{
+			return false;
+		}
+	}
+
+	/**
 	 * Loads up an instance of CodeIgniter
 	 * and gets the environment setup.
 	 *
