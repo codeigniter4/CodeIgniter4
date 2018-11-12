@@ -92,9 +92,9 @@ class Config extends BaseConfig
 			throw new \InvalidArgumentException($group . ' is not a valid database connection group.');
 		}
 
-		if ($getShared && isset(self::$instances[$group]))
+		if ($getShared && isset(static::$instances[$group]))
 		{
-			return self::$instances[$group];
+			return static::$instances[$group];
 		}
 
 		self::ensureFactory();
@@ -104,9 +104,9 @@ class Config extends BaseConfig
 			$config = $config->$group;
 		}
 
-		$connection = self::$factory->load($config, $group);
+		$connection = static::$factory->load($config, $group);
 
-		self::$instances[$group] = & $connection;
+		static::$instances[$group] = & $connection;
 
 		return $connection;
 	}
@@ -120,7 +120,7 @@ class Config extends BaseConfig
 	 */
 	public static function getConnections()
 	{
-		return self::$instances;
+		return static::$instances;
 	}
 
 	//--------------------------------------------------------------------
@@ -149,16 +149,16 @@ class Config extends BaseConfig
 			throw new \InvalidArgumentException($group . ' is not a valid database connection group.');
 		}
 
-		if (! isset(self::$instances[$group]))
+		if (! isset(static::$instances[$group]))
 		{
 			$db = self::connect($group);
 		}
 		else
 		{
-			$db = self::$instances[$group];
+			$db = static::$instances[$group];
 		}
 
-		return self::$factory->loadForge($db);
+		return static::$factory->loadForge($db);
 	}
 
 	//--------------------------------------------------------------------
@@ -186,16 +186,16 @@ class Config extends BaseConfig
 			throw new \InvalidArgumentException($group . ' is not a valid database connection group.');
 		}
 
-		if (! isset(self::$instances[$group]))
+		if (! isset(static::$instances[$group]))
 		{
 			$db = self::connect($group);
 		}
 		else
 		{
-			$db = self::$instances[$group];
+			$db = static::$instances[$group];
 		}
 
-		return self::$factory->loadUtils($db);
+		return static::$factory->loadUtils($db);
 	}
 
 	//--------------------------------------------------------------------
@@ -221,12 +221,12 @@ class Config extends BaseConfig
 	 */
 	protected static function ensureFactory()
 	{
-		if (self::$factory instanceof \CodeIgniter\Database\Database)
+		if (static::$factory instanceof \CodeIgniter\Database\Database)
 		{
 			return;
 		}
 
-		self::$factory = new \CodeIgniter\Database\Database();
+		static::$factory = new \CodeIgniter\Database\Database();
 	}
 
 	//--------------------------------------------------------------------

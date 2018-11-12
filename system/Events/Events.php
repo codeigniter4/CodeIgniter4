@@ -140,19 +140,19 @@ class Events
 	 */
 	public static function on($event_name, callable $callback, $priority = EVENT_PRIORITY_NORMAL)
 	{
-		if (! isset(self::$listeners[$event_name]))
+		if (! isset(static::$listeners[$event_name]))
 		{
-			self::$listeners[$event_name] = [
-					  true, // If there's only 1 item, it's sorted.
-					  [$priority],
-					  [$callback],
-				  ];
+			static::$listeners[$event_name] = [
+				true, // If there's only 1 item, it's sorted.
+				[$priority],
+				[$callback],
+			];
 		}
 		else
 		{
-			self::$listeners[$event_name][0]   = false; // Not sorted
-			self::$listeners[$event_name][1][] = $priority;
-			self::$listeners[$event_name][2][] = $callback;
+			static::$listeners[$event_name][0]   = false; // Not sorted
+			static::$listeners[$event_name][1][] = $priority;
+			static::$listeners[$event_name][2][] = $callback;
 		}
 	}
 
@@ -172,7 +172,7 @@ class Events
 	public static function trigger($eventName, ...$arguments): bool
 	{
 		// Read in our Config/events file so that we have them all!
-		if (! self::$initialized)
+		if (! static::$initialized)
 		{
 			self::initialize();
 		}
@@ -220,22 +220,22 @@ class Events
 	 */
 	public static function listeners($event_name): array
 	{
-		if (! isset(self::$listeners[$event_name]))
+		if (! isset(static::$listeners[$event_name]))
 		{
 			return [];
 		}
 
 		// The list is not sorted
-		if (! self::$listeners[$event_name][0])
+		if (! static::$listeners[$event_name][0])
 		{
 			// Sort it!
-			array_multisort(self::$listeners[$event_name][1], SORT_NUMERIC, self::$listeners[$event_name][2]);
+			array_multisort(static::$listeners[$event_name][1], SORT_NUMERIC, static::$listeners[$event_name][2]);
 
 			// Mark it as sorted already!
-			self::$listeners[$event_name][0] = true;
+			static::$listeners[$event_name][0] = true;
 		}
 
-		return self::$listeners[$event_name][2];
+		return static::$listeners[$event_name][2];
 	}
 
 	//--------------------------------------------------------------------
@@ -253,17 +253,17 @@ class Events
 	 */
 	public static function removeListener($event_name, callable $listener): bool
 	{
-		if (! isset(self::$listeners[$event_name]))
+		if (! isset(static::$listeners[$event_name]))
 		{
 			return false;
 		}
 
-		foreach (self::$listeners[$event_name][2] as $index => $check)
+		foreach (static::$listeners[$event_name][2] as $index => $check)
 		{
 			if ($check === $listener)
 			{
-				unset(self::$listeners[$event_name][1][$index]);
-				unset(self::$listeners[$event_name][2][$index]);
+				unset(static::$listeners[$event_name][1][$index]);
+				unset(static::$listeners[$event_name][2][$index]);
 
 				return true;
 			}
@@ -286,11 +286,11 @@ class Events
 	{
 		if (! is_null($event_name))
 		{
-			unset(self::$listeners[$event_name]);
+			unset(static::$listeners[$event_name]);
 		}
 		else
 		{
-			self::$listeners = [];
+			static::$listeners = [];
 		}
 	}
 

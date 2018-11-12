@@ -577,7 +577,7 @@ class CodeIgniter
 	 */
 	public static function cache(int $time)
 	{
-		self::$cacheTTL = $time;
+		static::$cacheTTL = $time;
 	}
 
 	//--------------------------------------------------------------------
@@ -599,7 +599,7 @@ class CodeIgniter
 		}
 
 		return cache()->save(
-						$this->generateCacheName($config), serialize(['headers' => $headers, 'output' => $this->output]), self::$cacheTTL
+						$this->generateCacheName($config), serialize(['headers' => $headers, 'output' => $this->output]), static::$cacheTTL
 		);
 	}
 
@@ -931,7 +931,7 @@ class CodeIgniter
 
 		// Cache it without the performance metrics replaced
 		// so that we can have live speed updates along the way.
-		if (self::$cacheTTL > 0)
+		if (static::$cacheTTL > 0)
 		{
 			$this->cachePage($cacheConfig);
 		}

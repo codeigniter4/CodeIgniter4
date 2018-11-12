@@ -227,7 +227,7 @@ class Toolbar
 
 		$files = [];
 
-		$current = self::$request->getGet('debugbar_time');
+		$current = static::$request->getGet('debugbar_time');
 		$app     = config(App::class);
 
 		for ($i = 0; $i < $total; $i++)
@@ -418,7 +418,7 @@ class Toolbar
 	 */
 	public static function eventHandler()
 	{
-		self::$request = Services::request();
+		static::$request = Services::request();
 
 		if (ENVIRONMENT === 'testing')
 		{
@@ -427,7 +427,7 @@ class Toolbar
 
 		// If the request contains '?debugbar then we're
 		// simply returning the loading script
-		if (self::$request->getGet('debugbar') !== null)
+		if (static::$request->getGet('debugbar') !== null)
 		{
 			// Let the browser know that we are sending javascript
 			header('Content-Type: application/javascript');
@@ -442,19 +442,19 @@ class Toolbar
 
 		// Otherwise, if it includes ?debugbar_time, then
 		// we should return the entire debugbar.
-		if (self::$request->getGet('debugbar_time'))
+		if (static::$request->getGet('debugbar_time'))
 		{
 			helper('security');
 
 			// Negotiate the content-type to format the output
-			$format = self::$request->negotiate('media', [
+			$format = static::$request->negotiate('media', [
 				'text/html',
 				'application/json',
 				'application/xml',
 			]);
 			$format = explode('/', $format)[1];
 
-			$file     = sanitize_filename('debugbar_' . self::$request->getGet('debugbar_time'));
+			$file     = sanitize_filename('debugbar_' . static::$request->getGet('debugbar_time'));
 			$filename = WRITEPATH . 'debugbar/' . $file;
 
 			// Show the toolbar
