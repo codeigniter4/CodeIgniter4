@@ -49,8 +49,6 @@ class XMLFormatter implements FormatterInterface
 	 */
 	public function format(array $data)
 	{
-		$result = null;
-
 		// SimpleXML is installed but default
 		// but best to check, and then provide a fallback.
 		if (! extension_loaded('simplexml'))
