@@ -318,4 +318,60 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->dropTable('forge_test_invoices', true);
 		$this->forge->dropTable('forge_test_users', true);
 	}
+
+	public function testEnumFields()
+	{
+		if (! in_array($this->db->DBDriver, ['MySQLi', 'Postgre']))
+		{
+			$this->markTestSkipped('ENUM Data Type available only in MySQL and PostgreSQL');
+		}
+
+		$this->forge->addField([
+			'enum_string'       => [
+				'type'       => 'ENUM("a","b")',
+			],
+			'enum_array'       => [
+				'type'       => 'ENUM',
+				'constraint' => ['a', 'b'],
+			],
+		]);
+		$this->forge->createTable('forge_test_enum');
+
+		$fields = $this->db->getFieldData('forge_test_enum');
+
+		$this->forge->dropTable('forge_test_enum');
+
+		$this->assertEquals('enum_string', $fields[0]->name);
+		$this->assertEquals('enum', $fields[0]->type);
+		$this->assertEquals('enum_array', $fields[1]->name);
+		$this->assertEquals('enum', $fields[1]->type);
+	}
+
+	public function testSetFields()
+	{
+		if ($this->db->DBDriver !== 'MySQLi')
+		{
+			$this->markTestSkipped('SET Data Type available only in MySQL');
+		}
+
+		$this->forge->addField([
+			'set_string'       => [
+				'type'       => 'SET("a","b")',
+			],
+			'set_array'       => [
+				'type'       => 'SET',
+				'constraint' => ['a', 'b'],
+			],
+		]);
+		$this->forge->createTable('forge_test_set');
+
+		$fields = $this->db->getFieldData('forge_test_set');
+
+		$this->forge->dropTable('forge_test_set');
+
+		$this->assertEquals('set_string', $fields[0]->name);
+		$this->assertEquals('set', $fields[0]->type);
+		$this->assertEquals('set_array', $fields[1]->name);
+		$this->assertEquals('set', $fields[1]->type);
+	}
 }

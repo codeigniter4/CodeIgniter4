@@ -114,6 +114,18 @@ Additionally, the following key/values can be used:
 		],
 	];
 
+If your database platform has the ENUM or SET data types, you can define the options as a string in the 'type' index or in the 'constraint' as array::
+
+	$fields = array(
+		'color'  => array(
+			'type'       => 'SET("blue","red","yellow")',
+		),
+		'status' => array(
+			'type'       => 'ENUM',
+			'constraint' => array('enabled', 'disabled'),
+		),
+	);
+
 After the fields have been defined, they can be added using
 ``$forge->addField($fields);`` followed by a call to the
 ``createTable()`` method.
@@ -132,9 +144,9 @@ string into the field definitions with addField()
 
 	$forge->addField("label varchar(100) NOT NULL DEFAULT 'default label'");
 
-.. note:: Passing raw strings as fields cannot be followed by ``add_key()`` calls on those fields.
+.. note:: Passing raw strings as fields cannot be followed by ``addKey()`` calls on those fields.
 
-.. note:: Multiple calls to add_field() are cumulative.
+.. note:: Multiple calls to addField() are cumulative.
 
 Creating an id field
 --------------------
@@ -320,7 +332,7 @@ Modifying a Column in a Table
 
 **$forge->modifyColumn()**
 
-The usage of this method is identical to ``add_column()``, except it
+The usage of this method is identical to ``addColumn()``, except it
 alters an existing column rather than adding a new one. In order to
 change the name you can add a "name" key into the field defining array.
 
