@@ -870,7 +870,7 @@ class Response extends Message implements ResponseInterface
 
 		foreach ($this->cookies as $cookie)
 		{
-			if ($cookie['name'] !== $prefix . $name)
+			if ($cookie['name'] !== $name)
 			{
 				continue;
 			}
@@ -894,8 +894,14 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return mixed
 	 */
-	public function getCookie(string $name, string $prefix = '')
+	public function getCookie(string $name = null, string $prefix = '')
 	{
+		// if no name given, return them all
+		if (empty($name))
+		{
+			return $this->cookies;
+		}
+
 		if ($prefix === '' && $this->cookiePrefix !== '')
 		{
 			$prefix = $this->cookiePrefix;
@@ -910,6 +916,7 @@ class Response extends Message implements ResponseInterface
 				return $cookie;
 			}
 		}
+		return null;
 	}
 
 	/**
@@ -920,8 +927,13 @@ class Response extends Message implements ResponseInterface
 	 * @param string $path
 	 * @param string $prefix
 	 */
-	public function deleteCookie($name, string $domain = '', string $path = '/', string $prefix = '')
+	public function deleteCookie($name = '', string $domain = '', string $path = '/', string $prefix = '')
 	{
+		if (empty($name))
+		{
+			return;
+		}
+
 		if ($prefix === '' && $this->cookiePrefix !== '')
 		{
 			$prefix = $this->cookiePrefix;
@@ -933,6 +945,14 @@ class Response extends Message implements ResponseInterface
 		{
 			if ($cookie['name'] === $name)
 			{
+				if (! empty($domain) && $cookie['domain'] !== $domain)
+				{
+					continue;
+				}
+				if (! empty($path) && $cookie['path'] !== $path)
+				{
+					continue;
+				}
 				$cookie['value']   = '';
 				$cookie['expires'] = '';
 
