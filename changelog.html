@@ -210,23 +210,86 @@
 <p>The list of changed files follows, with PR numbers shown.</p>
 <ul class="simple">
 <li><dl class="first docutils">
-<dt>application /</dt>
+<dt>admin/</dt>
 <dd><ul class="first last">
-<li>Config/Mimes #1368</li>
-<li>Filters/Honeypot #1376</li>
+<li>pre-commit #1388</li>
+<li>setup.sh #1388</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>public /</li>
+<li><dl class="first docutils">
+<dt>application /</dt>
+<dd><ul class="first last">
+<li>Config/Autoload #1396, #1416</li>
+<li>Config/Mimes #1368</li>
+<li>Filters/Honeypot #1376</li>
+<li><dl class="first docutils">
+<dt>Views/</dt>
+<dd><ul class="first last">
+<li>errors/* #1415, #1413</li>
+<li>form.php removed #1442</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>public /</dt>
+<dd><ul class="first last">
+<li>index.php #1388</li>
+</ul>
+</dd>
+</dl>
+</li>
 <li><dl class="first docutils">
 <dt>system /</dt>
 <dd><ul class="first last">
 <li><dl class="first docutils">
+<dt>Cache/Handlers/</dt>
+<dd><ul class="first last">
+<li>MemcachedHandler #1383</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>CLI/</dt>
+<dd><ul class="first last">
+<li>CLI #1432</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
 <dt>Commands/</dt>
 <dd><ul class="first last">
-<li>Database/CreateMigration #1374</li>
+<li><dl class="first docutils">
+<dt>Database/</dt>
+<dd><ul class="first last">
+<li>CreateMigration #1374, #1422, #1431</li>
+<li>MigrateCurrent #1431</li>
+<li>MigrateLatest #1431</li>
+<li>MigrateRollback #1431</li>
+<li>MigrateStatus #1431</li>
+<li>MigrateVersion #1431</li>
+</ul>
+</dd>
+</dl>
+</li>
 <li>Sessions/CrateMigration #1357</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Config/</dt>
+<dd><ul class="first last">
+<li>AutoloadCOnfig #1416</li>
+<li>Services #1180</li>
 </ul>
 </dd>
 </dl>
@@ -234,9 +297,15 @@
 <li><dl class="first docutils">
 <dt>Database/</dt>
 <dd><ul class="first last">
+<li>BaseBuilder #1335</li>
+<li>BaseConnection #1335, #1407</li>
+<li>BaseResult #1426</li>
 <li>Forge #1343</li>
 <li>MigrationRunner #1371</li>
+<li>MySQLi/Connection #1335</li>
 <li>MySQLi/Forge #1343, #1344</li>
+<li>Postgre/Connection #1335</li>
+<li>SQLite3/Connection #1335</li>
 </ul>
 </dd>
 </dl>
@@ -250,9 +319,36 @@
 </dl>
 </li>
 <li><dl class="first docutils">
+<dt>Email/</dt>
+<dd><ul class="first last">
+<li>Email #1389, #1413</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Files/</dt>
+<dd><ul class="first last">
+<li>File #1399</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Helpers/</dt>
+<dd><ul class="first last">
+<li>array_helper #1412</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
 <dt>HTTP/</dt>
 <dd><ul class="first last">
 <li>DownloadResponse #1375</li>
+<li>Exceptions/DownloadException #1405</li>
+<li>Files/UploadedFile #1335, #1399</li>
+<li>RedirectResponse #1387</li>
 <li>ResponseInterface #1384</li>
 <li>UploadedFile #1368</li>
 <li>URI #1213</li>
@@ -263,6 +359,7 @@
 <li><dl class="first docutils">
 <dt>Language/en/</dt>
 <dd><ul class="first last">
+<li>Database #1335</li>
 <li>Filters #1378</li>
 <li>Migrations #1374</li>
 </ul>
@@ -279,6 +376,34 @@
 </dl>
 </li>
 <li><dl class="first docutils">
+<dt>Router/</dt>
+<dd><ul class="first last">
+<li>RouteCollectionInterface #1406, #1410</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Session/Handlers/</dt>
+<dd><ul class="first last">
+<li>BaseHandler #1180</li>
+<li>DatabaseHandler #1180</li>
+<li>FileHandler #1180</li>
+<li>MemcachedHandler #1180</li>
+<li>RedisHandler #1180</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Test/</dt>
+<dd><ul class="first last">
+<li>FeatureTestCase #1427</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
 <dt>Validation /</dt>
 <dd><ul class="first last">
 <li>Rules #1345</li>
@@ -290,13 +415,15 @@
 <li><dl class="first docutils">
 <dt>View/</dt>
 <dd><ul class="first last">
-<li>View #1357, #1377</li>
+<li>Parser #1417</li>
+<li>View #1357, #1377, #1410</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>Entity #1369</li>
-<li>Model #1345, #1380</li>
+<li>Controller #1423</li>
+<li>Entity #1369, #1373</li>
+<li>Model #1345, #1380, #1373</li>
 </ul>
 </dd>
 </dl>
@@ -304,11 +431,31 @@
 <li><dl class="first docutils">
 <dt>tests /</dt>
 <dd><ul class="first last">
+<li>_support/_bootstrap.php #1397, #1443</li>
+<li><dl class="first docutils">
+<dt>Cache/Handlers/</dt>
+<dd><ul class="first last">
+<li>MemcachedHandlerTest #1180, #1383</li>
+<li>RedisHandlerTest #1180</li>
+</ul>
+</dd>
+</dl>
+</li>
 <li><dl class="first docutils">
 <dt>HTTP/</dt>
 <dd><ul class="first last">
+<li>Files/FileMovingTest #1424</li>
 <li>DownloadResponseTest #1375</li>
+<li>RedirectResponseTest #1387</li>
 <li>ResponseTest #1375</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Log/</dt>
+<dd><ul class="first last">
+<li>FileHandlerTest #1425</li>
 </ul>
 </dd>
 </dl>
@@ -321,6 +468,40 @@
 </dd>
 </dl>
 </li>
+<li><dl class="first docutils">
+<dt>Session/</dt>
+<dd><ul class="first last">
+<li>SessionTest  #1180</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Test/</dt>
+<dd><ul class="first last">
+<li>BootstrapFCPATHTest #1397</li>
+<li>TestCaseTest #1390</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Throttle/</dt>
+<dd><ul class="first last">
+<li>ThrottleTest #1398</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>View/</dt>
+<dd><ul class="first last">
+<li>ParserTest #1335</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>CommonFunctionsTest #1180</li>
 </ul>
 </dd>
 </dl>
@@ -329,9 +510,25 @@
 <dt>user_guide_src /source/</dt>
 <dd><ul class="first last">
 <li><dl class="first docutils">
+<dt>database/</dt>
+<dd><ul class="first last">
+<li>queries #1407</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
 <dt>dbmgmt/</dt>
 <dd><ul class="first last">
-<li>migration #1374</li>
+<li>migration #1374, #1385, #1431</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>installation/</dt>
+<dd><ul class="first last">
+<li>index #1388</li>
 </ul>
 </dd>
 </dl>
@@ -344,16 +541,67 @@
 </dd>
 </dl>
 </li>
+<li><dl class="first docutils">
+<dt>tutorial/</dt>
+<dd><ul class="first last">
+<li>create_news_item #1442</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>/</li>
+<li>changelog #1385</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>/</dt>
+<dd><ul class="first last">
+<li>composer.json #1388, #1418</li>
+<li>.travis.yml #1394</li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 <div class="section" id="prs-merged">
 <h3>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
+<li>#1443 Fixes unit test output not captured</li>
+<li>#1442 remove form view in application/View/ and form helper usage in create new items tutorial</li>
+<li>#1432 Use mb_strlen to get length of columns</li>
+<li>#1431 can&#8217;t call run() method with params from commands migrations</li>
+<li>#1427 Fixes &#8220;options&#8221; request call parameter in FeatureTestCase</li>
+<li>#1416 performance improvement in DatabaseBaseResult</li>
+<li>#1425 Ensure FileHandlerTest uses MockFileHandler</li>
+<li>#1424 Fix FileMovingTest leaving cruft</li>
+<li>#1423 Fix Controller use validate bug</li>
+<li>#1422 fix Migrations.classNotFound</li>
+<li>#1418 normalize composer.json</li>
+<li>#1417 fix Parser::parsePairs always escapes</li>
+<li>#1416 remove $psr4[&#8216;TestsSupport&#8217;] definition in applicationConfigAutoload</li>
+<li>#1415 remove unneded &#8220;defined(&#8216;BASEPATH&#8217;) ...</li>
+<li>#1413 set more_entropy = true in all uniqid() usage</li>
+<li>#1412 function_exists() typo fixes on array_helper</li>
+<li>#1411 add missing break; in loop in View::render()</li>
+<li>#1410 Fix spark serve not working from commit 2d0b325</li>
+<li>#1407 Database: add missing call initialize() check on BaseConnection-&gt;prepare()</li>
+<li>#1406 Add missing parameter to RouteCollectionInterface</li>
+<li>#1405 Fix language string used in DownloadException</li>
+<li>#1402 Correct class namespacing in the user guide</li>
+<li>#1399 optional type hinting in guessExtension</li>
+<li>#1398 Tweak throttle testing</li>
+<li>#1397 Correcting FCPATH setting in tests/_support/_bootstrap.php</li>
+<li>#1396 only register PSR4 &#8220;TestsSupport&#8221; namespace in &#8220;testing&#8221; environment</li>
+<li>#1395 short array syntax in docs</li>
+<li>#1394 add php 7.3 to travis config</li>
+<li>#1390 Fixed not to output &#8220;Hello&#8221; at test execution</li>
+<li>#1389 Capitalize email filename</li>
+<li>#1388 Phpcs Auto-fix on commit</li>
+<li>#1387 Redirect to named route</li>
+<li>#1385 Fix migration page; udpate changelog</li>
 <li>#1384 add missing ResponseInterface contants</li>
+<li>#1383 fix TypeError in MemcachedHandler::__construct()</li>
 <li>#1381 Remove unused use statements</li>
 <li>#1380 count() improvement, use truthy check</li>
 <li>#1378 Update Filters language file</li>
@@ -361,6 +609,7 @@
 <li>#1376 Fix cannot use class Honeypot because already in use in AppFiltersHoneypot</li>
 <li>#1375 Give download a header conforming to RFC 6266</li>
 <li>#1374 Missing feature migration.</li>
+<li>#1373 Turning off casting for db insert/save</li>
 <li>#1371 update method name in coding style</li>
 <li>#1370 Toolbar needs logging. Fixes #1258</li>
 <li>#1369 Remove invisible character</li>
@@ -370,7 +619,9 @@
 <li>#1345 is_unique tried to connect to default database instead of defined in DBGroup</li>
 <li>#1344 Not to quote unecessary table options</li>
 <li>#1343 Avoid add two single quote to constraint</li>
+<li>#1335 Review and improvements in databases drivers MySQLi, Postgre and SQLite</li>
 <li>#1213 URI segment as page number in Pagination</li>
+<li>#1180 using HTTPRequest instance to pull ip address</li>
 </ul>
 </div>
 </div>
@@ -817,7 +1068,7 @@
 <dt>Non-code changes:</dt>
 <dd><ul class="first last simple">
 <li>User Guide adapted or rewritten</li>
-<li>[System message translations repository](<a class="reference external" href="https://github.com/bcit-ci/CodeIgniter4-translations">https://github.com/bcit-ci/CodeIgniter4-translations</a>)</li>
+<li>[System message translations repository](<a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4-translations">https://github.com/codeigniter4/CodeIgniter4-translations</a>)</li>
 <li>[Roadmap subforum](<a class="reference external" href="https://forum.codeigniter.com/forum-33.html">https://forum.codeigniter.com/forum-33.html</a>) for more transparent planning</li>
 </ul>
 </dd>
@@ -1123,7 +1374,7 @@ security, text, url</li>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Nov 09, 2018.
+      Last updated on Nov 11, 2018.
 
     </p>
   </div>
