@@ -230,7 +230,7 @@ WHERE "id" IN(2,3)';
 
 	//--------------------------------------------------------------------
 
-	// @see https://bcit-ci.github.io/CodeIgniter4/database/query_builder.html#updating-data
+	// @see https://codeigniter4.github.io/CodeIgniter4/database/query_builder.html#updating-data
 	public function testSetWithoutEscape()
 	{
 		$builder = new BaseBuilder('mytable', $this->db);
