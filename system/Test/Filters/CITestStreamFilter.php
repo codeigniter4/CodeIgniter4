@@ -51,8 +51,8 @@ class CITestStreamFilter extends \php_user_filter
 	{
 		while ($bucket = stream_bucket_make_writeable($in))
 		{
-			self::$buffer .= $bucket->data;
-			$consumed     += $bucket->datalen;
+			static::$buffer .= $bucket->data;
+			$consumed       += $bucket->datalen;
 		}
 		return PSFS_PASS_ON;
 	}

@@ -421,7 +421,7 @@ class Email
 	{
 		$this->initialize($config);
 
-		isset(self::$func_overload) || self::$func_overload = (extension_loaded('mbstring') && ini_get('mbstring.func_overload'));
+		isset(static::$func_overload) || static::$func_overload = (extension_loaded('mbstring') && ini_get('mbstring.func_overload'));
 
 		log_message('info', 'Email Class Initialized');
 	}
@@ -2515,7 +2515,7 @@ class Email
 	 */
 	protected static function strlen($str)
 	{
-		return (self::$func_overload) ? mb_strlen($str, '8bit') : strlen($str);
+		return (static::$func_overload) ? mb_strlen($str, '8bit') : strlen($str);
 	}
 
 	//--------------------------------------------------------------------
@@ -2531,7 +2531,7 @@ class Email
 	 */
 	protected static function substr($str, $start, $length = null)
 	{
-		if (self::$func_overload)
+		if (static::$func_overload)
 		{
 			return mb_substr($str, $start, $length, '8bit');
 		}
