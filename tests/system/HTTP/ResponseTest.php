@@ -294,7 +294,8 @@ class ResponseTest extends \CIUnitTestCase
 		$response = new Response(new App());
 		$response->setCookie('foo', 'bar', '', '', '', 'ack');
 
-		$this->assertFalse($response->hasCookie('foo', null, 'ack'));
+		$this->assertTrue($response->hasCookie('foo', null, 'ack'));
+		$this->assertFalse($response->hasCookie('foo', null, 'nak'));
 	}
 
 	//--------------------------------------------------------------------
