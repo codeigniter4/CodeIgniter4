@@ -34,6 +34,11 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 */
 	protected $session = [];
 
+	/**
+	 * Enabled auto clean op buffer after request call
+	 *
+	 * @var bool
+	 */
 	protected $clean = true;
 
 	/**
