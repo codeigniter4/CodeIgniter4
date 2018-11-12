@@ -345,6 +345,15 @@ between expected and actual time is within the prescribed tolerance.:</p>
 </pre></div>
 </div>
 <p>The above test will allow the actual time to be either 600 or 601 seconds.</p>
+<p><strong>assertCloseEnoughString($expected, $actual, $message=&#8217;&#8216;, $tolerance=1)</strong></p>
+<p>For extended execution time testing, tests that the absolute difference
+between expected and actual time, formatted as strings, is within the prescribed tolerance.:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$timer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Timer</span><span class="p">();</span>
+<span class="nv">$timer</span><span class="o">-&gt;</span><span class="na">start</span><span class="p">(</span><span class="s1">&#39;longjohn&#39;</span><span class="p">,</span> <span class="nb">strtotime</span><span class="p">(</span><span class="s1">&#39;-11 minutes&#39;</span><span class="p">));</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertCloseEnoughString</span><span class="p">(</span><span class="mi">11</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span> <span class="nv">$timer</span><span class="o">-&gt;</span><span class="na">getElapsedTime</span><span class="p">(</span><span class="s1">&#39;longjohn&#39;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The above test will allow the actual time to be either 600 or 601 seconds.</p>
 </div>
 <div class="section" id="accessing-protected-private-properties">
 <h4>Accessing Protected/Private Properties<a class="headerlink" href="#accessing-protected-private-properties" title="Permalink to this headline">¶</a></h4>
@@ -464,7 +473,7 @@ might be helpful. The <code class="docutils literal"><span class="pre">CITestStr
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Nov 11, 2018.
+      Last updated on Nov 12, 2018.
 
     </p>
   </div>

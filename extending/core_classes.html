@@ -261,7 +261,7 @@ the core system class, you would create your class like this:</p>
                 <span class="k">return</span> <span class="k">new</span> <span class="nx">\App\Libraries\RouteCollection</span><span class="p">();</span>
         <span class="p">}</span>
 
-        <span class="k">return</span> <span class="nx">self</span><span class="o">::</span><span class="na">getSharedInstance</span><span class="p">(</span><span class="s1">&#39;routes&#39;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">static</span><span class="o">::</span><span class="na">getSharedInstance</span><span class="p">(</span><span class="s1">&#39;routes&#39;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -335,7 +335,7 @@ constructors:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Nov 11, 2018.
+      Last updated on Nov 12, 2018.
 
     </p>
   </div>

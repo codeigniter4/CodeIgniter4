@@ -709,7 +709,7 @@ this as it is handled automatically by CodeIgniter.</p>
 pass information to this method so that a cookie can be set: Array
 Method, and Discrete Parameters:</p>
 <p><strong>Array Method</strong></p>
-<p>Using this method, an associative array is passed to the first
+<p>Using this method, an associative array is passed as the first
 parameter:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$cookie</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;name&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;The Cookie Name&#39;</span><span class="p">,</span>
@@ -718,7 +718,8 @@ parameter:</p>
         <span class="s1">&#39;domain&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;.some-domain.com&#39;</span><span class="p">,</span>
         <span class="s1">&#39;path&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
         <span class="s1">&#39;prefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;myprefix_&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;secure&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span>
+        <span class="s1">&#39;secure&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+        <span class="s1">&#39;httponly&#39;</span> <span class="o">=&gt;</span> <span class="k">FALSE</span>
 <span class="p">];</span>
 
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="nv">$cookie</span><span class="p">);</span>
@@ -742,7 +743,102 @@ by setting it to TRUE.</p>
 <p><strong>Discrete Parameters</strong></p>
 <p>If you prefer, you can set the cookie by passing data using individual
 parameters:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$value</span><span class="p">,</span> <span class="nv">$expire</span><span class="p">,</span> <span class="nv">$domain</span><span class="p">,</span> <span class="nv">$path</span><span class="p">,</span> <span class="nv">$prefix</span><span class="p">,</span> <span class="nv">$secure</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$value</span><span class="p">,</span> <span class="nv">$expire</span><span class="p">,</span> <span class="nv">$domain</span><span class="p">,</span> <span class="nv">$path</span><span class="p">,</span> <span class="nv">$prefix</span><span class="p">,</span> <span class="nv">$secure</span><span class="p">,</span> <span class="nv">$httponly</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="deleteCookie">
+<code class="descname">deleteCookie</code><span class="sig-paren">(</span><em>$name = ''</em><span class="optional">[</span>, <em>$domain = ''</em><span class="optional">[</span>, <em>$path = '/'</em><span class="optional">[</span>, <em>$prefix = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#deleteCookie" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$name</strong> (<em>mixed</em>) &#8211; Cookie name or an array of parameters</li>
+<li><strong>$domain</strong> (<em>string</em>) &#8211; Cookie domain</li>
+<li><strong>$path</strong> (<em>string</em>) &#8211; Cookie path</li>
+<li><strong>$prefix</strong> (<em>string</em>) &#8211; Cookie name prefix</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">void</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Delete an existing cookie by setting its expiry to blank.</p>
+<p><strong>Notes</strong></p>
+<p>Only the name is required.</p>
+<p>The prefix is only needed if you need to avoid name collisions with
+other identically named cookies for your server.</p>
+<p>Provide a prefix if cookies should only be deleted for that subset.
+Provide a domain name if cookies should only be deleted for that domain.
+Provide a path name if cookies should only be deleted for that path.</p>
+<p>If any of the optional parameters are empty, then the same-named
+cookie will be deleted across all that apply.</p>
+<p>Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">deleteCookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hasCookie">
+<code class="descname">hasCookie</code><span class="sig-paren">(</span><em>$name = ''</em><span class="optional">[</span>, <em>$value = null</em><span class="optional">[</span>, <em>$prefix = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#hasCookie" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$name</strong> (<em>mixed</em>) &#8211; Cookie name or an array of parameters</li>
+<li><strong>$value</strong> (<em>string</em>) &#8211; cookie value</li>
+<li><strong>$prefix</strong> (<em>string</em>) &#8211; Cookie name prefix</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">boolean</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Checks to see if the Response has a specified cookie or not.</p>
+<p><strong>Notes</strong></p>
+<p>Only the name is required. If a prefix is specified, it will be
+pre-pended to the cookie name.</p>
+<p>If no value is given, the method just checks for the existence
+of the named cookie. If a value is given, then the method checks
+that the cookie exists, and that it has the prescribed value.</p>
+<p>Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">hasCookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">))</span> <span class="o">...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="getCookie">
+<code class="descname">getCookie</code><span class="sig-paren">(</span><em>$name = ''</em><span class="optional">[</span>, <em>$prefix = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCookie" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$name</strong> (<em>mixed</em>) &#8211; Cookie name</li>
+<li><strong>$prefix</strong> (<em>string</em>) &#8211; Cookie name prefix</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">boolean</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Returns the named cookie, if found, or null.</p>
+<p>If no name is given, returns the array of cookies.</p>
+<p>Each cookie is returned as an associative array.</p>
+<p>Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$cookie</span> <span class="o">=</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getCookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -777,7 +873,7 @@ parameters:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Nov 11, 2018.
+      Last updated on Nov 12, 2018.
 
     </p>
   </div>
