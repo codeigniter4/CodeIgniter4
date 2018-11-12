@@ -321,18 +321,23 @@ class ForgeTest extends CIDatabaseTestCase
 
 	public function testEnumFields()
 	{
-		if (! in_array($this->db->DBDriver, ['MySQLi', 'Postgre']))
+		if ($this->db->DBDriver !== 'MySQLi')
 		{
-			$this->markTestSkipped('ENUM Data Type available only in MySQL and PostgreSQL');
+			// Postgres uses ENUM to "CREATE TYPE" - so, CREATE TABLE uses the "created type", not ENUM
+			// https://www.postgresql.org/docs/9.3/datatype-enum.html
+			$this->markTestSkipped('ENUM Data Type available only in MySQL');
 		}
 
 		$this->forge->addField([
-			'enum_string'       => [
-				'type'       => 'ENUM("a","b")',
+			'enum_string' => [
+				'type' => 'ENUM("a","b")',
 			],
-			'enum_array'       => [
+			'enum_array'  => [
 				'type'       => 'ENUM',
-				'constraint' => ['a', 'b'],
+				'constraint' => [
+					'a',
+					'b',
+				],
 			],
 		]);
 		$this->forge->createTable('forge_test_enum');
@@ -355,12 +360,15 @@ class ForgeTest extends CIDatabaseTestCase
 		}
 
 		$this->forge->addField([
-			'set_string'       => [
-				'type'       => 'SET("a","b")',
+			'set_string' => [
+				'type' => 'SET("a","b")',
 			],
-			'set_array'       => [
+			'set_array'  => [
 				'type'       => 'SET',
-				'constraint' => ['a', 'b'],
+				'constraint' => [
+					'a',
+					'b',
+				],
 			],
 		]);
 		$this->forge->createTable('forge_test_set');
