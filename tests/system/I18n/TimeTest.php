@@ -220,7 +220,7 @@ class TimeTest extends \CIUnitTestCase
 	public function testTestNow()
 	{
 		$this->assertFalse(Time::hasTestNow());
-		$this->assertEquals(date('Y-m-d H:i:s', time()), Time::now()->toDateTimeString());
+		$this->assertCloseEnoughString(date('Y-m-d H:i:s', time()), Time::now()->toDateTimeString());
 
 		$t = new Time('2000-01-02');
 		Time::setTestNow($t);
@@ -229,7 +229,7 @@ class TimeTest extends \CIUnitTestCase
 		$this->assertEquals('2000-01-02 00:00:00', Time::now()->toDateTimeString());
 
 		Time::setTestNow();
-		$this->assertEquals(date('Y-m-d H:i:s', time()), Time::now()->toDateTimeString());
+		$this->assertCloseEnoughString(date('Y-m-d H:i:s', time()), Time::now()->toDateTimeString());
 	}
 
 	//--------------------------------------------------------------------
