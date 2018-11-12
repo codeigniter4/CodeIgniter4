@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -44,18 +44,21 @@ abstract class Migration
 
 	/**
 	 * The name of the database group to use.
+	 *
 	 * @var string
 	 */
 	protected $DBGroup;
 
 	/**
 	 * Database Connection instance
-	 * @var BaseConnection 
+	 *
+	 * @var BaseConnection
 	 */
 	protected $db;
 
 	/**
 	 * Database Forge instance.
+	 *
 	 * @var Forge
 	 */
 	protected $forge;
@@ -64,7 +67,7 @@ abstract class Migration
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param \CodeIgniter\Database\Forge $forge
 	 */
 	public function __construct(Forge $forge = null)

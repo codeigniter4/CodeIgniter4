@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 4.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 4.0.0
  * @filesource
  */
+
 use CodeIgniter\Database\Query;
 
 /**
@@ -126,20 +127,20 @@ class Database extends BaseCollector
 		{
 			// Connection Time
 			$data[] = [
-				'name'		 => 'Connecting to Database: "' . $alias . '"',
-				'component'	 => 'Database',
-				'start'		 => $connection->getConnectStart(),
-				'duration'	 => $connection->getConnectDuration()
+				'name'      => 'Connecting to Database: "' . $alias . '"',
+				'component' => 'Database',
+				'start'     => $connection->getConnectStart(),
+				'duration'  => $connection->getConnectDuration(),
 			];
 		}
 
 		foreach (static::$queries as $query)
 		{
 			$data[] = [
-				'name'		 => 'Query',
-				'component'	 => 'Database',
-				'start'		 => $query->getStartTime(true),
-				'duration'	 => $query->getDuration()
+				'name'      => 'Query',
+				'component' => 'Database',
+				'start'     => $query->getStartTime(true),
+				'duration'  => $query->getDuration(),
 			];
 		}
 
@@ -156,13 +157,40 @@ class Database extends BaseCollector
 	public function display(): array
 	{
 		// Key words we want bolded
-		$highlight = ['SELECT', 'DISTINCT', 'FROM', 'WHERE', 'AND', 'LEFT&nbsp;JOIN', 'ORDER&nbsp;BY', 'GROUP&nbsp;BY',
-			'LIMIT', 'INSERT', 'INTO', 'VALUES', 'UPDATE', 'OR&nbsp;', 'HAVING', 'OFFSET', 'NOT&nbsp;IN',
-			'IN', 'LIKE', 'NOT&nbsp;LIKE', 'COUNT', 'MAX', 'MIN', 'ON', 'AS', 'AVG', 'SUM', '(', ')'
+		$highlight = [
+			'SELECT',
+			'DISTINCT',
+			'FROM',
+			'WHERE',
+			'AND',
+			'LEFT&nbsp;JOIN',
+			'ORDER&nbsp;BY',
+			'GROUP&nbsp;BY',
+			'LIMIT',
+			'INSERT',
+			'INTO',
+			'VALUES',
+			'UPDATE',
+			'OR&nbsp;',
+			'HAVING',
+			'OFFSET',
+			'NOT&nbsp;IN',
+			'IN',
+			'LIKE',
+			'NOT&nbsp;LIKE',
+			'COUNT',
+			'MAX',
+			'MIN',
+			'ON',
+			'AS',
+			'AVG',
+			'SUM',
+			'(',
+			')',
 		];
 
 		$data = [
-			'queries' => []
+			'queries' => [],
 		];
 
 		foreach (static::$queries as $query)
@@ -175,8 +203,8 @@ class Database extends BaseCollector
 			}
 
 			$data['queries'][] = [
-				'duration'	 => ($query->getDuration(5) * 1000) .' ms',
-				'sql'		 => $sql
+				'duration' => ($query->getDuration(5) * 1000) . ' ms',
+				'sql'      => $sql,
 			];
 		}
 
@@ -188,7 +216,7 @@ class Database extends BaseCollector
 	/**
 	 * Gets the "badge" value for the button.
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function getBadgeValue()
 	{
@@ -213,7 +241,7 @@ class Database extends BaseCollector
 	/**
 	 * Does this collector have any data collected?
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isEmpty()
 	{
@@ -232,7 +260,6 @@ class Database extends BaseCollector
 	public function icon(): string
 	{
 		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADMSURBVEhLY6A3YExLSwsA4nIycQDIDIhRWEBqamo/UNF/SjDQjF6ocZgAKPkRiFeEhoYyQ4WIBiA9QAuWAPEHqBAmgLqgHcolGQD1V4DMgHIxwbCxYD+QBqcKINseKo6eWrBioPrtQBq/BcgY5ht0cUIYbBg2AJKkRxCNWkDQgtFUNJwtABr+F6igE8olGQD114HMgHIxAVDyAhA/AlpSA8RYUwoeXAPVex5qHCbIyMgwBCkAuQJIY00huDBUz/mUlBQDqHGjgBjAwAAACexpph6oHSQAAAAASUVORK5CYII=';
-
 	}
 
 }

@@ -20,8 +20,8 @@ class Format extends BaseConfig
 	*/
 	public $supportedResponseFormats = [
 		'application/json',
-		'application/xml',		// machine-readable XML
-		'text/xml'				// human-readable XML
+		'application/xml', // machine-readable XML
+		'text/xml', // human-readable XML
 	];
 
 	/*
@@ -37,7 +37,7 @@ class Format extends BaseConfig
 	public $formatters = [
 		'application/json' => \CodeIgniter\Format\JSONFormatter::class,
 		'application/xml'  => \CodeIgniter\Format\XMLFormatter::class,
-		'text/xml'  => \CodeIgniter\Format\XMLFormatter::class,
+		'text/xml'         => \CodeIgniter\Format\XMLFormatter::class,
 	];
 
 	//--------------------------------------------------------------------
@@ -53,14 +53,14 @@ class Format extends BaseConfig
 	{
 		if (! array_key_exists($mime, $this->formatters))
 		{
-			throw new \InvalidArgumentException('No Formatter defined for mime type: '. $mime);
+			throw new \InvalidArgumentException('No Formatter defined for mime type: ' . $mime);
 		}
 
 		$class = $this->formatters[$mime];
 
 		if (! class_exists($class))
 		{
-			throw new \BadMethodCallException($class.' is not a valid Formatter.');
+			throw new \BadMethodCallException($class . ' is not a valid Formatter.');
 		}
 
 		return new $class();

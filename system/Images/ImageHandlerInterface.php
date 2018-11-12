@@ -35,16 +35,17 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
 interface ImageHandlerInterface
 {
 
 	/**
 	 * Resize the image
 	 *
-	 * @param int  $width
-	 * @param int  $height
-	 * @param bool $maintainRatio  If true, will get the closest match possible while keeping aspect ratio true.
-	 * @param string $masterDim
+	 * @param integer $width
+	 * @param integer $height
+	 * @param boolean $maintainRatio If true, will get the closest match possible while keeping aspect ratio true.
+	 * @param string  $masterDim
 	 */
 	public function resize(int $width, int $height, bool $maintainRatio = false, string $masterDim = 'auto');
 
@@ -55,12 +56,12 @@ interface ImageHandlerInterface
 	 * is not provided, that value will be set the appropriate value based on offsets and
 	 * image dimensions.
 	 *
-	 * @param int|null $width
-	 * @param int|null $height
-	 * @param int|null $x       X-axis coord to start cropping from the left of image
-	 * @param int|null $y       Y-axis coord to start cropping from the top of image
-	 * @param bool     $maintainRatio
-	 * @param string   $masterDim
+	 * @param integer|null $width
+	 * @param integer|null $height
+	 * @param integer|null $x             X-axis coord to start cropping from the left of image
+	 * @param integer|null $y             Y-axis coord to start cropping from the top of image
+	 * @param boolean      $maintainRatio
+	 * @param string       $masterDim
 	 *
 	 * @return mixed
 	 */
@@ -82,9 +83,9 @@ interface ImageHandlerInterface
 	/**
 	 * Flattens transparencies, default white background
 	 *
-	 * @param int $red
-	 * @param int $green
-	 * @param int $blue
+	 * @param integer $red
+	 * @param integer $green
+	 * @param integer $blue
 	 *
 	 * @return mixed
 	 */
@@ -105,7 +106,7 @@ interface ImageHandlerInterface
 	 * Retrieve the EXIF information from the image, if possible. Returns
 	 * an array of the information, or null if nothing can be found.
 	 *
-	 * @param string|null $key  If specified, will only return this piece of EXIF data.
+	 * @param string|null $key If specified, will only return this piece of EXIF data.
 	 *
 	 * @return mixed
 	 */
@@ -116,7 +117,7 @@ interface ImageHandlerInterface
 	/**
 	 * Flip an image horizontally or vertically
 	 *
-	 * @param string $dir  Direction to flip, either 'vertical' or 'horizontal'
+	 * @param string $dir Direction to flip, either 'vertical' or 'horizontal'
 	 *
 	 * @return mixed
 	 */
@@ -138,11 +139,11 @@ interface ImageHandlerInterface
 	 *  - bottom
 	 *  - bottom-right
 	 *
-	 * @param int    $width
-	 * @param int    $height
-	 * @param string $position
+	 * @param integer $width
+	 * @param integer $height
+	 * @param string  $position
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function fit(int $width, int $height, string $position);
 
@@ -179,8 +180,8 @@ interface ImageHandlerInterface
 	 *    $image->resize(100, 200, true)
 	 *          ->save($target);
 	 *
-	 * @param string $target
-	 * @param int    $quality
+	 * @param string  $target
+	 * @param integer $quality
 	 *
 	 * @return mixed
 	 */

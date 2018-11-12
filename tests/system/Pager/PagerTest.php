@@ -216,7 +216,7 @@ class PagerTest extends \CIUnitTestCase
 		$expected = current_url(true);
 		$expected = (string)$expected->setQueryArray($_GET);
 
-		$this->pager->store('foo', $_GET['page']-1, 12, 70);
+		$this->pager->store('foo', $_GET['page'] - 1, 12, 70);
 
 		$this->assertEquals((string)$expected, $this->pager->getNextPageURI('foo'));
 	}
@@ -230,7 +230,7 @@ class PagerTest extends \CIUnitTestCase
 		$expected = current_url(true);
 		$expected = (string)$expected->setQueryArray($_GET);
 
-		$this->pager->store('foo', $_GET['page']+1, 12, 70);
+		$this->pager->store('foo', $_GET['page'] + 1, 12, 70);
 
 		$this->assertEquals((string)$expected, $this->pager->getPreviousPageURI('foo'));
 	}
@@ -244,7 +244,10 @@ class PagerTest extends \CIUnitTestCase
 			'hello'    => 'xxx',
 			'category' => 'baz',
 		];
-		$onlyQueries = ['search', 'order'];
+		$onlyQueries = [
+			'search',
+			'order',
+		];
 
 		$this->pager->store('default', $_GET['page'], 10, 100);
 
@@ -252,15 +255,15 @@ class PagerTest extends \CIUnitTestCase
 
 		$this->assertEquals(
 			$this->pager->only($onlyQueries)
-			            ->getPreviousPageURI(), (string)$uri->setQuery('search=foo&order=asc&page=1')
+						->getPreviousPageURI(), (string)$uri->setQuery('search=foo&order=asc&page=1')
 		);
 		$this->assertEquals(
 			$this->pager->only($onlyQueries)
-			            ->getNextPageURI(), (string)$uri->setQuery('search=foo&order=asc&page=3')
+						->getNextPageURI(), (string)$uri->setQuery('search=foo&order=asc&page=3')
 		);
 		$this->assertEquals(
 			$this->pager->only($onlyQueries)
-			            ->getPageURI(4), (string)$uri->setQuery('search=foo&order=asc&page=4')
+						->getPageURI(4), (string)$uri->setQuery('search=foo&order=asc&page=4')
 		);
 	}
 
@@ -269,7 +272,6 @@ class PagerTest extends \CIUnitTestCase
 		$this->expectException(PagerException::class);
 		$this->pager->links('default', 'bogus');
 	}
-
 
 	// the tests below are looking for specific <ul> elements.
 	// not the most rigorous, but a start :-/

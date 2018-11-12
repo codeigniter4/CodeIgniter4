@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\CodeIgniter;
 
 class Console
@@ -42,12 +43,12 @@ class Console
 
 	/**
 	 * Main CodeIgniter instance.
+	 *
 	 * @var CodeIgniter
 	 */
 	protected $app;
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Console constructor.
@@ -64,7 +65,7 @@ class Console
 	/**
 	 * Runs the current command discovered on the CLI.
 	 *
-	 * @param bool $useSafeOutput
+	 * @param boolean $useSafeOutput
 	 *
 	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
 	 * @throws \CodeIgniter\HTTP\RedirectException

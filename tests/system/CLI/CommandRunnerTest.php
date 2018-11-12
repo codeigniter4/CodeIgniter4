@@ -22,26 +22,29 @@ class CommandRunnerTest extends \CIUnitTestCase
 		parent::setUp();
 
 		CITestStreamFilter::$buffer = '';
-		$this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
+		$this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
 
 		$this->env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
 		$this->env->load();
 
 		// Set environment values that would otherwise stop the framework from functioning during tests.
-		if ( ! isset($_SERVER['app.baseURL']))
+		if (! isset($_SERVER['app.baseURL']))
 		{
 			$_SERVER['app.baseURL'] = 'http://example.com';
 		}
 
-		$_SERVER['argv'] = ['spark', 'list'];
+		$_SERVER['argv'] = [
+			'spark',
+			'list',
+		];
 		$_SERVER['argc'] = 2;
 		CLI::init();
 
-		$this->config = new MockCLIConfig();
-		$this->request = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
+		$this->config   = new MockCLIConfig();
+		$this->request  = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
 		$this->response = new \CodeIgniter\HTTP\Response($this->config);
-		$this->logger = Services::logger();
-		$this->runner = new CommandRunner();
+		$this->logger   = Services::logger();
+		$this->runner   = new CommandRunner();
 		$this->runner->initController($this->request, $this->response, $this->logger);
 	}
 
@@ -72,7 +75,7 @@ class CommandRunnerTest extends \CIUnitTestCase
 
 	public function testEmptyCommand()
 	{
-		$this->runner->index([null,'list']);
+		$this->runner->index([null, 'list']);
 		$result = CITestStreamFilter::$buffer;
 
 		// make sure the result looks like a command list

@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -43,21 +43,22 @@ use CodeIgniter\CLI\CLI;
  * Launch the PHP development server
  *
  * Not testable, as it throws phpunit for a loop :-/
+ *
  * @codeCoverageIgnore
  */
 class Serve extends BaseCommand
 {
 	protected $minPHPVersion = '7.1';
 
-	protected $group = 'CodeIgniter';
-	protected $name = 'serve';
+	protected $group       = 'CodeIgniter';
+	protected $name        = 'serve';
 	protected $description = 'Launchs the CodeIgniter PHP-Development Server.';
-	protected $usage = 'serve';
-	protected $arguments = [];
-	protected $options = [
-		'-php'	 => 'The PHP Binary [default: "PHP_BINARY"]',
-		'-host'	 => 'The HTTP Host [default: "localhost"]',
-		'-port'	 => 'The HTTP Host Port [default: "8080"]',
+	protected $usage       = 'serve';
+	protected $arguments   = [];
+	protected $options     = [
+		'-php'  => 'The PHP Binary [default: "PHP_BINARY"]',
+		'-host' => 'The HTTP Host [default: "localhost"]',
+		'-port' => 'The HTTP Host Port [default: "8080"]',
 	];
 
 	public function run(array $params)
@@ -65,11 +66,11 @@ class Serve extends BaseCommand
 		// Valid PHP Version?
 		if (phpversion() < $this->minPHPVersion)
 		{
-			die("You PHP version must be {$this->minPHPVersion} or higher to run CodeIgniter. Current version: ". phpversion());
+			die("You PHP version must be {$this->minPHPVersion} or higher to run CodeIgniter. Current version: " . phpversion());
 		}
 
 		// Collect any user-supplied options and apply them
-		$php = CLI::getOption('php') ?? PHP_BINARY;
+		$php  = CLI::getOption('php') ?? PHP_BINARY;
 		$host = CLI::getOption('host') ?? 'localhost';
 		$port = CLI::getOption('port') ?? '8080';
 

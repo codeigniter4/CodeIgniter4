@@ -34,18 +34,18 @@
  * @since      Version 3.0.0
  * @filesource
  */
-if ( ! function_exists('now'))
-{
 
+if (! function_exists('now'))
+{
 	/**
 	 * Get "now" time
 	 *
 	 * Returns time() based on the timezone parameter or on the
 	 * app_timezone() setting
 	 *
-	 * @param    string $timezone
+	 * @param string $timezone
 	 *
-	 * @return    int
+	 * @return integer
 	 */
 	function now(string $timezone = null)
 	{
@@ -61,5 +61,4 @@ if ( ! function_exists('now'))
 
 		return mktime($hour, $minute, $second, $month, $day, $year);
 	}
-
 }

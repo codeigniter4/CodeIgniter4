@@ -29,8 +29,8 @@ class IncrementTest extends CIDatabaseTestCase
 		$this->hasInDatabase('job', ['name' => 'incremental', 'description' => '6']);
 
 		$this->db->table('job')
-		         ->where('name', 'incremental')
-		         ->increment('description', 2);
+				 ->where('name', 'incremental')
+				 ->increment('description', 2);
 
 		$this->seeInDatabase('job', ['name' => 'incremental', 'description' => '8']);
 	}
@@ -42,8 +42,8 @@ class IncrementTest extends CIDatabaseTestCase
 		$this->hasInDatabase('job', ['name' => 'incremental', 'description' => '6']);
 
 		$this->db->table('job')
-		         ->where('name', 'incremental')
-		         ->decrement('description');
+				 ->where('name', 'incremental')
+				 ->decrement('description');
 
 		$this->seeInDatabase('job', ['name' => 'incremental', 'description' => '5']);
 	}
@@ -55,8 +55,8 @@ class IncrementTest extends CIDatabaseTestCase
 		$this->hasInDatabase('job', ['name' => 'incremental', 'description' => '6']);
 
 		$this->db->table('job')
-		         ->where('name', 'incremental')
-		         ->decrement('description', 2);
+				 ->where('name', 'incremental')
+				 ->decrement('description', 2);
 
 		$this->seeInDatabase('job', ['name' => 'incremental', 'description' => '4']);
 	}

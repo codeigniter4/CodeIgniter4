@@ -12,26 +12,29 @@ class EventModel extends Model
 
 	protected $dateFormat = 'integer';
 
-    protected $allowedFields = [
-        'name', 'email', 'country', 'deleted'
-    ];
+	protected $allowedFields = [
+		'name',
+		'email',
+		'country',
+		'deleted',
+	];
 
-    protected $beforeInsert = ['beforeInsertMethod'];
-    protected $afterInsert  = ['afterInsertMethod'];
-    protected $beforeUpdate = ['beforeUpdateMethod'];
-    protected $afterUpdate  = ['afterUpdateMethod'];
-    protected $afterFind    = ['afterFindMethod'];
-    protected $afterDelete  = ['afterDeleteMethod'];
+	protected $beforeInsert = ['beforeInsertMethod'];
+	protected $afterInsert  = ['afterInsertMethod'];
+	protected $beforeUpdate = ['beforeUpdateMethod'];
+	protected $afterUpdate  = ['afterUpdateMethod'];
+	protected $afterFind    = ['afterFindMethod'];
+	protected $afterDelete  = ['afterDeleteMethod'];
 
-    // Holds stuff for testing events
-    protected $tokens = [];
+	// Holds stuff for testing events
+	protected $tokens = [];
 
 	protected function beforeInsertMethod(array $data)
 	{
 		$this->tokens[] = 'beforeInsert';
 
 		return $data;
-    }
+	}
 
 	protected function afterInsertMethod(array $data)
 	{

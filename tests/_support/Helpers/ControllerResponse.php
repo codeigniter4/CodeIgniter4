@@ -61,7 +61,6 @@ class ControllerResponse {
 		return $this->body;
 	}
 
-
 	/**
 	 * @param \CodeIgniter\HTTP\RequestInterface $request
 	 *
@@ -112,7 +111,7 @@ class ControllerResponse {
 	 * Boils down the possible responses into a bolean valid/not-valid
 	 * response type.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isOK(): bool
 	{
@@ -135,7 +134,7 @@ class ControllerResponse {
 	/**
 	 * Returns whether or not the Response was a redirect response
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isRedirect(): bool
 	{

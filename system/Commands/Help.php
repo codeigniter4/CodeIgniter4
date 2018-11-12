@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
@@ -84,7 +85,7 @@ class Help extends BaseCommand
 	 * @var array
 	 */
 	protected $arguments = [
-		'command_name' => 'The command name [default: "help"]'
+		'command_name' => 'The command name [default: "help"]',
 	];
 
 	/**
@@ -110,7 +111,7 @@ class Help extends BaseCommand
 		}
 
 		$commands = $this->commands->getCommands();
-		$class = new $commands[$command]['class']($this->logger, $this->commands);
+		$class    = new $commands[$command]['class']($this->logger, $this->commands);
 
 		$class->showHelp();
 	}

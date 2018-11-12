@@ -42,7 +42,7 @@ final class NumberHelperTest extends \CIUnitTestCase
 	{
 		$options = [
 			'before' => '<<',
-			'after' => '>>',
+			'after'  => '>>',
 		];
 		$this->assertEquals('<<123,456.79>>', format_number(123456.789, 2, 'en_US', $options));
 	}

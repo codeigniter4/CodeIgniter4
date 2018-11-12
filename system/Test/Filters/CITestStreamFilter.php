@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -51,8 +51,8 @@ class CITestStreamFilter extends \php_user_filter
 	{
 		while ($bucket = stream_bucket_make_writeable($in))
 		{
-			self::$buffer .= $bucket->data;
-			$consumed += $bucket->datalen;
+			static::$buffer .= $bucket->data;
+			$consumed       += $bucket->datalen;
 		}
 		return PSFS_PASS_ON;
 	}

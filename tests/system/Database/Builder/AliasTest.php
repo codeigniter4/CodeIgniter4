@@ -21,7 +21,7 @@ class AliasTest extends \CIUnitTestCase
 	{
 		$builder = $this->db->table('jobs j');
 
-		$expectedSQL   = 'SELECT * FROM "jobs" "j"';
+		$expectedSQL = 'SELECT * FROM "jobs" "j"';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -32,7 +32,7 @@ class AliasTest extends \CIUnitTestCase
 	{
 		$builder = $this->db->table(['jobs j', 'users u']);
 
-		$expectedSQL   = 'SELECT * FROM "jobs" "j", "users" "u"';
+		$expectedSQL = 'SELECT * FROM "jobs" "j", "users" "u"';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -43,7 +43,7 @@ class AliasTest extends \CIUnitTestCase
 	{
 		$builder = $this->db->table('jobs j, users u');
 
-		$expectedSQL   = 'SELECT * FROM "jobs" "j", "users" "u"';
+		$expectedSQL = 'SELECT * FROM "jobs" "j", "users" "u"';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}

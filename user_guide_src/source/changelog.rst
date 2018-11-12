@@ -11,61 +11,171 @@ Release Date: Not Released
 
 The list of changed files follows, with PR numbers shown.
 
+- admin/
+	- pre-commit #1388
+	- setup.sh #1388
+
 - application /
+	- Config/Autoload #1396, #1416
 	- Config/Mimes #1368
 	- Filters/Honeypot #1376
+	- Views/
+		- errors/* #1415, #1413
+		- form.php removed #1442
 
 - public /
+	- index.php #1388
 
 - system /
+	- Cache/Handlers/
+		- MemcachedHandler #1383
+	- CLI/
+		- CLI #1432
 	- Commands/
-		- Database/CreateMigration #1374
+		- Database/
+			- CreateMigration #1374, #1422, #1431
+			- MigrateCurrent #1431
+			- MigrateLatest #1431
+			- MigrateRollback #1431
+			- MigrateStatus #1431
+			- MigrateVersion #1431
 		- Sessions/CrateMigration #1357
+	- Config/
+		- AutoloadCOnfig #1416
+		- Services #1180
 	- Database/
+		- BaseBuilder #1335
+		- BaseConnection #1335, #1407
+		- BaseResult #1426
 		- Forge #1343
 		- MigrationRunner #1371
+		- MySQLi/Connection #1335
 		- MySQLi/Forge #1343, #1344
+		- Postgre/Connection #1335
+		- SQLite3/Connection #1335
 	- Debug
 		- Toolbar #1370
+	- Email/
+		- Email #1389, #1413
+	- Files/
+		- File #1399
+	- Helpers/
+		- array_helper #1412
 	- HTTP/
 		- DownloadResponse #1375
+		- Exceptions/DownloadException #1405
+		- Files/UploadedFile #1335, #1399
+		- RedirectResponse #1387
 		- ResponseInterface #1384
 		- UploadedFile #1368
 		- URI #1213
 	- Language/en/
+		- Database #1335
 		- Filters #1378
 		- Migrations #1374
 	- Pager/
 		- Pager #1213
 		- PagerRenderer #1213
+	- Router/
+		- RouteCollectionInterface #1406, #1410
+	- Session/Handlers/
+		- BaseHandler #1180
+		- DatabaseHandler #1180
+		- FileHandler #1180
+		- MemcachedHandler #1180
+		- RedisHandler #1180
+	- Test/
+		- FeatureTestCase #1427
 	- Validation /
 		- Rules #1345
 		- Validation #1345
 	- View/
-		- View #1357, #1377
-	- Entity #1369
-	- Model #1345, #1380
+		- Parser #1417
+		- View #1357, #1377, #1410
+	- Controller #1423
+	- Entity #1369, #1373
+	- Model #1345, #1380, #1373
 
 - tests /
+	- _support/_bootstrap.php #1397, #1443
+	- Cache/Handlers/
+		- MemcachedHandlerTest #1180, #1383
+		- RedisHandlerTest #1180
 	- HTTP/
+		- Files/FileMovingTest #1424
 		- DownloadResponseTest #1375
+		- RedirectResponseTest #1387
 		- ResponseTest #1375
+	- Log/
+		- FileHandlerTest #1425
 	- Pager/
 		- PagerRendererTest #1213
-
+	- Session/
+		- SessionTest  #1180
+	- Test/
+		- BootstrapFCPATHTest #1397
+		- TestCaseTest #1390
+	- Throttle/
+		- ThrottleTest #1398
+	- View/
+		- ParserTest #1335
+	- CommonFunctionsTest #1180
 
 - user_guide_src /source/
+	- database/
+		- queries #1407
 	- dbmgmt/
-		- migration #1374
+		- migration #1374, #1385, #1431
+	- installation/
+		- index	#1388
 	- libraries/
 		- pagination #1213
+	- tutorial/
+		- create_news_item #1442
+	- changelog #1385
 
 - /
+	- composer.json #1388, #1418
+	- .travis.yml #1394
 
 PRs merged:
 -----------
 
+- #1443 Fixes unit test output not captured
+- #1442 remove form view in application/View/ and form helper usage in create new items tutorial
+- #1432 Use mb_strlen to get length of columns
+- #1431 can't call run() method with params from commands migrations
+- #1427 Fixes "options" request call parameter in FeatureTestCase
+- #1416 performance improvement in Database\BaseResult
+- #1425 Ensure FileHandlerTest uses MockFileHandler
+- #1424 Fix FileMovingTest leaving cruft
+- #1423 Fix Controller use validate bug
+- #1422 fix Migrations.classNotFound
+- #1418 normalize composer.json
+- #1417 fix Parser::parsePairs always escapes
+- #1416 remove $psr4['Tests\Support'] definition in application\Config\Autoload
+- #1415 remove unneded "defined('BASEPATH') ...
+- #1413 set more_entropy = true in all uniqid() usage
+- #1412 function_exists() typo fixes on array_helper
+- #1411 add missing break; in loop in View::render()
+- #1410 Fix spark serve not working from commit 2d0b325
+- #1407 Database: add missing call initialize() check on BaseConnection->prepare()
+- #1406 Add missing parameter to RouteCollectionInterface
+- #1405 Fix language string used in DownloadException
+- #1402 Correct class namespacing in the user guide
+- #1399 optional type hinting in guessExtension
+- #1398 Tweak throttle testing
+- #1397 Correcting FCPATH setting in tests/_support/_bootstrap.php
+- #1396 only register PSR4 "Tests\Support" namespace in "testing" environment
+- #1395 short array syntax in docs
+- #1394 add php 7.3 to travis config
+- #1390 Fixed not to output "Hello" at test execution
+- #1389 Capitalize email filename
+- #1388 Phpcs Auto-fix on commit
+- #1387 Redirect to named route
+- #1385 Fix migration page; udpate changelog
 - #1384 add missing ResponseInterface contants
+- #1383 fix TypeError in MemcachedHandler::__construct()
 - #1381 Remove unused use statements
 - #1380 count() improvement, use truthy check
 - #1378 Update Filters language file
@@ -73,6 +183,7 @@ PRs merged:
 - #1376 Fix cannot use class Honeypot because already in use in App\Filters\Honeypot
 - #1375 Give download a header conforming to RFC 6266
 - #1374 Missing feature migration.
+- #1373 Turning off casting for db insert/save 
 - #1371 update method name in coding style
 - #1370 Toolbar needs logging. Fixes #1258
 - #1369 Remove invisible character
@@ -82,7 +193,9 @@ PRs merged:
 - #1345 is_unique tried to connect to default database instead of defined in DBGroup
 - #1344 Not to quote unecessary table options
 - #1343 Avoid add two single quote to constraint
+- #1335 Review and improvements in databases drivers MySQLi, Postgre and SQLite
 - #1213 URI segment as page number in Pagination
+- #1180 using HTTP\Request instance to pull ip address
 
 Version 4.0.0-alpha.2
 =================================
@@ -294,7 +407,7 @@ Release Date: September 28, 2018
 
 Non-code changes:
     - User Guide adapted or rewritten
-    - [System message translations repository](https://github.com/bcit-ci/CodeIgniter4-translations)
+    - [System message translations repository](https://github.com/codeigniter4/CodeIgniter4-translations)
     - [Roadmap subforum](https://forum.codeigniter.com/forum-33.html) for more transparent planning
 
 New core classes:

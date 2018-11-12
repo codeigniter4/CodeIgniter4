@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\App;
@@ -109,10 +110,10 @@ class CreateMigration extends BaseCommand
 		$path = APPPATH . 'Database/Migrations/' . date('YmdHis_') . 'create_' . $tableName . '_table' . '.php';
 
 		$data = [
-			'namespace'	 => CLI::getOption('n') ?? APP_NAMESPACE ?? 'App',
-			'DBGroup'	 => CLI::getOption('g'),
-			'tableName'	 => $tableName,
-			'matchIP'	 => $config->sessionMatchIP ?? false,
+			'namespace' => CLI::getOption('n') ?? APP_NAMESPACE ?? 'App',
+			'DBGroup'   => CLI::getOption('g'),
+			'tableName' => $tableName,
+			'matchIP'   => $config->sessionMatchIP ?? false,
 		];
 
 		$template = view('\CodeIgniter\Commands\Sessions\Views\migration.tpl.php', $data, ['debug' => false]);
@@ -120,7 +121,7 @@ class CreateMigration extends BaseCommand
 
 		// Write the file out.
 		helper('filesystem');
-		if ( ! write_file($path, $template))
+		if (! write_file($path, $template))
 		{
 			CLI::error(lang('Migrations.migWriteError'));
 			return;

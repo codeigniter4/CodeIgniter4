@@ -6,6 +6,7 @@
  * Doesn't provides a basic registrar class for testing BaseConfig registration functions,
  * because it doesn't return an associative array
  */
+
 class BadRegistrar
 {
 

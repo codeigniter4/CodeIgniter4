@@ -27,12 +27,14 @@ class ControllerTest extends \CIUnitTestCase
 
 	/**
 	 * Current request.
+	 *
 	 * @var \CodeIgniter\HTTP\Request
 	 */
 	protected $request;
 
 	/**
 	 * Current response.
+	 *
 	 * @var \CodeIgniter\HTTP\Response
 	 */
 	protected $response;
@@ -47,10 +49,10 @@ class ControllerTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->config = new App();
-		$this->request = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
-		$this->response = new \CodeIgniter\HTTP\Response($this->config);
-		$this->logger = \Config\Services::logger();
+		$this->config      = new App();
+		$this->request     = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
+		$this->response    = new \CodeIgniter\HTTP\Response($this->config);
+		$this->logger      = \Config\Services::logger();
 		$this->codeigniter = new MockCodeIgniter($this->config);
 	}
 
@@ -67,7 +69,7 @@ class ControllerTest extends \CIUnitTestCase
 	public function testConstructorHTTPS()
 	{
 		$original = $_SERVER;
-		$_SERVER = ['HTTPS' => 'on'];
+		$_SERVER  = ['HTTPS' => 'on'];
 		// make sure we can instantiate one
 		$this->controller = new Class() extends Controller
 		{
@@ -103,7 +105,10 @@ class ControllerTest extends \CIUnitTestCase
 	{
 		$this->controller = new Class() extends Controller
 		{
-			protected $helpers = ['cookie', 'text'];
+			protected $helpers = [
+				'cookie',
+				'text',
+			];
 		};
 		$this->controller->initController($this->request, $this->response, $this->logger);
 

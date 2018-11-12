@@ -43,7 +43,6 @@ class MockLogger
 	 */
 	public $path = '';
 
-
 	/*
 	  |--------------------------------------------------------------------------
 	  | Date Format for Logs
@@ -88,9 +87,17 @@ class MockLogger
 			/*
 			 * The log levels that this handler will handle.
 			 */
-			'handles' => ['critical', 'alert', 'emergency', 'debug',
-				'error', 'info', 'notice', 'warning'],
-		]
+			'handles' => [
+				'critical',
+				'alert',
+				'emergency',
+				'debug',
+				'error',
+				'info',
+				'notice',
+				'warning',
+			],
+		],
 	];
 
 }

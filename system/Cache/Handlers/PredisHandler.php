@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\CriticalError;
 
@@ -55,17 +56,17 @@ class PredisHandler implements CacheInterface
 	 * @var    array
 	 */
 	protected $config = [
-		'scheme'	 => 'tcp',
-		'host'		 => '127.0.0.1',
-		'password'	 => null,
-		'port'		 => 6379,
-		'timeout'	 => 0,
+		'scheme'   => 'tcp',
+		'host'     => '127.0.0.1',
+		'password' => null,
+		'port'     => 6379,
+		'timeout'  => 0,
 	];
 
 	/**
 	 * Predis connection
 	 *
-	 * @var    Predis
+	 * @var Predis
 	 */
 	protected $redis;
 
@@ -95,7 +96,8 @@ class PredisHandler implements CacheInterface
 
 			// Check if the connection is valid by trying to get the time.
 			$this->redis->time();
-		} catch (\Exception $e)
+		}
+		catch (\Exception $e)
 		{
 			// thrown if can't connect to redis server.
 			throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ')');
@@ -113,11 +115,13 @@ class PredisHandler implements CacheInterface
 	 */
 	public function get(string $key)
 	{
-		$data = array_combine(
-				['__ci_type', '__ci_value'], $this->redis->hmget($key, ['__ci_type', '__ci_value'])
+		$data = array_combine([
+			'__ci_type',
+			'__ci_value',
+		], $this->redis->hmget($key, ['__ci_type', '__ci_value'])
 		);
 
-		if ( ! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false)
+		if (! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false)
 		{
 			return false;
 		}
@@ -144,9 +148,9 @@ class PredisHandler implements CacheInterface
 	/**
 	 * Saves an item to the cache store.
 	 *
-	 * @param string $key   Cache item name
-	 * @param mixed  $value The data to save
-	 * @param int    $ttl   Time To Live, in seconds (default 60)
+	 * @param string  $key   Cache item name
+	 * @param mixed   $value The data to save
+	 * @param integer $ttl   Time To Live, in seconds (default 60)
 	 *
 	 * @return mixed
 	 */
@@ -169,7 +173,7 @@ class PredisHandler implements CacheInterface
 				return false;
 		}
 
-		if ( ! $this->redis->hmset($key, ['__ci_type' => $data_type, '__ci_value' => $value]))
+		if (! $this->redis->hmset($key, ['__ci_type' => $data_type, '__ci_value' => $value]))
 		{
 			return false;
 		}
@@ -198,8 +202,8 @@ class PredisHandler implements CacheInterface
 	/**
 	 * Performs atomic incrementation of a raw stored value.
 	 *
-	 * @param string $key    Cache ID
-	 * @param int    $offset Step/value to increase by
+	 * @param string  $key    Cache ID
+	 * @param integer $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 */
@@ -213,8 +217,8 @@ class PredisHandler implements CacheInterface
 	/**
 	 * Performs atomic decrementation of a raw stored value.
 	 *
-	 * @param string $key    Cache ID
-	 * @param int    $offset Step/value to increase by
+	 * @param string  $key    Cache ID
+	 * @param integer $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 */
@@ -267,11 +271,11 @@ class PredisHandler implements CacheInterface
 		{
 			return [
 				'expire' => time() + $this->redis->ttl($key),
-				'data'	 => $data['__ci_value']
+				'data'   => $data['__ci_value'],
 			];
 		}
 
-		return FALSE;
+		return false;
 	}
 
 	//--------------------------------------------------------------------

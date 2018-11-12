@@ -20,19 +20,19 @@ class FormHelperTest extends \CIUnitTestCase
 	// ------------------------------------------------------------------------
 	public function testFormOpenBasic()
 	{
-		$config = new App();
-		$config->baseURL = '';
+		$config            = new App();
+		$config->baseURL   = '';
 		$config->indexPage = 'index.php';
-		$request = Services::request($config);
-		$request->uri = new URI('http://example.com/');
+		$request           = Services::request($config);
+		$request->uri      = new URI('http://example.com/');
 
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
 		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
 		{
-			$Value = csrf_hash();
-			$Name = csrf_token();
+			$Value    = csrf_hash();
+			$Name     = csrf_token();
 			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
 <input type="hidden" name="$Name" value="$Value" style="display: none;" />
@@ -48,9 +48,9 @@ EOH;
 		}
 
 		$attributes = [
-			'name' => 'form',
-			'id' => 'form',
-			'method' => 'POST'
+			'name'   => 'form',
+			'id'     => 'form',
+			'method' => 'POST',
 		];
 		$this->assertEquals($expected, form_open('foo/bar', $attributes));
 	}
@@ -58,19 +58,19 @@ EOH;
 	// ------------------------------------------------------------------------
 	public function testFormOpenWithoutAction()
 	{
-		$config = new App();
-		$config->baseURL = '';
+		$config            = new App();
+		$config->baseURL   = '';
 		$config->indexPage = 'index.php';
-		$request = Services::request($config);
-		$request->uri = new URI('http://example.com/');
+		$request           = Services::request($config);
+		$request->uri      = new URI('http://example.com/');
 
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
 		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
 		{
-			$Value = csrf_hash();
-			$Name = csrf_token();
+			$Value    = csrf_hash();
+			$Name     = csrf_token();
 			$expected = <<<EOH
 <form action="http://example.com/" name="form" id="form" method="POST" accept-charset="utf-8">
 <input type="hidden" name="$Name" value="$Value" style="display: none;" />
@@ -85,9 +85,9 @@ EOH;
 EOH;
 		}
 		$attributes = [
-			'name' => 'form',
-			'id' => 'form',
-			'method' => 'POST'
+			'name'   => 'form',
+			'id'     => 'form',
+			'method' => 'POST',
 		];
 		$this->assertEquals($expected, form_open('', $attributes));
 	}
@@ -95,19 +95,19 @@ EOH;
 	// ------------------------------------------------------------------------
 	public function testFormOpenWithoutMethod()
 	{
-		$config = new App();
-		$config->baseURL = '';
+		$config            = new App();
+		$config->baseURL   = '';
 		$config->indexPage = 'index.php';
-		$request = Services::request($config);
-		$request->uri = new URI('http://example.com/');
+		$request           = Services::request($config);
+		$request->uri      = new URI('http://example.com/');
 
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
 		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
 		{
-			$Value = csrf_hash();
-			$Name = csrf_token();
+			$Value    = csrf_hash();
+			$Name     = csrf_token();
 			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="post" accept-charset="utf-8">
 <input type="hidden" name="$Name" value="$Value" style="display: none;" />
@@ -124,7 +124,7 @@ EOH;
 
 		$attributes = [
 			'name' => 'form',
-			'id' => 'form'
+			'id'   => 'form',
 		];
 		$this->assertEquals($expected, form_open('foo/bar', $attributes));
 	}
@@ -132,19 +132,19 @@ EOH;
 	// ------------------------------------------------------------------------
 	public function testFormOpenWithHidden()
 	{
-		$config = new App();
-		$config->baseURL = '';
+		$config            = new App();
+		$config->baseURL   = '';
 		$config->indexPage = 'index.php';
-		$request = Services::request($config);
-		$request->uri = new URI('http://example.com/');
+		$request           = Services::request($config);
+		$request->uri      = new URI('http://example.com/');
 
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
 		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
 		{
-			$Value = csrf_hash();
-			$Name = csrf_token();
+			$Value    = csrf_hash();
+			$Name     = csrf_token();
 			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
 <input type="hidden" name="foo" value="bar" style="display: none;" />
@@ -162,67 +162,67 @@ EOH;
 		}
 
 		$attributes = [
-			'name' => 'form',
-			'id' => 'form',
-			'method' => 'POST'
+			'name'   => 'form',
+			'id'     => 'form',
+			'method' => 'POST',
 		];
-		$hidden = [
-			'foo' => 'bar'
+		$hidden     = [
+			'foo' => 'bar',
 		];
 		$this->assertEquals($expected, form_open('foo/bar', $attributes, $hidden));
 	}
 
-// ------------------------------------------------------------------------
-//FIXME This needs dynamic filters to complete
-//	public function testFormOpenWithCSRF()
-//	{
-//		$config = new App();
-//		$config->baseURL = '';
-//		$config->indexPage = 'index.php';
-//		$request = Services::request($config);
-//		$request->uri = new URI('http://example.com/');
-//
-//		Services::injectMock('request', $request);
-//
-//		$filters = Services::filters();
-//		$filters->globals['before'][] = 'csrf'; // force CSRF
-//		$before = $filters->globals['before'];
-//
-//		$Value = csrf_hash();
-//		$Name = csrf_token();
-//		$expected = <<<EOH
-//<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
-//<input type="hidden" name="foo" value="bar" style="display: none;" />
-//<input type="hidden" name="$Name" value="$Value" style="display: none;" />
-//
-//EOH;
-//
-//		$attributes = [
-//			'name' => 'form',
-//			'id' => 'form',
-//			'method' => 'POST'
-//		];
-//		$hidden = [
-//			'foo' => 'bar'
-//		];
-//		$this->assertEquals($expected, form_open('foo/bar', $attributes, $hidden));
-//	}
+	// ------------------------------------------------------------------------
+	//FIXME This needs dynamic filters to complete
+	//  public function testFormOpenWithCSRF()
+	//  {
+	//      $config = new App();
+	//      $config->baseURL = '';
+	//      $config->indexPage = 'index.php';
+	//      $request = Services::request($config);
+	//      $request->uri = new URI('http://example.com/');
+	//
+	//      Services::injectMock('request', $request);
+	//
+	//      $filters = Services::filters();
+	//      $filters->globals['before'][] = 'csrf'; // force CSRF
+	//      $before = $filters->globals['before'];
+	//
+	//      $Value = csrf_hash();
+	//      $Name = csrf_token();
+	//      $expected = <<<EOH
+	//<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
+	//<input type="hidden" name="foo" value="bar" style="display: none;" />
+	//<input type="hidden" name="$Name" value="$Value" style="display: none;" />
+	//
+	//EOH;
+	//
+	//      $attributes = [
+	//          'name' => 'form',
+	//          'id' => 'form',
+	//          'method' => 'POST'
+	//      ];
+	//      $hidden = [
+	//          'foo' => 'bar'
+	//      ];
+	//      $this->assertEquals($expected, form_open('foo/bar', $attributes, $hidden));
+	//  }
 	// ------------------------------------------------------------------------
 	public function testFormOpenMultipart()
 	{
-		$config = new App();
-		$config->baseURL = '';
+		$config            = new App();
+		$config->baseURL   = '';
 		$config->indexPage = 'index.php';
-		$request = Services::request($config);
-		$request->uri = new URI('http://example.com/');
+		$request           = Services::request($config);
+		$request->uri      = new URI('http://example.com/');
 
 		Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
 		if (in_array('csrf', $before) || array_key_exists('csrf', $before))
 		{
-			$Value = csrf_hash();
-			$Name = csrf_token();
+			$Value    = csrf_hash();
+			$Name     = csrf_token();
 			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart&#x2F;form-data" accept-charset="utf-8">
 <input type="hidden" name="$Name" value="$Value" style="display: none;" />
@@ -237,9 +237,9 @@ EOH;
 EOH;
 		}
 		$attributes = [
-			'name' => 'form',
-			'id' => 'form',
-			'method' => 'POST'
+			'name'   => 'form',
+			'id'     => 'form',
+			'method' => 'POST',
 		];
 		$this->assertEquals($expected, form_open_multipart('foo/bar', $attributes));
 
@@ -261,8 +261,8 @@ EOH;
 	// ------------------------------------------------------------------------
 	public function testFormHiddenArrayInput()
 	{
-		$data = [
-			'foo' => 'bar'
+		$data     = [
+			'foo' => 'bar',
 		];
 		$expected = <<<EOH
 
@@ -275,8 +275,8 @@ EOH;
 	// ------------------------------------------------------------------------
 	public function testFormHiddenArrayValues()
 	{
-		$data = [
-			'foo' => 'bar'
+		$data     = [
+			'foo' => 'bar',
 		];
 		$expected = <<<EOH
 
@@ -292,13 +292,13 @@ EOH;
 		$expected = <<<EOH
 <input type="text" name="username" value="johndoe" id="username" maxlength="100" size="50" style="width:50%"  />\n
 EOH;
-		$data = [
-			'name' => 'username',
-			'id' => 'username',
-			'value' => 'johndoe',
+		$data     = [
+			'name'      => 'username',
+			'id'        => 'username',
+			'value'     => 'johndoe',
 			'maxlength' => '100',
-			'size' => '50',
-			'style' => 'width:50%',
+			'size'      => '50',
+			'style'     => 'width:50%',
 		];
 		$this->assertEquals($expected, form_input($data));
 	}
@@ -333,9 +333,9 @@ EOH;
 	// ------------------------------------------------------------------------
 	public function testFormTextareaWithValueAttribute()
 	{
-		$data = [
-			'name' => 'foo',
-			'value' => 'bar'
+		$data     = [
+			'name'  => 'foo',
+			'value' => 'bar',
 		];
 		$expected = <<<EOH
 <textarea name="foo" cols="40" rows="10" >bar</textarea>
@@ -355,14 +355,14 @@ EOH;
 <option value="xlarge">Extra Large Shirt</option>
 </select>\n
 EOH;
-		$options = [
-			'small' => 'Small Shirt',
-			'med' => 'Medium Shirt',
-			'large' => 'Large Shirt',
+		$options  = [
+			'small'  => 'Small Shirt',
+			'med'    => 'Medium Shirt',
+			'large'  => 'Large Shirt',
 			'xlarge' => 'Extra Large Shirt',
 		];
 		$this->assertEquals($expected, form_dropdown('shirts', $options, 'large'));
-		$expected = <<<EOH
+		$expected       = <<<EOH
 <select name="shirts" multiple="multiple">
 <option value="small" selected="selected">Small Shirt</option>
 <option value="med">Medium Shirt</option>
@@ -370,17 +370,20 @@ EOH;
 <option value="xlarge">Extra Large Shirt</option>
 </select>\n
 EOH;
-		$shirts_on_sale = ['small', 'large'];
+		$shirts_on_sale = [
+			'small',
+			'large',
+		];
 		$this->assertEquals($expected, form_dropdown('shirts', $options, $shirts_on_sale));
-		$options = [
+		$options  = [
 			'Swedish Cars' => [
 				'volvo' => 'Volvo',
-				'saab' => 'Saab'
+				'saab'  => 'Saab',
 			],
-			'German Cars' => [
+			'German Cars'  => [
 				'mercedes' => 'Mercedes',
-				'audi' => 'Audi'
-			]
+				'audi'     => 'Audi',
+			],
 		];
 		$expected = <<<EOH
 <select name="cars" multiple="multiple">
@@ -399,15 +402,15 @@ EOH;
 
 	public function testFormDropdownUnselected()
 	{
-		$options = [
+		$options  = [
 			'Swedish Cars' => [
 				'volvo' => 'Volvo',
-				'saab' => 'Saab'
+				'saab'  => 'Saab',
 			],
-			'German Cars' => [
+			'German Cars'  => [
 				'mercedes' => 'Mercedes',
-				'audi' => 'Audi'
-			]
+				'audi'     => 'Audi',
+			],
 		];
 		$expected = <<<EOH
 <select name="cars">
@@ -426,17 +429,17 @@ EOH;
 
 	public function testFormDropdownInferred()
 	{
-		$options = [
+		$options       = [
 			'Swedish Cars' => [
 				'volvo' => 'Volvo',
-				'saab' => 'Saab'
+				'saab'  => 'Saab',
 			],
-			'German Cars' => [
+			'German Cars'  => [
 				'mercedes' => 'Mercedes',
-				'audi' => 'Audi'
-			]
+				'audi'     => 'Audi',
+			],
 		];
-		$expected = <<<EOH
+		$expected      = <<<EOH
 <select name="cars">
 <optgroup label="Swedish Cars">
 <option value="volvo">Volvo</option>
@@ -462,12 +465,12 @@ EOH;
 </select>
 
 EOH;
-		$data = [
-			'name' => 'foo',
-			'selected' => 'bar'
+		$data     = [
+			'name'     => 'foo',
+			'selected' => 'bar',
 		];
-		$options = [
-			'bar' => 'Bar'
+		$options  = [
+			'bar' => 'Bar',
 		];
 		$this->assertEquals($expected, form_dropdown($data, $options));
 	}
@@ -481,11 +484,11 @@ EOH;
 </select>
 
 EOH;
-		$data = [
-			'name' => 'foo',
+		$data     = [
+			'name'    => 'foo',
 			'options' => [
-				'bar' => 'Bar'
-			]
+				'bar' => 'Bar',
+			],
 		];
 		$this->assertEquals($expected, form_dropdown($data));
 	}
@@ -498,8 +501,8 @@ EOH;
 </select>
 
 EOH;
-		$options = [
-			'bar' => []
+		$options  = [
+			'bar' => [],
 		];
 		$this->assertEquals($expected, form_dropdown('foo', $options));
 	}
@@ -515,10 +518,10 @@ EOH;
 <option value="xlarge">Extra Large Shirt</option>
 </select>\n
 EOH;
-		$options = [
-			'small' => 'Small Shirt',
-			'med' => 'Medium Shirt',
-			'large' => 'Large Shirt',
+		$options  = [
+			'small'  => 'Small Shirt',
+			'med'    => 'Medium Shirt',
+			'large'  => 'Large Shirt',
 			'xlarge' => 'Extra Large Shirt',
 		];
 		$this->assertEquals($expected, form_multiselect('shirts[]', $options, ['med', 'large']));
@@ -548,9 +551,9 @@ EOH;
 	public function testFormFieldsetWithAttributes()
 	{
 		$attributes = [
-			'name' => 'bar'
+			'name' => 'bar',
 		];
-		$expected = <<<EOH
+		$expected   = <<<EOH
 <fieldset name="bar">
 <legend>Foo</legend>
 
@@ -573,16 +576,16 @@ EOH;
 		$expected = <<<EOH
 <input type="checkbox" name="newsletter" value="accept" checked="checked"  />\n
 EOH;
-		$this->assertEquals($expected, form_checkbox('newsletter', 'accept', TRUE));
+		$this->assertEquals($expected, form_checkbox('newsletter', 'accept', true));
 	}
 
 	// ------------------------------------------------------------------------
 	public function testFormCheckboxArrayData()
 	{
-		$data = [
-			'name' => 'foo',
-			'value' => 'bar',
-			'checked' => true
+		$data     = [
+			'name'    => 'foo',
+			'value'   => 'bar',
+			'checked' => true,
 		];
 		$expected = <<<EOH
 <input type="checkbox" name="foo" value="bar" checked="checked"  />
@@ -594,10 +597,10 @@ EOH;
 	// ------------------------------------------------------------------------
 	public function testFormCheckboxArrayDataWithCheckedFalse()
 	{
-		$data = [
-			'name' => 'foo',
-			'value' => 'bar',
-			'checked' => false
+		$data     = [
+			'name'    => 'foo',
+			'value'   => 'bar',
+			'checked' => false,
 		];
 		$expected = <<<EOH
 <input type="checkbox" name="foo" value="bar"  />
@@ -612,7 +615,7 @@ EOH;
 		$expected = <<<EOH
 <input type="radio" name="newsletter" value="accept" checked="checked"  />\n
 EOH;
-		$this->assertEquals($expected, form_radio('newsletter', 'accept', TRUE));
+		$this->assertEquals($expected, form_radio('newsletter', 'accept', true));
 	}
 
 	// ------------------------------------------------------------------------
@@ -637,9 +640,9 @@ EOH;
 	public function testFormLabelWithAttributes()
 	{
 		$attributes = [
-			'id' => 'label1'
+			'id' => 'label1',
 		];
-		$expected = <<<EOH
+		$expected   = <<<EOH
 <label for="foo" id="label1">bar</label>
 EOH;
 		$this->assertEquals($expected, form_label('bar', 'foo', $attributes));
@@ -666,9 +669,9 @@ EOH;
 	// ------------------------------------------------------------------------
 	public function testFormButtonWithDataArray()
 	{
-		$data = [
-			'name' => 'foo',
-			'content' => 'bar'
+		$data     = [
+			'name'    => 'foo',
+			'content' => 'bar',
 		];
 		$expected = <<<EOH
 <button name="foo" type="button" >bar</button>
@@ -689,9 +692,9 @@ EOH;
 	// ------------------------------------------------------------------------
 	public function testFormDatalist()
 	{
-		$options = [
+		$options  = [
 			'foo1',
-			'bar1'
+			'bar1',
 		];
 		$expected = <<<EOH
 <input type="text" name="foo" value="bar" list="foo_list"  />
@@ -734,9 +737,9 @@ EOH;
 		$_SESSION = [
 			'_ci_old_input' => [
 				'post' => [
-					'foo' => 'bar'
-				]
-			]
+					'foo' => 'bar',
+				],
+			],
 		];
 
 		$this->assertEquals(' checked="checked"', set_checkbox('foo', 'bar'));
@@ -744,9 +747,9 @@ EOH;
 		$_SESSION = [
 			'_ci_old_input' => [
 				'post' => [
-					'foo' => ['foo' => 'bar']
-				]
-			]
+					'foo' => ['foo' => 'bar'],
+				],
+			],
 		];
 		$this->assertEquals(' checked="checked"', set_checkbox('foo', 'bar'));
 		$this->assertEquals('', set_checkbox('foo', 'baz'));
@@ -758,16 +761,16 @@ EOH;
 	// ------------------------------------------------------------------------
 	/**
 	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
+	 * @preserveGlobalState  disabled
 	 */
 	public function testSetRadio()
 	{
 		$_SESSION = [
 			'_ci_old_input' => [
 				'post' => [
-					'foo' => 'bar'
-				]
-			]
+					'foo' => 'bar',
+				],
+			],
 		];
 
 		$this->assertEquals(' checked="checked"', set_radio('foo', 'bar'));
@@ -777,7 +780,7 @@ EOH;
 
 	/**
 	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
+	 * @preserveGlobalState  disabled
 	 */
 	public function testSetRadioFromPost()
 	{
@@ -791,9 +794,12 @@ EOH;
 		$_SESSION = [
 			'_ci_old_input' => [
 				'post' => [
-					'bar' => ['boop', 'fuzzy']
-				]
-			]
+					'bar' => [
+						'boop',
+						'fuzzy',
+					],
+				],
+			],
 		];
 		$this->assertEquals(' checked="checked"', set_radio('bar', 'boop'));
 		$this->assertEquals('', set_radio('bar', 'baz'));

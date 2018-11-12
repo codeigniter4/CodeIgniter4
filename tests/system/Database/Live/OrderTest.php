@@ -13,10 +13,10 @@ class OrderTest extends CIDatabaseTestCase
 
 	public function testOrderAscending()
 	{
-	    $jobs = $this->db->table('job')
-		                ->orderBy('name', 'asc')
-		                ->get()
-		                ->getResult();
+		$jobs = $this->db->table('job')
+						->orderBy('name', 'asc')
+						->get()
+						->getResult();
 
 		$this->assertCount(4, $jobs);
 		$this->assertEquals('Accountant', $jobs[0]->name);
@@ -30,9 +30,9 @@ class OrderTest extends CIDatabaseTestCase
 	public function testOrderDescending()
 	{
 		$jobs = $this->db->table('job')
-		                 ->orderBy('name', 'desc')
-		                 ->get()
-		                 ->getResult();
+						 ->orderBy('name', 'desc')
+						 ->get()
+						 ->getResult();
 
 		$this->assertCount(4, $jobs);
 		$this->assertEquals('Accountant', $jobs[3]->name);
@@ -45,11 +45,11 @@ class OrderTest extends CIDatabaseTestCase
 
 	public function testMultipleOrderValues()
 	{
-	    $users = $this->db->table('user')
-		                ->orderBy('country', 'asc')
-		                ->orderBy('name', 'desc')
-		                ->get()
-		                ->getResult();
+		$users = $this->db->table('user')
+						->orderBy('country', 'asc')
+						->orderBy('name', 'desc')
+						->get()
+						->getResult();
 
 		$this->assertCount(4, $users);
 		$this->assertEquals('Ahmadinejad', $users[0]->name);
@@ -59,6 +59,5 @@ class OrderTest extends CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
-
 
 }

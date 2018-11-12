@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Cache\CacheInterface;
 
 class MemcachedHandler implements CacheInterface
@@ -60,20 +61,20 @@ class MemcachedHandler implements CacheInterface
 	 * @var array
 	 */
 	protected $config = [
-		'host'	 => '127.0.0.1',
-		'port'	 => 11211,
+		'host'   => '127.0.0.1',
+		'port'   => 11211,
 		'weight' => 1,
-		'raw'	 => false,
+		'raw'    => false,
 	];
 
 	//--------------------------------------------------------------------
 
 	public function __construct($config)
 	{
-		$config = (array)$config;
+		$config       = (array)$config;
 		$this->prefix = $config['prefix'] ?? '';
 
-		if ( ! empty($config))
+		if (! empty($config))
 		{
 			$this->config = array_merge($this->config, $config['memcached']);
 		}
@@ -158,9 +159,9 @@ class MemcachedHandler implements CacheInterface
 	/**
 	 * Saves an item to the cache store.
 	 *
-	 * @param string $key   Cache item name
-	 * @param mixed  $value The data to save
-	 * @param int    $ttl   Time To Live, in seconds (default 60)
+	 * @param string  $key   Cache item name
+	 * @param mixed   $value The data to save
+	 * @param integer $ttl   Time To Live, in seconds (default 60)
 	 *
 	 * @return mixed
 	 */
@@ -168,9 +169,13 @@ class MemcachedHandler implements CacheInterface
 	{
 		$key = $this->prefix . $key;
 
-		if ( ! $this->config['raw'])
+		if (! $this->config['raw'])
 		{
-			$value = [$value, time(), $ttl];
+			$value = [
+				$value,
+				time(),
+				$ttl,
+			];
 		}
 
 		if ($this->memcached instanceof \Memcached)
@@ -206,14 +211,14 @@ class MemcachedHandler implements CacheInterface
 	/**
 	 * Performs atomic incrementation of a raw stored value.
 	 *
-	 * @param string $key    Cache ID
-	 * @param int    $offset Step/value to increase by
+	 * @param string  $key    Cache ID
+	 * @param integer $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
-		if ( ! $this->config['raw'])
+		if (! $this->config['raw'])
 		{
 			return false;
 		}
@@ -228,14 +233,14 @@ class MemcachedHandler implements CacheInterface
 	/**
 	 * Performs atomic decrementation of a raw stored value.
 	 *
-	 * @param string $key    Cache ID
-	 * @param int    $offset Step/value to increase by
+	 * @param string  $key    Cache ID
+	 * @param integer $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
-		if ( ! $this->config['raw'])
+		if (! $this->config['raw'])
 		{
 			return false;
 		}
@@ -288,18 +293,18 @@ class MemcachedHandler implements CacheInterface
 
 		$stored = $this->memcached->get($key);
 
-        // if not an array, don't try to count for PHP7.2
+		// if not an array, don't try to count for PHP7.2
 		if (! is_array($stored) || count($stored) !== 3)
 		{
-			return FALSE;
+			return false;
 		}
 
 		list($data, $time, $ttl) = $stored;
 
 		return [
 			'expire' => $time + $ttl,
-			'mtime'	 => $time,
-			'data'	 => $data
+			'mtime'  => $time,
+			'data'   => $data,
 		];
 	}
 

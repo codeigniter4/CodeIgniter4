@@ -30,8 +30,8 @@ class HoneyTrap implements FilterInterface
 	/**
 	 * Attach a honypot to the current response.
 	 *
-	 * @param CodeIgniter\HTTP\RequestInterface $request
-	 * @param CodeIgniter\HTTP\ResponseInterface $response
+	 * @param  CodeIgniter\HTTP\RequestInterface  $request
+	 * @param  CodeIgniter\HTTP\ResponseInterface $response
 	 * @return mixed
 	 */
 	public function after(RequestInterface $request, ResponseInterface $response)

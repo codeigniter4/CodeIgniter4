@@ -24,7 +24,7 @@ class OrderTest extends \CIUnitTestCase
 
 		$builder->orderBy('name', 'asc');
 
-		$expectedSQL   = "SELECT * FROM \"user\" ORDER BY \"name\" ASC";
+		$expectedSQL = 'SELECT * FROM "user" ORDER BY "name" ASC';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -37,7 +37,7 @@ class OrderTest extends \CIUnitTestCase
 
 		$builder->orderBy('name', 'desc');
 
-		$expectedSQL   = "SELECT * FROM \"user\" ORDER BY \"name\" DESC";
+		$expectedSQL = 'SELECT * FROM "user" ORDER BY "name" DESC';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -50,7 +50,7 @@ class OrderTest extends \CIUnitTestCase
 
 		$builder->orderBy('name', 'random');
 
-		$expectedSQL   = "SELECT * FROM \"user\" ORDER BY RAND()";
+		$expectedSQL = 'SELECT * FROM "user" ORDER BY RAND()';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}

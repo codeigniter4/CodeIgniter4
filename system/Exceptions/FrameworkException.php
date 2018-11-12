@@ -8,6 +8,7 @@
  *
  * @package CodeIgniter\Exceptions
  */
+
 class FrameworkException extends \RuntimeException implements ExceptionInterface
 {
 

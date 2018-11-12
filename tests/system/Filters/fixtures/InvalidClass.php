@@ -4,7 +4,7 @@ class InvalidClass
 {
 	public function index()
 	{
-	    return 'bad';
+		return 'bad';
 	}
 
 	//--------------------------------------------------------------------

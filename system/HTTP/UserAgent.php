@@ -14,21 +14,21 @@ class UserAgent
 	/**
 	 * Flag for if the user-agent belongs to a browser
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $isBrowser = false;
 
 	/**
 	 * Flag for if the user-agent is a robot
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $isRobot = false;
 
 	/**
 	 * Flag for if the user-agent is a mobile browser
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $isMobile = false;
 
@@ -77,7 +77,7 @@ class UserAgent
 	/**
 	 * HTTP Referer
 	 *
-	 * @var    mixed
+	 * @var mixed
 	 */
 	protected $referrer;
 
@@ -109,9 +109,9 @@ class UserAgent
 	/**
 	 * Is Browser
 	 *
-	 * @param    string $key
+	 * @param string $key
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	public function isBrowser($key = null)
 	{
@@ -135,9 +135,9 @@ class UserAgent
 	/**
 	 * Is Robot
 	 *
-	 * @param    string $key
+	 * @param string $key
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	public function isRobot($key = null)
 	{
@@ -161,9 +161,9 @@ class UserAgent
 	/**
 	 * Is Mobile
 	 *
-	 * @param    string $key
+	 * @param string $key
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	public function isMobile($key = null)
 	{
@@ -187,7 +187,7 @@ class UserAgent
 	/**
 	 * Is this a referral from another site?
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	public function isReferral()
 	{
@@ -214,7 +214,7 @@ class UserAgent
 	/**
 	 * Agent String
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	public function getAgentString()
 	{
@@ -226,7 +226,7 @@ class UserAgent
 	/**
 	 * Get Platform
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	public function getPlatform()
 	{
@@ -238,7 +238,7 @@ class UserAgent
 	/**
 	 * Get Browser Name
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	public function getBrowser()
 	{
@@ -250,7 +250,7 @@ class UserAgent
 	/**
 	 * Get the Browser Version
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	public function getVersion()
 	{
@@ -262,7 +262,7 @@ class UserAgent
 	/**
 	 * Get The Robot Name
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	public function getRobot()
 	{
@@ -273,7 +273,7 @@ class UserAgent
 	/**
 	 * Get the Mobile Device
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	public function getMobile()
 	{
@@ -285,7 +285,7 @@ class UserAgent
 	/**
 	 * Get the referrer
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	public function getReferrer()
 	{
@@ -297,9 +297,9 @@ class UserAgent
 	/**
 	 * Parse a custom user-agent string
 	 *
-	 * @param    string $string
+	 * @param string $string
 	 *
-	 * @return    void
+	 * @return void
 	 */
 	public function parse($string)
 	{
@@ -325,7 +325,7 @@ class UserAgent
 	/**
 	 * Compile the User Agent Data
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	protected function compileData()
 	{
@@ -345,7 +345,7 @@ class UserAgent
 	/**
 	 * Set the Platform
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	protected function setPlatform()
 	{
@@ -353,7 +353,7 @@ class UserAgent
 		{
 			foreach ($this->config->platforms as $key => $val)
 			{
-				if (preg_match('|'.preg_quote($key).'|i', $this->agent))
+				if (preg_match('|' . preg_quote($key) . '|i', $this->agent))
 				{
 					$this->platform = $val;
 
@@ -372,7 +372,7 @@ class UserAgent
 	/**
 	 * Set the Browser
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	protected function setBrowser()
 	{
@@ -380,7 +380,7 @@ class UserAgent
 		{
 			foreach ($this->config->browsers as $key => $val)
 			{
-				if (preg_match('|'.$key.'.*?([0-9\.]+)|i', $this->agent, $match))
+				if (preg_match('|' . $key . '.*?([0-9\.]+)|i', $this->agent, $match))
 				{
 					$this->isBrowser = true;
 					$this->version   = $match[1];
@@ -400,7 +400,7 @@ class UserAgent
 	/**
 	 * Set the Robot
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	protected function setRobot()
 	{
@@ -408,7 +408,7 @@ class UserAgent
 		{
 			foreach ($this->config->robots as $key => $val)
 			{
-				if (preg_match('|'.preg_quote($key).'|i', $this->agent))
+				if (preg_match('|' . preg_quote($key) . '|i', $this->agent))
 				{
 					$this->isRobot = true;
 					$this->robot   = $val;
@@ -427,7 +427,7 @@ class UserAgent
 	/**
 	 * Set the Mobile Device
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	protected function setMobile()
 	{

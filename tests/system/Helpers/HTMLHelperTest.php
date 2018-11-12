@@ -16,7 +16,7 @@ final class HTMLHelperTest extends \CIUnitTestCase
 
 		$this->tracks = [
 			track('subtitles_no.vtt', 'subtitles', 'no', 'Norwegian No'),
-			track('subtitles_yes.vtt', 'subtitles', 'yes', 'Norwegian Yes')
+			track('subtitles_yes.vtt', 'subtitles', 'yes', 'Norwegian Yes'),
 		];
 	}
 
@@ -33,7 +33,10 @@ final class HTMLHelperTest extends \CIUnitTestCase
 EOH;
 
 		$expected = ltrim($expected);
-		$list = ['foo', 'bar'];
+		$list     = [
+			'foo',
+			'bar',
+		];
 
 		$this->assertEquals(ltrim($expected), ul($list));
 	}
@@ -49,7 +52,10 @@ EOH;
 EOH;
 
 		$expected = ltrim($expected);
-		$list = ['foo', 'bar'];
+		$list     = [
+			'foo',
+			'bar',
+		];
 
 		$this->assertEquals($expected, ul($list, 'class="test"'));
 	}
@@ -71,7 +77,14 @@ EOH;
 EOH;
 
 		$expected = ltrim($expected);
-		$list = ['foo', 'bar', ['foo', 'bar']];
+		$list     = [
+			'foo',
+			'bar',
+			[
+				'foo',
+				'bar',
+			],
+		];
 
 		$this->assertEquals(ltrim($expected), ul($list));
 	}
@@ -89,7 +102,10 @@ EOH;
 EOH;
 
 		$expected = ltrim($expected);
-		$list = ['foo', 'bar'];
+		$list     = [
+			'foo',
+			'bar',
+		];
 
 		$this->assertEquals(ltrim($expected), ol($list));
 	}
@@ -105,7 +121,10 @@ EOH;
 EOH;
 
 		$expected = ltrim($expected);
-		$list = ['foo', 'bar'];
+		$list     = [
+			'foo',
+			'bar',
+		];
 
 		$this->assertEquals($expected, ol($list, 'class="test"'));
 	}
@@ -127,7 +146,14 @@ EOH;
 EOH;
 
 		$expected = ltrim($expected);
-		$list = ['foo', 'bar', ['foo', 'bar']];
+		$list     = [
+			'foo',
+			'bar',
+			[
+				'foo',
+				'bar',
+			],
+		];
 
 		$this->assertEquals(ltrim($expected), ol($list));
 	}
@@ -136,21 +162,21 @@ EOH;
 
 	public function testIMG()
 	{
-		$target = 'http://site.com/images/picture.jpg';
+		$target   = 'http://site.com/images/picture.jpg';
 		$expected = '<img src="http://site.com/images/picture.jpg" alt="" />';
 		$this->assertEquals($expected, img($target));
 	}
 
 	public function testIMGWithoutProtocol()
 	{
-		$target = 'assets/mugshot.jpg';
+		$target   = 'assets/mugshot.jpg';
 		$expected = '<img src="http://example.com/assets/mugshot.jpg" alt="" />';
 		$this->assertEquals($expected, img($target));
 	}
 
 	public function testIMGWithIndexpage()
 	{
-		$target = 'assets/mugshot.jpg';
+		$target   = 'assets/mugshot.jpg';
 		$expected = '<img src="http://example.com/index.php/assets/mugshot.jpg" alt="" />';
 		$this->assertEquals($expected, img($target, true));
 	}
@@ -159,21 +185,21 @@ EOH;
 
 	public function testScriptTag()
 	{
-		$target = 'http://site.com/js/mystyles.js';
+		$target   = 'http://site.com/js/mystyles.js';
 		$expected = '<script src="http://site.com/js/mystyles.js" type="text/javascript"></script>';
 		$this->assertEquals($expected, script_tag($target));
 	}
 
 	public function testScriptTagWithoutProtocol()
 	{
-		$target = 'js/mystyles.js';
+		$target   = 'js/mystyles.js';
 		$expected = '<script src="http://example.com/js/mystyles.js" type="text/javascript"></script>';
 		$this->assertEquals($expected, script_tag($target));
 	}
 
 	public function testScriptTagWithIndexpage()
 	{
-		$target = 'js/mystyles.js';
+		$target   = 'js/mystyles.js';
 		$expected = '<script src="http://example.com/index.php/js/mystyles.js" type="text/javascript"></script>';
 		$this->assertEquals($expected, script_tag($target, true));
 	}
@@ -182,22 +208,22 @@ EOH;
 
 	public function testLinkTag()
 	{
-		$target = 'css/mystyles.css';
+		$target   = 'css/mystyles.css';
 		$expected = '<link href="http://example.com/css/mystyles.css" rel="stylesheet" type="text/css" />';
 		$this->assertEquals($expected, link_tag($target));
 	}
 
 	public function testLinkTagComplete()
 	{
-		$target = 'https://styles.com/css/mystyles.css';
+		$target   = 'https://styles.com/css/mystyles.css';
 		$expected = '<link href="https://styles.com/css/mystyles.css" rel="banana" type="fruit" media="VHS" title="Go away" />';
 		$this->assertEquals($expected, link_tag($target, 'banana', 'fruit', 'Go away', 'VHS'));
 	}
 
 	public function testLinkTagArray()
 	{
-		$parms = [
-			'href' => 'css/mystyles.css',
+		$parms    = [
+			'href'      => 'css/mystyles.css',
 			'indexPage' => true,
 		];
 		$expected = '<link href="http://example.com/index.php/css/mystyles.css" rel="stylesheet" type="text/css" />';
@@ -208,7 +234,7 @@ EOH;
 
 	public function testDocType()
 	{
-		$target = 'html4-strict';
+		$target   = 'html4-strict';
 		$expected = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">';
 		$this->assertEquals($expected, doctype($target));
 	}
@@ -236,9 +262,9 @@ EOH;
 
 EOH;
 
-		$target = 'http://www.codeigniter.com/test.mp4';
+		$target  = 'http://www.codeigniter.com/test.mp4';
 		$message = 'Your browser does not support the video tag.';
-		$video = video($target, $message, 'controls');
+		$video   = video($target, $message, 'controls');
 		$this->assertEquals($expected, $video);
 	}
 
@@ -253,9 +279,9 @@ EOH;
 
 EOH;
 
-		$target = 'test.mp4';
+		$target  = 'test.mp4';
 		$message = 'Your browser does not support the video tag.';
-		$video = video($target, $message, 'controls', $this->tracks);
+		$video   = video($target, $message, 'controls', $this->tracks);
 		$this->assertEquals($expected, $video);
 	}
 
@@ -270,9 +296,9 @@ EOH;
 
 EOH;
 
-		$target = 'test.mp4';
+		$target  = 'test.mp4';
 		$message = 'Your browser does not support the video tag.';
-		$video = video($target, $message, 'controls', $this->tracks, true);
+		$video   = video($target, $message, 'controls', $this->tracks, true);
 		$this->assertEquals($expected, $video);
 	}
 
@@ -295,10 +321,10 @@ EOH;
 			source('movie.mp4', 'video/mp4', 'class="test"'),
 			source('movie.ogg', 'video/ogg'),
 			source('movie.mov', 'video/quicktime'),
-			source('movie.ogv', 'video/ogv; codecs=dirac, speex')
+			source('movie.ogv', 'video/ogv; codecs=dirac, speex'),
 		];
 		$message = 'Your browser does not support the video tag.';
-		$video = video($sources, $message, 'class="test" controls', $this->tracks);
+		$video   = video($sources, $message, 'class="test" controls', $this->tracks);
 
 		$this->assertEquals($expected, $video);
 	}
@@ -320,10 +346,10 @@ EOH;
 
 		$sources = [
 			source('sound.ogg', 'audio/ogg'),
-			source('sound.mpeg', 'audio/mpeg')
+			source('sound.mpeg', 'audio/mpeg'),
 		];
 		$message = 'Your browser does not support the audio tag.';
-		$audio = audio($sources, $message, 'id="test" controls', $this->tracks);
+		$audio   = audio($sources, $message, 'id="test" controls', $this->tracks);
 
 		$this->assertEquals($expected, $audio);
 	}
@@ -337,9 +363,9 @@ EOH;
 
 EOH;
 
-		$source = 'sound.mpeg';
+		$source  = 'sound.mpeg';
 		$message = 'Your browser does not support the audio tag.';
-		$audio = audio($source, $message, 'type="audio/mpeg" id="test" controls');
+		$audio   = audio($source, $message, 'type="audio/mpeg" id="test" controls');
 
 		$this->assertEquals($expected, $audio);
 	}
@@ -353,9 +379,9 @@ EOH;
 
 EOH;
 
-		$source = 'http://codeigniter.com/sound.mpeg';
+		$source  = 'http://codeigniter.com/sound.mpeg';
 		$message = 'Your browser does not support the audio tag.';
-		$audio = audio($source, $message, 'type="audio/mpeg" id="test" controls');
+		$audio   = audio($source, $message, 'type="audio/mpeg" id="test" controls');
 
 		$this->assertEquals($expected, $audio);
 	}
@@ -369,9 +395,9 @@ EOH;
 
 EOH;
 
-		$source = 'sound.mpeg';
+		$source  = 'sound.mpeg';
 		$message = 'Your browser does not support the audio tag.';
-		$audio = audio($source, $message, 'type="audio/mpeg" id="test" controls', [], true);
+		$audio   = audio($source, $message, 'type="audio/mpeg" id="test" controls', [], true);
 
 		$this->assertEquals($expected, $audio);
 	}
@@ -387,9 +413,9 @@ EOH;
 
 EOH;
 
-		$source = 'sound.mpeg';
+		$source  = 'sound.mpeg';
 		$message = 'Your browser does not support the audio tag.';
-		$audio = audio($source, $message, 'type="audio/mpeg" id="test" controls', $this->tracks);
+		$audio   = audio($source, $message, 'type="audio/mpeg" id="test" controls', $this->tracks);
 
 		$this->assertEquals($expected, $audio);
 	}
@@ -415,9 +441,9 @@ EOH;
 </av>
 
 EOH;
-		$sources = [
+		$sources  = [
 			source('sound.ogg', 'audio/ogg'),
-			source('sound.mpeg', 'audio/mpeg')
+			source('sound.mpeg', 'audio/mpeg'),
 		];
 		$this->assertEquals($expected, _media('av', $sources));
 	}
@@ -437,7 +463,7 @@ EOH;
 
 EOH;
 
-		$type = 'video/quicktime';
+		$type  = 'video/quicktime';
 		$embed = embed('movie.mov', $type, 'class="test"');
 		$this->assertEquals($expected, $embed);
 	}
@@ -449,7 +475,7 @@ EOH;
 
 EOH;
 
-		$type = 'video/quicktime';
+		$type  = 'video/quicktime';
 		$embed = embed('movie.mov', $type, 'class="test"', true);
 		$this->assertEquals($expected, $embed, '');
 	}
@@ -461,7 +487,7 @@ EOH;
 
 EOH;
 
-		$type = 'application/x-shockwave-flash';
+		$type   = 'application/x-shockwave-flash';
 		$object = object('movie.swf', $type, 'class="test"');
 
 		$this->assertEquals($expected, $object);
@@ -469,7 +495,6 @@ EOH;
 
 	public function testObjectWithParams()
 	{
-
 		$expected = <<<EOH
 <object data="http://example.com/movie.swf" class="test">
   <param name="foo" type="ref" value="bar" class="test" />
@@ -478,10 +503,10 @@ EOH;
 
 EOH;
 
-		$type = 'application/x-shockwave-flash';
-		$parms = [
+		$type   = 'application/x-shockwave-flash';
+		$parms  = [
 			param('foo', 'bar', 'ref', 'class="test"'),
-			param('hello', 'world', 'ref', 'class="test"')
+			param('hello', 'world', 'ref', 'class="test"'),
 		];
 		$object = object('movie.swf', $type, 'class="test"', $parms);
 		$this->assertEquals($expected, $object);
@@ -494,7 +519,7 @@ EOH;
 
 EOH;
 
-		$type = 'application/x-shockwave-flash';
+		$type   = 'application/x-shockwave-flash';
 		$object = object('movie.swf', $type, 'class="test"', [], true);
 
 		$this->assertEquals($expected, $object);

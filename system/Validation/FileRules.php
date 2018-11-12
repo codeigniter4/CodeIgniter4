@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\HTTP\RequestInterface;
 use Config\Services;
 
@@ -69,7 +70,7 @@ class FileRules
 	 * @param string $name
 	 * @param array  $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function uploaded(string $blank = null, string $name, array $data): bool
 	{
@@ -80,7 +81,7 @@ class FileRules
 			return false;
 		}
 
-		if (ENVIRONMENT == 'testing')
+		if (ENVIRONMENT === 'testing')
 		{
 			return $file->getError() === 0;
 		}
@@ -100,14 +101,14 @@ class FileRules
 	 * @param string      $params
 	 * @param array       $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function max_size(string $blank = null, string $params, array $data): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
 		$params = explode(',', $params);
-		$name = array_shift($params);
+		$name   = array_shift($params);
 
 		$file = $this->request->getFile($name);
 
@@ -128,14 +129,14 @@ class FileRules
 	 * @param string      $params
 	 * @param array       $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function is_image(string $blank = null, string $params, array $data): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
 		$params = explode(',', $params);
-		$name = array_shift($params);
+		$name   = array_shift($params);
 
 		$file = $this->request->getFile($name);
 
@@ -160,14 +161,14 @@ class FileRules
 	 * @param string      $params
 	 * @param array       $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function mime_in(string $blank = null, string $params, array $data): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
 		$params = explode(',', $params);
-		$name = array_shift($params);
+		$name   = array_shift($params);
 
 		$file = $this->request->getFile($name);
 
@@ -188,14 +189,14 @@ class FileRules
 	 * @param string      $params
 	 * @param array       $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ext_in(string $blank = null, string $params, array $data): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
 		$params = explode(',', $params);
-		$name = array_shift($params);
+		$name   = array_shift($params);
 
 		$file = $this->request->getFile($name);
 
@@ -217,14 +218,14 @@ class FileRules
 	 * @param string      $params
 	 * @param array       $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function max_dims(string $blank = null, string $params, array $data): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
 		$params = explode(',', $params);
-		$name = array_shift($params);
+		$name   = array_shift($params);
 
 		$file = $this->request->getFile($name);
 
@@ -234,12 +235,12 @@ class FileRules
 		}
 
 		// Get Parameter sizes
-		$allowedWidth = $params[0] ?? 0;
+		$allowedWidth  = $params[0] ?? 0;
 		$allowedHeight = $params[1] ?? 0;
 
 		// Get uploaded image size
-		$info = getimagesize($file->getTempName());
-		$fileWidth = $info[0];
+		$info       = getimagesize($file->getTempName());
+		$fileWidth  = $info[0];
 		$fileHeight = $info[1];
 
 		return $fileWidth <= $allowedWidth && $fileHeight <= $allowedHeight;

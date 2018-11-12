@@ -1,7 +1,6 @@
 <?php
 namespace CodeIgniter\Helpers;
 
-
 final class DateHelperTest extends \CIUnitTestCase
 {
 

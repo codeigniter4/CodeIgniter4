@@ -175,9 +175,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 		)
 		{
 			// Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
-			if (($client_flags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info,
-					'5.7.3', '<=') && empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")
-														 ->fetch_object()->Value)
+			if (($client_flags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, '5.7.3', '<=') && empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")
+									->fetch_object()->Value)
 			)
 			{
 				$this->mysqli->close();
@@ -352,8 +351,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Platform-dependant string escape
 	 *
-	 * @param string $str
-	 *
+	 * @param  string $str
 	 * @return string
 	 */
 	protected function _escapeString(string $str): string
@@ -411,8 +409,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Returns an array of objects with field data
 	 *
-	 * @param string $table
-	 *
+	 * @param  string $table
 	 * @return \stdClass[]
 	 * @throws DatabaseException
 	 */
@@ -446,8 +443,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Returns an array of objects with index data
 	 *
-	 * @param string $table
-	 *
+	 * @param  string $table
 	 * @return \stdClass[]
 	 * @throws DatabaseException
 	 * @throws \LogicException
@@ -513,8 +509,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Returns an array of objects with Foreign key data
 	 *
-	 * @param string $table
-	 *
+	 * @param  string $table
 	 * @return \stdClass[]
 	 * @throws DatabaseException
 	 */

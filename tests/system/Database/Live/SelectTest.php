@@ -2,7 +2,6 @@
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 
-
 /**
  * @group DatabaseLive
  */
@@ -49,7 +48,7 @@ class SelectTest extends CIDatabaseTestCase
 
 	public function testSelectMax()
 	{
-	    $result = $this->db->table('job')->selectMax('id')->get()->getRow();
+		$result = $this->db->table('job')->selectMax('id')->get()->getRow();
 
 		$this->assertEquals(4, $result->id);
 	}
@@ -85,7 +84,7 @@ class SelectTest extends CIDatabaseTestCase
 
 	public function testSelectAvg()
 	{
-	    $result = $this->db->table('job')->selectAvg('id')->get()->getRow();
+		$result = $this->db->table('job')->selectAvg('id')->get()->getRow();
 
 		$this->assertEquals(2.5, $result->id);
 	}
@@ -121,7 +120,7 @@ class SelectTest extends CIDatabaseTestCase
 
 	public function testSelectDistinctWorkTogether()
 	{
-	    $users = $this->db->table('user')->select('country')->distinct()->get()->getResult();
+		$users = $this->db->table('user')->select('country')->distinct()->get()->getResult();
 
 		$this->assertCount(3, $users);
 	}

@@ -5,15 +5,22 @@
  *
  * Provides a basic registrar class for testing BaseConfig registration functions.
  */
+
 class Registrar
 {
 
 	public static function RegistrarConfig()
 	{
 		return [
-			'bar'	 => ['first', 'second'],
+			'bar'    => [
+				'first',
+				'second',
+			],
 			'format' => 'nice',
-			'fruit'	 => ['apple', 'banana']
+			'fruit'  => [
+				'apple',
+				'banana',
+			],
 		];
 	}
 

@@ -13,9 +13,9 @@ class I18nException extends FrameworkException implements ExceptionInterface
 	public static function forInvalidDay(string $day)
 	{
 		return new static(lang('Time.invalidDay', [$day]));
-       }
+	}
 
-       public static function forInvalidOverDay(string $lastDay, string $day)
+	public static function forInvalidOverDay(string $lastDay, string $day)
 	{
 		return new static(lang('Time.invalidOverDay', [$lastDay, $day]));
 	}

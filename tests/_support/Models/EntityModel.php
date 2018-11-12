@@ -12,7 +12,9 @@ class EntityModel extends Model
 
 	protected $dateFormat = 'datetime';
 
-    protected $allowedFields = [
-        'name', 'description', 'created_at'
-    ];
+	protected $allowedFields = [
+		'name',
+		'description',
+		'created_at',
+	];
 }
