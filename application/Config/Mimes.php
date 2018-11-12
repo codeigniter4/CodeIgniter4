@@ -485,12 +485,12 @@ class Mimes
 	{
 		$extension = trim(strtolower($extension), '. ');
 
-		if (! array_key_exists($extension, self::$mimes))
+		if (! array_key_exists($extension, static::$mimes))
 		{
 			return null;
 		}
 
-		return is_array(self::$mimes[$extension]) ? self::$mimes[$extension][0] : self::$mimes[$extension];
+		return is_array(static::$mimes[$extension]) ? static::$mimes[$extension][0] : static::$mimes[$extension];
 	}
 
 	//--------------------------------------------------------------------
@@ -509,12 +509,12 @@ class Mimes
 
 		$proposed_extension = trim(strtolower($proposed_extension));
 
-		if (! is_null($proposed_extension) && array_key_exists($proposed_extension, self::$mimes) && in_array($type, is_string(self::$mimes[$proposed_extension]) ? [self::$mimes[$proposed_extension]] : self::$mimes[$proposed_extension]))
+		if (! is_null($proposed_extension) && array_key_exists($proposed_extension, static::$mimes) && in_array($type, is_string(static::$mimes[$proposed_extension]) ? [static::$mimes[$proposed_extension]] : static::$mimes[$proposed_extension]))
 		{
 			return $proposed_extension;
 		}
 
-		foreach (self::$mimes as $ext => $types)
+		foreach (static::$mimes as $ext => $types)
 		{
 			if (is_string($types) && $types === $type)
 			{
