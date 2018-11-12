@@ -42,11 +42,11 @@ class CLITest extends \CIUnitTestCase
 	{
 		$time = time();
 		CLI::wait(1, true);
-		$this->assertEquals(1, time() - $time);
+		$this->assertCloseEnough(1, time() - $time);
 
 		$time = time();
 		CLI::wait(1);
-		$this->assertEquals(1, time() - $time);
+		$this->assertCloseEnough(1, time() - $time);
 
 		// Leaving the code fragment below in, to remind myself (or others)
 		// of what appears to be the most likely path to test this last
