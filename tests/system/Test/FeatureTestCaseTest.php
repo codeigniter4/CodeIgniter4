@@ -14,6 +14,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 		parent::setUp();
 
 		$this->skipEvents();
+		$this->clean = false;
 	}
 
 	public function testCallGet()
