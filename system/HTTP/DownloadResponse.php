@@ -412,7 +412,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	}
 
 	/**
-	 * output donload file text.
+	 * output download file text.
 	 *
 	 * @throws DownloadException
 	 *
