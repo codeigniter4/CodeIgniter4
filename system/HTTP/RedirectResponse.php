@@ -37,7 +37,6 @@
  */
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
-use Config\App;
 use Config\Services;
 
 class RedirectResponse extends Response
