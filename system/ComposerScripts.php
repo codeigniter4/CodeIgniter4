@@ -142,7 +142,7 @@ class ComposerScripts
 	 */
 	public static function moveEscaper()
 	{
-		if (class_exists('\\Zend\\Escaper\\Escaper') && file_exists(self::getClassFilePath('\\Zend\\Escaper\\Escaper')))
+		if (class_exists('\\Zend\\Escaper\\Escaper') && file_exists(static::getClassFilePath('\\Zend\\Escaper\\Escaper')))
 		{
 			$base = static::$basePath . 'ZendEscaper';
 
@@ -155,15 +155,15 @@ class ComposerScripts
 			}
 
 			$files = [
-				self::getClassFilePath('\\Zend\\Escaper\\Exception\\ExceptionInterface')       => $base . '/Exception/ExceptionInterface.php',
-				self::getClassFilePath('\\Zend\\Escaper\\Exception\\InvalidArgumentException') => $base . '/Exception/InvalidArgumentException.php',
-				self::getClassFilePath('\\Zend\\Escaper\\Exception\\RuntimeException')         => $base . '/Exception/RuntimeException.php',
-				self::getClassFilePath('\\Zend\\Escaper\\Escaper')                             => $base . '/Escaper.php',
+				static::getClassFilePath('\\Zend\\Escaper\\Exception\\ExceptionInterface')       => $base . '/Exception/ExceptionInterface.php',
+				static::getClassFilePath('\\Zend\\Escaper\\Exception\\InvalidArgumentException') => $base . '/Exception/InvalidArgumentException.php',
+				static::getClassFilePath('\\Zend\\Escaper\\Exception\\RuntimeException')         => $base . '/Exception/RuntimeException.php',
+				static::getClassFilePath('\\Zend\\Escaper\\Escaper')                             => $base . '/Escaper.php',
 			];
 
 			foreach ($files as $source => $dest)
 			{
-				if (! self::moveFile($source, $dest))
+				if (! static::moveFile($source, $dest))
 				{
 					die('Error moving: ' . $source);
 				}
@@ -197,7 +197,7 @@ class ComposerScripts
 				mkdir($base, 0755);
 			}
 
-			if (! self::moveFile($filename, $base . '/kint.php'))
+			if (! static::moveFile($filename, $base . '/kint.php'))
 			{
 				die('Error moving: ' . $filename);
 			}

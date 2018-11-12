@@ -174,10 +174,10 @@ class Events
 		// Read in our Config/events file so that we have them all!
 		if (! static::$initialized)
 		{
-			self::initialize();
+			static::initialize();
 		}
 
-		$listeners = self::listeners($eventName);
+		$listeners = static::listeners($eventName);
 
 		foreach ($listeners as $listener)
 		{

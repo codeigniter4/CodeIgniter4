@@ -87,7 +87,7 @@ class Filters
 	 */
 	public static function date_modify($value, string $adjustment): string
 	{
-		$value = self::date($value, 'Y-m-d H:i:s');
+		$value = static::date($value, 'Y-m-d H:i:s');
 
 		return strtotime($adjustment, strtotime($value));
 	}

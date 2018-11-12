@@ -528,7 +528,7 @@ class URI
 	 */
 	public function __toString()
 	{
-		return self::createURIString(
+		return static::createURIString(
 						$this->getScheme(), $this->getAuthority(), $this->getPath(), // Absolute URIs should use a "/" for an empty path
 						$this->getQuery(), $this->getFragment()
 		);
@@ -949,7 +949,7 @@ class URI
 
 		// Encode characters
 		$path = preg_replace_callback(
-				'/(?:[^' . self::CHAR_UNRESERVED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/', function (array $matches) {
+				'/(?:[^' . static::CHAR_UNRESERVED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/', function (array $matches) {
 					return rawurlencode($matches[0]);
 				}, $path
 		);
