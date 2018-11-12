@@ -340,7 +340,7 @@ class Forge
 	/**
 	 * Add Field
 	 *
-	 * @param array $field
+	 * @param array|string $field
 	 *
 	 * @return Forge
 	 */
