@@ -1,4 +1,3 @@
-####################
 Database Forge Class
 ####################
 
@@ -63,7 +62,7 @@ mechanism for this.
 Adding fields
 =============
 
-Fields are created via an associative array. Within the array you must
+Fields are normally created via an associative array. Within the array you must
 include a 'type' key that relates to the datatype of the field. For
 example, INT, VARCHAR, TEXT, etc. Many datatypes (for example VARCHAR)
 also require a 'constraint' key.
