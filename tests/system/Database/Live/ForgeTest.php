@@ -325,30 +325,34 @@ class ForgeTest extends CIDatabaseTestCase
 
 	public function testCreateTableWithArrayFieldConstraints()
 	{
-		if ($this->db->DBDriver === 'MySQLi')
+		if (in_array($this->db->DBDriver, ['MySQLi', 'SQLite3']))
 		{
+			$this->forge->dropTable('forge_array_constraint', true);
 			$this->forge->addField([
-				'enum_string' => [
-					'type' => 'ENUM("a","b")',
-				],
-				'enum_array'  => [
+				'status' => [
 					'type'       => 'ENUM',
 					'constraint' => [
-						'a',
-						'b',
+						'sad',
+						'ok',
+						'happy',
 					],
 				],
 			]);
-			$this->forge->createTable('forge_test_enum');
+			$this->forge->createTable('forge_array_constraint');
 
-			$fields = $this->db->getFieldData('forge_test_enum');
+			$fields = $this->db->getFieldData('forge_array_constraint');
 
-			$this->forge->dropTable('forge_test_enum');
+			$this->assertEquals('status', $fields[0]->name);
 
-			$this->assertEquals('enum_string', $fields[0]->name);
-			$this->assertEquals('enum', $fields[0]->type);
-			$this->assertEquals('enum_array', $fields[1]->name);
-			$this->assertEquals('enum', $fields[1]->type);
+			if ($this->db->DBDriver === 'SQLite3')
+			{
+				// SQLite3 converts array constraints to TEXT CHECK(...)
+				$this->assertEquals('TEXT', $fields[0]->type);
+			}
+			else
+			{
+				$this->assertEquals('enum', $fields[0]->type);
+			}
 		}
 		else
 		{
