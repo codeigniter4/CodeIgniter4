@@ -152,7 +152,7 @@ class Language
 		$file = substr($line, 0, strpos($line, '.'));
 		$line = substr($line, strlen($file) + 1);
 
-		if (! array_key_exists( $line, $this->language[$this->locale][$file] ) )
+		if (! isset($this->language[$this->locale][$file]) || ! array_key_exists($line, $this->language[$this->locale][$file]))
 		{
 			$this->load($file, $this->locale);
 		}
