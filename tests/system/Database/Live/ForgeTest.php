@@ -11,6 +11,10 @@ class ForgeTest extends CIDatabaseTestCase
 	protected $refresh = true;
 
 	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+	/**
+	 * @var \CodeIgniter\Database\Forge
+	 */
+	protected $forge;
 
 	public function setUp()
 	{
@@ -180,27 +184,27 @@ class ForgeTest extends CIDatabaseTestCase
 
 		if ($this->db->DBDriver === 'MySQLi')
 		{
-			$this->assertEquals($keys[0]->name, 'PRIMARY KEY');
-			$this->assertEquals($keys[0]->fields, ['id']);
-			$this->assertEquals($keys[0]->type, 'PRIMARY');
-			$this->assertEquals($keys[2]->name, 'code_company');
-			$this->assertEquals($keys[2]->fields, ['code', 'company']);
-			$this->assertEquals($keys[2]->type, 'INDEX');
-			$this->assertEquals($keys[1]->name, 'code_active');
-			$this->assertEquals($keys[1]->fields, ['code', 'active']);
-			$this->assertEquals($keys[1]->type, 'UNIQUE');
+			$this->assertEquals($keys['PRIMARY']->name, 'PRIMARY');
+			$this->assertEquals($keys['PRIMARY']->fields, ['id']);
+			$this->assertEquals($keys['PRIMARY']->type, 'PRIMARY');
+			$this->assertEquals($keys['code_company']->name, 'code_company');
+			$this->assertEquals($keys['code_company']->fields, ['code', 'company']);
+			$this->assertEquals($keys['code_company']->type, 'INDEX');
+			$this->assertEquals($keys['code_active']->name, 'code_active');
+			$this->assertEquals($keys['code_active']->fields, ['code', 'active']);
+			$this->assertEquals($keys['code_active']->type, 'UNIQUE');
 		}
 		elseif ($this->db->DBDriver === 'Postgre')
 		{
-			$this->assertEquals($keys[0]->name, 'pk_db_forge_test_1');
-			$this->assertEquals($keys[0]->fields, ['id']);
-			$this->assertEquals($keys[0]->type, 'PRIMARY');
-			$this->assertEquals($keys[1]->name, 'db_forge_test_1_code_company');
-			$this->assertEquals($keys[1]->fields, ['code', 'company']);
-			$this->assertEquals($keys[1]->type, 'INDEX');
-			$this->assertEquals($keys[2]->name, 'db_forge_test_1_code_active');
-			$this->assertEquals($keys[2]->fields, ['code', 'active']);
-			$this->assertEquals($keys[2]->type, 'UNIQUE');
+			$this->assertEquals($keys['pk_db_forge_test_1']->name, 'pk_db_forge_test_1');
+			$this->assertEquals($keys['pk_db_forge_test_1']->fields, ['id']);
+			$this->assertEquals($keys['pk_db_forge_test_1']->type, 'PRIMARY');
+			$this->assertEquals($keys['db_forge_test_1_code_company']->name, 'db_forge_test_1_code_company');
+			$this->assertEquals($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
+			$this->assertEquals($keys['db_forge_test_1_code_company']->type, 'INDEX');
+			$this->assertEquals($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
+			$this->assertEquals($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+			$this->assertEquals($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
 		}
 
 		$this->forge->dropTable('forge_test_1', true);

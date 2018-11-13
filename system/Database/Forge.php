@@ -82,7 +82,7 @@ class Forge
 	/**
 	 * List of foreign keys.
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $foreignKeys = [];
 

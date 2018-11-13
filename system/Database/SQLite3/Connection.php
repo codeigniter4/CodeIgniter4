@@ -364,7 +364,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 				$obj->fields[] = $field->name;
 			}
 
-			$retval[] = $obj;
+			$retval[$obj->name] = $obj;
 		}
 
 		return $retval;

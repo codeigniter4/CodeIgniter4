@@ -45,14 +45,12 @@ use \CodeIgniter\Database\Exceptions\DatabaseException;
  */
 class Connection extends BaseConnection implements ConnectionInterface
 {
-
 	/**
 	 * Database driver
 	 *
 	 * @var string
 	 */
 	public $DBDriver = 'MySQLi';
-
 	/**
 	 * DELETE hack flag
 	 *
@@ -63,18 +61,14 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @var boolean
 	 */
 	public $deleteHack = true;
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Identifier escape character
 	 *
 	 * @var string
 	 */
 	public $escapeChar = '`';
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * MySQLi object
 	 *
@@ -83,7 +77,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @var \MySQLi
 	 */
 	public $mysqli;
-
 	//--------------------------------------------------------------------
 
 	/**
@@ -121,7 +114,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			if ($this->strictOn)
 			{
-				$this->mysqli->options(MYSQLI_INIT_COMMAND, 'SET SESSION sql_mode = CONCAT(@@sql_mode, ",", "STRICT_ALL_TABLES")');
+				$this->mysqli->options(MYSQLI_INIT_COMMAND,
+					'SET SESSION sql_mode = CONCAT(@@sql_mode, ",", "STRICT_ALL_TABLES")');
 			}
 			else
 			{
@@ -154,7 +148,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 					if ($this->encrypt['ssl_verify'])
 					{
 						defined('MYSQLI_OPT_SSL_VERIFY_SERVER_CERT') &&
-								$this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
+						$this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
 					}
 					// Apparently (when it exists), setting MYSQLI_OPT_SSL_VERIFY_SERVER_CERT
 					// to FALSE didn't do anything, so PHP 5.6.16 introduced yet another
@@ -170,12 +164,14 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 				$client_flags |= MYSQLI_CLIENT_SSL;
 				$this->mysqli->ssl_set(
-						$ssl['key'] ?? null, $ssl['cert'] ?? null, $ssl['ca'] ?? null, $ssl['capath'] ?? null, $ssl['cipher'] ?? null
+					$ssl['key'] ?? null, $ssl['cert'] ?? null, $ssl['ca'] ?? null,
+					$ssl['capath'] ?? null, $ssl['cipher'] ?? null
 				);
 			}
 		}
 
-		if ($this->mysqli->real_connect($hostname, $this->username, $this->password, $this->database, $port, $socket, $client_flags)
+		if ($this->mysqli->real_connect($hostname, $this->username, $this->password,
+			$this->database, $port, $socket, $client_flags)
 		)
 		{
 			// Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
@@ -191,18 +187,21 @@ class Connection extends BaseConnection implements ConnectionInterface
 				{
 					throw new DatabaseException($message);
 				}
+
 				return false;
 			}
 
 			if (! $this->mysqli->set_charset($this->charset))
 			{
-				log_message('error', "Database: Unable to set the configured connection charset ('{$this->charset}').");
+				log_message('error',
+					"Database: Unable to set the configured connection charset ('{$this->charset}').");
 				$this->mysqli->close();
 
 				if ($this->db->debug)
 				{
 					throw new DatabaseException('Unable to set client connection character set: ' . $this->charset);
 				}
+
 				return false;
 			}
 
@@ -425,7 +424,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$query = $query->getResultObject();
 
 		$retval = [];
-		for ($i = 0, $c = count($query); $i < $c; $i ++)
+		for ($i = 0, $c = count($query); $i < $c; $i++)
 		{
 			$retval[$i]       = new \stdClass();
 			$retval[$i]->name = $query[$i]->Field;
@@ -433,7 +432,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			sscanf($query[$i]->Type, '%[a-z](%d)', $retval[$i]->type, $retval[$i]->max_length);
 
 			$retval[$i]->default     = $query[$i]->Default;
-			$retval[$i]->primary_key = (int) ($query[$i]->Key === 'PRI');
+			$retval[$i]->primary_key = (int)($query[$i]->Key === 'PRI');
 		}
 
 		return $retval;
@@ -453,53 +452,56 @@ class Connection extends BaseConnection implements ConnectionInterface
 	{
 		$table = $this->protectIdentifiers($table, true, null, false);
 
-		if (($query = $this->query('SHOW CREATE TABLE ' . $table)) === false)
+		if (($query = $this->query('SHOW INDEX FROM ' . $table)) === false)
 		{
 			throw new DatabaseException(lang('Database.failGetIndexData'));
 		}
 
-		if (! $row = $query->getRowArray())
+		if (! $indexes = $query->getResultArray())
 		{
 			return [];
 		}
 
-		$retval = [];
-		foreach (explode("\n", $row['Create Table']) as $line)
+		$keys = [];
+
+		foreach ($indexes as $index)
 		{
-			$line = trim($line);
-			if (strpos($line, 'PRIMARY KEY') === 0)
+			if (empty($keys[$index['Key_name']]))
 			{
-				$obj         = new \stdClass();
-				$obj->name   = 'PRIMARY KEY';
-				$_fields     = explode(',', preg_replace('/^.*\((.+)\).*$/', '$1', $line));
-				$obj->fields = array_map(function ($v) {
-					return trim($v, '`');
-				}, $_fields);
-				$obj->type   = 'PRIMARY';
+				$keys[$index['Key_name']]       = new \stdClass();
+				$keys[$index['Key_name']]->name = $index['Key_name'];
 
-				$retval[] = $obj;
-			}
-			elseif (($unique = strpos($line, 'UNIQUE KEY') === 0) || strpos($line, 'KEY') === 0)
-			{
-				if (preg_match('/KEY `([^`]+)` \((.+)\)/', $line, $matches))
+				if ($index['Key_name'] === 'PRIMARY')
 				{
-					$obj         = new \stdClass();
-					$obj->name   = $matches[1];
-					$obj->fields = array_map(function ($v) {
-						return trim($v, '`');
-					}, explode(',', $matches[2]));
-					$obj->type   = $unique ? 'UNIQUE' : 'INDEX';
-
-					$retval[] = $obj;
+					$type = 'PRIMARY';
+				}
+				elseif ($index['Index_type'] === 'FULLTEXT')
+				{
+					$type = 'FULLTEXT';
+				}
+				elseif ($index['Non_unique'])
+				{
+					if ($index['Index_type'] === 'SPATIAL')
+					{
+						$type = 'SPATIAL';
+					}
+					else
+					{
+						$type = 'INDEX';
+					}
 				}
 				else
 				{
-					throw new \LogicException(lang('Database.parseStringFail'));
+					$type = 'UNIQUE';
 				}
+
+				$keys[$index['Key_name']]->type = $type;
 			}
+
+			$keys[$index['Key_name']]->fields[] = $index['Column_name'];
 		}
 
-		return $retval;
+		return $keys;
 	}
 
 	//--------------------------------------------------------------------
@@ -535,10 +537,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$retval = [];
 		foreach ($query as $row)
 		{
-			$obj                                 = new \stdClass();
-			$obj->constraint_name                = $row->CONSTRAINT_NAME;
-						$obj->table_name         = $row->TABLE_NAME;
-						$obj->foreign_table_name = $row->REFERENCED_TABLE_NAME;
+			$obj                     = new \stdClass();
+			$obj->constraint_name    = $row->CONSTRAINT_NAME;
+			$obj->table_name         = $row->TABLE_NAME;
+			$obj->foreign_table_name = $row->REFERENCED_TABLE_NAME;
 
 			$retval[] = $obj;
 		}
@@ -611,6 +613,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		if ($this->connID->commit())
 		{
 			$this->connID->autocommit(true);
+
 			return true;
 		}
 
@@ -629,11 +632,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 		if ($this->connID->rollback())
 		{
 			$this->connID->autocommit(true);
+
 			return true;
 		}
 
 		return false;
 	}
-
 	//--------------------------------------------------------------------
 }

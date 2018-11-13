@@ -365,7 +365,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 				$obj->type = (strpos($row->indexdef, 'CREATE UNIQUE') === 0) ? 'UNIQUE' : 'INDEX';
 			}
 
-			$retval[] = $obj;
+			$retval[$obj->name] = $obj;
 		}
 
 		return $retval;
