@@ -153,4 +153,21 @@ class LanguageTest extends \CIUnitTestCase
 		$this->assertEquals(1, count($lang->loaded()));
 	}
 
+	//--------------------------------------------------------------------
+
+	public function testLanguageSameKeyAndFileName()
+	{
+		$lang = new MockLanguage('en');
+
+		// first file data | example.message
+		$lang->setData(['message' => 'This is an example message']);
+
+		// force loading data into file Example
+		$this->assertEquals('This is an example message', $lang->getLine('example.message'));
+
+		// second file data | another.example
+		$lang->setData(['example' => 'Another example']);
+
+		$this->assertEquals('Another example', $lang->getLine('another.example'));
+	}
 }
