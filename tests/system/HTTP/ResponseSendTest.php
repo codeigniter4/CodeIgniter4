@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\Test;
+namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Response;
 use Config\App;
@@ -10,7 +10,7 @@ use Config\App;
  * buffering from PHPUnit, and the individual
  * test cases need to be run as separate processes.
  */
-class TestCaseEmissionsTest extends \CIUnitTestCase
+class ResponseSendTest extends \CIUnitTestCase
 {
 
 	/**
@@ -32,9 +32,48 @@ class TestCaseEmissionsTest extends \CIUnitTestCase
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
 	 */
-	public function testHeadersEmitted()
+	public function testHeadersMissingDate()
 	{
 		$response = new Response(new App());
+		$response->pretend(false);
+
+		$body = 'Hello';
+		$response->setBody($body);
+
+		$response->setCookie('foo', 'bar');
+		$this->assertTrue($response->hasCookie('foo'));
+		$this->assertTrue($response->hasCookie('foo', 'bar'));
+
+		// Drop the date header, to make sure it gets put back in
+		$response->removeHeader('Date');
+
+		// send it
+		ob_start();
+		$response->send();
+
+		$buffer = ob_clean();
+		if (ob_get_level() > 0)
+		{
+			ob_end_clean();
+		}
+
+		// and what actually got sent?
+		$this->assertHeaderEmitted('Date:');
+	}
+
+	//--------------------------------------------------------------------
+	/**
+	 * This test does not test that CSP is handled properly -
+	 * it makes sure that sending gives CSP a chance to do its thing.
+	 *
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testHeadersWithCSP()
+	{
+		$config             = new App();
+		$config->CSPEnabled = true;
+		$response           = new Response($config);
 		$response->pretend(false);
 
 		$body = 'Hello';
@@ -55,38 +94,7 @@ class TestCaseEmissionsTest extends \CIUnitTestCase
 		}
 
 		// and what actually got sent?; test both ways
-		$this->assertHeaderEmitted('Set-Cookie: foo=bar;');
-		$this->assertHeaderEmitted('set-cookie: FOO=bar', true);
-	}
-
-	//--------------------------------------------------------------------
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
-	public function testHeadersNotEmitted()
-	{
-		$response = new Response(new App());
-		$response->pretend(false);
-
-		$body = 'Hello';
-		$response->setBody($body);
-
-		// what do we think we're about to send?
-		$response->setCookie('foo', 'bar');
-		$this->assertTrue($response->hasCookie('foo'));
-		$this->assertTrue($response->hasCookie('foo', 'bar'));
-
-		// send it
-		ob_start();
-		$response->send();
-		$output = ob_clean(); // what really was sent
-		if (ob_get_level() > 0)
-		{
-			ob_end_clean();
-		}
-
-		$this->assertHeaderNotEmitted('Set-Cookie: pop=corn', true);
+		$this->assertHeaderEmitted('Content-Security-Policy:');
 	}
 
 }
