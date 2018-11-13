@@ -152,14 +152,14 @@ class Language
 		$file = substr($line, 0, strpos($line, '.'));
 		$line = substr($line, strlen($file) + 1);
 
-		if (! array_key_exists($line, $this->language))
+		if (! isset( $this->language[$this->locale][$file] ) )
 		{
 			$this->load($file, $this->locale);
 		}
 
 		return [
 			$file,
-			$this->language[$this->locale][$line] ?? $line,
+			$line,
 		];
 	}
 
