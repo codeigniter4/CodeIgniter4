@@ -20,7 +20,7 @@ final class DateHelperTest extends \CIUnitTestCase
 	public function testNowDefault()
 	{
 		$time = new \DateTime();
-		$this->assertCloseEnough(abs(now(), time()));  // close enough
+		$this->assertCloseEnough(now(), time());  // close enough
 	}
 
 	//--------------------------------------------------------------------
