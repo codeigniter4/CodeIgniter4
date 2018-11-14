@@ -8,41 +8,50 @@ end
 
 Vagrant.configure("2") do |config|
   # VM Box
-  #config.vm.box = "debian/testing64"
   config.vm.box = "ubuntu/bionic64"
-
   # Automatic box update checking
   config.vm.box_check_update = true
 
   # CodeIgniter virtual host
   config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
   # Code Coverage virtual host
-  config.vm.network "forwarded_port", guest: 8080, host: 8081, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", guest: 81, host: 8081, host_ip: "127.0.0.1"
+  # MySQL server
+  #config.vm.network "forwarded_port", guest: 3306, host: 3307, host_ip: "127.0.0.1"
+  # PostgreSQL server
+  #config.vm.network "forwarded_port", guest: 5432, host: 5433, host_ip: "127.0.0.1"
 
-  # virtualbox type allow auto-sync host to guest and guest to host
-  # VAGRANT_DISABLE_STRICT_DEPENDENCY_ENFORCEMENT=1 vagrant plugin install vagrant-vbguest
-  config.vm.synced_folder ".", "/var/www/codeigniter", type: "rsync"
+  # Add "192.168.10.10 ${VIRTUALHOST}" in your host file to access by domain
+  #config.vm.network "private_network", ip: "192.168.10.10"
+
+  # Same path set in the $CODEIGNITER_PATH Provision
+  # "virtualbox" type allow auto-sync host to guest and guest to host
+  config.vm.synced_folder ".", "/var/www/codeigniter", type: "virtualbox"
 
   # Provider-specific configuration
   config.vm.provider "virtualbox" do |vb|
     # Display the VirtualBox GUI when booting the machine
     vb.gui = false
     # Customize the amount of memory on the VM:
-    vb.memory = "512"
+    vb.memory = "768"
   end
 
   # Provision
   config.vm.provision "shell", inline: <<-SHELL
     MYSQL_ROOT_PASS="password"
+    POSTGRES_USER_PASS="password"
     VIRTUALHOST="localhost"
+    CODEIGNITER_PATH="/var/www/codeigniter"
     PHP_VERSION=7.2
-    PGSQL_VERSION=11
+    POSTGRES_VERSION=10
 
-    echo "127.0.0.1 ${VIRTUALHOST}" >> /etc/hosts
+    grep -q "127.0.0.1 ${VIRTUALHOST}" /etc/hosts || echo "127.0.0.1 ${VIRTUALHOST}" >> /etc/hosts
 
     export DEBIAN_FRONTEND=noninteractive
 
-    echo "Updating and installing required packages..."
+    echo "================================================================================"
+    echo "Updating and Installing Required Packages"
+    echo "================================================================================"
 
     apt-get update
 
@@ -50,56 +59,64 @@ Vagrant.configure("2") do |config|
     debconf-set-selections <<< "mysql-server mysql-server/root_password_again password ${MYSQL_ROOT_PASS}"
 
     apt-get install -y \
-    php$PHP_VERSION apache2 curl composer \
-    php-intl php-mbstring php-curl php-gd php-xdebug \
+    php$PHP_VERSION apache2 composer \
+    php-intl php-mbstring php-xml php-xdebug \
     php-mysql mysql-server mysql-client \
-    php-pgsql postgresql-$PGSQL_VERSION postgresql-client-$PGSQL_VERSION \
+    php-pgsql postgresql-$POSTGRES_VERSION \
     php-sqlite3 sqlite3 \
     php-memcached memcached \
-    php-redis redis-server
+    php-redis redis-server \
+    php-curl curl \
+    php-gd php-imagick
 
     apt-get autoclean
 
-    echo "Configuring databases..."
+    echo "================================================================================"
+    echo "Configuring Databases"
+    echo "================================================================================"
 
-    mysql -e "CREATE DATABASE IF NOT EXISTS codeigniter;" -uroot -p$MYSQL_ROOT_PASS
-    mysql -e "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'codeigniter';" -uroot -p$MYSQL_ROOT_PASS
-    mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION; FLUSH PRIVILEGES;" -uroot -p$MYSQL_ROOT_PASS
-    sed -i "s/^bind-address/#bind-address/" /etc/mysql/my.cnf
+    mysql -e "CREATE DATABASE IF NOT EXISTS codeigniter COLLATE 'utf8_general_ci';;
+    UPDATE mysql.user SET Host='%' WHERE user='root';
+    GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+    FLUSH PRIVILEGES;" -uroot -p$MYSQL_ROOT_PASS
+    sed -i "s/^bind-address/#bind-address/" /etc/mysql/mysql.conf.d/mysqld.cnf
     systemctl restart mysql
 
-
-    sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/" /etc/postgresql/$PGSQL_VERSION/main/postgresql.conf
-    echo "host    all             all             all                     md5" >> /etc/postgresql/$PGSQL_VERSION/main/pg_hba.conf
-    sudo -u postgres psql -c 'CREATE DATABASE codeigniter;'
-    sudo -u postgres psql -c "alter user postgres with password 'password';"
+    sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/" /etc/postgresql/$POSTGRES_VERSION/main/postgresql.conf
+    grep -q "host    all             all             all                     md5" /etc/postgresql/$POSTGRES_VERSION/main/pg_hba.conf || echo "host    all             all             all                     md5" >> /etc/postgresql/$POSTGRES_VERSION/main/pg_hba.conf
+     sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname = 'codeigniter';" | grep -q 1 || sudo -u postgres psql -c "CREATE DATABASE codeigniter;"
+    sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD '${POSTGRES_USER_PASS}';"
     systemctl restart postgresql
 
-    echo "Configuring virtual hosts..."
+    echo "================================================================================"
+    echo "Configuring Virtual Hosts"
+    echo "================================================================================"
 
-    mkdir -p /var/www/codeigniter/builds/coverage-html
-    mkdir -p /var/www/codeigniter/public
-    mkdir -p /var/www/codeigniter/writable/apache
+    mkdir -p "${CODEIGNITER_PATH}/build/coverage-html"
+    mkdir -p "${CODEIGNITER_PATH}/public"
+    mkdir -p "${CODEIGNITER_PATH}/writable/apache"
+    chown -R vagrant:vagrant $CODEIGNITER_PATH
+
+    if [ ! -d /home/vagrant/codeigniter ]; then ln -s $CODEIGNITER_PATH /home/vagrant/codeigniter; fi
 
     sed -i "s/APACHE_RUN_USER=www-data/APACHE_RUN_USER=vagrant/" /etc/apache2/envvars
     sed -i "s/APACHE_RUN_GROUP=www-data/APACHE_RUN_GROUP=vagrant/" /etc/apache2/envvars
+    grep -q "Listen 81" /etc/apache2/ports.conf || sed -i "s/Listen 80/Listen 80\\nListen 81/" /etc/apache2/ports.conf
 
     echo "
 <VirtualHost *:80>
-    ServerAdmin webmaster@${VIRTUALHOST}
-    ServerName ${VIRTUALHOST}
-    ServerAlias www.${VIRTUALHOST}
+    ServerAdmin vagrant@localhost
     DirectoryIndex index.php
-    DocumentRoot /var/www/codeigniter/public
-    LogLevel warn
-    ErrorLog  /var/www/codeigniter/writable/apache/error.log
-    CustomLog /var/www/codeigniter/writable/apache/custom.log combined
+    DocumentRoot ${CODEIGNITER_PATH}/public
+    ErrorLog  ${CODEIGNITER_PATH}/writable/apache/error.log
+    CustomLog ${CODEIGNITER_PATH}/writable/apache/custom.log combined
 </VirtualHost>
-<VirtualHost *:8080>
-    ServerName ${VIRTUALHOST}
-    ServerAlias www.${VIRTUALHOST}
+<VirtualHost *:81>
+    ServerAdmin vagrant@localhost
     DirectoryIndex index.html
-    DocumentRoot /var/www/codeigniter/builds/coverage-html
+    DocumentRoot ${CODEIGNITER_PATH}/build/coverage-html
+    ErrorLog  ${CODEIGNITER_PATH}/writable/apache/coverage-error.log
+    CustomLog ${CODEIGNITER_PATH}/writable/apache/coverage-custom.log combined
 </VirtualHost>
 " > /etc/apache2/sites-available/codeigniter.conf
 
@@ -107,6 +124,11 @@ Vagrant.configure("2") do |config|
     a2dissite 000-default.conf
     a2ensite codeigniter.conf
     systemctl restart apache2
+
+    echo "================================================================================"
+    echo "Services Status"
+    echo "================================================================================"
+    service --status-all
 
   SHELL
 end
