@@ -16,6 +16,8 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
   # Code Coverage virtual host
   config.vm.network "forwarded_port", guest: 81, host: 8081, host_ip: "127.0.0.1"
+  # User Guide virtual host
+  config.vm.network "forwarded_port", guest: 82, host: 8082, host_ip: "127.0.0.1"
   # MySQL server
   #config.vm.network "forwarded_port", guest: 3306, host: 3307, host_ip: "127.0.0.1"
   # PostgreSQL server
@@ -27,7 +29,8 @@ Vagrant.configure("2") do |config|
   # Same path set in the $CODEIGNITER_PATH Provision
   # "virtualbox" type allow auto-sync host to guest and guest to host
   # but chmod does not work... tests will fail.
-  config.vm.synced_folder ".", "/var/www/codeigniter", type: "rsync"
+  # Default rsync__args except "--copy-links", to allow phpunit correctly works by symlink
+  config.vm.synced_folder ".", "/var/www/codeigniter", type: "rsync", rsync__args: ["--verbose", "--archive", "--delete", "-z"]
 
   # Provider-specific configuration
   config.vm.provider "virtualbox" do |vb|
@@ -68,7 +71,12 @@ Vagrant.configure("2") do |config|
     php-memcached memcached \
     php-redis redis-server \
     php-curl curl \
-    php-gd php-imagick
+    php-gd php-imagick \
+    python-pip
+
+    pip install sphinx sphinxcontrib-phpdomain
+    python "${CODEIGNITER_PATH}/user_guide_src/cilexer/setup.py" install
+    pygmentize -L
 
     apt-get autoclean
 
@@ -76,7 +84,7 @@ Vagrant.configure("2") do |config|
     echo "Configuring Databases"
     echo "================================================================================"
 
-    mysql -e "CREATE DATABASE IF NOT EXISTS codeigniter COLLATE 'utf8_general_ci';;
+    mysql -e "CREATE DATABASE IF NOT EXISTS codeigniter COLLATE 'utf8_general_ci';
     UPDATE mysql.user SET Host='%' WHERE user='root';
     GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
     FLUSH PRIVILEGES;" -uroot -p$MYSQL_ROOT_PASS
@@ -95,6 +103,7 @@ Vagrant.configure("2") do |config|
 
     mkdir -p "${CODEIGNITER_PATH}/build/coverage-html"
     mkdir -p "${CODEIGNITER_PATH}/public"
+    mkdir -p "${CODEIGNITER_PATH}/user_guide_src/build/html"
     mkdir -p "${CODEIGNITER_PATH}/writable/apache"
     chown -R vagrant:vagrant $CODEIGNITER_PATH
 
@@ -102,7 +111,7 @@ Vagrant.configure("2") do |config|
 
     sed -i "s/APACHE_RUN_USER=www-data/APACHE_RUN_USER=vagrant/" /etc/apache2/envvars
     sed -i "s/APACHE_RUN_GROUP=www-data/APACHE_RUN_GROUP=vagrant/" /etc/apache2/envvars
-    grep -q "Listen 81" /etc/apache2/ports.conf || sed -i "s/Listen 80/Listen 80\\nListen 81/" /etc/apache2/ports.conf
+    grep -q "Listen 81" /etc/apache2/ports.conf || sed -i "s/Listen 80/Listen 80\\nListen 81\\nListen 82/" /etc/apache2/ports.conf
 
     echo "
 <Directory ${CODEIGNITER_PATH}>
@@ -117,10 +126,10 @@ Vagrant.configure("2") do |config|
     CustomLog ${CODEIGNITER_PATH}/writable/apache/custom.log combined
 </VirtualHost>
 <VirtualHost *:81>
-    ServerAdmin vagrant@localhost
     DocumentRoot ${CODEIGNITER_PATH}/build/coverage-html
-    ErrorLog  ${CODEIGNITER_PATH}/writable/apache/coverage-error.log
-    CustomLog ${CODEIGNITER_PATH}/writable/apache/coverage-custom.log combined
+</VirtualHost>
+<VirtualHost *:82>
+    DocumentRoot ${CODEIGNITER_PATH}/user_guide_src/build/html
 </VirtualHost>
 " > /etc/apache2/sites-available/codeigniter.conf
 
