@@ -139,7 +139,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 		$this->cookieName   = $config->sessionCookieName;
 		$this->matchIP      = $config->sessionMatchIP;
 		$this->savePath     = $config->sessionSavePath;
-		$this->ipAdddress   = $ipAddress;
+		$this->ipAddress    = $ipAddress;
 	}
 
 	//--------------------------------------------------------------------
