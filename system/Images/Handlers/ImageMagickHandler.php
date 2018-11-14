@@ -85,8 +85,6 @@ class ImageMagickHandler extends BaseHandler
 		$source      = ! empty($this->resource) ? $this->resource : $this->image->getPathname();
 		$destination = $this->getResourcePath();
 
-		//todo FIX THIS HANDLER PROPERLY
-
 		$escape = '\\';
 		if (stripos(PHP_OS, 'WIN') === 0)
 		{
