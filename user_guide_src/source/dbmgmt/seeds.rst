@@ -24,7 +24,7 @@ stored within the **application/Database/Seeds** directory. The name of the file
 			];
 
 			// Simple Queries
-			$this->db->query("INSERT INTO users (username, email) VALUES(:username, :email)",
+			$this->db->query("INSERT INTO users (username, email) VALUES(:username:, :email:)",
 				$data
 			);
 
