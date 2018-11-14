@@ -322,4 +322,41 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->dropTable('forge_test_invoices', true);
 		$this->forge->dropTable('forge_test_users', true);
 	}
+
+	public function testCreateTableWithArrayFieldConstraints()
+	{
+		if (in_array($this->db->DBDriver, ['MySQLi', 'SQLite3']))
+		{
+			$this->forge->dropTable('forge_array_constraint', true);
+			$this->forge->addField([
+				'status' => [
+					'type'       => 'ENUM',
+					'constraint' => [
+						'sad',
+						'ok',
+						'happy',
+					],
+				],
+			]);
+			$this->forge->createTable('forge_array_constraint');
+
+			$fields = $this->db->getFieldData('forge_array_constraint');
+
+			$this->assertEquals('status', $fields[0]->name);
+
+			if ($this->db->DBDriver === 'SQLite3')
+			{
+				// SQLite3 converts array constraints to TEXT CHECK(...)
+				$this->assertEquals('TEXT', $fields[0]->type);
+			}
+			else
+			{
+				$this->assertEquals('enum', $fields[0]->type);
+			}
+		}
+		else
+		{
+			$this->expectNotToPerformAssertions();
+		}
+	}
 }

@@ -171,6 +171,12 @@ class Forge extends \CodeIgniter\Database\Forge
 	 */
 	protected function _processColumn($field)
 	{
+		if ($field['type'] === 'TEXT' && strpos($field['length'], "('") === 0)
+		{
+			$field['type'] .= ' CHECK(' . $this->db->escapeIdentifiers($field['name'])
+				. ' IN ' . $field['length'] . ')';
+		}
+
 		return $this->db->escapeIdentifiers($field['name'])
 			   . ' ' . $field['type']
 			   . $field['auto_increment']

@@ -946,19 +946,13 @@ class Forge
 
 			if (isset($attributes['TYPE']) && ! empty($attributes['CONSTRAINT']))
 			{
-				switch (strtoupper($attributes['TYPE']))
+				if (is_array($attributes['CONSTRAINT']))
 				{
-					case 'ENUM':
-					case 'SET':
-						$attributes['CONSTRAINT'] = $this->db->escapeString($attributes['CONSTRAINT']);
-						$field['length']          = is_array($attributes['CONSTRAINT']) ? "('" . implode("','",
-								$attributes['CONSTRAINT']) . "')" : '(' . $attributes['CONSTRAINT'] . ')';
-						break;
-					default:
-						$field['length'] = is_array($attributes['CONSTRAINT']) ? '(' . implode(',',
-								$attributes['CONSTRAINT']) . ')' : '(' . $attributes['CONSTRAINT'] . ')';
-						break;
+					$attributes['CONSTRAINT'] = $this->db->escape($attributes['CONSTRAINT']);
+					$attributes['CONSTRAINT'] = implode(',', $attributes['CONSTRAINT']);
 				}
+
+				$field['length'] = '(' . $attributes['CONSTRAINT'] . ')';
 			}
 
 			$fields[] = $field;
