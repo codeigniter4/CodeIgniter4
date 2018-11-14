@@ -105,16 +105,19 @@ Vagrant.configure("2") do |config|
     grep -q "Listen 81" /etc/apache2/ports.conf || sed -i "s/Listen 80/Listen 80\\nListen 81/" /etc/apache2/ports.conf
 
     echo "
+<Directory ${CODEIGNITER_PATH}>
+    DirectoryIndex index.html index.php
+    Options All
+    AllowOverride All
+</Directory>
 <VirtualHost *:80>
     ServerAdmin vagrant@localhost
-    DirectoryIndex index.php
     DocumentRoot ${CODEIGNITER_PATH}/public
     ErrorLog  ${CODEIGNITER_PATH}/writable/apache/error.log
     CustomLog ${CODEIGNITER_PATH}/writable/apache/custom.log combined
 </VirtualHost>
 <VirtualHost *:81>
     ServerAdmin vagrant@localhost
-    DirectoryIndex index.html
     DocumentRoot ${CODEIGNITER_PATH}/build/coverage-html
     ErrorLog  ${CODEIGNITER_PATH}/writable/apache/coverage-error.log
     CustomLog ${CODEIGNITER_PATH}/writable/apache/coverage-custom.log combined
