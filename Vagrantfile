@@ -26,7 +26,8 @@ Vagrant.configure("2") do |config|
 
   # Same path set in the $CODEIGNITER_PATH Provision
   # "virtualbox" type allow auto-sync host to guest and guest to host
-  config.vm.synced_folder ".", "/var/www/codeigniter", type: "virtualbox"
+  # but chmod does not work... tests will fail.
+  config.vm.synced_folder ".", "/var/www/codeigniter", type: "rsync"
 
   # Provider-specific configuration
   config.vm.provider "virtualbox" do |vb|
@@ -84,7 +85,7 @@ Vagrant.configure("2") do |config|
 
     sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/" /etc/postgresql/$POSTGRES_VERSION/main/postgresql.conf
     grep -q "host    all             all             all                     md5" /etc/postgresql/$POSTGRES_VERSION/main/pg_hba.conf || echo "host    all             all             all                     md5" >> /etc/postgresql/$POSTGRES_VERSION/main/pg_hba.conf
-     sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname = 'codeigniter';" | grep -q 1 || sudo -u postgres psql -c "CREATE DATABASE codeigniter;"
+    sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname = 'codeigniter';" | grep -q 1 || sudo -u postgres psql -c "CREATE DATABASE codeigniter;"
     sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD '${POSTGRES_USER_PASS}';"
     systemctl restart postgresql
 
