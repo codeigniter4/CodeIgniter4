@@ -18,7 +18,7 @@ use Tests\Support\Session\MockSession;
 /**
  * @backupGlobals enabled
  */
-class CommomFunctionsTest extends \CIUnitTestCase
+class CommonFunctionsTest extends \CIUnitTestCase
 {
 
 	//--------------------------------------------------------------------
@@ -347,26 +347,6 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 		$this->assertTrue($answer1->hasCookie('foo', 'onething'));
 		$this->assertTrue($answer1->hasCookie('login_time'));
-	}
-
-	//--------------------------------------------------------------------
-	// Make sure cookies are set by RedirectResponse this way
-	// See https://github.com/codeigniter4/CodeIgniter4/issues/1393
-	public function testRedirectResponseCookies2()
-	{
-		$login_time = time();
-
-		$response = new Response(new App());
-
-		$routes = service('routes');
-		$routes->add('user/login', 'Auth::verify', ['as' => 'login']);
-
-		$answer2 = redirect('login')
-				->setCookie('foo', 'anotherthing', YEAR)
-				->setCookie('login_time', $login_time, YEAR);
-
-		$this->assertTrue($answer2->hasCookie('foo', 'anotherthing'));
-		$this->assertTrue($answer2->hasCookie('login_time'));
 	}
 
 }
