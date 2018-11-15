@@ -22,6 +22,10 @@ Vagrant.configure("2") do |config|
   #config.vm.network "forwarded_port", guest: 3306, host: 3307, host_ip: "127.0.0.1"
   # PostgreSQL server
   #config.vm.network "forwarded_port", guest: 5432, host: 5433, host_ip: "127.0.0.1"
+  # Memcached server
+  #config.vm.network "forwarded_port", guest: 11211, host: 11212, host_ip: "127.0.0.1"
+  # Redis server
+  #config.vm.network "forwarded_port", guest: 6379, host: 6380, host_ip: "127.0.0.1"
 
   # Add "192.168.10.10 ${VIRTUALHOST}" in your host file to access by domain
   #config.vm.network "private_network", ip: "192.168.10.10"
@@ -43,11 +47,11 @@ Vagrant.configure("2") do |config|
   # Provision
   config.vm.provision "shell", inline: <<-SHELL
     MYSQL_ROOT_PASS="password"
-    POSTGRES_USER_PASS="password"
+    PGSQL_ROOT_PASS="password"
     VIRTUALHOST="localhost"
     CODEIGNITER_PATH="/var/www/codeigniter"
     PHP_VERSION=7.2
-    POSTGRES_VERSION=10
+    PGSQL_VERSION=10
 
     grep -q "127.0.0.1 ${VIRTUALHOST}" /etc/hosts || echo "127.0.0.1 ${VIRTUALHOST}" >> /etc/hosts
 
@@ -66,7 +70,7 @@ Vagrant.configure("2") do |config|
     php$PHP_VERSION apache2 composer \
     php-intl php-mbstring php-xml php-zip php-xdebug \
     php-mysql mysql-server mysql-client \
-    php-pgsql postgresql-$POSTGRES_VERSION \
+    php-pgsql postgresql-$PGSQL_VERSION \
     php-sqlite3 sqlite3 \
     php-memcached memcached \
     php-redis redis-server \
@@ -75,27 +79,37 @@ Vagrant.configure("2") do |config|
     python-pip
 
     pip install sphinx sphinxcontrib-phpdomain
-    python "${CODEIGNITER_PATH}/user_guide_src/cilexer/setup.py" install
-    pygmentize -L
 
     apt-get autoclean
+
+    echo "================================================================================"
+    echo "Preparing User Guide"
+    echo "================================================================================"
+
+    cd "${CODEIGNITER_PATH}/user_guide_src/cilexer"
+    python setup.py install
+    cd ..
+    make html
 
     echo "================================================================================"
     echo "Configuring Databases"
     echo "================================================================================"
 
+    sed -i "s/^bind-address/#bind-address/" /etc/mysql/mysql.conf.d/mysqld.cnf
     mysql -e "CREATE DATABASE IF NOT EXISTS codeigniter COLLATE 'utf8_general_ci';
     UPDATE mysql.user SET Host='%' WHERE user='root';
     GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
     FLUSH PRIVILEGES;" -uroot -p$MYSQL_ROOT_PASS
-    sed -i "s/^bind-address/#bind-address/" /etc/mysql/mysql.conf.d/mysqld.cnf
     systemctl restart mysql
 
-    sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/" /etc/postgresql/$POSTGRES_VERSION/main/postgresql.conf
-    grep -q "host    all             all             all                     md5" /etc/postgresql/$POSTGRES_VERSION/main/pg_hba.conf || echo "host    all             all             all                     md5" >> /etc/postgresql/$POSTGRES_VERSION/main/pg_hba.conf
-    sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname = 'codeigniter';" | grep -q 1 || sudo -u postgres psql -c "CREATE DATABASE codeigniter;"
-    sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD '${POSTGRES_USER_PASS}';"
+    sed -i "s/^#listen_addresses = 'localhost'/listen_addresses = '*'/" /etc/postgresql/$PGSQL_VERSION/main/postgresql.conf
+    grep -q "host    all             root            all                     md5" /etc/postgresql/$PGSQL_VERSION/main/pg_hba.conf || echo "host    all             root            all                     md5" >> /etc/postgresql/$PGSQL_VERSION/main/pg_hba.conf
+    sudo -u postgres psql -tc "SELECT 1 FROM pg_roles WHERE rolname='root'" | grep -q 1 || sudo -u postgres psql -c "CREATE ROLE root WITH SUPERUSER CREATEDB CREATEROLE INHERIT LOGIN"
+    sudo -u postgres psql -c "ALTER ROLE root WITH PASSWORD '${PGSQL_ROOT_PASS}'"
+    sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname='codeigniter'" | grep -q 1 ||sudo -u postgres psql -c "CREATE DATABASE codeigniter"
+    sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE codeigniter TO root"
     systemctl restart postgresql
+
 
     echo "================================================================================"
     echo "Configuring Virtual Hosts"
@@ -109,11 +123,11 @@ Vagrant.configure("2") do |config|
 
     if [ ! -d /home/vagrant/codeigniter ]; then ln -s $CODEIGNITER_PATH /home/vagrant/codeigniter; fi
 
-    sed -i "s/APACHE_RUN_USER=www-data/APACHE_RUN_USER=vagrant/" /etc/apache2/envvars
-    sed -i "s/APACHE_RUN_GROUP=www-data/APACHE_RUN_GROUP=vagrant/" /etc/apache2/envvars
-    grep -q "Listen 81" /etc/apache2/ports.conf || sed -i "s/Listen 80/Listen 80\\nListen 81\\nListen 82/" /etc/apache2/ports.conf
+    sed -i "s/^APACHE_RUN_USER=www-data/APACHE_RUN_USER=vagrant/" /etc/apache2/envvars
+    sed -i "s/^APACHE_RUN_GROUP=www-data/APACHE_RUN_GROUP=vagrant/" /etc/apache2/envvars
+    grep -q "Listen 81" /etc/apache2/ports.conf || sed -i "s/^Listen 80/Listen 80\\nListen 81\\nListen 82/" /etc/apache2/ports.conf
 
-    echo "
+    echo "ServerName ${VIRTUALHOST}
 <Directory ${CODEIGNITER_PATH}>
     DirectoryIndex index.html index.php
     Options All
