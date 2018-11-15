@@ -273,9 +273,13 @@ class Language
 			$strings[] = require $file;
 		}
 
-		if ($strings)
+		if (isset($strings[1]))
 		{
 			$strings = array_replace_recursive(...$strings);
+		}
+		elseif (isset($strings[0]))
+		{
+			$strings = $strings[0];
 		}
 
 		return $strings;
