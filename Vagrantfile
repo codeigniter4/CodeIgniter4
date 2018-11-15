@@ -64,7 +64,7 @@ Vagrant.configure("2") do |config|
 
     apt-get install -y \
     php$PHP_VERSION apache2 composer \
-    php-intl php-mbstring php-xml php-xdebug \
+    php-intl php-mbstring php-xml php-zip php-xdebug \
     php-mysql mysql-server mysql-client \
     php-pgsql postgresql-$POSTGRES_VERSION \
     php-sqlite3 sqlite3 \
