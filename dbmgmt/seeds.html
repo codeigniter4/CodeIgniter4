@@ -220,7 +220,7 @@ stored within the <strong>application/Database/Seeds</strong> directory. The nam
                 <span class="p">];</span>
 
                 <span class="c1">// Simple Queries</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;INSERT INTO users (username, email) VALUES(:username, :email)&quot;</span><span class="p">,</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;INSERT INTO users (username, email) VALUES(:username:, :email:)&quot;</span><span class="p">,</span>
                         <span class="nv">$data</span>
                 <span class="p">);</span>
 
@@ -296,7 +296,7 @@ a dedicated controller:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Nov 12, 2018.
+      Last updated on Nov 14, 2018.
 
     </p>
   </div>

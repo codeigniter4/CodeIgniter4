@@ -280,7 +280,7 @@ also require a &#8216;constraint&#8217; key.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">,</span>
         <span class="p">],</span>
 <span class="p">];</span>
 <span class="c1">// will translate to &quot;users VARCHAR(100)&quot; when the field is added.</span>
@@ -298,25 +298,30 @@ such as integer.</li>
 <li>unique/true : to generate a unique key for the field definition.</li>
 </ul>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;blog_id&#39;</span>          <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
-                <span class="s1">&#39;unsigned&#39;</span>       <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
-                <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span>
+                <span class="s1">&#39;unsigned&#39;</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+                <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span>
         <span class="p">],</span>
-        <span class="s1">&#39;blog_title&#39;</span>       <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;title&#39;</span>       <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;unique&#39;</span>         <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+                <span class="s1">&#39;unique&#39;</span>         <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
         <span class="p">],</span>
-        <span class="s1">&#39;blog_author&#39;</span>      <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;author&#39;</span>      <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span><span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">,</span>
                 <span class="s1">&#39;default&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;King of Town&#39;</span><span class="p">,</span>
         <span class="p">],</span>
-        <span class="s1">&#39;blog_description&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;null&#39;</span>           <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+                <span class="s1">&#39;null&#39;</span>           <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="p">],</span>
+        <span class="s1">&#39;status&#39;</span>      <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;ENUM&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;publish&#39;</span><span class="p">,</span> <span class="s1">&#39;pending&#39;</span><span class="p">,</span> <span class="s1">&#39;draft&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;default&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;pending&#39;</span><span class="p">,</span>
         <span class="p">],</span>
 <span class="p">];</span>
 </pre></div>
@@ -335,11 +340,11 @@ string into the field definitions with addField()</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Passing raw strings as fields cannot be followed by <code class="docutils literal"><span class="pre">add_key()</span></code> calls on those fields.</p>
+<p class="last">Passing raw strings as fields cannot be followed by <code class="docutils literal"><span class="pre">addKey()</span></code> calls on those fields.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Multiple calls to add_field() are cumulative.</p>
+<p class="last">Multiple calls to addField() are cumulative.</p>
 </div>
 </div>
 <div class="section" id="creating-an-id-field">
@@ -504,7 +509,7 @@ AFTER and FIRST clauses to position the new column.</p>
 <div class="section" id="modifying-a-column-in-a-table">
 <h3><a class="toc-backref" href="#id14">Modifying a Column in a Table</a><a class="headerlink" href="#modifying-a-column-in-a-table" title="Permalink to this headline">¶</a></h3>
 <p><strong>$forge-&gt;modifyColumn()</strong></p>
-<p>The usage of this method is identical to <code class="docutils literal"><span class="pre">add_column()</span></code>, except it
+<p>The usage of this method is identical to <code class="docutils literal"><span class="pre">addColumn()</span></code>, except it
 alters an existing column rather than adding a new one. In order to
 change the name you can add a &#8220;name&#8221; key into the field defining array.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
@@ -837,7 +842,7 @@ change the name you can add a &#8220;name&#8221; key into the field defining arr
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Nov 12, 2018.
+      Last updated on Nov 14, 2018.
 
     </p>
   </div>
