@@ -79,8 +79,9 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 * Constructor
 	 *
 	 * @param BaseConfig $config
+	 * @param string $ipAddress
 	 */
-	public function __construct($config, string $ipAddress)
+	public function __construct(BaseConfig $config, string $ipAddress)
 	{
 		parent::__construct($config, $ipAddress);
 
@@ -91,13 +92,13 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 		else
 		{
-					   $sessionPath = rtrim(ini_get('session.save_path'), '/\\');
+			$sessionPath = rtrim(ini_get('session.save_path'), '/\\');
 			if (! $sessionPath)
-					   {
+			{
 				$sessionPath = WRITEPATH . 'session';
 			}
 
-					   $this->savePath = $sessionPath;
+			$this->savePath = $sessionPath;
 		}
 	}
 

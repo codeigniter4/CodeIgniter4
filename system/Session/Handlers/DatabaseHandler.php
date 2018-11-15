@@ -88,6 +88,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	 * Constructor
 	 *
 	 * @param BaseConfig $config
+	 * @param string $ipAddress
 	 */
 	public function __construct(BaseConfig $config, string $ipAddress)
 	{

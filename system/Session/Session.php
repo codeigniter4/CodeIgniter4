@@ -145,7 +145,7 @@ class Session implements SessionInterface
 	protected $sidRegexp;
 
 	/**
-	 * Logger instance to record error messages and awarnings.
+	 * Logger instance to record error messages and warnings.
 	 *
 	 * @var \PSR\Log\LoggerInterface
 	 */
@@ -184,6 +184,8 @@ class Session implements SessionInterface
 
 	/**
 	 * Initialize the session container and starts up the session.
+	 *
+	 * @return mixed
 	 */
 	public function start()
 	{
@@ -191,7 +193,7 @@ class Session implements SessionInterface
 		{
 			$this->logger->debug('Session: Initialization under CLI aborted.');
 
-			return;
+			return; // TODO fmertins: should we throw an exception instead return? And then @return Session phpdoc?
 		}
 		elseif ((bool) ini_get('session.auto_start'))
 		{

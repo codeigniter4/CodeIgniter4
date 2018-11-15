@@ -50,7 +50,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	/**
 	 * The Data fingerprint.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $fingerprint;
 
@@ -64,49 +64,49 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Cookie prefix
 	 *
-	 * @var type
+	 * @var string
 	 */
 	protected $cookiePrefix = '';
 
 	/**
 	 * Cookie domain
 	 *
-	 * @var type
+	 * @var string
 	 */
 	protected $cookieDomain = '';
 
 	/**
 	 * Cookie path
 	 *
-	 * @var type
+	 * @var string
 	 */
 	protected $cookiePath = '/';
 
 	/**
 	 * Cookie secure?
 	 *
-	 * @var type
+	 * @var bool
 	 */
 	protected $cookieSecure = false;
 
 	/**
 	 * Cookie name to use
 	 *
-	 * @var type
+	 * @var string|null
 	 */
 	protected $cookieName;
 
 	/**
 	 * Match IP addresses for cookies?
 	 *
-	 * @var type
+	 * @var bool
 	 */
 	protected $matchIP = false;
 
 	/**
 	 * Current session ID
 	 *
-	 * @var type
+	 * @var string|null
 	 */
 	protected $sessionID;
 
@@ -129,9 +129,11 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 * Constructor
 	 *
 	 * @param BaseConfig $config
+	 * @param string $ipAddress
 	 */
-	public function __construct($config, string $ipAddress)
+	public function __construct(BaseConfig $config, string $ipAddress)
 	{
+		// TODO fmertins: these props cookie* and session* don't exist in BaseConfig class, should we create them there?
 		$this->cookiePrefix = $config->cookiePrefix;
 		$this->cookieDomain = $config->cookieDomain;
 		$this->cookiePath   = $config->cookiePath;
@@ -148,7 +150,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 * Internal method to force removal of a cookie by the client
 	 * when session_destroy() is called.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function destroyCookie(): bool
 	{
@@ -164,9 +166,9 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 * (databases other than PostgreSQL and MySQL) to act as if they
 	 * do acquire a lock.
 	 *
-	 * @param string $sessionID
+	 * @param string $sessionID Dummy, isn't used here
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function lockSession(string $sessionID): bool
 	{
@@ -179,12 +181,11 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Releases the lock, if any.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function releaseLock(): bool
 	{
 		$this->lock = false;
-
 		return true;
 	}
 
@@ -201,13 +202,11 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 * so that the INI is set just in time for the error message to
 	 * be properly generated.
 	 *
-	 * @return mixed
+	 * @return bool
 	 */
-	protected function fail()
+	protected function fail(): bool
 	{
 		ini_set('session.save_path', $this->savePath);
-
 		return false;
 	}
-
 }
