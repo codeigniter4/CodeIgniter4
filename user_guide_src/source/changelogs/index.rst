@@ -1,6 +1,6 @@
-##########
-Change Log
-##########
+###########
+Change Logs
+###########
 
 Version |version|
 ====================================================
@@ -18,7 +18,7 @@ CI4 code sniffer rules, and attempt to fix them.
 We have run all the source files through it, and any "funny"
 code formatting is temporary until the rules are updated.
 
-:doc:`See all the changes. </changedetails/v4.0.0-alpha.3>`
+:doc:`See all the changes. </changelogs/next>`
 
 
 Version 4.0.0-alpha.2
@@ -32,7 +32,7 @@ Release Date: Oct 26, 2018
 - features implemented
 - tutorial revised
 
-:doc:`See all the changes. </changedetails/v4.0.0-alpha.2>`
+:doc:`See all the changes. </changelogs/v4.0.0-alpha.2>`
 
 Version 4.0.0-alpha.1
 =================================
@@ -56,4 +56,5 @@ New core classes:
 
 Some new, some old & some borrowed packages, all namespaced.
 
-:doc:`See all the changes. </changedetails/v4.0.0-alpha.1>`
+:doc:`See all the changes. </changelogs/v4.0.0-alpha.1>`
+

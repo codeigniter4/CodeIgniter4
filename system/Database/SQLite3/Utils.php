@@ -55,7 +55,6 @@ class Utils extends \CodeIgniter\Database\BaseUtils
 	 * Platform dependent version of the backup function.
 	 *
 	 * @param array|null $prefs
-	 * @todo  build
 	 *
 	 * @return mixed
 	 */

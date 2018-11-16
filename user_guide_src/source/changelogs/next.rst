@@ -1,0 +1,288 @@
+Version |version|
+====================================================
+
+Release Date: Not Released
+
+**Next alpha release of CodeIgniter4**
+
+The list of changed files follows, with PR numbers shown.
+
+- admin/
+	- post_release #1484
+	- pre-commit #1388
+	- setup.sh #1388
+
+- application /
+	- Config/
+		- Autoload #1396, #1416
+		- Mimes #1368, #1465
+		- Services #1469
+	- Filters/Honeypot #1376
+	- Views/
+		- errors/* #1415, #1413, #1469
+		- form.php removed #1442
+
+- public /
+	- index.php #1388
+
+- system /
+	- Cache/Handlers/
+		- MemcachedHandler #1383
+	- CLI/
+		- CLI #1432, #1489
+	- Commands/
+		- Database/
+			- CreateMigration #1374, #1422, #1431
+			- MigrateCurrent #1431
+			- MigrateLatest #1431
+			- MigrateRollback #1431
+			- MigrateStatus #1431
+			- MigrateVersion #1431
+		- Sessions/CrateMigration #1357
+	- Config/
+		- AutoloadConfig #1416
+		- BaseService #1469
+		- Mimes #1453
+		- Services #1180, #1469
+	- Database/
+		- BaseBuilder #1335
+		- BaseConnection #1335, #1407
+		- BaseResult #1426
+		- Config #1465, #1469
+		- Forge #1343, #1449, #1470
+		- MigrationRunner #1371
+		- MySQLi/Connection #1335, #1449
+		- MySQLi/Forge #1343, #1344
+		- Postgre/Connection #1335, #1449
+		- SQLite3/Connection #1335, #1449
+		- SQLite3/Forge #1470
+	- Debug
+		- Toolbar #1370, #1465, #1469
+		- Toolbar/Views/toolbar.tpl #1469
+	- Email/
+		- Email #1389, #1413, #1438, #1454, #1465, #1469
+	- Events/
+		- Events #1465, #1469
+	- Files/
+		- File #1399
+	- Format/
+		- XMLFormatter #1471
+	- Helpers/
+		- array_helper #1412
+	- Honeypot/
+		- Honeypot #1460
+	- HTTP/
+		- DownloadResponse #1375
+		- Exceptions/DownloadException #1405
+		- Files/UploadedFile #1335, #1399
+		- IncomingRequest #1445, #1469
+		- RedirectResponse #1387, #1451, #1464
+		- Response #1456, #1472, #1477
+		- ResponseInterface #1384
+		- UploadedFile #1368, #1456
+		- URI #1213, #1469
+	- Language/
+		- en/Database #1335
+		- en/Filters #1378
+		- en/Migrations #1374
+		- Language #1480, #1489
+	- Pager/
+		- Pager #1213
+		- PagerRenderer #1213
+	- Router/
+		- RouteCollection #1464
+		- RouteCollectionInterface #1406, #1410
+	- Session/Handlers/
+		- BaseHandler #1180, #1483
+		- DatabaseHandler #1180
+		- FileHandler #1180
+		- MemcachedHandler #1180
+		- RedisHandler #1180
+	- Test/
+		- CIUnitTestCase #1467
+		- FeatureTestCase #1427, #1468
+		- Filters//CITestStreamFilter #1465
+	- Validation /
+		- CreditCardRules #1447
+		- Rules #1345
+		- Validation #1345
+	- View/
+		- Filters #1469
+		- Parser #1417
+		- View #1357, #1377, #1410
+	- CodeIgniter #1465
+	- ComposerScripts #1469
+	- Controller #1423
+	- Entity #1369, #1373
+	- Model #1345, #1380, #1373, #1440
+
+- tests /
+	- _support/
+		- HTTP/MockResponse #1456
+		- _bootstrap.php #1397, #1443
+	- Cache/Handlers/
+		- MemcachedHandlerTest #1180, #1383
+		- RedisHandlerTest #1180, #1481
+	- CLI/
+		- CLITest #1467, #1489
+	- Database/Live/
+		- ForgeTest #1449, #1470
+	- HTTP/
+		- Files/FileMovingTest #1424
+		- DownloadResponseTest #1375
+		- RedirectResponseTest #1387, #1456
+		- ResponseCookieTest #1472
+		- ResponseSendTest #1477
+		- ResponseTest #1375, #1456, #1472
+		- URITest #1456
+	- Helpers/
+		- DateHelperTest #1479
+	- I18n/
+		- TimeTest #1467, #1473
+	- Language/
+		- LanguageTest #1480
+	- Log/
+		- FileHandlerTest #1425
+	- Pager/
+		- PagerRendererTest #1213
+	- Router/
+		- RouteCollectionTest #1438
+		- RouterTest#1438
+	- Session/
+		- SessionTest  #1180
+	- Test/
+		- BootstrapFCPATHTest #1397
+		- FeatureTestCase #1468
+		- TestCaseEmissionsTest #1477
+		- TestCaseTest #1390
+	- Throttle/
+		- ThrottleTest #1398
+	- View/
+		- ParserTest #1335
+	- CommonFunctionsTest #1180
+
+- user_guide_src /source/
+	- concepts/
+		- services #1469
+		- structure #1448
+	- database/
+		- queries #1407
+	- dbmgmt/
+		- forge #1470
+		- migration #1374, #1385, #1431
+		- seeds #1482
+	- extending/
+		- core_classes #1469
+	- installation/
+		- index	#1388
+	- libraries/
+		- pagination #1213
+	- outgoing/
+		- resposne #1472
+	- testing/
+		- overview #1467
+	- tutorial/
+		- create_news_item #1442
+	- changelog #1385
+
+- /
+	- composer.json #1388, #1418
+	- README.md
+	- .travis.yml #1394
+
+PRs merged:
+-----------
+
+- #1489 Add CLI::strlen()
+- #1488 Load Language strings from other locations
+- #1484 missing slash
+- #1483 Small typo in Session\Handlers\BaseHandler.php
+- #1482 doc fix: query binding fix in Seeds documentation
+- #1481 RedisHandler test clean up
+- #1480 Fix Language Key-File confusion
+- #1479 Yet another time test to fix
+- #1477 Add Response send testing
+- #1475 Correct phpdocs for Forge::addField()
+- #1473 Fuzzify another time test
+- #1472 HTTP\Response cookie testing & missing functionality
+- #1471 remove unused local variable $result in XMLFormatter::format()
+- #1470 Allow create table with array field constraints
+- #1469 use static:: instead of self:: for call protected/public functions as well
+- #1468 Fix FeatureTestCaseTest output buffer
+- #1467 Provide time testing within tolerance
+- #1466 Fix phpdocs for BaseBuilder
+- #1465 use static:: instead of self:: for protected and public properties
+- #1464 remove unused use statements
+- #1463 Fix the remaining bcit-ci references
+- #1461 Typo fix: donload -> download
+- #1460 remove unneeded ternary check at HoneyPot
+- #1456 Beef up HTTP URI & Response testing
+- #1455 un-ignore application/Database/Migrations directory
+- #1454 add missing break; in loop at Email::getEncoding()
+- #1453 BugFix if there extension has only one mime type
+- #1451 remove unneeded $session->start(); check on RedirectResponse
+- #1450 phpcbf: fix all at once
+- #1449 Simplify how to get indexData from mysql/mariadb
+- #1448 documentation: add missing application structures
+- #1447 add missing break; on loop cards to get card info at CreditCardRules
+- #1445 using existing is_cli() function in HTTP\IncomingRequest
+- #1444 Dox for reorganized repo admin (4 of 4)
+- #1443 Fixes unit test output not captured
+- #1442 remove form view in application/View/ and form helper usage in create new items tutorial
+- #1440 Access to model's last inserted ID
+- #1438 Tailor the last few repo org names (3 of 4)
+- #1437 Replace repo org name in MOST php docs (2 of 4)
+- #1436 Change github organization name in docs (1 of 4)
+- #1432 Use mb_strlen to get length of columns
+- #1431 can't call run() method with params from commands migrations
+- #1427 Fixes "options" request call parameter in FeatureTestCase
+- #1416 performance improvement in Database\BaseResult
+- #1425 Ensure FileHandlerTest uses MockFileHandler
+- #1424 Fix FileMovingTest leaving cruft
+- #1423 Fix Controller use validate bug
+- #1422 fix Migrations.classNotFound
+- #1418 normalize composer.json
+- #1417 fix Parser::parsePairs always escapes
+- #1416 remove $psr4['Tests\Support'] definition in application\Config\Autoload
+- #1415 remove unneded "defined('BASEPATH') ...
+- #1413 set more_entropy = true in all uniqid() usage
+- #1412 function_exists() typo fixes on array_helper
+- #1411 add missing break; in loop in View::render()
+- #1410 Fix spark serve not working from commit 2d0b325
+- #1407 Database: add missing call initialize() check on BaseConnection->prepare()
+- #1406 Add missing parameter to RouteCollectionInterface
+- #1405 Fix language string used in DownloadException
+- #1402 Correct class namespacing in the user guide
+- #1399 optional type hinting in guessExtension
+- #1398 Tweak throttle testing
+- #1397 Correcting FCPATH setting in tests/_support/_bootstrap.php
+- #1396 only register PSR4 "Tests\Support" namespace in "testing" environment
+- #1395 short array syntax in docs
+- #1394 add php 7.3 to travis config
+- #1390 Fixed not to output "Hello" at test execution
+- #1389 Capitalize email filename
+- #1388 Phpcs Auto-fix on commit
+- #1387 Redirect to named route
+- #1385 Fix migration page; udpate changelog
+- #1384 add missing ResponseInterface contants
+- #1383 fix TypeError in MemcachedHandler::__construct()
+- #1381 Remove unused use statements
+- #1380 count() improvement, use truthy check
+- #1378 Update Filters language file
+- #1377 fix monolog will cause an error
+- #1376 Fix cannot use class Honeypot because already in use in App\Filters\Honeypot
+- #1375 Give download a header conforming to RFC 6266
+- #1374 Missing feature migration.
+- #1373 Turning off casting for db insert/save 
+- #1371 update method name in coding style
+- #1370 Toolbar needs logging. Fixes #1258
+- #1369 Remove invisible character
+- #1368 UploadedFile->guessExtenstion()...
+- #1360 rm --cached php_errors.log file
+- #1357 Update template file is not .php compatibility
+- #1345 is_unique tried to connect to default database instead of defined in DBGroup
+- #1344 Not to quote unecessary table options
+- #1343 Avoid add two single quote to constraint
+- #1335 Review and improvements in databases drivers MySQLi, Postgre and SQLite
+- #1213 URI segment as page number in Pagination
+- #1180 using HTTP\Request instance to pull ip address
