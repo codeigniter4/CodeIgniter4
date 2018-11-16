@@ -1,6 +1,7 @@
 <?php
 
 use CodeIgniter\Session\Handlers\FileHandler;
+use CodeIgniter\HTTP\Response;
 use Config\App;
 use Config\Autoload;
 use CodeIgniter\Config\Services;
@@ -17,7 +18,7 @@ use Tests\Support\Session\MockSession;
 /**
  * @backupGlobals enabled
  */
-class CommomFunctionsTest extends \CIUnitTestCase
+class CommonFunctionsTest extends \CIUnitTestCase
 {
 
 	//--------------------------------------------------------------------
@@ -321,11 +322,31 @@ class CommomFunctionsTest extends \CIUnitTestCase
 			'cookieSecure'             => false,
 		];
 
-		$config = (object)$defaults;
+		$config = (object) $defaults;
 
 		$session = new MockSession(new FileHandler($config, '127.0.0.1'), $config);
 		$session->setLogger(new TestLogger(new Logger()));
 		\CodeIgniter\Config\BaseService::injectMock('session', $session);
+	}
+
+	//--------------------------------------------------------------------
+	// Make sure cookies are set by RedirectResponse this way
+	// See https://github.com/codeigniter4/CodeIgniter4/issues/1393
+	public function testRedirectResponseCookies1()
+	{
+		$login_time = time();
+
+		$response = new Response(new App());
+
+		$routes = service('routes');
+		$routes->add('user/login', 'Auth::verify', ['as' => 'login']);
+
+		$answer1 = redirect()->route('login')
+				->setCookie('foo', 'onething', YEAR)
+				->setCookie('login_time', $login_time, YEAR);
+
+		$this->assertTrue($answer1->hasCookie('foo', 'onething'));
+		$this->assertTrue($answer1->hasCookie('login_time'));
 	}
 
 }

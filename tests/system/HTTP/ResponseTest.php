@@ -481,4 +481,20 @@ class ResponseTest extends \CIUnitTestCase
 		$this->assertEquals(307, $response->getStatusCode());
 	}
 
+	//--------------------------------------------------------------------
+	// Make sure cookies are set by RedirectResponse this way
+	// See https://github.com/codeigniter4/CodeIgniter4/issues/1393
+	public function testRedirectResponseCookies()
+	{
+		$login_time = time();
+
+		$response = new Response(new App());
+		$answer1  = $response->redirect('/login')
+				->setCookie('foo', 'bar', YEAR)
+				->setCookie('login_time', $login_time, YEAR);
+
+		$this->assertTrue($answer1->hasCookie('foo'));
+		$this->assertTrue($answer1->hasCookie('login_time'));
+	}
+
 }
