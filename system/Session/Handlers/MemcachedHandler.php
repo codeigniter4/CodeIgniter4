@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,15 +27,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Session\Exceptions\SessionException;
 
 /**
  * Session handler using Memcache for persistence
@@ -46,28 +48,28 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Memcached instance
 	 *
-	 * @var    \Memcached
+	 * @var \Memcached
 	 */
 	protected $memcached;
 
 	/**
 	 * Key prefix
 	 *
-	 * @var    string
+	 * @var string
 	 */
 	protected $keyPrefix = 'ci_session:';
 
 	/**
 	 * Lock key
 	 *
-	 * @var    string
+	 * @var string
 	 */
 	protected $lockKey;
 
 	/**
 	 * Number of seconds until the session ends.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	protected $sessionExpiration = 7200;
 
@@ -76,21 +78,21 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Constructor
 	 *
-	 * @param BaseConfig $config
-	 * @throws \Exception
+	 * @param  BaseConfig $config
+	 * @throws \CodeIgniter\Session\Exceptions\SessionException
 	 */
-	public function __construct(BaseConfig $config)
+	public function __construct(BaseConfig $config, string $ipAddress)
 	{
-		parent::__construct($config);
+		parent::__construct($config, $ipAddress);
 
 		if (empty($this->savePath))
 		{
-			throw new \Exception('Session: No Memcached save path configured.');
+			throw SessionException::forEmptySavepath();
 		}
 
 		if ($this->matchIP === true)
 		{
-			$this->keyPrefix .= $_SERVER['REMOTE_ADDR'] . ':';
+			$this->keyPrefix .= $this->ipAddress . ':';
 		}
 
 		$this->sessionExpiration = $config->sessionExpiration;
@@ -103,10 +105,10 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * Sanitizes save_path and initializes connections.
 	 *
-	 * @param    string $save_path Server path(s)
-	 * @param    string $name      Session cookie name, unused
+	 * @param string $save_path Server path(s)
+	 * @param string $name      Session cookie name, unused
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	public function open($save_path, $name)
 	{
@@ -120,7 +122,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 			$server_list[] = $server['host'] . ':' . $server['port'];
 		}
 
-		if ( ! preg_match_all('#,?([^,:]+)\:(\d{1,5})(?:\:(\d+))?#', $this->savePath, $matches, PREG_SET_ORDER)
+		if (! preg_match_all('#,?([^,:]+)\:(\d{1,5})(?:\:(\d+))?#', $this->savePath, $matches, PREG_SET_ORDER)
 		)
 		{
 			$this->memcached = null;
@@ -138,7 +140,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 				continue;
 			}
 
-			if ( ! $this->memcached->addServer($match[1], $match[2], isset($match[3]) ? $match[3] : 0))
+			if (! $this->memcached->addServer($match[1], $match[2], $match[3] ?? 0))
 			{
 				$this->logger->error('Could not add ' . $match[1] . ':' . $match[2] . ' to Memcached server pool.');
 			}
@@ -165,9 +167,9 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * Reads session data and acquires a lock
 	 *
-	 * @param    string $sessionID Session ID
+	 * @param string $sessionID Session ID
 	 *
-	 * @return    string    Serialized session data
+	 * @return string    Serialized session data
 	 */
 	public function read($sessionID)
 	{
@@ -176,7 +178,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 			// Needed by write() to detect session_regenerate_id() calls
 			$this->sessionID = $sessionID;
 
-			$session_data = (string) $this->memcached->get($this->keyPrefix . $sessionID);
+			$session_data      = (string) $this->memcached->get($this->keyPrefix . $sessionID);
 			$this->fingerprint = md5($session_data);
 
 			return $session_data;
@@ -192,27 +194,27 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * Writes (create / update) session data
 	 *
-	 * @param    string $sessionID   Session ID
-	 * @param    string $sessionData Serialized session data
+	 * @param string $sessionID   Session ID
+	 * @param string $sessionData Serialized session data
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	public function write($sessionID, $sessionData)
 	{
-		if ( ! isset($this->memcached))
+		if (! isset($this->memcached))
 		{
 			return false;
 		}
 		// Was the ID regenerated?
 		elseif ($sessionID !== $this->sessionID)
 		{
-			if ( ! $this->releaseLock() || ! $this->lockSession($sessionID))
+			if (! $this->releaseLock() || ! $this->lockSession($sessionID))
 			{
 				return false;
 			}
 
 			$this->fingerprint = md5('');
-			$this->sessionID = $sessionID;
+			$this->sessionID   = $sessionID;
 		}
 
 		if (isset($this->lockKey))
@@ -244,7 +246,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * Releases locks and closes connection.
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	public function close()
 	{
@@ -252,7 +254,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			isset($this->lockKey) && $this->memcached->delete($this->lockKey);
 
-			if ( ! $this->memcached->quit())
+			if (! $this->memcached->quit())
 			{
 				return false;
 			}
@@ -272,9 +274,9 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * Destroys the current session.
 	 *
-	 * @param    string $session_id Session ID
+	 * @param string $session_id Session ID
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	public function destroy($session_id)
 	{
@@ -295,9 +297,9 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * Deletes expired sessions
 	 *
-	 * @param    int $maxlifetime Maximum lifetime of sessions
+	 * @param integer $maxlifetime Maximum lifetime of sessions
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	public function gc($maxlifetime)
 	{
@@ -312,9 +314,9 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * Acquires an (emulated) lock.
 	 *
-	 * @param    string $sessionID Session ID
+	 * @param string $sessionID Session ID
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	protected function lockSession(string $sessionID): bool
 	{
@@ -325,7 +327,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 
 		// 30 attempts to obtain a lock, in case another request already has it
 		$lock_key = $this->keyPrefix . $sessionID . ':lock';
-		$attempt = 0;
+		$attempt  = 0;
 
 		do
 		{
@@ -335,7 +337,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 				continue;
 			}
 
-			if ( ! $this->memcached->set($lock_key, time(), 300))
+			if (! $this->memcached->set($lock_key, time(), 300))
 			{
 				$this->logger->error('Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID);
 
@@ -344,7 +346,8 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 
 			$this->lockKey = $lock_key;
 			break;
-		} while (++ $attempt < 30);
+		}
+		while (++ $attempt < 30);
 
 		if ($attempt === 30)
 		{
@@ -365,13 +368,13 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * Releases a previously acquired lock
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	protected function releaseLock(): bool
 	{
 		if (isset($this->memcached, $this->lockKey) && $this->lock)
 		{
-			if ( ! $this->memcached->delete($this->lockKey) &&
+			if (! $this->memcached->delete($this->lockKey) &&
 					$this->memcached->getResultCode() !== \Memcached::RES_NOTFOUND
 			)
 			{
@@ -381,7 +384,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 			}
 
 			$this->lockKey = null;
-			$this->lock = false;
+			$this->lock    = false;
 		}
 
 		return true;

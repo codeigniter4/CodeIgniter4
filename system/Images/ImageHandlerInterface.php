@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,23 +29,25 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
  * @filesource
  */
+
 interface ImageHandlerInterface
 {
 
 	/**
 	 * Resize the image
 	 *
-	 * @param int  $width
-	 * @param int  $height
-	 * @param bool $maintainRation  If true, will get the closest match possible while keeping aspect ratio true.
+	 * @param integer $width
+	 * @param integer $height
+	 * @param boolean $maintainRatio If true, will get the closest match possible while keeping aspect ratio true.
+	 * @param string  $masterDim
 	 */
-	public function resize(int $width, int $height, bool $maintainRatio = false);
+	public function resize(int $width, int $height, bool $maintainRatio = false, string $masterDim = 'auto');
 
 	//--------------------------------------------------------------------
 
@@ -54,14 +56,16 @@ interface ImageHandlerInterface
 	 * is not provided, that value will be set the appropriate value based on offsets and
 	 * image dimensions.
 	 *
-	 * @param int|null $width
-	 * @param int|null $height
-	 * @param int|null $x       X-axis coord to start cropping from the left of image
-	 * @param int|null $y       Y-axis coord to start cropping from the top of image
+	 * @param integer|null $width
+	 * @param integer|null $height
+	 * @param integer|null $x             X-axis coord to start cropping from the left of image
+	 * @param integer|null $y             Y-axis coord to start cropping from the top of image
+	 * @param boolean      $maintainRatio
+	 * @param string       $masterDim
 	 *
 	 * @return mixed
 	 */
-	public function crop(int $width = null, int $height = null, int $x = null, int $y = null);
+	public function crop(int $width = null, int $height = null, int $x = null, int $y = null, bool $maintainRatio = false, string $masterDim = 'auto');
 
 	//--------------------------------------------------------------------
 
@@ -77,10 +81,22 @@ interface ImageHandlerInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Flattens transparencies, default white background
+	 *
+	 * @param integer $red
+	 * @param integer $green
+	 * @param integer $blue
+	 *
+	 * @return mixed
+	 */
+	public function flatten(int $red = 255, int $green = 255, int $blue = 255);
+	//--------------------------------------------------------------------
+
+	/**
 	 * Reads the EXIF information from the image and modifies the orientation
 	 * so that displays correctly in the browser.
 	 *
-	 * @return $this
+	 * @return ImageHandlerInterface
 	 */
 	public function reorient();
 
@@ -90,11 +106,22 @@ interface ImageHandlerInterface
 	 * Retrieve the EXIF information from the image, if possible. Returns
 	 * an array of the information, or null if nothing can be found.
 	 *
-	 * @param string|null $key  If specified, will only return this piece of EXIF data.
+	 * @param string|null $key If specified, will only return this piece of EXIF data.
 	 *
 	 * @return mixed
 	 */
 	public function getEXIF(string $key = null);
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Flip an image horizontally or vertically
+	 *
+	 * @param string $dir Direction to flip, either 'vertical' or 'horizontal'
+	 *
+	 * @return mixed
+	 */
+	public function flip(string $dir = 'vertical');
 
 	//--------------------------------------------------------------------
 
@@ -112,13 +139,51 @@ interface ImageHandlerInterface
 	 *  - bottom
 	 *  - bottom-right
 	 *
-	 * @param int    $width
-	 * @param int    $height
-	 * @param string $position
+	 * @param integer $width
+	 * @param integer $height
+	 * @param string  $position
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function fit(int $width, int $height, string $position);
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Overlays a string of text over the image.
+	 *
+	 * Valid options:
+	 *
+	 *  - color         Text Color (hex number)
+	 *  - shadowColor   Color of the shadow (hex number)
+	 *  - hAlign        Horizontal alignment: left, center, right
+	 *  - vAlign        Vertical alignment: top, middle, bottom
+	 *  - hOffset
+	 *  - vOffset
+	 *  - fontPath
+	 *  - fontSize
+	 *  - shadowOffset
+	 *
+	 * @param string $text
+	 * @param array  $options
+	 *
+	 * @return $this
+	 */
+	public function text(string $text, array $options = []);
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Saves any changes that have been made to file.
+	 *
+	 * Example:
+	 *    $image->resize(100, 200, true)
+	 *          ->save($target);
+	 *
+	 * @param string  $target
+	 * @param integer $quality
+	 *
+	 * @return mixed
+	 */
+	public function save(string $target = null, int $quality = 90);
 }

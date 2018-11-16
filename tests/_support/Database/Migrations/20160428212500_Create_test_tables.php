@@ -4,12 +4,15 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 {
 	public function up()
 	{
+		// SQLite3 uses auto increment different
+		$unique_or_auto = $this->db->DBDriver === 'SQLite3' ? 'unique' : 'auto_increment';
+
 		// User Table
 		$this->forge->addField([
 			'id'      => [
-				'type'           => 'INTEGER',
-				'constraint'     => 3,
-				'auto_increment' => true,
+				'type'          => 'INTEGER',
+				'constraint'    => 3,
+				$unique_or_auto => true,
 			],
 			'name'    => [
 				'type'       => 'VARCHAR',
@@ -24,9 +27,9 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 				'constraint' => 40,
 			],
 			'deleted' => [
-				'type'      => 'TINYINT',
-			    'constraint' => 1,
-			    'default' => '0'
+				'type'       => 'TINYINT',
+				'constraint' => 1,
+				'default'    => '0',
 			],
 		]);
 		$this->forge->addKey('id', true);
@@ -35,16 +38,18 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		// Job Table
 		$this->forge->addField([
 			'id'          => [
-				'type'           => 'INTEGER',
-				'constraint'     => 3,
-				'auto_increment' => true,
+				'type'          => 'INTEGER',
+				'constraint'    => 3,
+				$unique_or_auto => true,
 			],
 			'name'        => [
 				'type'       => 'VARCHAR',
 				'constraint' => 40,
 			],
-			'description' => [
-				'type' => 'TEXT',
+			'description' => ['type' => 'TEXT'],
+			'created_at'  => [
+				'type' => 'DATETIME',
+				'null' => true,
 			],
 		]);
 		$this->forge->addKey('id', true);
@@ -53,17 +58,15 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		// Misc Table
 		$this->forge->addField([
 			'id'    => [
-				'type'           => 'INTEGER',
-				'constraint'     => 3,
-				'auto_increment' => true,
+				'type'          => 'INTEGER',
+				'constraint'    => 3,
+				$unique_or_auto => true,
 			],
 			'key'   => [
 				'type'       => 'VARCHAR',
 				'constraint' => 40,
 			],
-			'value' => [
-				'type' => 'TEXT',
-			],
+			'value' => ['type' => 'TEXT'],
 		]);
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('misc', true);
@@ -71,9 +74,9 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		// Empty Table
 		$this->forge->addField([
 			'id'   => [
-				'type'           => 'INTEGER',
-				'constraint'     => 3,
-				'auto_increment' => true,
+				'type'          => 'INTEGER',
+				'constraint'    => 3,
+				$unique_or_auto => true,
 			],
 			'name' => [
 				'type'       => 'VARCHAR',

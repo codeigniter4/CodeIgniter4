@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,16 +27,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
+use CodeIgniter\View\Exceptions\ViewException;
 use Config\Services;
-use CodeIgniter\Log\Logger;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class View
@@ -56,33 +58,44 @@ class View implements RendererInterface
 	/**
 	 * The base directory to look in for our Views.
 	 *
-	 * @var
+	 * @var string
 	 */
 	protected $viewPath;
 
 	/**
-	 * Instance of CodeIgniter\Loader for when
+	 * The render variables
+	 *
+	 * @var array
+	 */
+	protected $renderVars = [];
+
+	/**
+	 * Instance of FileLocator for when
 	 * we need to attempt to find a view
 	 * that's not in standard place.
-	 * @var
+	 *
+	 * @var \CodeIgniter\Autoloader\FileLocator
 	 */
 	protected $loader;
 
 	/**
 	 * Logger instance.
+	 *
 	 * @var Logger
 	 */
 	protected $logger;
 
 	/**
 	 * Should we store performance info?
-	 * @var bool
+	 *
+	 * @var boolean
 	 */
 	protected $debug = false;
 
 	/**
 	 * Cache stats about our performance here,
 	 * when CI_DEBUG = true
+	 *
 	 * @var array
 	 */
 	protected $performanceData = [];
@@ -95,28 +108,35 @@ class View implements RendererInterface
 	/**
 	 * Whether data should be saved between renders.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $saveData;
+
+	/**
+	 * Number of loaded views
+	 *
+	 * @var integer
+	 */
+	protected $viewsCount = 0;
 
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
 	 *
-	 * @param \Config\View  $config
-	 * @param string        $viewPath
-	 * @param type          $loader
-	 * @param bool          $debug
-	 * @param Logger        $logger
+	 * @param \Config\View    $config
+	 * @param string          $viewPath
+	 * @param mixed           $loader
+	 * @param boolean         $debug
+	 * @param LoggerInterface $logger
 	 */
-	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, Logger $logger = null)
+	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, LoggerInterface $logger = null)
 	{
-		$this->config = $config;
+		$this->config   = $config;
 		$this->viewPath = rtrim($viewPath, '/ ') . '/';
-		$this->loader = is_null($loader) ? Services::locator() : $loader;
-		$this->logger = is_null($logger) ? Services::logger() : $logger;
-		$this->debug = is_null($debug) ? CI_DEBUG : $debug;
+		$this->loader   = is_null($loader) ? Services::locator() : $loader;
+		$this->logger   = is_null($logger) ? Services::logger() : $logger;
+		$this->debug    = is_null($debug) ? CI_DEBUG : $debug;
 		$this->saveData = $config->saveData ?? null;
 	}
 
@@ -127,18 +147,18 @@ class View implements RendererInterface
 	 * data that has already been set.
 	 *
 	 * Valid $options:
-	 * 	- cache 		number of seconds to cache for
+	 *     - cache 		number of seconds to cache for
 	 *  - cache_name	Name to use for cache
 	 *
-	 * @param string $view
-	 * @param array  $options
-	 * @param bool $saveData
+	 * @param string  $view
+	 * @param array   $options
+	 * @param boolean $saveData
 	 *
 	 * @return string
 	 */
 	public function render(string $view, array $options = null, $saveData = null): string
 	{
-		$start = microtime(true);
+		$this->renderVars['start'] = microtime(true);
 
 		// Store the results here so even if
 		// multiple views are called in a view, it won't
@@ -148,52 +168,80 @@ class View implements RendererInterface
 			$this->saveData = $saveData;
 		}
 
-		$view = str_replace('.php', '', $view) . '.php';
+		$fileExt                     = pathinfo($view, PATHINFO_EXTENSION);
+		$realPath                    = empty($fileExt) ? $view . '.php' : $view; // allow Views as .html, .tpl, etc (from CI3)
+		$this->renderVars['view']    = $realPath;
+		$this->renderVars['options'] = $options;
 
 		// Was it cached?
-		if (isset($options['cache']))
+		if (isset($this->renderVars['options']['cache']))
 		{
-			$cacheName = $options['cache_name'] ?? str_replace('.php', '', $view);
+			$this->renderVars['cacheName'] = $this->renderVars['options']['cache_name'] ?? str_replace('.php', '', $this->renderVars['view']);
 
-			if ($output = cache($cacheName))
+			if ($output = cache($this->renderVars['cacheName']))
 			{
-				$this->logPerformance($start, microtime(true), $view);
+				$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 				return $output;
 			}
 		}
 
-		$file = $this->viewPath . $view;
+		$this->renderVars['file'] = $this->viewPath . $this->renderVars['view'];
 
-		if ( ! file_exists($file))
+		if (! file_exists($this->renderVars['file']))
 		{
-			$file = $this->loader->locateFile($view, 'Views');
+			$this->renderVars['file'] = $this->loader->locateFile($this->renderVars['view'], 'Views', empty($fileExt) ? 'php' : $fileExt);
 		}
 
 		// locateFile will return an empty string if the file cannot be found.
-		if (empty($file))
+		if (empty($this->renderVars['file']))
 		{
-			throw new \InvalidArgumentException('View file not found: ' . $view);
+			throw ViewException::forInvalidFile($this->renderVars['view']);
 		}
 
 		// Make our view data available to the view.
 		extract($this->data);
 
-		if ( ! $this->saveData)
+		if (! $this->saveData)
 		{
 			$this->data = [];
 		}
 
 		ob_start();
-		include($file); // PHP will be processed
+		include($this->renderVars['file']); // PHP will be processed
 		$output = ob_get_contents();
 		@ob_end_clean();
 
-		$this->logPerformance($start, microtime(true), $view);
+		$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
+
+		if (CI_DEBUG && (! isset($options['debug']) || $options['debug'] === true))
+		{
+			$after = (new \Config\Filters())->globals['after'];
+			if (in_array('toolbar', $after) || array_key_exists('toolbar', $after))
+			{
+				$toolbarCollectors = (config(\Config\App::class))->toolbarCollectors;
+				if (in_array('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors) || array_key_exists('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors))
+				{
+					// Clean up our path names to make them a little cleaner
+					foreach (['APPPATH', 'BASEPATH', 'ROOTPATH'] as $path)
+					{
+						if (strpos($this->renderVars['file'], constant($path)) === 0)
+						{
+							$this->renderVars['file'] = str_replace(constant($path), $path . '/', $this->renderVars['file']);
+							break;
+						}
+					}
+					$this->renderVars['file'] = ++$this->viewsCount . ' ' . $this->renderVars['file'];
+					$output                   = '<!-- DEBUG-VIEW START ' . $this->renderVars['file'] . ' -->' . PHP_EOL
+						. $output . PHP_EOL
+						. '<!-- DEBUG-VIEW ENDED ' . $this->renderVars['file'] . ' -->' . PHP_EOL;
+				}
+			}
+		}
 
 		// Should we cache?
-		if (isset($options['cache']))
+		if (isset($this->renderVars['options']['cache']))
 		{
-			cache()->save($cacheName, $output, (int) $options['cache']);
+			cache()->save($this->renderVars['cacheName'], $output, (int) $this->renderVars['options']['cache']);
 		}
 
 		return $output;
@@ -206,13 +254,13 @@ class View implements RendererInterface
 	 * data that has already been set.
 	 * Cache does not apply, because there is no "key".
 	 *
-	 * @param string $view	The view contents
-	 * @param array  $options  Reserved for 3rd-party uses since
-	 *                         it might be needed to pass additional info
-	 *                         to other template engines.
-	 * @param bool   $saveData If true, will save data for use with any other calls,
-	 *                         if false, will clean the data after displaying the view,
-	 * 						   if not specified, use the config setting.
+	 * @param string  $view     The view contents
+	 * @param array   $options  Reserved for 3rd-party uses since
+	 *                          it might be needed to pass additional info
+	 *                          to other template engines.
+	 * @param boolean $saveData If true, will save data for use with any other calls,
+	 *                          if false, will clean the data after displaying the view,
+	 *                             if not specified, use the config setting.
 	 *
 	 * @return string
 	 */
@@ -226,13 +274,13 @@ class View implements RendererInterface
 
 		extract($this->data);
 
-		if ( ! $saveData)
+		if (! $saveData)
 		{
 			$this->data = [];
 		}
 
 		ob_start();
-		$incoming = "?>" . $view;
+		$incoming = '?>' . $view;
 		eval($incoming);
 		$output = ob_get_contents();
 		@ob_end_clean();
@@ -247,8 +295,8 @@ class View implements RendererInterface
 	/**
 	 * Extract first bit of a long string and add ellipsis
 	 *
-	 * @param string	$string
-	 * @parm	int		$length
+	 * @param  string  $string
+	 * @param  integer $length
 	 * @return string
 	 */
 	public function excerpt(string $string, int $length = 20): string
@@ -261,7 +309,7 @@ class View implements RendererInterface
 	/**
 	 * Sets several pieces of view data at once.
 	 *
-	 * @param array $data
+	 * @param array  $data
 	 * @param string $context The context to escape it for: html, css, js, url
 	 *                        If null, no escaping will happen
 	 *
@@ -269,7 +317,7 @@ class View implements RendererInterface
 	 */
 	public function setData(array $data = [], string $context = null): RendererInterface
 	{
-		if ( ! empty($context))
+		if (! empty($context))
 		{
 			$data = \esc($data, $context);
 		}
@@ -285,7 +333,7 @@ class View implements RendererInterface
 	 * Sets a single piece of view data.
 	 *
 	 * @param string $name
-	 * @param mixed   $value
+	 * @param mixed  $value
 	 * @param string $context The context to escape it for: html, css, js, url
 	 *                        If null, no escaping will happen
 	 *
@@ -293,7 +341,7 @@ class View implements RendererInterface
 	 */
 	public function setVar(string $name, $value = null, string $context = null): RendererInterface
 	{
-		if ( ! empty($context))
+		if (! empty($context))
 		{
 			$value = \esc($value, $context);
 		}
@@ -353,13 +401,15 @@ class View implements RendererInterface
 	 */
 	protected function logPerformance(float $start, float $end, string $view)
 	{
-		if ( ! $this->debug)
+		if (! $this->debug)
+		{
 			return;
+		}
 
 		$this->performanceData[] = [
-			'start'	 => $start,
-			'end'	 => $end,
-			'view'	 => $view
+			'start' => $start,
+			'end'   => $end,
+			'view'  => $view,
 		];
 	}
 

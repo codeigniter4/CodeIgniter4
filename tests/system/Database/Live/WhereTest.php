@@ -1,17 +1,19 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Test\CIDatabaseTestCase;
+
 /**
  * @group DatabaseLive
  */
-class WhereTest extends \CIDatabaseTestCase
+class WhereTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	public function testWhereSimpleKeyValue()
 	{
-	    $row = $this->db->table('job')->where('id', 1)->get()->getRow();
+		$row = $this->db->table('job')->where('id', 1)->get()->getRow();
 
 		$this->assertEquals(1, $row->id);
 		$this->assertEquals('Developer', $row->name);
@@ -21,21 +23,21 @@ class WhereTest extends \CIDatabaseTestCase
 
 	public function testWhereCustomKeyValue()
 	{
-	    $jobs = $this->db->table('job')->where('id !=', 1)->get()->getResult();
+		$jobs = $this->db->table('job')->where('id !=', 1)->get()->getResult();
 
-		$this->assertEquals(3, count($jobs));
+		$this->assertCount(3, $jobs);
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testWhereArray()
 	{
-	    $jobs = $this->db->table('job')->where([
-		    'id >' => 2,
-	        'name !=' => 'Accountant'
-	    ])->get()->getResult();
+		$jobs = $this->db->table('job')->where([
+			'id >'    => 2,
+			'name !=' => 'Accountant',
+		])->get()->getResult();
 
-		$this->assertEquals(1, count($jobs));
+		$this->assertCount(1, $jobs);
 
 		$job = current($jobs);
 		$this->assertEquals('Musician', $job->name);
@@ -45,11 +47,11 @@ class WhereTest extends \CIDatabaseTestCase
 
 	public function testWhereCustomString()
 	{
-	    $jobs = $this->db->table('job')->where("id > 2 AND name != 'Accountant'")
-		                    ->get()
-		                    ->getResult();
+		$jobs = $this->db->table('job')->where("id > 2 AND name != 'Accountant'")
+							->get()
+							->getResult();
 
-		$this->assertEquals(1, count($jobs));
+		$this->assertCount(1, $jobs);
 
 		$job = current($jobs);
 		$this->assertEquals('Musician', $job->name);
@@ -59,13 +61,13 @@ class WhereTest extends \CIDatabaseTestCase
 
 	public function testOrWhere()
 	{
-	    $jobs = $this->db->table('job')
-		                ->where('name !=', 'Accountant')
-		                ->orWhere('id >', 3)
-		                ->get()
-		                ->getResult();
+		$jobs = $this->db->table('job')
+						->where('name !=', 'Accountant')
+						->orWhere('id >', 3)
+						->get()
+						->getResult();
 
-		$this->assertEquals(3, count($jobs));
+		$this->assertCount(3, $jobs);
 		$this->assertEquals('Developer', $jobs[0]->name);
 		$this->assertEquals('Politician', $jobs[1]->name);
 		$this->assertEquals('Musician', $jobs[2]->name);
@@ -76,12 +78,12 @@ class WhereTest extends \CIDatabaseTestCase
 	public function testOrWhereSameColumn()
 	{
 		$jobs = $this->db->table('job')
-		                ->where('name', 'Developer')
-		                ->orWhere('name', 'Politician')
-		                ->get()
-		                ->getResult();
+						->where('name', 'Developer')
+						->orWhere('name', 'Politician')
+						->get()
+						->getResult();
 
-		$this->assertEquals(2, count($jobs));
+		$this->assertCount(2, $jobs);
 		$this->assertEquals('Developer', $jobs[0]->name);
 		$this->assertEquals('Politician', $jobs[1]->name);
 	}
@@ -90,29 +92,29 @@ class WhereTest extends \CIDatabaseTestCase
 
 	public function testWhereIn()
 	{
-	    $jobs = $this->db->table('job')
+		$jobs = $this->db->table('job')
 						->whereIn('name', ['Politician', 'Accountant'])
-		                ->get()
-		                ->getResult();
+						->get()
+						->getResult();
 
-		$this->assertEquals(2, count($jobs));
+		$this->assertCount(2, $jobs);
 		$this->assertEquals('Politician', $jobs[0]->name);
 		$this->assertEquals('Accountant', $jobs[1]->name);
 	}
 
 	//--------------------------------------------------------------------
 
-    /**
-     * @group single
-     */
+	/**
+	 * @group single
+	 */
 	public function testWhereNotIn()
 	{
 		$jobs = $this->db->table('job')
-		                 ->whereNotIn('name', ['Politician', 'Accountant'])
-		                 ->get()
-		                 ->getResult();
+						 ->whereNotIn('name', ['Politician', 'Accountant'])
+						 ->get()
+						 ->getResult();
 
-		$this->assertEquals(2, count($jobs));
+		$this->assertCount(2, $jobs);
 		$this->assertEquals('Developer', $jobs[0]->name);
 		$this->assertEquals('Musician', $jobs[1]->name);
 	}

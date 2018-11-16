@@ -1,8 +1,7 @@
 <?php namespace Builder;
 
-use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Query;
-use CodeIgniter\Database\MockConnection;
+use Tests\Support\Database\MockConnection;
 
 class InsertTest extends \CIUnitTestCase
 {
@@ -12,6 +11,8 @@ class InsertTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->db = new MockConnection([]);
 	}
 
@@ -22,12 +23,12 @@ class InsertTest extends \CIUnitTestCase
 		$builder = $this->db->table('jobs');
 
 		$insertData = [
-			'id' => 1,
-		    'name' => 'Grocery Sales'
+			'id'   => 1,
+			'name' => 'Grocery Sales',
 		];
 		$builder->insert($insertData, true, true);
 
-		$expectedSQL   = "INSERT INTO \"jobs\" (\"id\", \"name\") VALUES (:id, :name)";
+		$expectedSQL   = 'INSERT INTO "jobs" ("id", "name") VALUES (:id:, :name:)';
 		$expectedBinds = $insertData;
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
@@ -40,7 +41,7 @@ class InsertTest extends \CIUnitTestCase
 	{
 		$builder = $this->db->table('jobs');
 
-		$this->expectException('CodeIgniter\DatabaseException');
+		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
 		$this->expectExceptionMessage('You must use the "set" method to update an entry.');
 
 		$builder->insert(null, true, true);
@@ -52,10 +53,18 @@ class InsertTest extends \CIUnitTestCase
 	{
 		$builder = $this->db->table('jobs');
 
-		$insertData = array(
-			['id' => 2, 'name' => 'Commedian', 'description' => 'Theres something in your teeth'],
-			['id' => 3, 'name' => 'Cab Driver', 'description' => 'Iam yellow'],
-		);
+		$insertData = [
+			[
+				'id'          => 2,
+				'name'        => 'Commedian',
+				'description' => 'Theres something in your teeth',
+			],
+			[
+				'id'          => 3,
+				'name'        => 'Cab Driver',
+				'description' => 'Iam yellow',
+			],
+		];
 
 		$this->db->shouldReturn('execute', 1)
 				 ->shouldReturn('affectedRows', 1);
@@ -64,13 +73,13 @@ class InsertTest extends \CIUnitTestCase
 
 		$query = $this->db->getLastQuery();
 
-		$this->assertTrue($query instanceof Query);
+		$this->assertInstanceOf(Query::class, $query);
 
-		$raw = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES (:description0,:id0,:name0)";
+		$raw = 'INSERT INTO "jobs" ("description", "id", "name") VALUES (:description0:,:id0:,:name0:)';
 
 		$this->assertEquals($raw, str_replace("\n", ' ', $query->getOriginalQuery() ));
 
-		$expected   = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('Iam yellow',3,'Cab Driver')";
+		$expected = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('Iam yellow',3,'Cab Driver')";
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $query->getQuery() ));
 	}
@@ -79,9 +88,9 @@ class InsertTest extends \CIUnitTestCase
 
 	public function testInsertBatchThrowsExceptionOnNoData()
 	{
-	    $builder = $this->db->table('jobs');
+		$builder = $this->db->table('jobs');
 
-		$this->expectException('CodeIgniter\DatabaseException', 'You must use the "set" method to update an entry.');
+		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException', 'You must use the "set" method to update an entry.');
 		$this->expectExceptionMessage('You must use the "set" method to update an entry.');
 		$builder->insertBatch();
 	}
@@ -92,7 +101,7 @@ class InsertTest extends \CIUnitTestCase
 	{
 		$builder = $this->db->table('jobs');
 
-		$this->expectException('CodeIgniter\DatabaseException');
+		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
 		$this->expectExceptionMessage('insertBatch() called with no data');
 		$builder->insertBatch([]);
 	}

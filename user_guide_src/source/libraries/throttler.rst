@@ -4,9 +4,10 @@ Throttler
 
 .. contents::
     :local:
+    :depth: 2
 
-The Throttler class provides a very simple way to limit an activity to be performed a certain amount of attempts
-within a set time limit. This is most often used for performing rate limiting on API's, or restricting the number
+The Throttler class provides a very simple way to limit an activity to be performed to a certain number of attempts
+within a set period of time. This is most often used for performing rate limiting on API's, or restricting the number
 of attempts a user can make against a form to help prevent brute force attacks. The class itself can be used
 for anything that you need to throttle based on actions within a set time interval.
 
@@ -19,9 +20,9 @@ algorithm. This basically treats each action that you want as a bucket. When you
 you tell it how large the bucket is, and how many tokens it can hold and the time interval. Each ``check()`` call uses
 1 of the available tokens, by default. Let's walk through an example to make this clear.
 
-Let's say we want an action to happen once every second. The first call to the Throttler would look like the following,
-with the first parameter being the bucket name, the second parameter the number of tokens the bucket holds, and
-the third being the amount of time it takes for the bucket to refill::
+Let's say we want an action to happen once every second. The first call to the Throttler would look like the following.
+The first parameter is the bucket name, the second parameter the number of tokens the bucket holds, and
+the third being the amount of time it takes the bucket to refill::
 
     $throttler = \Config\Services::throttler();
     $throttler->check($name, 60, MINUTE);
@@ -41,7 +42,7 @@ Rate Limiting
 *************
 
 The Throttler class does not do any rate limiting or request throttling on its own, but is the key to making
-one work. An example :doc:`Filter </general/filters>` is provided that implements very simple rate limiting at
+one work. An example :doc:`Filter </incoming/filters>` is provided that implements very simple rate limiting at
 one request per second per IP address. Here we will run through how it works, and how you could set it up and
 start using it in your application.
 
@@ -50,20 +51,20 @@ The Code
 
 You can find this file at **application/Filters/Throttle.php** but the relevant method is reproduced here::
 
-    public function before(RequestInterface $request)
+	public function before(RequestInterface $request)
 	{
-        $throttler = Services::throttler();
+		$throttler = Services::throttler();
 
-        // Restrict an IP address to no more
-        // than 1 request per second across the
-        // entire site.
-        if ($throttler->check($request->getIPAddress(), 60, MINUTE) === false)
-        {
-            return Services::response()->setStatusCode(429);
-        }
+		// Restrict an IP address to no more
+		// than 1 request per second across the
+		// entire site.
+		if ($throttler->check($request->getIPAddress(), 60, MINUTE) === false)
+		{
+		    return Services::response()->setStatusCode(429);
+		}
 	}
 
-When ran, this method first grabs an instance of the throttler. Next it uses the IP address as the bucket name,
+When run, this method first grabs an instance of the throttler. Next it uses the IP address as the bucket name,
 and sets things to limit them to one request per second. If the throttler rejects the check, returning false,
 then we return a Response with the status code set to 429 - Too Many Attempts, and the script execution ends
 before it ever hits the controller. This example will throttle based on a single IP address across all requests
@@ -73,14 +74,14 @@ Applying the Filter
 ===================
 
 We don't necessarily need to throttle every page on the site. For many web applications this makes the most sense
-to apply only to POST requests, though API's might want to limit to every request made by a user. In order to apply
+to apply only to POST requests, though API's might want to limit every request made by a user. In order to apply
 this to incoming requests, you need to edit **/application/Config/Filters.php** and first add an alias to the
 filter::
 
-    public $aliases = [
+	public $aliases = [
 		'csrf' 	  => \App\Filters\CSRF::class,
 		'toolbar' => \App\Filters\DebugToolbar::class,
-        'throttle' => \App\Filters\Throttle::class
+		'throttle' => \App\Filters\Throttle::class
 	];
 
 Next, we assign it to all POST requests made on the site::
@@ -113,8 +114,6 @@ Class Reference
     :returns: The number of seconds until another token should be available.
     :rtype: integer
 
-    After ``check()`` has been ran and returned FALSE, this method can be used
+    After ``check()`` has been run and returned FALSE, this method can be used
     to determine the time until a new token should be available and the action can be
-    tried again.
-
-    In this case, the minimum enforced wait time is one second.
+    tried again. In this case the minimum enforced wait time is one second.

@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use Config\Format;
 use CodeIgniter\HTTP\Response;
 
@@ -45,8 +46,8 @@ use CodeIgniter\HTTP\Response;
  * consistent HTTP responses under a variety of common
  * situations when working as an API.
  *
- * @property $request   CodeIgniter\HTTP\Request
- * @property $response  CodeIgniter\HTTP\Response
+ * @property \CodeIgniter\HTTP\IncomingRequest $request
+ * @property \CodeIgniter\HTTP\Response        $response
  *
  * @package CodeIgniter\API
  */
@@ -60,32 +61,32 @@ trait ResponseTrait
 	 * @var array
 	 */
 	protected $codes = [
-		'created'					 => 201,
-		'deleted'					 => 200,
-		'invalid_request'			 => 400,
-		'unsupported_response_type'	 => 400,
-		'invalid_scope'				 => 400,
-		'temporarily_unavailable'	 => 400,
-		'invalid_grant'				 => 400,
-		'invalid_credentials'		 => 400,
-		'invalid_refresh'			 => 400,
-		'no_data'					 => 400,
-		'invalid_data'				 => 400,
-		'access_denied'				 => 401,
-		'unauthorized'				 => 401,
-		'invalid_client'			 => 401,
-		'forbidden'					 => 403,
-		'resource_not_found'		 => 404,
-		'not_acceptable'			 => 406,
-		'resource_exists'			 => 409,
-		'conflict'					 => 409,
-		'resource_gone'				 => 410,
-		'payload_too_large'			 => 413,
-		'unsupported_media_type'	 => 415,
-		'too_many_requests'			 => 429,
-		'server_error'				 => 500,
-		'unsupported_grant_type'	 => 501,
-		'not_implemented'			 => 501,
+		'created'                   => 201,
+		'deleted'                   => 200,
+		'invalid_request'           => 400,
+		'unsupported_response_type' => 400,
+		'invalid_scope'             => 400,
+		'temporarily_unavailable'   => 400,
+		'invalid_grant'             => 400,
+		'invalid_credentials'       => 400,
+		'invalid_refresh'           => 400,
+		'no_data'                   => 400,
+		'invalid_data'              => 400,
+		'access_denied'             => 401,
+		'unauthorized'              => 401,
+		'invalid_client'            => 401,
+		'forbidden'                 => 403,
+		'resource_not_found'        => 404,
+		'not_acceptable'            => 406,
+		'resource_exists'           => 409,
+		'conflict'                  => 409,
+		'resource_gone'             => 410,
+		'payload_too_large'         => 413,
+		'unsupported_media_type'    => 415,
+		'too_many_requests'         => 429,
+		'server_error'              => 500,
+		'unsupported_grant_type'    => 501,
+		'not_implemented'           => 501,
 	];
 
 	//--------------------------------------------------------------------
@@ -94,9 +95,9 @@ trait ResponseTrait
 	 * Provides a single, simple method to return an API response, formatted
 	 * to match the requested format, with proper content-type and status code.
 	 *
-	 * @param null   $data
-	 * @param int    $status
-	 * @param string $message
+	 * @param null    $data
+	 * @param integer $status
+	 * @param string  $message
 	 *
 	 * @return mixed
 	 */
@@ -129,24 +130,24 @@ trait ResponseTrait
 	/**
 	 * Used for generic failures that no custom methods exist for.
 	 *
-	 * @param             $messages
-	 * @param int|null    $status HTTP status code
-	 * @param string|null $code   Custom, API-specific, error code
-	 * @param string      $customMessage
+	 * @param string|array $messages
+	 * @param integer|null $status        HTTP status code
+	 * @param string|null  $code          Custom, API-specific, error code
+	 * @param string       $customMessage
 	 *
 	 * @return mixed
 	 */
 	public function fail($messages, int $status = 400, string $code = null, string $customMessage = '')
 	{
-		if ( ! is_array($messages))
+		if (! is_array($messages))
 		{
-			$messages = [$messages];
+			$messages = ['error' => $messages];
 		}
 
 		$response = [
-			'status'	 => $status,
-			'error'		 => $code === null ? $status : $code,
-			'messages'	 => $messages,
+			'status'   => $status,
+			'error'    => $code === null ? $status : $code,
+			'messages' => $messages,
 		];
 
 		return $this->respond($response, $status, $customMessage);
@@ -193,11 +194,12 @@ trait ResponseTrait
 	 * with the proper information.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
 	 */
-	public function failUnauthorized(string $description, string $code = null, string $message = '')
+	public function failUnauthorized(string $description = 'Unauthorized', string $code = null, string $message = '')
 	{
 		return $this->fail($description, $this->codes['unauthorized'], $code, $message);
 	}
@@ -209,11 +211,12 @@ trait ResponseTrait
 	 * of trying again will help.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
 	 */
-	public function failForbidden(string $description, string $code = null, string $message = '')
+	public function failForbidden(string $description = 'Forbidden', string $code = null, string $message = '')
 	{
 		return $this->fail($description, $this->codes['forbidden'], $code, $message);
 	}
@@ -224,11 +227,12 @@ trait ResponseTrait
 	 * Used when a specified resource cannot be found.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
 	 */
-	public function failNotFound(string $description, string $code = null, string $message = '')
+	public function failNotFound(string $description = 'Not Found', string $code = null, string $message = '')
 	{
 		return $this->fail($description, $this->codes['resource_not_found'], $code, $message);
 	}
@@ -239,11 +243,12 @@ trait ResponseTrait
 	 * Used when the data provided by the client cannot be validated.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
 	 */
-	public function failValidationError(string $description, string $code = null, string $message = '')
+	public function failValidationError(string $description = 'Bad Request', string $code = null, string $message = '')
 	{
 		return $this->fail($description, $this->codes['invalid_data'], $code, $message);
 	}
@@ -254,11 +259,12 @@ trait ResponseTrait
 	 * Use when trying to create a new resource and it already exists.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
 	 */
-	public function failResourceExists(string $description, string $code = null, string $message = '')
+	public function failResourceExists(string $description = 'Conflict', string $code = null, string $message = '')
 	{
 		return $this->fail($description, $this->codes['resource_exists'], $code, $message);
 	}
@@ -271,11 +277,12 @@ trait ResponseTrait
 	 * where Not Found means we simply cannot find any information about it.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
 	 */
-	public function failResourceGone(string $description, string $code = null, string $message = '')
+	public function failResourceGone(string $description = 'Gone', string $code = null, string $message = '')
 	{
 		return $this->fail($description, $this->codes['resource_gone'], $code, $message);
 	}
@@ -286,11 +293,12 @@ trait ResponseTrait
 	 * Used when the user has made too many requests for the resource recently.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
 	 */
-	public function failTooManyRequests(string $description, string $code = null, string $message = '')
+	public function failTooManyRequests(string $description = 'Too Many Requests', string $code = null, string $message = '')
 	{
 		return $this->fail($description, $this->codes['too_many_requests'], $code, $message);
 	}
@@ -306,7 +314,7 @@ trait ResponseTrait
 	 *
 	 * @return Response The value of the Response's send() method.
 	 */
-	public function failServerError(string $description, string $code = null, string $message = ''): Response
+	public function failServerError(string $description = 'Internal Server Error', string $code = null, string $message = ''): Response
 	{
 		return $this->fail($description, $this->codes['server_error'], $code, $message);
 	}
@@ -337,18 +345,24 @@ trait ResponseTrait
 			return $data;
 		}
 
+		// Determine correct response type through content negotiation
+		$config = new Format();
+		$format = $this->request->negotiate('media', $config->supportedResponseFormats, false);
+
+		$this->response->setContentType($format);
+
 		// if we don't have a formatter, make one
-		if ($this->formatter == null)
+		if (! isset($this->formatter))
 		{
-			$config = new Format();
-
-			// Determine correct response type through content negotiation
-			$format = $this->request->negotiate('media', $config->supportedResponseFormats, true);
-
-			$this->response->setContentType($format);
-
 			// if no formatter, use the default
 			$this->formatter = $config->getFormatter($format);
+		}
+
+		if ($format !== 'application/json')
+		{
+			// Recursively convert objects into associative arrays
+			// Conversion not required for JSONFormatter
+			$data = json_decode(json_encode($data), true);
 		}
 
 		return $this->formatter->format($data);

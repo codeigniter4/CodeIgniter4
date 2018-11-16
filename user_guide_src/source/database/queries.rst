@@ -2,7 +2,9 @@
 Queries
 #######
 
-.. contents:: Table of Contents
+.. contents::
+    :local:
+    :depth: 2
 
 ************
 Query Basics
@@ -16,7 +18,7 @@ To submit a query, use the **query** function::
 	$db->query('YOUR QUERY HERE');
 
 The query() function returns a database result **object** when "read"
-type queries are run, which you can use to :doc:`show your
+type queries are run which you can use to :doc:`show your
 results <results>`. When "write" type queries are run it simply
 returns TRUE or FALSE depending on success or failure. When retrieving
 data you will typically assign the query to your own variable, like
@@ -51,8 +53,8 @@ fetchable results.
 	}
 
 .. note:: PostgreSQL's ``pg_exec()`` function (for example) always
-	returns a resource on success, even for write type queries.
-	So take that in mind if you're looking for a boolean value.
+	returns a resource on success even for write type queries.
+	So keep that in mind if you're looking for a boolean value.
 
 ***************************************
 Working with Database prefixes manually
@@ -64,13 +66,11 @@ the following::
 
 	$db->prefixTable('tablename'); // outputs prefix_tablename
 
-
-If for any reason you would like to change the prefix programatically
-without needing to create a new connection, you can use this method::
+If for any reason you would like to change the prefix programmatically
+without needing to create a new connection you can use this method::
 
 	$db->setPrefix('newprefix');
 	$db->prefixTable('tablename'); // outputs newprefix_tablename
-
 
 **********************
 Protecting identifiers
@@ -78,13 +78,13 @@ Protecting identifiers
 
 In many databases it is advisable to protect table and field names - for
 example with backticks in MySQL. **Query Builder queries are
-automatically protected**, however if you need to manually protect an
+automatically protected**, but if you need to manually protect an
 identifier you can use::
 
 	$db->protectIdentifiers('table_name');
 
 .. important:: Although the Query Builder will try its best to properly
-	quote any field and table names that you feed it, note that it
+	quote any field and table names that you feed it. Note that it
 	is NOT designed to work with arbitrary user input. DO NOT feed it
 	with unsanitized user data.
 
@@ -93,7 +93,6 @@ have a prefix specified in your database config file. To enable the
 prefixing set TRUE (boolean) via the second parameter::
 
 	$db->protectIdentifiers('table_name', TRUE);
-
 
 ****************
 Escaping Queries
@@ -125,14 +124,13 @@ this:
 
         $search = '20% raise';
         $sql = "SELECT id FROM table WHERE column LIKE '%" .
-            $db->escapeLikeString($search)."%' ESCAPE '!'";
+        $db->escapeLikeString($search)."%' ESCAPE '!'";
 
 .. important:: The ``escapeLikeString()`` method uses '!' (exclamation mark)
 	to escape special characters for *LIKE* conditions. Because this
 	method escapes partial strings that you would wrap in quotes
 	yourself, it cannot automatically add the ``ESCAPE '!'``
 	condition for you, and so you'll have to manually do that.
-
 
 **************
 Query Bindings
@@ -150,16 +148,15 @@ values in the array in the second parameter of the query function.
 Binding also work with arrays, which will be transformed to IN sets::
 
 	$sql = "SELECT * FROM some_table WHERE id IN ? AND status = ? AND author = ?";
-	$db->query($sql, array(array(3, 6), 'live', 'Rick'));
+	$db->query($sql, [[3, 6], 'live', 'Rick']);
 
 The resulting query will be::
 
 	SELECT * FROM some_table WHERE id IN (3,6) AND status = 'live' AND author = 'Rick'
 
 The secondary benefit of using binds is that the values are
-automatically escaped, producing safer queries. You don't have to
-remember to manually escape data; the engine does it automatically for
-you.
+automatically escaped producing safer queries.
+You don't have to remember to manually escape data — the engine does it automatically for you.
 
 Named Bindings
 ==============
@@ -168,10 +165,14 @@ Instead of using the question mark to mark the location of the bound values,
 you can name the bindings, allowing the keys of the values passed in to match
 placeholders in the query::
 
-	$sql = "SELECT * FROM some_table WHERE id = :id AND status = :status AND author = :name";
-	$db->query($sql, ['id'     => 3,
-					  'status' => 'live',
-					  'name'   => 'Rick']);
+        $sql = "SELECT * FROM some_table WHERE id = :id: AND status = :status: AND author = :name:";
+        $db->query($sql, [
+                'id'     => 3,
+                'status' => 'live',
+                'name'   => 'Rick'
+        ]);
+
+.. note:: Each name in the query MUST be surrounded by colons.
 
 ***************
 Handling Errors
@@ -179,7 +180,7 @@ Handling Errors
 
 **$db->error();**
 
-If you need to get the last error that has occured, the error() method
+If you need to get the last error that has occurred, the error() method
 will return an array containing its code and message. Here's a quick
 example::
 
@@ -187,7 +188,6 @@ example::
 	{
 		$error = $db->error(); // Has keys 'code' and 'message'
 	}
-
 
 ****************
 Prepared Queries
@@ -207,43 +207,47 @@ Preparing the Query
 This can be easily done with the ``prepare()`` method. This takes a single parameter, which is a Closure that returns
 a query object. Query objects are automatically generated by any of the "final" type queries, including **insert**,
 **update**, **delete**, **replace**, and **get**. This is handled the easiest by using the Query Builder to
-run a query. The query is not actually ran, and the values don't matter since they're never applied, instead acting
+run a query. The query is not actually run, and the values don't matter since they're never applied, acting instead
 as placeholders. This returns a PreparedQuery object::
 
     $pQuery = $db->prepare(function($db)
     {
         return $db->table('user')
-                  ->insert([
-                      'name' => 'x',
-                      'email' => 'y',
-                      'country' => 'US'
-                  ]);
+                   ->insert([
+                        'name'    => 'x',
+                        'email'   => 'y',
+                        'country' => 'US'
+                   ]);
     });
 
-If you don't want to use the Query Builder, you can create the Query object manually, using question marks for
+If you don't want to use the Query Builder you can create the Query object manually using question marks for
 value placeholders::
 
+    use CodeIgniter\Database\Query;
+
     $pQuery = $db->prepare(function($db)
     {
         $sql = "INSERT INTO user (name, email, country) VALUES (?, ?, ?)";
 
-        return new Query($db)->setQuery($sql);
+        return (new Query($db))->setQuery($sql);
     });
 
-If the database requires an array of options passed to it during the prepare statement phase, you can pass that
+If the database requires an array of options passed to it during the prepare statement phase you can pass that
 array through in the second parameter::
+
+    use CodeIgniter\Database\Query;
 
     $pQuery = $db->prepare(function($db)
     {
         $sql = "INSERT INTO user (name, email, country) VALUES (?, ?, ?)";
 
-        return new Query($db)->setQuery($sql);
+        return (new Query($db))->setQuery($sql);
     }, $options);
 
 Executing the Query
 ===================
 
-Once you have a prepared query, you can use the ``execute()`` method to actually run the query. You can pass in as
+Once you have a prepared query you can use the ``execute()`` method to actually run the query. You can pass in as
 many variables as you need in the query parameters. The number of parameters you pass must match the number of
 placeholders in the query. They must also be passed in the same order as the placeholders appear in the original
 query::
@@ -252,16 +256,16 @@ query::
     $pQuery = $db->prepare(function($db)
     {
         return $db->table('user')
-                  ->insert([
-                      'name' => 'x',
-                      'email' => 'y',
-                      'country' => 'US'
-                  ]);
+                   ->insert([
+                        'name'    => 'x',
+                        'email'   => 'y',
+                        'country' => 'US'
+                   ]);
     });
 
     // Collect the Data
-    $name = 'John Doe';
-    $email = 'j.doe@example.com';
+    $name    = 'John Doe';
+    $email   = 'j.doe@example.com';
     $country = 'US';
 
     // Run the Query
@@ -272,11 +276,11 @@ This returns a standard :doc:`result set </database/results>`.
 Other Methods
 =============
 
-In addition, to these two primary methods, the prepared query object also has the following methods:
+In addition to these two primary methods, the prepared query object also has the following methods:
 
 **close()**
 
-While PHP does a pretty good job of closing all open statements with the database, it's always a good idea to
+While PHP does a pretty good job of closing all open statements with the database it's always a good idea to
 close out the prepared statement when you're done with it::
 
     $pQuery->close();
@@ -292,7 +296,7 @@ Returns boolean true/false if the last execute() call created any errors.
 **getErrorCode()**
 **getErrorMessage()**
 
-If any errors were encountered, these methods can be used to retrieve the error code and string.
+If any errors were encountered these methods can be used to retrieve the error code and string.
 
 **************************
 Working with Query Objects
@@ -320,7 +324,7 @@ as well.
 
 **getQuery()**
 
-Returns the final query, after all processing has happened. This is the exact
+Returns the final query after all processing has happened. This is the exact
 query that was sent to the database::
 
 	$sql = $query->getQuery();
@@ -338,7 +342,7 @@ binds in it, or prefixes swapped out, etc::
 
 **hasError()**
 
-If an error was encountered during the execution of this query, this method
+If an error was encountered during the execution of this query this method
 will return true::
 
 	if ($query->hasError())

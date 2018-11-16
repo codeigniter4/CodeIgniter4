@@ -1,5 +1,7 @@
 <?php namespace Tests\Support\Models;
 
+use CodeIgniter\Entity;
+
 /**
  * Class SimpleEntity
  *
@@ -8,31 +10,20 @@
  *
  * @package Tests\Support\Models
  */
-class SimpleEntity
+class SimpleEntity extends Entity
 {
-    protected $id;
-    protected $name;
-    protected $description;
+	protected $id;
+	protected $name;
+	protected $description;
+	protected $created_at;
 
-	protected $datamap = [];
-
-    public function __get($key)
-    {
-        if (isset($this->$key))
-        {
-            return $this->$key;
-        }
-    }
-
-    //--------------------------------------------------------------------
-
-    public function __set($key, $value)
-    {
-        if (isset($this->$key))
-        {
-            $this->$key = $value;
-        }
-    }
-
-
+	protected $_options = [
+		'datamap' => [],
+		'dates'   => [
+			'created_at',
+			'updated_at',
+			'deleted_at',
+		],
+		'casts'   => [],
+	];
 }

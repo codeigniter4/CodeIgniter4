@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 class RedisHandlerTest extends \CIUnitTestCase
 {
 	private $redisHandler;
@@ -44,7 +45,9 @@ class RedisHandlerTest extends \CIUnitTestCase
 	private static function getKeyArray()
 	{
 		return [
-			self::$key1, self::$key2, self::$key3
+			self::$key1,
+			self::$key2,
+			self::$key3,
 		];
 	}
 
@@ -53,10 +56,13 @@ class RedisHandlerTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->config = new \Config\Cache();
 
-		$this->redisHandler = new RedisHandler($this->config->redis);
-		if (!$this->redisHandler->isSupported()) {
+		$this->redisHandler = new RedisHandler($this->config);
+		if (! $this->redisHandler->isSupported())
+		{
 			$this->markTestSkipped('Not support redis');
 		}
 
@@ -65,7 +71,8 @@ class RedisHandlerTest extends \CIUnitTestCase
 
 	public function tearDown()
 	{
-		foreach (self::getKeyArray() as $key) {
+		foreach (self::getKeyArray() as $key)
+		{
 			$this->redisHandler->delete($key);
 		}
 	}
@@ -77,12 +84,11 @@ class RedisHandlerTest extends \CIUnitTestCase
 
 	public function testDestruct()
 	{
-		$this->redisHandler = new RedisHandler($this->config->redis);
+		$this->redisHandler = new RedisHandler($this->config);
 		$this->redisHandler->initialize();
 
 		$this->assertInstanceOf(RedisHandler::class, $this->redisHandler);
 	}
-
 
 	public function testGet()
 	{

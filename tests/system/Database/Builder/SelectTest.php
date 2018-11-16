@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\Database\MockConnection;
+use Tests\Support\Database\MockConnection;
 
 class SelectTest extends \CIUnitTestCase
 {
@@ -11,16 +11,18 @@ class SelectTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-	    $this->db = new MockConnection([]);
+		parent::setUp();
+
+		$this->db = new MockConnection([]);
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testSimpleSelect()
 	{
-	    $builder = new BaseBuilder('users', $this->db);
+		$builder = new BaseBuilder('users', $this->db);
 
-		$expected = "SELECT * FROM \"users\"";
+		$expected = 'SELECT * FROM "users"';
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -33,7 +35,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$builder->select('name');
 
-		$expected = "SELECT \"name\" FROM \"users\"";
+		$expected = 'SELECT "name" FROM "users"';
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -46,7 +48,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$builder->select(['name', 'role']);
 
-		$expected = "SELECT \"name\", \"role\" FROM \"users\"";
+		$expected = 'SELECT "name", "role" FROM "users"';
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -59,7 +61,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$builder->select('name, role');
 
-		$expected = "SELECT \"name\", \"role\" FROM \"users\"";
+		$expected = 'SELECT "name", "role" FROM "users"';
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -72,7 +74,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$builder->select('name, role as myRole');
 
-		$expected = "SELECT \"name\", \"role\" as \"myRole\" FROM \"users\"";
+		$expected = 'SELECT "name", "role" as "myRole" FROM "users"';
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -85,7 +87,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid');
 
-		$expected = "SELECT (SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid FROM \"users\"";
+		$expected = 'SELECT (SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid FROM "users"';
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -98,7 +100,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$builder->selectMin('payments');
 
-		$expected = "SELECT MIN(\"payments\") AS \"payments\" FROM \"invoices\"";
+		$expected = 'SELECT MIN("payments") AS "payments" FROM "invoices"';
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -111,7 +113,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$builder->selectMin('payments', 'myAlias');
 
-		$expected = "SELECT MIN(\"payments\") AS \"myAlias\" FROM \"invoices\"";
+		$expected = 'SELECT MIN("payments") AS "myAlias" FROM "invoices"';
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -124,7 +126,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$builder->selectMax('payments');
 
-		$expected = "SELECT MAX(\"payments\") AS \"payments\" FROM \"invoices\"";
+		$expected = 'SELECT MAX("payments") AS "payments" FROM "invoices"';
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -137,7 +139,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$builder->selectMax('payments', 'myAlias');
 
-		$expected = "SELECT MAX(\"payments\") AS \"myAlias\" FROM \"invoices\"";
+		$expected = 'SELECT MAX("payments") AS "myAlias" FROM "invoices"';
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -150,7 +152,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$builder->selectAvg('payments');
 
-		$expected = "SELECT AVG(\"payments\") AS \"payments\" FROM \"invoices\"";
+		$expected = 'SELECT AVG("payments") AS "payments" FROM "invoices"';
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -163,7 +165,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$builder->selectAvg('payments', 'myAlias');
 
-		$expected = "SELECT AVG(\"payments\") AS \"myAlias\" FROM \"invoices\"";
+		$expected = 'SELECT AVG("payments") AS "myAlias" FROM "invoices"';
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -176,7 +178,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$builder->selectSum('payments');
 
-		$expected = "SELECT SUM(\"payments\") AS \"payments\" FROM \"invoices\"";
+		$expected = 'SELECT SUM("payments") AS "payments" FROM "invoices"';
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -189,7 +191,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$builder->selectSum('payments', 'myAlias');
 
-		$expected = "SELECT SUM(\"payments\") AS \"myAlias\" FROM \"invoices\"";
+		$expected = 'SELECT SUM("payments") AS "myAlias" FROM "invoices"';
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -200,7 +202,7 @@ class SelectTest extends \CIUnitTestCase
 	{
 		$builder = new BaseBuilder('invoices', $this->db);
 
-		$this->expectException('CodeIgniter\DatabaseException');
+		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
 		$this->expectExceptionMessage('The query you submitted is not valid.');
 
 		$builder->selectSum('');
@@ -214,7 +216,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$builder->selectMax('db.payments');
 
-		$expected = "SELECT MAX(\"db\".\"payments\") AS \"payments\" FROM \"invoices\"";
+		$expected = 'SELECT MAX("db"."payments") AS "payments" FROM "invoices"';
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}

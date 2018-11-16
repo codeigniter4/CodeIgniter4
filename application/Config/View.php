@@ -10,7 +10,7 @@ class View extends \CodeIgniter\Config\View
 	 * calls so that it is available to all views. If that is the case,
 	 * set $saveData to true.
 	 */
-	public $saveData = false;
+	public $saveData = true;
 
 	/**
 	 * Parser Filters map a filter name with any PHP callable. When the
@@ -25,10 +25,10 @@ class View extends \CodeIgniter\Config\View
 	 */
 	public $filters = [];
 
-    /**
-     * Parser Plugins provide a way to extend the functionality provided
-     * by the core Parser by creating aliases that will be replaced with
-     * any callable. Can be single or tag pair.
-     */
+	/**
+	 * Parser Plugins provide a way to extend the functionality provided
+	 * by the core Parser by creating aliases that will be replaced with
+	 * any callable. Can be single or tag pair.
+	 */
 	public $plugins = [];
 }

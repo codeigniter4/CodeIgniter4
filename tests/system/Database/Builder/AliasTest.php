@@ -1,7 +1,6 @@
 <?php namespace Builder;
 
-use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\Database\MockConnection;
+use Tests\Support\Database\MockConnection;
 
 class AliasTest extends \CIUnitTestCase
 {
@@ -11,6 +10,8 @@ class AliasTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->db = new MockConnection([]);
 	}
 
@@ -20,7 +21,7 @@ class AliasTest extends \CIUnitTestCase
 	{
 		$builder = $this->db->table('jobs j');
 
-		$expectedSQL   = 'SELECT * FROM "jobs" "j"';
+		$expectedSQL = 'SELECT * FROM "jobs" "j"';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -31,7 +32,7 @@ class AliasTest extends \CIUnitTestCase
 	{
 		$builder = $this->db->table(['jobs j', 'users u']);
 
-		$expectedSQL   = 'SELECT * FROM "jobs" "j", "users" "u"';
+		$expectedSQL = 'SELECT * FROM "jobs" "j", "users" "u"';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -42,7 +43,7 @@ class AliasTest extends \CIUnitTestCase
 	{
 		$builder = $this->db->table('jobs j, users u');
 
-		$expectedSQL   = 'SELECT * FROM "jobs" "j", "users" "u"';
+		$expectedSQL = 'SELECT * FROM "jobs" "j", "users" "u"';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}

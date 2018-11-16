@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -57,13 +57,8 @@ class DotEnv
 	 * @param string $path
 	 * @param string $file
 	 */
-	public function __construct(string $path, $file = '.env')
+	public function __construct(string $path, string $file = '.env')
 	{
-		if ( ! is_string($file))
-		{
-			$file = '.env';
-		}
-
 		$this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
 	}
 
@@ -73,18 +68,20 @@ class DotEnv
 	 * The main entry point, will load the .env file and process it
 	 * so that we end up with all settings in the PHP environment vars
 	 * (i.e. getenv(), $_ENV, and $_SERVER)
+	 *
+	 * @return boolean
 	 */
 	public function load()
 	{
 		// We don't want to enforce the presence of a .env file,
 		// they should be optional.
-		if ( ! is_file($this->path))
+		if (! is_file($this->path))
 		{
 			return false;
 		}
 
 		// Ensure file is readable
-		if ( ! is_readable($this->path))
+		if (! is_readable($this->path))
 		{
 			throw new \InvalidArgumentException("The .env file is not readable: {$this->path}");
 		}
@@ -106,6 +103,8 @@ class DotEnv
 				$this->setVariable($line);
 			}
 		}
+
+		return true; // for success
 	}
 
 	//--------------------------------------------------------------------
@@ -122,12 +121,18 @@ class DotEnv
 	{
 		list($name, $value) = $this->normaliseVariable($name, $value);
 
-		if ( ! getenv($name, true))
+		if (! getenv($name, true))
+		{
 			putenv("$name=$value");
+		}
 		if (empty($_ENV[$name]))
+		{
 			$_ENV[$name] = $value;
+		}
 		if (empty($_SERVER[$name]))
+		{
 			$_SERVER[$name] = $value;
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -149,7 +154,7 @@ class DotEnv
 			list($name, $value) = explode('=', $name, 2);
 		}
 
-		$name = trim($name);
+		$name  = trim($name);
 		$value = trim($value);
 
 		// Sanitize the name
@@ -160,7 +165,10 @@ class DotEnv
 
 		$value = $this->resolveNestedVariables($value);
 
-		return [$name, $value];
+		return [
+			$name,
+			$value,
+		];
 	}
 
 	//--------------------------------------------------------------------
@@ -178,7 +186,7 @@ class DotEnv
 	 */
 	protected function sanitizeValue(string $value): string
 	{
-		if ( ! $value)
+		if (! $value)
 		{
 			return $value;
 		}
@@ -187,7 +195,7 @@ class DotEnv
 		if (strpbrk($value[0], '"\'') !== false)
 		{
 			// value starts with a quote
-			$quote = $value[0];
+			$quote        = $value[0];
 			$regexPattern = sprintf(
 					'/^
 					%1$s          # match a quote at the start of the value
@@ -202,9 +210,9 @@ class DotEnv
 					.*$           # and discard any string after the closing quote
 					/mx', $quote
 			);
-			$value = preg_replace($regexPattern, '$1', $value);
-			$value = str_replace("\\$quote", $quote, $value);
-			$value = str_replace('\\\\', '\\', $value);
+			$value        = preg_replace($regexPattern, '$1', $value);
+			$value        = str_replace("\\$quote", $quote, $value);
+			$value        = str_replace('\\\\', '\\', $value);
 		}
 		else
 		{
@@ -244,18 +252,18 @@ class DotEnv
 			$loader = $this;
 
 			$value = preg_replace_callback(
-					'/\${([a-zA-Z0-9_]+)}/', function ($matchedPatterns) use ($loader) {
-				$nestedVariable = $loader->getVariable($matchedPatterns[1]);
+				'/\${([a-zA-Z0-9_]+)}/',
+				function ($matchedPatterns) use ($loader) {
+					$nestedVariable = $loader->getVariable($matchedPatterns[1]);
 
-				if (is_null($nestedVariable))
-				{
-					return $matchedPatterns[0];
-				}
-				else
-				{
+					if (is_null($nestedVariable))
+					{
+						return $matchedPatterns[0];
+					}
+
 					return $nestedVariable;
-				}
-			}, $value
+				},
+				$value
 			);
 		}
 

@@ -6,13 +6,16 @@ CodeIgniter provides a File class that wraps the `SplFileInfo <http://php.net/ma
 and provides some additional convenience methods. This class is the base class for :doc:`uploaded files </libraries/uploaded_files>`
 and :doc:`images </libraries/images>`.
 
-.. contents:: Page Contents
+.. contents::
     :local:
+    :depth: 2
 
 Getting a File instance
 =======================
 
-You create a new File instance by passing in the path to the file in the constructor. By default the file does not need to exist. However, you can pass an additional argument of "true" to check that the file exist and throw ``FileNotFoundException()`` when it does not.
+You create a new File instance by passing in the path to the file in the constructor. 
+By default the file does not need to exist. However, you can pass an additional argument of "true" 
+to check that the file exist and throw ``FileNotFoundException()`` if it does not.
 
 ::
 

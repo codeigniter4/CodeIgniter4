@@ -1,8 +1,16 @@
 language: php
 
 php:
-  - 7
   - 7.1
+  - 7.2
+  - 7.3
+  - nightly
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: 7.3
+    - php: nightly
 
 global:
   - CI=true
@@ -10,11 +18,13 @@ global:
 
 # Recommended by Travis support
 sudo: required
-dist: precise
+dist: trusty
+group: edge
 
 env:
   - DB=mysqli
   - DB=postgres
+  - DB=sqlite
 
 services:
   - memcached
@@ -36,4 +46,4 @@ before_script:
   - composer install --prefer-source
 
 after_success:
-  - travis_retry php tests/bin/coveralls.phar
+  - travis_retry php tests/bin/php-coveralls.phar -v

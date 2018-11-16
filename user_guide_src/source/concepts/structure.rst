@@ -8,24 +8,28 @@ can change to meet the needs of your application.
 Default Directories
 ===================
 
-A fresh install has six directories: ``/application``, ``/system``, ``/public``, 
-``/writable``, ``/tests`` and ``/docs``. 
+A fresh install has six directories: ``/application``, ``/system``, ``/public``,
+``/writable``, ``/tests`` and ``/docs``.
 Each of these directories has a very specific part to play.
 
 application
 -----------
 The ``application`` directory is where all of your application code lives. This comes with a default directory
-structure that works well for many applications. The following folders make up the basic contents::
+structure that works well for many applications. The following folders make up the basic contents:
+
+.. code-block:: none
 
 	/application
 		/Config         Stores the configuration files
 		/Controllers    Controllers determine the program flow
+		/Database       Stores the database migrations and seeds files
+		/Filters        Stores filter classes that can run before and after controller
 		/Helpers        Helpers store collections of standalone functions
 		/Language       Multiple language support reads the language strings from here
 		/Libraries      Useful classes that don't fit in another category
 		/Models         Models work with the database to represent the business entities.
+		/ThirdParty     ThirdParty libraries that can be used in application
 		/Views          Views make up the HTML that is displayed to the client.
-
 
 Because the ``application`` directory is already namespaced, you should feel free to modify the structure
 of this directory to suit your application's needs. For example, you might decide to start using the Repository
@@ -49,9 +53,9 @@ All files in this directory live under the ``CodeIgniter`` namespace.
 public
 ------
 
-The **public** folder holds the browser-acceible portion of your web application,
+The **public** folder holds the browser-accessible portion of your web application,
 preventing direct access to your source code.
-It contains the main **.htaccess** file, **index.php**, and any application 
+It contains the main **.htaccess** file, **index.php**, and any application
 assets that you add, like CSS, javascript, or
 images.
 
@@ -65,7 +69,6 @@ This includes directories for storing cache files, logs, and any uploads a user 
 directories that your application will need to write to here. This allows you to keep your other primary directories
 non-writable as an added security measure.
 
-
 tests
 -----
 This directory is setup to hold your test files. The ``_support`` directory holds various mock classes and other
@@ -74,14 +77,11 @@ production servers.
 
 docs
 ----
-This directory holds the CodeIgniter documentation. The ``user_guide`` subfolder contains a local copy of the
-User Guide, and the ``api_docs`` subfolder contains a local copy of the CodeIgniter components API reference.
+This directory holds a local copy of the CodeIgniter4
+User Guide.
 
 Modifying Directory Locations
 -----------------------------
 
-If you've relocated any of the main directories, you can let the application 
-know the new location within the main ``index.php`` file.
-
-Starting around line 50, you will find three variables that hold the location to the **application**,
-**system**, and **writable** directories. These paths are relative to **index.php**. 
+If you've relocated any of the main directories, you can change the configuration
+settings inside ``application/Config/Paths``.

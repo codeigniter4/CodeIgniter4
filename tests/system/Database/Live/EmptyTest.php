@@ -1,21 +1,23 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Test\CIDatabaseTestCase;
+
 /**
  * @group DatabaseLive
  */
-class EmptyTest extends \CIDatabaseTestCase
+class EmptyTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
-	public function testEmpty() 
+	public function testEmpty()
 	{
-	    $this->db->table('misc')->emptyTable();
+		$this->db->table('misc')->emptyTable();
 
 		$this->assertEquals(0, $this->db->table('misc')->countAll());
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	public function testTruncate()

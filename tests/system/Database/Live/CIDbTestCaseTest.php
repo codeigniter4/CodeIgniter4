@@ -1,13 +1,15 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Test\CIDatabaseTestCase;
+
 /**
  * @group DatabaseLive
  */
-class CIDbTestCaseTest extends \CIDatabaseTestCase
+class CIDbTestCaseTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	public function testHasInDatabase()
 	{
@@ -15,7 +17,7 @@ class CIDbTestCaseTest extends \CIDatabaseTestCase
 
 		$this->seeInDatabase('user', ['name' => 'Ricky', 'email' => 'sofine@example.com', 'country' => 'US']);
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	public function testDontSeeInDatabase()
@@ -32,16 +34,13 @@ class CIDbTestCaseTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-
 	public function testGrabFromDatabase()
 	{
-	    $email = $this->grabFromDatabase('user', 'email', ['name' => 'Derek Jones']);
+		$email = $this->grabFromDatabase('user', 'email', ['name' => 'Derek Jones']);
 
 		$this->assertEquals('derek@world.com', $email);
 	}
 
 	//--------------------------------------------------------------------
 
-
-	
 }

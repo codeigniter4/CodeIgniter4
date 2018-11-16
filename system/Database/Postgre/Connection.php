@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,17 +27,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
-use CodeIgniter\DatabaseException;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Connection for Postgre
@@ -64,7 +65,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Identifier escape character
 	 *
-	 * @var    string
+	 * @var string
 	 */
 	public $escapeChar = '"';
 
@@ -73,7 +74,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Connect to the database.
 	 *
-	 * @param bool $persistent
+	 * @param  boolean $persistent
 	 * @return mixed
 	 */
 	public function connect($persistent = false)
@@ -102,7 +103,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 				return false;
 			}
 
-			empty($this->schema) or $this->simpleQuery("SET search_path TO {$this->schema},public");
+			empty($this->schema) || $this->simpleQuery("SET search_path TO {$this->schema},public");
 
 			if ($this->setClientEncoding($this->charset) === false)
 			{
@@ -167,7 +168,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			return $this->dataCache['version'];
 		}
 
-		if ( ! $this->connID or ( $pgVersion = pg_version($this->connID)) === false)
+		if (! $this->connID || ( $pgVersion = pg_version($this->connID)) === false)
 		{
 			$this->initialize();
 		}
@@ -180,9 +181,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Executes the query against the database.
 	 *
-	 * @param $sql
+	 * @param string $sql
 	 *
-	 * @return mixed
+	 * @return resource
 	 */
 	public function execute($sql)
 	{
@@ -213,7 +214,12 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function escape($str)
 	{
-		if (is_string($str) OR ( is_object($str) && method_exists($str, '__toString')))
+		if (! $this->connID)
+		{
+			$this->initialize();
+		}
+
+		if (is_string($str) || ( is_object($str) && method_exists($str, '__toString')))
 		{
 			return pg_escape_literal($this->connID, $str);
 		}
@@ -230,12 +236,12 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Platform-dependant string escape
 	 *
-	 * @param	string $str
-	 * @return	string
+	 * @param  string $str
+	 * @return string
 	 */
 	protected function _escapeString(string $str): string
 	{
-		if (is_null($this->connID))
+		if (! $this->connID)
 		{
 			$this->initialize();
 		}
@@ -248,7 +254,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Generates the SQL for listing tables in a platform-dependent manner.
 	 *
-	 * @param bool $prefixLimit
+	 * @param boolean $prefixLimit
 	 *
 	 * @return string
 	 */
@@ -280,18 +286,19 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return 'SELECT "column_name"
 			FROM "information_schema"."columns"
 			WHERE LOWER("table_name") = '
-				. $this->escape(strtolower($table));
+				. $this->escape($this->DBPrefix . strtolower($table));
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns an object with field data
+	 * Returns an array of objects with field data
 	 *
-	 * @param	string	$table
-	 * @return	array
+	 * @param  string $table
+	 * @return \stdClass[]
+	 * @throws DatabaseException
 	 */
-	public function _fieldData(string $table)
+	public function _fieldData(string $table): array
 	{
 		$sql = 'SELECT "column_name", "data_type", "character_maximum_length", "numeric_precision", "column_default"
 			FROM "information_schema"."columns"
@@ -300,17 +307,17 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if (($query = $this->query($sql)) === false)
 		{
-			return false;
+			throw new DatabaseException(lang('Database.failGetFieldData'));
 		}
 		$query = $query->getResultObject();
 
 		$retval = [];
-		for ($i = 0, $c = count($query); $i < $c; $i ++ )
+		for ($i = 0, $c = count($query); $i < $c; $i ++)
 		{
-			$retval[$i] = new \stdClass();
-			$retval[$i]->name = $query[$i]->column_name;
-			$retval[$i]->type = $query[$i]->data_type;
-			$retval[$i]->default = $query[$i]->column_default;
+			$retval[$i]             = new \stdClass();
+			$retval[$i]->name       = $query[$i]->column_name;
+			$retval[$i]->type       = $query[$i]->data_type;
+			$retval[$i]->default    = $query[$i]->column_default;
 			$retval[$i]->max_length = $query[$i]->character_maximum_length > 0 ? $query[$i]->character_maximum_length : $query[$i]->numeric_precision;
 		}
 
@@ -320,12 +327,13 @@ class Connection extends BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns an object with index data
+	 * Returns an array of objects with index data
 	 *
-	 * @param	string	$table
-	 * @return	array
+	 * @param  string $table
+	 * @return \stdClass[]
+	 * @throws DatabaseException
 	 */
-	public function _indexData(string $table)
+	public function _indexData(string $table): array
 	{
 		$sql = 'SELECT "indexname", "indexdef"
 			FROM "pg_indexes"
@@ -334,21 +342,72 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if (($query = $this->query($sql)) === false)
 		{
-			return false;
+			throw new DatabaseException(lang('Database.failGetIndexData'));
 		}
 		$query = $query->getResultObject();
 
 		$retval = [];
 		foreach ($query as $row)
 		{
-			$obj = new \stdClass();
-			$obj->name = $row->indexname;
-			$_fields = explode(',', preg_replace('/^.*\((.+?)\)$/', '$1', trim($row->indexdef)));
-			$obj->fields = array_map(function($v) {
+			$obj         = new \stdClass();
+			$obj->name   = $row->indexname;
+			$_fields     = explode(',', preg_replace('/^.*\((.+?)\)$/', '$1', trim($row->indexdef)));
+			$obj->fields = array_map(function ($v) {
 				return trim($v);
 			}, $_fields);
 
-			$retval[] = $obj;
+			if (strpos($row->indexdef, 'CREATE UNIQUE INDEX pk') === 0)
+			{
+				$obj->type = 'PRIMARY';
+			}
+			else
+			{
+				$obj->type = (strpos($row->indexdef, 'CREATE UNIQUE') === 0) ? 'UNIQUE' : 'INDEX';
+			}
+
+			$retval[$obj->name] = $obj;
+		}
+
+		return $retval;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns an array of objects with Foreign key data
+	 *
+	 * @param  string $table
+	 * @return \stdClass[]
+	 * @throws DatabaseException
+	 */
+	public function _foreignKeyData(string $table): array
+	{
+		$sql = 'SELECT
+                            tc.constraint_name, tc.table_name, kcu.column_name,
+                            ccu.table_name AS foreign_table_name,
+                            ccu.column_name AS foreign_column_name
+                        FROM information_schema.table_constraints AS tc
+                        JOIN information_schema.key_column_usage AS kcu
+                            ON tc.constraint_name = kcu.constraint_name
+                        JOIN information_schema.constraint_column_usage AS ccu
+                            ON ccu.constraint_name = tc.constraint_name
+                        WHERE constraint_type = ' . $this->escape('FOREIGN KEY') . ' AND
+                            tc.table_name = ' . $this->escape($table);
+
+		if (($query = $this->query($sql)) === false)
+		{
+			throw new DatabaseException(lang('Database.failGetForeignKeyData'));
+		}
+		$query = $query->getResultObject();
+
+		$retval = [];
+		foreach ($query as $row)
+		{
+			$obj                     = new \stdClass();
+			$obj->constraint_name    = $row->constraint_name;
+			$obj->table_name         = $row->table_name;
+			$obj->foreign_table_name = $row->foreign_table_name;
+			$retval[]                = $obj;
 		}
 
 		return $retval;
@@ -363,13 +422,13 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 *  return ['code' => null, 'message' => null);
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function error()
 	{
 		return [
-			'code'		 => '',
-			'message'	 => pg_last_error($this->connID)
+			'code'    => '',
+			'message' => pg_last_error($this->connID),
 		];
 	}
 
@@ -378,15 +437,15 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Insert ID
 	 *
-	 * @return	int
+	 * @return integer
 	 */
 	public function insertID()
 	{
 		$v = pg_version($this->connID);
 		// 'server' key is only available since PostgreSQL 7.4
-		$v = isset($v['server']) ? $v['server'] : 0;
+		$v = $v['server'] ?? 0;
 
-		$table = func_num_args() > 0 ? func_get_arg(0) : null;
+		$table  = func_num_args() > 0 ? func_get_arg(0) : null;
 		$column = func_num_args() > 1 ? func_get_arg(1) : null;
 
 		if ($table === null && $v >= '8.1')
@@ -397,10 +456,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			if ($column !== null && $v >= '8.0')
 			{
-				$sql = "SELECT pg_get_serial_sequence('{$table}', '{$column}') AS seq";
+				$sql   = "SELECT pg_get_serial_sequence('{$table}', '{$column}') AS seq";
 				$query = $this->query($sql);
 				$query = $query->getRow();
-				$seq = $query->seq;
+				$seq   = $query->seq;
 			}
 			else
 			{
@@ -429,7 +488,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function buildDSN()
 	{
-		$this->DSN === '' or $this->DSN = '';
+		$this->DSN === '' || $this->DSN = '';
 
 		// If UNIX sockets are used, we shouldn't set a port
 		if (strpos($this->hostname, '/') !== false)
@@ -437,9 +496,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$this->port = '';
 		}
 
-		$this->hostname === '' or $this->DSN = "host={$this->hostname} ";
+		$this->hostname === '' || $this->DSN = "host={$this->hostname} ";
 
-		if ( ! empty($this->port) && ctype_digit($this->port))
+		if (! empty($this->port) && ctype_digit($this->port))
 		{
 			$this->DSN .= "port={$this->port} ";
 		}
@@ -451,10 +510,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 			// An empty password is valid!
 			// password must be set to null to ignore it.
 
-			$this->password === null or $this->DSN .= "password='{$this->password}' ";
+			$this->password === null || $this->DSN .= "password='{$this->password}' ";
 		}
 
-		$this->database === '' or $this->DSN .= "dbname={$this->database} ";
+		$this->database === '' || $this->DSN .= "dbname={$this->database} ";
 
 		// We don't have these options as elements in our standard configuration
 		// array, but they might be set by parse_url() if the configuration was
@@ -477,8 +536,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Set client encoding
 	 *
-	 * @param string $charset The client encoding to which the data will be converted.
-	 * @return bool
+	 * @param  string $charset The client encoding to which the data will be converted.
+	 * @return boolean
 	 */
 	protected function setClientEncoding($charset)
 	{
@@ -490,7 +549,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Begin Transaction
 	 *
-	 * @return	bool
+	 * @return boolean
 	 */
 	protected function _transBegin(): bool
 	{
@@ -502,7 +561,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Commit Transaction
 	 *
-	 * @return	bool
+	 * @return boolean
 	 */
 	protected function _transCommit(): bool
 	{
@@ -514,7 +573,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Rollback Transaction
 	 *
-	 * @return	bool
+	 * @return boolean
 	 */
 	protected function _transRollback(): bool
 	{

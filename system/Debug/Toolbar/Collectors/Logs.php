@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,15 +27,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 4.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 4.0.0
  * @filesource
  */
-use CodeIgniter\Services;
+
+use CodeIgniter\Config\Services;
 
 /**
  * Loags collector
@@ -47,7 +48,7 @@ class Logs extends BaseCollector
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $hasTimeline = false;
 
@@ -55,7 +56,7 @@ class Logs extends BaseCollector
 	 * Whether this collector needs to display
 	 * content in a tab or not.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $hasTabContent = true;
 
@@ -67,30 +68,74 @@ class Logs extends BaseCollector
 	 */
 	protected $title = 'Logs';
 
+	/**
+	 * Our collected data.
+	 *
+	 * @var array
+	 */
+	protected $data;
+
 	//--------------------------------------------------------------------
 
 	/**
-	 * Builds and returns the HTML needed to fill a tab to display
-	 * within the Debug Bar
+	 * Returns the data of this collector to be formatted in the toolbar
 	 *
-	 * @return string
+	 * @return array
 	 */
-	public function display(): string
+	public function display(): array
 	{
-		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/');
-
-		$logger = Services::logger(true);
-		$logs = $logger->logCache;
+		$logs = $this->collectLogs();
 
 		if (empty($logs) || ! is_array($logs))
 		{
-			return '<p>Nothing was logged. If you were expecting logged items, ensure that LoggerConfig file has the correct threshold set.</p>';
+			$logs = [];
 		}
 
-		return $parser->setData([
-							'logs' => $logs
-						])
-						->render('_logs.tpl');
+		return [
+			'logs' => $logs,
+		];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Does this collector actually have any data to display?
+	 */
+	public function isEmpty()
+	{
+		$this->collectLogs();
+
+		return empty($this->data);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Display the icon.
+	 *
+	 * Icon from https://icons8.com - 1em package
+	 *
+	 * @return string
+	 */
+	public function icon(): string
+	{
+		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACYSURBVEhLYxgFJIHU1FSjtLS0i0D8AYj7gEKMEBkqAaAFF4D4ERCvAFrwH4gDoFIMKSkpFkB+OTEYqgUTACXfA/GqjIwMQyD9H2hRHlQKJFcBEiMGQ7VgAqCBvUgK32dmZspCpagGGNPT0/1BLqeF4bQHQJePpiIwhmrBBEADR1MRfgB0+WgqAmOoFkwANHA0FY0CUgEDAwCQ0PUpNB3kqwAAAABJRU5ErkJggg==';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Ensures the data has been collected.
+	 */
+	protected function collectLogs()
+	{
+		if (! is_null($this->data))
+		{
+			return;
+		}
+
+		$logger     = Services::logger(true);
+		$this->data = $logger->logCache;
 	}
 
 	//--------------------------------------------------------------------

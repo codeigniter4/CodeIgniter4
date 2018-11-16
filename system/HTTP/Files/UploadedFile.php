@@ -1,5 +1,7 @@
-<?php namespace CodeIgniter\HTTP\Files;
+<?php
+namespace CodeIgniter\HTTP\Files;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 /**
  * CodeIgniter
  *
@@ -7,7 +9,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,16 +29,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 use CodeIgniter\Files\File;
-use CodeIgniter\Files\FileException;
 
 /**
  * Value object representing a single file uploaded through an
@@ -82,14 +83,14 @@ class UploadedFile extends File implements UploadedFileInterface
 	 * The error constant of the upload
 	 * (one of PHP's UPLOADERRXXX constants)
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	protected $error;
 
 	/**
 	 * Whether the file has been moved already or not.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $hasMoved = false;
 
@@ -98,20 +99,20 @@ class UploadedFile extends File implements UploadedFileInterface
 	/**
 	 * Accepts the file information as would be filled in from the $_FILES array.
 	 *
-	 * @param string $path         The temporary location of the uploaded file.
-	 * @param string $originalName The client-provided filename.
-	 * @param string $mimeType     The type of file as provided by PHP
-	 * @param int    $size         The size of the file, in bytes
-	 * @param int    $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
+	 * @param string  $path         The temporary location of the uploaded file.
+	 * @param string  $originalName The client-provided filename.
+	 * @param string  $mimeType     The type of file as provided by PHP
+	 * @param integer $size         The size of the file, in bytes
+	 * @param integer $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
 	 */
 	public function __construct(string $path, string $originalName, string $mimeType = null, int $size = null, int $error = null)
 	{
-		$this->path = $path;
-		$this->name = $originalName;
-		$this->originalName = $originalName;
+		$this->path             = $path;
+		$this->name             = $originalName;
+		$this->originalName     = $originalName;
 		$this->originalMimeType = $mimeType;
-		$this->size = $size;
-		$this->error = $error;
+		$this->size             = $size;
+		$this->error            = $error;
 
 		parent::__construct($path, false);
 	}
@@ -140,12 +141,12 @@ class UploadedFile extends File implements UploadedFileInterface
 	 * @see http://php.net/is_uploaded_file
 	 * @see http://php.net/move_uploaded_file
 	 *
-	 * @param string $targetPath Path to which to move the uploaded file.
-	 * @param string $name       the name to rename the file to.
-	 * @param bool   $overwrite  State for indicating whether to overwrite the previously generated file with the same
-	 *                           name or not.
+	 * @param string  $targetPath Path to which to move the uploaded file.
+	 * @param string  $name       the name to rename the file to.
+	 * @param boolean $overwrite  State for indicating whether to overwrite the previously generated file with the same
+	 *                            name or not.
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @throws \InvalidArgumentException if the $path specified is invalid.
 	 * @throws \RuntimeException on any error during the move operation.
@@ -153,34 +154,63 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function move(string $targetPath, string $name = null, bool $overwrite = false)
 	{
+		$targetPath = $this->setPath($targetPath); //set the target path
+
 		if ($this->hasMoved)
 		{
-			throw new FileException('The file has already been moved.');
+			throw HTTPException::forAlreadyMoved();
 		}
 
-		if ( ! $this->isValid())
+		if (! $this->isValid())
 		{
-			throw new FileException('The original file is not a valid file.');
+			throw HTTPException::forInvalidFile();
 		}
 
-		$targetPath = rtrim($targetPath, '/') . '/';
-		$name = is_null($name) ? $this->getName() : $name;
-		$destination = $overwrite ? $this->getDestination($targetPath . $name) : $targetPath . $name;
+		$targetPath  = rtrim($targetPath, '/') . '/';
+		$name        = is_null($name) ? $this->getName() : $name;
+		$destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
-		if ( ! @move_uploaded_file($this->path, $destination))
+		try
+		{
+			@move_uploaded_file($this->path, $destination);
+		}
+		catch (\Exception $e)
 		{
 			$error = error_get_last();
-			throw new \RuntimeException(sprintf('Could not move file %s to %s (%s)', basename($this->path), $targetPath, strip_tags($error['message'])));
+			throw HTTPException::forMoveFailed(basename($this->path), $targetPath, strip_tags($error['message']));
 		}
 
 		@chmod($targetPath, 0777 & ~umask());
 
 		// Success, so store our new information
-		$this->path = $targetPath;
-		$this->name = $name;
+		$this->path     = $targetPath;
+		$this->name     = basename($destination);
 		$this->hasMoved = true;
 
 		return true;
+	}
+
+	/**
+	 * create file target path if
+	 * the set path does not exist
+	 *
+	 * @param string $path
+	 *
+	 * @return string The path set or created.
+	 */
+	protected function setPath($path)
+	{
+		if (! is_dir($path))
+		{
+			mkdir($path, 0777, true);
+			//create the index.html file
+			if (! file_exists($path . 'index.html'))
+			{
+				$file = fopen($path . 'index.html', 'x+');
+				fclose($file);
+			}
+		}
+		return $path;
 	}
 
 	//--------------------------------------------------------------------
@@ -190,7 +220,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 * the move() method will not work and certain properties, like
 	 * the tempName, will no longer be available.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function hasMoved(): bool
 	{
@@ -210,8 +240,8 @@ class UploadedFile extends File implements UploadedFileInterface
 	 * Implementations SHOULD return the value stored in the "error" key of
 	 * the file in the $_FILES array.
 	 *
-	 * @see http://php.net/manual/en/features.file-upload.errors.php
-	 * @return int One of PHP's UPLOAD_ERR_XXX constants.
+	 * @see    http://php.net/manual/en/features.file-upload.errors.php
+	 * @return integer One of PHP's UPLOAD_ERR_XXX constants.
 	 */
 	public function getError(): int
 	{
@@ -229,23 +259,25 @@ class UploadedFile extends File implements UploadedFileInterface
 	 * Get error string
 	 *
 	 * @staticvar array $errors
-	 * @return type
+	 *
+	 * @return string
 	 */
 	public function getErrorString()
 	{
 		static $errors = [
-			UPLOAD_ERR_INI_SIZE		 => 'The file "%s" exceeds your upload_max_filesize ini directive.',
-			UPLOAD_ERR_FORM_SIZE	 => 'The file "%s" exceeds the upload limit defined in your form.',
-			UPLOAD_ERR_PARTIAL		 => 'The file "%s" was only partially uploaded.',
-			UPLOAD_ERR_NO_FILE		 => 'No file was uploaded.',
-			UPLOAD_ERR_CANT_WRITE	 => 'The file "%s" could not be written on disk.',
-			UPLOAD_ERR_NO_TMP_DIR	 => 'File could not be uploaded: missing temporary directory.',
-			UPLOAD_ERR_EXTENSION	 => 'File upload was stopped by a PHP extension.',
+			UPLOAD_ERR_OK         => 'The file uploaded with success.',
+			UPLOAD_ERR_INI_SIZE   => 'The file "%s" exceeds your upload_max_filesize ini directive.',
+			UPLOAD_ERR_FORM_SIZE  => 'The file "%s" exceeds the upload limit defined in your form.',
+			UPLOAD_ERR_PARTIAL    => 'The file "%s" was only partially uploaded.',
+			UPLOAD_ERR_NO_FILE    => 'No file was uploaded.',
+			UPLOAD_ERR_CANT_WRITE => 'The file "%s" could not be written on disk.',
+			UPLOAD_ERR_NO_TMP_DIR => 'File could not be uploaded: missing temporary directory.',
+			UPLOAD_ERR_EXTENSION  => 'File upload was stopped by a PHP extension.',
 		];
 
 		$error = is_null($this->error) ? UPLOAD_ERR_OK : $this->error;
 
-		return isset($errors[$error]) ? sprintf($errors[$error], $this->getName()) : sprintf('The file "%s" was not uploaded due to an unknown error.', $this->getName());
+		return sprintf($errors[$error] ?? 'The file "%s" was not uploaded due to an unknown error.', $this->getName());
 	}
 
 	//--------------------------------------------------------------------
@@ -310,11 +342,20 @@ class UploadedFile extends File implements UploadedFileInterface
 	 *
 	 * Is simply an alias for guessExtension for a safer method
 	 * than simply relying on the provided extension.
+	 * Additionaly it will return clientExtension in case if there are
+	 * other extensions withe the same mime type.
 	 */
-	public function getExtension()
+	public function getExtension(): string
 	{
 		return $this->guessExtension();
 	}
+
+	public function guessExtension(): ?string
+	{
+		return \Config\Mimes::guessExtensionFromType($this->getMimeType(), $this->getClientExtension());
+	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the original file extension, based on the file name that
@@ -334,11 +375,31 @@ class UploadedFile extends File implements UploadedFileInterface
 	 * Returns whether the file was uploaded successfully, based on whether
 	 * it was uploaded via HTTP and has no errors.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isValid(): bool
 	{
 		return is_uploaded_file($this->path) && $this->error === UPLOAD_ERR_OK;
+	}
+
+	/**
+	 * Save the uploaded file to a new location.
+	 *
+	 * By default, upload files are saved in writable/uploads directory. The YYYYMMDD folder
+	 * and random file name will be created.
+	 *
+	 * @param  string $folderName the folder name to writable/uploads directory.
+	 * @param  string $fileName   the name to rename the file to.
+	 * @return string file full path
+	 */
+	public function store($folderName = null, $fileName = null): string
+	{
+		$folderName = $folderName ?? date('Ymd');
+		$fileName   = $fileName ?? $this->getRandomName();
+
+		// Move the uploaded file to a new location.
+		return ($this->move(WRITEPATH . 'uploads/' . $folderName, $fileName)) ?
+				$folderName . DIRECTORY_SEPARATOR . $this->name : null;
 	}
 
 	//--------------------------------------------------------------------

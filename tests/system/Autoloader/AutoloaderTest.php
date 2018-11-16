@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Autoloader;
 
 use Config\Autoload;
+use Tests\Support\Autoloader\MockAutoloader;
 
 //--------------------------------------------------------------------
 
@@ -11,17 +12,19 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp()
+	public function setUp()
 	{
+		parent::setUp();
+
 		$config = new Autoload();
 
 		$config->classmap = [
-			'FirstClass'		 => '/app/dir/First.php',
-			'Name\Spaced\Class'	 => '/app/namespace/Class.php',
+			'FirstClass'        => '/app/dir/First.php',
+			'Name\Spaced\Class' => '/app/namespace/Class.php',
 		];
-		$config->psr4 = [
-			'App\Controllers'	 => '/application/Controllers',
-			'App\Libraries'		 => '/application/somewhere',
+		$config->psr4     = [
+			'App\Controllers' => '/application/Controllers',
+			'App\Libraries'   => '/application/somewhere',
 		];
 
 		$this->loader = new MockAutoloader();
@@ -46,11 +49,10 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	public function testServiceAutoLoaderFromShareInstances()
 	{
-
 		$auto_loader = \CodeIgniter\Config\Services::autoloader();
 		// $auto_loader->register();
 		// look for Home controller, as that should be in base repo
-		$actual = $auto_loader->loadClass('App\Controllers\Home');
+		$actual   = $auto_loader->loadClass('App\Controllers\Home');
 		$expected = APPPATH . 'Controllers/Home.php';
 		$this->assertSame($expected, $actual);
 	}
@@ -59,13 +61,12 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	public function testServiceAutoLoader()
 	{
-
-		$getShared = false;
+		$getShared   = false;
 		$auto_loader = \CodeIgniter\Config\Services::autoloader($getShared);
 		$auto_loader->initialize(new Autoload());
 		$auto_loader->register();
 		// look for Home controller, as that should be in base repo
-		$actual = $auto_loader->loadClass('App\Controllers\Home');
+		$actual   = $auto_loader->loadClass('App\Controllers\Home');
 		$expected = APPPATH . 'Controllers/Home.php';
 		$this->assertSame($expected, $actual);
 	}
@@ -74,11 +75,11 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	public function testExistingFile()
 	{
-		$actual = $this->loader->loadClass('App\Controllers\Classname');
+		$actual   = $this->loader->loadClass('App\Controllers\Classname');
 		$expected = '/application/Controllers/Classname.php';
 		$this->assertSame($expected, $actual);
 
-		$actual = $this->loader->loadClass('App\Libraries\Classname');
+		$actual   = $this->loader->loadClass('App\Libraries\Classname');
 		$expected = '/application/somewhere/Classname.php';
 		$this->assertSame($expected, $actual);
 	}
@@ -87,7 +88,7 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	public function testMatchesWithPreceedingSlash()
 	{
-		$actual = $this->loader->loadClass('\App\Controllers\Classname');
+		$actual   = $this->loader->loadClass('\App\Controllers\Classname');
 		$expected = '/application/Controllers/Classname.php';
 		$this->assertSame($expected, $actual);
 	}
@@ -96,7 +97,7 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	public function testMatchesWithFileExtension()
 	{
-		$actual = $this->loader->loadClass('\App\Controllers\Classname.php');
+		$actual   = $this->loader->loadClass('\App\Controllers\Classname.php');
 		$expected = '/application/Controllers/Classname.php';
 		$this->assertSame($expected, $actual);
 	}
@@ -117,9 +118,9 @@ class AutoloaderTest extends \CIUnitTestCase
 	 */
 	public function testInitializeException()
 	{
-		$config = new Autoload();
+		$config           = new Autoload();
 		$config->classmap = [];
-		$config->psr4 = [];
+		$config->psr4     = [];
 
 		$this->loader = new MockAutoloader();
 		$this->loader->initialize($config);
@@ -131,7 +132,7 @@ class AutoloaderTest extends \CIUnitTestCase
 
 		$this->loader->addNamespace('My\App', '/my/app');
 
-		$actual = $this->loader->loadClass('My\App\Class');
+		$actual   = $this->loader->loadClass('My\App\Class');
 		$expected = '/my/app/Class.php';
 
 		$this->assertSame($expected, $actual);
@@ -146,11 +147,11 @@ class AutoloaderTest extends \CIUnitTestCase
 			'/test/app/ClassTest.php',
 		]);
 
-		$actual = $this->loader->loadClass('My\App\ClassTest');
+		$actual   = $this->loader->loadClass('My\App\ClassTest');
 		$expected = '/test/app/ClassTest.php';
 		$this->assertSame($expected, $actual);
 
-		$actual = $this->loader->loadClass('My\App\Class');
+		$actual   = $this->loader->loadClass('My\App\Class');
 		$expected = '/my/app/Class.php';
 		$this->assertSame($expected, $actual);
 	}
@@ -194,7 +195,7 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	public function testSanitizationSimply()
 	{
-		$test = '${../path}!#/to/some/file.php_';
+		$test     = '${../path}!#/to/some/file.php_';
 		$expected = '/path/to/some/file.php';
 
 		$this->assertEquals($expected, $this->loader->sanitizeFilename($test));

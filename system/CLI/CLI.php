@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,14 +27,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
+use CodeIgniter\CLI\Exceptions\CLIException;
 
 /**
  * Class CLI
@@ -44,9 +46,18 @@
  *
  * Portions of this code were initially from the FuelPHP Framework,
  * version 1.7.x, and used here under the MIT license they were
- * originally made available under.
+ * originally made available under. Reference: http://fuelphp.com
  *
- * http://fuelphp.com
+ * Some of the code in this class is Windows-specific, and not
+ * possible to test using travis-ci. It has been phpunit-annotated
+ * to prevent messing up code coverage.
+ *
+ * Some of the methods require keyboard input, and are not unit-testable
+ * as a result: input() and prompt().
+ * validate() is internal, and not testable if prompt() isn't.
+ * The wait() method is mostly testable, as long as you don't give it
+ * an argument of "0".
+ * These have been flagged to ignore for code coverage purposes.
  *
  * @package CodeIgniter\HTTP
  */
@@ -56,7 +67,7 @@ class CLI
 	/**
 	 * Is the readline library on the system?
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public static $readline_support = false;
 
@@ -70,54 +81,61 @@ class CLI
 	/**
 	 * Has the class already been initialized?
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected static $initialized = false;
 
 	/**
 	 * Foreground color list
+	 *
 	 * @var array
 	 */
 	protected static $foreground_colors = [
-		'black'			 => '0;30',
-		'dark_gray'		 => '1;30',
-		'blue'			 => '0;34',
-		'dark_blue'		 => '1;34',
-		'light_blue'	 => '1;34',
-		'green'			 => '0;32',
-		'light_green'	 => '1;32',
-		'cyan'			 => '0;36',
-		'light_cyan'	 => '1;36',
-		'red'			 => '0;31',
-		'light_red'		 => '1;31',
-		'purple'		 => '0;35',
-		'light_purple'	 => '1;35',
-		'light_yellow'	 => '0;33',
-		'yellow'		 => '1;33',
-		'light_gray'	 => '0;37',
-		'white'			 => '1;37',
+		'black'        => '0;30',
+		'dark_gray'    => '1;30',
+		'blue'         => '0;34',
+		'dark_blue'    => '1;34',
+		'light_blue'   => '1;34',
+		'green'        => '0;32',
+		'light_green'  => '1;32',
+		'cyan'         => '0;36',
+		'light_cyan'   => '1;36',
+		'red'          => '0;31',
+		'light_red'    => '1;31',
+		'purple'       => '0;35',
+		'light_purple' => '1;35',
+		'light_yellow' => '0;33',
+		'yellow'       => '1;33',
+		'light_gray'   => '0;37',
+		'white'        => '1;37',
 	];
 
 	/**
 	 * Background color list
+	 *
 	 * @var array
 	 */
 	protected static $background_colors = [
-		'black'		 => '40',
-		'red'		 => '41',
-		'green'		 => '42',
-		'yellow'	 => '43',
-		'blue'		 => '44',
-		'magenta'	 => '45',
-		'cyan'		 => '46',
+		'black'      => '40',
+		'red'        => '41',
+		'green'      => '42',
+		'yellow'     => '43',
+		'blue'       => '44',
+		'magenta'    => '45',
+		'cyan'       => '46',
 		'light_gray' => '47',
 	];
 
 	/**
 	 * List of array segments.
+	 *
 	 * @var array
 	 */
 	protected static $segments = [];
+
+	/**
+	 * @var array
+	 */
 	protected static $options = [];
 
 	//--------------------------------------------------------------------
@@ -132,6 +150,10 @@ class CLI
 		// http://www.php.net/manual/en/readline.installation.php
 		static::$readline_support = extension_loaded('readline');
 
+		// clear segments & options to keep testing clean
+		static::$segments = [];
+		static::$options  = [];
+
 		static::parseCommandLine();
 
 		static::$initialized = true;
@@ -145,9 +167,10 @@ class CLI
 	 * Named options must be in the following formats:
 	 * php index.php user -v --v -name=John --name=John
 	 *
-	 * @param    string $prefix
+	 * @param  string $prefix
+	 * @return string
 	 *
-	 * @return    string
+	 * @codeCoverageIgnore
 	 */
 	public static function input(string $prefix = null): string
 	{
@@ -164,12 +187,9 @@ class CLI
 	//--------------------------------------------------------------------
 
 	/**
-	 * Asks the user for input.  This can have either 1 or 2 arguments.
+	 * Asks the user for input.
 	 *
 	 * Usage:
-	 *
-	 * // Waits for any key press
-	 * CLI::prompt();
 	 *
 	 * // Takes any input
 	 * $color = CLI::prompt('What is your favorite color?');
@@ -177,102 +197,62 @@ class CLI
 	 * // Takes any input, but offers default
 	 * $color = CLI::prompt('What is your favourite color?', 'white');
 	 *
-	 * // Will only accept the options in the array
-	 * $ready = CLI::prompt('Are you ready?', array('y','n'));
+	 * // Will validate options with the in_list rule and accept only if one of the list
+	 * $color = CLI::prompt('What is your favourite color?', array('red','blue'));
 	 *
-	 * @return    string    the user input
+	 * // Do not provide options but requires a valid email
+	 * $email = CLI::prompt('What is your email?', null, 'required|valid_email');
+	 *
+	 * @param string       $field      Output "field" question
+	 * @param string|array $options    String to a defaul value, array to a list of options (the first option will be the default value)
+	 * @param string       $validation Validation rules
+	 *
+	 * @return             string                   The user input
+	 * @codeCoverageIgnore
 	 */
-	public static function prompt(): string
+	public static function prompt($field, $options = null, $validation = null): string
 	{
-		$args = func_get_args();
+		$extra_output = '';
+		$default      = '';
 
-		$options = [];
-		$output = '';
-		$default = null;
-
-		// How many we got
-		$arg_count = count($args);
-
-		// Is the last argument a boolean? True means required
-		$required = end($args) === true;
-
-		// Reduce the argument count if required was passed, we don't care about that anymore
-		$required === true && -- $arg_count;
-
-		// This method can take a few crazy combinations of arguments, so lets work it out
-		switch ($arg_count)
+		if (is_string($options))
 		{
-			case 2:
-
-				// E.g: $ready = CLI::prompt('Are you ready?', array('y','n'));
-				if (is_array($args[1]))
-				{
-					list($output, $options) = $args;
-				}
-
-				// E.g: $color = CLI::prompt('What is your favourite color?', 'white');
-				elseif (is_string($args[1]))
-				{
-					list($output, $default) = $args;
-				}
-
-				break;
-
-			case 1:
-
-				// No question (probably been asked already) so just show options
-				// E.g: $ready = CLI::prompt(array('y','n'));
-				if (is_array($args[0]))
-				{
-					$options = $args[0];
-				}
-
-				// Question without options
-				// E.g: $ready = CLI::prompt('What did you do today?');
-				elseif (is_string($args[0]))
-				{
-					$output = $args[0];
-				}
-
-				break;
+			$extra_output = ' [' . static::color($options, 'white') . ']';
+			$default      = $options;
 		}
 
-		// If a question has been asked with the read
-		if ($output !== '')
+		if (is_array($options) && $options)
 		{
-			$extra_output = '';
+			$opts                 = $options;
+			$extra_output_default = static::color($opts[0], 'white');
 
-			if ($default !== null)
+			unset($opts[0]);
+
+			if (empty($opts))
 			{
-				$extra_output = ' [ Default: "' . $default . '" ]';
+				$extra_output = $extra_output_default;
 			}
-			elseif ($options !== [])
+			else
 			{
-				$extra_output = ' [ ' . implode(', ', $options) . ' ]';
+				$extra_output = ' [' . $extra_output_default . ', ' . implode(', ', $opts) . ']';
+				$validation  .= '|in_list[' . implode(',', $options) . ']';
+				$validation   = trim($validation, '|');
 			}
 
-			fwrite(STDOUT, $output . $extra_output . ': ');
+			$default = $options[0];
 		}
+
+		fwrite(STDOUT, $field . $extra_output . ': ');
 
 		// Read the input from keyboard.
 		$input = trim(static::input()) ?: $default;
 
-		// No input provided and we require one (default will stop this being called)
-		if (empty($input) && $required === true)
+		if (isset($validation))
 		{
-			static::write('This is required.');
-			static::newLine();
-
-			$input = forward_static_call_array([__CLASS__, 'prompt'], $args);
-		}
-
-		// If options are provided and the choice is not in the array, tell them to try again
-		if ( ! empty($options) && ! in_array($input, $options))
-		{
-			static::write('This is not a valid option. Please try again.');
-			static::newLine();
-
-			$input = forward_static_call_array([__CLASS__, 'prompt'], $args);
+			while (! static::validate($field, $input, $validation))
+			{
+				$input = static::prompt($field, $options, $validation);
+			}
 		}
 
 		return empty($input) ? '' : $input;
@@ -281,9 +261,37 @@ class CLI
 	//--------------------------------------------------------------------
 
 	/**
+	 * Validate one prompt "field" at a time
+	 *
+	 * @param string $field Prompt "field" output
+	 * @param string $value Input value
+	 * @param string $rules Validation rules
+	 *
+	 * @return             boolean
+	 * @codeCoverageIgnore
+	 */
+	protected static function validate($field, $value, $rules)
+	{
+		$validation = \Config\Services::validation(null, false);
+		$validation->setRule($field, null, $rules);
+		$validation->run([$field => $value]);
+
+		if ($validation->hasError($field))
+		{
+			static::error($validation->getError($field));
+
+			return false;
+		}
+
+		return true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Outputs a string to the cli.
 	 *
-	 * @param string $text          the text to output
+	 * @param string $text       The text to output
 	 * @param string $foreground
 	 * @param string $background
 	 */
@@ -302,9 +310,9 @@ class CLI
 	/**
 	 * Outputs an error to the CLI using STDERR instead of STDOUT
 	 *
-	 * @param    string|array $text the text to output, or array of errors
-	 * @param string $foreground
-	 * @param string $background
+	 * @param string|array $text       The text to output, or array of errors
+	 * @param string       $foreground
+	 * @param string       $background
 	 */
 	public static function error(string $text, string $foreground = 'light_red', string $background = null)
 	{
@@ -321,7 +329,7 @@ class CLI
 	/**
 	 * Beeps a certain number of times.
 	 *
-	 * @param    int $num the number of times to beep
+	 * @param integer $num The number of times to beep
 	 */
 	public static function beep(int $num = 1)
 	{
@@ -334,8 +342,8 @@ class CLI
 	 * Waits a certain number of seconds, optionally showing a wait message and
 	 * waiting for a key press.
 	 *
-	 * @param    int  $seconds   number of seconds
-	 * @param    bool $countdown show a countdown or not
+	 * @param integer $seconds   Number of seconds
+	 * @param boolean $countdown Show a countdown or not
 	 */
 	public static function wait(int $seconds, bool $countdown = false)
 	{
@@ -359,8 +367,11 @@ class CLI
 			}
 			else
 			{
+				// this chunk cannot be tested because of keyboard input
+				// @codeCoverageIgnoreStart
 				static::write(static::$wait_msg);
 				static::input();
+				// @codeCoverageIgnoreEnd
 			}
 		}
 	}
@@ -372,7 +383,7 @@ class CLI
 	 */
 	public static function isWindows()
 	{
-		return 'win' === strtolower(substr(php_uname("s"), 0, 3));
+			   return stripos(PHP_OS, 'WIN') === 0;
 	}
 
 	//--------------------------------------------------------------------
@@ -380,14 +391,14 @@ class CLI
 	/**
 	 * Enter a number of empty lines
 	 *
-	 * @param    int $num   Number of lines to output
+	 * @param integer $num Number of lines to output
 	 *
-	 * @return    void
+	 * @return void
 	 */
 	public static function newLine(int $num = 1)
 	{
 		// Do it once or more, write with empty string gives us a new line
-		for ($i = 0; $i < $num; $i ++ )
+		for ($i = 0; $i < $num; $i ++)
 		{
 			static::write('');
 		}
@@ -398,7 +409,8 @@ class CLI
 	/**
 	 * Clears the screen of output
 	 *
-	 * @return    void
+	 * @return             void
+	 * @codeCoverageIgnore
 	 */
 	public static function clearScreen()
 	{
@@ -408,7 +420,7 @@ class CLI
 						? static::newLine(40)
 
 				// Anything with a flair of Unix will handle these magic characters
-						: fwrite(STDOUT, chr(27) . "[H" . chr(27) . "[2J");
+						: fwrite(STDOUT, chr(27) . '[H' . chr(27) . '[2J');
 	}
 
 	//--------------------------------------------------------------------
@@ -417,35 +429,37 @@ class CLI
 	 * Returns the given text with the correct color codes for a foreground and
 	 * optionally a background color.
 	 *
-	 * @param    string $text       the text to color
-	 * @param    string $foreground the foreground color
-	 * @param    string $background the background color
-	 * @param    string $format     other formatting to apply. Currently only 'underline' is understood
+	 * @param string $text       The text to color
+	 * @param string $foreground The foreground color
+	 * @param string $background The background color
+	 * @param string $format     Other formatting to apply. Currently only 'underline' is understood
 	 *
-	 * @return    string    the color coded string
+	 * @return string    The color coded string
 	 */
 	public static function color(string $text, string $foreground, string $background = null, string $format = null)
 	{
 		if (static::isWindows() && ! isset($_SERVER['ANSICON']))
 		{
+			// @codeCoverageIgnoreStart
 			return $text;
+			// @codeCoverageIgnoreEnd
 		}
 
-		if ( ! array_key_exists($foreground, static::$foreground_colors))
+		if (! array_key_exists($foreground, static::$foreground_colors))
 		{
-			throw new \RuntimeException('Invalid CLI foreground color: ' . $foreground);
+			throw CLIException::forInvalidColor('foreground', $foreground);
 		}
 
 		if ($background !== null && ! array_key_exists($background, static::$background_colors))
 		{
-			throw new \RuntimeException('Invalid CLI background color: ' . $background);
+			throw CLIException::forInvalidColor('background', $background);
 		}
 
-		$string = "\033[" . static::$foreground_colors[$foreground] . "m";
+		$string = "\033[" . static::$foreground_colors[$foreground] . 'm';
 
 		if ($background !== null)
 		{
-			$string .= "\033[" . static::$background_colors[$background] . "m";
+			$string .= "\033[" . static::$background_colors[$background] . 'm';
 		}
 
 		if ($format === 'underline')
@@ -461,19 +475,48 @@ class CLI
 	//--------------------------------------------------------------------
 
 	/**
+	 * Get the number of characters in string having encoded characters
+	 * and ignores styles set by the color() function
+	 *
+	 * @param string $string
+	 *
+	 * @return integer
+	 */
+	public static function strlen(string $string): int
+	{
+		foreach (static::$foreground_colors as $color)
+		{
+			$string = strtr($string, ["\033[" . $color . 'm' => '']);
+		}
+
+		foreach (static::$background_colors as $color)
+		{
+			$string = strtr($string, ["\033[" . $color . 'm' => '']);
+		}
+
+		$string = strtr($string, ["\033[4m" => '', "\033[0m" => '']);
+
+		return mb_strlen($string);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Attempts to determine the width of the viewable CLI window.
 	 * This only works on *nix-based systems, so return a sane default
 	 * for Windows environments.
 	 *
-	 * @param int $default
+	 * @param integer $default
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public static function getWidth(int $default = 80): int
 	{
-		if (static::isWindows())
+		if (static::isWindows() || (int) shell_exec('tput cols') === 0)
 		{
+			// @codeCoverageIgnoreStart
 			return $default;
+			// @codeCoverageIgnoreEnd
 		}
 
 		return (int) shell_exec('tput cols');
@@ -486,15 +529,17 @@ class CLI
 	 * This only works on *nix-based systems, so return a sane default
 	 * for Windows environments.
 	 *
-	 * @param int $default
+	 * @param integer $default
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public static function getHeight(int $default = 32): int
 	{
 		if (static::isWindows())
 		{
+			// @codeCoverageIgnoreStart
 			return $default;
+			// @codeCoverageIgnoreEnd
 		}
 
 		return (int) shell_exec('tput lines');
@@ -506,8 +551,8 @@ class CLI
 	 * Displays a progress bar on the CLI. You must call it repeatedly
 	 * to update it. Set $thisStep = false to erase the progress bar.
 	 *
-	 * @param int $thisStep
-	 * @param int $totalSteps
+	 * @param integer $thisStep
+	 * @param integer $totalSteps
 	 */
 	public static function showProgress($thisStep = 1, int $totalSteps = 10)
 	{
@@ -523,16 +568,16 @@ class CLI
 		if ($thisStep !== false)
 		{
 			// Don't allow div by zero or negative numbers....
-			$thisStep = abs($thisStep);
+			$thisStep   = abs($thisStep);
 			$totalSteps = $totalSteps < 1 ? 1 : $totalSteps;
 
 			$percent = intval(($thisStep / $totalSteps) * 100);
-			$step = (int) round($percent / 10);
+			$step    = (int) round($percent / 10);
 
 			// Write the progress bar
 			fwrite(STDOUT, "[\033[32m" . str_repeat('#', $step) . str_repeat('.', 10 - $step) . "\033[0m]");
 			// Textual representation...
-			fwrite(STDOUT, sprintf(" %3d%% Complete", $percent) . PHP_EOL);
+			fwrite(STDOUT, sprintf(' %3d%% Complete', $percent) . PHP_EOL);
 		}
 		else
 		{
@@ -551,9 +596,9 @@ class CLI
 	 * will padded with that many spaces to the left. Useful when printing
 	 * short descriptions that need to start on an existing line.
 	 *
-	 * @param string $string
-	 * @param int  $max
-	 * @param int  $pad_left
+	 * @param string  $string
+	 * @param integer $max
+	 * @param integer $pad_left
 	 *
 	 * @return string
 	 */
@@ -564,7 +609,7 @@ class CLI
 			return '';
 		}
 
-		if ($max == 0)
+		if ($max === 0)
 		{
 			$max = CLI::getWidth();
 		}
@@ -584,10 +629,10 @@ class CLI
 
 			$first = true;
 
-			array_walk($lines, function (&$line, $index) use ($max, $pad_left, &$first) {
-				if ( ! $first)
+			array_walk($lines, function (&$line, $index) use ($pad_left, &$first) {
+				if (! $first)
 				{
-					$line = str_repeat(" ", $pad_left) . $line;
+					$line = str_repeat(' ', $pad_left) . $line;
 				}
 				else
 				{
@@ -618,11 +663,12 @@ class CLI
 	{
 		$optionsFound = false;
 
-		for ($i = 1; $i < $_SERVER['argc']; $i ++ )
+		// start picking segments off from #1, ignoring the invoking program
+		for ($i = 1; $i < $_SERVER['argc']; $i ++)
 		{
 			// If there's no '-' at the beginning of the argument
 			// then add it to our segments.
-			if ( ! $optionsFound && mb_strpos($_SERVER['argv'][$i], '-') === false)
+			if (! $optionsFound && mb_strpos($_SERVER['argv'][$i], '-') === false)
 			{
 				static::$segments[] = $_SERVER['argv'][$i];
 				continue;
@@ -633,16 +679,11 @@ class CLI
 			// value belonging to this option.
 			$optionsFound = true;
 
-			if (mb_substr($_SERVER['argv'][$i], 0, 1) != '-')
-			{
-				continue;
-			}
-
-			$arg = str_replace('-', '', $_SERVER['argv'][$i]);
+			$arg   = str_replace('-', '', $_SERVER['argv'][$i]);
 			$value = null;
 
-			// if the next item doesn't have a dash it's a value.
-			if (isset($_SERVER['argv'][$i + 1]) && mb_substr($_SERVER['argv'][$i + 1], 0, 1) != '-')
+			// if there is a following segment, and it doesn't start with a dash, it's a value.
+			if (isset($_SERVER['argv'][$i + 1]) && mb_strpos($_SERVER['argv'][$i + 1], '-') !== 0)
 			{
 				$value = $_SERVER['argv'][$i + 1];
 				$i ++;
@@ -679,15 +720,15 @@ class CLI
 	 * valid segments in the command:
 	 *
 	 *  // segment(3) is 'three', not '-f' or 'anOption'
-	 *  > ci.php one two -f anOption three
+	 *  > php spark one two -f anOption three
 	 *
-	 * @param int $index
+	 * @param integer $index
 	 *
 	 * @return mixed|null
 	 */
 	public static function getSegment(int $index)
 	{
-		if ( ! isset(static::$segments[$index - 1]))
+		if (! isset(static::$segments[$index - 1]))
 		{
 			return null;
 		}
@@ -698,16 +739,28 @@ class CLI
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the raw array of segments found.
+	 *
+	 * @return array
+	 */
+	public static function getSegments()
+	{
+		return static::$segments;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Gets a single command-line option. Returns TRUE if the option
 	 * exists, but doesn't have a value, and is simply acting as a flag.
 	 *
 	 * @param string $name
 	 *
-	 * @return bool|mixed|null
+	 * @return boolean|mixed|null
 	 */
 	public static function getOption(string $name)
 	{
-		if ( ! array_key_exists($name, static::$options))
+		if (! array_key_exists($name, static::$options))
 		{
 			return null;
 		}
@@ -734,14 +787,14 @@ class CLI
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns the options a string, suitable for passing along on
+	 * Returns the options as a string, suitable for passing along on
 	 * the CLI to other commands.
 	 *
 	 * @return string
 	 */
 	public static function getOptionString(): string
 	{
-		if ( ! count(static::$options))
+		if (empty(static::$options))
 		{
 			return '';
 		}
@@ -764,7 +817,113 @@ class CLI
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a well formated table
+	 *
+	 * @param array $tbody List of rows
+	 * @param array $thead List of columns
+	 *
+	 * @return string
+	 */
+	public static function table(array $tbody, array $thead = [])
+	{
+		// All the rows in the table will be here until the end
+		$table_rows = [];
+
+		// We need only indexes and not keys
+		if (! empty($thead))
+		{
+			$table_rows[] = array_values($thead);
+		}
+
+		foreach ($tbody as $tr)
+		{
+			$table_rows[] = array_values($tr);
+		}
+
+		// Yes, it really is necessary to know this count
+		$total_rows = count($table_rows);
+
+		// Store all columns lengths
+		// $all_cols_lengths[row][column] = length
+		$all_cols_lengths = [];
+
+		// Store maximum lengths by column
+		// $max_cols_lengths[column] = length
+		$max_cols_lengths = [];
+
+		// Read row by row and define the longest columns
+		for ($row = 0; $row < $total_rows; $row ++)
+		{
+			$column = 0; // Current column index
+			foreach ($table_rows[$row] as $col)
+			{
+				// Sets the size of this column in the current row
+				$all_cols_lengths[$row][$column] = static::strlen($col);
+
+				// If the current column does not have a value among the larger ones
+				// or the value of this is greater than the existing one
+				// then, now, this assumes the maximum length
+				if (! isset($max_cols_lengths[$column]) || $all_cols_lengths[$row][$column] > $max_cols_lengths[$column])
+				{
+					$max_cols_lengths[$column] = $all_cols_lengths[$row][$column];
+				}
+
+				// We can go check the size of the next column...
+				$column ++;
+			}
+		}
+
+		// Read row by row and add spaces at the end of the columns
+		// to match the exact column length
+		for ($row = 0; $row < $total_rows; $row ++)
+		{
+			$column = 0;
+			foreach ($table_rows[$row] as $col)
+			{
+				$diff = $max_cols_lengths[$column] - static::strlen($col);
+				if ($diff)
+				{
+					$table_rows[$row][$column] = $table_rows[$row][$column] . str_repeat(' ', $diff);
+				}
+				$column ++;
+			}
+		}
+
+		$table = '';
+
+		// Joins columns and append the well formatted rows to the table
+		for ($row = 0; $row < $total_rows; $row ++)
+		{
+			// Set the table border-top
+			if ($row === 0)
+			{
+				$cols = '+';
+				foreach ($table_rows[$row] as $col)
+				{
+					$cols .= str_repeat('-', static::strlen($col) + 2) . '+';
+				}
+				$table .= $cols . PHP_EOL;
+			}
+
+			// Set the columns borders
+			$table .= '| ' . implode(' | ', $table_rows[$row]) . ' |' . PHP_EOL;
+
+			// Set the thead and table borders-bottom
+			if ($row === 0 && ! empty($thead) || $row + 1 === $total_rows)
+			{
+				$table .= $cols . PHP_EOL;
+			}
+		}
+
+		fwrite(STDOUT, $table);
+	}
+
+	//--------------------------------------------------------------------
 }
 
-// Ensure the class is initialized.
+// Ensure the class is initialized. Done outside of code coverage
+// @codeCoverageIgnoreStart
 CLI::init();
+// @codeCoverageIgnoreEnd

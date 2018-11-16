@@ -184,7 +184,7 @@ class App extends BaseConfig
 	public $sessionDriver            = 'CodeIgniter\Session\Handlers\FileHandler';
 	public $sessionCookieName        = 'ci_session';
 	public $sessionExpiration        = 7200;
-	public $sessionSavePath          = null;
+	public $sessionSavePath          = WRITEPATH . 'session';
 	public $sessionMatchIP           = false;
 	public $sessionTimeToUpdate      = 300;
 	public $sessionRegenerateDestroy = false;
@@ -204,10 +204,10 @@ class App extends BaseConfig
 	|       'cookie_httponly') will also affect sessions.
 	|
 	*/
-	public $cookiePrefix = '';
-	public $cookieDomain = '';
-	public $cookiePath = '/';
-	public $cookieSecure = false;
+	public $cookiePrefix   = '';
+	public $cookieDomain   = '';
+	public $cookiePath     = '/';
+	public $cookieSecure   = false;
 	public $cookieHTTPOnly = false;
 
 	/*
@@ -215,7 +215,7 @@ class App extends BaseConfig
 	| Reverse Proxy IPs
 	|--------------------------------------------------------------------------
 	|
-	| If your getServer is behind a reverse proxy, you must whitelist the proxy
+	| If your server is behind a reverse proxy, you must whitelist the proxy
 	| IP addresses from which CodeIgniter should trust headers such as
 	| HTTP_X_FORWARDED_FOR and HTTP_CLIENT_IP in order to properly identify
 	| the visitor's IP address.
@@ -240,11 +240,13 @@ class App extends BaseConfig
 	| CSRFCookieName  = The cookie name
 	| CSRFExpire      = The number in seconds the token should expire.
 	| CSRFRegenerate  = Regenerate token on every submission
+	| CSRFRedirect    = Redirect to previous page with error on failure
 	*/
-	public $CSRFTokenName   = 'csrf_test_name';
-	public $CSRFCookieName  = 'csrf_cookie_name';
-	public $CSRFExpire      = 7200;
-	public $CSRFRegenerate  = true;
+	public $CSRFTokenName  = 'csrf_test_name';
+	public $CSRFCookieName = 'csrf_cookie_name';
+	public $CSRFExpire     = 7200;
+	public $CSRFRegenerate = true;
+	public $CSRFRedirect   = true;
 
 	/*
 	|--------------------------------------------------------------------------
@@ -270,27 +272,21 @@ class App extends BaseConfig
 	| and state of your application during that page display. By default it will
 	| NOT be displayed under production environments, and will only display if
 	| CI_DEBUG is true, since if it's not, there's not much to display anyway.
+	|
+	| toolbarMaxHistory = Number of history files, 0 for none or -1 for unlimited
+	|
 	*/
 	public $toolbarCollectors = [
 		'CodeIgniter\Debug\Toolbar\Collectors\Timers',
 		'CodeIgniter\Debug\Toolbar\Collectors\Database',
 		'CodeIgniter\Debug\Toolbar\Collectors\Logs',
 		'CodeIgniter\Debug\Toolbar\Collectors\Views',
-//		'CodeIgniter\Debug\Toolbar\Collectors\Cache',
+		// 'CodeIgniter\Debug\Toolbar\Collectors\Cache',
 		'CodeIgniter\Debug\Toolbar\Collectors\Files',
 		'CodeIgniter\Debug\Toolbar\Collectors\Routes',
+		'CodeIgniter\Debug\Toolbar\Collectors\Events',
 	];
-
-	/*
-	|--------------------------------------------------------------------------
-	| Error Views Path
-	|--------------------------------------------------------------------------
-	| This is the path to the directory that contains the 'cli' and 'html'
-	| directories that hold the views used to generate errors.
-	|
-	| Default: APPPATH.'Views/errors'
-	*/
-	public $errorViewPath = APPPATH.'Views/errors';
+	public $toolbarMaxHistory = 20;
 
 	/*
 	|--------------------------------------------------------------------------
@@ -302,11 +298,9 @@ class App extends BaseConfig
 	| and can be of any length, though the more random the characters
 	| the better.
 	|
-	| If you use the Model class' hashedID methods, this must be filled out.
 	*/
 	public $salt = '';
 
 	//--------------------------------------------------------------------
-
 
 }

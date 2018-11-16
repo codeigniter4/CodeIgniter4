@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Events;
 
+use Config\Services;
+
 /**
  * CodeIgniter
  *
@@ -7,7 +9,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,12 +29,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 define('EVENT_PRIORITY_LOW', 200);
@@ -53,42 +55,72 @@ class Events
 	protected static $listeners = [];
 
 	/**
-	 * Flag to let us know if we've read from the Config file
+	 * Flag to let us know if we've read from the Config file(s)
 	 * and have all of the defined events.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
-	protected static $haveReadFromFile = false;
+	protected static $initialized = false;
 
 	/**
-	 * The path to the file containing the events to load in.
+	 * If true, events will not actually be fired.
+	 * Useful during testing.
 	 *
-	 * @var string
+	 * @var boolean
 	 */
-	protected static $eventsFile;
+	protected static $simulate = false;
+
+	/**
+	 * Stores information about the events
+	 * for display in the debug toolbar.
+	 *
+	 * @var array
+	 */
+	protected static $performanceLog = [];
+
+	/**
+	 * A list of found files.
+	 *
+	 * @var array
+	 */
+	protected static $files = [];
 
 	//--------------------------------------------------------------------
 
 	/**
 	 * Ensures that we have a events file ready.
-	 *
-	 * @param string|null $file
 	 */
-	public static function initialize(string $file = null)
+	public static function initialize()
 	{
 		// Don't overwrite anything....
-		if ( ! empty(self::$eventsFile))
+		if (static::$initialized)
 		{
 			return;
 		}
 
-		// Default value
-		if (empty($file))
+		$config = config('Modules');
+
+		$files = [APPPATH . 'Config/Events.php'];
+
+		if ($config->shouldDiscover('events'))
 		{
-			$file = APPPATH . 'Config/Events.php';
+			$locator = Services::locator();
+			$files   = $locator->search('Config/Events.php');
 		}
 
-		self::$eventsFile = $file;
+		static::$files = $files;
+
+		foreach (static::$files as $file)
+		{
+			if (! file_exists($file))
+			{
+				continue;
+			}
+
+			include $file;
+		}
+
+		static::$initialized = true;
 	}
 
 	//--------------------------------------------------------------------
@@ -102,15 +134,15 @@ class Events
 	 *  Events::on('create', [$myInstance, 'myMethod']);  // Method on an existing instance
 	 *  Events::on('create', function() {});              // Closure
 	 *
-	 * @param          $event_name
-	 * @param callable $callback
-	 * @param int      $priority
+	 * @param $event_name
+	 * @param callable   $callback
+	 * @param integer    $priority
 	 */
 	public static function on($event_name, callable $callback, $priority = EVENT_PRIORITY_NORMAL)
 	{
-		if ( ! isset(self::$listeners[$event_name]))
+		if (! isset(static::$listeners[$event_name]))
 		{
-			self::$listeners[$event_name] = [
+			static::$listeners[$event_name] = [
 				true, // If there's only 1 item, it's sorted.
 				[$priority],
 				[$callback],
@@ -118,9 +150,9 @@ class Events
 		}
 		else
 		{
-			self::$listeners[$event_name][0] = false; // Not sorted
-			self::$listeners[$event_name][1][] = $priority;
-			self::$listeners[$event_name][2][] = $callback;
+			static::$listeners[$event_name][0]   = false; // Not sorted
+			static::$listeners[$event_name][1][] = $priority;
+			static::$listeners[$event_name][2][] = $callback;
 		}
 	}
 
@@ -132,30 +164,37 @@ class Events
 	 *  a) All subscribers have finished or
 	 *  b) a method returns false, at which point execution of subscribers stops.
 	 *
-	 * @param $event_name
+	 * @param $eventName
 	 * @param $arguments
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
-	public static function trigger($event_name, ...$arguments): bool
+	public static function trigger($eventName, ...$arguments): bool
 	{
 		// Read in our Config/events file so that we have them all!
-		if ( ! self::$haveReadFromFile)
+		if (! static::$initialized)
 		{
-			self::initialize();
-
-			if (is_file(self::$eventsFile))
-			{
-				include self::$eventsFile;
-			}
-			self::$haveReadFromFile = true;
+			static::initialize();
 		}
 
-		$listeners = self::listeners($event_name);
+		$listeners = static::listeners($eventName);
 
 		foreach ($listeners as $listener)
 		{
-			$result = $listener(...$arguments);
+			$start = microtime(true);
+
+			$result = static::$simulate === false
+				? $listener(...$arguments)
+				: true;
+
+			if (CI_DEBUG)
+			{
+				static::$performanceLog[] = [
+					'start' => $start,
+					'end'   => microtime(true),
+					'event' => strtolower($eventName),
+				];
+			}
 
 			if ($result === false)
 			{
@@ -181,22 +220,22 @@ class Events
 	 */
 	public static function listeners($event_name): array
 	{
-		if ( ! isset(self::$listeners[$event_name]))
+		if (! isset(static::$listeners[$event_name]))
 		{
 			return [];
 		}
 
 		// The list is not sorted
-		if ( ! self::$listeners[$event_name][0])
+		if (! static::$listeners[$event_name][0])
 		{
 			// Sort it!
-			array_multisort(self::$listeners[$event_name][1], SORT_NUMERIC, self::$listeners[$event_name][2]);
+			array_multisort(static::$listeners[$event_name][1], SORT_NUMERIC, static::$listeners[$event_name][2]);
 
 			// Mark it as sorted already!
-			self::$listeners[$event_name][0] = true;
+			static::$listeners[$event_name][0] = true;
 		}
 
-		return self::$listeners[$event_name][2];
+		return static::$listeners[$event_name][2];
 	}
 
 	//--------------------------------------------------------------------
@@ -207,24 +246,24 @@ class Events
 	 * If the listener couldn't be found, returns FALSE, else TRUE if
 	 * it was removed.
 	 *
-	 * @param          $event_name
-	 * @param callable $listener
+	 * @param $event_name
+	 * @param callable   $listener
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function removeListener($event_name, callable $listener): bool
 	{
-		if ( ! isset(self::$listeners[$event_name]))
+		if (! isset(static::$listeners[$event_name]))
 		{
 			return false;
 		}
 
-		foreach (self::$listeners[$event_name][2] as $index => $check)
+		foreach (static::$listeners[$event_name][2] as $index => $check)
 		{
 			if ($check === $listener)
 			{
-				unset(self::$listeners[$event_name][1][$index]);
-				unset(self::$listeners[$event_name][2][$index]);
+				unset(static::$listeners[$event_name][1][$index]);
+				unset(static::$listeners[$event_name][2][$index]);
 
 				return true;
 			}
@@ -245,13 +284,13 @@ class Events
 	 */
 	public static function removeAllListeners($event_name = null)
 	{
-		if ( ! is_null($event_name))
+		if (! is_null($event_name))
 		{
-			unset(self::$listeners[$event_name]);
+			unset(static::$listeners[$event_name]);
 		}
 		else
 		{
-			self::$listeners = [];
+			static::$listeners = [];
 		}
 	}
 
@@ -260,12 +299,51 @@ class Events
 	/**
 	 * Sets the path to the file that routes are read from.
 	 *
-	 * @param string $path
+	 * @param array $files
 	 */
-	public function setFile(string $path)
+	public static function setFiles(array $files)
 	{
-		self::$eventsFile = $path;
+		static::$files = $files;
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the files that were found/loaded during this request.
+	 *
+	 * @return mixed
+	 */
+	public function getFiles()
+	{
+		return static::$files;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Turns simulation on or off. When on, events will not be triggered,
+	 * simply logged. Useful during testing when you don't actually want
+	 * the tests to run.
+	 *
+	 * @param boolean $choice
+	 */
+	public static function simulate(bool $choice = true)
+	{
+		static::$simulate = $choice;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Getter for the performance log records.
+	 *
+	 * @return array
+	 */
+	public static function getPerformanceLogs()
+	{
+		return static::$performanceLog;
+	}
+
+	//--------------------------------------------------------------------
+
 }

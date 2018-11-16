@@ -1,17 +1,22 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Test\CIDatabaseTestCase;
+
 /**
  * @group DatabaseLive
  */
-class InsertTest extends \CIDatabaseTestCase
+class InsertTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	public function testInsert()
 	{
-		$job_data = array('name' => 'Grocery Sales', 'description' => 'Discount!');
+		$job_data = [
+			'name'        => 'Grocery Sales',
+			'description' => 'Discount!',
+		];
 
 		$this->db->table('job')->insert($job_data);
 
@@ -22,10 +27,16 @@ class InsertTest extends \CIDatabaseTestCase
 
 	public function testInsertBatch()
 	{
-		$job_data = array(
-			array('name' => 'Comedian', 'description' => 'Theres something in your teeth'),
-			array('name' => 'Cab Driver', 'description' => 'Iam yellow'),
-		);
+		$job_data = [
+			[
+				'name'        => 'Comedian',
+				'description' => 'Theres something in your teeth',
+			],
+			[
+				'name'        => 'Cab Driver',
+				'description' => 'Iam yellow',
+			],
+		];
 
 		$this->db->table('job')->insertBatch($job_data);
 
@@ -37,7 +48,11 @@ class InsertTest extends \CIDatabaseTestCase
 
 	public function testReplaceWithNoMatchingData()
 	{
-		$data = array('id' => 5, 'name' => 'Cab Driver', 'description' => 'Iam yellow');
+		$data = [
+			'id'          => 5,
+			'name'        => 'Cab Driver',
+			'description' => 'Iam yellow',
+		];
 
 		$this->db->table('job')->replace($data);
 
@@ -52,43 +67,46 @@ class InsertTest extends \CIDatabaseTestCase
 
 	public function testReplaceWithMatchingData()
 	{
-		$data = array('id' => 1, 'name' => 'Cab Driver', 'description' => 'Iam yellow');
+		$data = [
+			'id'          => 1,
+			'name'        => 'Cab Driver',
+			'description' => 'Iam yellow',
+		];
 
 		$this->db->table('job')->replace($data);
 
 		$row = $this->db->table('job')
-		                ->getwhere(['id' => 1])
-		                ->getRow();
+						->getwhere(['id' => 1])
+						->getRow();
 
 		$this->assertEquals('Cab Driver', $row->name);
 	}
 
 	//--------------------------------------------------------------------
 
-    public function testBug302()
-    {
-        $code = "my code \'CodeIgniter\Autoloader\'";
+	public function testBug302()
+	{
+		$code = "my code \'CodeIgniter\Autoloader\'";
 
-        $this->db->table('misc')->insert([
-            'key' => 'test',
-            'value' => $code
-        ]);
+		$this->db->table('misc')->insert([
+			'key'   => 'test',
+			'value' => $code,
+		]);
 
-        $this->seeInDatabase('misc', ['key' => 'test']);
-        $this->seeInDatabase('misc', ['value' => $code]);
-    }
+		$this->seeInDatabase('misc', ['key' => 'test']);
+		$this->seeInDatabase('misc', ['value' => $code]);
+	}
 
-    public function testInsertPasswordHash()
-    {
-        $hash = '$2y$10$tNevVVMwW52V2neE3H79a.wp8ZoItrwosk54.Siz5Fbw55X9YIBsW';
+	public function testInsertPasswordHash()
+	{
+		$hash = '$2y$10$tNevVVMwW52V2neE3H79a.wp8ZoItrwosk54.Siz5Fbw55X9YIBsW';
 
-        $this->db->table('misc')->insert([
-            'key' => 'password',
-            'value' => $hash
-        ]);
+		$this->db->table('misc')->insert([
+			'key'   => 'password',
+			'value' => $hash,
+		]);
 
-        $this->seeInDatabase('misc', ['value' => $hash]);
-    }
-
+		$this->seeInDatabase('misc', ['value' => $hash]);
+	}
 
 }

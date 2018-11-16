@@ -1,7 +1,7 @@
 <?php namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\Database\MockConnection;
+use Tests\Support\Database\MockConnection;
 
 class LikeTest extends \CIUnitTestCase
 {
@@ -11,6 +11,8 @@ class LikeTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->db = new MockConnection([]);
 	}
 
@@ -22,7 +24,7 @@ class LikeTest extends \CIUnitTestCase
 
 		$builder->like('name', 'veloper');
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name ESCAPE '!'";
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name: ESCAPE '!'";
 		$expectedBinds = ['name' => '%veloper%'];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
@@ -37,7 +39,7 @@ class LikeTest extends \CIUnitTestCase
 
 		$builder->like('name', 'veloper', 'none');
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name ESCAPE '!'";
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name: ESCAPE '!'";
 		$expectedBinds = ['name' => 'veloper'];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
@@ -52,7 +54,7 @@ class LikeTest extends \CIUnitTestCase
 
 		$builder->like('name', 'veloper', 'before');
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name ESCAPE '!'";
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name: ESCAPE '!'";
 		$expectedBinds = ['name' => '%veloper'];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
@@ -67,7 +69,7 @@ class LikeTest extends \CIUnitTestCase
 
 		$builder->like('name', 'veloper', 'after');
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name ESCAPE '!'";
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name: ESCAPE '!'";
 		$expectedBinds = ['name' => 'veloper%'];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
@@ -82,8 +84,11 @@ class LikeTest extends \CIUnitTestCase
 
 		$builder->like('name', 'veloper')->orLike('name', 'ian');
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name ESCAPE '!' OR  \"name\" LIKE :name0 ESCAPE '!'";
-		$expectedBinds = ['name' => '%veloper%', 'name0' => '%ian%'];
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name: ESCAPE '!' OR  \"name\" LIKE :name0: ESCAPE '!'";
+		$expectedBinds = [
+			'name'  => '%veloper%',
+			'name0' => '%ian%',
+		];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
@@ -97,7 +102,7 @@ class LikeTest extends \CIUnitTestCase
 
 		$builder->notLike('name', 'veloper');
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" NOT LIKE :name ESCAPE '!'";
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" NOT LIKE :name: ESCAPE '!'";
 		$expectedBinds = ['name' => '%veloper%'];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
@@ -112,8 +117,11 @@ class LikeTest extends \CIUnitTestCase
 
 		$builder->like('name', 'veloper')->orNotLike('name', 'ian');
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name ESCAPE '!' OR  \"name\" NOT LIKE :name0 ESCAPE '!'";
-		$expectedBinds = ['name' => '%veloper%', 'name0' => '%ian%'];
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name: ESCAPE '!' OR  \"name\" NOT LIKE :name0: ESCAPE '!'";
+		$expectedBinds = [
+			'name'  => '%veloper%',
+			'name0' => '%ian%',
+		];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
@@ -130,7 +138,7 @@ class LikeTest extends \CIUnitTestCase
 
 		$builder->like('name', 'VELOPER', 'both', null, true);
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE LOWER(name) LIKE :name ESCAPE '!'";
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE LOWER(name) LIKE :name: ESCAPE '!'";
 		$expectedBinds = ['name' => '%veloper%'];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));

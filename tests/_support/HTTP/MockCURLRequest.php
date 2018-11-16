@@ -1,4 +1,8 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+
+namespace Tests\Support\HTTP;
+
+use CodeIgniter\HTTP\CURLRequest;
 
 /**
  * Class MockCURLRequest
@@ -9,8 +13,8 @@
  */
 class MockCURLRequest extends CURLRequest
 {
-	public $curl_options;
 
+	public $curl_options;
 	protected $output = '';
 
 	//--------------------------------------------------------------------
@@ -33,5 +37,16 @@ class MockCURLRequest extends CURLRequest
 	}
 
 	//--------------------------------------------------------------------
+	// for testing purposes only
+	public function getBaseURI()
+	{
+		return $this->baseURI;
+	}
+
+	// for testing purposes only
+	public function getDelay()
+	{
+		return $this->delay;
+	}
 
 }

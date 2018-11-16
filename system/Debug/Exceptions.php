@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,26 +27,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
-require __DIR__ . '/CustomExceptions.php';
 
 /**
  * Exceptions manager
  */
 class Exceptions
 {
+	use \CodeIgniter\API\ResponseTrait;
 
 	/**
 	 * Nesting level of the output buffering mechanism
 	 *
-	 * @var    int
+	 * @var integer
 	 */
 	public $ob_level;
 
@@ -58,18 +58,40 @@ class Exceptions
 	 */
 	protected $viewPath;
 
+	/**
+	 * @var \Config\Exceptions
+	 */
+	protected $config;
+
+	/**
+	 * @var \CodeIgniter\HTTP\IncomingRequest
+	 */
+	protected $request;
+
+	/**
+	 * @var \CodeIgniter\HTTP\Response
+	 */
+	protected $response;
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\App $config
+	 * @param \Config\Exceptions                $config
+	 * @param \CodeIgniter\HTTP\IncomingRequest $request
+	 * @param \CodeIgniter\HTTP\Response        $response
 	 */
-	public function __construct(\Config\App $config)
+	public function __construct(\Config\Exceptions $config, \CodeIgniter\HTTP\IncomingRequest $request, \CodeIgniter\HTTP\Response $response)
 	{
 		$this->ob_level = ob_get_level();
 
 		$this->viewPath = rtrim($config->errorViewPath, '/ ') . '/';
+
+		$this->config = $config;
+
+		$this->request  = $request;
+		$this->response = $response;
 	}
 
 	//--------------------------------------------------------------------
@@ -102,56 +124,35 @@ class Exceptions
 	 */
 	public function exceptionHandler(\Throwable $exception)
 	{
-		// Get Exception Info - these are available
-		// directly in the template that's displayed.
-		$type = get_class($exception);
-		$codes = $this->determineCodes($exception);
-		$code = $codes[0];
-		$exit = $codes[1];
-		$code = $exception->getCode();
-		$message = $exception->getMessage();
-		$file = $exception->getFile();
-		$line = $exception->getLine();
-		$trace = $exception->getTrace();
-		$title = get_class($exception);
-
-		if (empty($message))
-		{
-			$message = '(null)';
-		}
+		$codes      = $this->determineCodes($exception);
+		$statusCode = $codes[0];
+		$exitCode   = $codes[1];
 
 		// Log it
-		// Fire an Event
-		$templates_path = $this->viewPath;
-		if (empty($templates_path))
+		if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes))
 		{
-			$templates_path = APPPATH . 'Views/errors/';
+			log_message('critical', $exception->getMessage() . "\n{trace}", [
+							'trace' => $exception->getTraceAsString(),
+						]);
 		}
 
-		if (is_cli())
+		if (! is_cli())
 		{
-			$templates_path .= 'cli/';
-		}
-		else
-		{
-			header('HTTP/1.1 500 Internal Server Error', true, 500);
-			$templates_path .= 'html/';
-		}
+			$this->response->setStatusCode($statusCode);
+			$header = "HTTP/{$this->request->getProtocolVersion()} {$this->response->getStatusCode()} {$this->response->getReason()}";
+			header($header, true, $statusCode);
 
-		$view = $this->determineView($exception, $templates_path);
+			if (strpos($this->request->getHeaderLine('accept'), 'text/html') === false)
+			{
+				$this->respond(ENVIRONMENT === 'development' ? $this->collectVars($exception, $statusCode) : '', $statusCode)->send();
 
-		if (ob_get_level() > $this->ob_level + 1)
-		{
-			ob_end_clean();
+				exit($exitCode);
+			}
 		}
 
-		ob_start();
-		include($templates_path . $view);
-		$buffer = ob_get_contents();
-		ob_end_clean();
-		echo $buffer;
+		$this->render($exception, $statusCode);
 
-		exit($exit);
+		exit($exitCode);
 	}
 
 	//--------------------------------------------------------------------
@@ -163,11 +164,11 @@ class Exceptions
 	 *
 	 * This seems to be primarily when a user triggers it with trigger_error().
 	 *
-	 * @param int         $severity
-	 * @param string      $message
-	 * @param string|null $file
-	 * @param int|null    $line
-	 * @param null        $context
+	 * @param integer      $severity
+	 * @param string       $message
+	 * @param string|null  $file
+	 * @param integer|null $line
+	 * @param null         $context
 	 *
 	 * @throws \ErrorException
 	 */
@@ -190,7 +191,7 @@ class Exceptions
 		// If we've got an error that hasn't been displayed, then convert
 		// it to an Exception and use the Exception handler to display it
 		// to the user.
-		if ( ! is_null($error))
+		if (! is_null($error))
 		{
 			// Fatal Error?
 			if (in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE]))
@@ -214,7 +215,7 @@ class Exceptions
 	protected function determineView(\Throwable $exception, string $template_path): string
 	{
 		// Production environments should have a custom exception file.
-		$view = 'production.php';
+		$view          = 'production.php';
 		$template_path = rtrim($template_path, '/ ') . '/';
 
 		if (str_ireplace(['off', 'none', 'no', 'false', 'null'], '', ini_get('display_errors')))
@@ -223,7 +224,7 @@ class Exceptions
 		}
 
 		// 404 Errors
-		if ($exception instanceof \CodeIgniter\PageNotFoundException)
+		if ($exception instanceof \CodeIgniter\Exceptions\PageNotFoundException)
 		{
 			return 'error_404.php';
 		}
@@ -240,6 +241,68 @@ class Exceptions
 	//--------------------------------------------------------------------
 
 	/**
+	 * Given an exception and status code will display the error to the client.
+	 *
+	 * @param \Throwable $exception
+	 * @param integer    $statusCode
+	 */
+	protected function render(\Throwable $exception, int $statusCode)
+	{
+		// Determine directory with views
+		$path = $this->viewPath;
+		if (empty($path))
+		{
+			$path = APPPATH . 'Views/errors/';
+		}
+
+		$path = is_cli()
+			? $path . 'cli/'
+			: $path . 'html/';
+
+		// Determine the vew
+		$view = $this->determineView($exception, $path);
+
+		// Prepare the vars
+		$vars = $this->collectVars($exception, $statusCode);
+		extract($vars);
+
+		// Render it
+		if (ob_get_level() > $this->ob_level + 1)
+		{
+			ob_end_clean();
+		}
+
+		ob_start();
+		include($path . $view);
+		$buffer = ob_get_contents();
+		ob_end_clean();
+		echo $buffer;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Gathers the variables that will be made available to the view.
+	 *
+	 * @param \Throwable $exception
+	 * @param integer    $statusCode
+	 *
+	 * @return array
+	 */
+	protected function collectVars(\Throwable $exception, int $statusCode)
+	{
+		return [
+			'title'   => get_class($exception),
+			'type'    => get_class($exception),
+			'code'    => $statusCode,
+			'message' => $exception->getMessage() ?? '(null)',
+			'file'    => $exception->getFile(),
+			'line'    => $exception->getLine(),
+			'trace'   => $exception->getTrace(),
+		];
+	}
+
+	/**
 	 * Determines the HTTP status code and the exit status code for this request.
 	 *
 	 * @param \Throwable $exception
@@ -250,7 +313,7 @@ class Exceptions
 	{
 		$statusCode = abs($exception->getCode());
 
-		if ($statusCode < 100)
+		if ($statusCode < 100 || $statusCode > 599)
 		{
 			$exitStatus = $statusCode + EXIT__AUTO_MIN; // 9 is EXIT__AUTO_MIN
 			if ($exitStatus > EXIT__AUTO_MAX) // 125 is EXIT__AUTO_MAX
@@ -266,7 +329,7 @@ class Exceptions
 
 		return [
 			$statusCode ?? 500,
-			$exitStatus
+			$exitStatus,
 		];
 	}
 
@@ -280,9 +343,9 @@ class Exceptions
 	 *
 	 * This makes nicer looking paths for the error output.
 	 *
-	 * @param    string $file
+	 * @param string $file
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	public static function cleanPath($file)
 	{
@@ -331,11 +394,11 @@ class Exceptions
 	/**
 	 * Creates a syntax-highlighted version of a PHP file.
 	 *
-	 * @param     $file
-	 * @param     $lineNumber
-	 * @param int $lines
+	 * @param $file
+	 * @param $lineNumber
+	 * @param integer    $lines
 	 *
-	 * @return bool|string
+	 * @return boolean|string
 	 */
 	public static function highlightFile($file, $lineNumber, $lines = 15)
 	{
@@ -357,7 +420,8 @@ class Exceptions
 		try
 		{
 			$source = file_get_contents($file);
-		} catch (\Throwable $e)
+		}
+		catch (\Throwable $e)
 		{
 			return false;
 		}
@@ -388,9 +452,9 @@ class Exceptions
 		foreach ($source as $n => $row)
 		{
 			$spans += substr_count($row, '<span') - substr_count($row, '</span');
-			$row = str_replace(["\r", "\n"], ['', ''], $row);
+			$row    = str_replace(["\r", "\n"], ['', ''], $row);
 
-			if (($n + $start + 1) == $lineNumber)
+			if (($n + $start + 1) === $lineNumber)
 			{
 				preg_match_all('#<[^>]+>#', $row, $tags);
 				$out .= sprintf("<span class='line highlight'><span class='number'>{$format}</span> %s\n</span>%s", $n + $start + 1, strip_tags($row), implode('', $tags[0])

@@ -1,7 +1,7 @@
 <?php namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\Database\MockConnection;
+use Tests\Support\Database\MockConnection;
 
 class OrderTest extends \CIUnitTestCase
 {
@@ -11,6 +11,8 @@ class OrderTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->db = new MockConnection([]);
 	}
 
@@ -22,7 +24,7 @@ class OrderTest extends \CIUnitTestCase
 
 		$builder->orderBy('name', 'asc');
 
-		$expectedSQL   = "SELECT * FROM \"user\" ORDER BY \"name\" ASC";
+		$expectedSQL = 'SELECT * FROM "user" ORDER BY "name" ASC';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -35,7 +37,7 @@ class OrderTest extends \CIUnitTestCase
 
 		$builder->orderBy('name', 'desc');
 
-		$expectedSQL   = "SELECT * FROM \"user\" ORDER BY \"name\" DESC";
+		$expectedSQL = 'SELECT * FROM "user" ORDER BY "name" DESC';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -48,7 +50,7 @@ class OrderTest extends \CIUnitTestCase
 
 		$builder->orderBy('name', 'random');
 
-		$expectedSQL   = "SELECT * FROM \"user\" ORDER BY RAND()";
+		$expectedSQL = 'SELECT * FROM "user" ORDER BY RAND()';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}

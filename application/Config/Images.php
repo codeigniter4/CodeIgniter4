@@ -25,7 +25,7 @@ class Images extends BaseConfig
 	 * @var array
 	 */
 	public $handlers = [
-		'gd'        => \CodeIgniter\Images\Handlers\GDHandler::class,
-		'imagick'   => \CodeIgniter\Images\Handlers\ImageMagickHandler::class,
+		'gd'      => \CodeIgniter\Images\Handlers\GDHandler::class,
+		'imagick' => \CodeIgniter\Images\Handlers\ImageMagickHandler::class,
 	];
 }

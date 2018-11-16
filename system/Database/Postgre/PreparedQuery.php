@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Database\PreparedQueryInterface;
 use \CodeIgniter\Database\BasePreparedQuery;
 
@@ -52,6 +53,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	/**
 	 * The result resource from a successful
 	 * pg_exec. Or false.
+	 *
 	 * @var
 	 */
 	protected $result;
@@ -66,14 +68,14 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 * override this method.
 	 *
 	 * @param string $sql
-	 * @param array  $options  Passed to the connection's prepare statement.
-	 *                         Unused in the MySQLi driver.
+	 * @param array  $options Passed to the connection's prepare statement.
+	 *                        Unused in the MySQLi driver.
 	 *
 	 * @return mixed
 	 */
 	public function _prepare(string $sql, array $options = [])
 	{
-		$this->name = mt_rand(1, 10000000000000000);
+		$this->name = random_int(1, 10000000000000000);
 
 		$sql = $this->parameterize($sql);
 
@@ -81,9 +83,9 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		// than what was put in.
 		$this->query->setQuery($sql);
 
-		if ( ! $this->statement = pg_prepare($this->db->connID, $this->name, $sql))
+		if (! $this->statement = pg_prepare($this->db->connID, $this->name, $sql))
 		{
-			$this->errorCode = 0;
+			$this->errorCode   = 0;
 			$this->errorString = pg_last_error($this->db->connID);
 		}
 
@@ -98,7 +100,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @param array $data
 	 *
-	 * @return ResultInterface
+	 * @return boolean
 	 */
 	public function _execute($data)
 	{
@@ -139,7 +141,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		// Track our current value
 		$count = 0;
 
-		$sql = preg_replace_callback('/\?/', function($matches) use (&$count) {
+		$sql = preg_replace_callback('/\?/', function ($matches) use (&$count) {
 			$count ++;
 			return "\${$count}";
 		}, $sql);

@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\HTTP\Files;
+<?php
+namespace CodeIgniter\HTTP\Files;
 
 /**
  * CodeIgniter
@@ -7,7 +8,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,12 +28,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -79,20 +80,17 @@ class FileCollection
 	 *
 	 * @param string $name
 	 *
-	 * @return null
+	 * @return UploadedFile|null
 	 */
 	public function getFile(string $name)
 	{
 		$this->populateFiles();
 
-		$name = strtolower($name);
-
 		if ($this->hasFile($name))
 		{
-
 			if (strpos($name, '.') !== false)
 			{
-				$name = explode('.', $name);
+				$name         = explode('.', $name);
 				$uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
 				if ($uploadedFile instanceof \CodeIgniter\HTTP\Files\UploadedFile)
 				{
@@ -127,7 +125,7 @@ class FileCollection
 	 *
 	 * @param string $fileID The name of the uploaded file (from the input)
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function hasFile(string $fileID): bool
 	{
@@ -141,7 +139,7 @@ class FileCollection
 
 			foreach ($segments as $segment)
 			{
-				if ( ! array_key_exists($segment, $el))
+				if (! array_key_exists($segment, $el))
 				{
 					return false;
 				}
@@ -193,17 +191,17 @@ class FileCollection
 	 *
 	 * @param array $array
 	 *
-	 * @return array
+	 * @return array|UploadedFile
 	 */
 	protected function createFileObject(array $array)
 	{
-		if ( ! isset($array['name']))
+		if (! isset($array['name']))
 		{
 			$output = [];
 
 			foreach ($array as $key => $values)
 			{
-				if ( ! is_array($values))
+				if (! is_array($values))
 				{
 					continue;
 				}
@@ -244,13 +242,13 @@ class FileCollection
 			{
 				$pointer = &$output[$name];
 
-				if ( ! is_array($value))
+				if (! is_array($value))
 				{
 					$pointer[$field] = $value;
 					continue;
 				}
 
-				$stack = [&$pointer];
+				$stack    = [&$pointer];
 				$iterator = new \RecursiveIteratorIterator(
 						new \RecursiveArrayIterator($value), \RecursiveIteratorIterator::SELF_FIRST
 				);
@@ -261,7 +259,7 @@ class FileCollection
 					$pointer = &$stack[count($stack) - 1];
 					$pointer = &$pointer[$key];
 					$stack[] = &$pointer;
-					if ( ! $iterator->hasChildren())
+					if (! $iterator->hasChildren())
 					{
 						$pointer[$field] = $value;
 					}
@@ -284,27 +282,21 @@ class FileCollection
 	 */
 	protected function getValueDotNotationSyntax($index, $value)
 	{
-		if (is_array($index) && count($index)
-		)
+		if (is_array($index) && ! empty($index))
 		{
 			$current_index = array_shift($index);
 		}
-		if (is_array($index) && count($index) && is_array($value[$current_index]) && count($value[$current_index])
-		)
+		if (is_array($index) && $index && is_array($value[$current_index]) && $value[$current_index])
 		{
 			return $this->getValueDotNotationSyntax($index, $value[$current_index]);
 		}
-		else
+
+		if (isset($value[$current_index]))
 		{
-			if (isset($value[$current_index]))
-			{
-				return $value[$current_index];
-			}
-			else
-			{
-				return null;
-			}
+			return $value[$current_index];
 		}
+
+		return null;
 	}
 
 }

@@ -1,8 +1,7 @@
 <?php namespace CodeIgniter\Autoloader;
 
-use Config\MockAutoload;
-use PHPUnit\Framework\TestCase;
-use org\bovigo\vfs\vfsStream;
+use Tests\Support\Config\MockAutoload;
+use Tests\Support\Autoloader\MockFileLocator;
 
 class FileLocatorTest extends \CIUnitTestCase
 {
@@ -16,12 +15,15 @@ class FileLocatorTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-		$config = new MockAutoload();
+		parent::setUp();
+
+		$config       = new MockAutoload();
 		$config->psr4 = [
-			'App\Libraries'	 => '/application/somewhere',
-			'App'			 => '/application',
-			'Sys'			 => BASEPATH,
-			'Blog'			 => '/modules/blog'
+			'App\Libraries' => '/application/somewhere',
+			'App'           => '/application',
+			'Sys'           => BASEPATH,
+			'Blog'          => '/modules/blog',
+			'Tests/Support' => TESTPATH . '_support/',
 		];
 
 		$this->loader = new MockFileLocator($config);
@@ -31,7 +33,7 @@ class FileLocatorTest extends \CIUnitTestCase
 			APPPATH . 'Views/index.php',
 			APPPATH . 'Views/admin/users/create.php',
 			'/modules/blog/Views/index.php',
-			'/modules/blog/Views/admin/posts.php'
+			'/modules/blog/Views/admin/posts.php',
 		]);
 	}
 
@@ -150,10 +152,10 @@ class FileLocatorTest extends \CIUnitTestCase
 		$foundFiles = $this->loader->search('index', 'html');
 
 		$expected = rtrim(APPPATH, '/') . '/index.html';
-		$this->assertTrue(in_array($expected, $foundFiles));
+		$this->assertContains($expected, $foundFiles);
 
 		$expected = rtrim(BASEPATH, '/') . '/index.html';
-		$this->assertTrue(in_array($expected, $foundFiles));
+		$this->assertContains($expected, $foundFiles);
 	}
 
 	//--------------------------------------------------------------------
@@ -162,7 +164,7 @@ class FileLocatorTest extends \CIUnitTestCase
 	{
 		$foundFiles = $this->loader->search('Views/Fake.html');
 
-		$this->assertFalse(isset($foundFiles[0]));
+		$this->assertArrayNotHasKey(0, $foundFiles);
 	}
 
 	//--------------------------------------------------------------------
@@ -182,7 +184,7 @@ class FileLocatorTest extends \CIUnitTestCase
 	{
 		$files = $this->loader->listFiles('Config/App.php');
 
-		$this->assertTrue(empty($files));
+		$this->assertEmpty($files);
 	}
 
 	//--------------------------------------------------------------------
@@ -206,7 +208,7 @@ class FileLocatorTest extends \CIUnitTestCase
 	{
 		$files = $this->loader->listFiles('Fake/');
 
-		$this->assertTrue(empty($files));
+		$this->assertEmpty($files);
 	}
 
 	//--------------------------------------------------------------------
@@ -215,13 +217,13 @@ class FileLocatorTest extends \CIUnitTestCase
 	{
 		$files = $this->loader->listFiles('');
 
-		$this->assertTrue(empty($files));
+		$this->assertEmpty($files);
 	}
 
 	public function testFindQNameFromPathSimple()
 	{
 		$ClassName = $this->loader->findQualifiedNameFromPath('system/HTTP/Header.php');
-		$expected = '\Sys\HTTP\Header';
+		$expected  = '\Sys\HTTP\Header';
 
 		$this->assertEquals($expected, $ClassName);
 	}
@@ -230,21 +232,21 @@ class FileLocatorTest extends \CIUnitTestCase
 	{
 		$ClassName = $this->loader->findQualifiedNameFromPath('application/Config/App.php');
 
-		$this->assertEquals(null, $ClassName);
+		$this->assertNull($ClassName);
 	}
 
 	public function testFindQNameFromPathWithFileNotExist()
 	{
 		$ClassName = $this->loader->findQualifiedNameFromPath('modules/blog/Views/index.php');
 
-		$this->assertEquals(null, $ClassName);
+		$this->assertNull($ClassName);
 	}
 
 	public function testFindQNameFromPathWithoutCorrespondingNamespace()
 	{
 		$ClassName = $this->loader->findQualifiedNameFromPath('tests/system/CodeIgniterTest.php');
 
-		$this->assertEquals(null, $ClassName);
+		$this->assertNull($ClassName);
 	}
 
 }

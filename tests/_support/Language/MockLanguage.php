@@ -1,7 +1,10 @@
-<?php namespace CodeIgniter\Language;
+<?php namespace Tests\Support\Language;
+
+use CodeIgniter\Language\Language;
 
 class MockLanguage extends Language
 {
+
 	/**
 	 * Stores the data that should be
 	 * returned by the 'requireFile()' method.
@@ -23,7 +26,7 @@ class MockLanguage extends Language
 	 */
 	public function setData($data)
 	{
-	    $this->data = $data;
+		$this->data = $data;
 
 		return $this;
 	}
@@ -40,9 +43,17 @@ class MockLanguage extends Language
 	 */
 	protected function requireFile(string $path): array
 	{
-	    return $this->data ?? [];
+		return $this->data ?? [];
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Arbitrarily turnoff internationalization support for testing
+	 */
+	public function disableIntlSupport()
+	{
+		$this->intlSupport = false;
+	}
 
 }

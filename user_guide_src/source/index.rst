@@ -2,37 +2,21 @@
 CodeIgniter4 User Guide
 #######################
 
-- :doc:`License Agreement <license>`
-- :doc:`Change Log <changelog>`
-
-.. contents::
-   :local:
-   :depth: 2
-
-*******
-Welcome
-*******
-
 .. toctree::
 	:includehidden:
         :titlesonly:
 
         intro/index
 
-************
-Installation
-************
+***************
+Getting Started
+***************
 
 .. toctree::
-	:includehidden:
 	:maxdepth: 2
 	:titlesonly:
 
 	installation/index
-
-********
-Tutorial
-********
 
 .. toctree::
 	:includehidden:
@@ -40,34 +24,36 @@ Tutorial
 
     	tutorial/index
 
-*********************
-CodeIgniter4 Overview
-*********************
+*************************
+Overview & General Topics
+*************************
+
 .. toctree::
-   :titlesonly:
+	:titlesonly:
 
-   concepts/index
-
-**************
-General Topics
-**************
+	concepts/index
 
 .. toctree::
 	:titlesonly:
 
 	general/index
 
-*****************
-Library Reference
-*****************
+****************
+Request Handling
+****************
 
 .. toctree::
 	:titlesonly:
 
-	libraries/index
+	incoming/index
+
+.. toctree::
+	:titlesonly:
+
+	outgoing/index
 
 ******************
-Database Reference
+Handling Databases
 ******************
 
 .. toctree::
@@ -75,21 +61,52 @@ Database Reference
 
 	database/index
 
-****************
-Helper Reference
-****************
+.. toctree::
+	:titlesonly:
+
+	models/index
+
+.. toctree::
+	:titlesonly:
+
+	dbmgmt/index
+
+
+*******************
+Libraries & Helpers
+*******************
+
+.. toctree::
+	:titlesonly:
+
+	libraries/index
 
 .. toctree::
 	:titlesonly:
 
 	helpers/index
 
-
-***************************
-Contributing to CodeIgniter
-***************************
+***************
+Advanced Topics
+***************
 
 .. toctree::
 	:titlesonly:
 
-   	contributing/index
+	testing/index
+
+.. toctree::
+	:titlesonly:
+
+	cli/index
+
+.. toctree::
+	:titlesonly:
+
+	extending/index
+
+.. toctree::
+        :hidden:
+
+        license
+        changelogs/index

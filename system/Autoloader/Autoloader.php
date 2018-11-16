@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -97,7 +97,7 @@ class Autoloader
 	 * Reads in the configuration array (described above) and stores
 	 * the valid parts that we'll need.
 	 *
-	 * @param $config
+	 * @param \Config\Autoload $config
 	 */
 	public function initialize(\Config\Autoload $config)
 	{
@@ -144,7 +144,7 @@ class Autoloader
 		$config = is_array($this->classmap) ? $this->classmap : [];
 
 		spl_autoload_register(function ($class) use ($config) {
-			if ( ! array_key_exists($class, $config))
+			if (! array_key_exists($class, $config))
 			{
 				return false;
 			}
@@ -160,12 +160,12 @@ class Autoloader
 	/**
 	 * Registers a namespace with the autoloader.
 	 *
-	 * @param $namespace
-	 * @param $path
+	 * @param string $namespace
+	 * @param string $path
 	 *
-	 * @return $this
+	 * @return Autoloader
 	 */
-	public function addNamespace($namespace, $path)
+	public function addNamespace(string $namespace, string $path)
 	{
 		if (isset($this->prefixes[$namespace]))
 		{
@@ -181,7 +181,6 @@ class Autoloader
 			$this->prefixes[$namespace] = [$path];
 		}
 
-
 		return $this;
 	}
 
@@ -190,11 +189,11 @@ class Autoloader
 	/**
 	 * Removes a single namespace from the psr4 settings.
 	 *
-	 * @param $namespace
+	 * @param string $namespace
 	 *
-	 * @return $this
+	 * @return Autoloader
 	 */
-	public function removeNamespace($namespace)
+	public function removeNamespace(string $namespace)
 	{
 		unset($this->prefixes[$namespace]);
 
@@ -211,7 +210,7 @@ class Autoloader
 	 * @return mixed            The mapped file on success, or boolean false
 	 *                          on failure.
 	 */
-	public function loadClass($class)
+	public function loadClass(string $class)
 	{
 		$class = trim($class, '\\');
 		$class = str_ireplace('.php', '', $class);
@@ -220,7 +219,7 @@ class Autoloader
 
 		// Nothing? One last chance by looking
 		// in common CodeIgniter folders.
-		if ( ! $mapped_file)
+		if (! $mapped_file)
 		{
 			$mapped_file = $this->loadLegacy($class);
 		}
@@ -237,7 +236,7 @@ class Autoloader
 	 *
 	 * @return mixed            The mapped file name on success, or boolean false on fail
 	 */
-	protected function loadInNamespace($class)
+	protected function loadInNamespace(string $class)
 	{
 		if (strpos($class, '\\') === false)
 		{
@@ -279,11 +278,11 @@ class Autoloader
 	 * version of CodeIgniter, namely 'application/libraries', and
 	 * 'application/Models'.
 	 *
-	 * @param $class    The class name. This typically should NOT have a namespace.
+	 * @param string $class The class name. This typically should NOT have a namespace.
 	 *
 	 * @return mixed    The mapped file name on success, or boolean false on failure
 	 */
-	protected function loadLegacy($class)
+	protected function loadLegacy(string $class)
 	{
 		// If there is a namespace on this class, then
 		// we cannot load it from traditional locations.
@@ -319,11 +318,11 @@ class Autoloader
 	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @param $file
+	 * @param string $file
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
-	protected function requireFile($file)
+	protected function requireFile(string $file)
 	{
 		$file = $this->sanitizeFilename($file);
 

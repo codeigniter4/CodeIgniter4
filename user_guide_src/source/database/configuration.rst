@@ -2,6 +2,10 @@
 Database Configuration
 ######################
 
+.. contents::
+    :local:
+    :depth: 2
+
 CodeIgniter has a config file that lets you store your database
 connection values (username, password, database name, etc.). The config
 file is located at application/Config/Database.php. You can also set
@@ -11,7 +15,7 @@ The config settings are stored in a class property that is an array with this
 prototype::
 
 	public $default = [
-		'DSN'	=> '',
+		'DSN'	   => '',
 		'hostname' => 'localhost',
 		'username' => 'root',
 		'password' => '',
@@ -28,7 +32,7 @@ prototype::
 		'encrypt'  => FALSE,
 		'compress' => FALSE,
 		'strictOn' => FALSE,
-		'failover' => array(),
+		'failover' => [],
 	];
 
 The name of the class property is the connection name, and can be used
@@ -103,7 +107,7 @@ connection group for each, then switch between groups as needed. For
 example, to set up a "test" environment you would do this::
 
 	public $test = [
-		'DSN'	=> '',
+		'DSN'	   => '',
 		'hostname' => 'localhost',
 		'username' => 'root',
 		'password' => '',
@@ -120,7 +124,7 @@ example, to set up a "test" environment you would do this::
 		'compress' => FALSE,
 		'encrypt'  => FALSE,
 		'strictOn' => FALSE,
-		'failover' => array()
+		'failover' => []
 	);
 
 Then, to globally tell the system to use that group you would set this
@@ -198,7 +202,7 @@ Explanation of Values:
 			    - 'ssl_key'    - Path to the private key file
 			    - 'ssl_cert'   - Path to the public key certificate file
 			    - 'ssl_ca'     - Path to the certificate authority file
-			    - 'ssl_capath' - Path to a directory containing trusted CA certificats in PEM format
+			    - 'ssl_capath' - Path to a directory containing trusted CA certificates in PEM format
 			    - 'ssl_cipher' - List of *allowed* ciphers to be used for the encryption, separated by colons (':')
 			    - 'ssl_verify' - TRUE/FALSE; Whether to verify the server certificate or not ('MySQLi' only)
 

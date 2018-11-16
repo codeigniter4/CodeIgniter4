@@ -13,7 +13,7 @@ each piece as you need.
 
 **Views** are simple files, with little to no logic, that display the information to the user.
 
-**Controllers** act as glue code, marshalling data back and forth between the view (or the user that's seeing it) and
+**Controllers** act as glue code, marshaling data back and forth between the view (or the user that's seeing it) and
 the data storage.
 
 At their most basic, controllers and models are simply classes that have a specific job. They are not the only class
@@ -22,7 +22,6 @@ have designated directories in the **/application** directory for their storage,
 wherever you desire, as long as they are properly namespaced. We will discuss that in more detail below.
 
 Let's take a closer look at each of these three main components.
-
 
 **************
 The Components
@@ -47,8 +46,7 @@ You might store the view file for this method in **/application/Views/User/Profi
 That type of organization works great as a base habit to get into. At times you might need to organize it differently.
 That's not a problem. As long as CodeIgniter can find the file, it can display it.
 
-:doc:`Find out more about views </general/views>`
-
+:doc:`Find out more about views </outgoing/views>`
 
 Models
 ======
@@ -65,8 +63,7 @@ miss updating an area.
 
 Models are typically stored in **/application/Models**, though they can use a namespace to be grouped however you need.
 
-:doc:`Find out more about models </database/model>`
-
+:doc:`Find out more about models </models/model>`
 
 Controllers
 ===========
@@ -76,11 +73,11 @@ then determine what to do with it. This often involves passing the data to a mod
 the model that is then passed on to the view to be displayed. This also includes loading up other utility classes,
 if needed, to handle specialized tasks that is outside of the purview of the model.
 
-The other responsibility of the controller is to handles everything that pertains to HTTP requests - redirects,
+The other responsibility of the controller is to handle everything that pertains to HTTP requests - redirects,
 authentication, web safety, encoding, etc. In short, the controller is where you make sure that people are allowed to
 be there, and they get the data they need in a format they can use.
 
 Controllers are typically stored in **/application/Controllers**, though they can use a namespace to be grouped however
 you need.
 
-:doc:`Find out more about controllers </general/controllers>`
+:doc:`Find out more about controllers </incoming/controllers>`

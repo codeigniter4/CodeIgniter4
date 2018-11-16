@@ -18,21 +18,21 @@ class Logger extends BaseConfig
 	|	2 = Alert Messages      - Action Must Be Taken Immediately
 	|   3 = Critical Messages   - Application component unavailable, unexpected exception.
 	|   4 = Runtime Errors      - Don't need immediate action, but should be monitored.
-	|   5 = Debug               - Detailed debug information.
-	|   6 = Warnings            - Exceptional occurrences that are not errors.
-	|   7 = Notices             - Normal but significant events.
-	|   8 = Info                - Interesting events, like user logging in, etc.
+	|   5 = Warnings               - Exceptional occurrences that are not errors.
+	|   6 = Notices            - Normal but significant events.
+	|   7 = Info             - Interesting events, like user logging in, etc.
+	|   8 = Debug                - Detailed debug information.
 	|   9 = All Messages
 	|
 	| You can also pass an array with threshold levels to show individual error types
 	|
-	| 	array(1, 2, 3, 5) = Emergency, Alert, Critical, and Debug messages
+	| 	array(1, 2, 3, 8) = Emergency, Alert, Critical, and Debug messages
 	|
 	| For a live site you'll usually enable Critical or higher (3) to be logged otherwise
 	| your log files will fill up very fast.
 	|
 	*/
-	public $threshold = 0;
+	public $threshold = 3;
 
 	/*
 	|--------------------------------------------------------------------------
@@ -43,7 +43,6 @@ class Logger extends BaseConfig
 	|
 	*/
 	public $path = '';
-
 
 	/*
 	|--------------------------------------------------------------------------
@@ -91,43 +90,51 @@ class Logger extends BaseConfig
 			/*
 			 * The log levels that this handler will handle.
 			 */
-			'handles' => ['critical', 'alert', 'emergency', 'debug',
-							'error', 'info', 'notice', 'warning'],
+			'handles'         => [
+				'critical',
+				'alert',
+				'emergency',
+				'debug',
+				'error',
+				'info',
+				'notice',
+				'warning',
+			],
 
 			/*
 			 * Leave this BLANK unless you would like to set something other than the default
 			 * writeable/logs/ directory. Use a full getServer path with trailing slash.
 			 */
-		    'path' => WRITEPATH.'logs/',
+			'path'            => WRITEPATH . 'logs/',
 
-		    /*
-		     * The default filename extension for log files. The default 'php' allows for
-		     * protecting the log files via basic scripting, when they are to be stored
-		     * under a publicly accessible directory.
-		     *
-		     * Note: Leaving it blank will default to 'php'.
-		     */
-		    'fileExtension' => 'php',
+			/*
+			 * The default filename extension for log files. The default 'php' allows for
+			 * protecting the log files via basic scripting, when they are to be stored
+			 * under a publicly accessible directory.
+			 *
+			 * Note: Leaving it blank will default to 'php'.
+			 */
+			'fileExtension'   => 'php',
 
-		    /*
-		     * The file system permissions to be applied on newly created log files.
-		     *
-		     * IMPORTANT: This MUST be an integer (no quotes) and you MUST use octal
-		     * integer notation (i.e. 0700, 0644, etc.)
-		     */
-		    'filePermissions' => 0644
+			/*
+			 * The file system permissions to be applied on newly created log files.
+			 *
+			 * IMPORTANT: This MUST be an integer (no quotes) and you MUST use octal
+			 * integer notation (i.e. 0700, 0644, etc.)
+			 */
+			'filePermissions' => 0644,
 		],
 
 		/**
 		 * The ChromeLoggerHandler requires the use of the Chrome web browser
 		 * and the ChromeLogger extension. Uncomment this block to use it.
 		 */
-//	    'CodeIgniter\Log\Handlers\ChromeLoggerHandler' => [
-//		    /*
-//			 * The log levels that this handler will handle.
-//			 */
-//		    'handles' => ['critical', 'alert', 'emergency', 'debug',
-//		                  'error', 'info', 'notice', 'warning'],
-//	    ]
+		//      'CodeIgniter\Log\Handlers\ChromeLoggerHandler' => [
+		//          /*
+		//           * The log levels that this handler will handle.
+		//           */
+		//          'handles' => ['critical', 'alert', 'emergency', 'debug',
+		//                        'error', 'info', 'notice', 'warning'],
+		//      ]
 	];
 }

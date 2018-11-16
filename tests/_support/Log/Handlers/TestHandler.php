@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Log\Handlers;
+<?php namespace Tests\Support\Log\Handlers;
 
 /**
  * Class TestHandler
@@ -6,62 +6,29 @@
  * A simple LogHandler that stores the logs in memory.
  * Only used for testing purposes.
  */
-class TestHandler implements HandlerInterface
-{
-	/**
-	 * @var array
-	 */
-	protected $handles;
 
-	/**
-	 * @var string
-	 */
-	protected $dateFormat = 'Y-m-d H:i:s';
+class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
+{
 
 	/**
 	 * Local storage for logs.
+	 *
 	 * @var array
 	 */
 	protected static $logs = [];
 
+	/**
+	 * Where would the log be written?
+	 */
 	//--------------------------------------------------------------------
 
 	public function __construct(array $config)
 	{
-		$this->handles = $config['handles'] ?? [];
+		parent::__construct($config);
+		$this->handles     = $config['handles'] ?? [];
+		$this->destination = $this->path . 'log-' . date('Y-m-d') . '.' . $this->fileExtension;
 
 		self::$logs = [];
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Checks whether the Handler will handle logging items of this
-	 * log Level.
-	 *
-	 * @param $level
-	 *
-	 * @return bool
-	 */
-	public function canHandle(string $level): bool
-	{
-		return in_array($level, $this->handles);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Stores the date format to use while logging messages.
-	 *
-	 * @param string $format
-	 *
-	 * @return HandlerInterface
-	 */
-	public function setDateFormat(string $format)
-	{
-		$this->dateFormat = $format;
-
-		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -75,13 +42,13 @@ class TestHandler implements HandlerInterface
 	 * @param $level
 	 * @param $message
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function handle($level, $message): bool
 	{
 		$date = date($this->dateFormat);
 
-		self::$logs[] = strtoupper($level).' - '.$date.' --> '.$message;
+		self::$logs[] = strtoupper($level) . ' - ' . $date . ' --> ' . $message;
 
 		return true;
 	}
@@ -90,10 +57,8 @@ class TestHandler implements HandlerInterface
 
 	public static function getLogs()
 	{
-	    return self::$logs;
+		return self::$logs;
 	}
 
 	//--------------------------------------------------------------------
-
-
 }

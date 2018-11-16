@@ -1,7 +1,7 @@
 # CodeIgniter 4 Development
 
-[![Build Status](https://travis-ci.org/bcit-ci/CodeIgniter4.svg?branch=develop)](https://travis-ci.org/bcit-ci/CodeIgniter4)
-[![Coverage Status](https://coveralls.io/repos/github/bcit-ci/CodeIgniter4/badge.svg?branch=develop)](https://coveralls.io/github/bcit-ci/CodeIgniter4?branch=develop)
+[![Build Status](https://travis-ci.org/codeigniter4/CodeIgniter4.svg?branch=develop)](https://travis-ci.org/codeigniter4/CodeIgniter4)
+[![Coverage Status](https://coveralls.io/repos/github/codeigniter4/CodeIgniter4/badge.svg?branch=develop)](https://coveralls.io/github/codeigniter4/CodeIgniter4?branch=develop)
 <br>
 
 ## What is CodeIgniter?
@@ -18,7 +18,9 @@ More information about the plans for version 4 can be found in [the announcement
 
 ### Documentation
 
-The current documentation can be found [here](https://bcit-ci.github.io/CodeIgniter4/). As with the rest of the framwork, it is currently a work in progress, and will see changes over time to structure, explanations, etc.
+The current in-progress documentation can be found [here](https://codeigniter4.github.io/CodeIgniter4/). 
+As with the rest of the framework, it is currently a work in progress, and will see changes over time to structure, explanations, etc.
+
 
 ## Important Change with index.php
 
@@ -63,13 +65,20 @@ if you want to take the lead for one of them.
 
 We are not looking for out-of-scope contributions, only those that would be considered part of our controlled evolution!
 
-Please read the *Contributing to CodeIgniter* section in the user guide
+Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing.md) section in the user guide
 
 ## Server Requirements
-PHP version 7 or higher is required, with the following extensions installed: 
+PHP version 7.1 or higher is required, with the following extensions installed: 
 
-- intl
+- [intl](http://php.net/manual/en/intl.requirements.php)
+- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
 
+Additionally, make sure that the following extensions are enabled in your PHP:
+
+- json (enabled by default - don't turn it off)
+- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php)
+- xml (enabled by default - don't turn it off)
 
 ## Running CodeIgniter Tests
 Information on running CodeIgniter test suite can be found in the [README.md](tests/README.md) file in the tests directory.

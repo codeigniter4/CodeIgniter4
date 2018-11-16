@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,17 +27,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
 /**
  * Expected behavior of an HTTP request
+ *
+ * @mixin \CodeIgniter\HTTP\IncomingRequest
+ * @mixin \CodeIgniter\HTTP\CLIRequest
+ * @mixin \CodeIgniter\HTTP\CURLRequest
  */
 interface RequestInterface
 {
@@ -54,10 +58,10 @@ interface RequestInterface
 	/**
 	 * Validate an IP address
 	 *
-	 * @param        $ip     IP Address
-	 * @param string $which  IP protocol: 'ipv4' or 'ipv6'
+	 * @param string $ip    IP Address
+	 * @param string $which IP protocol: 'ipv4' or 'ipv6'
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isValidIP(string $ip, string $which = null): bool;
 
@@ -66,7 +70,7 @@ interface RequestInterface
 	/**
 	 * Get the request method.
 	 *
-	 * @param bool|false $upper Whether to return in upper or lower case.
+	 * @param boolean $upper Whether to return in upper or lower case.
 	 *
 	 * @return string
 	 */
@@ -77,8 +81,8 @@ interface RequestInterface
 	/**
 	 * Fetch an item from the $_SERVER array.
 	 *
-	 * @param null $index   Index for item to be fetched from $_SERVER
-	 * @param null $filter  A filter name to be applied
+	 * @param  string $index  Index for item to be fetched from $_SERVER
+	 * @param  null   $filter A filter name to be applied
 	 * @return mixed
 	 */
 	public function getServer($index = null, $filter = null);

@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
@@ -47,6 +48,12 @@ use Config\Services;
 class MigrateVersion extends BaseCommand
 {
 
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
 	protected $group = 'Database';
 
 	/**
@@ -91,6 +98,8 @@ class MigrateVersion extends BaseCommand
 
 	/**
 	 * Migrates the database up or down to get to the specified version.
+	 *
+	 * @param array $params
 	 */
 	public function run(array $params = [])
 	{
@@ -110,19 +119,20 @@ class MigrateVersion extends BaseCommand
 			exit();
 		}
 
-		CLI::write(sprintf(lang('Migrations.migToVersionPH'), $version), 'yellow');
+		CLI::write(sprintf(lang('Migrations.toVersionPH'), $version), 'yellow');
 
-		$namespace = CLI::getOption('n');
-		$group = CLI::getOption('g');
+		$namespace = $params['-n'] ?? CLI::getOption('n');
+		$group     = $params['-g'] ?? CLI::getOption('g');
+
 		try
 		{
 			$runner->version($version, $namespace, $group);
-		} catch (\Exception $e)
+			CLI::write('Done');
+		}
+		catch (\Exception $e)
 		{
 			$this->showError($e);
 		}
-
-		CLI::write('Done');
 	}
 
 }

@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +29,13 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Files\File;
 use CodeIgniter\Images\Exceptions\ImageException;
 
@@ -57,9 +58,10 @@ class Image extends File
 
 	/**
 	 * The image type constant.
+	 *
 	 * @see http://php.net/manual/en/image.constants.php
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $imageType;
 
@@ -82,11 +84,11 @@ class Image extends File
 	 * Makes a copy of itself to the new location. If no filename is provided
 	 * it will use the existing filename.
 	 *
-	 * @param string      $targetPath   The directory to store the file in
-	 * @param string|null $targetName   The new name of the copied file.
-	 * @param int         $perms        File permissions to be applied after copy.
+	 * @param string      $targetPath The directory to store the file in
+	 * @param string|null $targetName The new name of the copied file.
+	 * @param integer     $perms      File permissions to be applied after copy.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function copy(string $targetPath, string $targetName = null, int $perms = 0644)
 	{
@@ -96,17 +98,17 @@ class Image extends File
 
 		if (empty($targetName))
 		{
-			throw new ImageException('Invalid file name.');
+			throw ImageException::forInvalidFile($targetName);
 		}
 
-		if ( ! is_dir($targetPath))
+		if (! is_dir($targetPath))
 		{
 			mkdir($targetName, 0755, true);
 		}
 
-		if ( ! copy($this->getPathname(), "{$targetPath}{$targetName}"))
+		if (! copy($this->getPathname(), "{$targetPath}{$targetName}"))
 		{
-			throw new ImageException('Unable to copy image to new destination.');
+			throw ImageException::forCopyError($targetPath);
 		}
 
 		chmod("{$targetPath}/{$targetName}", $perms);
@@ -121,35 +123,39 @@ class Image extends File
 	 *
 	 * A helper function that gets info about the file
 	 *
-	 * @param    string
-	 * @param    bool
+	 * @param boolean $return
 	 *
-	 * @return    mixed
+	 * @return mixed
 	 */
 	public function getProperties($return = false)
 	{
 		$path = $this->getPathname();
 
-		$vals = getimagesize($path);
-		$types = [1 => 'gif', 2 => 'jpeg', 3 => 'png'];
-		$mime = (isset($types[$vals[2]])) ? 'image/' . $types[$vals[2]] : 'image/jpg';
+		$vals  = getimagesize($path);
+		$types = [
+			1 => 'gif',
+			2 => 'jpeg',
+			3 => 'png',
+		];
+
+		$mime = 'image/' . ($types[$vals[2]] ?? 'jpg');
 
 		if ($return === true)
 		{
 			return [
-				'width'		 => $vals[0],
-				'height'	 => $vals[1],
+				'width'      => $vals[0],
+				'height'     => $vals[1],
 				'image_type' => $vals[2],
-				'size_str'	 => $vals[3],
-				'mime_type'	 => $mime,
+				'size_str'   => $vals[3],
+				'mime_type'  => $mime,
 			];
 		}
 
-		$this->origWidth = $vals[0];
+		$this->origWidth  = $vals[0];
 		$this->origHeight = $vals[1];
-		$this->imageType = $vals[2];
-		$this->sizeStr = $vals[3];
-		$this->mime = $mime;
+		$this->imageType  = $vals[2];
+		$this->sizeStr    = $vals[3];
+		$this->mime       = $mime;
 
 		return true;
 	}

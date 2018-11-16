@@ -7,18 +7,21 @@ class Filters extends BaseConfig
 	// Makes reading things below nicer,
 	// and simpler to change out script that's used.
 	public $aliases = [
-		'csrf' 	  => \App\Filters\CSRF::class,
-		'toolbar' => \App\Filters\DebugToolbar::class,
+		'csrf'     => \App\Filters\CSRF::class,
+		'toolbar'  => \App\Filters\DebugToolbar::class,
+		'honeypot' => \App\Filters\Honeypot::class,
 	];
 
 	// Always applied before every request
 	public $globals = [
 		'before' => [
-			// 'csrf'
+			//'honeypot'
+			// 'csrf',
 		],
 		'after'  => [
-			'toolbar'
-		]
+			'toolbar',
+			//'honeypot'
+		],
 	];
 
 	// Works on all of a particular HTTP method

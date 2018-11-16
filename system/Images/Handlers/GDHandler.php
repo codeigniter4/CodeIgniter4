@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +29,13 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Images\Exceptions\ImageException;
 
 class GDHandler extends BaseHandler
@@ -42,21 +43,17 @@ class GDHandler extends BaseHandler
 
 	public $version;
 
-	/**
-	 * Stores image resource in memory.
-	 *
-	 * @var
-	 */
-	protected $resource;
-
 	public function __construct($config = null)
 	{
 		parent::__construct($config);
 
-		if ( ! extension_loaded('gd'))
+		// We should never see this, so can't test it
+		// @codeCoverageIgnoreStart
+		if (! extension_loaded('gd'))
 		{
-			throw new ImageException('GD Extension is not loaded.');
+			throw ImageException::forMissingExtension('GD');
 		}
+		// @codeCoverageIgnoreEnd
 	}
 
 	//--------------------------------------------------------------------
@@ -65,17 +62,14 @@ class GDHandler extends BaseHandler
 	 * Handles the rotation of an image resource.
 	 * Doesn't save the image, but replaces the current resource.
 	 *
-	 * @param int $angle
+	 * @param integer $angle
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function _rotate(int $angle)
 	{
 		// Create the image handle
-		if ( ! ($srcImg = $this->createImage()))
-		{
-			return false;
-		}
+		$srcImg = $this->createImage();
 
 		// Set the background color
 		// This won't work with transparent PNG files so we are
@@ -85,7 +79,7 @@ class GDHandler extends BaseHandler
 		$white = imagecolorallocate($srcImg, 255, 255, 255);
 
 		// Rotate it!
-		$destImg = imagerotate($this->resource, $angle, $white);
+		$destImg = imagerotate($srcImg, $angle, $white);
 
 		// Kill the file handles
 		imagedestroy($srcImg);
@@ -93,6 +87,46 @@ class GDHandler extends BaseHandler
 		$this->resource = $destImg;
 
 		return true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Flattens transparencies
+	 *
+	 * @param integer $red
+	 * @param integer $green
+	 * @param integer $blue
+	 *
+	 * @return $this
+	 */
+	public function _flatten(int $red = 255, int $green = 255, int $blue = 255)
+	{
+		$srcImg = $this->createImage();
+
+		if (function_exists('imagecreatetruecolor'))
+		{
+			$create = 'imagecreatetruecolor';
+			$copy   = 'imagecopyresampled';
+		}
+		else
+		{
+			$create = 'imagecreate';
+			$copy   = 'imagecopyresized';
+		}
+		$dest = $create($this->width, $this->height);
+
+		$matte = imagecolorallocate($dest, $red, $green, $blue);
+
+		imagefilledrectangle($dest, 0, 0, $this->width, $this->height, $matte);
+		imagecopy($dest, $srcImg, 0, 0, 0, 0, $this->width, $this->height);
+
+		// Kill the file handles
+		imagedestroy($srcImg);
+
+		$this->resource = $dest;
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -108,14 +142,14 @@ class GDHandler extends BaseHandler
 	{
 		$srcImg = $this->createImage();
 
-		$width = $this->image->origWidth;
+		$width  = $this->image->origWidth;
 		$height = $this->image->origHeight;
 
 		if ($direction === 'horizontal')
 		{
-			for ($i = 0; $i < $height; $i ++ )
+			for ($i = 0; $i < $height; $i ++)
 			{
-				$left = 0;
+				$left  = 0;
 				$right = $width - 1;
 
 				while ($left < $right)
@@ -133,9 +167,9 @@ class GDHandler extends BaseHandler
 		}
 		else
 		{
-			for ($i = 0; $i < $width; $i ++ )
+			for ($i = 0; $i < $width; $i ++)
 			{
-				$top = 0;
+				$top    = 0;
 				$bottom = $height - 1;
 
 				while ($top < $bottom)
@@ -162,7 +196,7 @@ class GDHandler extends BaseHandler
 	/**
 	 * Get GD version
 	 *
-	 * @return    mixed
+	 * @return mixed
 	 */
 	public function getVersion()
 	{
@@ -181,7 +215,7 @@ class GDHandler extends BaseHandler
 	/**
 	 * Resizes the image.
 	 *
-	 * @return bool|\CodeIgniter\Images\Handlers\GDHandler
+	 * @return boolean|\CodeIgniter\Images\Handlers\GDHandler
 	 */
 	public function _resize()
 	{
@@ -193,9 +227,9 @@ class GDHandler extends BaseHandler
 	/**
 	 * Crops the image.
 	 *
-	 * @return bool|\CodeIgniter\Images\Handlers\GDHandler
+	 * @return boolean|\CodeIgniter\Images\Handlers\GDHandler
 	 */
-	public function _crops()
+	public function _crop()
 	{
 		return $this->process('crop');
 	}
@@ -211,20 +245,20 @@ class GDHandler extends BaseHandler
 	 */
 	protected function process(string $action)
 	{
-		$origWidth = $this->image->origWidth;
+		$origWidth  = $this->image->origWidth;
 		$origHeight = $this->image->origHeight;
 
-		if ($action == 'crop')
+		if ($action === 'crop')
 		{
 			// Reassign the source width/height if cropping
-			$origWidth = $this->width;
+			$origWidth  = $this->width;
 			$origHeight = $this->height;
 
 			// Modify the "original" width/height to the new
 			// values so that methods that come after have the
 			// correct size to work with.
 			$this->image->origHeight = $this->height;
-			$this->image->origWidth = $this->width;
+			$this->image->origWidth  = $this->width;
 		}
 
 		// Create the image handle
@@ -233,12 +267,12 @@ class GDHandler extends BaseHandler
 		if (function_exists('imagecreatetruecolor'))
 		{
 			$create = 'imagecreatetruecolor';
-			$copy = 'imagecopyresampled';
+			$copy   = 'imagecopyresampled';
 		}
 		else
 		{
 			$create = 'imagecreate';
-			$copy = 'imagecopyresized';
+			$copy   = 'imagecopyresized';
 		}
 
 		$dest = $create($this->width, $this->height);
@@ -269,9 +303,9 @@ class GDHandler extends BaseHandler
 	 *          ->save();
 	 *
 	 * @param string|null $target
-	 * @param int         $quality
+	 * @param integer     $quality
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function save(string $target = null, int $quality = 90)
 	{
@@ -280,40 +314,40 @@ class GDHandler extends BaseHandler
 		switch ($this->image->imageType)
 		{
 			case IMAGETYPE_GIF:
-				if ( ! function_exists('imagegif'))
+				if (! function_exists('imagegif'))
 				{
-					throw new ImageException(lang('images.unsupportedImagecreate') . ' ' . lang('images.gifNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.gifNotSupported'));
 				}
 
-				if ( ! @imagegif($this->resource, $target))
+				if (! @imagegif($this->resource, $target))
 				{
-					throw new ImageException(lang('images.saveFailed'));
+					throw ImageException::forSaveFailed();
 				}
 				break;
 			case IMAGETYPE_JPEG:
-				if ( ! function_exists('imagejpeg'))
+				if (! function_exists('imagejpeg'))
 				{
-					throw new ImageException(lang('images.unsupportedImagecreate') . ' ' . lang('images.jpgNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.jpgNotSupported'));
 				}
 
-				if ( ! @imagejpeg($this->resource, $target, $quality))
+				if (! @imagejpeg($this->resource, $target, $quality))
 				{
-					throw new ImageException(lang('images.saveFailed'));
+					throw ImageException::forSaveFailed();
 				}
 				break;
 			case IMAGETYPE_PNG:
-				if ( ! function_exists('imagepng'))
+				if (! function_exists('imagepng'))
 				{
-					throw new ImageException(lang('images.unsupportedImagecreate') . ' ' . lang('images.pngNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.pngNotSupported'));
 				}
 
-				if ( ! @imagepng($this->resource, $target))
+				if (! @imagepng($this->resource, $target))
 				{
-					throw new ImageException(lang('images.saveFailed'));
+					throw ImageException::forSaveFailed();
 				}
 				break;
 			default:
-				throw new ImageException(lang('images.unsupportedImagecreate'));
+				throw ImageException::forInvalidImageCreate();
 				break;
 		}
 
@@ -332,10 +366,10 @@ class GDHandler extends BaseHandler
 	 * This simply creates an image resource handle
 	 * based on the type of image being processed
 	 *
-	 * @param    string
-	 * @param    string
+	 * @param string
+	 * @param string
 	 *
-	 * @return    resource|bool
+	 * @return resource|boolean
 	 */
 	protected function createImage($path = '', $imageType = '')
 	{
@@ -357,28 +391,28 @@ class GDHandler extends BaseHandler
 		switch ($imageType)
 		{
 			case IMAGETYPE_GIF:
-				if ( ! function_exists('imagecreatefromgif'))
+				if (! function_exists('imagecreatefromgif'))
 				{
-					throw new ImageException(lang('images.gifNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.gifNotSupported'));
 				}
 
 				return imagecreatefromgif($path);
 			case IMAGETYPE_JPEG:
-				if ( ! function_exists('imagecreatefromjpeg'))
+				if (! function_exists('imagecreatefromjpeg'))
 				{
-					throw new ImageException(lang('images.jpgNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.jpgNotSupported'));
 				}
 
 				return imagecreatefromjpeg($path);
 			case IMAGETYPE_PNG:
-				if ( ! function_exists('imagecreatefrompng'))
+				if (! function_exists('imagecreatefrompng'))
 				{
-					throw new ImageException(lang('images.pngNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.pngNotSupported'));
 				}
 
 				return imagecreatefrompng($path);
 			default:
-				throw new ImageException(lang('images.unsupportedImagecreate'));
+				throw ImageException::forInvalidImageCreate('Ima');
 		}
 	}
 
@@ -406,7 +440,7 @@ class GDHandler extends BaseHandler
 		// Set font width and height
 		// These are calculated differently depending on
 		// whether we are using the true type font or not
-		if ( ! empty($options['fontPath']))
+		if (! empty($options['fontPath']))
 		{
 			if (function_exists('imagettfbbox'))
 			{
@@ -424,12 +458,12 @@ class GDHandler extends BaseHandler
 		}
 		else
 		{
-			$fontwidth = imagefontwidth($options['fontSize']);
+			$fontwidth  = imagefontwidth($options['fontSize']);
 			$fontheight = imagefontheight($options['fontSize']);
 		}
 
 		$options['fontheight'] = $fontheight;
-		$options['fontwidth'] = $fontwidth;
+		$options['fontwidth']  = $fontwidth;
 
 		// Set base X and Y axis values
 		$xAxis = $options['hOffset'] + $options['padding'];
@@ -476,9 +510,9 @@ class GDHandler extends BaseHandler
 	/**
 	 * Handler-specific method for overlaying text on an image.
 	 *
-	 * @param string $text
-	 * @param array  $options
-	 * @param bool   $isShadow  Whether we are drawing the dropshadow or actual text
+	 * @param string  $text
+	 * @param array   $options
+	 * @param boolean $isShadow Whether we are drawing the dropshadow or actual text
 	 */
 	protected function textOverlay(string $text, array $options = [], bool $isShadow = false)
 	{
@@ -502,7 +536,7 @@ class GDHandler extends BaseHandler
 		$yAxis = $isShadow ? $options['yShadow'] : $options['yAxis'];
 
 		// Add the shadow to the source image
-		if ( ! empty($options['fontPath']))
+		if (! empty($options['fontPath']))
 		{
 			// We have to add fontheight because imagettftext locates the bottom left corner, not top-left corner.
 			imagettftext($src, $options['fontSize'], 0, $xAxis, $yAxis + $options['fontheight'], $color, $options['fontPath'], $text);
@@ -516,4 +550,15 @@ class GDHandler extends BaseHandler
 	}
 
 	//--------------------------------------------------------------------
+
+	public function _getWidth()
+	{
+		return imagesx($this->resource);
+	}
+
+	public function _getHeight()
+	{
+		return imagesy($this->resource);
+	}
+
 }

@@ -7,7 +7,4 @@ class RegistrarConfig extends \CodeIgniter\Config\BaseConfig
 		'baz'
 	];
 
-	protected $registrars = [
-		\Tests\Support\Config\Registrar::class
-	];
 }

@@ -2,32 +2,34 @@
 
 class SecurityHelperTest extends \CIUnitTestCase
 {
-    public function setUp()
-    {
-        helper('security');
-    }
+	public function setUp()
+	{
+		parent::setUp();
 
-    public function testSanitizeFilenameSimpleSuccess()
-    {
-        $this->assertEquals('hello.doc', sanitize_filename('hello.doc'));
-    }
+		helper('security');
+	}
 
-    public function testSanitizeFilenameStripsExtras()
-    {
-        $filename = './<!--foo -->';
-        $this->assertEquals('foo ', sanitize_filename($filename));
-    }
+	public function testSanitizeFilenameSimpleSuccess()
+	{
+		$this->assertEquals('hello.doc', sanitize_filename('hello.doc'));
+	}
 
-    public function testStripImageTags()
-    {
-        $this->assertEquals('http://example.com/spacer.gif', strip_image_tags('http://example.com/spacer.gif'));
+	public function testSanitizeFilenameStripsExtras()
+	{
+		$filename = './<!--foo -->';
+		$this->assertEquals('foo ', sanitize_filename($filename));
+	}
 
-        $this->assertEquals('http://example.com/spacer.gif', strip_image_tags('<img src="http://example.com/spacer.gif" alt="Who needs CSS when you have a spacer.gif?" />'));
-    }
+	public function testStripImageTags()
+	{
+		$this->assertEquals('http://example.com/spacer.gif', strip_image_tags('http://example.com/spacer.gif'));
 
-    function test_encode_php_tags()
-    {
-        $this->assertEquals('&lt;? echo $foo; ?&gt;', encode_php_tags('<? echo $foo; ?>'));
-    }
+		$this->assertEquals('http://example.com/spacer.gif', strip_image_tags('<img src="http://example.com/spacer.gif" alt="Who needs CSS when you have a spacer.gif?" />'));
+	}
+
+	function test_encode_php_tags()
+	{
+		$this->assertEquals('&lt;? echo $foo; ?&gt;', encode_php_tags('<? echo $foo; ?>'));
+	}
 
 }

@@ -2,6 +2,10 @@
 Database Metadata
 #################
 
+.. contents::
+    :local:
+    :depth: 2
+
 **************
 Table MetaData
 **************
@@ -23,7 +27,6 @@ you are currently connected to. Example::
 		echo $table;
 	}
 
-
 Determine If a Table Exists
 ===========================
 
@@ -38,7 +41,6 @@ running an operation on it. Returns a boolean TRUE/FALSE. Usage example::
 	}
 
 .. note:: Replace *table_name* with the name of the table you are looking for.
-
 
 **************
 Field MetaData
@@ -72,7 +74,6 @@ calling the function from your query result object::
 		echo $field;
 	}
 
-
 Determine If a Field is Present in a Table
 ==========================================
 
@@ -89,7 +90,6 @@ performing an action. Returns a boolean TRUE/FALSE. Usage example::
 .. note:: Replace *field_name* with the name of the column you are looking
 	for, and replace *table_name* with the name of the table you are
 	looking for.
-
 
 Retrieve Field Metadata
 =======================
@@ -118,7 +118,7 @@ Usage example::
 If you have run a query already you can use the result object instead of
 supplying the table name::
 
-	$query = $db->query("YOUR QUERY");
+	$query  = $db->query("YOUR QUERY");
 	$fields = $query->fieldData();
 
 The following data is available from this function if supported by your

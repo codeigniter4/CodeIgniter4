@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,21 +27,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
 /**
- * CI Help command for the ci.php script.
+ * CI Help command for the spark script.
  *
- * Lists the basic usage information for the ci.php script,
+ * Lists the basic usage information for the spark script,
  * and provides a way to list help for other commands.
  *
  * @package CodeIgniter\Commands
@@ -49,6 +50,12 @@ use CodeIgniter\CLI\CLI;
 class Help extends BaseCommand
 {
 
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
 	protected $group = 'CodeIgniter';
 
 	/**
@@ -77,21 +84,21 @@ class Help extends BaseCommand
 	 *
 	 * @var array
 	 */
-	protected $arguments = array(
-		'command_name' => 'The command name [default: "help"]'
-	);
+	protected $arguments = [
+		'command_name' => 'The command name [default: "help"]',
+	];
 
 	/**
 	 * the Command's Options
 	 *
 	 * @var array
 	 */
-	protected $options = array();
+	protected $options = [];
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Displays the help for the ci.php cli script itself.
+	 * Displays the help for the spark cli script itself.
 	 *
 	 * @param array $params
 	 */
@@ -104,7 +111,7 @@ class Help extends BaseCommand
 		}
 
 		$commands = $this->commands->getCommands();
-		$class = new $commands[$command]['class']($this->logger, $this->commands);
+		$class    = new $commands[$command]['class']($this->logger, $this->commands);
 
 		$class->showHelp();
 	}

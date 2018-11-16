@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,16 +27,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
-use CodeIgniter\Log\Handlers\BaseHandler;
-use CodeIgniter\Log\Handlers\HandlerInterface;
 
 /**
  * Log error messages to file system
@@ -46,20 +44,22 @@ class FileHandler extends BaseHandler implements HandlerInterface
 
 	/**
 	 * Folder to hold logs
-	 * 
-	 * @var type 
+	 *
+	 * @var string
 	 */
 	protected $path;
 
 	/**
 	 * Extension to use for log files
-	 * @var type 
+	 *
+	 * @var string
 	 */
 	protected $fileExtension;
 
 	/**
 	 * Permissions for new log files
-	 * @var type 
+	 *
+	 * @var integer
 	 */
 	protected $filePermissions;
 
@@ -67,6 +67,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 
 	/**
 	 * Constructor
+	 *
 	 * @param array $config
 	 */
 	public function __construct(array $config = [])
@@ -92,7 +93,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 	 * @param $level
 	 * @param $message
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function handle($level, $message): bool
 	{
@@ -100,18 +101,18 @@ class FileHandler extends BaseHandler implements HandlerInterface
 
 		$msg = '';
 
-		if ( ! file_exists($filepath))
+		if (! file_exists($filepath))
 		{
 			$newfile = true;
 
 			// Only add protection to php files
 			if ($this->fileExtension === 'php')
 			{
-				$msg .= "<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>\n\n";
+				$msg .= "<?php defined('BASEPATH') || exit('No direct script access allowed'); ?>\n\n";
 			}
 		}
 
-		if ( ! $fp = @fopen($filepath, 'ab'))
+		if (! $fp = @fopen($filepath, 'ab'))
 		{
 			return false;
 		}
@@ -119,10 +120,10 @@ class FileHandler extends BaseHandler implements HandlerInterface
 		// Instantiating DateTime with microseconds appended to initial date is needed for proper support of this format
 		if (strpos($this->dateFormat, 'u') !== false)
 		{
-			$microtime_full = microtime(true);
-			$microtime_short = sprintf("%06d", ($microtime_full - floor($microtime_full)) * 1000000);
-			$date = new \DateTime(date('Y-m-d H:i:s.' . $microtime_short, $microtime_full));
-			$date = $date->format($this->dateFormat);
+			$microtime_full  = microtime(true);
+			$microtime_short = sprintf('%06d', ($microtime_full - floor($microtime_full)) * 1000000);
+			$date            = new \DateTime(date('Y-m-d H:i:s.' . $microtime_short, $microtime_full));
+			$date            = $date->format($this->dateFormat);
 		}
 		else
 		{

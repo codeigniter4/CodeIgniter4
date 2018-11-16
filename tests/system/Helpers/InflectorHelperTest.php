@@ -1,20 +1,21 @@
-<?php namespace CodeIgniter\HTTP;
-
-use Config\App;
+<?php
+namespace CodeIgniter\Helpers;
 
 final class InflectorHelperTest extends \CIUnitTestCase
 {
 
 	public function setUp()
 	{
-	    helper('inflector');
+		parent::setUp();
+
+		helper('inflector');
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testSingular()
 	{
-		$strings = 
+		$strings =
 		[
 			'matrices'  => 'matrix',
 			'oxen'      => 'ox',
@@ -41,7 +42,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 			'dogs'      => 'dog',
 			'cats'      => 'cat',
 			'families'  => 'family',
-			'countries' => 'country'
+			'countries' => 'country',
 		];
 
 		foreach ($strings as $pluralizedString => $singularizedString)
@@ -55,7 +56,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function testPlural()
 	{
-		$strings = 
+		$strings =
 		[
 			'searches'  => 'search',
 			'matrices'  => 'matrix',
@@ -81,7 +82,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 			'dogs'      => 'dog',
 			'cats'      => 'cat',
 			'families'  => 'family',
-			'countries' => 'country'
+			'countries' => 'country',
 		];
 
 		foreach ($strings as $pluralizedString => $singularizedString)
@@ -95,10 +96,10 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function testCamelize()
 	{
-		$strings = 
+		$strings =
 		[
 			'hello from codeIgniter 4' => 'helloFromCodeIgniter4',
-			'hello_world'              => 'helloWorld'
+			'hello_world'              => 'helloWorld',
 		];
 
 		foreach ($strings as $lowerCasedString => $camelizedString)
@@ -112,10 +113,10 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function testUnderscore()
 	{
-		$strings = 
+		$strings =
 		[
 			'Hello From CodeIgniter 4' => 'Hello_From_CodeIgniter_4',
-			'hello world'              => 'hello_world'
+			'hello world'              => 'hello_world',
 		];
 
 		foreach ($strings as $spaced => $underscore)
@@ -129,8 +130,14 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function testHumanize()
 	{
-		$underscored = ['Hello_From_CodeIgniter_4', 'Hello From CodeIgniter 4'];
-		$dashed      = ['hello-world'             , 'Hello World'];
+		$underscored = [
+			'Hello_From_CodeIgniter_4',
+			'Hello From CodeIgniter 4',
+		];
+		$dashed      = [
+			'hello-world',
+			'Hello World',
+		];
 
 		$humanizedUnderscore = humanize($underscored[0]);
 		$humanizedDash       = humanize($dashed[0], '-');
@@ -143,20 +150,20 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function testIsCountable()
 	{
-		$words = 
+		$words =
 		[
 			'tip'        => 'advice',
 			'fight'      => 'bravery',
 			'thing'      => 'equipment',
 			'deocration' => 'jewelry',
 			'line'       => 'series',
-			'letter'     => 'spelling'
+			'letter'     => 'spelling',
 		];
 
 		foreach ($words as $countable => $unCountable)
 		{
-			$this->assertEquals(is_countable($countable), true);
-			$this->assertEquals(is_countable($unCountable), false);
+			$this->assertTrue(is_pluralizable($countable));
+			$this->assertFalse(is_pluralizable($unCountable));
 		}
 	}
 
@@ -164,10 +171,10 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function testDasherize()
 	{
-		$strings = 
+		$strings =
 		[
 			'hello_world'              => 'hello-world',
-			'Hello_From_CodeIgniter_4' => 'Hello-From-CodeIgniter-4'
+			'Hello_From_CodeIgniter_4' => 'Hello-From-CodeIgniter-4',
 		];
 
 		foreach ($strings as $underscored => $dashed)
@@ -181,7 +188,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function testOrdinal()
 	{
-		$suffixes = 
+		$suffixes =
 		[
 			'st' => 1,
 			'nd' => 2,
@@ -192,10 +199,10 @@ final class InflectorHelperTest extends \CIUnitTestCase
 			'st' => 21,
 			'nd' => 22,
 			'rd' => 23,
-			'th' => 24
+			'th' => 24,
 		];
 
-		foreach ($suffixes as $suffix => $number) 
+		foreach ($suffixes as $suffix => $number)
 		{
 			$ordinal = ordinal($number);
 			$this->assertEquals($suffix, $ordinal);
@@ -206,7 +213,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function testOrdinalize()
 	{
-		$suffixedNumbers = 
+		$suffixedNumbers =
 		[
 			'1st'  => 1,
 			'2nd'  => 2,
@@ -217,10 +224,10 @@ final class InflectorHelperTest extends \CIUnitTestCase
 			'21st' => 21,
 			'22nd' => 22,
 			'23rd' => 23,
-			'24th' => 24
+			'24th' => 24,
 		];
 
-		foreach ($suffixedNumbers as $suffixed => $number) 
+		foreach ($suffixedNumbers as $suffixed => $number)
 		{
 			$ordinalized = ordinalize($number);
 			$this->assertEquals($suffixed, $ordinalized);

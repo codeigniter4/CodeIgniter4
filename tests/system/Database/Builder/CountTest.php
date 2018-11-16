@@ -1,7 +1,7 @@
 <?php namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\Database\MockConnection;
+use Tests\Support\Database\MockConnection;
 
 class CountTest extends \CIUnitTestCase
 {
@@ -11,6 +11,8 @@ class CountTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->db = new MockConnection([]);
 	}
 
@@ -20,9 +22,9 @@ class CountTest extends \CIUnitTestCase
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
 
-		$expectedSQL   = "SELECT COUNT(*) AS \"numrows\" FROM \"jobs\"";
+		$expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "jobs"';
 
-		$this->assertEquals($expectedSQL, $builder->countAll(true));
+		$this->assertEquals($expectedSQL, $builder->countAll(true, true));
 	}
 
 	//--------------------------------------------------------------------
@@ -31,9 +33,9 @@ class CountTest extends \CIUnitTestCase
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
 
-		$answer = $builder->where('id >', 3)->countAllResults(null, true);
+		$answer = $builder->where('id >', 3)->countAllResults(false, true);
 
-		$expectedSQL   = "SELECT COUNT(*) AS \"numrows\" FROM \"jobs\" WHERE \"id\" > :id";
+		$expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "jobs" WHERE "id" > :id:';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
 	}

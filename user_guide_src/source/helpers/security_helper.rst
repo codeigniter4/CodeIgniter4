@@ -5,7 +5,7 @@ Security Helper
 The Security Helper file contains security related functions.
 
 .. contents::
-:local:
+  :local:
 
 Loading this Helper
 ===================
@@ -43,7 +43,6 @@ The following functions are available:
     	Example::
 
 		$string = strip_image_tags($string);
-
 
 .. php:function:: encode_php_tags($str)
 

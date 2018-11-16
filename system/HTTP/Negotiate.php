@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+
+namespace CodeIgniter\HTTP;
 
 /**
  * CodeIgniter
@@ -7,7 +9,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,14 +29,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 /**
  * Class Negotiate
@@ -43,7 +47,7 @@
  * type match between what the application supports and what the requesting
  * getServer wants.
  *
- * @see http://tools.ietf.org/html/rfc7231#section-5.3
+ * @see     http://tools.ietf.org/html/rfc7231#section-5.3
  * @package CodeIgniter\HTTP
  */
 class Negotiate
@@ -51,8 +55,8 @@ class Negotiate
 
 	/**
 	 * Request
-	 * 
-	 * @var \CodeIgniter\HTTP\RequestInterface
+	 *
+	 * @var \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\IncomingRequest
 	 */
 	protected $request;
 
@@ -60,12 +64,12 @@ class Negotiate
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface $request
 	 */
 	public function __construct(\CodeIgniter\HTTP\RequestInterface $request = null)
 	{
-		if ( ! is_null($request))
+		if (! is_null($request))
 		{
 			$this->request = $request;
 		}
@@ -97,9 +101,9 @@ class Negotiate
 	 * If no match is found, the first, highest-ranking client requested
 	 * type is returned.
 	 *
-	 * @param array $supported
-	 * @param bool  $strictMatch If TRUE, will return an empty string when no match found.
-	 *                           If FALSE, will return the first supported element.
+	 * @param array   $supported
+	 * @param boolean $strictMatch If TRUE, will return an empty string when no match found.
+	 *                             If FALSE, will return the first supported element.
 	 *
 	 * @return string
 	 */
@@ -187,11 +191,11 @@ class Negotiate
 	 *
 	 * Portions of this code base on Aura.Accept library.
 	 *
-	 * @param array  $supported    App-supported values
-	 * @param string $header       header string
-	 * @param bool   $enforceTypes If TRUE, will compare media types and sub-types.
-	 * @param bool   $strictMatch  If TRUE, will return empty string on no match.
-	 *                             If FALSE, will return the first supported element.
+	 * @param array   $supported    App-supported values
+	 * @param string  $header       header string
+	 * @param boolean $enforceTypes If TRUE, will compare media types and sub-types.
+	 * @param boolean $strictMatch  If TRUE, will return empty string on no match.
+	 *                              If FALSE, will return the first supported element.
 	 *
 	 * @return string Best match
 	 */
@@ -199,7 +203,7 @@ class Negotiate
 	{
 		if (empty($supported))
 		{
-			throw new \InvalidArgumentException('You must provide an array of supported values to all Negotiations.');
+			throw HTTPException::forEmptySupportedNegotiations();
 		}
 
 		if (empty($header))
@@ -209,23 +213,16 @@ class Negotiate
 
 		$acceptable = $this->parseHeader($header);
 
-		// If no acceptable values exist, return the
-		// first that we support.
-		if (empty($acceptable))
-		{
-			return $supported[0];
-		}
-
 		foreach ($acceptable as $accept)
 		{
 			// if acceptable quality is zero, skip it.
-			if ($accept['q'] == 0)
+			if ($accept['q'] === 0.0)
 			{
 				continue;
 			}
 
 			// if acceptable value is "anything", return the first available
-			if ($accept['value'] == '*' || $accept['value'] == '*/*')
+			if ($accept['value'] === '*' || $accept['value'] === '*/*')
 			{
 				return $supported[0];
 			}
@@ -257,7 +254,7 @@ class Negotiate
 	 */
 	public function parseHeader(string $header)
 	{
-		$results = [];
+		$results    = [];
 		$acceptable = explode(',', $header);
 
 		foreach ($acceptable as $value)
@@ -268,11 +265,11 @@ class Negotiate
 
 			unset($pairs[0]);
 
-			$parameters = array();
+			$parameters = [];
 
 			foreach ($pairs as $pair)
 			{
-				$param = array();
+				$param = [];
 				preg_match(
 						'/^(?P<name>.+?)=(?P<quoted>"|\')?(?P<value>.*?)(?:\k<quoted>)?$/', $pair, $param
 				);
@@ -288,15 +285,15 @@ class Negotiate
 			}
 
 			$results[] = [
-				'value'	 => trim($value),
-				'q'		 => (float) $quality,
-				'params' => $parameters
+				'value'  => trim($value),
+				'q'      => (float) $quality,
+				'params' => $parameters,
 			];
 		}
 
 		// Sort to get the highest results first
 		usort($results, function ($a, $b) {
-			if ($a['q'] == $b['q'])
+			if ($a['q'] === $b['q'])
 			{
 				$a_ast = substr_count($a['value'], '*');
 				$b_ast = substr_count($b['value'], '*');
@@ -318,7 +315,7 @@ class Negotiate
 				// This seems backwards, but needs to be that way
 				// due to the way PHP7 handles ordering or array
 				// elements created by reference.
-				if ($a_ast == $b_ast)
+				if ($a_ast === $b_ast)
 				{
 					return count($b['params']) - count($a['params']);
 				}
@@ -337,22 +334,22 @@ class Negotiate
 
 	/**
 	 * Match-maker
-	 * 
-	 * @param array $acceptable
-	 * @param string $supported
-	 * @param bool $enforceTypes
+	 *
+	 * @param  array   $acceptable
+	 * @param  string  $supported
+	 * @param  boolean $enforceTypes
 	 * @return boolean
 	 */
 	protected function match(array $acceptable, string $supported, bool $enforceTypes = false)
 	{
 		$supported = $this->parseHeader($supported);
-		if (is_array($supported) && count($supported) == 1)
+		if (is_array($supported) && count($supported) === 1)
 		{
 			$supported = $supported[0];
 		}
 
 		// Is it an exact match?
-		if ($acceptable['value'] == $supported['value'])
+		if ($acceptable['value'] === $supported['value'])
 		{
 			return $this->matchParameters($acceptable, $supported);
 		}
@@ -376,19 +373,19 @@ class Negotiate
 	 * @param array $acceptable
 	 * @param array $supported
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function matchParameters(array $acceptable, array $supported): bool
 	{
-		if (count($acceptable['params']) != count($supported['params']))
+		if (count($acceptable['params']) !== count($supported['params']))
 		{
 			return false;
 		}
 
 		foreach ($supported['params'] as $label => $value)
 		{
-			if ( ! isset($acceptable['params'][$label]) ||
-					$acceptable['params'][$label] != $value)
+			if (! isset($acceptable['params'][$label]) ||
+					$acceptable['params'][$label] !== $value)
 			{
 				return false;
 			}
@@ -406,7 +403,7 @@ class Negotiate
 	 * @param array $acceptable
 	 * @param array $supported
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function matchTypes(array $acceptable, array $supported): bool
 	{
@@ -414,19 +411,19 @@ class Negotiate
 		list($sType, $sSubType) = explode('/', $supported['value']);
 
 		// If the types don't match, we're done.
-		if ($aType != $sType)
+		if ($aType !== $sType)
 		{
 			return false;
 		}
 
 		// If there's an asterisk, we're cool
-		if ($aSubType == '*')
+		if ($aSubType === '*')
 		{
 			return true;
 		}
 
 		// Otherwise, subtypes must match also.
-		return $aSubType == $sSubType;
+		return $aSubType === $sSubType;
 	}
 
 	//--------------------------------------------------------------------

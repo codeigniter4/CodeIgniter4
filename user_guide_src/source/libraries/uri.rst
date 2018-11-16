@@ -6,8 +6,9 @@ CodeIngiter provides an object oriented solution for working with URI's in your 
 simple to ensure that the structure is always correct, no matter how complex the URI might be, as well as adding
 relative URI to an existing one and have it resolved safely and correctly.
 
-.. contents:: Page Contents
-
+.. contents::
+    :local:
+    :depth: 2
 
 ======================
 Creating URI instances
@@ -38,7 +39,6 @@ a controller that extends ``CodeIgniter\Controller`` you can get it like::
 
 Second, you can use one of the functions available in the **url_helper**::
 
-	helper('url');
 	$uri = current_url(true);
 
 You must pass ``true`` as the first parameter, otherwise it will return the string representation of the current URL.

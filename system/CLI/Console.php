@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\CodeIgniter;
 
 class Console
@@ -42,12 +43,18 @@ class Console
 
 	/**
 	 * Main CodeIgniter instance.
+	 *
 	 * @var CodeIgniter
 	 */
 	protected $app;
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Console constructor.
+	 *
+	 * @param \CodeIgniter\CodeIgniter $app
+	 */
 	public function __construct(CodeIgniter $app)
 	{
 		$this->app = $app;
@@ -57,15 +64,20 @@ class Console
 
 	/**
 	 * Runs the current command discovered on the CLI.
+	 *
+	 * @param boolean $useSafeOutput
+	 *
+	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
+	 * @throws \CodeIgniter\HTTP\RedirectException
 	 */
-	public function run()
+	public function run(bool $useSafeOutput = false)
 	{
 		$path = CLI::getURI() ?: 'list';
 
 		// Set the path for the application to route to.
 		$this->app->setPath("ci{$path}");
 
-		return $this->app->run();
+		return $this->app->useSafeOutput($useSafeOutput)->run();
 	}
 
 	//--------------------------------------------------------------------

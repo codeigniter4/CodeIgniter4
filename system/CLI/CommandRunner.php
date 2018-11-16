@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\CLI;
+<?php
+namespace CodeIgniter\CLI;
 
 /**
  * CodeIgniter
@@ -7,7 +8,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,14 +28,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Controller;
 
 class CommandRunner extends Controller
@@ -47,14 +49,19 @@ class CommandRunner extends Controller
 	 */
 	protected $commands = [];
 
+	/**
+	 * @var \CodeIgniter\Log\Logger
+	 */
+	protected $logger;
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * We map all un-routed CLI methods through this function
 	 * so we have the chance to look for a Command first.
 	 *
-	 * @param       $method
-	 * @param array ...$params
+	 * @param string $method
+	 * @param array  ...$params
 	 */
 	public function _remap($method, ...$params)
 	{
@@ -69,6 +76,11 @@ class CommandRunner extends Controller
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @param array $params
+	 *
+	 * @return mixed
+	 */
 	public function index(array $params)
 	{
 		$command = array_shift($params);
@@ -89,10 +101,13 @@ class CommandRunner extends Controller
 	 * Actually runs the command.
 	 *
 	 * @param string $command
+	 * @param array  $params
+	 *
+	 * @return mixed
 	 */
 	protected function runCommand(string $command, array $params)
 	{
-		if ( ! isset($this->commands[$command]))
+		if (! isset($this->commands[$command]))
 		{
 			CLI::error('Command \'' . $command . '\' not found');
 			CLI::newLine();
@@ -102,7 +117,7 @@ class CommandRunner extends Controller
 		// The file would have already been loaded during the
 		// createCommandList function...
 		$className = $this->commands[$command]['class'];
-		$class = new $className($this->logger, $this);
+		$class     = new $className($this->logger, $this);
 
 		return $class->run($params);
 	}
@@ -117,7 +132,7 @@ class CommandRunner extends Controller
 	 */
 	protected function createCommandList()
 	{
-		$files = service('locator')->listFiles("Commands/");
+		$files = service('locator')->listFiles('Commands/');
 
 		// If no matching command files were found, bail
 		if (empty($files))
@@ -130,8 +145,14 @@ class CommandRunner extends Controller
 		foreach ($files as $file)
 		{
 			$className = service('locator')->findQualifiedNameFromPath($file);
-
 			if (empty($className) || ! class_exists($className))
+			{
+				continue;
+			}
+
+			$class = new \ReflectionClass($className);
+
+			if (! $class->isInstantiable() || ! $class->isSubclassOf(BaseCommand::class))
 			{
 				continue;
 			}
@@ -142,10 +163,10 @@ class CommandRunner extends Controller
 			if ($class->group !== null)
 			{
 				$this->commands[$class->name] = [
-					'class'			 => $className,
-					'file'			 => $file,
-					'group'			 => $class->group,
-					'description'	 => $class->description
+					'class'       => $className,
+					'file'        => $file,
+					'group'       => $class->group,
+					'description' => $class->description,
 				];
 			}
 

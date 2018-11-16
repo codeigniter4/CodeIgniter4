@@ -1,6 +1,6 @@
-##################
-Database Reference
-##################
+######################
+Working With Databases
+######################
 
 CodeIgniter comes with a full-featured and very fast abstracted database
 class that supports both traditional structures and Query Builder
@@ -19,9 +19,5 @@ patterns. The database functions offer clear, simple syntax.
     Transactions <transactions>
     Getting MetaData <metadata>
     Custom Function Calls <call_function>
-    Using CodeIgniter's Model <model>
-    Using Entity Classes <entities>
-    Database Manipulation with Database Forge <forge>
-    Database Migrations <migration>
-    Database Seeding <seeds>
     Database Events <events>
+    Database Utilities <utilities>

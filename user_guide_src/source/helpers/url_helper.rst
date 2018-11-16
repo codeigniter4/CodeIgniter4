@@ -48,7 +48,7 @@ The following functions are available:
 
 	Here is an example of segments passed as an array::
 
-		$segments = array('news', 'local', '123');
+		$segments = ['news', 'local', '123'];
 		echo site_url($segments);
 
         You may find the alternate configuration useful if generating URLs for a
@@ -95,7 +95,6 @@ The following functions are available:
 	viewed.
 
 	.. note:: Calling this function is the same as doing this::
-
 		base_url(uri_string());
 
 .. php:function:: previous_url([$returnObject = false])
@@ -111,7 +110,6 @@ The following functions are available:
 	use a known and trusted source. If the session hasn't been loaded, or is otherwise unavailable,
 	then a sanitized version of HTTP_REFERER will be used.
 
-
 .. php:function:: uri_string()
 
 	:returns:	An URI string
@@ -125,7 +123,6 @@ The following functions are available:
 	The function would return::
 
 		blog/comments/123
-
 
 .. php:function:: index_page([$altConfig = NULL])
 
@@ -175,7 +172,7 @@ The following functions are available:
 		echo anchor('news/local/123', 'My News', 'title="News title"');
 		// Prints: <a href="http://example.com/index.php/news/local/123" title="News title">My News</a>
 
-		echo anchor('news/local/123', 'My News', array('title' => 'The best news!'));
+		echo anchor('news/local/123', 'My News', ['title' => 'The best news!']);
 		// Prints: <a href="http://example.com/index.php/news/local/123" title="The best news!">My News</a>
 
 		echo anchor('', 'Click here');
@@ -205,7 +202,7 @@ The following functions are available:
 
 	Here is an example with attributes::
 
-		$atts = array(
+		$atts = [
 			'width'       => 800,
 			'height'      => 600,
 			'scrollbars'  => 'yes',
@@ -214,7 +211,7 @@ The following functions are available:
 			'screenx'     => 0,
 			'screeny'     => 0,
 			'window_name' => '_blank'
-		);
+		];
 
 		echo anchor_popup('news/local/123', 'Click Me!', $atts);
 
@@ -223,7 +220,7 @@ The following functions are available:
 		function to use all of its defaults simply pass an empty array in the
 		third parameter::
 
-                    echo anchor_popup('news/local/123', 'Click Me!', array());
+                    echo anchor_popup('news/local/123', 'Click Me!', []);
 
 	.. note:: The **window_name** is not really an attribute, but an argument to
 		the JavaScript `window.open() <http://www.w3schools.com/jsref/met_win_open.asp>`_
@@ -254,7 +251,7 @@ The following functions are available:
 	As with the :php:func:`anchor()` tab above, you can set attributes using the
 	third parameter::
 
-		$attributes = array('title' => 'Mail me');
+		$attributes = ['title' => 'Mail me'];
 		echo mailto('me@my-site.com', 'Contact Me', $attributes);
 
 	.. note:: Attributes passed into the mailto function are automatically escaped to protected against XSS attacks.
@@ -316,7 +313,7 @@ The following functions are available:
 	useful if, for example, you have a blog in which you'd like to use the
 	title of your entries in the URL. Example::
 
-		$title = "What's wrong with CSS?";
+		$title     = "What's wrong with CSS?";
 		$url_title = url_title($title);
 		// Produces: Whats-wrong-with-CSS
 
@@ -325,7 +322,7 @@ The following functions are available:
 
 	Example::
 
-		$title = "What's wrong with CSS?";
+		$title     = "What's wrong with CSS?";
 		$url_title = url_title($title, 'underscore');
 		// Produces: Whats_wrong_with_CSS
 
@@ -334,10 +331,9 @@ The following functions are available:
 
 	Example::
 
-		$title = "What's wrong with CSS?";
+		$title     = "What's wrong with CSS?";
 		$url_title = url_title($title, 'underscore', TRUE);
 		// Produces: whats_wrong_with_css
-
 
 .. php:function:: prep_url($str = '')
 

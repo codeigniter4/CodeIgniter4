@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 interface PagerInterface
 {
 
@@ -66,10 +67,10 @@ interface PagerInterface
 	 * Allows for a simple, manual, form of pagination where all of the data
 	 * is provided by the user. The URL is the current URI.
 	 *
-	 * @param int    $page
-	 * @param int    $perPage
-	 * @param int    $total
-	 * @param string $template The output template alias to render.
+	 * @param integer $page
+	 * @param integer $perPage
+	 * @param integer $total
+	 * @param string  $template The output template alias to render.
 	 *
 	 * @return string
 	 */
@@ -81,10 +82,10 @@ interface PagerInterface
 	 * Stores a set of pagination data for later display. Most commonly used
 	 * by the model to automate the process.
 	 *
-	 * @param string $group
-	 * @param int    $page
-	 * @param int    $perPage
-	 * @param int    $total
+	 * @param string  $group
+	 * @param integer $page
+	 * @param integer $perPage
+	 * @param integer $total
 	 *
 	 * @return mixed
 	 */
@@ -109,7 +110,7 @@ interface PagerInterface
 	 *
 	 * @param string|null $group
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function getPageCount(string $group = 'default'): int;
 
@@ -120,7 +121,7 @@ interface PagerInterface
 	 *
 	 * @param string|null $group
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function getCurrentPage(string $group = 'default'): int;
 
@@ -131,7 +132,7 @@ interface PagerInterface
 	 *
 	 * @param string|null $group
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function hasMore(string $group = 'default'): bool;
 
@@ -142,7 +143,7 @@ interface PagerInterface
 	 *
 	 * @param string $group
 	 *
-	 * @return int|null
+	 * @return integer|null
 	 */
 	public function getLastPage(string $group = 'default');
 
@@ -175,7 +176,7 @@ interface PagerInterface
 	 *
 	 * @param string $group
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function getPerPage(string $group = 'default'): int;
 

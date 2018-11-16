@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -64,14 +64,14 @@ class Header
 	//--------------------------------------------------------------------
 
 	/**
-	 * Header constructor. If a name or value is provided they will be set.
+	 * Header constructor. name is mandatory, if a value is provided, it will be set.
 	 *
-	 * @param string|null        $name
-	 * @param string|array|null  $value
+	 * @param string            $name
+	 * @param string|array|null $value
 	 */
-	public function __construct(string $name = null, $value = null)
+	public function __construct(string $name, $value = null)
 	{
-		$this->name = $name;
+		$this->name  = $name;
 		$this->value = $value;
 	}
 
@@ -144,7 +144,7 @@ class Header
 	 */
 	public function appendValue($value = null)
 	{
-		if ( ! is_array($this->value))
+		if (! is_array($this->value))
 		{
 			$this->value = [$this->value];
 		}
@@ -166,7 +166,7 @@ class Header
 	 */
 	public function prependValue($value = null)
 	{
-		if ( ! is_array($this->value))
+		if (! is_array($this->value))
 		{
 			$this->value = [$this->value];
 		}
@@ -193,7 +193,7 @@ class Header
 		{
 			return $this->value;
 		}
-		else if ( ! is_array($this->value))
+		else if (! is_array($this->value))
 		{
 			return '';
 		}
@@ -208,7 +208,7 @@ class Header
 			}
 			else if (is_array($value))
 			{
-				$key = key($value);
+				$key       = key($value);
 				$options[] = $key . '=' . $value[$key];
 			}
 			else if (is_numeric($key))

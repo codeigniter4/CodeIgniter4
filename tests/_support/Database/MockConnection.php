@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database;
+<?php namespace Tests\Support\Database;
+
+use CodeIgniter\Database\BaseConnection;
 
 class MockConnection extends BaseConnection
 {
@@ -6,7 +8,7 @@ class MockConnection extends BaseConnection
 
 	public $database;
 
-    public $lastQuery;
+	public $lastQuery;
 
 	//--------------------------------------------------------------------
 
@@ -19,7 +21,7 @@ class MockConnection extends BaseConnection
 
 	//--------------------------------------------------------------------
 
-	public function query(string $sql, $binds = null)
+	public function query(string $sql, $binds = null, $queryClass = 'CodeIgniter\\Database\\Query')
 	{
 		$queryClass = str_replace('Connection', 'Query', get_class($this));
 
@@ -34,7 +36,7 @@ class MockConnection extends BaseConnection
 
 		$startTime = microtime(true);
 
-        $this->lastQuery = $query;
+		$this->lastQuery = $query;
 
 		// Run the query
 		if (false === ($this->resultID = $this->simpleQuery($query->getQuery())))
@@ -82,10 +84,10 @@ class MockConnection extends BaseConnection
 	 *
 	 * @return mixed
 	 */
-	 public function reconnect()
-	 {
+	public function reconnect()
+	{
 		return true;
-	 }
+	}
 
 	//--------------------------------------------------------------------
 
@@ -150,11 +152,14 @@ class MockConnection extends BaseConnection
 	 *
 	 *  return ['code' => null, 'message' => null);
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function error()
 	{
-		return ['code' => null, 'message' => null];
+		return [
+			'code'    => null,
+			'message' => null,
+		];
 	}
 
 	//--------------------------------------------------------------------
@@ -162,7 +167,7 @@ class MockConnection extends BaseConnection
 	/**
 	 * Insert ID
 	 *
-	 * @return	int
+	 * @return integer
 	 */
 	public function insertID()
 	{
@@ -174,7 +179,7 @@ class MockConnection extends BaseConnection
 	/**
 	 * Generates the SQL for listing tables in a platform-dependent manner.
 	 *
-	 * @param bool $constrainByPrefix
+	 * @param boolean $constrainByPrefix
 	 *
 	 * @return string
 	 */
@@ -197,52 +202,78 @@ class MockConnection extends BaseConnection
 		return '';
 	}
 
+	/**
+	 * @param  string $table
+	 * @return array
+	 */
+	protected function _fieldData(string $table): array
+	{
+		return [];
+	}
+
+	/**
+	 * @param  string $table
+	 * @return array
+	 */
+	protected function _indexData(string $table): array
+	{
+		return [];
+	}
+
+	/**
+	 * @param  string $table
+	 * @return array
+	 */
+	protected function _foreignKeyData(string $table): array
+	{
+		return [];
+	}
+
 	//--------------------------------------------------------------------
 
-    /**
-     * Close the connection.
-     */
-    protected function _close()
-    {
-        return;
-    }
+	/**
+	 * Close the connection.
+	 */
+	protected function _close()
+	{
+		return;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
+	/**
+	 * Begin Transaction
+	 *
+	 * @return boolean
+	 */
+	protected function _transBegin(): bool
+	{
+		return true;
+	}
 
-    /**
-     * Begin Transaction
-     *
-     * @return	bool
-     */
-    protected function _transBegin(): bool
-    {
-        return true;
-    }
+	//--------------------------------------------------------------------
 
-    //--------------------------------------------------------------------
+	/**
+	 * Commit Transaction
+	 *
+	 * @return boolean
+	 */
+	protected function _transCommit(): bool
+	{
+		return true;
+	}
 
-    /**
-     * Commit Transaction
-     *
-     * @return	bool
-     */
-    protected function _transCommit(): bool
-    {
-        return true;
-    }
+	//--------------------------------------------------------------------
 
-    //--------------------------------------------------------------------
+	/**
+	 * Rollback Transaction
+	 *
+	 * @return boolean
+	 */
+	protected function _transRollback(): bool
+	{
+		return true;
+	}
 
-    /**
-     * Rollback Transaction
-     *
-     * @return	bool
-     */
-    protected function _transRollback(): bool
-    {
-        return true;
-    }
-
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 }

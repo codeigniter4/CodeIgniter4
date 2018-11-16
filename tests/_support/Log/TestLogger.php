@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Log;
+<?php namespace Tests\Support\Log;
+
+use CodeIgniter\Log\Logger;
 
 class TestLogger extends Logger
 {
@@ -15,7 +17,7 @@ class TestLogger extends Logger
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function log($level, $message, array $context = []): bool
 	{
@@ -26,22 +28,22 @@ class TestLogger extends Logger
 		// Determine the file and line by finding the first
 		// backtrace that is not part of our logging system.
 		$trace = debug_backtrace();
-		$file = null;
+		$file  = null;
 
 		foreach ($trace as $row)
 		{
 			if (! in_array($row['function'], ['log', 'log_message']))
 			{
-				$file = basename($row['file']);
+				$file = basename($row['file'] ?? '');
 				break;
 			}
 		}
 
 		self::$op_logs[] = [
-			'level'   => $level,
-		    'message' => $log_message,
-		    'file'    => $file,
-		];
+				  'level'   => $level,
+				  'message' => $log_message,
+				  'file'    => $file,
+			  ];
 
 		// Let the parent do it's thing.
 		return parent::log($level, $message, $context);
@@ -52,16 +54,16 @@ class TestLogger extends Logger
 	/**
 	 * Used by CIUnitTestCase class to provide ->assertLogged() methods.
 	 *
-	 * @param string      $level
-	 * @param             $message
-	 * @param string|null $file
+	 * @param string $level
+	 * @param string $message
+	 *
+	 * @return boolean
 	 */
 	public static function didLog(string $level, $message)
 	{
 		foreach (self::$op_logs as $log)
 		{
-			if (strtolower($log['level']) == strtolower($level)
-				&& $message == $log['message'])
+			if (strtolower($log['level']) === strtolower($level) && $message === $log['message'])
 			{
 				return true;
 			}
@@ -71,5 +73,10 @@ class TestLogger extends Logger
 	}
 
 	//--------------------------------------------------------------------
+	// Expose cleanFileNames()
+	public function cleanup($file)
+	{
+		return $this->cleanFileNames($file);
+	}
 
 }

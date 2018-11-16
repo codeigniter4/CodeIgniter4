@@ -24,12 +24,11 @@ Available Functions
 
 The following functions are available:
 
-
 .. php:function:: img([$src = ''[, $indexPage = false[, $attributes = '']]])
 
-    :param  string  $src:        Image source data
+    :param  mixed  $src:        Image source data
     :param  bool    $indexPage:  Whether to treat $src as a routed URI string
-    :param  array   $attributes: HTML attributes
+    :param  mixed   $attributes: HTML attributes
     :returns:   HTML image tag
     :rtype: string
 
@@ -47,21 +46,21 @@ The following functions are available:
         echo img('images/picture.jpg', true);
         // <img src="http://site.com/index.php/images/picture.jpg" alt="" />
 
-    Additionally, an associative array can be passed to the ``img()`` function
+    Additionally, an associative array can be passed as the first parameter,
     for complete control over all attributes and values. If an *alt* attribute
     is not provided, CodeIgniter will generate an empty string.
 
     Example::
 
-        $imageProperties = array(
-            'src'   => 'images/picture.jpg',
-            'alt'   => 'Me, demonstrating how to eat 4 slices of pizza at one time',
-            'class' => 'post_images',
-            'width' => '200',
-            'height'=> '200',
-            'title' => 'That was quite a night',
-            'rel'   => 'lightbox'
-        );
+        $imageProperties = [
+            'src'    => 'images/picture.jpg',
+            'alt'    => 'Me, demonstrating how to eat 4 slices of pizza at one time',
+            'class'  => 'post_images',
+            'width'  => '200',
+            'height' => '200',
+            'title'  => 'That was quite a night',
+            'rel'    => 'lightbox'
+        ];
 
         img($imageProperties);
         // <img src="http://site.com/index.php/images/picture.jpg" alt="Me, demonstrating how to eat 4 slices of pizza at one time" class="post_images" width="200" height="200" title="That was quite a night" rel="lightbox" />
@@ -97,22 +96,22 @@ The following functions are available:
         echo link_tag('feed', 'alternate', 'application/rss+xml', 'My RSS Feed');
         // <link href="http://site.com/feed" rel="alternate" type="application/rss+xml" title="My RSS Feed" />
 
-    Additionally, an associative array can be passed to the ``link()`` function
+    Alternately, an associative array can be passed to the ``link_tag()`` function
     for complete control over all attributes and values::
 
-        $link = array(
+        $link = [
             'href'  => 'css/printer.css',
             'rel'   => 'stylesheet',
             'type'  => 'text/css',
             'media' => 'print'
-        );
+        ];
 
         echo link_tag($link);
         // <link href="http://site.com/css/printer.css" rel="stylesheet" type="text/css" media="print" />
 
 .. php:function:: script_tag([$src = ''[, $indexPage = false]])
 
-    :param  string  $src: The source of JavaScript file
+    :param  mixed  $src: The source name of a JavaScript file
     :param  bool    $indexPage: Whether to treat $src as a routed URI string
     :returns:   HTML script tag
     :rtype: string
@@ -127,14 +126,10 @@ The following functions are available:
         echo script_tag('js/mystyles.js');
         // <script src="http://site.com/js/mystyles.js" type="text/javascript"></script>
 
-    Further examples::
-
-        // to be done
-
-    Additionally, an associative array can be passed to the ``script_tag()`` function
+    Alternately, an associative array can be passed to the ``script_tag()`` function
     for complete control over all attributes and values::
 
-        $script = array('src'  => 'js/printer.js');
+        $script = ['src'  => 'js/printer.js'];
 
         echo script_tag($script);
         // <script src="http://site.com/js/printer.js" type="text/javascript"></script>
@@ -149,17 +144,17 @@ The following functions are available:
     Permits you to generate unordered HTML lists from simple or
     multi-dimensional arrays. Example::
 
-        $list = array(
+        $list = [
             'red',
             'blue',
             'green',
             'yellow'
-        );
+        ];
 
-        $attributes = array(
+        $attributes = [
             'class' => 'boldlist',
             'id'    => 'mylist'
-        );
+        ];
 
         echo ul($list, $attributes);
 
@@ -176,40 +171,40 @@ The following functions are available:
 
     Here is a more complex example, using a multi-dimensional array::
 
-        $attributes = array(
+        $attributes = [
             'class' => 'boldlist',
             'id'    => 'mylist'
-        );
+        ];
 
-        $list = array(
-            'colors'  => array(
+        $list = [
+            'colors' => [
                 'red',
                 'blue',
                 'green'
-            ),
-            'shapes'  => array(
+            ],
+            'shapes' => [
                 'round',
                 'square',
-                'circles' => array(
+                'circles' => [
                     'ellipse',
                     'oval',
                     'sphere'
-                )
-            ),
-            'moods'  => array(
+                ]
+            ],
+            'moods'  => [
                 'happy',
-                'upset' => array(
-                    'defeated' => array(
+                'upset'   => [
+                    'defeated' => [
                         'dejected',
                         'disheartened',
                         'depressed'
-                    ),
+                    ],
                     'annoyed',
                     'cross',
                     'angry'
-                )
-            )
-        );
+                ]
+            ]
+        ];
 
         echo ul($list, $attributes);
 
@@ -342,11 +337,10 @@ The following functions are available:
     :param  string  $attributes:
     :param  array   $tracks:             Use the track function inside an array. See :php:func:`track()` function
     :param  bool    $indexPage:
-    :returns:                            HTML-formatted video element
+    :returns:                            HTML-formatted audio element
     :rtype: string
 
     Identical to :php:func:`video()`, only it produces the <audio> tag instead of <video>.
-
 
 .. php:function:: source($src = ''[, $type = false[, $attributes = '']])
 
@@ -376,7 +370,6 @@ The following functions are available:
 
         echo embed('movie.mov', 'video/quicktime', 'class="test"');
         // <embed src="movie.mov" type="video/quicktime" class="test"/>
-
 
 .. php:function:: object($data = ''[, $type = false[, $attributes = '']])
 
@@ -414,7 +407,6 @@ The following functions are available:
           <param name="hello" type="ref" value="world" class="test" />
         </object>
 
-
 .. php:function:: param($name = ''[, $type = false[, $attributes = '']])
 
     :param  string  $name:       The name of the parameter
@@ -429,7 +421,6 @@ The following functions are available:
         echo param('movie.mov', 'video/quicktime', 'class="test"');
         // <param src="movie.mov" type="video/quicktime" class="test"/>
 
-
 .. php:function:: track($name = ''[, $type = false[, $attributes = '']])
 
     :param  string  $name:       The name of the parameter
@@ -443,7 +434,6 @@ The following functions are available:
 
         echo track('subtitles_no.vtt', 'subtitles', 'no', 'Norwegian No');
         // <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
-
 
 .. php:function:: doctype([$type = 'html5'])
 
@@ -462,8 +452,8 @@ The following functions are available:
         echo doctype('html4-trans');
         // <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
-    The following is a list of doctype choices. These are configurable, and
-    pulled from application/config/doctypes.php
+    The following is a list of the pre-defined doctype choices. These are configurable,
+    pulled from `application/Config/DocTypes.php`, or they could be over-ridden in your `.env` configuration.
 
     =============================== =================== ==================================================================================================================================================
     Document type                   Option              Result

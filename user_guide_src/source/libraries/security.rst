@@ -4,17 +4,18 @@ Security Class
 
 The Security Class contains methods that help protect your site against Cross-Site Request Forgery attacks.
 
-.. contents:: Page Contents
-	:local:
+.. contents::
+    :local:
+    :depth: 2
 
 *******************
 Loading the Library
 *******************
 
-If your only interest in loading the library is to handle CSRF protection, then you will never need to load it,
-as it is ran as filter and has no manual interaction.
+If your only interest in loading the library is to handle CSRF protection, then you will never need to load it, 
+as it runs as a filter and has no manual interaction.
 
-If you find a case where you do need direct access, though, you may load it through the Services file::
+If you find a case where you do need direct access though, you may load it through the Services file::
 
 	$security = \Config\Services::security();
 
@@ -57,7 +58,7 @@ and ``csrf_hash()`` functions
 
 	<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 
-Additionally, you can use the ``csrf_field()`` method to generate this 
+Additionally, you can use the ``csrf_field()`` method to generate this
 hidden input field for you::
 
 	// Generates: <input type="hidden" name="{csrf_token}" value="{csrf_hash}" />
@@ -72,6 +73,15 @@ may alter this behavior by editing the following config parameter
 ::
 
 	public $CSRFRegenerate  = true;
+
+When a request fails the CSRF validation check, it will redirect to the previous page by default,
+setting an ``error`` flash message that you can display to the end user. This provides a nicer experience
+than simply crashing. This can be turned off by editing the ``$CSRFRedirect`` value in
+**application/Config/App.php**::
+
+	public $CSRFRedirect = false;
+
+Even when the redirect value is **true**, AJAX calls will not redirect, but will throw an error.
 
 *********************
 Other Helpful Methods

@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -55,7 +55,7 @@ interface RouterInterface
 	 * Scans the URI and attempts to match the current URI to the
 	 * one of the defined routes in the RouteCollection.
 	 *
-	 * @param null $uri
+	 * @param string $uri
 	 *
 	 * @return mixed
 	 */
@@ -85,7 +85,7 @@ interface RouterInterface
 	/**
 	 * Returns the binds that have been matched and collected
 	 * during the parsing process as an array, ready to send to
-	 * call_user_func_array().
+	 * instance->method(...$params).
 	 *
 	 * @return mixed
 	 */

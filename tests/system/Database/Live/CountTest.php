@@ -1,13 +1,15 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Test\CIDatabaseTestCase;
+
 /**
  * @group DatabaseLive
  */
-class CountTest extends \CIDatabaseTestCase
+class CountTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	public function testCountReturnsZeroWithNoResults()
 	{
@@ -18,14 +20,14 @@ class CountTest extends \CIDatabaseTestCase
 
 	public function testCountAllReturnsCorrectInteger()
 	{
-	    $this->assertSame(4, $this->db->table('job')->countAll());
+		$this->assertSame(4, $this->db->table('job')->countAll());
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testCountAllResultsReturnsZeroWithNoResults()
 	{
-	    $this->assertSame(0, $this->db->table('job')->where('name', 'Superstar')->countAllResults());
+		$this->assertSame(0, $this->db->table('job')->where('name', 'Superstar')->countAllResults());
 	}
 
 	//--------------------------------------------------------------------

@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Config\BaseConfig;
 use Config\Database;
 
@@ -65,48 +66,47 @@ class Config extends BaseConfig
 	/**
 	 * Creates the default
 	 *
-	 * @param string|array  $group     The name of the connection group to use,
-	 *                                 or an array of configuration settings.
-	 * @param bool          $getShared Whether to return a shared instance of the connection.
+	 * @param string|array $group     The name of the connection group to use,
+	 *                                or an array of configuration settings.
+	 * @param boolean      $getShared Whether to return a shared instance of the connection.
 	 *
-	 * @return mixed
+	 * @return BaseConnection
 	 */
-	public static function connect($group = null, $getShared = true)
+	public static function connect($group = null, bool $getShared = true)
 	{
 		if (is_array($group))
 		{
 			$config = $group;
-			$group = 'custom';
+			$group  = 'custom';
 		}
 
 		$config = $config ?? new \Config\Database();
 
 		if (empty($group))
 		{
-			$group = ENVIRONMENT == 'testing' ? 'tests' : $config->defaultGroup;
+			$group = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
 		}
 
-		if (is_string($group) && ! isset($config->$group) && $group != 'custom')
+		if (is_string($group) && ! isset($config->$group) && $group !== 'custom')
 		{
 			throw new \InvalidArgumentException($group . ' is not a valid database connection group.');
 		}
 
-		if ($getShared && isset(self::$instances[$group]))
+		if ($getShared && isset(static::$instances[$group]))
 		{
-			return self::$instances[$group];
+			return static::$instances[$group];
 		}
 
-		self::ensureFactory();
-
+		static::ensureFactory();
 
 		if (isset($config->$group))
 		{
 			$config = $config->$group;
 		}
 
-		$connection = self::$factory->load($config, $group);
+		$connection = static::$factory->load($config, $group);
 
-		self::$instances[$group] = & $connection;
+		static::$instances[$group] = & $connection;
 
 		return $connection;
 	}
@@ -120,7 +120,7 @@ class Config extends BaseConfig
 	 */
 	public static function getConnections()
 	{
-		return self::$instances;
+		return static::$instances;
 	}
 
 	//--------------------------------------------------------------------
@@ -130,33 +130,35 @@ class Config extends BaseConfig
 	 * database group, and loads the group if it hasn't been loaded yet.
 	 *
 	 * @param string|null $group
+	 *
+	 * @return Forge
 	 */
 	public static function forge(string $group = null)
 	{
 		$config = new \Config\Database();
 
-		self::ensureFactory();
+		static::ensureFactory();
 
 		if (empty($group))
 		{
-			$group = ENVIRONMENT == 'testing' ? 'tests' : $config->defaultGroup;
+			$group = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
 		}
 
-		if ( ! isset($config->$group))
+		if (! isset($config->$group))
 		{
 			throw new \InvalidArgumentException($group . ' is not a valid database connection group.');
 		}
 
-		if ( ! isset(self::$instances[$group]))
+		if (! isset(static::$instances[$group]))
 		{
-			$db = self::connect($group);
+			$db = static::connect($group);
 		}
 		else
 		{
-			$db = self::$instances[$group];
+			$db = static::$instances[$group];
 		}
 
-		return self::$factory->loadForge($db);
+		return static::$factory->loadForge($db);
 	}
 
 	//--------------------------------------------------------------------
@@ -166,34 +168,34 @@ class Config extends BaseConfig
 	 *
 	 * @param string|null $group
 	 *
-	 * @return mixed
+	 * @return BaseUtils
 	 */
 	public static function utils(string $group = null)
 	{
 		$config = new \Config\Database();
 
-		self::ensureFactory();
+		static::ensureFactory();
 
 		if (empty($group))
 		{
 			$group = $config->defaultGroup;
 		}
 
-		if ( ! isset($config->group))
+		if (! isset($config->group))
 		{
 			throw new \InvalidArgumentException($group . ' is not a valid database connection group.');
 		}
 
-		if ( ! isset(self::$instances[$group]))
+		if (! isset(static::$instances[$group]))
 		{
-			$db = self::connect($group);
+			$db = static::connect($group);
 		}
 		else
 		{
-			$db = self::$instances[$group];
+			$db = static::$instances[$group];
 		}
 
-		return self::$factory->loadUtils($db);
+		return static::$factory->loadUtils($db);
 	}
 
 	//--------------------------------------------------------------------
@@ -209,7 +211,7 @@ class Config extends BaseConfig
 	{
 		$config = new \Config\Database();
 
-		return new Seeder($config, self::connect($group));
+		return new Seeder($config, static::connect($group));
 	}
 
 	//--------------------------------------------------------------------
@@ -219,12 +221,12 @@ class Config extends BaseConfig
 	 */
 	protected static function ensureFactory()
 	{
-		if (self::$factory instanceof \CodeIgniter\Database\Database)
+		if (static::$factory instanceof \CodeIgniter\Database\Database)
 		{
 			return;
 		}
 
-		self::$factory = new \CodeIgniter\Database\Database();
+		static::$factory = new \CodeIgniter\Database\Database();
 	}
 
 	//--------------------------------------------------------------------

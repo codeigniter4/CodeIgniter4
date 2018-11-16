@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\HTTP\RequestInterface;
 use Config\Services;
 
@@ -65,9 +66,11 @@ class FileRules
 	/**
 	 * Verifies that $name is the name of a valid uploaded file.
 	 *
+	 * @param string $blank
 	 * @param string $name
+	 * @param array  $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function uploaded(string $blank = null, string $name, array $data): bool
 	{
@@ -78,31 +81,34 @@ class FileRules
 			return false;
 		}
 
-		if (ENVIRONMENT == 'testing')
+		if (ENVIRONMENT === 'testing')
 		{
 			return $file->getError() === 0;
 		}
 
+		// Note: cannot unit test this; no way to over-ride ENVIRONMENT?
+		// @codeCoverageIgnoreStart
 		return $file->isValid();
+		// @codeCoverageIgnoreEnd
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Verifies if the file's size in Kilobytes is larger than the parameter.
+	 * Verifies if the file's size in Kilobytes is no larger than the parameter.
 	 *
 	 * @param string|null $blank
 	 * @param string      $params
 	 * @param array       $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function max_size(string $blank = null, string $params, array $data): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
 		$params = explode(',', $params);
-		$name = array_shift($params);
+		$name   = array_shift($params);
 
 		$file = $this->request->getFile($name);
 
@@ -110,8 +116,7 @@ class FileRules
 		{
 			return false;
 		}
-
-		return $params[0] > $file->getSize('kb');
+		return $params[0] >= $file->getSize() / 1024;
 	}
 
 	//--------------------------------------------------------------------
@@ -124,14 +129,14 @@ class FileRules
 	 * @param string      $params
 	 * @param array       $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function is_image(string $blank = null, string $params, array $data): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
 		$params = explode(',', $params);
-		$name = array_shift($params);
+		$name   = array_shift($params);
 
 		$file = $this->request->getFile($name);
 
@@ -156,14 +161,14 @@ class FileRules
 	 * @param string      $params
 	 * @param array       $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function mime_in(string $blank = null, string $params, array $data): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
 		$params = explode(',', $params);
-		$name = array_shift($params);
+		$name   = array_shift($params);
 
 		$file = $this->request->getFile($name);
 
@@ -172,7 +177,7 @@ class FileRules
 			return false;
 		}
 
-		return in_array($file->getType(), $params);
+		return in_array($file->getMimeType(), $params);
 	}
 
 	//--------------------------------------------------------------------
@@ -184,14 +189,14 @@ class FileRules
 	 * @param string      $params
 	 * @param array       $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ext_in(string $blank = null, string $params, array $data): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
 		$params = explode(',', $params);
-		$name = array_shift($params);
+		$name   = array_shift($params);
 
 		$file = $this->request->getFile($name);
 
@@ -213,14 +218,14 @@ class FileRules
 	 * @param string      $params
 	 * @param array       $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function max_dims(string $blank = null, string $params, array $data): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
 		$params = explode(',', $params);
-		$name = array_shift($params);
+		$name   = array_shift($params);
 
 		$file = $this->request->getFile($name);
 
@@ -230,12 +235,12 @@ class FileRules
 		}
 
 		// Get Parameter sizes
-		$allowedWidth = $params[0] ?? 0;
+		$allowedWidth  = $params[0] ?? 0;
 		$allowedHeight = $params[1] ?? 0;
 
 		// Get uploaded image size
-		$info = getimagesize($file->getTempName());
-		$fileWidth = $info[0];
+		$info       = getimagesize($file->getTempName());
+		$fileWidth  = $info[0];
 		$fileHeight = $info[1];
 
 		return $fileWidth <= $allowedWidth && $fileHeight <= $allowedHeight;

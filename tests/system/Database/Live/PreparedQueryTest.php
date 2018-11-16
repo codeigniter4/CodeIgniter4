@@ -1,35 +1,36 @@
 <?php namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Test\CIDatabaseTestCase;
 
 /**
  * @group DatabaseLive
  */
-class PreparedQueryTest extends \CIDatabaseTestCase
+class PreparedQueryTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	//--------------------------------------------------------------------
 
 	public function testPrepareReturnsPreparedQuery()
 	{
-	    $query = $this->db->prepare(function($db){
-	    	return $db->table('user')->insert([
-	    		'name' => 'a',
-				'email' => 'b@example.com'
+		$query = $this->db->prepare(function ($db) {
+			return $db->table('user')->insert([
+				'name'  => 'a',
+				'email' => 'b@example.com',
 			]);
 		});
 
-		$this->assertTrue($query instanceof BasePreparedQuery);
+		$this->assertInstanceOf(BasePreparedQuery::class, $query);
 
-		$ec = $this->db->escapeChar;
+		$ec  = $this->db->escapeChar;
 		$pre = $this->db->DBPrefix;
 
 		$placeholders = '?, ?';
 
-		if ($this->db->DBDriver == 'Postgre')
+		if ($this->db->DBDriver === 'Postgre')
 		{
 			$placeholders = '$1, $2';
 		}
@@ -44,19 +45,19 @@ class PreparedQueryTest extends \CIDatabaseTestCase
 
 	public function testExecuteRunsQueryAndReturnsResultObject()
 	{
-		$query = $this->db->prepare(function($db){
+		$query = $this->db->prepare(function ($db) {
 			return $db->table('user')->insert([
-				'name' => 'a',
-				'email' => 'b@example.com',
-				'country' => 'x'
+				'name'    => 'a',
+				'email'   => 'b@example.com',
+				'country' => 'x',
 			]);
 		});
 
 		$query->execute('foo', 'foo@example.com', 'US');
 		$query->execute('bar', 'bar@example.com', 'GB');
 
-		$this->seeInDatabase($this->db->DBPrefix.'user', ['name' => 'foo', 'email' => 'foo@example.com']);
-		$this->seeInDatabase($this->db->DBPrefix.'user', ['name' => 'bar', 'email' => 'bar@example.com']);
+		$this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'foo', 'email' => 'foo@example.com']);
+		$this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'bar', 'email' => 'bar@example.com']);
 
 		$query->close();
 	}

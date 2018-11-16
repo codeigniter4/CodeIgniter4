@@ -7,10 +7,6 @@ you haven't written any information to the database yet. In this section
 you'll expand your news controller and model created earlier to include
 this functionality.
 
-.. note:: This section of the tutorial cannot be completed as certain
-    portions of the framework, like the form helper and the validation
-    library have not been completed yet.
-
 Create a form
 -------------
 
@@ -18,15 +14,15 @@ To input data into the database you need to create a form where you can
 input the information to be stored. This means you'll be needing a form
 with two fields, one for the title and one for the text. You'll derive
 the slug from our title in the model. Create the new view at
-*application/Views/News/Create.php*.
+*application/Views/news/create.php*.
 
 ::
 
     <h2><?= esc($title); ?></h2>
 
-    <?= validation_errors(); ?>
+    <?= \Config\Services::validation()->listErrors(); ?>
 
-    <?= form_open('news/create'); ?>
+    <form>
 
         <label for="title">Title</label>
         <input type="input" name="title" /><br />
@@ -38,13 +34,7 @@ the slug from our title in the model. Create the new view at
 
     </form>
 
-There are only two things here that probably look unfamiliar to you: the
-``form_open()`` function and the ``validation_errors()`` function.
-
-The first function is provided by the :doc:`form
-helper <../helpers/form_helper>` and renders the form element and
-adds extra functionality, like adding a hidden :doc:`CSRF prevention
-field <../libraries/security>`. The latter is used to report
+There is only one thing here that probably look unfamiliar to you: the ``\Config\Services::validation()->listErrors()`` function. It is used to report
 errors related to form validation.
 
 Go back to your news controller. You're going to do two things here,
@@ -59,14 +49,14 @@ validation <../libraries/validation>` library to do this.
         helper('form');
         $model = new NewsModel();
 
-        if (! $this->validate($this->request, [
-            'title' => 'required|min[3]|max[255]',
+        if (! $this->validate([
+            'title' => 'required|min_length[3]|max_length[255]',
             'text'  => 'required'
         ]))
         {
-            echo view('Templates/Header', ['title' => 'Create a news item']);
-            echo view('News/Create');
-            echo view('Templates/Footer');
+            echo view('templates/header', ['title' => 'Create a news item']);
+            echo view('news/create');
+            echo view('templates/footer');
 
         }
         else
@@ -76,7 +66,7 @@ validation <../libraries/validation>` library to do this.
                 'slug'  => url_title($this->request->getVar('title')),
                 'text'  => $this->request->getVar('text'),
             ]);
-            echo view('News/Success');
+            echo view('news/success');
         }
     }
 
@@ -100,7 +90,7 @@ sure everything is in lowercase characters. This leaves you with a nice
 slug, perfect for creating URIs.
 
 After this, a view is loaded to display a success message. Create a view at
-**application/Views/News/Success.php** and write a success message.
+**application/Views/news/success.php** and write a success message.
 
 Model
 -----
@@ -119,8 +109,10 @@ fields in the ``$allowedFields`` property.
 
 ::
 
-    <?php
-    class NewsModel extends \CodeIgniter\Model
+    namespace App\Models;
+    use CodeIgniter\Model;
+
+    class NewsModel extends Model
     {
         protected $table = 'news';
 
@@ -133,7 +125,6 @@ never need to do that, since it is an auto-incrementing field in the database.
 This helps protect against Mass Assignment Vulnerabilities. If your model is
 handling your timestamps, you would also leave those out.
 
-
 Routing
 -------
 
@@ -144,10 +135,10 @@ as a method instead of a news item's slug.
 
 ::
 
-    $routes->post('news/create', 'News::create');
-    $routes->add('news/(:segment)', 'News::view/$1');
+    $routes->match(['get', 'post'], 'news/create', 'News::create');
+    $routes->get('news/(:segment)', 'News::view/$1');
     $routes->get('news', 'News::index');
-    $routes->add('(:any)', 'Pages::view/$1');
+    $routes->get('(:any)', 'Pages::view/$1');
 
 Now point your browser to your local development environment where you
 installed CodeIgniter and add index.php/news/create to the URL.

@@ -1,19 +1,20 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\DatabaseException;
+use \CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Test\CIDatabaseTestCase;
 
 /**
  * @group DatabaseLive
  */
-class DeleteTest extends \CIDatabaseTestCase
+class DeleteTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	public function testDeleteThrowExceptionWithNoCriteria()
 	{
-	    $this->expectException('CodeIgniter\DatabaseException');
+		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
 
 		$this->db->table('job')->delete();
 	}
@@ -24,7 +25,7 @@ class DeleteTest extends \CIDatabaseTestCase
 	{
 		$this->seeInDatabase('job', ['name' => 'Developer']);
 
-	    $this->db->table('job')->where('name', 'Developer')->delete();
+		$this->db->table('job')->where('name', 'Developer')->delete();
 
 		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
 	}
@@ -43,8 +44,8 @@ class DeleteTest extends \CIDatabaseTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @group single
-	 * @throws \CodeIgniter\DatabaseException
+	 * @group  single
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function testDeleteWithLimit()
 	{
@@ -53,7 +54,7 @@ class DeleteTest extends \CIDatabaseTestCase
 		try
 		{
 			$this->db->table('user')
-			         ->delete(['country' => 'US'], 1);
+					 ->delete(['country' => 'US'], 1);
 		}
 		catch (DatabaseException $e)
 		{

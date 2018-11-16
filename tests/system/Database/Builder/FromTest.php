@@ -1,7 +1,7 @@
 <?php namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\Database\MockConnection;
+use Tests\Support\Database\MockConnection;
 
 class FromTest extends \CIUnitTestCase
 {
@@ -11,6 +11,8 @@ class FromTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->db = new MockConnection([]);
 	}
 
@@ -22,7 +24,7 @@ class FromTest extends \CIUnitTestCase
 
 		$builder->from('jobs');
 
-		$expectedSQL   = "SELECT * FROM \"user\", \"jobs\"";
+		$expectedSQL = 'SELECT * FROM "user", "jobs"';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -35,7 +37,7 @@ class FromTest extends \CIUnitTestCase
 
 		$builder->from('jobs', true);
 
-		$expectedSQL   = "SELECT * FROM \"jobs\"";
+		$expectedSQL = 'SELECT * FROM "jobs"';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -48,7 +50,7 @@ class FromTest extends \CIUnitTestCase
 
 		$builder->from(['jobs', 'roles']);
 
-		$expectedSQL   = "SELECT * FROM \"user\", \"jobs\", \"roles\"";
+		$expectedSQL = 'SELECT * FROM "user", "jobs", "roles"';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -61,7 +63,7 @@ class FromTest extends \CIUnitTestCase
 
 		$builder->from(['jobs, roles']);
 
-		$expectedSQL   = "SELECT * FROM \"user\", \"jobs\", \"roles\"";
+		$expectedSQL = 'SELECT * FROM "user", "jobs", "roles"';
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}

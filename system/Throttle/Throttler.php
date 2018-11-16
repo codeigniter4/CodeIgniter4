@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Cache\CacheInterface;
 
 /**
@@ -62,7 +63,7 @@ class Throttler implements ThrottlerInterface
 	/**
 	 * The number of seconds until the next token is available.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	protected $tokenTime = 0;
 
@@ -73,6 +74,13 @@ class Throttler implements ThrottlerInterface
 	 * @var string
 	 */
 	protected $prefix = 'throttler_';
+
+	/**
+	 * Timestamp to use (during testing)
+	 *
+	 * @var integer
+	 */
+	protected $testTime;
 
 	//--------------------------------------------------------------------
 
@@ -87,11 +95,11 @@ class Throttler implements ThrottlerInterface
 	 * Returns the number of seconds until the next available token will
 	 * be released for usage.
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function getTokenTime()
 	{
-		return (int) $this->tokenTime;
+		return $this->tokenTime;
 	}
 
 	//--------------------------------------------------------------------
@@ -107,12 +115,12 @@ class Throttler implements ThrottlerInterface
 	 *      die('You submitted over 60 requests within a minute.');
 	 * }
 	 *
-	 * @param string $key      The name to use as the "bucket" name.
-	 * @param int    $capacity The number of requests the "bucket" can hold
-	 * @param int    $seconds  The time it takes the "bucket" to completely refill
-	 * @param int    $cost     The number of tokens this action uses.
+	 * @param string  $key      The name to use as the "bucket" name.
+	 * @param integer $capacity The number of requests the "bucket" can hold
+	 * @param integer $seconds  The time it takes the "bucket" to completely refill
+	 * @param integer $cost     The number of tokens this action uses.
 	 *
-	 * @return bool
+	 * @return   boolean
 	 * @internal param int $maxRequests
 	 */
 	public function check(string $key, int $capacity, int $seconds, int $cost = 1)
@@ -133,17 +141,19 @@ class Throttler implements ThrottlerInterface
 		// If $tokens > 0, then we need to replenish the bucket
 		// based on how long it's been since the last update.
 		$throttleTime = $this->cache->get($tokenName . 'Time');
-		$elapsed = time() - $throttleTime;
-		$rate = (int) ceil($elapsed / $capacity);
+		$elapsed      = $this->time() - $throttleTime;
+		// Number of tokens to add back per second
+		$rate = $capacity / $seconds;
 
 		// We must have a minimum wait of 1 second for a new token
+		// Primarily stored to allow devs to report back to users.
 		$this->tokenTime = max(1, $rate);
 
 		// Add tokens based up on number per second that
 		// should be refilled, then checked against capacity
 		// to be sure the bucket didn't overflow.
-		$tokens += ($rate * $seconds);
-		$tokens = $tokens > $capacity ? $capacity : $tokens;
+		$tokens += $rate * $elapsed;
+		$tokens  = $tokens > $capacity ? $capacity : $tokens;
 
 		// If $tokens > 0, then we are save to perform the action, but
 		// we need to decrement the number of available tokens.
@@ -161,4 +171,31 @@ class Throttler implements ThrottlerInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Used during testing to set the current timestamp to use.
+	 *
+	 * @param integer $time
+	 *
+	 * @return $this
+	 */
+	public function setTestTime(int $time)
+	{
+		$this->testTime = $time;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 *
+	 *
+	 * @return integer
+	 */
+	public function time()
+	{
+		return $this->testTime ?? time();
+	}
+
 }

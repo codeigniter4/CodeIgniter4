@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use ReflectionMethod;
 use ReflectionObject;
 use ReflectionClass;
@@ -47,9 +48,9 @@ trait ReflectionHelper
 
 	/**
 	 * Find a private method invoker.
-	 * 
-	 * @param object|string $obj    object or class name
-	 * @param string        $method method name
+	 *
+	 * @param  object|string $obj    object or class name
+	 * @param  string        $method method name
 	 * @return \Closure
 	 */
 	public static function getPrivateMethodInvoker($obj, $method)
@@ -66,10 +67,11 @@ trait ReflectionHelper
 
 	/**
 	 * Find an accessible property.
-	 * 
-	 * @param type $obj
-	 * @param type $property
-	 * @return type
+	 *
+	 * @param object $obj
+	 * @param string $property
+	 *
+	 * @return \ReflectionProperty
 	 */
 	private static function getAccessibleRefProperty($obj, $property)
 	{
@@ -90,7 +92,7 @@ trait ReflectionHelper
 
 	/**
 	 * Set a private property.
-	 * 
+	 *
 	 * @param object|string $obj      object or class name
 	 * @param string        $property property name
 	 * @param mixed         $value    value
@@ -103,9 +105,9 @@ trait ReflectionHelper
 
 	/**
 	 * Retrieve a private property.
-	 * 
-	 * @param object|string $obj      object or class name
-	 * @param string        $property property name
+	 *
+	 * @param  object|string $obj      object or class name
+	 * @param  string        $property property name
 	 * @return mixed value
 	 */
 	public static function getPrivateProperty($obj, $property)

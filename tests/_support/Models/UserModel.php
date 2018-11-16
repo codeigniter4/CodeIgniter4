@@ -6,7 +6,12 @@ class UserModel extends Model
 {
 	protected $table = 'user';
 
-	protected $allowedFields = ['name', 'email', 'country', 'deleted'];
+	protected $allowedFields = [
+		'name',
+		'email',
+		'country',
+		'deleted',
+	];
 
 	protected $returnType = 'object';
 

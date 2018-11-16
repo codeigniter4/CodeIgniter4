@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,15 +27,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
-use Config\Services;
 
 class Language
 {
@@ -60,7 +59,7 @@ class Language
 	 * Boolean value whether the intl
 	 * libraries exist on the system.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $intlSupport = false;
 
@@ -87,6 +86,23 @@ class Language
 	//--------------------------------------------------------------------
 
 	/**
+	 * Sets the current locale to use when performing string lookups.
+	 *
+	 * @param string $locale
+	 *
+	 * @return $this
+	 */
+	public function setLocale(string $locale = null)
+	{
+		if (! is_null($locale))
+		{
+			$this->locale = $locale;
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Parses the language string for a file, loads the file, if necessary,
 	 * getting the line.
 	 *
@@ -99,15 +115,14 @@ class Language
 	{
 		// Parse out the file name and the actual alias.
 		// Will load the language file and strings.
-		list($file, $line) = $this->parseLine($line);
+		list($file, $parsedLine) = $this->parseLine($line);
 
-		$output = isset($this->language[$file][$line]) ? $this->language[$file][$line] : $line;
+		$output = $this->language[$this->locale][$file][$parsedLine] ?? $line;
 
-		if (count($args))
+		if (! empty($args))
 		{
 			$output = $this->formatMessage($output, $args);
 		}
-
 		return $output;
 	}
 
@@ -119,7 +134,7 @@ class Language
 	 *
 	 * @param string $line
 	 *
-	 * @return string
+	 * @return array
 	 */
 	protected function parseLine(string $line): array
 	{
@@ -130,21 +145,21 @@ class Language
 		{
 			return [
 				null,
-				$line
+				$line,
 			];
 		}
 
 		$file = substr($line, 0, strpos($line, '.'));
 		$line = substr($line, strlen($file) + 1);
 
-		if ( ! array_key_exists($line, $this->language))
+		if (! isset($this->language[$this->locale][$file]) || ! array_key_exists($line, $this->language[$this->locale][$file]))
 		{
 			$this->load($file, $this->locale);
 		}
 
 		return [
 			$file,
-			$this->language[$line] ?? $line
+			$line,
 		];
 	}
 
@@ -160,7 +175,7 @@ class Language
 	 */
 	protected function formatMessage($message, array $args = [])
 	{
-		if ( ! $this->intlSupport || ! count($args))
+		if (! $this->intlSupport || ! $args)
 		{
 			return $message;
 		}
@@ -184,38 +199,48 @@ class Language
 	 * will return the file's contents, otherwise will merge with
 	 * the existing language lines.
 	 *
-	 * @param string $file
-	 * @param string $locale
-	 * @param bool   $return
+	 * @param string  $file
+	 * @param string  $locale
+	 * @param boolean $return
 	 *
 	 * @return array|null
 	 */
 	protected function load(string $file, string $locale, bool $return = false)
 	{
-		if (in_array($file, $this->loadedFiles))
+		if (! array_key_exists($locale, $this->loadedFiles))
 		{
+			$this->loadedFiles[$locale] = [];
+		}
+
+		if (in_array($file, $this->loadedFiles[$locale]))
+		{
+			// Don't load it more than once.
 			return [];
 		}
 
-		if ( ! array_key_exists($file, $this->language))
+		if (! array_key_exists($locale, $this->language))
 		{
-			$this->language[$file] = [];
+			$this->language[$locale] = [];
+		}
+
+		if (! array_key_exists($file, $this->language[$locale]))
+		{
+			$this->language[$locale][$file] = [];
 		}
 
 		$path = "Language/{$locale}/{$file}.php";
 
 		$lang = $this->requireFile($path);
 
-		// Don't load it more than once.
-		$this->loadedFiles[] = $file;
-
 		if ($return)
 		{
 			return $lang;
 		}
 
+		$this->loadedFiles[$locale][] = $file;
+
 		// Merge our string
-		$this->language[$file] = $lang;
+		$this->language[$this->locale][$file] = $lang;
 	}
 
 	//--------------------------------------------------------------------
@@ -223,8 +248,6 @@ class Language
 	/**
 	 * A simple method for including files that can be
 	 * overridden during testing.
-	 *
-	 * @todo - should look into loading from other locations, also probably...
 	 *
 	 * @param string $path
 	 *
@@ -234,9 +257,11 @@ class Language
 	{
 		$files = service('locator')->search($path);
 
+		$strings = [];
+
 		foreach ($files as $file)
 		{
-			if ( ! is_file($file))
+			if (! is_file($file))
 			{
 				continue;
 			}
@@ -245,10 +270,19 @@ class Language
 			// on this command returning boolean instead
 			// of array during testing, so we've removed
 			// the require_once for now.
-			return require $file;
+			$strings[] = require $file;
 		}
 
-		return [];
+		if (isset($strings[1]))
+		{
+			$strings = array_replace_recursive(...$strings);
+		}
+		elseif (isset($strings[0]))
+		{
+			$strings = $strings[0];
+		}
+
+		return $strings;
 	}
 
 	//--------------------------------------------------------------------
