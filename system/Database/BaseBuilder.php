@@ -2173,7 +2173,7 @@ class BaseBuilder
 
 		if (! is_array($key))
 		{
-			// @todo error
+			return;
 		}
 
 		is_bool($escape) || $escape = $this->db->protectIdentifiers;
