@@ -475,6 +475,33 @@ class CLI
 	//--------------------------------------------------------------------
 
 	/**
+	 * Get the number of characters in string having encoded characters
+	 * and ignores styles set by the color() function
+	 *
+	 * @param string $string
+	 *
+	 * @return integer
+	 */
+	public static function strlen(string $string): int
+	{
+		foreach (static::$foreground_colors as $color)
+		{
+			$string = strtr($string, ["\033[" . $color . 'm' => '']);
+		}
+
+		foreach (static::$background_colors as $color)
+		{
+			$string = strtr($string, ["\033[" . $color . 'm' => '']);
+		}
+
+		$string = strtr($string, ["\033[4m" => '', "\033[0m" => '']);
+
+		return mb_strlen($string);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Attempts to determine the width of the viewable CLI window.
 	 * This only works on *nix-based systems, so return a sane default
 	 * for Windows environments.
@@ -833,7 +860,7 @@ class CLI
 			foreach ($table_rows[$row] as $col)
 			{
 				// Sets the size of this column in the current row
-				$all_cols_lengths[$row][$column] = mb_strlen($col);
+				$all_cols_lengths[$row][$column] = static::strlen($col);
 
 				// If the current column does not have a value among the larger ones
 				// or the value of this is greater than the existing one
@@ -855,7 +882,7 @@ class CLI
 			$column = 0;
 			foreach ($table_rows[$row] as $col)
 			{
-				$diff = $max_cols_lengths[$column] - mb_strlen($col);
+				$diff = $max_cols_lengths[$column] - static::strlen($col);
 				if ($diff)
 				{
 					$table_rows[$row][$column] = $table_rows[$row][$column] . str_repeat(' ', $diff);
@@ -875,7 +902,7 @@ class CLI
 				$cols = '+';
 				foreach ($table_rows[$row] as $col)
 				{
-					$cols .= str_repeat('-', mb_strlen($col) + 2) . '+';
+					$cols .= str_repeat('-', static::strlen($col) + 2) . '+';
 				}
 				$table .= $cols . PHP_EOL;
 			}

@@ -377,4 +377,10 @@ EOT;
 			],
 		];
 	}
+
+	public function testStrlen()
+	{
+		$this->assertEquals(18, mb_strlen(CLI::color('success', 'green')));
+		$this->assertEquals(7, CLI::strlen(CLI::color('success', 'green')));
+	}
 }
