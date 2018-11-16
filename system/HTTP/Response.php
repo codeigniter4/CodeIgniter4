@@ -40,6 +40,7 @@ namespace CodeIgniter\HTTP;
 use Config\App;
 use Config\Format;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Pager\PagerInterface;
 
 /**
  * Redirect exception
@@ -386,14 +387,35 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Set the Link Header
 	 *
-	 * @param \CodeIgniter\Pager\Pager $pager
+	 * @param \CodeIgniter\Pager\PagerInterface $pager
+	 *
+	 * @see http://tools.ietf.org/html/rfc5988
 	 *
 	 * @return Response
 	 */
-	public function setLink(Pager $pager)
+	public function setLink(PagerInterface $pager)
 	{
-		// http://tools.ietf.org/html/rfc5988
-		$this->setHeader('Link', $pager->links('default', 'default_header'));
+		//$pager->setSurroundCount(0);
+		$links = '';
+
+		if ($previous = $pager->getPreviousPageURI())
+		{
+			$links .= '<' . $pager->getPageURI($pager->getFirstPage()) . '>; rel="first",';
+			$links .= '<' . $previous . '>; rel="prev"';
+		}
+
+		if (($next = $pager->getNextPageURI()) && $previous)
+		{
+			$links .= ',';
+		}
+
+		if ($next)
+		{
+			$links .= '<' . $next . '>; rel="next",';
+			$links .= '<' . $pager->getPageURI($pager->getLastPage()) . '>; rel="last"';
+		}
+
+		$this->setHeader('Link', $links);
 
 		return $this;
 	}
