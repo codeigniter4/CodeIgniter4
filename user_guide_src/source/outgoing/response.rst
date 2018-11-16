@@ -242,7 +242,7 @@ The methods provided by the parent class that are available are:
 
 .. php:class:: CodeIgniter\\HTTP\\Response
 
-	.. php:method:: statusCode()
+	.. php:method:: getStatusCode()
 
 		:returns: The current HTTP status code for this response
 		:rtype: int
@@ -250,7 +250,7 @@ The methods provided by the parent class that are available are:
 		Returns the currently status code for this response. If no status code has been set, a BadMethodCallException
 		will be thrown::
 
-			echo $response->statusCode();
+			echo $response->getStatusCode();
 
 	.. php:method:: setStatusCode($code[, $reason=''])
 
@@ -268,14 +268,14 @@ The methods provided by the parent class that are available are:
 
 			$response->setStatusCode(230, "Tardis initiated");
 
-	.. php:method:: reason()
+	.. php:method:: getReason()
 
 		:returns: The current reason phrase.
 		:rtype: string
 
 		Returns the current status code for this response. If not status has been set, will return an empty string::
 
-			echo $response->reason();
+			echo $response->getReason();
 
 	.. php:method:: setDate($date)
 
