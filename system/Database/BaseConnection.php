@@ -633,8 +633,6 @@ abstract class BaseConnection implements ConnectionInterface
 				$this->transStatus = false;
 			}
 
-			// @todo deal with errors
-
 			if ($this->DBDebug)
 			{
 				// We call this function in order to roll-back queries
@@ -648,14 +646,10 @@ abstract class BaseConnection implements ConnectionInterface
 
 					if ($transDepth === $this->transDepth)
 					{
-						// @todo log
-						// log_message('error', 'Database: Failure during an automated transaction commit/rollback!');
+						log_message('error', 'Database: Failure during an automated transaction commit/rollback!');
 						break;
 					}
 				}
-
-				// display the errors....
-				// @todo display the error...
 
 				return false;
 			}
