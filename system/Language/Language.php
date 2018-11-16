@@ -249,8 +249,6 @@ class Language
 	 * A simple method for including files that can be
 	 * overridden during testing.
 	 *
-	 * @todo - should look into loading from other locations, also probably...
-	 *
 	 * @param string $path
 	 *
 	 * @return array
@@ -258,6 +256,8 @@ class Language
 	protected function requireFile(string $path): array
 	{
 		$files = service('locator')->search($path);
+
+		$strings = [];
 
 		foreach ($files as $file)
 		{
@@ -270,10 +270,19 @@ class Language
 			// on this command returning boolean instead
 			// of array during testing, so we've removed
 			// the require_once for now.
-			return require $file;
+			$strings[] = require $file;
 		}
 
-		return [];
+		if (isset($strings[1]))
+		{
+			$strings = array_replace_recursive(...$strings);
+		}
+		elseif (isset($strings[0]))
+		{
+			$strings = $strings[0];
+		}
+
+		return $strings;
 	}
 
 	//--------------------------------------------------------------------
