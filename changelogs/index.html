@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Working With Databases &mdash; CodeIgniter4 4.0.0-alpha.2 documentation</title>
+  <title>Change Logs &mdash; CodeIgniter4 4.0.0-alpha.2 documentation</title>
   
 
   
@@ -35,8 +35,7 @@
 
   
     <link rel="top" title="CodeIgniter4 4.0.0-alpha.2 documentation" href="../index.html"/>
-        <link rel="next" title="Database Quick Start: Example Code" href="examples.html"/>
-        <link rel="prev" title="Alternate PHP Syntax for View Files" href="../outgoing/alternative_php.html"/> 
+        <link rel="prev" title="The MIT License (MIT)" href="../license.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -103,22 +102,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Working With Databases</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="examples.html">Quick Start: Usage Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html">Database Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="connecting.html">Connecting to a Database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="queries.html">Running Queries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="results.html">Generating Query Results</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html">Query Helper Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="query_builder.html">Query Builder Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="transactions.html">Transactions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.html">Getting MetaData</a></li>
-<li class="toctree-l2"><a class="reference internal" href="call_function.html">Custom Function Calls</a></li>
-<li class="toctree-l2"><a class="reference internal" href="events.html">Database Events</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utilities.html">Database Utilities</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
@@ -141,9 +126,14 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Change Logs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-version">Version 4.0-dev</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-4-0-0-alpha-2">Version 4.0.0-alpha.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-4-0-0-alpha-1">Version 4.0.0-alpha.1</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -188,7 +178,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Working With Databases</li>
+      <li>Change Logs</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -205,26 +195,60 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="working-with-databases">
-<h1>Working With Databases<a class="headerlink" href="#working-with-databases" title="Permalink to this headline">¶</a></h1>
-<p>CodeIgniter comes with a full-featured and very fast abstracted database
-class that supports both traditional structures and Query Builder
-patterns. The database functions offer clear, simple syntax.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Quick Start: Usage Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">Database Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="connecting.html">Connecting to a Database</a></li>
-<li class="toctree-l1"><a class="reference internal" href="queries.html">Running Queries</a></li>
-<li class="toctree-l1"><a class="reference internal" href="results.html">Generating Query Results</a></li>
-<li class="toctree-l1"><a class="reference internal" href="helpers.html">Query Helper Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="query_builder.html">Query Builder Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="transactions.html">Transactions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="metadata.html">Getting MetaData</a></li>
-<li class="toctree-l1"><a class="reference internal" href="call_function.html">Custom Function Calls</a></li>
-<li class="toctree-l1"><a class="reference internal" href="events.html">Database Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utilities.html">Database Utilities</a></li>
+  <div class="section" id="change-logs">
+<h1>Change Logs<a class="headerlink" href="#change-logs" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="version-version">
+<h2>Version 4.0-dev<a class="headerlink" href="#version-version" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: Not Released</p>
+<p><strong>Next alpha release of CodeIgniter4</strong></p>
+<ul class="simple">
+<li>Numerous bug fixes</li>
+<li>Many missing features implemented</li>
+<li>CodeIgniter4 has been promoted to its own github organization.</li>
 </ul>
+<p>That is reflected in docs and comments.
+- We have integrated a git pre-commit hook, which will apply the
+CI4 code sniffer rules, and attempt to fix them.
+We have run all the source files through it, and any &#8220;funny&#8221;
+code formatting is temporary until the rules are updated.</p>
+<p><a class="reference internal" href="next.html"><span class="doc">See all the changes.</span></a></p>
+</div>
+<div class="section" id="version-4-0-0-alpha-2">
+<h2>Version 4.0.0-alpha.2<a class="headerlink" href="#version-4-0-0-alpha-2" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: Oct 26, 2018</p>
+<p><strong>Second alpha release of CodeIgniter4</strong></p>
+<ul class="simple">
+<li>bug fixes</li>
+<li>features implemented</li>
+<li>tutorial revised</li>
+</ul>
+<p><a class="reference internal" href="v4.0.0-alpha.2.html"><span class="doc">See all the changes.</span></a></p>
+</div>
+<div class="section" id="version-4-0-0-alpha-1">
+<h2>Version 4.0.0-alpha.1<a class="headerlink" href="#version-4-0-0-alpha-1" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: September 28, 2018</p>
+<p><strong>Rewrite of the CodeIgniter framework</strong></p>
+<dl class="docutils">
+<dt>Non-code changes:</dt>
+<dd><ul class="first last simple">
+<li>User Guide adapted or rewritten</li>
+<li>[System message translations repository](<a class="reference external" href="https://github.com/bcit-ci/CodeIgniter4-translations">https://github.com/bcit-ci/CodeIgniter4-translations</a>)</li>
+<li>[Roadmap subforum](<a class="reference external" href="https://forum.codeigniter.com/forum-33.html">https://forum.codeigniter.com/forum-33.html</a>) for more transparent planning</li>
+</ul>
+</dd>
+<dt>New core classes:</dt>
+<dd><ul class="first last simple">
+<li>CodeIgniter (bootstrap)</li>
+<li>Common (shared functions)</li>
+<li>ComposerScripts (integrate third party tools)</li>
+<li>Controller (base controller)</li>
+<li>Model (base model)</li>
+<li>Entity (entity encapsulation)</li>
+</ul>
+</dd>
+</dl>
+<p>Some new, some old &amp; some borrowed packages, all namespaced.</p>
+<p><a class="reference internal" href="v4.0.0-alpha.1.html"><span class="doc">See all the changes.</span></a></p>
 </div>
 </div>
 
@@ -238,10 +262,8 @@ patterns. The database functions offer clear, simple syntax.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="examples.html" class="btn btn-neutral float-right" title="Database Quick Start: Example Code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="../outgoing/alternative_php.html" class="btn btn-neutral" title="Alternate PHP Syntax for View Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../license.html" class="btn btn-neutral" title="The MIT License (MIT)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
