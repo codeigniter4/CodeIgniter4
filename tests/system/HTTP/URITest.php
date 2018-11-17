@@ -742,6 +742,36 @@ class URITest extends \CIUnitTestCase
 		$this->assertEquals('foo/banana/baz', $uri->getPath());
 	}
 
+	//--------------------------------------------------------------------
+
+	public function testSetSegmentFallback()
+	{
+		$base = 'http://example.com';
+
+		$uri = new URI($base);
+		$uri->setSegment(1, 'first');
+		$uri->setSegment(3, 'third');
+
+		$this->assertEquals('first/third', $uri->getPath());
+
+		$uri->setSegment(2, 'second');
+
+		$this->assertEquals('first/second', $uri->getPath());
+
+		$uri->setSegment(3, 'third');
+
+		$this->assertEquals('first/second/third', $uri->getPath());
+
+		$uri->setSegment(5, 'fifth');
+
+		$this->assertEquals('first/second/third/fifth', $uri->getPath());
+
+		// sixth or seventh was not set
+		$this->expectException(HTTPException::class);
+
+		$uri->setSegment(8, 'eighth');
+	}
+
 	public function testSetBadSegment()
 	{
 		$this->expectException(HTTPException::class);
