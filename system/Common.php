@@ -264,13 +264,13 @@ if (! function_exists('esc'))
 
 			static $escaper;
 			if (! $escaper)
-					   {
+			{
 				$escaper = new \Zend\Escaper\Escaper($encoding);
 			}
 
 			if ($encoding && $escaper->getEncoding() !== $encoding)
-					   {
-					$escaper = new \Zend\Escaper\Escaper($encoding);
+			{
+				$escaper = new \Zend\Escaper\Escaper($encoding);
 			}
 
 			$data = $escaper->$method($data);
@@ -745,7 +745,7 @@ if (! function_exists('force_https'))
 
 		$uri = \CodeIgniter\HTTP\URI::createURIString(
 						$uri->getScheme(), $uri->getAuthority(true), $uri->getPath(), // Absolute URIs should use a "/" for an empty path
-											$uri->getQuery(), $uri->getFragment()
+						$uri->getQuery(), $uri->getFragment()
 		);
 
 		// Set an HSTS header
@@ -783,9 +783,12 @@ if (! function_exists('old'))
 		}
 
 		// If the result was serialized array or string, then unserialize it for use...
-		if (strpos($value, 'a:') === 0 || strpos($value, 's:') === 0)
+		if (is_string($value))
 		{
-			$value = unserialize($value);
+			if (strpos($value, 'a:') === 0 || strpos($value, 's:') === 0)
+			{
+				$value = unserialize($value);
+			}
 		}
 
 		return $escape === false ? $value : esc($value, $escape);

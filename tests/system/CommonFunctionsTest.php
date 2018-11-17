@@ -289,6 +289,43 @@ class CommonFunctionsTest extends \CIUnitTestCase
 		$this->assertEquals('fritz', old('zibble')); // serialized parameter
 	}
 
+	// Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testOldInputArray()
+	{
+		$this->injectSessionMock();
+		// setup from RedirectResponseTest...
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$this->config          = new App();
+		$this->config->baseURL = 'http://example.com';
+
+		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()), new \Config\Modules());
+		Services::injectMock('routes', $this->routes);
+
+		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
+		Services::injectMock('request', $this->request);
+
+		$locations = [
+			'AB' => 'Alberta',
+			'BC' => 'British Columbia',
+			'SK' => 'Saskatchewan',
+		];
+
+		// setup & ask for a redirect...
+		$_SESSION = [];
+		$_GET     = [];
+		$_POST    = ['location' => $locations];
+
+		$response = new RedirectResponse(new App());
+		$returned = $response->withInput();
+
+		$this->assertEquals($locations, old('location'));
+	}
+
 	// ------------------------------------------------------------------------
 
 	public function testReallyWritable()
