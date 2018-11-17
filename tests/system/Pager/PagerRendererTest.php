@@ -4,7 +4,9 @@ use CodeIgniter\HTTP\URI;
 
 class PagerRendererTest extends \CIUnitTestCase
 {
-
+	/**
+	 * @var URI
+	 */
 	protected $uri;
 
 	//--------------------------------------------------------------------
@@ -190,6 +192,45 @@ class PagerRendererTest extends \CIUnitTestCase
 
 		$this->assertEquals('http://example.com/foo?foo=bar&page=1', $pager->getFirst());
 		$this->assertEquals('http://example.com/foo?foo=bar&page=50', $pager->getLast());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetCurrent()
+	{
+		$uri = $this->uri;
+		$uri->addQuery('foo', 'bar');
+
+		$details = [
+			'uri'         => $uri,
+			'pageCount'   => 50,
+			'currentPage' => 10,
+			'total'       => 100,
+		];
+
+		$pager = new PagerRenderer($details);
+
+		$this->assertEquals('http://example.com/foo?foo=bar&page=10', $pager->getCurrent());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetCurrentWithSegment()
+	{
+		$uri = $this->uri;
+		$uri->addQuery('foo', 'bar');
+
+		$details = [
+			'uri'         => $uri,
+			'pageCount'   => 50,
+			'currentPage' => 10,
+			'total'       => 100,
+			'segment'     => 2,
+		];
+
+		$pager = new PagerRenderer($details);
+
+		$this->assertEquals('http://example.com/foo/10?foo=bar', $pager->getCurrent());
 	}
 
 	//--------------------------------------------------------------------
