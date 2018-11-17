@@ -395,7 +395,6 @@ class Response extends Message implements ResponseInterface
 	 */
 	public function setLink(PagerInterface $pager)
 	{
-		//$pager->setSurroundCount(0);
 		$links = '';
 
 		if ($previous = $pager->getPreviousPageURI())

@@ -1,4 +1,10 @@
-<?php $pager->setSurroundCount(2) ?>
+<?php
+/**
+ * @var \CodeIgniter\Pager\PagerRenderer $pager
+ */
+
+$pager->setSurroundCount(2);
+?>
 
 <nav aria-label="<?= lang('Pager.pageNavigation') ?>">
 	<ul class="pagination">
