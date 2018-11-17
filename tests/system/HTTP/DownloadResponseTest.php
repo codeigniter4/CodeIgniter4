@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\HTTP;
+<?php declare(strict_types=1);
+namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use DateTime;

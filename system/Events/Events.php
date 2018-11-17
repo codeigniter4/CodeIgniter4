@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Events;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Events;
 
 use Config\Services;
 

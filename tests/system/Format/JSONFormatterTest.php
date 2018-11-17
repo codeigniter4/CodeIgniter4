@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Format;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Format;
 
 class JSONFormatterTest extends \CIUnitTestCase
 {

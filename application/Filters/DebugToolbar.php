@@ -1,4 +1,5 @@
-<?php namespace App\Filters;
+<?php declare(strict_types=1);
+namespace App\Filters;
 
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;

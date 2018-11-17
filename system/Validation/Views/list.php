@@ -1,4 +1,5 @@
-<?php if (! empty($errors)) : ?>
+<?php declare(strict_types=1);
+if (! empty($errors)) : ?>
 	<div class="alert alert-danger" role="alert">
 		<ul>
 		<?php foreach ($errors as $error) : ?>

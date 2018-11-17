@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\HTTP\Response;

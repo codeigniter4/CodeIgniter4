@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use CodeIgniter\View\Parser;
 use CodeIgniter\View\Exceptions\ViewException;

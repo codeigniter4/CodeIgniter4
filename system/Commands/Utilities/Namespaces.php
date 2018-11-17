@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Commands\Utilities;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Commands\Utilities;
 
 /**
  * CodeIgniter

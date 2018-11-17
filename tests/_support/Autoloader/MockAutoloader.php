@@ -1,4 +1,5 @@
-<?php namespace Tests\Support\Autoloader;
+<?php declare(strict_types=1);
+namespace Tests\Support\Autoloader;
 
 use CodeIgniter\Autoloader\Autoloader;
 

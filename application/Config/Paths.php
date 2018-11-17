@@ -1,4 +1,5 @@
-<?php namespace Config;
+<?php declare(strict_types=1);
+namespace Config;
 
 /**
  * Holds the paths that are used by the system to

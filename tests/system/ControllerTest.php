@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter;
+<?php declare(strict_types=1);
+namespace CodeIgniter;
 
 use CodeIgniter\Log\Logger;
 use Config\App;

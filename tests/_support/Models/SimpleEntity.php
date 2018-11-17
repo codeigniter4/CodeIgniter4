@@ -1,4 +1,5 @@
-<?php namespace Tests\Support\Models;
+<?php declare(strict_types=1);
+namespace Tests\Support\Models;
 
 use CodeIgniter\Entity;
 

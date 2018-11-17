@@ -1,4 +1,5 @@
-<?php if (ENVIRONMENT !== 'testing') : ?>
+<?php declare(strict_types=1);
+if (ENVIRONMENT !== 'testing') : ?>
 document.addEventListener('DOMContentLoaded', loadDoc, false);
 
 function loadDoc(time) {

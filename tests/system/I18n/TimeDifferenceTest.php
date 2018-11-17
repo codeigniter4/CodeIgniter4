@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\I18n;
+<?php declare(strict_types=1);
+namespace CodeIgniter\I18n;
 
 class TimeDifferenceTest extends \CIUnitTestCase
 {

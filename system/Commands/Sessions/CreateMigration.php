@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Commands\Sessions;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Commands\Sessions;
 
 /**
  * CodeIgniter

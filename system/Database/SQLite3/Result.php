@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Database\SQLite3;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Database\SQLite3;
 
 /**
  * CodeIgniter

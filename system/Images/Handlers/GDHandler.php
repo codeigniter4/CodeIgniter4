@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Images\Handlers;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Images\Handlers;
 
 /**
  * CodeIgniter

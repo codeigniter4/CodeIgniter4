@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Commands\Database;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Commands\Database;
 
 /**
  * CodeIgniter

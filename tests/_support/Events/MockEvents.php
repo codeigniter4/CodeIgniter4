@@ -1,4 +1,5 @@
-<?php namespace Tests\Support\Events;
+<?php declare(strict_types=1);
+namespace Tests\Support\Events;
 
 /**
  * CodeIgniter

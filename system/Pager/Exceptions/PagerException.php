@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Pager\Exceptions;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Pager\Exceptions;
 
 use CodeIgniter\Exceptions\ExceptionInterface;
 use CodeIgniter\Exceptions\FrameworkException;

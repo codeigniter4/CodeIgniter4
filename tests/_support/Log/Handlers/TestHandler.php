@@ -1,4 +1,5 @@
-<?php namespace Tests\Support\Log\Handlers;
+<?php declare(strict_types=1);
+namespace Tests\Support\Log\Handlers;
 
 /**
  * Class TestHandler

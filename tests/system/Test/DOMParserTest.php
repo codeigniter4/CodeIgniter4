@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Test;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Test;
 
 use Tests\Support\DOM\DOMParser;
 

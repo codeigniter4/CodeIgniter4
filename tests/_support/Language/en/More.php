@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 return [
    'strongForce' => 'These are not the droids you are looking for',

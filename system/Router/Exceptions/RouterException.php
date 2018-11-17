@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Router\Exceptions;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Router\Exceptions;
 
 use CodeIgniter\Exceptions\ExceptionInterface;
 use CodeIgniter\Exceptions\FrameworkException;

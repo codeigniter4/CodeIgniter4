@@ -1,4 +1,5 @@
-<?php namespace Tests\Support\DOM;
+<?php declare(strict_types=1);
+namespace Tests\Support\DOM;
 
 class DOMParser
 {

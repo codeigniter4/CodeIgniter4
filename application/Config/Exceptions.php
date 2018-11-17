@@ -1,4 +1,5 @@
-<?php namespace Config;
+<?php declare(strict_types=1);
+namespace Config;
 
 /**
  * Setup how the exception handler works.

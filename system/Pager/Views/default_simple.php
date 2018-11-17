@@ -1,4 +1,5 @@
-<?php $pager->setSurroundCount(0) ?>
+<?php declare(strict_types=1);
+$pager->setSurroundCount(0) ?>
 <nav>
 	<ul class="pager">
 		<li <?= $pager->hasPrevious() ? '' : 'class="disabled"' ?>>

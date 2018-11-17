@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\CLI\Exceptions;
+<?php declare(strict_types=1);
+namespace CodeIgniter\CLI\Exceptions;
 
 class CLIException extends \RuntimeException
 {

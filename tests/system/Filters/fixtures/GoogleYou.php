@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Filters\fixtures;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Filters\fixtures;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\FilterInterface;

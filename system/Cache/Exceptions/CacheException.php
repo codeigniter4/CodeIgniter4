@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Cache\Exceptions;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Cache\Exceptions;
 
 class CacheException extends \RuntimeException implements ExceptionInterface
 {

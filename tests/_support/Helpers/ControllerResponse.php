@@ -1,4 +1,5 @@
-<?php namespace Tests\Support\Helpers;
+<?php declare(strict_types=1);
+namespace Tests\Support\Helpers;
 
 use Tests\Support\DOM\DOMParser;
 use CodeIgniter\HTTP\RedirectResponse;

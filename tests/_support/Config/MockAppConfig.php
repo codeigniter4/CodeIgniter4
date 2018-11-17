@@ -1,4 +1,5 @@
-<?php namespace Tests\Support\Config;
+<?php declare(strict_types=1);
+namespace Tests\Support\Config;
 
 class MockAppConfig
 {

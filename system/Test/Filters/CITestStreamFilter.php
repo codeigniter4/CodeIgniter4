@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Test\Filters;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Test\Filters;
 
 /**
  * CodeIgniter

@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Cache;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Cache;
 
 /**
  * CodeIgniter

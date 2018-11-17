@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use CodeIgniter\HTTP\Response;
 use Config\App;

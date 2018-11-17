@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Database\MySQLi;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Database\MySQLi;
 
 /**
  * CodeIgniter

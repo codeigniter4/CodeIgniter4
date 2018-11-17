@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Exceptions;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Exceptions;
 
 /**
  * Error: Action must be taken immediately (system/db down, etc)

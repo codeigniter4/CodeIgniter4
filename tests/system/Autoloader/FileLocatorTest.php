@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Autoloader;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Autoloader;
 
 use Tests\Support\Config\MockAutoload;
 use Tests\Support\Autoloader\MockFileLocator;

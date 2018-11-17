@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Cache\Handlers;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Cache\Handlers;
 
 class DummyHandlerTest extends \CIUnitTestCase
 {

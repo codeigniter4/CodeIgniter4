@@ -1,4 +1,5 @@
-<?php namespace Tests\Support\Helpers;
+<?php declare(strict_types=1);
+namespace Tests\Support\Helpers;
 
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;

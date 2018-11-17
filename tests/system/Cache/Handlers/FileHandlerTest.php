@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Cache\Handlers;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Cache\Handlers;
 
 set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline, array $errcontext) {
 	//throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);

@@ -1,4 +1,5 @@
-<?php namespace Tests\Support\Language;
+<?php declare(strict_types=1);
+namespace Tests\Support\Language;
 
 use CodeIgniter\Language\Language;
 

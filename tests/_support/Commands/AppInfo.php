@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Tests\Support\Commands;
 
 use CodeIgniter\CLI\BaseCommand;

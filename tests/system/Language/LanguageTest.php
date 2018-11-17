@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Language;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Language;
 
 use Tests\Support\Language\MockLanguage;
 use Tests\Support\Language\SecondMockLanguage;

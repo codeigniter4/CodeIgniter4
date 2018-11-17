@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Debug\Toolbar\Collectors;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 /**
  * CodeIgniter

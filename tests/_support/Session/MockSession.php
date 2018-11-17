@@ -1,4 +1,5 @@
-<?php namespace Tests\Support\Session;
+<?php declare(strict_types=1);
+namespace Tests\Support\Session;
 
 use CodeIgniter\Session\Session;
 

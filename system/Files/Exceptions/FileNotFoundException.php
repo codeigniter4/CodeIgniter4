@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Files\Exceptions;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Files\Exceptions;
 
 use CodeIgniter\Exceptions\ExceptionInterface;
 

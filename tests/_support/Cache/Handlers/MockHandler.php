@@ -1,4 +1,5 @@
-<?php namespace Tests\Support\Cache\Handlers;
+<?php declare(strict_types=1);
+namespace Tests\Support\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheInterface;
 

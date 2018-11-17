@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 class SimpleConfig extends \CodeIgniter\Config\BaseConfig
 {

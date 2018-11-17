@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Validation;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Validation;
 
 use Config\Database;
 use CodeIgniter\Test\CIDatabaseTestCase;

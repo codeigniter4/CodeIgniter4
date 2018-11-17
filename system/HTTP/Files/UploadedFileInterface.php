@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\HTTP\Files;
+<?php declare(strict_types=1);
+namespace CodeIgniter\HTTP\Files;
 
 /**
  * CodeIgniter

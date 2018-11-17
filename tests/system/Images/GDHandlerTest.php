@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Images;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Images;
 
 use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Config\Services;

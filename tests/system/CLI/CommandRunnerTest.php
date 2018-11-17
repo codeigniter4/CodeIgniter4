@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\CLI;
+<?php declare(strict_types=1);
+namespace CodeIgniter\CLI;
 
 use CodeIgniter\HTTP\UserAgent;
 use Config\Services;

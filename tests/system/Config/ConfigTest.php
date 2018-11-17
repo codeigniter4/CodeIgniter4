@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Config;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Config;
 
 use Config\Email;
 

@@ -1,4 +1,5 @@
-<?php namespace Tests\Support\View;
+<?php declare(strict_types=1);
+namespace Tests\Support\View;
 
 /**
  * Class SampleClass

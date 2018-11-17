@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Database\Postgre;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Database\Postgre;
 
 /**
  * CodeIgniter

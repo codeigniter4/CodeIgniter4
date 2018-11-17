@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;

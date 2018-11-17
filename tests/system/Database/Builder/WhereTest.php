@@ -1,4 +1,5 @@
-<?php namespace Builder;
+<?php declare(strict_types=1);
+namespace Builder;
 
 use Tests\Support\Database\MockConnection;
 

@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Typography;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Typography;
 
 class TypographyTest extends \CIUnitTestCase
 {

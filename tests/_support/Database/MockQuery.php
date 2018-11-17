@@ -1,4 +1,5 @@
-<?php namespace Tests\Support\Database;
+<?php declare(strict_types=1);
+namespace Tests\Support\Database;
 
 use CodeIgniter\Database\Query;
 

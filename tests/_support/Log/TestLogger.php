@@ -1,4 +1,5 @@
-<?php namespace Tests\Support\Log;
+<?php declare(strict_types=1);
+namespace Tests\Support\Log;
 
 use CodeIgniter\Log\Logger;
 

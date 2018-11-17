@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Throttle;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Throttle;
 
 use Tests\Support\Cache\Handlers\MockHandler;
 

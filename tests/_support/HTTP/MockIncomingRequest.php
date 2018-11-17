@@ -1,4 +1,5 @@
-<?php namespace Tests\Support\HTTP;
+<?php declare(strict_types=1);
+namespace Tests\Support\HTTP;
 
 use CodeIgniter\HTTP\IncomingRequest;
 

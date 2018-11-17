@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Session\Handlers;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Session\Handlers;
 
 /**
  * CodeIgniter

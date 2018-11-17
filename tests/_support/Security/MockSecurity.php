@@ -1,4 +1,5 @@
-<?php namespace Tests\Support\Security;
+<?php declare(strict_types=1);
+namespace Tests\Support\Security;
 
 use CodeIgniter\Security\Security;
 use CodeIgniter\HTTP\RequestInterface;

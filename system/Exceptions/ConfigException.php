@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Exceptions;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Exceptions;
 
 /**
  * Exception for automatic logging.

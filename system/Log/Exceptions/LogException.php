@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Log\Exceptions;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Log\Exceptions;
 
 use CodeIgniter\Exceptions\ExceptionInterface;
 use CodeIgniter\Exceptions\FrameworkException;

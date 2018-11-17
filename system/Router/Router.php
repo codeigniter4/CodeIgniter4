@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Router;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Router;
 
 /**
  * CodeIgniter

@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Filters;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Exceptions\FilterException;

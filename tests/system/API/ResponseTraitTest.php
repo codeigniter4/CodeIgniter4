@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\API;
+<?php declare(strict_types=1);
+namespace CodeIgniter\API;
 
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;

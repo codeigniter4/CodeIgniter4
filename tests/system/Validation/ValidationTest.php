@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Validation;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Validation;
 
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\Services;

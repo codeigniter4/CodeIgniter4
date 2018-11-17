@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Log\Handlers;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Log\Handlers;
 
 use Tests\Support\Config\MockLogger as LoggerConfig;
 use Tests\Support\Log\Handlers\MockChromeHandler;

@@ -1,4 +1,5 @@
-<?php $error_id = uniqid('error', true); ?>
+<?php declare(strict_types=1);
+$error_id = uniqid('error', true); ?>
 <!doctype html>
 <html>
 <head>

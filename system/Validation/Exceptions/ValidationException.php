@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Validation\Exceptions;
+<?php declare(strict_types=1);
+namespace CodeIgniter\Validation\Exceptions;
 
 use CodeIgniter\Exceptions\ExceptionInterface;
 use CodeIgniter\Exceptions\FrameworkException;
