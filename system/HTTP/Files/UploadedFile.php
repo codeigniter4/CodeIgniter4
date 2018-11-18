@@ -172,7 +172,7 @@ class UploadedFile extends File implements UploadedFileInterface
 
 		try
 		{
-			@move_uploaded_file($this->path, $destination);
+			move_uploaded_file($this->path, $destination);
 		}
 		catch (\Exception $e)
 		{
