@@ -40,7 +40,7 @@ class SessionTest extends \CIUnitTestCase
 		];
 
 		$config = array_merge($defaults, $options);
-		$config = (object)$config;
+		$config = (object) $config;
 
 		$session = new MockSession(new FileHandler($config, '127.0.0.1'), $config);
 		$session->setLogger(new TestLogger(new Logger()));
@@ -91,6 +91,22 @@ class SessionTest extends \CIUnitTestCase
 		$this->assertEquals('bar', $_SESSION['foo']);
 		$this->assertEquals('baz', $_SESSION['bar']);
 		$this->assertArrayNotHasKey('__ci_vars', $_SESSION);
+	}
+
+	// Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
+	public function testCanSerializeArray()
+	{
+		$session = $this->getInstance();
+		$session->start();
+
+		$locations = [
+			'AB' => 'Alberta',
+			'BC' => 'British Columbia',
+			'SK' => 'Saskatchewan',
+		];
+		$session->set(['_ci_old_input' => ['location' => $locations]]);
+
+		$this->assertEquals($locations, $session->get('_ci_old_input')['location']);
 	}
 
 	public function testGetSimpleKey()

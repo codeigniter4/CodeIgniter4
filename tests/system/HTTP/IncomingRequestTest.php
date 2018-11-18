@@ -1,5 +1,4 @@
 <?php
-
 namespace CodeIgniter\HTTP;
 
 use Config\App;
@@ -82,6 +81,36 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 		$this->assertEquals('foo', $this->request->getOldInput('banana.name'));
 		$this->assertEquals('two', $this->request->getOldInput('apple.name'));
+	}
+
+	// Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
+	public function testCanGetOldInputArray()
+	{
+		$_SESSION['_ci_old_input'] = [
+			'get'  => ['apple' => ['name' => 'two']],
+			'post' => ['banana' => ['name' => 'foo']],
+		];
+
+		$this->assertEquals(['name' => 'two'], $this->request->getOldInput('apple'));
+		$this->assertEquals(['name' => 'foo'], $this->request->getOldInput('banana'));
+	}
+
+	// Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testCanSerializeOldArray()
+	{
+		$locations = [
+			'AB' => 'Alberta',
+			'BC' => 'British Columbia',
+			'SK' => 'Saskatchewan',
+		];
+		$session   = service('session');
+		$session->set(['_ci_old_input' => ['post' => ['location' => $locations]]]);
+
+		$this->assertEquals($locations, $this->request->getOldInput('location'));
 	}
 
 	//--------------------------------------------------------------------
@@ -319,6 +348,5 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$this->assertEquals(124, $file->getSize());
 	}
 
-		//--------------------------------------------------------------------
-
+	//--------------------------------------------------------------------
 }

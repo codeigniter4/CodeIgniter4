@@ -521,6 +521,9 @@ class IncomingRequest extends Request
 				return $value;
 			}
 		}
+
+		// return null if requested session key not found
+		return null;
 	}
 
 	/**
