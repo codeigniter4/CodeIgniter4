@@ -92,26 +92,16 @@ class FileCollection
 			{
 				$name         = explode('.', $name);
 				$uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
-				if ($uploadedFile instanceof \CodeIgniter\HTTP\Files\UploadedFile)
-				{
-					return $uploadedFile;
-				}
-
-				return null;
+				return ($uploadedFile instanceof \CodeIgniter\HTTP\Files\UploadedFile) ?
+					 $uploadedFile : null;
 			}
 
 			if (array_key_exists($name, $this->files))
 			{
 				$uploadedFile = $this->files[$name];
-				if ($uploadedFile instanceof \CodeIgniter\HTTP\Files\UploadedFile)
-				{
-					return $uploadedFile;
-				}
-
-				return null;
+				return  ($uploadedFile instanceof \CodeIgniter\HTTP\Files\UploadedFile) ?
+					$uploadedFile : null;
 			}
-
-			return null;
 		}
 
 		return null;
@@ -291,12 +281,7 @@ class FileCollection
 			return $this->getValueDotNotationSyntax($index, $value[$current_index]);
 		}
 
-		if (isset($value[$current_index]))
-		{
-			return $value[$current_index];
-		}
-
-		return null;
+		return (isset($value[$current_index])) ? $value[$current_index] : null;
 	}
 
 }
