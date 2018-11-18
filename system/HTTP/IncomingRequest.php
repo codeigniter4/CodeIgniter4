@@ -522,8 +522,8 @@ class IncomingRequest extends Request
 			}
 		}
 
-		// return null if requested session key not found
-		return null;
+		//      // return null if requested session key not found
+		//      return null;
 	}
 
 	/**

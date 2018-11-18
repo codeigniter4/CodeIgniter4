@@ -783,13 +783,13 @@ if (! function_exists('old'))
 		}
 
 		// If the result was serialized array or string, then unserialize it for use...
-		if (is_string($value))
-		{
-			if (strpos($value, 'a:') === 0 || strpos($value, 's:') === 0)
+		//      if (is_string($value))
+		//      {
+		if (strpos($value, 'a:') === 0 || strpos($value, 's:') === 0)
 			{
-				$value = unserialize($value);
-			}
+			$value = unserialize($value);
 		}
+		//      }
 
 		return $escape === false ? $value : esc($value, $escape);
 	}
