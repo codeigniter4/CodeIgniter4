@@ -818,7 +818,8 @@ if (! function_exists('redirect'))
 
 		if (! empty($uri))
 		{
-			return $response->route($uri);
+			//          return $response->route($uri);
+			return $response->to($uri);
 		}
 
 		return $response;
