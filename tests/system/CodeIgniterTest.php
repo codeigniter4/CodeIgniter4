@@ -258,4 +258,19 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->assertEquals(2, $response->getProtocolVersion());
 	}
 
+	public function testIgnoringErrorSuppressedByAt()
+	{
+		$_SERVER['argv'] = [
+			'index.php',
+			'/',
+		];
+		$_SERVER['argc'] = 2;
+
+		ob_start();
+		@unlink('inexistent-file');
+		$this->codeigniter->useSafeOutput(true)->run();
+		$output = ob_get_clean();
+
+		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
+	}
 }
