@@ -446,8 +446,8 @@ life, and is most secure when generated on the fly. To make this simple, you can
 <dt>
 <code class="descname">CodeIgniter\HTTP\Response</code></dt>
 <dd><dl class="method">
-<dt id="statusCode">
-<code class="descname">statusCode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#statusCode" title="Permalink to this definition">¶</a></dt>
+<dt id="getStatusCode">
+<code class="descname">getStatusCode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getStatusCode" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -460,7 +460,7 @@ life, and is most secure when generated on the fly. To make this simple, you can
 </table>
 <p>Returns the currently status code for this response. If no status code has been set, a BadMethodCallException
 will be thrown:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">statusCode</span><span class="p">();</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getStatusCode</span><span class="p">();</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -498,8 +498,8 @@ for a custom status code, you can pass the reason phrase as the second parameter
 </dd></dl>
 
 <dl class="method">
-<dt id="reason">
-<code class="descname">reason</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reason" title="Permalink to this definition">¶</a></dt>
+<dt id="getReason">
+<code class="descname">getReason</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getReason" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -511,7 +511,7 @@ for a custom status code, you can pass the reason phrase as the second parameter
 </tbody>
 </table>
 <p>Returns the current status code for this response. If not status has been set, will return an empty string:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">reason</span><span class="p">();</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getReason</span><span class="p">();</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -873,7 +873,7 @@ that the cookie exists, and that it has the prescribed value.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Nov 16, 2018.
+      Last updated on Nov 17, 2018.
 
     </p>
   </div>
