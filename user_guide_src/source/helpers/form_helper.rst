@@ -605,12 +605,6 @@ The following functions are available:
 
 	The above form will show "0" when loaded for the first time.
 
-	.. note:: If you've loaded the :doc:`Form Validation Library <../libraries/validation>` and
-		have set a validation rule for the field name in use with this helper, then it will
-		forward the call to the :doc:`Form Validation Library <../libraries/validation>`'s
-		own ``set_value()`` method. Otherwise, this function looks in ``$_POST`` for the
-		field value.
-
 .. php:function:: set_select($field[, $value = ''[, $default = FALSE]])
 
 	:param	string	$field: Field name
