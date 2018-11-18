@@ -342,8 +342,8 @@ class UploadedFile extends File implements UploadedFileInterface
 	 *
 	 * Is simply an alias for guessExtension for a safer method
 	 * than simply relying on the provided extension.
-	 * Additionaly it will return clientExtension in case if there are
-	 * other extensions withe the same mime type.
+	 * Additionally it will return clientExtension in case if there are
+	 * other extensions with the same mime type.
 	 */
 	public function getExtension(): string
 	{
