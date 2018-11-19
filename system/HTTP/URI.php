@@ -990,7 +990,7 @@ class URI
 		// Scheme
 		if (isset($parts['scheme']))
 		{
-			$this->setScheme(rtrim(strtolower($parts['scheme']), ':/'));
+			$this->setScheme(rtrim($parts['scheme'], ':/'));
 		}
 		else
 		{
