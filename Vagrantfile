@@ -52,8 +52,18 @@ Vagrant.configure("2") do |config|
     CODEIGNITER_PATH="/var/www/codeigniter"
     PHP_VERSION=7.2
     PGSQL_VERSION=10
+    #APT_PROXY="192.168.10.1:3142"
 
     grep -q "127.0.0.1 ${VIRTUALHOST}" /etc/hosts || echo "127.0.0.1 ${VIRTUALHOST}" >> /etc/hosts
+
+    # Prepare to use APT Proxy
+    if [ ! -z $APT_PROXY ]; then
+        if [ ! -f /etc/apt/sources.list-origin ]; then
+            cp /etc/apt/sources.list /etc/apt/sources.list-origin
+        fi
+        sed -i "s/archive.ubuntu.com/${APT_PROXY}/" /etc/apt/sources.list
+        sed -i "s/security.ubuntu.com/${APT_PROXY}/" /etc/apt/sources.list
+    fi
 
     export DEBIAN_FRONTEND=noninteractive
 
@@ -114,11 +124,11 @@ Vagrant.configure("2") do |config|
     echo "Configuring Memcached and Redis"
     echo "================================================================================"
 
-	sed -i "s/^bind 127.0.0.1 ::1/#bind 127.0.0.1 ::1/" /etc/redis/redis.conf
-	sed -i "s/^protected-mode yes/protected-mode no/" /etc/redis/redis.conf
-	sed -i "s/^-l 127.0.0.1/#-l 127.0.0.1/" /etc/memcached.conf
-	systemctl restart redis
-	systemctl restart memcached
+    sed -i "s/^bind 127.0.0.1/#bind 127.0.0.1/" /etc/redis/redis.conf
+    sed -i "s/^protected-mode yes/protected-mode no/" /etc/redis/redis.conf
+    sed -i "s/^-l 127.0.0.1/#-l 127.0.0.1/" /etc/memcached.conf
+    systemctl restart redis
+    systemctl restart memcached
 
     echo "================================================================================"
     echo "Configuring Virtual Hosts"
@@ -130,10 +140,13 @@ Vagrant.configure("2") do |config|
     mkdir -p "${CODEIGNITER_PATH}/writable/apache"
     chown -R vagrant:vagrant $CODEIGNITER_PATH
 
-    if [ ! -d /home/vagrant/codeigniter ]; then ln -s $CODEIGNITER_PATH /home/vagrant/codeigniter; fi
+    # Creates a symlink in the user home
+    if [ ! -d /home/vagrant/codeigniter ]; then
+        ln -s $CODEIGNITER_PATH /home/vagrant/codeigniter
+    fi
 
-    sed -i "s/^APACHE_RUN_USER=www-data/APACHE_RUN_USER=vagrant/" /etc/apache2/envvars
-    sed -i "s/^APACHE_RUN_GROUP=www-data/APACHE_RUN_GROUP=vagrant/" /etc/apache2/envvars
+    sed -i "s/APACHE_RUN_USER=www-data/APACHE_RUN_USER=vagrant/" /etc/apache2/envvars
+    sed -i "s/APACHE_RUN_GROUP=www-data/APACHE_RUN_GROUP=vagrant/" /etc/apache2/envvars
     grep -q "Listen 81" /etc/apache2/ports.conf || sed -i "s/^Listen 80/Listen 80\\nListen 81\\nListen 82/" /etc/apache2/ports.conf
 
     echo "ServerName ${VIRTUALHOST}
