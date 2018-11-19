@@ -92,23 +92,15 @@ class FileCollection
 			{
 				$name         = explode('.', $name);
 				$uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
-				if ($uploadedFile instanceof UploadedFile)
-				{
-					return $uploadedFile;
-				}
-
-				return null;
+				return ($uploadedFile instanceof UploadedFile) ?
+						$uploadedFile : null;
 			}
 
 			if (array_key_exists($name, $this->files))
 			{
 				$uploadedFile = $this->files[$name];
-				if ($uploadedFile instanceof UploadedFile)
-				{
-					return $uploadedFile;
-				}
-
-				return null;
+				return ($uploadedFile instanceof UploadedFile) ?
+						$uploadedFile : null;
 			}
 
 			return null;
