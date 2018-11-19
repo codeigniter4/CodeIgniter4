@@ -1,9 +1,7 @@
 <?php
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
-use Tests\Support\HTTP\MockResponse;
 
 class ResponseCookieTest extends \CIUnitTestCase
 {
