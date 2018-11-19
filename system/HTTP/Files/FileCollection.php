@@ -92,14 +92,14 @@ class FileCollection
 			{
 				$name         = explode('.', $name);
 				$uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
-				return ($uploadedFile instanceof \CodeIgniter\HTTP\Files\UploadedFile) ?
+				return ($uploadedFile instanceof UploadedFile) ?
 					 $uploadedFile : null;
 			}
 
 			if (array_key_exists($name, $this->files))
 			{
 				$uploadedFile = $this->files[$name];
-				return  ($uploadedFile instanceof \CodeIgniter\HTTP\Files\UploadedFile) ?
+				return  ($uploadedFile instanceof UploadedFile) ?
 					$uploadedFile : null;
 			}
 		}
