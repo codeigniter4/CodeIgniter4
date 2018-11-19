@@ -137,6 +137,38 @@ class FileCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testExtensionGuessing()
+	{
+		$_FILES = [
+			'userfile1' => [
+				'name'     => 'fileA.txt',
+				'type'     => 'text/plain',
+				'size'     => 124,
+				'tmp_name' => '/fileA.txt',
+				'error'    => 0,
+			],
+			'userfile2' => [
+				'name'     => 'fileB.txt',
+				'type'     => 'text/csv',
+				'size'     => 248,
+				'tmp_name' => '/fileB.txt',
+				'error'    => 0,
+			],
+		];
+
+		$collection = new FileCollection();
+
+		$file = $collection->getFile('userfile1');
+		$this->assertInstanceOf(UploadedFile::class, $file);
+		$this->assertEquals('txt', $file->getExtension());
+
+		$file = $collection->getFile('userfile2');
+		$this->assertInstanceOf(UploadedFile::class, $file);
+		$this->assertEquals('csv', $file->guessExtension());
+	}
+
+	//--------------------------------------------------------------------
+
 	/**
 	 * @group single
 	 */
