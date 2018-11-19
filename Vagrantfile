@@ -110,6 +110,15 @@ Vagrant.configure("2") do |config|
     sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE codeigniter TO root"
     systemctl restart postgresql
 
+    echo "================================================================================"
+    echo "Configuring Memcached and Redis"
+    echo "================================================================================"
+
+	sed -i "s/^bind 127.0.0.1 ::1/#bind 127.0.0.1 ::1/" /etc/redis/redis.conf
+	sed -i "s/^protected-mode yes/protected-mode no/" /etc/redis/redis.conf
+	sed -i "s/^-l 127.0.0.1/#-l 127.0.0.1/" /etc/memcached.conf
+	systemctl restart redis
+	systemctl restart memcached
 
     echo "================================================================================"
     echo "Configuring Virtual Hosts"
