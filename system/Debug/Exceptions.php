@@ -102,6 +102,8 @@ class Exceptions
 	 */
 	public function initialize()
 	{
+		\ob_start([$this, 'fatalHandler']);
+
 		//Set the Exception Handler
 		set_exception_handler([$this, 'exceptionHandler']);
 
@@ -111,6 +113,11 @@ class Exceptions
 		// Set the handler for shutdown to catch Parse errors
 		// Do we need this in PHP7?
 		register_shutdown_function([$this, 'shutdownHandler']);
+	}
+
+	public function fatalHandler($buffer)
+	{
+		return $buffer;
 	}
 
 	//--------------------------------------------------------------------
@@ -174,7 +181,8 @@ class Exceptions
 	 */
 	public function errorHandler(int $severity, string $message, string $file = null, int $line = null, $context = null)
 	{
-		if (! (\error_reporting() & $severity)) {
+		if (! (\error_reporting() & $severity))
+		{
 			return;
 		}
 
