@@ -58,7 +58,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	 *
 	 * @var float
 	 */
-	const VERSION = 1.0;
+	public const VERSION = 1.0;
 
 	/**
 	 * The number of strack frames returned from the backtrace.
