@@ -62,3 +62,78 @@ if (! function_exists('now'))
 		return mktime($hour, $minute, $second, $month, $day, $year);
 	}
 }
+
+if (! function_exists('validate_date'))
+{
+	/**
+	 * Validate date string from <input type="date">.
+	 * Check if the string is valid date string (yyyy-mm-dd)
+	 * 
+	 * @param string $dateString
+	 *
+	 * @return bool
+	 */
+	function validate_date(string $dateString):bool 
+	{
+    		$dateArr = explode('-', $dateString);
+    		if(count($dateArr) === 3)
+		{
+			return checkdate($dateArr[1], $dateArr[2], $dateArr[0]);
+    		}else{
+			return FALSE;
+    		}
+	}
+}
+if (! function_exists('validate_time'))
+{
+	/**
+	* Validate time string from <input type="time">.
+ 	* Check if time string is valid using 24-hour format HH:mm OR HH:mm:ss 
+ 	* @param string $timestring
+ 	* @param bool $withsecond true for format 'HH:mm:ss' instead (<input type="time" step="1"> will activate second part)
+ 	* @return bool valid or not
+ 	*/
+	function validate_time(string $timestring,bool $withsecond = FALSE)
+	{
+    		$timeArr = explode(':', $timestring);
+    		if($withsecond)
+		{
+			if(count($timeArr) !== 3)
+			{
+	    			return FALSE;
+			}
+    		}else{
+			if(count($timeArr) !== 2)
+			{
+	    			return FALSE;
+			}
+    		}
+		
+    		// accepted range: 00:00:00 to 23:59:59
+    		$iHour = (int)$timeArr[0];
+    		if(($iHour < 0) || ($iHour > 23))
+		{
+			return FALSE;
+    		}
+    		$iMin = (int)$timeArr[1];
+    		if(($iMin < 0) || ($iMin > 59))
+		{
+			return FALSE;
+    		}
+		//checks second if exist
+    		if($withsecond)
+		{
+			$iSec = (int)$timeArr[2];
+			if(($iSec < 0) || ($iSec > 59))
+			{
+	    			return FALSE;
+			}else{
+	    			// all checks passed means valid
+	    			return TRUE;
+			}
+    		}else{
+			// all checks passed means valid
+			return TRUE;
+    		}
+	}
+}
