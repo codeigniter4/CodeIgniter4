@@ -671,6 +671,13 @@ instance. If not custom error message is provided, the default value will be use
 <span class="p">);</span>
 </pre></div>
 </div>
+<p>If you’d like to include a field’s “human” name, or the optional parameter some rules allow for (such as max_length),
+you can add the <code class="docutils literal"><span class="pre">{field}</span></code> and <code class="docutils literal"><span class="pre">{param}</span></code> tags to your message, respectively:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="s1">&#39;min_length&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;{field} must have at least {param} characters.&#39;</span>
+</pre></div>
+</div>
+<p>On a field with the human name Username and a rule of min_length[5], an error would display: “Username must have
+at least 5 characters.”</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If you pass the last parameter the labeled style error messages will be ignored.</p>
@@ -1161,7 +1168,7 @@ the field data).</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Nov 17, 2018.
+      Last updated on Nov 19, 2018.
 
     </p>
   </div>
