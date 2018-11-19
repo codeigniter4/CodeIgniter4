@@ -1,7 +1,5 @@
 <?php
 
-use CodeIgniter\HTTP\Response;
-use Config\App;
 
 class CommonFunctionsSendTest extends \CIUnitTestCase
 {
@@ -15,8 +13,8 @@ class CommonFunctionsSendTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 	/**
-	// Make sure cookies are set by RedirectResponse this way
-	// See https://github.com/codeigniter4/CodeIgniter4/issues/1393
+	 * Make sure cookies are set by RedirectResponse this way
+	 * See https://github.com/codeigniter4/CodeIgniter4/issues/1393
 	 *
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
