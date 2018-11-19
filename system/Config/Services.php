@@ -500,7 +500,7 @@ class Services extends BaseService
 		{
 			$paths = config('Paths');
 
-			$viewPath = $paths->viewDirectory;
+			$viewPath = ROOTPATH.$paths->viewDirectory;
 		}
 
 		return new \CodeIgniter\View\View($config, $viewPath, static::locator(true), CI_DEBUG, static::logger(true));
