@@ -174,6 +174,10 @@ class Exceptions
 	 */
 	public function errorHandler(int $severity, string $message, string $file = null, int $line = null, $context = null)
 	{
+		if (! (\error_reporting() & $severity)) {
+			return;
+		}
+
 		// Convert it to an exception and pass it along.
 		throw new \ErrorException($message, 0, $severity, $file, $line);
 	}
