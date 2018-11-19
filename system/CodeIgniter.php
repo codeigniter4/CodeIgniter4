@@ -326,17 +326,6 @@ class CodeIgniter
 			$this->benchmark->stop('controller');
 		}
 
-		// Handle any redirects
-		if ($returned instanceof RedirectResponse)
-		{
-			if ($returnResponse)
-			{
-				return $returned;
-			}
-
-			$this->callExit(EXIT_SUCCESS);
-		}
-
 		// If $returned is a string, then the controller output something,
 		// probably a view, instead of echoing it directly. Send it along
 		// so it can be used with the output.

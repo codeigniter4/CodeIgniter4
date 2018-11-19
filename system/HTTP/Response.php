@@ -755,7 +755,7 @@ class Response extends Message implements ResponseInterface
 		}
 
 		$this->setStatusCode($code);
-		$this->sendHeaders();
+
 		return $this;
 	}
 
