@@ -1,7 +1,6 @@
 <?php
 namespace CodeIgniter\HTTP\Files;
 
-use CodeIgniter\Files\File;
 /**
  * CodeIgniter
  *
@@ -37,6 +36,8 @@ use CodeIgniter\Files\File;
  * @since      Version 3.0.0
  * @filesource
  */
+
+use CodeIgniter\Files\File;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 /**
