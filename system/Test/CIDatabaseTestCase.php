@@ -36,10 +36,10 @@
  * @filesource
  */
 
-use Config\Services;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Exceptions\ConfigException;
+use Config\Services;
 
 /**
  * CIDatabaseTestCase

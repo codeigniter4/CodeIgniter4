@@ -1,8 +1,8 @@
 <?php namespace CodeIgniter;
 
+use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Log\Logger;
 use Config\App;
-use CodeIgniter\HTTP\UserAgent;
 use Tests\Support\MockCodeIgniter;
 
 /**

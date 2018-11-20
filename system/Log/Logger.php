@@ -36,8 +36,8 @@
  * @filesource
  */
 
-use Psr\Log\LoggerInterface;
 use CodeIgniter\Log\Exceptions\LogException;
+use Psr\Log\LoggerInterface;
 
 /**
  * The CodeIgntier Logger

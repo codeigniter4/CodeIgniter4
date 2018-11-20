@@ -37,11 +37,11 @@
  */
 
 use CodeIgniter\I18n\Exceptions\I18nException;
-use Locale;
-use DateTime;
 use DateInterval;
+use DateTime;
 use DateTimeZone;
 use IntlDateFormatter;
+use Locale;
 
 /**
  * Class Time

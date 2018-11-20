@@ -36,10 +36,10 @@
  * @filesource
  */
 
-use Config\App;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\View\RendererInterface;
+use Config\App;
 
 /**
  * Services Configuration file.

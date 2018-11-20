@@ -36,8 +36,8 @@
  * @filesource
  */
 
-use Config\Format;
 use CodeIgniter\HTTP\Response;
+use Config\Format;
 
 /**
  * Response trait.

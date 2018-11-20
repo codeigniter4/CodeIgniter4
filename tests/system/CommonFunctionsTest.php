@@ -1,14 +1,14 @@
 <?php
 
-use CodeIgniter\Session\Handlers\FileHandler;
-use CodeIgniter\HTTP\Response;
-use Config\App;
-use Config\Autoload;
 use CodeIgniter\Config\Services;
-use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Session\Handlers\FileHandler;
+use Config\App;
+use Config\Autoload;
 use Config\Logger;
 use Tests\Support\Autoloader\MockFileLocator;
 use Tests\Support\HTTP\MockIncomingRequest;

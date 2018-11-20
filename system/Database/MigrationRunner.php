@@ -36,10 +36,10 @@
  * @filesource
  */
 
-use Config\Autoload;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Exceptions\ConfigException;
+use Config\Autoload;
 
 /**
  * Class MigrationRunner

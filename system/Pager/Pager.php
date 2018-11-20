@@ -37,8 +37,8 @@
  */
 
 use CodeIgniter\Pager\Exceptions\PagerException;
-use Config\Services;
 use CodeIgniter\View\RendererInterface;
+use Config\Services;
 
 /**
  * Class Pager

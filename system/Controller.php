@@ -38,8 +38,8 @@
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Validation\Validation;
 use CodeIgniter\Validation\Exceptions\ValidationException;
+use CodeIgniter\Validation\Validation;
 use Psr\Log\LoggerInterface;
 
 /**

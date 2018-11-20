@@ -36,9 +36,9 @@
  * @filesource
  */
 
-use SplFileInfo;
 use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use SplFileInfo;
 
 class File extends SplFileInfo
 {

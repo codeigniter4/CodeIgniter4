@@ -2,10 +2,10 @@
 namespace CodeIgniter\Honeypot\fixtures;
 
 use CodeIgniter\Filters\FilterInterface;
-use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\Honeypot\Honeypot;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
 
 class HoneyTrap implements FilterInterface
 {

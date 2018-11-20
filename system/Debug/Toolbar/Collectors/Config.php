@@ -1,8 +1,8 @@
 <?php namespace CodeIgniter\Debug\Toolbar\Collectors;
 
+use CodeIgniter\CodeIgniter;
 use Config\App;
 use Config\Services;
-use CodeIgniter\CodeIgniter;
 
 class Config
 {

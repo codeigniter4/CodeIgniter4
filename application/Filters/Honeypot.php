@@ -3,10 +3,10 @@
 namespace App\Filters;
 
 use CodeIgniter\Filters\FilterInterface;
+use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
-use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 
 class Honeypot implements FilterInterface
 {

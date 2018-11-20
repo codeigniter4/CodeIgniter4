@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Validation;
 
-use Config\Database;
 use CodeIgniter\Test\CIDatabaseTestCase;
+use Config\Database;
 
 class UniqueRulesTest extends CIDatabaseTestCase
 {

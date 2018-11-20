@@ -38,8 +38,8 @@
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Config\Services;
 use Config\Autoload;
+use Config\Services;
 
 /**
  * Displays a list of all migrations and whether they've been run or not.

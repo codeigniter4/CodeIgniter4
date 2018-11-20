@@ -37,9 +37,9 @@ namespace CodeIgniter\HTTP;
  * @filesource
  */
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 use Config\Format;
-use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 /**
  * Redirect exception

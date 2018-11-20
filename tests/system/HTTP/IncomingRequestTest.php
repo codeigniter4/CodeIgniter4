@@ -1,8 +1,8 @@
 <?php
 namespace CodeIgniter\HTTP;
 
-use Config\App;
 use CodeIgniter\HTTP\Files\UploadedFile;
+use Config\App;
 
 /**
  * @backupGlobals enabled

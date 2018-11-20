@@ -1,7 +1,7 @@
 <?php namespace Config;
 
-use CodeIgniter\Config\Services as CoreServices;
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Config\Services as CoreServices;
 
 require_once BASEPATH . 'Config/Services.php';
 

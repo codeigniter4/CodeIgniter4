@@ -38,8 +38,8 @@
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Config\Services;
 use Config\Autoload;
+use Config\Services;
 
 /**
  * Runs all of the migrations in reverse order, until they have

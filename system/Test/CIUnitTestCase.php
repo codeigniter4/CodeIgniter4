@@ -37,8 +37,8 @@ namespace CodeIgniter\Test;
  * @filesource
  */
 
-use Config\Paths;
 use CodeIgniter\Events\Events;
+use Config\Paths;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\Log\TestLogger;
 

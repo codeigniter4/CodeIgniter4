@@ -1,9 +1,9 @@
 <?php namespace CodeIgniter;
 
-use Config\App;
-use Tests\Support\MockCodeIgniter;
 use CodeIgniter\Router\RouteCollection;
+use Config\App;
 use Tests\Support\Autoloader\MockFileLocator;
+use Tests\Support\MockCodeIgniter;
 
 /**
  * @backupGlobals enabled

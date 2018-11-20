@@ -1,9 +1,9 @@
 <?php namespace CodeIgniter\CLI;
 
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\Services;
 use Tests\Support\Config\MockCLIConfig;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
 
 class CommandRunnerTest extends \CIUnitTestCase
 {

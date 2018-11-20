@@ -1,8 +1,8 @@
 <?php namespace CodeIgniter\Log\Handlers;
 
+use org\bovigo\vfs\vfsStream;
 use Tests\Support\Config\MockLogger as LoggerConfig;
 use Tests\Support\Log\Handlers\MockFileHandler as MockFileHandler;
-use org\bovigo\vfs\vfsStream;
 
 class FileHandlerTest extends \CIUnitTestCase
 {

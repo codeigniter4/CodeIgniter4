@@ -36,10 +36,10 @@
  * @filesource
  */
 
-use Config\App;
-use Config\Services;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Format\XMLFormatter;
+use Config\App;
+use Config\Services;
 
 /**
  * Debug Toolbar

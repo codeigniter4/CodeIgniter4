@@ -1,7 +1,7 @@
 <?php
 
-use CodeIgniter\Test\FeatureTestCase;
 use CodeIgniter\Test\FeatureResponse;
+use CodeIgniter\Test\FeatureTestCase;
 
 /**
  * @group DatabaseLive

@@ -36,14 +36,14 @@
  * @filesource
  */
 
-use Config\Database;
-use CodeIgniter\I18n\Time;
-use CodeIgniter\Pager\Pager;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
-use CodeIgniter\Validation\ValidationInterface;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\I18n\Time;
+use CodeIgniter\Pager\Pager;
+use CodeIgniter\Validation\ValidationInterface;
+use Config\Database;
 
 /**
  * Class Model

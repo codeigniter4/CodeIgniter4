@@ -1,11 +1,11 @@
 <?php namespace CodeIgniter\Security;
 
-use CodeIgniter\HTTP\URI;
-use CodeIgniter\HTTP\Request;
-use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\HTTP\IncomingRequest;
-use Tests\Support\Config\MockAppConfig;
+use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Security\Exceptions\SecurityException;
+use Tests\Support\Config\MockAppConfig;
 use Tests\Support\Security\MockSecurity;
 
 //--------------------------------------------------------------------

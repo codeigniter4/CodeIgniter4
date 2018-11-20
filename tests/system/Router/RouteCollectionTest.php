@@ -1,8 +1,8 @@
 <?php
 namespace CodeIgniter\Router;
 
-use Tests\Support\Autoloader\MockFileLocator;
 use CodeIgniter\Router\Exceptions\RouterException;
+use Tests\Support\Autoloader\MockFileLocator;
 
 /**
  * @backupGlobals enabled

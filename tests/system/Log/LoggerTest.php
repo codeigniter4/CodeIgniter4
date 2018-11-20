@@ -1,8 +1,8 @@
 <?php
 
-use CodeIgniter\Log\Logger;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Log\Exceptions\LogException;
+use CodeIgniter\Log\Logger;
 use Tests\Support\Config\MockLogger as LoggerConfig;
 use Tests\Support\Log\Handlers\TestHandler;
 

@@ -36,8 +36,8 @@
  * @filesource
  */
 
-use CodeIgniter\Exceptions\CriticalError;
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Exceptions\CriticalError;
 
 class RedisHandler implements CacheInterface
 {

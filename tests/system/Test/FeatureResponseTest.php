@@ -1,8 +1,8 @@
 <?php
 
+use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\FeatureResponse;
-use CodeIgniter\HTTP\RedirectResponse;
 
 class FeatureResponseTest extends CIUnitTestCase
 {
