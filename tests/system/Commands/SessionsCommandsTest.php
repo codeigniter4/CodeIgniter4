@@ -16,6 +16,7 @@ class SessionsCommandsTest extends \CIUnitTestCase
 	protected $response;
 	protected $logger;
 	protected $runner;
+	private $result;
 
 	public function setUp()
 	{
@@ -51,6 +52,14 @@ class SessionsCommandsTest extends \CIUnitTestCase
 	public function tearDown()
 	{
 		stream_filter_remove($this->stream_filter);
+
+		$result = remove_invisible_characters($this->result);
+		$result = str_replace('[0;32m', '', $result);
+		$result = str_replace('[0m', '', $result);
+		$file   = trim(substr($result, 14));
+		$file   = str_replace('APPPATH', APPPATH, $file);
+
+		unlink($file);
 	}
 
 	public function testCreateMigrationCommand()
@@ -64,6 +73,8 @@ class SessionsCommandsTest extends \CIUnitTestCase
 		$this->assertContains('Created file:', $result);
 		$this->assertContains('APPPATH/Database/Migrations/', $result);
 		$this->assertContains('_create_ci_sessions_table.php', $result);
+
+		$this->result = $result;
 	}
 
 	public function testOverriddenCreateMigrationCommand()
@@ -84,6 +95,8 @@ class SessionsCommandsTest extends \CIUnitTestCase
 		$this->assertContains('Created file:', $result);
 		$this->assertContains('APPPATH/Database/Migrations/', $result);
 		$this->assertContains('_create_mygoodies_table.php', $result);
+
+		$this->result = $result;
 	}
 
 }
