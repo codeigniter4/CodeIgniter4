@@ -41,7 +41,7 @@
  */
 class Exceptions
 {
-	use CodeIgniter\API\ResponseTrait;
+	use \CodeIgniter\API\ResponseTrait;
 
 	/**
 	 * Nesting level of the output buffering mechanism
