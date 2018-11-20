@@ -41,7 +41,7 @@
  */
 class Exceptions
 {
-	use \CodeIgniter\API\ResponseTrait;
+	use CodeIgniter\API\ResponseTrait;
 
 	/**
 	 * Nesting level of the output buffering mechanism
@@ -174,7 +174,8 @@ class Exceptions
 	 */
 	public function errorHandler(int $severity, string $message, string $file = null, int $line = null, $context = null)
 	{
-		if (! (\error_reporting() & $severity)) {
+		if (! (\error_reporting() & $severity))
+		{
 			return;
 		}
 

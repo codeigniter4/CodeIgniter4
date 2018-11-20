@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use \CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\PreparedQueryInterface;
 
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
