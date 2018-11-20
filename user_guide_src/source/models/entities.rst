@@ -187,7 +187,7 @@ class property will be access through the ``setCreatedAt()`` and ``getCreatedAt(
 
 In the ``setPassword()`` method we ensure that the password is always hashed.
 
-In ``setCreatedOn()`` we convert the string we receive from the model into a DateTime object, ensuring that our timezone
+In ``setCreatedAt()`` we convert the string we receive from the model into a DateTime object, ensuring that our timezone
 is UTC so we can easily convert the the viewer's current timezone. In ``getCreatedAt()``, it converts the time to
 a formatted string in the application's current timezone.
 
