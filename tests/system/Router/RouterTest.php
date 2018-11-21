@@ -286,6 +286,110 @@ class RouterTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1247
+	 */
+	public function testGroupedResourceRoutesWithFilters()
+	{
+		$group = [
+			'api',
+			[
+				'namespace' => 'App\Controllers\Api',
+				'filter'    => 'api-auth',
+			],
+			function (RouteCollection $routes) {
+				$routes->resource('posts', [
+					'controller' => 'PostController',
+				]);
+			},
+		];
+
+		// GET
+		$this->collection->setHTTPVerb('get');
+
+		$this->collection->group(...$group);
+
+		$router = new Router($this->collection);
+
+		$router->handle('api/posts');
+
+		$this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
+		$this->assertEquals('index', $router->methodName());
+		$this->assertEquals('api-auth', $router->getFilter());
+
+		$router->handle('api/posts/new');
+
+		$this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
+		$this->assertEquals('new', $router->methodName());
+		$this->assertEquals('api-auth', $router->getFilter());
+
+		$router->handle('api/posts/50');
+
+		$this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
+		$this->assertEquals('show', $router->methodName());
+		$this->assertEquals('api-auth', $router->getFilter());
+
+		$router->handle('api/posts/50/edit');
+
+		$this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
+		$this->assertEquals('edit', $router->methodName());
+		$this->assertEquals('api-auth', $router->getFilter());
+
+		// POST
+		$this->collection->setHTTPVerb('post');
+
+		$this->collection->group(...$group);
+
+		$router = new Router($this->collection);
+
+		$router->handle('api/posts');
+
+		$this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
+		$this->assertEquals('create', $router->methodName());
+		$this->assertEquals('api-auth', $router->getFilter());
+
+		// PUT
+		$this->collection->setHTTPVerb('put');
+
+		$this->collection->group(...$group);
+
+		$router = new Router($this->collection);
+
+		$router->handle('api/posts/50');
+
+		$this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
+		$this->assertEquals('update', $router->methodName());
+		$this->assertEquals('api-auth', $router->getFilter());
+
+		// PATCH
+		$this->collection->setHTTPVerb('patch');
+
+		$this->collection->group(...$group);
+
+		$router = new Router($this->collection);
+
+		$router->handle('api/posts/50');
+
+		$this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
+		$this->assertEquals('update', $router->methodName());
+		$this->assertEquals('api-auth', $router->getFilter());
+
+		// DELETE
+		$this->collection->setHTTPVerb('delete');
+
+		$this->collection->group(...$group);
+
+		$router = new Router($this->collection);
+
+		$router->handle('api/posts/50');
+
+		$this->assertEquals('\App\Controllers\Api\PostController', $router->controllerName());
+		$this->assertEquals('delete', $router->methodName());
+		$this->assertEquals('api-auth', $router->getFilter());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1240
 	 */
 	public function testMatchesCorrectlyWithMixedVerbs()
