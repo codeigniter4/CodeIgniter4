@@ -329,14 +329,7 @@ class FileHandler implements CacheInterface
 	 */
 	protected function writeFile($path, $data, $mode = 'wb')
 	{
-		try
-		{
-			if (($fp = @fopen($path, $mode)) === false)
-			{
-				return false;
-			}
-		}
-		catch (\ErrorException $e)
+		if (($fp = @fopen($path, $mode)) === false)
 		{
 			return false;
 		}
