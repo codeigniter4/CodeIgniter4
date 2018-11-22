@@ -294,7 +294,13 @@ class FormatRules
 
 		foreach (explode(',', $str) as $email)
 		{
-			if (trim($email) !== '' && $this->valid_email(trim($email)) === false)
+			$email = trim($email);
+			if ($email === '')
+			{
+				return false;
+			}
+
+			if ($this->valid_email($email) === false)
 			{
 				return false;
 			}

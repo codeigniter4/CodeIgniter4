@@ -241,6 +241,10 @@ class FormatRulesTest extends \CIUnitTestCase
 				null,
 				false,
 			],
+			[
+				',',
+				false,
+			],
 		];
 	}
 
