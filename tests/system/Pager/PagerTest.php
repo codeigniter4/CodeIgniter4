@@ -124,7 +124,7 @@ class PagerTest extends \CIUnitTestCase
 		$_GET['page'] = 3;
 		$_GET['foo']  = 'bar';
 
-		$this->pager->store('default', 3, 25, 100, 2);
+		$this->pager->store('default', 3, 25, 100, 1);
 
 		$this->assertEquals('http://example.com/2?page=3&foo=bar', $this->pager->getPreviousPageURI());
 		$this->assertEquals('http://example.com/4?page=3&foo=bar', $this->pager->getNextPageURI());
