@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
     # Display the VirtualBox GUI when booting the machine
     vb.gui = false
     # Customize the amount of memory on the VM:
-    vb.memory = "768"
+    vb.memory = "1024"
   end
 
   # Provision
@@ -55,6 +55,22 @@ Vagrant.configure("2") do |config|
     #APT_PROXY="192.168.10.1:3142"
 
     grep -q "127.0.0.1 ${VIRTUALHOST}" /etc/hosts || echo "127.0.0.1 ${VIRTUALHOST}" >> /etc/hosts
+
+    # Creates a swap file if necessary
+    RAM=`awk '/MemTotal/ {print $2}' /proc/meminfo`
+    if [ $RAM -lt 1000000 ] && [ ! -f /swap/swapfile ]; then
+        echo "================================================================================"
+        echo "Adding swap"
+        echo "================================================================================"
+        echo "This process may take a few minutes. Please wait..."
+        mkdir /swap
+        dd if=/dev/zero of=/swap/swapfile bs=1024 count=1000000
+        chmod 600 /swap/swapfile
+        mkswap /swap/swapfile
+        swapon /swap/swapfile
+        echo "/swap/swapfile swap swap defaults 0 0" >> /etc/fstab
+        echo "Done."
+    fi
 
     # Prepare to use APT Proxy
     if [ ! -z $APT_PROXY ]; then
