@@ -174,9 +174,9 @@ class Router implements RouterInterface
 
 		if ($this->checkRoutes($uri))
 		{
-			if ($this->collection->isFiltered($uri))
+			if ($this->collection->isFiltered($this->matchedRoute[0]))
 			{
-				$this->filterInfo = $this->collection->getFilterForRoute($uri);
+				$this->filterInfo = $this->collection->getFilterForRoute($this->matchedRoute[0]);
 			}
 
 			return $this->controller;

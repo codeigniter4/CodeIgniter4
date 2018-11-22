@@ -669,7 +669,7 @@ class CodeIgniter
 	 * @param RouteCollectionInterface $routes An collection interface to use in place
 	 *                                         of the config file.
 	 *
-	 * @return array
+	 * @return string
 	 */
 	protected function tryToRouteIt(RouteCollectionInterface $routes = null)
 	{
