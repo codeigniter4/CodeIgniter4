@@ -385,7 +385,7 @@ be automatically called whenever you set or retrieve the class property using th
 The methods do not need to be public unless you want them accessed from other classes. For example, the <code class="docutils literal"><span class="pre">created_at</span></code>
 class property will be access through the <code class="docutils literal"><span class="pre">setCreatedAt()</span></code> and <code class="docutils literal"><span class="pre">getCreatedAt()</span></code> methods.</p>
 <p>In the <code class="docutils literal"><span class="pre">setPassword()</span></code> method we ensure that the password is always hashed.</p>
-<p>In <code class="docutils literal"><span class="pre">setCreatedOn()</span></code> we convert the string we receive from the model into a DateTime object, ensuring that our timezone
+<p>In <code class="docutils literal"><span class="pre">setCreatedAt()</span></code> we convert the string we receive from the model into a DateTime object, ensuring that our timezone
 is UTC so we can easily convert the the viewer&#8217;s current timezone. In <code class="docutils literal"><span class="pre">getCreatedAt()</span></code>, it converts the time to
 a formatted string in the application&#8217;s current timezone.</p>
 <p>While fairly simple, these examples show that using Entity classes can provide a very flexible way to enforce
@@ -597,7 +597,7 @@ Unlike the rest of the data types that you can cast properties into, the:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Nov 19, 2018.
+      Last updated on Nov 21, 2018.
 
     </p>
   </div>
