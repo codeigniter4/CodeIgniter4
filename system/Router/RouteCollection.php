@@ -436,7 +436,7 @@ class RouteCollection implements RouteCollectionInterface
 
 	/**
 	 * Sets the default constraint to be used in the system. Typically
-	 * for use with the 'resources' method.
+	 * for use with the 'resource' method.
 	 *
 	 * @param string $placeholder
 	 *
@@ -722,7 +722,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * Example:
 	 *     // Creates route: admin/users
 	 *     $route->group('admin', function() {
-	 *            $route->resources('users');
+	 *            $route->resource('users');
 	 *     });
 	 *
 	 * @param string $name The name to group/prefix the routes with.
@@ -777,7 +777,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *      'placeholder'   - The regex used by the Router. Defaults to '(:any)'
 	 *
 	 * Example:
-	 *      $route->resources('photos');
+	 *      $route->resource('photos');
 	 *
 	 *      // Generates the following routes:
 	 *      HTTP Verb | Path        | Action        | Used for...
@@ -864,8 +864,8 @@ class RouteCollection implements RouteCollectionInterface
 		if (in_array('update', $methods))
 		{
 			$this->put($name . '/' . $id, $new_name . '::update/$1', $options);
+			$this->patch($name . '/' . $id, $new_name . '::update/$1', $options);
 		}
-		$this->patch($name . '/' . $id, $new_name . '::update/$1', $options);
 		if (in_array('delete', $methods))
 		{
 			$this->delete($name . '/' . $id, $new_name . '::delete/$1', $options);

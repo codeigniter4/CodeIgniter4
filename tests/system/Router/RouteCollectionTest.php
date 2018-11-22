@@ -458,6 +458,24 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testResourcesWithWebsafe()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$routes                    = $this->getCollector();
+
+		$routes->resource('photos', ['websafe' => true]);
+
+		$expected = [
+			'photos'             => '\Photos::create',
+			'photos/(.*)'        => '\Photos::update/$1',
+			'photos/(.*)/delete' => '\Photos::delete/$1',
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testMatchSupportsMultipleMethods()
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
