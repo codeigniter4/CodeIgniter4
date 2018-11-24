@@ -1,9 +1,8 @@
 #!/bin/bash
-#######################DO NOT USE YET########################
 
 ## Cleanup after a framework release
 
-UPSTREAM=https://github.com/codeigniter4/CodeIgniter4.git
+UPSTREAM=${CI_ORG}CodeIgniter4.git
 version=4
 qualifier=
 

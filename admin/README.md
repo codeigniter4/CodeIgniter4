@@ -2,7 +2,7 @@
 
 This folder contains tools or docs useful for project maintainers.
 
-##Repositories Organization, inside https://github.com/codeigniter4
+##Repositories inside https://github.com/codeigniter4
 
 -   **CodeIgniter4** is the main development repository.  
     It supports issues and pull requests, and has a rule to enforce GPG-signed commits.  
@@ -45,6 +45,7 @@ This folder contains tools or docs useful for project maintainers.
 
 ##Maintainer Scripts
 
+-   **config** holds variables used for the maintainer & release building
 -   **docbot** re-builds the user guide from the RST source for it,
     and optionally deploys it to the `gh-pages` branch of the main
     repository (if the user running it has maintainer rights on that repo).  
@@ -59,7 +60,7 @@ scripts used by the release manager:
     This includes updating version dependencies or constants,
     generating version(s) of the user guide; and possibly
     moving or ignoring stuff, distinguishing release from development.
-    If successful, it will leave a `releasing` file, with the version number
+    If successful, it will update the `config` file, with the version number
     in it.
 -   **release** builds release branches for the derived repositories
     (framework, appstarter and userguide).  

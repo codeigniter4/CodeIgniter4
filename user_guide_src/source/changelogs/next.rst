@@ -5,6 +5,7 @@ Release Date: Not Released
 
 **Next alpha release of CodeIgniter4**
 
+
 The list of changed files follows, with PR numbers shown.
 
 - admin/
@@ -45,8 +46,8 @@ The list of changed files follows, with PR numbers shown.
 		- Mimes #1453
 		- Services #1180, #1469
 	- Database/
-		- BaseBuilder #1335
-		- BaseConnection #1335, #1407
+		- BaseBuilder #1335, #1491
+		- BaseConnection #1335, #1407, #1491
 		- BaseResult #1426
 		- Config #1465, #1469
 		- Forge #1343, #1449, #1470
@@ -57,6 +58,7 @@ The list of changed files follows, with PR numbers shown.
 		- SQLite3/Connection #1335, #1449
 		- SQLite3/Forge #1470
 	- Debug
+		- Exceptions #1500
 		- Toolbar #1370, #1465, #1469
 		- Toolbar/Views/toolbar.tpl #1469
 	- Email/
@@ -74,13 +76,14 @@ The list of changed files follows, with PR numbers shown.
 	- HTTP/
 		- DownloadResponse #1375
 		- Exceptions/DownloadException #1405
-		- Files/UploadedFile #1335, #1399
-		- IncomingRequest #1445, #1469
+		- Files/FileCollection #1506
+		- Files/UploadedFile #1335, #1399, #1500, #1506
+		- IncomingRequest #1445, #1469, #1496
 		- RedirectResponse #1387, #1451, #1464
-		- Response #1456, #1472, #1477
+		- Response #1456, #1472, #1477, #1486, #1504, #1505
 		- ResponseInterface #1384
 		- UploadedFile #1368, #1456
-		- URI #1213, #1469
+		- URI #1213, #1469, #1508
 	- Language/
 		- en/Database #1335
 		- en/Filters #1378
@@ -90,8 +93,9 @@ The list of changed files follows, with PR numbers shown.
 		- Pager #1213
 		- PagerRenderer #1213
 	- Router/
-		- RouteCollection #1464
+		- RouteCollection #1464, #1524
 		- RouteCollectionInterface #1406, #1410
+		- Router #1523
 	- Session/Handlers/
 		- BaseHandler #1180, #1483
 		- DatabaseHandler #1180
@@ -101,16 +105,18 @@ The list of changed files follows, with PR numbers shown.
 	- Test/
 		- CIUnitTestCase #1467
 		- FeatureTestCase #1427, #1468
-		- Filters//CITestStreamFilter #1465
+		- Filters/CITestStreamFilter #1465
 	- Validation /
 		- CreditCardRules #1447
+		- FormatRules #1507
 		- Rules #1345
 		- Validation #1345
 	- View/
 		- Filters #1469
 		- Parser #1417
 		- View #1357, #1377, #1410
-	- CodeIgniter #1465
+	- CodeIgniter #1465, #1505, #1523, 2047b5a
+	- Common #1486, #1496, #1504, #1513
 	- ComposerScripts #1469
 	- Controller #1423
 	- Entity #1369, #1373
@@ -125,16 +131,20 @@ The list of changed files follows, with PR numbers shown.
 		- RedisHandlerTest #1180, #1481
 	- CLI/
 		- CLITest #1467, #1489
+	- Commands/
+		- SessionCommandsTest #1455
 	- Database/Live/
 		- ForgeTest #1449, #1470
 	- HTTP/
+		- Files/FileCOllectionTest #1506		
 		- Files/FileMovingTest #1424
 		- DownloadResponseTest #1375
+		- IncomingRequestTest #1496
 		- RedirectResponseTest #1387, #1456
-		- ResponseCookieTest #1472
-		- ResponseSendTest #1477
-		- ResponseTest #1375, #1456, #1472
-		- URITest #1456
+		- ResponseCookieTest #1472, #1509
+		- ResponseSendTest #1477, #1486, #1509
+		- ResponseTest #1375, #1456, #1472, #1486
+		- URITest #1456, #1495
 	- Helpers/
 		- DateHelperTest #1479
 	- I18n/
@@ -146,8 +156,8 @@ The list of changed files follows, with PR numbers shown.
 	- Pager/
 		- PagerRendererTest #1213
 	- Router/
-		- RouteCollectionTest #1438
-		- RouterTest#1438
+		- RouteCollectionTest #1438, #1524
+		- RouterTest #1438, #1523
 	- Session/
 		- SessionTest  #1180
 	- Test/
@@ -157,11 +167,16 @@ The list of changed files follows, with PR numbers shown.
 		- TestCaseTest #1390
 	- Throttle/
 		- ThrottleTest #1398
+	- Validation/
+		- FormatRulesTest #1507
 	- View/
 		- ParserTest #1335
-	- CommonFunctionsTest #1180
+	- CodeIgniterTest #1500
+	- CommonFunctionsSendTest #1486, #1509
+	- CommonFunctionsTest #1180, #1486, #1496
 
 - user_guide_src /source/
+	- changelogs/ #1385, #1490
 	- concepts/
 		- services #1469
 		- structure #1448
@@ -173,28 +188,55 @@ The list of changed files follows, with PR numbers shown.
 		- seeds #1482
 	- extending/
 		- core_classes #1469
+	- helpers/
+		- form_helper #1499
 	- installation/
 		- index	#1388
 	- libraries/
 		- pagination #1213
+		- validation #27868b
+	- models/
+		- entities #1518
 	- outgoing/
-		- resposne #1472
+		- response #1472, #1494
 	- testing/
 		- overview #1467
 	- tutorial/
 		- create_news_item #1442
-	- changelog #1385
 
 - /
 	- composer.json #1388, #1418
 	- README.md
+	- spark 2047b5a
 	- .travis.yml #1394
 
 PRs merged:
 -----------
 
+- 2047b5a Don't run filters when using spark.
+- #1524 Test routes resource with 'websafe' option
+- #1523 Check if the matched route regex is filtered
+- #1521 .gitignore clean up
+- #1518 Small typo: changed setCreatedOn to setCreatedAt
+- #1517 move .htaccess from per-directory in writable/{directory} to writable/
+- #1513 More secure redirection
+- #1509 remove unused use statements
+- #1508 remove duplicate strtolower() call in URI::setScheme() call
+- #1507 Fix multi "empty" string separated by "," marked as valid emails
+- #1506 Flesh out HTTP/File unit testing
+- #1505 Do not exit until all Response is completed
+- 27868b Add missing docs for {field} and {param} placeholders
+- #1504 Revert RedirectResponse changes
+- #1500 Ignoring errors suppressed by @
+- #1499 Fix form_helper's set_value writeup
+- #1496 Fix Common::old()
+- #1495 Add URI segment test
+- #1494 Method naming in user guide
+- #1491 Error logging
+- #1490 Changelog(s) restructure
 - #1489 Add CLI::strlen()
 - #1488 Load Language strings from other locations
+- #1486 Test RedirectResponse problem report
 - #1484 missing slash
 - #1483 Small typo in Session\Handlers\BaseHandler.php
 - #1482 doc fix: query binding fix in Seeds documentation
@@ -286,3 +328,4 @@ PRs merged:
 - #1335 Review and improvements in databases drivers MySQLi, Postgre and SQLite
 - #1213 URI segment as page number in Pagination
 - #1180 using HTTP\Request instance to pull ip address
+

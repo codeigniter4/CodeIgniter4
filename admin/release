@@ -1,12 +1,21 @@
 #!/bin/bash
-#######################DO NOT USE YET########################
 
 ## Build the distributable repo branches
+
+. admin/config
+
+#---------------------------------------------------
+# Sanity check - are we underway already?
+if [ "$BRANCH" ]; then
+    echo -e "${BOLD}${ERROR}No release build is underway${NORMAL}"
+    exit 1
+fi
+
 
 #---------------------------------------------------
 # Setup variables
 
-UPSTREAM=https://github.comcodeigniter4/CodeIgniter4.git
+UPSTREAM=${CI_ORG}CodeIgniter4.git
 action=test
 version=4
 qualifier=

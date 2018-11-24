@@ -1,0 +1,12 @@
+
+# Variables used for maintainers & release building
+
+CI_ORG=https://github.com/codeigniter4/
+
+BOLD='\033[1m'
+NORMAL='\033[0m'
+COLOR='\033[1;31m'
+ERROR='\033[0;31m'
+
+# If RELEASE is set to something below, then we are part-way through the workflow
+RELEASE=
