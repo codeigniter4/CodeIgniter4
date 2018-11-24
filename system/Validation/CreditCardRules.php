@@ -228,7 +228,7 @@ class CreditCardRules
 		}
 
 		// Make sure we have a valid length
-		if (mb_strlen($ccNumber) === 0)
+		if (strlen($ccNumber) === 0)
 		{
 			return false;
 		}
@@ -245,7 +245,7 @@ class CreditCardRules
 		// Make sure it's a valid length for this card
 		$lengths = explode(',', $info['length']);
 
-		if (! in_array(mb_strlen($ccNumber), $lengths))
+		if (! in_array(strlen($ccNumber), $lengths))
 		{
 			return false;
 		}
@@ -257,7 +257,7 @@ class CreditCardRules
 
 		foreach ($prefixes as $prefix)
 		{
-			if (mb_strpos($ccNumber, $prefix) === 0)
+			if (strpos($ccNumber, $prefix) === 0)
 			{
 							  $validPrefix = true;
 							  break;
