@@ -852,10 +852,10 @@ class Forge
 		$sql .= ($alter_type === 'ADD') ? 'ADD ' : $alter_type . ' COLUMN ';
 
 		$sqls = [];
-		for ($i = 0, $c = count($field); $i < $c; $i++)
+		foreach ($field as $data)
 		{
 			$sqls[] = $sql
-					  . ($field[$i]['_literal'] !== false ? $field[$i]['_literal'] : $this->_processColumn($field[$i]));
+					  . ($data['_literal'] !== false ? $data['_literal'] : $this->_processColumn($data));
 		}
 
 		return $sqls;
