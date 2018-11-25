@@ -8,6 +8,7 @@
         "php": ">=7.1",
         "ext-curl": "*",
         "ext-intl": "*",
+        "ext-json": "*",
         "kint-php/kint": "^2.1",
         "zendframework/zend-escaper": "^2.5"
     },
