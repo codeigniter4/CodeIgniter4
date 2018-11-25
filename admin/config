@@ -2,6 +2,7 @@
 # Variables used for maintainers & release building
 
 CI_ORG=https://github.com/codeigniter4/
+CI_DIR=`pwd`
 
 BOLD='\033[1m'
 NORMAL='\033[0m'
