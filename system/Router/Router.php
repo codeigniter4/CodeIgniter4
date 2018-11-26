@@ -404,10 +404,13 @@ class Router implements RouterInterface
 		// Loop through the route array looking for wildcards
 		foreach ($routes as $key => $val)
 		{
+			$localeSegment = NULL; // remove stale value 
 			// Are we dealing with a locale?
 			if (strpos($key, '{locale}') !== false)
 			{
-				$localeSegment = array_search('{locale}', explode('/', $key));
+				$tempkey = preg_replace( '#\(([^()]*)\)#i' , 'x' , $key);
+			    	$exp = explode('/', $tempkey);
+				$localeSegment = array_search('{locale}', $exp);
 
 				// Replace it with a regex so it
 				// will actually match.
