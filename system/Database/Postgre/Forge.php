@@ -106,42 +106,42 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		$sql  = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
 		$sqls = [];
-		for ($i = 0, $c = count($field); $i < $c; $i ++)
+		foreach ($field as $data)
 		{
-			if ($field[$i]['_literal'] !== false)
+			if ($data['_literal'] !== false)
 			{
 				return false;
 			}
 
-			if (version_compare($this->db->getVersion(), '8', '>=') && isset($field[$i]['type']))
+			if (version_compare($this->db->getVersion(), '8', '>=') && isset($data['type']))
 			{
-				$sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field[$i]['name'])
-						. " TYPE {$field[$i]['type']}{$field[$i]['length']}";
+				$sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
+						. " TYPE {$data['type']}{$data['length']}";
 			}
 
-			if (! empty($field[$i]['default']))
+			if (! empty($data['default']))
 			{
-				$sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field[$i]['name'])
-						. " SET DEFAULT {$field[$i]['default']}";
+				$sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
+						. " SET DEFAULT {$data['default']}";
 			}
 
-			if (isset($field[$i]['null']))
+			if (isset($data['null']))
 			{
-				$sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field[$i]['name'])
-						. ($field[$i]['null'] === true ? ' DROP' : ' SET') . ' NOT NULL';
+				$sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
+						. ($data['null'] === true ? ' DROP' : ' SET') . ' NOT NULL';
 			}
 
-			if (! empty($field[$i]['new_name']))
+			if (! empty($data['new_name']))
 			{
-				$sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($field[$i]['name'])
-						. ' TO ' . $this->db->escapeIdentifiers($field[$i]['new_name']);
+				$sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($data['name'])
+						. ' TO ' . $this->db->escapeIdentifiers($data['new_name']);
 			}
 
-			if (! empty($field[$i]['comment']))
+			if (! empty($data['comment']))
 			{
 				$sqls[] = 'COMMENT ON COLUMN' . $this->db->escapeIdentifiers($table)
-						. '.' . $this->db->escapeIdentifiers($field[$i]['name'])
-						. " IS {$field[$i]['comment']}";
+						. '.' . $this->db->escapeIdentifiers($data['name'])
+						. " IS {$data['comment']}";
 			}
 		}
 
