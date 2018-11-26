@@ -89,14 +89,6 @@ class Controller
 	 */
 	protected $forceHTTPS = 0;
 
-	/**
-	 * Once validation has been run,
-	 * will hold the Validation instance.
-	 *
-	 * @var Validation
-	 */
-	protected $validator;
-
 	//--------------------------------------------------------------------
 
 	/**
@@ -186,7 +178,7 @@ class Controller
 	 */
 	public function validate($rules, array $messages = []): bool
 	{
-		$this->validator = Services::validation();
+		$validator = Services::validation();
 
 		// If you replace the $rules array with the name of the group
 		if (is_string($rules))
@@ -210,7 +202,7 @@ class Controller
 			$rules = $validation->$rules;
 		}
 
-		$success = $this->validator
+		$success = $validator
 			->withRequest($this->request)
 			->setRules($rules, $messages)
 			->run();
