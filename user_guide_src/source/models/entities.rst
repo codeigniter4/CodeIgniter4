@@ -173,9 +173,7 @@ Here's an updated User entity to provide some examples of how this could be used
 
             $this->created_at->setTimezone($timezone);
 
-            return $format === true
-                ? $this->created_at
-                : $this->created_at->format($format);
+            return $this->created_at->format($format);
         }
     }
 
