@@ -331,7 +331,7 @@ if (! function_exists('get_file_info'))
 	 */
 	function get_file_info(string $file, $returned_values = ['name', 'server_path', 'size', 'date'])
 	{
-		if (! file_exists($file))
+		if (! is_file($file))
 		{
 			return null;
 		}

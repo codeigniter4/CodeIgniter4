@@ -204,7 +204,7 @@ class UploadedFile extends File implements UploadedFileInterface
 		{
 			mkdir($path, 0777, true);
 			//create the index.html file
-			if (! file_exists($path . 'index.html'))
+			if (! is_file($path . 'index.html'))
 			{
 				$file = fopen($path . 'index.html', 'x+');
 				fclose($file);

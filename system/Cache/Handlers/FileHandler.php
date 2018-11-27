@@ -137,7 +137,7 @@ class FileHandler implements CacheInterface
 	{
 		$key = $this->prefix . $key;
 
-		return file_exists($this->path . $key) ? unlink($this->path . $key) : false;
+		return is_file($this->path . $key) ? unlink($this->path . $key) : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -246,7 +246,7 @@ class FileHandler implements CacheInterface
 	{
 		$key = $this->prefix . $key;
 
-		if (! file_exists($this->path . $key))
+		if (! is_file($this->path . $key))
 		{
 			return false;
 		}
@@ -473,7 +473,7 @@ class FileHandler implements CacheInterface
 	 */
 	protected function getFileInfo(string $file, array $returned_values = ['name', 'server_path', 'size', 'date'])
 	{
-		if (! file_exists($file))
+		if (! is_file($file))
 		{
 			return false;
 		}

@@ -101,7 +101,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 
 		$msg = '';
 
-		if (! file_exists($filepath))
+		if (! is_file($filepath))
 		{
 			$newfile = true;
 
