@@ -158,15 +158,7 @@ if (! function_exists('img'))
 
 		if (! isset($src['alt']))
 		{
-			if(is_array($attributes) && isset($attributes['alt']))
-			{
-				$src['alt'] = $attributes['alt'];
-			}
-			//If there is no alt attribute defined, set it to an empty string.
-			else
-			{
-				$src['alt'] = '';
-			}
+			$src['alt'] = $attributes['alt'] ?? '';
 		}
 
 
