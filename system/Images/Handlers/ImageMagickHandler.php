@@ -69,6 +69,14 @@ class ImageMagickHandler extends BaseHandler
 	public function __construct($config = null)
 	{
 		parent::__construct($config);
+
+		// We should never see this, so can't test it
+		// @codeCoverageIgnoreStart
+		if (! (extension_loaded('imagick') || class_exists('Imagick')))
+		{
+			throw ImageException::forMissingExtension('IMAGICK');
+		}
+		// @codeCoverageIgnoreEnd
 	}
 
 	//--------------------------------------------------------------------
