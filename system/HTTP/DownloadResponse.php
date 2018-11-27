@@ -269,7 +269,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	public function setDate(\DateTime $date)
 	{
-		$date->setTimezone(new \DateTimeZone('UTC'));
+		$date->setTimezone(new \DateTimeZone(app_timezone() ?? 'UTC'));
 
 		$this->setHeader('Date', $date->format('D, d M Y H:i:s') . ' GMT');
 
@@ -332,7 +332,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	{
 		if ($date instanceof \DateTime)
 		{
-			$date->setTimezone(new \DateTimeZone('UTC'));
+			$date->setTimezone(new \DateTimeZone(app_timezone() ?? 'UTC'));
 			$this->setHeader('Last-Modified', $date->format('D, d M Y H:i:s') . ' GMT');
 		}
 		elseif (is_string($date))
