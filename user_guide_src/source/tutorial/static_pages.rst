@@ -98,7 +98,7 @@ page actually exists:
 
 	public function view($page = 'home')
 	{
-		if ( ! file_exists(APPPATH.'/Views/pages/'.$page.'.php'))
+		if ( ! is_file(APPPATH.'/Views/pages/'.$page.'.php'))
 		{
 		    // Whoops, we don't have a page for that!
 		    throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
@@ -116,7 +116,7 @@ footer, and displayed to the user. If the page doesn't exist, a "404
 Page not found" error is shown.
 
 The first line in this method checks whether the page actually exists.
-PHP's native ``file_exists()`` function is used to check whether the file
+PHP's native ``is_file()`` function is used to check whether the file
 is where it's expected to be. The ``PageNotFoundException`` is a CodeIgniter
 exception that causes the default error page to show.
 

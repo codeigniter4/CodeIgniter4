@@ -67,7 +67,7 @@ Classmap
 ========
 
 The classmap is used extensively by CodeIgniter to eke the last ounces of performance out of the system
-by not hitting the file-system with extra ``file_exists()`` calls. You can use the classmap to link to
+by not hitting the file-system with extra ``is_file()`` calls. You can use the classmap to link to
 third-party libraries that are not namespaced::
 
 	$classmap = [
