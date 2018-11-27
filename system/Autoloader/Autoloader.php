@@ -326,7 +326,7 @@ class Autoloader
 	{
 		$file = $this->sanitizeFilename($file);
 
-		if (file_exists($file))
+		if (is_file($file))
 		{
 			require_once $file;
 

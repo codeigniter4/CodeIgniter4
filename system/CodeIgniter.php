@@ -411,7 +411,7 @@ class CodeIgniter
 	 */
 	protected function bootstrapEnvironment()
 	{
-		if (file_exists(APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php'))
+		if (is_file(APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php'))
 		{
 			require_once APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php';
 		}

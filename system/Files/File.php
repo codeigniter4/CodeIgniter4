@@ -199,7 +199,7 @@ class File extends SplFileInfo
 	 */
 	public function getDestination(string $destination, string $delimiter = '_', int $i = 0): string
 	{
-		while (file_exists($destination))
+		while (is_file($destination))
 		{
 			$info = pathinfo($destination);
 			if (strpos($info['filename'], $delimiter) !== false)

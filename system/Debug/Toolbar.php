@@ -458,7 +458,7 @@ class Toolbar
 			$filename = WRITEPATH . 'debugbar/' . $file;
 
 			// Show the toolbar
-			if (file_exists($filename))
+			if (is_file($filename))
 			{
 				$contents = static::format(file_get_contents($filename), $format);
 				exit($contents);

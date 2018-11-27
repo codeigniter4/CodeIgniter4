@@ -153,7 +153,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		// which re-reads session data
 		if ($this->fileHandle === null)
 		{
-			$this->fileNew = ! file_exists($this->filePath . $sessionID);
+			$this->fileNew = ! is_file($this->filePath . $sessionID);
 
 			if (($this->fileHandle = fopen($this->filePath . $sessionID, 'c+b')) === false)
 			{
@@ -302,13 +302,13 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		if ($this->close())
 		{
-			return file_exists($this->filePath . $session_id) ? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
+			return is_file($this->filePath . $session_id) ? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
 		}
 		elseif ($this->filePath !== null)
 		{
 			clearstatcache();
 
-			return file_exists($this->filePath . $session_id) ? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
+			return is_file($this->filePath . $session_id) ? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
 		}
 
 		return false;

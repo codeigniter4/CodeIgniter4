@@ -734,7 +734,7 @@ class Email
 	{
 		if ($mime === '')
 		{
-			if (strpos($file, '://') === false && ! file_exists($file))
+			if (strpos($file, '://') === false && ! is_file($file))
 			{
 				$this->setErrorMessage(lang('Email.attachmentMissing', [$file]));
 
