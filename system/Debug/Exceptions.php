@@ -102,7 +102,9 @@ class Exceptions
 	 */
 	public function initialize()
 	{
+		// @codeCoverageIgnoreStart
 		\ob_start([$this, 'fatalHandler']);
+		// @codeCoverageIgnoreEnd
 
 		//Set the Exception Handler
 		set_exception_handler([$this, 'exceptionHandler']);
@@ -115,10 +117,12 @@ class Exceptions
 		register_shutdown_function([$this, 'shutdownHandler']);
 	}
 
+	// @codeCoverageIgnoreStart
 	public function fatalHandler($buffer)
 	{
 		return $buffer;
 	}
+	// @codeCoverageIgnoreEnd
 
 	//--------------------------------------------------------------------
 
