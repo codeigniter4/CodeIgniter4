@@ -5,37 +5,21 @@ There might be other feature branches, but they are not relevant to this process
 
 Once "develop" is ready for a new release, the general workflow is to
 
-pre-release...
+release prep (`admin/release <version> <qualifier>`)...
 - create a "release" branch from develop
 - update version dependencies or constants
 - generate version(s) of the user guide
 - move or ignore stuff, distinguishing release from development
 - test that all is as it should be
+- merge the release branch into "master" & "develop"
+- prepare the distribution repos
 
-release...
-- merge the release branch into "master"
-- update the distribution repos
-- **manually** create the releases & tag them on github, based on master
-
-post-release...
-- eliminate the build & dist folders used above
-- setup substitution variables for the next release
-- merge the post-release branch into "master"
-- merge the post-release branch into "develop"
-- **manually** delete the release branches in the repo
+After these have been vetted ...
+- push the release to github (`admin/deploy please`)
+- **manually** create the releases & tag them on github, based on master  
+  Include any supplementary binaries as part of releases.
 - **manually** post a sticky announcement thread on the forum
 - **manually** tweet the release announcement
-
-
-    This would be manually merged to the `master` and `develop` branches.  
-    Creating a release is done on github.com manually, so that additional
-    binaries can be added to the release if appropriate.
-
-Visually:
-
-    develop -> release -> master
-    post-release -> master
-    post->release  -> develop
 
 ## Assumptions
 
@@ -57,11 +41,10 @@ as part of a bug fix minor release.
 
 Inside a shell prompt, in the project root:
 
-    `admin/pre-release version [qualifier]`
+    `admin/release version [qualifier]`
 
-Nothing is pushed to the repo at this point -
-the results are left inside
-the release branch in your local clone.
+Nothing is pushed to the repo at this point. You have a chance to vet
+the repository changes.
 
 The "version" should follow semantic versioning, e.g. `4.0.6`, and the
 version number should be higher than the current released one.
@@ -70,21 +53,17 @@ The "qualifier" argument is a suffix to add to the version
 for a pre-release, e.g. `beta.2` or `rc.41`.
 
 Examples:
-- `admin/pre-release 4.0.0 alpha.1` would prepare the "4.0.0-alpha.1" pre-release PR
-- `admin/pre-release 4.0.0` would prepare the "4.0.0" release PR
-- `admin/pre-release peanut butter banana` would complain and tell you to read these directions
+- `admin/release 4.0.0 alpha.1` would prepare the "4.0.0-alpha.1" pre-release PR
+- `admin/release 4.0.0` would prepare the "4.0.0" release PR
+- `admin/release peanut butter banana` would complain and tell you to read these directions
 
 Once you have vetted the `dist` folder inside your local repo, you
 can merge & push everything with
 
-    `admin/release`
+    `admin/release-deploy please`
 
 On github.com, create an appropriate release (or pre-release),
 with any optional files from the root of `dist`.
-
-Once the github releases are done, clean up with:
-
-    `admin/post_release`
 
 ## Release notes
 
@@ -99,4 +78,3 @@ i.e. someone with commit rights on the CI4 repositories.
 
 You will be prompted for your github credentials and
 GPG-signing key as appropriate.
-

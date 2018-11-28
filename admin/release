@@ -1,36 +1,11 @@
 #!/bin/bash
 
-## Build the distributable repo branches
+## Build framework release branch & distributables
 
-. admin/config
-
-#---------------------------------------------------
-# Sanity check - are we underway already?
-if [ "$BRANCH" ]; then
-    echo -e "${BOLD}${ERROR}No release build is underway${NORMAL}"
-    exit 1
-fi
-
-
-#---------------------------------------------------
 # Setup variables
+. admin/release-config
 
-UPSTREAM=${CI_ORG}CodeIgniter4.git
-action=test
-version=4
-qualifier=
-
-branch=post-release-
-devonly='.github/* admin/* build/* contributing/* user_guide_src/* CODE_OF_CONDUCT.md \
-DCO.txt PULL_REQUEST_TEMPLATE.md'
-which=release
-
-BOLD='\033[1m'
-NORMAL='\033[0m'
-COLOR='\033[1;31m'
-ERROR='\033[0;31m'
-
-echo -e "${BOLD}${COLOR}CodeIgniter4 release cleanup${NORMAL}"
+echo -e "${BOLD}${COLOR}CodeIgniter4 release builder${NORMAL}"
 echo '----------------------------'
 
 #---------------------------------------------------
@@ -38,68 +13,106 @@ echo '----------------------------'
 echo -e "${BOLD}Checking arguments...${NORMAL}"
 
 if [ $# -lt 1 ]; then
-    echo "You really need to read the directions first!"
+    echo -e "${BOLD}Usage: admin/release version# pre-release-qualifier${NORMAL}"
     exit 1
 fi
 
-version=$1
-if [ $# -gt 1 ]; then
-    qualifier="-${2}"
-    which='pre-release'
-fi
-release_branch="release-$version$qualifier"
-branch="post-${release_branch}"
-
 #---------------------------------------------------
-# Create the post-release branch
-echo -e "${BOLD}Creating $branch${NORMAL}"
+# Create the release branch
+echo -e "${BOLD}Creating $which $branch to $action ${NORMAL}"
 
-git checkout $release_branch
-git branch -d $branch     # remove the branch if there
-git checkout -b $branch
-
-#---------------------------------------------------
-# Put our house back in order
-echo -e "${BOLD}Put our house back in order${NORMAL}"
-
-mv -r admin/previous-gitignore .gitignore
-rm -Rf docs
-
-#---------------------------------------------------
-# Add next version block in changelog.rst
-echo -e "${BOLD}Setup next release${NORMAL}"
-sed -i '5 i\
-Version |release|
-====================================================
-
-Release Date: Not Released
-' user_guide_src/source/changelog.rst
-
-git add .
-git commit -S -m "Post ${branch} cleanup"
-
-#---------------------------------------------------
-# Cleanup master
-echo -e "${BOLD}Cleanup the master branch${NORMAL}"
-git checkout master
-git merge ${branch}
-git push origin master
-#git push UPSTREAM master
-
-#---------------------------------------------------
-# Cleanup develop
-echo -e "${BOLD}Cleanup the develop branch${NORMAL}"
 git checkout develop
-git merge ${branch}
-git push origin develop
-#git push UPSTREAM develop
-
-# keep or delete the release branch? up to you
-# at this point, you should have uptodate develop and master,
-# as well as the release and post-release branches
+git branch -d $branch &>/dev/null    # remove the branch if there
+git checkout -b $branch
+composer update
 
 #---------------------------------------------------
-# Phew!
+# Update version dependencies
+echo -e "${BOLD}Updating version dependencies${NORMAL}"
 
-echo -e "${BOLD}Congratulations - we have liftoff${NORMAL}"
-echo "Don't forget to announce this release on the forum and on twitter!"
+function check_unique {
+    count=`grep -c '$1' < $2 | wc -l`
+    if [ $count -ne 1 ]; then
+        echo -e "${BOLD}${COLOR}$2 has ${count} occurrences of '$1'${NORMAL}"
+        exit 1
+    fi
+}
+
+# Make sure there is only one line to affect in each file
+check_unique "const CI_VERSION" 'system/CodeIgniter.php'
+check_unique "release =" 'user_guide_src/source/conf.py'
+check_unique "|release|" 'user_guide_src/source/changelogs/index.rst'
+check_unique "Release Date.*Not Released" 'user_guide_src/source/changelogs/index.rst'
+
+# CI_VERSION definition in system/CodeIgniter.php
+sed -i "/const CI_VERSION/s/'.*'/'${RELEASE}'/" system/CodeIgniter.php
+
+# release substitution variable in user_guide_src/source/conf.py
+sed -i "/release =/s/'.*'/'${RELEASE}'/" user_guide_src/source/conf.py
+
+# version & date in user_guide_src/source/index.rst
+sed -i "/|release|/s/|.*|/${RELEASE}/" user_guide_src/source/changelogs/index.rst
+sed -i "/Release Date/s/Not Released/$(date +'%B %d, %Y')/" user_guide_src/source/changelogs/index.rst
+
+# version & date in user_guide_src/source/next.rst
+sed -i "/|release|/s/|.*|/${RELEASE}/" user_guide_src/source/changelogs/next.rst
+sed -i "/Release Date/s/Not Released/$(date +'%B %d, %Y')/" user_guide_src/source/changelogs/next.rst
+sed -i "/|version|/s/|version|/${RELEASE}/" user_guide_src/source/changelogs/next.rst
+
+# establish version-specific changelog
+mv user_guide_src/source/changelogs/next.rst user_guide_src/source/changelogs/${RELEASE}.rst
+
+#---------------------------------------------------
+# Setup the distribution folders
+echo -e "${BOLD}Building distribution folders${NORMAL}"
+
+function setup_repo {
+	echo -e "${BOLD}... $1${NORMAL}"
+    if [ -d dist/$1 ]; then
+        rm -rf dist/$1
+    fi
+    mkdir dist/$1
+    cd dist/$1
+    git init
+    git remote add origin ${CI_ORG}/$1.git
+    git fetch
+	git checkout master
+	git checkout -b $branch
+	cd $CI_DIR
+}
+
+if [ -d dist ]; then
+    rm -rf dist/
+fi
+mkdir dist
+
+setup_repo framework
+setup_repo userguide
+setup_repo appstarter
+
+#---------------------------------------------------
+# Generate the user guide
+echo -e "${BOLD}Generate the user guide${NORMAL}"
+
+cd user_guide_src
+
+# make the UG 
+rm -rf build/*
+echo -e "${BOLD}... HTML version${NORMAL}"
+make html
+echo -e "${BOLD}... epub version${NORMAL}"
+make epub
+
+cd ${CI_DIR}
+
+#---------------------------------------------------
+# Build the distributables
+
+. release-framework
+. release-userguide
+. release-appstarter
+
+#---------------------------------------------------
+# Done for now
+echo -e "${BOLD}Your $branch branch is ready to inspect.${NORMAL}"
+echo -e "${BOLD}Follow the directions in workflow.md to continue.${NORMAL}"

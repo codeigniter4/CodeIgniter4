@@ -1,0 +1,52 @@
+#!/bin/bash
+
+## Push local changes to github
+
+echo -e "${BOLD}${COLOR}CodeIgniter4 release deployment${NORMAL}"
+echo '-------------------------------'
+
+# Check for politeness, to avoid inadvertent deployment
+if [ $# -lt 2 ]; then
+    echo "You forgot the magic word"
+    exit 1
+fi
+if [ $1 != 'please' ]; then
+    echo "What do you say?"
+    exit 1
+fi
+
+. admin/release-config
+
+echo -e "${BOLD}Merge release into master${NORMAL}"
+git checkout master
+git merge $branch
+git push origin master
+git push ${CI_ORG}/CodeIgniter4 master
+
+echo -e "${BOLD}Merge release into develop${NORMAL}"
+git checkout develop
+git merge $branch
+git push origin develop
+git push ${CI_ORG}/CodeIgniter4 develop
+
+echo -e "${BOLD}Pushing to the user guide repository${NORMAL}"
+cd ${CI_DIR}/dist/userguide
+git push origin master
+git push ${CI_ORG}/userguide master
+
+echo -e "${BOLD}Pushing to the framework repository${NORMAL}"
+cd ${CI_DIR}/dist/framework
+git push origin master
+git push ${CI_ORG}/framework master
+
+echo -e "${BOLD}Pushing to the app starter repository${NORMAL}"
+cd ${CI_DIR}/dist/appstarter
+git push origin master
+git push ${CI_ORG}/appstarter master
+
+cd ${CI_DIR}
+
+#---------------------------------------------------
+# Phew!
+echo -e "${BOLD}Congratulations - we have liftoff${NORMAL}"
+echo "Don't forget to announce this release on the forum and on twitter!"
