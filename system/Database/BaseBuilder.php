@@ -233,7 +233,10 @@ class BaseBuilder
 		{
 			foreach ($options as $key => $value)
 			{
-				$this->$key = $value;
+				if (property_exists($this, $key))
+				{
+					$this->$key = $value;
+				}
 			}
 		}
 	}
