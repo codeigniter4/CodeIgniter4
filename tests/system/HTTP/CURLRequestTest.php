@@ -753,6 +753,7 @@ class CURLRequestTest extends \CIUnitTestCase
 		$this->request->setJSON($params)->post('/post');
 
 		$this->assertEquals(json_encode($params), $this->request->getBody());
+		$this->assertEquals('application/json', $this->request->getHeaderLine('Content-Type'));
 	}
 
 	//--------------------------------------------------------------------
