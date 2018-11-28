@@ -12,6 +12,8 @@
  * this class mainly acts as a passthru to the framework itself.
  */
 
+define('SPARKED', true);
+
 /*
  *---------------------------------------------------------------
  * BOOTSTRAP THE APPLICATION

@@ -142,7 +142,7 @@ class ComposerScripts
 	 */
 	public static function moveEscaper()
 	{
-		if (class_exists('\\Zend\\Escaper\\Escaper') && file_exists(static::getClassFilePath('\\Zend\\Escaper\\Escaper')))
+		if (class_exists('\\Zend\\Escaper\\Escaper') && is_file(static::getClassFilePath('\\Zend\\Escaper\\Escaper')))
 		{
 			$base = static::$basePath . 'ZendEscaper';
 
@@ -181,7 +181,7 @@ class ComposerScripts
 	{
 		$filename = 'vendor/kint-php/kint/build/kint-aante-light.php';
 
-		if (file_exists($filename))
+		if (is_file($filename))
 		{
 			$base = static::$basePath . 'Kint';
 

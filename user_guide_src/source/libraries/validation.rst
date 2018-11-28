@@ -644,6 +644,13 @@ Available Rules
 
 The following is a list of all the native rules that are available to use:
 
+.. note:: Rule is string; there must be no spaces between the parameters, especially the "is_unique" rule.
+	There can be no spaces before and after "ignore_value".
+
+- "is_unique[supplier.name,uuid, $uuid]"   is not ok
+- "is_unique[supplier.name,uuid,$uuid ]"   is not ok
+- "is_unique[supplier.name,uuid,$uuid]"    is ok
+
 ======================= =========== =============================================================================================== ===================================================
 Rule                    Parameter   Description                                                                                     Example
 ======================= =========== =============================================================================================== ===================================================

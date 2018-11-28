@@ -233,7 +233,7 @@ class FileLocator
 		{
 			$folder = rtrim($folder, '/') . '/';
 
-			if (file_exists($folder . $path))
+			if (is_file($folder . $path) === true)
 			{
 				$foundPaths[] = $folder . $path;
 			}
@@ -369,7 +369,7 @@ class FileLocator
 	 */
 	protected function requireFile(string $path): bool
 	{
-		return file_exists($path);
+		return is_file($path);
 	}
 
 	//--------------------------------------------------------------------

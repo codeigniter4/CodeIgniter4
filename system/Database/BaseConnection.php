@@ -338,7 +338,10 @@ abstract class BaseConnection implements ConnectionInterface
 	{
 		foreach ($params as $key => $value)
 		{
-			$this->$key = $value;
+			if (property_exists($this, $key))
+			{
+				$this->$key = $value;
+			}
 		}
 	}
 
@@ -382,7 +385,10 @@ abstract class BaseConnection implements ConnectionInterface
 					// Replace the current settings with those of the failover
 					foreach ($failover as $key => $val)
 					{
-						$this->$key = $val;
+						if (property_exists($this, $key))
+						{
+							$this->$key = $val;
+						}
 					}
 
 					// Try to connect

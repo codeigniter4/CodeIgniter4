@@ -297,15 +297,19 @@ class CodeIgniter
 
 		$uri = $this->request instanceof CLIRequest ? $this->request->getPath() : $this->request->uri->getPath();
 
-		$possibleRedirect = $filters->run($uri, 'before');
-		if ($possibleRedirect instanceof RedirectResponse)
+		// Never run filters when running through Spark cli
+		if (! defined('SPARKED'))
 		{
-			return $possibleRedirect;
-		}
-		// If a Response instance is returned, the Response will be sent back to the client and script execution will stop
-		if ($possibleRedirect instanceof ResponseInterface)
-		{
-			return $possibleRedirect->send();
+			$possibleRedirect = $filters->run($uri, 'before');
+			if ($possibleRedirect instanceof RedirectResponse)
+			{
+				return $possibleRedirect;
+			}
+			// If a Response instance is returned, the Response will be sent back to the client and script execution will stop
+			if ($possibleRedirect instanceof ResponseInterface)
+			{
+				return $possibleRedirect->send();
+			}
 		}
 
 		$returned = $this->startController();
@@ -331,9 +335,17 @@ class CodeIgniter
 		// so it can be used with the output.
 		$this->gatherOutput($cacheConfig, $returned);
 
-		$filters->setResponse($this->response);
-		// Run "after" filters
-		$response = $filters->run($uri, 'after');
+		// Never run filters when running through Spark cli
+		if (! defined('SPARKED'))
+		{
+			$filters->setResponse($this->response);
+			// Run "after" filters
+			$response = $filters->run($uri, 'after');
+		}
+		else
+		{
+			$response = $this->response;
+		}
 
 		if ($response instanceof Response)
 		{
@@ -399,7 +411,7 @@ class CodeIgniter
 	 */
 	protected function bootstrapEnvironment()
 	{
-		if (file_exists(APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php'))
+		if (is_file(APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php'))
 		{
 			require_once APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php';
 		}

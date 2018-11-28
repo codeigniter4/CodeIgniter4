@@ -125,7 +125,7 @@ $loader->initialize(new Config\Autoload());
 $loader->register();    // Register the loader with the SPL autoloader stack.
 
 // Now load Composer's if it's available
-if (file_exists(COMPOSER_PATH))
+if (is_file(COMPOSER_PATH))
 {
 	require_once COMPOSER_PATH;
 }

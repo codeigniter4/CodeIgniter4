@@ -168,11 +168,11 @@ class Forge extends \CodeIgniter\Database\Forge
 		}
 
 		$sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
-		for ($i = 0, $c = count($field); $i < $c; $i ++)
+		foreach ($field as $i => $data)
 		{
-			if ($field[$i]['_literal'] !== false)
+			if ($data['_literal'] !== false)
 			{
-				$field[$i] = ($alter_type === 'ADD') ? "\n\tADD " . $field[$i]['_literal'] : "\n\tMODIFY " . $field[$i]['_literal'];
+				$field[$i] = ($alter_type === 'ADD') ? "\n\tADD " . $data['_literal'] : "\n\tMODIFY " . $data['_literal'];
 			}
 			else
 			{
@@ -182,7 +182,7 @@ class Forge extends \CodeIgniter\Database\Forge
 				}
 				else
 				{
-					$field[$i]['_literal'] = empty($field[$i]['new_name']) ? "\n\tMODIFY " : "\n\tCHANGE ";
+					$field[$i]['_literal'] = empty($data['new_name']) ? "\n\tMODIFY " : "\n\tCHANGE ";
 				}
 
 				$field[$i] = $field[$i]['_literal'] . $this->_processColumn($field[$i]);

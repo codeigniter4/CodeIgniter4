@@ -581,7 +581,7 @@ class CURLRequest extends Request
 				$cert                                = $cert[0];
 			}
 
-			if (! file_exists($cert))
+			if (! is_file($cert))
 			{
 				throw HTTPException::forSSLCertNotFound($cert);
 			}

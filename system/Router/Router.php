@@ -530,7 +530,7 @@ class Router implements RouterInterface
 
 		// Load the file so that it's available for CodeIgniter.
 		$file = APPPATH . 'Controllers/' . $this->directory . $this->controller . '.php';
-		if (file_exists($file))
+		if (is_file($file))
 		{
 			include_once $file;
 		}
@@ -564,7 +564,7 @@ class Router implements RouterInterface
 			$test = $this->directory . ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]
 			);
 
-			if (! file_exists(APPPATH . 'Controllers/' . $test . '.php') && $directory_override === false && is_dir(APPPATH . 'Controllers/' . $this->directory . ucfirst($segments[0]))
+			if (! is_file(APPPATH . 'Controllers/' . $test . '.php') && $directory_override === false && is_dir(APPPATH . 'Controllers/' . $this->directory . ucfirst($segments[0]))
 			)
 			{
 				$this->setDirectory(array_shift($segments), true);
@@ -663,7 +663,7 @@ class Router implements RouterInterface
 			$this->method = 'index';
 		}
 
-		if (! file_exists(APPPATH . 'Controllers/' . $this->directory . ucfirst($class) . '.php'))
+		if (! is_file(APPPATH . 'Controllers/' . $this->directory . ucfirst($class) . '.php'))
 		{
 			return;
 		}

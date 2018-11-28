@@ -103,7 +103,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	public function dropDatabase($db_name): bool
 	{
 		// In SQLite, a database is dropped when we delete a file
-		if (! file_exists($db_name))
+		if (! is_file($db_name))
 		{
 			if ($this->db->DBDebug)
 			{

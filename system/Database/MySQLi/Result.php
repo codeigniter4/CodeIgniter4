@@ -86,14 +86,14 @@ class Result extends BaseResult implements ResultInterface
 		$retval    = [];
 		$fieldData = $this->resultID->fetch_fields();
 
-		for ($i = 0, $c = count($fieldData); $i < $c; $i ++)
+		foreach ($fieldData as $i => $data)
 		{
 			$retval[$i]              = new \stdClass();
-			$retval[$i]->name        = $fieldData[$i]->name;
-			$retval[$i]->type        = $fieldData[$i]->type;
-			$retval[$i]->max_length  = $fieldData[$i]->max_length;
-			$retval[$i]->primary_key = (int) ($fieldData[$i]->flags & 2);
-			$retval[$i]->default     = $fieldData[$i]->def;
+			$retval[$i]->name        = $data->name;
+			$retval[$i]->type        = $data->type;
+			$retval[$i]->max_length  = $data->max_length;
+			$retval[$i]->primary_key = (int) ($data->flags & 2);
+			$retval[$i]->default     = $data->def;
 		}
 
 		return $retval;
