@@ -278,7 +278,7 @@ If you like to be particularly un-original, try &#8220;Hello World!&#8221;.</p>
 page actually exists:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">view</span><span class="p">(</span><span class="nv">$page</span> <span class="o">=</span> <span class="s1">&#39;home&#39;</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nb">file_exists</span><span class="p">(</span><span class="nx">APPPATH</span><span class="o">.</span><span class="s1">&#39;/Views/pages/&#39;</span><span class="o">.</span><span class="nv">$page</span><span class="o">.</span><span class="s1">&#39;.php&#39;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nb">is_file</span><span class="p">(</span><span class="nx">APPPATH</span><span class="o">.</span><span class="s1">&#39;/Views/pages/&#39;</span><span class="o">.</span><span class="nv">$page</span><span class="o">.</span><span class="s1">&#39;.php&#39;</span><span class="p">))</span>
         <span class="p">{</span>
             <span class="c1">// Whoops, we don&#39;t have a page for that!</span>
             <span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Exceptions\PageNotFoundException</span><span class="p">(</span><span class="nv">$page</span><span class="p">);</span>
@@ -296,7 +296,7 @@ page actually exists:</p>
 footer, and displayed to the user. If the page doesn&#8217;t exist, a &#8220;404
 Page not found&#8221; error is shown.</p>
 <p>The first line in this method checks whether the page actually exists.
-PHP&#8217;s native <code class="docutils literal"><span class="pre">file_exists()</span></code> function is used to check whether the file
+PHP&#8217;s native <code class="docutils literal"><span class="pre">is_file()</span></code> function is used to check whether the file
 is where it&#8217;s expected to be. The <code class="docutils literal"><span class="pre">PageNotFoundException</span></code> is a CodeIgniter
 exception that causes the default error page to show.</p>
 <p>In the header template, the <code class="docutils literal"><span class="pre">$title</span></code> variable was used to customize the
@@ -407,7 +407,7 @@ method in the pages controller? Awesome!</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Nov 21, 2018.
+      Last updated on Nov 28, 2018.
 
     </p>
   </div>

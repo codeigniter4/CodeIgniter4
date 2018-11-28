@@ -372,9 +372,7 @@ the class properties directly, allowing you to enforce any business logic or dat
 
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">created_at</span><span class="o">-&gt;</span><span class="na">setTimezone</span><span class="p">(</span><span class="nv">$timezone</span><span class="p">);</span>
 
-        <span class="k">return</span> <span class="nv">$format</span> <span class="o">===</span> <span class="k">true</span>
-            <span class="o">?</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">created_at</span>
-            <span class="o">:</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">created_at</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="nv">$format</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">created_at</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="nv">$format</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -597,7 +595,7 @@ Unlike the rest of the data types that you can cast properties into, the:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Nov 21, 2018.
+      Last updated on Nov 28, 2018.
 
     </p>
   </div>

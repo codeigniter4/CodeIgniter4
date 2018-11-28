@@ -862,6 +862,16 @@ for rules like <code class="docutils literal"><span class="pre">require_with</sp
 <div class="section" id="available-rules">
 <h2><a class="toc-backref" href="#id26">Available Rules</a><a class="headerlink" href="#available-rules" title="Permalink to this headline">¶</a></h2>
 <p>The following is a list of all the native rules that are available to use:</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Rule is string; there must be no spaces between the parameters, especially the &#8220;is_unique&#8221; rule.
+There can be no spaces before and after &#8220;ignore_value&#8221;.</p>
+</div>
+<ul class="simple">
+<li>&#8220;is_unique[supplier.name,uuid, $uuid]&#8221;   is not ok</li>
+<li>&#8220;is_unique[supplier.name,uuid,$uuid ]&#8221;   is not ok</li>
+<li>&#8220;is_unique[supplier.name,uuid,$uuid]&#8221;    is ok</li>
+</ul>
 <table border="1" class="docutils">
 <colgroup>
 <col width="13%" />
@@ -1168,7 +1178,7 @@ the field data).</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Nov 21, 2018.
+      Last updated on Nov 28, 2018.
 
     </p>
   </div>

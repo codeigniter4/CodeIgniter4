@@ -262,7 +262,7 @@ namespace has changed.</p>
 <div class="section" id="classmap">
 <h2>Classmap<a class="headerlink" href="#classmap" title="Permalink to this headline">¶</a></h2>
 <p>The classmap is used extensively by CodeIgniter to eke the last ounces of performance out of the system
-by not hitting the file-system with extra <code class="docutils literal"><span class="pre">file_exists()</span></code> calls. You can use the classmap to link to
+by not hitting the file-system with extra <code class="docutils literal"><span class="pre">is_file()</span></code> calls. You can use the classmap to link to
 third-party libraries that are not namespaced:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$classmap</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;Markdown&#39;</span> <span class="o">=&gt;</span> <span class="nx">APPPATH</span> <span class="o">.</span><span class="s1">&#39;third_party/markdown.php&#39;</span>
@@ -303,7 +303,7 @@ a measure to help ease the transition from previous versions.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Nov 21, 2018.
+      Last updated on Nov 28, 2018.
 
     </p>
   </div>
