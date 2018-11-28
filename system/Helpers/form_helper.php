@@ -2,7 +2,28 @@
 
 /**
  * CodeIgniter
- *
+ *<?= form_open(current_url()); ?>
+<?=
+form_field(
+	'email',
+	['name' => 'p[username]', 'pattern' => esc(INPUT_PATTERN_EMAIL_HTML,'html'), 'autofocus' => false],
+	['use_defaults' => true],
+	array_merge($label_col, ['text' => lang('PagesUser.logInFormEmailLabel')]),
+	$field_col
+);
+?>
+<?=
+form_field(
+	'password',
+	['name' => 'p[username]'],
+	['use_defaults' => true],
+	array_merge($label_col, ['text' => lang('PagesUser.logInFormEmailLabel')]),
+	$field_col
+);
+?>
+<?= form_close(); ?>
+
+
  * An open source application development framework for PHP
  *
  * This content is released under the MIT License (MIT)
@@ -927,7 +948,7 @@ if (! function_exists('parse_form_attributes'))
 
 		foreach ($default as $key => $val)
 		{
-			if($val !== false)
+			if(!is_bool($val))
 			{
 				if ($key === 'value')
 				{
