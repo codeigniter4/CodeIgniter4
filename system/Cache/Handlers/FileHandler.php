@@ -37,6 +37,7 @@
  */
 
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Cache\Exceptions\CacheException;
 
 class FileHandler implements CacheInterface
 {
@@ -59,10 +60,14 @@ class FileHandler implements CacheInterface
 
 	public function __construct($config)
 	{
-		$this->prefix = $config->prefix ?: '';
-		$this->path   = ! empty($config->storePath) ? $config->storePath : WRITEPATH . 'cache';
+		$path = ! empty($config->storePath) ? $config->storePath : WRITEPATH . 'cache';
+		if (! is_really_writable($path))
+		{
+			throw CacheException::forUnableToWrite($path);
+		}
 
-		$this->path = rtrim($this->path, '/') . '/';
+		$this->prefix = $config->prefix ?: '';
+		$this->path   = rtrim($path, '/') . '/';
 	}
 
 	//--------------------------------------------------------------------
@@ -329,11 +334,7 @@ class FileHandler implements CacheInterface
 	 */
 	protected function writeFile($path, $data, $mode = 'wb')
 	{
-		if (($fp = @fopen($path, $mode)) === false)
-		{
-			return false;
-		}
-
+		fopen($path, $mode);
 		flock($fp, LOCK_EX);
 
 		for ($result = $written = 0, $length = strlen($data); $written < $length; $written += $result)
