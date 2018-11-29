@@ -119,6 +119,31 @@ class BaseService
 	//--------------------------------------------------------------------
 
 	/**
+	 * The Autoloader class is the central class that handles our
+	 * spl_autoload_register method, and helper methods.
+	 *
+	 * @param boolean $getShared
+	 *
+	 * @return \CodeIgniter\Autoloader\Autoloader
+	 */
+	public static function autoloader(bool $getShared = true)
+	{
+		if ($getShared)
+		{
+			if (empty(static::$instances['autoloader']))
+			{
+				static::$instances['autoloader'] = new \CodeIgniter\Autoloader\Autoloader();
+			}
+
+			return static::$instances['autoloader'];
+		}
+
+		return new \CodeIgniter\Autoloader\Autoloader();
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * The file locator provides utility methods for looking for non-classes
 	 * within namespaced folders, as well as convenience methods for
 	 * loading 'helpers', and 'libraries'.
