@@ -1,8 +1,6 @@
 # Variables used for release building
 
-if [ "$CI_ORG" ]; then
-    ;
-else
+if [ -z "$CI_ORG" ]; then
 
     # Initialize variables 
     CI_ORG=https://github.com/codeigniter4
