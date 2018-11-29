@@ -1,6 +1,7 @@
 # Variables used for release building
 
 if [ "$CI_ORG" ]; then
+    ;
 else
 
     # Initialize variables 
