@@ -53,6 +53,7 @@ sed -i "/release =/s/'.*'/'${RELEASE}'/" user_guide_src/source/conf.py
 # version & date in user_guide_src/source/index.rst
 sed -i "/|release|/s/|.*|/${RELEASE}/" user_guide_src/source/changelogs/index.rst
 sed -i "/Release Date/s/Not Released/$(date +'%B %d, %Y')/" user_guide_src/source/changelogs/index.rst
+sed -i "/|version|/s/|version|/${RELEASE}/" user_guide_src/source/changelogs/index.rst
 
 # version & date in user_guide_src/source/next.rst
 sed -i "/|release|/s/|.*|/${RELEASE}/" user_guide_src/source/changelogs/next.rst
@@ -106,24 +107,24 @@ make epub
 cd ${CI_DIR}
 
 # add changelog preamble
-sed '5 i Version |version|
-====================================================
-
-Release Date: Not Released
-
-**Next release of CodeIgniter4**
-
-
-:doc:`See all the changes. </changelogs/next>`
-
-' ${TARGET}/user_guide_src/changelogs/index.rst
+file=user_guide_src/source/changelogs/index.rst
+sed -i "4 a Version |version|" $file
+sed -i "5 a ====================================================" $file
+sed -i "6 G" $file
+sed -i "7 a Release Date: Not Released" $file
+sed -i "8 G" $file
+sed -i "9 a **Next release of CodeIgniter4**" $file
+sed -i "10 G" $file
+sed -i "11 G" $file
+sed -i "12 a :doc:\`See all the changes. </changelogs/next>\`" $file
+sed -i "13 G" $file
 
 #---------------------------------------------------
 # Build the distributables
 
-. release-framework
-. release-userguide
-. release-appstarter
+. admin/release-framework
+. admin/release-userguide
+. admin/release-appstarter
 
 #---------------------------------------------------
 # Done for now

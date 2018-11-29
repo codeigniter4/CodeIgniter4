@@ -15,7 +15,7 @@ release prep (`admin/release <version> <qualifier>`)...
 - prepare the distribution repos
 
 After these have been vetted ...
-- push the release to github (`admin/deploy please`)
+- push the release(s) to github (`admin/release-deploy <version> <qualifier>`)
 - **manually** create the releases & tag them on github, based on master  
   Include any supplementary binaries as part of releases.
 - **manually** post a sticky announcement thread on the forum

@@ -62,7 +62,8 @@ scripts used by the release manager:
     moving or ignoring stuff, distinguishing release from development.
     If successful, it will update the `config` file, with the version number
     in it, and it will run the related scripts following, to revise
-    the release distributions.
+    the release distributions.  
+	Usage: `admin/release version qualifier`
 -   **release-framework** builds the distributable framework repo.  
     It could be used on its own, but is normally part of `release`.
 -   **release-appstarter** builds the distributable appstarter repo.  
@@ -70,7 +71,8 @@ scripts used by the release manager:
 -   **release-userguide** builds the distributable userguide repo.  
     It could be used on its own, but is normally part of `release`.
 -   **release-deploy** pushes the release changes to the appropriate github
-    repositories. Tag & create releases on github. This is not easily reversible!
+    repositories. Tag & create releases on github. This is not easily reversible!  
+	Usage: `admin/release-deploy version qualifier`
 -   **release-revert** can be used to restore your repositories to the state they
     were in before you started a release. **IF** you haven't deployed. 
     This is in case you decide not to proceed with the release, for any reason. 

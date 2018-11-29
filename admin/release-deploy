@@ -5,16 +5,6 @@
 echo -e "${BOLD}${COLOR}CodeIgniter4 release deployment${NORMAL}"
 echo '-------------------------------'
 
-# Check for politeness, to avoid inadvertent deployment
-if [ $# -lt 2 ]; then
-    echo "You forgot the magic word"
-    exit 1
-fi
-if [ $1 != 'please' ]; then
-    echo "What do you say?"
-    exit 1
-fi
-
 . admin/release-config
 
 echo -e "${BOLD}Merge release into master${NORMAL}"

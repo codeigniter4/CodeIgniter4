@@ -25,7 +25,7 @@ The list of changed files follows, with PR numbers shown.
 		- form.php removed #1442
 
 - public /
-	- index.php #1388
+	- index.php #1388, #1457
 
 - system /
 	- Autoloader/
@@ -294,6 +294,7 @@ PRs merged:
 - #1463 Fix the remaining bcit-ci references
 - #1461 Typo fix: donload -> download
 - #1460 remove unneeded ternary check at HoneyPot
+- #1457 use $paths->systemDirectory in public/index.php 
 - #1456 Beef up HTTP URI & Response testing
 - #1455 un-ignore application/Database/Migrations directory
 - #1454 add missing break; in loop at Email::getEncoding()

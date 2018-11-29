@@ -5,6 +5,7 @@
 # Setup variables
 . admin/release-config
 TARGET=dist/appstarter
+cd $TARGET
 git checkout $branch
 
 #---------------------------------------------------
@@ -12,18 +13,15 @@ echo -e "${BOLD}Build the framework distributable${NORMAL}"
 
 echo -e "${BOLD}Copy the main files/folders...${NORMAL}"
 releasable='application public writable README.md contributing.md env license.txt spark'
-for fff in $releasable 
-    if [ -d $fff ]; then
-        rm -rf ${TARGET}/$fff
-        cp -rf $fff ${TARGET}/
-    else
-        rm ${TARGET}/$fff
-        cp -f $fff ${TARGET}/
+for fff in $releasable ; do
+    if [ -d "$fff" ] ; then
+        rm -rf $fff
     fi
+    cp -rf ${CI_DIR}/$fff .
 done
 
 echo -e "${BOLD}Override as needed...${NORMAL}"
-cp -rf admin/starter/* ${TARGET}/
+cp -rf ${CI_DIR}/admin/starter/* .
 
 echo -e "${BOLD}Fix paths...${NORMAL}"
 sed -i "/public $systemDirectory = 'system';/s/'system'/'vendor/codeigniter4/framework/system'/" application/Config/Paths.php
@@ -31,7 +29,6 @@ sed -i "/public $systemDirectory = 'system';/s/'system'/'vendor/codeigniter4/fra
 #---------------------------------------------------
 # And finally, get ready for merging
 echo -e "${BOLD}Assemble the pieces...${NORMAL}"
-cd $TARGET
 git add .
 git commit -S -m "Release ${RELEASE}"
 git checkout master
