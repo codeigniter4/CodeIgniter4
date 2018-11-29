@@ -56,21 +56,25 @@ class FileLocator
 	 */
 	protected $namespaces;
 
+	/**
+	 * @var \CodeIgniter\Autoloader\Autoloader
+	 */
+	protected $autoloader;
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
 	 *
-	 * @param Autoload $autoload
+	 * @param Autoloader $autoloader
 	 */
-	public function __construct(Autoload $autoload)
+	public function __construct(Autoloader $autoloader)
 	{
-		$this->namespaces = $autoload->psr4;
-
-		unset($autoload);
+		$this->autoloader = $autoloader;
+		//$this->autoloader->addNamespace(APP_NAMESPACE, APPPATH);
 
 		// Always keep the Application directory as a "package".
-		array_unshift($this->namespaces, APPPATH);
+		//array_unshift($this->namespaces, APPPATH);
 	}
 
 	//--------------------------------------------------------------------
@@ -121,12 +125,12 @@ class FileLocator
 		{
 			$prefix .= empty($prefix) ? ucfirst(array_shift($segments)) : '\\' . ucfirst(array_shift($segments));
 
-			if (! array_key_exists($prefix, $this->namespaces))
+			if (! array_key_exists($prefix, $this->autoloader->getNamespace()))
 			{
 				continue;
 			}
 
-			$path     = $this->namespaces[$prefix] . '/';
+			$path     = $this->autoloader->getNamespace($prefix) . '/';
 			$filename = implode('/', $segments);
 			break;
 		}
@@ -224,12 +228,20 @@ class FileLocator
 	 */
 	public function search(string $path, string $ext = 'php'): array
 	{
+		// Ensure the extension is at the end of the filename
+		if ($ext)
+		{
+			$ext = '.' . $ext;
+
+			if (strpos($ext, $ext) === false || substr($path, -strlen($ext)) !== $ext)
+			{
+				$path .= $ext;
+			}
+		}
+
 		$foundPaths = [];
 
-		// Ensure the extension is on the filename
-		$path = strpos($path, '.' . $ext) !== false ? $path : $path . '.' . $ext;
-
-		foreach ($this->namespaces as $name => $folder)
+		foreach ($this->autoloader->getNamespace() as $name => $folder)
 		{
 			$folder = rtrim($folder, '/') . '/';
 
@@ -265,7 +277,7 @@ class FileLocator
 			return;
 		}
 
-		foreach ($this->namespaces as $namespace => $nsPath)
+		foreach ($this->autoloader->getNamespace() as $namespace => $nsPath)
 		{
 			$nsPath = realpath($nsPath);
 			if (is_numeric($namespace) || empty($nsPath))
@@ -305,7 +317,7 @@ class FileLocator
 		$files = [];
 		helper('filesystem');
 
-		foreach ($this->namespaces as $namespace => $nsPath)
+		foreach ($this->autoloader->getNamespace() as $namespace => $nsPath)
 		{
 			$fullPath = realpath(rtrim($nsPath, '/') . '/' . $path);
 
