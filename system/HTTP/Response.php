@@ -42,14 +42,6 @@ use Config\Format;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 /**
- * Redirect exception
- */
-class RedirectException extends \Exception
-{
-
-}
-
-/**
  * Representation of an outgoing, getServer-side response.
  *
  * Per the HTTP specification, this interface includes properties for
@@ -310,8 +302,8 @@ class Response extends Message implements ResponseInterface
 	 *                        provided status code; if none is provided, will
 	 *                        default to the IANA name.
 	 *
-	 * @return self
-	 * @throws \InvalidArgumentException For invalid status code arguments.
+	 * @return $this
+	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException For invalid status code arguments.
 	 */
 	public function setStatusCode(int $code, string $reason = '')
 	{
@@ -411,7 +403,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Converts the $body into JSON and sets the Content Type header.
 	 *
-	 * @param $body
+	 * @param array|string $body
 	 *
 	 * @return $this
 	 */
@@ -428,6 +420,8 @@ class Response extends Message implements ResponseInterface
 	 * Returns the current body, converted to JSON is it isn't already.
 	 *
 	 * @return mixed|string
+	 *
+	 * @throws \InvalidArgumentException If the body property is not array.
 	 */
 	public function getJSON()
 	{
@@ -435,6 +429,9 @@ class Response extends Message implements ResponseInterface
 
 		if ($this->bodyFormat !== 'json')
 		{
+			/**
+			 * @var Format $config
+			 */
 			$config    = config(Format::class);
 			$formatter = $config->getFormatter('application/json');
 
@@ -449,7 +446,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Converts $body into XML, and sets the correct Content-Type.
 	 *
-	 * @param $body
+	 * @param array|string $body
 	 *
 	 * @return $this
 	 */
@@ -466,6 +463,7 @@ class Response extends Message implements ResponseInterface
 	 * Retrieves the current body into XML and returns it.
 	 *
 	 * @return mixed|string
+	 * @throws \InvalidArgumentException If the body property is not array.
 	 */
 	public function getXML()
 	{
@@ -473,6 +471,9 @@ class Response extends Message implements ResponseInterface
 
 		if ($this->bodyFormat !== 'xml')
 		{
+			/**
+			 * @var Format $config
+			 */
 			$config    = config(Format::class);
 			$formatter = $config->getFormatter('application/xml');
 
@@ -488,10 +489,11 @@ class Response extends Message implements ResponseInterface
 	 * Handles conversion of the of the data into the appropriate format,
 	 * and sets the correct Content-Type header for our response.
 	 *
-	 * @param $body
-	 * @param string $format Valid: json, xml
+	 * @param string|array $body
+	 * @param string       $format Valid: json, xml
 	 *
 	 * @return mixed
+	 * @throws \InvalidArgumentException If the body property is not string or array.
 	 */
 	protected function formatBody($body, string $format)
 	{
@@ -502,6 +504,9 @@ class Response extends Message implements ResponseInterface
 		// Nothing much to do for a string...
 		if (! is_string($body))
 		{
+			/**
+			 * @var Format $config
+			 */
 			$config    = config(Format::class);
 			$formatter = $config->getFormatter($mime);
 
@@ -718,7 +723,7 @@ class Response extends Message implements ResponseInterface
 	 * @param integer $code   The type of redirection, defaults to 302
 	 *
 	 * @return $this
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException For invalid status code.
 	 */
 	public function redirect(string $uri, string $method = 'auto', int $code = null)
 	{
@@ -775,6 +780,8 @@ class Response extends Message implements ResponseInterface
 	 * @param string        $prefix   Cookie name prefix
 	 * @param boolean|false $secure   Whether to only transfer cookies via SSL
 	 * @param boolean|false $httponly Whether only make the cookie accessible via HTTP (no javascript)
+	 *
+	 * @return $this
 	 */
 	public function setCookie(
 		$name,
@@ -851,9 +858,9 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Checks to see if the Response has a specified cookie or not.
 	 *
-	 * @param string $name
-	 * @param null   $value
-	 * @param string $prefix
+	 * @param string      $name
+	 * @param string|null $value
+	 * @param string      $prefix
 	 *
 	 * @return boolean
 	 */
@@ -887,8 +894,8 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Returns the cookie
 	 *
-	 * @param string $name
-	 * @param string $prefix
+	 * @param string|null $name
+	 * @param string      $prefix
 	 *
 	 * @return mixed
 	 */
@@ -924,12 +931,14 @@ class Response extends Message implements ResponseInterface
 	 * @param string $domain
 	 * @param string $path
 	 * @param string $prefix
+	 *
+	 * @return $this
 	 */
 	public function deleteCookie($name = '', string $domain = '', string $path = '/', string $prefix = '')
 	{
 		if (empty($name))
 		{
-			return;
+			return $this;
 		}
 
 		if ($prefix === '' && $this->cookiePrefix !== '')
@@ -989,6 +998,8 @@ class Response extends Message implements ResponseInterface
 	 * @param string  $filename The path to the file to send
 	 * @param string  $data     The data to be downloaded
 	 * @param boolean $setMime  Whether to try and send the actual MIME type
+	 *
+	 * @return \CodeIgniter\HTTP\DownloadResponse|null
 	 */
 	public function download(string $filename = '', $data = '', bool $setMime = false)
 	{
