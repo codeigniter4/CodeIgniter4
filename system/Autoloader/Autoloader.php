@@ -118,6 +118,8 @@ class Autoloader
 			$this->classmap = $config->classmap;
 		}
 
+		$this->addNamespace(APP_NAMESPACE, APPPATH);
+
 		unset($config);
 	}
 
@@ -160,28 +162,43 @@ class Autoloader
 	/**
 	 * Registers a namespace with the autoloader.
 	 *
-	 * @param string $namespace
-	 * @param string $path
+	 * @param array|string $namespace
+	 * @param string       $path
 	 *
 	 * @return Autoloader
 	 */
-	public function addNamespace(string $namespace, string $path)
+	public function addNamespace($namespace, string $path = null)
 	{
-		if (isset($this->prefixes[$namespace]))
+		if (\is_array($namespace))
 		{
-			if (is_string($this->prefixes[$namespace]))
+			foreach ($namespace as $prefix => $path)
 			{
-				$this->prefixes[$namespace] = [$this->prefixes[$namespace]];
+				$this->prefixes[$prefix] = $path;
 			}
-
-			$this->prefixes[$namespace] = array_merge($this->prefixes[$namespace], [$path]);
 		}
 		else
 		{
-			$this->prefixes[$namespace] = [$path];
+			$this->prefixes[$namespace] = $path;
 		}
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @var string|null $prefix
+	 *
+	 * @return array|string
+	 */
+	public function getNamespace(string $prefix = null)
+	{
+		if ($prefix === null)
+		{
+			return $this->prefixes;
+		}
+
+		return $this->prefixes[$prefix];
 	}
 
 	//--------------------------------------------------------------------
