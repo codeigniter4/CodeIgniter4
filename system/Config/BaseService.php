@@ -156,10 +156,17 @@ class BaseService
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('locator');
+			if (empty(static::$instances['locator']))
+			{
+				static::$instances['locator'] = new \CodeIgniter\Autoloader\FileLocator(
+					static::autoloader()
+				);
+			}
+
+			return static::$instances['locator'];
 		}
 
-		return new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
+		return new \CodeIgniter\Autoloader\FileLocator(static::autoloader());
 	}
 
 	//--------------------------------------------------------------------
