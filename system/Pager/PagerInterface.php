@@ -128,6 +128,19 @@ interface PagerInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the URI for a specific page for the specified group.
+	 *
+	 * @param integer|null $page
+	 * @param string       $group
+	 * @param boolean      $returnObject
+	 *
+	 * @return string|\CodeIgniter\HTTP\URI
+	 */
+	public function getPageURI(int $page = null, string $group = 'default', $returnObject = false);
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Tells whether this group of results has any more pages of results.
 	 *
 	 * @param string|null $group
@@ -135,6 +148,17 @@ interface PagerInterface
 	 * @return boolean
 	 */
 	public function hasMore(string $group = 'default'): bool;
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the first page.
+	 *
+	 * @param string $group
+	 *
+	 * @return integer
+	 */
+	public function getFirstPage(string $group = 'default');
 
 	//--------------------------------------------------------------------
 

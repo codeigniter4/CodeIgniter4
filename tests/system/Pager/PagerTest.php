@@ -103,6 +103,38 @@ class PagerTest extends \CIUnitTestCase
 		$this->assertFalse($this->pager->hasMore('foo'));
 	}
 
+	public function testStoreWithQueries()
+	{
+		$_GET['page'] = 3;
+		$_GET['foo']  = 'bar';
+
+		$this->pager->store('default', 3, 25, 100);
+
+		$this->assertEquals('http://example.com?page=2&foo=bar', $this->pager->getPreviousPageURI());
+		$this->assertEquals('http://example.com?page=4&foo=bar', $this->pager->getNextPageURI());
+		$this->assertEquals('http://example.com?page=5&foo=bar', $this->pager->getPageURI(5));
+		$this->assertEquals(
+			'http://example.com?foo=bar&page=5',
+			$this->pager->only(['foo'])->getPageURI(5)
+		);
+	}
+
+	public function testStoreWithSegments()
+	{
+		$_GET['page'] = 3;
+		$_GET['foo']  = 'bar';
+
+		$this->pager->store('default', 3, 25, 100, 1);
+
+		$this->assertEquals('http://example.com/2?page=3&foo=bar', $this->pager->getPreviousPageURI());
+		$this->assertEquals('http://example.com/4?page=3&foo=bar', $this->pager->getNextPageURI());
+		$this->assertEquals('http://example.com/5?page=3&foo=bar', $this->pager->getPageURI(5));
+		$this->assertEquals(
+			'http://example.com/5?foo=bar',
+			$this->pager->only(['foo'])->getPageURI(5)
+		);
+	}
+
 	public function testHasMoreDefaultsToFalse()
 	{
 		$this->assertFalse($this->pager->hasMore('foo'));
@@ -278,18 +310,48 @@ class PagerTest extends \CIUnitTestCase
 
 	public function testLinks()
 	{
-		$this->assertTrue(strpos($this->pager->links(), '<ul class="pagination">') > 0);
+		$this->assertContains('<ul class="pagination">', $this->pager->links());
 	}
 
 	public function testSimpleLinks()
 	{
-		$this->assertTrue(strpos($this->pager->simpleLinks(), '<ul class="pager">') > 0);
+		$this->assertContains('<ul class="pager">', $this->pager->simpleLinks());
 	}
 
 	public function testMakeLinks()
 	{
-		$actual = $this->pager->makeLinks(4, 10, 50);
-		$this->assertTrue(strpos($this->pager->makeLinks(4, 10, 50), '<ul class="pagination">') > 0);
+		$this->assertContains(
+			'<ul class="pagination">', $this->pager->makeLinks(4, 10, 50)
+		);
+		$this->assertContains(
+			'<ul class="pagination">', $this->pager->makeLinks(4, 10, 50, 'default_full')
+		);
+		$this->assertContains(
+			'<ul class="pager">', $this->pager->makeLinks(4, 10, 50, 'default_simple')
+		);
+		$this->assertContains(
+			'<link rel="canonical"', $this->pager->makeLinks(4, 10, 50, 'default_head')
+		);
 	}
 
+	public function testHeadLinks()
+	{
+		$first_page = $this->pager->makeLinks(1, 10, 50, 'default_head');
+
+		$this->assertNotContains('<link rel="prev"', $first_page);
+		$this->assertContains('<link rel="canonical"', $first_page);
+		$this->assertContains('<link rel="next"', $first_page);
+
+		$second_page = $this->pager->makeLinks(2, 10, 50, 'default_head');
+
+		$this->assertContains('<link rel="prev"', $second_page);
+		$this->assertContains('<link rel="canonical"', $second_page);
+		$this->assertContains('<link rel="next"', $second_page);
+
+		$last_page = $this->pager->makeLinks(5, 10, 50, 'default_head');
+
+		$this->assertContains('<link rel="prev"', $last_page);
+		$this->assertContains('<link rel="canonical"', $last_page);
+		$this->assertNotContains('<link rel="next"', $last_page);
+	}
 }

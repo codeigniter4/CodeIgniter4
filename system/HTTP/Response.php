@@ -40,6 +40,7 @@ namespace CodeIgniter\HTTP;
 use Config\App;
 use Config\Format;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Pager\PagerInterface;
 
 /**
  * Representation of an outgoing, getServer-side response.
@@ -369,6 +370,43 @@ class Response extends Message implements ResponseInterface
 		$date->setTimezone(new \DateTimeZone('UTC'));
 
 		$this->setHeader('Date', $date->format('D, d M Y H:i:s') . ' GMT');
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Set the Link Header
+	 *
+	 * @param \CodeIgniter\Pager\PagerInterface $pager
+	 *
+	 * @see http://tools.ietf.org/html/rfc5988
+	 *
+	 * @return Response
+	 */
+	public function setLink(PagerInterface $pager)
+	{
+		$links = '';
+
+		if ($previous = $pager->getPreviousPageURI())
+		{
+			$links .= '<' . $pager->getPageURI($pager->getFirstPage()) . '>; rel="first",';
+			$links .= '<' . $previous . '>; rel="prev"';
+		}
+
+		if (($next = $pager->getNextPageURI()) && $previous)
+		{
+			$links .= ',';
+		}
+
+		if ($next)
+		{
+			$links .= '<' . $next . '>; rel="next",';
+			$links .= '<' . $pager->getPageURI($pager->getLastPage()) . '>; rel="last"';
+		}
+
+		$this->setHeader('Link', $links);
 
 		return $this;
 	}

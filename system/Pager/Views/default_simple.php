@@ -1,4 +1,10 @@
-<?php $pager->setSurroundCount(0) ?>
+<?php
+/**
+ * @var \CodeIgniter\Pager\PagerRenderer $pager
+ */
+
+$pager->setSurroundCount(0);
+?>
 <nav>
 	<ul class="pager">
 		<li <?= $pager->hasPrevious() ? '' : 'class="disabled"' ?>>

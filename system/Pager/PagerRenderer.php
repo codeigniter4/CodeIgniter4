@@ -224,6 +224,29 @@ class PagerRenderer
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the URI of the current page.
+	 *
+	 * @return string
+	 */
+	public function getCurrent(): string
+	{
+		$uri = clone $this->uri;
+
+		if ($this->segment === 0)
+		{
+			$uri->addQuery('page', $this->current);
+		}
+		else
+		{
+			$uri->setSegment($this->segment, $this->current);
+		}
+
+		return (string) $uri;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns an array of links that should be displayed. Each link
 	 * is represented by another array containing of the URI the link
 	 * should go to, the title (number) of the link, and a boolean
