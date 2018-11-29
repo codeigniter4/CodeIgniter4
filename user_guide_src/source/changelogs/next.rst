@@ -9,7 +9,7 @@ Release Date: Not Released
 The list of changed files follows, with PR numbers shown.
 
 - admin/
-	- post_release #1484
+	- release* #1484, 
 	- pre-commit #1388
 	- setup.sh #1388
 
@@ -17,6 +17,7 @@ The list of changed files follows, with PR numbers shown.
 	- Config/
 		- Autoload #1396, #1416
 		- Mimes #1368, #1465
+		- Pager #622
 		- Services #1469
 	- Filters/Honeypot #1376
 	- Views/
@@ -27,7 +28,11 @@ The list of changed files follows, with PR numbers shown.
 	- index.php #1388
 
 - system /
+	- Autoloader/
+		- Autoloader #1547
+		- FileLocator #1547, #1550
 	- Cache/Handlers/
+		- FileHandler #1547
 		- MemcachedHandler #1383
 	- CLI/
 		- CLI #1432, #1489
@@ -46,60 +51,73 @@ The list of changed files follows, with PR numbers shown.
 		- Mimes #1453
 		- Services #1180, #1469
 	- Database/
-		- BaseBuilder #1335, #1491
-		- BaseConnection #1335, #1407, #1491
+		- BaseBuilder #1335, #1491, #1522
+		- BaseConnection #1335, #1407, #1491, #1522
 		- BaseResult #1426
 		- Config #1465, #1469
-		- Forge #1343, #1449, #1470
+		- Forge #1343, #1449, #1470, #1530
 		- MigrationRunner #1371
 		- MySQLi/Connection #1335, #1449
-		- MySQLi/Forge #1343, #1344
+		- MySQLi/Forge #1343, #1344, #1530
+		- MySQLi/Result #1530
 		- Postgre/Connection #1335, #1449
+		- Postgre/Forge #1530
 		- SQLite3/Connection #1335, #1449
-		- SQLite3/Forge #1470
+		- SQLite3/Forge #1470, #1547
 	- Debug
 		- Exceptions #1500
-		- Toolbar #1370, #1465, #1469
+		- Toolbar #1370, #1465, #1469, #1547
 		- Toolbar/Views/toolbar.tpl #1469
 	- Email/
-		- Email #1389, #1413, #1438, #1454, #1465, #1469
+		- Email #1389, #1413, #1438, #1454, #1465, #1469, #1547
 	- Events/
-		- Events #1465, #1469
+		- Events #1465, #1469, #1547
 	- Files/
-		- File #1399
+		- File #1399, #1547
 	- Format/
 		- XMLFormatter #1471
 	- Helpers/
 		- array_helper #1412
+		- filesystem_helper #1547
 	- Honeypot/
 		- Honeypot #1460
 	- HTTP/
+		- CURLRequest #1547, #1498
 		- DownloadResponse #1375
 		- Exceptions/DownloadException #1405
 		- Files/FileCollection #1506
-		- Files/UploadedFile #1335, #1399, #1500, #1506
+		- Files/UploadedFile #1335, #1399, #1500, #1506, #1547
 		- IncomingRequest #1445, #1469, #1496
+		- Message #1497
 		- RedirectResponse #1387, #1451, #1464
-		- Response #1456, #1472, #1477, #1486, #1504, #1505
+		- Response #1456, #1472, #1477, #1486, #1504, #1505, #1497, #622
 		- ResponseInterface #1384
 		- UploadedFile #1368, #1456
 		- URI #1213, #1469, #1508
+	- Images/Handlers/
+		- ImageMagickHandler #1546
 	- Language/
 		- en/Database #1335
 		- en/Filters #1378
 		- en/Migrations #1374
 		- Language #1480, #1489
+	- Log/
+		- Handlers/FileHandler #1547
 	- Pager/
-		- Pager #1213
-		- PagerRenderer #1213
+		- Pager #1213, #622
+		- PagerInterface #622
+		- PagerRenderer #1213, #622
+		- Views/default_full #622
+		- Views/default_head #622
+		- Views/default_simple #622
 	- Router/
 		- RouteCollection #1464, #1524
 		- RouteCollectionInterface #1406, #1410
-		- Router #1523
+		- Router #1523, #1547
 	- Session/Handlers/
 		- BaseHandler #1180, #1483
 		- DatabaseHandler #1180
-		- FileHandler #1180
+		- FileHandler #1180, #1547
 		- MemcachedHandler #1180
 		- RedisHandler #1180
 	- Test/
@@ -107,17 +125,18 @@ The list of changed files follows, with PR numbers shown.
 		- FeatureTestCase #1427, #1468
 		- Filters/CITestStreamFilter #1465
 	- Validation /
-		- CreditCardRules #1447
+		- CreditCardRules #1447, #1529
 		- FormatRules #1507
 		- Rules #1345
 		- Validation #1345
 	- View/
 		- Filters #1469
-		- Parser #1417
-		- View #1357, #1377, #1410
-	- CodeIgniter #1465, #1505, #1523, 2047b5a
+		- Parser #1417, #1547
+		- View #1357, #1377, #1410, #1547
+	- bootstrao #1547
+	- CodeIgniter #1465, #1505, #1523, 2047b5a, #1547
 	- Common #1486, #1496, #1504, #1513
-	- ComposerScripts #1469
+	- ComposerScripts #1469, #1547
 	- Controller #1423
 	- Entity #1369, #1373
 	- Model #1345, #1380, #1373, #1440
@@ -127,6 +146,7 @@ The list of changed files follows, with PR numbers shown.
 		- HTTP/MockResponse #1456
 		- _bootstrap.php #1397, #1443
 	- Cache/Handlers/
+		- FileHandlerTest #1547
 		- MemcachedHandlerTest #1180, #1383
 		- RedisHandlerTest #1180, #1481
 	- CLI/
@@ -136,6 +156,7 @@ The list of changed files follows, with PR numbers shown.
 	- Database/Live/
 		- ForgeTest #1449, #1470
 	- HTTP/
+		- CURLRequestTest#1498
 		- Files/FileCOllectionTest #1506		
 		- Files/FileMovingTest #1424
 		- DownloadResponseTest #1375
@@ -143,7 +164,7 @@ The list of changed files follows, with PR numbers shown.
 		- RedirectResponseTest #1387, #1456
 		- ResponseCookieTest #1472, #1509
 		- ResponseSendTest #1477, #1486, #1509
-		- ResponseTest #1375, #1456, #1472, #1486
+		- ResponseTest #1375, #1456, #1472, #1486, #622
 		- URITest #1456, #1495
 	- Helpers/
 		- DateHelperTest #1479
@@ -154,7 +175,8 @@ The list of changed files follows, with PR numbers shown.
 	- Log/
 		- FileHandlerTest #1425
 	- Pager/
-		- PagerRendererTest #1213
+		- PagerRendererTest #1213, #622
+		- PagerTest #622
 	- Router/
 		- RouteCollectionTest #1438, #1524
 		- RouterTest #1438, #1523
@@ -178,6 +200,8 @@ The list of changed files follows, with PR numbers shown.
 - user_guide_src /source/
 	- changelogs/ #1385, #1490
 	- concepts/
+		- autoloader #1547
+		- security #1540
 		- services #1469
 		- structure #1448
 	- database/
@@ -194,18 +218,19 @@ The list of changed files follows, with PR numbers shown.
 		- index	#1388
 	- libraries/
 		- pagination #1213
-		- validation #27868b
+		- validation #27868b, #1540
 	- models/
-		- entities #1518
+		- entities #1518, #1540
 	- outgoing/
 		- response #1472, #1494
 	- testing/
 		- overview #1467
 	- tutorial/
 		- create_news_item #1442
+		- static_pages #1547
 
 - /
-	- composer.json #1388, #1418
+	- composer.json #1388, #1418, #1536
 	- README.md
 	- spark 2047b5a
 	- .travis.yml #1394
@@ -213,9 +238,18 @@ The list of changed files follows, with PR numbers shown.
 PRs merged:
 -----------
 
+- #1550 remove commented CLI::newLine($tempFiles) at FileLocator
+- #1549 use .gitkeep instead of .gitignore in Database/Seeds directory
+- #1547 Change file exists to is file
+- #1546 ImageMagickHandler::__construct ...
+- #1540 Update validation class User Guide
+- #1530 database performance improvement : use foreach() when possible
 - 2047b5a Don't run filters when using spark.
+- #1539 remove mb_* (mb string usage) in CreditCardRules
+- #1536 ext-json in composer.json
 - #1524 Test routes resource with 'websafe' option
 - #1523 Check if the matched route regex is filtered
+- #1522 add property_exists check on BaseBuilder
 - #1521 .gitignore clean up
 - #1518 Small typo: changed setCreatedOn to setCreatedAt
 - #1517 move .htaccess from per-directory in writable/{directory} to writable/
@@ -229,6 +263,8 @@ PRs merged:
 - #1504 Revert RedirectResponse changes
 - #1500 Ignoring errors suppressed by @
 - #1499 Fix form_helper's set_value writeup
+- #1498 Add CURLRequest helper methods
+- #1497 Remove unused RedirectException
 - #1496 Fix Common::old()
 - #1495 Add URI segment test
 - #1494 Method naming in user guide
@@ -328,4 +364,4 @@ PRs merged:
 - #1335 Review and improvements in databases drivers MySQLi, Postgre and SQLite
 - #1213 URI segment as page number in Pagination
 - #1180 using HTTP\Request instance to pull ip address
-
+- #622 Add Header Link Pagination

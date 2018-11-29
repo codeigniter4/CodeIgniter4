@@ -5,27 +5,17 @@
 # Setup variables
 . admin/release-config
 TARGET=dist/userguide
+git checkout $branch
 
+#---------------------------------------------------
 echo -e "${BOLD}Build the user guide distributable${NORMAL}"
 
-echo -e "${BOLD}Copy the main files/folders...${NORMAL}"
-releasable='application public writable README.md contributing.md env license.txt spark'
-for fff in $releasable 
-    if [ -d $fff ]; then
-        rm -rf ${TARGET}/$fff
-        cp -rf $fff ${TARGET}/
-    else
-        rm ${TARGET}/$fff
-        cp -f $fff ${TARGET}/
-    fi
-done
-
-echo -e "${BOLD}Override as needed...${NORMAL}"
-cp -rf admin/appstarter/* ${TARGET}/
 cp -rf user_guide_src/build/html ${TARGET}/docs
+cp -rf user_guide_src/build/epub/* ${TARGET}/
 
 #---------------------------------------------------
 # And finally, get ready for merging
+echo -e "${BOLD}Assemble the pieces...${NORMAL}"
 cd $TARGET
 git add .
 git commit -S -m "Release ${RELEASE}"

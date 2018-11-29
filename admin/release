@@ -105,6 +105,19 @@ make epub
 
 cd ${CI_DIR}
 
+# add changelog preamble
+sed '5 i Version |version|
+====================================================
+
+Release Date: Not Released
+
+**Next release of CodeIgniter4**
+
+
+:doc:`See all the changes. </changelogs/next>`
+
+' ${TARGET}/user_guide_src/changelogs/index.rst
+
 #---------------------------------------------------
 # Build the distributables
 

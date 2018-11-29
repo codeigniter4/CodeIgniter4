@@ -5,7 +5,9 @@
 # Setup variables
 . admin/release-config
 TARGET=dist/framework
+git checkout $branch
 
+#---------------------------------------------------
 echo -e "${BOLD}Build the framework distributable${NORMAL}"
 
 echo -e "${BOLD}Copy the main files/folders...${NORMAL}"
@@ -23,12 +25,13 @@ done
 echo -e "${BOLD}Override as needed...${NORMAL}"
 cp -rf admin/framework/* ${TARGET}/
 
-# add the docs
+echo -e "${BOLD}Bundle the docs...${NORMAL}"
 rm -rf ${TARGET}/docs
 cp -rf user_guide_src/build/html ${TARGET}/docs
 
 #---------------------------------------------------
 # And finally, get ready for merging
+echo -e "${BOLD}Assemble the pieces...${NORMAL}"
 cd $TARGET
 git add .
 git commit -S -m "Release ${RELEASE}"

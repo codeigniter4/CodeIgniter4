@@ -5,7 +5,9 @@
 # Setup variables
 . admin/release-config
 TARGET=dist/appstarter
+git checkout $branch
 
+#---------------------------------------------------
 echo -e "${BOLD}Build the framework distributable${NORMAL}"
 
 echo -e "${BOLD}Copy the main files/folders...${NORMAL}"
@@ -23,8 +25,12 @@ done
 echo -e "${BOLD}Override as needed...${NORMAL}"
 cp -rf admin/starter/* ${TARGET}/
 
+echo -e "${BOLD}Fix paths...${NORMAL}"
+sed -i "/public $systemDirectory = 'system';/s/'system'/'vendor/codeigniter4/framework/system'/" application/Config/Paths.php
+
 #---------------------------------------------------
 # And finally, get ready for merging
+echo -e "${BOLD}Assemble the pieces...${NORMAL}"
 cd $TARGET
 git add .
 git commit -S -m "Release ${RELEASE}"
