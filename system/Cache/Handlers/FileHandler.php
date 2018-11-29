@@ -334,7 +334,11 @@ class FileHandler implements CacheInterface
 	 */
 	protected function writeFile($path, $data, $mode = 'wb')
 	{
-		$fp = fopen($path, $mode);
+		if (($fp = @fopen($path, $mode)) === false)
+		{
+			return false;
+		}
+
 		flock($fp, LOCK_EX);
 
 		for ($result = $written = 0, $length = strlen($data); $written < $length; $written += $result)
