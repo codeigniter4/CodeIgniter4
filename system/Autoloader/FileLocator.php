@@ -315,7 +315,6 @@ class FileLocator
 			}
 
 			$tempFiles = get_filenames($fullPath, true);
-			//CLI::newLine($tempFiles);
 
 			if (! empty($tempFiles))
 			{
