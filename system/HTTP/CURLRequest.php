@@ -47,8 +47,6 @@ use Config\App;
  * A lightweight HTTP client for sending synchronous HTTP requests
  * via cURL.
  *
- * @todo Add a few helpers for dealing with JSON, forms, files, etc.
- *
  * @package CodeIgniter\HTTP
  */
 class CURLRequest extends Request
@@ -263,6 +261,68 @@ class CURLRequest extends Request
 	public function put(string $url, array $options = []): ResponseInterface
 	{
 		return $this->request('put', $url, $options);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Set the HTTP Authentication.
+	 *
+	 * @param string $username
+	 * @param string $password
+	 * @param string $type     basic or digest
+	 *
+	 * @return $this
+	 */
+	public function setAuth(string $username, string $password, string $type = 'basic')
+	{
+		$this->config['auth'] = [
+			$username,
+			$password,
+			$type,
+		];
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Set form data to be sent.
+	 *
+	 * @param array   $params
+	 * @param boolean $multipart Set TRUE if you are sending CURLFiles
+	 *
+	 * @return $this
+	 */
+	public function setForm(array $params, bool $multipart = false)
+	{
+		if ($multipart)
+		{
+			$this->config['multipart'] = $params;
+		}
+		else
+		{
+			$this->config['form_params'] = $params;
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Set JSON data to be sent.
+	 *
+	 * @param mixed $data
+	 *
+	 * @return $this
+	 */
+	public function setJSON($data)
+	{
+		$this->config['json'] = $data;
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------

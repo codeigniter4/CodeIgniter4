@@ -325,35 +325,32 @@ class Pager implements PagerInterface
 	{
 		$this->ensureGroup($group);
 
+		/**
+		 * @var \CodeIgniter\HTTP\URI $uri
+		 */
 		$uri = $this->groups[$group]['uri'];
 
 		$segment = $this->segment[$group] ?? 0;
+
+		if ($segment)
+		{
+			$uri->setSegment($segment, $page);
+		}
+		else
+		{
+			$uri->addQuery('page', $page);
+		}
 
 		if ($this->only)
 		{
 			$query = array_intersect_key($_GET, array_flip($this->only));
 
-			if ($segment > 0)
-			{
-				$uri->setSegment($segment, $page);
-			}
-			else
+			if (! $segment)
 			{
 				$query['page'] = $page;
 			}
 
 			$uri->setQueryArray($query);
-		}
-		else
-		{
-			if ($segment > 0)
-			{
-				$uri->setSegment($segment, $page);
-			}
-			else
-			{
-				$uri->addQuery('page', $page);
-			}
 		}
 
 		return $returnObject === true ? $uri : (string) $uri;

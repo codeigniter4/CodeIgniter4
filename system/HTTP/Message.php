@@ -254,8 +254,8 @@ class Message
 	/**
 	 * Sets a header and it's value.
 	 *
-	 * @param string $name
-	 * @param string $value
+	 * @param string            $name
+	 * @param array|null|string $value
 	 *
 	 * @return Message|Response
 	 */

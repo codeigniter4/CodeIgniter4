@@ -156,6 +156,38 @@ class ResponseTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testSetLink()
+	{
+		$response = new Response(new App());
+		$pager    = \Config\Services::pager();
+
+		$pager->store('default', 3, 10, 200);
+		$response->setLink($pager);
+
+		$this->assertEquals(
+			'<http://example.com?page=1>; rel="first",<http://example.com?page=2>; rel="prev",<http://example.com?page=4>; rel="next",<http://example.com?page=20>; rel="last"',
+			$response->getHeader('Link')->getValue()
+		);
+
+		$pager->store('default', 1, 10, 200);
+		$response->setLink($pager);
+
+		$this->assertEquals(
+			'<http://example.com?page=2>; rel="next",<http://example.com?page=20>; rel="last"',
+			$response->getHeader('Link')->getValue()
+		);
+
+		$pager->store('default', 20, 10, 200);
+		$response->setLink($pager);
+
+		$this->assertEquals(
+			'<http://example.com?page=1>; rel="first",<http://example.com?page=19>; rel="prev"',
+			$response->getHeader('Link')->getValue()
+		);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testSetContentType()
 	{
 		$response = new Response(new App());
