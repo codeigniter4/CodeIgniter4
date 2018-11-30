@@ -20,8 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "CodeIgniter\\": "system/",
-            "Psr\\Log\\": "system/ThirdParty/PSR/Log/"
+            "CodeIgniter\\": "system/"
         }
     },
     "scripts": {
