@@ -22,6 +22,30 @@ class ServicesTest extends \CIUnitTestCase
 		$_SERVER = $this->original;
 	}
 
+	public function testNewAutoloader()
+	{
+		$actual = Services::autoloader();
+		$this->assertInstanceOf(\CodeIgniter\Autoloader\Autoloader::class, $actual);
+	}
+
+	public function testNewUnsharedAutoloader()
+	{
+		$actual = Services::autoloader(false);
+		$this->assertInstanceOf(\CodeIgniter\Autoloader\Autoloader::class, $actual);
+	}
+
+	public function testNewFileLocator()
+	{
+		$actual = Services::locator();
+		$this->assertInstanceOf(\CodeIgniter\Autoloader\FileLocator::class, $actual);
+	}
+
+	public function testNewUnsharedFileLocator()
+	{
+		$actual = Services::locator(false);
+		$this->assertInstanceOf(\CodeIgniter\Autoloader\FileLocator::class, $actual);
+	}
+
 	public function testNewCurlRequest()
 	{
 		$actual = Services::curlrequest();
