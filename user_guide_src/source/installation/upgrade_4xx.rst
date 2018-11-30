@@ -30,7 +30,7 @@ subforum for an uptodate list!
 
 **Namespaces**
 
-- CI4 is built for PHP7.1+, and everything in the framework is namespaced, even the helpers
+- CI4 is built for PHP7.1+, and everything in the framework is namespaced, except for the helpers.
 
 **Application Structure**
 
@@ -61,7 +61,7 @@ subforum for an uptodate list!
 
 **Controllers**
 
-- Controllers extend \CodeIgniter\Controller instead of CI_Controller
+- Controllers extend \\CodeIgniter\\Controller instead of CI_Controller
 - They don't use a constructor any more (to invoke CI "magic") unless
   that is part of a base controller you make
 - CI provides ``Request`` and ``Response`` objects for you to work with -
@@ -72,7 +72,7 @@ subforum for an uptodate list!
 
 **Models**
 
-- Models extend \CodeIgniter\Model instead of CI_Model
+- Models extend \\CodeIgniter\\Model instead of CI_Model
 - The CI4 model has much more functionality, including automatic
   database connection, basic CRUD, in-model validation, and
   automatic pagination
@@ -91,7 +91,7 @@ subforum for an uptodate list!
 
 **Libraries**
 
-- Your app classes can still go inside ``application\Libraries``, but they
+- Your app classes can still go inside ``application/Libraries``, but they
   don't have to
 - Instead of CI3's ``$this->load->library(x);`` you can now use
   ``$this->x = new X();``, following namespaced conventions for your

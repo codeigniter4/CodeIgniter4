@@ -9,8 +9,12 @@ Release Date: Not Released
 The list of changed files follows, with PR numbers shown.
 
 - admin/
+        - framework/* #1553
+        - starter/* #1553
+        - docbot #1553
 	- release* #1484, 
 	- pre-commit #1388
+        - README.md #1553
 	- setup.sh #1388
 
 - application /
@@ -198,7 +202,7 @@ The list of changed files follows, with PR numbers shown.
 	- CommonFunctionsTest #1180, #1486, #1496
 
 - user_guide_src /source/
-	- changelogs/ #1385, #1490
+	- changelogs/ #1385, #1490, #1553
 	- concepts/
 		- autoloader #1547
 		- security #1540
@@ -230,14 +234,15 @@ The list of changed files follows, with PR numbers shown.
 		- static_pages #1547
 
 - /
-	- composer.json #1388, #1418, #1536
-	- README.md
+	- composer.json #1388, #1418, #1536, #1553
+	- README.md #1553
 	- spark 2047b5a
 	- .travis.yml #1394
 
 PRs merged:
 -----------
 
+- #1553 Admin/scripts
 - #1550 remove commented CLI::newLine($tempFiles) at FileLocator
 - #1549 use .gitkeep instead of .gitignore in Database/Seeds directory
 - #1547 Change file exists to is file
