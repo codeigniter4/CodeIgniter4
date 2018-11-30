@@ -5,7 +5,7 @@
 use CodeIgniter\Test\CIDatabaseTestCase;
 use Config\Database;
 
-class AliasTest extends CIDatabaseTestCase
+class ConnectTest extends CIDatabaseTestCase
 {
 	protected $group1;
 
