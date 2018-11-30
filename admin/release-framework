@@ -23,10 +23,6 @@ done
 echo -e "${BOLD}Override as needed...${NORMAL}"
 cp -rf ${CI_DIR}/admin/framework/* .
 
-echo -e "${BOLD}Bundle the docs...${NORMAL}"
-rm -rf docs
-cp -rf ${CI_DIR}/user_guide_src/build/html ./docs
-
 #---------------------------------------------------
 # And finally, get ready for merging
 echo -e "${BOLD}Assemble the pieces...${NORMAL}"

@@ -35,9 +35,10 @@ The list of changed files follows, with PR numbers shown.
 	- Autoloader/
 		- Autoloader #1547
 		- FileLocator #1547, #1550
-	- Cache/Handlers/
-		- FileHandler #1547
-		- MemcachedHandler #1383
+	- Cache/
+                - Exceptions/CacheException #1525
+		- Handlers/FileHandler #1547, #1525
+		- Handlers/MemcachedHandler #1383
 	- CLI/
 		- CLI #1432, #1489
 	- Commands/
@@ -58,7 +59,7 @@ The list of changed files follows, with PR numbers shown.
 		- BaseBuilder #1335, #1491, #1522
 		- BaseConnection #1335, #1407, #1491, #1522
 		- BaseResult #1426
-		- Config #1465, #1469
+		- Config #1465, #1469, #1554
 		- Forge #1343, #1449, #1470, #1530
 		- MigrationRunner #1371
 		- MySQLi/Connection #1335, #1449
@@ -101,6 +102,7 @@ The list of changed files follows, with PR numbers shown.
 	- Images/Handlers/
 		- ImageMagickHandler #1546
 	- Language/
+                - en/Cache #1525
 		- en/Database #1335
 		- en/Filters #1378
 		- en/Migrations #1374
@@ -150,7 +152,7 @@ The list of changed files follows, with PR numbers shown.
 		- HTTP/MockResponse #1456
 		- _bootstrap.php #1397, #1443
 	- Cache/Handlers/
-		- FileHandlerTest #1547
+		- FileHandlerTest #1547, #1525
 		- MemcachedHandlerTest #1180, #1383
 		- RedisHandlerTest #1180, #1481
 	- CLI/
@@ -158,6 +160,7 @@ The list of changed files follows, with PR numbers shown.
 	- Commands/
 		- SessionCommandsTest #1455
 	- Database/Live/
+                - ConnectTest #1554
 		- ForgeTest #1449, #1470
 	- HTTP/
 		- CURLRequestTest#1498
@@ -221,6 +224,7 @@ The list of changed files follows, with PR numbers shown.
 	- installation/
 		- index	#1388
 	- libraries/
+                - caching #1525
 		- pagination #1213
 		- validation #27868b, #1540
 	- models/
@@ -242,6 +246,7 @@ The list of changed files follows, with PR numbers shown.
 PRs merged:
 -----------
 
+- #1554 Serviceinstances
 - #1553 Admin/scripts
 - #1550 remove commented CLI::newLine($tempFiles) at FileLocator
 - #1549 use .gitkeep instead of .gitignore in Database/Seeds directory
@@ -252,6 +257,7 @@ PRs merged:
 - 2047b5a Don't run filters when using spark.
 - #1539 remove mb_* (mb string usage) in CreditCardRules
 - #1536 ext-json in composer.json
+- #1525 remove unneeded try {} catch {}
 - #1524 Test routes resource with 'websafe' option
 - #1523 Check if the matched route regex is filtered
 - #1522 add property_exists check on BaseBuilder

@@ -10,6 +10,13 @@ It has been built from the
 
 **This is pre-release code and should not be used in production sites.**
 
+--- 
+ 
+**CAUTION: This app starter is EXPERIMENTAL, and likely to change before
+the framework release. We are looking for feedback and suggestions!**  
+
+---
+
 More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
 
 The user guide corresponding to this version of the framework can be found
