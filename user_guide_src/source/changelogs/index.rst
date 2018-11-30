@@ -9,14 +9,17 @@ Release Date: Not Released
 
 **Next alpha release of CodeIgniter4**
 
-- Numerous bug fixes
-- Many missing features implemented
+- Numerous bug fixes, across the framework
+- Many missing features implemented, across the framework
+- Code coverage is up to 72%
 - CodeIgniter4 has been promoted to its own github organization.
-That is reflected in docs and comments.
+  That is reflected in docs and comments.
 - We have integrated a git pre-commit hook, which will apply the
-CI4 code sniffer rules, and attempt to fix them.
-We have run all the source files through it, and any "funny"
-code formatting is temporary until the rules are updated.
+  CI4 code sniffer rules, and attempt to fix them.
+  We have run all the source files through it, and any "funny"
+  code formatting is temporary until the rules are updated.
+- We welcome Natan Felles, from Brazil, to the code developer team.
+  He has proven to be passionate, dedicated and thorough :)
 
 :doc:`See all the changes. </changelogs/next>`
 

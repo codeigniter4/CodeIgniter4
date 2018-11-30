@@ -36,6 +36,6 @@ Do NOT create repo issues with support questions - we are using github for bug a
 
 Do NOT post support questions or feature requests in response to this thread - those
 will be deleted. We are trying to make the best of the
-limited resousrces that we have!
+limited resources that we have!
 
 Thank you, and ENJOY!
