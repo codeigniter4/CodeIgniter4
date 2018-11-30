@@ -103,6 +103,14 @@ class Language
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getLocale(): string
+	{
+		return $this->locale;
+	}
+
+	/**
 	 * Parses the language string for a file, loads the file, if necessary,
 	 * getting the line.
 	 *
