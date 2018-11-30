@@ -36,8 +36,6 @@
  * @filesource
  */
 
-use Config\Autoload;
-
 /**
  * Class Loader
  *
@@ -48,14 +46,6 @@ use Config\Autoload;
  */
 class FileLocator
 {
-
-	/**
-	 * Stores our namespaces
-	 *
-	 * @var array
-	 */
-	protected $namespaces;
-
 	/**
 	 * @var \CodeIgniter\Autoloader\Autoloader
 	 */
@@ -95,7 +85,8 @@ class FileLocator
 		$file = strpos($file, '.' . $ext) !== false ? $file : $file . '.' . $ext;
 
 		// Clean the folder name from the filename
-		if (! empty($folder))
+		//if (! empty($folder))
+		if (! empty($folder) /*&& strpos($file, $folder) === false*/)
 		{
 			$file = str_replace($folder . '/', '', $file);
 		}
@@ -123,14 +114,15 @@ class FileLocator
 
 		while (! empty($segments))
 		{
-			$prefix .= empty($prefix) ? ucfirst(array_shift($segments)) : '\\' . ucfirst(array_shift($segments));
+			$prefix .= empty($prefix)
+				? ucfirst(array_shift($segments))
+				: '\\' . ucfirst(array_shift($segments));
 
 			if (! array_key_exists($prefix, $this->autoloader->getNamespace()))
 			{
 				continue;
 			}
-
-			$path     = $this->autoloader->getNamespace($prefix) . '/';
+			$path     = $this->getNamespaces($prefix);
 			$filename = implode('/', $segments);
 			break;
 		}
@@ -241,13 +233,13 @@ class FileLocator
 
 		$foundPaths = [];
 
-		foreach ($this->autoloader->getNamespace() as $name => $folder)
+		foreach ($this->getNamespaces() as $namespace)
 		{
-			$folder = rtrim($folder, '/') . '/';
+			$namespace['path'] = rtrim($namespace['path'], '/') . '/';
 
-			if (is_file($folder . $path) === true)
+			if (is_file($namespace['path'] . $path) === true)
 			{
-				$foundPaths[] = $folder . $path;
+				$foundPaths[] = $namespace['path'] . $path;
 			}
 		}
 
@@ -255,6 +247,33 @@ class FileLocator
 		$foundPaths = array_unique($foundPaths);
 
 		return $foundPaths;
+	}
+
+	//--------------------------------------------------------------------
+
+	protected function getNamespaces(string $prefix = null)
+	{
+		if ($prefix)
+		{
+			$path = $this->autoloader->getNamespace($prefix);
+
+			return isset($path[0]) ? $path[0] : '';
+		}
+
+		$namespaces = [];
+
+		foreach ($this->autoloader->getNamespace() as $prefix => $paths)
+		{
+			foreach ($paths as $path)
+			{
+				$namespaces[] = [
+					'prefix' => $prefix,
+					'path'   => $path,
+				];
+			}
+		}
+
+		return $namespaces;
 	}
 
 	//--------------------------------------------------------------------
@@ -277,18 +296,21 @@ class FileLocator
 			return;
 		}
 
-		foreach ($this->autoloader->getNamespace() as $namespace => $nsPath)
+		foreach ($this->getNamespaces() as $namespace)
 		{
-			$nsPath = realpath($nsPath);
-			if (is_numeric($namespace) || empty($nsPath))
+			$namespace['path'] = realpath($namespace['path']);
+
+			if (empty($namespace['path']))
 			{
 				continue;
 			}
 
-			if (mb_strpos($path, $nsPath) === 0)
+			if (mb_strpos($path, $namespace['path']) === 0)
 			{
-				$className = '\\' . $namespace . '\\' .
-						ltrim(str_replace('/', '\\', mb_substr($path, mb_strlen($nsPath))), '\\');
+				$className = '\\' . $namespace['prefix'] . '\\' .
+						ltrim(str_replace('/', '\\', mb_substr(
+							$path, mb_strlen($namespace['path']))
+						), '\\');
 				// Remove the file extension (.php)
 				$className = mb_substr($className, 0, -4);
 
@@ -317,9 +339,9 @@ class FileLocator
 		$files = [];
 		helper('filesystem');
 
-		foreach ($this->autoloader->getNamespace() as $namespace => $nsPath)
+		foreach ($this->getNamespaces() as $namespace)
 		{
-			$fullPath = realpath(rtrim($nsPath, '/') . '/' . $path);
+			$fullPath = realpath(rtrim($namespace['path'], '/') . '/' . $path);
 
 			if (! is_dir($fullPath))
 			{
@@ -373,8 +395,7 @@ class FileLocator
 	 * Checks to see if a file exists on the file system. This is split
 	 * out to it's own method to make testing simpler.
 	 *
-	 * @codeCoverageIgnore
-	 * @param              string $path
+	 * @param string $path
 	 *
 	 * @return boolean
 	 */
