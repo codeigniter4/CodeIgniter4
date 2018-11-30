@@ -1,34 +1,30 @@
 {
-    "name": "codeigniter4/codeigniter4",
+    "name": "codeigniter4/appstarter",
     "type": "project",
-    "description": "The CodeIgniter framework v4",
+    "description": "CodeIgniter4 starter app",
     "homepage": "https://codeigniter.com",
     "license": "MIT",
     "require": {
         "php": ">=7.1",
-        "ext-curl": "*",
+        "codeigniter4/framework": "^4",
+         "ext-curl": "*",
         "ext-intl": "*",
-        "ext-json": "*",
         "kint-php/kint": "^2.1",
         "zendframework/zend-escaper": "^2.5"
     },
     "require-dev": {
-        "codeigniter4/codeigniter4-standard": "^1.0",
         "mikey179/vfsStream": "1.6.*",
-        "phpunit/phpunit": "^7.0",
-        "squizlabs/php_codesniffer": "^3.3"
+        "phpunit/phpunit": "^7.0"
     },
     "autoload": {
         "psr-4": {
-            "CodeIgniter\\": "system/",
-            "Psr\\Log\\": "system/ThirdParty/PSR/Log/"
+            "CodeIgniter\\": "vendor/codeigniter4/framework/system/",
+            "Psr\\Log\\": "vendor/codeigniter4/framework/system/ThirdParty/PSR/Log/"
         }
     },
     "scripts": {
         "post-update-cmd": [
-            "composer dump-autoload",
-            "CodeIgniter\\ComposerScripts::postUpdate",
-            "bash admin/setup.sh"
+            "composer dump-autoload"
         ]
     },
     "support": {

@@ -1,30 +1,24 @@
-# CodeIgniter 4 Development
-
-[![Build Status](https://travis-ci.org/codeigniter4/CodeIgniter4.svg?branch=develop)](https://travis-ci.org/codeigniter4/CodeIgniter4)
-[![Coverage Status](https://coveralls.io/repos/github/codeigniter4/CodeIgniter4/badge.svg?branch=develop)](https://coveralls.io/github/codeigniter4/CodeIgniter4?branch=develop)
-<br>
+# CodeIgniter 4 Framework
 
 ## What is CodeIgniter?
 CodeIgniter is a PHP full-stack web framework that is light, fast, flexible, and secure. 
 More information can be found at the [official site](http://codeigniter.com).
 
-This repository holds the alpha code for CodeIgniter 4 only. 
-Version 4 is a complete rewrite to bring the quality and the code into a more modern version, 
-while still keeping as many of the things intact that has made people love the framework over the years. 
+This repository holds the distributable version of the framework,
+including the user guide. It has been built from the 
+[development repository](https://github.com/codeigniter4/CodeIgniter4).
 
 **This is pre-release code and should not be used in production sites.**
 
 More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
 
-### Documentation
-
-The current in-progress documentation can be found [here](https://codeigniter4.github.io/CodeIgniter4/). 
-As with the rest of the framework, it is currently a work in progress, and will see changes over time to structure, explanations, etc.
+The user guide corresponding to this version of the framework can be found
+[here](https://codeigniter4.github.io/userguide/). 
 
 
 ## Important Change with index.php
 
-index.php is no longer in the root of the project! It has been moved inside the *public* folder,
+`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
 for better security and separation of components.
 
 This means that you should configure your web server to "point" to your project's *public* folder, and
@@ -57,15 +51,9 @@ Remember that some components that were part of CodeIgniter 3 are being moved
 to optional packages, with their own repository.
 
 ## Contributing
-We **are** accepting contributions from the community, specifically those identified as part of phase 2.
+We welcome contributions from the community.
 
-We will try to manage the process somewhat, by adding a "Help wanted" label to those that we are 
-specifically interested in at any point in time. Join the discussion for those issues, and let us know 
-if you want to take the lead for one of them.
-
-We are not looking for out-of-scope contributions, only those that would be considered part of our controlled evolution!
-
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing.md) section in the user guide
+Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing.md) section in the development repository.
 
 ## Server Requirements
 PHP version 7.1 or higher is required, with the following extensions installed: 
@@ -79,6 +67,3 @@ Additionally, make sure that the following extensions are enabled in your PHP:
 - [mbstring](http://php.net/manual/en/mbstring.installation.php)
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php)
 - xml (enabled by default - don't turn it off)
-
-## Running CodeIgniter Tests
-Information on running CodeIgniter test suite can be found in the [README.md](tests/README.md) file in the tests directory.

@@ -1,5 +1,5 @@
 {
-    "name": "codeigniter4/codeigniter4",
+    "name": "codeigniter4/framework",
     "type": "project",
     "description": "The CodeIgniter framework v4",
     "homepage": "https://codeigniter.com",
@@ -8,7 +8,6 @@
         "php": ">=7.1",
         "ext-curl": "*",
         "ext-intl": "*",
-        "ext-json": "*",
         "kint-php/kint": "^2.1",
         "zendframework/zend-escaper": "^2.5"
     },
