@@ -1,7 +1,7 @@
 <?php
 namespace CodeIgniter\Router;
 
-use Tests\Support\Autoloader\MockFileLocator;
+use CodeIgniter\Config\Services;
 use CodeIgniter\Router\Exceptions\RouterException;
 
 /**
@@ -24,11 +24,9 @@ class RouteCollectionTest extends \CIUnitTestCase
 		];
 		$config   = array_merge($config, $defaults);
 
-		$autoload       = new \Config\Autoload();
-		$autoload->psr4 = $config;
+		Services::autoloader()->addNamespace($config);
 
-		$loader = new MockFileLocator($autoload);
-		$loader->setFiles($files);
+		$loader = Services::locator();
 
 		if ($moduleConfig === null)
 		{
