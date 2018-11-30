@@ -15,7 +15,7 @@ class ConnectTest extends CIDatabaseTestCase
 	{
 		parent::setUp();
 
-		$config = config('database');
+		$config = config('Database');
 
 		$this->group1 = $config->default;
 		$this->group2 = $config->default;
