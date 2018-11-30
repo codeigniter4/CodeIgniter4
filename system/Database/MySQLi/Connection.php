@@ -343,7 +343,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function affectedRows(): int
 	{
-		return $this->connID->affected_rows;
+		return $this->connID->affected_rows ?? 0;
 	}
 
 	//--------------------------------------------------------------------
