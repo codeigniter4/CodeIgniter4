@@ -7,7 +7,7 @@ use org\bovigo\vfs\vfsStream;
 class FileHandlerTest extends \CIUnitTestCase
 {
 
-	public function setUp()
+	protected function setUp()
 	{
 		$this->root  = vfsStream::setup('root');
 		$this->start = $this->root->url() . '/';

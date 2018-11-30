@@ -11,7 +11,7 @@ use Tests\Support\HTTP\MockResponse;
 class ResponseTest extends \CIUnitTestCase
 {
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 		$this->server = $_SERVER;

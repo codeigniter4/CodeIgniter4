@@ -17,7 +17,7 @@ class BootstrapFCPATHTest extends \CIUnitTestCase
 	private $dir1       = '/tmp/dir1';
 	private $file1      = '/tmp/dir1/testFile.php';
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 		$this->deleteFiles();

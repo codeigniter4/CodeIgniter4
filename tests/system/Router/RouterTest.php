@@ -18,7 +18,7 @@ class RouterTest extends \CIUnitTestCase
 	 */
 	protected $root;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

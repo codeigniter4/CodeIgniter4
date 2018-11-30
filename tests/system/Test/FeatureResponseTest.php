@@ -15,7 +15,7 @@ class FeatureResponseTest extends CIUnitTestCase
 	 */
 	protected $response;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 	}

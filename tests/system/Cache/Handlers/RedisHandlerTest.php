@@ -54,7 +54,7 @@ class RedisHandlerTest extends \CIUnitTestCase
 	private static $dummy = 'dymmy';
 	private $config;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
