@@ -43,7 +43,10 @@ class ValidationTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
+		// Reset all services instances
 		Services::reset();
+		// Initialize the Autoloader... - we need it to search for language files in the locator
+		Services::autoloader()->initialize(new \Config\Autoload());
 
 		$this->validation = new Validation((object) $this->config, \Config\Services::renderer());
 		$this->validation->reset();
