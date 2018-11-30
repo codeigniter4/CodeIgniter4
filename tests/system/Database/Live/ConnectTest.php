@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;;
+<?php namespace CodeIgniter\Database\Live;
+
+;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 use Config\Database;

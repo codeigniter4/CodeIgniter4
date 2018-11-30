@@ -77,7 +77,7 @@ class Config extends BaseConfig
 		if (is_array($group))
 		{
 			$config = $group;
-			$group  = 'custom-'. md5(json_encode($config));
+			$group  = 'custom-' . md5(json_encode($config));
 		}
 
 		$config = $config ?? new \Config\Database();
