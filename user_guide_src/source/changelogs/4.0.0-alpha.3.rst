@@ -1,7 +1,7 @@
-Version |version|
+Version 4.0.0-alpha.3
 ====================================================
 
-Release Date: Not Released
+Release Date: November 30, 2018
 
 **Next alpha release of CodeIgniter4**
 
