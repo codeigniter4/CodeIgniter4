@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
@@ -96,7 +97,7 @@ class ListCommands extends BaseCommand
 	 * The length of the longest command name.
 	 * Used during display in columns.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	protected $maxFirstLength = 0;
 
@@ -128,7 +129,7 @@ class ListCommands extends BaseCommand
 		ksort($commands);
 
 		// Sort into buckets by group
-		$sorted = [];
+		$sorted         = [];
 		$maxTitleLength = 0;
 
 		foreach ($commands as $title => $command)
@@ -172,10 +173,10 @@ class ListCommands extends BaseCommand
 	/**
 	 * Pads our string out so that all titles are the same length to nicely line up descriptions.
 	 *
-	 * @param string $item
-	 * @param        $max
-	 * @param int    $extra // How many extra spaces to add at the end
-	 * @param int    $indent
+	 * @param string  $item
+	 * @param $max
+	 * @param integer $extra  // How many extra spaces to add at the end
+	 * @param integer $indent
 	 *
 	 * @return array
 	 */

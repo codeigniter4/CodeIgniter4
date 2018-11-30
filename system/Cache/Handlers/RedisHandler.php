@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Exceptions\CriticalError;
 use CodeIgniter\Cache\CacheInterface;
 
@@ -55,16 +56,16 @@ class RedisHandler implements CacheInterface
 	 * @var    array
 	 */
 	protected $config = [
-		'host'		 => '127.0.0.1',
-		'password'	 => null,
-		'port'		 => 6379,
-		'timeout'	 => 0,
+		'host'     => '127.0.0.1',
+		'password' => null,
+		'port'     => 6379,
+		'timeout'  => 0,
 	];
 
 	/**
 	 * Redis connection
 	 *
-	 * @var    Redis
+	 * @var Redis
 	 */
 	protected $redis;
 
@@ -72,10 +73,10 @@ class RedisHandler implements CacheInterface
 
 	public function __construct($config)
 	{
-		$config = (array)$config;
+		$config       = (array)$config;
 		$this->prefix = $config['prefix'] ?? '';
 
-		if ( ! empty($config))
+		if (! empty($config))
 		{
 			$this->config = array_merge($this->config, $config['redis']);
 		}
@@ -107,17 +108,18 @@ class RedisHandler implements CacheInterface
 
 		try
 		{
-			if ( ! $this->redis->connect($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout'])
+			if (! $this->redis->connect($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout'])
 			)
 			{
-//				log_message('error', 'Cache: Redis connection failed. Check your configuration.');
+				//              log_message('error', 'Cache: Redis connection failed. Check your configuration.');
 			}
 
 			if (isset($config['password']) && ! $this->redis->auth($config['password']))
 			{
-//				log_message('error', 'Cache: Redis authentication failed.');
+				//              log_message('error', 'Cache: Redis authentication failed.');
 			}
-		} catch (\RedisException $e)
+		}
+		catch (\RedisException $e)
 		{
 			throw new CriticalError('Cache: Redis connection refused (' . $e->getMessage() . ')');
 		}
@@ -138,7 +140,7 @@ class RedisHandler implements CacheInterface
 
 		$data = $this->redis->hMGet($key, ['__ci_type', '__ci_value']);
 
-		if ( ! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false)
+		if (! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false)
 		{
 			return false;
 		}
@@ -165,9 +167,9 @@ class RedisHandler implements CacheInterface
 	/**
 	 * Saves an item to the cache store.
 	 *
-	 * @param string $key   Cache item name
-	 * @param mixed  $value The data to save
-	 * @param int    $ttl   Time To Live, in seconds (default 60)
+	 * @param string  $key   Cache item name
+	 * @param mixed   $value The data to save
+	 * @param integer $ttl   Time To Live, in seconds (default 60)
 	 *
 	 * @return mixed
 	 */
@@ -192,7 +194,7 @@ class RedisHandler implements CacheInterface
 				return false;
 		}
 
-		if ( ! $this->redis->hMSet($key, ['__ci_type' => $data_type, '__ci_value' => $value]))
+		if (! $this->redis->hMSet($key, ['__ci_type' => $data_type, '__ci_value' => $value]))
 		{
 			return false;
 		}
@@ -225,8 +227,8 @@ class RedisHandler implements CacheInterface
 	/**
 	 * Performs atomic incrementation of a raw stored value.
 	 *
-	 * @param string $key    Cache ID
-	 * @param int    $offset Step/value to increase by
+	 * @param string  $key    Cache ID
+	 * @param integer $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 */
@@ -242,8 +244,8 @@ class RedisHandler implements CacheInterface
 	/**
 	 * Performs atomic decrementation of a raw stored value.
 	 *
-	 * @param string $key    Cache ID
-	 * @param int    $offset Step/value to increase by
+	 * @param string  $key    Cache ID
+	 * @param integer $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 */
@@ -296,17 +298,17 @@ class RedisHandler implements CacheInterface
 
 		$value = $this->get($key);
 
-		if ($value !== FALSE)
+		if ($value !== false)
 		{
 			$time = time();
 			return [
 				'expire' => $time + $this->redis->ttl($key),
-				'mtime' => $time,
-				'data' => $value
+				'mtime'  => $time,
+				'data'   => $value,
 			];
 		}
 
-		return FALSE;
+		return false;
 	}
 
 	//--------------------------------------------------------------------

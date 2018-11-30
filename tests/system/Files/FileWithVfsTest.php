@@ -1,7 +1,6 @@
 <?php namespace CodeIgniter\Files;
 
 use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
 
 class FileWithVfsTest extends \CIUnitTestCase
 {
@@ -16,7 +15,7 @@ class FileWithVfsTest extends \CIUnitTestCase
 		$this->path = '_support/Files/';
 		vfsStream::copyFromFileSystem(TESTPATH . $this->path, $this->root);
 		$this->start = $this->root->url() . '/';
-		$this->file = new File($this->start . 'able/apple.php');
+		$this->file  = new File($this->start . 'able/apple.php');
 	}
 
 	public function tearDown()
@@ -113,7 +112,7 @@ class FileWithVfsTest extends \CIUnitTestCase
 	{
 		$here = $this->root->url();
 
-		chmod($here,400); // make a read-only folder
+		chmod($here, 400); // make a read-only folder
 		$destination = $here . '/charlie';
 		$this->file->move($destination); // try to move our file there
 	}

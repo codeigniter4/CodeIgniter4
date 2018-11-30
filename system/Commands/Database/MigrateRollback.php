@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
@@ -91,9 +92,9 @@ class MigrateRollback extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-n'	 => 'Set migration namespace',
-		'-g'	 => 'Set database group',
-		'-all'	 => 'Set latest for all namespace, will ignore (-n) option',
+		'-n'   => 'Set migration namespace',
+		'-g'   => 'Set database group',
+		'-all' => 'Set latest for all namespace, will ignore (-n) option',
 	];
 
 	/**
@@ -107,22 +108,24 @@ class MigrateRollback extends BaseCommand
 		$runner = Services::migrations();
 
 		CLI::write(lang('Migrations.rollingBack'), 'yellow');
-		$group = CLI::getOption('g');
-		if ( ! is_null($group))
+
+		$group = $params['-g'] ?? CLI::getOption('g');
+
+		if (! is_null($group))
 		{
 			$runner->setGroup($group);
 		}
 		try
 		{
-			if (is_null(CLI::getOption('all')))
+			if (! $this->isAllNamespace())
 			{
-				$namespace = CLI::getOption('n');
+				$namespace = $params['-n'] ?? CLI::getOption('n');
 				$runner->version(0, $namespace);
 			}
 			else
 			{
 				// Get all namespaces form  PSR4 paths.
-				$config = new Autoload();
+				$config     = new Autoload();
 				$namespaces = $config->psr4;
 				foreach ($namespaces as $namespace => $path)
 				{
@@ -142,13 +145,31 @@ class MigrateRollback extends BaseCommand
 			}
 
 			CLI::write('Done');
-
-		} catch (\Exception $e)
+		}
+		catch (\Exception $e)
 		{
 			$this->showError($e);
 		}
+	}
 
+	/**
+	 * To migrate all namespaces to the latest migration
+	 *
+	 * Demo:
+	 *  1. command line: php spark migrate:latest -all
+	 *  2. command file: $this->call('migrate:latest', ['-g' => 'test','-all']);
+	 *
+	 * @param  array $params
+	 * @return boolean
+	 */
+	private function isAllNamespace(array $params)
+	{
+		if (array_search('-all', $params) !== false)
+		{
+			return true;
+		}
 
+		return ! is_null(CLI::getOption('all'));
 	}
 
 }

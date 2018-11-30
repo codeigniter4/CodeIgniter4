@@ -1,13 +1,27 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 use Config\Format;
 use DateTime;
 use DateTimeZone;
+use Tests\Support\HTTP\MockResponse;
 
 class ResponseTest extends \CIUnitTestCase
 {
+
+	public function setUp()
+	{
+		parent::setUp();
+		$this->server = $_SERVER;
+	}
+
+	public function tearDown()
+	{
+		$_SERVER = $this->server;
+	}
+
 	public function testCanSetStatusCode()
 	{
 		$response = new Response(new App());
@@ -29,6 +43,16 @@ class ResponseTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testConstructWithCSPEnabled()
+	{
+		$config             = new App();
+		$config->CSPEnabled = true;
+		$response           = new Response($config);
+
+		$this->assertTrue($response instanceof Response);
+	}
+
+	//--------------------------------------------------------------------
 
 	public function testSetStatusCodeSetsReason()
 	{
@@ -127,7 +151,39 @@ class ResponseTest extends \CIUnitTestCase
 
 		$header = $response->getHeaderLine('Date');
 
-		$this->assertEquals($date->format('D, d M Y H:i:s').' GMT', $header);
+		$this->assertEquals($date->format('D, d M Y H:i:s') . ' GMT', $header);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetLink()
+	{
+		$response = new Response(new App());
+		$pager    = \Config\Services::pager();
+
+		$pager->store('default', 3, 10, 200);
+		$response->setLink($pager);
+
+		$this->assertEquals(
+			'<http://example.com?page=1>; rel="first",<http://example.com?page=2>; rel="prev",<http://example.com?page=4>; rel="next",<http://example.com?page=20>; rel="last"',
+			$response->getHeader('Link')->getValue()
+		);
+
+		$pager->store('default', 1, 10, 200);
+		$response->setLink($pager);
+
+		$this->assertEquals(
+			'<http://example.com?page=2>; rel="next",<http://example.com?page=20>; rel="last"',
+			$response->getHeader('Link')->getValue()
+		);
+
+		$pager->store('default', 20, 10, 200);
+		$response->setLink($pager);
+
+		$this->assertEquals(
+			'<http://example.com?page=1>; rel="first",<http://example.com?page=19>; rel="prev"',
+			$response->getHeader('Link')->getValue()
+		);
 	}
 
 	//--------------------------------------------------------------------
@@ -161,9 +217,9 @@ class ResponseTest extends \CIUnitTestCase
 		$date = date('r');
 
 		$options = [
-			'etag' => '12345678',
+			'etag'          => '12345678',
 			'last-modified' => $date,
-			'max-age' => 300,
+			'max-age'       => 300,
 			'must-revalidate'
 		];
 
@@ -172,6 +228,19 @@ class ResponseTest extends \CIUnitTestCase
 		$this->assertEquals('12345678', $response->getHeaderLine('ETag'));
 		$this->assertEquals($date, $response->getHeaderLine('Last-Modified'));
 		$this->assertEquals('max-age=300, must-revalidate', $response->getHeaderLine('Cache-Control'));
+	}
+
+	public function testSetCacheNoOptions()
+	{
+		$response = new Response(new App());
+
+		$date = date('r');
+
+		$options = [];
+
+		$response->setCache($options);
+
+		$this->assertEquals('no-store, max-age=0, no-cache', $response->getHeaderLine('Cache-Control'));
 	}
 
 	//--------------------------------------------------------------------
@@ -187,7 +256,7 @@ class ResponseTest extends \CIUnitTestCase
 
 		$header = $response->getHeaderLine('Last-Modified');
 
-		$this->assertEquals($date->format('D, d M Y H:i:s').' GMT', $header);
+		$this->assertEquals($date->format('D, d M Y H:i:s') . ' GMT', $header);
 	}
 
 	//--------------------------------------------------------------------
@@ -214,6 +283,16 @@ class ResponseTest extends \CIUnitTestCase
 		$this->assertTrue($response->hasHeader('location'));
 		$this->assertEquals('example.com', $response->getHeaderLine('Location'));
 		$this->assertEquals(307, $response->getStatusCode());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRedirectWithIIS()
+	{
+		$_SERVER['SERVER_SOFTWARE'] = 'Microsoft-IIS';
+		$response                   = new Response(new App());
+		$response->redirect('example.com', 'auto', 307);
+		$this->assertEquals('0;url=example.com', $response->getHeaderLine('Refresh'));
 	}
 
 	//--------------------------------------------------------------------
@@ -247,18 +326,25 @@ class ResponseTest extends \CIUnitTestCase
 		$response = new Response(new App());
 		$response->setCookie('foo', 'bar', '', '', '', 'ack');
 
-		$this->assertFalse($response->hasCookie('foo', null, 'ack'));
+		$this->assertTrue($response->hasCookie('foo', null, 'ack'));
+		$this->assertFalse($response->hasCookie('foo', null, 'nak'));
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testJSONWithArray()
 	{
-		$response = new Response(new App());
-		$config = new Format();
+		$response  = new Response(new App());
+		$config    = new Format();
 		$formatter = $config->getFormatter('application/json');
 
-		$body = [
+		$body     = [
 			'foo' => 'bar',
-			'bar' => [1, 2, 3]
+			'bar' => [
+				1,
+				2,
+				3,
+			],
 		];
 		$expected = $formatter->format($body);
 
@@ -270,13 +356,17 @@ class ResponseTest extends \CIUnitTestCase
 
 	public function testJSONGetFromNormalBody()
 	{
-		$response = new Response(new App());
-		$config = new Format();
+		$response  = new Response(new App());
+		$config    = new Format();
 		$formatter = $config->getFormatter('application/json');
 
-		$body = [
+		$body     = [
 			'foo' => 'bar',
-			'bar' => [1, 2, 3]
+			'bar' => [
+				1,
+				2,
+				3,
+			],
 		];
 		$expected = $formatter->format($body);
 
@@ -285,15 +375,21 @@ class ResponseTest extends \CIUnitTestCase
 		$this->assertEquals($expected, $response->getJSON());
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testXMLWithArray()
 	{
-		$response = new Response(new App());
-		$config = new Format();
+		$response  = new Response(new App());
+		$config    = new Format();
 		$formatter = $config->getFormatter('application/xml');
 
-		$body = [
+		$body     = [
 			'foo' => 'bar',
-			'bar' => [1, 2, 3]
+			'bar' => [
+				1,
+				2,
+				3,
+			],
 		];
 		$expected = $formatter->format($body);
 
@@ -305,13 +401,17 @@ class ResponseTest extends \CIUnitTestCase
 
 	public function testXMLGetFromNormalBody()
 	{
-		$response = new Response(new App());
-		$config = new Format();
+		$response  = new Response(new App());
+		$config    = new Format();
 		$formatter = $config->getFormatter('application/xml');
 
-		$body = [
+		$body     = [
 			'foo' => 'bar',
-			'bar' => [1, 2, 3]
+			'bar' => [
+				1,
+				2,
+				3,
+			],
 		];
 		$expected = $formatter->format($body);
 
@@ -319,6 +419,8 @@ class ResponseTest extends \CIUnitTestCase
 
 		$this->assertEquals($expected, $response->getXML());
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testGetDownloadResponseByData()
 	{
@@ -328,7 +430,7 @@ class ResponseTest extends \CIUnitTestCase
 
 		$this->assertInstanceOf(DownloadResponse::class, $actual);
 		$actual->buildHeaders();
-		$this->assertSame('attachment; filename="unit-test.txt"', $actual->getHeaderLine('Content-Disposition'));
+		$this->assertSame('attachment; filename="unit-test.txt"; filename*=UTF-8\'\'unit-test.txt', $actual->getHeaderLine('Content-Disposition'));
 
 		ob_start();
 		$actual->sendBody();
@@ -346,7 +448,7 @@ class ResponseTest extends \CIUnitTestCase
 
 		$this->assertInstanceOf(DownloadResponse::class, $actual);
 		$actual->buildHeaders();
-		$this->assertSame('attachment; filename="'.basename(__FILE__).'"', $actual->getHeaderLine('Content-Disposition'));
+		$this->assertSame('attachment; filename="' . basename(__FILE__) . '"; filename*=UTF-8\'\'' . basename(__FILE__), $actual->getHeaderLine('Content-Disposition'));
 
 		ob_start();
 		$actual->sendBody();
@@ -355,4 +457,76 @@ class ResponseTest extends \CIUnitTestCase
 
 		$this->assertSame(file_get_contents(__FILE__), $actual_output);
 	}
+
+	public function testVagueDownload()
+	{
+		$response = new Response(new App());
+
+		$actual = $response->download();
+
+		$this->assertNull($actual);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testPretendMode()
+	{
+		$response = new MockResponse(new App());
+		$response->pretend(true);
+		$this->assertTrue($response->getPretend());
+		$response->pretend(false);
+		$this->assertFalse($response->getPretend());
+	}
+
+	public function testMisbehaving()
+	{
+		$response = new MockResponse(new App());
+		$response->misbehave();
+
+		$this->expectException(HTTPException::class);
+		$response->getStatusCode();
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testTemporaryRedirect11()
+	{
+		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+		$_SERVER['REQUEST_METHOD']  = 'POST';
+		$response                   = new Response(new App());
+
+		$response->setProtocolVersion('HTTP/1.1');
+		$response->redirect('/foo');
+
+		$this->assertEquals(303, $response->getStatusCode());
+	}
+
+	public function testTemporaryRedirectGet11()
+	{
+		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+		$_SERVER['REQUEST_METHOD']  = 'GET';
+		$response                   = new Response(new App());
+
+		$response->setProtocolVersion('HTTP/1.1');
+		$response->redirect('/foo');
+
+		$this->assertEquals(307, $response->getStatusCode());
+	}
+
+	//--------------------------------------------------------------------
+	// Make sure cookies are set by RedirectResponse this way
+	// See https://github.com/codeigniter4/CodeIgniter4/issues/1393
+	public function testRedirectResponseCookies()
+	{
+		$login_time = time();
+
+		$response = new Response(new App());
+		$answer1  = $response->redirect('/login')
+				->setCookie('foo', 'bar', YEAR)
+				->setCookie('login_time', $login_time, YEAR);
+
+		$this->assertTrue($answer1->hasCookie('foo'));
+		$this->assertTrue($answer1->hasCookie('login_time'));
+	}
+
 }

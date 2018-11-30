@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Router\Exceptions\RouterException;
 
@@ -100,12 +101,13 @@ class Router implements RouterInterface
 	 * Whether dashes in URI's should be converted
 	 * to underscores when determining method names.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $translateURIDashes = false;
 
 	/**
 	 * The route that was matched for this request.
+	 *
 	 * @var array|null
 	 */
 	protected $matchedRoute = null;
@@ -119,6 +121,7 @@ class Router implements RouterInterface
 
 	/**
 	 * The locale that was detected in a route.
+	 *
 	 * @var string
 	 */
 	protected $detectedLocale = null;
@@ -126,6 +129,7 @@ class Router implements RouterInterface
 	/**
 	 * The filter info from Route Collection
 	 * if the matched route should be filtered.
+	 *
 	 * @var string
 	 */
 	protected $filterInfo;
@@ -142,7 +146,7 @@ class Router implements RouterInterface
 		$this->collection = $routes;
 
 		$this->controller = $this->collection->getDefaultController();
-		$this->method = $this->collection->getDefaultMethod();
+		$this->method     = $this->collection->getDefaultMethod();
 	}
 
 	//--------------------------------------------------------------------
@@ -170,9 +174,9 @@ class Router implements RouterInterface
 
 		if ($this->checkRoutes($uri))
 		{
-			if ($this->collection->isFiltered($uri))
+			if ($this->collection->isFiltered($this->matchedRoute[0]))
 			{
-				$this->filterInfo = $this->collection->getFilterForRoute($uri);
+				$this->filterInfo = $this->collection->getFilterForRoute($this->matchedRoute[0]);
 			}
 
 			return $this->controller;
@@ -181,7 +185,7 @@ class Router implements RouterInterface
 		// Still here? Then we can try to match the URI against
 		// Controllers/directories, but the application may not
 		// want this, like in the case of API's.
-		if ( ! $this->collection->shouldAutoRoute())
+		if (! $this->collection->shouldAutoRoute())
 		{
 			throw new PageNotFoundException("Can't find a route for '{$uri}'.");
 		}
@@ -244,7 +248,7 @@ class Router implements RouterInterface
 
 			return [
 				$routeArray[0], // Controller
-				$routeArray[1] ?? 'index'   // Method
+				$routeArray[1] ?? 'index',   // Method
 			];
 		}
 
@@ -335,7 +339,7 @@ class Router implements RouterInterface
 	 * Tells the system whether we should translate URI dashes or not
 	 * in the URI from a dash to an underscore.
 	 *
-	 * @param bool|false $val
+	 * @param boolean|false $val
 	 *
 	 * @return $this
 	 */
@@ -352,7 +356,7 @@ class Router implements RouterInterface
 	 * Returns true/false based on whether the current route contained
 	 * a {locale} placeholder.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function hasLocale()
 	{
@@ -380,14 +384,14 @@ class Router implements RouterInterface
 	 *
 	 * @param string $uri The URI path to compare against the routes
 	 *
-	 * @return bool Whether the route was matched or not.
+	 * @return boolean Whether the route was matched or not.
 	 * @throws \CodeIgniter\Router\RedirectException
 	 */
 	protected function checkRoutes(string $uri): bool
 	{
 		$routes = $this->collection->getRoutes($this->collection->getHTTPVerb());
 
-		$uri = $uri == '/'
+		$uri = $uri === '/'
 			? $uri
 			: ltrim($uri, '/ ');
 
@@ -418,7 +422,7 @@ class Router implements RouterInterface
 				if (isset($localeSegment))
 				{
 					// The following may be inefficient, but doesn't upset NetBeans :-/
-					$temp = (explode('/', $uri));
+					$temp                 = (explode('/', $uri));
 					$this->detectedLocale = $temp[$localeSegment];
 					unset($localeSegment);
 				}
@@ -426,7 +430,7 @@ class Router implements RouterInterface
 				// Are we using Closures? If so, then we need
 				// to collect the params into an array
 				// so it can be passed to the controller method later.
-				if ( ! is_string($val) && is_callable($val))
+				if (! is_string($val) && is_callable($val))
 				{
 					$this->controller = $val;
 
@@ -435,7 +439,10 @@ class Router implements RouterInterface
 
 					$this->params = $matches;
 
-					$this->matchedRoute = [$key, $val];
+					$this->matchedRoute = [
+						$key,
+						$val,
+					];
 
 					$this->matchedRouteOptions = $this->collection->getRoutesOptions($key);
 
@@ -448,8 +455,8 @@ class Router implements RouterInterface
 				if (strpos($val, '$') !== false && strpos($key, '(') !== false && strpos($key, '/') !== false)
 				{
 					$replacekey = str_replace('/(.*)', '', $key);
-					$val = preg_replace('#^' . $key . '$#', $val, $uri);
-					$val = str_replace($replacekey, str_replace("/", "\\", $replacekey), $val);
+					$val        = preg_replace('#^' . $key . '$#', $val, $uri);
+					$val        = str_replace($replacekey, str_replace('/', '\\', $replacekey), $val);
 				}
 				elseif (strpos($val, '$') !== false && strpos($key, '(') !== false)
 				{
@@ -468,7 +475,10 @@ class Router implements RouterInterface
 
 				$this->setRequest(explode('/', $val));
 
-				$this->matchedRoute = [$key, $val];
+				$this->matchedRoute = [
+					$key,
+					$val,
+				];
 
 				$this->matchedRouteOptions = $this->collection->getRoutesOptions($key);
 
@@ -508,19 +518,19 @@ class Router implements RouterInterface
 		// Use the method name if it exists.
 		// If it doesn't, no biggie - the default method name
 		// has already been set.
-		if ( ! empty($segments))
+		if (! empty($segments))
 		{
 			$this->method = array_shift($segments);
 		}
 
-		if ( ! empty($segments))
+		if (! empty($segments))
 		{
 			$this->params = $segments;
 		}
 
 		// Load the file so that it's available for CodeIgniter.
 		$file = APPPATH . 'Controllers/' . $this->directory . $this->controller . '.php';
-		if (file_exists($file))
+		if (is_file($file))
 		{
 			include_once $file;
 		}
@@ -544,7 +554,7 @@ class Router implements RouterInterface
 	 */
 	protected function validateRequest(array $segments)
 	{
-		$c = count($segments);
+		$c                  = count($segments);
 		$directory_override = isset($this->directory);
 
 		// Loop through our segments and return as soon as a controller
@@ -554,7 +564,7 @@ class Router implements RouterInterface
 			$test = $this->directory . ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]
 			);
 
-			if ( ! file_exists(APPPATH . 'Controllers/' . $test . '.php') && $directory_override === false && is_dir(APPPATH . 'Controllers/' . $this->directory . ucfirst($segments[0]))
+			if (! is_file(APPPATH . 'Controllers/' . $test . '.php') && $directory_override === false && is_dir(APPPATH . 'Controllers/' . $this->directory . ucfirst($segments[0]))
 			)
 			{
 				$this->setDirectory(array_shift($segments), true);
@@ -573,14 +583,14 @@ class Router implements RouterInterface
 	/**
 	 * Sets the sub-directory that the controller is in.
 	 *
-	 * @param string|null $dir
-	 * @param bool|false  $append
+	 * @param string|null   $dir
+	 * @param boolean|false $append
 	 */
 	protected function setDirectory(string $dir = null, $append = false)
 	{
 		$dir = ucfirst($dir);
 
-		if ($append !== TRUE || empty($this->directory))
+		if ($append !== true || empty($this->directory))
 		{
 			$this->directory = str_replace('.', '', trim($dir, '/')) . '/';
 		}
@@ -598,7 +608,7 @@ class Router implements RouterInterface
 	 * Takes an array of URI segments as input and sets the class/method
 	 * to be called.
 	 *
-	 * @param    array $segments URI segments
+	 * @param array $segments URI segments
 	 */
 	protected function setRequest(array $segments = [])
 	{
@@ -625,7 +635,7 @@ class Router implements RouterInterface
 
 		// $this->method already contains the default method name,
 		// so don't overwrite it with emptiness.
-		if ( ! empty($method))
+		if (! empty($method))
 		{
 			$this->method = $method;
 		}
@@ -653,7 +663,7 @@ class Router implements RouterInterface
 			$this->method = 'index';
 		}
 
-		if ( ! file_exists(APPPATH . 'Controllers/' . $this->directory . ucfirst($class) . '.php'))
+		if (! is_file(APPPATH . 'Controllers/' . $this->directory . ucfirst($class) . '.php'))
 		{
 			return;
 		}

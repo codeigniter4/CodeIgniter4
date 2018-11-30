@@ -8,7 +8,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-	    helper('inflector');
+		helper('inflector');
 	}
 
 	//--------------------------------------------------------------------
@@ -42,7 +42,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 			'dogs'      => 'dog',
 			'cats'      => 'cat',
 			'families'  => 'family',
-			'countries' => 'country'
+			'countries' => 'country',
 		];
 
 		foreach ($strings as $pluralizedString => $singularizedString)
@@ -82,7 +82,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 			'dogs'      => 'dog',
 			'cats'      => 'cat',
 			'families'  => 'family',
-			'countries' => 'country'
+			'countries' => 'country',
 		];
 
 		foreach ($strings as $pluralizedString => $singularizedString)
@@ -99,7 +99,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 		$strings =
 		[
 			'hello from codeIgniter 4' => 'helloFromCodeIgniter4',
-			'hello_world'              => 'helloWorld'
+			'hello_world'              => 'helloWorld',
 		];
 
 		foreach ($strings as $lowerCasedString => $camelizedString)
@@ -116,7 +116,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 		$strings =
 		[
 			'Hello From CodeIgniter 4' => 'Hello_From_CodeIgniter_4',
-			'hello world'              => 'hello_world'
+			'hello world'              => 'hello_world',
 		];
 
 		foreach ($strings as $spaced => $underscore)
@@ -130,8 +130,14 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function testHumanize()
 	{
-		$underscored = ['Hello_From_CodeIgniter_4', 'Hello From CodeIgniter 4'];
-		$dashed      = ['hello-world'             , 'Hello World'];
+		$underscored = [
+			'Hello_From_CodeIgniter_4',
+			'Hello From CodeIgniter 4',
+		];
+		$dashed      = [
+			'hello-world',
+			'Hello World',
+		];
 
 		$humanizedUnderscore = humanize($underscored[0]);
 		$humanizedDash       = humanize($dashed[0], '-');
@@ -151,7 +157,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 			'thing'      => 'equipment',
 			'deocration' => 'jewelry',
 			'line'       => 'series',
-			'letter'     => 'spelling'
+			'letter'     => 'spelling',
 		];
 
 		foreach ($words as $countable => $unCountable)
@@ -168,7 +174,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 		$strings =
 		[
 			'hello_world'              => 'hello-world',
-			'Hello_From_CodeIgniter_4' => 'Hello-From-CodeIgniter-4'
+			'Hello_From_CodeIgniter_4' => 'Hello-From-CodeIgniter-4',
 		];
 
 		foreach ($strings as $underscored => $dashed)
@@ -193,7 +199,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 			'st' => 21,
 			'nd' => 22,
 			'rd' => 23,
-			'th' => 24
+			'th' => 24,
 		];
 
 		foreach ($suffixes as $suffix => $number)
@@ -218,7 +224,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 			'21st' => 21,
 			'22nd' => 22,
 			'23rd' => 23,
-			'24th' => 24
+			'24th' => 24,
 		];
 
 		foreach ($suffixedNumbers as $suffixed => $number)

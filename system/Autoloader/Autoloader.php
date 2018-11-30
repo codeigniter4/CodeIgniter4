@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -144,7 +144,7 @@ class Autoloader
 		$config = is_array($this->classmap) ? $this->classmap : [];
 
 		spl_autoload_register(function ($class) use ($config) {
-			if ( ! array_key_exists($class, $config))
+			if (! array_key_exists($class, $config))
 			{
 				return false;
 			}
@@ -180,7 +180,6 @@ class Autoloader
 		{
 			$this->prefixes[$namespace] = [$path];
 		}
-
 
 		return $this;
 	}
@@ -220,7 +219,7 @@ class Autoloader
 
 		// Nothing? One last chance by looking
 		// in common CodeIgniter folders.
-		if ( ! $mapped_file)
+		if (! $mapped_file)
 		{
 			$mapped_file = $this->loadLegacy($class);
 		}
@@ -321,13 +320,13 @@ class Autoloader
 	 *
 	 * @param string $file
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function requireFile(string $file)
 	{
 		$file = $this->sanitizeFilename($file);
 
-		if (file_exists($file))
+		if (is_file($file))
 		{
 			require_once $file;
 

@@ -2,13 +2,9 @@
 
 namespace CodeIgniter\Honeypot;
 
-use Config\App;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
-use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\URI;
-use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 
 require_once __DIR__ . '/fixtures/HoneyTrap.php';
@@ -24,22 +20,22 @@ class HoneypotTest extends CIUnitTestCase
 	protected $request;
 	protected $response;
 
-//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function setUp()
 	{
 		parent::setUp();
-		$this->config = new \Config\Honeypot();
+		$this->config   = new \Config\Honeypot();
 		$this->honeypot = new Honeypot($this->config);
 
 		unset($_POST[$this->config->name]);
-		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$_SERVER['REQUEST_METHOD']  = 'POST';
 		$_POST[$this->config->name] = 'hey';
-		$this->request = Services::request(null,false);
-		$this->response = Services::response();
+		$this->request              = Services::request(null, false);
+		$this->response             = Services::response();
 	}
 
-//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function testAttachHoneypot()
 	{
@@ -52,7 +48,7 @@ class HoneypotTest extends CIUnitTestCase
 		$this->assertNotContains($this->config->name, $this->response->getBody());
 	}
 
-//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function testHasntContent()
 	{
@@ -67,7 +63,7 @@ class HoneypotTest extends CIUnitTestCase
 		$this->assertEquals(true, $this->honeypot->hasContent($this->request));
 	}
 
-//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function testConfigHidden()
 	{
@@ -90,19 +86,19 @@ class HoneypotTest extends CIUnitTestCase
 		$this->honeypot = new Honeypot($this->config);
 	}
 
-//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 	public function testHoneypotFilterBefore()
 	{
 		$config = [
-			'aliases'	 => ['trap' => 'CodeIgniter\Honeypot\fixtures\HoneyTrap'],
-			'globals'	 => [
+			'aliases' => ['trap' => 'CodeIgniter\Honeypot\fixtures\HoneyTrap'],
+			'globals' => [
 				'before' => ['trap'],
-				'after'	 => []
-			]
+				'after'  => [],
+			],
 		];
 
 		$filters = new Filters((object) $config, $this->request, $this->response);
-		$uri = 'admin/foo/bar';
+		$uri     = 'admin/foo/bar';
 
 		$this->expectException(HoneypotException::class);
 		$request = $filters->run($uri, 'before');
@@ -111,15 +107,15 @@ class HoneypotTest extends CIUnitTestCase
 	public function testHoneypotFilterAfter()
 	{
 		$config = [
-			'aliases'	 => ['trap' => 'CodeIgniter\Honeypot\fixtures\HoneyTrap'],
-			'globals'	 => [
+			'aliases' => ['trap' => 'CodeIgniter\Honeypot\fixtures\HoneyTrap'],
+			'globals' => [
 				'before' => [],
-				'after'	 => ['trap']
-			]
+				'after'  => ['trap'],
+			],
 		];
 
 		$filters = new Filters((object) $config, $this->request, $this->response);
-		$uri = 'admin/foo/bar';
+		$uri     = 'admin/foo/bar';
 
 		$this->response->setBody('<form></form>');
 		$this->response = $filters->run($uri, 'after');

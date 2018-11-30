@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -48,14 +48,14 @@
 
 $public = trim($paths->publicDirectory, '/');
 
-$pos = strrpos(FCPATH, $public.DIRECTORY_SEPARATOR);
+$pos = strrpos(FCPATH, $public . DIRECTORY_SEPARATOR);
 
 /**
  * The path to the main application directory. Just above public.
  */
 if (! defined('ROOTPATH'))
 {
-	define('ROOTPATH', substr_replace(FCPATH, '', $pos, strlen($public.DIRECTORY_SEPARATOR)));
+	define('ROOTPATH', substr_replace(FCPATH, '', $pos, strlen($public . DIRECTORY_SEPARATOR)));
 }
 
 /**
@@ -63,7 +63,7 @@ if (! defined('ROOTPATH'))
  */
 if (! defined('APPPATH'))
 {
-	define('APPPATH', realpath(ROOTPATH . $paths->applicationDirectory).DIRECTORY_SEPARATOR);
+	define('APPPATH', realpath(ROOTPATH . $paths->applicationDirectory) . DIRECTORY_SEPARATOR);
 }
 
 /**
@@ -71,7 +71,7 @@ if (! defined('APPPATH'))
  */
 if (! defined('BASEPATH'))
 {
-	define('BASEPATH', realpath(ROOTPATH . $paths->systemDirectory).DIRECTORY_SEPARATOR);
+	define('BASEPATH', realpath(ROOTPATH . $paths->systemDirectory) . DIRECTORY_SEPARATOR);
 }
 
 /**
@@ -79,7 +79,7 @@ if (! defined('BASEPATH'))
  */
 if (! defined('WRITEPATH'))
 {
-	define('WRITEPATH', realpath(ROOTPATH . $paths->writableDirectory).DIRECTORY_SEPARATOR);
+	define('WRITEPATH', realpath(ROOTPATH . $paths->writableDirectory) . DIRECTORY_SEPARATOR);
 }
 
 /**
@@ -87,7 +87,7 @@ if (! defined('WRITEPATH'))
  */
 if (! defined('TESTPATH'))
 {
-	define('TESTPATH', realpath(ROOTPATH . $paths->testsDirectory).DIRECTORY_SEPARATOR);
+	define('TESTPATH', realpath(ROOTPATH . $paths->testsDirectory) . DIRECTORY_SEPARATOR);
 }
 
 /*
@@ -95,9 +95,9 @@ if (! defined('TESTPATH'))
  * GRAB OUR CONSTANTS & COMMON
  * ---------------------------------------------------------------
  */
-require_once APPPATH.'Config/Constants.php';
+require_once APPPATH . 'Config/Constants.php';
 
-require_once BASEPATH.'Common.php';
+require_once BASEPATH . 'Common.php';
 
 /*
  * ---------------------------------------------------------------
@@ -109,10 +109,10 @@ require_once BASEPATH.'Common.php';
  * that the config files can use the path constants.
  */
 
-require_once BASEPATH.'Autoloader/Autoloader.php';
-require_once APPPATH .'Config/Autoload.php';
-require_once BASEPATH .'Config/BaseService.php';
-require_once APPPATH .'Config/Services.php';
+require_once BASEPATH . 'Autoloader/Autoloader.php';
+require_once APPPATH . 'Config/Autoload.php';
+require_once BASEPATH . 'Config/BaseService.php';
+require_once APPPATH . 'Config/Services.php';
 
 // Use Config\Services as CodeIgniter\Services
 if (! class_exists('CodeIgniter\Services', false))
@@ -125,7 +125,7 @@ $loader->initialize(new Config\Autoload());
 $loader->register();    // Register the loader with the SPL autoloader stack.
 
 // Now load Composer's if it's available
-if (file_exists(COMPOSER_PATH))
+if (is_file(COMPOSER_PATH))
 {
 	require_once COMPOSER_PATH;
 }
@@ -152,7 +152,7 @@ helper('url');
  */
 
 $appConfig = config(\Config\App::class);
-$app = new \CodeIgniter\CodeIgniter($appConfig);
+$app       = new \CodeIgniter\CodeIgniter($appConfig);
 $app->initialize();
 
 return $app;

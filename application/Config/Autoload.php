@@ -1,6 +1,6 @@
 <?php namespace Config;
 
-require_once BASEPATH.'Config/AutoloadConfig.php';
+require_once BASEPATH . 'Config/AutoloadConfig.php';
 
 /**
  * -------------------------------------------------------------------
@@ -50,10 +50,9 @@ class Autoload extends \CodeIgniter\Config\AutoloadConfig
 		 *   `];
 		 */
 		$psr4 = [
-			'Config'                     => APPPATH.'Config',
-			APP_NAMESPACE                => APPPATH,			    // For custom namespace
-			'App'                        => APPPATH,			    // To ensure filters, etc still found,
-			'Tests\Support'              => TESTPATH.'_support',    // So custom migrations can run during testing
+			'Config'      => APPPATH . 'Config',
+			APP_NAMESPACE => APPPATH,                // For custom namespace
+			'App'         => APPPATH,                // To ensure filters, etc still found,
 		];
 
 		/**
@@ -78,7 +77,7 @@ class Autoload extends \CodeIgniter\Config\AutoloadConfig
 		// Do Not Edit Below This Line
 		//--------------------------------------------------------------------
 
-		$this->psr4 = array_merge($this->psr4, $psr4);
+		$this->psr4     = array_merge($this->psr4, $psr4);
 		$this->classmap = array_merge($this->classmap, $classmap);
 
 		unset($psr4, $classmap);

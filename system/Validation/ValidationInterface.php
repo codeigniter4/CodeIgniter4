@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\HTTP\RequestInterface;
 
 interface ValidationInterface
@@ -44,10 +45,10 @@ interface ValidationInterface
 	 * Runs the validation process, returning true/false determing whether
 	 * or not validation was successful.
 	 *
-	 * @param array  $data		The array of data to validate.
-	 * @param string $group		The pre-defined group of rules to apply.
+	 * @param array  $data  The array of data to validate.
+	 * @param string $group The pre-defined group of rules to apply.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function run(array $data, string $group = null): bool;
 
@@ -61,7 +62,7 @@ interface ValidationInterface
 	 * @param string   $rule   Rule.
 	 * @param string[] $errors Errors.
 	 *
-	 * @return bool True if valid, else false.
+	 * @return boolean True if valid, else false.
 	 */
 	public function check($value, string $rule, array $errors = []): bool;
 
@@ -97,7 +98,7 @@ interface ValidationInterface
 	 *
 	 * @param string $field
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function hasRule(string $field): bool;
 

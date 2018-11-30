@@ -20,14 +20,14 @@ class CountTest extends CIDatabaseTestCase
 
 	public function testCountAllReturnsCorrectInteger()
 	{
-	    $this->assertSame(4, $this->db->table('job')->countAll());
+		$this->assertSame(4, $this->db->table('job')->countAll());
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testCountAllResultsReturnsZeroWithNoResults()
 	{
-	    $this->assertSame(0, $this->db->table('job')->where('name', 'Superstar')->countAllResults());
+		$this->assertSame(0, $this->db->table('job')->where('name', 'Superstar')->countAllResults());
 	}
 
 	//--------------------------------------------------------------------

@@ -7,7 +7,6 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
-use CodeIgniter\Honeypot\Honeypot;
 
 class Honeypot implements FilterInterface
 {
@@ -22,7 +21,7 @@ class Honeypot implements FilterInterface
 	 */
 	public function before(RequestInterface $request)
 	{
-		$honeypot = new Honeypot(new \Config\Honeypot());
+		$honeypot = Services::honeypot(new \Config\Honeypot());
 		if ($honeypot->hasContent($request))
 		{
 			throw HoneypotException::isBot();
@@ -32,13 +31,13 @@ class Honeypot implements FilterInterface
 	/**
 	 * Attach a honypot to the current response.
 	 *
-	 * @param CodeIgniter\HTTP\RequestInterface $request
-	 * @param CodeIgniter\HTTP\ResponseInterface $response
+	 * @param  CodeIgniter\HTTP\RequestInterface  $request
+	 * @param  CodeIgniter\HTTP\ResponseInterface $response
 	 * @return mixed
 	 */
 	public function after(RequestInterface $request, ResponseInterface $response)
 	{
-		$honeypot = new Honeypot(new \Config\Honeypot());
+		$honeypot = Services::honeypot(new \Config\Honeypot());
 		$honeypot->attachHoneypot($response);
 	}
 

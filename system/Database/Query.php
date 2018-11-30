@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -70,7 +70,7 @@ class Query implements QueryInterface
 	 *
 	 * Character used to identify values in a prepared statement.
 	 *
-	 * @var    string
+	 * @var string
 	 */
 	protected $bindMarker = '?';
 
@@ -93,7 +93,7 @@ class Query implements QueryInterface
 	/**
 	 * The error code, if any.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	protected $errorCode;
 
@@ -130,7 +130,7 @@ class Query implements QueryInterface
 	 * Sets the raw query string to use for this statement.
 	 *
 	 * @param string $sql
-	 * @param array $binds
+	 * @param array  $binds
 	 *
 	 * @return mixed
 	 */
@@ -138,7 +138,7 @@ class Query implements QueryInterface
 	{
 		$this->originalQueryString = $sql;
 
-		if ( ! is_null($binds))
+		if (! is_null($binds))
 		{
 			$this->binds = $binds;
 		}
@@ -213,8 +213,8 @@ class Query implements QueryInterface
 	/**
 	 * Returns the start time in seconds with microseconds.
 	 *
-	 * @param bool $returnRaw
-	 * @param int $decimals
+	 * @param boolean $returnRaw
+	 * @param integer $decimals
 	 *
 	 * @return mixed
 	 */
@@ -233,7 +233,7 @@ class Query implements QueryInterface
 	 * Returns the duration of this query during execution, or null if
 	 * the query has not been executed yet.
 	 *
-	 * @param int $decimals The accuracy of the returned time.
+	 * @param integer $decimals The accuracy of the returned time.
 	 *
 	 * @return mixed
 	 */
@@ -247,14 +247,14 @@ class Query implements QueryInterface
 	/**
 	 * Stores the error description that happened for this query.
 	 *
-	 * @param int    $code
-	 * @param string $error
+	 * @param integer $code
+	 * @param string  $error
 	 *
 	 * @return Query
 	 */
 	public function setError(int $code, string $error)
 	{
-		$this->errorCode = $code;
+		$this->errorCode   = $code;
 		$this->errorString = $error;
 
 		return $this;
@@ -265,7 +265,7 @@ class Query implements QueryInterface
 	/**
 	 * Reports whether this statement created an error not.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function hasError(): bool
 	{
@@ -277,7 +277,7 @@ class Query implements QueryInterface
 	/**
 	 * Returns the error code created while executing this statement.
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function getErrorCode(): int
 	{
@@ -301,7 +301,7 @@ class Query implements QueryInterface
 	/**
 	 * Determines if the statement is a write-type query or not.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isWriteType(): bool
 	{
@@ -359,20 +359,20 @@ class Query implements QueryInterface
 			return;
 		}
 
-		if ( ! is_array($this->binds))
+		if (! is_array($this->binds))
 		{
-			$binds = [$this->binds];
+			$binds     = [$this->binds];
 			$bindCount = 1;
 		}
 		else
 		{
-			$binds = $this->binds;
+			$binds     = $this->binds;
 			$bindCount = count($binds);
 		}
 
 		// Reverse the binds so that duplicate named binds
 		// will be processed prior to the original binds.
-		if ( ! is_numeric(key(array_slice($binds, 0, 1))))
+		if (! is_numeric(key(array_slice($binds, 0, 1))))
 		{
 			$binds = array_reverse($binds);
 		}
@@ -396,8 +396,9 @@ class Query implements QueryInterface
 
 	/**
 	 * Match bindings
-	 * @param string $sql
-	 * @param array $binds
+	 *
+	 * @param  string $sql
+	 * @param  array  $binds
 	 * @return string
 	 */
 	protected function matchNamedBinds(string $sql, array $binds)
@@ -418,7 +419,7 @@ class Query implements QueryInterface
 
 			$replacers[":{$placeholder}:"] = $escapedValue;
 
-//			$sql = preg_replace('|:' . $placeholder . '(?!\w)|', $escapedValue, $sql);
+			//          $sql = preg_replace('|:' . $placeholder . '(?!\w)|', $escapedValue, $sql);
 		}
 
 		$sql = strtr($sql, $replacers);
@@ -430,10 +431,11 @@ class Query implements QueryInterface
 
 	/**
 	 * Match bindings
-	 * @param string $sql
-	 * @param array $binds
-	 * @param int $bindCount
-	 * @param int $ml
+	 *
+	 * @param  string  $sql
+	 * @param  array   $binds
+	 * @param  integer $bindCount
+	 * @param  integer $ml
 	 * @return string
 	 */
 	protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml)
@@ -464,7 +466,8 @@ class Query implements QueryInterface
 				$escapedValue = '(' . implode(',', $escapedValue) . ')';
 			}
 			$sql = substr_replace($sql, $escapedValue, $matches[0][$c][1], $ml);
-		} while ($c !== 0);
+		}
+		while ($c !== 0);
 
 		return $sql;
 	}

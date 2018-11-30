@@ -65,7 +65,7 @@ class DOMParser
 	{
 		if (! is_file($path))
 		{
-			throw new \InvalidArgumentException(basename($path).' is not a valid file.');
+			throw new \InvalidArgumentException(basename($path) . ' is not a valid file.');
 		}
 
 		$content = file_get_contents($path);
@@ -78,9 +78,9 @@ class DOMParser
 	 *
 	 * @param string $search
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
-	public function see(string $search=null, string $element=null): bool
+	public function see(string $search = null, string $element = null): bool
 	{
 		// If Element is null, we're just scanning for text
 		if (is_null($element))
@@ -100,9 +100,9 @@ class DOMParser
 	 * @param string      $search
 	 * @param string|null $element
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
-	public function dontSee(string $search=null, string $element=null): bool
+	public function dontSee(string $search = null, string $element = null): bool
 	{
 		return ! $this->see($search, $element);
 	}
@@ -113,7 +113,7 @@ class DOMParser
 	 *
 	 * @param string $element
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function seeElement(string $element): bool
 	{
@@ -125,7 +125,7 @@ class DOMParser
 	 *
 	 * @param string $element
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function dontSeeElement(string $element): bool
 	{
@@ -139,11 +139,11 @@ class DOMParser
 	 * @param string      $text
 	 * @param string|null $details
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
-	public function seeLink(string $text, string $details=null): bool
+	public function seeLink(string $text, string $details = null): bool
 	{
-		return $this->see($text, 'a'.$details);
+		return $this->see($text, 'a' . $details);
 	}
 
 	/**
@@ -152,11 +152,11 @@ class DOMParser
 	 * @param string $field
 	 * @param string $value
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function seeInField(string $field, string $value): bool
 	{
-		$result = $this->doXPath(null, "input", ["[@value=\"{$value}\"][@name=\"{$field}\"]"]);
+		$result = $this->doXPath(null, 'input', ["[@value=\"{$value}\"][@name=\"{$field}\"]"]);
 
 		return (bool)$result->length;
 	}
@@ -166,22 +166,21 @@ class DOMParser
 	 *
 	 * @param string $element
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function seeCheckboxIsChecked(string $element): bool
 	{
-		$result = $this->doXPath(null, "input".$element, [
+		$result = $this->doXPath(null, 'input' . $element, [
 			'[@type="checkbox"]',
-			'[@checked="checked"]'
+			'[@checked="checked"]',
 		]);
 
 		return (bool)$result->length;
 	}
 
-
 	//--------------------------------------------------------------------
 
-	protected function doXPath(string $search=null, string $element, array $paths=[])
+	protected function doXPath(string $search = null, string $element, array $paths = [])
 	{
 		// Otherwise, grab any elements that match
 		// the selector
@@ -254,20 +253,20 @@ class DOMParser
 		// Attribute
 		elseif (strpos($selector, '[') !== false && strpos($selector, ']') !== false)
 		{
-			$open = strpos($selector, '[');
+			$open  = strpos($selector, '[');
 			$close = strpos($selector, ']');
 
-			$tag = substr($selector, 0, $open);
-			$text = substr($selector, $open+1, $close-2);
+			$tag  = substr($selector, 0, $open);
+			$text = substr($selector, $open + 1, $close - 2);
 
 			// We only support a single attribute currently
 			$text = explode(',', $text);
 			$text = trim(array_shift($text));
 
 			list($name, $value) = explode('=', $text);
-			$name = trim($name);
-			$value = trim($value);
-			$attr = [$name => trim($value, '] ')];
+			$name               = trim($name);
+			$value              = trim($value);
+			$attr               = [$name => trim($value, '] ')];
 		}
 		// Class?
 		elseif ($pos = strpos($selector, '.') !== false)
@@ -284,7 +283,7 @@ class DOMParser
 			'tag'   => $tag,
 			'id'    => $id,
 			'class' => $class,
-			'attr'  => $attr
+			'attr'  => $attr,
 		];
 	}
 

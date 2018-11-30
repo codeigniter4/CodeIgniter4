@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use Config\App;
 
 /**
@@ -64,6 +65,7 @@ class CLIRequest extends Request
 
 	/**
 	 * Command line options and their values.
+	 *
 	 * @var array
 	 */
 	protected $options = [];
@@ -213,11 +215,11 @@ class CLIRequest extends Request
 		$argv = $this->getServer('argv');
 
 		// We start at 1 since we never want to include index.php
-		for ($i = 1; $i < $argc; $i ++ )
+		for ($i = 1; $i < $argc; $i ++)
 		{
 			// If there's no '-' at the beginning of the argument
 			// then add it to our segments.
-			if ( ! $options_found && strpos($argv[$i], '-') === false)
+			if (! $options_found && strpos($argv[$i], '-') === false)
 			{
 				$this->segments[] = filter_var($argv[$i], FILTER_SANITIZE_STRING);
 				continue;
@@ -230,7 +232,7 @@ class CLIRequest extends Request
 				continue;
 			}
 
-			$arg = filter_var(str_replace('-', '', $argv[$i]), FILTER_SANITIZE_STRING);
+			$arg   = filter_var(str_replace('-', '', $argv[$i]), FILTER_SANITIZE_STRING);
 			$value = null;
 
 			// If the next item starts with a dash it's a value

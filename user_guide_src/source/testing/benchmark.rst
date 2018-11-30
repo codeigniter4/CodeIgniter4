@@ -53,13 +53,13 @@ This returns an array of benchmark information, including start, end, and durati
 	$timers = $benchmark->getTimers();
 
 	// Timers =
-	array(
-		'render view'  => array(
+	[
+		'render view'  => [
 			'start'    => 1234567890,
 			'end'      => 1345678920,
 			'duration' => 15.4315      // number of seconds
-		)
-	)
+		]
+	]
 
 You can change the precision of the calculated duration by passing in the number of decimal places you want shown as
 the only parameter. The default value is 4 numbers behind the decimal point::

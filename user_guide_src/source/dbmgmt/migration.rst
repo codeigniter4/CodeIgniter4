@@ -190,7 +190,7 @@ You can use (latest) with the following options:
 
 - (-g) to chose database group, otherwise default database group will be used.
 - (-n) to choose namespace, otherwise (App) namespace will be used.
-- (all) to migrate all namespaces to the latest migration
+- (-all) to migrate all namespaces to the latest migration
 
 This example will migrate Blog namespace to latest::
 
@@ -237,7 +237,7 @@ You can use (rollback) with the following options:
 
 - (-g) to chose database group, otherwise default database group will be used.
 - (-n) to choose namespace, otherwise (App) namespace will be used.
-- (all) to migrate all namespaces to the latest migration
+- (-all) to migrate all namespaces to the latest migration
 
 **refresh**
 
@@ -249,7 +249,7 @@ You can use (refresh) with the following options:
 
 - (-g) to chose database group, otherwise default database group will be used.
 - (-n) to choose namespace, otherwise (App) namespace will be used.
-- (all) to migrate all namespaces to the latest migration
+- (-all) to migrate all namespaces to the latest migration
 
 **status**
 
@@ -265,9 +265,15 @@ You can use (refresh) with the following options:
 
 **create**
 
-Creates a skeleton migration file in **application/Database/Migrations** using the timestamp format::
+Creates a skeleton migration file in **application/Database/Migrations**.
+
+- When migration type is timestamp, using the YYYYMMDDHHIISS format::
 
   > php spark migrate:create [filename]
+
+- When migration type is sequential, using the numbered in sequence, default with 001::
+
+  > php spark migrate:create [filename] 001
 
 You can use (create) with the following options:
 

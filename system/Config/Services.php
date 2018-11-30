@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use Config\App;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
@@ -63,15 +64,15 @@ class Services extends BaseService
 	 * The Autoloader class is the central class that handles our
 	 * spl_autoload_register method, and helper methods.
 	 *
-	 * @param bool $getShared
+	 * @param boolean $getShared
 	 *
-	 * @return  \CodeIgniter\Autoloader\Autoloader
+	 * @return \CodeIgniter\Autoloader\Autoloader
 	 */
 	public static function autoloader(bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('autoloader');
+			return static::getSharedInstance('autoloader');
 		}
 
 		return new \CodeIgniter\Autoloader\Autoloader();
@@ -84,7 +85,7 @@ class Services extends BaseService
 	 * complex data for later.
 	 *
 	 * @param \Config\Cache $config
-	 * @param bool          $getShared
+	 * @param boolean       $getShared
 	 *
 	 * @return \CodeIgniter\Cache\CacheInterface
 	 */
@@ -92,7 +93,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('cache', $config);
+			return static::getSharedInstance('cache', $config);
 		}
 
 		if (! is_object($config))
@@ -110,7 +111,7 @@ class Services extends BaseService
 	 * a command line request.
 	 *
 	 * @param \Config\App $config
-	 * @param bool        $getShared
+	 * @param boolean     $getShared
 	 *
 	 * @return \CodeIgniter\HTTP\CLIRequest
 	 */
@@ -118,7 +119,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('clirequest', $config);
+			return static::getSharedInstance('clirequest', $config);
 		}
 
 		if (! is_object($config))
@@ -138,14 +139,15 @@ class Services extends BaseService
 	 * @param array                               $options
 	 * @param \CodeIgniter\HTTP\ResponseInterface $response
 	 * @param \Config\App                         $config
-	 * @param bool                                $getShared
+	 * @param boolean                             $getShared
 	 *
 	 * @return \CodeIgniter\HTTP\CURLRequest
 	 */
-	public static function curlrequest(array $options = [], $response = null, \Config\App $config = null, bool $getShared = true) {
+	public static function curlrequest(array $options = [], $response = null, \Config\App $config = null, bool $getShared = true)
+	{
 		if ($getShared === true)
 		{
-			return self::getSharedInstance('curlrequest', $options, $response, $config);
+			return static::getSharedInstance('curlrequest', $options, $response, $config);
 		}
 
 		if (! is_object($config))
@@ -171,8 +173,8 @@ class Services extends BaseService
 	/**
 	 * The Email class allows you to send email via mail, sendmail, SMTP.
 	 *
-	 * @param null $config
-	 * @param bool $getShared
+	 * @param null    $config
+	 * @param boolean $getShared
 	 *
 	 * @return \CodeIgniter\Email\Email|mixed
 	 */
@@ -180,7 +182,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('email', $config);
+			return static::getSharedInstance('email', $config);
 		}
 
 		if (empty($config))
@@ -189,7 +191,7 @@ class Services extends BaseService
 		}
 
 		$email = new \CodeIgniter\Email\Email($config);
-		$email->setLogger(self::logger(true));
+		$email->setLogger(static::logger(true));
 
 		return $email;
 	}
@@ -206,7 +208,7 @@ class Services extends BaseService
 	 * @param \Config\Exceptions                $config
 	 * @param \CodeIgniter\HTTP\IncomingRequest $request
 	 * @param \CodeIgniter\HTTP\Response        $response
-	 * @param bool                              $getShared
+	 * @param boolean                           $getShared
 	 *
 	 * @return \CodeIgniter\Debug\Exceptions
 	 */
@@ -215,10 +217,11 @@ class Services extends BaseService
 		\CodeIgniter\HTTP\IncomingRequest $request = null,
 		\CodeIgniter\HTTP\Response $response = null,
 		$getShared = true
-	) {
+	)
+	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('exceptions', $config, $request, $response);
+			return static::getSharedInstance('exceptions', $config, $request, $response);
 		}
 
 		if (empty($config))
@@ -247,8 +250,8 @@ class Services extends BaseService
 	 * and actions taken based on the request, while after filters can
 	 * act on or modify the response itself before it is sent to the client.
 	 *
-	 * @param mixed $config
-	 * @param bool  $getShared
+	 * @param mixed   $config
+	 * @param boolean $getShared
 	 *
 	 * @return \CodeIgniter\Filters\Filters
 	 */
@@ -256,7 +259,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('filters', $config);
+			return static::getSharedInstance('filters', $config);
 		}
 
 		if (empty($config))
@@ -264,7 +267,7 @@ class Services extends BaseService
 			$config = new \Config\Filters();
 		}
 
-		return new \CodeIgniter\Filters\Filters($config, self::request(), self::response());
+		return new \CodeIgniter\Filters\Filters($config, static::request(), static::response());
 	}
 
 	//--------------------------------------------------------------------
@@ -273,9 +276,9 @@ class Services extends BaseService
 	 * Acts as a factory for ImageHandler classes and returns an instance
 	 * of the handler. Used like Services::image()->withFile($path)->rotate(90)->save();
 	 *
-	 * @param string $handler
-	 * @param mixed  $config
-	 * @param bool   $getShared
+	 * @param string  $handler
+	 * @param mixed   $config
+	 * @param boolean $getShared
 	 *
 	 * @return \CodeIgniter\Images\Handlers\BaseHandler
 	 */
@@ -283,7 +286,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('image', $handler, $config);
+			return static::getSharedInstance('image', $handler, $config);
 		}
 
 		if (empty($config))
@@ -305,7 +308,7 @@ class Services extends BaseService
 	 * and timing the results and memory usage. Used when debugging and
 	 * optimizing applications.
 	 *
-	 * @param bool $getShared
+	 * @param boolean $getShared
 	 *
 	 * @return \CodeIgniter\Debug\Iterator
 	 */
@@ -313,7 +316,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('iterator');
+			return static::getSharedInstance('iterator');
 		}
 
 		return new \CodeIgniter\Debug\Iterator();
@@ -324,8 +327,8 @@ class Services extends BaseService
 	/**
 	 * Responsible for loading the language string translations.
 	 *
-	 * @param string $locale
-	 * @param bool   $getShared
+	 * @param string  $locale
+	 * @param boolean $getShared
 	 *
 	 * @return \CodeIgniter\Language\Language
 	 */
@@ -333,14 +336,14 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('language', $locale)
-			           ->setLocale($locale);
+			return static::getSharedInstance('language', $locale)
+					   ->setLocale($locale);
 		}
 
 		$locale = ! empty($locale)
 			? $locale
-			: self::request()
-			      ->getLocale();
+			: static::request()
+				  ->getLocale();
 
 		return new \CodeIgniter\Language\Language($locale);
 	}
@@ -351,7 +354,7 @@ class Services extends BaseService
 	 * The Logger class is a PSR-3 compatible Logging class that supports
 	 * multiple handlers that process the actual logging.
 	 *
-	 * @param bool $getShared
+	 * @param boolean $getShared
 	 *
 	 * @return \CodeIgniter\Log\Logger
 	 */
@@ -359,7 +362,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('logger');
+			return static::getSharedInstance('logger');
 		}
 
 		return new \CodeIgniter\Log\Logger(new \Config\Logger());
@@ -370,7 +373,7 @@ class Services extends BaseService
 	/**
 	 * @param \CodeIgniter\Config\BaseConfig            $config
 	 * @param \CodeIgniter\Database\ConnectionInterface $db
-	 * @param bool                                      $getShared
+	 * @param boolean                                   $getShared
 	 *
 	 * @return \CodeIgniter\Database\MigrationRunner
 	 */
@@ -378,7 +381,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('migrations', $config, $db);
+			return static::getSharedInstance('migrations', $config, $db);
 		}
 
 		$config = empty($config) ? new \Config\Migrations() : $config;
@@ -394,7 +397,7 @@ class Services extends BaseService
 	 * and more.
 	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface $request
-	 * @param bool                               $getShared
+	 * @param boolean                            $getShared
 	 *
 	 * @return \CodeIgniter\HTTP\Negotiate
 	 */
@@ -402,12 +405,12 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('negotiator', $request);
+			return static::getSharedInstance('negotiator', $request);
 		}
 
 		if (is_null($request))
 		{
-			$request = self::request();
+			$request = static::request();
 		}
 
 		return new \CodeIgniter\HTTP\Negotiate($request);
@@ -415,11 +418,10 @@ class Services extends BaseService
 
 	//--------------------------------------------------------------------
 
-
 	/**
 	 * @param mixed                               $config
 	 * @param \CodeIgniter\View\RendererInterface $view
-	 * @param bool                                $getShared
+	 * @param boolean                             $getShared
 	 *
 	 * @return \CodeIgniter\Pager\Pager
 	 */
@@ -427,7 +429,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('pager', $config, $view);
+			return static::getSharedInstance('pager', $config, $view);
 		}
 
 		if (empty($config))
@@ -437,7 +439,7 @@ class Services extends BaseService
 
 		if (! $view instanceof RendererInterface)
 		{
-			$view = self::renderer();
+			$view = static::renderer();
 		}
 
 		return new \CodeIgniter\Pager\Pager($config, $view);
@@ -448,17 +450,17 @@ class Services extends BaseService
 	/**
 	 * The Parser is a simple template parser.
 	 *
-	 * @param string $viewPath
-	 * @param mixed  $config
-	 * @param bool   $getShared
+	 * @param string  $viewPath
+	 * @param mixed   $config
+	 * @param boolean $getShared
 	 *
 	 * @return \CodeIgniter\View\Parser
 	 */
-	public static function parser($viewPath = APPPATH.'Views/', $config = null, bool $getShared = true)
+	public static function parser($viewPath = APPPATH . 'Views/', $config = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('parser', $viewPath, $config);
+			return static::getSharedInstance('parser', $viewPath, $config);
 		}
 
 		if (is_null($config))
@@ -466,7 +468,7 @@ class Services extends BaseService
 			$config = new \Config\View();
 		}
 
-		return new \CodeIgniter\View\Parser($config, $viewPath, self::locator(true), CI_DEBUG, self::logger(true));
+		return new \CodeIgniter\View\Parser($config, $viewPath, static::locator(true), CI_DEBUG, static::logger(true));
 	}
 
 	//--------------------------------------------------------------------
@@ -476,9 +478,9 @@ class Services extends BaseService
 	 * The default View class within CodeIgniter is intentionally simple, but this
 	 * service could easily be replaced by a template engine if the user needed to.
 	 *
-	 * @param string $viewPath
-	 * @param mixed  $config
-	 * @param bool   $getShared
+	 * @param string  $viewPath
+	 * @param mixed   $config
+	 * @param boolean $getShared
 	 *
 	 * @return \CodeIgniter\View\View
 	 */
@@ -486,7 +488,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('renderer', $viewPath, $config);
+			return static::getSharedInstance('renderer', $viewPath, $config);
 		}
 
 		if (is_null($config))
@@ -501,7 +503,7 @@ class Services extends BaseService
 			$viewPath = $paths->viewDirectory;
 		}
 
-		return new \CodeIgniter\View\View($config, $viewPath, self::locator(true), CI_DEBUG, self::logger(true));
+		return new \CodeIgniter\View\View($config, $viewPath, static::locator(true), CI_DEBUG, static::logger(true));
 	}
 
 	//--------------------------------------------------------------------
@@ -510,7 +512,7 @@ class Services extends BaseService
 	 * The Request class models an HTTP request.
 	 *
 	 * @param \Config\App $config
-	 * @param bool        $getShared
+	 * @param boolean     $getShared
 	 *
 	 * @return \CodeIgniter\HTTP\IncomingRequest
 	 */
@@ -518,7 +520,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('request', $config);
+			return static::getSharedInstance('request', $config);
 		}
 
 		if (! is_object($config))
@@ -540,7 +542,7 @@ class Services extends BaseService
 	 * The Response class models an HTTP response.
 	 *
 	 * @param \Config\App $config
-	 * @param bool        $getShared
+	 * @param boolean     $getShared
 	 *
 	 * @return \CodeIgniter\HTTP\Response
 	 */
@@ -548,7 +550,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('response', $config);
+			return static::getSharedInstance('response', $config);
 		}
 
 		if (! is_object($config))
@@ -565,7 +567,7 @@ class Services extends BaseService
 	 * The Redirect class provides nice way of working with redirects.
 	 *
 	 * @param \Config\App $config
-	 * @param bool        $getShared
+	 * @param boolean     $getShared
 	 *
 	 * @return \CodeIgniter\HTTP\Response
 	 */
@@ -573,7 +575,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('redirectResponse', $config);
+			return static::getSharedInstance('redirectResponse', $config);
 		}
 
 		if (! is_object($config))
@@ -582,8 +584,8 @@ class Services extends BaseService
 		}
 
 		$response = new \CodeIgniter\HTTP\RedirectResponse($config);
-		$response->setProtocolVersion(self::request()
-		                                  ->getProtocolVersion());
+		$response->setProtocolVersion(static::request()
+										  ->getProtocolVersion());
 
 		return $response;
 	}
@@ -594,7 +596,7 @@ class Services extends BaseService
 	 * The Routes service is a class that allows for easily building
 	 * a collection of routes.
 	 *
-	 * @param bool $getShared
+	 * @param boolean $getShared
 	 *
 	 * @return \CodeIgniter\Router\RouteCollection
 	 */
@@ -602,10 +604,10 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('routes');
+			return static::getSharedInstance('routes');
 		}
 
-		return new \CodeIgniter\Router\RouteCollection(self::locator(), config('Modules'));
+		return new \CodeIgniter\Router\RouteCollection(static::locator(), config('Modules'));
 	}
 
 	//--------------------------------------------------------------------
@@ -615,7 +617,7 @@ class Services extends BaseService
 	 * the correct Controller and Method to execute.
 	 *
 	 * @param \CodeIgniter\Router\RouteCollectionInterface $routes
-	 * @param bool                                         $getShared
+	 * @param boolean                                      $getShared
 	 *
 	 * @return \CodeIgniter\Router\Router
 	 */
@@ -623,12 +625,12 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('router', $routes);
+			return static::getSharedInstance('router', $routes);
 		}
 
 		if (empty($routes))
 		{
-			$routes = self::routes(true);
+			$routes = static::routes(true);
 		}
 
 		return new \CodeIgniter\Router\Router($routes);
@@ -641,7 +643,7 @@ class Services extends BaseService
 	 * secure, most notably the CSRF protection tools.
 	 *
 	 * @param \Config\App $config
-	 * @param bool        $getShared
+	 * @param boolean     $getShared
 	 *
 	 * @return \CodeIgniter\Security\Security
 	 */
@@ -649,7 +651,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('security', $config);
+			return static::getSharedInstance('security', $config);
 		}
 
 		if (! is_object($config))
@@ -664,7 +666,7 @@ class Services extends BaseService
 
 	/**
 	 * @param \Config\App $config
-	 * @param bool        $getShared
+	 * @param boolean     $getShared
 	 *
 	 * @return \CodeIgniter\Session\Session
 	 */
@@ -672,7 +674,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('session', $config);
+			return static::getSharedInstance('session', $config);
 		}
 
 		if (! is_object($config))
@@ -680,16 +682,16 @@ class Services extends BaseService
 			$config = config(App::class);
 		}
 
-		$logger = self::logger(true);
+		$logger = static::logger(true);
 
 		$driverName = $config->sessionDriver;
-		$driver     = new $driverName($config);
+		$driver     = new $driverName($config, static::request()->getIpAddress());
 		$driver->setLogger($logger);
 
 		$session = new \CodeIgniter\Session\Session($driver, $config);
 		$session->setLogger($logger);
 
-		if (session_status() == PHP_SESSION_NONE)
+		if (session_status() === PHP_SESSION_NONE)
 		{
 			$session->start();
 		}
@@ -703,7 +705,7 @@ class Services extends BaseService
 	 * The Throttler class provides a simple method for implementing
 	 * rate limiting in your applications.
 	 *
-	 * @param bool $getShared
+	 * @param boolean $getShared
 	 *
 	 * @return \CodeIgniter\Throttle\Throttler
 	 */
@@ -711,10 +713,10 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('throttler');
+			return static::getSharedInstance('throttler');
 		}
 
-		return new \CodeIgniter\Throttle\Throttler(self::cache());
+		return new \CodeIgniter\Throttle\Throttler(static::cache());
 	}
 
 	//--------------------------------------------------------------------
@@ -723,7 +725,7 @@ class Services extends BaseService
 	 * The Timer class provides a simple way to Benchmark portions of your
 	 * application.
 	 *
-	 * @param bool $getShared
+	 * @param boolean $getShared
 	 *
 	 * @return \CodeIgniter\Debug\Timer
 	 */
@@ -731,7 +733,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('timer');
+			return static::getSharedInstance('timer');
 		}
 
 		return new \CodeIgniter\Debug\Timer();
@@ -741,7 +743,7 @@ class Services extends BaseService
 
 	/**
 	 * @param \Config\App $config
-	 * @param bool        $getShared
+	 * @param boolean     $getShared
 	 *
 	 * @return \CodeIgniter\Debug\Toolbar
 	 */
@@ -749,7 +751,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('toolbar', $config);
+			return static::getSharedInstance('toolbar', $config);
 		}
 
 		if (! is_object($config))
@@ -765,8 +767,8 @@ class Services extends BaseService
 	/**
 	 * The URI class provides a way to model and manipulate URIs.
 	 *
-	 * @param string $uri
-	 * @param bool   $getShared
+	 * @param string  $uri
+	 * @param boolean $getShared
 	 *
 	 * @return \CodeIgniter\HTTP\URI
 	 */
@@ -774,7 +776,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('uri', $uri);
+			return static::getSharedInstance('uri', $uri);
 		}
 
 		return new \CodeIgniter\HTTP\URI($uri);
@@ -786,7 +788,7 @@ class Services extends BaseService
 	 * The Validation class provides tools for validating input data.
 	 *
 	 * @param \Config\Validation $config
-	 * @param bool               $getShared
+	 * @param boolean            $getShared
 	 *
 	 * @return \CodeIgniter\Validation\Validation
 	 */
@@ -794,7 +796,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('validation', $config);
+			return static::getSharedInstance('validation', $config);
 		}
 
 		if (is_null($config))
@@ -802,7 +804,7 @@ class Services extends BaseService
 			$config = new \Config\Validation();
 		}
 
-		return new \CodeIgniter\Validation\Validation($config, self::renderer());
+		return new \CodeIgniter\Validation\Validation($config, static::renderer());
 	}
 
 	//--------------------------------------------------------------------
@@ -811,7 +813,7 @@ class Services extends BaseService
 	 * View cells are intended to let you insert HTML into view
 	 * that has been generated by any callable in the system.
 	 *
-	 * @param bool $getShared
+	 * @param boolean $getShared
 	 *
 	 * @return \CodeIgniter\View\Cell
 	 */
@@ -819,10 +821,10 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('viewcell');
+			return static::getSharedInstance('viewcell');
 		}
 
-		return new \CodeIgniter\View\Cell(self::cache());
+		return new \CodeIgniter\View\Cell(static::cache());
 	}
 
 	//--------------------------------------------------------------------
@@ -830,7 +832,7 @@ class Services extends BaseService
 	/**
 	 * The Typography class provides a way to format text in semantically relevant ways.
 	 *
-	 * @param bool $getShared
+	 * @param boolean $getShared
 	 *
 	 * @return \CodeIgniter\Typography\Typography
 	 */
@@ -838,7 +840,7 @@ class Services extends BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('typography');
+			return static::getSharedInstance('typography');
 		}
 
 		return new \CodeIgniter\Typography\Typography();

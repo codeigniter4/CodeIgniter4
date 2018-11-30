@@ -25,16 +25,16 @@ class FileCollectionTest extends \CIUnitTestCase
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'		 => 'someFile.txt',
-				'type'		 => 'text/plain',
-				'size'		 => '124',
-				'tmp_name'	 => '/tmp/myTempFile.txt',
-				'error'		 => 0
-			]
+				'name'     => 'someFile.txt',
+				'type'     => 'text/plain',
+				'size'     => '124',
+				'tmp_name' => '/tmp/myTempFile.txt',
+				'error'    => 0,
+			],
 		];
 
-		$collection	 = new FileCollection();
-		$files		 = $collection->all();
+		$collection = new FileCollection();
+		$files      = $collection->all();
 		$this->assertCount(1, $files);
 
 		$file = array_shift($files);
@@ -50,16 +50,28 @@ class FileCollectionTest extends \CIUnitTestCase
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'		 => ['fileA.txt', 'fileB.txt'],
-				'type'		 => ['text/plain', 'text/csv'],
-				'size'		 => ['124', '248'],
-				'tmp_name'	 => ['/tmp/fileA.txt', '/tmp/fileB.txt'],
-				'error'		 => 0
-			]
+				'name'     => [
+					'fileA.txt',
+					'fileB.txt',
+				],
+				'type'     => [
+					'text/plain',
+					'text/csv',
+				],
+				'size'     => [
+					'124',
+					'248',
+				],
+				'tmp_name' => [
+					'/tmp/fileA.txt',
+					'/tmp/fileB.txt',
+				],
+				'error'    => 0,
+			],
 		];
 
-		$collection	 = new FileCollection();
-		$files		 = $collection->all();
+		$collection = new FileCollection();
+		$files      = $collection->all();
 		$this->assertCount(1, $files);
 		$this->assertEquals('userfile', key($files));
 
@@ -78,28 +90,27 @@ class FileCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-
 	public function testAllReturnsValidMultipleFilesDifferentName()
 	{
 		$_FILES = [
-			'userfile1'	 => [
-				'name'		 => 'fileA.txt',
-				'type'		 => 'text/plain',
-				'size'		 => 124,
-				'tmp_name'	 => '/tmp/fileA.txt',
-				'error'		 => 0
+			'userfile1' => [
+				'name'     => 'fileA.txt',
+				'type'     => 'text/plain',
+				'size'     => 124,
+				'tmp_name' => '/tmp/fileA.txt',
+				'error'    => 0,
 			],
-			'userfile2'	 => [
-				'name'		 => 'fileB.txt',
-				'type'		 => 'text/csv',
-				'size'		 => 248,
-				'tmp_name'	 => '/tmp/fileB.txt',
-				'error'		 => 0
+			'userfile2' => [
+				'name'     => 'fileB.txt',
+				'type'     => 'text/csv',
+				'size'     => 248,
+				'tmp_name' => '/tmp/fileB.txt',
+				'error'    => 0,
 			],
 		];
 
-		$collection	 = new FileCollection();
-		$files		 = $collection->all();
+		$collection = new FileCollection();
+		$files      = $collection->all();
 		$this->assertCount(2, $files);
 		$this->assertEquals('userfile1', key($files));
 
@@ -126,6 +137,38 @@ class FileCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testExtensionGuessing()
+	{
+		$_FILES = [
+			'userfile1' => [
+				'name'     => 'fileA.txt',
+				'type'     => 'text/plain',
+				'size'     => 124,
+				'tmp_name' => '/fileA.txt',
+				'error'    => 0,
+			],
+			'userfile2' => [
+				'name'     => 'fileB.txt',
+				'type'     => 'text/csv',
+				'size'     => 248,
+				'tmp_name' => '/fileB.txt',
+				'error'    => 0,
+			],
+		];
+
+		$collection = new FileCollection();
+
+		$file = $collection->getFile('userfile1');
+		$this->assertInstanceOf(UploadedFile::class, $file);
+		$this->assertEquals('txt', $file->getExtension());
+
+		$file = $collection->getFile('userfile2');
+		$this->assertInstanceOf(UploadedFile::class, $file);
+		$this->assertEquals('csv', $file->guessExtension());
+	}
+
+	//--------------------------------------------------------------------
+
 	/**
 	 * @group single
 	 */
@@ -133,32 +176,32 @@ class FileCollectionTest extends \CIUnitTestCase
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'		 => [
+				'name'     => [
 					'foo' => [
-						'bar' => 'fileA.txt'
-					]
+						'bar' => 'fileA.txt',
+					],
 				],
-				'type'		 => [
+				'type'     => [
 					'foo' => [
-						'bar' => 'text/plain'
-					]
+						'bar' => 'text/plain',
+					],
 				],
-				'size'		 => [
+				'size'     => [
 					'foo' => [
-						'bar' => 124
-					]
+						'bar' => 124,
+					],
 				],
-				'tmp_name'	 => [
+				'tmp_name' => [
 					'foo' => [
-						'bar' => '/tmp/fileA.txt'
-					]
+						'bar' => '/tmp/fileA.txt',
+					],
 				],
-				'error'		 => 0
-			]
+				'error'    => 0,
+			],
 		];
 
-		$collection	 = new FileCollection();
-		$files		 = $collection->all();
+		$collection = new FileCollection();
+		$files      = $collection->all();
 		$this->assertCount(1, $files);
 		$this->assertEquals('userfile', key($files));
 
@@ -180,12 +223,12 @@ class FileCollectionTest extends \CIUnitTestCase
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'		 => 'someFile.txt',
-				'type'		 => 'text/plain',
-				'size'		 => '124',
-				'tmp_name'	 => '/tmp/myTempFile.txt',
-				'error'		 => 0
-			]
+				'name'     => 'someFile.txt',
+				'type'     => 'text/plain',
+				'size'     => '124',
+				'tmp_name' => '/tmp/myTempFile.txt',
+				'error'    => 0,
+			],
 		];
 
 		$collection = new FileCollection();
@@ -199,19 +242,19 @@ class FileCollectionTest extends \CIUnitTestCase
 	public function testHasFileWithMultipleFilesWithDifferentNames()
 	{
 		$_FILES = [
-			'userfile1'	 => [
-				'name'		 => 'fileA.txt',
-				'type'		 => 'text/plain',
-				'size'		 => 124,
-				'tmp_name'	 => '/tmp/fileA.txt',
-				'error'		 => 0
+			'userfile1' => [
+				'name'     => 'fileA.txt',
+				'type'     => 'text/plain',
+				'size'     => 124,
+				'tmp_name' => '/tmp/fileA.txt',
+				'error'    => 0,
 			],
-			'userfile2'	 => [
-				'name'		 => 'fileB.txt',
-				'type'		 => 'text/csv',
-				'size'		 => 248,
-				'tmp_name'	 => '/tmp/fileB.txt',
-				'error'		 => 0
+			'userfile2' => [
+				'name'     => 'fileB.txt',
+				'type'     => 'text/csv',
+				'size'     => 248,
+				'tmp_name' => '/tmp/fileB.txt',
+				'error'    => 0,
 			],
 		];
 
@@ -230,28 +273,28 @@ class FileCollectionTest extends \CIUnitTestCase
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'		 => [
+				'name'     => [
 					'foo' => [
-						'bar' => 'fileA.txt'
-					]
+						'bar' => 'fileA.txt',
+					],
 				],
-				'type'		 => [
+				'type'     => [
 					'foo' => [
-						'bar' => 'text/plain'
-					]
+						'bar' => 'text/plain',
+					],
 				],
-				'size'		 => [
+				'size'     => [
 					'foo' => [
-						'bar' => 124
-					]
+						'bar' => 124,
+					],
 				],
-				'tmp_name'	 => [
+				'tmp_name' => [
 					'foo' => [
-						'bar' => '/tmp/fileA.txt'
-					]
+						'bar' => '/tmp/fileA.txt',
+					],
 				],
-				'error'		 => 0
-			]
+				'error'    => 0,
+			],
 		];
 
 		$collection = new FileCollection();
@@ -267,18 +310,18 @@ class FileCollectionTest extends \CIUnitTestCase
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'		 => 'someFile.txt',
-				'type'		 => 'text/plain',
-				'size'		 => '124',
-				'tmp_name'	 => '/tmp/myTempFile.txt',
-				'error'		 => UPLOAD_ERR_INI_SIZE
-			]
+				'name'     => 'someFile.txt',
+				'type'     => 'text/plain',
+				'size'     => '124',
+				'tmp_name' => '/tmp/myTempFile.txt',
+				'error'    => UPLOAD_ERR_INI_SIZE,
+			],
 		];
 
 		$expected = 'The file "someFile.txt" exceeds your upload_max_filesize ini directive.';
 
-		$collection	 = new FileCollection();
-		$file		 = $collection->getFile('userfile');
+		$collection = new FileCollection();
+		$file       = $collection->getFile('userfile');
 
 		$this->assertEquals($expected, $file->getErrorString());
 	}
@@ -287,18 +330,18 @@ class FileCollectionTest extends \CIUnitTestCase
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'		 => 'someFile.txt',
-				'type'		 => 'text/plain',
-				'size'		 => '124',
-				'tmp_name'	 => '/tmp/myTempFile.txt',
-				'error'		 => 123
-			]
+				'name'     => 'someFile.txt',
+				'type'     => 'text/plain',
+				'size'     => '124',
+				'tmp_name' => '/tmp/myTempFile.txt',
+				'error'    => 123,
+			],
 		];
 
 		$expected = 'The file "someFile.txt" was not uploaded due to an unknown error.';
 
-		$collection	 = new FileCollection();
-		$file		 = $collection->getFile('userfile');
+		$collection = new FileCollection();
+		$file       = $collection->getFile('userfile');
 
 		$this->assertEquals($expected, $file->getErrorString());
 	}
@@ -307,17 +350,17 @@ class FileCollectionTest extends \CIUnitTestCase
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'		 => 'someFile.txt',
-				'type'		 => 'text/plain',
-				'size'		 => '124',
-				'tmp_name'	 => '/tmp/myTempFile.txt',
-			]
+				'name'     => 'someFile.txt',
+				'type'     => 'text/plain',
+				'size'     => '124',
+				'tmp_name' => '/tmp/myTempFile.txt',
+			],
 		];
 
 		$expected = 'The file uploaded with success.';
 
-		$collection	 = new FileCollection();
-		$file		 = $collection->getFile('userfile');
+		$collection = new FileCollection();
+		$file       = $collection->getFile('userfile');
 
 		$this->assertEquals($expected, $file->getErrorString());
 	}
@@ -328,16 +371,16 @@ class FileCollectionTest extends \CIUnitTestCase
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'		 => 'someFile.txt',
-				'type'		 => 'text/plain',
-				'size'		 => '124',
-				'tmp_name'	 => '/tmp/myTempFile.txt',
-				'error'		 => UPLOAD_ERR_INI_SIZE
-			]
+				'name'     => 'someFile.txt',
+				'type'     => 'text/plain',
+				'size'     => '124',
+				'tmp_name' => '/tmp/myTempFile.txt',
+				'error'    => UPLOAD_ERR_INI_SIZE,
+			],
 		];
 
-		$collection	 = new FileCollection();
-		$file		 = $collection->getFile('userfile');
+		$collection = new FileCollection();
+		$file       = $collection->getFile('userfile');
 
 		$this->assertEquals(UPLOAD_ERR_INI_SIZE, $file->getError());
 	}
@@ -346,15 +389,15 @@ class FileCollectionTest extends \CIUnitTestCase
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'		 => 'someFile.txt',
-				'type'		 => 'text/plain',
-				'size'		 => '124',
-				'tmp_name'	 => '/tmp/myTempFile.txt',
-			]
+				'name'     => 'someFile.txt',
+				'type'     => 'text/plain',
+				'size'     => '124',
+				'tmp_name' => '/tmp/myTempFile.txt',
+			],
 		];
 
-		$collection	 = new FileCollection();
-		$file		 = $collection->getFile('userfile');
+		$collection = new FileCollection();
+		$file       = $collection->getFile('userfile');
 
 		$this->assertEquals(0, $file->getError());
 	}
@@ -363,16 +406,16 @@ class FileCollectionTest extends \CIUnitTestCase
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'		 => 'someFile.txt',
-				'type'		 => 'text/plain',
-				'size'		 => '124',
-				'tmp_name'	 => '/tmp/myTempFile.txt',
-				'error'		 => 0
-			]
+				'name'     => 'someFile.txt',
+				'type'     => 'text/plain',
+				'size'     => '124',
+				'tmp_name' => '/tmp/myTempFile.txt',
+				'error'    => 0,
+			],
 		];
 
-		$collection	 = new FileCollection();
-		$file		 = $collection->getFile('userfile');
+		$collection = new FileCollection();
+		$file       = $collection->getFile('userfile');
 
 		$this->assertEquals(UPLOAD_ERR_OK, $file->getError());
 	}
@@ -383,16 +426,16 @@ class FileCollectionTest extends \CIUnitTestCase
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'		 => 'someFile.txt',
-				'type'		 => 'text/plain',
-				'size'		 => '124',
-				'tmp_name'	 => '/tmp/myTempFile.txt',
-				'error'		 => 0
-			]
+				'name'     => 'someFile.txt',
+				'type'     => 'text/plain',
+				'size'     => '124',
+				'tmp_name' => '/tmp/myTempFile.txt',
+				'error'    => 0,
+			],
 		];
 
-		$collection	 = new FileCollection();
-		$file		 = $collection->getFile('userfile');
+		$collection = new FileCollection();
+		$file       = $collection->getFile('userfile');
 		$this->assertInstanceOf(UploadedFile::class, $file);
 
 		$this->assertEquals('someFile.txt', $file->getName());
@@ -405,16 +448,16 @@ class FileCollectionTest extends \CIUnitTestCase
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'		 => 'someFile.txt',
-				'type'		 => 'text/plain',
-				'size'		 => '124',
-				'tmp_name'	 => '/tmp/myTempFile.txt',
-				'error'		 => 0
-			]
+				'name'     => 'someFile.txt',
+				'type'     => 'text/plain',
+				'size'     => '124',
+				'tmp_name' => '/tmp/myTempFile.txt',
+				'error'    => 0,
+			],
 		];
 
-		$collection	 = new FileCollection();
-		$file		 = $collection->getFile('fileuser');
+		$collection = new FileCollection();
+		$file       = $collection->getFile('fileuser');
 		$this->AssertNull($file);
 	}
 
@@ -424,12 +467,24 @@ class FileCollectionTest extends \CIUnitTestCase
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'		 => ['fileA.txt', 'fileB.txt'],
-				'type'		 => ['text/plain', 'text/csv'],
-				'size'		 => ['124', '248'],
-				'tmp_name'	 => ['/tmp/fileA.txt', '/tmp/fileB.txt'],
-				'error'		 => 0
-			]
+				'name'     => [
+					'fileA.txt',
+					'fileB.txt',
+				],
+				'type'     => [
+					'text/plain',
+					'text/csv',
+				],
+				'size'     => [
+					'124',
+					'248',
+				],
+				'tmp_name' => [
+					'/tmp/fileA.txt',
+					'/tmp/fileB.txt',
+				],
+				'error'    => 0,
+			],
 		];
 
 		$collection = new FileCollection();
@@ -457,32 +512,47 @@ class FileCollectionTest extends \CIUnitTestCase
 	{
 		$_FILES = [
 			'my-form' => [
-				'name'		 => [
+				'name'     => [
 					'details' => [
-						'avatars' => ['fileA.txt', 'fileB.txt']
-					]
+						'avatars' => [
+							'fileA.txt',
+							'fileB.txt',
+						],
+					],
 				],
-				'type'		 => [
+				'type'     => [
 					'details' => [
-						'avatars' => ['text/plain', 'text/plain']
-					]
+						'avatars' => [
+							'text/plain',
+							'text/plain',
+						],
+					],
 				],
-				'size'		 => [
+				'size'     => [
 					'details' => [
-						'avatars' => [125, 243]
-					]
+						'avatars' => [
+							125,
+							243,
+						],
+					],
 				],
-				'tmp_name'	 => [
+				'tmp_name' => [
 					'details' => [
-						'avatars' => ['/tmp/fileA.txt', '/tmp/fileB.txt']
-					]
+						'avatars' => [
+							'/tmp/fileA.txt',
+							'/tmp/fileB.txt',
+						],
+					],
 				],
-				'error'		 => [
+				'error'    => [
 					'details' => [
-						'avatars' => [0, 0]
-					]
+						'avatars' => [
+							0,
+							0,
+						],
+					],
 				],
-			]
+			],
 		];
 
 		$collection = new FileCollection();
@@ -505,37 +575,52 @@ class FileCollectionTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	public function testDoesntHaveFile()
 	{
 		$_FILES = [
 			'my-form' => [
-				'name'		 => [
+				'name'     => [
 					'details' => [
-						'avatars' => ['fileA.txt', 'fileB.txt']
-					]
+						'avatars' => [
+							'fileA.txt',
+							'fileB.txt',
+						],
+					],
 				],
-				'type'		 => [
+				'type'     => [
 					'details' => [
-						'avatars' => ['text/plain', 'text/plain']
-					]
+						'avatars' => [
+							'text/plain',
+							'text/plain',
+						],
+					],
 				],
-				'size'		 => [
+				'size'     => [
 					'details' => [
-						'avatars' => [125, 243]
-					]
+						'avatars' => [
+							125,
+							243,
+						],
+					],
 				],
-				'tmp_name'	 => [
+				'tmp_name' => [
 					'details' => [
-						'avatars' => ['/tmp/fileA.txt', '/tmp/fileB.txt']
-					]
+						'avatars' => [
+							'/tmp/fileA.txt',
+							'/tmp/fileB.txt',
+						],
+					],
 				],
-				'error'		 => [
+				'error'    => [
 					'details' => [
-						'avatars' => [0, 0]
-					]
+						'avatars' => [
+							0,
+							0,
+						],
+					],
 				],
-			]
+			],
 		];
 
 		$collection = new FileCollection();

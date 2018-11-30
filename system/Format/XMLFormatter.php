@@ -29,12 +29,12 @@ use CodeIgniter\Format\Exceptions\FormatException;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 class XMLFormatter implements FormatterInterface
@@ -49,16 +49,14 @@ class XMLFormatter implements FormatterInterface
 	 */
 	public function format(array $data)
 	{
-		$result = null;
-
 		// SimpleXML is installed but default
 		// but best to check, and then provide a fallback.
-		if ( ! extension_loaded('simplexml'))
+		if (! extension_loaded('simplexml'))
 		{
 			throw FormatException::forMissingExtension();
 		}
 
-		$output = new \SimpleXMLElement("<?xml version=\"1.0\"?><response></response>");
+		$output = new \SimpleXMLElement('<?xml version="1.0"?><response></response>');
 
 		$this->arrayToXML($data, $output);
 
@@ -83,7 +81,7 @@ class XMLFormatter implements FormatterInterface
 		{
 			if (is_array($value))
 			{
-				if ( ! is_numeric($key))
+				if (! is_numeric($key))
 				{
 					$subnode = $output->addChild("$key");
 					$this->arrayToXML($value, $subnode);

@@ -36,7 +36,7 @@ class FileTest extends \CIUnitTestCase
 
 	public function testRandomName()
 	{
-		$file = new File(BASEPATH . 'Common.php');
+		$file    = new File(BASEPATH . 'Common.php');
 		$result1 = $file->getRandomName();
 		$this->assertNotEquals($result1, $file->getRandomName());
 	}

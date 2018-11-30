@@ -1,14 +1,11 @@
 <?php namespace CodeIgniter\Images;
 
-use CodeIgniter\Images\Exceptions\ImageException;
-use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Config\Services;
 use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
 
 /**
  * Test the common image processing functionality.
- * 
+ *
  * Note: some of the underlying PHP functions do not play nicely
  * with vfsStream, so the support files are used directly for
  * most work, and the virtual file system will be used for
@@ -19,7 +16,7 @@ class BaseHandlerTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-		if ( ! extension_loaded('gd'))
+		if (! extension_loaded('gd'))
 		{
 			$this->markTestSkipped('The GD extension is not available.');
 			return;
@@ -31,14 +28,17 @@ class BaseHandlerTest extends \CIUnitTestCase
 		$this->origin = SUPPORTPATH . 'Images/';
 		vfsStream::copyFromFileSystem($this->origin, $this->root);
 		// make subfolders
-		$structure = ['work' => [], 'wontwork' => []];
+		$structure = [
+			'work'     => [],
+			'wontwork' => [],
+		];
 		vfsStream::create($structure);
 		// with one of them read only
 		$wont = $this->root->getChild('wontwork')->chmod(0400);
 
 		// for VFS tests
-		$this->start = $this->root->url() . '/'; 
-		$this->path = $this->start . 'ci-logo.png'; 
+		$this->start = $this->root->url() . '/';
+		$this->path  = $this->start . 'ci-logo.png';
 	}
 
 	//--------------------------------------------------------------------
@@ -51,7 +51,7 @@ class BaseHandlerTest extends \CIUnitTestCase
 
 	public function testWithFile()
 	{
-		$path = $this->origin . 'ci-logo.png';
+		$path    = $this->origin . 'ci-logo.png';
 		$handler = Services::image('gd', null, false);
 		$handler->withFile($path);
 

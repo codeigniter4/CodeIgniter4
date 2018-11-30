@@ -3,12 +3,14 @@
 /**
  * Exception for automatic logging.
  */
+
 class ConfigException extends CriticalError
 {
 
 	/**
 	 * Error code
-	 * @var int
+	 *
+	 * @var integer
 	 */
 	protected $code = 3;
 

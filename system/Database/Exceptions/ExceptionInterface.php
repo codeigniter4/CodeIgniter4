@@ -6,6 +6,7 @@
  *
  * catch (\CodeIgniter\Database\Exceptions\ExceptionInterface) { ... }
  */
+
 interface ExceptionInterface extends \CodeIgniter\Exceptions\ExceptionInterface
 {
 

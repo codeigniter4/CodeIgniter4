@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use Config\Autoload;
 
 /**
@@ -43,7 +44,6 @@ use Config\Autoload;
  * Allows loading non-class files in a namespaced manner.
  * Works with Helpers, Views, etc.
  *
-  *
  * @package CodeIgniter
  */
 class FileLocator
@@ -91,7 +91,7 @@ class FileLocator
 		$file = strpos($file, '.' . $ext) !== false ? $file : $file . '.' . $ext;
 
 		// Clean the folder name from the filename
-		if ( ! empty($folder))
+		if (! empty($folder))
 		{
 			$file = str_replace($folder . '/', '', $file);
 		}
@@ -109,22 +109,24 @@ class FileLocator
 
 		// The first segment will be empty if a slash started the filename.
 		if (empty($segments[0]))
+		{
 			unset($segments[0]);
+		}
 
-		$path = '';
-		$prefix = '';
+		$path     = '';
+		$prefix   = '';
 		$filename = '';
 
-		while ( ! empty($segments))
+		while (! empty($segments))
 		{
 			$prefix .= empty($prefix) ? ucfirst(array_shift($segments)) : '\\' . ucfirst(array_shift($segments));
 
-			if ( ! array_key_exists($prefix, $this->namespaces))
+			if (! array_key_exists($prefix, $this->namespaces))
 			{
 				continue;
 			}
 
-			$path = $this->namespaces[$prefix] . '/';
+			$path     = $this->namespaces[$prefix] . '/';
 			$filename = implode('/', $segments);
 			break;
 		}
@@ -132,14 +134,14 @@ class FileLocator
 		// IF we have a folder name, then the calling function
 		// expects this file to be within that folder, like 'Views',
 		// or 'libraries'.
-		if ( ! empty($folder) && strpos($filename, $folder) === false)
+		if (! empty($folder) && strpos($filename, $folder) === false)
 		{
 			$filename = $folder . '/' . $filename;
 		}
 
 		$path .= $filename;
 
-		if ( ! $this->requireFile($path))
+		if (! $this->requireFile($path))
 		{
 			$path = '';
 		}
@@ -158,16 +160,16 @@ class FileLocator
 	 */
 	public function getClassname(string $file) : string
 	{
-		$php    = file_get_contents($file);
-		$tokens = token_get_all($php);
-		$count  = count($tokens);
-		$dlm    = false;
-		$namespace = '';
+		$php        = file_get_contents($file);
+		$tokens     = token_get_all($php);
+		$count      = count($tokens);
+		$dlm        = false;
+		$namespace  = '';
 		$class_name = '';
 
 		for ($i = 2; $i < $count; $i++)
 		{
-			if ((isset($tokens[$i-2][1]) && ($tokens[$i-2][1] == "phpnamespace" || $tokens[$i-2][1] == "namespace")) || ($dlm && $tokens[$i-1][0] == T_NS_SEPARATOR && $tokens[$i][0] == T_STRING))
+			if ((isset($tokens[$i - 2][1]) && ($tokens[$i - 2][1] === 'phpnamespace' || $tokens[$i - 2][1] === 'namespace')) || ($dlm && $tokens[$i - 1][0] === T_NS_SEPARATOR && $tokens[$i][0] === T_STRING))
 			{
 				if (! $dlm)
 				{
@@ -175,26 +177,29 @@ class FileLocator
 				}
 				if (isset($tokens[$i][1]))
 				{
-					$namespace = $namespace ? $namespace."\\".$tokens[$i][1] : $tokens[$i][1];
+					$namespace = $namespace ? $namespace . '\\' . $tokens[$i][1] : $tokens[$i][1];
 					$dlm       = true;
 				}
 			}
-			elseif ($dlm && ($tokens[$i][0] != T_NS_SEPARATOR) && ($tokens[$i][0] != T_STRING))
+			elseif ($dlm && ($tokens[$i][0] !== T_NS_SEPARATOR) && ($tokens[$i][0] !== T_STRING))
 			{
 				$dlm = false;
 			}
-			if (($tokens[$i-2][0] == T_CLASS || (isset($tokens[$i-2][1]) && $tokens[$i-2][1] == "phpclass"))
-				&& $tokens[$i-1][0] == T_WHITESPACE
-				&& $tokens[$i][0] == T_STRING)
+			if (($tokens[$i - 2][0] === T_CLASS || (isset($tokens[$i - 2][1]) && $tokens[$i - 2][1] === 'phpclass'))
+				&& $tokens[$i - 1][0] === T_WHITESPACE
+				&& $tokens[$i][0] === T_STRING)
 			{
 				$class_name = $tokens[$i][1];
 				break;
 			}
 		}
 
-		if( empty( $class_name ) ) return "";
+		if (empty( $class_name ))
+		{
+			return '';
+		}
 
-		return $namespace .'\\'. $class_name;
+		return $namespace . '\\' . $class_name;
 	}
 
 	//--------------------------------------------------------------------
@@ -228,7 +233,7 @@ class FileLocator
 		{
 			$folder = rtrim($folder, '/') . '/';
 
-			if (file_exists($folder . $path))
+			if (is_file($folder . $path) === true)
 			{
 				$foundPaths[] = $folder . $path;
 			}
@@ -255,7 +260,7 @@ class FileLocator
 	{
 		$path = realpath($path);
 
-		if ( ! $path)
+		if (! $path)
 		{
 			return;
 		}
@@ -264,7 +269,9 @@ class FileLocator
 		{
 			$nsPath = realpath($nsPath);
 			if (is_numeric($namespace) || empty($nsPath))
+			{
 				continue;
+			}
 
 			if (mb_strpos($path, $nsPath) === 0)
 			{
@@ -291,7 +298,9 @@ class FileLocator
 	public function listFiles(string $path): array
 	{
 		if (empty($path))
+		{
 			return [];
+		}
 
 		$files = [];
 		helper('filesystem');
@@ -300,14 +309,17 @@ class FileLocator
 		{
 			$fullPath = realpath(rtrim($nsPath, '/') . '/' . $path);
 
-			if ( ! is_dir($fullPath))
+			if (! is_dir($fullPath))
+			{
 				continue;
+			}
 
 			$tempFiles = get_filenames($fullPath, true);
-			//CLI::newLine($tempFiles);
 
 			if (! empty($tempFiles))
+			{
 				$files = array_merge($files, $tempFiles);
+			}
 		}
 
 		return $files;
@@ -320,13 +332,15 @@ class FileLocator
 	 * @param string      $file
 	 * @param string|null $folder
 	 *
-	 * @return string
+	 * @return   string
 	 * @internal param string $ext
-	 *
 	 */
 	protected function legacyLocate(string $file, string $folder = null): string
 	{
-		$paths = [APPPATH, BASEPATH];
+		$paths = [
+			APPPATH,
+			BASEPATH,
+		];
 
 		foreach ($paths as $path)
 		{
@@ -348,13 +362,13 @@ class FileLocator
 	 * out to it's own method to make testing simpler.
 	 *
 	 * @codeCoverageIgnore
-	 * @param string $path
+	 * @param              string $path
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function requireFile(string $path): bool
 	{
-		return file_exists($path);
+		return is_file($path);
 	}
 
 	//--------------------------------------------------------------------

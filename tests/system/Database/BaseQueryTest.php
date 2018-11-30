@@ -19,9 +19,9 @@ class QueryTest extends \CIUnitTestCase
 
 	public function testQueryStoresSQL()
 	{
-	    $query = new Query($this->db);
+		$query = new Query($this->db);
 
-		$sql = "SELECT * FROM users";
+		$sql = 'SELECT * FROM users';
 
 		$query->setQuery($sql);
 
@@ -32,11 +32,11 @@ class QueryTest extends \CIUnitTestCase
 
 	public function testStoresDuration()
 	{
-	    $query = new Query($this->db);
+		$query = new Query($this->db);
 
 		$start = microtime(true);
 
-		$query->setDuration($start, $start+5);
+		$query->setDuration($start, $start + 5);
 
 		$this->assertEquals(5, $query->getDuration());
 	}
@@ -45,7 +45,7 @@ class QueryTest extends \CIUnitTestCase
 
 	public function testsStoresErrorInformation()
 	{
-	    $query = new Query($this->db);
+		$query = new Query($this->db);
 
 		$code = 13;
 		$msg  = 'Oops, yo!';
@@ -62,7 +62,7 @@ class QueryTest extends \CIUnitTestCase
 
 	public function testSwapPrefix()
 	{
-	    $query = new Query($this->db);
+		$query = new Query($this->db);
 
 		$origPrefix = 'db_';
 		$newPrefix  = 'ci_';
@@ -81,24 +81,78 @@ class QueryTest extends \CIUnitTestCase
 	public function queryTypes()
 	{
 		return [
-			'select' => [false, 'SELECT * FROM users'],
-		    'set' => [true, 'SET ...'],
-		    'insert' => [true, 'INSERT INTO ...'],
-		    'update' => [true, 'UPDATE ...'],
-		    'delete' => [true, 'DELETE ...'],
-		    'replace' => [true, 'REPLACE ...'],
-		    'create' => [true, 'CREATE ...'],
-		    'drop' => [true, 'DROP ...'],
-		    'truncate' => [true, 'TRUNCATE ...'],
-		    'load' => [true, 'LOAD ...'],
-		    'copy' => [true, 'COPY ...'],
-		    'alter' => [true, 'ALTER ...'],
-		    'rename' => [true, 'RENAME ...'],
-		    'grant' => [true, 'GRANT ...'],
-		    'revoke' => [true, 'REVOKE ...'],
-		    'lock' => [true, 'LOCK ...'],
-		    'unlock' => [true, 'UNLOCK ...'],
-		    'reindex' => [true, 'REINDEX ...'],
+			'select'   => [
+				false,
+				'SELECT * FROM users',
+			],
+			'set'      => [
+				true,
+				'SET ...',
+			],
+			'insert'   => [
+				true,
+				'INSERT INTO ...',
+			],
+			'update'   => [
+				true,
+				'UPDATE ...',
+			],
+			'delete'   => [
+				true,
+				'DELETE ...',
+			],
+			'replace'  => [
+				true,
+				'REPLACE ...',
+			],
+			'create'   => [
+				true,
+				'CREATE ...',
+			],
+			'drop'     => [
+				true,
+				'DROP ...',
+			],
+			'truncate' => [
+				true,
+				'TRUNCATE ...',
+			],
+			'load'     => [
+				true,
+				'LOAD ...',
+			],
+			'copy'     => [
+				true,
+				'COPY ...',
+			],
+			'alter'    => [
+				true,
+				'ALTER ...',
+			],
+			'rename'   => [
+				true,
+				'RENAME ...',
+			],
+			'grant'    => [
+				true,
+				'GRANT ...',
+			],
+			'revoke'   => [
+				true,
+				'REVOKE ...',
+			],
+			'lock'     => [
+				true,
+				'LOCK ...',
+			],
+			'unlock'   => [
+				true,
+				'UNLOCK ...',
+			],
+			'reindex'  => [
+				true,
+				'REINDEX ...',
+			],
 		];
 	}
 
@@ -109,7 +163,7 @@ class QueryTest extends \CIUnitTestCase
 	 */
 	public function testIsWriteType($expected, $sql)
 	{
-	    $query = new Query($this->db);
+		$query = new Query($this->db);
 
 		$query->setQuery($sql);
 		$this->assertSame($expected, $query->isWriteType());
@@ -119,7 +173,7 @@ class QueryTest extends \CIUnitTestCase
 
 	public function testSingleBindingOutsideOfArray()
 	{
-	    $query = new Query($this->db);
+		$query = new Query($this->db);
 
 		$query->setQuery('SELECT * FROM users WHERE id = ?', 13);
 
@@ -129,7 +183,6 @@ class QueryTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
-
 
 	public function testBindingSingleElementInArray()
 	{
@@ -186,7 +239,7 @@ class QueryTest extends \CIUnitTestCase
 	/**
 	 * @group single
 	 *
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/201
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/201
 	 */
 	public function testSimilarNamedBinds()
 	{

@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -51,7 +51,7 @@ interface QueryInterface
 	 * Sets the raw query string to use for this statement.
 	 *
 	 * @param string $sql
-	 * @param array $binds
+	 * @param array  $binds
 	 *
 	 * @return mixed
 	 */
@@ -87,7 +87,7 @@ interface QueryInterface
 	 * Returns the duration of this query during execution, or null if
 	 * the query has not been executed yet.
 	 *
-	 * @param int    $decimals  The accuracy of the returned time.
+	 * @param integer $decimals The accuracy of the returned time.
 	 *
 	 * @return mixed
 	 */
@@ -98,8 +98,8 @@ interface QueryInterface
 	/**
 	 * Stores the error description that happened for this query.
 	 *
-	 * @param int $code
-	 * @param string $error
+	 * @param integer $code
+	 * @param string  $error
 	 */
 	public function setError(int $code, string $error);
 
@@ -108,7 +108,7 @@ interface QueryInterface
 	/**
 	 * Reports whether this statement created an error not.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function hasError(): bool;
 
@@ -117,7 +117,7 @@ interface QueryInterface
 	/**
 	 * Returns the error code created while executing this statement.
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function getErrorCode(): int;
 
@@ -135,7 +135,7 @@ interface QueryInterface
 	/**
 	 * Determines if the statement is a write-type query or not.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isWriteType(): bool;
 

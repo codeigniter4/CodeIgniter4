@@ -9,7 +9,9 @@ class MemcachedHandlerTest extends \CIUnitTestCase
 	private static function getKeyArray()
 	{
 		return [
-			self::$key1, self::$key2, self::$key3
+			self::$key1,
+			self::$key2,
+			self::$key3,
 		];
 	}
 
@@ -22,8 +24,9 @@ class MemcachedHandlerTest extends \CIUnitTestCase
 
 		$this->config = new \Config\Cache();
 
-		$this->memcachedHandler = new MemcachedHandler($this->config->memcached);
-		if (!$this->memcachedHandler->isSupported()) {
+		$this->memcachedHandler = new MemcachedHandler($this->config);
+		if (! $this->memcachedHandler->isSupported())
+		{
 			$this->markTestSkipped('Not support memcached and memcache');
 		}
 
@@ -32,7 +35,8 @@ class MemcachedHandlerTest extends \CIUnitTestCase
 
 	public function tearDown()
 	{
-		foreach (self::getKeyArray() as $key) {
+		foreach (self::getKeyArray() as $key)
+		{
 			$this->memcachedHandler->delete($key);
 		}
 	}
@@ -72,9 +76,9 @@ class MemcachedHandlerTest extends \CIUnitTestCase
 
 		$this->assertFalse($this->memcachedHandler->increment(self::$key1, 10));
 
-		$config = new \Config\Cache();
+		$config                   = new \Config\Cache();
 		$config->memcached['raw'] = true;
-		$memcachedHandler = new MemcachedHandler($config->memcached);
+		$memcachedHandler         = new MemcachedHandler($config);
 		$memcachedHandler->initialize();
 
 		$memcachedHandler->save(self::$key1, 1);
@@ -91,9 +95,9 @@ class MemcachedHandlerTest extends \CIUnitTestCase
 
 		$this->assertFalse($this->memcachedHandler->decrement(self::$key1, 1));
 
-		$config = new \Config\Cache();
+		$config                   = new \Config\Cache();
 		$config->memcached['raw'] = true;
-		$memcachedHandler = new MemcachedHandler($config->memcached);
+		$memcachedHandler         = new MemcachedHandler($config);
 		$memcachedHandler->initialize();
 
 		$memcachedHandler->save(self::$key1, 10);

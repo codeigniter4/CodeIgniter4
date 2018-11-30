@@ -29,12 +29,12 @@ use Config\Services;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 define('EVENT_PRIORITY_LOW', 200);
@@ -58,7 +58,7 @@ class Events
 	 * Flag to let us know if we've read from the Config file(s)
 	 * and have all of the defined events.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected static $initialized = false;
 
@@ -66,19 +66,21 @@ class Events
 	 * If true, events will not actually be fired.
 	 * Useful during testing.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected static $simulate = false;
 
 	/**
 	 * Stores information about the events
 	 * for display in the debug toolbar.
+	 *
 	 * @var array
 	 */
 	protected static $performanceLog = [];
 
 	/**
 	 * A list of found files.
+	 *
 	 * @var array
 	 */
 	protected static $files = [];
@@ -98,19 +100,19 @@ class Events
 
 		$config = config('Modules');
 
-		$files = [APPPATH.'Config/Events.php'];
+		$files = [APPPATH . 'Config/Events.php'];
 
 		if ($config->shouldDiscover('events'))
 		{
 			$locator = Services::locator();
-			$files = $locator->search('Config/Events.php');
+			$files   = $locator->search('Config/Events.php');
 		}
 
 		static::$files = $files;
 
 		foreach (static::$files as $file)
 		{
-			if (! file_exists($file))
+			if (! is_file($file))
 			{
 				continue;
 			}
@@ -132,15 +134,15 @@ class Events
 	 *  Events::on('create', [$myInstance, 'myMethod']);  // Method on an existing instance
 	 *  Events::on('create', function() {});              // Closure
 	 *
-	 * @param          $event_name
-	 * @param callable $callback
-	 * @param int      $priority
+	 * @param $event_name
+	 * @param callable   $callback
+	 * @param integer    $priority
 	 */
 	public static function on($event_name, callable $callback, $priority = EVENT_PRIORITY_NORMAL)
 	{
-		if ( ! isset(self::$listeners[$event_name]))
+		if (! isset(static::$listeners[$event_name]))
 		{
-			self::$listeners[$event_name] = [
+			static::$listeners[$event_name] = [
 				true, // If there's only 1 item, it's sorted.
 				[$priority],
 				[$callback],
@@ -148,9 +150,9 @@ class Events
 		}
 		else
 		{
-			self::$listeners[$event_name][0] = false; // Not sorted
-			self::$listeners[$event_name][1][] = $priority;
-			self::$listeners[$event_name][2][] = $callback;
+			static::$listeners[$event_name][0]   = false; // Not sorted
+			static::$listeners[$event_name][1][] = $priority;
+			static::$listeners[$event_name][2][] = $callback;
 		}
 	}
 
@@ -165,17 +167,17 @@ class Events
 	 * @param $eventName
 	 * @param $arguments
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function trigger($eventName, ...$arguments): bool
 	{
 		// Read in our Config/events file so that we have them all!
-		if ( ! self::$initialized)
+		if (! static::$initialized)
 		{
-			self::initialize();
+			static::initialize();
 		}
 
-		$listeners = self::listeners($eventName);
+		$listeners = static::listeners($eventName);
 
 		foreach ($listeners as $listener)
 		{
@@ -189,8 +191,8 @@ class Events
 			{
 				static::$performanceLog[] = [
 					'start' => $start,
-					'end' => microtime(true),
-					'event' => strtolower($eventName)
+					'end'   => microtime(true),
+					'event' => strtolower($eventName),
 				];
 			}
 
@@ -218,22 +220,22 @@ class Events
 	 */
 	public static function listeners($event_name): array
 	{
-		if ( ! isset(self::$listeners[$event_name]))
+		if (! isset(static::$listeners[$event_name]))
 		{
 			return [];
 		}
 
 		// The list is not sorted
-		if ( ! self::$listeners[$event_name][0])
+		if (! static::$listeners[$event_name][0])
 		{
 			// Sort it!
-			array_multisort(self::$listeners[$event_name][1], SORT_NUMERIC, self::$listeners[$event_name][2]);
+			array_multisort(static::$listeners[$event_name][1], SORT_NUMERIC, static::$listeners[$event_name][2]);
 
 			// Mark it as sorted already!
-			self::$listeners[$event_name][0] = true;
+			static::$listeners[$event_name][0] = true;
 		}
 
-		return self::$listeners[$event_name][2];
+		return static::$listeners[$event_name][2];
 	}
 
 	//--------------------------------------------------------------------
@@ -244,24 +246,24 @@ class Events
 	 * If the listener couldn't be found, returns FALSE, else TRUE if
 	 * it was removed.
 	 *
-	 * @param          $event_name
-	 * @param callable $listener
+	 * @param $event_name
+	 * @param callable   $listener
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function removeListener($event_name, callable $listener): bool
 	{
-		if ( ! isset(self::$listeners[$event_name]))
+		if (! isset(static::$listeners[$event_name]))
 		{
 			return false;
 		}
 
-		foreach (self::$listeners[$event_name][2] as $index => $check)
+		foreach (static::$listeners[$event_name][2] as $index => $check)
 		{
 			if ($check === $listener)
 			{
-				unset(self::$listeners[$event_name][1][$index]);
-				unset(self::$listeners[$event_name][2][$index]);
+				unset(static::$listeners[$event_name][1][$index]);
+				unset(static::$listeners[$event_name][2][$index]);
 
 				return true;
 			}
@@ -282,13 +284,13 @@ class Events
 	 */
 	public static function removeAllListeners($event_name = null)
 	{
-		if ( ! is_null($event_name))
+		if (! is_null($event_name))
 		{
-			unset(self::$listeners[$event_name]);
+			unset(static::$listeners[$event_name]);
 		}
 		else
 		{
-			self::$listeners = [];
+			static::$listeners = [];
 		}
 	}
 
@@ -323,7 +325,7 @@ class Events
 	 * simply logged. Useful during testing when you don't actually want
 	 * the tests to run.
 	 *
-	 * @param bool $choice
+	 * @param boolean $choice
 	 */
 	public static function simulate(bool $choice = true)
 	{

@@ -6,6 +6,7 @@
  * This class is only used to provide a reference point
  * during tests to make sure that things work as expected.
  */
+
 class SampleClass {
 
 	public function index()
@@ -44,7 +45,8 @@ class SampleClass {
 
 	//--------------------------------------------------------------------
 
-	public function work($p1, $p2, $p4) {
+	public function work($p1, $p2, $p4)
+	{
 		return 'Right on';
 	}
 }

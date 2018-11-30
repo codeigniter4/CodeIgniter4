@@ -446,6 +446,14 @@ Or as a labeled style::
         ]
     );
 
+If you’d like to include a field’s “human” name, or the optional parameter some rules allow for (such as max_length),
+you can add the ``{field}`` and ``{param}`` tags to your message, respectively::
+
+    'min_length' => '{field} must have at least {param} characters.'
+
+On a field with the human name Username and a rule of min_length[5], an error would display: “Username must have
+at least 5 characters.”
+
 .. note:: If you pass the last parameter the labeled style error messages will be ignored.
 
 Getting All Errors
@@ -635,6 +643,13 @@ Available Rules
 ***************
 
 The following is a list of all the native rules that are available to use:
+
+.. note:: Rule is string; there must be no spaces between the parameters, especially the "is_unique" rule.
+	There can be no spaces before and after "ignore_value".
+
+- "is_unique[supplier.name,uuid, $uuid]"   is not ok
+- "is_unique[supplier.name,uuid,$uuid ]"   is not ok
+- "is_unique[supplier.name,uuid,$uuid]"    is ok
 
 ======================= =========== =============================================================================================== ===================================================
 Rule                    Parameter   Description                                                                                     Example

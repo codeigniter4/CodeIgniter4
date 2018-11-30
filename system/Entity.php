@@ -29,12 +29,12 @@ use CodeIgniter\I18n\Time;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 class Entity
@@ -55,13 +55,17 @@ class Entity
 		/*
 		 * Define properties that are automatically converted to Time instances.
 		 */
-		'dates' => ['created_at', 'updated_at', 'deleted_at'],
+		'dates'   => [
+			'created_at',
+			'updated_at',
+			'deleted_at',
+		],
 
 		/*
 		 * Array of field names and the type of value to cast them as
 		 * when they are accessed.
 		 */
-		'casts' => []
+		'casts'   => [],
 	];
 
 	/**
@@ -72,6 +76,13 @@ class Entity
 	 * @var array
 	 */
 	protected $_original = [];
+
+	/**
+	 * Holds info whenever prperties have to be casted
+	 *
+	 * @var boolean
+	 **/
+	private $_cast = true;
 
 	/**
 	 * Allows filling in Entity parameters during construction.
@@ -86,7 +97,7 @@ class Entity
 
 		foreach ($properties as $key => $value)
 		{
-			if (substr($key, 0, 1) == '_')
+			if (substr($key, 0, 1) === '_')
 			{
 				unset($properties[$key]);
 			}
@@ -132,13 +143,15 @@ class Entity
 	 * through the __get() magic method so will have any casts, etc
 	 * applied to them.
 	 *
-	 * @param bool $onlyChanged     If true, only return values that have changed since object creation
+	 * @param boolean $onlyChanged If true, only return values that have changed since object creation
+	 * @param boolean $cast        If true, properties will be casted.
 	 *
 	 * @return array
 	 */
-	public function toArray(bool $onlyChanged = false): array
+	public function toArray(bool $onlyChanged = false, bool $cast = true): array
 	{
-		$return = [];
+		$this->_cast = $cast;
+		$return      = [];
 
 		// we need to loop over our properties so that we
 		// allow our magic methods a chance to do their thing.
@@ -146,7 +159,10 @@ class Entity
 
 		foreach ($properties as $key => $value)
 		{
-			if (substr($key, 0, 1) == '_') continue;
+			if (substr($key, 0, 1) === '_')
+			{
+				continue;
+			}
 
 			if ($onlyChanged && $this->_original[$key] === null && $value === null)
 			{
@@ -164,7 +180,7 @@ class Entity
 				$return[$from] = $this->__get($to);
 			}
 		}
-
+		$this->_cast = true;
 		return $return;
 	}
 
@@ -191,8 +207,8 @@ class Entity
 		// Convert to CamelCase for the method
 		$method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 
-		// if a set* method exists for this key, 
-		// use that method to insert this value. 
+		// if a set* method exists for this key,
+		// use that method to insert this value.
 		if (method_exists($this, $method))
 		{
 			$result = $this->$method();
@@ -211,7 +227,7 @@ class Entity
 			$result = $this->mutateDate($result);
 		}
 		// Or cast it as something?
-		else if (isset($this->_options['casts'][$key]) && ! empty($this->_options['casts'][$key]))
+		else if ($this->_cast && isset($this->_options['casts'][$key]) && ! empty($this->_options['casts'][$key]))
 		{
 			$result = $this->castAs($result, $this->_options['casts'][$key]);
 		}
@@ -261,8 +277,8 @@ class Entity
 			$value = json_encode($value);
 		}
 
-		// if a set* method exists for this key, 
-		// use that method to insert this value. 
+		// if a set* method exists for this key,
+		// use that method to insert this value.
 		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 		if (method_exists($this, $method))
 		{
@@ -295,14 +311,16 @@ class Entity
 	{
 		// If not actual property exists, get out
 		// before we confuse our data mapping.
-		if ( ! property_exists($this, $key))
+		if (! property_exists($this, $key))
+		{
 			return;
+		}
 
 		$this->$key = null;
 
 		// Get the class' original default value for this property
 		// so we can reset it to the original value.
-		$reflectionClass = new \ReflectionClass($this);
+		$reflectionClass   = new \ReflectionClass($this);
 		$defaultProperties = $reflectionClass->getDefaultProperties();
 
 		if (isset($defaultProperties[$key]))
@@ -319,7 +337,7 @@ class Entity
 	 *
 	 * @param string $key
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function __isset(string $key): bool
 	{
@@ -395,7 +413,7 @@ class Entity
 	/**
 	 * Provides the ability to cast an item as a specific data type.
 	 *
-	 * @param        $value
+	 * @param $value
 	 * @param string $type
 	 *
 	 * @return mixed
@@ -424,7 +442,7 @@ class Entity
 				$value = (object)$value;
 				break;
 			case 'array':
-				if (is_string($value) && (strpos($value,'a:') === 0 || strpos($value, 's:') === 0))
+				if (is_string($value) && (strpos($value, 'a:') === 0 || strpos($value, 's:') === 0))
 				{
 					$value = unserialize($value);
 				}
@@ -453,21 +471,21 @@ class Entity
 	/**
 	 * Cast as JSON
 	 *
-	 * @param mixed $value
-	 * @param bool $asArray
+	 * @param mixed   $value
+	 * @param boolean $asArray
 	 *
 	 * @return mixed
 	 */
 	private function castAsJson($value, bool $asArray = false)
 	{
-		$tmp = !is_null($value) ? ($asArray ? [] : new \stdClass) : null;
-		if(function_exists('json_decode'))
+		$tmp = ! is_null($value) ? ($asArray ? [] : new \stdClass) : null;
+		if (function_exists('json_decode'))
 		{
-			if((is_string($value) && (strpos($value, '[') === 0 || strpos($value, '{') === 0 || (strpos($value, '"') === 0 && strrpos($value, '"') === 0 ))) || is_numeric($value))
+			if ((is_string($value) && (strpos($value, '[') === 0 || strpos($value, '{') === 0 || (strpos($value, '"') === 0 && strrpos($value, '"') === 0 ))) || is_numeric($value))
 			{
 				$tmp = json_decode($value, $asArray);
 
-				if(json_last_error() !== JSON_ERROR_NONE)
+				if (json_last_error() !== JSON_ERROR_NONE)
 				{
 					throw CastException::forInvalidJsonFormatException(json_last_error());
 				}

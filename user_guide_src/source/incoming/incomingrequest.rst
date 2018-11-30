@@ -16,7 +16,10 @@ Accessing the Request
 An instance of the request class already populated for you if the current class is a descendant of
 ``CodeIgniter\Controller`` and can be accessed as a class property::
 
-	class UserController extends CodeIgniter\Controller
+        namespace App\Controllers;
+        user CodeIgniter\Controller;
+
+	class UserController extends Controller
 	{
 		public function index()
 		{
@@ -413,7 +416,7 @@ The methods provided by the parent classes that are available are:
 
 		To return an array of multiple cookie values, pass all the required keys as an array::
 
-			$request->getCookie(array('some_cookie', 'some_cookie2'));
+			$request->getCookie(['some_cookie', 'some_cookie2']);
 
 		.. note:: Unlike the :doc:`Cookie Helper <../helpers/cookie_helper>`
 			function :php:func:`get_cookie()`, this method does NOT prepend

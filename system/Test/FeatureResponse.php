@@ -35,7 +35,7 @@ class FeatureResponse extends TestCase
 	 * Boils down the possible responses into a bolean valid/not-valid
 	 * response type.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isOK(): bool
 	{
@@ -58,7 +58,7 @@ class FeatureResponse extends TestCase
 	/**
 	 * Returns whether or not the Response was a redirect response
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isRedirect(): bool
 	{
@@ -72,13 +72,13 @@ class FeatureResponse extends TestCase
 	 */
 	public function assertRedirect()
 	{
-		$this->assertTrue($this->isRedirect(), "Response is not a RedirectResponse.");
+		$this->assertTrue($this->isRedirect(), 'Response is not a RedirectResponse.');
 	}
 
 	/**
 	 * Asserts that the status is a specific value.
 	 *
-	 * @param int $code
+	 * @param integer $code
 	 *
 	 * @throws \Exception
 	 */
@@ -273,7 +273,7 @@ class FeatureResponse extends TestCase
 	 *
 	 * @throws \Exception
 	 */
-	public function assertSeeLink(string $text, string $details=null)
+	public function assertSeeLink(string $text, string $details = null)
 	{
 		$this->assertTrue($this->domParser->seeLink($text, $details), "Do no see anchor tag with the text {$text} in response.");
 	}
@@ -286,7 +286,7 @@ class FeatureResponse extends TestCase
 	 *
 	 * @throws \Exception
 	 */
-	public function assertSeeInField(string $field, string $value=null)
+	public function assertSeeInField(string $field, string $value = null)
 	{
 		$this->assertTrue($this->domParser->seeInField($field, $value), "Do no see input named {$field} with value {$value} in response.");
 	}
@@ -323,7 +323,7 @@ class FeatureResponse extends TestCase
 	{
 		$json = json_decode($this->getJSON(), true);
 
-		$this->assertArraySubset($fragment, $json, false, "Response does not contain a matching JSON fragment.");
+		$this->assertArraySubset($fragment, $json, false, 'Response does not contain a matching JSON fragment.');
 	}
 
 	/**
@@ -345,9 +345,8 @@ class FeatureResponse extends TestCase
 			$test      = $formatter->format($test);
 		}
 
-		$this->assertJsonStringEqualsJsonString($test, $json, "Response does not contain matching JSON.");
+		$this->assertJsonStringEqualsJsonString($test, $json, 'Response does not contain matching JSON.');
 	}
-
 
 	//--------------------------------------------------------------------
 	// XML Methods

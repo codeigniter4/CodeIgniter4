@@ -34,16 +34,13 @@ class CIDbTestCaseTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-
 	public function testGrabFromDatabase()
 	{
-	    $email = $this->grabFromDatabase('user', 'email', ['name' => 'Derek Jones']);
+		$email = $this->grabFromDatabase('user', 'email', ['name' => 'Derek Jones']);
 
 		$this->assertEquals('derek@world.com', $email);
 	}
 
 	//--------------------------------------------------------------------
-
-
 
 }

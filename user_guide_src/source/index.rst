@@ -109,4 +109,4 @@ Advanced Topics
         :hidden:
 
         license
-        changelog
+        changelogs/index

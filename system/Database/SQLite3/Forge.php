@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -47,14 +47,14 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * UNSIGNED support
 	 *
-	 * @var    bool|array
+	 * @var boolean|array
 	 */
 	protected $_unsigned = false;
 
 	/**
 	 * NULL value representation in CREATE/ALTER TABLE statements
 	 *
-	 * @var    string
+	 * @var string
 	 */
 	protected $_null = 'NULL';
 
@@ -62,7 +62,6 @@ class Forge extends \CodeIgniter\Database\Forge
 
 	/**
 	 * Constructor.
-	 *
 	 */
 	public function __construct($db)
 	{
@@ -80,9 +79,9 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Create database
 	 *
-	 * @param    string $db_name
+	 * @param string $db_name
 	 *
-	 * @return    bool
+	 * @return boolean
 	 */
 	public function createDatabase($db_name): bool
 	{
@@ -96,15 +95,15 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Drop database
 	 *
-	 * @param    string $db_name
+	 * @param string $db_name
 	 *
-	 * @return    bool
+	 * @return boolean
 	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function dropDatabase($db_name): bool
 	{
 		// In SQLite, a database is dropped when we delete a file
-		if (! file_exists($db_name))
+		if (! is_file($db_name))
 		{
 			if ($this->db->DBDebug)
 			{
@@ -143,13 +142,13 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * ALTER TABLE
 	 *
-	 * @todo    implement drop_column(), modify_column()
+	 * @todo implement drop_column(), modify_column()
 	 *
-	 * @param    string $alter_type ALTER type
-	 * @param    string $table      Table name
-	 * @param    mixed  $field      Column definition
+	 * @param string $alter_type ALTER type
+	 * @param string $table      Table name
+	 * @param mixed  $field      Column definition
 	 *
-	 * @return    string|array
+	 * @return string|array
 	 */
 	protected function _alterTable($alter_type, $table, $field)
 	{
@@ -166,18 +165,24 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Process column
 	 *
-	 * @param    array $field
+	 * @param array $field
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	protected function _processColumn($field)
 	{
+		if ($field['type'] === 'TEXT' && strpos($field['length'], "('") === 0)
+		{
+			$field['type'] .= ' CHECK(' . $this->db->escapeIdentifiers($field['name'])
+				. ' IN ' . $field['length'] . ')';
+		}
+
 		return $this->db->escapeIdentifiers($field['name'])
-		       .' '.$field['type']
-		       .$field['auto_increment']
-		       .$field['null']
-		       .$field['unique']
-		       .$field['default'];
+			   . ' ' . $field['type']
+			   . $field['auto_increment']
+			   . $field['null']
+			   . $field['unique']
+			   . $field['default'];
 	}
 
 	//--------------------------------------------------------------------
@@ -185,9 +190,9 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Process indexes
 	 *
-	 * @param    string $table
+	 * @param string $table
 	 *
-	 * @return    array
+	 * @return array
 	 */
 	protected function _processIndexes($table)
 	{
@@ -211,15 +216,15 @@ class Forge extends \CodeIgniter\Database\Forge
 
 			if (in_array($i, $this->uniqueKeys))
 			{
-				$sqls[] = 'CREATE UNIQUE INDEX '.$this->db->escapeIdentifiers($table.'_'.implode('_', $this->keys[$i]))
-				          .' ON '.$this->db->escapeIdentifiers($table)
-				          .' ('.implode(', ', $this->db->escapeIdentifiers($this->keys[$i])).');';
+				$sqls[] = 'CREATE UNIQUE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+						  . ' ON ' . $this->db->escapeIdentifiers($table)
+						  . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
 				continue;
 			}
 
-			$sqls[] = 'CREATE INDEX '.$this->db->escapeIdentifiers($table.'_'.implode('_', $this->keys[$i]))
-			          .' ON '.$this->db->escapeIdentifiers($table)
-			          .' ('.implode(', ', $this->db->escapeIdentifiers($this->keys[$i])).');';
+			$sqls[] = 'CREATE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+					  . ' ON ' . $this->db->escapeIdentifiers($table)
+					  . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
 		}
 
 		return $sqls;
@@ -231,9 +236,9 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * Performs a data type mapping between different databases.
 	 *
-	 * @param    array &$attributes
+	 * @param array &$attributes
 	 *
-	 * @return    void
+	 * @return void
 	 */
 	protected function _attributeType(&$attributes)
 	{
@@ -254,15 +259,15 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Field attribute AUTO_INCREMENT
 	 *
-	 * @param    array &$attributes
-	 * @param    array &$field
+	 * @param array &$attributes
+	 * @param array &$field
 	 *
-	 * @return    void
+	 * @return void
 	 */
 	protected function _attributeAutoIncrement(&$attributes, &$field)
 	{
 		if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true
-		    && stripos($field['type'], 'int') !== false)
+			&& stripos($field['type'], 'int') !== false)
 		{
 			$field['type']           = 'INTEGER PRIMARY KEY';
 			$field['default']        = '';
@@ -279,10 +284,10 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Foreign Key Drop
 	 *
-	 * @param    string $table        Table name
-	 * @param    string $foreign_name Foreign name
+	 * @param string $table        Table name
+	 * @param string $foreign_name Foreign name
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function dropForeignKey($table, $foreign_name)

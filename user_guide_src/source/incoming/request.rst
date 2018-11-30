@@ -90,4 +90,4 @@ Class Reference
 		as an array.
 		::
 
-			$require->getServer(array('SERVER_PROTOCOL', 'REQUEST_URI'));
+			$require->getServer(['SERVER_PROTOCOL', 'REQUEST_URI']);

@@ -1,9 +1,9 @@
 <style type="text/css">
-	<?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__.'/toolbar.css')) ?>
+	<?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__ . '/toolbar.css')) ?>
 </style>
 
 <script id="toolbar_js" type="text/javascript">
-	<?= file_get_contents(__DIR__.'/toolbar.js') ?>
+	<?= file_get_contents(__DIR__ . '/toolbar.js') ?>
 </script>
 <div id="debug-icon" class="debug-bar-ndisplay">
 	<a id="debug-icon-link" href="javascript:void(0)">
@@ -102,7 +102,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?= self::renderTimeline($collectors, $startTime, $segmentCount, $segmentDuration, $styles) ?>
+				<?= static::renderTimeline($collectors, $startTime, $segmentCount, $segmentDuration, $styles) ?>
 			</tbody>
 		</table>
 	</div>
@@ -133,7 +133,7 @@
 
 				<?php if (is_array($items)) : ?>
 
-					<table id="<?= strtolower(str_replace(' ', '-', $heading.'_table')) ?>">
+					<table id="<?= strtolower(str_replace(' ', '-', $heading . '_table')) ?>">
 						<tbody>
 						<?php foreach ($items as $key => $value) : ?>
 							<tr>
@@ -244,7 +244,7 @@
 			</table>
 		<?php endif ?>
 
-		<h2>Response <span>( <?= $vars['response']['statusCode'].' - '. $vars['response']['reason'] ?> )</span></h2>
+		<h2>Response <span>( <?= $vars['response']['statusCode'] . ' - ' . $vars['response']['reason'] ?> )</span></h2>
 
 		<?php if (isset($vars['headers']) && $headers = $vars['headers']) : ?>
 			<a href="javascript:void(0)" onclick="ciDebugBar.toggleDataTable('response_headers'); return false;">
@@ -272,9 +272,9 @@
 	</div>
 </div>
 <style type="text/css">
-	<?php foreach( $styles as $name => $style ) : ?>
+	<?php foreach($styles as $name => $style) : ?>
 	.<?= $name ?> {
-	<?= $style ?>
+		<?= $style ?>
 	}
 	<?php endforeach ?>
 </style>

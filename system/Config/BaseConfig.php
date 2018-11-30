@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -70,10 +70,10 @@ class BaseConfig
 	{
 		static::$moduleConfig = config('Modules');
 
-		$properties = array_keys(get_object_vars($this));
-		$prefix = get_class($this);
-		$slashAt = strrpos($prefix, '\\');
-		$shortPrefix = strtolower(substr($prefix, $slashAt === false ? 0  : $slashAt+1 ));
+		$properties  = array_keys(get_object_vars($this));
+		$prefix      = get_class($this);
+		$slashAt     = strrpos($prefix, '\\');
+		$shortPrefix = strtolower(substr($prefix, $slashAt === false ? 0 : $slashAt + 1 ));
 
 		foreach ($properties as $property)
 		{
@@ -126,7 +126,7 @@ class BaseConfig
 			}
 		}
 
-		if (defined('ENVIRONMENT') && ENVIRONMENT != 'testing')
+		if (defined('ENVIRONMENT') && ENVIRONMENT !== 'testing')
 		{
 			$this->registerProperties();
 		}
@@ -145,23 +145,23 @@ class BaseConfig
 	 */
 	protected function getEnvValue(string $property, string $prefix, string $shortPrefix)
 	{
-		$shortPrefix = ltrim( $shortPrefix, '\\' );
+		$shortPrefix = ltrim($shortPrefix, '\\');
 		switch (true)
 		{
-			case array_key_exists( "{$shortPrefix}.{$property}", $_ENV ):
+			case array_key_exists("{$shortPrefix}.{$property}", $_ENV):
 				return $_ENV["{$shortPrefix}.{$property}"];
 				break;
-			case array_key_exists( "{$shortPrefix}.{$property}", $_SERVER ):
+			case array_key_exists("{$shortPrefix}.{$property}", $_SERVER):
 				return $_SERVER["{$shortPrefix}.{$property}"];
 				break;
-			case array_key_exists( "{$prefix}.{$property}", $_ENV ):
+			case array_key_exists("{$prefix}.{$property}", $_ENV):
 				return $_ENV["{$prefix}.{$property}"];
 				break;
-			case array_key_exists( "{$prefix}.{$property}", $_SERVER ):
+			case array_key_exists("{$prefix}.{$property}", $_SERVER):
 				return $_SERVER["{$prefix}.{$property}"];
 				break;
 			default:
-				$value = getenv( $property );
+				$value = getenv($property);
 				return $value === false ? null : $value;
 		}
 	}
@@ -181,7 +181,7 @@ class BaseConfig
 
 		if (! static::$didDiscovery)
 		{
-			$locator = \Config\Services::locator();
+			$locator            = \Config\Services::locator();
 			static::$registrars = $locator->search('Config/Registrar.php');
 		}
 
@@ -191,14 +191,14 @@ class BaseConfig
 		foreach (static::$registrars as $callable)
 		{
 			// ignore non-applicable registrars
-			if ( ! method_exists($callable, $shortName))
+			if (! method_exists($callable, $shortName))
 			{
 				continue;
 			}
 
 			$properties = $callable::$shortName();
 
-			if ( ! is_array($properties))
+			if (! is_array($properties))
 			{
 				throw new \RuntimeException('Registrars must return an array of properties and their values.');
 			}

@@ -1,4 +1,3 @@
-####################
 Database Forge Class
 ####################
 
@@ -63,19 +62,19 @@ mechanism for this.
 Adding fields
 =============
 
-Fields are created via an associative array. Within the array you must
+Fields are normally created via an associative array. Within the array you must
 include a 'type' key that relates to the datatype of the field. For
 example, INT, VARCHAR, TEXT, etc. Many datatypes (for example VARCHAR)
 also require a 'constraint' key.
 
 ::
 
-	$fields = array(
-		'users' => array(
+	$fields = [
+		'users' => [
 			'type'       => 'VARCHAR',
-			'constraint' => '100',
-		),
-	);
+			'constraint' => 100,
+		],
+	];
 	// will translate to "users VARCHAR(100)" when the field is added.
 
 Additionally, the following key/values can be used:
@@ -91,28 +90,33 @@ Additionally, the following key/values can be used:
 
 ::
 
-	$fields = array(
-		'blog_id'          => array(
+	$fields = [
+		'id'          => [
 			'type'           => 'INT',
 			'constraint'     => 5,
-			'unsigned'       => TRUE,
-			'auto_increment' => TRUE
-		),
-		'blog_title'       => array(
+			'unsigned'       => true,
+			'auto_increment' => true
+		],
+		'title'       => [
 			'type'           => 'VARCHAR',
 			'constraint'     => '100',
-			'unique'         => TRUE,
-		),
-		'blog_author'      => array(
+			'unique'         => true,
+		],
+		'author'      => [
 			'type'           =>'VARCHAR',
-			'constraint'     => '100',
+			'constraint'     => 100,
 			'default'        => 'King of Town',
-		),
-		'blog_description' => array(
+		],
+		'description' => [
 			'type'           => 'TEXT',
-			'null'           => TRUE,
-		),
-	);
+			'null'           => true,
+		],
+		'status'      => [
+			'type'           => 'ENUM',
+			'constraint'     => ['publish', 'pending', 'draft'],
+			'default'        => 'pending',
+		],
+	];
 
 After the fields have been defined, they can be added using
 ``$forge->addField($fields);`` followed by a call to the
@@ -132,9 +136,9 @@ string into the field definitions with addField()
 
 	$forge->addField("label varchar(100) NOT NULL DEFAULT 'default label'");
 
-.. note:: Passing raw strings as fields cannot be followed by ``add_key()`` calls on those fields.
+.. note:: Passing raw strings as fields cannot be followed by ``addKey()`` calls on those fields.
 
-.. note:: Multiple calls to add_field() are cumulative.
+.. note:: Multiple calls to addField() are cumulative.
 
 Creating an id field
 --------------------
@@ -172,10 +176,10 @@ below is for MySQL.
 	$forge->addKey('blog_name');
 	// gives KEY `blog_name` (`blog_name`)
 
-	$forge->addKey(array('blog_name', 'blog_label'));
+	$forge->addKey(['blog_name', 'blog_label']);
 	// gives KEY `blog_name_blog_label` (`blog_name`, `blog_label`)
 
-	$forge->addKey(array('blog_id', 'uri'), FALSE, TRUE);
+	$forge->addKey(['blog_id', 'uri'], FALSE, TRUE);
 	// gives UNIQUE KEY `blog_id_uri` (`blog_id`, `uri`)
 
 To make code reading more objective it is also possible to add primary
@@ -187,7 +191,7 @@ and unique keys with specific methods::
 Foreign Keys help to enforce relationships and actions across your tables. For tables that support Foreign Keys,
 you may add them directly in forge::
 
-	$forge->addUniqueKey(array('blog_id', 'uri'));
+	$forge->addUniqueKey(['blog_id', 'uri']);
 	// gives UNIQUE KEY `blog_id_uri` (`blog_id`, `uri`)
 
 
@@ -225,7 +229,7 @@ into the definition
 
 You could also pass optional table attributes, such as MySQL's ``ENGINE``::
 
-	$attributes = array('ENGINE' => 'InnoDB');
+	$attributes = ['ENGINE' => 'InnoDB'];
 	$forge->createTable('table_name', FALSE, $attributes);
 	// produces: CREATE TABLE `table_name` (...) ENGINE = InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
 
@@ -283,9 +287,9 @@ number of additional fields.
 
 ::
 
-	$fields = array(
-		'preferences' => array('type' => 'TEXT')
-	);
+	$fields = [
+		'preferences' => ['type' => 'TEXT']
+	];
 	$forge->addColumn('table_name', $fields);
 	// Executes: ALTER TABLE table_name ADD preferences TEXT
 
@@ -295,14 +299,14 @@ AFTER and FIRST clauses to position the new column.
 Examples::
 
 	// Will place the new column after the `another_field` column:
-	$fields = array(
-		'preferences' => array('type' => 'TEXT', 'after' => 'another_field')
-	);
+	$fields = [
+		'preferences' => ['type' => 'TEXT', 'after' => 'another_field']
+	];
 
 	// Will place the new column at the start of the table definition:
-	$fields = array(
-		'preferences' => array('type' => 'TEXT', 'first' => TRUE)
-	);
+	$fields = [
+		'preferences' => ['type' => 'TEXT', 'first' => TRUE]
+	];
 
 Dropping a Column From a Table
 ==============================
@@ -320,18 +324,18 @@ Modifying a Column in a Table
 
 **$forge->modifyColumn()**
 
-The usage of this method is identical to ``add_column()``, except it
+The usage of this method is identical to ``addColumn()``, except it
 alters an existing column rather than adding a new one. In order to
 change the name you can add a "name" key into the field defining array.
 
 ::
 
-	$fields = array(
-		'old_name' => array(
+	$fields = [
+		'old_name' => [
 			'name' => 'new_name',
 			'type' => 'TEXT',
-		),
-	);
+		],
+	];
 	$forge->modifyColumn('table_name', $fields);
 	// gives ALTER TABLE table_name CHANGE old_name new_name TEXT
 
@@ -341,7 +345,7 @@ Class Reference
 
 .. php:class:: \CodeIgniter\Database\Forge
 
-	.. php:method:: addColumn($table[, $field = array()])
+	.. php:method:: addColumn($table[, $field = []])
 
 		:param	string	$table: Table name to add the column to
 		:param	array	$field: Column definition(s)
@@ -392,7 +396,7 @@ Class Reference
 
 		Creates a new database. Usage:  See `Creating and Dropping Databases`_.
 
-	.. php:method:: createTable($table[, $if_not_exists = FALSE[, array $attributes = array()]])
+	.. php:method:: createTable($table[, $if_not_exists = FALSE[, array $attributes = []]])
 
 		:param	string	$table: Name of the table to create
 		:param	string	$if_not_exists: Set to TRUE to add an 'IF NOT EXISTS' clause

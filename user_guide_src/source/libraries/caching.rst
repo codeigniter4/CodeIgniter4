@@ -212,7 +212,7 @@ File-based Caching
 Unlike caching from the Output Class, the driver file-based caching
 allows for pieces of view files to be cached. Use this with care, and
 make sure to benchmark your application, as a point can come where disk
-I/O will negate positive gains by caching.
+I/O will negate positive gains by caching. This require a writable cache directory to be really writable (0777).
 
 =================
 Memcached Caching

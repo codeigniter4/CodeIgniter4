@@ -2,7 +2,7 @@
 
 # Rebuild and deploy CodeIgniter4 user guide
 
-UPSTREAM=https://github.com/bcit-ci/CodeIgniter4.git
+. config
 
 # Prepare the nested repo clone folder
 cd user_guide_src

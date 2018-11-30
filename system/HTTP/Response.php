@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+namespace CodeIgniter\HTTP;
 
 /**
  * CodeIgniter
@@ -27,27 +28,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use Config\App;
-use Config\Mimes;
 use Config\Format;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
-
-/**
- * Redirect exception
- *
- */
-class RedirectException extends \Exception
-{
-
-}
+use CodeIgniter\Pager\PagerInterface;
 
 /**
  * Representation of an outgoing, getServer-side response.
@@ -121,8 +114,8 @@ class Response extends Message implements ResponseInterface
 		421 => 'Misdirected Request', // http://www.iana.org/go/rfc7540 Section 9.1.2
 		422 => 'Unprocessable Entity', // http://www.iana.org/go/rfc4918
 		423 => 'Locked', // http://www.iana.org/go/rfc4918
-              424 => 'Failed Dependency', // http://www.iana.org/go/rfc4918
-              425 => 'Too Early', // https://datatracker.ietf.org/doc/draft-ietf-httpbis-replay/
+		424 => 'Failed Dependency', // http://www.iana.org/go/rfc4918
+		425 => 'Too Early', // https://datatracker.ietf.org/doc/draft-ietf-httpbis-replay/
 		426 => 'Upgrade Required',
 		428 => 'Precondition Required', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
 		429 => 'Too Many Requests', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
@@ -155,14 +148,14 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * The current status code for this response.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	protected $statusCode = 200;
 
 	/**
 	 * Whether Content Security Policy is being enforced.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $CSPEnabled = false;
 
@@ -197,14 +190,14 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Cookie will only be set if a secure HTTPS connection exists.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $cookieSecure = false;
 
 	/**
 	 * Cookie will only be accessible via HTTP(S) (no javascript)
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $cookieHTTPOnly = false;
 
@@ -218,7 +211,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * If true, will not write output. Useful during testing.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $pretend = false;
 
@@ -265,7 +258,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Turns "pretend" mode on or off to aid in testing.
 	 *
-	 * @param bool $pretend
+	 * @param boolean $pretend
 	 *
 	 * @return $this
 	 */
@@ -282,7 +275,7 @@ class Response extends Message implements ResponseInterface
 	 * The status code is a 3-digit integer result code of the getServer's attempt
 	 * to understand and satisfy the request.
 	 *
-	 * @return int Status code.
+	 * @return integer Status code.
 	 */
 	public function getStatusCode(): int
 	{
@@ -305,13 +298,13 @@ class Response extends Message implements ResponseInterface
 	 * @see http://tools.ietf.org/html/rfc7231#section-6
 	 * @see http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 	 *
-	 * @param int    $code         The 3-digit integer result code to set.
-	 * @param string $reason       The reason phrase to use with the
-	 *                             provided status code; if none is provided, will
-	 *                             default to the IANA name.
+	 * @param integer $code   The 3-digit integer result code to set.
+	 * @param string  $reason The reason phrase to use with the
+	 *                        provided status code; if none is provided, will
+	 *                        default to the IANA name.
 	 *
-	 * @return self
-	 * @throws \InvalidArgumentException For invalid status code arguments.
+	 * @return $this
+	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException For invalid status code arguments.
 	 */
 	public function setStatusCode(int $code, string $reason = '')
 	{
@@ -362,7 +355,6 @@ class Response extends Message implements ResponseInterface
 	}
 
 	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
 	// Convenience Methods
 	//--------------------------------------------------------------------
 
@@ -377,7 +369,44 @@ class Response extends Message implements ResponseInterface
 	{
 		$date->setTimezone(new \DateTimeZone('UTC'));
 
-		$this->setHeader('Date', $date->format('D, d M Y H:i:s').' GMT');
+		$this->setHeader('Date', $date->format('D, d M Y H:i:s') . ' GMT');
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Set the Link Header
+	 *
+	 * @param \CodeIgniter\Pager\PagerInterface $pager
+	 *
+	 * @see http://tools.ietf.org/html/rfc5988
+	 *
+	 * @return Response
+	 */
+	public function setLink(PagerInterface $pager)
+	{
+		$links = '';
+
+		if ($previous = $pager->getPreviousPageURI())
+		{
+			$links .= '<' . $pager->getPageURI($pager->getFirstPage()) . '>; rel="first",';
+			$links .= '<' . $previous . '>; rel="prev"';
+		}
+
+		if (($next = $pager->getNextPageURI()) && $previous)
+		{
+			$links .= ',';
+		}
+
+		if ($next)
+		{
+			$links .= '<' . $next . '>; rel="next",';
+			$links .= '<' . $pager->getPageURI($pager->getLastPage()) . '>; rel="last"';
+		}
+
+		$this->setHeader('Link', $links);
 
 		return $this;
 	}
@@ -398,7 +427,7 @@ class Response extends Message implements ResponseInterface
 		// add charset attribute if not already there and provided as parm
 		if ((strpos($mime, 'charset=') < 1) && ! empty($charset))
 		{
-			$mime .= '; charset='.$charset;
+			$mime .= '; charset=' . $charset;
 		}
 
 		$this->removeHeader('Content-Type'); // replace existing content type
@@ -412,7 +441,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Converts the $body into JSON and sets the Content Type header.
 	 *
-	 * @param $body
+	 * @param array|string $body
 	 *
 	 * @return $this
 	 */
@@ -429,14 +458,19 @@ class Response extends Message implements ResponseInterface
 	 * Returns the current body, converted to JSON is it isn't already.
 	 *
 	 * @return mixed|string
+	 *
+	 * @throws \InvalidArgumentException If the body property is not array.
 	 */
 	public function getJSON()
 	{
 		$body = $this->body;
 
-		if ($this->bodyFormat != 'json')
+		if ($this->bodyFormat !== 'json')
 		{
-			$config = config(Format::class);
+			/**
+			 * @var Format $config
+			 */
+			$config    = config(Format::class);
 			$formatter = $config->getFormatter('application/json');
 
 			$body = $formatter->format($body);
@@ -450,7 +484,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Converts $body into XML, and sets the correct Content-Type.
 	 *
-	 * @param $body
+	 * @param array|string $body
 	 *
 	 * @return $this
 	 */
@@ -467,14 +501,18 @@ class Response extends Message implements ResponseInterface
 	 * Retrieves the current body into XML and returns it.
 	 *
 	 * @return mixed|string
+	 * @throws \InvalidArgumentException If the body property is not array.
 	 */
 	public function getXML()
 	{
 		$body = $this->body;
 
-		if ($this->bodyFormat != 'xml')
+		if ($this->bodyFormat !== 'xml')
 		{
-			$config = config(Format::class);
+			/**
+			 * @var Format $config
+			 */
+			$config    = config(Format::class);
 			$formatter = $config->getFormatter('application/xml');
 
 			$body = $formatter->format($body);
@@ -489,10 +527,11 @@ class Response extends Message implements ResponseInterface
 	 * Handles conversion of the of the data into the appropriate format,
 	 * and sets the correct Content-Type header for our response.
 	 *
-	 * @param        $body
-	 * @param string $format Valid: json, xml
+	 * @param string|array $body
+	 * @param string       $format Valid: json, xml
 	 *
 	 * @return mixed
+	 * @throws \InvalidArgumentException If the body property is not string or array.
 	 */
 	protected function formatBody($body, string $format)
 	{
@@ -503,6 +542,9 @@ class Response extends Message implements ResponseInterface
 		// Nothing much to do for a string...
 		if (! is_string($body))
 		{
+			/**
+			 * @var Format $config
+			 */
 			$config    = config(Format::class);
 			$formatter = $config->getFormatter($mime);
 
@@ -513,7 +555,6 @@ class Response extends Message implements ResponseInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Cache Control Methods
 	//
@@ -612,7 +653,7 @@ class Response extends Message implements ResponseInterface
 		if ($date instanceof \DateTime)
 		{
 			$date->setTimezone(new \DateTimeZone('UTC'));
-			$this->setHeader('Last-Modified', $date->format('D, d M Y H:i:s').' GMT');
+			$this->setHeader('Last-Modified', $date->format('D, d M Y H:i:s') . ' GMT');
 		}
 		elseif (is_string($date))
 		{
@@ -639,9 +680,10 @@ class Response extends Message implements ResponseInterface
 		if ($this->CSPEnabled === true)
 		{
 			$this->CSP->finalize($this);
-		}else{
-
-			$this->body = str_replace(['{csp-style-nonce}','{csp-script-nonce}'], '', $this->body);
+		}
+		else
+		{
+			$this->body = str_replace(['{csp-style-nonce}', '{csp-script-nonce}'], '', $this->body);
 		}
 
 		$this->sendHeaders();
@@ -668,19 +710,18 @@ class Response extends Message implements ResponseInterface
 
 		// Per spec, MUST be sent with each request, if possible.
 		// http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
-		if (isset($this->headers['Date']))
+		if (! isset($this->headers['Date']))
 		{
 			$this->setDate(\DateTime::createFromFormat('U', time()));
 		}
 
 		// HTTP Status
-		header(sprintf('HTTP/%s %s %s', $this->protocolVersion, $this->statusCode, $this->reason), true,
-			$this->statusCode);
+		header(sprintf('HTTP/%s %s %s', $this->protocolVersion, $this->statusCode, $this->reason), true, $this->statusCode);
 
 		// Send all of our headers
 		foreach ($this->getHeaders() as $name => $values)
 		{
-			header($name.': '.$this->getHeaderLine($name), false, $this->statusCode);
+			header($name . ': ' . $this->getHeaderLine($name), false, $this->statusCode);
 		}
 
 		return $this;
@@ -715,39 +756,41 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Perform a redirect to a new URL, in two flavors: header or location.
 	 *
-	 * @param string $uri  The URI to redirect to
-	 * @param string $method
-	 * @param int    $code The type of redirection, defaults to 302
+	 * @param string  $uri    The URI to redirect to
+	 * @param string  $method
+	 * @param integer $code   The type of redirection, defaults to 302
 	 *
 	 * @return $this
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException For invalid status code.
 	 */
 	public function redirect(string $uri, string $method = 'auto', int $code = null)
 	{
+		// Assume 302 status code response; override if needed
+		if (empty($code))
+		{
+			$code = 302;
+		}
+
 		// IIS environment likely? Use 'refresh' for better compatibility
-		if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE'])
-		    && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false)
+		if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false)
 		{
 			$method = 'refresh';
 		}
-		elseif ($method !== 'refresh' && (empty($code) || ! is_numeric($code)))
+
+		// override status code for HTTP/1.1 & higher
+		// reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
+		if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $this->getProtocolVersion() >= 1.1)
 		{
-			if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $this->getProtocolVersion() >= 1.1)
+			if ($method !== 'refresh')
 			{
-				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303
-					// reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
-					: 307;
-			}
-			else
-			{
-				$code = 302;
+				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303 : 307;
 			}
 		}
 
 		switch ($method)
 		{
 			case 'refresh':
-				$this->setHeader('Refresh', '0;url='.$uri);
+				$this->setHeader('Refresh', '0;url=' . $uri);
 				break;
 			default:
 				$this->setHeader('Location', $uri);
@@ -755,8 +798,6 @@ class Response extends Message implements ResponseInterface
 		}
 
 		$this->setStatusCode($code);
-
-		$this->sendHeaders();
 
 		return $this;
 	}
@@ -769,14 +810,16 @@ class Response extends Message implements ResponseInterface
 	 * Accepts an arbitrary number of binds (up to 7) or an associateive
 	 * array in the first parameter containing all the values.
 	 *
-	 * @param string|array $name     Cookie name or array containing binds
-	 * @param string       $value    Cookie value
-	 * @param string       $expire   Cookie expiration time in seconds
-	 * @param string       $domain   Cookie domain (e.g.: '.yourdomain.com')
-	 * @param string       $path     Cookie path (default: '/')
-	 * @param string       $prefix   Cookie name prefix
-	 * @param bool|false   $secure   Whether to only transfer cookies via SSL
-	 * @param bool|false   $httponly Whether only make the cookie accessible via HTTP (no javascript)
+	 * @param string|array  $name     Cookie name or array containing binds
+	 * @param string        $value    Cookie value
+	 * @param string        $expire   Cookie expiration time in seconds
+	 * @param string        $domain   Cookie domain (e.g.: '.yourdomain.com')
+	 * @param string        $path     Cookie path (default: '/')
+	 * @param string        $prefix   Cookie name prefix
+	 * @param boolean|false $secure   Whether to only transfer cookies via SSL
+	 * @param boolean|false $httponly Whether only make the cookie accessible via HTTP (no javascript)
+	 *
+	 * @return $this
 	 */
 	public function setCookie(
 		$name,
@@ -787,7 +830,8 @@ class Response extends Message implements ResponseInterface
 		$prefix = '',
 		$secure = false,
 		$httponly = false
-	) {
+	)
+	{
 		if (is_array($name))
 		{
 			// always leave 'name' in last place, as the loop will break otherwise, due to $$item
@@ -805,7 +849,7 @@ class Response extends Message implements ResponseInterface
 			$prefix = $this->cookiePrefix;
 		}
 
-		if ($domain == '' && $this->cookieDomain != '')
+		if ($domain === '' && $this->cookieDomain !== '')
 		{
 			$domain = $this->cookieDomain;
 		}
@@ -827,15 +871,15 @@ class Response extends Message implements ResponseInterface
 
 		if (! is_numeric($expire))
 		{
-			$expire = time()-86500;
+			$expire = time() - 86500;
 		}
 		else
 		{
-			$expire = ($expire > 0) ? time()+$expire : 0;
+			$expire = ($expire > 0) ? time() + $expire : 0;
 		}
 
 		$this->cookies[] = [
-			'name'     => $prefix.$name,
+			'name'     => $prefix . $name,
 			'value'    => $value,
 			'expires'  => $expire,
 			'path'     => $path,
@@ -852,11 +896,11 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Checks to see if the Response has a specified cookie or not.
 	 *
-	 * @param string $name
-	 * @param null   $value
-	 * @param string $prefix
+	 * @param string      $name
+	 * @param string|null $value
+	 * @param string      $prefix
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function hasCookie(string $name, $value = null, string $prefix = '')
 	{
@@ -865,11 +909,11 @@ class Response extends Message implements ResponseInterface
 			$prefix = $this->cookiePrefix;
 		}
 
-		$name = $prefix.$name;
+		$name = $prefix . $name;
 
 		foreach ($this->cookies as $cookie)
 		{
-			if ($cookie['name'] != $prefix.$name)
+			if ($cookie['name'] !== $name)
 			{
 				continue;
 			}
@@ -879,7 +923,7 @@ class Response extends Message implements ResponseInterface
 				return true;
 			}
 
-			return $cookie['value'] == $value;
+			return $cookie['value'] === $value;
 		}
 
 		return false;
@@ -888,51 +932,73 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Returns the cookie
 	 *
-	 * @param string $name
-	 * @param string $prefix
+	 * @param string|null $name
+	 * @param string      $prefix
 	 *
 	 * @return mixed
 	 */
-	public function getCookie(string $name, string $prefix = '')
+	public function getCookie(string $name = null, string $prefix = '')
 	{
+		// if no name given, return them all
+		if (empty($name))
+		{
+			return $this->cookies;
+		}
+
 		if ($prefix === '' && $this->cookiePrefix !== '')
 		{
 			$prefix = $this->cookiePrefix;
 		}
 
-		$name = $prefix.$name;
+		$name = $prefix . $name;
 
 		foreach ($this->cookies as $cookie)
 		{
-			if ($cookie['name'] == $name)
+			if ($cookie['name'] === $name)
 			{
 				return $cookie;
 			}
 		}
+		return null;
 	}
 
 	/**
 	 * Sets a cookie to be deleted when the response is sent.
 	 *
-	 * @param        $name
+	 * @param $name
 	 * @param string $domain
 	 * @param string $path
 	 * @param string $prefix
+	 *
+	 * @return $this
 	 */
-	public function deleteCookie($name, string $domain = '', string $path = '/', string $prefix = '')
+	public function deleteCookie($name = '', string $domain = '', string $path = '/', string $prefix = '')
 	{
+		if (empty($name))
+		{
+			return $this;
+		}
+
 		if ($prefix === '' && $this->cookiePrefix !== '')
 		{
 			$prefix = $this->cookiePrefix;
 		}
 
-		$name = $prefix.$name;
+		$name = $prefix . $name;
 
 		foreach ($this->cookies as &$cookie)
 		{
-			if ($cookie['name'] == $name)
+			if ($cookie['name'] === $name)
 			{
-				$cookie['value'] = '';
+				if (! empty($domain) && $cookie['domain'] !== $domain)
+				{
+					continue;
+				}
+				if (! empty($path) && $cookie['path'] !== $path)
+				{
+					continue;
+				}
+				$cookie['value']   = '';
 				$cookie['expires'] = '';
 
 				break;
@@ -967,16 +1033,17 @@ class Response extends Message implements ResponseInterface
 	 * Generates the headers that force a download to happen. And
 	 * sends the file to the browser.
 	 *
-	 * @param string $filename The path to the file to send
-	 * @param string $data     The data to be downloaded
-	 * @param bool   $setMime  Whether to try and send the actual MIME type
+	 * @param string  $filename The path to the file to send
+	 * @param string  $data     The data to be downloaded
+	 * @param boolean $setMime  Whether to try and send the actual MIME type
+	 *
+	 * @return \CodeIgniter\HTTP\DownloadResponse|null
 	 */
 	public function download(string $filename = '', $data = '', bool $setMime = false)
 	{
 		if ($filename === '' || $data === '')
 		{
-			// @todo: Should I throw an exception?
-			return;
+			return null;
 		}
 
 		$filepath = '';

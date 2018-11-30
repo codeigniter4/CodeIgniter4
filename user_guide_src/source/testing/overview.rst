@@ -154,6 +154,17 @@ between expected and actual time is within the prescribed tolerance.::
 
 The above test will allow the actual time to be either 600 or 601 seconds.
 
+**assertCloseEnoughString($expected, $actual, $message='', $tolerance=1)**
+
+For extended execution time testing, tests that the absolute difference
+between expected and actual time, formatted as strings, is within the prescribed tolerance.::
+
+    $timer = new Timer();
+    $timer->start('longjohn', strtotime('-11 minutes'));
+    $this->assertCloseEnoughString(11 * 60, $timer->getElapsedTime('longjohn'));
+
+The above test will allow the actual time to be either 600 or 601 seconds.
+
 Accessing Protected/Private Properties
 --------------------------------------
 

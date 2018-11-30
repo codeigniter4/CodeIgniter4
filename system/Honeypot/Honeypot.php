@@ -29,14 +29,15 @@ namespace CodeIgniter\Honeypot;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -78,11 +79,10 @@ class Honeypot
 	 * Checks the request if honeypot field has data.
 	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface $request
-	 * 
 	 */
 	public function hasContent(RequestInterface $request)
 	{
-		return ( ! empty($request->getPost($this->config->name))) ? true : false;
+		return ! empty($request->getPost($this->config->name));
 	}
 
 	/**
@@ -103,7 +103,7 @@ class Honeypot
 	 * Prepares the template by adding label
 	 * content and field name.
 	 *
-	 * @param string $template
+	 * @param  string $template
 	 * @return string
 	 */
 	protected function prepareTemplate($template): string

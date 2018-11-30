@@ -13,7 +13,7 @@ class ParserFilterTest extends \CIUnitTestCase
 		parent::setUp();
 
 		$this->loader   = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
-		$this->viewsDir = __DIR__.'/Views';
+		$this->viewsDir = __DIR__ . '/Views';
 		$this->config   = new Config\View();
 	}
 
@@ -25,7 +25,7 @@ class ParserFilterTest extends \CIUnitTestCase
 
 		$data = [
 			'value1' => -5,
-			'value2' => 5
+			'value2' => 5,
 		];
 
 		$template = '{ value1|abs }{ value2|abs }';
@@ -42,7 +42,7 @@ class ParserFilterTest extends \CIUnitTestCase
 
 		$data = [
 			'value1' => 'wonder',
-			'value2' => 'TWInS'
+			'value2' => 'TWInS',
 		];
 
 		$template = '{ value1|capitalize } { value2|capitalize }';
@@ -76,7 +76,7 @@ class ParserFilterTest extends \CIUnitTestCase
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
-		$today = date('Y-m-d');
+		$today     = date('Y-m-d');
 		$tommorrow = date('Y-m-d', strtotime('+1 day'));
 
 		$data = [
@@ -105,7 +105,7 @@ class ParserFilterTest extends \CIUnitTestCase
 		$template = '{ value1|default(foo) } { value2|default(bar) } { value3|default(baz) }';
 
 		$parser->setData($data);
-		$this->assertEquals("foo bar test", $parser->renderString($template));
+		$this->assertEquals('foo bar test', $parser->renderString($template));
 	}
 
 	//--------------------------------------------------------------------
@@ -118,7 +118,7 @@ class ParserFilterTest extends \CIUnitTestCase
 		$value2 = esc('<script>', 'js');
 
 		$data = [
-			'value1' => '<script>'
+			'value1' => '<script>',
 		];
 
 		$template = '{ value1|esc(html) } { value1|esc(js) }';
@@ -134,13 +134,13 @@ class ParserFilterTest extends \CIUnitTestCase
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
 		$data = [
-			'value1' => 'The quick red fox jumped over the lazy brown dog'
+			'value1' => 'The quick red fox jumped over the lazy brown dog',
 		];
 
 		$template = '{ value1|excerpt(jumped, 10) }';
 
 		$parser->setData($data);
-		$this->assertEquals("... red fox jumped over ...", $parser->renderString($template));
+		$this->assertEquals('... red fox jumped over ...', $parser->renderString($template));
 	}
 
 	//--------------------------------------------------------------------
@@ -150,13 +150,13 @@ class ParserFilterTest extends \CIUnitTestCase
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
 		$data = [
-			'value1' => 'The quick red fox jumped over the lazy brown dog'
+			'value1' => 'The quick red fox jumped over the lazy brown dog',
 		];
 
 		$template = '{ value1|highlight(jumped over) }';
 
 		$parser->setData($data);
-		$this->assertEquals("The quick red fox <mark>jumped over</mark> the lazy brown dog", $parser->renderString($template));
+		$this->assertEquals('The quick red fox <mark>jumped over</mark> the lazy brown dog', $parser->renderString($template));
 	}
 
 	public function testHighlightCode()
@@ -164,7 +164,7 @@ class ParserFilterTest extends \CIUnitTestCase
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
 		$data = [
-			'value1' => 'Sincerely'
+			'value1' => 'Sincerely',
 		];
 		$parser->setData($data);
 
@@ -183,7 +183,7 @@ EOF;
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
 		$data = [
-			'value1' => 'Sincerely\nMe'
+			'value1' => 'Sincerely\nMe',
 		];
 		$parser->setData($data);
 
@@ -199,13 +199,13 @@ EOF;
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
 		$data = [
-			'value1' => 'The quick red fox jumped over the lazy brown dog'
+			'value1' => 'The quick red fox jumped over the lazy brown dog',
 		];
 
 		$template = '{ value1|limit_chars(10) }';
 
 		$parser->setData($data);
-		$this->assertEquals("The quick&#8230;", $parser->renderString($template));
+		$this->assertEquals('The quick&#8230;', $parser->renderString($template));
 	}
 
 	//--------------------------------------------------------------------
@@ -215,13 +215,13 @@ EOF;
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
 		$data = [
-			'value1' => 'The quick red fox jumped over the lazy brown dog'
+			'value1' => 'The quick red fox jumped over the lazy brown dog',
 		];
 
 		$template = '{ value1|limit_words(4) }';
 
 		$parser->setData($data);
-		$this->assertEquals("The quick red fox&#8230;", $parser->renderString($template));
+		$this->assertEquals('The quick red fox&#8230;', $parser->renderString($template));
 	}
 
 	//--------------------------------------------------------------------
@@ -231,13 +231,13 @@ EOF;
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
 		$data = [
-			'value1' => 'SOMETHING'
+			'value1' => 'SOMETHING',
 		];
 
 		$template = '{ value1|lower }';
 
 		$parser->setData($data);
-		$this->assertEquals("something", $parser->renderString($template));
+		$this->assertEquals('something', $parser->renderString($template));
 	}
 
 	//--------------------------------------------------------------------
@@ -247,7 +247,7 @@ EOF;
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
 		$data = [
-			'value1' => "first\nsecond"
+			'value1' => "first\nsecond",
 		];
 
 		$template = '{ value1|nl2br }';
@@ -343,7 +343,7 @@ EOF;
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
 		$data = [
-			'mynum' => 	1234567.891234567890000
+			'mynum' => 1234567.891234567890000,
 		];
 
 		$template = '{ mynum|local_number }';
@@ -357,7 +357,7 @@ EOF;
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
 		$data = [
-			'mynum' => 	1234567.891234567890000
+			'mynum' => 1234567.891234567890000,
 		];
 
 		$template = '{ mynum|local_number(decimal,2) }';
@@ -371,9 +371,8 @@ EOF;
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
 		$data = [
-			'mynum' => 	1234567.891234567890000
+			'mynum' => 1234567.891234567890000,
 		];
-
 
 		$template = '{ mynum|local_number(spellout) }';
 
@@ -386,7 +385,7 @@ EOF;
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
 		$data = [
-			'mynum' => 	1234567.891234567890000
+			'mynum' => 1234567.891234567890000,
 		];
 
 		$template = '{ mynum|local_number(decimal,4,de_DE) }';
@@ -400,7 +399,7 @@ EOF;
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
 		$data = [
-			'mynum' => 	1234567.891234567890000
+			'mynum' => 1234567.891234567890000,
 		];
 
 		$template = '{ mynum|local_currency(EUR,de_DE) }';

@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use Psr\Log\LoggerInterface;
 use CodeIgniter\Log\Exceptions\LogException;
 
@@ -69,14 +70,14 @@ class Logger implements LoggerInterface
 	 * @var array
 	 */
 	protected $logLevels = [
-		'emergency'	 => 1,
-		'alert'		 => 2,
-		'critical'	 => 3,
-		'error'		 => 4,
-		'warning'	 => 5,
-		'notice'	 => 6,
-		'info'	 	 => 7,
-		'debug'		 => 8,
+		'emergency' => 1,
+		'alert'     => 2,
+		'critical'  => 3,
+		'error'     => 4,
+		'warning'   => 5,
+		'notice'    => 6,
+		'info'      => 7,
+		'debug'     => 8,
 	];
 
 	/**
@@ -91,7 +92,7 @@ class Logger implements LoggerInterface
 	/**
 	 * File permissions
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	protected $filePermissions = 0644;
 
@@ -136,7 +137,7 @@ class Logger implements LoggerInterface
 	/**
 	 * Should we cache our logged items?
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $cacheLogs = false;
 
@@ -145,8 +146,8 @@ class Logger implements LoggerInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param type $config
-	 * @param bool $debug
+	 * @param  type    $config
+	 * @param  boolean $debug
 	 * @throws \RuntimeException
 	 */
 	public function __construct($config, bool $debug = CI_DEBUG)
@@ -169,7 +170,7 @@ class Logger implements LoggerInterface
 
 		$this->dateFormat = $config->dateFormat ?? $this->dateFormat;
 
-		if ( ! is_array($config->handlers) || empty($config->handlers))
+		if (! is_array($config->handlers) || empty($config->handlers))
 		{
 			throw LogException::forNoHandlers('LoggerConfig');
 		}
@@ -325,7 +326,7 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function log($level, $message, array $context = []): bool
 	{
@@ -335,13 +336,13 @@ class Logger implements LoggerInterface
 		}
 
 		// Is the level a valid level?
-		if ( ! array_key_exists($level, $this->logLevels))
+		if (! array_key_exists($level, $this->logLevels))
 		{
 			throw LogException::forInvalidLogLevel($level);
 		}
 
 		// Does the app want to log this right now?
-		if ( ! in_array($level, $this->loggableLevels))
+		if (! in_array($level, $this->loggableLevels))
 		{
 			return false;
 		}
@@ -349,7 +350,7 @@ class Logger implements LoggerInterface
 		// Parse our placeholders
 		$message = $this->interpolate($message, $context);
 
-		if ( ! is_string($message))
+		if (! is_string($message))
 		{
 			$message = print_r($message, true);
 		}
@@ -357,14 +358,15 @@ class Logger implements LoggerInterface
 		if ($this->cacheLogs)
 		{
 			$this->logCache[] = [
-				'level'	 => $level,
-				'msg'	 => $message
+				'level' => $level,
+				'msg'   => $message,
 			];
 		}
 
 		foreach ($this->handlerConfig as $className => $config)
 		{
-			if ( ! array_key_exists($className, $this->handlers)) {
+			if (! array_key_exists($className, $this->handlers))
+			{
 				$this->handlers[$className] = new $className($config);
 			}
 
@@ -373,14 +375,14 @@ class Logger implements LoggerInterface
 			 */
 			$handler = $this->handlers[$className];
 
-			if ( ! $handler->canHandle($level))
+			if (! $handler->canHandle($level))
 			{
 				continue;
 			}
 
 			// If the handler returns false, then we
 			// don't execute any other handlers.
-			if ( ! $handler->setDateFormat($this->dateFormat)->handle($level, $message))
+			if (! $handler->setDateFormat($this->dateFormat)->handle($level, $message))
 			{
 				break;
 			}
@@ -403,15 +405,17 @@ class Logger implements LoggerInterface
 	 * {file}
 	 * {line}
 	 *
-	 * @param       $message
-	 * @param array $context
+	 * @param $message
+	 * @param array   $context
 	 *
 	 * @return string
 	 */
 	protected function interpolate($message, array $context = [])
 	{
-		if ( ! is_string($message))
+		if (! is_string($message))
+		{
 			return $message;
+		}
 
 		// build a replacement array with braces around the context keys
 		$replace = [];
@@ -420,7 +424,7 @@ class Logger implements LoggerInterface
 		{
 			// Verify that the 'exception' key is actually an exception
 			// or error, both of which implement the 'Throwable' interface.
-			if ($key == 'exception' && $val instanceof \Throwable)
+			if ($key === 'exception' && $val instanceof \Throwable)
 			{
 				$val = $val->getMessage() . ' ' . $this->cleanFileNames($val->getFile()) . ':' . $val->getLine();
 			}
@@ -431,8 +435,8 @@ class Logger implements LoggerInterface
 
 		// Add special placeholders
 		$replace['{post_vars}'] = '$_POST: ' . print_r($_POST, true);
-		$replace['{get_vars}'] = '$_GET: ' . print_r($_GET, true);
-		$replace['{env}'] = ENVIRONMENT;
+		$replace['{get_vars}']  = '$_GET: ' . print_r($_GET, true);
+		$replace['{env}']       = ENVIRONMENT;
 
 		// Allow us to log the file/line that we are logging from
 		if (strpos($message, '{file}') !== false)
@@ -452,7 +456,7 @@ class Logger implements LoggerInterface
 			{
 				foreach ($matches as $str)
 				{
-					$key = str_replace('env:', '', $str);
+					$key                 = str_replace('env:', '', $str);
 					$replace["{{$str}}"] = $_ENV[$key] ?? 'n/a';
 				}
 			}
@@ -480,8 +484,8 @@ class Logger implements LoggerInterface
 		// Determine the file and line by finding the first
 		// backtrace that is not part of our logging system.
 		$trace = debug_backtrace();
-		$file = null;
-		$line = null;
+		$file  = null;
+		$line  = null;
 
 		foreach ($trace as $row)
 		{
@@ -497,7 +501,7 @@ class Logger implements LoggerInterface
 
 		return [
 			$file,
-			$line
+			$line,
 		];
 	}
 

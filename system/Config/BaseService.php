@@ -27,15 +27,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
-
 
 /**
  * Services Configuration file.
@@ -75,7 +74,7 @@ class BaseService
 	/**
 	 * Have we already discovered other Services?
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	static protected $discovered = false;
 
@@ -124,7 +123,7 @@ class BaseService
 	 * within namespaced folders, as well as convenience methods for
 	 * loading 'helpers', and 'libraries'.
 	 *
-	 * @param bool $getShared
+	 * @param boolean $getShared
 	 *
 	 * @return \CodeIgniter\Autoloader\FileLocator
 	 */
@@ -132,7 +131,7 @@ class BaseService
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('locator');
+			return static::getSharedInstance('locator');
 		}
 
 		return new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
@@ -179,7 +178,7 @@ class BaseService
 	 * Inject mock object for testing.
 	 *
 	 * @param string $name
-	 * @param        $mock
+	 * @param $mock
 	 */
 	public static function injectMock(string $name, $mock)
 	{

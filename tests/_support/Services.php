@@ -37,7 +37,7 @@ class Services
 	 */
 	public static function injectMock(string $name, $mock)
 	{
-		$name = strtolower($name);
+		$name                 = strtolower($name);
 		static::$mocks[$name] = $mock;
 	}
 

@@ -5,7 +5,7 @@ Contributing to CodeIgniter
 CodeIgniter is a community driven project and accepts contributions of code
 and documentation from the community. These contributions are made in the form
 of Issues or `Pull Requests <https://help.github.com/articles/using-pull-requests/>`_
-on the `CodeIgniter4 repository <https://github.com/bcit-ci/CodeIgniter4>`_ on GitHub.
+on the `CodeIgniter4 repository <https://github.com/codeigniter4/CodeIgniter4>`_ on GitHub.
 
 Issues are a quick way to point out a bug. If you find a bug or documentation
 error in CodeIgniter then please check a few things first:
@@ -19,7 +19,7 @@ Reporting issues is helpful but an even better approach is to send a Pull
 Request, which is done by "Forking" the main repository and committing to your
 own copy. This will require you to use the version control system called Git.
 
-Please see the `Contributing to CodeIgniter4 <https://github.com/bcit-ci/CodeIgniter4/tree/develop/contributing>`_ 
+Please see the `Contributing to CodeIgniter4 <https://github.com/codeigniter4/CodeIgniter4/tree/develop/contributing>`_ 
 section of our code repository.
 
 
@@ -44,7 +44,7 @@ Please *don't* disclose it publicly, but e-mail us at security@codeigniter.com,
 or report it via our page on `HackerOne <https://hackerone.com/codeigniter>`_.
 
 If you've found a critical vulnerability, we'd be happy to credit you in our
-`ChangeLog <https://bcit-ci.github.io/CodeIgniter4/changelog.html>`_.
+`ChangeLog <https://codeigniter4.github.io/userguide/changelog.html>`_.
 
 ****************************
 Tips for a Good Issue Report

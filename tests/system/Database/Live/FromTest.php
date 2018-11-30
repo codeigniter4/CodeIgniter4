@@ -20,10 +20,9 @@ class FromTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-
 	public function testFromCanOverride()
 	{
-	    $result = $this->db->table('job')->from('misc', true)->get()->getResult();
+		$result = $this->db->table('job')->from('misc', true)->get()->getResult();
 
 		$this->assertCount(3, $result);
 	}
@@ -38,6 +37,5 @@ class FromTest extends CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
-
 
 }

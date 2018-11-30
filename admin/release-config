@@ -1,0 +1,26 @@
+# Variables used for release building
+
+if [ -z "$CI_ORG" ]; then
+
+    # Initialize variables 
+    CI_ORG=https://github.com/codeigniter4
+    CI_DIR=`pwd`
+
+    BOLD='\033[1m'
+    NORMAL='\033[0m'
+    COLOR='\033[1;31m'
+    ERROR='\033[0;31m'
+
+    qualifier=
+    which=release
+
+    version=$1
+    if [ $# -gt 1 ]; then
+        qualifier="-${2}"
+        which='pre-release'
+    fi
+
+    RELEASE=$version$qualifier
+    branch="release-$RELEASE"
+
+fi

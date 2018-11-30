@@ -27,18 +27,18 @@ class ResponseTraitTest extends \CIUnitTestCase
 	protected function makeController(array $userConfig = [], string $uri = 'http://example.com', array $userHeaders = [])
 	{
 		$config = [
-			'baseURL' => 'http://example.com',
-			'uriProtocol' => 'REQUEST_URI',
-			'defaultLocale' => 'en',
-			'negotiateLocale' => false,
+			'baseURL'          => 'http://example.com',
+			'uriProtocol'      => 'REQUEST_URI',
+			'defaultLocale'    => 'en',
+			'negotiateLocale'  => false,
 			'supportedLocales' => ['en'],
-			'CSPEnabled' => false,
-			'cookiePrefix' => '',
-			'cookieDomain' => '',
-			'cookiePath' => '/',
-			'cookieSecure' => false,
-			'cookieHTTPOnly' => false,
-			'proxyIPs' => []
+			'CSPEnabled'       => false,
+			'cookiePrefix'     => '',
+			'cookieDomain'     => '',
+			'cookiePath'       => '/',
+			'cookieSecure'     => false,
+			'cookieHTTPOnly'   => false,
+			'proxyIPs'         => [],
 		];
 
 		$config = array_merge($config, $userConfig);
@@ -51,15 +51,17 @@ class ResponseTraitTest extends \CIUnitTestCase
 
 		// Insert headers into request.
 		$headers = [
-			'Accept' => 'text/html'
+			'Accept' => 'text/html',
 		];
 		$headers = array_merge($headers, $userHeaders);
 
 		foreach ($headers as $key => $value)
 		{
 			$this->request->setHeader($key, $value);
-			if (($key == 'Accept') && ! is_array($value))
+			if (($key === 'Accept') && ! is_array($value))
+			{
 				$this->response->setContentType($value);
+			}
 		}
 
 		// Create the controller class finally.
@@ -74,8 +76,8 @@ class ResponseTraitTest extends \CIUnitTestCase
 
 			public function __construct(&$request, &$response, &$formatter)
 			{
-				$this->request = $request;
-				$this->response = $response;
+				$this->request   = $request;
+				$this->response  = $response;
 				$this->formatter = $formatter;
 			}
 		};
@@ -86,7 +88,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 	public function testNoFormatterJSON()
 	{
 		$this->formatter = null;
-		$controller = $this->makeController([], 'http://codeigniter.com', ['Accept' => 'application/json']);
+		$controller      = $this->makeController([], 'http://codeigniter.com', ['Accept' => 'application/json']);
 		$controller->respondCreated(['id' => 3], 'A Custom Reason');
 
 		$this->assertEquals('A Custom Reason', $this->response->getReason());
@@ -103,7 +105,7 @@ EOH;
 	public function testNoFormatterHTML()
 	{
 		$this->formatter = null;
-		$controller = $this->makeController();
+		$controller      = $this->makeController();
 		$controller->respondCreated('A Custom Reason');
 
 		$this->assertEquals('A Custom Reason', $this->response->getBody());
@@ -155,11 +157,11 @@ EOH;
 
 		// Will use the JSON formatter by default
 		$expected = [
-			'status' => 500,
-			'error' => 'WHAT!',
+			'status'   => 500,
+			'error'    => 'WHAT!',
 			'messages' => [
-				'error' => 'Failure to Launch'
-			]
+				'error' => 'Failure to Launch',
+			],
 		];
 
 		$this->assertEquals($this->formatter->format($expected), $this->response->getBody());
@@ -193,11 +195,11 @@ EOH;
 		$controller->failUnauthorized('Nope', 'FAT CHANCE', 'A Custom Reason');
 
 		$expected = [
-			'status' => 401,
-			'error' => 'FAT CHANCE',
+			'status'   => 401,
+			'error'    => 'FAT CHANCE',
 			'messages' => [
-				'error' => 'Nope'
-			]
+				'error' => 'Nope',
+			],
 		];
 
 		$this->assertEquals('A Custom Reason', $this->response->getReason());
@@ -211,11 +213,11 @@ EOH;
 		$controller->failForbidden('Nope', 'FAT CHANCE', 'A Custom Reason');
 
 		$expected = [
-			'status' => 403,
-			'error' => 'FAT CHANCE',
+			'status'   => 403,
+			'error'    => 'FAT CHANCE',
 			'messages' => [
-				'error' => 'Nope'
-			]
+				'error' => 'Nope',
+			],
 		];
 
 		$this->assertEquals('A Custom Reason', $this->response->getReason());
@@ -229,11 +231,11 @@ EOH;
 		$controller->failNotFound('Nope', 'FAT CHANCE', 'A Custom Reason');
 
 		$expected = [
-			'status' => 404,
-			'error' => 'FAT CHANCE',
+			'status'   => 404,
+			'error'    => 'FAT CHANCE',
 			'messages' => [
-				'error' => 'Nope'
-			]
+				'error' => 'Nope',
+			],
 		];
 
 		$this->assertEquals('A Custom Reason', $this->response->getReason());
@@ -247,11 +249,11 @@ EOH;
 		$controller->failValidationError('Nope', 'FAT CHANCE', 'A Custom Reason');
 
 		$expected = [
-			'status' => 400,
-			'error' => 'FAT CHANCE',
+			'status'   => 400,
+			'error'    => 'FAT CHANCE',
 			'messages' => [
-				'error' => 'Nope'
-			]
+				'error' => 'Nope',
+			],
 		];
 
 		$this->assertEquals('A Custom Reason', $this->response->getReason());
@@ -265,11 +267,11 @@ EOH;
 		$controller->failResourceExists('Nope', 'FAT CHANCE', 'A Custom Reason');
 
 		$expected = [
-			'status' => 409,
-			'error' => 'FAT CHANCE',
+			'status'   => 409,
+			'error'    => 'FAT CHANCE',
 			'messages' => [
-				'error' => 'Nope'
-			]
+				'error' => 'Nope',
+			],
 		];
 
 		$this->assertEquals('A Custom Reason', $this->response->getReason());
@@ -283,11 +285,11 @@ EOH;
 		$controller->failResourceGone('Nope', 'FAT CHANCE', 'A Custom Reason');
 
 		$expected = [
-			'status' => 410,
-			'error' => 'FAT CHANCE',
+			'status'   => 410,
+			'error'    => 'FAT CHANCE',
 			'messages' => [
-				'error' => 'Nope'
-			]
+				'error' => 'Nope',
+			],
 		];
 
 		$this->assertEquals('A Custom Reason', $this->response->getReason());
@@ -301,11 +303,11 @@ EOH;
 		$controller->failTooManyRequests('Nope', 'FAT CHANCE', 'A Custom Reason');
 
 		$expected = [
-			'status' => 429,
-			'error' => 'FAT CHANCE',
+			'status'   => 429,
+			'error'    => 'FAT CHANCE',
 			'messages' => [
-				'error' => 'Nope'
-			]
+				'error' => 'Nope',
+			],
 		];
 
 		$this->assertEquals('A Custom Reason', $this->response->getReason());
@@ -321,25 +323,32 @@ EOH;
 		$this::assertEquals('A custom reason.', $this->response->getReason());
 		$this::assertEquals(500, $this->response->getStatusCode());
 		$this::assertEquals($this->formatter->format([
-					'status' => 500,
-					'error' => 'FAT-CHANCE',
-					'messages' => [
-						'error' => 'Nope.'
-					]
-				]), $this->response->getBody());
+			'status'   => 500,
+			'error'    => 'FAT-CHANCE',
+			'messages' => [
+				'error' => 'Nope.',
+			],
+		]), $this->response->getBody());
 	}
 
 	public function testValidContentTypes()
 	{
-		$chars = '; charset=UTF-8';
-		$goodMimes = ['text/xml', 'text/html', 'application/json', 'application/xml'];
-		for ($i = 0; $i < count($goodMimes); $i ++ )
+		$chars     = '; charset=UTF-8';
+		$goodMimes = [
+			'text/xml',
+			'text/html',
+			'application/json',
+			'application/xml',
+		];
+		for ($i = 0; $i < count($goodMimes); $i ++)
+		{
 			$this->tryValidContentType($goodMimes[$i], $goodMimes[$i] . $chars);
+		}
 	}
 
 	private function tryValidContentType($mimeType, $contentType)
 	{
-		$original = $_SERVER;
+		$original                = $_SERVER;
 		$_SERVER['CONTENT_TYPE'] = $mimeType;
 
 		$controller = $this->makeController([], 'http://codeigniter.com', ['Accept' => $mimeType]);
@@ -352,16 +361,23 @@ EOH;
 
 	public function testValidResponses()
 	{
-		$chars = '; charset=UTF-8';
-		$goodMimes = ['text/xml', 'text/html', 'application/json', 'application/xml'];
-		for ($i = 0; $i < count($goodMimes); $i ++ )
+		$chars     = '; charset=UTF-8';
+		$goodMimes = [
+			'text/xml',
+			'text/html',
+			'application/json',
+			'application/xml',
+		];
+		for ($i = 0; $i < count($goodMimes); $i ++)
+		{
 			$this->tryValidContentType($goodMimes[$i], $goodMimes[$i] . $chars);
+		}
 	}
 
 	public function testXMLFormatter()
 	{
 		$this->formatter = new XMLFormatter();
-		$controller = $this->makeController();
+		$controller      = $this->makeController();
 
 		$this->assertEquals('CodeIgniter\Format\XMLFormatter', get_class($this->formatter));
 

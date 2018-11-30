@@ -6,7 +6,6 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\CommandRunner;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
-use Tests\Support\Config\MockLogger;
 
 class SessionsCommandsTest extends \CIUnitTestCase
 {
@@ -17,38 +16,50 @@ class SessionsCommandsTest extends \CIUnitTestCase
 	protected $response;
 	protected $logger;
 	protected $runner;
+	private $result;
 
 	public function setUp()
 	{
 		parent::setUp();
 
 		CITestStreamFilter::$buffer = '';
-		$this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
+		$this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
 
 		$this->env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
 		$this->env->load();
 
 		// Set environment values that would otherwise stop the framework from functioning during tests.
-		if ( ! isset($_SERVER['app.baseURL']))
+		if (! isset($_SERVER['app.baseURL']))
 		{
 			$_SERVER['app.baseURL'] = 'http://example.com';
 		}
 
-		$_SERVER['argv'] = ['spark', 'list'];
+		$_SERVER['argv'] = [
+			'spark',
+			'list',
+		];
 		$_SERVER['argc'] = 2;
 		CLI::init();
 
-		$this->config = new MockAppConfig();
-		$this->request = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
+		$this->config   = new MockAppConfig();
+		$this->request  = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
 		$this->response = new \CodeIgniter\HTTP\Response($this->config);
-		$this->logger = Services::logger();
-		$this->runner = new CommandRunner();
+		$this->logger   = Services::logger();
+		$this->runner   = new CommandRunner();
 		$this->runner->initController($this->request, $this->response, $this->logger);
 	}
 
 	public function tearDown()
 	{
 		stream_filter_remove($this->stream_filter);
+
+		$result = remove_invisible_characters($this->result);
+		$result = str_replace('[0;32m', '', $result);
+		$result = str_replace('[0m', '', $result);
+		$file   = trim(substr($result, 14));
+		$file   = str_replace('APPPATH', APPPATH, $file);
+
+		unlink($file);
 	}
 
 	public function testCreateMigrationCommand()
@@ -62,14 +73,21 @@ class SessionsCommandsTest extends \CIUnitTestCase
 		$this->assertContains('Created file:', $result);
 		$this->assertContains('APPPATH/Database/Migrations/', $result);
 		$this->assertContains('_create_ci_sessions_table.php', $result);
+
+		$this->result = $result;
 	}
 
 	public function testOverriddenCreateMigrationCommand()
 	{
-		$_SERVER['argv'] = ['spark','session:migration', '-t', 'mygoodies'];
+		$_SERVER['argv'] = [
+			'spark',
+			'session:migration',
+			'-t',
+			'mygoodies',
+		];
 		$_SERVER['argc'] = 4;
 		CLI::init();
-		
+
 		$this->runner->index(['session:migration']);
 		$result = CITestStreamFilter::$buffer;
 
@@ -77,7 +95,8 @@ class SessionsCommandsTest extends \CIUnitTestCase
 		$this->assertContains('Created file:', $result);
 		$this->assertContains('APPPATH/Database/Migrations/', $result);
 		$this->assertContains('_create_mygoodies_table.php', $result);
-	}
 
+		$this->result = $result;
+	}
 
 }

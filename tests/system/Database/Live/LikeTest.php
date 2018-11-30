@@ -13,7 +13,7 @@ class LikeTest extends CIDatabaseTestCase
 
 	public function testLikeDefault()
 	{
-	    $job = $this->db->table('job')->like('name', 'veloper')->get();
+		$job = $this->db->table('job')->like('name', 'veloper')->get();
 		$job = $job->getRow();
 
 		$this->assertEquals(1, $job->id);
@@ -68,10 +68,10 @@ class LikeTest extends CIDatabaseTestCase
 
 	public function testOrLike()
 	{
-	    $jobs = $this->db->table('job')->like('name', 'ian')
-		                ->orLike('name', 'veloper')
-		                ->get()
-		                ->getResult();
+		$jobs = $this->db->table('job')->like('name', 'ian')
+						->orLike('name', 'veloper')
+						->get()
+						->getResult();
 
 		$this->assertCount(3, $jobs);
 		$this->assertEquals('Developer', $jobs[0]->name);
@@ -85,8 +85,8 @@ class LikeTest extends CIDatabaseTestCase
 	{
 		$jobs = $this->db->table('job')
 						 ->notLike('name', 'veloper')
-		                 ->get()
-		                 ->getResult();
+						 ->get()
+						 ->getResult();
 
 		$this->assertCount(3, $jobs);
 		$this->assertEquals('Politician', $jobs[0]->name);
@@ -100,9 +100,9 @@ class LikeTest extends CIDatabaseTestCase
 	{
 		$jobs = $this->db->table('job')
 						 ->like('name', 'ian')
-		                 ->orNotLike('name', 'veloper')
-		                 ->get()
-		                 ->getResult();
+						 ->orNotLike('name', 'veloper')
+						 ->get()
+						 ->getResult();
 
 		$this->assertCount(3, $jobs);
 		$this->assertEquals('Politician', $jobs[0]->name);
@@ -115,14 +115,13 @@ class LikeTest extends CIDatabaseTestCase
 	public function testLikeSpacesOrTabs()
 	{
 		$builder = $this->db->table('misc');
-	    $spaces = $builder->like('value', '   ')->get()->getResult();
-	    $tabs = $builder->like('value', "\t")->get()->getResult();
+		$spaces  = $builder->like('value', '   ')->get()->getResult();
+		$tabs    = $builder->like('value', "\t")->get()->getResult();
 
 		$this->assertCount(1, $spaces);
 		$this->assertCount(1, $tabs);
 	}
 
 	//--------------------------------------------------------------------
-
 
 }

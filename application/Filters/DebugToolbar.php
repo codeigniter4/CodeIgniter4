@@ -17,7 +17,6 @@ class DebugToolbar implements FilterInterface
 	 */
 	public function before(RequestInterface $request)
 	{
-
 	}
 
 	//--------------------------------------------------------------------
@@ -27,13 +26,13 @@ class DebugToolbar implements FilterInterface
 	 * and debug information and display it in a toolbar.
 	 *
 	 * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
-	 * @param ResponseInterface|\CodeIgniter\HTTP\Response $response
+	 * @param ResponseInterface|\CodeIgniter\HTTP\Response       $response
 	 *
 	 * @return mixed
 	 */
 	public function after(RequestInterface $request, ResponseInterface $response)
 	{
-		if ( ! is_cli() && CI_DEBUG)
+		if (! is_cli() && CI_DEBUG)
 		{
 			global $app;
 
@@ -51,12 +50,12 @@ class DebugToolbar implements FilterInterface
 			// Updated to time() so we can get history
 			$time = time();
 
-			if (! is_dir(WRITEPATH.'debugbar'))
+			if (! is_dir(WRITEPATH . 'debugbar'))
 			{
-				mkdir(WRITEPATH.'debugbar', 0777);
+				mkdir(WRITEPATH . 'debugbar', 0777);
 			}
 
-			write_file(WRITEPATH .'debugbar/'.'debugbar_' . $time, $data, 'w+');
+			write_file(WRITEPATH . 'debugbar/' . 'debugbar_' . $time, $data, 'w+');
 
 			$format = $response->getHeaderLine('content-type');
 

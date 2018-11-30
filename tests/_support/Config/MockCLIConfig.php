@@ -25,5 +25,8 @@ class MockCLIConfig extends \Config\App
 
 	public $defaultLocale    = 'en';
 	public $negotiateLocale  = false;
-	public $supportedLocales = ['en', 'es'];
+	public $supportedLocales = [
+		'en',
+		'es',
+	];
 }

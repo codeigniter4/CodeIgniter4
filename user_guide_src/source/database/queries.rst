@@ -148,14 +148,14 @@ values in the array in the second parameter of the query function.
 Binding also work with arrays, which will be transformed to IN sets::
 
 	$sql = "SELECT * FROM some_table WHERE id IN ? AND status = ? AND author = ?";
-	$db->query($sql, array(array(3, 6), 'live', 'Rick'));
+	$db->query($sql, [[3, 6], 'live', 'Rick']);
 
 The resulting query will be::
 
 	SELECT * FROM some_table WHERE id IN (3,6) AND status = 'live' AND author = 'Rick'
 
 The secondary benefit of using binds is that the values are
-automatically escaped producing safer queries. 
+automatically escaped producing safer queries.
 You don't have to remember to manually escape data — the engine does it automatically for you.
 
 Named Bindings
@@ -223,21 +223,25 @@ as placeholders. This returns a PreparedQuery object::
 If you don't want to use the Query Builder you can create the Query object manually using question marks for
 value placeholders::
 
+    use CodeIgniter\Database\Query;
+
     $pQuery = $db->prepare(function($db)
     {
         $sql = "INSERT INTO user (name, email, country) VALUES (?, ?, ?)";
 
-        return new Query($db)->setQuery($sql);
+        return (new Query($db))->setQuery($sql);
     });
 
 If the database requires an array of options passed to it during the prepare statement phase you can pass that
 array through in the second parameter::
 
+    use CodeIgniter\Database\Query;
+
     $pQuery = $db->prepare(function($db)
     {
         $sql = "INSERT INTO user (name, email, country) VALUES (?, ?, ?)";
 
-        return new Query($db)->setQuery($sql);
+        return (new Query($db))->setQuery($sql);
     }, $options);
 
 Executing the Query

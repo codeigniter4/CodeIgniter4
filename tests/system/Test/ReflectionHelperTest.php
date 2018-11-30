@@ -4,14 +4,14 @@ class ReflectionHelperTest extends \CIUnitTestCase
 {
 	public function testGetPrivatePropertyWithObject()
 	{
-		$obj = new __TestForReflectionHelper();
+		$obj    = new __TestForReflectionHelper();
 		$actual = $this->getPrivateProperty($obj, 'private');
 		$this->assertEquals('secret', $actual);
 	}
 
 	public function testGetPrivatePropertyWithObjectStaticCall()
 	{
-		$obj = new __TestForReflectionHelper();
+		$obj    = new __TestForReflectionHelper();
 		$actual = \CIUnitTestCase::getPrivateProperty($obj, 'private');
 		$this->assertEquals('secret', $actual);
 	}
@@ -45,7 +45,7 @@ class ReflectionHelperTest extends \CIUnitTestCase
 
 	public function testGetPrivateMethodInvokerWithObject()
 	{
-		$obj = new __TestForReflectionHelper();
+		$obj    = new __TestForReflectionHelper();
 		$method = $this->getPrivateMethodInvoker(
 			$obj, 'privateMethod'
 		);
@@ -65,10 +65,9 @@ class ReflectionHelperTest extends \CIUnitTestCase
 	}
 }
 
-
 class __TestForReflectionHelper
 {
-	private $private = 'secret';
+	private $private               = 'secret';
 	private static $static_private = 'xyz';
 
 	public function getPrivate()

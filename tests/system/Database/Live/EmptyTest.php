@@ -13,7 +13,7 @@ class EmptyTest extends CIDatabaseTestCase
 
 	public function testEmpty()
 	{
-	    $this->db->table('misc')->emptyTable();
+		$this->db->table('misc')->emptyTable();
 
 		$this->assertEquals(0, $this->db->table('misc')->countAll());
 	}

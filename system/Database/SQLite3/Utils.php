@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -42,27 +42,26 @@
 class Utils extends \CodeIgniter\Database\BaseUtils
 {
 
-    /**
-     * OPTIMIZE TABLE statement
-     *
-     * @var	string
-     */
-    protected $optimizeTable = 'REINDEX %s';
+	/**
+	 * OPTIMIZE TABLE statement
+	 *
+	 * @var string
+	 */
+	protected $optimizeTable = 'REINDEX %s';
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Platform dependent version of the backup function.
-     *
-     * @param array|null $prefs
-     * @todo build
-     *
-     * @return mixed
-     */
-    public function _backup(array $prefs = null)
-    {
-        throw new DatabaseException('Unsupported feature of the database platform you are using.');
-    }
+	/**
+	 * Platform dependent version of the backup function.
+	 *
+	 * @param array|null $prefs
+	 *
+	 * @return mixed
+	 */
+	public function _backup(array $prefs = null)
+	{
+		throw new DatabaseException('Unsupported feature of the database platform you are using.');
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 }

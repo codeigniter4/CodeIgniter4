@@ -27,18 +27,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
 /**
  * Representation of an iHTTP request.
- *
  */
 class Request extends Message implements RequestInterface
 {
@@ -67,6 +66,7 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Stores values we've retrieved from
 	 * PHP globals.
+	 *
 	 * @var array
 	 */
 	protected $globals = [];
@@ -94,13 +94,13 @@ class Request extends Message implements RequestInterface
 	 */
 	public function getIPAddress(): string
 	{
-		if ( ! empty($this->ipAddress))
+		if (! empty($this->ipAddress))
 		{
 			return $this->ipAddress;
 		}
 
 		$proxy_ips = $this->proxyIPs;
-		if ( ! empty($this->proxyIPs) && ! is_array($this->proxyIPs))
+		if (! empty($this->proxyIPs) && ! is_array($this->proxyIPs))
 		{
 			$proxy_ips = explode(',', str_replace(' ', '', $this->proxyIPs));
 		}
@@ -111,16 +111,16 @@ class Request extends Message implements RequestInterface
 		{
 			foreach (['HTTP_X_FORWARDED_FOR', 'HTTP_CLIENT_IP', 'HTTP_X_CLIENT_IP', 'HTTP_X_CLUSTER_CLIENT_IP'] as $header)
 			{
-				if (($spoof = $this->getServer($header)) !== NULL)
+				if (($spoof = $this->getServer($header)) !== null)
 				{
 					// Some proxies typically list the whole chain of IP
 					// addresses through which the client has reached us.
 					// e.g. client_ip, proxy_ip1, proxy_ip2, etc.
 					sscanf($spoof, '%[^,]', $spoof);
 
-					if ( ! $this->isValidIP($spoof))
+					if (! $this->isValidIP($spoof))
 					{
-						$spoof = NULL;
+						$spoof = null;
 					}
 					else
 					{
@@ -131,10 +131,10 @@ class Request extends Message implements RequestInterface
 
 			if ($spoof)
 			{
-				for ($i = 0, $c = count($proxy_ips); $i < $c; $i ++ )
+				for ($i = 0, $c = count($proxy_ips); $i < $c; $i ++)
 				{
 					// Check if we have an IP address or a subnet
-					if (strpos($proxy_ips[$i], '/') === FALSE)
+					if (strpos($proxy_ips[$i], '/') === false)
 					{
 						// An IP address (and not a subnet) is specified.
 						// We can compare right away.
@@ -151,13 +151,13 @@ class Request extends Message implements RequestInterface
 					isset($separator) || $separator = $this->isValidIP($this->ipAddress, 'ipv6') ? ':' : '.';
 
 					// If the proxy entry doesn't match the IP protocol - skip it
-					if (strpos($proxy_ips[$i], $separator) === FALSE)
+					if (strpos($proxy_ips[$i], $separator) === false)
 					{
 						continue;
 					}
 
 					// Convert the REMOTE_ADDR IP address to binary, if needed
-					if ( ! isset($ip, $sprintf))
+					if (! isset($ip, $sprintf))
 					{
 						if ($separator === ':')
 						{
@@ -166,7 +166,7 @@ class Request extends Message implements RequestInterface
 									)
 							);
 
-							for ($j = 0; $j < 8; $j ++ )
+							for ($j = 0; $j < 8; $j ++)
 							{
 								$ip[$j] = intval($ip[$j], 16);
 							}
@@ -175,7 +175,7 @@ class Request extends Message implements RequestInterface
 						}
 						else
 						{
-							$ip = explode('.', $this->ipAddress);
+							$ip      = explode('.', $this->ipAddress);
 							$sprintf = '%08b%08b%08b%08b';
 						}
 
@@ -189,7 +189,7 @@ class Request extends Message implements RequestInterface
 					if ($separator === ':')
 					{
 						$netaddr = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($netaddr, ':')), $netaddr));
-						for ($i = 0; $i < 8; $i ++ )
+						for ($i = 0; $i < 8; $i ++)
 						{
 							$netaddr[$i] = intval($netaddr[$i], 16);
 						}
@@ -209,7 +209,7 @@ class Request extends Message implements RequestInterface
 			}
 		}
 
-		if ( ! $this->isValidIP($this->ipAddress))
+		if (! $this->isValidIP($this->ipAddress))
 		{
 			return $this->ipAddress = '0.0.0.0';
 		}
@@ -222,10 +222,10 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Validate an IP address
 	 *
-	 * @param string $ip     IP Address
-	 * @param string $which  IP protocol: 'ipv4' or 'ipv6'
+	 * @param string $ip    IP Address
+	 * @param string $which IP protocol: 'ipv4' or 'ipv6'
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isValidIP(string $ip = null, string $which = null): bool
 	{
@@ -238,7 +238,7 @@ class Request extends Message implements RequestInterface
 				$which = FILTER_FLAG_IPV6;
 				break;
 			default:
-				$which = NULL;
+				$which = null;
 				break;
 		}
 
@@ -250,7 +250,7 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Get the request method.
 	 *
-	 * @param bool $upper Whether to return in upper or lower case.
+	 * @param boolean $upper Whether to return in upper or lower case.
 	 *
 	 * @return string
 	 */
@@ -280,9 +280,9 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Fetch an item from the $_SERVER array.
 	 *
-	 * @param int|null $index  Index for item to be fetched from $_SERVER
-	 * @param int|null $filter A filter name to be applied
-	 * @param null     $flags
+	 * @param integer|null $index  Index for item to be fetched from $_SERVER
+	 * @param integer|null $filter A filter name to be applied
+	 * @param null         $flags
 	 *
 	 * @return mixed
 	 */
@@ -313,7 +313,7 @@ class Request extends Message implements RequestInterface
 	 * Allows manually setting the value of PHP global, like $_GET, $_POST, etc.
 	 *
 	 * @param string $method
-	 * @param        $value
+	 * @param $value
 	 *
 	 * @return $this
 	 */
@@ -336,14 +336,14 @@ class Request extends Message implements RequestInterface
 	 *
 	 * http://php.net/manual/en/filter.filters.sanitize.php
 	 *
-	 * @param int          $method Input filter constant
+	 * @param integer      $method Input filter constant
 	 * @param string|array $index
-	 * @param int          $filter Filter constant
+	 * @param integer      $filter Filter constant
 	 * @param null         $flags
 	 *
 	 * @return mixed
 	 */
-	public function fetchGlobal($method, $index = null, $filter = null, $flags = null )
+	public function fetchGlobal($method, $index = null, $filter = null, $flags = null)
 	{
 		$method = strtolower($method);
 

@@ -1,5 +1,5 @@
 <p class="debug-bar-alignRight">
-	<a href="https://bcit-ci.github.io/CodeIgniter4/index.html" target="_blank" >Read the CodeIgniter docs...</a>
+	<a href="https://codeigniter4.github.io/CodeIgniter4/index.html" target="_blank" >Read the CodeIgniter docs...</a>
 </p>
 
 <table>

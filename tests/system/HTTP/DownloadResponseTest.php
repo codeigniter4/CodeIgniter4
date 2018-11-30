@@ -1,6 +1,5 @@
 <?php namespace CodeIgniter\HTTP;
 
-use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use DateTime;
 use DateTimeZone;
@@ -42,7 +41,7 @@ class DownloadResponseTest extends \CIUnitTestCase
 
 		$header = $response->getHeaderLine('Date');
 
-		$this->assertEquals($date->format('D, d M Y H:i:s').' GMT', $header);
+		$this->assertEquals($date->format('D, d M Y H:i:s') . ' GMT', $header);
 	}
 
 	public function testSetLastModifiedWithDateTimeObject()
@@ -56,7 +55,7 @@ class DownloadResponseTest extends \CIUnitTestCase
 
 		$header = $response->getHeaderLine('Last-Modified');
 
-		$this->assertEquals($date->format('D, d M Y H:i:s').' GMT', $header);
+		$this->assertEquals($date->format('D, d M Y H:i:s') . ' GMT', $header);
 	}
 
 	public function testSetLastModifiedWithString()
@@ -158,13 +157,13 @@ class DownloadResponseTest extends \CIUnitTestCase
 
 	public function testIsSetDownloadableHeadlersFromBinary()
 	{
-		$response = new DownloadResponse('unit-test.txt', false);
+		$response = new DownloadResponse('unit test.txt', false);
 
 		$response->setBinary('test');
 		$response->buildHeaders();
 
 		$this->assertEquals('application/octet-stream', $response->getHeaderLine('Content-Type'));
-		$this->assertEquals('attachment; filename="unit-test.txt"', $response->getHeaderLine('Content-Disposition'));
+		$this->assertEquals('attachment; filename="unit test.txt"; filename*=UTF-8\'\'unit%20test.txt', $response->getHeaderLine('Content-Disposition'));
 		$this->assertEquals('0', $response->getHeaderLine('Expires-Disposition'));
 		$this->assertEquals('binary', $response->getHeaderLine('Content-Transfer-Encoding'));
 		$this->assertEquals('4', $response->getHeaderLine('Content-Length'));
@@ -178,21 +177,32 @@ class DownloadResponseTest extends \CIUnitTestCase
 		$response->buildHeaders();
 
 		$this->assertEquals('application/octet-stream', $response->getHeaderLine('Content-Type'));
-		$this->assertEquals('attachment; filename="unit-test.php"', $response->getHeaderLine('Content-Disposition'));
+		$this->assertEquals('attachment; filename="unit-test.php"; filename*=UTF-8\'\'unit-test.php', $response->getHeaderLine('Content-Disposition'));
 		$this->assertEquals('0', $response->getHeaderLine('Expires-Disposition'));
 		$this->assertEquals('binary', $response->getHeaderLine('Content-Transfer-Encoding'));
 		$this->assertEquals(filesize(__FILE__), $response->getHeaderLine('Content-Length'));
 	}
 
+	public function testIfTheCharacterCodeIsOtherThanUtf8ReplaceItWithUtf8AndRawurlencode()
+	{
+		$response = new DownloadResponse(mb_convert_encoding('テスト.php', 'Shift-JIS', 'UTF-8'), false);
+
+		$response->setFilePath(__FILE__);
+		$response->setContentType('application/octet-stream', 'Shift-JIS');
+		$response->buildHeaders();
+
+		$this->assertEquals('attachment; filename="' . mb_convert_encoding('テスト.php', 'Shift-JIS', 'UTF-8') . '"; filename*=UTF-8\'\'%E3%83%86%E3%82%B9%E3%83%88.php', $response->getHeaderLine('Content-Disposition'));
+	}
+
 	public function testFileExtensionIsUpperCaseWhenAndroidOSIs2()
 	{
 		$_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Linux; U; Android 2.0.3; ja-jp; SC-02C Build/IML74K) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30';
-		$response = new DownloadResponse('unit-test.php', false);
+		$response                   = new DownloadResponse('unit-test.php', false);
 
 		$response->setFilePath(__FILE__);
 		$response->buildHeaders();
 
-		$this->assertEquals('attachment; filename="unit-test.PHP"', $response->getHeaderLine('Content-Disposition'));
+		$this->assertEquals('attachment; filename="unit-test.PHP"; filename*=UTF-8\'\'unit-test.PHP', $response->getHeaderLine('Content-Disposition'));
 	}
 
 	public function testIsSetContentTypeFromFilename()

@@ -21,11 +21,9 @@ your database properly as described :doc:`here <../database/configuration>`.
 
 ::
 
-	<?php
+        use CodeIgniter\Model;
 
-	namespace App\Models;
-
-	class NewsModel extends \CodeIgniter\Model
+	class NewsModel extends Model
 	{
 		protected $table = 'news';
 	}
@@ -99,11 +97,11 @@ a new ``News`` controller is defined. Create the new controller at
 
 ::
 
-	<?php namespace App\Controllers;
-
+	namespace App\Controllers;
 	use App\Models\NewsModel;
+        use CodeIgniter\Controller;
 
-	class News extends \CodeIgniter\Controller
+	class News extends Controller
 	{
 		public function index()
 		{

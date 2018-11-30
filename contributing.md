@@ -15,7 +15,7 @@ Issues are a quick way to point out a bug. If you find a bug or documentation er
 2. The issue has already been fixed (check the develop branch, or look for closed Issues)
 3. Is it something really obvious that you can fix yourself?
 
-Reporting issues is helpful but an even [better approach](https://bcit-ci.github.io/CodeIgniter4/contributing/workflow.html) is to send a Pull Request, which is done by "Forking" the main repository and committing to your own copy. This will require you to use the version control system called Git.
+Reporting issues is helpful but an even [better approach](https://codeigniter4.github.io/CodeIgniter4/contributing/workflow.html) is to send a Pull Request, which is done by "Forking" the main repository and committing to your own copy. This will require you to use the version control system called Git.
 
 ## Guidelines
 
@@ -26,7 +26,7 @@ for us to maintain quality of the code-base.
 
 ### PHP Style
 
-All code must meet the [Style Guide](https://bcit-ci.github.io/CodeIgniter4/contributing/styleguide.html).
+All code must meet the [Style Guide](https://codeigniter4.github.io/CodeIgniter4/contributing/styleguide.html).
 This makes certain that all code is the same format as the existing code and means it will be as readable as possible.
 
 ### Documentation
@@ -46,7 +46,7 @@ One thing at a time: A pull request should only contain one change. That does no
 
 ### Signing
 
-You must [GPG-sign](https://bcit-ci.github.io/CodeIgniter4/contributing/signing.html) your work, certifying that you either wrote the work or otherwise have the right to pass it on to an open source project. This is *not* just a "signed-off-by" commit, but instead a digitally signed one.
+You must [GPG-sign](https://codeigniter4.github.io/CodeIgniter4/contributing/signing.html) your work, certifying that you either wrote the work or otherwise have the right to pass it on to an open source project. This is *not* just a "signed-off-by" commit, but instead a digitally signed one.
 
 ## How-to Guide
 
@@ -68,11 +68,11 @@ Once the maintainer handling your pull request is happy with it they will merge 
 
 ### Keeping your fork up-to-date
 
-Unlike systems like Subversion, Git can have multiple remotes. A remote is the name for a URL of a Git repository. By default your fork will have a remote named "origin" which points to your fork, but you can add another remote named "codeigniter" which points to `git://github.com/bcit-ci/CodeIgniter4.git`. This is a read-only remote but you can pull from this develop branch to update your own.
+Unlike systems like Subversion, Git can have multiple remotes. A remote is the name for a URL of a Git repository. By default your fork will have a remote named "origin" which points to your fork, but you can add another remote named "codeigniter" which points to `git://github.com/codeigniter4/CodeIgniter4.git`. This is a read-only remote but you can pull from this develop branch to update your own.
 
 If you are using command-line you can do the following:
 
-1. `git remote add codeigniter git://github.com/bcit-ci/CodeIgniter4.git`
+1. `git remote add codeigniter git://github.com/codeigniter4/CodeIgniter4.git`
 2. `git pull codeigniter develop`
 3. `git push origin develop`
 

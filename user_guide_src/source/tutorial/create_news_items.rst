@@ -22,7 +22,7 @@ the slug from our title in the model. Create the new view at
 
     <?= \Config\Services::validation()->listErrors(); ?>
 
-    <?= form_open('news/create'); ?>
+    <form>
 
         <label for="title">Title</label>
         <input type="input" name="title" /><br />
@@ -34,13 +34,7 @@ the slug from our title in the model. Create the new view at
 
     </form>
 
-There are only two things here that probably look unfamiliar to you: the
-``form_open()`` function and the ``\Config\Services::validation()->listErrors()`` function.
-
-The first function is provided by the :doc:`form
-helper <../helpers/form_helper>` and renders the form element and
-adds extra functionality, like adding a hidden :doc:`CSRF prevention
-field <../libraries/security>`. The latter is used to report
+There is only one thing here that probably look unfamiliar to you: the ``\Config\Services::validation()->listErrors()`` function. It is used to report
 errors related to form validation.
 
 Go back to your news controller. You're going to do two things here,
@@ -115,8 +109,10 @@ fields in the ``$allowedFields`` property.
 
 ::
 
-    <?php
-    class NewsModel extends \CodeIgniter\Model
+    namespace App\Models;
+    use CodeIgniter\Model;
+
+    class NewsModel extends Model
     {
         protected $table = 'news';
 

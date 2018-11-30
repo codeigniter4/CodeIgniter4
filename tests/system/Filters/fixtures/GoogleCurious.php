@@ -1,6 +1,5 @@
 <?php namespace CodeIgniter\Filters\fixtures;
 
-use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -9,8 +8,8 @@ class GoogleCurious implements FilterInterface
 {
 
 	public function before(RequestInterface $request)
-	{		
-		return 'This is curious';
+	{
+				return 'This is curious';
 	}
 
 	public function after(RequestInterface $request, ResponseInterface $response)

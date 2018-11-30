@@ -27,17 +27,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Autoload;
+use Config\Migrations;
 
 /**
  * Creates a new migration file.
@@ -82,7 +84,7 @@ class CreateMigration extends BaseCommand
 	 * @var array
 	 */
 	protected $arguments = [
-		'migration_name' => 'The migration file name'
+		'migration_name' => 'The migration file name',
 	];
 
 	/**
@@ -91,19 +93,16 @@ class CreateMigration extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-n' => 'Set migration namespace'
+		'-n' => 'Set migration namespace',
 	];
 
 	/**
 	 * Creates a new migration file with the current timestamp.
 	 *
-	 * @todo Have this check the settings and see what type of file it should create (timestamp or sequential)
-	 *
 	 * @param array $params
 	 */
 	public function run(array $params = [])
 	{
-
 		$name = array_shift($params);
 
 		if (empty($name))
@@ -116,19 +115,18 @@ class CreateMigration extends BaseCommand
 			CLI::error(lang('Migrations.badCreateName'));
 			return;
 		}
-		$ns = CLI::getOption('n');
+		$ns       = $params['-n'] ?? CLI::getOption('n');
 		$homepath = APPPATH;
 
-		if ( ! empty($ns))
+		if (! empty($ns))
 		{
 			// Get all namespaces form  PSR4 paths.
-			$config = new Autoload();
+			$config     = new Autoload();
 			$namespaces = $config->psr4;
 
 			foreach ($namespaces as $namespace => $path)
 			{
-
-				if ($namespace == $ns)
+				if ($namespace === $ns)
 				{
 					$homepath = realpath($path);
 					break;
@@ -137,10 +135,39 @@ class CreateMigration extends BaseCommand
 		}
 		else
 		{
-			$ns = "App";
+			$ns = 'App';
 		}
 
-		$path = $homepath . '/Database/Migrations/' . date('YmdHis_') . $name . '.php';
+		// Migrations Config
+		$config = new Migrations();
+
+		if ($config->type !== 'timestamp' && $config->type !== 'sequential')
+		{
+			CLI::error(lang('Migrations.invalidType', [$config->type]));
+			return;
+		}
+
+		// migration Type
+		if ($config->type === 'timestamp')
+		{
+			$fileName = date('YmdHis_') . $name;
+		}
+		else if ($config->type === 'sequential')
+		{
+			// default with 001
+			$sequence = $params[0] ?? '001';
+			// number must be three digits
+			if (! is_numeric($sequence) || strlen($sequence) !== 3)
+			{
+				CLI::error(lang('Migrations.migNumberError'));
+				return;
+			}
+
+			$fileName = $sequence . '_' . $name;
+		}
+
+		// full path
+		$path = $homepath . '/Database/Migrations/' . $fileName . '.php';
 
 		$template = <<<EOD
 <?php namespace $ns\Database\Migrations;
@@ -166,7 +193,7 @@ EOD;
 		$template = str_replace('{name}', $name, $template);
 
 		helper('filesystem');
-		if ( ! write_file($path, $template))
+		if (! write_file($path, $template))
 		{
 			CLI::error(lang('Migrations.writeError'));
 			return;

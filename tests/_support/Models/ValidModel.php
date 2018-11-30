@@ -12,17 +12,23 @@ class ValidModel extends Model
 
 	protected $dateFormat = 'integer';
 
-    protected $allowedFields = ['name', 'description'];
+	protected $allowedFields = [
+		'name',
+		'description',
+	];
 
-    protected $validationRules = [
-        'name'  => ['required', 'min_length[3]'],
-	    'token' => 'in_list[{id}]'
-    ];
+	protected $validationRules = [
+		'name'  => [
+			'required',
+			'min_length[3]',
+		],
+		'token' => 'in_list[{id}]',
+	];
 
-    protected $validationMessages = [
-        'name' => [
-            'required' => 'You forgot to name the baby.',
-            'min_length' => 'Too short, man!',
-        ]
-    ];
+	protected $validationMessages = [
+		'name' => [
+			'required'   => 'You forgot to name the baby.',
+			'min_length' => 'Too short, man!',
+		],
+	];
 }

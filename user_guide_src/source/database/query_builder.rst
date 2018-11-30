@@ -296,7 +296,7 @@ appropriate
 
 ::
 
-	$names = array('Frank', 'Todd', 'James');
+	$names = ['Frank', 'Todd', 'James'];
 	$builder->whereIn('username', $names);
 	// Produces: WHERE username IN ('Frank', 'Todd', 'James')
 
@@ -307,7 +307,7 @@ appropriate
 
 ::
 
-	$names = array('Frank', 'Todd', 'James');
+	$names = ['Frank', 'Todd', 'James'];
 	$builder->orWhereIn('username', $names);
 	// Produces: OR username IN ('Frank', 'Todd', 'James')
 
@@ -318,7 +318,7 @@ AND if appropriate
 
 ::
 
-	$names = array('Frank', 'Todd', 'James');
+	$names = ['Frank', 'Todd', 'James'];
 	$builder->whereNotIn('username', $names);
 	// Produces: WHERE username NOT IN ('Frank', 'Todd', 'James')
 
@@ -329,7 +329,7 @@ if appropriate
 
 ::
 
-	$names = array('Frank', 'Todd', 'James');
+	$names = ['Frank', 'Todd', 'James'];
 	$builder->orWhereNotIn('username', $names);
 	// Produces: OR username NOT IN ('Frank', 'Todd', 'James')
 
@@ -413,7 +413,7 @@ Permits you to write the GROUP BY portion of your query::
 
 You can also pass an array of multiple values as well::
 
-	$builder->groupBy(array("title", "date"));  // Produces: GROUP BY title, date
+	$builder->groupBy(["title", "date"]);  // Produces: GROUP BY title, date
 
 **$builder->distinct()**
 
@@ -535,7 +535,7 @@ Permits you to determine the number of rows in a particular table.
 Example::
 
 	echo $builder->countAll();  // Produces an integer, like 25
-	
+
 As is in countAllResult method, this method resets any field values that you may have passed
 to ``select()`` as well. If you need to keep them, you can pass ``FALSE`` as the
 first parameter.
@@ -593,11 +593,11 @@ Generates an insert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
 function. Here is an example using an array::
 
-	$data = array(
+	$data = [
 		'title' => 'My title',
 		'name'  => 'My Name',
 		'date'  => 'My date'
-	);
+	];
 
 	$builder->insert($data);
 	// Produces: INSERT INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date')
@@ -629,11 +629,11 @@ Compiles the insertion query just like $builder->insert() but does not
 
 Example::
 
-	$data = array(
+	$data = [
 		'title' => 'My title',
 		'name'  => 'My Name',
 		'date'  => 'My date'
-	);
+	];
 
 	$sql = $builder->set($data)->getCompiledInsert('mytable');
 	echo $sql;
@@ -665,18 +665,18 @@ Generates an insert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
 function. Here is an example using an array::
 
-	$data = array(
-		array(
+	$data = [
+		[
 			'title' => 'My title',
 			'name'  => 'My Name',
 			'date'  => 'My date'
-		),
-		array(
+		],
+		[
 			'title' => 'Another title',
 			'name'  => 'Another Name',
 			'date'  => 'Another date'
-		)
-	);
+		]
+	];
 
 	$builder->insertBatch($data);
 	// Produces: INSERT INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date'),  ('Another title', 'Another name', 'Another date')
@@ -700,11 +700,11 @@ logics with different combinations of  ``select()``, ``update()``,
 
 Example::
 
-	$data = array(
+	$data = [
 		'title' => 'My title',
 		'name'  => 'My Name',
 		'date'  => 'My date'
-	);
+	];
 
 	$builder->replace($data);
 
@@ -754,11 +754,11 @@ parameter.
 
 You can also pass an associative array to this function::
 
-	$array = array(
+	$array = [
 		'name'   => $name,
 		'title'  => $title,
 		'status' => $status
-	);
+	];
 
 	$builder->set($array);
 	$builder->insert();
@@ -783,11 +783,11 @@ Generates an update string and runs the query based on the data you
 supply. You can pass an **array** or an **object** to the function. Here
 is an example using an array::
 
-	$data = array(
+	$data = [
 		'title' => $title,
 		'name'  => $name,
 		'date'  => $date
-	);
+	];
 
 	$builder->where('id', $id);
 	$builder->update($data);
@@ -826,7 +826,7 @@ directly into the update function as a string::
 
 Or as an array::
 
-	$builder->update($data, array('id' => $id));
+	$builder->update($data, ['id' => $id]);
 
 You may also use the $builder->set() function described above when
 performing updates.
@@ -837,18 +837,18 @@ Generates an update string based on the data you supply, and runs the query.
 You can either pass an **array** or an **object** to the function.
 Here is an example using an array::
 
-	$data = array(
-	   array(
+	$data = [
+	   [
 	      'title' => 'My title' ,
 	      'name'  => 'My Name 2' ,
 	      'date'  => 'My date 2'
-	   ),
-	   array(
+	   ],
+	   [
 	      'title' => 'Another title' ,
 	      'name'  => 'Another Name 2' ,
 	      'date'  => 'Another date 2'
-	   )
-	);
+	   ]
+	];
 
 	$builder->updateBatch($data, 'title');
 
@@ -890,7 +890,7 @@ Generates a delete SQL string and runs the query.
 
 ::
 
-	$builder->delete(array('id' => $id));  // Produces: // DELETE FROM mytable  // WHERE id = $id
+	$builder->delete(['id' => $id]);  // Produces: // DELETE FROM mytable  // WHERE id = $id
 
 The first parameter is the where clause.
 You can also use the where() or or_where() functions instead of passing
@@ -962,7 +962,7 @@ This is useful in situations where you are using Query Builder to generate SQL
 run the query::
 
     // Note that the second parameter of the get_compiled_select method is FALSE
-    $sql = $builder->select(array('field1','field2'))
+    $sql = $builder->select(['field1','field2'])
                    ->where('field3',5)
                    ->getCompiledSelect(false);
 

@@ -14,14 +14,19 @@ class FeatureTestCaseTest extends FeatureTestCase
 		parent::setUp();
 
 		$this->skipEvents();
+		$this->clean = false;
 	}
 
 	public function testCallGet()
 	{
 		$this->withRoutes([
-			['get', 'home', function() {
-					return 'Hello World';
-				}]
+			[
+				'get',
+				'home',
+				function () {
+							return 'Hello World';
+				},
+			],
 		]);
 		$response = $this->get('home');
 
@@ -35,9 +40,13 @@ class FeatureTestCaseTest extends FeatureTestCase
 	public function testCallSimpleGet()
 	{
 		$this->withRoutes([
-			['add', 'home', function() {
-					return 'Hello World';
-				}]
+			[
+				'add',
+				'home',
+				function () {
+							return 'Hello World';
+				},
+			],
 		]);
 		$response = $this->call('get', 'home');
 
@@ -51,9 +60,13 @@ class FeatureTestCaseTest extends FeatureTestCase
 	public function testCallPost()
 	{
 		$this->withRoutes([
-			['post', 'home', function() {
-					return 'Hello World';
-				}]
+			[
+				'post',
+				'home',
+				function () {
+							return 'Hello World';
+				},
+			],
 		]);
 		$response = $this->post('home');
 
@@ -63,9 +76,13 @@ class FeatureTestCaseTest extends FeatureTestCase
 	public function testCallPut()
 	{
 		$this->withRoutes([
-			['put', 'home', function() {
-					return 'Hello World';
-				}]
+			[
+				'put',
+				'home',
+				function () {
+							return 'Hello World';
+				},
+			],
 		]);
 		$response = $this->put('home');
 
@@ -75,9 +92,13 @@ class FeatureTestCaseTest extends FeatureTestCase
 	public function testCallPatch()
 	{
 		$this->withRoutes([
-			['patch', 'home', function() {
-					return 'Hello World';
-				}]
+			[
+				'patch',
+				'home',
+				function () {
+							return 'Hello World';
+				},
+			],
 		]);
 		$response = $this->patch('home');
 
@@ -87,9 +108,13 @@ class FeatureTestCaseTest extends FeatureTestCase
 	public function testCallOptions()
 	{
 		$this->withRoutes([
-			['options', 'home', function() {
-					return 'Hello World';
-				}]
+			[
+				'options',
+				'home',
+				function () {
+							return 'Hello World';
+				},
+			],
 		]);
 		$response = $this->options('home');
 
@@ -99,9 +124,13 @@ class FeatureTestCaseTest extends FeatureTestCase
 	public function testCallDelete()
 	{
 		$this->withRoutes([
-			['delete', 'home', function() {
-					return 'Hello World';
-				}]
+			[
+				'delete',
+				'home',
+				function () {
+							return 'Hello World';
+				},
+			],
 		]);
 		$response = $this->delete('home');
 

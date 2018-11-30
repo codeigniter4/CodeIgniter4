@@ -242,7 +242,7 @@ The methods provided by the parent class that are available are:
 
 .. php:class:: CodeIgniter\\HTTP\\Response
 
-	.. php:method:: statusCode()
+	.. php:method:: getStatusCode()
 
 		:returns: The current HTTP status code for this response
 		:rtype: int
@@ -250,7 +250,7 @@ The methods provided by the parent class that are available are:
 		Returns the currently status code for this response. If no status code has been set, a BadMethodCallException
 		will be thrown::
 
-			echo $response->statusCode();
+			echo $response->getStatusCode();
 
 	.. php:method:: setStatusCode($code[, $reason=''])
 
@@ -268,14 +268,14 @@ The methods provided by the parent class that are available are:
 
 			$response->setStatusCode(230, "Tardis initiated");
 
-	.. php:method:: reason()
+	.. php:method:: getReason()
 
 		:returns: The current reason phrase.
 		:rtype: string
 
 		Returns the current status code for this response. If not status has been set, will return an empty string::
 
-			echo $response->reason();
+			echo $response->getReason();
 
 	.. php:method:: setDate($date)
 
@@ -379,18 +379,19 @@ The methods provided by the parent class that are available are:
 
 		**Array Method**
 
-		Using this method, an associative array is passed to the first
+		Using this method, an associative array is passed as the first
 		parameter::
 
-			$cookie = array(
+			$cookie = [
 				'name'   => 'The Cookie Name',
 				'value'  => 'The Value',
 				'expire' => '86500',
 				'domain' => '.some-domain.com',
 				'path'   => '/',
 				'prefix' => 'myprefix_',
-				'secure' => TRUE
-			);
+				'secure' => TRUE,
+                                'httponly' => FALSE
+			];
 
 			$response->setCookie($cookie);
 
@@ -421,4 +422,70 @@ The methods provided by the parent class that are available are:
 		If you prefer, you can set the cookie by passing data using individual
 		parameters::
 
-			$response->setCookie($name, $value, $expire, $domain, $path, $prefix, $secure);
+			$response->setCookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httponly);
+
+	.. php:method:: deleteCookie($name = ''[, $domain = ''[, $path = '/'[, $prefix = '']]])
+
+		:param	mixed	$name: Cookie name or an array of parameters
+		:param	string	$domain: Cookie domain
+		:param	string	$path: Cookie path
+		:param	string	$prefix: Cookie name prefix
+		:rtype:	void
+
+		Delete an existing cookie by setting its expiry to blank.
+
+		**Notes**
+
+		Only the name is required.
+
+		The prefix is only needed if you need to avoid name collisions with
+		other identically named cookies for your server.
+                
+		Provide a prefix if cookies should only be deleted for that subset.
+                Provide a domain name if cookies should only be deleted for that domain.
+                Provide a path name if cookies should only be deleted for that path.
+
+                If any of the optional parameters are empty, then the same-named
+                cookie will be deleted across all that apply.
+
+		Example::
+
+			$response->deleteCookie($name);
+
+	.. php:method:: hasCookie($name = ''[, $value = null[, $prefix = '']])
+
+		:param	mixed	$name: Cookie name or an array of parameters
+		:param	string	$value: cookie value
+		:param	string	$prefix: Cookie name prefix
+		:rtype:	boolean
+
+		Checks to see if the Response has a specified cookie or not.
+
+		**Notes**
+
+		Only the name is required. If a prefix is specified, it will be
+                pre-pended to the cookie name.
+
+                If no value is given, the method just checks for the existence
+                of the named cookie. If a value is given, then the method checks
+                that the cookie exists, and that it has the prescribed value.
+
+		Example::
+
+			if ($response->hasCookie($name)) ...
+
+	.. php:method:: getCookie($name = ''[, $prefix = ''])
+
+		:param	mixed	$name: Cookie name
+		:param	string	$prefix: Cookie name prefix
+		:rtype:	boolean
+
+		Returns the named cookie, if found, or null.
+
+                If no name is given, returns the array of cookies.
+
+                Each cookie is returned as an associative array.
+
+		Example::
+
+			$cookie = $response->getCookie($name);

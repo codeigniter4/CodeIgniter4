@@ -10,10 +10,10 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	/**
 	 * For CurlRequest
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 * 
+	 * @return             \CodeIgniter\HTTP\Exceptions\HTTPException
+	 *
 	 * Not testable with travis-ci
-	 * @codeCoverageIgnore		
+	 * @codeCoverageIgnore
 	 */
 	public static function forMissingCurl()
 	{
@@ -50,10 +50,10 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 * @param string $errorNum
 	 * @param string $error
 	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 * 
+	 * @return             \CodeIgniter\HTTP\Exceptions\HTTPException
+	 *
 	 * Not testable with travis-ci; we over-ride the method which triggers it
-	 * @codeCoverageIgnore		
+	 * @codeCoverageIgnore
 	 */
 	public static function forCurlError(string $errorNum, string $error)
 	{
@@ -119,7 +119,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	/**
 	 * For Response
 	 *
-	 * @param int $code
+	 * @param integer $code
 	 *
 	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
 	 */
@@ -131,7 +131,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	/**
 	 * For Response
 	 *
-	 * @param int $code
+	 * @param integer $code
 	 *
 	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
 	 */
@@ -155,7 +155,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	/**
 	 * For URI
 	 *
-	 * @param int $segment
+	 * @param integer $segment
 	 *
 	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
 	 */
@@ -167,7 +167,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	/**
 	 * For URI
 	 *
-	 * @param int $port
+	 * @param integer $port
 	 *
 	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
 	 */
@@ -203,7 +203,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 *
 	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
 	 */
-	public static function forInvalidFile(string $path=null)
+	public static function forInvalidFile(string $path = null)
 	{
 		return new static(lang('HTTP.invalidFile'));
 	}

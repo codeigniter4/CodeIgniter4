@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -51,13 +51,15 @@ class FileHandler extends BaseHandler implements HandlerInterface
 
 	/**
 	 * Extension to use for log files
+	 *
 	 * @var string
 	 */
 	protected $fileExtension;
 
 	/**
 	 * Permissions for new log files
-	 * @var int
+	 *
+	 * @var integer
 	 */
 	protected $filePermissions;
 
@@ -65,6 +67,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 
 	/**
 	 * Constructor
+	 *
 	 * @param array $config
 	 */
 	public function __construct(array $config = [])
@@ -90,7 +93,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 	 * @param $level
 	 * @param $message
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function handle($level, $message): bool
 	{
@@ -98,7 +101,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 
 		$msg = '';
 
-		if ( ! file_exists($filepath))
+		if (! is_file($filepath))
 		{
 			$newfile = true;
 
@@ -109,7 +112,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 			}
 		}
 
-		if ( ! $fp = @fopen($filepath, 'ab'))
+		if (! $fp = @fopen($filepath, 'ab'))
 		{
 			return false;
 		}
@@ -117,10 +120,10 @@ class FileHandler extends BaseHandler implements HandlerInterface
 		// Instantiating DateTime with microseconds appended to initial date is needed for proper support of this format
 		if (strpos($this->dateFormat, 'u') !== false)
 		{
-			$microtime_full = microtime(true);
-			$microtime_short = sprintf("%06d", ($microtime_full - floor($microtime_full)) * 1000000);
-			$date = new \DateTime(date('Y-m-d H:i:s.' . $microtime_short, $microtime_full));
-			$date = $date->format($this->dateFormat);
+			$microtime_full  = microtime(true);
+			$microtime_short = sprintf('%06d', ($microtime_full - floor($microtime_full)) * 1000000);
+			$date            = new \DateTime(date('Y-m-d H:i:s.' . $microtime_short, $microtime_full));
+			$date            = $date->format($this->dateFormat);
 		}
 		else
 		{

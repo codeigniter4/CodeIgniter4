@@ -21,15 +21,15 @@ class FileHandlerTest extends \CIUnitTestCase
 	}
 
 	private static $dummy = 'dymmy';
-	private        $fileHandler;
-	private        $config;
+	private $fileHandler;
+	private $config;
 
 	public function setUp()
 	{
 		parent::setUp();
 
 		//Initialize path
-		$this->config            = new \Config\Cache();
+		$this->config             = new \Config\Cache();
 		$this->config->storePath .= self::$directory;
 
 		if (! is_dir($this->config->storePath))
@@ -49,10 +49,10 @@ class FileHandlerTest extends \CIUnitTestCase
 
 			foreach (self::getKeyArray() as $key)
 			{
-				if (is_file($this->config->storePath.DIRECTORY_SEPARATOR.$key))
+				if (is_file($this->config->storePath . DIRECTORY_SEPARATOR . $key))
 				{
-					chmod($this->config->storePath.DIRECTORY_SEPARATOR.$key, 0777);
-					unlink($this->config->storePath.DIRECTORY_SEPARATOR.$key);
+					chmod($this->config->storePath . DIRECTORY_SEPARATOR . $key, 0777);
+					unlink($this->config->storePath . DIRECTORY_SEPARATOR . $key);
 				}
 			}
 
@@ -63,6 +63,15 @@ class FileHandlerTest extends \CIUnitTestCase
 	public function testNew()
 	{
 		$this->assertInstanceOf(FileHandler::class, $this->fileHandler);
+	}
+
+	/**
+	 * @expectedException \CodeIgniter\Cache\Exceptions\CacheException
+	 */
+	public function testNewWithNonWritablePath()
+	{
+		chmod($this->config->storePath, 0444);
+		new FileHandler($this->config);
 	}
 
 	public function testSetDefaultPath()
@@ -144,8 +153,8 @@ class FileHandlerTest extends \CIUnitTestCase
 		$this->assertFalse($this->fileHandler->getMetaData(self::$dummy));
 
 		$actual = $this->fileHandler->getMetaData(self::$key1);
-		$this->assertLessThanOrEqual(60, $actual['expire']-$time);
-		$this->assertLessThanOrEqual(0, $actual['mtime']-$time);
+		$this->assertLessThanOrEqual(60, $actual['expire'] - $time);
+		$this->assertLessThanOrEqual(0, $actual['mtime'] - $time);
 		$this->assertSame('value', $actual['data']);
 	}
 
@@ -175,11 +184,11 @@ class FileHandlerTest extends \CIUnitTestCase
 final class BaseTestFileHandler extends FileHandler
 {
 	private static $directory = 'FileHandler';
-	private        $config;
+	private $config;
 
 	public function __construct()
 	{
-		$this->config            = new \Config\Cache();
+		$this->config             = new \Config\Cache();
 		$this->config->storePath .= self::$directory;
 
 		parent::__construct($this->config);
@@ -187,7 +196,10 @@ final class BaseTestFileHandler extends FileHandler
 
 	public function getFileInfoTest()
 	{
-		return $this->getFileInfo($this->config->storePath, [
+		$tmp_handle = tmpfile();
+		stream_get_meta_data($tmp_handle)['uri'];
+
+		return $this->getFileInfo(stream_get_meta_data($tmp_handle)['uri'], [
 			'name',
 			'server_path',
 			'size',

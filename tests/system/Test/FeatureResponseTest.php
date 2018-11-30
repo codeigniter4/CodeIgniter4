@@ -20,7 +20,6 @@ class FeatureResponseTest extends CIUnitTestCase
 		parent::setUp();
 	}
 
-
 	public function testIsOKFailsSmall()
 	{
 		$this->getFeatureResponse('Hello World');
@@ -148,7 +147,6 @@ class FeatureResponseTest extends CIUnitTestCase
 		$this->feature->assertHeader('foo', 'bar');
 	}
 
-
 	public function testAssertCookie()
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
@@ -180,7 +178,7 @@ class FeatureResponseTest extends CIUnitTestCase
 	public function testGetJSON()
 	{
 		$this->getFeatureResponse(['foo' => 'bar']);
-		$config = new \Config\Format();
+		$config    = new \Config\Format();
 		$formatter = $config->getFormatter('application/json');
 
 		$this->assertEquals($formatter->format(['foo' => 'bar']), $this->feature->getJSON());
@@ -189,7 +187,7 @@ class FeatureResponseTest extends CIUnitTestCase
 	public function testGetXML()
 	{
 		$this->getFeatureResponse(['foo' => 'bar']);
-		$config = new \Config\Format();
+		$config    = new \Config\Format();
 		$formatter = $config->getFormatter('application/xml');
 
 		$this->assertEquals($formatter->format(['foo' => 'bar']), $this->feature->getXML());
@@ -199,8 +197,9 @@ class FeatureResponseTest extends CIUnitTestCase
 	{
 		$this->getFeatureResponse([
 			'config' => [
-				'key-a', 'key-b'
-			]
+				'key-a',
+				'key-b',
+			],
 		]);
 
 		$this->feature->assertJSONFragment(['config' => ['key-a']]);
@@ -210,8 +209,9 @@ class FeatureResponseTest extends CIUnitTestCase
 	{
 		$data = [
 			'config' => [
-				'key-a', 'key-b'
-			]
+				'key-a',
+				'key-b',
+			],
 		];
 
 		$this->getFeatureResponse($data);
@@ -223,21 +223,21 @@ class FeatureResponseTest extends CIUnitTestCase
 	{
 		$data = [
 			'config' => [
-				'key-a', 'key-b'
-			]
+				'key-a',
+				'key-b',
+			],
 		];
 
 		$this->getFeatureResponse($data);
 
-		$config = new \Config\Format();
+		$config    = new \Config\Format();
 		$formatter = $config->getFormatter('application/json');
-		$expected = $formatter->format($data);
+		$expected  = $formatter->format($data);
 
 		$this->feature->assertJSONExact($expected);
 	}
 
-
-	protected function getFeatureResponse($body=null, array $responseOptions = [], array $headers = [])
+	protected function getFeatureResponse($body = null, array $responseOptions = [], array $headers = [])
 	{
 		$this->response = new Response(new \Config\App());
 		$this->response->setBody($body);
@@ -246,7 +246,7 @@ class FeatureResponseTest extends CIUnitTestCase
 		{
 			foreach ($responseOptions as $key => $value)
 			{
-				$method = 'set'.ucfirst($key);
+				$method = 'set' . ucfirst($key);
 
 				if (method_exists($this->response, $method))
 				{

@@ -7,11 +7,10 @@ class MockResult extends BaseResult
 	/**
 	 * Gets the number of fields in the result set.
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function getFieldCount(): int
 	{
-
 	}
 
 	//--------------------------------------------------------------------
@@ -23,7 +22,6 @@ class MockResult extends BaseResult
 	 */
 	public function getFieldNames(): array
 	{
-
 	}
 
 	//--------------------------------------------------------------------
@@ -35,7 +33,6 @@ class MockResult extends BaseResult
 	 */
 	public function getFieldData(): array
 	{
-
 	}
 
 	//--------------------------------------------------------------------
@@ -47,7 +44,6 @@ class MockResult extends BaseResult
 	 */
 	public function freeResult()
 	{
-
 	}
 
 	//--------------------------------------------------------------------
@@ -57,13 +53,12 @@ class MockResult extends BaseResult
 	 * internally before fetching results to make sure the result set
 	 * starts at zero.
 	 *
-	 * @param int $n
+	 * @param integer $n
 	 *
 	 * @return mixed
 	 */
 	public function dataSeek($n = 0)
 	{
-
 	}
 
 	//--------------------------------------------------------------------
@@ -77,7 +72,6 @@ class MockResult extends BaseResult
 	 */
 	protected function fetchAssoc(): array
 	{
-
 	}
 
 	//--------------------------------------------------------------------
@@ -93,7 +87,6 @@ class MockResult extends BaseResult
 	 */
 	protected function fetchObject($className = 'stdClass')
 	{
-
 	}
 
 	//--------------------------------------------------------------------

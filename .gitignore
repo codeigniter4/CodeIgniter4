@@ -43,7 +43,6 @@ $RECYCLE.BIN/
 # as it poses a security risk.
 .env
 .vagrant
-application/.env
 Vagrantfile
 
 #-------------------------
@@ -51,23 +50,17 @@ Vagrantfile
 #-------------------------
 writable/cache/*
 !writable/cache/index.html
-!writable/cache/.htaccess
 
 writable/logs/*
 !writable/logs/index.html
-!writable/logs/.htaccess
 
 writable/session/*
 !writable/session/index.html
-!writable/session/.htaccess
 
 writable/uploads/*
 !writable/uploads/index.html
-!writable/uploads/.htaccess
 
 writable/debugbar/*
-
-application/Database/Migrations/2*
 
 php_errors.log
 
@@ -131,4 +124,3 @@ nb-configuration.xml
 
 /results/
 /phpunit*.xml
-
