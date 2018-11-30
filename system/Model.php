@@ -683,19 +683,15 @@ class Model
 	 * Updates a single record in $this->table. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
-	 * @param integer|array|string $id
-	 * @param array|object         $data
+	 * @param integer|array|string	$id
+	 * @param array|object			$data
+	 * @param boolean				$validation_filter - will validate only data which are in $data
 	 *
 	 * @return boolean
 	 */
-	public function update($id = null, $data = null)
+	public function update($id = null, $data = null, bool $validation_filter = false)
 	{
 		$escape = null;
-
-		if (is_numeric($id))
-		{
-			$id = [$id];
-		}
 
 		if (empty($data))
 		{
@@ -723,7 +719,7 @@ class Model
 		// Validate data before saving.
 		if ($this->skipValidation === false)
 		{
-			if ($this->validate($data) === false)
+			if ($this->validate($data, $validation_filter) === false)
 			{
 				return false;
 			}
@@ -752,9 +748,30 @@ class Model
 
 		$builder = $this->builder();
 
-		if ($id)
+		if (is_numeric($id) || (!empty($id) && is_string($id)))
 		{
-			$builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
+			$builder = $builder->where($this->table.'.'.$this->primaryKey, $id);
+		}
+		elseif (!empty($id) && is_array($id))
+		{
+			if(array_keys($id) === range(0, count($id) -1))
+			{
+				$builder = $builder->whereIn($this->table.'.'.$this->primaryKey, $id);
+			}
+			else
+			{
+				foreach ($id as $key => $value)
+				{
+					if(!empty($value) && is_array($value))
+					{
+						$builder = $builder->whereIn($this->table.'.'.$key, $value);
+					}
+					else
+					{
+						$builder = $builder->where($this->table.'.'.$key, $value);
+					}
+				}
+			}
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays
@@ -1235,10 +1252,11 @@ class Model
 	 * specified in the class property, $validationRules.
 	 *
 	 * @param array $data
+	 * @param bool $validation_filter
 	 *
 	 * @return boolean
 	 */
-	public function validate($data): bool
+	public function validate($data, bool $validation_filter = false): bool
 	{
 		if ($this->skipValidation === true || empty($this->validationRules) || empty($data))
 		{
@@ -1260,9 +1278,10 @@ class Model
 		}
 		else
 		{
+			$validation_rules = $validation_filter ? array_intersect_key($this->validationRules, $data) : $this->validationRules;
 			// Replace any placeholders (i.e. {id}) in the rules with
 			// the value found in $data, if exists.
-			$rules = $this->fillPlaceholders($this->validationRules, $data);
+			$rules = $this->fillPlaceholders($validation_rules, $data);
 
 			$this->validation->setRules($rules, $this->validationMessages, $this->DBGroup);
 			$valid = $this->validation->run($data);
