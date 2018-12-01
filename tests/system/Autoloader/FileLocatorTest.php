@@ -245,14 +245,14 @@ class FileLocatorTest extends \CIUnitTestCase
 	{
 		$ClassName = $this->locator->findQualifiedNameFromPath('modules/blog/Views/index.php');
 
-		$this->assertNull($ClassName);
+		$this->assertFalse($ClassName);
 	}
 
 	public function testFindQNameFromPathWithoutCorrespondingNamespace()
 	{
 		$ClassName = $this->locator->findQualifiedNameFromPath('/etc/hosts');
 
-		$this->assertNull($ClassName);
+		$this->assertFalse($ClassName);
 	}
 
 	public function testGetClassNameFromClassFile()

@@ -220,9 +220,7 @@ class FileLocator
 
 		foreach ($this->getNamespaces() as $namespace)
 		{
-			$namespace['path'] = rtrim($namespace['path'], '/') . '/';
-
-			if (is_file($namespace['path'] . $path) === true)
+			if (is_file($namespace['path'] . $path))
 			{
 				$foundPaths[] = $namespace['path'] . $path;
 			}
@@ -294,13 +292,12 @@ class FileLocator
 	//--------------------------------------------------------------------
 
 	/**
-	 * Attempts to load a file and instantiate a new class by looking
-	 * at its full path and comparing that to our existing psr4 namespaces
-	 * in Autoloader config file.
+	 * Find the qualified name of a file according to
+	 * the namespace of the first matched namespace path.
 	 *
 	 * @param string $path
 	 *
-	 * @return string|void
+	 * @return string|false The qualified name or false if the path is not found
 	 */
 	public function findQualifiedNameFromPath(string $path)
 	{
@@ -308,7 +305,7 @@ class FileLocator
 
 		if (! $path)
 		{
-			return;
+			return false;
 		}
 
 		foreach ($this->getNamespaces() as $namespace)
@@ -332,6 +329,8 @@ class FileLocator
 				return $className;
 			}
 		}
+
+		return false;
 	}
 
 	//--------------------------------------------------------------------
