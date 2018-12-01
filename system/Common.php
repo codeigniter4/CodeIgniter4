@@ -199,7 +199,7 @@ if (! function_exists('env'))
 			case 'empty':
 				return '';
 			case 'null':
-				return;
+				return null;
 		}
 
 		return $value;
@@ -488,9 +488,7 @@ if (! function_exists('route_to'))
 	 */
 	function route_to(string $method, ...$params): string
 	{
-		$routes = Services::routes();
-
-		return $routes->reverseRoute($method, ...$params);
+		return Services::routes()->reverseRoute($method, ...$params);
 	}
 }
 
@@ -713,7 +711,7 @@ if (! function_exists('force_https'))
 	 *
 	 * Not testable, as it will exit!
 	 *
-	 * @throws             \CodeIgniter\HTTP\RedirectException
+	 * @throws             \CodeIgniter\HTTP\Exceptions\HTTPException
 	 * @codeCoverageIgnore
 	 */
 	function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
