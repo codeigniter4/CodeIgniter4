@@ -690,7 +690,7 @@ if (! function_exists('csrf_field'))
 	 */
 	function csrf_field(string $id = null)
 	{
-		return '<input type="hidden"' . (!empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '">';
+		return '<input type="hidden"' . (!empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '" />';
 	}
 }
 
