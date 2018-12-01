@@ -37,7 +37,7 @@
  */
 
 /**
- * Class Loader
+ * Class FileLocator
  *
  * Allows loading non-class files in a namespaced manner.
  * Works with Helpers, Views, etc.
@@ -73,26 +73,26 @@ class FileLocator
 	 * @param string $folder The folder within the namespace that we should look for the file.
 	 * @param string $ext    The file extension the file should have.
 	 *
-	 * @return string       The path to the file if found, or an empty string.
+	 * @return string|false The path to the file, or false if not found.
 	 */
-	public function locateFile(string $file, string $folder = null, string $ext = 'php'): string
+	public function locateFile(string $file, string $folder = null, string $ext = 'php')
 	{
 		$file = $this->ensureExt($file, $ext);
 
 		// Clears the folder name if it is at the beginning of the filename
 		if (! empty($folder) && ($pos = strpos($file, $folder)) === 0)
 		{
-			$file = substr_replace($file, '', $pos, strlen($folder . '/'));
+			$file = substr($file, strlen($folder . '/'));
 		}
 
-		// No namespaceing? Try the application folder.
+		// Is not namespaced? Try the application folder.
 		if (strpos($file, '\\') === false)
 		{
 			return $this->legacyLocate($file, $folder);
 		}
 
 		// Standardize slashes to handle nested directories.
-		$file = str_replace('/', '\\', $file);
+		$file = strtr($file, '/', '\\');
 
 		$segments = explode('\\', $file);
 
@@ -106,13 +106,16 @@ class FileLocator
 		$prefix   = '';
 		$filename = '';
 
+		// Namespaces always comes with arrays of paths
+		$namespaces = $this->autoloader->getNamespace();
+
 		while (! empty($segments))
 		{
 			$prefix .= empty($prefix)
 				? ucfirst(array_shift($segments))
 				: '\\' . ucfirst(array_shift($segments));
 
-			if (! array_key_exists($prefix, $this->autoloader->getNamespace()))
+			if (empty($namespaces[$prefix]))
 			{
 				continue;
 			}
@@ -124,19 +127,14 @@ class FileLocator
 		// IF we have a folder name, then the calling function
 		// expects this file to be within that folder, like 'Views',
 		// or 'libraries'.
-		if (! empty($folder) && strpos($filename, $folder) === false)
+		if (! empty($folder) && strpos($filename, $folder . '/') !== 0)
 		{
 			$filename = $folder . '/' . $filename;
 		}
 
 		$path .= $filename;
 
-		if (! $this->requireFile($path))
-		{
-			$path = '';
-		}
-
-		return $path;
+		return is_file($path) ? $path : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -337,7 +335,7 @@ class FileLocator
 
 	/**
 	 * Scans the defined namespaces, returning a list of all files
-	 * that are contained within the subpath specifed by $path.
+	 * that are contained within the subpath specified by $path.
 	 *
 	 * @param string $path
 	 *
@@ -355,7 +353,7 @@ class FileLocator
 
 		foreach ($this->getNamespaces() as $namespace)
 		{
-			$fullPath = realpath(rtrim($namespace['path'], '/') . '/' . $path);
+			$fullPath = realpath($namespace['path'] . $path);
 
 			if (! is_dir($fullPath))
 			{
@@ -373,6 +371,8 @@ class FileLocator
 		return $files;
 	}
 
+	//--------------------------------------------------------------------
+
 	/**
 	 * Checks the application folder to see if the file can be found.
 	 * Only for use with filenames that DO NOT include namespacing.
@@ -380,10 +380,9 @@ class FileLocator
 	 * @param string      $file
 	 * @param string|null $folder
 	 *
-	 * @return   string
-	 * @internal param string $ext
+	 * @return string|false The path to the file, or false if not found.
 	 */
-	protected function legacyLocate(string $file, string $folder = null): string
+	protected function legacyLocate(string $file, string $folder = null)
 	{
 		$paths = [
 			APPPATH,
@@ -394,29 +393,12 @@ class FileLocator
 		{
 			$path .= empty($folder) ? $file : $folder . '/' . $file;
 
-			if ($this->requireFile($path) === true)
+			if (is_file($path))
 			{
 				return $path;
 			}
 		}
 
-		return '';
+		return false;
 	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Checks to see if a file exists on the file system. This is split
-	 * out to it's own method to make testing simpler.
-	 *
-	 * @param string $path
-	 *
-	 * @return boolean
-	 */
-	protected function requireFile(string $path): bool
-	{
-		return is_file($path);
-	}
-
-	//--------------------------------------------------------------------
 }

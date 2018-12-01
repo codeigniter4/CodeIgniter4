@@ -47,7 +47,7 @@ class FileLocatorTest extends \CIUnitTestCase
 	{
 		$file = 'Unknown';
 
-		$this->assertEquals('', $this->locator->locateFile($file));
+		$this->assertFalse($this->locator->locateFile($file));
 	}
 
 	//--------------------------------------------------------------------
@@ -129,11 +129,11 @@ class FileLocatorTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testLocateFileReturnsEmptyWithBadNamespace()
+	public function testLocateFileNotFoundWithBadNamespace()
 	{
 		$file = '\Blogger\admin/posts.php';
 
-		$this->assertEquals('', $this->locator->locateFile($file, 'Views'));
+		$this->assertFalse($this->locator->locateFile($file, 'Views'));
 	}
 
 	//--------------------------------------------------------------------
