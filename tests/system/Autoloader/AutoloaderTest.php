@@ -29,8 +29,6 @@ class AutoloaderTest extends \CIUnitTestCase
 			'CodeIgniter' => BASEPATH,
 		];
 
-		//\var_dump($config);exit;
-
 		$this->loader = new Autoloader();
 		$this->loader->initialize($config)->register();
 	}
@@ -51,7 +49,6 @@ class AutoloaderTest extends \CIUnitTestCase
 		(new Autoloader())->initialize($config);
 	}
 
-	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
 	// PSR4 Namespacing
 	//--------------------------------------------------------------------
@@ -119,7 +116,6 @@ class AutoloaderTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
 
 	/**
 	 * @expectedException        \InvalidArgumentException
@@ -161,7 +157,7 @@ class AutoloaderTest extends \CIUnitTestCase
 		$this->assertSame($expected, $actual);
 	}
 
-	public function testAddNamespaceStingToArray()
+	public function testAddNamespaceStringToArray()
 	{
 		$this->loader->addNamespace('App\Controllers', __DIR__);
 

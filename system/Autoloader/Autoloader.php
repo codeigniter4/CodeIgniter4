@@ -119,8 +119,6 @@ class Autoloader
 			$this->classmap = $config->classmap;
 		}
 
-		//$this->addNamespace(APP_NAMESPACE, APPPATH);
-
 		unset($config);
 
 		return $this;
