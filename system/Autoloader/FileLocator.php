@@ -61,10 +61,6 @@ class FileLocator
 	public function __construct(Autoloader $autoloader)
 	{
 		$this->autoloader = $autoloader;
-		//$this->autoloader->addNamespace(APP_NAMESPACE, APPPATH);
-
-		// Always keep the Application directory as a "package".
-		//array_unshift($this->namespaces, APPPATH);
 	}
 
 	//--------------------------------------------------------------------
@@ -81,14 +77,12 @@ class FileLocator
 	 */
 	public function locateFile(string $file, string $folder = null, string $ext = 'php'): string
 	{
-		// Ensure the extension is on the filename
-		$file = strpos($file, '.' . $ext) !== false ? $file : $file . '.' . $ext;
+		$file = $this->ensureExt($file, $ext);
 
-		// Clean the folder name from the filename
-		//if (! empty($folder))
-		if (! empty($folder) /*&& strpos($file, $folder) === false*/)
+		// Clears the folder name if it is at the beginning of the filename
+		if (! empty($folder) && ($pos = strpos($file, $folder)) === 0)
 		{
-			$file = str_replace($folder . '/', '', $file);
+			$file = substr_replace($file, '', $pos, strlen($folder . '/'));
 		}
 
 		// No namespaceing? Try the application folder.
@@ -220,16 +214,7 @@ class FileLocator
 	 */
 	public function search(string $path, string $ext = 'php'): array
 	{
-		// Ensure the extension is at the end of the filename
-		if ($ext)
-		{
-			$ext = '.' . $ext;
-
-			if (strpos($ext, $ext) === false || substr($path, -strlen($ext)) !== $ext)
-			{
-				$path .= $ext;
-			}
-		}
+		$path = $this->ensureExt($path, $ext);
 
 		$foundPaths = [];
 
@@ -251,6 +236,36 @@ class FileLocator
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Ensures a extension is at the end of a filename
+	 *
+	 * @param string $path
+	 * @param string $ext
+	 *
+	 * @return string
+	 */
+	protected function ensureExt(string $path, string $ext): string
+	{
+		if ($ext)
+		{
+			$ext = '.' . $ext;
+
+			if (substr($path, -strlen($ext)) !== $ext)
+			{
+				$path .= $ext;
+			}
+		}
+
+		return $path;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @param string|null $prefix
+	 *
+	 * @return array|string
+	 */
 	protected function getNamespaces(string $prefix = null)
 	{
 		if ($prefix)
