@@ -110,7 +110,7 @@ class CommandRunner extends Controller
 	{
 		if (! isset($this->commands[$command]))
 		{
-			CLI::error('Command \'' . $command . '\' not found');
+			CLI::error(lang('CLI.commandNotFound', [$command]));
 			CLI::newLine();
 			return;
 		}
