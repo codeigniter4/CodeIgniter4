@@ -127,7 +127,7 @@ class FileLocator
 		// IF we have a folder name, then the calling function
 		// expects this file to be within that folder, like 'Views',
 		// or 'libraries'.
-		if (! empty($folder) && strpos($filename, $folder . '/') !== 0)
+		if (! empty($folder) && strpos($path . $filename, '/' . $folder . '/') === false)
 		{
 			$filename = $folder . '/' . $filename;
 		}
