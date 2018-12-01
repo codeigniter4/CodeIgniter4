@@ -235,6 +235,8 @@ class BaseService
 	 *
 	 * @param string $name
 	 * @param array  $arguments
+	 *
+	 * @return mixed
 	 */
 	protected static function discoverServices(string $name, array $arguments)
 	{
@@ -249,7 +251,7 @@ class BaseService
 
 				if (empty($files))
 				{
-					return;
+					return null;
 				}
 
 				// Get instances of all service classes and cache them locally.
@@ -269,7 +271,7 @@ class BaseService
 
 		if (! static::$services)
 		{
-			return;
+			return null;
 		}
 
 		// Try to find the desired service method
@@ -280,5 +282,7 @@ class BaseService
 				return $class::$name(...$arguments);
 			}
 		}
+
+		return null;
 	}
 }
