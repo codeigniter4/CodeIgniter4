@@ -36,6 +36,13 @@
  * @filesource
  */
 
+use CodeIgniter\Config\Services;
+
+/**
+ * Class Language
+ *
+ * @package CodeIgniter\Language
+ */
 class Language
 {
 
@@ -102,6 +109,8 @@ class Language
 		return $this;
 	}
 
+	//--------------------------------------------------------------------
+
 	/**
 	 * @return string
 	 */
@@ -109,6 +118,8 @@ class Language
 	{
 		return $this->locale;
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Parses the language string for a file, loads the file, if necessary,
@@ -263,7 +274,7 @@ class Language
 	 */
 	protected function requireFile(string $path): array
 	{
-		$files = service('locator')->search($path);
+		$files = Services::locator()->search($path);
 
 		$strings = [];
 
