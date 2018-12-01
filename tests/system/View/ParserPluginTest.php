@@ -15,8 +15,8 @@ class ParserPluginTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		\Config\Services::reset();
-		\Config\Services::autoloader()->initialize(new \Config\Autoload());
+		\Config\Services::reset(true);
+
 		$this->parser    = \Config\Services::parser();
 		$this->validator = \Config\Services::validation();
 	}
