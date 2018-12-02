@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": ">=7.1",
-        "codeigniter4/framework": "^4",
+        "codeigniter4/framework": "^4@alpha",
          "ext-curl": "*",
         "ext-intl": "*",
         "kint-php/kint": "^2.1",

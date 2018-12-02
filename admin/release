@@ -56,12 +56,14 @@ sed -i "/Release Date/s/Not Released/$(date +'%B %d, %Y')/" user_guide_src/sourc
 sed -i "/|version|/s/|version|/${RELEASE}/" user_guide_src/source/changelogs/index.rst
 
 # version & date in user_guide_src/source/next.rst
-sed -i "/|release|/s/|.*|/${RELEASE}/" user_guide_src/source/changelogs/next.rst
 sed -i "/Release Date/s/Not Released/$(date +'%B %d, %Y')/" user_guide_src/source/changelogs/next.rst
 sed -i "/|version|/s/|version|/${RELEASE}/" user_guide_src/source/changelogs/next.rst
 
 # establish version-specific changelog
-mv user_guide_src/source/changelogs/next.rst user_guide_src/source/changelogs/${RELEASE}.rst
+sed -i "|changelogs/next|s|changeslog/next|changelogs/v{$RELEASE}| user_guide_src/source/changelogs/index.rst
+mv user_guide_src/source/changelogs/next.rst user_guide_src/source/changelogs/v${RELEASE}.rst
+touch user_guide_src/source/changelogs/next.rst
+cp admin/next.rst user_guide_src/source/changelogs/next.rst
 
 #---------------------------------------------------
 # Setup the distribution folders
@@ -92,6 +94,15 @@ setup_repo userguide
 setup_repo appstarter
 
 #---------------------------------------------------
+# Housekeeping - make sure writable is flushed of test files
+# at least, test files that crop up on my system :-/
+rm -f writable/cache/H*
+rm -f writable/cache/d*
+rm -f writable/cache/s*
+rm -f writable/debugbar/debug*
+rm -f writable/logs/log*
+
+#---------------------------------------------------
 # Generate the user guide
 echo -e "${BOLD}Generate the user guide${NORMAL}"
 
@@ -101,6 +112,7 @@ cd user_guide_src
 rm -rf build/*
 echo -e "${BOLD}... HTML version${NORMAL}"
 make html
+touch build/html/.nojekyll
 echo -e "${BOLD}... epub version${NORMAL}"
 make epub
 
@@ -118,6 +130,11 @@ sed -i "10 G" $file
 sed -i "11 G" $file
 sed -i "12 a :doc:\`See all the changes. </changelogs/next>\`" $file
 sed -i "13 G" $file
+
+#---------------------------------------------------
+echo -e "${BOLD}Commit the release branch${NORMAL}"
+git add .
+git commit -S -m "Release ${RELEASE}"
 
 #---------------------------------------------------
 # Build the distributables
