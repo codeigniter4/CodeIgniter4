@@ -94,6 +94,15 @@ setup_repo userguide
 setup_repo appstarter
 
 #---------------------------------------------------
+# Housekeeping - make sure writable is flushed of test files
+# at least, test files that crop up on my system :-/
+rm -f writable/cache/H*
+rm -f writable/cache/d*
+rm -f writable/cache/s*
+rm -f writable/debugbar/debug*
+rm -f writable/logs/log*
+
+#---------------------------------------------------
 # Generate the user guide
 echo -e "${BOLD}Generate the user guide${NORMAL}"
 
