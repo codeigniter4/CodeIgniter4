@@ -123,6 +123,11 @@ sed -i "12 a :doc:\`See all the changes. </changelogs/next>\`" $file
 sed -i "13 G" $file
 
 #---------------------------------------------------
+echo -e "${BOLD}Commit the release branch${NORMAL}"
+git add .
+git commit -S -m "Release ${RELEASE}"
+
+#---------------------------------------------------
 # Build the distributables
 
 . admin/release-framework
