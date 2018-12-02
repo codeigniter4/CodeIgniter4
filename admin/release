@@ -56,7 +56,6 @@ sed -i "/Release Date/s/Not Released/$(date +'%B %d, %Y')/" user_guide_src/sourc
 sed -i "/|version|/s/|version|/${RELEASE}/" user_guide_src/source/changelogs/index.rst
 
 # version & date in user_guide_src/source/next.rst
-sed -i "/|release|/s/|.*|/${RELEASE}/" user_guide_src/source/changelogs/next.rst
 sed -i "/Release Date/s/Not Released/$(date +'%B %d, %Y')/" user_guide_src/source/changelogs/next.rst
 sed -i "/|version|/s/|version|/${RELEASE}/" user_guide_src/source/changelogs/next.rst
 
@@ -64,6 +63,7 @@ sed -i "/|version|/s/|version|/${RELEASE}/" user_guide_src/source/changelogs/nex
 sed -i "|changelogs/next|s|changeslog/next|changelogs/v{$RELEASE}| user_guide_src/source/changelogs/index.rst
 mv user_guide_src/source/changelogs/next.rst user_guide_src/source/changelogs/v${RELEASE}.rst
 touch user_guide_src/source/changelogs/next.rst
+cp admin/next.rst user_guide_src/source/changelogs/next.rst
 
 #---------------------------------------------------
 # Setup the distribution folders
