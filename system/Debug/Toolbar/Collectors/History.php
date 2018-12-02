@@ -151,7 +151,7 @@ class History extends BaseCollector
 
 	public function isEmpty()
 	{
-		return count($this->files) === 0;
+		return empty($this->files);
 	}
 
 	//--------------------------------------------------------------------
