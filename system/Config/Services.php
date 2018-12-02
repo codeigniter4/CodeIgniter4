@@ -742,12 +742,12 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
-	 * @param \Config\App $config
-	 * @param boolean     $getShared
+	 * @param \Config\Toolbar $config
+	 * @param boolean         $getShared
 	 *
 	 * @return \CodeIgniter\Debug\Toolbar
 	 */
-	public static function toolbar(\Config\App $config = null, bool $getShared = true)
+	public static function toolbar(\Config\Toolbar $config = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -756,7 +756,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = config(App::class);
+			$config = config(\Config\Toolbar::class);
 		}
 
 		return new \CodeIgniter\Debug\Toolbar($config);
