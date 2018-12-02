@@ -39,7 +39,7 @@
 /**
  * Base Toolbar collector
  */
-class BaseCollector
+abstract class BaseCollector
 {
 
 	/**

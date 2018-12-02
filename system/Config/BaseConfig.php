@@ -45,7 +45,7 @@
  *
  * These can be set within the .env file.
  */
-class BaseConfig
+abstract class BaseConfig
 {
 
 	/**

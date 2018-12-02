@@ -47,7 +47,7 @@ use Psr\Log\LoggerInterface;
  *
  * @package CodeIgniter
  */
-class Controller
+abstract class Controller
 {
 
 	/**

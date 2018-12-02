@@ -63,7 +63,7 @@ use CodeIgniter\Database\Exceptions\DataException;
  * @package CodeIgniter
  * @mixin   BaseBuilder
  */
-class Model
+abstract class Model
 {
 
 	/**

@@ -38,7 +38,7 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
  * @since      Version 3.0.0
  * @filesource
  */
-class Message
+abstract class Message
 {
 
 	/**
