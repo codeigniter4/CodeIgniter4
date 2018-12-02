@@ -38,7 +38,6 @@
 
 use CodeIgniter\Debug\Toolbar\Collectors\History;
 use CodeIgniter\Format\JSONFormatter;
-use Config\App;
 use Config\Services;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Format\XMLFormatter;
@@ -115,12 +114,6 @@ class Toolbar
 		$data['segmentCount']    = (int)ceil($data['totalTime'] / $data['segmentDuration']);
 		$data['CI_VERSION']      = \CodeIgniter\CodeIgniter::CI_VERSION;
 		$data['collectors']      = [];
-
-		//global $app;
-
-		//\var_dump($app);exit;
-
-		//\var_dump($this->collectors);exit;
 
 		foreach ($this->collectors as $collector)
 		{
