@@ -421,6 +421,8 @@ class Entity
 
 	protected function castAs($value, string $type)
 	{
+		if(substr($type,0,1) === '?' && $value === null) return null;
+
 		switch($type)
 		{
 			case 'integer':
