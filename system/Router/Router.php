@@ -216,7 +216,7 @@ class Router implements RouterInterface
 	 */
 	public function controllerName()
 	{
-		return $this->controller;
+		return $this->translateURIDashes ? str_replace('-', '_', $this->controller) : $this->controller;
 	}
 
 	//--------------------------------------------------------------------
@@ -229,7 +229,7 @@ class Router implements RouterInterface
 	 */
 	public function methodName(): string
 	{
-		return $this->method;
+		return $this->translateURIDashes ? str_replace('-', '_', $this->method) : $this->method;
 	}
 
 	//--------------------------------------------------------------------
@@ -529,7 +529,7 @@ class Router implements RouterInterface
 		}
 
 		// Load the file so that it's available for CodeIgniter.
-		$file = APPPATH . 'Controllers/' . $this->directory . $this->controller . '.php';
+		$file = APPPATH . 'Controllers/' . $this->directory . $this->controllerName() . '.php';
 		if (is_file($file))
 		{
 			include_once $file;
@@ -618,15 +618,6 @@ class Router implements RouterInterface
 			$this->setDefaultController();
 
 			return;
-		}
-
-		if ($this->translateURIDashes === true)
-		{
-			$segments[0] = str_replace('-', '_', $segments[0]);
-			if (isset($segments[1]))
-			{
-				$segments[1] = str_replace('-', '_', $segments[1]);
-			}
 		}
 
 		list($controller, $method) = array_pad(explode('::', $segments[0]), 2, null);

@@ -700,7 +700,9 @@ class CodeIgniter
 
 		ob_start();
 
-		$this->controller = $this->router->handle($path);
+		// Scans the URI and attempts to match the current URI
+		$this->router->handle($path);
+		$this->controller = $this->router->controllerName();
 		$this->method     = $this->router->methodName();
 
 		// If a {locale} segment was matched in the final route,

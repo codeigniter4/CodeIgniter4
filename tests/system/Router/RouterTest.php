@@ -28,6 +28,8 @@ class RouterTest extends \CIUnitTestCase
 
 		$routes = [
 			'users'                                           => 'Users::index',
+			'user-setting/show-list'                          => 'User_setting::show_list',
+			'user-setting/(:any)'                             => 'User_setting::detail/$1',
 			'posts'                                           => 'Blog::posts',
 			'pages'                                           => 'App\Pages::list_all',
 			'posts/(:num)'                                    => 'Blog::show/$1',
@@ -97,6 +99,47 @@ class RouterTest extends \CIUnitTestCase
 
 		$this->assertEquals('\App\Pages', $router->controllerName());
 		$this->assertEquals('list_all', $router->methodName());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testTranslateURIDashes()
+	{
+		$router = new Router($this->collection);
+
+		$router->handle('user-setting/show-list');
+
+		$router->setTranslateURIDashes(true);
+
+		$this->assertEquals('\User_setting', $router->controllerName());
+		$this->assertEquals('show_list', $router->methodName());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testTranslateURIDashesForParams()
+	{
+		$router = new Router($this->collection);
+		$router->setTranslateURIDashes(true);
+
+		$router->handle('user-setting/2018-12-02');
+
+		$this->assertEquals('\User_setting', $router->controllerName());
+		$this->assertEquals('detail', $router->methodName());
+		$this->assertEquals(['2018-12-02'], $router->params());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testTranslateURIDashesForAutoRoute()
+	{
+		$router = new Router($this->collection);
+		$router->setTranslateURIDashes(true);
+
+		$router->autoRoute('admin-user/show-list');
+
+		$this->assertEquals('Admin_user', $router->controllerName());
+		$this->assertEquals('show_list', $router->methodName());
 	}
 
 	//--------------------------------------------------------------------
