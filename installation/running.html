@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Local Development Server &mdash; CodeIgniter4 4.0.0-alpha.2 documentation</title>
+  <title>Running Your App &mdash; CodeIgniter4 4.0.0-alpha.3 documentation</title>
   
 
   
@@ -34,10 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-alpha.2 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.3 documentation" href="../index.html"/>
         <link rel="up" title="Installation" href="index.html"/>
-        <link rel="next" title="Tutorial" href="../tutorial/index.html"/>
-        <link rel="prev" title="Troubleshooting" href="troubleshooting.html"/> 
+        <link rel="next" title="Upgrading From a Previous Version" href="upgrading.html"/>
+        <link rel="prev" title="Installation" href="installing.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -89,10 +89,10 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="downloads.html">Downloading CodeIgniter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="index.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Local Development Server</a></li>
 </ul>
 </li>
 </ul>
@@ -184,7 +184,7 @@
         
           <li><a href="index.html">Installation</a> &raquo;</li>
         
-      <li>Local Development Server</li>
+      <li>Running Your App</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -201,14 +201,48 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="local-development-server">
-<h1>Local Development Server<a class="headerlink" href="#local-development-server" title="Permalink to this headline">¶</a></h1>
-<p>PHP provides a built-in web server that is can be used locally when developing an application without
-the need to setup a dedicated web server like MAMP, XAMPP, etc. If you have PHP installed on your
-development machine, you can use the <code class="docutils literal"><span class="pre">serve</span></code> script to launch PHP&#8217;s built-in server and have
-it all setup to work with your CodeIgniter application. To launch the server type the following
-from the command line in the main directory:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">serve</span>
+  <div class="section" id="running-your-app">
+<h1>Running Your App<a class="headerlink" href="#running-your-app" title="Permalink to this headline">¶</a></h1>
+<p>A CodeIgniter 4 app can be run in a number of different ways: using a web server,
+using virtualization, or using PHP&#8217;s built-in server. This section addresses how to use
+each technique, and explains some of the pros and cons of them.</p>
+<div class="section" id="initial-configuration-setup">
+<h2>Initial Configuration &amp; Setup<a class="headerlink" href="#initial-configuration-setup" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Open the <strong>application/Config/App.php</strong> file with a text editor and
+set your base URL. If you intend to use encryption or sessions, set
+your encryption key. If you need more flexibility, the baseURL may
+be set within the .env file as <strong>app.baseURL=&#8221;http://example.com&#8221;</strong>.</li>
+<li>If you intend to use a database, open the
+<strong>application/Config/Database.php</strong> file with a text editor and set your
+database settings.</li>
+</ol>
+<p>One additional measure to take in production environments is to disable
+PHP error reporting and any other development-only functionality. In
+CodeIgniter, this can be done by setting the <code class="docutils literal"><span class="pre">ENVIRONMENT</span></code> constant, which
+is more fully described on the <a class="reference internal" href="../general/environments.html"><span class="doc">environments page</span></a>.
+By default, the application will run using the &#8220;production&#8221; environment. To
+take advantage of the debugging tools provided, you should set the environment
+to &#8220;develop&#8221;.</p>
+</div>
+<div class="section" id="hosting-with-apache">
+<h2>Hosting with Apache<a class="headerlink" href="#hosting-with-apache" title="Permalink to this headline">¶</a></h2>
+<p>Directions coming with the next release.</p>
+</div>
+<div class="section" id="hosting-with-nginx">
+<h2>Hosting with NGINX<a class="headerlink" href="#hosting-with-nginx" title="Permalink to this headline">¶</a></h2>
+<p>Directions coming with the next release.</p>
+</div>
+<div class="section" id="hosting-with-vagrant">
+<h2>Hosting with Vagrant<a class="headerlink" href="#hosting-with-vagrant" title="Permalink to this headline">¶</a></h2>
+<p>Directions coming with the next release.</p>
+</div>
+<div class="section" id="local-development-server">
+<h2>Local Development Server<a class="headerlink" href="#local-development-server" title="Permalink to this headline">¶</a></h2>
+<p>CodeIgniter 4 comes with a local development server, leveraging PHP&#8217;s built-in web server
+with CodeIgniter routing. You can use the <code class="docutils literal"><span class="pre">serve</span></code> script to launch it,
+with the following command line in the main directory:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span>
 </pre></div>
 </div>
 <p>This will launch the server and you can now view your application in your browser at <a class="reference external" href="http://localhost:8080">http://localhost:8080</a>.</p>
@@ -217,20 +251,32 @@ from the command line in the main directory:</p>
 <p class="last">The built-in development server should only be used on local development machines. It should NEVER
 be used on a production server.</p>
 </div>
-<div class="section" id="customization">
-<h2>Customization<a class="headerlink" href="#customization" title="Permalink to this headline">¶</a></h2>
-<p>If you need to run the site on a different host than simply localhost, you&#8217;ll first need to add the host
+<p>If you need to run the site on a host other than simply localhost, you&#8217;ll first need to add the host
 to your <code class="docutils literal"><span class="pre">hosts</span></code> file. The exact location of the file varies in each of the main operating systems, though
 all <em>nix-type systems (include OS X) will typically keep the file at *</em>/etc/hosts**.</p>
-<p>Once that is done you can use the <code class="docutils literal"><span class="pre">--host</span></code> CLI option to specify a different host to run the application at:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">serve</span> <span class="o">--</span><span class="nx">host</span><span class="o">=</span><span class="nx">example</span><span class="o">.</span><span class="nx">dev</span>
+<p>The local development server can be customized with three command line options:</p>
+<ul>
+<li><p class="first">Once that is done you can use the <code class="docutils literal"><span class="pre">--host</span></code> CLI option to specify a different host to run the application at:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span> <span class="o">--</span><span class="nx">host</span><span class="o">=</span><span class="nx">example</span><span class="o">.</span><span class="nx">dev</span>
 </pre></div>
 </div>
-<p>By default, the server runs on port 8080 but you might have more than one site running, or already have
+</li>
+<li><p class="first">By default, the server runs on port 8080 but you might have more than one site running, or already have
 another application using that port. You can use the <code class="docutils literal"><span class="pre">--port</span></code> CLI option to specify a different one:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">serve</span> <span class="o">--</span><span class="nx">port</span><span class="o">=</span><span class="mi">8081</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span> <span class="o">--</span><span class="nx">port</span><span class="o">=</span><span class="mi">8081</span>
 </pre></div>
 </div>
+</li>
+<li><p class="first">You can also specify a specific version of PHP to use, with the <code class="docutils literal"><span class="pre">--php</span></code> CLI option, with its value
+set to the path of the PHP executable you want to use:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span> <span class="o">--</span><span class="nx">php</span><span class="o">=/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">php7</span><span class="o">.</span><span class="mf">6.5</span><span class="o">.</span><span class="mi">4</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>If you&#8217;re new to CodeIgniter, please read the <a class="reference internal" href="../intro/index.html"><span class="doc">Getting
+Started</span></a> section of the User Guide
+to begin learning how to build dynamic PHP applications. Enjoy!</p>
 </div>
 </div>
 
@@ -244,10 +290,10 @@ another application using that port. You can use the <code class="docutils liter
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../tutorial/index.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="upgrading.html" class="btn btn-neutral float-right" title="Upgrading From a Previous Version" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="troubleshooting.html" class="btn btn-neutral" title="Troubleshooting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="installing.html" class="btn btn-neutral" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -257,7 +303,7 @@ another application using that port. You can use the <code class="docutils liter
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Nov 28, 2018.
+      Last updated on Dec 02, 2018.
 
     </p>
   </div>
@@ -279,7 +325,7 @@ another application using that port. You can use the <code class="docutils liter
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-alpha.2',
+            VERSION:'4.0.0-alpha.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,

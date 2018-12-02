@@ -1,0 +1,995 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Version 4.0.0-alpha.3 &mdash; CodeIgniter4 4.0.0-alpha.3 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.3 documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Change Logs</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Version 4.0.0-alpha.3</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="version-4-0-0-alpha-3">
+<h1>Version 4.0.0-alpha.3<a class="headerlink" href="#version-4-0-0-alpha-3" title="Permalink to this headline">¶</a></h1>
+<p>Release Date: November 30, 2018</p>
+<p><strong>Next alpha release of CodeIgniter4</strong></p>
+<p>The list of changed files follows, with PR numbers shown.</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>admin/</dt>
+<dd><ul class="first last">
+<li>framework/* #1553</li>
+<li>starter/* #1553</li>
+<li>docbot #1553</li>
+<li>release* #1484,</li>
+<li>pre-commit #1388</li>
+<li>README.md #1553</li>
+<li>setup.sh #1388</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>application /</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Config/</dt>
+<dd><ul class="first last">
+<li>Autoload #1396, #1416</li>
+<li>Mimes #1368, #1465</li>
+<li>Pager #622</li>
+<li>Services #1469</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Filters/Honeypot #1376</li>
+<li><dl class="first docutils">
+<dt>Views/</dt>
+<dd><ul class="first last">
+<li>errors/* #1415, #1413, #1469</li>
+<li>form.php removed #1442</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>public /</dt>
+<dd><ul class="first last">
+<li>index.php #1388, #1457</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>system /</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Autoloader/</dt>
+<dd><ul class="first last">
+<li>Autoloader #1547</li>
+<li>FileLocator #1547, #1550</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Cache/</dt>
+<dd><ul class="first last">
+<li>Exceptions/CacheException #1525</li>
+<li>Handlers/FileHandler #1547, #1525</li>
+<li>Handlers/MemcachedHandler #1383</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>CLI/</dt>
+<dd><ul class="first last">
+<li>CLI #1432, #1489</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Commands/</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Database/</dt>
+<dd><ul class="first last">
+<li>CreateMigration #1374, #1422, #1431</li>
+<li>MigrateCurrent #1431</li>
+<li>MigrateLatest #1431</li>
+<li>MigrateRollback #1431</li>
+<li>MigrateStatus #1431</li>
+<li>MigrateVersion #1431</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Sessions/CrateMigration #1357</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Config/</dt>
+<dd><ul class="first last">
+<li>AutoloadConfig #1416</li>
+<li>BaseService #1469</li>
+<li>Mimes #1453</li>
+<li>Services #1180, #1469</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Database/</dt>
+<dd><ul class="first last">
+<li>BaseBuilder #1335, #1491, #1522</li>
+<li>BaseConnection #1335, #1407, #1491, #1522</li>
+<li>BaseResult #1426</li>
+<li>Config #1465, #1469, #1554</li>
+<li>Forge #1343, #1449, #1470, #1530</li>
+<li>MigrationRunner #1371</li>
+<li>MySQLi/Connection #1335, #1449</li>
+<li>MySQLi/Forge #1343, #1344, #1530</li>
+<li>MySQLi/Result #1530</li>
+<li>Postgre/Connection #1335, #1449</li>
+<li>Postgre/Forge #1530</li>
+<li>SQLite3/Connection #1335, #1449</li>
+<li>SQLite3/Forge #1470, #1547</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Debug</dt>
+<dd><ul class="first last">
+<li>Exceptions #1500</li>
+<li>Toolbar #1370, #1465, #1469, #1547</li>
+<li>Toolbar/Views/toolbar.tpl #1469</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Email/</dt>
+<dd><ul class="first last">
+<li>Email #1389, #1413, #1438, #1454, #1465, #1469, #1547</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Events/</dt>
+<dd><ul class="first last">
+<li>Events #1465, #1469, #1547</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Files/</dt>
+<dd><ul class="first last">
+<li>File #1399, #1547</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Format/</dt>
+<dd><ul class="first last">
+<li>XMLFormatter #1471</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Helpers/</dt>
+<dd><ul class="first last">
+<li>array_helper #1412</li>
+<li>filesystem_helper #1547</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Honeypot/</dt>
+<dd><ul class="first last">
+<li>Honeypot #1460</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>HTTP/</dt>
+<dd><ul class="first last">
+<li>CURLRequest #1547, #1498</li>
+<li>DownloadResponse #1375</li>
+<li>Exceptions/DownloadException #1405</li>
+<li>Files/FileCollection #1506</li>
+<li>Files/UploadedFile #1335, #1399, #1500, #1506, #1547</li>
+<li>IncomingRequest #1445, #1469, #1496</li>
+<li>Message #1497</li>
+<li>RedirectResponse #1387, #1451, #1464</li>
+<li>Response #1456, #1472, #1477, #1486, #1504, #1505, #1497, #622</li>
+<li>ResponseInterface #1384</li>
+<li>UploadedFile #1368, #1456</li>
+<li>URI #1213, #1469, #1508</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Images/Handlers/</dt>
+<dd><ul class="first last">
+<li>ImageMagickHandler #1546</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Language/</dt>
+<dd><ul class="first last">
+<li>en/Cache #1525</li>
+<li>en/Database #1335</li>
+<li>en/Filters #1378</li>
+<li>en/Migrations #1374</li>
+<li>Language #1480, #1489</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Log/</dt>
+<dd><ul class="first last">
+<li>Handlers/FileHandler #1547</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Pager/</dt>
+<dd><ul class="first last">
+<li>Pager #1213, #622</li>
+<li>PagerInterface #622</li>
+<li>PagerRenderer #1213, #622</li>
+<li>Views/default_full #622</li>
+<li>Views/default_head #622</li>
+<li>Views/default_simple #622</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Router/</dt>
+<dd><ul class="first last">
+<li>RouteCollection #1464, #1524</li>
+<li>RouteCollectionInterface #1406, #1410</li>
+<li>Router #1523, #1547</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Session/Handlers/</dt>
+<dd><ul class="first last">
+<li>BaseHandler #1180, #1483</li>
+<li>DatabaseHandler #1180</li>
+<li>FileHandler #1180, #1547</li>
+<li>MemcachedHandler #1180</li>
+<li>RedisHandler #1180</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Test/</dt>
+<dd><ul class="first last">
+<li>CIUnitTestCase #1467</li>
+<li>FeatureTestCase #1427, #1468</li>
+<li>Filters/CITestStreamFilter #1465</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Validation /</dt>
+<dd><ul class="first last">
+<li>CreditCardRules #1447, #1529</li>
+<li>FormatRules #1507</li>
+<li>Rules #1345</li>
+<li>Validation #1345</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>View/</dt>
+<dd><ul class="first last">
+<li>Filters #1469</li>
+<li>Parser #1417, #1547</li>
+<li>View #1357, #1377, #1410, #1547</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>bootstrao #1547</li>
+<li>CodeIgniter #1465, #1505, #1523, 2047b5a, #1547</li>
+<li>Common #1486, #1496, #1504, #1513</li>
+<li>ComposerScripts #1469, #1547</li>
+<li>Controller #1423</li>
+<li>Entity #1369, #1373</li>
+<li>Model #1345, #1380, #1373, #1440</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>tests /</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>_support/</dt>
+<dd><ul class="first last">
+<li>HTTP/MockResponse #1456</li>
+<li>_bootstrap.php #1397, #1443</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Cache/Handlers/</dt>
+<dd><ul class="first last">
+<li>FileHandlerTest #1547, #1525</li>
+<li>MemcachedHandlerTest #1180, #1383</li>
+<li>RedisHandlerTest #1180, #1481</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>CLI/</dt>
+<dd><ul class="first last">
+<li>CLITest #1467, #1489</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Commands/</dt>
+<dd><ul class="first last">
+<li>SessionCommandsTest #1455</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Database/Live/</dt>
+<dd><ul class="first last">
+<li>ConnectTest #1554</li>
+<li>ForgeTest #1449, #1470</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>HTTP/</dt>
+<dd><ul class="first last">
+<li>CURLRequestTest#1498</li>
+<li>Files/FileCOllectionTest #1506</li>
+<li>Files/FileMovingTest #1424</li>
+<li>DownloadResponseTest #1375</li>
+<li>IncomingRequestTest #1496</li>
+<li>RedirectResponseTest #1387, #1456</li>
+<li>ResponseCookieTest #1472, #1509</li>
+<li>ResponseSendTest #1477, #1486, #1509</li>
+<li>ResponseTest #1375, #1456, #1472, #1486, #622</li>
+<li>URITest #1456, #1495</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Helpers/</dt>
+<dd><ul class="first last">
+<li>DateHelperTest #1479</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>I18n/</dt>
+<dd><ul class="first last">
+<li>TimeTest #1467, #1473</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Language/</dt>
+<dd><ul class="first last">
+<li>LanguageTest #1480</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Log/</dt>
+<dd><ul class="first last">
+<li>FileHandlerTest #1425</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Pager/</dt>
+<dd><ul class="first last">
+<li>PagerRendererTest #1213, #622</li>
+<li>PagerTest #622</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Router/</dt>
+<dd><ul class="first last">
+<li>RouteCollectionTest #1438, #1524</li>
+<li>RouterTest #1438, #1523</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Session/</dt>
+<dd><ul class="first last">
+<li>SessionTest  #1180</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Test/</dt>
+<dd><ul class="first last">
+<li>BootstrapFCPATHTest #1397</li>
+<li>FeatureTestCase #1468</li>
+<li>TestCaseEmissionsTest #1477</li>
+<li>TestCaseTest #1390</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Throttle/</dt>
+<dd><ul class="first last">
+<li>ThrottleTest #1398</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Validation/</dt>
+<dd><ul class="first last">
+<li>FormatRulesTest #1507</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>View/</dt>
+<dd><ul class="first last">
+<li>ParserTest #1335</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>CodeIgniterTest #1500</li>
+<li>CommonFunctionsSendTest #1486, #1509</li>
+<li>CommonFunctionsTest #1180, #1486, #1496</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>user_guide_src /source/</dt>
+<dd><ul class="first last">
+<li>changelogs/ #1385, #1490, #1553</li>
+<li><dl class="first docutils">
+<dt>concepts/</dt>
+<dd><ul class="first last">
+<li>autoloader #1547</li>
+<li>security #1540</li>
+<li>services #1469</li>
+<li>structure #1448</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>database/</dt>
+<dd><ul class="first last">
+<li>queries #1407</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>dbmgmt/</dt>
+<dd><ul class="first last">
+<li>forge #1470</li>
+<li>migration #1374, #1385, #1431</li>
+<li>seeds #1482</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>extending/</dt>
+<dd><ul class="first last">
+<li>core_classes #1469</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>helpers/</dt>
+<dd><ul class="first last">
+<li>form_helper #1499</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>installation/</dt>
+<dd><ul class="first last">
+<li>index #1388</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>libraries/</dt>
+<dd><ul class="first last">
+<li>caching #1525</li>
+<li>pagination #1213</li>
+<li>validation #27868b, #1540</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>models/</dt>
+<dd><ul class="first last">
+<li>entities #1518, #1540</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>outgoing/</dt>
+<dd><ul class="first last">
+<li>response #1472, #1494</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>testing/</dt>
+<dd><ul class="first last">
+<li>overview #1467</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>tutorial/</dt>
+<dd><ul class="first last">
+<li>create_news_item #1442</li>
+<li>static_pages #1547</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>/</dt>
+<dd><ul class="first last">
+<li>composer.json #1388, #1418, #1536, #1553</li>
+<li>README.md #1553</li>
+<li>spark 2047b5a</li>
+<li>.travis.yml #1394</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="section" id="prs-merged">
+<h2>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>#1554 Serviceinstances</li>
+<li>#1553 Admin/scripts</li>
+<li>#1550 remove commented CLI::newLine($tempFiles) at FileLocator</li>
+<li>#1549 use .gitkeep instead of .gitignore in Database/Seeds directory</li>
+<li>#1547 Change file exists to is file</li>
+<li>#1546 ImageMagickHandler::__construct ...</li>
+<li>#1540 Update validation class User Guide</li>
+<li>#1530 database performance improvement : use foreach() when possible</li>
+<li>2047b5a Don&#8217;t run filters when using spark.</li>
+<li>#1539 remove mb_* (mb string usage) in CreditCardRules</li>
+<li>#1536 ext-json in composer.json</li>
+<li>#1525 remove unneeded try {} catch {}</li>
+<li>#1524 Test routes resource with &#8216;websafe&#8217; option</li>
+<li>#1523 Check if the matched route regex is filtered</li>
+<li>#1522 add property_exists check on BaseBuilder</li>
+<li>#1521 .gitignore clean up</li>
+<li>#1518 Small typo: changed setCreatedOn to setCreatedAt</li>
+<li>#1517 move .htaccess from per-directory in writable/{directory} to writable/</li>
+<li>#1513 More secure redirection</li>
+<li>#1509 remove unused use statements</li>
+<li>#1508 remove duplicate strtolower() call in URI::setScheme() call</li>
+<li>#1507 Fix multi &#8220;empty&#8221; string separated by &#8221;,&#8221; marked as valid emails</li>
+<li>#1506 Flesh out HTTP/File unit testing</li>
+<li>#1505 Do not exit until all Response is completed</li>
+<li>27868b Add missing docs for {field} and {param} placeholders</li>
+<li>#1504 Revert RedirectResponse changes</li>
+<li>#1500 Ignoring errors suppressed by &#64;</li>
+<li>#1499 Fix form_helper&#8217;s set_value writeup</li>
+<li>#1498 Add CURLRequest helper methods</li>
+<li>#1497 Remove unused RedirectException</li>
+<li>#1496 Fix Common::old()</li>
+<li>#1495 Add URI segment test</li>
+<li>#1494 Method naming in user guide</li>
+<li>#1491 Error logging</li>
+<li>#1490 Changelog(s) restructure</li>
+<li>#1489 Add CLI::strlen()</li>
+<li>#1488 Load Language strings from other locations</li>
+<li>#1486 Test RedirectResponse problem report</li>
+<li>#1484 missing slash</li>
+<li>#1483 Small typo in SessionHandlersBaseHandler.php</li>
+<li>#1482 doc fix: query binding fix in Seeds documentation</li>
+<li>#1481 RedisHandler test clean up</li>
+<li>#1480 Fix Language Key-File confusion</li>
+<li>#1479 Yet another time test to fix</li>
+<li>#1477 Add Response send testing</li>
+<li>#1475 Correct phpdocs for Forge::addField()</li>
+<li>#1473 Fuzzify another time test</li>
+<li>#1472 HTTPResponse cookie testing &amp; missing functionality</li>
+<li>#1471 remove unused local variable $result in XMLFormatter::format()</li>
+<li>#1470 Allow create table with array field constraints</li>
+<li>#1469 use static:: instead of self:: for call protected/public functions as well</li>
+<li>#1468 Fix FeatureTestCaseTest output buffer</li>
+<li>#1467 Provide time testing within tolerance</li>
+<li>#1466 Fix phpdocs for BaseBuilder</li>
+<li>#1465 use static:: instead of self:: for protected and public properties</li>
+<li>#1464 remove unused use statements</li>
+<li>#1463 Fix the remaining bcit-ci references</li>
+<li>#1461 Typo fix: donload -&gt; download</li>
+<li>#1460 remove unneeded ternary check at HoneyPot</li>
+<li>#1457 use $paths-&gt;systemDirectory in public/index.php</li>
+<li>#1456 Beef up HTTP URI &amp; Response testing</li>
+<li>#1455 un-ignore application/Database/Migrations directory</li>
+<li>#1454 add missing break; in loop at Email::getEncoding()</li>
+<li>#1453 BugFix if there extension has only one mime type</li>
+<li>#1451 remove unneeded $session-&gt;start(); check on RedirectResponse</li>
+<li>#1450 phpcbf: fix all at once</li>
+<li>#1449 Simplify how to get indexData from mysql/mariadb</li>
+<li>#1448 documentation: add missing application structures</li>
+<li>#1447 add missing break; on loop cards to get card info at CreditCardRules</li>
+<li>#1445 using existing is_cli() function in HTTPIncomingRequest</li>
+<li>#1444 Dox for reorganized repo admin (4 of 4)</li>
+<li>#1443 Fixes unit test output not captured</li>
+<li>#1442 remove form view in application/View/ and form helper usage in create new items tutorial</li>
+<li>#1440 Access to model&#8217;s last inserted ID</li>
+<li>#1438 Tailor the last few repo org names (3 of 4)</li>
+<li>#1437 Replace repo org name in MOST php docs (2 of 4)</li>
+<li>#1436 Change github organization name in docs (1 of 4)</li>
+<li>#1432 Use mb_strlen to get length of columns</li>
+<li>#1431 can&#8217;t call run() method with params from commands migrations</li>
+<li>#1427 Fixes &#8220;options&#8221; request call parameter in FeatureTestCase</li>
+<li>#1416 performance improvement in DatabaseBaseResult</li>
+<li>#1425 Ensure FileHandlerTest uses MockFileHandler</li>
+<li>#1424 Fix FileMovingTest leaving cruft</li>
+<li>#1423 Fix Controller use validate bug</li>
+<li>#1422 fix Migrations.classNotFound</li>
+<li>#1418 normalize composer.json</li>
+<li>#1417 fix Parser::parsePairs always escapes</li>
+<li>#1416 remove $psr4[&#8216;TestsSupport&#8217;] definition in applicationConfigAutoload</li>
+<li>#1415 remove unneded &#8220;defined(&#8216;BASEPATH&#8217;) ...</li>
+<li>#1413 set more_entropy = true in all uniqid() usage</li>
+<li>#1412 function_exists() typo fixes on array_helper</li>
+<li>#1411 add missing break; in loop in View::render()</li>
+<li>#1410 Fix spark serve not working from commit 2d0b325</li>
+<li>#1407 Database: add missing call initialize() check on BaseConnection-&gt;prepare()</li>
+<li>#1406 Add missing parameter to RouteCollectionInterface</li>
+<li>#1405 Fix language string used in DownloadException</li>
+<li>#1402 Correct class namespacing in the user guide</li>
+<li>#1399 optional type hinting in guessExtension</li>
+<li>#1398 Tweak throttle testing</li>
+<li>#1397 Correcting FCPATH setting in tests/_support/_bootstrap.php</li>
+<li>#1396 only register PSR4 &#8220;TestsSupport&#8221; namespace in &#8220;testing&#8221; environment</li>
+<li>#1395 short array syntax in docs</li>
+<li>#1394 add php 7.3 to travis config</li>
+<li>#1390 Fixed not to output &#8220;Hello&#8221; at test execution</li>
+<li>#1389 Capitalize email filename</li>
+<li>#1388 Phpcs Auto-fix on commit</li>
+<li>#1387 Redirect to named route</li>
+<li>#1385 Fix migration page; udpate changelog</li>
+<li>#1384 add missing ResponseInterface contants</li>
+<li>#1383 fix TypeError in MemcachedHandler::__construct()</li>
+<li>#1381 Remove unused use statements</li>
+<li>#1380 count() improvement, use truthy check</li>
+<li>#1378 Update Filters language file</li>
+<li>#1377 fix monolog will cause an error</li>
+<li>#1376 Fix cannot use class Honeypot because already in use in AppFiltersHoneypot</li>
+<li>#1375 Give download a header conforming to RFC 6266</li>
+<li>#1374 Missing feature migration.</li>
+<li>#1373 Turning off casting for db insert/save</li>
+<li>#1371 update method name in coding style</li>
+<li>#1370 Toolbar needs logging. Fixes #1258</li>
+<li>#1369 Remove invisible character</li>
+<li>#1368 UploadedFile-&gt;guessExtenstion()...</li>
+<li>#1360 rm &#8211;cached php_errors.log file</li>
+<li>#1357 Update template file is not .php compatibility</li>
+<li>#1345 is_unique tried to connect to default database instead of defined in DBGroup</li>
+<li>#1344 Not to quote unecessary table options</li>
+<li>#1343 Avoid add two single quote to constraint</li>
+<li>#1335 Review and improvements in databases drivers MySQLi, Postgre and SQLite</li>
+<li>#1213 URI segment as page number in Pagination</li>
+<li>#1180 using HTTPRequest instance to pull ip address</li>
+<li>#622 Add Header Link Pagination</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Dec 02, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-alpha.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

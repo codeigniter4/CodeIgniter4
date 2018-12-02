@@ -1,0 +1,466 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation &mdash; CodeIgniter4 4.0.0-alpha.3 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.3 documentation" href="../index.html"/>
+        <link rel="up" title="Installation" href="index.html"/>
+        <link rel="next" title="Running Your App" href="running.html"/>
+        <link rel="prev" title="Downloading CodeIgniter" href="downloads.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="downloads.html">Downloading CodeIgniter</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Installation</a> &raquo;</li>
+        
+      <li>Installation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>CodeIgniter4 can be installed in a number of different ways: manually,
+using <a class="reference external" href="https://getcomposer.org">Composer</a>, or even using
+<a class="reference external" href="https://git-scm.com/">Git</a>. This section addresses how to use
+each technique, and explains some of the pros and cons of them.</p>
+<p>Once installed, read the next section, <a class="reference internal" href="running.html"><span class="doc">running your app</span></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Before using CodeIgniter 4, make sure that your server meets the
+<a class="reference internal" href="../intro/requirements.html"><span class="doc">requirements</span></a>.</p>
+</div>
+<div class="section" id="manual-installation">
+<h2>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h2>
+<p>Install the framework by downloading the latest version,
+and extract it to become your project root. Your document
+root will be the <code class="docutils literal"><span class="pre">public</span></code> folder inside here.</p>
+<p>Pros:</p>
+<ul class="simple">
+<li>download and run; this is the installation technique
+closest to that described for <a class="reference external" href="https://www.codeigniter.com/user_guide/installation/index.html">CodeIgniter 3</a>.</li>
+</ul>
+<p>Cons:</p>
+<ul class="simple">
+<li>upgrading the framework is done by downloading a new copy
+of the framework, and then following the upgrade
+directions to merge that with your project (typically
+replace the <code class="docutils literal"><span class="pre">system</span></code> folder and inspect designated
+<code class="docutils literal"><span class="pre">application/Config</span></code> folders for affected changes).</li>
+</ul>
+<p>Resulting folder structure:</p>
+<ul class="simple">
+<li>application</li>
+<li>public</li>
+<li>system</li>
+<li>writable</li>
+</ul>
+</div>
+<div class="section" id="composer-installation">
+<h2>Composer Installation<a class="headerlink" href="#composer-installation" title="Permalink to this headline">¶</a></h2>
+<p>Install the latest version of the framework with:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">framework</span> <span class="nx">PROJECT_ROOT</span>
+</pre></div>
+</div>
+<p>Pros:</p>
+<ul class="simple">
+<li>simple installation</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li><p class="first">upgrading the framework is done by:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">update</span>
+</pre></div>
+</div>
+<p>You would then need to resolve merge conflicts for any framework
+changes to <code class="docutils literal"><span class="pre">application</span></code> files that you modified for your app.</p>
+</li>
+</ul>
+<p>Resulting folder structure:</p>
+<ul class="simple">
+<li>application</li>
+<li>public</li>
+<li>system</li>
+<li>writable</li>
+</ul>
+</div>
+<div class="section" id="codebase-installation">
+<h2>Codebase Installation<a class="headerlink" href="#codebase-installation" title="Permalink to this headline">¶</a></h2>
+<p>Install the latest version of the codebase by</p>
+<ul class="simple">
+<li>forking the codebase to your github account</li>
+<li>cloning your forked repository locally</li>
+</ul>
+<p>Pros:</p>
+<ul class="simple">
+<li>you get the latest version of the codebase</li>
+<li>you can propose contributions by creating a feature branch, and then
+submitting a pull request to the main repository once you have
+pushed your feature branch to your repository</li>
+<li>a pre-commit hook is installed for this repo that binds it to the
+coding-standard repo, and then automatically runs
+PHP Code Sniffer and fixes any fixable issues whenever you commit.</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li><p class="first">you need to add a git remote alias to your project, so you can
+pull codebase changes:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">git</span> <span class="nx">remote</span> <span class="nx">add</span> <span class="nx">upstream</span> <span class="nx">https</span><span class="o">://</span><span class="nx">github</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">CodeIgniter4</span><span class="o">.</span><span class="nx">git</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">upgrading the framework is done by:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">git</span> <span class="nx">checkout</span> <span class="nx">develop</span>
+<span class="o">&gt;</span> <span class="nx">git</span> <span class="nx">pull</span> <span class="nx">upstream</span> <span class="nx">develop</span>
+<span class="o">&gt;</span> <span class="nx">git</span> <span class="nx">push</span> <span class="nx">origin</span> <span class="nx">develop</span>
+</pre></div>
+</div>
+<p>You would then need to resolve merge conflicts for any framework
+changes that conflict with modifications you have made.</p>
+</li>
+</ul>
+<p>Resulting folder structure:</p>
+<ul class="simple">
+<li>application</li>
+<li>public</li>
+<li>system</li>
+<li>tests</li>
+<li>user_guide_src</li>
+<li>writable</li>
+</ul>
+</div>
+<div class="section" id="app-starter-installation">
+<h2>App Starter Installation<a class="headerlink" href="#app-starter-installation" title="Permalink to this headline">¶</a></h2>
+<p>Install the latest version of the framework&#8217;s app starter with:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">appstarter</span> <span class="nx">PROJECT_ROOT</span>
+</pre></div>
+</div>
+<p>Pros:</p>
+<ul class="simple">
+<li>simple installation</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li><p class="first">upgrading the framework is done by:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">update</span>
+</pre></div>
+</div>
+<p>You would then need to resolve merge conflicts for any framework
+changes to <code class="docutils literal"><span class="pre">application</span></code> files that you modified for your app.</p>
+</li>
+</ul>
+<p>Resulting folder structure:</p>
+<ul>
+<li><p class="first">application</p>
+</li>
+<li><p class="first">public</p>
+</li>
+<li><p class="first">writable</p>
+</li>
+<li><p class="first">vendor/codeigniter4/framework</p>
+<blockquote>
+<div><ul class="simple">
+<li>application</li>
+<li>public</li>
+<li>system</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="translations-installation">
+<h2>Translations Installation<a class="headerlink" href="#translations-installation" title="Permalink to this headline">¶</a></h2>
+<p>Install the available localizations to an existing CodeIgniter 4
+project with:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="k">require</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">translations</span>
+</pre></div>
+</div>
+<p>Update the translations at any time with:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">update</span>
+</pre></div>
+</div>
+<p>When the translations are installed, they are added to the appropriate namespace.
+See the <a class="reference internal" href="../outgoing/localization.html"><span class="doc">localization page</span></a>
+for guidance.</p>
+<p>Resulting folder structure:</p>
+<p>...</p>
+<ul>
+<li><p class="first">vendor</p>
+<blockquote>
+<div><ul>
+<li><p class="first">codeigniter4</p>
+<blockquote>
+<div><ul class="simple">
+<li>translations</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="coding-standards-installation">
+<h2>Coding Standards Installation<a class="headerlink" href="#coding-standards-installation" title="Permalink to this headline">¶</a></h2>
+<p>This is bound and installed automatically as part of the
+codebase installation.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="running.html" class="btn btn-neutral float-right" title="Running Your App" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="downloads.html" class="btn btn-neutral" title="Downloading CodeIgniter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Dec 02, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-alpha.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
