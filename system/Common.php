@@ -581,7 +581,9 @@ if (! function_exists('helper'))
 				{
 					if (strpos($path, APPPATH) === 0)
 					{
+						// @codeCoverageIgnoreStart
 						$appHelper = $path;
+						// @codeCoverageIgnoreEnd
 					}
 					elseif (strpos($path, BASEPATH) === 0)
 					{
@@ -597,7 +599,9 @@ if (! function_exists('helper'))
 			// App-level helpers should override all others
 			if (! empty($appHelper))
 			{
+				// @codeCoverageIgnoreStart
 				$includes[] = $appHelper;
+				// @codeCoverageIgnoreEnd
 			}
 
 			// All namespaced files get added in next
