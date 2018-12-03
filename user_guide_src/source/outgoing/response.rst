@@ -190,6 +190,15 @@ class holds a number of methods that map pretty clearly to the appropriate heade
 	$response->CSP->addScriptSrc('scripts.example.com', $reportOnly);
 	$response->CSP->addStyleSrc('css.example.com', $reportOnly);
 
+The ``reportOnly`` method allows you to specify the default reporting treatment
+for subsequent sources, unless over-ridden. For instance, you could specify
+that youtube.com was allowed, and then provide several allowed but reported sources::
+
+    $response->addChildSrc('https://youtube.com'); // allowed
+    $response->reportOnly(true);
+    $response->addChildSrc('https://metube.com'); // allowed but reported
+    $response->addChildSrc('https://ourtube.com',false); // allowed
+
 Inline Content
 --------------
 

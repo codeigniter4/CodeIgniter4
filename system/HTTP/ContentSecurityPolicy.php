@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+namespace CodeIgniter\HTTP;
 
 /**
  * CodeIgniter
@@ -280,14 +281,14 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-base-uri
 	 *
-	 * @param string  $uri
-	 * @param boolean $reportOnly
+	 * @param string       $uri
+	 * @param boolean|null $override
 	 *
 	 * @return $this
 	 */
-	public function setBaseURI($uri, bool $reportOnly)
+	public function setBaseURI($uri, ?bool $override = null)
 	{
-		$this->baseURI = [(string) $uri => $reportOnly];
+		$this->baseURI = [(string) $uri => $override ?? $this->reportOnly];
 
 		return $this;
 	}
@@ -305,13 +306,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-child-src
 	 *
 	 * @param $uri
-	 * @param boolean $reportOnly
+	 * @param boolean|null $override
 	 *
 	 * @return $this
 	 */
-	public function addChildSrc($uri, bool $reportOnly = false)
+	public function addChildSrc($uri, ?bool $override = null)
 	{
-		$this->addOption($uri, 'childSrc', $reportOnly);
+		$this->addOption($uri, 'childSrc', $override ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -328,13 +329,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-connect-src
 	 *
 	 * @param $uri
-	 * @param boolean $reportOnly
+	 * @param boolean|null $override
 	 *
 	 * @return $this
 	 */
-	public function addConnectSrc($uri, bool $reportOnly = false)
+	public function addConnectSrc($uri, ?bool $override = null)
 	{
-		$this->addOption($uri, 'connectSrc', $reportOnly);
+		$this->addOption($uri, 'connectSrc', $override ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -351,13 +352,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-default-src
 	 *
 	 * @param $uri
-	 * @param boolean $reportOnly
+	 * @param boolean|null $override
 	 *
 	 * @return $this
 	 */
-	public function setDefaultSrc($uri, bool $reportOnly = false)
+	public function setDefaultSrc($uri, ?bool $override = null)
 	{
-		$this->defaultSrc = [(string) $uri => $reportOnly];
+		$this->defaultSrc = [(string) $uri => $override ?? $this->reportOnly];
 
 		return $this;
 	}
@@ -373,13 +374,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-font-src
 	 *
 	 * @param $uri
-	 * @param boolean $reportOnly
+	 * @param boolean|null $override
 	 *
 	 * @return $this
 	 */
-	public function addFontSrc($uri, bool $reportOnly = false)
+	public function addFontSrc($uri, ?bool $override = null)
 	{
-		$this->addOption($uri, 'fontSrc', $reportOnly);
+		$this->addOption($uri, 'fontSrc', $override ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -393,13 +394,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-form-action
 	 *
 	 * @param $uri
-	 * @param boolean $reportOnly
+	 * @param boolean|null $override
 	 *
 	 * @return $this
 	 */
-	public function addFormAction($uri, bool $reportOnly = false)
+	public function addFormAction($uri, ?bool $override = null)
 	{
-		$this->addOption($uri, 'formAction', $reportOnly);
+		$this->addOption($uri, 'formAction', $override ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -413,13 +414,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-frame-ancestors
 	 *
 	 * @param $uri
-	 * @param boolean $reportOnly
+	 * @param boolean|null $override
 	 *
 	 * @return $this
 	 */
-	public function addFrameAncestor($uri, bool $reportOnly = false)
+	public function addFrameAncestor($uri, ?bool $override = null)
 	{
-		$this->addOption($uri, 'frameAncestors', $reportOnly);
+		$this->addOption($uri, 'frameAncestors', $override ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -433,13 +434,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-img-src
 	 *
 	 * @param $uri
-	 * @param boolean $reportOnly
+	 * @param boolean|null $override
 	 *
 	 * @return $this
 	 */
-	public function addImageSrc($uri, bool $reportOnly = false)
+	public function addImageSrc($uri, ?bool $override = null)
 	{
-		$this->addOption($uri, 'imageSrc', $reportOnly);
+		$this->addOption($uri, 'imageSrc', $override ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -453,13 +454,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-media-src
 	 *
 	 * @param $uri
-	 * @param boolean $reportOnly
+	 * @param boolean|null $override
 	 *
 	 * @return $this
 	 */
-	public function addMediaSrc($uri, bool $reportOnly = false)
+	public function addMediaSrc($uri, ?bool $override = null)
 	{
-		$this->addOption($uri, 'mediaSrc', $reportOnly);
+		$this->addOption($uri, 'mediaSrc', $override ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -473,13 +474,13 @@ class ContentSecurityPolicy
 	 * @see https://www.w3.org/TR/CSP/#directive-manifest-src
 	 *
 	 * @param $uri
-	 * @param boolean $reportOnly
+	 * @param boolean|null $override
 	 *
 	 * @return $this
 	 */
-	public function addManifestSrc($uri, bool $reportOnly = false)
+	public function addManifestSrc($uri, ?bool $override = null)
 	{
-		$this->addOption($uri, 'manifestSrc', $reportOnly);
+		$this->addOption($uri, 'manifestSrc', $override ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -493,13 +494,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-object-src
 	 *
 	 * @param $uri
-	 * @param boolean $reportOnly
+	 * @param boolean|null $override
 	 *
 	 * @return $this
 	 */
-	public function addObjectSrc($uri, bool $reportOnly = false)
+	public function addObjectSrc($uri, ?bool $override = null)
 	{
-		$this->addOption($uri, 'objectSrc', $reportOnly);
+		$this->addOption($uri, 'objectSrc', $override ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -512,14 +513,14 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-plugin-types
 	 *
-	 * @param string  $mime       One or more plugin mime types, separate by spaces
-	 * @param boolean $reportOnly
+	 * @param string       $mime     One or more plugin mime types, separate by spaces
+	 * @param boolean|null $override
 	 *
 	 * @return $this
 	 */
-	public function addPluginType($mime, bool $reportOnly = false)
+	public function addPluginType($mime, ?bool $override = null)
 	{
-		$this->addOption($mime, 'pluginTypes', $reportOnly);
+		$this->addOption($mime, 'pluginTypes', $override ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -566,7 +567,6 @@ class ContentSecurityPolicy
 		{
 			$this->sandbox = $flags;
 		}
-
 		return $this;
 	}
 
@@ -579,13 +579,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-connect-src
 	 *
 	 * @param $uri
-	 * @param boolean $reportOnly
+	 * @param boolean|null $override
 	 *
 	 * @return $this
 	 */
-	public function addScriptSrc($uri, bool $reportOnly = false)
+	public function addScriptSrc($uri, ?bool $override = null)
 	{
-		$this->addOption($uri, 'scriptSrc', $reportOnly);
+		$this->addOption($uri, 'scriptSrc', $override ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -599,13 +599,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-connect-src
 	 *
 	 * @param $uri
-	 * @param boolean $reportOnly
+	 * @param boolean|null $override
 	 *
 	 * @return $this
 	 */
-	public function addStyleSrc($uri, bool $reportOnly = false)
+	public function addStyleSrc($uri, ?bool $override = null)
 	{
-		$this->addOption($uri, 'styleSrc', $reportOnly);
+		$this->addOption($uri, 'styleSrc', $override ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -636,10 +636,10 @@ class ContentSecurityPolicy
 	 * DRY method to add an string or array to a class property.
 	 *
 	 * @param $options
-	 * @param string  $target
-	 * @param boolean $reportOnly If TRUE, this item will be reported, not restricted
+	 * @param string       $target
+	 * @param boolean|null $override
 	 */
-	protected function addOption($options, string $target, bool $reportOnly = false)
+	protected function addOption($options, string $target, ?bool $override = null)
 	{
 		// Ensure we have an array to work with...
 		if (is_string($this->{$target}))
@@ -652,7 +652,7 @@ class ContentSecurityPolicy
 			$newOptions = [];
 			foreach ($options as $opt)
 			{
-				$newOptions[] = [$opt => $reportOnly];
+				$newOptions[] = [$opt => $override ?? $this->reportOnly];
 			}
 
 			$this->{$target} = array_merge($this->{$target}, $newOptions);
@@ -660,7 +660,7 @@ class ContentSecurityPolicy
 		}
 		else
 		{
-			$this->{$target}[$options] = $reportOnly;
+			$this->{$target}[$options] = $override ?? $this->reportOnly;
 		}
 	}
 
@@ -769,6 +769,12 @@ class ContentSecurityPolicy
 			{
 				$header .= " {$name} {$value};";
 			}
+			// add token only if needed
+			if ($this->upgradeInsecureRequests)
+			{
+				$header .= ' upgrade-insecure-requests;';
+			}
+
 			$response->appendHeader('Content-Security-Policy', $header);
 		}
 
