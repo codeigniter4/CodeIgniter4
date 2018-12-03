@@ -31,7 +31,7 @@ return [
    'emptySupportedNegotiations' => 'You must provide an array of supported values to all Negotiations.',
 
 	// RedirectResponse
-   'invalidRoute'               => '{0, string} is not a valid route.',
+   'invalidRoute'               => '{0, string} route cannot be found while reverse-routing.',
 
 	// DownloadResponse
    'cannotSetBinary'            => 'When setting filepath can not set binary.',
