@@ -15,7 +15,7 @@ class IncomingRequestTest extends \CIUnitTestCase
 	 */
 	protected $request;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

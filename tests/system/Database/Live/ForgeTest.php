@@ -16,7 +16,7 @@ class ForgeTest extends CIDatabaseTestCase
 	 */
 	protected $forge;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 		$this->forge = \Config\Database::forge($this->DBGroup);

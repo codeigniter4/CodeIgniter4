@@ -11,7 +11,7 @@ class ConnectTest extends CIDatabaseTestCase
 
 	protected $group2;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

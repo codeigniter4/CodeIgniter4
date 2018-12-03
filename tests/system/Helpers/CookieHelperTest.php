@@ -16,7 +16,7 @@ final class CookieHelperTest extends \CIUnitTestCase
 	private $expire;
 	private $response;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

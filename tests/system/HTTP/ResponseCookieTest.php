@@ -6,7 +6,7 @@ use Config\App;
 class ResponseCookieTest extends \CIUnitTestCase
 {
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 		$this->server = $_SERVER;

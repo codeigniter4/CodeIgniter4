@@ -27,7 +27,7 @@ class CreditCardRulesTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 		$this->validation = new Validation((object) $this->config, \Config\Services::renderer());

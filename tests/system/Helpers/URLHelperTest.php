@@ -12,7 +12,7 @@ use CodeIgniter\Config\Services;
 class URLHelperTest extends \CIUnitTestCase
 {
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

@@ -8,7 +8,7 @@ class ParserFilterTest extends \CIUnitTestCase
 	protected $viewsDir;
 	protected $config;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
