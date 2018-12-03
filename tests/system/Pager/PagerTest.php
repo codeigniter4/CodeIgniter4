@@ -16,7 +16,7 @@ class PagerTest extends \CIUnitTestCase
 	protected $pager;
 	protected $config;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

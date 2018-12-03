@@ -6,7 +6,7 @@ class ServicesTest extends \CIUnitTestCase
 	protected $config;
 	protected $original;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

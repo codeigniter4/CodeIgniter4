@@ -22,7 +22,7 @@ class ModelTest extends CIDatabaseTestCase
 
 	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
