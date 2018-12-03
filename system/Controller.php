@@ -150,7 +150,7 @@ class Controller
 	 *
 	 * @param integer $time
 	 */
-	public function cachePage(int $time)
+	protected function cachePage(int $time)
 	{
 		CodeIgniter::cache($time);
 	}
