@@ -32,25 +32,6 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 		return $buffer;
 	}
 
-	// Return first matching real emitted header
-	protected function getHeaderEmitted(string $header, bool $ignoreCase = false): ?string
-	{
-		$found = false;
-
-		foreach (xdebug_get_headers() as $emitted)
-		{
-			$found = $ignoreCase ?
-					(stripos($emitted, $header) === 0) :
-					(strpos($emitted, $header) === 0);
-			if ($found)
-			{
-				return $emitted;
-			}
-		}
-
-		return null;
-	}
-
 	//--------------------------------------------------------------------
 	/**
 	 * @runInSeparateProcess
@@ -365,21 +346,23 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 		$this->assertContains('sandbox allow-popups allow-top-navigation;', $result);
 	}
 
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
-	public function testSandboxValue()
-	{
-		$this->prepare();
-		$this->csp->reportOnly(false);
-		$this->csp->setSandbox(true);
-		$result = $this->work();
-
-		$result = $this->getHeaderEmitted('Content-Security-Policy');
-		$this->assertContains('sandbox allow-popups allow-top-navigation;', $result);
-	}
-
+	//  /**
+	//   * Retained until the treatment of the setSandbox boolean parameter is resolved.
+	//   *
+	//   * @runInSeparateProcess
+	//   * @preserveGlobalState  disabled
+	//   */
+	//  public function testSandboxValue()
+	//  {
+	//      $this->prepare();
+	//      $this->csp->reportOnly(false);
+	//      $this->csp->setSandbox(true);
+	//      $result = $this->work();
+	//
+	//      $result = $this->getHeaderEmitted('Content-Security-Policy');
+	//      $this->assertContains('sandbox allow-popups allow-top-navigation;', $result);
+	//  }
+	//
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
