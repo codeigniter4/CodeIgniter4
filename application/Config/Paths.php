@@ -20,7 +20,7 @@ class Paths
 	 * Include the path if the folder is not in the same directory
 	 * as this file.
 	 */
-	public $systemDirectory = FCPATH . '../system';
+	public $systemDirectory = __DIR__ . '/../../system';
 
 	/*
 	 *---------------------------------------------------------------
@@ -35,7 +35,7 @@ class Paths
 	 *
 	 * NO TRAILING SLASH!
 	 */
-	public $applicationDirectory = FCPATH . '../application';
+	public $applicationDirectory = __DIR__ . '/../../application';
 
 	/*
 	 * ---------------------------------------------------------------
@@ -48,7 +48,7 @@ class Paths
 	 * for maximum security, keeping it out of the application and/or
 	 * system directories.
 	 */
-	public $writableDirectory = FCPATH . '../writable';
+	public $writableDirectory = __DIR__ . '/../../writable';
 
 	/*
 	 * ---------------------------------------------------------------
@@ -61,7 +61,7 @@ class Paths
 	 * for maximum security, keeping it out of the application and/or
 	 * system directories.
 	 */
-	public $testsDirectory = FCPATH . '../tests';
+	public $testsDirectory = __DIR__ . '/../../tests';
 
 	/*
 	 * ---------------------------------------------------------------
@@ -87,5 +87,5 @@ class Paths
 	 * default this is in `application/Views`. This value
 	 * is used when no value is provided to `Services::renderer()`.
 	 */
-	public $viewDirectory = FCPATH . '../application/Views';
+	public $viewDirectory = __DIR__ . '/../../application/Views';
 }
