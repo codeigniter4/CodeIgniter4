@@ -152,6 +152,15 @@ class CommonFunctionsTest extends \CIUnitTestCase
 
 	// ------------------------------------------------------------------------
 
+	public function testEscapeWithDifferentEncodings()
+	{
+		$this->assertEquals('&lt;x', esc('<x', 'html', 'utf-8'));
+		$this->assertEquals('&lt;x', esc('<x', 'html', 'iso-8859-1'));
+		$this->assertEquals('&lt;x', esc('<x', 'html', 'windows-1251'));
+	}
+
+	// ------------------------------------------------------------------------
+
 	public function testEscapeBadContext()
 	{
 		$this->expectException(InvalidArgumentException::class);
