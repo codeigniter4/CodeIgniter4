@@ -12,7 +12,7 @@ class MessageTest extends \CIUnitTestCase
 	 */
 	protected $message;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

@@ -23,7 +23,7 @@ class CommonFunctionsTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
@@ -148,6 +148,15 @@ class CommonFunctionsTest extends \CIUnitTestCase
 	{
 		$expected = 'Hello';
 		$this->assertEquals($expected, view_cell('\Tests\Support\View\SampleClass::hello'));
+	}
+
+	// ------------------------------------------------------------------------
+
+	public function testEscapeWithDifferentEncodings()
+	{
+		$this->assertEquals('&lt;x', esc('<x', 'html', 'utf-8'));
+		$this->assertEquals('&lt;x', esc('<x', 'html', 'iso-8859-1'));
+		$this->assertEquals('&lt;x', esc('<x', 'html', 'windows-1251'));
 	}
 
 	// ------------------------------------------------------------------------

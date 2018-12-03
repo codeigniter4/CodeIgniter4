@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use \CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Class BaseUtils

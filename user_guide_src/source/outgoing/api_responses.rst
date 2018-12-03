@@ -21,9 +21,11 @@ The following example shows a common usage pattern within your controllers.
 
     <?php namespace App\Controllers;
 
+    use CodeIgniter\API\ResponseTrait;
+
     class Users extends \CodeIgniter\Controller
     {
-        use \CodeIgniter\API\ResponseTrait;
+        use ResponseTrait;
 
         public function createUser()
         {

@@ -151,7 +151,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 *
 	 * @throws ConfigException
 	 */
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

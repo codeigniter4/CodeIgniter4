@@ -7,7 +7,7 @@ class FileWithVfsTest extends \CIUnitTestCase
 
 	protected $root;
 
-	public function setup()
+	protected function setUp()
 	{
 		parent::setUp();
 

@@ -9,7 +9,7 @@ class ConsoleTest extends \CIUnitTestCase
 
 	private $stream_filter;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

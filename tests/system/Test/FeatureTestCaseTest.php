@@ -9,7 +9,7 @@ use CodeIgniter\Test\FeatureResponse;
 class FeatureTestCaseTest extends FeatureTestCase
 {
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
