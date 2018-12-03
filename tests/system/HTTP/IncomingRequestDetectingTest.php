@@ -35,6 +35,15 @@ class IncomingRequestDetectingTest extends \CIUnitTestCase
 		$this->assertEquals($expected, $this->request->detectPath());
 	}
 
+	public function testPathEmpty()
+	{
+		$this->request->uri     = '/';
+		$_SERVER['REQUEST_URI'] = '/';
+		$_SERVER['SCRIPT_NAME'] = '/index.php';
+		$expected               = '/';
+		$this->assertEquals($expected, $this->request->detectPath());
+	}
+
 	public function testPathRequestURI()
 	{
 		$this->request->uri     = '/index.php/woot?code=good#pos';
