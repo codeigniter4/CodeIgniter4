@@ -165,24 +165,21 @@ class ResponseTest extends \CIUnitTestCase
 		$response->setLink($pager);
 
 		$this->assertEquals(
-			'<http://example.com?page=1>; rel="first",<http://example.com?page=2>; rel="prev",<http://example.com?page=4>; rel="next",<http://example.com?page=20>; rel="last"',
-			$response->getHeader('Link')->getValue()
+				'<http://example.com?page=1>; rel="first",<http://example.com?page=2>; rel="prev",<http://example.com?page=4>; rel="next",<http://example.com?page=20>; rel="last"', $response->getHeader('Link')->getValue()
 		);
 
 		$pager->store('default', 1, 10, 200);
 		$response->setLink($pager);
 
 		$this->assertEquals(
-			'<http://example.com?page=2>; rel="next",<http://example.com?page=20>; rel="last"',
-			$response->getHeader('Link')->getValue()
+				'<http://example.com?page=2>; rel="next",<http://example.com?page=20>; rel="last"', $response->getHeader('Link')->getValue()
 		);
 
 		$pager->store('default', 20, 10, 200);
 		$response->setLink($pager);
 
 		$this->assertEquals(
-			'<http://example.com?page=1>; rel="first",<http://example.com?page=19>; rel="prev"',
-			$response->getHeader('Link')->getValue()
+				'<http://example.com?page=1>; rel="first",<http://example.com?page=19>; rel="prev"', $response->getHeader('Link')->getValue()
 		);
 	}
 
@@ -527,6 +524,23 @@ class ResponseTest extends \CIUnitTestCase
 
 		$this->assertTrue($answer1->hasCookie('foo'));
 		$this->assertTrue($answer1->hasCookie('login_time'));
+	}
+
+	//--------------------------------------------------------------------
+	// Make sure we don't blow up if pretending to send headers
+	public function testPretendOutput()
+	{
+		$response = new Response(new App());
+		$response->pretend(true);
+
+		$response->setBody('Happy days');
+
+		ob_start();
+		$response->send();
+		$actual = ob_get_contents();
+		ob_end_clean();
+
+		$this->assertEquals('Happy days', $actual);
 	}
 
 }
