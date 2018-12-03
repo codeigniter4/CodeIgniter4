@@ -303,7 +303,7 @@ class CodeIgniter
 			$possibleRedirect = $filters->run($uri, 'before');
 			if ($possibleRedirect instanceof RedirectResponse)
 			{
-				return $possibleRedirect;
+				return $possibleRedirect->send();
 			}
 			// If a Response instance is returned, the Response will be sent back to the client and script execution will stop
 			if ($possibleRedirect instanceof ResponseInterface)
