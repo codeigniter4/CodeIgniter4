@@ -46,24 +46,20 @@
  * so they are available in the config files that are loaded.
  */
 
-$public = trim($paths->publicDirectory, '/');
-
-$pos = strrpos(FCPATH, $public . DIRECTORY_SEPARATOR);
-
-/**
- * The path to the main application directory. Just above public.
- */
-if (! defined('ROOTPATH'))
-{
-	define('ROOTPATH', substr_replace(FCPATH, '', $pos, strlen($public . DIRECTORY_SEPARATOR)));
-}
-
 /**
  * The path to the application directory.
  */
 if (! defined('APPPATH'))
 {
-	define('APPPATH', realpath(ROOTPATH . $paths->applicationDirectory) . DIRECTORY_SEPARATOR);
+	define('APPPATH', realpath($paths->applicationDirectory) . DIRECTORY_SEPARATOR);
+}
+
+/**
+ * The path to the main application directory. Just above APPPATH.
+ */
+if (! defined('ROOTPATH'))
+{
+	define('ROOTPATH', realpath(APPPATH . '../') . DIRECTORY_SEPARATOR);
 }
 
 /**
@@ -71,7 +67,7 @@ if (! defined('APPPATH'))
  */
 if (! defined('BASEPATH'))
 {
-	define('BASEPATH', realpath(ROOTPATH . $paths->systemDirectory) . DIRECTORY_SEPARATOR);
+	define('BASEPATH', realpath($paths->systemDirectory) . DIRECTORY_SEPARATOR);
 }
 
 /**
@@ -79,7 +75,7 @@ if (! defined('BASEPATH'))
  */
 if (! defined('WRITEPATH'))
 {
-	define('WRITEPATH', realpath(ROOTPATH . $paths->writableDirectory) . DIRECTORY_SEPARATOR);
+	define('WRITEPATH', realpath($paths->writableDirectory) . DIRECTORY_SEPARATOR);
 }
 
 /**
@@ -87,7 +83,7 @@ if (! defined('WRITEPATH'))
  */
 if (! defined('TESTPATH'))
 {
-	define('TESTPATH', realpath(ROOTPATH . $paths->testsDirectory) . DIRECTORY_SEPARATOR);
+	define('TESTPATH', realpath($paths->testsDirectory) . DIRECTORY_SEPARATOR);
 }
 
 /*
