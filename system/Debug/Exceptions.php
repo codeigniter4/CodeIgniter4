@@ -36,12 +36,14 @@
  * @filesource
  */
 
+use CodeIgniter\API\ResponseTrait;
+
 /**
  * Exceptions manager
  */
 class Exceptions
 {
-	use \CodeIgniter\API\ResponseTrait;
+	use ResponseTrait;
 
 	/**
 	 * Nesting level of the output buffering mechanism

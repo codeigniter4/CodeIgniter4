@@ -266,30 +266,6 @@ class App extends BaseConfig
 
 	/*
 	|--------------------------------------------------------------------------
-	| Debug Toolbar
-	|--------------------------------------------------------------------------
-	| The Debug Toolbar provides a way to see information about the performance
-	| and state of your application during that page display. By default it will
-	| NOT be displayed under production environments, and will only display if
-	| CI_DEBUG is true, since if it's not, there's not much to display anyway.
-	|
-	| toolbarMaxHistory = Number of history files, 0 for none or -1 for unlimited
-	|
-	*/
-	public $toolbarCollectors = [
-		'CodeIgniter\Debug\Toolbar\Collectors\Timers',
-		'CodeIgniter\Debug\Toolbar\Collectors\Database',
-		'CodeIgniter\Debug\Toolbar\Collectors\Logs',
-		'CodeIgniter\Debug\Toolbar\Collectors\Views',
-		// 'CodeIgniter\Debug\Toolbar\Collectors\Cache',
-		'CodeIgniter\Debug\Toolbar\Collectors\Files',
-		'CodeIgniter\Debug\Toolbar\Collectors\Routes',
-		'CodeIgniter\Debug\Toolbar\Collectors\Events',
-	];
-	public $toolbarMaxHistory = 20;
-
-	/*
-	|--------------------------------------------------------------------------
 	| Application Salt
 	|--------------------------------------------------------------------------
 	|

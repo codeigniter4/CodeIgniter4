@@ -63,7 +63,7 @@ class CIUnitTestCase extends TestCase
 	 */
 	protected $configPath = '../application/Config';
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

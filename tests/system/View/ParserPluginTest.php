@@ -7,7 +7,7 @@ class ParserPluginTest extends \CIUnitTestCase
 	protected $parser;
 	protected $validator;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

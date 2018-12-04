@@ -8,7 +8,7 @@ class QueryTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

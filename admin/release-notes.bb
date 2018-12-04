@@ -1,3 +1,5 @@
+CAUTION: THIS FILE IS A MIX OF BBCODE & MARKDOWN... NEEDS PROOFING
+
 CodeIgniter-4.0.0-alpha.1 launches today, after a lengthy build-up :)
 
 Huge shoutout to Lonnie Ezell for all of his hard work getting the vision

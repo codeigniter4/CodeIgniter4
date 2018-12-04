@@ -399,7 +399,7 @@ class DownloadResponse extends Message implements ResponseInterface
 
 		// Per spec, MUST be sent with each request, if possible.
 		// http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
-		if (isset($this->headers['Date']))
+		if (! isset($this->headers['Date']))
 		{
 			$this->setDate(\DateTime::createFromFormat('U', time()));
 		}

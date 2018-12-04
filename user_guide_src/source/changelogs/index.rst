@@ -31,7 +31,7 @@ Release Date: November 30, 2018
 - We welcome Natan Felles, from Brazil, to the code developer team.
   He has proven to be passionate, dedicated and thorough :)
 
-:doc:`See all the changes. </changelogs/next>`
+:doc:`See all the changes. </changelogs/v4.0.0-alpha.3>`
 
 
 Version 4.0.0-alpha.2
@@ -71,3 +71,11 @@ Some new, some old & some borrowed packages, all namespaced.
 
 :doc:`See all the changes. </changelogs/v4.0.0-alpha.1>`
 
+.. toctree::
+    :hidden:
+    :titlesonly:
+
+    next
+    v4.0.0-alpha.3
+    v4.0.0-alpha.2
+    v4.0.0-alpha.1

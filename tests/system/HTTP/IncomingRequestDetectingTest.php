@@ -15,7 +15,7 @@ class IncomingRequestDetectingTest extends \CIUnitTestCase
 	 */
 	protected $request;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
@@ -32,6 +32,15 @@ class IncomingRequestDetectingTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/index.php/woot';
 		$_SERVER['SCRIPT_NAME'] = '/index.php';
 		$expected               = 'woot';
+		$this->assertEquals($expected, $this->request->detectPath());
+	}
+
+	public function testPathEmpty()
+	{
+		$this->request->uri     = '/';
+		$_SERVER['REQUEST_URI'] = '/';
+		$_SERVER['SCRIPT_NAME'] = '/index.php';
+		$expected               = '/';
 		$this->assertEquals($expected, $this->request->detectPath());
 	}
 

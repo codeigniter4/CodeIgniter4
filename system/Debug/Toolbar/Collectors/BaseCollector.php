@@ -302,4 +302,21 @@ abstract class BaseCollector
 		return '';
 	}
 
+	public function getAsArray()
+	{
+		return [
+			'title'           => $this->getTitle(),
+			'titleSafe'       => $this->getTitle(true),
+			'titleDetails'    => $this->getTitleDetails(),
+			'display'         => $this->display(),
+			'badgeValue'      => $this->getBadgeValue(),
+			'isEmpty'         => $this->isEmpty(),
+			'hasTabContent'   => $this->hasTabContent(),
+			'hasLabel'        => $this->hasLabel(),
+			'icon'            => $this->icon(),
+			'hasTimelineData' => $this->hasTimelineData(),
+			'timelineData'    => $this->timelineData(),
+		];
+	}
+
 }

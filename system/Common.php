@@ -581,7 +581,9 @@ if (! function_exists('helper'))
 				{
 					if (strpos($path, APPPATH) === 0)
 					{
+						// @codeCoverageIgnoreStart
 						$appHelper = $path;
+						// @codeCoverageIgnoreEnd
 					}
 					elseif (strpos($path, BASEPATH) === 0)
 					{
@@ -597,7 +599,9 @@ if (! function_exists('helper'))
 			// App-level helpers should override all others
 			if (! empty($appHelper))
 			{
+				// @codeCoverageIgnoreStart
 				$includes[] = $appHelper;
+				// @codeCoverageIgnoreEnd
 			}
 
 			// All namespaced files get added in next
@@ -688,9 +692,9 @@ if (! function_exists('csrf_field'))
 	 *
 	 * @return string
 	 */
-	function csrf_field()
+	function csrf_field(string $id = null)
 	{
-		return '<input type="hidden" name="' . csrf_token() . '" value="' . csrf_hash() . '">';
+		return '<input type="hidden"' . (!empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '" />';
 	}
 }
 
