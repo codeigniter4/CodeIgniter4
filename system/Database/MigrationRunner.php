@@ -436,7 +436,7 @@ class MigrationRunner
 		}
 
 		// Check if $targetversion file is found
-		if ($targetversion !== 0 && ! array_key_exists($targetversion, $migrations))
+		if ($targetversion !== '0' && ! array_key_exists($targetversion, $migrations))
 		{
 			if ($this->silent)
 			{
