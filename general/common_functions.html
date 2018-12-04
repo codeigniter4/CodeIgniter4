@@ -647,6 +647,12 @@ modern browsers to automatically modify any HTTP requests to HTTPS requests for 
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">with</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>When passing a URI into the function, it is treated as a reverse-route request, not a relative/full URI, treating
+it the same as using redirect()-&gt;route():</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Go to a named/reverse-routed URI</span>
+<span class="k">return</span> <span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;named_route&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
@@ -901,7 +907,7 @@ instance every time.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Dec 02, 2018.
+      Last updated on Dec 03, 2018.
 
     </p>
   </div>
