@@ -381,7 +381,12 @@ the class properties directly, allowing you to enforce any business logic or dat
 column name to be converted into PascalCase, and prefixed with either <code class="docutils literal"><span class="pre">set</span></code> or <code class="docutils literal"><span class="pre">get</span></code>. These methods will then
 be automatically called whenever you set or retrieve the class property using the direct syntax (i.e. $user-&gt;email).
 The methods do not need to be public unless you want them accessed from other classes. For example, the <code class="docutils literal"><span class="pre">created_at</span></code>
-class property will be access through the <code class="docutils literal"><span class="pre">setCreatedAt()</span></code> and <code class="docutils literal"><span class="pre">getCreatedAt()</span></code> methods.</p>
+class property will be accessed through the <code class="docutils literal"><span class="pre">setCreatedAt()</span></code> and <code class="docutils literal"><span class="pre">getCreatedAt()</span></code> methods.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This only works when trying to access the properties from outside of the track. Any methods internal to the
+class must call the <code class="docutils literal"><span class="pre">setX()</span></code> and <code class="docutils literal"><span class="pre">getX()</span></code> methods directly.</p>
+</div>
 <p>In the <code class="docutils literal"><span class="pre">setPassword()</span></code> method we ensure that the password is always hashed.</p>
 <p>In <code class="docutils literal"><span class="pre">setCreatedAt()</span></code> we convert the string we receive from the model into a DateTime object, ensuring that our timezone
 is UTC so we can easily convert the the viewer&#8217;s current timezone. In <code class="docutils literal"><span class="pre">getCreatedAt()</span></code>, it converts the time to
