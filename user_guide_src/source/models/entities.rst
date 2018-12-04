@@ -181,7 +181,10 @@ The first thing to notice is the name of the methods we've added. For each one, 
 column name to be converted into PascalCase, and prefixed with either ``set`` or ``get``. These methods will then
 be automatically called whenever you set or retrieve the class property using the direct syntax (i.e. $user->email).
 The methods do not need to be public unless you want them accessed from other classes. For example, the ``created_at``
-class property will be access through the ``setCreatedAt()`` and ``getCreatedAt()`` methods.
+class property will be accessed through the ``setCreatedAt()`` and ``getCreatedAt()`` methods.
+
+.. note:: This only works when trying to access the properties from outside of the track. Any methods internal to the
+    class must call the ``setX()`` and ``getX()`` methods directly.
 
 In the ``setPassword()`` method we ensure that the password is always hashed.
 
