@@ -412,6 +412,7 @@ class Entity
 
 	/**
 	 * Provides the ability to cast an item as a specific data type.
+	 * Add ? at the beginning of $type  (i.e. ?string) to get NULL instead of castig $value if $value === null
 	 *
 	 * @param $value
 	 * @param string $type
@@ -426,6 +427,7 @@ class Entity
 		switch($type)
 		{
 			case 'integer':
+			case 'int': //alias for 'integer'
 				$value = (int)$value;
 				break;
 			case 'float':
@@ -438,6 +440,7 @@ class Entity
 				$value = (string)$value;
 				break;
 			case 'boolean':
+			case 'bool': //alias for 'boolean'
 				$value = (bool)$value;
 				break;
 			case 'object':
