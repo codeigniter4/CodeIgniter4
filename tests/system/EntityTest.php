@@ -71,6 +71,23 @@ class EntityTest extends \CIUnitTestCase
 		$this->assertObjectNotHasAttribute('baz', $entity);
 	}
 
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1567
+	 */
+	public function testFillMapsEntities()
+	{
+		$entity = $this->getMappedEntity();
+
+		$data = [
+			'bar' => 'foo',
+			'orig' => 'simple'
+		];
+		$entity->fill($data);
+
+		$this->assertEquals('foo', $entity->bar);
+		$this->assertEquals('oo:simple:oo', $entity->orig);
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testDataMappingConvertsOriginalName()

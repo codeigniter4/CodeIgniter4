@@ -117,11 +117,15 @@ class Entity
 	 * that may or may not exist.
 	 *
 	 * @param array $data
+	 *
+	 * @return \CodeIgniter\Entity
 	 */
 	public function fill(array $data)
 	{
 		foreach ($data as $key => $value)
 		{
+			$key = $this->mapProperty($key);
+
 			$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 
 			if (method_exists($this, $method))
@@ -133,6 +137,8 @@ class Entity
 				$this->$key = $value;
 			}
 		}
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
