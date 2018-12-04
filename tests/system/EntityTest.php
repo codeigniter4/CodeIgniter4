@@ -588,7 +588,7 @@ class EntityTest extends \CIUnitTestCase
 			protected $string_null = null;
 			protected $string_empty = null;
 			protected $integer_null = null;
-			protected $integer_0 = 0;
+			protected $integer_0 = null;
 			// 'bar' is db column, 'foo' is internal representation
 			protected $_options = [
 				'casts'   => [
