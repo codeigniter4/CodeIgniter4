@@ -1,7 +1,6 @@
 <?php namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\I18n\Time;
-use CodeIgniter\Model;
 use CodeIgniter\Test\CIDatabaseTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Tests\Support\Models\EntityModel;
@@ -21,13 +20,6 @@ class ModelTest extends CIDatabaseTestCase
 	protected $refresh = true;
 
 	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
-
-	public function setUp()
-	{
-		parent::setUp();
-
-		$this->model = new Model($this->db);
-	}
 
 	//--------------------------------------------------------------------
 

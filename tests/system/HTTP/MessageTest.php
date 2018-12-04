@@ -8,7 +8,7 @@ class MessageTest extends \CIUnitTestCase
 {
 
 	/**
-	 * @var CodeIgniter\HTTP\Message
+	 * @var \CodeIgniter\HTTP\Message
 	 */
 	protected $message;
 
@@ -16,7 +16,7 @@ class MessageTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->message = new Message();
+		$this->message = new class extends Message {};
 	}
 
 	//--------------------------------------------------------------------

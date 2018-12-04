@@ -1,6 +1,5 @@
 <?php namespace CodeIgniter;
 
-use CodeIgniter\Log\Logger;
 use Config\App;
 use CodeIgniter\HTTP\UserAgent;
 use Tests\Support\MockCodeIgniter;
@@ -54,6 +53,7 @@ class ControllerTest extends \CIUnitTestCase
 		$this->response    = new \CodeIgniter\HTTP\Response($this->config);
 		$this->logger      = \Config\Services::logger();
 		$this->codeigniter = new MockCodeIgniter($this->config);
+		$this->controller  = new class extends Controller {};
 	}
 
 	//--------------------------------------------------------------------
@@ -61,7 +61,6 @@ class ControllerTest extends \CIUnitTestCase
 	public function testConstructor()
 	{
 		// make sure we can instantiate one
-		$this->controller = new Controller();
 		$this->controller->initController($this->request, $this->response, $this->logger);
 		$this->assertInstanceOf(Controller::class, $this->controller);
 	}
@@ -84,7 +83,6 @@ class ControllerTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 	public function testCachePage()
 	{
-		$this->controller = new Controller();
 		$this->controller->initController($this->request, $this->response, $this->logger);
 
 		$this->assertNull($this->controller->cachePage(10));
@@ -93,7 +91,6 @@ class ControllerTest extends \CIUnitTestCase
 	public function testValidate()
 	{
 		// make sure we can instantiate one
-		$this->controller = new Controller();
 		$this->controller->initController($this->request, $this->response, $this->logger);
 
 		// and that we can attempt validation, with no rules
