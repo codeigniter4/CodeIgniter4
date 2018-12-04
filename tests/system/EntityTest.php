@@ -368,6 +368,19 @@ class EntityTest extends \CIUnitTestCase
 		$this->assertEquals(['foo' => 'bar'], $entity->seventh);
 	}
 
+	
+	//--------------------------------------------------------------------
+	
+	public function testCastNullable()
+	{
+		$entity = $this->getCastNullableEntity();
+
+		$this->assertSame(null, $entity->string_null);
+		$this->assertSame('', $entity->string_empty);
+		$this->assertSame(null, $entity->integer_null);
+		$this->assertSame(0, $entity->integer_0);
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testCastAsJSON()
@@ -564,5 +577,31 @@ class EntityTest extends \CIUnitTestCase
 			}
 		};
 	}
+	
+	
+	
+	protected function getCastNullableEntity()
+	{
+		return new class extends Entity
+		{
+
+			protected $string_null = null;
+			protected $string_empty = null;
+			protected $integer_null = null;
+			protected $integer_0 = 0;
+			// 'bar' is db column, 'foo' is internal representation
+			protected $_options = [
+				'casts'   => [
+					'string_null'    => '?string',
+					'string_empty'   => 'string',
+					'integner_null'  => '?integer',
+					'integer_0'      => 'integer'
+				],
+				'dates'   => [],
+				'datamap' => [],
+			];
+		};
+	}
+
 
 }
