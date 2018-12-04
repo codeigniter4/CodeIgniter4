@@ -79,8 +79,8 @@ class EntityTest extends \CIUnitTestCase
 		$entity = $this->getMappedEntity();
 
 		$data = [
-			'bar' => 'foo',
-			'orig' => 'simple'
+			'bar'  => 'foo',
+			'orig' => 'simple',
 		];
 		$entity->fill($data);
 
