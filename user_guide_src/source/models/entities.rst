@@ -315,7 +315,7 @@ the **$_options** property. The **casts** option should be an array where the ke
 and the value is the data type it should be cast to. Casting only affects when values are read. No conversions happen
 that affect the permanent value in either the entity or the database. Properties can be cast to any of the following
 data types: **integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, and
-**timestamp**.
+**timestamp**. Add question mark at the beginning of type to mark property as nullable, i.e. **?string**, **?integer**.
 
 For example, if you had a User entity with an **is_banned** property, you can cast it as a boolean::
 
@@ -329,7 +329,8 @@ For example, if you had a User entity with an **is_banned** property, you can ca
 
         protected $_options = [
             'casts' => [
-                'is_banned' => 'boolean'
+                'is_banned' => 'boolean',
+                'is_banned_nullable' => '?boolean'
             ],
             'dates' => ['created_at', 'updated_at', 'deleted_at'],
             'datamap' => []
