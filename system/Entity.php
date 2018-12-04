@@ -426,8 +426,8 @@ class Entity
 
 		switch($type)
 		{
-			case 'integer':
-			case 'int': //alias for 'integer'
+			case 'int':
+			case 'integer': //alias for 'integer'
 				$value = (int)$value;
 				break;
 			case 'float':
@@ -439,8 +439,8 @@ class Entity
 			case 'string':
 				$value = (string)$value;
 				break;
-			case 'boolean':
-			case 'bool': //alias for 'boolean'
+			case 'bool':
+			case 'boolean': //alias for 'boolean'
 				$value = (bool)$value;
 				break;
 			case 'object':
