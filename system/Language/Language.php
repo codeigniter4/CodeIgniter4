@@ -122,7 +122,7 @@ class Language
 
 		$output = $this->language[$this->locale][$file][$parsedLine] ?? null;
 
-		if (empty($output) && strpos($this->locale, '-'))
+		if ($output === null && strpos($this->locale, '-'))
 		{
 			[$locale] = explode('-', $this->locale, 2);
 
