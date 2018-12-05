@@ -215,7 +215,9 @@ database or other data stores. They provide access to your data.</p>
 <p>Open up the <em>application/Models/</em> directory and create a new file called
 <em>NewsModel.php</em> and add the following code. Make sure you&#8217;ve configured
 your database properly as described <a class="reference internal" href="../database/configuration.html"><span class="doc">here</span></a>.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">NewsModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
@@ -439,7 +441,7 @@ watch your news page.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Dec 03, 2018.
+      Last updated on Dec 05, 2018.
 
     </p>
   </div>
