@@ -21,6 +21,8 @@ your database properly as described :doc:`here <../database/configuration>`.
 
 ::
 
+        namespace App\Models;
+
         use CodeIgniter\Model;
 
 	class NewsModel extends Model
