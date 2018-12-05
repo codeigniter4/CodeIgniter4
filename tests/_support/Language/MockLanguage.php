@@ -20,13 +20,15 @@ class MockLanguage extends Language
 	 * 'requireFile()' method to allow easy overrides
 	 * during testing.
 	 *
-	 * @param $data
+	 * @param array       $data
+	 * @param string      $file
+	 * @param string|null $locale
 	 *
 	 * @return $this
 	 */
-	public function setData($data)
+	public function setData(string $file, array $data, string $locale = null)
 	{
-		$this->data = $data;
+		$this->language[$locale ?? $this->locale][$file] = $data;
 
 		return $this;
 	}
