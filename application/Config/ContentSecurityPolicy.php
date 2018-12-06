@@ -25,18 +25,18 @@ class ContentSecurityPolicy extends BaseConfig
 	// sources allowed; string or array of strings
 	// Note: once you set a policy to 'none', it cannot be further restricted
 
-	public $defaultSrc     = null;
+	public $defaultSrc     = 'self';
 	public $scriptSrc      = 'self';
 	public $styleSrc       = 'self';
 	public $imageSrc       = 'self';
-	public $baseURI        = null;
-	public $childSrc       = null;
+	public $baseURI        = 'self';
+	public $childSrc       = 'self';
 	public $connectSrc     = 'self';
 	public $fontSrc        = null;
-	public $formAction     = null;
+	public $formAction     = 'self';
 	public $frameAncestors = null;
 	public $mediaSrc       = null;
-	public $objectSrc      = null;
+	public $objectSrc      = 'self';
 	public $manifestSrc    = null;
 
 	// mime types allowed; string or array of strings

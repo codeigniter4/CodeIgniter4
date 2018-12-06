@@ -279,13 +279,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-base-uri
 	 *
 	 * @param string|array $uri
-	 * @param boolean|null $override
+	 * @param boolean|null $explicitReporting
 	 *
 	 * @return $this
 	 */
-	public function addBaseURI($uri, ?bool $override = null)
+	public function addBaseURI($uri, ?bool $explicitReporting = null)
 	{
-		$this->addOption($uri, 'baseURI', $override ?? $this->reportOnly);
+		$this->addOption($uri, 'baseURI', $explicitReporting ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -303,13 +303,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-child-src
 	 *
 	 * @param string|array $uri
-	 * @param boolean|null $override
+	 * @param boolean|null $explicitReporting
 	 *
 	 * @return $this
 	 */
-	public function addChildSrc($uri, ?bool $override = null)
+	public function addChildSrc($uri, ?bool $explicitReporting = null)
 	{
-		$this->addOption($uri, 'childSrc', $override ?? $this->reportOnly);
+		$this->addOption($uri, 'childSrc', $explicitReporting ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -326,13 +326,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-connect-src
 	 *
 	 * @param string|array $uri
-	 * @param boolean|null $override
+	 * @param boolean|null $explicitReporting
 	 *
 	 * @return $this
 	 */
-	public function addConnectSrc($uri, ?bool $override = null)
+	public function addConnectSrc($uri, ?bool $explicitReporting = null)
 	{
-		$this->addOption($uri, 'connectSrc', $override ?? $this->reportOnly);
+		$this->addOption($uri, 'connectSrc', $explicitReporting ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -349,13 +349,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-default-src
 	 *
 	 * @param string|array $uri
-	 * @param boolean|null $override
+	 * @param boolean|null $explicitReporting
 	 *
 	 * @return $this
 	 */
-	public function setDefaultSrc($uri, ?bool $override = null)
+	public function setDefaultSrc($uri, ?bool $explicitReporting = null)
 	{
-		$this->defaultSrc = [(string) $uri => $override ?? $this->reportOnly];
+		$this->defaultSrc = [(string) $uri => $explicitReporting ?? $this->reportOnly];
 
 		return $this;
 	}
@@ -371,13 +371,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-font-src
 	 *
 	 * @param string|array $uri
-	 * @param boolean|null $override
+	 * @param boolean|null $explicitReporting
 	 *
 	 * @return $this
 	 */
-	public function addFontSrc($uri, ?bool $override = null)
+	public function addFontSrc($uri, ?bool $explicitReporting = null)
 	{
-		$this->addOption($uri, 'fontSrc', $override ?? $this->reportOnly);
+		$this->addOption($uri, 'fontSrc', $explicitReporting ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -391,13 +391,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-form-action
 	 *
 	 * @param string|array $uri
-	 * @param boolean|null $override
+	 * @param boolean|null $explicitReporting
 	 *
 	 * @return $this
 	 */
-	public function addFormAction($uri, ?bool $override = null)
+	public function addFormAction($uri, ?bool $explicitReporting = null)
 	{
-		$this->addOption($uri, 'formAction', $override ?? $this->reportOnly);
+		$this->addOption($uri, 'formAction', $explicitReporting ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -411,13 +411,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-frame-ancestors
 	 *
 	 * @param string|array $uri
-	 * @param boolean|null $override
+	 * @param boolean|null $explicitReporting
 	 *
 	 * @return $this
 	 */
-	public function addFrameAncestor($uri, ?bool $override = null)
+	public function addFrameAncestor($uri, ?bool $explicitReporting = null)
 	{
-		$this->addOption($uri, 'frameAncestors', $override ?? $this->reportOnly);
+		$this->addOption($uri, 'frameAncestors', $explicitReporting ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -431,13 +431,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-img-src
 	 *
 	 * @param string|array $uri
-	 * @param boolean|null $override
+	 * @param boolean|null $explicitReporting
 	 *
 	 * @return $this
 	 */
-	public function addImageSrc($uri, ?bool $override = null)
+	public function addImageSrc($uri, ?bool $explicitReporting = null)
 	{
-		$this->addOption($uri, 'imageSrc', $override ?? $this->reportOnly);
+		$this->addOption($uri, 'imageSrc', $explicitReporting ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -451,13 +451,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-media-src
 	 *
 	 * @param string|array $uri
-	 * @param boolean|null $override
+	 * @param boolean|null $explicitReporting
 	 *
 	 * @return $this
 	 */
-	public function addMediaSrc($uri, ?bool $override = null)
+	public function addMediaSrc($uri, ?bool $explicitReporting = null)
 	{
-		$this->addOption($uri, 'mediaSrc', $override ?? $this->reportOnly);
+		$this->addOption($uri, 'mediaSrc', $explicitReporting ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -471,13 +471,13 @@ class ContentSecurityPolicy
 	 * @see https://www.w3.org/TR/CSP/#directive-manifest-src
 	 *
 	 * @param string|array $uri
-	 * @param boolean|null $override
+	 * @param boolean|null $explicitReporting
 	 *
 	 * @return $this
 	 */
-	public function addManifestSrc($uri, ?bool $override = null)
+	public function addManifestSrc($uri, ?bool $explicitReporting = null)
 	{
-		$this->addOption($uri, 'manifestSrc', $override ?? $this->reportOnly);
+		$this->addOption($uri, 'manifestSrc', $explicitReporting ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -491,13 +491,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-object-src
 	 *
 	 * @param string|array $uri
-	 * @param boolean|null $override
+	 * @param boolean|null $explicitReporting
 	 *
 	 * @return $this
 	 */
-	public function addObjectSrc($uri, ?bool $override = null)
+	public function addObjectSrc($uri, ?bool $explicitReporting = null)
 	{
-		$this->addOption($uri, 'objectSrc', $override ?? $this->reportOnly);
+		$this->addOption($uri, 'objectSrc', $explicitReporting ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -510,14 +510,14 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-plugin-types
 	 *
-	 * @param string|array $mime     One or more plugin mime types, separate by spaces
-	 * @param boolean|null $override
+	 * @param string|array $mime              One or more plugin mime types, separate by spaces
+	 * @param boolean|null $explicitReporting
 	 *
 	 * @return $this
 	 */
-	public function addPluginType($mime, ?bool $override = null)
+	public function addPluginType($mime, ?bool $explicitReporting = null)
 	{
-		$this->addOption($mime, 'pluginTypes', $override ?? $this->reportOnly);
+		$this->addOption($mime, 'pluginTypes', $explicitReporting ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -549,14 +549,14 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-sandbox
 	 *
-	 * @param string|array $flags    An array of sandbox flags that can be added to the directive.
-	 * @param boolean|null $override
+	 * @param string|array $flags             An array of sandbox flags that can be added to the directive.
+	 * @param boolean|null $explicitReporting
 	 *
 	 * @return $this
 	 */
-	public function addSandbox($flags, ?bool $override = null)
+	public function addSandbox($flags, ?bool $explicitReporting = null)
 	{
-		$this->addOption($flags, 'sandbox', $override ?? $this->reportOnly);
+		$this->addOption($flags, 'sandbox', $explicitReporting ?? $this->reportOnly);
 		return $this;
 	}
 
@@ -569,13 +569,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-connect-src
 	 *
 	 * @param string|array $uri
-	 * @param boolean|null $override
+	 * @param boolean|null $explicitReporting
 	 *
 	 * @return $this
 	 */
-	public function addScriptSrc($uri, ?bool $override = null)
+	public function addScriptSrc($uri, ?bool $explicitReporting = null)
 	{
-		$this->addOption($uri, 'scriptSrc', $override ?? $this->reportOnly);
+		$this->addOption($uri, 'scriptSrc', $explicitReporting ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -589,13 +589,13 @@ class ContentSecurityPolicy
 	 * @see http://www.w3.org/TR/CSP/#directive-connect-src
 	 *
 	 * @param string|array $uri
-	 * @param boolean|null $override
+	 * @param boolean|null $explicitReporting
 	 *
 	 * @return $this
 	 */
-	public function addStyleSrc($uri, ?bool $override = null)
+	public function addStyleSrc($uri, ?bool $explicitReporting = null)
 	{
-		$this->addOption($uri, 'styleSrc', $override ?? $this->reportOnly);
+		$this->addOption($uri, 'styleSrc', $explicitReporting ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -626,9 +626,9 @@ class ContentSecurityPolicy
 	 *
 	 * @param string|array $options
 	 * @param string       $target
-	 * @param boolean|null $override
+	 * @param boolean|null $explicitReporting
 	 */
-	protected function addOption($options, string $target, ?bool $override = null)
+	protected function addOption($options, string $target, ?bool $explicitReporting = null)
 	{
 		// Ensure we have an array to work with...
 		if (is_string($this->{$target}))
@@ -640,12 +640,12 @@ class ContentSecurityPolicy
 		{
 			foreach ($options as $opt)
 			{
-				$this->{$target}[$opt] = $override ?? $this->reportOnly;
+				$this->{$target}[$opt] = $explicitReporting ?? $this->reportOnly;
 			}
 		}
 		else
 		{
-			$this->{$target}[$options] = $override ?? $this->reportOnly;
+			$this->{$target}[$options] = $explicitReporting ?? $this->reportOnly;
 		}
 	}
 

@@ -163,33 +163,51 @@ When enabled, the response object will contain an instance of ``CodeIgniter\HTTP
 values set in **application/Config/ContentSecurityPolicy.php** are applied to that instance and, if no changes are
 needed during runtime, then the correctly formatted header is sent and you're all done.
 
+With CSP enabled, two header lines are added to the HTTP response: a Content-Security-Policy header, with
+policies identifying content types or origins that are explicitly allowed for different
+contexts, and a Content-Security-Policy-Report-Only header, which identifies content types 
+or origins that will be allowed but which will also be reported to the destination
+of your choice.
+
+Our implementation provides for a default treatment, changeable through the ``reportOnly()`` method.
+When an additional entry is added to a CSP directive, as shown below, it will be added
+to the CSP header appropriate for blocking or preventing. That can be over-ridden on a per
+call basis, by providing an optional second parameter to the adding method call.
+
 Runtime Configuration
 ---------------------
 
 If your application needs to make changes at run-time, you can access the instance at ``$response->CSP``. The
-class holds a number of methods that map pretty clearly to the appropriate header value that you need to set::
+class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
+Examples are shown below, with different combinations of parameters, though all accept either a directive
+name or anarray of them.::
 
-	$reportOnly = true;
-
-	$response->CSP->reportOnly($reportOnly);
-	$response->CSP->setDefaultSrc('cdn.example.com', $reportOnly);
+        // specify the default directive treatment 
+	$response->CSP->reportOnly(false); 
+        
+        // specify the origin to use if none provided for a directive
+	$response->CSP->setDefaultSrc('cdn.example.com'); 
+        // specify the URL that "report-only" reports get sent to
 	$response->CSP->setReportURI('http://example.com/csp/reports');
+        // specify that HTTP requests be upgraded to HTTPS
 	$response->CSP->upgradeInsecureRequests(true);
 
-	$response->CSP->addBaseURI('example.com', true);
-	$response->CSP->addChildSrc('https://youtube.com', $reportOnly);
-	$response->CSP->addConnectSrc('https://*.facebook.com', $reportOnly);
-	$response->CSP->addFontSrc('fonts.example.com', $reportOnly);
-	$response->CSP->addFormAction('self', $reportOnly);
-	$response->CSP->addFrameAncestor('none', $reportOnly);
-	$response->CSP->addImageSrc('cdn.example.com', $reportOnly);
-	$response->CSP->addMediaSrc('cdn.example.com', $reportOnly);
-	$response->CSP->addManifestSrc('cdn.example.com', $reportOnly);
-	$response->CSP->addObjectSrc('cdn.example.com', $reportOnly);
-	$response->CSP->addPluginType('application/pdf', $reportOnly);
-	$response->CSP->addScriptSrc('scripts.example.com', $reportOnly);
-	$response->CSP->addStyleSrc('css.example.com', $reportOnly);
-	$response->CSP->addSandbox(['allow-forms', 'allow-scripts'],$reportOnly);
+        // add types or origins to CSP directives
+        // assuming that the default treatment is to block rather than just report
+	$response->CSP->addBaseURI('example.com', true); // report only
+	$response->CSP->addChildSrc('https://youtube.com'); // blocked
+	$response->CSP->addConnectSrc('https://*.facebook.com', false); // blocked
+	$response->CSP->addFontSrc('fonts.example.com');
+	$response->CSP->addFormAction('self');
+	$response->CSP->addFrameAncestor('none', true); // report this one
+	$response->CSP->addImageSrc('cdn.example.com');
+	$response->CSP->addMediaSrc('cdn.example.com');
+	$response->CSP->addManifestSrc('cdn.example.com');
+	$response->CSP->addObjectSrc('cdn.example.com', false); // reject from here
+	$response->CSP->addPluginType('application/pdf', false); // reject this media type
+	$response->CSP->addScriptSrc('scripts.example.com', true); // allow but report requests from here
+	$response->CSP->addStyleSrc('css.example.com');
+	$response->CSP->addSandbox(['allow-forms', 'allow-scripts']);
 
 
 The first parameter to each of the "add" methods is an appropriate string value,
