@@ -3,6 +3,12 @@ namespace CodeIgniter\HTTP;
 
 use Config\App;
 
+/**
+ * Test the CSP policy directive creation.
+ *
+ * See https://apimirror.com/http/headers/content-security-policy
+ * See https://cspvalidator.org/
+ */
 class ContentSecurityPolicyTest extends \CIUnitTestCase
 {
 
@@ -67,6 +73,8 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 	public function testDefaults()
 	{
 		$this->prepare();
+		$this->csp->addBaseURI('none');
+		$this->csp->setDefaultSrc('none');
 
 		$result = $this->work();
 
@@ -238,6 +246,21 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
 	 */
+	public function testPluginArray()
+	{
+		$this->prepare();
+		$this->csp->addPluginType('application/x-shockwave-flash');
+		$this->csp->addPluginType('application/wacky-hacky');
+		$result = $this->work();
+
+		$result = $this->getHeaderEmitted('Content-Security-Policy');
+		$this->assertContains('plugin-types application/x-shockwave-flash application/wacky-hacky;', $result);
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
 	public function testObjectSrc()
 	{
 		$this->prepare();
@@ -293,7 +316,7 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 	public function testBaseURI()
 	{
 		$this->prepare();
-		$this->csp->setBaseURI('example.com');
+		$this->csp->addBaseURI('example.com');
 		$result = $this->work();
 
 		$result = $this->getHeaderEmitted('Content-Security-Policy');
@@ -339,30 +362,14 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 	{
 		$this->prepare();
 		$this->csp->reportOnly(false);
-		$this->csp->setSandbox(true, ['allow-popups', 'allow-top-navigation']);
+		$this->csp->addSandbox(['allow-popups', 'allow-top-navigation']);
+		//      $this->csp->addSandbox('allow-popups');
 		$result = $this->work();
 
 		$result = $this->getHeaderEmitted('Content-Security-Policy');
 		$this->assertContains('sandbox allow-popups allow-top-navigation;', $result);
 	}
 
-	//  /**
-	//   * Retained until the treatment of the setSandbox boolean parameter is resolved.
-	//   *
-	//   * @runInSeparateProcess
-	//   * @preserveGlobalState  disabled
-	//   */
-	//  public function testSandboxValue()
-	//  {
-	//      $this->prepare();
-	//      $this->csp->reportOnly(false);
-	//      $this->csp->setSandbox(true);
-	//      $result = $this->work();
-	//
-	//      $result = $this->getHeaderEmitted('Content-Security-Policy');
-	//      $this->assertContains('sandbox allow-popups allow-top-navigation;', $result);
-	//  }
-	//
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled

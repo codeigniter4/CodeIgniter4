@@ -99,7 +99,7 @@ class ContentSecurityPolicy
 	 *
 	 * @var type
 	 */
-	protected $frameAncestors = null;
+	protected $frameAncestors = [];
 
 	/**
 	 * Used for security enforcement
@@ -125,9 +125,9 @@ class ContentSecurityPolicy
 	/**
 	 * Used for security enforcement
 	 *
-	 * @var type
+	 * @var array
 	 */
-	protected $pluginTypes = null;
+	protected $pluginTypes = [];
 
 	/**
 	 * Used for security enforcement
@@ -139,9 +139,9 @@ class ContentSecurityPolicy
 	/**
 	 * Used for security enforcement
 	 *
-	 * @var boolean
+	 * @var array
 	 */
-	protected $sandbox = false;
+	protected $sandbox = [];
 
 	/**
 	 * Used for security enforcement
@@ -250,9 +250,6 @@ class ContentSecurityPolicy
 	}
 
 	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
-	// Setters
-	//--------------------------------------------------------------------
 
 	/**
 	 * If TRUE, nothing will be restricted. Instead all violations will
@@ -275,20 +272,20 @@ class ContentSecurityPolicy
 	//--------------------------------------------------------------------
 
 	/**
-	 * Sets the base_uri value. Can be either a URI class or a simple string.
+	 * Adds a new base_uri value. Can be either a URI class or a simple string.
 	 *
 	 * base_uri restricts the URLs that can appear in a page’s <base> element.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-base-uri
 	 *
-	 * @param string       $uri
+	 * @param string|array $uri
 	 * @param boolean|null $override
 	 *
 	 * @return $this
 	 */
-	public function setBaseURI($uri, ?bool $override = null)
+	public function addBaseURI($uri, ?bool $override = null)
 	{
-		$this->baseURI = [(string) $uri => $override ?? $this->reportOnly];
+		$this->addOption($uri, 'baseURI', $override ?? $this->reportOnly);
 
 		return $this;
 	}
@@ -305,7 +302,7 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-child-src
 	 *
-	 * @param $uri
+	 * @param string|array $uri
 	 * @param boolean|null $override
 	 *
 	 * @return $this
@@ -328,7 +325,7 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-connect-src
 	 *
-	 * @param $uri
+	 * @param string|array $uri
 	 * @param boolean|null $override
 	 *
 	 * @return $this
@@ -351,7 +348,7 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-default-src
 	 *
-	 * @param $uri
+	 * @param string|array $uri
 	 * @param boolean|null $override
 	 *
 	 * @return $this
@@ -373,7 +370,7 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-font-src
 	 *
-	 * @param $uri
+	 * @param string|array $uri
 	 * @param boolean|null $override
 	 *
 	 * @return $this
@@ -393,7 +390,7 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-form-action
 	 *
-	 * @param $uri
+	 * @param string|array $uri
 	 * @param boolean|null $override
 	 *
 	 * @return $this
@@ -413,7 +410,7 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-frame-ancestors
 	 *
-	 * @param $uri
+	 * @param string|array $uri
 	 * @param boolean|null $override
 	 *
 	 * @return $this
@@ -433,7 +430,7 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-img-src
 	 *
-	 * @param $uri
+	 * @param string|array $uri
 	 * @param boolean|null $override
 	 *
 	 * @return $this
@@ -453,7 +450,7 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-media-src
 	 *
-	 * @param $uri
+	 * @param string|array $uri
 	 * @param boolean|null $override
 	 *
 	 * @return $this
@@ -473,7 +470,7 @@ class ContentSecurityPolicy
 	 *
 	 * @see https://www.w3.org/TR/CSP/#directive-manifest-src
 	 *
-	 * @param $uri
+	 * @param string|array $uri
 	 * @param boolean|null $override
 	 *
 	 * @return $this
@@ -493,7 +490,7 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-object-src
 	 *
-	 * @param $uri
+	 * @param string|array $uri
 	 * @param boolean|null $override
 	 *
 	 * @return $this
@@ -513,7 +510,7 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-plugin-types
 	 *
-	 * @param string       $mime     One or more plugin mime types, separate by spaces
+	 * @param string|array $mime     One or more plugin mime types, separate by spaces
 	 * @param boolean|null $override
 	 *
 	 * @return $this
@@ -533,7 +530,7 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-report-uri
 	 *
-	 * @param $uri
+	 * @param string $uri
 	 *
 	 * @return $this
 	 */
@@ -552,21 +549,14 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-sandbox
 	 *
-	 * @param boolean $value
-	 * @param array   $flags An array of sandbox flags that can be added to the directive.
+	 * @param string|array $flags    An array of sandbox flags that can be added to the directive.
+	 * @param boolean|null $override
 	 *
 	 * @return $this
 	 */
-	public function setSandbox(bool $value = true, array $flags = null)
+	public function addSandbox($flags, ?bool $override = null)
 	{
-		if (empty($this->sandbox) && empty($flags))
-		{
-			$this->sandbox = $value;
-		}
-		else
-		{
-			$this->sandbox = $flags;
-		}
+		$this->addOption($flags, 'sandbox', $override ?? $this->reportOnly);
 		return $this;
 	}
 
@@ -578,7 +568,7 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-connect-src
 	 *
-	 * @param $uri
+	 * @param string|array $uri
 	 * @param boolean|null $override
 	 *
 	 * @return $this
@@ -598,7 +588,7 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-connect-src
 	 *
-	 * @param $uri
+	 * @param string|array $uri
 	 * @param boolean|null $override
 	 *
 	 * @return $this
@@ -616,7 +606,7 @@ class ContentSecurityPolicy
 	 * Sets whether the user agents should rewrite URL schemes, changing
 	 * HTTP to HTTPS.
 	 *
-	 * @param boolean|true $value
+	 * @param boolean $value
 	 *
 	 * @return $this
 	 */
@@ -628,14 +618,13 @@ class ContentSecurityPolicy
 	}
 
 	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
 	// Utility
 	//--------------------------------------------------------------------
 
 	/**
 	 * DRY method to add an string or array to a class property.
 	 *
-	 * @param $options
+	 * @param string|array $options
 	 * @param string       $target
 	 * @param boolean|null $override
 	 */
@@ -649,14 +638,10 @@ class ContentSecurityPolicy
 
 		if (is_array($options))
 		{
-			$newOptions = [];
 			foreach ($options as $opt)
 			{
-				$newOptions[] = [$opt => $override ?? $this->reportOnly];
+				$this->{$target}[$opt] = $override ?? $this->reportOnly;
 			}
-
-			$this->{$target} = array_merge($this->{$target}, $newOptions);
-			unset($newOptions);
 		}
 		else
 		{
@@ -750,6 +735,16 @@ class ContentSecurityPolicy
 			'report-uri'      => 'reportURI',
 		];
 
+		// inject default base & default URIs if needed
+		if (empty($this->baseURI))
+		{
+			$this->baseURI = 'none';
+		}
+		if (empty($this->defaultURI))
+		{
+			$this->defaultURI = 'none';
+		}
+
 		foreach ($directives as $name => $property)
 		{
 			// base_uri
@@ -806,8 +801,6 @@ class ContentSecurityPolicy
 	{
 		if (empty($values))
 		{
-			// It's possible that directives like 'sandbox' will not
-			// have any values passed in, so add them to the main policy.
 			$this->tempHeaders[$name] = null;
 			return;
 		}

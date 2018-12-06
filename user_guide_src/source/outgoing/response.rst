@@ -172,11 +172,11 @@ class holds a number of methods that map pretty clearly to the appropriate heade
 	$reportOnly = true;
 
 	$response->CSP->reportOnly($reportOnly);
-	$response->CSP->setBaseURI('example.com', true);
 	$response->CSP->setDefaultSrc('cdn.example.com', $reportOnly);
 	$response->CSP->setReportURI('http://example.com/csp/reports');
-	$response->CSP->setSandbox(true, ['allow-forms', 'allow-scripts']);
 	$response->CSP->upgradeInsecureRequests(true);
+
+	$response->CSP->addBaseURI('example.com', true);
 	$response->CSP->addChildSrc('https://youtube.com', $reportOnly);
 	$response->CSP->addConnectSrc('https://*.facebook.com', $reportOnly);
 	$response->CSP->addFontSrc('fonts.example.com', $reportOnly);
@@ -189,6 +189,11 @@ class holds a number of methods that map pretty clearly to the appropriate heade
 	$response->CSP->addPluginType('application/pdf', $reportOnly);
 	$response->CSP->addScriptSrc('scripts.example.com', $reportOnly);
 	$response->CSP->addStyleSrc('css.example.com', $reportOnly);
+	$response->CSP->addSandbox(['allow-forms', 'allow-scripts'],$reportOnly);
+
+
+The first parameter to each of the "add" methods is an appropriate string value,
+or an array of them.
 
 The ``reportOnly`` method allows you to specify the default reporting treatment
 for subsequent sources, unless over-ridden. For instance, you could specify
