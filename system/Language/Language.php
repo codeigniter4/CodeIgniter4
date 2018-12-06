@@ -115,14 +115,32 @@ class Language
 	{
 		// Parse out the file name and the actual alias.
 		// Will load the language file and strings.
-		list($file, $parsedLine) = $this->parseLine($line);
+		[
+			$file,
+			$parsedLine,
+		] = $this->parseLine($line, $this->locale);
 
-		$output = $this->language[$this->locale][$file][$parsedLine] ?? $line;
+		$output = $this->language[$this->locale][$file][$parsedLine] ?? null;
+
+		if ($output === null && strpos($this->locale, '-'))
+		{
+			[$locale] = explode('-', $this->locale, 2);
+
+			[
+				$file,
+				$parsedLine,
+			] = $this->parseLine($line, $locale);
+
+			$output = $this->language[$locale][$file][$parsedLine] ?? null;
+		}
+
+		$output = $output ?? $line;
 
 		if (! empty($args))
 		{
 			$output = $this->formatMessage($output, $args);
 		}
+
 		return $output;
 	}
 
@@ -133,10 +151,11 @@ class Language
 	 * filename as the first segment (separated by period).
 	 *
 	 * @param string $line
+	 * @param string $locale
 	 *
 	 * @return array
 	 */
-	protected function parseLine(string $line): array
+	protected function parseLine(string $line, string $locale): array
 	{
 		// If there's no possibility of a filename being in the string
 		// simply return the string, and they can parse the replacement
@@ -152,9 +171,9 @@ class Language
 		$file = substr($line, 0, strpos($line, '.'));
 		$line = substr($line, strlen($file) + 1);
 
-		if (! isset($this->language[$this->locale][$file]) || ! array_key_exists($line, $this->language[$this->locale][$file]))
+		if (! isset($this->language[$locale][$file]) || ! array_key_exists($line, $this->language[$locale][$file]))
 		{
-			$this->load($file, $this->locale);
+			$this->load($file, $locale);
 		}
 
 		return [

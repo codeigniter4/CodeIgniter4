@@ -117,11 +117,15 @@ class Entity
 	 * that may or may not exist.
 	 *
 	 * @param array $data
+	 *
+	 * @return \CodeIgniter\Entity
 	 */
 	public function fill(array $data)
 	{
 		foreach ($data as $key => $value)
 		{
+			$key = $this->mapProperty($key);
+
 			$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 
 			if (method_exists($this, $method))
@@ -133,6 +137,8 @@ class Entity
 				$this->$key = $value;
 			}
 		}
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -412,6 +418,7 @@ class Entity
 
 	/**
 	 * Provides the ability to cast an item as a specific data type.
+	 * Add ? at the beginning of $type  (i.e. ?string) to get NULL instead of castig $value if $value === null
 	 *
 	 * @param $value
 	 * @param string $type
@@ -421,9 +428,12 @@ class Entity
 
 	protected function castAs($value, string $type)
 	{
+		if(substr($type,0,1) === '?' && $value === null) return null;
+
 		switch($type)
 		{
-			case 'integer':
+			case 'int':
+			case 'integer': //alias for 'integer'
 				$value = (int)$value;
 				break;
 			case 'float':
@@ -435,7 +445,8 @@ class Entity
 			case 'string':
 				$value = (string)$value;
 				break;
-			case 'boolean':
+			case 'bool':
+			case 'boolean': //alias for 'boolean'
 				$value = (bool)$value;
 				break;
 			case 'object':
