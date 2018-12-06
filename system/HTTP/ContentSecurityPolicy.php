@@ -738,11 +738,11 @@ class ContentSecurityPolicy
 		// inject default base & default URIs if needed
 		if (empty($this->baseURI))
 		{
-			$this->baseURI = 'none';
+			$this->baseURI = 'self';
 		}
-		if (empty($this->defaultURI))
+		if (empty($this->defaultSrc))
 		{
-			$this->defaultURI = 'none';
+			$this->defaultSrc = 'self';
 		}
 
 		foreach ($directives as $name => $property)

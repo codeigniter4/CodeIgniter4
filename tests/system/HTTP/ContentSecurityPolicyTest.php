@@ -73,15 +73,13 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 	public function testDefaults()
 	{
 		$this->prepare();
-		$this->csp->addBaseURI('none');
-		$this->csp->setDefaultSrc('none');
 
 		$result = $this->work();
 
 		$result = $this->getHeaderEmitted('Content-Security-Policy');
-		$this->assertContains("base-uri 'none';", $result);
+		$this->assertContains("base-uri 'self';", $result);
 		$this->assertContains("connect-src 'self';", $result);
-		$this->assertContains("default-src 'none';", $result);
+		$this->assertContains("default-src 'self';", $result);
 		$this->assertContains("img-src 'self';", $result);
 		$this->assertContains("script-src 'self';", $result);
 		$this->assertContains("style-src 'self';", $result);
@@ -102,7 +100,7 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 		$result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
 		$this->assertContains('child-src evil.com;', $result);
 		$result = $this->getHeaderEmitted('Content-Security-Policy');
-		$this->assertContains('child-src good.com;', $result);
+		$this->assertContains("child-src 'self' good.com;", $result);
 	}
 
 	/**
@@ -148,13 +146,12 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 		$this->prepare();
 		$this->csp->reportOnly(true);
 		$this->csp->addFormAction('surveysrus.com');
-		$this->csp->addFormAction('none', false);
 		$result = $this->work();
 
 		$result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
 		$this->assertContains('form-action surveysrus.com;', $result);
 		$result = $this->getHeaderEmitted('Content-Security-Policy');
-		$this->assertContains("form-action 'none';", $result);
+		$this->assertContains("form-action 'self';", $result);
 	}
 
 	/**
@@ -271,7 +268,7 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 		$result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
 		$this->assertContains('object-src them.com;', $result);
 		$result = $this->getHeaderEmitted('Content-Security-Policy');
-		$this->assertContains('object-src cdn.cloudy.com;', $result);
+		$this->assertContains("object-src 'self' cdn.cloudy.com;", $result);
 	}
 
 	/**
@@ -313,6 +310,19 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
 	 */
+	public function testBaseURIDefault()
+	{
+		$this->prepare();
+		$result = $this->work();
+
+		$result = $this->getHeaderEmitted('Content-Security-Policy');
+		$this->assertContains("base-uri 'self';", $result);
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
 	public function testBaseURI()
 	{
 		$this->prepare();
@@ -321,6 +331,20 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 
 		$result = $this->getHeaderEmitted('Content-Security-Policy');
 		$this->assertContains('base-uri example.com;', $result);
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testBaseURIRich()
+	{
+		$this->prepare();
+		$this->csp->addBaseURI(['self', 'example.com']);
+		$result = $this->work();
+
+		$result = $this->getHeaderEmitted('Content-Security-Policy');
+		$this->assertContains("base-uri 'self' example.com;", $result);
 	}
 
 	/**
