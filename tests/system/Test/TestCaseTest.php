@@ -76,4 +76,19 @@ class TestCaseTest extends \CIUnitTestCase
 		$this->assertHeaderNotEmitted('Set-Cookie: foo=bar;');
 	}
 
+	//--------------------------------------------------------------------
+	public function testCloseEnough()
+	{
+		$this->assertCloseEnough(1, 1);
+		$this->assertCloseEnough(1, 0);
+		$this->assertCloseEnough(1, 2);
+	}
+
+	public function testCloseEnoughString()
+	{
+		$this->assertCloseEnough('1000', '0959');
+		$this->assertCloseEnough('1000', '1000');
+		$this->assertCloseEnough('1000', '1001');
+	}
+
 }

@@ -152,7 +152,7 @@ between expected and actual time is within the prescribed tolerance.::
     $timer->start('longjohn', strtotime('-11 minutes'));
     $this->assertCloseEnough(11 * 60, $timer->getElapsedTime('longjohn'));
 
-The above test will allow the actual time to be either 600 or 601 seconds.
+The above test will allow the actual time to be either 660 or 661 seconds.
 
 **assertCloseEnoughString($expected, $actual, $message='', $tolerance=1)**
 
@@ -163,7 +163,8 @@ between expected and actual time, formatted as strings, is within the prescribed
     $timer->start('longjohn', strtotime('-11 minutes'));
     $this->assertCloseEnoughString(11 * 60, $timer->getElapsedTime('longjohn'));
 
-The above test will allow the actual time to be either 600 or 601 seconds.
+The above test will allow the actual time to be either 660 or 661 seconds.
+
 
 Accessing Protected/Private Properties
 --------------------------------------
