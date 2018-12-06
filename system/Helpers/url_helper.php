@@ -57,16 +57,16 @@ if (! function_exists('site_url'))
 		// use alternate config if provided, else default one
 		$config = empty($altConfig) ? config(\Config\App::class) : $altConfig;
 
-		$base = base_url();
+		$path = rtrim(base_url(), '/') . '/';
 
 		// Add index page, if so configured
 		if (! empty($config->indexPage))
 		{
-			$path = rtrim($base, '/') . '/' . rtrim($config->indexPage, '/') . '/' . $path;
+			$path .= rtrim($config->indexPage, '/');
 		}
-		else
+		if (! empty($path))
 		{
-			$path = rtrim($base, '/') . '/' . $path;
+			$path .= '/' . $path;
 		}
 
 		$url = new \CodeIgniter\HTTP\URI($path);
