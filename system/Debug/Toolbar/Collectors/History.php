@@ -107,7 +107,7 @@ class History extends BaseCollector
 			$contents = json_decode($contents);
 
 			\preg_match_all('/\d+/', $filename, $time);
-			$time = (int)$time[0][1];
+			$time = (int)$time[0][0];
 
 			// Debugbar files shown in History Collector
 			$files[] = [
