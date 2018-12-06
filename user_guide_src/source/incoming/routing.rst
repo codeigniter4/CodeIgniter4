@@ -542,3 +542,13 @@ a valid class/method pair, just like you would show in any route, or a Closure::
     {
         echo view('my_errors/not_found.html');
     });
+    
+    // Will display a custom view and custom message
+    $routes->set404Override(function($message)
+    {
+        $data['message'] = $message;
+	echo view('errors/html/error_404_custom.php',$data);
+    });
+
+
+.. note:: Your custom error views is responsible to check the message is empty or not, if you want to have this functionality
