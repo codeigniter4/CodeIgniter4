@@ -284,4 +284,32 @@ class CIUnitTestCase extends TestCase
 		return $paths;
 	}
 
+	//--------------------------------------------------------------------
+	/**
+	 * Return first matching emitted header.
+	 *
+	 * @param string $header Identifier of the header of interest
+	 * @param bool $ignoreCase
+	 *
+	 * @return string|null The value of the header found, null if not found
+	 */
+		//
+	protected function getHeaderEmitted(string $header, bool $ignoreCase = false): ?string
+	{
+		$found = false;
+
+		foreach (xdebug_get_headers() as $emitted)
+		{
+			$found = $ignoreCase ?
+					(stripos($emitted, $header) === 0) :
+					(strpos($emitted, $header) === 0);
+			if ($found)
+			{
+				return $emitted;
+			}
+		}
+
+		return null;
+	}
+
 }
