@@ -19,7 +19,7 @@ class LanguageTest extends \CIUnitTestCase
 	{
 		$lang = new MockLanguage('en');
 
-		$lang->setData([
+		$lang->setData('books', [
 			'bookSaved'  => 'We kept the book free from the boogeyman',
 			'booksSaved' => 'We saved some more',
 		]);
@@ -29,11 +29,49 @@ class LanguageTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testGetLineReturnsFallbackLine()
+	{
+		$lang = new MockLanguage('en-US');
+		$lang->setData('equivalent', [
+			'touchWood'   => 'touch wood',
+			'lieOfLand'   => 'lie of the land',
+			'leaseOfLife' => 'a new lease of life',
+			'slowcoach'   => 'slowcoach',
+		], 'en');
+		$lang->setData('equivalent', [
+			'lieOfLand' => 'lay of the land',
+			'slowcoach' => 'slowpoke',
+		], 'en-US');
+
+		$this->assertEquals(
+			'lay of the land',
+			$lang->getLine('equivalent.lieOfLand')
+		);
+		$this->assertEquals(
+			'slowpoke',
+			$lang->getLine('equivalent.slowcoach')
+		);
+		$this->assertEquals(
+			'a new lease of life',
+			$lang->getLine('equivalent.leaseOfLife')
+		);
+		$this->assertEquals(
+			'touch wood',
+			$lang->getLine('equivalent.touchWood')
+		);
+		$this->assertEquals(
+			'equivalent.unknown',
+			$lang->getLine('equivalent.unknown')
+		);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testGetLineArrayReturnsLineArray()
 	{
 		$lang = new MockLanguage('en');
 
-		$lang->setData([
+		$lang->setData('books', [
 			'booksList' => [
 				'The Boogeyman',
 				'We Saved',
@@ -58,7 +96,7 @@ class LanguageTest extends \CIUnitTestCase
 
 		$lang = new MockLanguage('en');
 
-		$lang->setData([
+		$lang->setData('books', [
 			'bookCount' => '{0, number, integer} books have been saved.',
 		]);
 
@@ -77,7 +115,7 @@ class LanguageTest extends \CIUnitTestCase
 
 		$lang = new MockLanguage('en');
 
-		$lang->setData([
+		$lang->setData('books', [
 			'bookList' => [
 				'{0, number, integer} related books.'
 			],
@@ -107,7 +145,7 @@ class LanguageTest extends \CIUnitTestCase
 		$lang = new MockLanguage('en');
 		$lang->disableIntlSupport();
 
-		$lang->setData([
+		$lang->setData('books', [
 			'bookList' => [
 				'{0, number, integer} related books.'
 			],
@@ -160,13 +198,13 @@ class LanguageTest extends \CIUnitTestCase
 		$lang = new MockLanguage('en');
 
 		// first file data | example.message
-		$lang->setData(['message' => 'This is an example message']);
+		$lang->setData('example', ['message' => 'This is an example message']);
 
 		// force loading data into file Example
 		$this->assertEquals('This is an example message', $lang->getLine('example.message'));
 
 		// second file data | another.example
-		$lang->setData(['example' => 'Another example']);
+		$lang->setData('another', ['example' => 'Another example']);
 
 		$this->assertEquals('Another example', $lang->getLine('another.example'));
 	}

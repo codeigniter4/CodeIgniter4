@@ -245,9 +245,9 @@ Miscellaneous Functions
 		return redirect()->back()->with('foo', 'message');
 
 	When passing a URI into the function, it is treated as a reverse-route request, not a relative/full URI, treating
-    it the same as using redirect()->route()::
+        it the same as using redirect()->route()::
 
-        // Go to a named/reverse-routed URI
+                // Go to a named/reverse-routed URI
 		return redirect('named_route');
 
 .. php:function:: remove_invisible_characters($str[, $url_encoded = TRUE])

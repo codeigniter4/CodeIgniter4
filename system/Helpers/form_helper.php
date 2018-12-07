@@ -927,15 +927,22 @@ if (! function_exists('parse_form_attributes'))
 
 		foreach ($default as $key => $val)
 		{
-			if ($key === 'value')
+			if(!is_bool($val))
 			{
-				$val = esc($val, 'html');
+				if ($key === 'value')
+				{
+					$val = esc($val, 'html');
+				}
+				elseif ($key === 'name' && ! strlen($default['name']))
+				{
+					continue;
+				}
+				$att .= $key . '="' . $val . '" ';
 			}
-			elseif ($key === 'name' && ! strlen($default['name']))
+			else
 			{
-				continue;
+				$att .= $key . ' ';
 			}
-			$att .= $key . '="' . $val . '" ';
 		}
 
 		return $att;
