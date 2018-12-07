@@ -49,7 +49,7 @@ in it::
 		}
 	}
 
-Then save the file to your **application/Controllers/** directory.
+Then save the file to your **app/Controllers/** directory.
 
 Now normally you would visit the your site using a URL similar to this::
 

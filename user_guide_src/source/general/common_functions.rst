@@ -322,7 +322,7 @@ Core Constants
 
 .. php:const:: APPPATH
 
-	The path to the **application** directory.
+	The path to the **app** directory.
 
 .. php:const:: ROOTPATH
 

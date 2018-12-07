@@ -16,7 +16,7 @@ building out custom code generators for your company.
 Running Commands
 ****************
 
-Commands are run from the command line, in the root directory. The same one that holds the **/application**
+Commands are run from the command line, in the root directory. The same one that holds the **/app**
 and **/system** directories. A custom script, **spark** has been provided that is used to run any of the
 cli commands::
 
@@ -67,7 +67,7 @@ File Location
 =============
 
 Commands must be stored within a directory named **Commands**. However, that directory can be located anywhere
-that the :doc:`Autoloader </concepts/autoloader>` can locate it. This could be in **/application/Commands**, or
+that the :doc:`Autoloader </concepts/autoloader>` can locate it. This could be in **/app/Commands**, or
 a directory that you keep commands in to use in all of your project development, like **Acme/Commands**.
 
 .. note:: When the commands are executed, the full CodeIgniter cli environment has been loaded, making it
@@ -77,7 +77,7 @@ An Example Command
 ==================
 
 Let's step through an example command whose only function is to report basic information about the application
-itself, for demonstration purposes. Start by creating a new file at **/application/Commands/AppInfo.php**. It
+itself, for demonstration purposes. Start by creating a new file at **/app/Commands/AppInfo.php**. It
 should contain the following code::
 
     <?php namespace App\Commands;

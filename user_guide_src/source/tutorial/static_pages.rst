@@ -24,7 +24,7 @@ you'll see URL patterns that match:
 As URL schemes become more complex, this may change. But for now, this
 is all we will need to know.
 
-Create a file at *application/Controllers/Pages.php* with the following
+Create a file at *app/Controllers/Pages.php* with the following
 code.
 
 ::
@@ -53,7 +53,7 @@ Now that you've created your first method, it's time to make some basic page
 templates. We will be creating two "views" (page templates) that act as
 our page footer and header.
 
-Create the header at *application/Views/templates/header.php* and add
+Create the header at *app/Views/templates/header.php* and add
 the following code:
 
 ::
@@ -70,7 +70,7 @@ the following code:
 The header contains the basic HTML code that you'll want to display
 before loading the main view, together with a heading. It will also
 output the ``$title`` variable, which we'll define later in the controller.
-Now, create a footer at *application/Views/templates/footer.php* that
+Now, create a footer at *app/Views/templates/footer.php* that
 includes the following code:
 
 ::
@@ -84,7 +84,7 @@ Adding logic to the controller
 
 Earlier you set up a controller with a ``view()`` method. The method
 accepts one parameter, which is the name of the page to be loaded. The
-static page templates will be located in the *application/Views/pages/*
+static page templates will be located in the *app/Views/pages/*
 directory.
 
 In that directory, create two files named *home.php* and *about.php*.
@@ -166,7 +166,7 @@ controller you made above produces...
 - ``localhost:8080/pages/view/about`` will show the "about" page that you made above,
   because we explicitly asked for it
 - ``localhost:8080/pages/view/shop`` will show a "404 - File Not Found" error page,
-  because there is no `application/Views/pages/shop.php`
+  because there is no `app/Views/pages/shop.php`
 
 
 Routing
@@ -179,7 +179,7 @@ controller and method, and break free from the normal convention:
 ``http://example.com/[controller-class]/[controller-method]/[arguments]``
 
 Let's do that. Open the routing file located at
-*application/Config/Routes.php* and look for the "Route Definitions"
+*app/Config/Routes.php* and look for the "Route Definitions"
 section of the configuration file.
 
 The only uncommented line there to start with should be:::

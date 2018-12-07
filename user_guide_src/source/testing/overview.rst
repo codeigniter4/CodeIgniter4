@@ -216,7 +216,7 @@ parameter is the name of the property to set the value of. The third parameter i
 Mocking Services
 ================
 
-You will often find that you need to mock one of the services defined in **application/Config/Services.php** to limit
+You will often find that you need to mock one of the services defined in **app/Config/Services.php** to limit
 your tests to only the code in question, while simulating various responses from the services. This is especially
 true when testing controllers and other integration testing. The **Services** class provides two methods to make this
 simple: ``injectMock()``, and ``reset()``.
