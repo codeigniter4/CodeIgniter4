@@ -61,7 +61,7 @@ class CIUnitTestCase extends TestCase
 	 *
 	 * @var string
 	 */
-	protected $configPath = '../application/Config';
+	protected $configPath = '../app/Config';
 
 	protected function setUp()
 	{
@@ -236,6 +236,8 @@ class CIUnitTestCase extends TestCase
 	 * Loads up an instance of CodeIgniter
 	 * and gets the environment setup.
 	 *
+	 * @todo Use absolute paths
+	 *
 	 * @return mixed
 	 */
 	protected function createApplication()
@@ -262,7 +264,7 @@ class CIUnitTestCase extends TestCase
 	{
 		$tests = [
 			'systemDirectory',
-			'applicationDirectory',
+			'appDirectory',
 			'writableDirectory',
 			'testsDirectory',
 		];
