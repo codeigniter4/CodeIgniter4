@@ -27,7 +27,7 @@ class Paths
 	 * APPLICATION FOLDER NAME
 	 *---------------------------------------------------------------
 	 *
-	 * If you want this front controller to use a different "application"
+	 * If you want this front controller to use a different "app"
 	 * folder than the default one you can set its name here. The folder
 	 * can also be renamed or relocated anywhere on your getServer. If
 	 * you do, use a full getServer path. For more info please see the user guide:
@@ -35,7 +35,7 @@ class Paths
 	 *
 	 * NO TRAILING SLASH!
 	 */
-	public $applicationDirectory = __DIR__ . '/../../application';
+	public $appDirectory = __DIR__ . '/../../app';
 
 	/*
 	 * ---------------------------------------------------------------
@@ -73,5 +73,5 @@ class Paths
 	 * default this is in `application/Views`. This value
 	 * is used when no value is provided to `Services::renderer()`.
 	 */
-	public $viewDirectory = __DIR__ . '/../../application/Views';
+	public $viewDirectory = __DIR__ . '/../../app/Views';
 }

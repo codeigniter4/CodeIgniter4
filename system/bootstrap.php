@@ -51,7 +51,7 @@
  */
 if (! defined('APPPATH'))
 {
-	define('APPPATH', realpath($paths->applicationDirectory) . DIRECTORY_SEPARATOR);
+	define('APPPATH', realpath($paths->appDirectory) . DIRECTORY_SEPARATOR);
 }
 
 /**
