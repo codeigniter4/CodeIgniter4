@@ -9,6 +9,15 @@ use Config\App;
 class TestCaseTest extends \CIUnitTestCase
 {
 
+	//  protected function tearDown()
+	//  {
+	//      $buffer = ob_clean();
+	//      if (ob_get_level() > 0)
+	//      {
+	//          ob_end_clean();
+	//      }
+	//  }
+	//
 	public function testGetPrivatePropertyWithObject()
 	{
 		$obj    = new __TestForReflectionHelper();
@@ -86,9 +95,15 @@ class TestCaseTest extends \CIUnitTestCase
 
 	public function testCloseEnoughString()
 	{
-		$this->assertCloseEnough('1000', '0959');
-		$this->assertCloseEnough('1000', '1000');
-		$this->assertCloseEnough('1000', '1001');
+		$this->assertCloseEnoughString(strtotime('10:00:00'), strtotime('09:59:59'));
+		$this->assertCloseEnoughString(strtotime('10:00:00'), strtotime('10:00:00'));
+		$this->assertCloseEnoughString(strtotime('10:00:00'), strtotime('10:00:01'));
+	}
+
+	public function testCloseEnoughStringBadLength()
+	{
+		$result = $this->assertCloseEnoughString('apples & oranges', 'apples');
+		$this->assertFalse($result, 'Different string lengths should have returned false');
 	}
 
 }
