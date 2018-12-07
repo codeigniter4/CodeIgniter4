@@ -326,7 +326,7 @@ Core Constants
 
 .. php:const:: ROOTPATH
 
-	The path to the main application directory. Just above ``APPPATH``.
+	The path to the project root directory. Just above ``APPPATH``.
 
 .. php:const:: SYSTEMPATH
 
