@@ -130,7 +130,7 @@ Our demo command might have a ``run`` method something like::
         CLI::write('PHP Version: '. CLI::color(phpversion(), 'yellow'));
         CLI::write('CI Version: '. CLI::color(CodeIgniter::CI_VERSION, 'yellow'));
         CLI::write('APPPATH: '. CLI::color(APPPATH, 'yellow'));
-        CLI::write('BASEPATH: '. CLI::color(BASEPATH, 'yellow'));
+        CLI::write('SYSTEMPATH: '. CLI::color(SYSTEMPATH, 'yellow'));
         CLI::write('ROOTPATH: '. CLI::color(ROOTPATH, 'yellow'));
         CLI::write('Included files: '. CLI::color(count(get_included_files()), 'yellow'));
     }

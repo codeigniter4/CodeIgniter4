@@ -328,7 +328,7 @@ Core Constants
 
 	The path to the main application directory. Just above ``APPPATH``.
 
-.. php:const:: BASEPATH
+.. php:const:: SYSTEMPATH
 
 	The path to the **system** directory.
 

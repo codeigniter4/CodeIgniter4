@@ -65,9 +65,9 @@ if (! defined('ROOTPATH'))
 /**
  * The path to the system directory.
  */
-if (! defined('BASEPATH'))
+if (! defined('SYSTEMPATH'))
 {
-	define('BASEPATH', realpath($paths->systemDirectory) . DIRECTORY_SEPARATOR);
+	define('SYSTEMPATH', realpath($paths->systemDirectory) . DIRECTORY_SEPARATOR);
 }
 
 /**
@@ -93,7 +93,7 @@ if (! defined('TESTPATH'))
  */
 require_once APPPATH . 'Config/Constants.php';
 
-require_once BASEPATH . 'Common.php';
+require_once SYSTEMPATH . 'Common.php';
 
 /*
  * ---------------------------------------------------------------
@@ -105,9 +105,9 @@ require_once BASEPATH . 'Common.php';
  * that the config files can use the path constants.
  */
 
-require_once BASEPATH . 'Autoloader/Autoloader.php';
+require_once SYSTEMPATH . 'Autoloader/Autoloader.php';
 require_once APPPATH . 'Config/Autoload.php';
-require_once BASEPATH . 'Config/BaseService.php';
+require_once SYSTEMPATH . 'Config/BaseService.php';
 require_once APPPATH . 'Config/Services.php';
 
 // Use Config\Services as CodeIgniter\Services
@@ -128,7 +128,7 @@ if (is_file(COMPOSER_PATH))
 
 // Load environment settings from .env files
 // into $_SERVER and $_ENV
-require_once BASEPATH . 'Config/DotEnv.php';
+require_once SYSTEMPATH . 'Config/DotEnv.php';
 
 $env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
 $env->load();

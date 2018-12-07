@@ -27,5 +27,5 @@ class Toolbar extends BaseConfig
 		\CodeIgniter\Debug\Toolbar\Collectors\Events::class,
 	];
 	public $maxHistory = 20;
-	public $viewsPath  = BASEPATH . 'Debug/Toolbar/Views/';
+	public $viewsPath  = SYSTEMPATH . 'Debug/Toolbar/Views/';
 }

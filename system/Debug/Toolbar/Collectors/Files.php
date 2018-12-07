@@ -95,7 +95,7 @@ class Files extends BaseCollector
 		{
 			$path = $this->cleanPath($file);
 
-			if (strpos($path, 'BASEPATH') !== false)
+			if (strpos($path, 'SYSTEMPATH') !== false)
 			{
 				$coreFiles[] = [
 					'name' => basename($file),

@@ -182,7 +182,7 @@ class CodeIgniter
 
 		if (CI_DEBUG)
 		{
-			require_once BASEPATH . 'ThirdParty/Kint/kint.php';
+			require_once SYSTEMPATH . 'ThirdParty/Kint/kint.php';
 		}
 	}
 

@@ -22,9 +22,9 @@ $routes = Services::routes(true);
 
 // Load the system's routing file first, so that the app and ENVIRONMENT
 // can override as needed.
-if (file_exists(BASEPATH . 'Config/Routes.php'))
+if (file_exists(SYSTEMPATH . 'Config/Routes.php'))
 {
-	require BASEPATH . 'Config/Routes.php';
+	require SYSTEMPATH . 'Config/Routes.php';
 }
 
 /**

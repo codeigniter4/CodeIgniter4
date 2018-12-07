@@ -21,7 +21,7 @@ class FileLocatorTest extends \CIUnitTestCase
 		$config->psr4 = [
 			'App\Libraries' => '/application/somewhere',
 			'App'           => '/application',
-			'Sys'           => BASEPATH,
+			'Sys'           => SYSTEMPATH,
 			'Blog'          => '/modules/blog',
 			'Tests/Support' => TESTPATH . '_support/',
 		];
@@ -154,7 +154,7 @@ class FileLocatorTest extends \CIUnitTestCase
 		$expected = rtrim(APPPATH, '/') . '/index.html';
 		$this->assertContains($expected, $foundFiles);
 
-		$expected = rtrim(BASEPATH, '/') . '/index.html';
+		$expected = rtrim(SYSTEMPATH, '/') . '/index.html';
 		$this->assertContains($expected, $foundFiles);
 	}
 
@@ -197,8 +197,8 @@ class FileLocatorTest extends \CIUnitTestCase
 		$expectedLin = APPPATH . 'Filters/DebugToolbar.php';
 		$this->assertTrue(in_array($expectedWin, $files) || in_array($expectedLin, $files));
 
-		$expectedWin = BASEPATH . 'Filters\Filters.php';
-		$expectedLin = BASEPATH . 'Filters/Filters.php';
+		$expectedWin = SYSTEMPATH . 'Filters\Filters.php';
+		$expectedLin = SYSTEMPATH . 'Filters/Filters.php';
 		$this->assertTrue(in_array($expectedWin, $files) || in_array($expectedLin, $files));
 	}
 

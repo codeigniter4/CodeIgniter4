@@ -585,7 +585,7 @@ if (! function_exists('helper'))
 						$appHelper = $path;
 						// @codeCoverageIgnoreEnd
 					}
-					elseif (strpos($path, BASEPATH) === 0)
+					elseif (strpos($path, SYSTEMPATH) === 0)
 					{
 						$systemHelper = $path;
 					}
@@ -694,7 +694,7 @@ if (! function_exists('csrf_field'))
 	 */
 	function csrf_field(string $id = null)
 	{
-		return '<input type="hidden"' . (!empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '" />';
+		return '<input type="hidden"' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '" />';
 	}
 }
 

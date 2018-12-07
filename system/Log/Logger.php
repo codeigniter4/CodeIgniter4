@@ -508,7 +508,7 @@ class Logger implements LoggerInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Cleans the paths of filenames by replacing APPPATH, BASEPATH, FCPATH
+	 * Cleans the paths of filenames by replacing APPPATH, SYSTEMPATH, FCPATH
 	 * with the actual var. i.e.
 	 *
 	 *  /var/www/site/application/Controllers/Home.php
@@ -522,7 +522,7 @@ class Logger implements LoggerInterface
 	protected function cleanFileNames($file)
 	{
 		$file = str_replace(APPPATH, 'APPPATH/', $file);
-		$file = str_replace(BASEPATH, 'BASEPATH/', $file);
+		$file = str_replace(SYSTEMPATH, 'SYSTEMPATH/', $file);
 		$file = str_replace(FCPATH, 'FCPATH/', $file);
 
 		return $file;
