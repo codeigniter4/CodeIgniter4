@@ -90,7 +90,7 @@ class CommandRunnerTest extends \CIUnitTestCase
 		stream_filter_remove($this->error_filter);
 
 		// make sure the result looks like a command list
-		$this->assertContains("Command 'bogus' not found", $result);
+		$this->assertContains('Command "bogus" not found', $result);
 	}
 
 }
