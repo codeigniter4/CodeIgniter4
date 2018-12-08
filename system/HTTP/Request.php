@@ -336,10 +336,10 @@ class Request extends Message implements RequestInterface
 	 *
 	 * http://php.net/manual/en/filter.filters.sanitize.php
 	 *
-	 * @param integer      $method Input filter constant
+	 * @param string       $method Input filter constant
 	 * @param string|array $index
 	 * @param integer      $filter Filter constant
-	 * @param null         $flags
+	 * @param mixed        $flags
 	 *
 	 * @return mixed
 	 */

@@ -320,9 +320,9 @@ class IncomingRequest extends Request
 	 * to grab data from the request object and can be used in lieu of the
 	 * other get* methods in most cases.
 	 *
-	 * @param null $index
-	 * @param null $filter
-	 * @param null $flags
+	 * @param string $index
+	 * @param integer $filter
+	 * @param mixed $flags
 	 *
 	 * @return mixed
 	 */
@@ -373,9 +373,9 @@ class IncomingRequest extends Request
 	/**
 	 * Fetch an item from GET data.
 	 *
-	 * @param null $index  Index for item to fetch from $_GET.
-	 * @param null $filter A filter name to apply.
-	 * @param null $flags
+	 * @param string  $index  Index for item to fetch from $_GET.
+	 * @param integer $filter A filter name to apply.
+	 * @param mixed   $flags
 	 *
 	 * @return mixed
 	 */
@@ -389,9 +389,9 @@ class IncomingRequest extends Request
 	/**
 	 * Fetch an item from POST.
 	 *
-	 * @param null $index  Index for item to fetch from $_POST.
-	 * @param null $filter A filter name to apply
-	 * @param null $flags
+	 * @param string  $index  Index for item to fetch from $_POST.
+	 * @param integer $filter A filter name to apply
+	 * @param mixed   $flags
 	 *
 	 * @return mixed
 	 */
@@ -405,9 +405,9 @@ class IncomingRequest extends Request
 	/**
 	 * Fetch an item from POST data with fallback to GET.
 	 *
-	 * @param null $index  Index for item to fetch from $_POST or $_GET
-	 * @param null $filter A filter name to apply
-	 * @param null $flags
+	 * @param string  $index  Index for item to fetch from $_POST or $_GET
+	 * @param integer $filter A filter name to apply
+	 * @param mixed   $flags
 	 *
 	 * @return mixed
 	 */
@@ -424,9 +424,9 @@ class IncomingRequest extends Request
 	/**
 	 * Fetch an item from GET data with fallback to POST.
 	 *
-	 * @param null $index  Index for item to be fetched from $_GET or $_POST
-	 * @param null $filter A filter name to apply
-	 * @param null $flags
+	 * @param string  $index  Index for item to be fetched from $_GET or $_POST
+	 * @param integer $filter A filter name to apply
+	 * @param mixed   $flags
 	 *
 	 * @return mixed
 	 */
@@ -443,9 +443,9 @@ class IncomingRequest extends Request
 	/**
 	 * Fetch an item from the COOKIE array.
 	 *
-	 * @param null $index  Index for item to be fetched from $_COOKIE
-	 * @param null $filter A filter name to be applied
-	 * @param null $flags
+	 * @param string  $index  Index for item to be fetched from $_COOKIE
+	 * @param integer $filter A filter name to be applied
+	 * @param mixed   $flags
 	 *
 	 * @return mixed
 	 */
@@ -459,9 +459,7 @@ class IncomingRequest extends Request
 	/**
 	 * Fetch the user agent string
 	 *
-	 * @param null $filter
-	 *
-	 * @return mixed
+	 * @return \CodeIgniter\HTTP\UserAgent
 	 */
 	public function getUserAgent()
 	{

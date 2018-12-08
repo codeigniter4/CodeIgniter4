@@ -95,7 +95,7 @@ trait ResponseTrait
 	 * Provides a single, simple method to return an API response, formatted
 	 * to match the requested format, with proper content-type and status code.
 	 *
-	 * @param null    $data
+	 * @param mixed    $data
 	 * @param integer $status
 	 * @param string  $message
 	 *
