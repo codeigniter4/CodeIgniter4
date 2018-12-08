@@ -12,7 +12,8 @@ class ParserFilterTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->loader   = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
+		$this->loader = \CodeIgniter\Config\Services::locator();
+		;
 		$this->viewsDir = __DIR__ . '/Views';
 		$this->config   = new Config\View();
 	}
