@@ -37,7 +37,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	/**
 	 * Enabled auto clean op buffer after request call
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $clean = true;
 
@@ -122,10 +122,13 @@ class FeatureTestCase extends CIDatabaseTestCase
 			->run($this->routes, true);
 
 		// Clean up any open output buffers
+		// not relevant to unit testing
+		// @codeCoverageIgnoreStart
 		if (ob_get_level() > 0 && $this->clean)
 		{
 			ob_end_clean();
 		}
+		// @codeCoverageIgnoreEnd
 
 		$featureResponse = new FeatureResponse($response);
 

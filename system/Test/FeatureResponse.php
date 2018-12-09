@@ -298,7 +298,7 @@ class FeatureResponse extends TestCase
 	/**
 	 * Returns the response's body as JSON
 	 *
-	 * @return mixed|string
+	 * @return mixed|false
 	 */
 	public function getJSON()
 	{
@@ -306,7 +306,7 @@ class FeatureResponse extends TestCase
 
 		if (is_null($response))
 		{
-			$this->fail('The Response contained invalid JSON.');
+			return false;
 		}
 
 		return $response;

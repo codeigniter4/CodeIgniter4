@@ -24,7 +24,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 				'get',
 				'home',
 				function () {
-							return 'Hello World';
+					return 'Hello World';
 				},
 			],
 		]);
@@ -44,7 +44,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 				'add',
 				'home',
 				function () {
-							return 'Hello World';
+					return 'Hello World';
 				},
 			],
 		]);
@@ -64,7 +64,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 				'post',
 				'home',
 				function () {
-							return 'Hello World';
+					return 'Hello World';
 				},
 			],
 		]);
@@ -80,7 +80,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 				'put',
 				'home',
 				function () {
-							return 'Hello World';
+					return 'Hello World';
 				},
 			],
 		]);
@@ -96,7 +96,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 				'patch',
 				'home',
 				function () {
-							return 'Hello World';
+					return 'Hello World';
 				},
 			],
 		]);
@@ -112,7 +112,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 				'options',
 				'home',
 				function () {
-							return 'Hello World';
+					return 'Hello World';
 				},
 			],
 		]);
@@ -128,13 +128,24 @@ class FeatureTestCaseTest extends FeatureTestCase
 				'delete',
 				'home',
 				function () {
-							return 'Hello World';
+					return 'Hello World';
 				},
 			],
 		]);
 		$response = $this->delete('home');
 
 		$response->assertSee('Hello World');
+	}
+
+	public function testSession()
+	{
+		$response = $this->withSession([
+			'fruit'    => 'apple',
+			'greeting' => 'hello',
+		])->get('home');
+
+		$response->assertSessionHas('fruit', 'apple');
+		$response->assertSessionMissing('popcorn');
 	}
 
 }
