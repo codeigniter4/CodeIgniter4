@@ -69,7 +69,7 @@ if (! function_exists('cache'))
 	 */
 	function cache(string $key = null)
 	{
-		$cache = \Config\Services::cache();
+		$cache = Services::cache();
 
 		// No params - return cache object
 		if (is_null($key))
@@ -298,7 +298,7 @@ if (! function_exists('session'))
 	 */
 	function session($val = null)
 	{
-		$session = \Config\Services::session();
+		$session = Services::session();
 
 		// Returning a single item?
 		if (is_string($val))
@@ -325,7 +325,7 @@ if (! function_exists('timer'))
 	 */
 	function timer(string $name = null)
 	{
-		$timer = \Config\Services::timer();
+		$timer = Services::timer();
 
 		if (empty($name))
 		{
@@ -692,7 +692,7 @@ if (! function_exists('csrf_field'))
 	 */
 	function csrf_field(string $id = null)
 	{
-		return '<input type="hidden"' . (!empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '" />';
+		return '<input type="hidden"' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '" />';
 	}
 }
 
