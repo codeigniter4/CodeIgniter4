@@ -7,6 +7,7 @@ use CodeIgniter\Test\ReflectionHelper;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
+use Tests\Support\Models\SecondaryModel;
 use Tests\Support\Models\SimpleEntity;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
@@ -194,6 +195,25 @@ class ModelTest extends CIDatabaseTestCase
 		$user = $model->withDeleted()->first();
 
 		$this->assertEquals(1, $user->id);
+	}
+
+	public function testFirstWithNoPrimaryKey()
+	{
+		$model = new SecondaryModel();
+
+		$this->db->table('secondary')->insert([
+			'key'   => 'foo',
+			'value' => 'bar',
+		]);
+		$this->db->table('secondary')->insert([
+			'key'   => 'bar',
+			'value' => 'baz',
+		]);
+
+		$record = $model->first();
+
+		$this->assertInstanceOf('stdClass', $record);
+		$this->assertEquals('foo', $record->key);
 	}
 
 	//--------------------------------------------------------------------
@@ -744,4 +764,28 @@ class ModelTest extends CIDatabaseTestCase
 			'description' => 'Plays guitar for Queen',
 		]);
 	}
+
+	public function testUpdateNoPrimaryKey()
+	{
+		$model = new SecondaryModel();
+
+		$this->db->table('secondary')->insert([
+			'key'   => 'foo',
+			'value' => 'bar',
+		]);
+
+		$this->dontSeeInDatabase('secondary', [
+			'key'   => 'bar',
+			'value' => 'baz',
+		]);
+
+		$model->where('key', 'foo')->update(null, ['key' => 'bar', 'value' => 'baz']);
+
+		$this->seeInDatabase('secondary', [
+			'key'   => 'bar',
+			'value' => 'baz',
+		]);
+	}
+
+	//--------------------------------------------------------------------
 }

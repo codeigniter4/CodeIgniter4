@@ -102,7 +102,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 
 		// Get DB Connection
-		$this->DBGroup = ! empty($config->sessionDBGroup) ? $config->sessionDBGroup : 'default';
+		$this->DBGroup = $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
 
 		$this->db = Database::connect($this->DBGroup);
 

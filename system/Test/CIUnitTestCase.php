@@ -202,7 +202,7 @@ class CIUnitTestCase extends TestCase
 	 * where the result is close but not exactly equal to the
 	 * expected time, for reasons beyond our control.
 	 *
-	 * @param integer $expected
+	 * @param mixed   $expected
 	 * @param mixed   $actual
 	 * @param string  $message
 	 * @param integer $tolerance
