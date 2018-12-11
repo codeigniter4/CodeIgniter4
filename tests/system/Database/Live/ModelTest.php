@@ -212,7 +212,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$record = $model->first();
 
-		$this->assertEquals(1, count($record));
+		$this->assertInstanceOf('stdClass', $record);
 		$this->assertEquals('foo', $record->key);
 	}
 
