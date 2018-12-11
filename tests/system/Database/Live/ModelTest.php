@@ -764,4 +764,28 @@ class ModelTest extends CIDatabaseTestCase
 			'description' => 'Plays guitar for Queen',
 		]);
 	}
+
+	public function testUpdateNoPrimaryKey()
+	{
+		$model = new SecondaryModel();
+
+		$this->db->table('secondary')->insert([
+			'key'   => 'foo',
+			'value' => 'bar',
+		]);
+
+		$this->dontSeeInDatabase('secondary', [
+			'key'   => 'bar',
+			'value' => 'baz',
+		]);
+
+		$model->where('key', 'foo')->update(null, ['key' => 'bar', 'value' => 'baz']);
+
+		$this->seeInDatabase('secondary', [
+			'key'   => 'bar',
+			'value' => 'baz',
+		]);
+	}
+
+	//--------------------------------------------------------------------
 }
