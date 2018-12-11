@@ -29,7 +29,7 @@ function loadDoc(time) {
 			{
 				let PosBeg = responseText.indexOf( '>', responseText.indexOf( '<style' ) ) + 1;
 				let PosEnd = responseText.indexOf( '</style>', PosBeg );
-				document.getElementById( 'debugbar_dynamic_style' ).innerHTML = responseText.substr( PosBeg, PosEnd )
+				document.getElementById( 'debugbar_dynamic_style' ).innerHTML = responseText.substr( PosBeg, PosEnd - PosBeg );
 				responseText = responseText.substr( PosEnd + 8 );
 			}
 			// the script block starts right after style blocks ended
@@ -44,7 +44,7 @@ function loadDoc(time) {
 				let PosBeg = responseText.indexOf( '>', responseText.lastIndexOf( '<style' ) ) + 1;
 				let PosEnd = responseText.indexOf( '</style>', PosBeg );
 				document.getElementById( 'debugbar_dynamic_style' ).innerHTML += responseText.substr( PosBeg, PosEnd - PosBeg );
-				responseText = responseText.substr( 0, PosBeg );
+				responseText = responseText.substr( 0, PosBeg + 8 );
 			}
 
 			toolbar.innerHTML = responseText;

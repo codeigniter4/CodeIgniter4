@@ -1,17 +1,22 @@
 <?php
 
-use CodeIgniter\View\Parser;
-
 class ParserPluginTest extends \CIUnitTestCase
 {
+	/**
+	 * @var \CodeIgniter\View\Parser
+	 */
 	protected $parser;
+	/**
+	 * @var \CodeIgniter\Validation\Validation
+	 */
 	protected $validator;
 
 	protected function setUp()
 	{
 		parent::setUp();
 
-		\Config\Services::reset();
+		\Config\Services::reset(true);
+
 		$this->parser    = \Config\Services::parser();
 		$this->validator = \Config\Services::validation();
 	}

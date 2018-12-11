@@ -37,6 +37,7 @@ namespace CodeIgniter\CLI;
  * @filesource
  */
 
+use CodeIgniter\Config\Services;
 use CodeIgniter\Controller;
 
 class CommandRunner extends Controller
@@ -109,7 +110,7 @@ class CommandRunner extends Controller
 	{
 		if (! isset($this->commands[$command]))
 		{
-			CLI::error('Command \'' . $command . '\' not found');
+			CLI::error(lang('CLI.commandNotFound', [$command]));
 			CLI::newLine();
 			return;
 		}
@@ -127,12 +128,10 @@ class CommandRunner extends Controller
 	/**
 	 * Scans all Commands directories and prepares a list
 	 * of each command with it's group and file.
-	 *
-	 * @return null|void
 	 */
 	protected function createCommandList()
 	{
-		$files = service('locator')->listFiles('Commands/');
+		$files = Services::locator()->listFiles('Commands/');
 
 		// If no matching command files were found, bail
 		if (empty($files))
@@ -144,7 +143,7 @@ class CommandRunner extends Controller
 		// alias exists in the class. If so, return it. Otherwise, try the next.
 		foreach ($files as $file)
 		{
-			$className = service('locator')->findQualifiedNameFromPath($file);
+			$className = Services::locator()->findQualifiedNameFromPath($file);
 			if (empty($className) || ! class_exists($className))
 			{
 				continue;

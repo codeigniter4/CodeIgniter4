@@ -30,6 +30,12 @@ if (ENVIRONMENT !== 'production')
 	Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
 
 	Events::on('pre_system', function () {
+		if (ENVIRONMENT !== 'testing')
+		{
+			\ob_start(function ($buffer) {
+				return $buffer;
+			});
+		}
 		Services::toolbar()->respond();
 	});
 }

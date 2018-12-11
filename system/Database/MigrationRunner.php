@@ -179,14 +179,14 @@ class MigrationRunner
 	 * Calls each migration step required to get to the schema version of
 	 * choice
 	 *
-	 * @param integer     $targetVersion Target schema version
+	 * @param string      $targetVersion Target schema version
 	 * @param string|null $namespace
 	 * @param string|null $group
 	 *
 	 * @return mixed TRUE if no migrations are found, current version string on success, FALSE on failure
 	 * @throws ConfigException
 	 */
-	public function version(int $targetVersion, string $namespace = null, string $group = null)
+	public function version(string $targetVersion, string $namespace = null, string $group = null)
 	{
 		if (! $this->enabled)
 		{
@@ -277,12 +277,12 @@ class MigrationRunner
 	/**
 	 * Sets the schema to the latest migration
 	 *
-	 * @param string $namespace
-	 * @param string $group
+	 * @param string|null $namespace
+	 * @param string|null $group
 	 *
 	 * @return mixed    Current version string on success, FALSE on failure
 	 */
-	public function latest($namespace = null, $group = null)
+	public function latest(string $namespace = null, string $group = null)
 	{
 		// Set Namespace if not null
 		if (! is_null($namespace))
@@ -309,11 +309,11 @@ class MigrationRunner
 	/**
 	 * Sets the schema to the latest migration for all namespaces
 	 *
-	 * @param string $group
+	 * @param string|null $group
 	 *
 	 * @return boolean
 	 */
-	public function latestAll($group = null)
+	public function latestAll(string $group = null)
 	{
 		// Set database group if not null
 		if (! is_null($group))
@@ -355,11 +355,11 @@ class MigrationRunner
 	/**
 	 * Sets the (APP_NAMESPACE) schema to $currentVersion in migration config file
 	 *
-	 * @param string $group
+	 * @param string|null $group
 	 *
 	 * @return mixed    TRUE if no migrations are found, current version string on success, FALSE on failure
 	 */
-	public function current($group = null)
+	public function current(string $group = null)
 	{
 		// Set database group if not null
 		if (! is_null($group))
@@ -417,13 +417,13 @@ class MigrationRunner
 	 *  if sequential check if no gaps and check if all consistent with migrations table if downgrading
 	 *  if timestamp check if consistent with migrations table if downgrading
 	 *
-	 * @param array   $migrations
-	 * @param string  $method
-	 * @param integer $targetversion
+	 * @param array  $migrations
+	 * @param string $method
+	 * @param string $targetversion
 	 *
 	 * @return boolean
 	 */
-	protected function checkMigrations(array $migrations, string $method, int $targetversion)
+	protected function checkMigrations(array $migrations, string $method, string $targetversion)
 	{
 		// Check if no migrations found
 		if (empty($migrations))
@@ -436,7 +436,7 @@ class MigrationRunner
 		}
 
 		// Check if $targetversion file is found
-		if ($targetversion !== 0 && ! array_key_exists($targetversion, $migrations))
+		if ($targetversion !== '0' && ! array_key_exists($targetversion, $migrations))
 		{
 			if ($this->silent)
 			{
@@ -529,7 +529,7 @@ class MigrationRunner
 	 *
 	 * @return array
 	 */
-	public function getHistory($group = 'default')
+	public function getHistory(string $group = 'default')
 	{
 		$query = $this->db->table($this->table)
 				->where('group', $group)
@@ -571,7 +571,7 @@ class MigrationRunner
 	 *
 	 * @return string    Numeric portion of a migration filename
 	 */
-	protected function getMigrationNumber($migration)
+	protected function getMigrationNumber(string $migration)
 	{
 		return sscanf($migration, '%[0-9]+', $number) ? $number : '0';
 	}
@@ -585,7 +585,7 @@ class MigrationRunner
 	 *
 	 * @return string    text portion of a migration filename
 	 */
-	protected function getMigrationName($migration)
+	protected function getMigrationName(string $migration)
 	{
 		$parts = explode('_', $migration);
 		array_shift($parts);
@@ -633,7 +633,7 @@ class MigrationRunner
 	 *
 	 * @internal param string $migration Migration reached
 	 */
-	protected function addHistory($version)
+	protected function addHistory(string $version)
 	{
 		$this->db->table($this->table)
 				->insert([
@@ -656,7 +656,7 @@ class MigrationRunner
 	 *
 	 * @param string $version
 	 */
-	protected function removeHistory($version)
+	protected function removeHistory(string $version)
 	{
 		$this->db->table($this->table)
 				->where('version', $version)
