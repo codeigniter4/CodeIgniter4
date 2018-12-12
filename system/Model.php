@@ -343,6 +343,8 @@ class Model
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
+		$this->reset();
+
 		return $row['data'];
 	}
 

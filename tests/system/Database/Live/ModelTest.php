@@ -113,6 +113,21 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testFindClearsBinds()
+	{
+		$model = new JobModel($this->db);
+
+		$model->find(1);
+		$model->find(1);
+
+		// Binds should be reset to 0 after each one
+		$binds = $model->builder()->getBinds();
+		$this->assertCount(0, $binds);
+
+		$query = $model->getLastQuery();
+		$this->assertCount(1, $this->getPrivateProperty($query, 'binds'));
+	}
+
 	public function testFindAllReturnsAllRecords()
 	{
 		$model = new UserModel($this->db);
