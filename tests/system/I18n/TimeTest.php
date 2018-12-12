@@ -1,9 +1,13 @@
-<?php namespace CodeIgniter\I18n;
+<?php
+namespace CodeIgniter\I18n;
 
+use DateTime;
+use DateTimeZone;
 use IntlDateFormatter;
 
 class TimeTest extends \CIUnitTestCase
 {
+
 	protected function setUp()
 	{
 		parent::setUp();
@@ -15,65 +19,48 @@ class TimeTest extends \CIUnitTestCase
 	public function testNewTimeNow()
 	{
 		$formatter = new IntlDateFormatter(
-			'en_US',
-			IntlDateFormatter::SHORT,
-			IntlDateFormatter::SHORT,
-			'America/Chicago',  // Default for CodeIgniter
-			IntlDateFormatter::GREGORIAN,
-			'yyyy-MM-dd HH:mm:ss'
+				'en_US', IntlDateFormatter::SHORT, IntlDateFormatter::SHORT, 'America/Chicago', // Default for CodeIgniter
+				IntlDateFormatter::GREGORIAN, 'yyyy-MM-dd HH:mm:ss'
 		);
 
 		$time = new Time(null, 'America/Chicago');
 
-		$this->assertEquals($formatter->format($time), (string)$time);
+		$this->assertEquals($formatter->format($time), (string) $time);
 	}
 
 	public function testTimeWithTimezone()
 	{
 		$formatter = new IntlDateFormatter(
-			'en_US',
-			IntlDateFormatter::SHORT,
-			IntlDateFormatter::SHORT,
-			'Europe/London',  // Default for CodeIgniter
-			IntlDateFormatter::GREGORIAN,
-			'yyyy-MM-dd HH:mm:ss'
+				'en_US', IntlDateFormatter::SHORT, IntlDateFormatter::SHORT, 'Europe/London', // Default for CodeIgniter
+				IntlDateFormatter::GREGORIAN, 'yyyy-MM-dd HH:mm:ss'
 		);
 
 		$time = new Time('now', 'Europe/London');
 
-		$this->assertEquals($formatter->format($time), (string)$time);
+		$this->assertEquals($formatter->format($time), (string) $time);
 	}
 
 	public function testTimeWithTimezoneAndLocale()
 	{
 		$formatter = new IntlDateFormatter(
-			'fr_FR',
-			IntlDateFormatter::SHORT,
-			IntlDateFormatter::SHORT,
-			'Europe/London',  // Default for CodeIgniter
-			IntlDateFormatter::GREGORIAN,
-			'yyyy-MM-dd HH:mm:ss'
+				'fr_FR', IntlDateFormatter::SHORT, IntlDateFormatter::SHORT, 'Europe/London', // Default for CodeIgniter
+				IntlDateFormatter::GREGORIAN, 'yyyy-MM-dd HH:mm:ss'
 		);
 
 		$time = new Time('now', 'Europe/London', 'fr_FR');
 
-		$this->assertEquals($formatter->format($time), (string)$time);
+		$this->assertEquals($formatter->format($time), (string) $time);
 	}
 
 	public function testTimeWithDateTimeZone()
 	{
 		$formatter = new IntlDateFormatter(
-			'fr_FR',
-			IntlDateFormatter::SHORT,
-			IntlDateFormatter::SHORT,
-			'Europe/London',
-			IntlDateFormatter::GREGORIAN,
-			'yyyy-MM-dd HH:mm:ss'
+				'fr_FR', IntlDateFormatter::SHORT, IntlDateFormatter::SHORT, 'Europe/London', IntlDateFormatter::GREGORIAN, 'yyyy-MM-dd HH:mm:ss'
 		);
 
 		$time = new Time('now', new \DateTimeZone('Europe/London'), 'fr_FR');
 
-		$this->assertEquals($formatter->format($time), (string)$time);
+		$this->assertEquals($formatter->format($time), (string) $time);
 	}
 
 	public function testToDateTime()
@@ -107,7 +94,7 @@ class TimeTest extends \CIUnitTestCase
 	{
 		$time = Time::parse('2017-01-12 00:00', 'America/Chicago');
 
-		$this->assertEquals('2017-01-12 00:00:00', (string)$time);
+		$this->assertEquals('2017-01-12 00:00:00', (string) $time);
 		$this->assertEquals('2017-01-12 00:00:00', $time->toDateTimeString());
 	}
 
@@ -315,8 +302,19 @@ class TimeTest extends \CIUnitTestCase
 	public function testGetAge()
 	{
 		$time = Time::parse('5 years ago');
-
 		$this->assertEquals(5, $time->age);
+	}
+
+	public function testAgeNow()
+	{
+		$time = new Time();
+		$this->assertEquals(0, $time->age);
+	}
+
+	public function testAgeFuture()
+	{
+		$time = Time::parse('August 12, 2116 4:15:23pm');
+		$this->assertEquals(0, $time->age);
 	}
 
 	public function testGetQuarter()
@@ -328,8 +326,20 @@ class TimeTest extends \CIUnitTestCase
 
 	public function testGetDST()
 	{
-		$this->assertFalse(Time::createFromDate(2012, 1, 1)->dst);
-		$this->assertTrue(Time::createFromDate(2012, 9, 1)->dst);
+		// America/Chicago. DST from early March -> early Nov
+		$time = Time::createFromDate(2012, 1, 1);
+		$this->assertFalse($time->dst);
+		$time = Time::createFromDate(2012, 9, 1);
+		$this->assertTrue($time->dst);
+	}
+
+	public function testGetDSTUnobserved()
+	{
+		// Asia/Shanghai. DST not observed
+		$tz   = new DateTimeZone('Asia/Shanghai');
+		$time = Time::createFromDate(2012, 1, 1, $tz, 'Asia/Shanghai');
+
+		$this->assertFalse($time->dst);
 	}
 
 	public function testGetLocal()
@@ -407,21 +417,21 @@ class TimeTest extends \CIUnitTestCase
 		$this->assertEquals('2017-05-15 00:00:00', $time2->toDateTimeString());
 	}
 
-	   /**
-		* @expectedException \CodeIgniter\I18n\Exceptions\I18nException
-		*/
+	/**
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
+	 */
 	public function testSetDayOverMaxInCurrentMonth()
 	{
 		$time = Time::parse('Feb 02, 2009');
-		 $time->setDay(29);
+		$time->setDay(29);
 	}
 
 	public function testSetDayNotOverMaxInCurrentMonth()
 	{
-		$time      = Time::parse('Feb 02, 2012');
-			$time2 = $time->setDay(29);
+		$time  = Time::parse('Feb 02, 2012');
+		$time2 = $time->setDay(29);
 
-			$this->assertInstanceOf(Time::class, $time2);
+		$this->assertInstanceOf(Time::class, $time2);
 		$this->assertNotSame($time, $time2);
 		$this->assertEquals('2012-02-29 00:00:00', $time2->toDateTimeString());
 	}
@@ -577,13 +587,15 @@ class TimeTest extends \CIUnitTestCase
 	/**
 	 * Unfortunately, ubuntu 14.04 (on TravisCI) fails this test and
 	 * shows a numeric version of the month instead of the textual version.
+	 * Confirmed on CentOS 7 as well.
+	 * Example: format 'MMM' for November returns 'M02' instead of 'Nov'
 	 * Not sure what the fix is just yet....
 	 */
-	//  public function testToFormattedDateString()
-	//  {
-	//      $time = Time::parse('February 10, 2017', 'America/Chicago');
-	//      $this->assertEquals('Feb 10, 2017', $time->toFormattedDateString());
-	//  }
+	//    public function testToFormattedDateString()
+	//    {
+	//        $time = Time::parse('February 10, 2017', 'America/Chicago');
+	//        $this->assertEquals('Feb 10, 2017', $time->toFormattedDateString());
+	//    }
 
 	public function testToTimeString()
 	{
@@ -939,6 +951,32 @@ class TimeTest extends \CIUnitTestCase
 		$time = Time::parse('March 18, 2017', 'America/Chicago');
 
 		$this->assertEquals('in 2 weeks', $time->humanize());
+	}
+
+	public function testHumanizeNow()
+	{
+		Time::setTestNow('March 10, 2017', 'America/Chicago');
+		$time = Time::parse('March 10, 2017', 'America/Chicago');
+
+		$this->assertEquals('Just now', $time->humanize());
+	}
+
+	//--------------------------------------------------------------------
+	// Missing tests
+
+	public function testInstance()
+	{
+		$datetime = new DateTime();
+		$time     = Time::instance($datetime);
+		$this->assertTrue($time instanceof Time);
+		$this->assertTrue($time->sameAs($datetime));
+	}
+
+	public function testGetter()
+	{
+		$time = Time::parse('August 12, 2016 4:15:23pm');
+
+		$this->assertNull($time->weekOfWeek);
 	}
 
 }

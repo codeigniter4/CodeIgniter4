@@ -6,21 +6,11 @@
     "license": "MIT",
     "require": {
         "php": ">=7.1",
-        "codeigniter4/framework": "^4@alpha",
-         "ext-curl": "*",
-        "ext-intl": "*",
-        "kint-php/kint": "^2.1",
-        "zendframework/zend-escaper": "^2.5"
+        "codeigniter4/framework": "^4@alpha"
     },
     "require-dev": {
         "mikey179/vfsStream": "1.6.*",
         "phpunit/phpunit": "^7.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "CodeIgniter\\": "vendor/codeigniter4/framework/system/",
-            "Psr\\Log\\": "vendor/codeigniter4/framework/system/ThirdParty/PSR/Log/"
-        }
     },
     "scripts": {
         "post-update-cmd": [
