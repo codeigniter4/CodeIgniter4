@@ -15,7 +15,7 @@ echo -e "clean up ${TARGET}";
 rm -rf *
 
 echo -e "${BOLD}Copy the main files/folders...${NORMAL}"
-releasable='system README.md composer.json contributing.md license.txt'
+releasable='system README.md contributing.md license.txt'
 for fff in $releasable ; do
     cp -rf ${CI_DIR}/$fff .
 done
