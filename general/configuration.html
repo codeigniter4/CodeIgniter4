@@ -304,6 +304,12 @@ the environment. This will work in any environment. These variables are then ava
 <span class="nv">$s3_bucket</span> <span class="o">=</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">];</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are using Apache, then the CI_ENVIRONMENT can be set at the top of
+<code class="docutils literal"><span class="pre">public/.htaccess</span></code>, which comes with a commented line to do that. Change the
+environment setting to the one you want to use, and uncomment that line.</p>
+</div>
 </div>
 <div class="section" id="nesting-variables">
 <h2><a class="toc-backref" href="#id5">Nesting Variables</a><a class="headerlink" href="#nesting-variables" title="Permalink to this headline">¶</a></h2>
@@ -454,7 +460,7 @@ by treating <cite>RegionalSalesModel</cite> as a &#8220;registrar&#8221;. The re
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Dec 09, 2018.
+      Last updated on Dec 12, 2018.
 
     </p>
   </div>
