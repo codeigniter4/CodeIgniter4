@@ -96,6 +96,10 @@ the environment. This will work in any environment. These variables are then ava
 	$s3_bucket = $_ENV['S3_BUCKET'];
 	$s3_bucket = $_SERVER['S3_BUCKET'];
 
+.. note:: If you are using Apache, then the CI_ENVIRONMENT can be set at the top of 
+    ``public/.htaccess``, which comes with a commented line to do that. Change the
+    environment setting to the one you want to use, and uncomment that line.
+
 Nesting Variables
 =================
 
