@@ -11,7 +11,7 @@ git checkout $branch
 #---------------------------------------------------
 echo -e "${BOLD}Build the framework distributable${NORMAL}"
 
-echo -e "clean up ${TARGET}";
+echo -e "clean up ${TARGET}"
 rm -rf *
 
 echo -e "${BOLD}Copy the main files/folders...${NORMAL}"
