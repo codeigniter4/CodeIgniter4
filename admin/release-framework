@@ -11,12 +11,12 @@ git checkout $branch
 #---------------------------------------------------
 echo -e "${BOLD}Build the framework distributable${NORMAL}"
 
-echo -e "clean up ${TARGET}"
-rm -rf *
-
 echo -e "${BOLD}Copy the main files/folders...${NORMAL}"
-releasable='system README.md contributing.md license.txt'
+releasable='application docs public system writable contributing.md env license.txt spark'
 for fff in $releasable ; do
+    if [ -d "$fff" ] ; then
+        rm -rf $fff
+    fi
     cp -rf ${CI_DIR}/$fff .
 done
 
