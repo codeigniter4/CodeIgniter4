@@ -1,5 +1,7 @@
-<?php namespace CodeIgniter\Language;
+<?php
+namespace CodeIgniter\Language;
 
+use Config\Services;
 use Tests\Support\Language\MockLanguage;
 use Tests\Support\Language\SecondMockLanguage;
 
@@ -44,24 +46,19 @@ class LanguageTest extends \CIUnitTestCase
 		], 'en-US');
 
 		$this->assertEquals(
-			'lay of the land',
-			$lang->getLine('equivalent.lieOfLand')
+				'lay of the land', $lang->getLine('equivalent.lieOfLand')
 		);
 		$this->assertEquals(
-			'slowpoke',
-			$lang->getLine('equivalent.slowcoach')
+				'slowpoke', $lang->getLine('equivalent.slowcoach')
 		);
 		$this->assertEquals(
-			'a new lease of life',
-			$lang->getLine('equivalent.leaseOfLife')
+				'a new lease of life', $lang->getLine('equivalent.leaseOfLife')
 		);
 		$this->assertEquals(
-			'touch wood',
-			$lang->getLine('equivalent.touchWood')
+				'touch wood', $lang->getLine('equivalent.touchWood')
 		);
 		$this->assertEquals(
-			'equivalent.unknown',
-			$lang->getLine('equivalent.unknown')
+				'equivalent.unknown', $lang->getLine('equivalent.unknown')
 		);
 	}
 
@@ -208,4 +205,67 @@ class LanguageTest extends \CIUnitTestCase
 
 		$this->assertEquals('Another example', $lang->getLine('another.example'));
 	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetLocale()
+	{
+		$language = Services::language('en', false);
+		$this->assertEquals('en', $language->getLocale());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testPrioritizedLocator()
+	{
+		$language = Services::language('en', false);
+		// this should load the replacement bundle of messages
+		$message = lang('Number.trillion', [], 'en');
+		$this->assertEquals(' lots', $message);
+		// and we should have our new message too
+		$this->assertEquals(' bazillions', lang('Number.bazillion', [], 'en'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function MessageBundles()
+	{
+		return [
+			['CLI'],
+			['Cache'],
+			['Cast'],
+			['Core'],
+			['Database'],
+			['Email'],
+			['Files'],
+			['Filters'],
+			['Format'],
+			['HTTP'],
+			['Images'],
+			['Language'],
+			['Log'],
+			['Migrations'],
+			['Number'],
+			['Pager'],
+			['Router'],
+			['Session'],
+			['Time'],
+			['Validation'],
+			['View'],
+		];
+	}
+
+	/**
+	 * There's not a whole lot that can be done with message bundles,
+	 * but we can at least try loading them ... more accurate code coverage?
+	 *
+	 * @dataProvider MessageBundles
+	 */
+	public function testBundleUniqueKeys($bundle)
+	{
+		$language = Services::language('en', false);
+		$messages = require BASEPATH . 'Language/en/' . $bundle . '.php';
+		$this->assertGreaterThan(0, count($messages));
+	}
+
 }

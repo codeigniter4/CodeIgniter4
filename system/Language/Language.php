@@ -293,22 +293,19 @@ class Language
 	 */
 	protected function requireFile(string $path): array
 	{
-		$files = Services::locator()->search($path);
-
+		$files   = Services::locator()->search($path);
 		$strings = [];
 
 		foreach ($files as $file)
 		{
-			if (! is_file($file))
-			{
-				continue;
-			}
-
 			// On some OS's we were seeing failures
 			// on this command returning boolean instead
 			// of array during testing, so we've removed
 			// the require_once for now.
-			$strings[] = require $file;
+			if (is_file($file))
+			{
+				$strings[] = require $file;
+			}
 		}
 
 		if (isset($strings[1]))
