@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Language;
+<?php
+namespace CodeIgniter\Language;
 
 /**
  * CodeIgniter
@@ -132,6 +133,12 @@ class Language
 	 */
 	public function getLine(string $line, array $args = [])
 	{
+		// ignore requests with no file specified
+		if (! strpos($line, '.'))
+		{
+			return $line;
+		}
+
 		// Parse out the file name and the actual alias.
 		// Will load the language file and strings.
 		[
@@ -151,6 +158,13 @@ class Language
 			] = $this->parseLine($line, $locale);
 
 			$output = $this->language[$locale][$file][$parsedLine] ?? null;
+		}
+
+		// if still not found, try English
+		if (empty($output))
+		{
+			$this->parseLine($line, 'en');
+			$output = $this->language['en'][$file][$parsedLine] ?? null;
 		}
 
 		$output = $output ?? $line;
@@ -278,7 +292,7 @@ class Language
 		$this->loadedFiles[$locale][] = $file;
 
 		// Merge our string
-		$this->language[$this->locale][$file] = $lang;
+		$this->language[$locale][$file] = $lang;
 	}
 
 	//--------------------------------------------------------------------
