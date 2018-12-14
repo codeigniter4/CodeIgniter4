@@ -220,10 +220,10 @@ class LanguageTest extends \CIUnitTestCase
 	{
 		$language = Services::language('en', false);
 		// this should load the replacement bundle of messages
-		$message = lang('Number.trillion', [], 'en');
-		$this->assertEquals(' lots', $message);
+		$message = lang('Core.missingExtension', [], 'en');
+		$this->assertEquals('{0} extension could not be found.', $message);
 		// and we should have our new message too
-		$this->assertEquals(' bazillion', lang('Number.bazillion', [], 'en'));
+		$this->assertEquals('billions and billions', lang('Core.bazillion', [], 'en'));
 	}
 
 	//--------------------------------------------------------------------
