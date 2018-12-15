@@ -264,7 +264,7 @@ class LanguageTest extends \CIUnitTestCase
 	public function testBundleUniqueKeys($bundle)
 	{
 		$language = Services::language('en', false);
-		$messages = require BASEPATH . 'Language/en/' . $bundle . '.php';
+		$messages = require SYSTEMPATH . 'Language/en/' . $bundle . '.php';
 		$this->assertGreaterThan(0, count($messages));
 	}
 
