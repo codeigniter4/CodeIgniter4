@@ -583,7 +583,7 @@ if (! function_exists('helper'))
 						$appHelper = $path;
 						// @codeCoverageIgnoreEnd
 					}
-					elseif (strpos($path, BASEPATH) === 0)
+					elseif (strpos($path, SYSTEMPATH) === 0)
 					{
 						$systemHelper = $path;
 					}

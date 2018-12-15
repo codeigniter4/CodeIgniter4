@@ -11,7 +11,7 @@ need to be run against the production machines next time you deploy.
 The database table **migration** tracks which migrations have already been
 run so all you have to do is update your application files and
 call ``$migration->current()`` to work out which migrations should be run.
-The current version is found in **application/Config/Migrations.php**.
+The current version is found in **app/Config/Migrations.php**.
 
 .. contents::
   :local:
@@ -36,7 +36,7 @@ method taken. Two numbering styles are available:
   the preferred scheme in CodeIgniter 3.0 and later.
 
 The desired style may be selected using the ``$type`` setting in your
-*application/Config/Migrations.php* file. The default setting is timestamp.
+*app/Config/Migrations.php* file. The default setting is timestamp.
 
 Regardless of which numbering style you choose to use, prefix your migration
 files with the migration number followed by an underscore and a descriptive
@@ -50,7 +50,7 @@ Create a Migration
 ******************
 
 This will be the first migration for a new site which has a blog. All
-migrations go in the **application/Database/Migrations/** directory and have names such
+migrations go in the **app/Database/Migrations/** directory and have names such
 as *20121031100537_Add_blog.php*.
 ::
 
@@ -86,7 +86,7 @@ as *20121031100537_Add_blog.php*.
 		}
 	}
 
-Then in **application/Config/Migrations.php** set ``$currentVersion = 20121031100537;``.
+Then in **app/Config/Migrations.php** set ``$currentVersion = 20121031100537;``.
 
 The database connection and the database Forge class are both available to you through
 ``$this->db`` and ``$this->forge``, respectively.
@@ -108,7 +108,7 @@ Database Groups
 ===============
 
 A migration will only be run against a single database group. If you have multiple groups defined in
-**application/Config/Database.php**, then it will run against the ``$defaultGroup`` as specified
+**app/Config/Database.php**, then it will run against the ``$defaultGroup`` as specified
 in that same configuration file. There may be times when you need different schemas for different
 database groups. Perhaps you have one database that is used for all general site information, while
 another database is used for mission critical data. You can ensure that migrations are run only
@@ -128,7 +128,7 @@ Namespaces
 ==========
 
 The migration library can automatically scan all namespaces you have defined within
-**application/Config/Autoload.php** and its ``$psr4`` property for matching directory
+**app/Config/Autoload.php** and its ``$psr4`` property for matching directory
 names. It will include all migrations it finds in Database/Migrations.
 
 Each namespace has it's own version sequence, this will help you upgrade and downgrade each module (namespace) without affecting other namespaces.
@@ -149,7 +149,7 @@ re-usable, modular code suites.
 Usage Example
 *************
 
-In this example some simple code is placed in **application/Controllers/Migrate.php**
+In this example some simple code is placed in **app/Controllers/Migrate.php**
 to update the schema::
 
 	<?php
@@ -265,7 +265,7 @@ You can use (refresh) with the following options:
 
 **create**
 
-Creates a skeleton migration file in **application/Database/Migrations**.
+Creates a skeleton migration file in **app/Database/Migrations**.
 
 - When migration type is timestamp, using the YYYYMMDDHHIISS format::
 
@@ -283,7 +283,7 @@ You can use (create) with the following options:
 Migration Preferences
 *********************
 
-The following is a table of all the config options for migrations, available in **application/Config/Migrations.php**.
+The following is a table of all the config options for migrations, available in **app/Config/Migrations.php**.
 
 ========================== ====================== ========================== =============================================================
 Preference                 Default                Options                    Description
@@ -308,7 +308,7 @@ Class Reference
 		:rtype:	mixed
 
 		Migrates up to the current version (whatever is set for
-		``$currentVersion`` in *application/Config/Migrations.php*).
+		``$currentVersion`` in *app/Config/Migrations.php*).
 
 	.. php:method:: findMigrations()
 

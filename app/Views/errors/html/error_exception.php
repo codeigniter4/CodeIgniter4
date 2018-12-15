@@ -7,11 +7,11 @@
 
 	<title><?= htmlspecialchars($title, ENT_SUBSTITUTE, 'UTF-8') ?></title>
 	<style type="text/css">
-		<?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'debug.css')) ?>
+		<?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'debug.css')) ?>
 	</style>
 
 	<script type="text/javascript">
-		<?= file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'debug.js') ?>
+		<?= file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'debug.js') ?>
 	</script>
 </head>
 <body onload="init()">
@@ -19,10 +19,10 @@
 	<!-- Header -->
 	<div class="header">
 		<div class="container">
-			<h1><?= htmlspecialchars($title, ENT_SUBSTITUTE, 'UTF-8'), ($exception->getCode() ? ' #'.$exception->getCode() : '') ?></h1>
+			<h1><?= htmlspecialchars($title, ENT_SUBSTITUTE, 'UTF-8'), ($exception->getCode() ? ' #' . $exception->getCode() : '') ?></h1>
 			<p>
 				<?= $exception->getMessage() ?>
-				<a href="https://www.google.com/search?q=<?= urlencode($title.' '.preg_replace('#\'.*\'|".*"#Us', '', $exception->getMessage())) ?>"
+				<a href="https://www.google.com/search?q=<?= urlencode($title . ' ' . preg_replace('#\'.*\'|".*"#Us', '', $exception->getMessage())) ?>"
 				   rel="noreferrer" target="_blank">search &rarr;</a>
 			</p>
 		</div>
@@ -64,14 +64,14 @@
 							<!-- Trace info -->
 							<?php if (isset($row['file']) && is_file($row['file'])) :?>
 								<?php
-									if (isset($row['function']) && in_array($row['function'], ['include', 'include_once', 'require', 'require_once']))
+								if (isset($row['function']) && in_array($row['function'], ['include', 'include_once', 'require', 'require_once']))
 									{
-										echo $row['function'].' '. static::cleanPath($row['file']);
-									}
-									else
+									echo $row['function'] . ' ' . static::cleanPath($row['file']);
+								}
+								else
 									{
-										echo static::cleanPath($row['file']).' : '.$row['line'];
-									}
+									echo static::cleanPath($row['file']) . ' : ' . $row['line'];
+								}
 								?>
 							<?php else : ?>
 								{PHP internal code}
@@ -79,9 +79,9 @@
 
 							<!-- Class/Method -->
 							<?php if (isset($row['class'])) : ?>
-								&nbsp;&nbsp;&mdash;&nbsp;&nbsp;<?= $row['class'].$row['type'].$row['function'] ?>
+								&nbsp;&nbsp;&mdash;&nbsp;&nbsp;<?= $row['class'] . $row['type'] . $row['function'] ?>
 								<?php if (! empty($row['args'])) : ?>
-									<?php $args_id = $error_id.'args'.$index ?>
+									<?php $args_id = $error_id . 'args' . $index ?>
 									( <a href="#" onclick="return toggle('<?= $args_id ?>');">arguments</a> )
 									<div class="args" id="<?= $args_id ?>">
 										<table cellspacing="0">
@@ -89,14 +89,14 @@
 										<?php
 										$params = null;
 										// Reflection by name is not available for closure function
-										if( substr( $row['function'], -1 ) !== '}' )
+										if (substr( $row['function'], -1 ) !== '}')
 										{
 											$mirror = isset( $row['class'] ) ? new \ReflectionMethod( $row['class'], $row['function'] ) : new \ReflectionFunction( $row['function'] );
 											$params = $mirror->getParameters();
 										}
 										foreach ($row['args'] as $key => $value) : ?>
 											<tr>
-												<td><code><?= htmlspecialchars(isset($params[$key]) ? '$'.$params[$key]->name : "#$key", ENT_SUBSTITUTE, 'UTF-8') ?></code></td>
+												<td><code><?= htmlspecialchars(isset($params[$key]) ? '$' . $params[$key]->name : "#$key", ENT_SUBSTITUTE, 'UTF-8') ?></code></td>
 												<td><pre><?= print_r($value, true) ?></pre></td>
 											</tr>
 										<?php endforeach ?>
@@ -129,7 +129,10 @@
 			<!-- Server -->
 			<div class="content" id="server">
 				<?php foreach (['_SERVER', '_SESSION'] as $var) : ?>
-					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var])) continue; ?>
+					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var]))
+					{
+						continue;
+} ?>
 
 					<h3>$<?= $var ?></h3>
 
@@ -148,7 +151,7 @@
 									<?php if (is_string($value)) : ?>
 										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
 									<?php else: ?>
-										<?= '<pre>'.print_r($value, true) ?>
+										<?= '<pre>' . print_r($value, true) ?>
 									<?php endif; ?>
 								</td>
 							</tr>
@@ -175,10 +178,10 @@
 							<tr>
 								<td><?= htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
 								<td>
-									<?php if (!is_array($value) && ! is_object($value)) : ?>
+									<?php if (! is_array($value) && ! is_object($value)) : ?>
 										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
 									<?php else: ?>
-										<?= '<pre>'.print_r($value, true) ?>
+										<?= '<pre>' . print_r($value, true) ?>
 									<?php endif; ?>
 								</td>
 							</tr>
@@ -229,7 +232,10 @@
 
 				<?php $empty = true; ?>
 				<?php foreach (['_GET', '_POST', '_COOKIE'] as $var) : ?>
-					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var])) continue; ?>
+					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var]))
+					{
+						continue;
+} ?>
 
 					<?php $empty = false; ?>
 
@@ -247,10 +253,10 @@
 							<tr>
 								<td><?= htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
 								<td>
-									<?php if (!is_array($value) && ! is_object($value)) : ?>
+									<?php if (! is_array($value) && ! is_object($value)) : ?>
 										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
 									<?php else: ?>
-										<?= '<pre>'.print_r($value, true) ?>
+										<?= '<pre>' . print_r($value, true) ?>
 									<?php endif; ?>
 								</td>
 							</tr>
@@ -282,8 +288,14 @@
 						</thead>
 						<tbody>
 						<?php foreach ($headers as $name => $value) : ?>
-							<?php if (empty($value)) continue; ?>
-							<?php if (! is_array($value)) { $value = [$value]; } ?>
+							<?php if (empty($value))
+							{
+								continue;
+} ?>
+							<?php if (! is_array($value))
+							{
+								$value = [$value];
+} ?>
 							<?php foreach ($value as $h) : ?>
 								<tr>
 									<td><?= esc($h->getName(), 'html') ?></td>
@@ -306,7 +318,7 @@
 				<table>
 					<tr>
 						<td style="width: 15em">Response Status</td>
-						<td><?= $response->getStatusCode().' - '.$response->getReason() ?></td>
+						<td><?= $response->getStatusCode() . ' - ' . $response->getReason() ?></td>
 					</tr>
 				</table>
 
