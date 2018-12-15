@@ -61,26 +61,6 @@ use CodeIgniter\View\RendererInterface;
 class Services extends BaseService
 {
 	/**
-	 * The Autoloader class is the central class that handles our
-	 * spl_autoload_register method, and helper methods.
-	 *
-	 * @param boolean $getShared
-	 *
-	 * @return \CodeIgniter\Autoloader\Autoloader
-	 */
-	public static function autoloader(bool $getShared = true)
-	{
-		if ($getShared)
-		{
-			return static::getSharedInstance('autoloader');
-		}
-
-		return new \CodeIgniter\Autoloader\Autoloader();
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * The cache class provides a simple way to store and retrieve
 	 * complex data for later.
 	 *
@@ -742,12 +722,12 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
-	 * @param \Config\App $config
-	 * @param boolean     $getShared
+	 * @param \Config\Toolbar $config
+	 * @param boolean         $getShared
 	 *
 	 * @return \CodeIgniter\Debug\Toolbar
 	 */
-	public static function toolbar(\Config\App $config = null, bool $getShared = true)
+	public static function toolbar(\Config\Toolbar $config = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -756,7 +736,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = config(App::class);
+			$config = config(\Config\Toolbar::class);
 		}
 
 		return new \CodeIgniter\Debug\Toolbar($config);

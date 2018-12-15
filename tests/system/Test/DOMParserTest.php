@@ -4,7 +4,7 @@ use Tests\Support\DOM\DOMParser;
 
 class DOMParserTest extends CIUnitTestCase
 {
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

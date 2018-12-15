@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Language;
+<?php
+namespace CodeIgniter\Language;
 
 /**
  * CodeIgniter
@@ -36,6 +37,13 @@
  * @filesource
  */
 
+use CodeIgniter\Config\Services;
+
+/**
+ * Class Language
+ *
+ * @package CodeIgniter\Language
+ */
 class Language
 {
 
@@ -102,6 +110,18 @@ class Language
 		return $this;
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * @return string
+	 */
+	public function getLocale(): string
+	{
+		return $this->locale;
+	}
+
+	//--------------------------------------------------------------------
+
 	/**
 	 * Parses the language string for a file, loads the file, if necessary,
 	 * getting the line.
@@ -113,16 +133,47 @@ class Language
 	 */
 	public function getLine(string $line, array $args = [])
 	{
+		// ignore requests with no file specified
+		if (! strpos($line, '.'))
+		{
+			return $line;
+		}
+
 		// Parse out the file name and the actual alias.
 		// Will load the language file and strings.
-		list($file, $parsedLine) = $this->parseLine($line);
+		[
+			$file,
+			$parsedLine,
+		] = $this->parseLine($line, $this->locale);
 
-		$output = $this->language[$this->locale][$file][$parsedLine] ?? $line;
+		$output = $this->language[$this->locale][$file][$parsedLine] ?? null;
+
+		if ($output === null && strpos($this->locale, '-'))
+		{
+			[$locale] = explode('-', $this->locale, 2);
+
+			[
+				$file,
+				$parsedLine,
+			] = $this->parseLine($line, $locale);
+
+			$output = $this->language[$locale][$file][$parsedLine] ?? null;
+		}
+
+		// if still not found, try English
+		if (empty($output))
+		{
+			$this->parseLine($line, 'en');
+			$output = $this->language['en'][$file][$parsedLine] ?? null;
+		}
+
+		$output = $output ?? $line;
 
 		if (! empty($args))
 		{
 			$output = $this->formatMessage($output, $args);
 		}
+
 		return $output;
 	}
 
@@ -133,10 +184,11 @@ class Language
 	 * filename as the first segment (separated by period).
 	 *
 	 * @param string $line
+	 * @param string $locale
 	 *
 	 * @return array
 	 */
-	protected function parseLine(string $line): array
+	protected function parseLine(string $line, string $locale): array
 	{
 		// If there's no possibility of a filename being in the string
 		// simply return the string, and they can parse the replacement
@@ -152,9 +204,9 @@ class Language
 		$file = substr($line, 0, strpos($line, '.'));
 		$line = substr($line, strlen($file) + 1);
 
-		if (! isset($this->language[$this->locale][$file]) || ! array_key_exists($line, $this->language[$this->locale][$file]))
+		if (! isset($this->language[$locale][$file]) || ! array_key_exists($line, $this->language[$locale][$file]))
 		{
-			$this->load($file, $this->locale);
+			$this->load($file, $locale);
 		}
 
 		return [
@@ -240,7 +292,7 @@ class Language
 		$this->loadedFiles[$locale][] = $file;
 
 		// Merge our string
-		$this->language[$this->locale][$file] = $lang;
+		$this->language[$locale][$file] = $lang;
 	}
 
 	//--------------------------------------------------------------------
@@ -255,22 +307,19 @@ class Language
 	 */
 	protected function requireFile(string $path): array
 	{
-		$files = service('locator')->search($path);
-
+		$files   = Services::locator()->search($path);
 		$strings = [];
 
 		foreach ($files as $file)
 		{
-			if (! is_file($file))
-			{
-				continue;
-			}
-
 			// On some OS's we were seeing failures
 			// on this command returning boolean instead
 			// of array during testing, so we've removed
 			// the require_once for now.
-			$strings[] = require $file;
+			if (is_file($file))
+			{
+				$strings[] = require $file;
+			}
 		}
 
 		if (isset($strings[1]))

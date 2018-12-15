@@ -22,7 +22,7 @@ class HoneypotTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 		$this->config   = new \Config\Honeypot();

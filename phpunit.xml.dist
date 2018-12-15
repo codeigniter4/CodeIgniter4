@@ -42,4 +42,8 @@
     <logging>
         <log type="coverage-clover" target="build/logs/clover.xml"/>
     </logging>
+
+    <php>
+        <env name="app.baseURL" value="http://example.com"/>
+    </php>
 </phpunit>

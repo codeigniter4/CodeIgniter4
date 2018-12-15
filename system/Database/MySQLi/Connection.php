@@ -38,7 +38,7 @@
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
-use \CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Connection for MySQLi
@@ -170,42 +170,56 @@ class Connection extends BaseConnection implements ConnectionInterface
 			}
 		}
 
-		if ($this->mysqli->real_connect($hostname, $this->username, $this->password,
-			$this->database, $port, $socket, $client_flags)
-		)
+		try
 		{
-			// Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
-			if (($client_flags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, '5.7.3', '<=') && empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")
-									->fetch_object()->Value)
+			if ($this->mysqli->real_connect($hostname, $this->username, $this->password,
+				$this->database, $port, $socket, $client_flags)
 			)
 			{
-				$this->mysqli->close();
-				$message = 'MySQLi was configured for an SSL connection, but got an unencrypted connection instead!';
-				log_message('error', $message);
-
-				if ($this->DBDebug)
+				// Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
+				if (($client_flags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, '5.7.3', '<=')
+					&& empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")
+										  ->fetch_object()->Value)
+				)
 				{
-					throw new DatabaseException($message);
+					$this->mysqli->close();
+					$message = 'MySQLi was configured for an SSL connection, but got an unencrypted connection instead!';
+					log_message('error', $message);
+
+					if ($this->DBDebug)
+					{
+						throw new DatabaseException($message);
+					}
+
+					return false;
 				}
 
-				return false;
-			}
-
-			if (! $this->mysqli->set_charset($this->charset))
-			{
-				log_message('error',
-					"Database: Unable to set the configured connection charset ('{$this->charset}').");
-				$this->mysqli->close();
-
-				if ($this->db->debug)
+				if (! $this->mysqli->set_charset($this->charset))
 				{
-					throw new DatabaseException('Unable to set client connection character set: ' . $this->charset);
+					log_message('error',
+						"Database: Unable to set the configured connection charset ('{$this->charset}').");
+					$this->mysqli->close();
+
+					if ($this->db->debug)
+					{
+						throw new DatabaseException('Unable to set client connection character set: ' . $this->charset);
+					}
+
+					return false;
 				}
 
-				return false;
+				return $this->mysqli;
 			}
+		}
+		catch (\Throwable $e)
+		{
+			// Clean sensitive information from errors.
+			$msg = $e->getMessage();
 
-			return $this->mysqli;
+			$msg = str_replace($this->username, '****', $msg);
+			$msg = str_replace($this->password, '****', $msg);
+
+			throw new \mysqli_sql_exception($msg, $e->getCode(), $e);
 		}
 
 		return false;
@@ -343,7 +357,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function affectedRows(): int
 	{
-		return $this->connID->affected_rows;
+		return $this->connID->affected_rows ?? 0;
 	}
 
 	//--------------------------------------------------------------------

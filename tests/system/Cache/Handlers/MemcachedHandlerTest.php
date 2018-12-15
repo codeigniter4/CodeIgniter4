@@ -18,7 +18,7 @@ class MemcachedHandlerTest extends \CIUnitTestCase
 	private static $dummy = 'dymmy';
 	private $config;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

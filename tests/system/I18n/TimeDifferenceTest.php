@@ -1,8 +1,10 @@
-<?php namespace CodeIgniter\I18n;
+<?php
+namespace CodeIgniter\I18n;
 
 class TimeDifferenceTest extends \CIUnitTestCase
 {
-	public function setUp()
+
+	protected function setUp()
 	{
 		parent::setUp();
 
@@ -180,4 +182,22 @@ class TimeDifferenceTest extends \CIUnitTestCase
 
 		$this->assertEquals('in 1 week', $diff->humanize('en'));
 	}
+
+	public function testHumanizeNoDifference()
+	{
+		$current = Time::parse('March 10, 2017', 'America/Chicago');
+		$diff    = $current->difference('March 10, 2017', 'America/Chicago');
+
+		$this->assertEquals('Just now', $diff->humanize('en'));
+	}
+
+	public function testGetter()
+	{
+		$current = Time::parse('March 10, 2017', 'America/Chicago');
+		$diff    = $current->difference('March 18, 2017', 'America/Chicago');
+
+		$this->assertEquals(-8, (int) round($diff->days));
+		$this->assertNull($diff->nonsense);
+	}
+
 }

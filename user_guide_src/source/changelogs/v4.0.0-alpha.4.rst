@@ -1,0 +1,215 @@
+Version 4.0.0-alpha.4
+====================================================
+
+Release Date: Dec 15, 2018
+
+**Next alpha release of CodeIgniter4**
+
+Highlights:
+
+- Refactor for consistency: folder application renamed to app;
+    constant BASEPATH renamed to SYSTEMPATH
+- Debug toolbar gets its own config, history collector
+- Numerous corrections and enhancements
+
+The list of changed files follows, with PR numbers shown.
+
+- admin/
+	- docbot #1573
+	- framework/composer.json #1555
+	- release #1573
+	- release-deploy #1573
+	- starter/composer.json #1573, #1600
+
+- app/
+	- Config/
+		- App #1571
+		- Autoload #1579
+		- ContentSecurityPolicy #1581
+		- Events #1571, #1595
+		- Paths #1579
+		- Routes #1579
+		- Services #1579
+		- Toolbar #1571, #1579
+	- Filters/
+		- Toolbar #1571
+	- Views/
+		- errors/* #1579
+
+- public/
+	- index #1579
+
+- system/
+	- Autoloader/
+		- Autoloader #1562
+		- FileLocator #1562, #1579
+	- CLI/
+		- CommandRunner #1562
+	- Config/
+		- AutoloadConfig #1555, #1579
+		- BaseConfig #1562
+		- Services #1571, #1562
+	- Database/
+		- BaseBuilder #a0fc68
+		- MigrationRunner #1585
+		- MySQLi/Connection #1561, #8f205a
+	- Debug/
+		- Collectors/* #1571, #1589, #1579
+		- Exceptions #1579
+		- Toolbar #1571	
+		- Views/toolbar.tpl #1571
+		- Views/toolbarloader.js #1594
+	- Helpers/
+		- form_helper #1548
+		- url_helper #1588
+	- HTTP/
+		- ContentSecurityPolicy #1581
+		- DownloadResponse
+	- I18n/
+		- Time #1603
+	- Language/
+		- Language #1587, #1562, #1610
+		- en/
+			- CLI #1562
+			- HTTP #d7dfc5
+	- Log/
+		- Handlers/FileHandler #1579
+		- Logger #1562, #1579
+	- Session/
+		- Handlers/DatabaseHandler #1598
+	- Test/
+		- CIUnitTest #1581, #1593, #1579
+		- FeatureResponse #1593
+		- FeatureTestCase #1593
+	- View/
+		- View #1571, #1579
+	- bootstrap #1579
+	- CodeIgniter #ab8b5b, #1579
+	- Common #1569, #1563, #1562, #1601, #1579
+	- Entity #4c7bfe, #1575
+	- Model #1602, #a0fc68
+
+- tests/	
+	- Autoloader/
+		- AutolaoderTest #1562, #1579
+		- FileLocatorTest #1562, #1579
+	- Config/
+		- ServicesTest #1562
+	- Database/
+		- Live/ModelTest #1602, #a0fc68
+	- Files/
+		- FileTest #1579
+	- Helpers/
+		- FormHelperTest #1548
+		- URLHelperTest #1588
+	- HTTP/
+		- ContentSecurityPolicyTest #1581
+		- DownloadResponseTest #1576, #1579
+		- IncomingRequestDetectingTest #1576
+		- IncomingRequestTest #1576
+		- RedirectResponseTest #1562
+		- ResponseTest #1576
+	- I18n/
+		- TimeDifferenceTest #1603
+		- TimeTest #1603
+	- Language/
+		-LanguageTest #1587, #1610
+	- Log/
+		- FileHandlerTest #1579
+	- Router/
+		- RouterCollectionTest #1562
+		- RouterTest #1562
+	- Test/
+		- FeatureResponseTest #1593
+		- FeatureTestCaseTest #1593
+		- TestCaseTest #1593
+	- Validation/
+		- ValidationTest #1562
+	- View/
+		- ParserPluginTest #1562
+		- ParserTest #1562
+		- ViewTest #1562
+	- CodeIgniterTest #1562
+	- CommonFunctionsTest #1569, #1562
+	- EntityTest #4c7bfe, #1575
+	
+- user_guide_src/source/
+	- cli/
+		- cli #1579
+		- cli_commands #1579
+	- concepts/
+		- autoloader #1579
+		- mvc #1579
+		- services #1579
+		- structure #1579
+	- database/
+		- configuration #1579
+	- dbmgt/
+		- migration #1579
+		- seeds #1579
+	- general/
+		- common_functions #d7dfc5, #1579
+		- configuration #1608
+		- errors #1579
+	- installation/
+		- downloads #1579
+	- models/
+		- entities #547792, #1575
+	- outgoing/
+		- localization #1610
+		- response #1581, #1579
+		- view_parser #1579
+	- testing/
+		- debugging #1579
+		- overview #1593, #1579
+	- tutorial/
+		- news_section #1586
+		- static_pages #1579
+
+- composer.json #1555
+- ComposerScripts #1551
+- spark #1579
+- Vagrantfile.dist #1459
+
+PRs merged:
+-----------
+
+- #1610 Test, fix & enhance Language
+- #a0fc68 Clear binds after inserts, updates, and find queries
+- #1608 Note about environment configuration in UG
+- #1606 release framework script clean up
+- #1603 Flesh out I18n testing
+- #8f305a Catch mysql connection errors and sanitize username and password
+- #1602 Model's first and update didn't work primary key-less tables
+- #1601 clean up \Config\Services in Common.php
+- #1600 admin/starter/composer.json clean up
+- #1598 use $defaultGroup as default value for database session DBGroup
+- #1595 handle fatal error via pre_system
+- #1594 Fix Toolbar invalid css
+- #1593 Flesh out the Test package testing
+- #1589 Fix Toolbar file loading throw exception
+- #1588 Fix site_url generate invalid url
+- #1587 Add Language fallback
+- #1586 Fix model namespace in tutorial
+- #1585 Type hint MigrationRunner methods
+- #4c7bfe Entity fill() now respects mapped properties
+- #547792 Add _get and _set notes for Entity class
+- #1582 Fix changelog index & common functions UG indent
+- #1581 ContentSecurityPolicy testing & enhancement
+- #1579 Use Absolute Paths
+- #1576 Testing13/http
+- #1575 Adds ?integer, ?double, ?string, etc. cast types
+- #ab8b5b Set baseURL to example.com during testing by default.
+- #d7dfc5 Doc tweaks for redirects
+- #1573 Lessons learned
+- #1571 Toolbar updates
+- #1569 Test esc() with different encodings and ignore app-only helpers
+- #1563 id attribute support added for csrf_field
+- #1562 Integrates Autoloader and FileLocator
+- #1561 Update Connection.php
+- #1557 remove \ prefix on use statements
+- #1556 using protected intead of public modifier for setUp() function in tests
+- #1555 autoload clean up: remove Psr\Log namespace from composer.json
+- #1551 remove manual define "system/" directory prefix at ComposerScripts
+- #1548 allows to set empty html attr
+- #1459 Add Vagrantfile

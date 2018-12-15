@@ -10,7 +10,7 @@ class EventsTest extends \CIUnitTestCase
 	 */
 	protected $manager;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

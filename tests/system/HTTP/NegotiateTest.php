@@ -17,7 +17,7 @@ class NegotiateTest extends \CIUnitTestCase
 	 */
 	protected $negotiate;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

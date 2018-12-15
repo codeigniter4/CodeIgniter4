@@ -55,15 +55,7 @@ class CIUnitTestCase extends TestCase
 	 */
 	protected $app;
 
-	/**
-	 * Path to Config folder, relative
-	 * to the system folder.
-	 *
-	 * @var string
-	 */
-	protected $configPath = '../application/Config';
-
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
@@ -202,7 +194,7 @@ class CIUnitTestCase extends TestCase
 	 * where the result is close but not exactly equal to the
 	 * expected time, for reasons beyond our control.
 	 *
-	 * @param integer $expected
+	 * @param mixed   $expected
 	 * @param mixed   $actual
 	 * @param string  $message
 	 * @param integer $tolerance
@@ -236,52 +228,41 @@ class CIUnitTestCase extends TestCase
 	 * Loads up an instance of CodeIgniter
 	 * and gets the environment setup.
 	 *
-	 * @return mixed
+	 * @return \CodeIgniter\CodeIgniter
 	 */
 	protected function createApplication()
 	{
-		$systemPath = realpath(__DIR__ . '/../');
+		$paths = new Paths();
 
-		require_once $systemPath . '/' . $this->configPath . '/Paths.php';
-		$paths = $this->adjustPaths(new \Config\Paths());
-
-		$app = require $systemPath . '/bootstrap.php';
-		return $app;
+		return require realpath(__DIR__ . '/../') . '/bootstrap.php';
 	}
 
+	//--------------------------------------------------------------------
 	/**
-	 * Attempts to adjust our system paths to account
-	 * for relative location of our tests folder.
-	 * Not foolproof, but works well for default locations.
+	 * Return first matching emitted header.
 	 *
-	 * @param \Config\Paths $paths
+	 * @param string $header Identifier of the header of interest
+	 * @param bool $ignoreCase
 	 *
-	 * @return \Config\Paths
+	 * @return string|null The value of the header found, null if not found
 	 */
-	protected function adjustPaths(Paths $paths)
+		//
+	protected function getHeaderEmitted(string $header, bool $ignoreCase = false): ?string
 	{
-		$tests = [
-			'systemDirectory',
-			'applicationDirectory',
-			'writableDirectory',
-			'testsDirectory',
-		];
+		$found = false;
 
-		foreach ($tests as $test)
+		foreach (xdebug_get_headers() as $emitted)
 		{
-			if (is_dir($paths->$test) || strpos($paths->$test, '../') !== 0)
+			$found = $ignoreCase ?
+					(stripos($emitted, $header) === 0) :
+					(strpos($emitted, $header) === 0);
+			if ($found)
 			{
-				continue;
-			}
-
-			$check = substr($paths->$test, 3);
-			if (is_dir($check))
-			{
-				$paths->$test = $check;
+				return $emitted;
 			}
 		}
 
-		return $paths;
+		return null;
 	}
 
 }

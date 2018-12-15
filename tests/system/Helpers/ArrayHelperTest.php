@@ -2,7 +2,7 @@
 
 class ArrayHelperTest extends \CIUnitTestCase
 {
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 		helper('array');

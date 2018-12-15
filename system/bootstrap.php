@@ -46,32 +46,28 @@
  * so they are available in the config files that are loaded.
  */
 
-$public = trim($paths->publicDirectory, '/');
-
-$pos = strrpos(FCPATH, $public . DIRECTORY_SEPARATOR);
-
-/**
- * The path to the main application directory. Just above public.
- */
-if (! defined('ROOTPATH'))
-{
-	define('ROOTPATH', substr_replace(FCPATH, '', $pos, strlen($public . DIRECTORY_SEPARATOR)));
-}
-
 /**
  * The path to the application directory.
  */
 if (! defined('APPPATH'))
 {
-	define('APPPATH', realpath(ROOTPATH . $paths->applicationDirectory) . DIRECTORY_SEPARATOR);
+	define('APPPATH', realpath($paths->appDirectory) . DIRECTORY_SEPARATOR);
+}
+
+/**
+ * The path to the project root directory. Just above APPPATH.
+ */
+if (! defined('ROOTPATH'))
+{
+	define('ROOTPATH', realpath(APPPATH . '../') . DIRECTORY_SEPARATOR);
 }
 
 /**
  * The path to the system directory.
  */
-if (! defined('BASEPATH'))
+if (! defined('SYSTEMPATH'))
 {
-	define('BASEPATH', realpath(ROOTPATH . $paths->systemDirectory) . DIRECTORY_SEPARATOR);
+	define('SYSTEMPATH', realpath($paths->systemDirectory) . DIRECTORY_SEPARATOR);
 }
 
 /**
@@ -79,7 +75,7 @@ if (! defined('BASEPATH'))
  */
 if (! defined('WRITEPATH'))
 {
-	define('WRITEPATH', realpath(ROOTPATH . $paths->writableDirectory) . DIRECTORY_SEPARATOR);
+	define('WRITEPATH', realpath($paths->writableDirectory) . DIRECTORY_SEPARATOR);
 }
 
 /**
@@ -87,7 +83,7 @@ if (! defined('WRITEPATH'))
  */
 if (! defined('TESTPATH'))
 {
-	define('TESTPATH', realpath(ROOTPATH . $paths->testsDirectory) . DIRECTORY_SEPARATOR);
+	define('TESTPATH', realpath($paths->testsDirectory) . DIRECTORY_SEPARATOR);
 }
 
 /*
@@ -97,7 +93,7 @@ if (! defined('TESTPATH'))
  */
 require_once APPPATH . 'Config/Constants.php';
 
-require_once BASEPATH . 'Common.php';
+require_once SYSTEMPATH . 'Common.php';
 
 /*
  * ---------------------------------------------------------------
@@ -109,9 +105,9 @@ require_once BASEPATH . 'Common.php';
  * that the config files can use the path constants.
  */
 
-require_once BASEPATH . 'Autoloader/Autoloader.php';
+require_once SYSTEMPATH . 'Autoloader/Autoloader.php';
 require_once APPPATH . 'Config/Autoload.php';
-require_once BASEPATH . 'Config/BaseService.php';
+require_once SYSTEMPATH . 'Config/BaseService.php';
 require_once APPPATH . 'Config/Services.php';
 
 // Use Config\Services as CodeIgniter\Services
@@ -132,7 +128,7 @@ if (is_file(COMPOSER_PATH))
 
 // Load environment settings from .env files
 // into $_SERVER and $_ENV
-require_once BASEPATH . 'Config/DotEnv.php';
+require_once SYSTEMPATH . 'Config/DotEnv.php';
 
 $env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
 $env->load();

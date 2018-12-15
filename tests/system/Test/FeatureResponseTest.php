@@ -6,16 +6,18 @@ use CodeIgniter\HTTP\RedirectResponse;
 
 class FeatureResponseTest extends CIUnitTestCase
 {
+
 	/**
 	 * @var FeatureResponse
 	 */
 	protected $feature;
+
 	/**
 	 * @var Response
 	 */
 	protected $response;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 	}
@@ -42,6 +44,15 @@ class FeatureResponseTest extends CIUnitTestCase
 		$this->response->setStatusCode(200);
 
 		$this->assertTrue($this->feature->isOK());
+	}
+
+	public function testIsOKEmpty()
+	{
+		$this->getFeatureResponse('Hi there');
+		$this->response->setStatusCode(200);
+		$this->response->setBody('');
+
+		$this->assertFalse($this->feature->isOK());
 	}
 
 	public function testAssertSee()
@@ -76,6 +87,14 @@ class FeatureResponseTest extends CIUnitTestCase
 		$this->feature->assertDontSeeElement('h2');
 		$this->feature->assertDontSeeElement('.span');
 		$this->feature->assertDontSeeElement('h1.para');
+	}
+
+	public function testAssertSeeLink()
+	{
+		$this->getFeatureResponse('<h1 class="header"><a href="http://example.com/hello">Hello</a> <span>World</span></h1>');
+
+		$this->feature->assertSeeElement('h1');
+		$this->feature->assertSeeLink('Hello');
 	}
 
 	public function testAssertSeeInField()
@@ -147,6 +166,14 @@ class FeatureResponseTest extends CIUnitTestCase
 		$this->feature->assertHeader('foo', 'bar');
 	}
 
+	public function testAssertHeaderMissing()
+	{
+		$this->getFeatureResponse('<h1>Hello World</h1>', [], ['foo' => 'bar']);
+
+		$this->feature->assertHeader('foo');
+		$this->feature->assertHeaderMissing('banana');
+	}
+
 	public function testAssertCookie()
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
@@ -182,6 +209,17 @@ class FeatureResponseTest extends CIUnitTestCase
 		$formatter = $config->getFormatter('application/json');
 
 		$this->assertEquals($formatter->format(['foo' => 'bar']), $this->feature->getJSON());
+	}
+
+	public function testInvalidJSON()
+	{
+		$this->getFeatureResponse('<h1>Hello World</h1>');
+		$this->response->setJSON('');
+		$config    = new \Config\Format();
+		$formatter = $config->getFormatter('application/json');
+
+		// this should fail because of empty JSON
+		$this->assertFalse($this->feature->getJSON());
 	}
 
 	public function testGetXML()
@@ -265,4 +303,5 @@ class FeatureResponseTest extends CIUnitTestCase
 
 		$this->feature = new FeatureResponse($this->response);
 	}
+
 }

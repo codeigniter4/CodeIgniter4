@@ -16,7 +16,7 @@ use org\bovigo\vfs\vfsStream;
 class GDHandlerTest extends \CIUnitTestCase
 {
 
-	public function setUp()
+	protected function setUp()
 	{
 		if (! extension_loaded('gd'))
 		{

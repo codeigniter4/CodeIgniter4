@@ -11,7 +11,7 @@ use CodeIgniter\Session\Handlers\FileHandler;
  */
 class SessionTest extends \CIUnitTestCase
 {
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

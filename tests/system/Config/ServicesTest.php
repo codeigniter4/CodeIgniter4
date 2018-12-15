@@ -6,7 +6,7 @@ class ServicesTest extends \CIUnitTestCase
 	protected $config;
 	protected $original;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
@@ -20,6 +20,30 @@ class ServicesTest extends \CIUnitTestCase
 	public function tearDown()
 	{
 		$_SERVER = $this->original;
+	}
+
+	public function testNewAutoloader()
+	{
+		$actual = Services::autoloader();
+		$this->assertInstanceOf(\CodeIgniter\Autoloader\Autoloader::class, $actual);
+	}
+
+	public function testNewUnsharedAutoloader()
+	{
+		$actual = Services::autoloader(false);
+		$this->assertInstanceOf(\CodeIgniter\Autoloader\Autoloader::class, $actual);
+	}
+
+	public function testNewFileLocator()
+	{
+		$actual = Services::locator();
+		$this->assertInstanceOf(\CodeIgniter\Autoloader\FileLocator::class, $actual);
+	}
+
+	public function testNewUnsharedFileLocator()
+	{
+		$actual = Services::locator(false);
+		$this->assertInstanceOf(\CodeIgniter\Autoloader\FileLocator::class, $actual);
 	}
 
 	public function testNewCurlRequest()
@@ -79,6 +103,46 @@ class ServicesTest extends \CIUnitTestCase
 	{
 		$actual = Services::clirequest(null, false);
 		$this->assertInstanceOf(\CodeIgniter\HTTP\CLIRequest::class, $actual);
+	}
+
+	public function testNewEmail()
+	{
+		$actual = Services::email();
+		$this->assertInstanceOf(\CodeIgniter\Email\Email::class, $actual);
+
+		$actual->fromName = 'Zoboomafoo';
+		$this->assertEquals('Zoboomafoo', Services::email()->fromName);
+		$this->assertEquals('Zoboomafoo', Services::email(new \Config\Email())->fromName);
+	}
+
+	public function testNewUnsharedEmail()
+	{
+		$actual = Services::email(null, false);
+		$this->assertInstanceOf(\CodeIgniter\Email\Email::class, $actual);
+
+		$actual->fromName = 'Zoboomafoo';
+		$this->assertEquals('', Services::email(null, false)->fromName);
+		$this->assertEquals('', Services::email(new \Config\Email(), false)->fromName);
+	}
+
+	public function testNewLanguage()
+	{
+		$actual = Services::language();
+		$this->assertInstanceOf(\CodeIgniter\Language\Language::class, $actual);
+		$this->assertEquals('en', $actual->getLocale());
+
+		Services::language('la');
+		$this->assertEquals('la', $actual->getLocale());
+	}
+
+	public function testNewUnsharedLanguage()
+	{
+		$actual = Services::language(null, false);
+		$this->assertInstanceOf(\CodeIgniter\Language\Language::class, $actual);
+		$this->assertEquals('en', $actual->getLocale());
+
+		Services::language('la', false);
+		$this->assertEquals('en', $actual->getLocale());
 	}
 
 	public function testNewPager()

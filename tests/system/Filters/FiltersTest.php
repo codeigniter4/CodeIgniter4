@@ -19,7 +19,7 @@ class FiltersTest extends \CIUnitTestCase
 	protected $request;
 	protected $response;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

@@ -146,8 +146,8 @@ class Logger implements LoggerInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param  type    $config
-	 * @param  boolean $debug
+	 * @param  \Config\Logger $config
+	 * @param  boolean        $debug
 	 * @throws \RuntimeException
 	 */
 	public function __construct($config, bool $debug = CI_DEBUG)
@@ -194,11 +194,11 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return null
+	 * @return boolean
 	 */
 	public function emergency($message, array $context = [])
 	{
-		$this->log('emergency', $message, $context);
+		return $this->log('emergency', $message, $context);
 	}
 
 	//--------------------------------------------------------------------
@@ -212,11 +212,11 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return null
+	 * @return boolean
 	 */
 	public function alert($message, array $context = [])
 	{
-		$this->log('alert', $message, $context);
+		return $this->log('alert', $message, $context);
 	}
 
 	//--------------------------------------------------------------------
@@ -229,11 +229,11 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return null
+	 * @return boolean
 	 */
 	public function critical($message, array $context = [])
 	{
-		$this->log('critical', $message, $context);
+		return $this->log('critical', $message, $context);
 	}
 
 	//--------------------------------------------------------------------
@@ -245,11 +245,11 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return null
+	 * @return boolean
 	 */
 	public function error($message, array $context = [])
 	{
-		$this->log('error', $message, $context);
+		return $this->log('error', $message, $context);
 	}
 
 	//--------------------------------------------------------------------
@@ -263,11 +263,11 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return null
+	 * @return boolean
 	 */
 	public function warning($message, array $context = [])
 	{
-		$this->log('warning', $message, $context);
+		return $this->log('warning', $message, $context);
 	}
 
 	//--------------------------------------------------------------------
@@ -278,11 +278,11 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return null
+	 * @return boolean
 	 */
 	public function notice($message, array $context = [])
 	{
-		$this->log('notice', $message, $context);
+		return $this->log('notice', $message, $context);
 	}
 
 	//--------------------------------------------------------------------
@@ -295,11 +295,11 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return null
+	 * @return boolean
 	 */
 	public function info($message, array $context = [])
 	{
-		$this->log('info', $message, $context);
+		return $this->log('info', $message, $context);
 	}
 
 	//--------------------------------------------------------------------
@@ -310,11 +310,11 @@ class Logger implements LoggerInterface
 	 * @param string $message
 	 * @param array  $context
 	 *
-	 * @return null
+	 * @return boolean
 	 */
 	public function debug($message, array $context = [])
 	{
-		$this->log('debug', $message, $context);
+		return $this->log('debug', $message, $context);
 	}
 
 	//--------------------------------------------------------------------
@@ -508,7 +508,7 @@ class Logger implements LoggerInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Cleans the paths of filenames by replacing APPPATH, BASEPATH, FCPATH
+	 * Cleans the paths of filenames by replacing APPPATH, SYSTEMPATH, FCPATH
 	 * with the actual var. i.e.
 	 *
 	 *  /var/www/site/application/Controllers/Home.php
@@ -522,7 +522,7 @@ class Logger implements LoggerInterface
 	protected function cleanFileNames($file)
 	{
 		$file = str_replace(APPPATH, 'APPPATH/', $file);
-		$file = str_replace(BASEPATH, 'BASEPATH/', $file);
+		$file = str_replace(SYSTEMPATH, 'SYSTEMPATH/', $file);
 		$file = str_replace(FCPATH, 'FCPATH/', $file);
 
 		return $file;

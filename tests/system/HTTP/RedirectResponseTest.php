@@ -3,11 +3,9 @@
 namespace CodeIgniter\HTTP;
 
 use Config\App;
-use Config\Autoload;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Validation\Validation;
 use CodeIgniter\Router\RouteCollection;
-use Tests\Support\Autoloader\MockFileLocator;
 use Tests\Support\HTTP\MockIncomingRequest;
 
 class RedirectResponseTest extends \CIUnitTestCase
@@ -20,7 +18,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 	protected $request;
 	protected $config;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
@@ -29,7 +27,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->config          = new App();
 		$this->config->baseURL = 'http://example.com';
 
-		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()), new \Config\Modules());
+		$this->routes = new RouteCollection(Services::locator(), new \Config\Modules());
 		Services::injectMock('routes', $this->routes);
 
 		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());

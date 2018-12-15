@@ -1,7 +1,7 @@
 <?php
 namespace CodeIgniter\Router;
 
-use Tests\Support\Autoloader\MockFileLocator;
+use CodeIgniter\Config\Services;
 
 class RouterTest extends \CIUnitTestCase
 {
@@ -18,13 +18,13 @@ class RouterTest extends \CIUnitTestCase
 	 */
 	protected $root;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
 		$moduleConfig          = new \Config\Modules;
 		$moduleConfig->enabled = false;
-		$this->collection      = new RouteCollection(new MockFileLocator(new \Config\Autoload()), $moduleConfig);
+		$this->collection      = new RouteCollection(Services::locator(), $moduleConfig);
 
 		$routes = [
 			'users'                                           => 'Users::index',

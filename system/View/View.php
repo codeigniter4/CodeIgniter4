@@ -215,26 +215,23 @@ class View implements RendererInterface
 
 		if (CI_DEBUG && (! isset($options['debug']) || $options['debug'] === true))
 		{
-			$after = (new \Config\Filters())->globals['after'];
-			if (in_array('toolbar', $after) || array_key_exists('toolbar', $after))
+			$toolbarCollectors = config(\Config\Toolbar::class)->collectors;
+
+			if (in_array(\CodeIgniter\Debug\Toolbar\Collectors\Views::class, $toolbarCollectors))
 			{
-				$toolbarCollectors = (config(\Config\App::class))->toolbarCollectors;
-				if (in_array('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors) || array_key_exists('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors))
+				// Clean up our path names to make them a little cleaner
+				foreach (['APPPATH', 'SYSTEMPATH', 'ROOTPATH'] as $path)
 				{
-					// Clean up our path names to make them a little cleaner
-					foreach (['APPPATH', 'BASEPATH', 'ROOTPATH'] as $path)
+					if (strpos($this->renderVars['file'], constant($path)) === 0)
 					{
-						if (strpos($this->renderVars['file'], constant($path)) === 0)
-						{
-							$this->renderVars['file'] = str_replace(constant($path), $path . '/', $this->renderVars['file']);
-							break;
-						}
+						$this->renderVars['file'] = str_replace(constant($path), $path . '/', $this->renderVars['file']);
+						break;
 					}
-					$this->renderVars['file'] = ++$this->viewsCount . ' ' . $this->renderVars['file'];
-					$output                   = '<!-- DEBUG-VIEW START ' . $this->renderVars['file'] . ' -->' . PHP_EOL
-						. $output . PHP_EOL
-						. '<!-- DEBUG-VIEW ENDED ' . $this->renderVars['file'] . ' -->' . PHP_EOL;
 				}
+				$this->renderVars['file'] = ++$this->viewsCount . ' ' . $this->renderVars['file'];
+				$output                   = '<!-- DEBUG-VIEW START ' . $this->renderVars['file'] . ' -->' . PHP_EOL
+					. $output . PHP_EOL
+					. '<!-- DEBUG-VIEW ENDED ' . $this->renderVars['file'] . ' -->' . PHP_EOL;
 			}
 		}
 

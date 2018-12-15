@@ -9,7 +9,7 @@ class BaseConfigTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function setup()
+	protected function setUp()
 	{
 		parent::setUp();
 

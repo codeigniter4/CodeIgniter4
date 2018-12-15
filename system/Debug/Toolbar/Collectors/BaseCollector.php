@@ -255,9 +255,9 @@ class BaseCollector
 		{
 			$file = 'APPPATH/' . substr($file, strlen(APPPATH));
 		}
-		elseif (strpos($file, BASEPATH) === 0)
+		elseif (strpos($file, SYSTEMPATH) === 0)
 		{
-			$file = 'BASEPATH/' . substr($file, strlen(BASEPATH));
+			$file = 'SYSTEMPATH/' . substr($file, strlen(SYSTEMPATH));
 		}
 		elseif (strpos($file, FCPATH) === 0)
 		{
@@ -300,6 +300,23 @@ class BaseCollector
 	public function icon(): string
 	{
 		return '';
+	}
+
+	public function getAsArray()
+	{
+		return [
+			'title'           => $this->getTitle(),
+			'titleSafe'       => $this->getTitle(true),
+			'titleDetails'    => $this->getTitleDetails(),
+			'display'         => $this->display(),
+			'badgeValue'      => $this->getBadgeValue(),
+			'isEmpty'         => $this->isEmpty(),
+			'hasTabContent'   => $this->hasTabContent(),
+			'hasLabel'        => $this->hasLabel(),
+			'icon'            => $this->icon(),
+			'hasTimelineData' => $this->hasTimelineData(),
+			'timelineData'    => $this->timelineData(),
+		];
 	}
 
 }

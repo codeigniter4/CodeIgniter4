@@ -8,7 +8,7 @@ Database Configuration
 
 CodeIgniter has a config file that lets you store your database
 connection values (username, password, database name, etc.). The config
-file is located at application/Config/Database.php. You can also set
+file is located at app/Config/Database.php. You can also set
 database connection values in the .env file. See below for more details.
 
 The config settings are stored in a class property that is an array with this

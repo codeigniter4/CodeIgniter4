@@ -37,7 +37,7 @@
  */
 
 use CodeIgniter\Database\BaseBuilder;
-use \CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Builder for Postgre

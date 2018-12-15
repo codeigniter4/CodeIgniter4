@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use \CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Class BaseBuilder
@@ -1428,6 +1428,9 @@ class BaseBuilder
 		if ($reset === true)
 		{
 			$this->resetSelect();
+
+			// Clear our binds so we don't eat up memory
+			$this->binds = [];
 		}
 
 		return $result;
@@ -1776,7 +1779,12 @@ class BaseBuilder
 		{
 			$this->resetWrite();
 
-			return $this->db->query($sql, $this->binds);
+			$result = $this->db->query($sql, $this->binds);
+
+			// Clear our binds so we don't eat up memory
+			$this->binds = [];
+
+			return $result;
 		}
 	}
 
@@ -1975,6 +1983,9 @@ class BaseBuilder
 
 			if ($this->db->query($sql, $this->binds))
 			{
+				// Clear our binds so we don't eat up memory
+				$this->binds = [];
+
 				return true;
 			}
 

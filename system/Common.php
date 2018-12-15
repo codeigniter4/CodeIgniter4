@@ -69,7 +69,7 @@ if (! function_exists('cache'))
 	 */
 	function cache(string $key = null)
 	{
-		$cache = \Config\Services::cache();
+		$cache = Services::cache();
 
 		// No params - return cache object
 		if (is_null($key))
@@ -199,7 +199,7 @@ if (! function_exists('env'))
 			case 'empty':
 				return '';
 			case 'null':
-				return;
+				return null;
 		}
 
 		return $value;
@@ -298,7 +298,7 @@ if (! function_exists('session'))
 	 */
 	function session($val = null)
 	{
-		$session = \Config\Services::session();
+		$session = Services::session();
 
 		// Returning a single item?
 		if (is_string($val))
@@ -325,7 +325,7 @@ if (! function_exists('timer'))
 	 */
 	function timer(string $name = null)
 	{
-		$timer = \Config\Services::timer();
+		$timer = Services::timer();
 
 		if (empty($name))
 		{
@@ -488,9 +488,7 @@ if (! function_exists('route_to'))
 	 */
 	function route_to(string $method, ...$params): string
 	{
-		$routes = Services::routes();
-
-		return $routes->reverseRoute($method, ...$params);
+		return Services::routes()->reverseRoute($method, ...$params);
 	}
 }
 
@@ -581,9 +579,11 @@ if (! function_exists('helper'))
 				{
 					if (strpos($path, APPPATH) === 0)
 					{
+						// @codeCoverageIgnoreStart
 						$appHelper = $path;
+						// @codeCoverageIgnoreEnd
 					}
-					elseif (strpos($path, BASEPATH) === 0)
+					elseif (strpos($path, SYSTEMPATH) === 0)
 					{
 						$systemHelper = $path;
 					}
@@ -597,7 +597,9 @@ if (! function_exists('helper'))
 			// App-level helpers should override all others
 			if (! empty($appHelper))
 			{
+				// @codeCoverageIgnoreStart
 				$includes[] = $appHelper;
+				// @codeCoverageIgnoreEnd
 			}
 
 			// All namespaced files get added in next
@@ -688,9 +690,9 @@ if (! function_exists('csrf_field'))
 	 *
 	 * @return string
 	 */
-	function csrf_field()
+	function csrf_field(string $id = null)
 	{
-		return '<input type="hidden" name="' . csrf_token() . '" value="' . csrf_hash() . '">';
+		return '<input type="hidden"' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '" />';
 	}
 }
 
@@ -713,7 +715,7 @@ if (! function_exists('force_https'))
 	 *
 	 * Not testable, as it will exit!
 	 *
-	 * @throws             \CodeIgniter\HTTP\RedirectException
+	 * @throws             \CodeIgniter\HTTP\Exceptions\HTTPException
 	 * @codeCoverageIgnore
 	 */
 	function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)

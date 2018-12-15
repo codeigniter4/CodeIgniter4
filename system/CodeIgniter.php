@@ -61,7 +61,7 @@ class CodeIgniter
 	/**
 	 * The current version of CodeIgniter Framework
 	 */
-	const CI_VERSION = '4.0.0-alpha.3';
+	const CI_VERSION = '4.0.0-alpha.4';
 
 	/**
 	 * App startup time.
@@ -182,7 +182,7 @@ class CodeIgniter
 
 		if (CI_DEBUG)
 		{
-			require_once BASEPATH . 'ThirdParty/Kint/kint.php';
+			require_once SYSTEMPATH . 'ThirdParty/Kint/kint.php';
 		}
 	}
 
@@ -303,7 +303,7 @@ class CodeIgniter
 			$possibleRedirect = $filters->run($uri, 'before');
 			if ($possibleRedirect instanceof RedirectResponse)
 			{
-				return $possibleRedirect;
+				return $possibleRedirect->send();
 			}
 			// If a Response instance is returned, the Response will be sent back to the client and script execution will stop
 			if ($possibleRedirect instanceof ResponseInterface)

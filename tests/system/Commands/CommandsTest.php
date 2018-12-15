@@ -19,7 +19,7 @@ class CommandsTest extends \CIUnitTestCase
 	protected $logger;
 	protected $runner;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

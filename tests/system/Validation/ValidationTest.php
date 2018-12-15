@@ -39,11 +39,11 @@ class ValidationTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
-		Services::reset();
+		Services::reset(true);
 
 		$this->validation = new Validation((object) $this->config, \Config\Services::renderer());
 		$this->validation->reset();
