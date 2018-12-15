@@ -217,6 +217,8 @@
 <li><a class="reference internal" href="#language-localization" id="id5">Language Localization</a><ul>
 <li><a class="reference internal" href="#creating-language-files" id="id6">Creating Language Files</a></li>
 <li><a class="reference internal" href="#basic-usage" id="id7">Basic Usage</a></li>
+<li><a class="reference internal" href="#language-fallback" id="id8">Language Fallback</a></li>
+<li><a class="reference internal" href="#message-translations" id="id9">Message Translations</a></li>
 </ul>
 </li>
 </ul>
@@ -473,6 +475,32 @@ third parameter to the <code class="docutils literal"><span class="pre">lang()</
 </div>
 </div>
 </div>
+<div class="section" id="language-fallback">
+<h3><a class="toc-backref" href="#id8">Language Fallback</a><a class="headerlink" href="#language-fallback" title="Permalink to this headline">¶</a></h3>
+<p>If you have a set of messages for a given locale, for instance
+<code class="docutils literal"><span class="pre">Language/en/app.php</span></code>, you can add language variants for that locale,
+each in its own folder, for instance <code class="docutils literal"><span class="pre">Language/en-US/app.php</span></code>.</p>
+<p>You only need to provide values for those messages that would be
+localized differently for that locale variant. Any missing message
+definitions will be automatically pulled from the main locale settings.</p>
+<p>It gets better - the localization can fall all the way back to English,
+in case new messages are added to the framework and you haven&#8217;t had
+a chance to translate them yet for your locale.</p>
+<p>So, if you are using the locale <code class="docutils literal"><span class="pre">fr-CA</span></code>, then a localized
+message will first be sought in <code class="docutils literal"><span class="pre">Language/fr/CA</span></code>, then in
+<code class="docutils literal"><span class="pre">Language/fr</span></code>, and finally in <code class="docutils literal"><span class="pre">Language/en</span></code>.</p>
+</div>
+<div class="section" id="message-translations">
+<h3><a class="toc-backref" href="#id9">Message Translations</a><a class="headerlink" href="#message-translations" title="Permalink to this headline">¶</a></h3>
+<p>We have an &#8220;official&#8221; set of translations in their
+<a class="reference external" href="https://github.com/codeigniter4/translations">own repository</a>.</p>
+<p>You can download that repository, and copy its <code class="docutils literal"><span class="pre">Language</span></code> folder
+into your <code class="docutils literal"><span class="pre">app</span></code>. The incorporated translations will be automatically
+picked up because the <code class="docutils literal"><span class="pre">App</span></code> namespace is mapped to your <code class="docutils literal"><span class="pre">app</span></code> folder.</p>
+<p>Alternately, you could use <code class="docutils literal"><span class="pre">composer</span> <span class="pre">install</span> <span class="pre">codeigniter4/translations</span></code>
+inside your project, and the translated messages will be automatically picked
+up because the <code class="docutils literal"><span class="pre">Translations</span></code> namespace gets mapped appropriately.</p>
+</div>
 </div>
 </div>
 
@@ -499,7 +527,7 @@ third parameter to the <code class="docutils literal"><span class="pre">lang()</
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Dec 12, 2018.
+      Last updated on Dec 15, 2018.
 
     </p>
   </div>
