@@ -19,8 +19,15 @@ Release Date: December 15, 2018
 
 **Next release of CodeIgniter4**
 
+Highlights:
 
-:doc:`See all the changes. </changelogs/next>`
+- Refactor for consistency: folder application renamed to app;
+    constant BASEPATH renamed to SYSTEMPATH
+- Debug toolbar gets its own config, history collector
+- Numerous corrections and enhancements
+
+
+:doc:`See all the changes. </changelogs/v4.0.0-alpha.4>`
 
 Version 4.0.0-alpha.3
 ====================================================
