@@ -26,7 +26,7 @@ class AutoloaderTest extends \CIUnitTestCase
 		];
 		$config->psr4     = [
 			'App'         => APPPATH,
-			'CodeIgniter' => BASEPATH,
+			'CodeIgniter' => SYSTEMPATH,
 		];
 
 		$this->loader = new Autoloader();
@@ -86,7 +86,7 @@ class AutoloaderTest extends \CIUnitTestCase
 		$this->assertSame($expected, $actual);
 
 		$actual   = $this->loader->loadClass('CodeIgniter\Helpers\array_helper');
-		$expected = BASEPATH . 'Helpers/array_helper.php';
+		$expected = SYSTEMPATH . 'Helpers/array_helper.php';
 		$this->assertSame($expected, $actual);
 	}
 

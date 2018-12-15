@@ -220,7 +220,7 @@ class View implements RendererInterface
 			if (in_array(\CodeIgniter\Debug\Toolbar\Collectors\Views::class, $toolbarCollectors))
 			{
 				// Clean up our path names to make them a little cleaner
-				foreach (['APPPATH', 'BASEPATH', 'ROOTPATH'] as $path)
+				foreach (['APPPATH', 'SYSTEMPATH', 'ROOTPATH'] as $path)
 				{
 					if (strpos($this->renderVars['file'], constant($path)) === 0)
 					{

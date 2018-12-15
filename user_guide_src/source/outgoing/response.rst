@@ -155,12 +155,12 @@ Turning CSP On
 --------------
 
 By default, support for this is off. To enable support in your application, edit the ``CSPEnabled`` value in
-**application/Config/App.php**::
+**app/Config/App.php**::
 
 	public $CSPEnabled = true;
 
 When enabled, the response object will contain an instance of ``CodeIgniter\HTTP\ContentSecurityPolicy``. The
-values set in **application/Config/ContentSecurityPolicy.php** are applied to that instance and, if no changes are
+values set in **app/Config/ContentSecurityPolicy.php** are applied to that instance and, if no changes are
 needed during runtime, then the correctly formatted header is sent and you're all done.
 
 With CSP enabled, two header lines are added to the HTTP response: a Content-Security-Policy header, with
@@ -472,7 +472,7 @@ The methods provided by the parent class that are available are:
 
 		The prefix is only needed if you need to avoid name collisions with
 		other identically named cookies for your server.
-                
+
 		Provide a prefix if cookies should only be deleted for that subset.
                 Provide a domain name if cookies should only be deleted for that domain.
                 Provide a path name if cookies should only be deleted for that path.

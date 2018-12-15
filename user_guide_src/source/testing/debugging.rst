@@ -61,11 +61,11 @@ Enabling the Toolbar
 
 The toolbar is enabled by default in any environment *except* production. It will be shown whenever the
 constant CI_DEBUG is defined and it's value is positive. This is defined in the boot files (i.e.
-application/Config/Boot/development.php) and can be modified there to determine what environments it shows
+app/Config/Boot/development.php) and can be modified there to determine what environments it shows
 itself in.
 
 The toolbar itself is displayed as an :doc:`After Filter </incoming/filters>`. You can stop it from ever
-running by removing it from the ``$globals`` property of **application/Config/Filters.php**.
+running by removing it from the ``$globals`` property of **app/Config/Filters.php**.
 
 Choosing What to Show
 ---------------------

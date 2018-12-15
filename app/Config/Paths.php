@@ -20,14 +20,14 @@ class Paths
 	 * Include the path if the folder is not in the same directory
 	 * as this file.
 	 */
-	public $systemDirectory = 'system';
+	public $systemDirectory = __DIR__ . '/../../system';
 
 	/*
 	 *---------------------------------------------------------------
 	 * APPLICATION FOLDER NAME
 	 *---------------------------------------------------------------
 	 *
-	 * If you want this front controller to use a different "application"
+	 * If you want this front controller to use a different "app"
 	 * folder than the default one you can set its name here. The folder
 	 * can also be renamed or relocated anywhere on your getServer. If
 	 * you do, use a full getServer path. For more info please see the user guide:
@@ -35,7 +35,7 @@ class Paths
 	 *
 	 * NO TRAILING SLASH!
 	 */
-	public $applicationDirectory = 'application';
+	public $appDirectory = __DIR__ . '/../../app';
 
 	/*
 	 * ---------------------------------------------------------------
@@ -48,7 +48,7 @@ class Paths
 	 * for maximum security, keeping it out of the application and/or
 	 * system directories.
 	 */
-	public $writableDirectory = 'writable';
+	public $writableDirectory = __DIR__ . '/../../writable';
 
 	/*
 	 * ---------------------------------------------------------------
@@ -61,21 +61,7 @@ class Paths
 	 * for maximum security, keeping it out of the application and/or
 	 * system directories.
 	 */
-	public $testsDirectory = 'tests';
-
-	/*
-	 * ---------------------------------------------------------------
-	 * PUBLIC DIRECTORY NAME
-	 * ---------------------------------------------------------------
-	 *
-	 * This variable must contain the name of the directory that
-	 * contains the main index.php front-controller. By default,
-	 * this is the `public` directory, but some hosts may not
-	 * be able to map a primary domain to a sub-directory so you
-	 * can change this to `public_html`, for example, to comply
-	 * with your host's needs.
-	 */
-	public $publicDirectory = 'public';
+	public $testsDirectory = __DIR__ . '/../../tests';
 
 	/*
 	 * ---------------------------------------------------------------
@@ -87,5 +73,5 @@ class Paths
 	 * default this is in `application/Views`. This value
 	 * is used when no value is provided to `Services::renderer()`.
 	 */
-	public $viewDirectory = 'application/Views';
+	public $viewDirectory = __DIR__ . '/../../app/Views';
 }
