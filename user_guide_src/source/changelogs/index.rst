@@ -12,6 +12,16 @@ Release Date: Not Released
 
 :doc:`See all the changes. </changelogs/next>`
 
+Version 4.0.0-alpha.4
+====================================================
+
+Release Date: December 15, 2018
+
+**Next release of CodeIgniter4**
+
+
+:doc:`See all the changes. </changelogs/next>`
+
 Version 4.0.0-alpha.3
 ====================================================
 
