@@ -38,6 +38,7 @@ namespace CodeIgniter\Email;
  * @filesource
  */
 
+use CodeIgniter\Email\Exceptions\EmailException;
 use Config\Mimes;
 use Psr\Log\LoggerAwareTrait;
 
@@ -421,8 +422,6 @@ class Email
 	{
 		$this->initialize($config);
 
-		isset(static::$func_overload) || static::$func_overload = (extension_loaded('mbstring') && ini_get('mbstring.func_overload'));
-
 		log_message('info', 'Email Class Initialized');
 	}
 
@@ -725,27 +724,23 @@ class Email
 	 *
 	 * @param string      $file        Can be local path, URL or buffered content
 	 * @param string      $disposition 'attachment'
-	 * @param string|null $newname
-	 * @param string      $mime
+	 * @param string|null $newName
+	 * @param string      $mime        Empty if $file is buffered content
 	 *
 	 * @return Email
 	 */
-	public function attach($file, $disposition = '', $newname = null, $mime = '')
+	public function attach(string $file, string $disposition = '', ?string $newName = null, string $mime = '')
 	{
 		if ($mime === '')
 		{
 			if (strpos($file, '://') === false && ! is_file($file))
 			{
-				$this->setErrorMessage(lang('Email.attachmentMissing', [$file]));
-
-				return false;
+				throw EmailException::forAttachmentMissing($file);
 			}
 
 			if (! $fp = @fopen($file, 'rb'))
 			{
-				$this->setErrorMessage(lang('Email.attachmentUnreadable', [$file]));
-
-				return false;
+				throw EmailException::forAttachmentUnreadable($file);
 			}
 
 			$fileContent = stream_get_contents($fp);
@@ -765,7 +760,7 @@ class Email
 		$this->attachments[] = [
 			'name'        => $namesAttached,
 			'disposition' => empty($disposition) ? 'attachment' : $disposition,
-		// Can also be 'inline'  Not sure if it matters
+			// Can also be 'inline'  Not sure if it matters
 			'type'        => $mime,
 			'content'     => chunk_split(base64_encode($fileContent)),
 			'multipart'   => 'mixed',
@@ -1066,18 +1061,14 @@ class Email
 	{
 		if (! is_array($email))
 		{
-			$this->setErrorMessage(lang('Email.mustBeArray'));
-
-			return false;
+				throw EmailException::forMustBeArray();
 		}
 
 		foreach ($email as $val)
 		{
 			if (! $this->isValidEmail($val))
 			{
-				$this->setErrorMessage(lang('Email.invalidAddress', $val));
-
-				return false;
+				throw EmailException::forInvalidAddress($val);
 			}
 		}
 
@@ -1341,7 +1332,7 @@ class Email
 					$this->finalBody = $hdr . $this->newline . $this->newline . $this->body;
 				}
 
-			return;
+				return;
 
 			case 'html':
 
@@ -1369,7 +1360,7 @@ class Email
 
 				if ($this->getProtocol() === 'mail')
 				{
-					  $this->headerStr .= $hdr;
+					$this->headerStr .= $hdr;
 				}
 				else
 				{
@@ -1381,7 +1372,7 @@ class Email
 					$this->finalBody .= '--' . $boundary . '--';
 				}
 
-			return;
+				return;
 
 			case 'plain-attach':
 
@@ -1390,7 +1381,7 @@ class Email
 
 				if ($this->getProtocol() === 'mail')
 				{
-					  $this->headerStr .= $hdr;
+					$this->headerStr .= $hdr;
 				}
 
 				$body .= $this->getMimeMessage() . $this->newline
@@ -1403,7 +1394,7 @@ class Email
 
 				$this->appendAttachments($body, $boundary);
 
-			break;
+				break;
 			case 'html-attach':
 
 				$alt_boundary  = uniqid('B_ALT_', true);
@@ -1435,7 +1426,7 @@ class Email
 
 				if ($this->getProtocol() === 'mail')
 				{
-					  $this->headerStr .= $hdr;
+					$this->headerStr .= $hdr;
 				}
 
 				static::strlen($body) && $body .= $this->newline . $this->newline;
@@ -1465,7 +1456,7 @@ class Email
 					$this->appendAttachments($body, $atc_boundary, 'mixed');
 				}
 
-			break;
+				break;
 		}
 
 		$this->finalBody = ($this->getProtocol() === 'mail') ? $body : $hdr . $this->newline . $this->newline . $body;
@@ -1540,7 +1531,7 @@ class Email
 		// used literally, without encoding, as described in RFC 2049.
 		// http://www.ietf.org/rfc/rfc2049.txt
 		static $ascii_safe_chars = [
-		// ' (  )   +   ,   -   .   /   :   =   ?
+			// ' (  )   +   ,   -   .   /   :   =   ?
 			39,
 			40,
 			41,
@@ -1552,7 +1543,7 @@ class Email
 			58,
 			61,
 			63,
-		// numbers
+			// numbers
 			48,
 			49,
 			50,
@@ -1563,7 +1554,7 @@ class Email
 			55,
 			56,
 			57,
-		// upper-case letters
+			// upper-case letters
 			65,
 			66,
 			67,
@@ -1590,7 +1581,7 @@ class Email
 			88,
 			89,
 			90,
-		// lower-case letters
+			// lower-case letters
 			97,
 			98,
 			99,
@@ -1735,10 +1726,10 @@ class Email
 				// There are reports that iconv_mime_encode() might fail and return FALSE
 				if ($output !== false)
 				{
-						  // iconv_mime_encode() will always put a header field name.
-						  // We've passed it an empty one, but it still prepends our
-						  // encoded string with ': ', so we need to strip it.
-						  return static::substr($output, 2);
+					// iconv_mime_encode() will always put a header field name.
+					// We've passed it an empty one, but it still prepends our
+					// encoded string with ': ', so we need to strip it.
+					return static::substr($output, 2);
 				}
 
 				$chars = iconv_strlen($str, 'UTF-8');
@@ -1794,9 +1785,7 @@ class Email
 
 		if (! isset($this->headers['From']))
 		{
-			$this->setErrorMessage(lang('Email.noFrom'));
-
-			return false;
+				throw EmailException::forNoFrom();
 		}
 
 		if ($this->replyToFlag === false)
@@ -1807,9 +1796,7 @@ class Email
 		if (empty($this->recipients) && ! isset($this->headers['To']) && empty($this->BCCArray) && ! isset($this->headers['Bcc']) && ! isset($this->headers['Cc'])
 		)
 		{
-			$this->setErrorMessage(lang('Email.noRecipients'));
-
-			return false;
+				throw EmailException::forNoRecipients();
 		}
 
 		$this->buildHeaders();
@@ -1947,8 +1934,7 @@ class Email
 
 		if (! $success)
 		{
-			$this->setErrorMessage(lang('Email.sendFailure' . ($protocol === 'mail' ? 'PHPMail' : ucfirst($protocol))));
-			return false;
+				throw EmailException::forSendFailure($protocol === 'mail' ? 'PHPMail' : ucfirst($protocol));
 		}
 
 		$this->setErrorMessage(lang('Email.sent', [$protocol]));
@@ -2049,10 +2035,7 @@ class Email
 
 		if ($status !== 0)
 		{
-			$this->setErrorMessage(lang('Email.exitStatus', [$status]));
-			$this->setErrorMessage(lang('Email.nosocket'));
-
-			return false;
+				throw EmailException::forNosocket($status);
 		}
 
 		return true;
@@ -2069,9 +2052,7 @@ class Email
 	{
 		if ($this->SMTPHost === '')
 		{
-			$this->setErrorMessage(lang('Email.noHostname'));
-
-			return false;
+				throw EmailException::forNoHostname();
 		}
 
 		if (! $this->SMTPConnect() || ! $this->SMTPAuthenticate())
@@ -2134,9 +2115,7 @@ class Email
 
 		if (strpos($reply, '250') !== 0)
 		{
-			$this->setErrorMessage(lang('Email.SMTPError', [$reply]));
-
-			return false;
+				throw EmailException::forSMTPError($reply);
 		}
 
 		return true;
@@ -2176,9 +2155,7 @@ class Email
 
 		if (! is_resource($this->SMTPConnect))
 		{
-			$this->setErrorMessage(lang('Email.SMTPError', [$errno . ' ' . $errstr]));
-
-			return false;
+				throw EmailException::forSMTPError($errno . ' ' . $errstr);
 		}
 
 		stream_set_timeout($this->SMTPConnect, $this->SMTPTimeout);
@@ -2193,9 +2170,7 @@ class Email
 
 			if ($crypto !== true)
 			{
-				$this->setErrorMessage(lang('Email.SMTPError', $this->getSMTPData()));
-
-				return false;
+				throw EmailException::forSMTPError($this->getSMTPData());
 			}
 		}
 
@@ -2227,15 +2202,15 @@ class Email
 				}
 
 				$resp = 250;
-			break;
+				break;
 			case 'starttls':
 				$this->sendData('STARTTLS');
 				$resp = 220;
-			break;
+				break;
 			case 'from':
 				$this->sendData('MAIL FROM:<' . $data . '>');
 				$resp = 250;
-			break;
+				break;
 			case 'to':
 				if ($this->DSN)
 				{
@@ -2246,19 +2221,19 @@ class Email
 					$this->sendData('RCPT TO:<' . $data . '>');
 				}
 				$resp = 250;
-			break;
+				break;
 			case 'data':
 				$this->sendData('DATA');
 				$resp = 354;
-			break;
+				break;
 			case 'reset':
 				$this->sendData('RSET');
 				$resp = 250;
-			break;
+				break;
 			case 'quit':
 				$this->sendData('QUIT');
 				$resp = 221;
-			break;
+				break;
 		}
 
 		$reply = $this->getSMTPData();
@@ -2267,9 +2242,7 @@ class Email
 
 		if ((int) static::substr($reply, 0, 3) !== $resp)
 		{
-			$this->setErrorMessage(lang('Email.SMTPError', [$reply]));
-
-			return false;
+				throw EmailException::forSMTPError($reply);
 		}
 
 		if ($cmd === 'quit')
@@ -2296,9 +2269,7 @@ class Email
 
 		if ($this->SMTPUser === '' && $this->SMTPPass === '')
 		{
-			$this->setErrorMessage(lang('lang:email.noSMTPAuth'));
-
-			return false;
+				throw EmailException::forNoSMTPAuth();
 		}
 
 		$this->sendData('AUTH LOGIN');
@@ -2310,9 +2281,7 @@ class Email
 		}
 		elseif (strpos($reply, '334') !== 0)
 		{
-			$this->setErrorMessage(lang('Email.failedSMTPLogin', [$reply]));
-
-			return false;
+				throw EmailException::forFailedSMTPLogin($reply);
 		}
 
 		$this->sendData(base64_encode($this->SMTPUser));
@@ -2320,9 +2289,7 @@ class Email
 
 		if (strpos($reply, '334') !== 0)
 		{
-			$this->setErrorMessage(lang('Email.SMTPAuthUsername', [$reply]));
-
-			return false;
+				throw EmailException::forSMTPAuthUsername($reply);
 		}
 
 		$this->sendData(base64_encode($this->SMTPPass));
@@ -2330,9 +2297,7 @@ class Email
 
 		if (strpos($reply, '235') !== 0)
 		{
-			$this->setErrorMessage(lang('Email.SMTPAuthPassword', [$reply]));
-
-			return false;
+				throw EmailException::forSMTPAuthPassword($reply);
 		}
 
 		if ($this->SMTPKeepAlive)
@@ -2385,9 +2350,7 @@ class Email
 
 		if ($result === false)
 		{
-			$this->setErrorMessage(lang('Email.SMTPDataFailure', $data));
-
-			return false;
+				throw EmailException::forSMTPDataFailure($data);
 		}
 
 		return true;
