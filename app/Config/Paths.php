@@ -24,7 +24,7 @@ class Paths
 
 	/*
 	 *---------------------------------------------------------------
-	 * APPLICATION FOLDER NAME
+	 * APP FOLDER NAME
 	 *---------------------------------------------------------------
 	 *
 	 * If you want this front controller to use a different "app"
@@ -45,7 +45,7 @@ class Paths
 	 * This variable must contain the name of your "writable" directory.
 	 * The writable directory allows you to group all directories that
 	 * need write permission to a single place that can be tucked away
-	 * for maximum security, keeping it out of the application and/or
+	 * for maximum security, keeping it out of the app and/or
 	 * system directories.
 	 */
 	public $writableDirectory = __DIR__ . '/../../writable';
@@ -58,20 +58,20 @@ class Paths
 	 * This variable must contain the name of your "tests" directory.
 	 * The writable directory allows you to group all directories that
 	 * need write permission to a single place that can be tucked away
-	 * for maximum security, keeping it out of the application and/or
+	 * for maximum security, keeping it out of the app and/or
 	 * system directories.
 	 */
 	public $testsDirectory = __DIR__ . '/../../tests';
 
 	/*
 	 * ---------------------------------------------------------------
-	 * VIEW DIRECTORY NAME
+	 * VIEWS DIRECTORY NAME
 	 * ---------------------------------------------------------------
 	 *
 	 * This variable must contain the name of the directory that
-	 * contains the view files used by your application. By
-	 * default this is in `application/Views`. This value
+	 * contains the view files used by your app. By
+	 * default this is in `app/Views`. This value
 	 * is used when no value is provided to `Services::renderer()`.
 	 */
-	public $viewDirectory = __DIR__ . '/../../app/Views';
+	public $viewsDirectory = __DIR__ . '/../../app/Views';
 }
