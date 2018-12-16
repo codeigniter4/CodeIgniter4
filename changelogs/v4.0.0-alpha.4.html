@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Version 4.0.0-alpha.2 &mdash; CodeIgniter4 4.0.0-alpha.4 documentation</title>
+  <title>Version 4.0.0-alpha.4 &mdash; CodeIgniter4 4.0.0-alpha.4 documentation</title>
   
 
   
@@ -34,10 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-alpha.4 documentation" href="../index.html"/>
-        <link rel="up" title="Change Logs" href="index.html"/>
-        <link rel="next" title="Version 4.0.0-alpha.1" href="v4.0.0-alpha.1.html"/>
-        <link rel="prev" title="Version 4.0.0-alpha.3" href="v4.0.0-alpha.3.html"/> 
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.4 documentation" href="../index.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -128,25 +125,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
 </ul>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Change Logs</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="index.html#version-version">Version 4.0-dev</a></li>
-<li class="toctree-l2"><a class="reference internal" href="index.html#version-4-0-0-alpha-4">Version 4.0.0-alpha.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="index.html#version-4-0-0-alpha-3">Version 4.0.0-alpha.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="index.html#version-4-0-0-alpha-2">Version 4.0.0-alpha.2</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="index.html#version-4-0-0-alpha-1">Version 4.0.0-alpha.1</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="next.html">Version 4.0-dev</a></li>
-<li class="toctree-l3"><a class="reference internal" href="v4.0.0-alpha.3.html">Version 4.0.0-alpha.3</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Version 4.0.0-alpha.2</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#prs-merged">PRs merged:</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="v4.0.0-alpha.1.html">Version 4.0.0-alpha.1</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Change Logs</a></li>
 </ul>
 
             
@@ -191,9 +172,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">Change Logs</a> &raquo;</li>
-        
-      <li>Version 4.0.0-alpha.2</li>
+      <li>Version 4.0.0-alpha.4</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -210,81 +189,48 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="version-4-0-0-alpha-2">
-<h1>Version 4.0.0-alpha.2<a class="headerlink" href="#version-4-0-0-alpha-2" title="Permalink to this headline">¶</a></h1>
-<p>Release Date: Oct 26, 2018</p>
-<p><strong>Second alpha release of CodeIgniter4</strong></p>
+  <div class="section" id="version-4-0-0-alpha-4">
+<h1>Version 4.0.0-alpha.4<a class="headerlink" href="#version-4-0-0-alpha-4" title="Permalink to this headline">¶</a></h1>
+<p>Release Date: Dec 15, 2018</p>
+<p><strong>Next alpha release of CodeIgniter4</strong></p>
+<p>Highlights:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>Refactor for consistency: folder application renamed to app;</dt>
+<dd>constant BASEPATH renamed to SYSTEMPATH</dd>
+</dl>
+</li>
+<li>Debug toolbar gets its own config, history collector</li>
+<li>Numerous corrections and enhancements</li>
+</ul>
 <p>The list of changed files follows, with PR numbers shown.</p>
-<dl class="docutils">
-<dt>application /</dt>
-<dd><ul class="first last simple">
-<li>composer.json #1312</li>
-<li>Config/Boot/development, production, testing #1312</li>
-<li>Config/Paths #1341</li>
-<li>Config/Routes #1281</li>
-<li>Filters/Honeypot #1314</li>
-<li>Views/errors/cli/error_404 #1272</li>
-<li>Views/welcome_message #1342</li>
-</ul>
-</dd>
-<dt>public /</dt>
-<dd><ul class="first last simple">
-<li>.htaccess #1281</li>
-<li>index #1295, #1313</li>
-</ul>
-</dd>
-<dt>system /</dt>
-<dd><ul class="first last simple">
+<ul class="simple">
 <li><dl class="first docutils">
-<dt>CLI/</dt>
+<dt>admin/</dt>
 <dd><ul class="first last">
-<li>CommandRunner #1350, #1356</li>
+<li>docbot #1573</li>
+<li>framework/composer.json #1555</li>
+<li>release #1573</li>
+<li>release-deploy #1573</li>
+<li>starter/composer.json #1573, #1600</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Commands/</dt>
+<dt>app/</dt>
 <dd><ul class="first last">
-<li>Server/Serve #1313</li>
-</ul>
-</dd>
-</dl>
-</li>
 <li><dl class="first docutils">
 <dt>Config/</dt>
 <dd><ul class="first last">
-<li>AutoloadConfig #1271</li>
-<li>Services #1341</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Database/</dt>
-<dd><ul class="first last">
-<li>BaseBuilder #1217</li>
-<li>BaseUtils #1209, #1329</li>
-<li>Database #1339</li>
-<li>MySQLi/Utils #1209</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Debug/Toolbar/</dt>
-<dd><ul class="first last">
-<li>Views/toolbar.css #1342</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Exceptions/</dt>
-<dd><ul class="first last">
-<li>CastException #1283</li>
-<li>DownloadException #1239</li>
-<li>FrameworkException #1313</li>
+<li>App #1571</li>
+<li>Autoload #1579</li>
+<li>ContentSecurityPolicy #1581</li>
+<li>Events #1571, #1595</li>
+<li>Paths #1579</li>
+<li>Routes #1579</li>
+<li>Services #1579</li>
+<li>Toolbar #1571, #1579</li>
 </ul>
 </dd>
 </dl>
@@ -292,93 +238,57 @@
 <li><dl class="first docutils">
 <dt>Filters/</dt>
 <dd><ul class="first last">
-<li>Filters #1239</li>
+<li>Toolbar #1571</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Helpers/</dt>
+<dt>Views/</dt>
 <dd><ul class="first last">
-<li>cookie_helper #1286</li>
-<li>form_helper #1244, #1327</li>
-<li>url_helper #1321</li>
-<li>xml_helper #1209</li>
+<li>errors/* #1579</li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Honeypot/</dt>
+<dt>public/</dt>
 <dd><ul class="first last">
-<li>Honeypot #1314</li>
+<li>index #1579</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>HTTP/</dt>
+<dt>system/</dt>
 <dd><ul class="first last">
-<li>CliRequest #1303</li>
-<li>CURLRequest #1303</li>
-<li>DownloadResponse #1239</li>
-<li>Exceptions/HTTPException #1303</li>
-<li>IncomingRequest #1304, #1313</li>
-<li>Negotiate #1306</li>
-<li>RedirectResponse #1300, #1306, #1329</li>
-<li>Response #1239, #1286</li>
-<li>ResponseInterface #1239</li>
-<li>URI #1300</li>
+<li><dl class="first docutils">
+<dt>Autoloader/</dt>
+<dd><ul class="first last">
+<li>Autoloader #1562</li>
+<li>FileLocator #1562, #1579</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Language/en/</dt>
+<dt>CLI/</dt>
 <dd><ul class="first last">
-<li>Cast #1283</li>
-<li>HTTP #1239</li>
+<li>CommandRunner #1562</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Router/</dt>
+<dt>Config/</dt>
 <dd><ul class="first last">
-<li>RouteCollection #1285, #1355</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Test/</dt>
-<dd><ul class="first last">
-<li>CIUnitTestCase #1312, #1361</li>
-<li>FeatureTestCase #1282</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li>CodeIgniter #1239 #1337</li>
-<li>Common #1291</li>
-<li>Entity #1283, #1311</li>
-<li>Model #1311</li>
-</ul>
-</dd>
-<dt>tests /</dt>
-<dd><ul class="first last simple">
-<li><dl class="first docutils">
-<dt>API/</dt>
-<dd><ul class="first last">
-<li>ResponseTraitTest #1302</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Commands/</dt>
-<dd><ul class="first last">
-<li>CommandsTest #1356</li>
+<li>AutoloadConfig #1555, #1579</li>
+<li>BaseConfig #1562</li>
+<li>Services #1571, #1562</li>
 </ul>
 </dd>
 </dl>
@@ -386,8 +296,9 @@
 <li><dl class="first docutils">
 <dt>Database/</dt>
 <dd><ul class="first last">
-<li>BaseBuilderTest #1217</li>
-<li>Live/ModelTest #1311</li>
+<li>BaseBuilder #a0fc68</li>
+<li>MigrationRunner #1585</li>
+<li>MySQLi/Connection #1561, #8f205a</li>
 </ul>
 </dd>
 </dl>
@@ -395,7 +306,11 @@
 <li><dl class="first docutils">
 <dt>Debug/</dt>
 <dd><ul class="first last">
-<li>TimerTest #1273</li>
+<li>Collectors/* #1571, #1589, #1579</li>
+<li>Exceptions #1579</li>
+<li>Toolbar #1571</li>
+<li>Views/toolbar.tpl #1571</li>
+<li>Views/toolbarloader.js #1594</li>
 </ul>
 </dd>
 </dl>
@@ -403,15 +318,8 @@
 <li><dl class="first docutils">
 <dt>Helpers/</dt>
 <dd><ul class="first last">
-<li>CookieHelperTest #1286</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Honeypot/</dt>
-<dd><ul class="first last">
-<li>HoneypotTest #1314</li>
+<li>form_helper #1548</li>
+<li>url_helper #1588</li>
 </ul>
 </dd>
 </dl>
@@ -419,21 +327,8 @@
 <li><dl class="first docutils">
 <dt>HTTP/</dt>
 <dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>Files/</dt>
-<dd><ul class="first last">
-<li>FileMovingTest #1302</li>
-<li>UploadedFileTest #1302</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li>CLIRequestTest #1303</li>
-<li>CURLRequestTest #1303</li>
-<li>DownloadResponseTest #1239</li>
-<li>NegotiateTest #1306</li>
-<li>RedirectResponseTest #1300, #1306, #1329</li>
-<li>ResponseTest #1239</li>
+<li>ContentSecurityPolicy #1581</li>
+<li>DownloadResponse</li>
 </ul>
 </dd>
 </dl>
@@ -441,15 +336,41 @@
 <li><dl class="first docutils">
 <dt>I18n/</dt>
 <dd><ul class="first last">
-<li>TimeTest #1273, #1316</li>
+<li>Time #1603</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Router/</dt>
+<dt>Language/</dt>
 <dd><ul class="first last">
-<li>RouteTest #1285, #1355</li>
+<li>Language #1587, #1562, #1610</li>
+<li><dl class="first docutils">
+<dt>en/</dt>
+<dd><ul class="first last">
+<li>CLI #1562</li>
+<li>HTTP #d7dfc5</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Log/</dt>
+<dd><ul class="first last">
+<li>Handlers/FileHandler #1579</li>
+<li>Logger #1562, #1579</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Session/</dt>
+<dd><ul class="first last">
+<li>Handlers/DatabaseHandler #1598</li>
 </ul>
 </dd>
 </dl>
@@ -457,8 +378,9 @@
 <li><dl class="first docutils">
 <dt>Test/</dt>
 <dd><ul class="first last">
-<li>TestCaseEmissionsTest #1312</li>
-<li>TestCaseTest #1312</li>
+<li>CIUnitTest #1581, #1593, #1579</li>
+<li>FeatureResponse #1593</li>
+<li>FeatureTestCase #1593</li>
 </ul>
 </dd>
 </dl>
@@ -466,20 +388,163 @@
 <li><dl class="first docutils">
 <dt>View/</dt>
 <dd><ul class="first last">
-<li>ParserTest #1311</li>
+<li>View #1571, #1579</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>EntityTest #1319</li>
+<li>bootstrap #1579</li>
+<li>CodeIgniter #ab8b5b, #1579</li>
+<li>Common #1569, #1563, #1562, #1601, #1579</li>
+<li>Entity #4c7bfe, #1575</li>
+<li>Model #1602, #a0fc68</li>
 </ul>
 </dd>
-<dt>user_guide_src /source/</dt>
-<dd><ul class="first last simple">
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>tests/</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Autoloader/</dt>
+<dd><ul class="first last">
+<li>AutolaoderTest #1562, #1579</li>
+<li>FileLocatorTest #1562, #1579</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Config/</dt>
+<dd><ul class="first last">
+<li>ServicesTest #1562</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Database/</dt>
+<dd><ul class="first last">
+<li>Live/ModelTest #1602, #a0fc68</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Files/</dt>
+<dd><ul class="first last">
+<li>FileTest #1579</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Helpers/</dt>
+<dd><ul class="first last">
+<li>FormHelperTest #1548</li>
+<li>URLHelperTest #1588</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>HTTP/</dt>
+<dd><ul class="first last">
+<li>ContentSecurityPolicyTest #1581</li>
+<li>DownloadResponseTest #1576, #1579</li>
+<li>IncomingRequestDetectingTest #1576</li>
+<li>IncomingRequestTest #1576</li>
+<li>RedirectResponseTest #1562</li>
+<li>ResponseTest #1576</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>I18n/</dt>
+<dd><ul class="first last">
+<li>TimeDifferenceTest #1603</li>
+<li>TimeTest #1603</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Language/</dt>
+<dd>-LanguageTest #1587, #1610</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Log/</dt>
+<dd><ul class="first last">
+<li>FileHandlerTest #1579</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Router/</dt>
+<dd><ul class="first last">
+<li>RouterCollectionTest #1562</li>
+<li>RouterTest #1562</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Test/</dt>
+<dd><ul class="first last">
+<li>FeatureResponseTest #1593</li>
+<li>FeatureTestCaseTest #1593</li>
+<li>TestCaseTest #1593</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Validation/</dt>
+<dd><ul class="first last">
+<li>ValidationTest #1562</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>View/</dt>
+<dd><ul class="first last">
+<li>ParserPluginTest #1562</li>
+<li>ParserTest #1562</li>
+<li>ViewTest #1562</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>CodeIgniterTest #1562</li>
+<li>CommonFunctionsTest #1569, #1562</li>
+<li>EntityTest #4c7bfe, #1575</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>user_guide_src/source/</dt>
+<dd><ul class="first last">
 <li><dl class="first docutils">
 <dt>cli/</dt>
 <dd><ul class="first last">
-<li>cli_request #1303</li>
+<li>cli #1579</li>
+<li>cli_commands #1579</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>concepts/</dt>
+<dd><ul class="first last">
+<li>autoloader #1579</li>
+<li>mvc #1579</li>
+<li>services #1579</li>
+<li>structure #1579</li>
 </ul>
 </dd>
 </dl>
@@ -487,16 +552,16 @@
 <li><dl class="first docutils">
 <dt>database/</dt>
 <dd><ul class="first last">
-<li>query_builder #1217</li>
-<li>utilities #1209</li>
+<li>configuration #1579</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>extending/</dt>
+<dt>dbmgt/</dt>
 <dd><ul class="first last">
-<li>contributing #1280</li>
+<li>migration #1579</li>
+<li>seeds #1579</li>
 </ul>
 </dd>
 </dl>
@@ -504,53 +569,17 @@
 <li><dl class="first docutils">
 <dt>general/</dt>
 <dd><ul class="first last">
-<li>common_functions #1300, #1329</li>
-<li>helpers #1291</li>
-<li>managing_apps #1341</li>
+<li>common_functions #d7dfc5, #1579</li>
+<li>configuration #1608</li>
+<li>errors #1579</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>helpers/</dt>
+<dt>installation/</dt>
 <dd><ul class="first last">
-<li>xml_helper #1321</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>incoming/</dt>
-<dd><ul class="first last">
-<li>controllers #1323</li>
-<li>routing #1337</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>intro/</dt>
-<dd><ul class="first last">
-<li>requirements #1280, #1303</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>installation/ #1280, #1303</dt>
-<dd><ul class="first last">
-<li>troubleshooting #1265</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>libraries/</dt>
-<dd><ul class="first last">
-<li>curlrequest #1303</li>
-<li>honeypot #1314</li>
-<li>sessions #1333</li>
-<li>uploaded_files #1302</li>
+<li>downloads #1579</li>
 </ul>
 </dd>
 </dl>
@@ -558,7 +587,7 @@
 <li><dl class="first docutils">
 <dt>models/</dt>
 <dd><ul class="first last">
-<li>entities #1283</li>
+<li>entities #547792, #1575</li>
 </ul>
 </dd>
 </dl>
@@ -566,7 +595,9 @@
 <li><dl class="first docutils">
 <dt>outgoing/</dt>
 <dd><ul class="first last">
-<li>response #1340</li>
+<li>localization #1610</li>
+<li>response #1581, #1579</li>
+<li>view_parser #1579</li>
 </ul>
 </dd>
 </dl>
@@ -574,74 +605,72 @@
 <li><dl class="first docutils">
 <dt>testing/</dt>
 <dd><ul class="first last">
-<li>overview #1312</li>
+<li>debugging #1579</li>
+<li>overview #1593, #1579</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>tutorial... #1265, #1281, #1294</li>
+<li><dl class="first docutils">
+<dt>tutorial/</dt>
+<dd><ul class="first last">
+<li>news_section #1586</li>
+<li>static_pages #1579</li>
 </ul>
 </dd>
 </dl>
-<dl class="docutils">
-<dt>/</dt>
-<dd><ul class="first last simple">
-<li>spark #1305</li>
+</li>
 </ul>
 </dd>
 </dl>
+</li>
+<li>composer.json #1555</li>
+<li>ComposerScripts #1551</li>
+<li>spark #1579</li>
+<li>Vagrantfile.dist #1459</li>
+</ul>
 <div class="section" id="prs-merged">
 <h2>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>#1361 Add timing assertion to CIUnitTestCase</li>
-<li>#1312 Add headerEmitted assertions to CIUnitTestCase</li>
-<li>#1356 Testing/commands</li>
-<li>#1355 Handle duplicate HTTP verb and generic rules properly</li>
-<li>#1350 Checks if class is instantiable and is a command</li>
-<li>#1348 Fix sphinx formatting in sessions</li>
-<li>#1347 Fix sphinx formatting in sessions</li>
-<li>#1342 Toolbar Styles</li>
-<li>#1341 Make viewpath configurable in Paths.php. Fixes #1296</li>
-<li>#1340 Update docs for downloads to reflect the need to return it. Fixes #1331</li>
-<li>#1339 Fix error where Forge class might not be returned. Fixes #1225</li>
-<li>#1337 Filter in the router Fixes #1315</li>
-<li>#1336 Revert alpha.2</li>
-<li>#1334 Proposed changelog for alpha.2</li>
-<li>#1333 Error in user guide for session config. Fixes #1330</li>
-<li>#1329 Tweaks</li>
-<li>#1327 FIX form_hidden and form_open - value escaping as is in form_input.</li>
-<li>#1323 Fix doc error : show_404() doesn&#8217;t exist any more</li>
-<li>#1321 Added missing xml_helper UG page</li>
-<li>#1319 Testing/entity</li>
-<li>#1316 Refactor TimeTest</li>
-<li>#1314 Fix &amp; expand Honeypot &amp; its tests</li>
-<li>#1313 Clean exception</li>
-<li>#1311 Entities store an original stack of values to compare against so we d…</li>
-<li>#1306 Testing3/http</li>
-<li>#1305 Change chdir(&#8216;public&#8217;) to chdir($public)</li>
-<li>#1304 Refactor script name stripping in parseRequestURI()</li>
-<li>#1303 Testing/http</li>
-<li>#1302 Exception：No Formatter defined for mime type &#8216;&#8217;</li>
-<li>#1300 Allow redirect with Query Vars from the current request.</li>
-<li>#1295 Fix grammar in front controller comment.</li>
-<li>#1294 Updated final tutorial page. Fixes #1292</li>
-<li>#1291 Allows extending of helpers. Fixes #1264</li>
-<li>#1286 Cookies</li>
-<li>#1285 Ensure current HTTP verb routes are matched prior to any * matched ro…</li>
-<li>#1283 Entities</li>
-<li>#1282 system/Test/FeatureTestCase::setupRequest(), minor fixes phpdoc block…</li>
-<li>#1281 Tut</li>
-<li>#1280 Add contributing reference to user guide</li>
-<li>#1273 Fix/timing</li>
-<li>#1272 Fix undefined variable &#8220;heading&#8221; in cli 404</li>
-<li>#1271 remove inexistent &#8220;CodeIgniterLoader&#8221; from AutoloadConfig::classmap</li>
-<li>#1269 Release notes &amp; process</li>
-<li>#1266 Adjusting the release build scripts</li>
-<li>#1265 WIP Fix docs re PHP server</li>
-<li>#1245 Fix #1244 (form_hidden declaration)</li>
-<li>#1239 【Unsolicited PR】I changed the download method to testable.</li>
-<li>#1217 Optional parameter for resetSelect() call in Builder&#8217;s countAll();</li>
-<li>#1209 Fix undefined function xml_convert at DatabaseBaseUtils</li>
+<li>#1610 Test, fix &amp; enhance Language</li>
+<li>#a0fc68 Clear binds after inserts, updates, and find queries</li>
+<li>#1608 Note about environment configuration in UG</li>
+<li>#1606 release framework script clean up</li>
+<li>#1603 Flesh out I18n testing</li>
+<li>#8f305a Catch mysql connection errors and sanitize username and password</li>
+<li>#1602 Model&#8217;s first and update didn&#8217;t work primary key-less tables</li>
+<li>#1601 clean up ConfigServices in Common.php</li>
+<li>#1600 admin/starter/composer.json clean up</li>
+<li>#1598 use $defaultGroup as default value for database session DBGroup</li>
+<li>#1595 handle fatal error via pre_system</li>
+<li>#1594 Fix Toolbar invalid css</li>
+<li>#1593 Flesh out the Test package testing</li>
+<li>#1589 Fix Toolbar file loading throw exception</li>
+<li>#1588 Fix site_url generate invalid url</li>
+<li>#1587 Add Language fallback</li>
+<li>#1586 Fix model namespace in tutorial</li>
+<li>#1585 Type hint MigrationRunner methods</li>
+<li>#4c7bfe Entity fill() now respects mapped properties</li>
+<li>#547792 Add _get and _set notes for Entity class</li>
+<li>#1582 Fix changelog index &amp; common functions UG indent</li>
+<li>#1581 ContentSecurityPolicy testing &amp; enhancement</li>
+<li>#1579 Use Absolute Paths</li>
+<li>#1576 Testing13/http</li>
+<li>#1575 Adds ?integer, ?double, ?string, etc. cast types</li>
+<li>#ab8b5b Set baseURL to example.com during testing by default.</li>
+<li>#d7dfc5 Doc tweaks for redirects</li>
+<li>#1573 Lessons learned</li>
+<li>#1571 Toolbar updates</li>
+<li>#1569 Test esc() with different encodings and ignore app-only helpers</li>
+<li>#1563 id attribute support added for csrf_field</li>
+<li>#1562 Integrates Autoloader and FileLocator</li>
+<li>#1561 Update Connection.php</li>
+<li>#1557 remove prefix on use statements</li>
+<li>#1556 using protected intead of public modifier for setUp() function in tests</li>
+<li>#1555 autoload clean up: remove PsrLog namespace from composer.json</li>
+<li>#1551 remove manual define &#8220;system/&#8221; directory prefix at ComposerScripts</li>
+<li>#1548 allows to set empty html attr</li>
+<li>#1459 Add Vagrantfile</li>
 </ul>
 </div>
 </div>
@@ -653,15 +682,6 @@
            </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="v4.0.0-alpha.1.html" class="btn btn-neutral float-right" title="Version 4.0.0-alpha.1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="v4.0.0-alpha.3.html" class="btn btn-neutral" title="Version 4.0.0-alpha.3" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

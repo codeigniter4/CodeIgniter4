@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>HTTP Responses &mdash; CodeIgniter4 4.0.0-alpha.3 documentation</title>
+  <title>HTTP Responses &mdash; CodeIgniter4 4.0.0-alpha.4 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-alpha.3 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.4 documentation" href="../index.html"/>
         <link rel="up" title="Building Responses" href="index.html"/>
         <link rel="next" title="API Response Trait" href="api_responses.html"/>
         <link rel="prev" title="View Parser" href="view_parser.html"/> 
@@ -358,12 +358,12 @@ visit the following sites:</p>
 <div class="section" id="turning-csp-on">
 <h3><a class="toc-backref" href="#id7">Turning CSP On</a><a class="headerlink" href="#turning-csp-on" title="Permalink to this headline">¶</a></h3>
 <p>By default, support for this is off. To enable support in your application, edit the <code class="docutils literal"><span class="pre">CSPEnabled</span></code> value in
-<strong>application/Config/App.php</strong>:</p>
+<strong>app/Config/App.php</strong>:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$CSPEnabled</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>When enabled, the response object will contain an instance of <code class="docutils literal"><span class="pre">CodeIgniter\HTTP\ContentSecurityPolicy</span></code>. The
-values set in <strong>application/Config/ContentSecurityPolicy.php</strong> are applied to that instance and, if no changes are
+values set in <strong>app/Config/ContentSecurityPolicy.php</strong> are applied to that instance and, if no changes are
 needed during runtime, then the correctly formatted header is sent and you&#8217;re all done.</p>
 <p>With CSP enabled, two header lines are added to the HTTP response: a Content-Security-Policy header, with
 policies identifying content types or origins that are explicitly allowed for different
@@ -923,7 +923,7 @@ that the cookie exists, and that it has the prescribed value.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-alpha.3',
+            VERSION:'4.0.0-alpha.4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,

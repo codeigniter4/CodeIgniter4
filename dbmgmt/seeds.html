@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Database Seeding &mdash; CodeIgniter4 4.0.0-alpha.3 documentation</title>
+  <title>Database Seeding &mdash; CodeIgniter4 4.0.0-alpha.4 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-alpha.3 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.4 documentation" href="../index.html"/>
         <link rel="up" title="Managing Databases" href="index.html"/>
         <link rel="next" title="Library Reference" href="../libraries/index.html"/>
         <link rel="prev" title="Database Migrations" href="migration.html"/> 
@@ -208,8 +208,8 @@ event or setting information, and more.</p>
 <p>Database seeds are simple classes that must have a <strong>run()</strong> method, and extend <strong>CodeIgniterDatabaseSeeder</strong>.
 Within the <strong>run()</strong> the class can create any form of data that it needs to. It has access to the database
 connection and the forge through <code class="docutils literal"><span class="pre">$this-&gt;db</span></code> and <code class="docutils literal"><span class="pre">$this-&gt;forge</span></code>, respectively. Seed files must be
-stored within the <strong>application/Database/Seeds</strong> directory. The name of the file must match the name of the class.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// application/Database/Seeds/SimpleSeeder.php</span>
+stored within the <strong>app/Database/Seeds</strong> directory. The name of the file must match the name of the class.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// app/Database/Seeds/SimpleSeeder.php</span>
 <span class="k">class</span> <span class="nc">SimpleSeeder</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Database\Seeder</span>
 <span class="p">{</span>
         <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
@@ -318,7 +318,7 @@ a dedicated controller:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-alpha.3',
+            VERSION:'4.0.0-alpha.4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,

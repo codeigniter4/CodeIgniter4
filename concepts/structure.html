@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Application Structure &mdash; CodeIgniter4 4.0.0-alpha.3 documentation</title>
+  <title>Application Structure &mdash; CodeIgniter4 4.0.0-alpha.4 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-alpha.3 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.4 documentation" href="../index.html"/>
         <link rel="up" title="CodeIgniter4 Overview" href="index.html"/>
         <link rel="next" title="Models, Views, and Controllers" href="mvc.html"/>
         <link rel="prev" title="CodeIgniter4 Overview" href="index.html"/> 
@@ -208,14 +208,14 @@
 can change to meet the needs of your application.</p>
 <div class="section" id="default-directories">
 <h2>Default Directories<a class="headerlink" href="#default-directories" title="Permalink to this headline">¶</a></h2>
-<p>A fresh install has six directories: <code class="docutils literal"><span class="pre">/application</span></code>, <code class="docutils literal"><span class="pre">/system</span></code>, <code class="docutils literal"><span class="pre">/public</span></code>,
+<p>A fresh install has six directories: <code class="docutils literal"><span class="pre">/app</span></code>, <code class="docutils literal"><span class="pre">/system</span></code>, <code class="docutils literal"><span class="pre">/public</span></code>,
 <code class="docutils literal"><span class="pre">/writable</span></code>, <code class="docutils literal"><span class="pre">/tests</span></code> and <code class="docutils literal"><span class="pre">/docs</span></code>.
 Each of these directories has a very specific part to play.</p>
-<div class="section" id="application">
-<h3>application<a class="headerlink" href="#application" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal"><span class="pre">application</span></code> directory is where all of your application code lives. This comes with a default directory
+<div class="section" id="app">
+<h3>app<a class="headerlink" href="#app" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">app</span></code> directory is where all of your application code lives. This comes with a default directory
 structure that works well for many applications. The following folders make up the basic contents:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>/application
+<div class="highlight-none"><div class="highlight"><pre><span></span>/app
         /Config         Stores the configuration files
         /Controllers    Controllers determine the program flow
         /Database       Stores the database migrations and seeds files
@@ -228,7 +228,7 @@ structure that works well for many applications. The following folders make up t
         /Views          Views make up the HTML that is displayed to the client.
 </pre></div>
 </div>
-<p>Because the <code class="docutils literal"><span class="pre">application</span></code> directory is already namespaced, you should feel free to modify the structure
+<p>Because the <code class="docutils literal"><span class="pre">app</span></code> directory is already namespaced, you should feel free to modify the structure
 of this directory to suit your application&#8217;s needs. For example, you might decide to start using the Repository
 pattern and Entity Models to work with your data. In this case, you could rename the <code class="docutils literal"><span class="pre">Models</span></code> directory to
 <code class="docutils literal"><span class="pre">Repositories</span></code>, and add a new <code class="docutils literal"><span class="pre">Entities</span></code> directory.</p>
@@ -238,7 +238,7 @@ pattern and Entity Models to work with your data. In this case, you could rename
 routing to controllers, and will need to define all of your routes in the routes file.</p>
 </div>
 <p>All files in this directory live under the <code class="docutils literal"><span class="pre">App</span></code> namespace, though you are free to change that in
-<strong>application/Config/Constants.php</strong>.</p>
+<strong>app/Config/Constants.php</strong>.</p>
 </div>
 <div class="section" id="system">
 <h3>system<a class="headerlink" href="#system" title="Permalink to this headline">¶</a></h3>
@@ -278,7 +278,7 @@ User Guide.</p>
 <div class="section" id="modifying-directory-locations">
 <h3>Modifying Directory Locations<a class="headerlink" href="#modifying-directory-locations" title="Permalink to this headline">¶</a></h3>
 <p>If you&#8217;ve relocated any of the main directories, you can change the configuration
-settings inside <code class="docutils literal"><span class="pre">application/Config/Paths</span></code>.</p>
+settings inside <code class="docutils literal"><span class="pre">app/Config/Paths</span></code>.</p>
 </div>
 </div>
 </div>
@@ -328,7 +328,7 @@ settings inside <code class="docutils literal"><span class="pre">application/Con
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-alpha.3',
+            VERSION:'4.0.0-alpha.4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,

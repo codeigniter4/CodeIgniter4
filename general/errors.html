@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Error Handling &mdash; CodeIgniter4 4.0.0-alpha.3 documentation</title>
+  <title>Error Handling &mdash; CodeIgniter4 4.0.0-alpha.4 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-alpha.3 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.4 documentation" href="../index.html"/>
         <link rel="up" title="General Topics" href="index.html"/>
         <link rel="next" title="Web Page Caching" href="caching.html"/>
         <link rel="prev" title="Logging Information" href="logging.html"/> 
@@ -307,7 +307,7 @@ are not setup to log <strong>critical</strong> errors, which all exceptions are 
 <div class="section" id="pagenotfoundexception">
 <h3><a class="toc-backref" href="#id5">PageNotFoundException</a><a class="headerlink" href="#pagenotfoundexception" title="Permalink to this headline">¶</a></h3>
 <p>This is used to signal a 404, Page Not Found error. When thrown, the system will show the view found at
-<code class="docutils literal"><span class="pre">/application/views/errors/html/error_404.php</span></code>. You should customize all of the error views for your site.
+<code class="docutils literal"><span class="pre">/app/views/errors/html/error_404.php</span></code>. You should customize all of the error views for your site.
 If, in <code class="docutils literal"><span class="pre">Config/Routes.php</span></code>, you have specified a 404 Override, that will be called instead of the standard
 404 page:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$page</span> <span class="o">=</span> <span class="nv">$pageModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">))</span>
@@ -384,7 +384,7 @@ or when it is temporarily lost:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-alpha.3',
+            VERSION:'4.0.0-alpha.4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,

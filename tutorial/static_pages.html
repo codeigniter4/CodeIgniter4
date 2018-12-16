@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Static pages &mdash; CodeIgniter4 4.0.0-alpha.3 documentation</title>
+  <title>Static pages &mdash; CodeIgniter4 4.0.0-alpha.4 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-alpha.3 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.4 documentation" href="../index.html"/>
         <link rel="up" title="Tutorial" href="index.html"/>
         <link rel="next" title="News section" href="news_section.html"/>
         <link rel="prev" title="Tutorial" href="index.html"/> 
@@ -219,7 +219,7 @@ you&#8217;ll see URL patterns that match:</p>
 <div><a class="reference external" href="http://example.com/[controller-class]/[controller-method]/[arguments">http://example.com/[controller-class]/[controller-method]/[arguments</a>]</div></blockquote>
 <p>As URL schemes become more complex, this may change. But for now, this
 is all we will need to know.</p>
-<p>Create a file at <em>application/Controllers/Pages.php</em> with the following
+<p>Create a file at <em>app/Controllers/Pages.php</em> with the following
 code.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
@@ -243,7 +243,7 @@ it within your controllers as <code class="docutils literal"><span class="pre">$
 <p>Now that you&#8217;ve created your first method, it&#8217;s time to make some basic page
 templates. We will be creating two &#8220;views&#8221; (page templates) that act as
 our page footer and header.</p>
-<p>Create the header at <em>application/Views/templates/header.php</em> and add
+<p>Create the header at <em>app/Views/templates/header.php</em> and add
 the following code:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;!</span><span class="nx">doctype</span> <span class="nx">html</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
@@ -258,7 +258,7 @@ the following code:</p>
 <p>The header contains the basic HTML code that you&#8217;ll want to display
 before loading the main view, together with a heading. It will also
 output the <code class="docutils literal"><span class="pre">$title</span></code> variable, which we&#8217;ll define later in the controller.
-Now, create a footer at <em>application/Views/templates/footer.php</em> that
+Now, create a footer at <em>app/Views/templates/footer.php</em> that
 includes the following code:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span>        <span class="o">&lt;</span><span class="nx">em</span><span class="o">&gt;&amp;</span><span class="nb">copy</span><span class="p">;</span> <span class="mi">2016</span><span class="o">&lt;/</span><span class="nx">em</span><span class="o">&gt;</span>
 <span class="o">&lt;/</span><span class="nx">body</span><span class="o">&gt;</span>
@@ -269,7 +269,7 @@ includes the following code:</p>
 <h2>Adding logic to the controller<a class="headerlink" href="#adding-logic-to-the-controller" title="Permalink to this headline">¶</a></h2>
 <p>Earlier you set up a controller with a <code class="docutils literal"><span class="pre">view()</span></code> method. The method
 accepts one parameter, which is the name of the page to be loaded. The
-static page templates will be located in the <em>application/Views/pages/</em>
+static page templates will be located in the <em>app/Views/pages/</em>
 directory.</p>
 <p>In that directory, create two files named <em>home.php</em> and <em>about.php</em>.
 Within those files, type some text − anything you&#8217;d like − and save them.
@@ -342,7 +342,7 @@ because we explicitly asked for it</li>
 <li><code class="docutils literal"><span class="pre">localhost:8080/pages/view/about</span></code> will show the &#8220;about&#8221; page that you made above,
 because we explicitly asked for it</li>
 <li><code class="docutils literal"><span class="pre">localhost:8080/pages/view/shop</span></code> will show a &#8220;404 - File Not Found&#8221; error page,
-because there is no <cite>application/Views/pages/shop.php</cite></li>
+because there is no <cite>app/Views/pages/shop.php</cite></li>
 </ul>
 </div>
 <div class="section" id="routing">
@@ -352,7 +352,7 @@ because there is no <cite>application/Views/pages/shop.php</cite></li>
 controller and method, and break free from the normal convention:
 <code class="docutils literal"><span class="pre">http://example.com/[controller-class]/[controller-method]/[arguments]</span></code></p>
 <p>Let&#8217;s do that. Open the routing file located at
-<em>application/Config/Routes.php</em> and look for the &#8220;Route Definitions&#8221;
+<em>app/Config/Routes.php</em> and look for the &#8220;Route Definitions&#8221;
 section of the configuration file.</p>
 <p>The only uncommented line there to start with should be::</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
@@ -429,7 +429,7 @@ method in the pages controller? Awesome!</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-alpha.3',
+            VERSION:'4.0.0-alpha.4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
