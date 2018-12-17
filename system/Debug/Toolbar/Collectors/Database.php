@@ -109,7 +109,15 @@ class Database extends BaseCollector
 	 */
 	public static function collect(Query $query)
 	{
-		static::$queries[] = $query;
+		$config = config('Toolbar');
+
+		// Provide default in case it's not set
+		$max = $config->maxQueries ?: 100;
+
+		if (count(static::$queries) < $max)
+		{
+			static::$queries[] = $query;
+		}
 	}
 
 	//--------------------------------------------------------------------
