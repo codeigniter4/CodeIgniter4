@@ -317,6 +317,7 @@ class MailHandler extends BaseHandler
 	 */
 	public function __construct($config = null)
 	{
+		$this->protocol = 'mail';
 		$this->initialize($config);
 
 		log_message('info', 'Email Class Initialized');

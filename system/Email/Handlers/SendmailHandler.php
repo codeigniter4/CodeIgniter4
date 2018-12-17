@@ -317,6 +317,7 @@ class SendmailHandler extends BaseHandler
 	 */
 	public function __construct($config = null)
 	{
+		$this->protocol = 'sendmail';
 		$this->initialize($config);
 
 		log_message('info', 'Email Class Initialized');
@@ -385,7 +386,7 @@ class SendmailHandler extends BaseHandler
 		$this->headers      = [];
 		$this->debugMessage = [];
 
-		$this->setHeader('Date', $this->setDate());
+		//      $this->setHeader('Date', $this->setDate());
 
 		if ($clearAttachments !== false)
 		{
@@ -917,7 +918,7 @@ class SendmailHandler extends BaseHandler
 
 		if (! isset($this->headers['From']))
 		{
-				throw EmailException::forNoFrom();
+			throw EmailException::forNoFrom();
 		}
 
 		if ($this->replyToFlag === false)
@@ -928,7 +929,7 @@ class SendmailHandler extends BaseHandler
 		if (empty($this->recipients) && ! isset($this->headers['To']) && empty($this->BCCArray) && ! isset($this->headers['Bcc']) && ! isset($this->headers['Cc'])
 		)
 		{
-				throw EmailException::forNoRecipients();
+			throw EmailException::forNoRecipients();
 		}
 
 		$this->buildHeaders();
@@ -1066,7 +1067,7 @@ class SendmailHandler extends BaseHandler
 
 		if (! $success)
 		{
-				throw EmailException::forSendFailure($protocol === 'mail' ? 'PHPMail' : ucfirst($protocol));
+			throw EmailException::forSendFailure($protocol === 'mail' ? 'PHPMail' : ucfirst($protocol));
 		}
 
 		$this->setErrorMessage(lang('Email.sent', [$protocol]));
@@ -1167,7 +1168,7 @@ class SendmailHandler extends BaseHandler
 
 		if ($status !== 0)
 		{
-				throw EmailException::forNosocket($status);
+			throw EmailException::forNosocket($status);
 		}
 
 		return true;
@@ -1184,7 +1185,7 @@ class SendmailHandler extends BaseHandler
 	{
 		if ($this->SMTPHost === '')
 		{
-				throw EmailException::forNoHostname();
+			throw EmailException::forNoHostname();
 		}
 
 		if (! $this->SMTPConnect() || ! $this->SMTPAuthenticate())
@@ -1247,7 +1248,7 @@ class SendmailHandler extends BaseHandler
 
 		if (strpos($reply, '250') !== 0)
 		{
-				throw EmailException::forSMTPError($reply);
+			throw EmailException::forSMTPError($reply);
 		}
 
 		return true;
@@ -1287,7 +1288,7 @@ class SendmailHandler extends BaseHandler
 
 		if (! is_resource($this->SMTPConnect))
 		{
-				throw EmailException::forSMTPError($errno . ' ' . $errstr);
+			throw EmailException::forSMTPError($errno . ' ' . $errstr);
 		}
 
 		stream_set_timeout($this->SMTPConnect, $this->SMTPTimeout);
@@ -1374,7 +1375,7 @@ class SendmailHandler extends BaseHandler
 
 		if ((int) static::substr($reply, 0, 3) !== $resp)
 		{
-				throw EmailException::forSMTPError($reply);
+			throw EmailException::forSMTPError($reply);
 		}
 
 		if ($cmd === 'quit')
@@ -1401,7 +1402,7 @@ class SendmailHandler extends BaseHandler
 
 		if ($this->SMTPUser === '' && $this->SMTPPass === '')
 		{
-				throw EmailException::forNoSMTPAuth();
+			throw EmailException::forNoSMTPAuth();
 		}
 
 		$this->sendData('AUTH LOGIN');
@@ -1413,7 +1414,7 @@ class SendmailHandler extends BaseHandler
 		}
 		elseif (strpos($reply, '334') !== 0)
 		{
-				throw EmailException::forFailedSMTPLogin($reply);
+			throw EmailException::forFailedSMTPLogin($reply);
 		}
 
 		$this->sendData(base64_encode($this->SMTPUser));
@@ -1421,7 +1422,7 @@ class SendmailHandler extends BaseHandler
 
 		if (strpos($reply, '334') !== 0)
 		{
-				throw EmailException::forSMTPAuthUsername($reply);
+			throw EmailException::forSMTPAuthUsername($reply);
 		}
 
 		$this->sendData(base64_encode($this->SMTPPass));
@@ -1429,7 +1430,7 @@ class SendmailHandler extends BaseHandler
 
 		if (strpos($reply, '235') !== 0)
 		{
-				throw EmailException::forSMTPAuthPassword($reply);
+			throw EmailException::forSMTPAuthPassword($reply);
 		}
 
 		if ($this->SMTPKeepAlive)
@@ -1482,7 +1483,7 @@ class SendmailHandler extends BaseHandler
 
 		if ($result === false)
 		{
-				throw EmailException::forSMTPDataFailure($data);
+			throw EmailException::forSMTPDataFailure($data);
 		}
 
 		return true;

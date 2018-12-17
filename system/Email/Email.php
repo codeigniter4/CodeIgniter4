@@ -239,6 +239,13 @@ class Email
 	protected $attachments = [];
 
 	/**
+	 * Which protocol are we using?
+	 *
+	 * @var string
+	 */
+	protected $protocol = 'mail';
+
+	/**
 	 * Valid $protocol values
 	 *
 	 * @see Email::$protocol
@@ -305,6 +312,13 @@ class Email
 	 */
 	protected $handler;
 
+	/**
+	 * Config settings, used if protocol changed.
+	 *
+	 * @var Config\Email
+	 */
+	protected $config = null;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -318,7 +332,17 @@ class Email
 	{
 		if ($config === null)
 		{
-			$config = new \Config\Email();
+			$config       = new \Config\Email();
+			$this->config = $config;
+		}
+		else if (is_array($config))
+		{
+			$mergedConfig = new \Config\Email();
+			foreach ($config as $key => $value)
+			{
+				$mergedConfig->$key = $value;
+			}
+			$this->config = $mergedConfig;
 		}
 		$this->initialize($config);
 	}
@@ -361,6 +385,41 @@ class Email
 		$this->handler = Services::transporter($config);
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Set the email protocol to use.
+	 * If valid, get an appropriate handler for it.
+	 *
+	 * @param string $protocol
+	 *
+	 * @returns Email
+	 */
+	public function setProtocol(string $protocol = 'mail')
+	{
+		if (! in_array($protocol, $this->protocols))
+		{
+			throw EmailException::forInvalidProtocol($protocol);
+		}
+
+		$this->protocol         = $protocol;
+		$this->config->protocol = $protocol; // update config too
+		$this->handler          = Services::transporter($this->config, false);
+
+		return $this;
+	}
+
+	/**
+	 * Get the protocol our handler is using.
+	 * Note: the protocol property here is only the requested one.
+	 *
+	 * @return string
+	 */
+	public function getProtocol(): string
+	{
+		return $this->handler->getProtocol();
 	}
 
 	//--------------------------------------------------------------------
@@ -414,10 +473,10 @@ class Email
 
 		if ($this->validate)
 		{
-			$this->validateEmail($this->stringToArray($from));
+			$this->validateEmail($from);
 			if ($returnPath)
 			{
-				$this->validateEmail($this->stringToArray($returnPath));
+				$this->validateEmail($returnPath);
 			}
 		}
 
@@ -965,9 +1024,9 @@ class Email
 	//--------------------------------------------------------------------
 
 	/**
-	 * Validate Email Address
+	 * Validate Email Address(es)
 	 *
-	 * @param string $email
+	 * @param string|array $email
 	 *
 	 * @return boolean
 	 */
@@ -975,7 +1034,7 @@ class Email
 	{
 		if (! is_array($email))
 		{
-			throw EmailException::forMustBeArray();
+			$email = [$email];
 		}
 
 		foreach ($email as $val)
@@ -1000,12 +1059,13 @@ class Email
 	 */
 	public function isValidEmail($email)
 	{
-		if (function_exists('idn_to_ascii') && defined('INTL_IDNA_VARIANT_UTS46') && $atpos = strpos($email, '@'))
-		{
-			$email = mb_substr($email, 0, ++ $atpos, '8bit') . idn_to_ascii(
-							mb_substr($email, $atpos), 0, INTL_IDNA_VARIANT_UTS46
-			);
-		}
+		$email = $this->cleanEMail($email);
+
+		// sanitize the domain name
+		$atpos = strpos($email, '@');
+		$email = mb_substr($email, 0, ++ $atpos, '8bit') . idn_to_ascii(
+						mb_substr($email, $atpos), 0, INTL_IDNA_VARIANT_UTS46
+		);
 
 		return (bool) filter_var($email, FILTER_VALIDATE_EMAIL);
 	}
@@ -1015,9 +1075,9 @@ class Email
 	/**
 	 * Clean Extended Email Address: Joe Smith <joe@smith.com>
 	 *
-	 * @param string $email
+	 * @param string|array $email An email string, or array of them
 	 *
-	 * @return string
+	 * @return string|array The "clean" email-only address(es)
 	 */
 	public function cleanEmail($email)
 	{

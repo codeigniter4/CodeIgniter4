@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\Emails\Exceptions;
+namespace CodeIgniter\Email\Exceptions;
 
 use CodeIgniter\Exceptions\ExceptionInterface;
 
@@ -24,6 +24,11 @@ class EmailException extends \RuntimeException implements ExceptionInterface
 	public static function forInvalidAddress(string $value = null)
 	{
 		return new static(lang('Email.invalidAddress', [$value]));
+	}
+
+	public static function forInvalidProtocol(string $value = null)
+	{
+		return new static(lang('Email.invalidProtocolRequested', [$value]));
 	}
 
 	public static function forNoFrom()
