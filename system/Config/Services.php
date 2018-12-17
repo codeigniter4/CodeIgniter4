@@ -253,6 +253,32 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
+	 * The Honeypot provides a secret input on forms that bots should NOT
+	 * fill in, providing an additional safeguard when accepting user input.
+	 *
+	 * @param \CodeIgniter\Config\BaseConfig|null $config
+	 * @param boolean                             $getShared
+	 *
+	 * @return \CodeIgniter\Honeypot\Honeypot|mixed
+	 */
+	public static function honeypot(BaseConfig $config = null, $getShared = true)
+	{
+		if ($getShared)
+		{
+			return static::getSharedInstance('honeypot', $config);
+		}
+
+		if (is_null($config))
+		{
+			$config = new \Config\Honeypot();
+		}
+
+		return new \CodeIgniter\Honeypot\Honeypot($config);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Acts as a factory for ImageHandler classes and returns an instance
 	 * of the handler. Used like Services::image()->withFile($path)->rotate(90)->save();
 	 *
