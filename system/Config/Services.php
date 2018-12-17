@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Config;
+<?php
+namespace CodeIgniter\Config;
 
 /**
  * CodeIgniter
@@ -60,6 +61,7 @@ use CodeIgniter\View\RendererInterface;
  */
 class Services extends BaseService
 {
+
 	/**
 	 * The cache class provides a simple way to store and retrieve
 	 * complex data for later.
@@ -141,28 +143,25 @@ class Services extends BaseService
 		}
 
 		return new \CodeIgniter\HTTP\CURLRequest(
-			$config,
-			new \CodeIgniter\HTTP\URI($options['base_uri'] ?? null),
-			$response,
-			$options
+				$config, new \CodeIgniter\HTTP\URI($options['base_uri'] ?? null), $response, $options
 		);
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * The Email class allows you to send email via mail, sendmail, SMTP.
+	 * The Email Transporter class lets you send email via mail, sendmail, SMTP.
 	 *
 	 * @param null    $config
 	 * @param boolean $getShared
 	 *
-	 * @return \CodeIgniter\Email\Email|mixed
+	 * @return \CodeIgniter\Email\TransporterInterface
 	 */
-	public static function email($config = null, bool $getShared = true)
+	public static function transporter($config = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('email', $config);
+			return static::getSharedInstance('transporter', $config);
 		}
 
 		if (empty($config))
@@ -170,10 +169,17 @@ class Services extends BaseService
 			$config = new \Config\Email();
 		}
 
-		$email = new \CodeIgniter\Email\Email($config);
-		$email->setLogger(static::logger(true));
+		$protocolMap = [
+			'mail'     => 'MailHandler',
+			'sendmail' => 'SendmailHandler',
+			'smtp'     => 'SMTPHandler',
+		];
 
-		return $email;
+		$handler     = '\\CodeIgniter\\Email\\Handlers\\' . ($protocolMap[$config->protocol ?? 'mail'] );
+		$transporter = new $handler($config);
+		$transporter->setLogger(static::logger(true));
+
+		return $transporter;
 	}
 
 	//--------------------------------------------------------------------
@@ -317,13 +323,11 @@ class Services extends BaseService
 		if ($getShared)
 		{
 			return static::getSharedInstance('language', $locale)
-					   ->setLocale($locale);
+							->setLocale($locale);
 		}
 
-		$locale = ! empty($locale)
-			? $locale
-			: static::request()
-				  ->getLocale();
+		$locale = ! empty($locale) ? $locale : static::request()
+						->getLocale();
 
 		return new \CodeIgniter\Language\Language($locale);
 	}
@@ -509,10 +513,7 @@ class Services extends BaseService
 		}
 
 		return new \CodeIgniter\HTTP\IncomingRequest(
-			$config,
-			new \CodeIgniter\HTTP\URI(),
-			'php://input',
-			new \CodeIgniter\HTTP\UserAgent()
+				$config, new \CodeIgniter\HTTP\URI(), 'php://input', new \CodeIgniter\HTTP\UserAgent()
 		);
 	}
 
@@ -565,7 +566,7 @@ class Services extends BaseService
 
 		$response = new \CodeIgniter\HTTP\RedirectResponse($config);
 		$response->setProtocolVersion(static::request()
-										  ->getProtocolVersion());
+						->getProtocolVersion());
 
 		return $response;
 	}
@@ -827,5 +828,4 @@ class Services extends BaseService
 	}
 
 	//--------------------------------------------------------------------
-
 }

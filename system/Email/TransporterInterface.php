@@ -45,9 +45,16 @@ interface TransporterInterface
 	/**
 	 * Send an email
 	 *
-	 * @param boolean $destroy Should old session data be destroyed?
+	 * @param Email The email to send
+	 * @param boolean                 $autoClear  Should old session data be destroyed?
+	 * @param boolean                 $reallySend Should the email really be sent? or everything but that
 	 */
-	public function send(Email $email, bool $autoClear = true);
+	public function send(Email $email, bool $autoClear = true, bool $reallySend = true);
+
+	/**
+	 * Which protocol is this a handler for?
+	 */
+	public function getProtocol() : string;
 
 	//--------------------------------------------------------------------
 }

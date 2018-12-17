@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Emails\Exceptions;
+<?php
+namespace CodeIgniter\Emails\Exceptions;
 
 use CodeIgniter\Exceptions\ExceptionInterface;
 
