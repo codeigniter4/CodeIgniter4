@@ -780,7 +780,7 @@ class Model
 	 * Deletes a single record from $this->table where $id matches
 	 * the table's primaryKey
 	 *
-	 * @param int|array|null $id    The rows primary key(s)
+	 * @param int|array|string   $id if int | string; associative array - delete will use where('key','value'); indexed array update will use whereIn(primaryKey, $id)
 	 * @param bool           $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return mixed
