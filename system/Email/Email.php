@@ -626,7 +626,7 @@ class Email
 	/**
 	 * Set Recipients
 	 *
-	 * @param string $to
+	 * @param string|array $to One or more recipients
 	 *
 	 * @return Email
 	 */
@@ -655,7 +655,7 @@ class Email
 	/**
 	 * Set CC
 	 *
-	 * @param string $cc
+	 * @param string|array $cc
 	 *
 	 * @return Email
 	 */
@@ -670,10 +670,10 @@ class Email
 
 		$this->setHeader('Cc', implode(', ', $cc));
 
-		if ($this->handler->getProtocol() === 'smtp')
-		{
+		//      if ($this->handler->getProtocol() === 'smtp')
+		//      {
 			$this->CCArray = $cc;
-		}
+		//      }
 
 		return $this;
 	}
@@ -683,14 +683,14 @@ class Email
 	/**
 	 * Set BCC
 	 *
-	 * @param string $bcc
-	 * @param string $limit
+	 * @param string|array $bcc
+	 * @param integer|null $limit
 	 *
 	 * @return Email
 	 */
-	public function setBCC($bcc, $limit = '')
+	public function setBCC($bcc, int $limit = null)
 	{
-		if ($limit !== '' && is_numeric($limit))
+		if ($limit !== null)
 		{
 			$this->BCCBatchMode = true;
 			$this->BCCBatchSize = $limit;
@@ -703,14 +703,15 @@ class Email
 			$this->validateEmail($bcc);
 		}
 
-		if ($this->handler->getProtocol() === 'smtp' || ($this->BCCBatchMode && count($bcc) > $this->BCCBatchSize))
-		{
+		//      if ($this->handler->getProtocol() === 'smtp' ||
+		//              if ($this->BCCBatchMode && count($bcc) > $this->BCCBatchSize)
+		//      {
 			$this->BCCArray = $bcc;
-		}
-		else
-		{
+		//      }
+		//      else
+		//      {
 			$this->setHeader('Bcc', implode(', ', $bcc));
-		}
+		//      }
 
 		return $this;
 	}
