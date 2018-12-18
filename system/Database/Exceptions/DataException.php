@@ -45,4 +45,14 @@ class DataException extends \RuntimeException implements ExceptionInterface
 	{
 		return new static(lang('Database.invalidAllowedFields', [$model]));
 	}
+	
+	/**
+	 * Used by Model's findColumn method
+	 *
+	 * @return \CodeIgniter\Database\Exceptions\DataException
+	 */
+	public static function forFindColumnIsNotAString()
+	{
+		return new static(lang('Database.findColumnIsNotAString'));
+	}
 }
