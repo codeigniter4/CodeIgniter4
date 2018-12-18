@@ -348,6 +348,42 @@ class Model
 		return $row['data'];
 	}
 
+	/**
+	 * Fetches the column of database from $this->table with a primary key
+	 * matching $id.
+	 *
+	 * @param mixed|array|null $id One primary key or an array of primary keys
+	 * @param mixed|array|null $column_name Column name or null for primaryKey
+	 *
+	 * @return array|null array of table's column values
+	 */
+	public function findColumn($id = null, string $column_name = null) : array
+	{
+
+		if(is_null($column_name))
+			$column_name = $this->primaryKey;
+
+		if(!is_string($column_name))
+			throw DataException::forFindColumnIsNotAString();
+
+		$this->select($column_name);
+		$tmp = $this->asArray()->find($id);
+
+		if(count($tmp))
+		{
+			$data = [];
+
+			foreach ($tmp as $item)
+			{
+				$data[] = $item[$column_name];
+			}
+
+			return $data;
+		}
+
+		return null;
+	}
+	
 	//--------------------------------------------------------------------
 
 	/**
