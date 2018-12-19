@@ -1364,6 +1364,24 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Override countAllResults to account for soft deleted accounts.
+	 *
+	 * @param boolean $reset
+	 * @param boolean $test
+	 *
+	 * @return mixed
+	 */
+	public function countAllResults(bool $reset = true, bool $test = false)
+	{
+		if ($this->tempUseSoftDeletes === true)
+		{
+			$this->builder()->where($this->deletedField, 0);
+		}
+
+		return $this->builder()->countAllResults($reset, $test);
+	}
+
+	/**
 	 * A simple event trigger for Model Events that allows additional
 	 * data manipulation within the model. Specifically intended for
 	 * usage by child models this can be used to format data,
