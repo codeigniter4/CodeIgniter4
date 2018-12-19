@@ -4,6 +4,13 @@ namespace CodeIgniter\Email;
 class EmailTest extends \CIUnitTestCase
 {
 
+	public function tearDown()
+	{
+		// restore file permissions after unreadable attachment test
+		$thefile = SUPPORTPATH . 'Email/ci-logo-not-readable.png';
+		chmod($thefile, 0664);
+	}
+
 	//--------------------------------------------------------------------
 	// Test constructor & configs
 
@@ -80,6 +87,51 @@ class EmailTest extends \CIUnitTestCase
 		$email->setFrom('leia@alderaan.org', 'Princess Leia', 'padme@naboo.org');
 		$this->assertEquals('"Princess Leia" <leia@alderaan.org>', $email->getHeader('From'));
 		$this->assertEquals('<padme@naboo.org>', $email->getHeader('Return-Path'));
+	}
+
+	//--------------------------------------------------------------------
+	// Test setting the "replyTo" property
+
+	public function testSetReplyToEmailOnly()
+	{
+		$email = new Email();
+		$email->setReplyTo('leia@alderaan.org');
+		$this->assertEquals(' <leia@alderaan.org>', $email->getHeader('Reply-To'));
+	}
+
+	public function testSetReplyToEmailAndName()
+	{
+		$email = new Email();
+		$email->setReplyTo('leia@alderaan.org', 'Princess Leia');
+		$this->assertEquals('"Princess Leia" <leia@alderaan.org>', $email->getHeader('Reply-To'));
+	}
+
+	public function testSetReplyToEmailAndFunkyName()
+	{
+		$email = new Email();
+		$email->setReplyTo('<leia@alderaan.org>', 'Princess Leià');
+		$this->assertEquals('=?UTF-8?Q?Princess=20Lei=C3=A0?= <leia@alderaan.org>', $email->getHeader('Reply-To'));
+	}
+
+	public function testSetReplyToWithValidation()
+	{
+		$email = new Email(['validation' => true]);
+		$email->setReplyTo('leia@alderaan.org', 'Princess Leia');
+		$this->assertEquals('"Princess Leia" <leia@alderaan.org>', $email->getHeader('Reply-To'));
+	}
+
+	public function testSetReplyToWithValidationAndReturnPath()
+	{
+		$email = new Email(['validation' => true]);
+		$email->setReplyTo('leia@alderaan.org', 'Princess Leia', 'leia@alderaan.org');
+		$this->assertEquals('"Princess Leia" <leia@alderaan.org>', $email->getHeader('Reply-To'));
+	}
+
+	public function testSetReplyToWithValidationAndDifferentReturnPath()
+	{
+		$email = new Email(['validation' => true]);
+		$email->setReplyTo('leia@alderaan.org', 'Princess Leia', 'padme@naboo.org');
+		$this->assertEquals('"Princess Leia" <leia@alderaan.org>', $email->getHeader('Reply-To'));
 	}
 
 	//--------------------------------------------------------------------
@@ -304,10 +356,30 @@ class EmailTest extends \CIUnitTestCase
 	public function testSetMultilineMessage()
 	{
 		$email    = new Email();
-		$original = "Just a silly love song\n\rIt's just two lines long";
+		$original = "Just a silly love song\r\nIt's just two lines long";
 		$expected = "Just a silly love song\nIt's just two lines long";
 		$email->setMessage($original);
 		$this->assertEquals($expected, $email->body);
+	}
+
+	//--------------------------------------------------------------------
+	// Test setting the alternate message
+
+	public function testSetAltMessage()
+	{
+		$email    = new Email();
+		$original = 'Just a silly love song';
+		$expected = $original;
+		$email->setAltMessage($original);
+		$this->assertEquals($expected, $email->altMessage);
+	}
+
+	public function testSetMultilineAltMessage()
+	{
+		$email    = new Email();
+		$original = "Just a silly love song\r\nIt's just two lines long";
+		$email->setAltMessage($original);
+		$this->assertEquals($original, $email->altMessage);
 	}
 
 	//--------------------------------------------------------------------
@@ -327,6 +399,57 @@ class EmailTest extends \CIUnitTestCase
 
 		$email->setFrom('leia@alderaan.org');
 		$this->assertEquals(' <leia@alderaan.org>', $email->getHeader('From'));
+	}
+
+	//--------------------------------------------------------------------
+	// Test clearing the email
+
+	public function testAttach()
+	{
+		$email = new Email();
+		$email->setFrom('leia@alderaan.org');
+		$email->setTo('luke@tatooine.org');
+
+		$email->attach(SUPPORTPATH . 'Images/ci-logo.png');
+		$this->assertEquals(1, count($email->attachments));
+	}
+
+	/**
+	 * @expectedException \CodeIgniter\Email\Exceptions\EmailException
+	 */
+	public function testAttachNotThere()
+	{
+		$email = new Email();
+		$email->setFrom('leia@alderaan.org');
+		$email->setTo('luke@tatooine.org');
+
+		$email->attach(SUPPORTPATH . 'Email/ci-logo-not-there.png');
+		$this->assertEquals(1, count($email->attachments));
+	}
+
+	/**
+	 * @expectedException \CodeIgniter\Email\Exceptions\EmailException
+	 */
+	public function testAttachNotReadable()
+	{
+		$email = new Email();
+		$email->setFrom('leia@alderaan.org');
+		$email->setTo('luke@tatooine.org');
+
+		$thefile = SUPPORTPATH . 'Email/ci-logo-not-readable.png';
+		chmod($thefile, 0222);
+		$email->attach($thefile);
+	}
+
+	public function testAttachContent()
+	{
+		$email = new Email();
+		$email->setFrom('leia@alderaan.org');
+		$email->setTo('luke@tatooine.org');
+
+		$content = 'This is bogus content';
+		$email->attach($content, '', 'truelies.txt', 'text/html');
+		$this->assertEquals(1, count($email->attachments));
 	}
 
 	//--------------------------------------------------------------------
@@ -352,6 +475,73 @@ class EmailTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+	// Test word wrap
+
+	public function testWordWrapVanilla()
+	{
+		$email    = new Email();
+		$original = 'This is a short line.';
+		$expected = $original;
+		$this->assertEquals($expected, rtrim($email->wordWrap($original)));
+	}
+
+	public function testWordWrapShortLines()
+	{
+		$email    = new Email();
+		$original = 'This is a short line.';
+		$expected = "This is a short\r\nline.";
+		$this->assertEquals($expected, rtrim($email->wordWrap($original, 16)));
+	}
+
+	public function testWordWrapLines()
+	{
+		$email    = new Email();
+		$original = "This is a\rshort line.";
+		$expected = "This is a\r\nshort line.";
+		$this->assertEquals($expected, rtrim($email->wordWrap($original)));
+	}
+
+	public function testWordWrapUnwrap()
+	{
+		$email    = new Email();
+		$original = 'This is a {unwrap}not so short{/unwrap} line.';
+		$expected = 'This is a not so short line.';
+		$this->assertEquals($expected, rtrim($email->wordWrap($original)));
+	}
+
+	public function testWordWrapUnwrapWrapped()
+	{
+		$email    = new Email();
+		$original = 'This is a {unwrap}not so short or something{/unwrap} line.';
+		$expected = "This is a\r\nnot so short or something\r\nline.";
+		$this->assertEquals($expected, rtrim($email->wordWrap($original, 16)));
+	}
+
+	public function testWordWrapConsolidate()
+	{
+		$email    = new Email();
+		$original = "This is\r\na not so short or something\r\nline.";
+		$expected = "This is\r\na not so short\r\nor something\r\nline.";
+		$this->assertEquals($expected, rtrim($email->wordWrap($original, 16)));
+	}
+
+	public function testWordWrapLongWord()
+	{
+		$email    = new Email();
+		$original = "This is part of interoperabilities isn't it?";
+		$expected = "This is part of\r\ninteroperabilit\r\nies\r\nisn't it?";
+		$this->assertEquals($expected, rtrim($email->wordWrap($original, 16)));
+	}
+
+	public function testWordWrapURL()
+	{
+		$email    = new Email();
+		$original = "This is part of http://interoperabilities.com isn't it?";
+		$expected = "This is part of\r\nhttp://interoperabilities.com\r\nisn't it?";
+		$this->assertEquals($expected, rtrim($email->wordWrap($original, 16)));
+	}
+
+	//--------------------------------------------------------------------
 	// Test support methods
 
 	public function testValidEmail()
@@ -363,6 +553,28 @@ class EmailTest extends \CIUnitTestCase
 		$this->assertFalse($email->isValidEmail('<leia_at_alderaan.org>'));
 		$this->assertFalse($email->isValidEmail('<leia@alderaan>'));
 		$this->assertFalse($email->isValidEmail('<leia.alderaan@org>'));
+	}
+
+	public function testMagicMethods()
+	{
+		$email           = new Email();
+		$email->protocol = 'mail';
+		$this->assertEquals('mail', $email->protocol);
+	}
+
+	//--------------------------------------------------------------------
+	// "Test" sending the email
+
+	public function testFakeSend()
+	{
+		$email = new Email();
+		$email->setFrom('leia@alderaan.org');
+		$email->setTo('Luke <luke@tatooine>');
+		$email->setSubject('Hi there');
+
+		// make sure the second parameter below is "false"
+		// or you will trigger email for real!
+		$this->assertTrue($email->send(true, false));
 	}
 
 }

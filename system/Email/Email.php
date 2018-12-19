@@ -672,7 +672,7 @@ class Email
 
 		//      if ($this->handler->getProtocol() === 'smtp')
 		//      {
-			$this->CCArray = $cc;
+		$this->CCArray = $cc;
 		//      }
 
 		return $this;
@@ -706,11 +706,11 @@ class Email
 		//      if ($this->handler->getProtocol() === 'smtp' ||
 		//              if ($this->BCCBatchMode && count($bcc) > $this->BCCBatchSize)
 		//      {
-			$this->BCCArray = $bcc;
+		$this->BCCArray = $bcc;
 		//      }
 		//      else
 		//      {
-			$this->setHeader('Bcc', implode(', ', $bcc));
+		$this->setHeader('Bcc', implode(', ', $bcc));
 		//      }
 
 		return $this;
@@ -757,7 +757,7 @@ class Email
 	 * @param string $file        Can be local path, URL or buffered content
 	 * @param string $disposition 'attachment'
 	 * @param string $newName
-	 * @param string $mime        Empty if $file is buffered content
+	 * @param string $mime        Not-empty if $file is buffered content
 	 *
 	 * @return Email
 	 */
@@ -787,7 +787,7 @@ class Email
 		// declare names on their own, to make phpcbf happy
 		$namesAttached       = [
 			$file,
-			$newname,
+			$newName,
 		];
 		$this->attachments[] = [
 			'name'        => $namesAttached,
@@ -936,66 +936,6 @@ class Email
 	//--------------------------------------------------------------------
 
 	/**
-	 * Get the Message ID
-	 *
-	 * @return string
-	 */
-	protected function getMessageID()
-	{
-		$from = str_replace(['>', '<'], '', $this->headers['Return-Path']);
-
-		return '<' . uniqid('', true) . strstr($from, '@') . '>';
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Get Mail Encoding
-	 *
-	 * @return string
-	 */
-	protected function getEncoding()
-	{
-		in_array($this->encoding, $this->bitDepths) || $this->encoding = '8bit';
-
-		foreach ($this->baseCharsets as $charset)
-		{
-			if (strpos($this->charset, $charset) === 0)
-			{
-				$this->encoding = '7bit';
-				break;
-			}
-		}
-
-		return $this->encoding;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Get content type (text/html/attachment)
-	 *
-	 * @return string
-	 */
-	protected function getContentType()
-	{
-		if ($this->mailType === 'html')
-		{
-			return empty($this->attachments) ? 'html' : 'html-attach';
-		}
-		elseif ($this->mailType === 'text' && ! empty($this->attachments))
-		{
-			return 'plain-attach';
-		}
-		else
-		{
-			return 'plain';
-		}
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Set RFC 822 Date
 	 *
 	 * @return string
@@ -1008,18 +948,6 @@ class Email
 		$timezone = floor($timezone / 3600) * 100 + ($timezone % 3600) / 60;
 
 		return sprintf('%s %s%04d', date('D, j M Y H:i:s'), $operator, $timezone);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Mime message
-	 *
-	 * @return string
-	 */
-	protected function getMimeMessage()
-	{
-		return 'This is a multi-part message in MIME format.' . $this->newline . 'Your email application may not support this format.';
 	}
 
 	//--------------------------------------------------------------------
@@ -1095,39 +1023,6 @@ class Email
 		}
 
 		return $cleanEmail;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Build alternative plain text message
-	 *
-	 * Provides the raw message for use in plain-text headers of
-	 * HTML-formatted emails.
-	 * If the user hasn't specified his own alternative message
-	 * it creates one by stripping the HTML
-	 *
-	 * @return string
-	 */
-	protected function getAltMessage()
-	{
-		if (! empty($this->altMessage))
-		{
-			return ($this->wordWrap) ? $this->wordWrap($this->altMessage, 76) : $this->altMessage;
-		}
-
-		$body = preg_match('/\<body.*?\>(.*)\<\/body\>/si', $this->body, $match) ? $match[1] : $this->body;
-		$body = str_replace("\t", '', preg_replace('#<!--(.*)--\>#', '', trim(strip_tags($body))));
-
-		for ($i = 20; $i >= 3; $i --)
-		{
-			$body = str_replace(str_repeat("\n", $i), "\n\n", $body);
-		}
-
-		// Reduce multiple spaces
-		$body = preg_replace('| +|', ' ', $body);
-
-		return ($this->wordWrap) ? $this->wordWrap($body, 76) : $body;
 	}
 
 	//--------------------------------------------------------------------
@@ -1229,12 +1124,14 @@ class Email
 	 * Send Email
 	 *
 	 * @param boolean $autoClear
+	 * @param boolean $reallySend
 	 *
 	 * @return boolean
 	 */
-	public function send($autoClear = true)
+	public function send($autoClear = true, bool $reallySend = true)
 	{
-		$result = $this->handler->send($this, $autoClear);
+		// our decision here, whether to send or fake it
+		$result = $reallySend ? $this->handler->send($this, $autoClear) : true;
 
 		if ($result && $autoClear)
 		{
@@ -1242,91 +1139,6 @@ class Email
 		}
 
 		return $result;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Batch Bcc Send. Sends groups of BCCs in batches
-	 */
-	public function batchBCCSend()
-	{
-		$float = $this->BCCBatchSize - 1;
-		$set   = '';
-		$chunk = [];
-
-		for ($i = 0, $c = count($this->BCCArray); $i < $c; $i ++)
-		{
-			if (isset($this->BCCArray[$i]))
-			{
-				$set .= ', ' . $this->BCCArray[$i];
-			}
-
-			if ($i === $float)
-			{
-				$chunk[] = mb_substr($set, 1);
-				$float  += $this->BCCBatchSize;
-				$set     = '';
-			}
-
-			if ($i === $c - 1)
-			{
-				$chunk[] = mb_substr($set, 1);
-			}
-		}
-
-		for ($i = 0, $c = count($chunk); $i < $c; $i ++)
-		{
-			unset($this->headers['Bcc']);
-
-			$bcc = $this->cleanEmail($this->stringToArray($chunk[$i]));
-
-			if ($this->protocol !== 'smtp')
-			{
-				$this->setHeader('Bcc', implode(', ', $bcc));
-			}
-			else
-			{
-				$this->BCCArray = $bcc;
-			}
-
-			$this->buildMessage();
-			$this->spoolEmail();
-		}
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Unwrap special elements
-	 */
-	protected function unwrapSpecials()
-	{
-		$this->finalBody = preg_replace_callback(
-				'/\{unwrap\}(.*?)\{\/unwrap\}/si', [
-					$this,
-					'removeNLCallback',
-				], $this->finalBody
-		);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Strip line-breaks via callback
-	 *
-	 * @param string $matches
-	 *
-	 * @return string
-	 */
-	protected function removeNLCallback($matches)
-	{
-		if (strpos($matches[1], "\r") !== false || strpos($matches[1], "\n") !== false)
-		{
-			$matches[1] = str_replace(["\r\n", "\r", "\n"], '', $matches[1]);
-		}
-
-		return $matches[1];
 	}
 
 	//--------------------------------------------------------------------

@@ -837,6 +837,7 @@ class BaseHandler implements TransporterInterface
 	 * Send Email
 	 *
 	 * @param boolean $autoClear
+	 * @param boolean $reallySend
 	 *
 	 * @return boolean
 	 */
@@ -1519,6 +1520,111 @@ class BaseHandler implements TransporterInterface
 		$mime = Mimes::guessTypeFromExtension(strtolower($ext));
 
 		return ! empty($mime) ? $mime : 'application/x-unknown-content-type';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Get the Message ID
+	 *
+	 * @return string
+	 */
+	protected function getMessageID()
+	{
+		$from = str_replace(['>', '<'], '', $this->headers['Return-Path']);
+
+		return '<' . uniqid('', true) . strstr($from, '@') . '>';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Get Mail Encoding
+	 *
+	 * @return string
+	 */
+	protected function getEncoding()
+	{
+		in_array($this->encoding, $this->bitDepths) || $this->encoding = '8bit';
+
+		foreach ($this->baseCharsets as $charset)
+		{
+			if (strpos($this->charset, $charset) === 0)
+			{
+				$this->encoding = '7bit';
+				break;
+			}
+		}
+
+		return $this->encoding;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Get content type (text/html/attachment)
+	 *
+	 * @return string
+	 */
+	protected function getContentType()
+	{
+		if ($this->mailType === 'html')
+		{
+			return empty($this->attachments) ? 'html' : 'html-attach';
+		}
+		elseif ($this->mailType === 'text' && ! empty($this->attachments))
+		{
+			return 'plain-attach';
+		}
+		else
+		{
+			return 'plain';
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Mime message
+	 *
+	 * @return string
+	 */
+	protected function getMimeMessage()
+	{
+		return 'This is a multi-part message in MIME format.' . $this->newline . 'Your email application may not support this format.';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Build alternative plain text message
+	 *
+	 * Provides the raw message for use in plain-text headers of
+	 * HTML-formatted emails.
+	 * If the user hasn't specified his own alternative message
+	 * it creates one by stripping the HTML
+	 *
+	 * @return string
+	 */
+	protected function getAltMessage()
+	{
+		if (! empty($this->altMessage))
+		{
+			return ($this->wordWrap) ? $this->wordWrap($this->altMessage, 76) : $this->altMessage;
+		}
+
+		$body = preg_match('/\<body.*?\>(.*)\<\/body\>/si', $this->body, $match) ? $match[1] : $this->body;
+		$body = str_replace("\t", '', preg_replace('#<!--(.*)--\>#', '', trim(strip_tags($body))));
+
+		for ($i = 20; $i >= 3; $i --)
+		{
+			$body = str_replace(str_repeat("\n", $i), "\n\n", $body);
+		}
+
+		// Reduce multiple spaces
+		$body = preg_replace('| +|', ' ', $body);
+
+		return ($this->wordWrap) ? $this->wordWrap($body, 76) : $body;
 	}
 
 	//--------------------------------------------------------------------
