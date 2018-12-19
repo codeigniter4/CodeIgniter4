@@ -357,17 +357,16 @@ class Model
 	 *
 	 * @return array|null array of table's column values
 	 */
-	public function findColumn($id = null, string $column_name = null) : array
+	public function findColumn($id = null, string $columnName = null) : array
 	{
+		$columnName = $columnName ?? $this->primaryKey;
 
-		if(is_null($column_name))
-			$column_name = $this->primaryKey;
-
-		if(!is_string($column_name))
+		if(!is_string($columnName))
+		{
 			throw DataException::forFindColumnIsNotAString();
+		}
 
-		$this->select($column_name);
-		$tmp = $this->asArray()->find($id);
+		$tmp = $this->select($columnName)->asArray()->find($id);
 
 		if(count($tmp))
 		{
@@ -375,13 +374,13 @@ class Model
 
 			foreach ($tmp as $item)
 			{
-				$data[] = $item[$column_name];
+				$data[] = $item[$columnName];
 			}
 
 			return $data;
 		}
 
-		return null;
+		return;
 	}
 	
 	//--------------------------------------------------------------------
