@@ -359,8 +359,11 @@ class Model
 	 */
 	public function findColumn($id = null, string $columnName = null) : ?array
 	{
-		$columnName = $columnName ?? $this->primaryKey;
-
+		if(is_null($columnName))
+		{
+			$columnName = $this->primaryKey;
+		}
+		
 		if(!is_string($columnName))
 		{
 			throw DataException::forFindColumnIsNotAString();
