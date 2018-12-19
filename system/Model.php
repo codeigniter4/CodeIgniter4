@@ -357,7 +357,7 @@ class Model
 	 *
 	 * @return array|null array of table's column values
 	 */
-	public function findColumn($id = null, string $columnName = null) : array
+	public function findColumn($id = null, string $columnName = null) : ?array
 	{
 		$columnName = $columnName ?? $this->primaryKey;
 
