@@ -164,6 +164,8 @@ class Router implements RouterInterface
 	 */
 	public function handle(string $uri = null)
 	{
+		$this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
+
 		// If we cannot find a URI to match against, then
 		// everything runs off of it's default settings.
 		if (empty($uri))
