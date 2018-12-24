@@ -386,7 +386,7 @@ class FileLocator
 	{
 		$paths = [
 			APPPATH,
-			BASEPATH,
+			SYSTEMPATH,
 		];
 
 		foreach ($paths as $path)

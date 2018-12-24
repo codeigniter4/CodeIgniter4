@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Language;
+<?php
+namespace CodeIgniter\Language;
 
 /**
  * CodeIgniter
@@ -132,6 +133,12 @@ class Language
 	 */
 	public function getLine(string $line, array $args = [])
 	{
+		// ignore requests with no file specified
+		if (! strpos($line, '.'))
+		{
+			return $line;
+		}
+
 		// Parse out the file name and the actual alias.
 		// Will load the language file and strings.
 		[
@@ -151,6 +158,13 @@ class Language
 			] = $this->parseLine($line, $locale);
 
 			$output = $this->language[$locale][$file][$parsedLine] ?? null;
+		}
+
+		// if still not found, try English
+		if (empty($output))
+		{
+			$this->parseLine($line, 'en');
+			$output = $this->language['en'][$file][$parsedLine] ?? null;
 		}
 
 		$output = $output ?? $line;
@@ -278,7 +292,7 @@ class Language
 		$this->loadedFiles[$locale][] = $file;
 
 		// Merge our string
-		$this->language[$this->locale][$file] = $lang;
+		$this->language[$locale][$file] = $lang;
 	}
 
 	//--------------------------------------------------------------------
@@ -293,22 +307,19 @@ class Language
 	 */
 	protected function requireFile(string $path): array
 	{
-		$files = Services::locator()->search($path);
-
+		$files   = Services::locator()->search($path);
 		$strings = [];
 
 		foreach ($files as $file)
 		{
-			if (! is_file($file))
-			{
-				continue;
-			}
-
 			// On some OS's we were seeing failures
 			// on this command returning boolean instead
 			// of array during testing, so we've removed
 			// the require_once for now.
-			$strings[] = require $file;
+			if (is_file($file))
+			{
+				$strings[] = require $file;
+			}
 		}
 
 		if (isset($strings[1]))

@@ -79,7 +79,7 @@ create a new class that implements the ``RouterCollectionInterface``::
 		// Implement required methods here.
 	}
 
-Finally, modify **/application/Config/Services.php** to create a new instance of ``MyRouter``
+Finally, modify **/app/Config/Services.php** to create a new instance of ``MyRouter``
 instead of ``CodeIgniter\Router\RouterCollection``::
 
 	public static function routes()

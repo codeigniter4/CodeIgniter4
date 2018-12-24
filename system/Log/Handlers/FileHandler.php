@@ -108,7 +108,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 			// Only add protection to php files
 			if ($this->fileExtension === 'php')
 			{
-				$msg .= "<?php defined('BASEPATH') || exit('No direct script access allowed'); ?>\n\n";
+				$msg .= "<?php defined('SYSTEMPATH') || exit('No direct script access allowed'); ?>\n\n";
 			}
 		}
 

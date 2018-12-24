@@ -320,25 +320,21 @@ The following constants are always available anywhere within your application.
 Core Constants
 ==============
 
-.. php:const:: ROOTPATH
-
-	The path to the main application directory. Just above ``public``.
-
 .. php:const:: APPPATH
 
-	The path to the **application** directory.
+	The path to the **app** directory.
 
-.. php:const:: BASEPATH
+.. php:const:: ROOTPATH
+
+	The path to the project root directory. Just above ``APPPATH``.
+
+.. php:const:: SYSTEMPATH
 
 	The path to the **system** directory.
 
 .. php:const:: FCPATH
 
 	The path to the directory that holds the front controller.
-
-.. php:const:: SELF
-
-	The path to the front controller, **index.php**.
 
 .. php:const:: WRITEPATH
 

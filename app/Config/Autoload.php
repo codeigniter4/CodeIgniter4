@@ -1,6 +1,6 @@
 <?php namespace Config;
 
-require_once BASEPATH . 'Config/AutoloadConfig.php';
+require_once SYSTEMPATH . 'Config/AutoloadConfig.php';
 
 /**
  * -------------------------------------------------------------------

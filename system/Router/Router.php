@@ -160,9 +160,12 @@ class Router implements RouterInterface
 	 * @param string $uri
 	 *
 	 * @return mixed
+	 * @throws \CodeIgniter\Router\RedirectException
 	 */
 	public function handle(string $uri = null)
 	{
+		$this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
+
 		// If we cannot find a URI to match against, then
 		// everything runs off of it's default settings.
 		if (empty($uri))
@@ -192,7 +195,7 @@ class Router implements RouterInterface
 
 		$this->autoRoute($uri);
 
-		return $this->controller;
+		return $this->controllerName();
 	}
 
 	//--------------------------------------------------------------------
@@ -216,7 +219,9 @@ class Router implements RouterInterface
 	 */
 	public function controllerName()
 	{
-		return $this->controller;
+		return $this->translateURIDashes
+			? str_replace('-', '_', $this->controller)
+			: $this->controller;
 	}
 
 	//--------------------------------------------------------------------
@@ -229,7 +234,9 @@ class Router implements RouterInterface
 	 */
 	public function methodName(): string
 	{
-		return $this->method;
+		return $this->translateURIDashes
+			? str_replace('-', '_', $this->method)
+			: $this->method;
 	}
 
 	//--------------------------------------------------------------------
@@ -529,7 +536,7 @@ class Router implements RouterInterface
 		}
 
 		// Load the file so that it's available for CodeIgniter.
-		$file = APPPATH . 'Controllers/' . $this->directory . $this->controller . '.php';
+		$file = APPPATH . 'Controllers/' . $this->directory . $this->controllerName() . '.php';
 		if (is_file($file))
 		{
 			include_once $file;
@@ -539,7 +546,7 @@ class Router implements RouterInterface
 		// We have to check for a length over 1, since by default it will be '\'
 		if (strpos($this->controller, '\\') === false && strlen($this->collection->getDefaultNamespace()) > 1)
 		{
-			$this->controller = str_replace('/', '\\', $this->collection->getDefaultNamespace() . $this->directory . $this->controller);
+			$this->controller = str_replace('/', '\\', $this->collection->getDefaultNamespace() . $this->directory . $this->controllerName());
 		}
 	}
 
@@ -618,15 +625,6 @@ class Router implements RouterInterface
 			$this->setDefaultController();
 
 			return;
-		}
-
-		if ($this->translateURIDashes === true)
-		{
-			$segments[0] = str_replace('-', '_', $segments[0]);
-			if (isset($segments[1]))
-			{
-				$segments[1] = str_replace('-', '_', $segments[1]);
-			}
 		}
 
 		list($controller, $method) = array_pad(explode('::', $segments[0]), 2, null);

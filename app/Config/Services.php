@@ -3,7 +3,7 @@
 use CodeIgniter\Config\Services as CoreServices;
 use CodeIgniter\Config\BaseConfig;
 
-require_once BASEPATH . 'Config/Services.php';
+require_once SYSTEMPATH . 'Config/Services.php';
 
 /**
  * Services Configuration file.
@@ -30,20 +30,4 @@ class Services extends CoreServices
 	//
 	//        return new \CodeIgniter\Example();
 	//    }
-
-	public static function honeypot(BaseConfig $config = null, $getShared = true)
-	{
-		if ($getShared)
-		{
-			return static::getSharedInstance('honeypot', $config);
-		}
-
-		if (is_null($config))
-		{
-			$config = new \Config\Honeypot();
-		}
-
-		return new \CodeIgniter\Honeypot\Honeypot($config);
-	}
-
 }

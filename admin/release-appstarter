@@ -12,7 +12,7 @@ git checkout $branch
 echo -e "${BOLD}Build the framework distributable${NORMAL}"
 
 echo -e "${BOLD}Copy the main files/folders...${NORMAL}"
-releasable='application public writable README.md contributing.md env license.txt spark'
+releasable='app public writable README.md contributing.md env license.txt spark'
 for fff in $releasable ; do
     if [ -d "$fff" ] ; then
         rm -rf $fff
@@ -23,8 +23,9 @@ done
 echo -e "${BOLD}Override as needed...${NORMAL}"
 cp -rf ${CI_DIR}/admin/starter/* .
 
-echo -e "${BOLD}Fix paths...${NORMAL}"
-sed -i "/public $systemDirectory = 'system';/s/'system'/'vendor/codeigniter4/framework/system'/" application/Config/Paths.php
+############# this can only happen after composer create-project/update
+#echo -e "${BOLD}Fix paths...${NORMAL}"
+#sed -i "/public $systemDirectory = 'system';/s/'system'/'vendor/codeigniter4/framework/system'/" app/Config/Paths.php
 
 #---------------------------------------------------
 # And finally, get ready for merging

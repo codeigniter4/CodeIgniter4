@@ -152,8 +152,8 @@ class DownloadResponseTest extends \CIUnitTestCase
 
 		$response = new DownloadResponse('unit-test.txt', true);
 
-		$size = filesize(BASEPATH . 'Common.php');
-		$response->setFilePath(BASEPATH . 'Common.php');
+		$size = filesize(SYSTEMPATH . 'Common.php');
+		$response->setFilePath(SYSTEMPATH . 'Common.php');
 		$this->assertSame($size, $response->getContentLength());
 	}
 
