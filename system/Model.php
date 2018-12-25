@@ -402,7 +402,10 @@ class Model
 		// information to consistently return correct results.
 		if (empty($builder->QBOrderBy) && ! empty($this->primaryKey))
 		{
-			$builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
+			// if the table is defined by including an alias 
+			$partOfTable = explode(' ',preg_replace("/\s+/",' ',$this->table));
+			$builder->orderBy(end($partOfTable) . '.' . $this->primaryKey, 'asc');
+			//$builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
 		}
 
 		$row = $builder->limit(1, 0)
