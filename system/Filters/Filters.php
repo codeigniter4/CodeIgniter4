@@ -481,6 +481,7 @@ class Filters
 				}
 
 				$this->filters['after'] = array_merge($this->filters['after'], $matches);
+				$matches                = [];
 			}
 		}
 	}
