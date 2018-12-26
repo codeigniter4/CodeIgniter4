@@ -30,7 +30,7 @@ Using your text editor, create a file called ``BlogView.php`` and put this in it
         </body>
 	</html>
 
-Then save the file in your **application/Views** directory.
+Then save the file in your **app/Views** directory.
 
 Displaying a View
 =================
@@ -175,7 +175,7 @@ into the `$option` array in the third parameter.
 	echo view('blogview', $data, ['saveData' => true]);
 
 Additionally, if you would like the default functionality of the view method to be that it does save the data
-between calls, you can set ``$saveData`` to **true** in **application/Config/Views.php**.
+between calls, you can set ``$saveData`` to **true** in **app/Config/Views.php**.
 
 Creating Loops
 ==============

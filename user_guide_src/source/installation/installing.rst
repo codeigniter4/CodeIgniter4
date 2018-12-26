@@ -2,8 +2,8 @@
 Installation
 ############
 
-CodeIgniter4 can be installed in a number of different ways: manually, 
-using `Composer <https://getcomposer.org>`_, or even using 
+CodeIgniter4 can be installed in a number of different ways: manually,
+using `Composer <https://getcomposer.org>`_, or even using
 `Git <https://git-scm.com/>`_. This section addresses how to use
 each technique, and explains some of the pros and cons of them.
 
@@ -30,11 +30,11 @@ Cons:
   of the framework, and then following the upgrade
   directions to merge that with your project (typically
   replace the ``system`` folder and inspect designated
-  ``application/Config`` folders for affected changes).
+  ``app/Config`` folders for affected changes).
 
 Resulting folder structure:
 
-- application
+- app
 - public
 - system
 - writable
@@ -170,5 +170,5 @@ Resulting folder structure:
 Coding Standards Installation
 ============================================================
 
-This is bound and installed automatically as part of the 
+This is bound and installed automatically as part of the
 codebase installation.

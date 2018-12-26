@@ -17,7 +17,7 @@ Namespaces
 
 The core element of the modules functionality comes from the :doc:`PSR4-compatible autoloading </concepts/autoloader>`
 that CodeIgniter uses. While any code can use the PSR4 autoloader and namespaces, the only way to take full advantage of
-modules is to namespace your code and add it to **application/Config/Autoload.php**, in the ``psr4`` section.
+modules is to namespace your code and add it to **app/Config/Autoload.php**, in the ``psr4`` section.
 
 For example, let's say we want to keep a simple blog module that we can re-use between applications. We might create
 folder with our company name, Acme, to store all of our modules within. We will put it right alongside our **application**
@@ -30,7 +30,7 @@ directory in the main project root::
     /tests
     /writable
 
-Open **application/Config/Autoload.php** and add the **Acme** namespace to the ``psr4`` array property::
+Open **app/Config/Autoload.php** and add the **Acme** namespace to the ``psr4`` array property::
 
     public $psr4 = [
         'Acme' => ROOTPATH.'acme'
@@ -74,7 +74,7 @@ file types, including:
 - :doc:`Route files </incoming/routing>`
 - :doc:`Services </concepts/services>`
 
-This is configured in the file **application/Config/Modules.php**.
+This is configured in the file **app/Config/Modules.php**.
 
 The auto-discovery system works by scanning any psr4 namespaces that have been defined within **Config/Autoload.php**
 for familiar directories/files.
@@ -116,7 +116,7 @@ the **Modules** config file, described above.
 Controllers
 ===========
 
-Controllers outside of the main **application/Controllers** directory cannot be automatically routed by URI detection,
+Controllers outside of the main **app/Controllers** directory cannot be automatically routed by URI detection,
 but must be specified within the Routes file itself::
 
     // Routes.php

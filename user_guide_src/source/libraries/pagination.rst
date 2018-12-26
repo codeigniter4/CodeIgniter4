@@ -134,7 +134,7 @@ View Configuration
 ==================
 
 When the links are rendered out to the page, they use a view file to describe the HTML. You can easily change the view
-that is used by editing **application/Config/Pager.php**::
+that is used by editing **app/Config/Pager.php**::
 
     public $templates = [
         'default_full'   => 'CodeIgniter\Pager\Views\default_full',
@@ -146,13 +146,13 @@ should be used. The *default_full* and *default_simple* views are used for the `
 methods, respectively. To change the way those are displayed application-wide, you could assign a new view here.
 
 For example, say you create a new view file that works with the Foundation CSS framework, instead of Bootstrap, and
-you place that file at **application/Views/Pagers/foundation_full.php**. Since the **application** directory is
+you place that file at **app/Views/Pagers/foundation_full.php**. Since the **application** directory is
 namespaced as ``App``, and all directories underneath it map directly to segments of the namespace, you can locate
 the view file through it's namespace::
 
     'default_full'   => 'App\Views\Pagers\foundation_full',
 
-Since it is under the standard **application/Views** directory, though, you do not need to namespace it since the
+Since it is under the standard **app/Views** directory, though, you do not need to namespace it since the
 ``view()`` method can locate it by filename. In that case, you can simple give the sub-directory and file name::
 
     'default_full'   => 'Pagers/foundation_full',
