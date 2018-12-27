@@ -65,6 +65,12 @@ if (! function_exists('form_open'))
 			$action = site_url($action);
 		}
 
+		if(is_array($attributes) && array_key_exists('csrf_id', $attributes))
+		{
+			$csrf_id = $attributes['csrf_id'];
+			unset($attributes['csrf_id']);
+		}
+
 		$attributes = stringify_attributes($attributes);
 
 		if (stripos($attributes, 'method=') === false)
@@ -82,17 +88,16 @@ if (! function_exists('form_open'))
 		// Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
 		$before = Services::filters()->getFilters()['before'];
 
-		if ((in_array('csrf', $before) || array_key_exists('csrf', $before)) && strpos($action, base_url()) !== false && ! stripos($form, 'method="get"')
-		)
+		if ((in_array('csrf', $before) || array_key_exists('csrf', $before)) && strpos($action, base_url()) !== false && ! stripos($form, 'method="get"'))
 		{
-			$hidden[csrf_token()] = csrf_hash();
+			$form .= csrf_field($csrf_id ?? null);
 		}
 
 		if (is_array($hidden))
 		{
 			foreach ($hidden as $name => $value)
 			{
-				$form .= '<input type="hidden" name="' . $name . '" value="' . esc($value, 'html') . '" style="display: none;" />' . "\n";
+				$form .= form_hidden($name, $value);
 			}
 		}
 
@@ -167,7 +172,7 @@ if (! function_exists('form_hidden'))
 
 		if (! is_array($value))
 		{
-			$form .= '<input type="hidden" name="' . $name . '" value="' . esc($value, 'html') . "\" />\n";
+			$form .= '<input type="hidden" name="' . $name . '" value="' . esc($value, 'html') . "\" style="display:none;" />\n";
 		}
 		else
 		{
