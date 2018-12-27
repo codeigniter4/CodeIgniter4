@@ -34,7 +34,7 @@ Configuration
 =============
 
 You can modify which levels are actually logged, as well as assign different Loggers to handle different levels, within
-the ``/application/Config/Logger.php`` configuration file.
+the ``/app/Config/Logger.php`` configuration file.
 
 The ``threshold`` value of the config file determines which levels are logged across your application. If any levels
 are requested to be logged by the application, but the threshold doesn't allow them to log currently, they will be
@@ -142,8 +142,8 @@ You can use any other logger that you might like as long as it extends from eith
 that you can easily drop in use for any PSR3-compatible logger, or create your own.
 
 You must ensure that the third-party logger can be found by the system, by adding it to either
-the ``/application/Config/Autoload.php`` configuration file, or through another autoloader,
-like Composer. Next, you should modify ``/application/Config/Services.php`` to point the ``logger``
+the ``/app/Config/Autoload.php`` configuration file, or through another autoloader,
+like Composer. Next, you should modify ``/app/Config/Services.php`` to point the ``logger``
 alias to your new class name.
 
 Now, any call that is done through the ``log_message()`` function will use your library instead.

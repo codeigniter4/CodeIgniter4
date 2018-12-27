@@ -437,7 +437,7 @@ careful configuration must be done. Please take your time to consider
 all of the options and their effects.
 
 You'll find the following Session related preferences in your
-**application/Config/App.php** file:
+**app/Config/App.php** file:
 
 ============================== ========================================= ============================================== ============================================================================================
 Preference                     Default                                   Options                                        Description
@@ -499,7 +499,7 @@ because it is the most safe choice and is expected to work everywhere
 (virtually every environment has a file system).
 
 However, any other driver may be selected via the ``public $sessionDriver``
-line in your **application/Config/App.php** file, if you chose to do so.
+line in your **app/Config/App.php** file, if you chose to do so.
 Have it in mind though, every driver has different caveats, so be sure to
 get yourself familiar with them (below) before you make that choice.
 
