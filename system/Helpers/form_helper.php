@@ -172,7 +172,7 @@ if (! function_exists('form_hidden'))
 
 		if (! is_array($value))
 		{
-			$form .= '<input type="hidden" name="' . $name . '" value="' . esc($value, 'html') . "\" style="display:none;" />\n";
+			$form .= '<input type="hidden" name="' . $name . '" value="' . esc($value, 'html') . "\" style=\"display:none;\" />\n";
 		}
 		else
 		{
