@@ -253,7 +253,7 @@ EOH;
 	{
 		$expected = <<<EOH
 
-<input type="hidden" name="username" value="johndoe" />\n
+<input type="hidden" name="username" value="johndoe" style="display:none;" />\n
 EOH;
 		$this->assertEquals($expected, form_hidden('username', 'johndoe'));
 	}
@@ -266,7 +266,7 @@ EOH;
 		];
 		$expected = <<<EOH
 
-<input type="hidden" name="foo" value="bar" />
+<input type="hidden" name="foo" value="bar" style="display:none;" />
 
 EOH;
 		$this->assertEquals($expected, form_hidden($data, null));
@@ -280,7 +280,7 @@ EOH;
 		];
 		$expected = <<<EOH
 
-<input type="hidden" name="name[foo]" value="bar" />
+<input type="hidden" name="name[foo]" value="bar" style="display:none;" />
 
 EOH;
 		$this->assertEquals($expected, form_hidden('name', $data));
