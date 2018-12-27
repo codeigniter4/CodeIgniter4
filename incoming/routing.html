@@ -263,7 +263,7 @@ class/method can be called instead of the one corresponding to the URL.</p>
 above it instead has a product ID. To overcome this, CodeIgniter allows you to remap the URI handler.</p>
 <div class="section" id="setting-your-own-routing-rules">
 <h2><a class="toc-backref" href="#id1">Setting your own routing rules</a><a class="headerlink" href="#setting-your-own-routing-rules" title="Permalink to this headline">¶</a></h2>
-<p>Routing rules are defined in the <strong>application/config/Routes.php</strong> file. In it you&#8217;ll see that
+<p>Routing rules are defined in the <strong>app/config/Routes.php</strong> file. In it you&#8217;ll see that
 it creates an instance of the RouteCollection class that permits you to specify your own routing criteria.
 Routes can be specified using placeholders or Regular Expressions.</p>
 <p>A route simply takes the URI on the left, and maps it to the controller and method on the right,
@@ -462,7 +462,7 @@ run the filter before or after the controller. This is especially handy during a
 <span class="p">});</span>
 </pre></div>
 </div>
-<p>The value for the filter must match one of the aliases defined within <code class="docutils literal"><span class="pre">application/Config/Filters.php</span></code>.</p>
+<p>The value for the filter must match one of the aliases defined within <code class="docutils literal"><span class="pre">app/Config/Filters.php</span></code>.</p>
 </div>
 <div class="section" id="environment-restrictions">
 <h2><a class="toc-backref" href="#id10">Environment Restrictions</a><a class="headerlink" href="#environment-restrictions" title="Permalink to this headline">¶</a></h2>
@@ -685,7 +685,7 @@ be used when the first parameter is a language string:</p>
 <div class="section" id="routes-configuration-options">
 <h2><a class="toc-backref" href="#id24">Routes Configuration Options</a><a class="headerlink" href="#routes-configuration-options" title="Permalink to this headline">¶</a></h2>
 <p>The RoutesCollection class provides several options that affect all routes, and can be modified to meet your
-application&#8217;s needs. These options are available at the top of <cite>/application/Config/Routes.php</cite>.</p>
+application&#8217;s needs. These options are available at the top of <cite>/app/Config/Routes.php</cite>.</p>
 <div class="section" id="default-namespace">
 <h3><a class="toc-backref" href="#id25">Default Namespace</a><a class="headerlink" href="#default-namespace" title="Permalink to this headline">¶</a></h3>
 <p>When matching a controller to a route, the router will add the default namespace value to the front of the controller
@@ -716,14 +716,14 @@ then you can change this value to save typing:</p>
 <h3><a class="toc-backref" href="#id26">Default Controller</a><a class="headerlink" href="#default-controller" title="Permalink to this headline">¶</a></h3>
 <p>When a user visits the root of your site (i.e. example.com) the controller to use is determined by the value set by
 the <code class="docutils literal"><span class="pre">setDefaultController()</span></code> method, unless a route exists for it explicitly. The default value for this is <code class="docutils literal"><span class="pre">Home</span></code>
-which matches the controller at <code class="docutils literal"><span class="pre">/application/Controllers/Home.php</span></code>:</p>
+which matches the controller at <code class="docutils literal"><span class="pre">/app/Controllers/Home.php</span></code>:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// example.com routes to application/Controllers/Welcome.php</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Welcome&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The default controller is also used when no matching route has been found, and the URI would point to a directory
 in the controllers directory. For example, if the user visits <code class="docutils literal"><span class="pre">example.com/admin</span></code>, if a controller was found at
-<code class="docutils literal"><span class="pre">/application/Controllers/admin/Home.php</span></code> it would be used.</p>
+<code class="docutils literal"><span class="pre">/app/Controllers/admin/Home.php</span></code> it would be used.</p>
 </div>
 <div class="section" id="default-method">
 <h3><a class="toc-backref" href="#id27">Default Method</a><a class="headerlink" href="#default-method" title="Permalink to this headline">¶</a></h3>
@@ -795,8 +795,8 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Dec 15, 2018.
+        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
+      Last updated on Dec 26, 2018.
 
     </p>
   </div>

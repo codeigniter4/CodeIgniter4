@@ -212,7 +212,7 @@ and start using a database.</p>
 should be placed in a model, so they can easily be reused later. Models
 are the place where you retrieve, insert, and update information in your
 database or other data stores. They provide access to your data.</p>
-<p>Open up the <em>application/Models/</em> directory and create a new file called
+<p>Open up the <em>app/Models/</em> directory and create a new file called
 <em>NewsModel.php</em> and add the following code. Make sure you&#8217;ve configured
 your database properly as described <a class="reference internal" href="../database/configuration.html"><span class="doc">here</span></a>.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
@@ -283,7 +283,7 @@ returning an array of results in the format of your choice. In this example,
 that are going to display the news items to the user. This could be done
 in our <code class="docutils literal"><span class="pre">Pages</span></code> controller created earlier, but for the sake of clarity,
 a new <code class="docutils literal"><span class="pre">News</span></code> controller is defined. Create the new controller at
-<em>application/Controllers/News.php</em>.</p>
+<em>app/Controllers/News.php</em>.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">App\Models\NewsModel</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
@@ -336,7 +336,7 @@ the views. Modify the <code class="docutils literal"><span class="pre">index()</
 <p>The code above gets all news records from the model and assigns it to a
 variable. The value for the title is also assigned to the <code class="docutils literal"><span class="pre">$data['title']</span></code>
 element and all data is passed to the views. You now need to create a
-view to render the news items. Create <em>application/Views/news/index.php</em>
+view to render the news items. Create <em>app/Views/news/index.php</em>
 and add the next piece of code.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nv">$title</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 
@@ -393,7 +393,7 @@ add some code to the controller and create a new view. Go back to the
 <p>Instead of calling the <code class="docutils literal"><span class="pre">getNews()</span></code> method without a parameter, the
 <code class="docutils literal"><span class="pre">$slug</span></code> variable is passed, so it will return the specific news item.
 The only things left to do is create the corresponding view at
-<em>application/Views/news/view.php</em>. Put the following code in this file.</p>
+<em>app/Views/news/view.php</em>. Put the following code in this file.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 <span class="k">echo</span> <span class="s1">&#39;&lt;h2&gt;&#39;</span><span class="o">.</span><span class="nv">$news</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="s1">&#39;&lt;/h2&gt;&#39;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nv">$news</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">];</span>
@@ -404,7 +404,7 @@ The only things left to do is create the corresponding view at
 <h2>Routing<a class="headerlink" href="#routing" title="Permalink to this headline">¶</a></h2>
 <p>Because of the wildcard routing rule created earlier, you need an extra
 route to view the controller that you just made. Modify your routing file
-(<em>application/config/routes.php</em>) so it looks as follows.
+(<em>app/config/routes.php</em>) so it looks as follows.
 This makes sure the requests reach the <code class="docutils literal"><span class="pre">News</span></code> controller instead of
 going directly to the <code class="docutils literal"><span class="pre">Pages</span></code> controller. The first line routes URI&#8217;s
 with a slug to the <code class="docutils literal"><span class="pre">view()</span></code> method in the <code class="docutils literal"><span class="pre">News</span></code> controller.</p>
@@ -440,8 +440,8 @@ watch your news page.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Dec 15, 2018.
+        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
+      Last updated on Dec 26, 2018.
 
     </p>
   </div>

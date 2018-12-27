@@ -212,7 +212,7 @@ this functionality.</p>
 input the information to be stored. This means you&#8217;ll be needing a form
 with two fields, one for the title and one for the text. You&#8217;ll derive
 the slug from our title in the model. Create the new view at
-<em>application/Views/news/create.php</em>.</p>
+<em>app/Views/news/create.php</em>.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$title</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 
 <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">validation</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">listErrors</span><span class="p">();</span> <span class="cp">?&gt;</span>
@@ -280,7 +280,7 @@ the string you pass it, replacing all spaces by dashes (-) and makes
 sure everything is in lowercase characters. This leaves you with a nice
 slug, perfect for creating URIs.</p>
 <p>After this, a view is loaded to display a success message. Create a view at
-<strong>application/Views/news/success.php</strong> and write a success message.</p>
+<strong>app/Views/news/success.php</strong> and write a success message.</p>
 </div>
 <div class="section" id="model">
 <h2>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
@@ -352,8 +352,8 @@ Add some news and check out the different pages you made.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Dec 15, 2018.
+        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
+      Last updated on Dec 26, 2018.
 
     </p>
   </div>

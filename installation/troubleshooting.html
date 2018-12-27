@@ -215,11 +215,11 @@ URL <code class="docutils literal"><span class="pre">/index.php/mypage/find/appl
 <p>If you find that no matter what you put in your URL only your default
 page is loading, it might be that your server does not support the
 REQUEST_URI variable needed to serve search-engine friendly URLs. As a
-first step, open your <em>application/Config/App.php</em> file and look for
+first step, open your <em>app/Config/App.php</em> file and look for
 the URI Protocol information. It will recommend that you try a couple of
 alternate settings. If it still doesn&#8217;t work after you&#8217;ve tried this
 you&#8217;ll need to force CodeIgniter to add a question mark to your URLs. To
-do this open your <em>application/Config/App.php</em> file and change this:</p>
+do this open your <em>app/Config/App.php</em> file and change this:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$indexPage</span> <span class="o">=</span> <span class="s1">&#39;index.php&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -259,8 +259,8 @@ requests properly.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Dec 15, 2018.
+        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
+      Last updated on Dec 26, 2018.
 
     </p>
   </div>

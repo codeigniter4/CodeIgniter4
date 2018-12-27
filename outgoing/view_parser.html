@@ -850,7 +850,7 @@ key/value pairs:</p>
 <div class="section" id="registering-a-plugin">
 <h4>Registering a Plugin<a class="headerlink" href="#registering-a-plugin" title="Permalink to this headline">¶</a></h4>
 <p>At its simplest, all you need to do to register a new plugin and make it ready for use is to add it to the
-<strong>application/Config/View.php</strong>, under the <strong>$plugins</strong> array. The key is the name of the plugin that is
+<strong>app/Config/View.php</strong>, under the <strong>$plugins</strong> array. The key is the name of the plugin that is
 used within the template file. The value is any valid PHP callable, including static class methods, and closures:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$plugins</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;foo&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;\Some\Class::methodName&#39;</span><span class="p">,</span>
@@ -1182,8 +1182,8 @@ substitutions are performed for each data pair.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Dec 15, 2018.
+        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
+      Last updated on Dec 26, 2018.
 
     </p>
   </div>

@@ -225,7 +225,7 @@ they work in sequence and don&#8217;t get in each other&#8217;s way.</p>
 beginning of the framework&#8217;s execution.</p>
 <div class="section" id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
-<p>Initial configuration is done in <strong>/application/Config/Autoload.php</strong>. This file contains two primary
+<p>Initial configuration is done in <strong>/app/Config/Autoload.php</strong>. This file contains two primary
 arrays: one for the classmap, and one for PSR4-compatible namespaces.</p>
 </div>
 <div class="section" id="namespaces">
@@ -246,7 +246,7 @@ not <code class="docutils literal"><span class="pre">My\App</span></code>. The v
 have a trailing slash.</p>
 <p>By default, the application folder is namespace to the <code class="docutils literal"><span class="pre">App</span></code> namespace. While you are not forced to namespace the controllers,
 libraries, or models in the application directory, if you do, they will be found under the <code class="docutils literal"><span class="pre">App</span></code> namespace.
-You may change this namespace by editing the <strong>/application/Config/Constants.php</strong> file and setting the
+You may change this namespace by editing the <strong>/app/Config/Constants.php</strong> file and setting the
 new namespace value under the <code class="docutils literal"><span class="pre">APP_NAMESPACE</span></code> setting:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nb">define</span><span class="p">(</span><span class="s1">&#39;APP_NAMESPACE&#39;</span><span class="p">,</span> <span class="s1">&#39;App&#39;</span><span class="p">);</span>
 </pre></div>
@@ -274,7 +274,7 @@ third-party libraries that are not namespaced:</p>
 <div class="section" id="legacy-support">
 <h2>Legacy Support<a class="headerlink" href="#legacy-support" title="Permalink to this headline">¶</a></h2>
 <p>If neither of the above methods find the class, and the class is not namespaced, the autoloader will look in the
-<strong>/application/Libraries</strong> and <strong>/application/Models</strong> directories to attempt to locate the files. This provides
+<strong>/app/Libraries</strong> and <strong>/app/Models</strong> directories to attempt to locate the files. This provides
 a measure to help ease the transition from previous versions.</p>
 <p>There are no configuration options for legacy support.</p>
 </div>
@@ -302,8 +302,8 @@ a measure to help ease the transition from previous versions.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Dec 15, 2018.
+        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
+      Last updated on Dec 26, 2018.
 
     </p>
   </div>

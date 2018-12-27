@@ -235,7 +235,7 @@ includes the user guide (though in the <cite>docs</cite> subfolder</li>
 </ul>
 <p><strong>Application Structure</strong></p>
 <ul class="simple">
-<li>The framework still has <code class="docutils literal"><span class="pre">application</span></code> and <code class="docutils literal"><span class="pre">system</span></code> folders, with the same
+<li>The framework still has <code class="docutils literal"><span class="pre">app</span></code> and <code class="docutils literal"><span class="pre">system</span></code> folders, with the same
 interpretation as before</li>
 <li>The framework now provides for a <code class="docutils literal"><span class="pre">public</span></code> folder, intended as the document
 root for your app</li>
@@ -292,7 +292,7 @@ enhanced</li>
 </ul>
 <p><strong>Libraries</strong></p>
 <ul class="simple">
-<li>Your app classes can still go inside <code class="docutils literal"><span class="pre">application/Libraries</span></code>, but they
+<li>Your app classes can still go inside <code class="docutils literal"><span class="pre">app/Libraries</span></code>, but they
 don&#8217;t have to</li>
 <li>Instead of CI3&#8217;s <code class="docutils literal"><span class="pre">$this-&gt;load-&gt;library(x);</span></code> you can now use
 <code class="docutils literal"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your
@@ -309,7 +309,7 @@ component extensions or replacements</li>
 <li>You don&#8217;t need <code class="docutils literal"><span class="pre">MY_x</span></code> classes inside your libraries folder
 to extend or replace CI4 pieces</li>
 <li>Make any such classes where you like, and add appropriate
-service methods in <code class="docutils literal"><span class="pre">application/Config/Services.php</span></code> to load
+service methods in <code class="docutils literal"><span class="pre">app/Config/Services.php</span></code> to load
 your components instead of the default ones</li>
 </ul>
 </div>
@@ -336,8 +336,8 @@ your components instead of the default ones</li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Dec 15, 2018.
+        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
+      Last updated on Dec 26, 2018.
 
     </p>
   </div>

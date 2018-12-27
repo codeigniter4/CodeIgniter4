@@ -278,7 +278,7 @@ This is typically used to peform redirects, like in this example:</p>
 </pre></div>
 </div>
 <p>If a Response instance is returned, the Response will be sent back to the client and script execution will stop.
-This can be useful for implementing rate limiting for API&#8217;s. See <strong>application/Filters/Throttle.php</strong> for an
+This can be useful for implementing rate limiting for API&#8217;s. See <strong>app/Filters/Throttle.php</strong> for an
 example.</p>
 </div>
 <div class="section" id="after-filters">
@@ -289,7 +289,7 @@ the final output. This could be used to ensure certain security headers were set
 the final output, or even to filter the final output with a bad words filter.</p>
 <div class="section" id="configuring-filters">
 <h4>Configuring Filters<a class="headerlink" href="#configuring-filters" title="Permalink to this headline">¶</a></h4>
-<p>Once you&#8217;ve created your filters, you need to configure when they get run. This is done in <code class="docutils literal"><span class="pre">application/Config/Filters.php</span></code>.
+<p>Once you&#8217;ve created your filters, you need to configure when they get run. This is done in <code class="docutils literal"><span class="pre">app/Config/Filters.php</span></code>.
 This file contains four properties that allow you to configure exactly when the filters run.</p>
 </div>
 </div>
@@ -409,8 +409,8 @@ a list of URI patterns that filter should apply to:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Dec 15, 2018.
+        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
+      Last updated on Dec 26, 2018.
 
     </p>
   </div>

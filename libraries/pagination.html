@@ -332,7 +332,7 @@ sections.</p>
 <div class="section" id="view-configuration">
 <h3>View Configuration<a class="headerlink" href="#view-configuration" title="Permalink to this headline">¶</a></h3>
 <p>When the links are rendered out to the page, they use a view file to describe the HTML. You can easily change the view
-that is used by editing <strong>application/Config/Pager.php</strong>:</p>
+that is used by editing <strong>app/Config/Pager.php</strong>:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$templates</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;default_full&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Pager\Views\default_full&#39;</span><span class="p">,</span>
     <span class="s1">&#39;default_simple&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Pager\Views\default_simple&#39;</span>
@@ -343,13 +343,13 @@ that is used by editing <strong>application/Config/Pager.php</strong>:</p>
 should be used. The <em>default_full</em> and <em>default_simple</em> views are used for the <code class="docutils literal"><span class="pre">links()</span></code> and <code class="docutils literal"><span class="pre">simpleLinks()</span></code>
 methods, respectively. To change the way those are displayed application-wide, you could assign a new view here.</p>
 <p>For example, say you create a new view file that works with the Foundation CSS framework, instead of Bootstrap, and
-you place that file at <strong>application/Views/Pagers/foundation_full.php</strong>. Since the <strong>application</strong> directory is
+you place that file at <strong>app/Views/Pagers/foundation_full.php</strong>. Since the <strong>application</strong> directory is
 namespaced as <code class="docutils literal"><span class="pre">App</span></code>, and all directories underneath it map directly to segments of the namespace, you can locate
 the view file through it&#8217;s namespace:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="s1">&#39;default_full&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;App\Views\Pagers\foundation_full&#39;</span><span class="p">,</span>
 </pre></div>
 </div>
-<p>Since it is under the standard <strong>application/Views</strong> directory, though, you do not need to namespace it since the
+<p>Since it is under the standard <strong>app/Views</strong> directory, though, you do not need to namespace it since the
 <code class="docutils literal"><span class="pre">view()</span></code> method can locate it by filename. In that case, you can simple give the sub-directory and file name:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="s1">&#39;default_full&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Pagers/foundation_full&#39;</span><span class="p">,</span>
 </pre></div>
@@ -469,8 +469,8 @@ title, which is just the number, and a boolean that tells whether the link is th
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Dec 15, 2018.
+        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
+      Last updated on Dec 26, 2018.
 
     </p>
   </div>

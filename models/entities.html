@@ -243,8 +243,8 @@ database when you&#8217;ve proven the concept works.</p>
 <div class="section" id="create-the-entity-class">
 <h3><a class="toc-backref" href="#id2">Create the Entity Class</a><a class="headerlink" href="#create-the-entity-class" title="Permalink to this headline">¶</a></h3>
 <p>Now create a new Entity class. Since there&#8217;s no default location to store these classes, and it doesn&#8217;t fit
-in with the existing directory structure, create a new directory at <strong>application/Entities</strong>. Create the
-Entity itself at <strong>application/Entities/User.php</strong>.</p>
+in with the existing directory structure, create a new directory at <strong>app/Entities</strong>. Create the
+Entity itself at <strong>app/Entities/User.php</strong>.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Entity</span><span class="p">;</span>
@@ -265,7 +265,7 @@ database columns are represented in the Entity. This is required for the Model t
 </div>
 <div class="section" id="create-the-model">
 <h3><a class="toc-backref" href="#id3">Create the Model</a><a class="headerlink" href="#create-the-model" title="Permalink to this headline">¶</a></h3>
-<p>Create the model first at <strong>application/Models/UserModel.php</strong> so that we can interact with it:</p>
+<p>Create the model first at <strong>app/Models/UserModel.php</strong> so that we can interact with it:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
@@ -490,7 +490,7 @@ of helpful methods in a immutable, localized way.</p>
 </pre></div>
 </div>
 <p>Now, when any of those properties are set, they will be converted to a Time instance, using the application&#8217;s
-current timezone, as set in <strong>application/Config/App.php</strong>:</p>
+current timezone, as set in <strong>app/Config/App.php</strong>:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">App\Entities\User</span><span class="p">();</span>
 
 <span class="c1">// Converted to Time instance</span>
@@ -600,8 +600,8 @@ Unlike the rest of the data types that you can cast properties into, the:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Dec 15, 2018.
+        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
+      Last updated on Dec 26, 2018.
 
     </p>
   </div>
