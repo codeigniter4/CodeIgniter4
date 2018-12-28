@@ -136,7 +136,11 @@ class CommandRunner extends Controller
 		// If no matching command files were found, bail
 		if (empty($files))
 		{
+			// This should never happen in unit testing.
+			// if it does, we have far bigger problems!
+			// @codeCoverageIgnoreStart
 			return;
+			// @codeCoverageIgnoreEnd
 		}
 
 		// Loop over each file checking to see if a command with that

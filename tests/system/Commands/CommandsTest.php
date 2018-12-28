@@ -83,6 +83,31 @@ class CommandsTest extends \CIUnitTestCase
 		$this->assertContains('CI Version:', $result);
 	}
 
+	public function testShowError()
+	{
+		$this->runner->index(['app:info']);
+		$commands = $this->runner->getCommands();
+		$command  = new $commands['app:info']['class']($this->logger, $this->runner);
+
+		$command->helpme();
+		$result = CITestStreamFilter::$buffer;
+		$this->assertContains('Displays basic usage information.', $result);
+	}
+
+	public function testCommandCall()
+	{
+		$this->error_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
+		$this->runner->index(['app:info']);
+		$commands = $this->runner->getCommands();
+		$command  = new $commands['app:info']['class']($this->logger, $this->runner);
+
+		$command->bomb();
+		$result = CITestStreamFilter::$buffer;
+		stream_filter_remove($this->error_filter);
+
+		$this->assertContains('Invalid background color:', $result);
+	}
+
 	public function testNonexistantCommand()
 	{
 		// catch errors too
