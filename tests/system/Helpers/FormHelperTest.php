@@ -156,6 +156,7 @@ EOH;
 		{
 			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
+
 <input type="hidden" name="foo" value="bar" style="display:none;" />
 
 EOH;
