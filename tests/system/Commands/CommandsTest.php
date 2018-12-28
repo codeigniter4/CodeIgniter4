@@ -130,4 +130,24 @@ class CommandsTest extends \CIUnitTestCase
 		$this->assertContains('not found', $result);
 	}
 
+	public function testNamespacesCommand()
+	{
+		$this->runner->index(['namespaces']);
+		$result = CITestStreamFilter::$buffer;
+
+		$this->assertContains('| Namespace', $result);
+		$this->assertContains('| Config', $result);
+		$this->assertContains('| Yes', $result);
+	}
+
+	public function testRoutesCommand()
+	{
+		$this->runner->index(['routes']);
+		$result = CITestStreamFilter::$buffer;
+
+		$this->assertContains('| Route', $result);
+		$this->assertContains('| testing', $result);
+		$this->assertContains('| \\TestController::index', $result);
+	}
+
 }
