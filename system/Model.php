@@ -467,18 +467,17 @@ class Model
 
 		if (is_object($data) && isset($data->{$this->primaryKey}))
 		{
-			$response = $this->update($data->{$this->primaryKey}, $data);
+            		$this->update($data->{$this->primaryKey}, $data);
+            		return $data->$this->primaryKey;
 		}
-		elseif (is_array($data) && ! empty($data[$this->primaryKey]))
-		{
-			$response = $this->update($data[$this->primaryKey], $data);
+        
+        	if (is_array($data) && ! empty($data[$this->primaryKey]))
+		{            
+            		$this->update($data[$this->primaryKey], $data);
+            		return $data[$this->primaryKey];
 		}
-		else
-		{
-			$response = $this->insert($data);
-		}
-
-		return $response;
+        
+        	return $this->insert($data);
 	}
 
 	//--------------------------------------------------------------------
