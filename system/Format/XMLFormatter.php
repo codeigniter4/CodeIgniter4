@@ -53,7 +53,10 @@ class XMLFormatter implements FormatterInterface
 		// but best to check, and then provide a fallback.
 		if (! extension_loaded('simplexml'))
 		{
+			// never thrown in travis-ci
+			// @codeCoverageIgnoreStart
 			throw FormatException::forMissingExtension();
+			// @codeCoverageIgnoreEnd
 		}
 
 		$output = new \SimpleXMLElement('<?xml version="1.0"?><response></response>');
