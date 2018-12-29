@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Config;
+<?php
+namespace CodeIgniter\Config;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
@@ -42,11 +43,29 @@ class BaseConfigTest extends CIUnitTestCase
 		$this->assertEquals(18, $config->golf);
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testServerValues()
+	{
+		$_SERVER = [
+			'simpleconfig.shortie' => 123,
+			'SimpleConfig.longie'  => 456,
+		];
+		$dotenv  = new DotEnv($this->fixturesFolder, '.env');
+		$dotenv->load();
+		$config = new \SimpleConfig();
+
+		$this->assertEquals(123, $config->shortie);
+		$this->assertEquals(456, $config->longie);
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testEnvironmentOverrides()
 	{
-		$dotenv = new DotEnv($this->fixturesFolder, '.env', 'z');
+		$dotenv = new DotEnv($this->fixturesFolder, '.env');
 		$dotenv->load();
 
 		$config = new \SimpleConfig();
@@ -61,6 +80,12 @@ class BaseConfigTest extends CIUnitTestCase
 		$this->assertObjectNotHasAttribute('notthere', $config);
 		// same ENV var as property, but not namespaced, still over-rides
 		$this->assertEquals('kazaam', $config->bravo);
+		// empty ENV var should not affect config setting
+		$this->assertEquals('pineapple', $config->fruit);
+		// non-empty ENV var should overrideconfig setting
+		$this->assertEquals('banana', $config->dessert);
+		// null property should not be affected
+		$this->assertNull($config->QEMPTYSTR);
 	}
 
 	//--------------------------------------------------------------------

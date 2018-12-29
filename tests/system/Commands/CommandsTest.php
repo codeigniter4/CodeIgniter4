@@ -147,7 +147,7 @@ class CommandsTest extends \CIUnitTestCase
 
 		$this->assertContains('| Route', $result);
 		$this->assertContains('| testing', $result);
-		$this->assertContains('| \\TestController::index', $result);
+		$this->assertContains('\\TestController::index', $result);
 	}
 
 }
