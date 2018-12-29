@@ -403,7 +403,7 @@ class Model
 		if (empty($builder->QBOrderBy) && ! empty($this->primaryKey))
 		{
 			// if the table is defined by including an alias 
-			$partOfTable = explode(' ',preg_replace("/\s+/",' ',$this->table));
+			$partOfTable = explode(' ',trim($this->table));
 			$builder->orderBy(end($partOfTable) . '.' . $this->primaryKey, 'asc');
 			//$builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
 		}
