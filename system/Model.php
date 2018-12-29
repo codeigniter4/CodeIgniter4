@@ -468,7 +468,7 @@ class Model
 		if (is_object($data) && isset($data->{$this->primaryKey}))
 		{
             		$this->update($data->{$this->primaryKey}, $data);
-            		return $data->$this->primaryKey;
+            		return $data->{$this->primaryKey};
 		}
         
         	if (is_array($data) && ! empty($data[$this->primaryKey]))
