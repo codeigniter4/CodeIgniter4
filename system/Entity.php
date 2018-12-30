@@ -428,9 +428,13 @@ class Entity
 
 	protected function castAs($value, string $type)
 	{
-		if (substr($type, 0, 1) === '?' && $value === null)
+		if(substr($type,0,1) === '?')
 		{
-			return null;
+			if($value === null)
+			{
+				return null;
+			}
+			$type = substr($type,1);
 		}
 
 		switch($type)

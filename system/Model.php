@@ -1266,8 +1266,8 @@ class Model
 			// the value found in $data, if exists.
 			$rules = $this->fillPlaceholders($this->validationRules, $data);
 
-			$this->validation->setRules($rules, $this->validationMessages, $this->DBGroup);
-			$valid = $this->validation->run($data);
+			$this->validation->setRules($rules, $this->validationMessages);
+			$valid = $this->validation->run($data, null, $this->DBGroup);
 		}
 
 		return (bool) $valid;
