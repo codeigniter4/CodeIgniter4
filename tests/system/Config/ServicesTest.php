@@ -277,4 +277,64 @@ class ServicesTest extends \CIUnitTestCase
 		$this->assertTrue($response !== $response2);
 	}
 
+	public function testFilters()
+	{
+		$result = Services::filters();
+		$this->assertInstanceOf(\CodeIgniter\Filters\Filters::class, $result);
+	}
+
+	public function testHoneypot()
+	{
+		$result = Services::honeypot();
+		$this->assertInstanceOf(\CodeIgniter\Honeypot\Honeypot::class, $result);
+	}
+
+	public function testMigrations()
+	{
+		$result = Services::migrations();
+		$this->assertInstanceOf(\CodeIgniter\Database\MigrationRunner::class, $result);
+	}
+
+	public function testParser()
+	{
+		$result = Services::parser();
+		$this->assertInstanceOf(\CodeIgniter\View\Parser::class, $result);
+	}
+
+	public function testRedirectResponse()
+	{
+		$result = Services::redirectResponse();
+		$this->assertInstanceOf(\CodeIgniter\HTTP\RedirectResponse::class, $result);
+	}
+
+	public function testRoutes()
+	{
+		$result = Services::routes();
+		$this->assertInstanceOf(\CodeIgniter\Router\RouteCollection::class, $result);
+	}
+
+	public function testRouter()
+	{
+		$result = Services::router();
+		$this->assertInstanceOf(\CodeIgniter\Router\Router::class, $result);
+	}
+
+	public function testSecurity()
+	{
+		$result = Services::security();
+		$this->assertInstanceOf(\CodeIgniter\Security\Security::class, $result);
+	}
+
+	public function testTimer()
+	{
+		$result = Services::timer();
+		$this->assertInstanceOf(\CodeIgniter\Debug\Timer::class, $result);
+	}
+
+	public function testTypography()
+	{
+		$result = Services::typography();
+		$this->assertInstanceOf(\CodeIgniter\Typography\Typography::class, $result);
+	}
+
 }
