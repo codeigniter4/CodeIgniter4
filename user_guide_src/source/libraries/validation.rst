@@ -65,7 +65,7 @@ The Form
 ========
 
 Using a text editor, create a form called **Signup.php**. In it, place this
-code and save it to your **application/Views/** folder::
+code and save it to your **app/Views/** folder::
 
 	<html>
 	<head>
@@ -100,7 +100,7 @@ The Success Page
 ================
 
 Using a text editor, create a form called **Success.php**. In it, place
-this code and save it to your **application/Views/** folder::
+this code and save it to your **app/Views/** folder::
 
 	<html>
 	<head>
@@ -119,7 +119,7 @@ The Controller
 ==============
 
 Using a text editor, create a controller called **Form.php**. In it, place
-this code and save it to your **application/Controllers/** folder::
+this code and save it to your **app/Controllers/** folder::
 
 	<?php namespace App\Controllers;
 
@@ -505,7 +505,7 @@ Creating the Views
 
 The first step is to create the custom views. These can be placed anywhere that the ``view()`` method can locate them,
 which means the standard View directory, or any namespaced View folder will work. For example, you could create
-a new view at **/application/Views/_errors_list.php**::
+a new view at **/app/Views/_errors_list.php**::
 
     <div class="alert alert-danger" role="alert">
         <ul>

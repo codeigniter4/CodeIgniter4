@@ -35,8 +35,8 @@ Create the Entity Class
 -----------------------
 
 Now create a new Entity class. Since there's no default location to store these classes, and it doesn't fit
-in with the existing directory structure, create a new directory at **application/Entities**. Create the
-Entity itself at **application/Entities/User.php**.
+in with the existing directory structure, create a new directory at **app/Entities**. Create the
+Entity itself at **app/Entities/User.php**.
 
 ::
 
@@ -60,7 +60,7 @@ database columns are represented in the Entity. This is required for the Model t
 Create the Model
 ----------------
 
-Create the model first at **application/Models/UserModel.php** so that we can interact with it::
+Create the model first at **app/Models/UserModel.php** so that we can interact with it::
 
     <?php namespace App\Models;
 
@@ -299,7 +299,7 @@ You can define which properties are automatically converted by adding the name t
     }
 
 Now, when any of those properties are set, they will be converted to a Time instance, using the application's
-current timezone, as set in **application/Config/App.php**::
+current timezone, as set in **app/Config/App.php**::
 
     $user = new App\Entities\User();
 

@@ -29,7 +29,7 @@ beginning of the framework's execution.
 Configuration
 =============
 
-Initial configuration is done in **/application/Config/Autoload.php**. This file contains two primary
+Initial configuration is done in **/app/Config/Autoload.php**. This file contains two primary
 arrays: one for the classmap, and one for PSR4-compatible namespaces.
 
 Namespaces
@@ -52,7 +52,7 @@ have a trailing slash.
 
 By default, the application folder is namespace to the ``App`` namespace. While you are not forced to namespace the controllers,
 libraries, or models in the application directory, if you do, they will be found under the ``App`` namespace.
-You may change this namespace by editing the **/application/Config/Constants.php** file and setting the
+You may change this namespace by editing the **/app/Config/Constants.php** file and setting the
 new namespace value under the ``APP_NAMESPACE`` setting::
 
 	define('APP_NAMESPACE', 'App');
@@ -80,7 +80,7 @@ Legacy Support
 ==============
 
 If neither of the above methods find the class, and the class is not namespaced, the autoloader will look in the
-**/application/Libraries** and **/application/Models** directories to attempt to locate the files. This provides
+**/app/Libraries** and **/app/Models** directories to attempt to locate the files. This provides
 a measure to help ease the transition from previous versions.
 
 There are no configuration options for legacy support.

@@ -26,7 +26,7 @@ User Agent Definitions
 ======================
 
 The user agent name definitions are located in a config file located at:
-**application/Config/UserAgents.php**. You may add items to the various
+**app/Config/UserAgents.php**. You may add items to the various
 user agent arrays if needed.
 
 Example
@@ -85,7 +85,7 @@ Class Reference
 			}
 
 		.. note:: The string "Safari" in this example is an array key in the list of browser definitions.
-				  You can find this list in **application/Config/UserAgents.php** if you want to add new
+				  You can find this list in **app/Config/UserAgents.php** if you want to add new
 				  browsers or change the strings.
 
 	.. php:method:: isMobile([$key = NULL])
@@ -121,7 +121,7 @@ Class Reference
     		.. note:: The user agent library only contains the most common robot definitions. It is not a complete list of bots.
     				  There are hundreds of them so searching for each one would not be very efficient. If you find that some bots
     				  that commonly visit your site are missing from the list you can add them to your
-    				  **application/Config/UserAgents.php** file.
+    				  **app/Config/UserAgents.php** file.
 
 	.. php:method:: isReferral()
 

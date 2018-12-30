@@ -12,7 +12,7 @@ Renaming the Application Directory
 ==================================
 
 If you would like to rename your application directory you may do so
-as long as you open **application/Config/Paths.php** file and set its name using
+as long as you open **app/Config/Paths.php** file and set its name using
 the ``$applicationDirectory`` variable::
 
 	$applicationDirectory = 'application';

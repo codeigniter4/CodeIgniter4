@@ -32,7 +32,7 @@ Sending Email
 =============
 
 Sending email is not only simple, but you can configure it on the fly or
-set your preferences in the **application/Config/Email.php** file.
+set your preferences in the **app/Config/Email.php** file.
 
 Here is a basic example demonstrating how you might send email::
 
@@ -75,7 +75,7 @@ Setting Email Preferences in a Config File
 
 If you prefer not to set preferences using the above method, you can
 instead put them into the config file. Simply open the
-**application/Config/Email.php** file, and set your configs in the
+**app/Config/Email.php** file, and set your configs in the
 Email properties. Then save the file and it will be used automatically.
 You will NOT need to use the ``$email->initialize()`` method if
 you set your preferences in the config file.
