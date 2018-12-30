@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Events;
+<?php
+namespace CodeIgniter\Events;
 
 use Config\Services;
 
@@ -112,12 +113,10 @@ class Events
 
 		foreach (static::$files as $file)
 		{
-			if (! is_file($file))
+			if (is_file($file))
 			{
-				continue;
+				include $file;
 			}
-
-			include $file;
 		}
 
 		static::$initialized = true;
@@ -183,9 +182,7 @@ class Events
 		{
 			$start = microtime(true);
 
-			$result = static::$simulate === false
-				? $listener(...$arguments)
-				: true;
+			$result = static::$simulate === false ? $listener(...$arguments) : true;
 
 			if (CI_DEBUG)
 			{
@@ -345,5 +342,4 @@ class Events
 	}
 
 	//--------------------------------------------------------------------
-
 }
