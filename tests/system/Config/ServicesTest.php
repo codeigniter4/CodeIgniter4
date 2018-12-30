@@ -1,4 +1,7 @@
-<?php namespace Config;
+<?php
+namespace Config;
+
+use Tests\Support\HTTP\MockResponse;
 
 class ServicesTest extends \CIUnitTestCase
 {
@@ -225,6 +228,53 @@ class ServicesTest extends \CIUnitTestCase
 		// __callStatic should kick in for this
 		$actual = \CodeIgniter\Config\Services::SeSsIoN(null, false);
 		$this->assertInstanceOf(\CodeIgniter\Session\Session::class, $actual);
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testCallStaticDirectly()
+	{
+		//      $actual = \CodeIgniter\Config\Services::SeSsIoN(null, false); // original
+		$actual = \CodeIgniter\Config\Services::__callStatic('SeSsIoN', [null, false]);
+		$this->assertInstanceOf(\CodeIgniter\Session\Session::class, $actual);
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testMockInjection()
+	{
+		Services::injectMock('response', new MockResponse(new App()));
+		$response = service('response');
+		$this->assertInstanceOf(MockResponse::class, $response);
+
+		Services::injectMock('response', new MockResponse(new App()));
+		$response2 = service('response');
+		$this->assertInstanceOf(MockResponse::class, $response2);
+
+		$this->assertEquals($response, $response2);
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testReset()
+	{
+		Services::injectMock('response', new MockResponse(new App()));
+		$response = service('response');
+		$this->assertInstanceOf(MockResponse::class, $response);
+
+		Services::reset(true); // reset mocks & shared instances
+
+		Services::injectMock('response', new MockResponse(new App()));
+		$response2 = service('response');
+		$this->assertInstanceOf(MockResponse::class, $response2);
+
+		$this->assertTrue($response !== $response2);
 	}
 
 }

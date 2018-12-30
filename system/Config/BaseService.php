@@ -184,7 +184,7 @@ class BaseService
 	{
 		$name = strtolower($name);
 
-		if (method_exists(__CLASS__, $name))
+		if (method_exists(Services::class, $name))
 		{
 			return Services::$name(...$arguments);
 		}
