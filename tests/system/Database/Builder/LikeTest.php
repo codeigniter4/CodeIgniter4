@@ -24,7 +24,7 @@ class LikeTest extends \CIUnitTestCase
 
 		$builder->like('name', 'veloper');
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name: ESCAPE '!'";
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE '%veloper%' ESCAPE '!'";
 		$expectedBinds = ['name' => '%veloper%'];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
@@ -39,7 +39,7 @@ class LikeTest extends \CIUnitTestCase
 
 		$builder->like('name', 'veloper', 'none');
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name: ESCAPE '!'";
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE 'veloper' ESCAPE '!'";
 		$expectedBinds = ['name' => 'veloper'];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
@@ -54,7 +54,7 @@ class LikeTest extends \CIUnitTestCase
 
 		$builder->like('name', 'veloper', 'before');
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name: ESCAPE '!'";
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE '%veloper' ESCAPE '!'";
 		$expectedBinds = ['name' => '%veloper'];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
@@ -69,7 +69,7 @@ class LikeTest extends \CIUnitTestCase
 
 		$builder->like('name', 'veloper', 'after');
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name: ESCAPE '!'";
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE 'veloper%' ESCAPE '!'";
 		$expectedBinds = ['name' => 'veloper%'];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
@@ -84,7 +84,7 @@ class LikeTest extends \CIUnitTestCase
 
 		$builder->like('name', 'veloper')->orLike('name', 'ian');
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name: ESCAPE '!' OR  \"name\" LIKE :name0: ESCAPE '!'";
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE '%veloper%' ESCAPE '!' OR  \"name\" LIKE '%ian%' ESCAPE '!'";
 		$expectedBinds = [
 			'name'  => '%veloper%',
 			'name0' => '%ian%',
@@ -102,7 +102,7 @@ class LikeTest extends \CIUnitTestCase
 
 		$builder->notLike('name', 'veloper');
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" NOT LIKE :name: ESCAPE '!'";
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" NOT LIKE '%veloper%' ESCAPE '!'";
 		$expectedBinds = ['name' => '%veloper%'];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
@@ -117,7 +117,7 @@ class LikeTest extends \CIUnitTestCase
 
 		$builder->like('name', 'veloper')->orNotLike('name', 'ian');
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE :name: ESCAPE '!' OR  \"name\" NOT LIKE :name0: ESCAPE '!'";
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE '%veloper%' ESCAPE '!' OR  \"name\" NOT LIKE '%ian%' ESCAPE '!'";
 		$expectedBinds = [
 			'name'  => '%veloper%',
 			'name0' => '%ian%',
@@ -138,7 +138,7 @@ class LikeTest extends \CIUnitTestCase
 
 		$builder->like('name', 'VELOPER', 'both', null, true);
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE LOWER(name) LIKE :name: ESCAPE '!'";
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE LOWER(name) LIKE '%veloper%' ESCAPE '!'";
 		$expectedBinds = ['name' => '%veloper%'];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
