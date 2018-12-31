@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\CLI;
+<?php
+namespace CodeIgniter\CLI;
 
 use CodeIgniter\HTTP\UserAgent;
 use Config\Services;
@@ -9,7 +10,6 @@ class CommandRunnerTest extends \CIUnitTestCase
 {
 
 	private $stream_filter;
-
 	protected $env;
 	protected $config;
 	protected $request;
@@ -71,6 +71,38 @@ class CommandRunnerTest extends \CIUnitTestCase
 		// make sure the result looks like basic help
 		$this->assertContains('Displays basic usage information.', $result);
 		$this->assertContains('help command_name', $result);
+	}
+
+	public function testHelpCommand()
+	{
+		$this->runner->index(['help']);
+		$result = CITestStreamFilter::$buffer;
+
+		// make sure the result looks like basic help
+		$this->assertContains('Displays basic usage information.', $result);
+		$this->assertContains('help command_name', $result);
+	}
+
+	public function testHelpCommandDetails()
+	{
+		$this->runner->index(['help', 'session:migration']);
+		$result = CITestStreamFilter::$buffer;
+
+		// make sure the result looks like more detailed help
+		$this->assertContains('Description:', $result);
+		$this->assertContains('Usage:', $result);
+		$this->assertContains('Options:', $result);
+	}
+
+	public function testCommandProperties()
+	{
+		$this->runner->index(['help']);
+		$result   = CITestStreamFilter::$buffer;
+		$commands = $this->runner->getCommands();
+		$command  = new $commands['help']['class']($this->logger, $this->runner);
+
+		$this->assertEquals('Displays basic usage information.', $command->description);
+		$this->assertNull($command->notdescription);
 	}
 
 	public function testEmptyCommand()

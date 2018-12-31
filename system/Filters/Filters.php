@@ -204,7 +204,7 @@ class Filters
 	{
 		if ($this->initialized === true)
 		{
-			return;
+			return $this;
 		}
 
 		$this->processGlobals($uri);
@@ -242,9 +242,7 @@ class Filters
 	 */
 	public function addFilter(string $class, string $alias = null, string $when = 'before', string $section = 'globals')
 	{
-		$alias = is_null($alias)
-			? md5($class)
-			: $alias;
+		$alias = $alias ?? md5($class);
 
 		if (! isset($this->config->{$section}))
 		{
