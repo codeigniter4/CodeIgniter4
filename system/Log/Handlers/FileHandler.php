@@ -36,6 +36,8 @@
  * @filesource
  */
 
+use CodeIgniter\Log\Exceptions\LogException;
+
 /**
  * Log error messages to file system
  */
@@ -114,7 +116,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 
 		if (! $fp = @fopen($filepath, 'ab'))
 		{
-			return false;
+			throw LogException::forNotWritablePath($filepath);
 		}
 
 		// Instantiating DateTime with microseconds appended to initial date is needed for proper support of this format
@@ -138,7 +140,10 @@ class FileHandler extends BaseHandler implements HandlerInterface
 		{
 			if (($result = fwrite($fp, substr($msg, $written))) === false)
 			{
+				// if we get this far, we'll never see this during travis-ci
+				// @codeCoverageIgnoreStart
 				break;
+				// @codeCoverageIgnoreEnd
 			}
 		}
 
