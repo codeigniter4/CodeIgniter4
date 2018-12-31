@@ -13,8 +13,8 @@ and :doc:`images </libraries/images>`.
 Getting a File instance
 =======================
 
-You create a new File instance by passing in the path to the file in the constructor. 
-By default the file does not need to exist. However, you can pass an additional argument of "true" 
+You create a new File instance by passing in the path to the file in the constructor.
+By default the file does not need to exist. However, you can pass an additional argument of "true"
 to check that the file exist and throw ``FileNotFoundException()`` if it does not.
 
 ::
@@ -81,7 +81,7 @@ the type of file::
 
 Attempts to determine the file extension based on the trusted ``getMimeType()`` method. If the mime type is unknown,
 will return null. This is often a more trusted source than simply using the extension provided by the filename. Uses
-the values in **application/Config/Mimes.php** to determine extension::
+the values in **app/Config/Mimes.php** to determine extension::
 
 	// Returns 'jpg' (WITHOUT the period)
 	$ext = $file->guessExtension();

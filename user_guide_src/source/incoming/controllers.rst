@@ -31,7 +31,7 @@ and put the following code in it::
 	namespace App\Controllers;
         use CodeIgniter\Controller;
 
-	class Blog extends Controller 
+	class Blog extends Controller
         {
 		public function index()
 		{
@@ -39,7 +39,7 @@ and put the following code in it::
 		}
 	}
 
-Then save the file to your **/application/Controllers/** directory.
+Then save the file to your **/app/Controllers/** directory.
 
 .. important:: The file must be called 'Blog.php', with a capital 'B'.
 
@@ -91,7 +91,7 @@ Let's try it. Add a new method to your controller::
 	namespace App\Controllers;
         use CodeIgniter\Controller;
 
-	class Blog extends Controller 
+	class Blog extends Controller
         {
 
 		public function index()
@@ -126,7 +126,7 @@ Your method will be passed URI segments 3 and 4 ("sandals" and "123")::
 	namespace App\Controllers;
         use CodeIgniter\Controller;
 
-	class Products extends Controller 
+	class Products extends Controller
         {
 
 		public function shoes($sandals, $id)
@@ -145,7 +145,7 @@ Defining a Default Controller
 
 CodeIgniter can be told to load a default controller when a URI is not
 present, as will be the case when only your site root URL is requested.
-To specify a default controller, open your **application/Config/Routes.php**
+To specify a default controller, open your **app/Config/Routes.php**
 file and set this variable::
 
 	$routes->setDefaultController('Blog');
@@ -228,7 +228,7 @@ If you are building a large application you might want to hierarchically
 organize or structure your controllers into sub-directories. CodeIgniter
 permits you to do this.
 
-Simply create sub-directories under the main *application/Controllers/*
+Simply create sub-directories under the main *app/Controllers/*
 one and place your controller classes within them.
 
 .. note:: When using this feature the first segment of your URI must
@@ -244,7 +244,7 @@ one and place your controller classes within them.
 Each of your sub-directories may contain a default controller which will be
 called if the URL contains *only* the sub-directory. Simply put a controller
 in there that matches the name of your 'default_controller' as specified in
-your *application/Config/Routes.php* file.
+your *app/Config/Routes.php* file.
 
 CodeIgniter also permits you to remap your URIs using its :doc:`URI Routing <routing>` feature.
 
@@ -301,7 +301,7 @@ inside the controller::
 	namespace App\Controllers;
         use CodeIgniter\Controller;
 
-	class MyController extends Controller 
+	class MyController extends Controller
 	{
 		protected $helpers = ['url', 'form'];
 	}

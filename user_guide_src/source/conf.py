@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'CodeIgniter4'
-copyright = u'2014-2018 British Columbia Institute of Technology'
+copyright = u'2014-2019 British Columbia Institute of Technology'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

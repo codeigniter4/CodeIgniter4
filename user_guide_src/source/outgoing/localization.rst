@@ -14,10 +14,10 @@ CodeIgniter provides several tools to help you localize your application for dif
 localization of an application is a complex subject, it's simple to swap out strings in your application
 with different supported languages.
 
-Language strings are stored in the **application/Language** directory, with a sub-directory for each
+Language strings are stored in the **app/Language** directory, with a sub-directory for each
 supported language::
 
-    /application
+    /app
         /Language
             /en
                 app.php
@@ -42,7 +42,7 @@ to this can be found on the `W3C's site <https://www.w3.org/International/articl
 The system is smart enough to fallback to more generic language codes if an exact match
 cannot be found. If the locale code was set to **en-US** and we only have language files setup for **en**
 then those will be used since nothing exists for the more specific **en-US**. If, however, a language
-directory existed at **application/Language/en-US** then that would be used first.
+directory existed at **app/Language/en-US** then that would be used first.
 
 Locale Detection
 ================
@@ -271,7 +271,7 @@ If you have a set of messages for a given locale, for instance
 ``Language/en/app.php``, you can add language variants for that locale,
 each in its own folder, for instance ``Language/en-US/app.php``.
 
-You only need to provide values for those messages that would be 
+You only need to provide values for those messages that would be
 localized differently for that locale variant. Any missing message
 definitions will be automatically pulled from the main locale settings.
 
