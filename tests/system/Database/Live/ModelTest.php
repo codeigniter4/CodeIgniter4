@@ -45,6 +45,14 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testFindNoReturnsRow()
+	{
+		$model = new JobModel($this->db);
+		$this->assertNull($model->find(123));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testFindReturnsMultipleRows()
 	{
 		$model = new JobModel($this->db);
@@ -53,6 +61,15 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertEquals('Developer', $job[0]->name);
 		$this->assertEquals('Musician', $job[1]->name);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testFindNoReturnsMultipleRows()
+	{
+		$model = new JobModel($this->db);
+
+		$this->assertNull($model->find([123, 456]));
 	}
 
 	//--------------------------------------------------------------------
