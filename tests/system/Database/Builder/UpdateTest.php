@@ -25,7 +25,7 @@ class UpdateTest extends \CIUnitTestCase
 
 		$builder->where('id', 1)->update(['name' => 'Programmer'], null, null, true);
 
-		$expectedSQL   = 'UPDATE "jobs" SET "name" = :name: WHERE "id" = :id:';
+		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1';
 		$expectedBinds = [
 			'id'   => 1,
 			'name' => 'Programmer',
@@ -43,7 +43,7 @@ class UpdateTest extends \CIUnitTestCase
 
 		$builder->update(['name' => 'Programmer'], ['id' => 1], 5, true);
 
-		$expectedSQL   = 'UPDATE "jobs" SET "name" = :name: WHERE "id" = :id:  LIMIT 5';
+		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1  LIMIT 5';
 		$expectedBinds = [
 			'id'   => 1,
 			'name' => 'Programmer',
@@ -61,7 +61,7 @@ class UpdateTest extends \CIUnitTestCase
 
 		$builder->set('name', 'Programmer')->where('id', 1)->update(null, null, null, true);
 
-		$expectedSQL   = 'UPDATE "jobs" SET "name" = :name: WHERE "id" = :id:';
+		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1';
 		$expectedBinds = [
 			'id'   => 1,
 			'name' => 'Programmer',
@@ -177,7 +177,7 @@ WHERE "id" IN(2,3)';
 
 		$builder->update(['name' => 'foobar'], ['name' => 'Programmer'], null, true);
 
-		$expectedSQL   = 'UPDATE "jobs" SET "name" = :name: WHERE "name" = :name0:';
+		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'foobar\' WHERE "name" = \'Programmer\'';
 		$expectedBinds = [
 			'name'  => 'foobar',
 			'name0' => 'Programmer',
@@ -198,7 +198,7 @@ WHERE "id" IN(2,3)';
 			->where('name', 'Programmer')
 			->update(null, null, null, true);
 
-		$expectedSQL   = 'UPDATE "jobs" SET "name" = :name: WHERE "name" = :name0:';
+		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'foobar\' WHERE "name" = \'Programmer\'';
 		$expectedBinds = [
 			'name'  => 'foobar',
 			'name0' => 'Programmer',
@@ -218,7 +218,7 @@ WHERE "id" IN(2,3)';
 		$builder->where('name', 'Programmer')
 			->update(['name' => 'foobar'], null, null, true);
 
-		$expectedSQL   = 'UPDATE "jobs" SET "name" = :name0: WHERE "name" = :name:';
+		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'foobar\' WHERE "name" = \'Programmer\'';
 		$expectedBinds = [
 			'name'  => 'Programmer',
 			'name0' => 'foobar',
@@ -239,7 +239,7 @@ WHERE "id" IN(2,3)';
 			->where('id', 2)
 			->update(null, null, null, true);
 
-		$expectedSQL   = 'UPDATE "mytable" SET field = field+1 WHERE "id" = :id:';
+		$expectedSQL   = 'UPDATE "mytable" SET field = field+1 WHERE "id" = 2';
 		$expectedBinds = ['id' => 2];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
