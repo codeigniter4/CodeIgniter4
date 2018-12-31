@@ -67,7 +67,7 @@ if (! function_exists('form_open'))
 
 		if(is_array($attributes) && array_key_exists('csrf_id', $attributes))
 		{
-			$csrf_id = $attributes['csrf_id'];
+			$csrfId = $attributes['csrf_id'];
 			unset($attributes['csrf_id']);
 		}
 
@@ -90,7 +90,7 @@ if (! function_exists('form_open'))
 
 		if ((in_array('csrf', $before) || array_key_exists('csrf', $before)) && strpos($action, base_url()) !== false && ! stripos($form, 'method="get"'))
 		{
-			$form .= csrf_field($csrf_id ?? null);
+			$form .= csrf_field($csrfId ?? null);
 		}
 
 		if (is_array($hidden))
