@@ -55,16 +55,6 @@ class FileHandlerTest extends \CIUnitTestCase
 		$this->assertEquals($expectedResult, $line);
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\Log\Exceptions\LogException
-	 */
-	public function testNotWritable()
-	{
-		$config = ['path' => '//never work\\\\'];
-		$logger = new \CodeIgniter\Log\Handlers\FileHandler($config);
-		$this->assertTrue($logger->handle('warning', 'This is a test log'));
-	}
-
 	public function testHandleDateTimeCorrectly()
 	{
 		$config       = new LoggerConfig();
