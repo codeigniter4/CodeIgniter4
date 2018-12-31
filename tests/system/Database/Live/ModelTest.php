@@ -68,8 +68,10 @@ class ModelTest extends CIDatabaseTestCase
 	public function testFindNoReturnsMultipleRows()
 	{
 		$model = new JobModel($this->db);
+		$job   = $model->find([123, 456]);
 
-		$this->assertNull($model->find([123, 456]));
+		$this->assertNull($job[0]);
+		$this->assertNull($job[1]);
 	}
 
 	//--------------------------------------------------------------------
