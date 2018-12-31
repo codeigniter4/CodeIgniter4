@@ -70,8 +70,7 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new JobModel($this->db);
 		$job   = $model->find([123, 456]);
 
-		$this->assertNull($job[0]);
-		$this->assertNull($job[1]);
+		$this->assertEmpty($job);
 	}
 
 	//--------------------------------------------------------------------
