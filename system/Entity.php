@@ -267,21 +267,21 @@ class Entity
 			$value = $this->mutateDate($value);
 		}
 
-		$is_nullable = false;
-		$cast_to = false;
+		$isNullable = false;
+		$castTo = false;
 
 		if(array_key_exists($key, $this->_options['casts']))
 		{
-			$is_nullable = substr($this->_options['casts'][$key],0,1) === '?';
-			$cast_to = $is_nullable ? substr($this->_options['casts'][$key], 1) : $this->_options['casts'][$key];
+			$isNullable = substr($this->_options['casts'][$key],0,1) === '?';
+			$castTo = $isNullable ? substr($this->_options['casts'][$key], 1) : $this->_options['casts'][$key];
 		}
 
-		if(!$is_nullable || !is_null($value))
+		if(!$isNullable || !is_null($value))
 		{
 			// Array casting requires that we serialize the value
 			// when setting it so that it can easily be stored
 			// back to the database.
-			if ($cast_to === 'array')
+			if ($castTo === 'array')
 			{
 				$value = serialize($value);
 			}
@@ -289,7 +289,7 @@ class Entity
 			// JSON casting requires that we JSONize the value
 			// when setting it so that it can easily be stored
 			// back to the database.
-			if (($cast_to === 'json' || $cast_to === 'json-array') && function_exists('json_encode'))
+			if (($castTo === 'json' || $castTo === 'json-array') && function_exists('json_encode'))
 			{
 				$value = json_encode($value);
 			}
@@ -298,7 +298,7 @@ class Entity
 
 		// if a set* method exists for this key,
 		// use that method to insert this value.
-		// *) should be outside $is_nullable check - SO maybe wants to do sth with null value automatically
+		// *) should be outside $isNullable check - SO maybe wants to do sth with null value automatically
 		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 		if (method_exists($this, $method))
 		{
