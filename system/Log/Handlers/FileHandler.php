@@ -116,7 +116,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 
 		if (! $fp = @fopen($filepath, 'ab'))
 		{
-			throw LogException::forNotWritablePath($filepath);
+			return false;
 		}
 
 		// Instantiating DateTime with microseconds appended to initial date is needed for proper support of this format
