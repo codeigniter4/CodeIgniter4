@@ -22,10 +22,10 @@ Relocating your Application Directory
 
 It is possible to move your application directory to a different
 location on your server than your web root. To do so open
-your main **index.php** and set a *full server path* in the
-``$applicationDirectory`` variable::
+your main **app/Config/Paths.php** and set a *full server path* in the
+``$appDirectory`` variable::
 
-	$applicationDirectory = '/path/to/your/application';
+	$appDirectory = '/path/to/your/application';
 
 Running Multiple Applications with one CodeIgniter Installation
 ===============================================================
