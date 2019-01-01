@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Config;
 
-use Config\Email;
+use Config\Format;
 
 class ConfigTest extends \CIUnitTestCase
 {
