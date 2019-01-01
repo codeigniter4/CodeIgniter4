@@ -683,7 +683,7 @@ class ContentSecurityPolicy
 
 					$this->styleSrc[] = 'nonce-' . $nonce;
 
-					return "nonce={$nonce}";
+					return "nonce=\"{$nonce}\"";
 				}, $body
 		);
 
@@ -694,7 +694,7 @@ class ContentSecurityPolicy
 
 					$this->scriptSrc[] = 'nonce-' . $nonce;
 
-					return "nonce={$nonce}";
+					return "nonce=\"{$nonce}\"";
 				}, $body
 		);
 
