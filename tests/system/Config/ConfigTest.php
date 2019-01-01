@@ -7,8 +7,8 @@ class ConfigTest extends \CIUnitTestCase
 
 	public function testCreateSingleInstance()
 	{
-		$Config          = Config::get('Email', false);
-		$NamespaceConfig = Config::get('Config\\Email', false);
+		$Config          = Config::get('Format', false);
+		$NamespaceConfig = Config::get('Config\\Format', false);
 
 		$this->assertInstanceOf(Email::class, $Config);
 		$this->assertInstanceOf(Email::class, $NamespaceConfig);
@@ -23,8 +23,8 @@ class ConfigTest extends \CIUnitTestCase
 
 	public function testCreateSharedInstance()
 	{
-		$Config  = Config::get('Email' );
-		$Config2 = Config::get('Config\\Email');
+		$Config  = Config::get('Format' );
+		$Config2 = Config::get('Config\\Format');
 
 		$this->assertTrue($Config === $Config2);
 	}
