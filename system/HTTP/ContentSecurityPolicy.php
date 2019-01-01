@@ -799,12 +799,6 @@ class ContentSecurityPolicy
 	 */
 	protected function addToHeader(string $name, $values = null)
 	{
-		if (empty($values))
-		{
-			$this->tempHeaders[$name] = null;
-			return;
-		}
-
 		if (is_string($values))
 		{
 			$values = [$values => 0];

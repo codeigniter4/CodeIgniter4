@@ -16,7 +16,7 @@ class TextHelperTest extends \CIUnitTestCase
 
 	// --------------------------------------------------------------------
 
-	public function test_strip_slashes()
+	public function testStripSlashes()
 	{
 		$expected = [
 			"Is your name O'reilly?",
@@ -30,7 +30,7 @@ class TextHelperTest extends \CIUnitTestCase
 	}
 
 	// --------------------------------------------------------------------
-	public function test_strip_quotes()
+	public function testStripQuotes()
 	{
 		$strs = [
 			'"me oh my!"'    => 'me oh my!',
@@ -43,7 +43,7 @@ class TextHelperTest extends \CIUnitTestCase
 	}
 
 	// --------------------------------------------------------------------
-	public function test_quotes_to_entities()
+	public function testQuotesToEntities()
 	{
 		$strs = [
 			'"me oh my!"'    => '&quot;me oh my!&quot;',
@@ -56,7 +56,7 @@ class TextHelperTest extends \CIUnitTestCase
 	}
 
 	// --------------------------------------------------------------------
-	public function test_reduce_double_slashes()
+	public function testReduceDoubleSlashes()
 	{
 		$strs = [
 			'http://codeigniter.com'      => 'http://codeigniter.com',
@@ -70,7 +70,7 @@ class TextHelperTest extends \CIUnitTestCase
 	}
 
 	// --------------------------------------------------------------------
-	public function test_reduce_multiples()
+	public function testReduceMultiples()
 	{
 		$strs = [
 			'Fred, Bill,, Joe, Jimmy' => 'Fred, Bill, Joe, Jimmy',
@@ -91,7 +91,7 @@ class TextHelperTest extends \CIUnitTestCase
 	}
 
 	// --------------------------------------------------------------------
-	public function test_random_string()
+	public function testRandomString()
 	{
 		$this->assertEquals(16, strlen(random_string('alnum', 16)));
 		$this->assertEquals(16, strlen(random_string('alpha', 16)));
@@ -108,7 +108,7 @@ class TextHelperTest extends \CIUnitTestCase
 	}
 
 	// --------------------------------------------------------------------
-	public function test_increment_string()
+	public function testIncrementString()
 	{
 		$this->assertEquals('my-test_1', increment_string('my-test'));
 		$this->assertEquals('my-test-1', increment_string('my-test', '-'));
@@ -123,7 +123,7 @@ class TextHelperTest extends \CIUnitTestCase
 	// Functions from text_helper_test.php
 	// -------------------------------------------------------------------
 
-	public function test_word_limiter()
+	public function testWordLimiter()
 	{
 		$this->assertEquals('Once upon a time,&#8230;', word_limiter($this->_long_string, 4));
 		$this->assertEquals('Once upon a time,&hellip;', word_limiter($this->_long_string, 4, '&hellip;'));
@@ -133,7 +133,7 @@ class TextHelperTest extends \CIUnitTestCase
 	}
 
 	// ------------------------------------------------------------------------
-	public function test_character_limiter()
+	public function testCharacterLimiter()
 	{
 		$this->assertEquals('Once upon a time, a&#8230;', character_limiter($this->_long_string, 20));
 		$this->assertEquals('Once upon a time, a&hellip;', character_limiter($this->_long_string, 20, '&hellip;'));
@@ -142,7 +142,7 @@ class TextHelperTest extends \CIUnitTestCase
 	}
 
 	// ------------------------------------------------------------------------
-	public function test_ascii_to_entities()
+	public function testAsciiToEntities()
 	{
 		$strs = [
 			'“‘ “test” '     => '&#8220;&#8216; &#8220;test&#8221; ',
@@ -155,7 +155,7 @@ class TextHelperTest extends \CIUnitTestCase
 	}
 
 	// ------------------------------------------------------------------------
-	public function test_entities_to_ascii()
+	public function testEntitiesToAscii()
 	{
 		$strs = [
 			'&#8220;&#8216; &#8220;test&#8221; '                                                      => '“‘ “test” ',
@@ -181,7 +181,7 @@ class TextHelperTest extends \CIUnitTestCase
 	}
 
 	// ------------------------------------------------------------------------
-	public function test_convert_accented_characters()
+	public function testConvertAccentedCharacters()
 	{
 		//$this->ci_vfs_clone('application/Config/ForeignChars.php');
 		$this->assertEquals('AAAeEEEIIOOEUUUeY', convert_accented_characters('ÀÂÄÈÊËÎÏÔŒÙÛÜŸ'));
@@ -189,7 +189,7 @@ class TextHelperTest extends \CIUnitTestCase
 	}
 
 	// ------------------------------------------------------------------------
-	public function test_censored_words()
+	public function testCensoredWords()
 	{
 		$censored = [
 			'boob',
@@ -214,14 +214,14 @@ class TextHelperTest extends \CIUnitTestCase
 	}
 
 	// ------------------------------------------------------------------------
-	public function test_highlight_code()
+	public function testHighlightCode()
 	{
 		$expect = "<code><span style=\"color: #000000\">\n<span style=\"color: #0000BB\">&lt;?php&nbsp;var_dump</span><span style=\"color: #007700\">(</span><span style=\"color: #0000BB\">\$this</span><span style=\"color: #007700\">);&nbsp;</span><span style=\"color: #0000BB\">?&gt;&nbsp;</span>\n</span>\n</code>";
 		$this->assertEquals($expect, highlight_code('<?php var_dump($this); ?>'));
 	}
 
 	// ------------------------------------------------------------------------
-	public function test_highlight_phrase()
+	public function testHighlightPhrase()
 	{
 		$strs = [
 			'this is a phrase'        => '<mark>this is</mark> a phrase',
@@ -238,7 +238,7 @@ class TextHelperTest extends \CIUnitTestCase
 	}
 
 	// ------------------------------------------------------------------------
-	public function test_ellipsize()
+	public function testEllipsize()
 	{
 		$strs = [
 			'0'  => [
@@ -313,7 +313,7 @@ class TextHelperTest extends \CIUnitTestCase
 	}
 
 	// ------------------------------------------------------------------------
-	public function test_default_word_wrap_charlim()
+	public function testDefaultWordWrapCharlim()
 	{
 		$string = 'Here is a longer string of text that will help us demonstrate the default charlim of this function.';
 		$this->assertEquals(strpos(word_wrap($string), "\n"), 73);
@@ -321,7 +321,7 @@ class TextHelperTest extends \CIUnitTestCase
 
 	// -----------------------------------------------------------------------
 
-	public function test_excerpt()
+	public function testExcerpt()
 	{
 		$string = $this->_long_string;
 		$result = ' Once upon a time, a framework had no tests. It sad  So some nice people began to write tests. The more time that went on, the happier it became. ...';
@@ -330,7 +330,7 @@ class TextHelperTest extends \CIUnitTestCase
 
 	// -----------------------------------------------------------------------
 
-	public function test_excerpt_radius()
+	public function testExcerptRadius()
 	{
 		$string = $this->_long_string;
 		$phrase = 'began';
@@ -340,7 +340,7 @@ class TextHelperTest extends \CIUnitTestCase
 
 	// -----------------------------------------------------------------------
 
-	public function test_alternator()
+	public function testAlternator()
 	{
 		$phrase = ' scream! ';
 		$result = '';
@@ -352,7 +352,7 @@ class TextHelperTest extends \CIUnitTestCase
 		$this->assertEquals('I scream! you scream! we scream! I scream! ', $result);
 	}
 
-	public function test_empty_alternator()
+	public function testEmptyAlternator()
 	{
 		$phrase = ' scream! ';
 		$result = '';
