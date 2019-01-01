@@ -4,6 +4,8 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIDatabaseTestCase;
 use CodeIgniter\Test\ReflectionHelper;
+use Config\Database;
+use Myth\Auth\Entities\User;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
@@ -802,5 +804,18 @@ class ModelTest extends CIDatabaseTestCase
 		]);
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1617
+	 */
+	public function testCountAllResultsRespectsSoftDeletes()
+	{
+		$model = new UserModel();
+
+		// testSeeder has 4 users....
+		$this->assertEquals(4, $model->countAllResults());
+
+		$model->where('name', 'Derek Jones')->delete();
+
+		$this->assertEquals(3, $model->countAllResults());
+	}
 }

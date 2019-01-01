@@ -215,7 +215,7 @@ Miscellaneous Functions
 	:returns: TRUE if was logged succesfully or FALSE if there was a problem logging it
 	:rtype: bool
 
-	Logs a message using the Log Handlers defined in **application/Config/Logger.php**.
+	Logs a message using the Log Handlers defined in **app/Config/Logger.php**.
 
 	Level can be one of the following values: **emergency**, **alert**, **critical**, **error**, **warning**,
 	**notice**, **info**, or **debug**.

@@ -40,7 +40,7 @@ You can grab an instance of the cache engine directly through the Services class
 Configuring the Cache
 =====================
 
-All configuration for the cache engine is done in **application/Config/Cache.php**. In that file,
+All configuration for the cache engine is done in **app/Config/Cache.php**. In that file,
 the following items are available.
 
 **$handler**

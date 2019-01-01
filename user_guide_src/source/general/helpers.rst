@@ -24,8 +24,8 @@ in your :doc:`controller </incoming/controllers>` and
 :doc:`views </outgoing/views>`.
 
 Helpers are typically stored in your **system/Helpers**, or
-**application/Helpers directory**. CodeIgniter will look first in your
-**application/Helpers directory**. If the directory does not exist or the
+**app/Helpers directory**. CodeIgniter will look first in your
+**app/Helpers directory**. If the directory does not exist or the
 specified helper is not located there CI will instead look in your
 global *system/Helpers/* directory.
 
@@ -64,7 +64,7 @@ it.
 Loading from Non-standard Locations
 -----------------------------------
 
-Helpers can be loaded from directories outside of **application/Helpers** and
+Helpers can be loaded from directories outside of **app/Helpers** and
 **system/Helpers**, as long as that path can be found through a namespace that
 has been setup within the PSR-4 section of the :doc:`Autoloader config file <../concepts/autoloader>`.
 You would prefix the name of the Helper with the namespace that it can be located
@@ -100,7 +100,7 @@ URI to the controller/method you wish to link to.
 "Extending" Helpers
 ===================
 
-To "extend" Helpers, create a file in your **application/Helpers/** folder
+To "extend" Helpers, create a file in your **app/Helpers/** folder
 with an identical name to the existing Helper.
 
 If all you need to do is add some functionality to an existing helper -
@@ -114,7 +114,7 @@ your version. In this case it's better to simply "extend" the Helper.
 	add to or or to replace the functions a Helper provides.
 
 For example, to extend the native **Array Helper** you'll create a file
-named **application/Helpers/array_helper.php**, and add or override
+named **app/Helpers/array_helper.php**, and add or override
 functions::
 
 	// any_in_array() is not in the Array Helper, so it defines a new function
@@ -140,12 +140,12 @@ functions::
 		return array_pop($array);
 	}
 
-The **helper()** method will scan through all PSR-4 namespaces defined in **application/Config/Autoload.php**
+The **helper()** method will scan through all PSR-4 namespaces defined in **app/Config/Autoload.php**
 and load in ALL matching helpers of the same name. This allows any module's helpers
 to be loaded, as well as any helpers you've created specifically for this application. The load order
 is as follows:
 
-1. application/Helpers - Files loaded here are always loaded first.
+1. app/Helpers - Files loaded here are always loaded first.
 2. {namespace}/Helpers - All namespaces are looped through in the order they are defined.
 3. system/Helpers - The base file is loaded last
 

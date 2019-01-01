@@ -36,7 +36,7 @@ class Autoload extends \CodeIgniter\Config\AutoloadConfig
 		 * to their location on the file system. These are used by the
 		 * Autoloader to locate files the first time they have been instantiated.
 		 *
-		 * The '/application' and '/system' directories are already mapped for
+		 * The '/app' and '/system' directories are already mapped for
 		 * you. You may change the name of the 'App' namespace if you wish,
 		 * but this should be done prior to creating any namespaced classes,
 		 * else you will need to modify all of those classes for this to work.

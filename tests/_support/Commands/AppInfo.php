@@ -17,4 +17,20 @@ class AppInfo extends BaseCommand
 		CLI::write('CI Version: ' . CLI::color(CodeIgniter::CI_VERSION, 'red'));
 	}
 
+	public function bomb()
+	{
+		try
+		{
+			CLI::color('test', 'white', 'Background');
+		}
+		catch (\RuntimeException $oops)
+		{
+			$this->showError($oops);
+		}
+	}
+
+	public function helpme()
+	{
+		$this->call('help');
+	}
 }

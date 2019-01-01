@@ -9,7 +9,7 @@ use CodeIgniter\I18n\Time;
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2018 British Columbia Institute of Technology
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ use CodeIgniter\I18n\Time;
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
@@ -428,7 +428,14 @@ class Entity
 
 	protected function castAs($value, string $type)
 	{
-		if(substr($type,0,1) === '?' && $value === null) return null;
+		if(substr($type,0,1) === '?')
+		{
+			if($value === null)
+			{
+				return null;
+			}
+			$type = substr($type,1);
+		}
 
 		switch($type)
 		{

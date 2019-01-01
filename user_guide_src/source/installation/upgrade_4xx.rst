@@ -7,12 +7,12 @@ It is more appropriate to think of converting your app, rather than upgrading it
 Once you have done that, upgrading from one version of CodeIgniter 4 to the next
 will be straightforward.
 
-The "lean, mean and simple" philosophy has been retained, but the 
+The "lean, mean and simple" philosophy has been retained, but the
 implementation has a lot of differences, compared to CodeIgniter 3.
 
 There is no 12-step checklist for upgrading. Instead, start with a copy
-of CodeIgniter 4 in a new project folder, 
-:doc:`however you wish to install and use it </installation/index>`, 
+of CodeIgniter 4 in a new project folder,
+:doc:`however you wish to install and use it </installation/index>`,
 and then convert and integrate your app components.
 We'll try to point out the most important considerations here.
 
@@ -34,7 +34,7 @@ subforum for an uptodate list!
 
 **Application Structure**
 
-- The framework still has ``application`` and ``system`` folders, with the same 
+- The framework still has ``app`` and ``system`` folders, with the same
   interpretation as before
 - The framework now provides for a ``public`` folder, intended as the document
   root for your app
@@ -91,7 +91,7 @@ subforum for an uptodate list!
 
 **Libraries**
 
-- Your app classes can still go inside ``application/Libraries``, but they
+- Your app classes can still go inside ``app/Libraries``, but they
   don't have to
 - Instead of CI3's ``$this->load->library(x);`` you can now use
   ``$this->x = new X();``, following namespaced conventions for your
@@ -108,5 +108,5 @@ subforum for an uptodate list!
 - You don't need ``MY_x`` classes inside your libraries folder
   to extend or replace CI4 pieces
 - Make any such classes where you like, and add appropriate
-  service methods in ``application/Config/Services.php`` to load
+  service methods in ``app/Config/Services.php`` to load
   your components instead of the default ones

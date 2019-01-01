@@ -45,7 +45,7 @@ you. Once the tag is in place, your pages will begin being cached.
 	your output, you have to manually delete your cache files.
 
 .. note:: Before the cache files can be written you must set the cache
-	engine up by editing **application/Config/Cache.php**.
+	engine up by editing **app/Config/Cache.php**.
 
 Deleting Caches
 ===============

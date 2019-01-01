@@ -26,6 +26,43 @@ class Toolbar extends BaseConfig
 		\CodeIgniter\Debug\Toolbar\Collectors\Routes::class,
 		\CodeIgniter\Debug\Toolbar\Collectors\Events::class,
 	];
+
+	/*
+	|--------------------------------------------------------------------------
+	| Max History
+	|--------------------------------------------------------------------------
+	| The Toolbar allows you to view recent requests that have been made to
+	| the application while the toolbar is active. This allows you to quickly
+	| view and compare multiple requests.
+	|
+	| $maxHistory sets a limit on the number of past requests that are stored,
+	| helping to conserve file space used to store them. You can set it to
+	| 0 (zero) to not have any history stored, or -1 for unlimited history.
+	|
+	*/
 	public $maxHistory = 20;
-	public $viewsPath  = SYSTEMPATH . 'Debug/Toolbar/Views/';
+
+	/*
+	|--------------------------------------------------------------------------
+	| Toolbar Views Path
+	|--------------------------------------------------------------------------
+	| The full path to the the views that are used by the toolbar.
+	| MUST have a trailing slash.
+	|
+	*/
+	public $viewsPath = SYSTEMPATH . 'Debug/Toolbar/Views/';
+
+	/*
+	|--------------------------------------------------------------------------
+	| Max Queries
+	|--------------------------------------------------------------------------
+	| If the Database Collector is enabled, it will log every query that the
+	| the system generates so they can be displayed on the toolbar's timeline
+	| and in the query log. This can lead to memory issues in some instances
+	| with hundreds of queries.
+	|
+	| $maxQueries defines the maximum amount of queries that will be stored.
+	|
+	*/
+	public $maxQueries = 100;
 }

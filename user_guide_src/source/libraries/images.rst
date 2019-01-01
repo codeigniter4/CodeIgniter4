@@ -37,7 +37,7 @@ The available Handlers are as follows:
 - imagick   The ImageMagick library.
 
 If using the ImageMagick library, you must set the path to the library on your
-server in **application/Config/Images.php**.
+server in **app/Config/Images.php**.
 
 .. note:: The ImageMagick handler does NOT require the imagick extension to be
         loaded on the server. As long as your script can access the library

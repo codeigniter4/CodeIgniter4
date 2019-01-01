@@ -43,7 +43,7 @@ Test Database Setup
 
 When running database tests, you need to provide a database that can be used during testing. Instead of
 using the PHPUnit built-in database features, the framework provides tools specific to CodeIgniter. The first
-step is to ensure that you have a ``tests`` database group setup in **application/Config/Database.php**.
+step is to ensure that you have a ``tests`` database group setup in **app/Config/Database.php**.
 This specifies a database connection that is only used while running tests, to keep your other data safe.
 
 If you have multiple developers on your team, you will likely want to keep your credentials store in
