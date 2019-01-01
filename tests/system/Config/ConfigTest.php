@@ -10,8 +10,8 @@ class ConfigTest extends \CIUnitTestCase
 		$Config          = Config::get('Format', false);
 		$NamespaceConfig = Config::get('Config\\Format', false);
 
-		$this->assertInstanceOf(Email::class, $Config);
-		$this->assertInstanceOf(Email::class, $NamespaceConfig);
+		$this->assertInstanceOf(Format::class, $Config);
+		$this->assertInstanceOf(Format::class, $NamespaceConfig);
 	}
 
 	public function testCreateInvalidInstance()
