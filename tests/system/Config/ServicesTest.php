@@ -108,26 +108,6 @@ class ServicesTest extends \CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\HTTP\CLIRequest::class, $actual);
 	}
 
-	public function testNewEmail()
-	{
-		$actual = Services::email();
-		$this->assertInstanceOf(\CodeIgniter\Email\Email::class, $actual);
-
-		$actual->fromName = 'Zoboomafoo';
-		$this->assertEquals('Zoboomafoo', Services::email()->fromName);
-		$this->assertEquals('Zoboomafoo', Services::email(new \Config\Email())->fromName);
-	}
-
-	public function testNewUnsharedEmail()
-	{
-		$actual = Services::email(null, false);
-		$this->assertInstanceOf(\CodeIgniter\Email\Email::class, $actual);
-
-		$actual->fromName = 'Zoboomafoo';
-		$this->assertEquals('', Services::email(null, false)->fromName);
-		$this->assertEquals('', Services::email(new \Config\Email(), false)->fromName);
-	}
-
 	public function testNewLanguage()
 	{
 		$actual = Services::language();
