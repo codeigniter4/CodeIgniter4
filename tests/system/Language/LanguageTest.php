@@ -236,7 +236,6 @@ class LanguageTest extends \CIUnitTestCase
 			['Cast'],
 			['Core'],
 			['Database'],
-			['Email'],
 			['Files'],
 			['Filters'],
 			['Format'],
