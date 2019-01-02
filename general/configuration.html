@@ -230,20 +230,19 @@ create an instance of the class and all your settings are there for you.</p>
 <p>You can access config files within your classes by creating a new instance or using the config function. All of the properties
 are public, so you access the settings like any other property:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Creating new class by hand</span>
-<span class="nv">$config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Config\EmailConfig</span><span class="p">();</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Config\Pager</span><span class="p">();</span>
 
 <span class="c1">// Creating new class with config function</span>
-<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span> <span class="s1">&#39;EmailConfig&#39;</span><span class="p">,</span> <span class="k">false</span> <span class="p">);</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span> <span class="s1">&#39;Pager&#39;</span><span class="p">,</span> <span class="k">false</span> <span class="p">);</span>
 
 <span class="c1">// Get shared instance with config function</span>
-<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span> <span class="s1">&#39;EmailConfig&#39;</span> <span class="p">);</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span> <span class="s1">&#39;Pager&#39;</span> <span class="p">);</span>
 
 <span class="c1">// Access config class with namespace</span>
-<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span> <span class="s1">&#39;Config\\EmailConfig&#39;</span> <span class="p">);</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span> <span class="s1">&#39;Config\\Pager&#39;</span> <span class="p">);</span>
 
 <span class="c1">// Access settings as class properties</span>
-<span class="nv">$protocol</span> <span class="o">=</span> <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">protocol</span><span class="p">;</span>
-<span class="nv">$mailpath</span> <span class="o">=</span> <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">mailpath</span><span class="p">;</span>
+<span class="nv">$pageSize</span> <span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">perPage</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>If no namespace is provided, it will look for the files in all available namespaces that have
@@ -460,7 +459,7 @@ by treating <cite>RegionalSalesModel</cite> as a &#8220;registrar&#8221;. The re
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Dec 30, 2018.
+      Last updated on Jan 01, 2019.
 
     </p>
   </div>

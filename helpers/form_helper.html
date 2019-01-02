@@ -309,6 +309,13 @@ parameter, like this:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;http://example.com/index.php/email/send&quot;</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;email&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;myform&quot;</span><span class="o">&gt;</span>
 </pre></div>
 </div>
+<p>If CSRF filter is turned on <cite>form_open()</cite> will generate CSRF field at the beginning of the form. You can specify ID of this field by passing csrf_id as one of the $attribute array:</p>
+<blockquote>
+<div>form_open(&#8216;/u/sign-up&#8217;, [&#8216;csrf_id&#8217; =&gt; &#8216;my-id&#8217;]);</div></blockquote>
+<p>will return:</p>
+<blockquote>
+<div>&lt;form action=&#8221;/u/sign-up&#8221; method=&#8221;post&#8221; accept-charset=&#8221;utf-8&#8221;&gt;
+&lt;input type=&#8221;hidden&#8221; id=&#8221;my-id&#8221; name=&#8221;csrf_field&#8221; value=&#8221;964ede6e0ae8a680f7b8eab69136717d&#8221; /&gt;</div></blockquote>
 </div></blockquote>
 <p><strong>Adding Hidden Input Fields</strong></p>
 <blockquote>
@@ -1233,7 +1240,7 @@ class instead of the generic helper function.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Dec 30, 2018.
+      Last updated on Jan 01, 2019.
 
     </p>
   </div>
