@@ -281,19 +281,24 @@ of the columns in $table, while the array's values are the values to save for th
 
 Multiple records may be updated with a single call by passing an array of primary keys as the first parameter::
 
-    $data = [
-		'active' => 1
-	];
+    $data = ['active' => 1];
 
 	$userModel->update([1, 2, 3], $data);
 
-When you need a more flexible solution, you can leaven the parameters empty and it functions like the Query Builder's
-update command, with the added benefit of validation, events, etc::
+When you need a more flexible solution, you can:
+- leave the parameters empty and it functions like the Query Builder's update command, with the added benefit of validation, events, etc::
 
     $userModel
         ->whereIn('id', [1,2,3])
         ->set(['active' => 1]
         ->update();
+
+- pass more details about records which should be updated in the first parameter::
+
+	// Performs an update for `table`.`type` = 1 AND `table`.`mode` IN(2,3)
+	$userModel->update(['type' => 1, 'mode' => [2, 3]], $data);
+	
+	
 
 **save()**
 
@@ -396,6 +401,11 @@ a permanent delete by setting the second parameter as true.
 An array of primary keys can be passed in as the first parameter to delete multiple records at once::
 
     $userModel->delete([1,2,3]);
+    
+When you need a more flexible solution, you can pass more details about records which should be deleted in the first parameter::
+
+	// Performs an delete for `table`.`foo` = 1 AND `table`.`active` IN(-1,2)
+	$userModel->update(['foo' => 1, 'active' => [-1, 2]], $data);
 
 If no parameters are passed in, will act like the Query Builder's delete method, requiring a where call
 previously::
