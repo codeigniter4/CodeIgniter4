@@ -151,34 +151,6 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
-	 * The Email class allows you to send email via mail, sendmail, SMTP.
-	 *
-	 * @param null    $config
-	 * @param boolean $getShared
-	 *
-	 * @return \CodeIgniter\Email\Email|mixed
-	 */
-	public static function email($config = null, bool $getShared = true)
-	{
-		if ($getShared)
-		{
-			return static::getSharedInstance('email', $config);
-		}
-
-		if (empty($config))
-		{
-			$config = new \Config\Email();
-		}
-
-		$email = new \CodeIgniter\Email\Email($config);
-		$email->setLogger(static::logger(true));
-
-		return $email;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * The Exceptions class holds the methods that handle:
 	 *
 	 *  - set_exception_handler

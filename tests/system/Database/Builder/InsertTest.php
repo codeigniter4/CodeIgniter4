@@ -28,7 +28,7 @@ class InsertTest extends \CIUnitTestCase
 		];
 		$builder->insert($insertData, true, true);
 
-		$expectedSQL   = 'INSERT INTO "jobs" ("id", "name") VALUES (:id:, :name:)';
+		$expectedSQL   = 'INSERT INTO "jobs" ("id", "name") VALUES (1, \'Grocery Sales\')';
 		$expectedBinds = $insertData;
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));

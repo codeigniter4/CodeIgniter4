@@ -21,7 +21,7 @@ class WhereTest extends \CIUnitTestCase
 	{
 		$builder = $this->db->table('users');
 
-		$expectedSQL   = 'SELECT * FROM "users" WHERE "id" = :id:';
+		$expectedSQL   = 'SELECT * FROM "users" WHERE "id" = 3';
 		$expectedBinds = ['id' => 3];
 
 		$builder->where('id', 3);
@@ -35,7 +35,7 @@ class WhereTest extends \CIUnitTestCase
 	{
 		$builder = $this->db->table('users');
 
-		$expectedSQL   = 'SELECT * FROM "users" WHERE id = :id:';
+		$expectedSQL   = 'SELECT * FROM "users" WHERE id = 3';
 		$expectedBinds = ['id' => 3];
 
 		$builder->where('id', 3, false);
@@ -49,7 +49,7 @@ class WhereTest extends \CIUnitTestCase
 	{
 		$builder = $this->db->table('users');
 
-		$expectedSQL   = 'SELECT * FROM "users" WHERE "id" != :id:';
+		$expectedSQL   = 'SELECT * FROM "users" WHERE "id" != 3';
 		$expectedBinds = ['id' => 3];
 
 		$builder->where('id !=', 3);
@@ -68,7 +68,7 @@ class WhereTest extends \CIUnitTestCase
 			'name !=' => 'Accountant',
 		];
 
-		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "id" = :id: AND "name" != :name:';
+		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "id" = 2 AND "name" != \'Accountant\'';
 		$expectedBinds = [
 			'id'   => 2,
 			'name' => 'Accountant',
@@ -104,7 +104,7 @@ class WhereTest extends \CIUnitTestCase
 		$builder->where('name !=', 'Accountant')
 				->orWhere('id >', 3);
 
-		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" != :name: OR "id" > :id:';
+		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" != \'Accountant\' OR "id" > 3';
 		$expectedBinds = [
 			'name' => 'Accountant',
 			'id'   => 3,
@@ -123,7 +123,7 @@ class WhereTest extends \CIUnitTestCase
 		$builder->where('name', 'Accountant')
 				->orWhere('name', 'foobar');
 
-		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" = :name: OR "name" = :name0:';
+		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" = \'Accountant\' OR "name" = \'foobar\'';
 		$expectedBinds = [
 			'name'  => 'Accountant',
 			'name0' => 'foobar',
@@ -141,7 +141,7 @@ class WhereTest extends \CIUnitTestCase
 
 		$builder->whereIn('name', ['Politician', 'Accountant']);
 
-		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" IN :name:';
+		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" IN (\'Politician\',\'Accountant\')';
 		$expectedBinds = [
 			'name' => [
 				'Politician',
@@ -161,7 +161,7 @@ class WhereTest extends \CIUnitTestCase
 
 		$builder->whereNotIn('name', ['Politician', 'Accountant']);
 
-		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" NOT IN :name:';
+		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" NOT IN (\'Politician\',\'Accountant\')';
 		$expectedBinds = [
 			'name' => [
 				'Politician',
@@ -181,7 +181,7 @@ class WhereTest extends \CIUnitTestCase
 
 		$builder->where('id', 2)->orWhereIn('name', ['Politician', 'Accountant']);
 
-		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "id" = :id: OR "name" IN :name:';
+		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "id" = 2 OR "name" IN (\'Politician\',\'Accountant\')';
 		$expectedBinds = [
 			'id'   => 2,
 			'name' => [
@@ -202,7 +202,7 @@ class WhereTest extends \CIUnitTestCase
 
 		$builder->where('id', 2)->orWhereNotIn('name', ['Politician', 'Accountant']);
 
-		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "id" = :id: OR "name" NOT IN :name:';
+		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "id" = 2 OR "name" NOT IN (\'Politician\',\'Accountant\')';
 		$expectedBinds = [
 			'id'   => 2,
 			'name' => [

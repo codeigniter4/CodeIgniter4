@@ -190,17 +190,6 @@ class Language
 	 */
 	protected function parseLine(string $line, string $locale): array
 	{
-		// If there's no possibility of a filename being in the string
-		// simply return the string, and they can parse the replacement
-		// without it being in a file.
-		if (strpos($line, '.') === false)
-		{
-			return [
-				null,
-				$line,
-			];
-		}
-
 		$file = substr($line, 0, strpos($line, '.'));
 		$line = substr($line, strlen($file) + 1);
 

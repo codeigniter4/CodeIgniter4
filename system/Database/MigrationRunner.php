@@ -322,7 +322,7 @@ class MigrationRunner
 		}
 
 		// Get all namespaces form  PSR4 paths.
-		$config     = new Autoload();
+		$config     = config('Autoload');
 		$namespaces = $config->psr4;
 
 		foreach ($namespaces as $namespace => $path)

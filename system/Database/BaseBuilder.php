@@ -1399,10 +1399,31 @@ class BaseBuilder
 			$this->resetSelect();
 		}
 
-		return $select;
+		return $this->compileFinalQuery($select);
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a finalized, compiled query string with the bindings
+	 * inserted and prefixes swapped out.
+	 *
+	 * @param string $sql
+	 *
+	 * @return mixed|string
+	 */
+	protected function compileFinalQuery(string $sql): string
+	{
+		$query = new Query($this->db);
+		$query->setQuery($sql, $this->binds);
+
+		if (! empty($this->db->swapPre) && ! empty($this->db->DBPrefix))
+		{
+			$query->swapPrefix($this->db->DBPrefix, $this->db->swapPre);
+		}
+
+		return $query->getQuery();
+	}
 
 	/**
 	 * Get
@@ -1741,7 +1762,7 @@ class BaseBuilder
 			$this->resetWrite();
 		}
 
-		return $sql;
+		return $this->compileFinalQuery($sql);
 	}
 
 	//--------------------------------------------------------------------
@@ -1931,7 +1952,7 @@ class BaseBuilder
 			$this->resetWrite();
 		}
 
-		return $sql;
+		return $this->compileFinalQuery($sql);
 	}
 
 	//--------------------------------------------------------------------
@@ -2312,7 +2333,7 @@ class BaseBuilder
 		$sql                   = $this->delete($table, '', null, $reset);
 		$this->returnDeleteSQL = false;
 
-		return $sql;
+		return $this->compileFinalQuery($sql);
 	}
 
 	//--------------------------------------------------------------------
