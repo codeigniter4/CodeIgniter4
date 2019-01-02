@@ -78,11 +78,11 @@ class Entity
 	protected $_original = [];
 
 	/**
-	 * Holds info whenever prperties have to be casted
+	 * Holds info whenever properties have to be casted or magic method should be used.
 	 *
 	 * @var boolean
 	 **/
-	private $_cast = true;
+	private $_raw = true;
 
 	/**
 	 * Allows filling in Entity parameters during construction.
@@ -150,13 +150,13 @@ class Entity
 	 * applied to them.
 	 *
 	 * @param boolean $onlyChanged If true, only return values that have changed since object creation
-	 * @param boolean $cast        If true, properties will be casted.
+	 * @param boolean $raw        If true, properties will be casted / and getMyProperty will be used.
 	 *
 	 * @return array
 	 */
-	public function toArray(bool $onlyChanged = false, bool $cast = true): array
+	public function toArray(bool $onlyChanged = false, bool $raw = true): array
 	{
-		$this->_cast = $cast;
+		$this->_raw = $raw;
 		$return      = [];
 
 		// we need to loop over our properties so that we
@@ -186,7 +186,7 @@ class Entity
 				$return[$from] = $this->__get($to);
 			}
 		}
-		$this->_cast = true;
+		$this->_raw = true;
 		return $return;
 	}
 
@@ -215,7 +215,7 @@ class Entity
 
 		// if a set* method exists for this key,
 		// use that method to insert this value.
-		if (method_exists($this, $method))
+		if ($this->_raw && method_exists($this, $method))
 		{
 			$result = $this->$method();
 		}
@@ -226,21 +226,21 @@ class Entity
 		{
 			$result = $this->$key;
 		}
-
 		// Do we need to mutate this into a date?
 		if (in_array($key, $this->_options['dates']))
 		{
 			$result = $this->mutateDate($result);
 		}
 		// Or cast it as something?
-		else if ($this->_cast && isset($this->_options['casts'][$key]) && ! empty($this->_options['casts'][$key]))
+		else if ($this->_raw && isset($this->_options['casts'][$key]) && ! empty($this->_options['casts'][$key]))
 		{
 			$result = $this->castAs($result, $this->_options['casts'][$key]);
+
 		}
 
 		return $result;
 	}
-
+	
 	//--------------------------------------------------------------------
 
 	/**
