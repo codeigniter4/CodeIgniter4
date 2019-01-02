@@ -405,7 +405,7 @@ An array of primary keys can be passed in as the first parameter to delete multi
 When you need a more flexible solution, you can pass more details about records which should be deleted in the first parameter::
 
 	// Performs an delete for `table`.`foo` = 1 AND `table`.`active` IN(-1,2)
-	$userModel->update(['foo' => 1, 'active' => [-1, 2]], $data);
+	$userModel->delete(['foo' => 1, 'active' => [-1, 2]], $data);
 
 If no parameters are passed in, will act like the Query Builder's delete method, requiring a where call
 previously::
