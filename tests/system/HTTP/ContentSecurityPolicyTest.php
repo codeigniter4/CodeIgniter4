@@ -22,9 +22,9 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 		$this->csp = $this->response->CSP;
 	}
 
-	protected function work()
+	protected function work(string $parm = 'Hello')
 	{
-		$body = 'Hello';
+		$body = $parm;
 		$this->response->setBody($body);
 		$this->response->setCookie('foo', 'bar');
 
@@ -406,6 +406,55 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 
 		$result = $this->getHeaderEmitted('Content-Security-Policy');
 		$this->assertContains('upgrade-insecure-requests;', $result);
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testBodyEmpty()
+	{
+		$this->prepare();
+		$body = '';
+		$this->response->setBody($body);
+		$this->csp->finalize($this->response);
+		$this->assertEquals($body, $this->response->getBody());
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testBodyScriptNonce()
+	{
+		$this->prepare();
+		$body = 'Blah blah {csp-script-nonce} blah blah';
+		$this->response->setBody($body);
+		$this->csp->addScriptSrc('cdn.cloudy.com');
+
+		$result = $this->work($body);
+
+		$this->assertContains('nonce=', $this->response->getBody());
+		$result = $this->getHeaderEmitted('Content-Security-Policy');
+		$this->assertContains('nonce-', $result);
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testBodyStyleNonce()
+	{
+		$this->prepare();
+		$body = 'Blah blah {csp-style-nonce} blah blah';
+		$this->response->setBody($body);
+		$this->csp->addStyleSrc('cdn.cloudy.com');
+
+		$result = $this->work($body);
+
+		$this->assertContains('nonce=', $this->response->getBody());
+		$result = $this->getHeaderEmitted('Content-Security-Policy');
+		$this->assertContains('nonce-', $result);
 	}
 
 }
