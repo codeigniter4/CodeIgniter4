@@ -35,7 +35,7 @@ class Paths
 	 *
 	 * NO TRAILING SLASH!
 	 */
-	public $appDirectory = __DIR__ . '/../../app';
+	public $appDirectory = __DIR__ . '/..';
 
 	/*
 	 * ---------------------------------------------------------------
