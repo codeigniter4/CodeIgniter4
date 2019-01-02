@@ -680,15 +680,64 @@ class Model
 	}
 
 	//--------------------------------------------------------------------
+	
+	/**
+	 * @param $id integer|string|array|null:
+	 * 		int|string:  WHERE $this->table.$this->primaryKey = $id
+	 * 		indexed array: WHERE $this->table.$this->primaryKey IN ([2,3]) <i.e.: $id = [2,3]>
+	 * 		associative array: WHERE $this->table.key1 = 1 AND $this->table.key2 IN([2,3]) <i.e.: $id = [key1 => 1, key2 => [2,3]]>  
+	 * @return BaseBuilder
+	 */
+	private function parseId($id = null)
+	{
+
+		$builder = $this->builder();
+
+		// is numeric or is non empty string
+		if(!empty($id))
+		{
+			if(is_numeric($id) || !is_string($id))
+			{
+				$builder = $builder->where($this->table.'.'.$this->primaryKey, $id);
+			}
+			elseif(is_array($id))
+			{
+				//$id contains an indexed array
+				if(array_keys($id) === range(0, count($id) -1))
+				{
+					$builder = $builder->whereIn($this->table.'.'.$this->primaryKey, $id);
+				}
+				//$id contains associative array
+				else
+				{
+					foreach ($id as $key => $value)
+					{
+						if(!empty($value) && is_array($value))
+						{
+							$builder = $builder->whereIn($this->table.'.'.$key, $value);
+						}
+						else
+						{
+							$builder = $builder->where($this->table.'.'.$key, $value);
+						}
+					}
+				}
+			}
+		}
+
+		return $builder;
+	}
+	//--------------------------------------------------------------------
 
 	/**
-	 * Updates a single record in $this->table. If an object is provided,
+	 * Updates a single or multiple records in $this->table. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
-	 * @param integer|array|string $id
-	 * @param array|object         $data
+	 * @param integer|string|array|null $id The rows primary key(s) or complex conditions as specified in parseId()
+	 * @param array|object $data
 	 *
 	 * @return boolean
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function update($id = null, $data = null)
 	{
@@ -752,12 +801,7 @@ class Model
 			throw DataException::forEmptyDataset('update');
 		}
 
-		$builder = $this->builder();
-
-		if ($id)
-		{
-			$builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
-		}
+		$builder = $this->parseId($id);
 
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $builder
@@ -806,7 +850,7 @@ class Model
 	 * Deletes a single record from $this->table where $id matches
 	 * the table's primaryKey
 	 *
-	 * @param integer|array|null $id    The rows primary key(s)
+	 * @param integer|string|array|null $id    The rows primary key(s) or complex conditions as specified in parseId()
 	 * @param boolean            $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return mixed
@@ -814,17 +858,9 @@ class Model
 	 */
 	public function delete($id = null, $purge = false)
 	{
-		if (! empty($id) && is_numeric($id))
-		{
-			$id = [$id];
-		}
 
-		$builder = $this->builder();
-		if (! empty($id))
-		{
-			$builder = $builder->whereIn($this->primaryKey, $id);
-		}
-
+		$builder = $this->parseId($id);
+		
 		$this->trigger('beforeDelete', ['id' => $id, 'purge' => $purge]);
 
 		if ($this->useSoftDeletes && ! $purge)
