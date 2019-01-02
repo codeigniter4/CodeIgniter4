@@ -294,6 +294,33 @@ update command, with the added benefit of validation, events, etc::
         ->whereIn('id', [1,2,3])
         ->set(['active' => 1]
         ->update();
+	
+If there are many validation rules specified in your model, i.e.:
+
+	class DrivingSchoolCourseModel extends \CodeIgniter\Model
+	{
+		protected $DBGroup    = DB_ZTN_GROUP;
+		protected $table      = 't_driving_school_course';
+		protected $primaryKey = 'dsc_id';
+		protected $returnType = 'App\Entities\DrivingSchool\DrivingSchoolCourse';
+		
+		protected $validationRules = [
+			'dsc_drs_id'              => 'required|is_natural_no_zero|less_than_equal_to[65535]',
+			'dsc_dct_id'              => 'required|is_natural_no_zero|less_than_equal_to[255]',
+			'dsc_status_door2door'    => 'required|in_list[0,1,2]',
+			'dsc_is_active'           => 'required|in_list[0,1]',
+			'etc...'                  => 'permit_empty'
+		];
+	}
+
+but you'd like to update only fields which are available in $data array passed to `update()` method and without checking other validation rules then do it in that way:
+
+	$data = ['dsc_is_active' => 0];
+	$validation_filter = true;
+	$drivingSchoolCourseModel->update(2, $data, $validation_filter);
+	
+in this case validation will return errors only if it will find an errors in values passed in $data.
+
 
 **save()**
 
