@@ -696,7 +696,7 @@ class Model
 		// is numeric or is non empty string
 		if(!empty($id))
 		{
-			if(is_numeric($id) || !is_string($id))
+			if(is_numeric($id) || is_string($id))
 			{
 				$builder = $builder->where($this->table.'.'.$this->primaryKey, $id);
 			}
