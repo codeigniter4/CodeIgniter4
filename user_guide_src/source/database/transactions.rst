@@ -76,7 +76,7 @@ debugging is turned off, you can manage your own errors like this::
 	}
 
 Disabling Transactions
-=====================
+======================
 
 Transactions are enabled by default. If you would like to disable transactions you
 can do so using $this->db->transOff()::
