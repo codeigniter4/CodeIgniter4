@@ -119,7 +119,8 @@ class FileHandler implements CacheInterface
 			'data' => $value,
 		];
 		
-		if(strpos(pathinfo($this->path . $key, PATHINFO_DIRNAME), WRITEPATH . 'cache') === 0 && strpos(!is_dir(pathinfo($this->path . $key, PATHINFO_DIRNAME)) && false === mkdir(pathinfo($this->path . $key, PATHINFO_DIRNAME), 0750, true))
+		$path = pathinfo($this->path . $key, PATHINFO_DIRNAME);
+		if(strpos($path, WRITEPATH . 'cache') === 0 && !is_dir($path) && !is_file($path) && false === mkdir($path, 0750, true))
 		{
 			return false;
 		}
