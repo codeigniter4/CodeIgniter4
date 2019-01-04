@@ -119,7 +119,7 @@ if (! function_exists('db_connnect'))
 	 * otherwise it will all calls will return the same instance.
 	 *
 	 * @param \CodeIgniter\Database\ConnectionInterface|array|string $db
-	 * @param bool                                                   $getShared
+	 * @param boolean                                                $getShared
 	 *
 	 * @return \CodeIgniter\Database\BaseConnection
 	 */
