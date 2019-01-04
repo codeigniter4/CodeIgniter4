@@ -74,6 +74,12 @@ class Config extends BaseConfig
 	 */
 	public static function connect($group = null, bool $getShared = true)
 	{
+		// If a DB connection is passed in, just pass it back
+		if ($group instanceof BaseConnection)
+		{
+			return $group;
+		}
+
 		if (is_array($group))
 		{
 			$config = $group;
