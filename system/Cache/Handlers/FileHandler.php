@@ -118,7 +118,12 @@ class FileHandler implements CacheInterface
 			'ttl'  => $ttl,
 			'data' => $value,
 		];
-
+		
+		if(strpos(pathinfo($this->path . $key, PATHINFO_DIRNAME), WRITEPATH . 'cache') === 0 && strpos(!is_dir(pathinfo($this->path . $key, PATHINFO_DIRNAME)) && false === mkdir(pathinfo($this->path . $key, PATHINFO_DIRNAME), 0750, true))
+		{
+			return false;
+		}
+		
 		if ($this->writeFile($this->path . $key, serialize($contents)))
 		{
 			chmod($this->path . $key, 0640);
