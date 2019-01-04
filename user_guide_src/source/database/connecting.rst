@@ -14,6 +14,11 @@ If the above function does **not** contain any information in the first
 parameter it will connect to the default group specified in your database config
 file. For most people, this is the preferred method of use.
 
+A convenience method exists that is purely a wrapper around the above line
+and is provided for your convenience::
+
+    $db = db_connect();
+
 Available Parameters
 --------------------
 
@@ -89,7 +94,7 @@ the same format as the groups are defined in the configuration file::
 		'failover' => [],
 		'port'     => 3306,
 	];
-    $db = \Config\Database::connect($custom); 
+    $db = \Config\Database::connect($custom);
 
 
 Reconnecting / Keeping the Connection Alive
