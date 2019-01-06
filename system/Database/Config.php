@@ -141,44 +141,7 @@ class Config extends BaseConfig
 	 */
 	public static function forge($group = null)
 	{
-		// Allow custom connections to be sent in
-		if (is_array($group))
-		{
-			$config = $group;
-			$group  = 'custom-' . md5(json_encode($config));
-		}
-		else
-		{
-			$config = config('Database');
-		}
-
-		static::ensureFactory();
-
-		if (empty($group))
-		{
-			$group = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
-		}
-
-		if (is_string($group) && ! isset($config->$group) && ! is_array($config))
-		{
-			throw new \InvalidArgumentException($group . ' is not a valid database connection group.');
-		}
-
-		if (! isset(static::$instances[$group]))
-		{
-			if (is_array($config))
-			{
-				$db = static::connect($config);
-			}
-			else
-			{
-				$db = static::connect($group);
-			}
-		}
-		else
-		{
-			$db = static::$instances[$group];
-		}
+		$db = static::connect($group);
 
 		return static::$factory->loadForge($db);
 	}
