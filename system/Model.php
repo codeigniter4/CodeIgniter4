@@ -1364,6 +1364,39 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Allows to set new validation messages.
+	 * It could be used when you have to change default or override current validate messages.
+	 *
+	 * @param array $validationMessages: new set of validation messages
+	 * @return void
+	 */
+	public function setValidationMessages(array $validationMessages)
+	{
+		$this->validationMessages = $validationMessages;
+	}
+
+	//--------------------------------------------------------------------
+	
+	/**
+	 * Allows to set/unset (if 2nd argument is empty) new field's validation messages.
+	 * 
+	 * @param string $field: field name
+	 * @param array|null $fieldMessages: new field's set or null
+	 */
+	public function setValidationMessage(string $field, ?array $fieldMessages)
+	{
+		if(!empty($fieldMessages))
+		{
+			$this->validationMessages[$field] = $fieldMessages;
+		}
+		elseif(array_key_exists($field, $this->validationMessages))
+		{
+			unset($this->validationMessages[$field]);
+		}
+	}
+
+	//--------------------------------------------------------------------
+	/**
 	 * Override countAllResults to account for soft deleted accounts.
 	 *
 	 * @param boolean $reset
