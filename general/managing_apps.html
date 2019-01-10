@@ -213,58 +213,55 @@ manage one application, which you will build in your <strong>application</strong
 directory. It is possible, however, to have multiple sets of
 applications that share a single CodeIgniter installation, or even to
 rename or relocate your application directory.</p>
-<div class="section" id="renaming-the-application-directory">
-<h2>Renaming the Application Directory<a class="headerlink" href="#renaming-the-application-directory" title="Permalink to this headline">¶</a></h2>
-<p>If you would like to rename your application directory you may do so
-as long as you open <strong>app/Config/Paths.php</strong> file and set its name using
-the <code class="docutils literal"><span class="pre">$applicationDirectory</span></code> variable:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$applicationDirectory</span> <span class="o">=</span> <span class="s1">&#39;application&#39;</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="relocating-your-application-directory">
-<h2>Relocating your Application Directory<a class="headerlink" href="#relocating-your-application-directory" title="Permalink to this headline">¶</a></h2>
-<p>It is possible to move your application directory to a different
-location on your server than your web root. To do so open
+<div class="section" id="renaming-or-relocating-the-application-directory">
+<h2>Renaming or Relocating the Application Directory<a class="headerlink" href="#renaming-or-relocating-the-application-directory" title="Permalink to this headline">¶</a></h2>
+<p>If you would like to rename your application directory or even move
+it to a different location on your server, other than your project root, open
 your main <strong>app/Config/Paths.php</strong> and set a <em>full server path</em> in the
-<code class="docutils literal"><span class="pre">$appDirectory</span></code> variable:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$appDirectory</span> <span class="o">=</span> <span class="s1">&#39;/path/to/your/application&#39;</span><span class="p">;</span>
+<code class="docutils literal"><span class="pre">$appDirectory</span></code> variable (at about line 38):</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$appDirectory</span> <span class="o">=</span> <span class="s1">&#39;/path/to/your/application&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
+<p>You will need to modify two additional files in your project root, so that
+they can find the <code class="docutils literal"><span class="pre">Paths</span></code> configuration file:</p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">/spark</span></code> runs command line apps; the path is specified on or about line 36:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">require</span> <span class="s1">&#39;app/Config/Paths.php&#39;</span><span class="p">;</span>
+<span class="c1">// ^^^ Change this if you move your application folder</span>
+</pre></div>
+</div>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">/public/index.php</span></code> is the front controller for your webapp; the config</dt>
+<dd><p class="first">path is specified on or about line 16:</p>
+<div class="last highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$pathsPath</span> <span class="o">=</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;../app/Config/Paths.php&#39;</span><span class="p">;</span>
+<span class="c1">// ^^^ Change this if you move your application folder</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
 </div>
 <div class="section" id="running-multiple-applications-with-one-codeigniter-installation">
 <h2>Running Multiple Applications with one CodeIgniter Installation<a class="headerlink" href="#running-multiple-applications-with-one-codeigniter-installation" title="Permalink to this headline">¶</a></h2>
-<p>If you would like to share a common CodeIgniter installation to manage
-several different applications simply put all of the directories located
-inside your application directory into their own sub-directory.</p>
+<p>If you would like to share a common CodeIgniter framework installation, to manage
+several different applications, simply put all of the directories located
+inside your application directory into their own (sub)-directory.</p>
 <p>For example, let&#8217;s say you want to create two applications, named &#8220;foo&#8221;
-and &#8220;bar&#8221;. You could structure your application directories like this:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">applications</span><span class="o">/</span><span class="nx">foo</span><span class="o">/</span>
-<span class="nx">applications</span><span class="o">/</span><span class="nx">foo</span><span class="o">/</span><span class="nx">config</span><span class="o">/</span>
-<span class="nx">applications</span><span class="o">/</span><span class="nx">foo</span><span class="o">/</span><span class="nx">controllers</span><span class="o">/</span>
-<span class="nx">applications</span><span class="o">/</span><span class="nx">foo</span><span class="o">/</span><span class="nx">libraries</span><span class="o">/</span>
-<span class="nx">applications</span><span class="o">/</span><span class="nx">foo</span><span class="o">/</span><span class="nx">models</span><span class="o">/</span>
-<span class="nx">applications</span><span class="o">/</span><span class="nx">foo</span><span class="o">/</span><span class="nx">views</span><span class="o">/</span>
-<span class="nx">applications</span><span class="o">/</span><span class="nx">bar</span><span class="o">/</span>
-<span class="nx">applications</span><span class="o">/</span><span class="nx">bar</span><span class="o">/</span><span class="nx">config</span><span class="o">/</span>
-<span class="nx">applications</span><span class="o">/</span><span class="nx">bar</span><span class="o">/</span><span class="nx">controllers</span><span class="o">/</span>
-<span class="nx">applications</span><span class="o">/</span><span class="nx">bar</span><span class="o">/</span><span class="nx">libraries</span><span class="o">/</span>
-<span class="nx">applications</span><span class="o">/</span><span class="nx">bar</span><span class="o">/</span><span class="nx">models</span><span class="o">/</span>
-<span class="nx">applications</span><span class="o">/</span><span class="nx">bar</span><span class="o">/</span><span class="nx">views</span><span class="o">/</span>
+and &#8220;bar&#8221;. You could structure your application project directories like this:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">foo</span><span class="o">/</span><span class="nx">app</span><span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="nx">tests</span> <span class="k">and</span> <span class="nx">writable</span>
+<span class="nx">bar</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="nx">tests</span> <span class="k">and</span> <span class="nx">writable</span>
+<span class="nx">codeigniter</span><span class="o">/</span><span class="nb">system</span> <span class="k">and</span> <span class="nx">docs</span>
 </pre></div>
 </div>
-<p>To select a particular application for use requires that you open your
-main index.php file and set the <code class="docutils literal"><span class="pre">$application_directory</span></code> variable. For
-example, to select the &#8220;foo&#8221; application for use you would do this:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$application_directory</span> <span class="o">=</span> <span class="s1">&#39;applications/foo&#39;</span><span class="p">;</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Each of your applications will need its own <strong>index.php</strong> file
-which calls the desired application. The <strong>index.php</strong> file can be named
-anything you want.</p>
-</div>
+<p>This would have two apps, &#8220;foo&#8221; and &#8220;bar&#8221;, both having standard application directories
+and a <code class="docutils literal"><span class="pre">public</span></code> folder, and sharing a common codeigniter framework.</p>
+<p>The <code class="docutils literal"><span class="pre">index.php</span></code> inside each application would refer to its own configuration,
+<code class="docutils literal"><span class="pre">.../app/Config/Paths.php</span></code>, and the <code class="docutils literal"><span class="pre">$systemDirectory</span></code> variable inside each
+of those would be set to refer to the shared common &#8220;system&#8221; folder.</p>
+<p>If either of the applications had a command-line component, then you would also
+modify <code class="docutils literal"><span class="pre">spark</span></code> inside each application&#8217;s project folder, as directed above.</p>
 </div>
 </div>
 
@@ -291,7 +288,7 @@ anything you want.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Jan 02, 2019.
+      Last updated on Jan 10, 2019.
 
     </p>
   </div>
