@@ -1436,7 +1436,7 @@ class Model
 	 */
 	public function __get(string $name)
 	{
-		if (in_array($name, ['primaryKey', 'table', 'returnType']))
+		if (in_array($name, ['primaryKey', 'table', 'returnType', 'DBGroup']))
 		{
 			return $this->{$name};
 		}

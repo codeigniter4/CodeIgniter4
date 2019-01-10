@@ -267,24 +267,38 @@ class Entity
 			$value = $this->mutateDate($value);
 		}
 
-		// Array casting requires that we serialize the value
-		// when setting it so that it can easily be stored
-		// back to the database.
-		if (array_key_exists($key, $this->_options['casts']) && $this->_options['casts'][$key] === 'array')
+		$isNullable = false;
+		$castTo = false;
+
+		if(array_key_exists($key, $this->_options['casts']))
 		{
-			$value = serialize($value);
+			$isNullable = substr($this->_options['casts'][$key],0,1) === '?';
+			$castTo = $isNullable ? substr($this->_options['casts'][$key], 1) : $this->_options['casts'][$key];
 		}
 
-		// JSON casting requires that we JSONize the value
-		// when setting it so that it can easily be stored
-		// back to the database.
-		if (function_exists('json_encode') && array_key_exists($key, $this->_options['casts']) && ($this->_options['casts'][$key] === 'json' || $this->_options['casts'][$key] === 'json-array'))
+		if(!$isNullable || !is_null($value))
 		{
-			$value = json_encode($value);
+			// Array casting requires that we serialize the value
+			// when setting it so that it can easily be stored
+			// back to the database.
+			if ($castTo === 'array')
+			{
+				$value = serialize($value);
+			}
+
+			// JSON casting requires that we JSONize the value
+			// when setting it so that it can easily be stored
+			// back to the database.
+			if (($castTo === 'json' || $castTo === 'json-array') && function_exists('json_encode'))
+			{
+				$value = json_encode($value);
+			}
+
 		}
 
 		// if a set* method exists for this key,
 		// use that method to insert this value.
+		// *) should be outside $isNullable check - SO maybe wants to do sth with null value automatically
 		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 		if (method_exists($this, $method))
 		{
@@ -303,6 +317,7 @@ class Entity
 
 		return $this;
 	}
+
 
 	//--------------------------------------------------------------------
 
