@@ -8,13 +8,16 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 {
 	protected $root;
 	protected $start;
+	protected $config;
 
 	public function setUp()
 	{
 		parent::setUp();
 
-		$this->root  = vfsStream::setup('root');
-		$this->start = $this->root->url() . '/';
+		$this->root            = vfsStream::setup('root');
+		$this->start           = $this->root->url() . '/';
+		$this->config          = new Migrations();
+		$this->config->enabled = true;
 	}
 
 	/**
@@ -22,7 +25,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 	 */
 	public function testThrowsOnInvalidMigrationType()
 	{
-		$config       = new Migrations();
+		$config       = $this->config;
 		$config->type = 'narwhal';
 
 		$runner = new MigrationRunner($config);
@@ -31,8 +34,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 	public function testLoadsDefaultDatabaseWhenNoneSpecified()
 	{
 		$dbConfig = new \Config\Database();
-		$config   = new Migrations();
-		$runner   = new MigrationRunner($config);
+		$runner   = new MigrationRunner($this->config);
 
 		$db = $this->getPrivateProperty($runner, 'db');
 
@@ -43,8 +45,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testGetCliMessages()
 	{
-		$config = new Migrations();
-		$runner = new MigrationRunner($config);
+		$runner = new MigrationRunner($this->config);
 
 		$messages = [
 			'foo',
@@ -58,8 +59,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testGetHistory()
 	{
-		$config = new Migrations();
-		$runner = new MigrationRunner($config);
+		$runner = new MigrationRunner($this->config);
 
 		$tableMaker = $this->getPrivateMethodInvoker($runner, 'ensureTable');
 		$tableMaker();
@@ -79,8 +79,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testGetHistoryReturnsEmptyArrayWithNoResults()
 	{
-		$config = new Migrations();
-		$runner = new MigrationRunner($config);
+		$runner = new MigrationRunner($this->config);
 
 		$tableMaker = $this->getPrivateMethodInvoker($runner, 'ensureTable');
 		$tableMaker();
@@ -90,8 +89,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testGetMigrationNumber()
 	{
-		$config = new Migrations();
-		$runner = new MigrationRunner($config);
+		$runner = new MigrationRunner($this->config);
 
 		$method = $this->getPrivateMethodInvoker($runner, 'getMigrationNumber');
 
@@ -100,8 +98,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testGetMigrationNumberReturnsZeroIfNoneFound()
 	{
-		$config = new Migrations();
-		$runner = new MigrationRunner($config);
+		$runner = new MigrationRunner($this->config);
 
 		$method = $this->getPrivateMethodInvoker($runner, 'getMigrationNumber');
 
@@ -110,8 +107,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testSetSilentStoresValue()
 	{
-		$config = new Migrations();
-		$runner = new MigrationRunner($config);
+		$runner = new MigrationRunner($this->config);
 
 		$runner->setSilent(true);
 		$this->assertTrue($this->getPrivateProperty($runner, 'silent'));
@@ -122,8 +118,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testSetNameStoresValue()
 	{
-		$config = new Migrations();
-		$runner = new MigrationRunner($config);
+		$runner = new MigrationRunner($this->config);
 
 		$runner->setName('foo');
 		$this->assertEquals('foo', $this->getPrivateProperty($runner, 'name'));
@@ -131,8 +126,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testSetGroupStoresValue()
 	{
-		$config = new Migrations();
-		$runner = new MigrationRunner($config);
+		$runner = new MigrationRunner($this->config);
 
 		$runner->setGroup('foo');
 		$this->assertEquals('foo', $this->getPrivateProperty($runner, 'group'));
@@ -140,8 +134,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testSetNamespaceStoresValue()
 	{
-		$config = new Migrations();
-		$runner = new MigrationRunner($config);
+		$runner = new MigrationRunner($this->config);
 
 		$runner->setNamespace('foo');
 		$this->assertEquals('foo', $this->getPrivateProperty($runner, 'namespace'));
@@ -149,7 +142,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testFindMigrationsReturnsEmptyArrayWithNoneFound()
 	{
-		$config       = new Migrations();
+		$config       = $this->config;
 		$config->type = 'timestamp';
 		$runner       = new MigrationRunner($config);
 
@@ -160,7 +153,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testFindMigrationsSuccessTimestamp()
 	{
-		$config       = new Migrations();
+		$config       = $this->config;
 		$config->type = 'timestamp';
 		$runner       = new MigrationRunner($config);
 
@@ -191,7 +184,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testFindMigrationsSuccessOrder()
 	{
-		$config       = new Migrations();
+		$config       = $this->config;
 		$config->type = 'sequential';
 		$runner       = new MigrationRunner($config);
 
@@ -225,7 +218,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 	 */
 	public function testVersionThrowsMigrationGapException()
 	{
-		$config       = new Migrations();
+		$config       = $this->config;
 		$config->type = 'sequential';
 		$runner       = new MigrationRunner($config);
 
@@ -240,7 +233,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testVersionReturnsTrueWhenNothingToDo()
 	{
-		$config       = new Migrations();
+		$config       = $this->config;
 		$config->type = 'sequential';
 		$runner       = new MigrationRunner($config);
 
@@ -259,7 +252,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 	 */
 	public function testVersionWithNoClassInFile()
 	{
-		$config       = new Migrations();
+		$config       = $this->config;
 		$config->type = 'sequential';
 		$runner       = new MigrationRunner($config);
 		$runner->setSilent(false);
@@ -275,7 +268,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testVersionReturnsUpDownSuccess()
 	{
-		$config       = new Migrations();
+		$config       = $this->config;
 		$config->type = 'sequential';
 		$runner       = new MigrationRunner($config);
 		$runner->setSilent(false);
@@ -300,7 +293,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testLatestSuccess()
 	{
-		$config       = new Migrations();
+		$config       = $this->config;
 		$config->type = 'sequential';
 		$runner       = new MigrationRunner($config);
 		$runner->setSilent(false);
@@ -320,7 +313,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testCurrentSuccess()
 	{
-		$config                 = new Migrations();
+		$config                 = $this->config;
 		$config->type           = 'sequential';
 		$config->currentVersion = 1;
 		$runner                 = new MigrationRunner($config);
