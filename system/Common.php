@@ -123,7 +123,7 @@ if (! function_exists('db_connnect'))
 	 *
 	 * @return \CodeIgniter\Database\BaseConnection
 	 */
-	function db_connect($db, bool $getShared = true)
+	function db_connect($db = null, bool $getShared = true)
 	{
 		return \Config\Database::connect($db, $getShared);
 	}

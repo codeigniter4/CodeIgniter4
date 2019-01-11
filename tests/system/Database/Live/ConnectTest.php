@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;;
+<?php namespace CodeIgniter\Database\Live;
+
+;
 
 use CodeIgniter\Config\Config;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -58,7 +60,7 @@ class ConnectTest extends CIDatabaseTestCase
 		$db = Database::connect('tests');
 		$this->assertInstanceOf(\CodeIgniter\Database\SQLite3\Connection::class, $db);
 
-		$config = config('Database');
+		$config                      = config('Database');
 		$config->default['DBDriver'] = 'MySQLi';
 		Config::injectMock('Database', $config);
 
