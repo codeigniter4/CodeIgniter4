@@ -14,11 +14,6 @@ class ConfigException extends CriticalError
 	 */
 	protected $code = 3;
 
-	public static function forMissingMigrationsTable()
-	{
-		throw new static(lang('Migrations.missingTable'));
-	}
-
 	public static function forInvalidMigrationType(string $type = null)
 	{
 		throw new static(lang('Migrations.invalidType', [$type]));

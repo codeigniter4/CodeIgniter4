@@ -102,6 +102,35 @@ if (! function_exists('config'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('db_connnect'))
+{
+	/**
+	 * Grabs a database connection and returns it to the user.
+	 *
+	 * This is a convenience wrapper for \Config\Database::connect()
+	 * and supports the same parameters. Namely:
+	 *
+	 * When passing in $db, you may pass any of the following to connect:
+	 * - group name
+	 * - existing connection instance
+	 * - array of database configuration values
+	 *
+	 * If $getShared === false then a new connection instance will be provided,
+	 * otherwise it will all calls will return the same instance.
+	 *
+	 * @param \CodeIgniter\Database\ConnectionInterface|array|string $db
+	 * @param boolean                                                $getShared
+	 *
+	 * @return \CodeIgniter\Database\BaseConnection
+	 */
+	function db_connect($db = null, bool $getShared = true)
+	{
+		return \Config\Database::connect($db, $getShared);
+	}
+}
+
+//--------------------------------------------------------------------
+
 if (! function_exists('view'))
 {
 	/**
