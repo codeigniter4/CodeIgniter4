@@ -135,4 +135,42 @@ class SelectTest extends CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1226
+	 */
+	public function testSelectWithMultipleWheresOnSameColumn()
+	{
+		$users = $this->db->table('user')
+			->where('id', 1)
+			->orWhereIn('id', [2, 3])
+			->get()
+			->getResultArray();
+
+		$this->assertCount(3, $users);
+
+		foreach ($users as $user)
+		{
+			$this->assertTrue(in_array($user['id'], [1, 2, 3]));
+		}
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1226
+	 */
+	public function testSelectWithMultipleWheresOnSameColumnAgain()
+	{
+		$users = $this->db->table('user')
+						  ->whereIn('id', [1, 2])
+						  ->orWhere('id', 3)
+						  ->get()
+						  ->getResultArray();
+
+		$this->assertCount(3, $users);
+
+		foreach ($users as $user)
+		{
+			$this->assertTrue(in_array($user['id'], [1, 2, 3]));
+		}
+	}
 }

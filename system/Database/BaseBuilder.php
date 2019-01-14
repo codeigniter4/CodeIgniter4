@@ -813,8 +813,8 @@ class BaseBuilder
 
 		$not = ($not) ? ' NOT' : '';
 
-		$where_in         = array_values($values);
-		$this->binds[$ok] = $where_in;
+		$where_in = array_values($values);
+		$ok       = $this->setBind($ok, $where_in);
 
 		$prefix = empty($this->QBWhere) ? $this->groupGetType('') : $this->groupGetType($type);
 
@@ -1444,6 +1444,7 @@ class BaseBuilder
 		{
 			$this->limit($limit, $offset);
 		}
+
 		$result = $returnSQL ? $this->getCompiledSelect() : $this->db->query($this->compileSelect(), $this->binds);
 
 		if ($reset === true)
@@ -2958,7 +2959,7 @@ class BaseBuilder
 
 		while (array_key_exists($key . $count, $this->binds))
 		{
-			++ $count;
+			++$count;
 		}
 
 		$this->binds[$key . $count] = $value;
