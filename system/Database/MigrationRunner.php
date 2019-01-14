@@ -446,10 +446,11 @@ class MigrationRunner
 			{
 				// Create migration object using stdClass
 				$migration = new \stdClass();
+
 				// Get migration version number
 				$migration->version = $this->getMigrationNumber($name);
 				$migration->name    = $this->getMigrationName($name);
-				$migration->path    = strpos($file, $this->path) !== 0
+				$migration->path    = ! empty($this->path) && strpos($file, $this->path) !== 0
 					? $this->path . $file
 					: $file;
 
