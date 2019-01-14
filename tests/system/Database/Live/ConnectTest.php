@@ -42,9 +42,11 @@ class ConnectTest extends CIDatabaseTestCase
 
 	public function testConnectReturnsProvidedConnection()
 	{
+		$config = config('Database');
+
 		// This will be the tests database
 		$db = Database::connect();
-		$this->assertInstanceOf(\CodeIgniter\Database\SQLite3\Connection::class, $db);
+		$this->assertEquals($config->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
 
 		// Get an instance of the system's default db so we have something to test with.
 		$db1 = Database::connect($this->group1);
@@ -57,8 +59,10 @@ class ConnectTest extends CIDatabaseTestCase
 
 	public function testConnectWorksWithGroupName()
 	{
+		$config = config('Database');
+
 		$db = Database::connect('tests');
-		$this->assertInstanceOf(\CodeIgniter\Database\SQLite3\Connection::class, $db);
+		$this->assertEquals($config->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
 
 		$config                      = config('Database');
 		$config->default['DBDriver'] = 'MySQLi';
