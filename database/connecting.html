@@ -219,6 +219,11 @@ database available globally in that class.</p>
 <p>If the above function does <strong>not</strong> contain any information in the first
 parameter it will connect to the default group specified in your database config
 file. For most people, this is the preferred method of use.</p>
+<p>A convenience method exists that is purely a wrapper around the above line
+and is provided for your convenience:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$db</span> <span class="o">=</span> <span class="nx">db_connect</span><span class="p">();</span>
+</pre></div>
+</div>
 <div class="section" id="available-parameters">
 <h2>Available Parameters<a class="headerlink" href="#available-parameters" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
@@ -264,6 +269,36 @@ can switch to a different database when you need to, like this:</p>
 <div class="last line-block">
 <div class="line">$db-&gt;setDatabase($database2_name);</div>
 </div>
+</div>
+</div>
+<div class="section" id="connecting-with-custom-settings">
+<h3>Connecting with Custom Settings<a class="headerlink" href="#connecting-with-custom-settings" title="Permalink to this headline">¶</a></h3>
+<p>You can pass in an array of database settings instead of a group name to get
+a connection that uses your custom settings. The array passed in must be
+the same format as the groups are defined in the configuration file:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$custom</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;DSN&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;database&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;DBDriver&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MySQLi&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;DBPrefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;pConnect&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+            <span class="s1">&#39;DBDebug&#39;</span>  <span class="o">=&gt;</span> <span class="p">(</span><span class="nx">ENVIRONMENT</span> <span class="o">!==</span> <span class="s1">&#39;production&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;cacheOn&#39;</span>  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+            <span class="s1">&#39;cacheDir&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8_general_ci&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;swapPre&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;encrypt&#39;</span>  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+            <span class="s1">&#39;compress&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+            <span class="s1">&#39;strictOn&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+            <span class="s1">&#39;failover&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span>
+            <span class="s1">&#39;port&#39;</span>     <span class="o">=&gt;</span> <span class="mi">3306</span><span class="p">,</span>
+    <span class="p">];</span>
+<span class="nv">$db</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">(</span><span class="nv">$custom</span><span class="p">);</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="reconnecting-keeping-the-connection-alive">
@@ -316,7 +351,7 @@ connections, you can explicitly close the connection.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Jan 10, 2019.
+      Last updated on Jan 15, 2019.
 
     </p>
   </div>
