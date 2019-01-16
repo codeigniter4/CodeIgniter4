@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Autoloader;
 
 use Config\Autoload;
+use Config\Modules;
 
 class AutoloaderTest extends \CIUnitTestCase
 {
@@ -17,7 +18,9 @@ class AutoloaderTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		$config = new Autoload();
+		$config                           = new Autoload();
+		$moduleConfig                     = new Modules();
+		$moduleConfig->discoverInComposer = false;
 
 		$config->classmap = [
 			'UnnamespacedClass' => SUPPORTPATH . 'Autoloader/UnnamespacedClass.php',
@@ -30,7 +33,7 @@ class AutoloaderTest extends \CIUnitTestCase
 		];
 
 		$this->loader = new Autoloader();
-		$this->loader->initialize($config)->register();
+		$this->loader->initialize($config, $moduleConfig)->register();
 	}
 
 	public function testLoadStoredClass()
@@ -42,11 +45,13 @@ class AutoloaderTest extends \CIUnitTestCase
 	{
 		$this->expectException(\InvalidArgumentException::class);
 
-		$config           = new Autoload();
-		$config->classmap = [];
-		$config->psr4     = [];
+		$config                           = new Autoload();
+		$config->classmap                 = [];
+		$config->psr4                     = [];
+		$moduleConfig                     = new Modules();
+		$moduleConfig->discoverInComposer = false;
 
-		(new Autoloader())->initialize($config);
+		(new Autoloader())->initialize($config, $moduleConfig);
 	}
 
 	//--------------------------------------------------------------------
@@ -69,7 +74,7 @@ class AutoloaderTest extends \CIUnitTestCase
 	{
 		$getShared   = false;
 		$auto_loader = \CodeIgniter\Config\Services::autoloader($getShared);
-		$auto_loader->initialize(new Autoload());
+		$auto_loader->initialize(new Autoload(), new Modules());
 		$auto_loader->register();
 		// look for Home controller, as that should be in base repo
 		$actual   = $auto_loader->loadClass('App\Controllers\Home');
@@ -123,12 +128,14 @@ class AutoloaderTest extends \CIUnitTestCase
 	 */
 	public function testInitializeException()
 	{
-		$config           = new Autoload();
-		$config->classmap = [];
-		$config->psr4     = [];
+		$config                           = new Autoload();
+		$config->classmap                 = [];
+		$config->psr4                     = [];
+		$moduleConfig                     = new Modules();
+		$moduleConfig->discoverInComposer = false;
 
 		$this->loader = new Autoloader();
-		$this->loader->initialize($config);
+		$this->loader->initialize($config, $moduleConfig);
 	}
 
 	public function testAddNamespaceWorks()
@@ -213,4 +220,17 @@ class AutoloaderTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testFindsComposerRoutes()
+	{
+		$config                           = new Autoload();
+		$moduleConfig                     = new Modules();
+		$moduleConfig->discoverInComposer = true;
+
+		$this->loader = new Autoloader();
+		$this->loader->initialize($config, $moduleConfig);
+
+		$namespaces = $this->loader->getNamespace();
+		$this->assertArrayHasKey('Zend\\Escaper', $namespaces);
+	}
 }

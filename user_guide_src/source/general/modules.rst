@@ -16,7 +16,7 @@ Namespaces
 ==========
 
 The core element of the modules functionality comes from the :doc:`PSR4-compatible autoloading </concepts/autoloader>`
-that CodeIgniter uses. While any code can use the PSR4 autoloader and namespaces, the only way to take full advantage of
+that CodeIgniter uses. While any code can use the PSR4 autoloader and namespaces, the primary way to take full advantage of
 modules is to namespace your code and add it to **app/Config/Autoload.php**, in the ``psr4`` section.
 
 For example, let's say we want to keep a simple blog module that we can re-use between applications. We might create
@@ -95,6 +95,17 @@ Specify Discovery Items
 
 With the **$activeExplorers** option, you can specify which items are automatically discovered. If the item is not
 present, then no auto-discovery will happen for that item, but the others in the array will still be discovered.
+
+Discovery and Composer
+======================
+
+Packages that were installed via Composer will also be discovered by default. This only requires that the namespace
+that Composer knows about is a PSR4 namespace. PSR0 namespaces will not be detected.
+
+If you do not want all of Composer's known directories to be scanned when locating files, you can turn this off
+by editing the ``$discoverInComposer`` variable in ``Config\Modules.php``::
+
+    public $discoverInComposer = false;
 
 ==================
 Working With Files

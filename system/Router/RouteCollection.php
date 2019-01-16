@@ -393,7 +393,6 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Will attempt to discover any additional routes, either through
 	 * the local PSR4 namespaces, or through selected Composer packages.
-	 * (Composer coming soon...)
 	 */
 	protected function discoverRoutes()
 	{
@@ -406,9 +405,6 @@ class RouteCollection implements RouteCollectionInterface
 		// so route files can access it.
 		$routes = $this;
 
-		/*
-		 * Discover Local Files
-		 */
 		if ($this->moduleConfig->shouldDiscover('routes'))
 		{
 			$files = $this->fileLocator->search('Config/Routes.php');
@@ -424,10 +420,6 @@ class RouteCollection implements RouteCollectionInterface
 				include $file;
 			}
 		}
-
-		/*
-		 * Discover Composer files (coming soon)
-		 */
 
 		$this->didDiscover = true;
 	}
