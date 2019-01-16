@@ -14,6 +14,11 @@ If the above function does **not** contain any information in the first
 parameter it will connect to the default group specified in your database config
 file. For most people, this is the preferred method of use.
 
+A convenience method exists that is purely a wrapper around the above line
+and is provided for your convenience::
+
+    $db = db_connect();
+
 Available Parameters
 --------------------
 
@@ -60,6 +65,37 @@ group names you are connecting to.
 	can switch to a different database when you need to, like this:
 
 	| $db->setDatabase($database2_name);
+
+Connecting with Custom Settings
+===============================
+
+You can pass in an array of database settings instead of a group name to get
+a connection that uses your custom settings. The array passed in must be
+the same format as the groups are defined in the configuration file::
+
+    $custom = [
+		'DSN'      => '',
+		'hostname' => 'localhost',
+		'username' => '',
+		'password' => '',
+		'database' => '',
+		'DBDriver' => 'MySQLi',
+		'DBPrefix' => '',
+		'pConnect' => false,
+		'DBDebug'  => (ENVIRONMENT !== 'production'),
+		'cacheOn'  => false,
+		'cacheDir' => '',
+		'charset'  => 'utf8',
+		'DBCollat' => 'utf8_general_ci',
+		'swapPre'  => '',
+		'encrypt'  => false,
+		'compress' => false,
+		'strictOn' => false,
+		'failover' => [],
+		'port'     => 3306,
+	];
+    $db = \Config\Database::connect($custom);
+
 
 Reconnecting / Keeping the Connection Alive
 ===========================================

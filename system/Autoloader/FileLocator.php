@@ -119,7 +119,8 @@ class FileLocator
 			{
 				continue;
 			}
-			$path     = $this->getNamespaces($prefix);
+			$path = $this->getNamespaces($prefix);
+
 			$filename = implode('/', $segments);
 			break;
 		}
@@ -268,7 +269,9 @@ class FileLocator
 		{
 			$path = $this->autoloader->getNamespace($prefix);
 
-			return isset($path[0]) ? $path[0] : '';
+			return isset($path[0])
+				? rtrim($path[0], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR
+				: '';
 		}
 
 		$namespaces = [];
@@ -279,7 +282,7 @@ class FileLocator
 			{
 				$namespaces[] = [
 					'prefix' => $prefix,
-					'path'   => $path,
+					'path'   => rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
 				];
 			}
 		}

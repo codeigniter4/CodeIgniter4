@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Autoloader;
 
+use Composer\Autoload\ClassLoader;
+
 /**
  * CodeIgniter
  *
@@ -97,10 +99,11 @@ class Autoloader
 	 * the valid parts that we'll need.
 	 *
 	 * @param \Config\Autoload $config
+	 * @param \Config\Modules  $moduleConfig
 	 *
 	 * @return $this
 	 */
-	public function initialize(\Config\Autoload $config)
+	public function initialize(\Config\Autoload $config, \Config\Modules $moduleConfig)
 	{
 		// We have to have one or the other, though we don't enforce the need
 		// to have both present in order to work.
@@ -119,7 +122,11 @@ class Autoloader
 			$this->classmap = $config->classmap;
 		}
 
-		unset($config);
+		// Should we load through Composer's namespaces, also?
+		if ($moduleConfig->discoverInComposer)
+		{
+			$this->discoverComposerNamespaces();
+		}
 
 		return $this;
 	}
@@ -391,5 +398,32 @@ class Autoloader
 
 		return $filename;
 	}
+
 	//--------------------------------------------------------------------
+
+	/**
+	 * Locates all PSR4 compatible namespaces from Composer.
+	 */
+	protected function discoverComposerNamespaces()
+	{
+		$composer = include COMPOSER_PATH;
+
+		$paths = $composer->getPrefixesPsr4();
+		unset($composer);
+
+		// Get rid of CodeIgniter so we don't have duplicates
+		if (isset($paths['CodeIgniter\\']))
+		{
+			unset($paths['CodeIgniter\\']);
+		}
+
+		// Composer stores paths with trailng slash. We don't.
+		$newPaths = [];
+		foreach ($paths as $key => $value)
+		{
+			$newPaths[rtrim($key, '\\ ')] = $value;
+		}
+
+		$this->prefixes = array_merge($this->prefixes, $newPaths);
+	}
 }
