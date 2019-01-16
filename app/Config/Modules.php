@@ -15,6 +15,16 @@ class Modules
 	public $enabled = true;
 
 	/*
+	 |--------------------------------------------------------------------------
+	 | Auto-Discovery Within Composer Packages Enabled?
+	 |--------------------------------------------------------------------------
+	 |
+	 | If true, then auto-discovery will happen across all namespaces loaded
+	 | by Composer, as well as the namespaces configured locally.
+	 */
+	public $discoverInComposer = true;
+
+	/*
 	|--------------------------------------------------------------------------
 	| Auto-discover Rules
 	|--------------------------------------------------------------------------

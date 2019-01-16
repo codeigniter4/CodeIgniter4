@@ -207,7 +207,7 @@ class BaseService
 
 		if ($init_autoloader)
 		{
-			static::autoloader()->initialize(new \Config\Autoload());
+			static::autoloader()->initialize(new \Config\Autoload(), new \Config\Modules());
 		}
 	}
 
