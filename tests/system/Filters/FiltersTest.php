@@ -637,4 +637,46 @@ class FiltersTest extends \CIUnitTestCase
 		$filters->enableFilter('goggle', 'before');
 	}
 
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1664
+	 */
+	public function testMatchesURICaseInsensitively()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config  = [
+			'globals' => [
+				'before' => [
+					'foo' => ['except' => 'Admin/*'],
+					'bar'
+				],
+				'after'  => [
+					'foo' => ['except' => 'Admin/*'],
+					'baz'
+				],
+			],
+			'filters' => [
+				'frak' => [
+					'before' => ['Admin/*'],
+					'after'  => ['Admin/*'],
+				],
+			],
+		];
+		$filters = new Filters((object) $config, $this->request, $this->response);
+		$uri     = 'admin/foo/bar';
+
+		$expected = [
+			'before' => [
+				'bar',
+				'frak',
+			],
+			'after'  => [
+				'baz',
+				'frak',
+			],
+		];
+
+		$this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+	}
+
 }
