@@ -73,7 +73,7 @@ for an example.
 PHP Compatibility
 =================
 
-CodeIgniter4 requires PHP 7.1.
+CodeIgniter4 requires PHP 7.2.
 
 Backwards Compatibility
 =======================
