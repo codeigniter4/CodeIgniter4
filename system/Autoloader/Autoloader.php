@@ -406,6 +406,11 @@ class Autoloader
 	 */
 	protected function discoverComposerNamespaces()
 	{
+		if (! is_file(COMPOSER_PATH))
+		{
+			return false;
+		}
+		
 		$composer = include COMPOSER_PATH;
 
 		$paths = $composer->getPrefixesPsr4();
