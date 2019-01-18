@@ -88,7 +88,7 @@ Configuration
 =============
 
 Should the package require user-configurable settings, you should create a new file just for that package under
-**application/Config**. The file name should generally match the package name.
+**app/Config**. The file name should generally match the package name.
 
 Autoloader
 ==========

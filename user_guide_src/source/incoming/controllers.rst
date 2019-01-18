@@ -235,7 +235,7 @@ one and place your controller classes within them.
 	specify the folder. For example, let's say you have a controller located
 	here::
 
-		application/controllers/products/Shoes.php
+		app/Controllers/products/Shoes.php
 
 	To call the above controller your URI will look something like this::
 

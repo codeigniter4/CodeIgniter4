@@ -14,7 +14,7 @@ If running under OS X or Linux, you will want to create a symbolic link to make 
 
 ## Setup
 
-A number of the tests that are ran during the test suite are ran against a running database. In order to setup the database used here, edit the details for the `tests` database group in **application/Config/Database.php**. Make sure that you provide a database engine that is currently running, and have already created a table that you can use only for these tests, as it will be wiped and refreshed often while running the test suite.  
+A number of the tests that are ran during the test suite are ran against a running database. In order to setup the database used here, edit the details for the `tests` database group in **app/Config/Database.php**. Make sure that you provide a database engine that is currently running, and have already created a table that you can use only for these tests, as it will be wiped and refreshed often while running the test suite.  
 
 If you want to run the tests without running the live database tests, you can exclude @DatabaseLive group. Or make a copy of **phpunit.dist.xml**, call it **phpunit.xml**, and un-comment the line within the testsuite that excludes the **tests/system/Database/Live** directory. This will make the tests run quite a bit faster.
 
