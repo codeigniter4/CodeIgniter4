@@ -7,32 +7,31 @@ The CodeIgniter 4 open source project has its own
 
 There are a number of repositories there of interest:
 
-- `CodeIgniter4 <https://github.com/codeigniter4/CodeIgniter4>`_
-    holds the codebase for the project, including unit testing
-    and the source from which the user guide is built.
-    This would be used by contributors to the project.
-- `framework <https://github.com/codeigniter4/framework>`_
-    holds the released versions of the framework.
-    This would be normally be used by developers.
-- `appstarter <https://github.com/codeigniter4/appstarter>`_
-    holds the released application starter, with app
-    and public folders, but with only a composer
-    dependency on the framework.
-    This is meant as the easy way to start a CodeIgniter 4 project.
-- `userguide <https://github.com/codeigniter4/userguide>`_
-    holds the pre-built user guide. It can be downloaded
-    on its own, or `viewed online <https://codeigniter4.github.io/userguide>`_.
-- `translations <https://github.com/codeigniter4/translations>`_
-    holds translations of the CodeIgniter 4 system messages.
-    Developers can use this for :doc:`localization </outgoing/localization>`.
-- `coding-standard <https://github.com/codeigniter4/coding-standard>`_
-    holds the coding conventions we use for source code that is
-    part of the framework itself.
-    It is a dependency of the codebase repository, for contributors.
++------------------+--------------+-----------------------------------------------------------------+
++ Repository       + Audience     + Description                                                     +
++==================+==============+=================================================================+
++ CodeIgniter4     + contributors + Project codebase, including tests & user guide sources          +
++------------------+--------------+-----------------------------------------------------------------+
++ framework        + developers   + Released versions of the framework                              +
++------------------+--------------+-----------------------------------------------------------------+
++ appstarter       + developers   + Starter project (app/public/writable).                          +
++                  +              + Dependent on "framework"                                        +
++------------------+--------------+-----------------------------------------------------------------+
++ devstarter       + developers   + Starter project (app/public/writable).                          +
++                  +              + Dependent on develop branch of codebase repository              +
++------------------+--------------+-----------------------------------------------------------------+
++ userguide        + anyone       + Pre-built user guide                                            +
++------------------+--------------+-----------------------------------------------------------------+
++ translations     + developers   + System message translations                                     +
++------------------+--------------+-----------------------------------------------------------------+
++ coding-standard  + contributors + Coding style conventions & rules                                +
++------------------+--------------+-----------------------------------------------------------------+
++                  +              +                                                                 +
++------------------+--------------+-----------------------------------------------------------------+
 
 In all the above, the latest version of a repository can be downloaded
 by selecting the "releases" link in the secondary navbar inside
-the "Code" tab. The current (in development) version of each can
+the "Code" tab of its Github repository page. The current (in development) version of each can
 be cloned or downloaded by selecting the "Clone or download" dropdown
 button on the right-hand side if the repository homepage.
 
@@ -44,6 +43,7 @@ These correspond to the repositories mentioned above:
 
 - `codeigniter4/framework <https://packagist.org/packages/codeigniter4/framework>`_
 - `codeigniter4/appstarter <https://packagist.org/packages/codeigniter4/appstarter>`_
+- `codeigniter4/devstarter <https://packagist.org/packages/codeigniter4/devstarter>`_
 - `codeigniter4/userguide <https://packagist.org/packages/codeigniter4/userguide>`_
 - `codeigniter4/translations <https://packagist.org/packages/codeigniter4/translations>`_
 - `codeigniter4/CodeIgniter4 <https://packagist.org/packages/codeigniter4/CodeIgniter4>`_
