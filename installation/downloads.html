@@ -206,51 +206,69 @@
 <p>The CodeIgniter 4 open source project has its own
 <a class="reference external" href="https://github.com/codeigniter4">Github organization</a>.</p>
 <p>There are a number of repositories there of interest:</p>
-<ul class="simple">
-<li><dl class="first docutils">
-<dt><a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4">CodeIgniter4</a></dt>
-<dd>holds the codebase for the project, including unit testing
-and the source from which the user guide is built.
-This would be used by contributors to the project.</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><a class="reference external" href="https://github.com/codeigniter4/framework">framework</a></dt>
-<dd>holds the released versions of the framework.
-This would be normally be used by developers.</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><a class="reference external" href="https://github.com/codeigniter4/appstarter">appstarter</a></dt>
-<dd>holds the released application starter, with app
-and public folders, but with only a composer
-dependency on the framework.
-This is meant as the easy way to start a CodeIgniter 4 project.</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><a class="reference external" href="https://github.com/codeigniter4/userguide">userguide</a></dt>
-<dd>holds the pre-built user guide. It can be downloaded
-on its own, or <a class="reference external" href="https://codeigniter4.github.io/userguide">viewed online</a>.</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><a class="reference external" href="https://github.com/codeigniter4/translations">translations</a></dt>
-<dd>holds translations of the CodeIgniter 4 system messages.
-Developers can use this for <a class="reference internal" href="../outgoing/localization.html"><span class="doc">localization</span></a>.</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><a class="reference external" href="https://github.com/codeigniter4/coding-standard">coding-standard</a></dt>
-<dd>holds the coding conventions we use for source code that is
-part of the framework itself.
-It is a dependency of the codebase repository, for contributors.</dd>
-</dl>
-</li>
-</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="14%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" rowspan="2">Repository</th>
+<th class="head" rowspan="2">Audience</th>
+<th class="head" rowspan="2">Description</th>
+</tr>
+<tr class="row-even"></tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td rowspan="2">CodeIgniter4</td>
+<td rowspan="2">contributors</td>
+<td rowspan="2">Project codebase, including tests &amp; user guide sources</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2">framework</td>
+<td rowspan="2">developers</td>
+<td rowspan="2">Released versions of the framework</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="3">appstarter</td>
+<td rowspan="3">developers</td>
+<td rowspan="3">Starter project (app/public/writable).
+Dependent on &#8220;framework&#8221;</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="3">devstarter</td>
+<td rowspan="3">developers</td>
+<td rowspan="3">Starter project (app/public/writable).
+Dependent on develop branch of codebase repository</td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2">userguide</td>
+<td rowspan="2">anyone</td>
+<td rowspan="2">Pre-built user guide</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2">translations</td>
+<td rowspan="2">developers</td>
+<td rowspan="2">System message translations</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2">coding-standard</td>
+<td rowspan="2">contributors</td>
+<td rowspan="2">Coding style conventions &amp; rules</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2">&nbsp;</td>
+<td rowspan="2">&nbsp;</td>
+<td rowspan="2">&nbsp;</td>
+</tr>
+<tr class="row-even"></tr>
+</tbody>
+</table>
 <p>In all the above, the latest version of a repository can be downloaded
 by selecting the &#8220;releases&#8221; link in the secondary navbar inside
-the &#8220;Code&#8221; tab. The current (in development) version of each can
+the &#8220;Code&#8221; tab of its Github repository page. The current (in development) version of each can
 be cloned or downloaded by selecting the &#8220;Clone or download&#8221; dropdown
 button on the right-hand side if the repository homepage.</p>
 <div class="section" id="composer-packages">
@@ -260,6 +278,7 @@ These correspond to the repositories mentioned above:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://packagist.org/packages/codeigniter4/framework">codeigniter4/framework</a></li>
 <li><a class="reference external" href="https://packagist.org/packages/codeigniter4/appstarter">codeigniter4/appstarter</a></li>
+<li><a class="reference external" href="https://packagist.org/packages/codeigniter4/devstarter">codeigniter4/devstarter</a></li>
 <li><a class="reference external" href="https://packagist.org/packages/codeigniter4/userguide">codeigniter4/userguide</a></li>
 <li><a class="reference external" href="https://packagist.org/packages/codeigniter4/translations">codeigniter4/translations</a></li>
 <li><a class="reference external" href="https://packagist.org/packages/codeigniter4/CodeIgniter4">codeigniter4/CodeIgniter4</a></li>
@@ -292,7 +311,7 @@ These correspond to the repositories mentioned above:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Jan 15, 2019.
+      Last updated on Jan 18, 2019.
 
     </p>
   </div>
