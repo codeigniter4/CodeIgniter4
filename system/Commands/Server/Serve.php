@@ -48,7 +48,7 @@ use CodeIgniter\CLI\CLI;
  */
 class Serve extends BaseCommand
 {
-	protected $minPHPVersion = '7.1';
+	protected $minPHPVersion = '7.2';
 
 	protected $group       = 'CodeIgniter';
 	protected $name        = 'serve';

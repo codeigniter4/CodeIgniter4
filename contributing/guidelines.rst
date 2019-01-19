@@ -74,7 +74,7 @@ be highlighted in the next release after it has been merged.
 PHP Compatibility
 =================
 
-CodeIgniter4 requires PHP 7.1.
+CodeIgniter4 requires PHP 7.2.
 
 Backwards Compatibility
 =======================

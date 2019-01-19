@@ -328,7 +328,7 @@ Asserts that $fragment is found within the JSON response. It does not need to ma
     // Is true
     $this->assertJSONFragment(['config' => ['key-a']);
 
-.. note:: This simply uses phpUnit's own `assertArraySubset() <https://phpunit.readthedocs.io/en/7.1/assertions.html#assertarraysubset>`_
+.. note:: This simply uses phpUnit's own `assertArraySubset() <https://phpunit.readthedocs.io/en/7.2/assertions.html#assertarraysubset>`_
     method to do the comparison.
 
 **assertJSONExact($test)**

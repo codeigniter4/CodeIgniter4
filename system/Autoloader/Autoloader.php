@@ -410,7 +410,7 @@ class Autoloader
 		{
 			return false;
 		}
-		
+
 		$composer = include COMPOSER_PATH;
 
 		$paths = $composer->getPrefixesPsr4();
