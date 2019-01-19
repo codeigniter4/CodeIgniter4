@@ -4,6 +4,9 @@ use Config\Migrations;
 use org\bovigo\vfs\vfsStream;
 use CodeIgniter\Test\CIDatabaseTestCase;
 
+/**
+ * @group DatabaseLive
+ */
 class MigrationRunnerTest extends CIDatabaseTestCase
 {
 	protected $root;

@@ -2,6 +2,9 @@
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 
+/**
+ * @group DatabaseLive
+ */
 class AliasTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
