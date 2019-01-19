@@ -54,7 +54,8 @@ If you've found a critical vulnerability, we'd be happy to credit you in our
 Tips for a Good Issue Report
 ****************************
 
-Use a descriptive subject line (eg parser library chokes on commas) rather than a vague one (eg. your code broke).
+Use a descriptive subject line (eg parser library chokes on commas) rather than 
+a vague one (eg. your code broke).
 
 Address a single issue in a report.
 
@@ -64,12 +65,13 @@ Explain what you expected to happen, and what did happen.
 Include error messages and stacktrace, if any.
 
 Include short code segments if they help to explain.
-Use a pastebin or dropbox facility to include longer segments of code or screenshots - do not include them in the issue report itself.
+Use a pastebin or dropbox facility to include longer segments of code or 
+screenshots - do not include them in the issue report itself.
 This means setting a reasonable expiry for those, until the issue is resolved or closed.
 
 If you know how to fix the issue, you can do so in your own fork & branch, and submit a pull request.
 The issue report information above should be part of that.
 
 If your issue report can describe the steps to reproduce the problem, that is great.
-If you can include a unit test that reproduces the problem, that is even better, as it gives whoever is fixing
-it a clearer target!
+If you can include a unit test that reproduces the problem, that is even better, 
+as it gives whoever is fixing it a clearer target!

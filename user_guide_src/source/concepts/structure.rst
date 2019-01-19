@@ -9,7 +9,7 @@ Default Directories
 ===================
 
 A fresh install has six directories: ``/app``, ``/system``, ``/public``,
-``/writable``, ``/tests`` and ``/docs``.
+``/writable``, ``/tests`` and possibly ``/docs``.
 Each of these directories has a very specific part to play.
 
 app
@@ -77,7 +77,7 @@ production servers.
 
 docs
 ----
-This directory holds a local copy of the CodeIgniter4
+If this directory is part of your project, it holds a local copy of the CodeIgniter4
 User Guide.
 
 Modifying Directory Locations
@@ -85,3 +85,5 @@ Modifying Directory Locations
 
 If you've relocated any of the main directories, you can change the configuration
 settings inside ``app/Config/Paths``.
+
+Please read `Managing your Applications <../general/managing.html>`_

@@ -34,6 +34,7 @@ define('FCPATH', __DIR__ . '/public' . DIRECTORY_SEPARATOR);
 
 // Load our paths config file
 require 'app/Config/Paths.php';
+// ^^^ Change this line if you move your application folder
 
 $paths = new Config\Paths();
 

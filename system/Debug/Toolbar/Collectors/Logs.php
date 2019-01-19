@@ -84,15 +84,8 @@ class Logs extends BaseCollector
 	 */
 	public function display(): array
 	{
-		$logs = $this->collectLogs();
-
-		if (empty($logs) || ! is_array($logs))
-		{
-			$logs = [];
-		}
-
 		return [
-			'logs' => $logs,
+			'logs' => $this->collectLogs(),
 		];
 	}
 
@@ -131,11 +124,10 @@ class Logs extends BaseCollector
 	{
 		if (! is_null($this->data))
 		{
-			return;
+			return $this->data;
 		}
 
-		$logger     = Services::logger(true);
-		$this->data = $logger->logCache;
+		return $this->data = Services::logger(true)->logCache ?? [];
 	}
 
 	//--------------------------------------------------------------------
