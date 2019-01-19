@@ -569,7 +569,7 @@ if (! function_exists('helper'))
 	 * both in and out of the 'helpers' directory of a namespaced directory.
 	 *
 	 * Will load ALL helpers of the matching name, in the following order:
-	 *   1. application/Helpers
+	 *   1. app/Helpers
 	 *   2. {namespace}/Helpers
 	 *   3. system/Helpers
 	 *

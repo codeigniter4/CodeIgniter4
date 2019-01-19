@@ -511,7 +511,7 @@ class Logger implements LoggerInterface
 	 * Cleans the paths of filenames by replacing APPPATH, SYSTEMPATH, FCPATH
 	 * with the actual var. i.e.
 	 *
-	 *  /var/www/site/application/Controllers/Home.php
+	 *  /var/www/site/app/Controllers/Home.php
 	 *      becomes:
 	 *  APPPATH/Controllers/Home.php
 	 *

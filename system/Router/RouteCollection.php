@@ -1308,7 +1308,7 @@ class RouteCollection implements RouteCollectionInterface
 		$name = $options['as'] ?? $from;
 
 		// Don't overwrite any existing 'froms' so that auto-discovered routes
-		// do not overwrite any application/Config/Routes settings. The app
+		// do not overwrite any app/Config/Routes settings. The app
 		// routes should always be the "source of truth".
 		// this works only because discovered routes are added just prior
 		// to attempting to route the request.

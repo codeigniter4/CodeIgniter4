@@ -239,7 +239,7 @@ Redis Caching
 Redis is an in-memory key-value store which can operate in LRU cache mode.
 To use it, you need `Redis server and phpredis PHP extension <https://github.com/phpredis/phpredis>`_.
 
-Config options to connect to redis server must be stored in the application/config/redis.php file.
+Config options to connect to redis server must be stored in the app/Config/redis.php file.
 Available options are::
 
 	$config['host'] = '127.0.0.1';
