@@ -7,8 +7,17 @@ Version |version|
 
 Release Date: Not Released
 
-**Next release of CodeIgniter4**
+**Alpha 5**
 
+Highlights:
+
+- updated PHP dependency to 7.2
+- new feature branches have been created for the email and queue modules, 
+    so they don't impact the release of 4.0.0
+- dropped several language messages that were unused (eg Migrations.missingTable) 
+    and added some new (eg Migrations.invalidType)
+- lots of bug fixes
+- code coverage is up to 78%
 
 :doc:`See all the changes. </changelogs/next>`
 
