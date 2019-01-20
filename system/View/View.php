@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2018 British Columbia Institute of Technology
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
@@ -215,26 +215,23 @@ class View implements RendererInterface
 
 		if (CI_DEBUG && (! isset($options['debug']) || $options['debug'] === true))
 		{
-			$after = (new \Config\Filters())->globals['after'];
-			if (in_array('toolbar', $after) || array_key_exists('toolbar', $after))
+			$toolbarCollectors = config(\Config\Toolbar::class)->collectors;
+
+			if (in_array(\CodeIgniter\Debug\Toolbar\Collectors\Views::class, $toolbarCollectors))
 			{
-				$toolbarCollectors = (config(\Config\App::class))->toolbarCollectors;
-				if (in_array('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors) || array_key_exists('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors))
+				// Clean up our path names to make them a little cleaner
+				foreach (['APPPATH', 'SYSTEMPATH', 'ROOTPATH'] as $path)
 				{
-					// Clean up our path names to make them a little cleaner
-					foreach (['APPPATH', 'BASEPATH', 'ROOTPATH'] as $path)
+					if (strpos($this->renderVars['file'], constant($path)) === 0)
 					{
-						if (strpos($this->renderVars['file'], constant($path)) === 0)
-						{
-							$this->renderVars['file'] = str_replace(constant($path), $path . '/', $this->renderVars['file']);
-							break;
-						}
+						$this->renderVars['file'] = str_replace(constant($path), $path . '/', $this->renderVars['file']);
+						break;
 					}
-					$this->renderVars['file'] = ++$this->viewsCount . ' ' . $this->renderVars['file'];
-					$output                   = '<!-- DEBUG-VIEW START ' . $this->renderVars['file'] . ' -->' . PHP_EOL
-						. $output . PHP_EOL
-						. '<!-- DEBUG-VIEW ENDED ' . $this->renderVars['file'] . ' -->' . PHP_EOL;
 				}
+				$this->renderVars['file'] = ++$this->viewsCount . ' ' . $this->renderVars['file'];
+				$output                   = '<!-- DEBUG-VIEW START ' . $this->renderVars['file'] . ' -->' . PHP_EOL
+					. $output . PHP_EOL
+					. '<!-- DEBUG-VIEW ENDED ' . $this->renderVars['file'] . ' -->' . PHP_EOL;
 			}
 		}
 

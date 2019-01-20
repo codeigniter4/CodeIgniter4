@@ -9,7 +9,7 @@ final class DateHelperTest extends \CIUnitTestCase
 	private $expire;
 	private $response;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 		helper('date');

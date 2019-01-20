@@ -6,7 +6,7 @@ class CacheFactoryTest extends \CIUnitTestCase
 	private $cacheFactory;
 	private $config;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

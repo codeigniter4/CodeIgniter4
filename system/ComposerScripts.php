@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2018 British Columbia Institute of Technology
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
@@ -49,7 +49,7 @@
  */
 class ComposerScripts
 {
-	protected static $basePath = 'system/ThirdParty/';
+	protected static $basePath = 'ThirdParty/';
 
 	/**
 	 * After composer install/update, this is called to move
@@ -144,7 +144,7 @@ class ComposerScripts
 	{
 		if (class_exists('\\Zend\\Escaper\\Escaper') && is_file(static::getClassFilePath('\\Zend\\Escaper\\Escaper')))
 		{
-			$base = static::$basePath . 'ZendEscaper';
+			$base = basename(__DIR__) . '/' . static::$basePath . 'ZendEscaper';
 
 			foreach ([$base, $base . '/Exception'] as $path)
 			{
@@ -183,7 +183,7 @@ class ComposerScripts
 
 		if (is_file($filename))
 		{
-			$base = static::$basePath . 'Kint';
+			$base = basename(__DIR__) . '/' . static::$basePath . 'Kint';
 
 			// Remove the contents of the previous Kint folder, if any.
 			if (is_dir($base))

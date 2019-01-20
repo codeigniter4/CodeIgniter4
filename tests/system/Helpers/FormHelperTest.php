@@ -10,7 +10,7 @@ use Config\Filters;
 class FormHelperTest extends \CIUnitTestCase
 {
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
@@ -35,7 +35,7 @@ class FormHelperTest extends \CIUnitTestCase
 			$Name     = csrf_token();
 			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
-<input type="hidden" name="$Name" value="$Value" style="display: none;" />
+<input type="hidden" name="$Name" value="$Value" style="display:none;" />
 
 EOH;
 		}
@@ -73,7 +73,7 @@ EOH;
 			$Name     = csrf_token();
 			$expected = <<<EOH
 <form action="http://example.com/" name="form" id="form" method="POST" accept-charset="utf-8">
-<input type="hidden" name="$Name" value="$Value" style="display: none;" />
+<input type="hidden" name="$Name" value="$Value" style="display:none;" />
 
 EOH;
 		}
@@ -110,7 +110,7 @@ EOH;
 			$Name     = csrf_token();
 			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="post" accept-charset="utf-8">
-<input type="hidden" name="$Name" value="$Value" style="display: none;" />
+<input type="hidden" name="$Name" value="$Value" style="display:none;" />
 
 EOH;
 		}
@@ -147,8 +147,8 @@ EOH;
 			$Name     = csrf_token();
 			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
-<input type="hidden" name="foo" value="bar" style="display: none;" />
-<input type="hidden" name="$Name" value="$Value" style="display: none;" />
+<input type="hidden" name="foo" value="bar" style="display:none;" />
+<input type="hidden" name="$Name" value="$Value" style="display:none;" />
 
 EOH;
 		}
@@ -156,7 +156,8 @@ EOH;
 		{
 			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
-<input type="hidden" name="foo" value="bar" style="display: none;" />
+
+<input type="hidden" name="foo" value="bar" style="display:none;" />
 
 EOH;
 		}
@@ -225,7 +226,7 @@ EOH;
 			$Name     = csrf_token();
 			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart&#x2F;form-data" accept-charset="utf-8">
-<input type="hidden" name="$Name" value="$Value" style="display: none;" />
+<input type="hidden" name="$Name" value="$Value" style="display:none;" />
 
 EOH;
 		}
@@ -253,7 +254,7 @@ EOH;
 	{
 		$expected = <<<EOH
 
-<input type="hidden" name="username" value="johndoe" />\n
+<input type="hidden" name="username" value="johndoe" style="display:none;" />\n
 EOH;
 		$this->assertEquals($expected, form_hidden('username', 'johndoe'));
 	}
@@ -266,7 +267,7 @@ EOH;
 		];
 		$expected = <<<EOH
 
-<input type="hidden" name="foo" value="bar" />
+<input type="hidden" name="foo" value="bar" style="display:none;" />
 
 EOH;
 		$this->assertEquals($expected, form_hidden($data, null));
@@ -280,7 +281,7 @@ EOH;
 		];
 		$expected = <<<EOH
 
-<input type="hidden" name="name[foo]" value="bar" />
+<input type="hidden" name="name[foo]" value="bar" style="display:none;" />
 
 EOH;
 		$this->assertEquals($expected, form_hidden('name', $data));
@@ -810,5 +811,60 @@ EOH;
 		$this->assertEquals(' checked="checked"', set_radio('code', 'alpha', true));
 		$this->assertEquals('', set_radio('code', 'beta', false));
 	}
+	
+	
+	// ------------------------------------------------------------------------
+	public function testFormParseFormAttributesTrue()
+	{
+		$expected = 'readonly ';
+		$this->assertEquals($expected, parse_form_attributes(['readonly' => true], []));
+	}
+	
+	
+	// ------------------------------------------------------------------------
+	public function testFormParseFormAttributesFalse()
+	{
+		$expected = 'disabled ';
+		$this->assertEquals($expected, parse_form_attributes(['disabled' => false], []));
+	}
 
+	
+	// ------------------------------------------------------------------------
+	public function testFormParseFormAttributesNull()
+	{
+		$expected = 'bar="" ';
+		$this->assertEquals($expected, parse_form_attributes(['bar' => null], []));
+	}
+	
+	
+	// ------------------------------------------------------------------------
+	public function testFormParseFormAttributesStringEmpty()
+	{
+		$expected = 'bar="" ';
+		$this->assertEquals($expected, parse_form_attributes(['bar' => ''], []));
+	}
+	
+	
+	// ------------------------------------------------------------------------
+	public function testFormParseFormAttributesStringFoo()
+	{
+		$expected = 'bar="foo" ';
+		$this->assertEquals($expected, parse_form_attributes(['bar' => 'foo'], []));
+	}
+
+	
+	// ------------------------------------------------------------------------
+	public function testFormParseFormAttributesInt0()
+	{
+		$expected = 'ok="0" ';
+		$this->assertEquals($expected, parse_form_attributes(['ok' => 0], []));
+	}
+	
+	
+	// ------------------------------------------------------------------------
+	public function testFormParseFormAttributesInt1()
+	{
+		$expected = 'ok="1" ';
+		$this->assertEquals($expected, parse_form_attributes(['ok' => 1], []));
+	}
 }

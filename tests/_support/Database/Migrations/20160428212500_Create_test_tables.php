@@ -85,6 +85,16 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		]);
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('empty', true);
+
+		//No Primary Key
+		$this->forge->addField([
+			'key'   => [
+				'type'       => 'VARCHAR',
+				'constraint' => 40,
+			],
+			'value' => ['type' => 'TEXT'],
+		]);
+		$this->forge->createTable('secondary', true);
 	}
 
 	//--------------------------------------------------------------------
@@ -95,6 +105,7 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		$this->forge->dropTable('job');
 		$this->forge->dropTable('misc');
 		$this->forge->dropTable('empty');
+		$this->forge->dropTable('secondary');
 	}
 
 	//--------------------------------------------------------------------

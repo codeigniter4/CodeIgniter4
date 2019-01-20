@@ -1,6 +1,7 @@
 # CodeIgniter 4 Application Starter
 
 ## What is CodeIgniter?
+
 CodeIgniter is a PHP full-stack web framework that is light, fast, flexible, and secure. 
 More information can be found at the [official site](http://codeigniter.com).
 
@@ -22,12 +23,12 @@ More information about the plans for version 4 can be found in [the announcement
 The user guide corresponding to this version of the framework can be found
 [here](https://codeigniter4.github.io/userguide/). 
 
-##Installation & updates
+## Installation & updates
 
 `composer create-project codeigniter4/appstarter` then `composer update` whenever
 there is a new release of the framework.
 
-##Setup
+## Setup
 
 Copy `env` to `.env` and tailor for your app, specifically the baseURL
 and any database settings.
@@ -45,7 +46,8 @@ framework are exposed.
 The user guide updating and deployment is a bit awkward at the moment, but we are working on it!
 
 ## Server Requirements
-PHP version 7.1 or higher is required, with the following extensions installed: 
+
+PHP version 7.2 or higher is required, with the following extensions installed: 
 
 - [intl](http://php.net/manual/en/intl.requirements.php)
 - [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library

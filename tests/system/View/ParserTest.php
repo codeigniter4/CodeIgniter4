@@ -6,11 +6,11 @@ use CodeIgniter\View\Exceptions\ViewException;
 class ParserTest extends \CIUnitTestCase
 {
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
-		$this->loader   = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
+		$this->loader   = \CodeIgniter\Config\Services::locator();
 		$this->viewsDir = __DIR__ . '/Views';
 		$this->config   = new Config\View();
 	}
@@ -224,6 +224,31 @@ class ParserTest extends \CIUnitTestCase
 		$this->assertEquals("Super Heroes\nTom Dick Henry ", $parser->renderString($template));
 	}
 
+	public function testParseLoopObjectProperties()
+	{
+		$parser     = new Parser($this->config, $this->viewsDir, $this->loader);
+		$obj1       = new stdClass();
+		$obj1->name = 'Tom';
+		$obj2       = new stdClass();
+		$obj2->name = 'Dick';
+		$obj3       = new stdClass();
+		$obj3->name = 'Henry';
+
+		$data = [
+			'title'  => 'Super Heroes',
+			'powers' => [
+				$obj1,
+				$obj2,
+				$obj3,
+			],
+		];
+
+		$template = "{title}\n{powers}{name} {/powers}";
+
+		$parser->setData($data, 'html');
+		$this->assertEquals("Super Heroes\nTom Dick Henry ", $parser->renderString($template));
+	}
+
 	// --------------------------------------------------------------------
 
 	public function testParseLoopEntityProperties()
@@ -242,6 +267,7 @@ class ParserTest extends \CIUnitTestCase
 					],
 				];
 			}
+
 		};
 
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -255,6 +281,44 @@ class ParserTest extends \CIUnitTestCase
 		$template = "{title}\n{powers} {foo} {bar} {bobbles}{name} {/bobbles}{/powers}";
 
 		$parser->setData($data);
+		$this->assertEquals("Super Heroes\n bar baz first second ", $parser->renderString($template));
+	}
+
+	public function testParseLoopEntityObjectProperties()
+	{
+		$power = new class extends \CodeIgniter\Entity
+		{
+
+			public $foo     = 'bar';
+			protected $bar  = 'baz';
+			protected $obj1 = null;
+			protected $obj2 = null;
+			public $bobbles = [];
+
+			public function __construct()
+			{
+				$this->obj1       = new stdClass();
+				$this->obj2       = new stdClass();
+				$this->obj1->name = 'first';
+				$this->obj2->name = 'second';
+				$this->bobbles    = [
+					$this->obj1,
+					$this->obj2,
+				];
+			}
+		};
+
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$data   = [
+			'title'  => 'Super Heroes',
+			'powers' => [
+				$power
+			],
+		];
+
+		$template = "{title}\n{powers} {foo} {bar} {bobbles}{name} {/bobbles}{/powers}";
+
+		$parser->setData($data, 'html');
 		$this->assertEquals("Super Heroes\n bar baz first second ", $parser->renderString($template));
 	}
 

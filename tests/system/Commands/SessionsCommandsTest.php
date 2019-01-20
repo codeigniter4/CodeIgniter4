@@ -18,7 +18,7 @@ class SessionsCommandsTest extends \CIUnitTestCase
 	protected $runner;
 	private $result;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

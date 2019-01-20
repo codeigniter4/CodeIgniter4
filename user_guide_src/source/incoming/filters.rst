@@ -22,9 +22,9 @@ and power. Some common examples of tasks that might be performed with filters ar
 Creating a Filter
 *****************
 
-Filters are simple classes that implement ``CodeIgniter\Filters\FilterInterface``. 
-They contain two methods: ``before()`` and ``after()`` which hold the code that 
-will run before and after the controller respectively. Your class must contain both methods 
+Filters are simple classes that implement ``CodeIgniter\Filters\FilterInterface``.
+They contain two methods: ``before()`` and ``after()`` which hold the code that
+will run before and after the controller respectively. Your class must contain both methods
 but may leave the methods empty if they are not needed. A skeleton filter class looks like::
 
     <?php namespace App\Filters;
@@ -69,7 +69,7 @@ This is typically used to peform redirects, like in this example::
     }
 
 If a Response instance is returned, the Response will be sent back to the client and script execution will stop.
-This can be useful for implementing rate limiting for API's. See **application/Filters/Throttle.php** for an
+This can be useful for implementing rate limiting for API's. See **app/Filters/Throttle.php** for an
 example.
 
 After Filters
@@ -84,7 +84,7 @@ the final output, or even to filter the final output with a bad words filter.
 Configuring Filters
 ===================
 
-Once you've created your filters, you need to configure when they get run. This is done in ``application/Config/Filters.php``.
+Once you've created your filters, you need to configure when they get run. This is done in ``app/Config/Filters.php``.
 This file contains four properties that allow you to configure exactly when the filters run.
 
 $aliases

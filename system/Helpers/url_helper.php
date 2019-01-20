@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2018 British Columbia Institute of Technology
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
@@ -55,21 +55,21 @@ if (! function_exists('site_url'))
 		}
 
 		// use alternate config if provided, else default one
-		$config = empty($altConfig) ? config(\Config\App::class) : $altConfig;
+		$config = $altConfig ?? config(\Config\App::class);
 
-		$base = base_url();
+		$fullPath = rtrim(base_url(), '/') . '/';
 
 		// Add index page, if so configured
 		if (! empty($config->indexPage))
 		{
-			$path = rtrim($base, '/') . '/' . rtrim($config->indexPage, '/') . '/' . $path;
+			$fullPath .= rtrim($config->indexPage, '/');
 		}
-		else
+		if (! empty($path))
 		{
-			$path = rtrim($base, '/') . '/' . $path;
+			$fullPath .= '/' . $path;
 		}
 
-		$url = new \CodeIgniter\HTTP\URI($path);
+		$url = new \CodeIgniter\HTTP\URI($fullPath);
 
 		// allow the scheme to be over-ridden; else, use default
 		if (! empty($scheme))
@@ -145,7 +145,7 @@ if (! function_exists('current_url'))
 	 */
 	function current_url(bool $returnObject = false)
 	{
-		return $returnObject === true ? \CodeIgniter\Config\Services::request()->uri : (string) \CodeIgniter\Config\Services::request()->uri;
+		return $returnObject ? \CodeIgniter\Config\Services::request()->uri : (string) \CodeIgniter\Config\Services::request()->uri;
 	}
 }
 
@@ -170,7 +170,7 @@ if (! function_exists('previous_url'))
 		// Otherwise, grab a sanitized version from $_SERVER.
 		$referer = $_SESSION['_ci_previous_url'] ?? \CodeIgniter\Config\Services::request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL);
 
-		$referer = empty($referer) ? site_url('/') : $referer;
+		$referer = $referer ?? site_url('/');
 
 		return $returnObject ? new \CodeIgniter\HTTP\URI($referer) : $referer;
 	}
@@ -208,7 +208,7 @@ if (! function_exists('index_page'))
 	function index_page(\Config\App $altConfig = null): string
 	{
 		// use alternate config if provided, else default one
-		$config = empty($altConfig) ? config(\Config\App::class) : $altConfig;
+		$config = $altConfig ?? config(\Config\App::class);
 
 		return $config->indexPage;
 	}
@@ -233,7 +233,7 @@ if (! function_exists('anchor'))
 	function anchor($uri = '', string $title = '', $attributes = '', \Config\App $altConfig = null): string
 	{
 		// use alternate config if provided, else default one
-		$config = empty($altConfig) ? config(\Config\App::class) : $altConfig;
+		$config = $altConfig ?? config(\Config\App::class);
 
 		$site_url = is_array($uri) ? site_url($uri, null, $config) : (preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config));
 		// eliminate trailing slash
@@ -273,7 +273,7 @@ if (! function_exists('anchor_popup'))
 	function anchor_popup($uri = '', string $title = '', $attributes = false, \Config\App $altConfig = null): string
 	{
 		// use alternate config if provided, else default one
-		$config = empty($altConfig) ? config(\Config\App::class) : $altConfig;
+		$config = $altConfig ?? config(\Config\App::class);
 
 		$site_url = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, '', $config);
 		$site_url = rtrim($site_url, '/');

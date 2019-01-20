@@ -8,7 +8,7 @@ namespace CodeIgniter\Router;
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2018 British Columbia Institute of Technology
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ namespace CodeIgniter\Router;
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
@@ -393,7 +393,6 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Will attempt to discover any additional routes, either through
 	 * the local PSR4 namespaces, or through selected Composer packages.
-	 * (Composer coming soon...)
 	 */
 	protected function discoverRoutes()
 	{
@@ -406,9 +405,6 @@ class RouteCollection implements RouteCollectionInterface
 		// so route files can access it.
 		$routes = $this;
 
-		/*
-		 * Discover Local Files
-		 */
 		if ($this->moduleConfig->shouldDiscover('routes'))
 		{
 			$files = $this->fileLocator->search('Config/Routes.php');
@@ -424,10 +420,6 @@ class RouteCollection implements RouteCollectionInterface
 				include $file;
 			}
 		}
-
-		/*
-		 * Discover Composer files (coming soon)
-		 */
 
 		$this->didDiscover = true;
 	}
@@ -1316,7 +1308,7 @@ class RouteCollection implements RouteCollectionInterface
 		$name = $options['as'] ?? $from;
 
 		// Don't overwrite any existing 'froms' so that auto-discovered routes
-		// do not overwrite any application/Config/Routes settings. The app
+		// do not overwrite any app/Config/Routes settings. The app
 		// routes should always be the "source of truth".
 		// this works only because discovered routes are added just prior
 		// to attempting to route the request.

@@ -15,7 +15,7 @@ class IncomingRequestTest extends \CIUnitTestCase
 	 */
 	protected $request;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
@@ -61,6 +61,11 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testNoOldInput()
+	{
+		$this->assertNull($this->request->getOldInput('name'));
+	}
+
 	public function testCanGetOldInput()
 	{
 		$_SESSION['_ci_old_input'] = [
@@ -81,6 +86,16 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 		$this->assertEquals('foo', $this->request->getOldInput('banana.name'));
 		$this->assertEquals('two', $this->request->getOldInput('apple.name'));
+	}
+
+	public function testMissingOldInput()
+	{
+		$_SESSION['_ci_old_input'] = [
+			'get'  => ['apple' => ['name' => 'two']],
+			'post' => ['banana' => ['name' => 'foo']],
+		];
+
+		$this->assertNull($this->request->getOldInput('pineapple.name'));
 	}
 
 	// Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
@@ -349,4 +364,29 @@ class IncomingRequestTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testGetFile()
+	{
+		$_FILES = [
+			'userfile' => [
+				'name'     => 'someFile.txt',
+				'type'     => 'text/plain',
+				'size'     => '124',
+				'tmp_name' => '/tmp/myTempFile.txt',
+				'error'    => 0,
+			],
+		];
+
+		$gotit = $this->request->getFile('userfile');
+		$this->assertEquals(124, $gotit->getSize());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSpoofing()
+	{
+		$this->request->setMethod('WINK');
+		$this->assertEquals('wink', $this->request->getMethod());
+	}
+
 }

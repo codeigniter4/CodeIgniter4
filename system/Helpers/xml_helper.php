@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2018 British Columbia Institute of Technology
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,46 +28,59 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
  * @since      Version 1.0.0
  * @filesource
  */
-if ( ! function_exists('xml_convert'))
+
+if (! function_exists('xml_convert'))
 {
 	/**
 	 * Convert Reserved XML characters to Entities
 	 *
-	 * @param	string
-	 * @param	bool
-	 * @return	string
+	 * @param  string
+	 * @param  boolean
+	 * @return string
 	 */
-	function xml_convert(string $str, $protect_all = FALSE): string
+	function xml_convert(string $str, $protect_all = false): string
 	{
 		$temp = '__TEMP_AMPERSANDS__';
 
 		// Replace entities to temporary markers so that
 		// ampersands won't get messed up
-		$str = preg_replace('/&#(\d+);/', $temp.'\\1;', $str);
+		$str = preg_replace('/&#(\d+);/', $temp . '\\1;', $str);
 
-		if ($protect_all === TRUE)
+		if ($protect_all === true)
 		{
-			$str = preg_replace('/&(\w+);/', $temp.'\\1;', $str);
+			$str = preg_replace('/&(\w+);/', $temp . '\\1;', $str);
 		}
 
-		$str = str_replace(
-			['&', '<', '>', '"', "'", '-'],
-			['&amp;', '&lt;', '&gt;', '&quot;', '&apos;', '&#45;'],
-			$str
-		);
+		$original    = [
+			'&',
+			'<',
+			'>',
+			'"',
+			"'",
+			'-',
+		];
+		$replacement = [
+			'&amp;',
+			'&lt;',
+			'&gt;',
+			'&quot;',
+			'&apos;',
+			'&#45;',
+		];
+		$str         = str_replace($original, $replacement, $str);
 
 		// Decode the temp markers back to entities
-		$str = preg_replace('/'.$temp.'(\d+);/', '&#\\1;', $str);
+		$str = preg_replace('/' . $temp . '(\d+);/', '&#\\1;', $str);
 
-		if ($protect_all === TRUE)
+		if ($protect_all === true)
 		{
-			return preg_replace('/'.$temp.'(\w+);/', '&\\1;', $str);
+			return preg_replace('/' . $temp . '(\w+);/', '&\\1;', $str);
 		}
 
 		return $str;

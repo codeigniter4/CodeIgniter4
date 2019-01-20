@@ -7,10 +7,36 @@ Version |version|
 
 Release Date: Not Released
 
-**Next release of CodeIgniter4**
+**Alpha 5**
 
+Highlights:
+
+- updated PHP dependency to 7.2
+- new feature branches have been created for the email and queue modules, 
+    so they don't impact the release of 4.0.0
+- dropped several language messages that were unused (eg Migrations.missingTable) 
+    and added some new (eg Migrations.invalidType)
+- lots of bug fixes
+- code coverage is up to 78%
 
 :doc:`See all the changes. </changelogs/next>`
+
+Version 4.0.0-alpha.4
+====================================================
+
+Release Date: December 15, 2018
+
+**Next release of CodeIgniter4**
+
+Highlights:
+
+- Refactor for consistency: folder application renamed to app;
+    constant BASEPATH renamed to SYSTEMPATH
+- Debug toolbar gets its own config, history collector
+- Numerous corrections and enhancements
+
+
+:doc:`See all the changes. </changelogs/v4.0.0-alpha.4>`
 
 Version 4.0.0-alpha.3
 ====================================================
@@ -31,7 +57,7 @@ Release Date: November 30, 2018
 - We welcome Natan Felles, from Brazil, to the code developer team.
   He has proven to be passionate, dedicated and thorough :)
 
-:doc:`See all the changes. </changelogs/next>`
+:doc:`See all the changes. </changelogs/v4.0.0-alpha.3>`
 
 
 Version 4.0.0-alpha.2
@@ -71,3 +97,11 @@ Some new, some old & some borrowed packages, all namespaced.
 
 :doc:`See all the changes. </changelogs/v4.0.0-alpha.1>`
 
+.. toctree::
+    :hidden:
+    :titlesonly:
+
+    next
+    v4.0.0-alpha.3
+    v4.0.0-alpha.2
+    v4.0.0-alpha.1

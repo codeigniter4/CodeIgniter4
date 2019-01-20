@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2018 British Columbia Institute of Technology
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -255,9 +255,9 @@ class BaseCollector
 		{
 			$file = 'APPPATH/' . substr($file, strlen(APPPATH));
 		}
-		elseif (strpos($file, BASEPATH) === 0)
+		elseif (strpos($file, SYSTEMPATH) === 0)
 		{
-			$file = 'BASEPATH/' . substr($file, strlen(BASEPATH));
+			$file = 'SYSTEMPATH/' . substr($file, strlen(SYSTEMPATH));
 		}
 		elseif (strpos($file, FCPATH) === 0)
 		{
@@ -300,6 +300,23 @@ class BaseCollector
 	public function icon(): string
 	{
 		return '';
+	}
+
+	public function getAsArray()
+	{
+		return [
+			'title'           => $this->getTitle(),
+			'titleSafe'       => $this->getTitle(true),
+			'titleDetails'    => $this->getTitleDetails(),
+			'display'         => $this->display(),
+			'badgeValue'      => $this->getBadgeValue(),
+			'isEmpty'         => $this->isEmpty(),
+			'hasTabContent'   => $this->hasTabContent(),
+			'hasLabel'        => $this->hasLabel(),
+			'icon'            => $this->icon(),
+			'hasTimelineData' => $this->hasTimelineData(),
+			'timelineData'    => $this->timelineData(),
+		];
 	}
 
 }

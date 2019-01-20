@@ -12,7 +12,7 @@ use CodeIgniter\Config\Services;
 class URLHelperTest extends \CIUnitTestCase
 {
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
@@ -36,7 +36,7 @@ class URLHelperTest extends \CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com/index.php/', site_url('', null, $config));
+		$this->assertEquals('http://example.com/index.php', site_url('', null, $config));
 	}
 
 	public function testSiteURLHTTPS()
@@ -53,7 +53,7 @@ class URLHelperTest extends \CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('https://example.com/index.php/', site_url('', null, $config));
+		$this->assertEquals('https://example.com/index.php', site_url('', null, $config));
 	}
 
 	public function testSiteURLNoIndex()
@@ -85,7 +85,7 @@ class URLHelperTest extends \CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com/banana.php/', site_url('', null, $config));
+		$this->assertEquals('http://example.com/banana.php', site_url('', null, $config));
 	}
 
 	public function testSiteURLNoIndexButPath()
@@ -184,7 +184,7 @@ class URLHelperTest extends \CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com/index.php/', site_url());
+		$this->assertEquals('http://example.com/index.php', site_url());
 	}
 
 	/**
@@ -203,7 +203,7 @@ class URLHelperTest extends \CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com/index.php/', site_url());
+		$this->assertEquals('http://example.com/index.php', site_url());
 		$this->assertEquals('http://example.com/index.php/profile', site_url('profile'));
 	}
 

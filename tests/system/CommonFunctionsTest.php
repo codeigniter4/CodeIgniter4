@@ -3,14 +3,12 @@
 use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\HTTP\Response;
 use Config\App;
-use Config\Autoload;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use Config\Logger;
-use Tests\Support\Autoloader\MockFileLocator;
 use Tests\Support\HTTP\MockIncomingRequest;
 use Tests\Support\Log\TestLogger;
 use Tests\Support\Session\MockSession;
@@ -23,7 +21,7 @@ class CommonFunctionsTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
@@ -102,7 +100,9 @@ class CommonFunctionsTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$response = $this->createMock(\CodeIgniter\HTTP\Response::class);
-		$routes   = new \CodeIgniter\Router\RouteCollection(new \Tests\Support\Autoloader\MockFileLocator(new \Config\Autoload()), new \Config\Modules());
+		$routes   = new \CodeIgniter\Router\RouteCollection(
+			Services::locator(), new \Config\Modules()
+		);
 		\CodeIgniter\Services::injectMock('response', $response);
 		\CodeIgniter\Services::injectMock('routes', $routes);
 
@@ -148,6 +148,15 @@ class CommonFunctionsTest extends \CIUnitTestCase
 	{
 		$expected = 'Hello';
 		$this->assertEquals($expected, view_cell('\Tests\Support\View\SampleClass::hello'));
+	}
+
+	// ------------------------------------------------------------------------
+
+	public function testEscapeWithDifferentEncodings()
+	{
+		$this->assertEquals('&lt;x', esc('<x', 'html', 'utf-8'));
+		$this->assertEquals('&lt;x', esc('<x', 'html', 'iso-8859-1'));
+		$this->assertEquals('&lt;x', esc('<x', 'html', 'windows-1251'));
 	}
 
 	// ------------------------------------------------------------------------
@@ -267,7 +276,7 @@ class CommonFunctionsTest extends \CIUnitTestCase
 		$this->config          = new App();
 		$this->config->baseURL = 'http://example.com';
 
-		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()), new \Config\Modules());
+		$this->routes = new RouteCollection(Services::locator(), new \Config\Modules());
 		Services::injectMock('routes', $this->routes);
 
 		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
@@ -303,7 +312,7 @@ class CommonFunctionsTest extends \CIUnitTestCase
 		$this->config          = new App();
 		$this->config->baseURL = 'http://example.com';
 
-		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()), new \Config\Modules());
+		$this->routes = new RouteCollection(Services::locator(), new \Config\Modules());
 		Services::injectMock('routes', $this->routes);
 
 		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());

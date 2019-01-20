@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use DateTime;
@@ -7,6 +8,7 @@ use CodeIgniter\Exceptions\DownloadException;
 
 class DownloadResponseTest extends \CIUnitTestCase
 {
+
 	public function tearDown()
 	{
 		if (isset($_SERVER['HTTP_USER_AGENT']))
@@ -150,8 +152,8 @@ class DownloadResponseTest extends \CIUnitTestCase
 
 		$response = new DownloadResponse('unit-test.txt', true);
 
-		$size = filesize(BASEPATH . 'Common.php');
-		$response->setFilePath(BASEPATH . 'Common.php');
+		$size = filesize(SYSTEMPATH . 'Common.php');
+		$response->setFilePath(SYSTEMPATH . 'Common.php');
 		$this->assertSame($size, $response->getContentLength());
 	}
 
@@ -250,4 +252,54 @@ class DownloadResponseTest extends \CIUnitTestCase
 		$this->expectException(DownloadException::class);
 		$response->sendBody();
 	}
+
+	//--------------------------------------------------------------------
+	public function testGetReason()
+	{
+		$response = new DownloadResponse('unit-test.php', false);
+		$this->assertEquals('OK', $response->getReason());
+	}
+
+	//--------------------------------------------------------------------
+	public function testPretendOutput()
+	{
+		$response = new DownloadResponse('unit-test.php', false);
+		$response->pretend(true);
+
+		$response->setFilePath(__FILE__);
+
+		ob_start();
+		$response->send();
+		$actual = ob_get_contents();
+		ob_end_clean();
+
+		$this->assertSame(file_get_contents(__FILE__), $actual);
+	}
+
+	//--------------------------------------------------------------------
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testRealOutput()
+	{
+		$response = new DownloadResponse('unit-test.php', false);
+		$response->pretend(false);
+		$response->setFilePath(__FILE__);
+
+		// send it
+		ob_start();
+		$response->send();
+
+		$buffer = ob_clean();
+		if (ob_get_level() > 0)
+		{
+			ob_end_clean();
+		}
+
+		// and what actually got sent?
+		$this->assertHeaderEmitted('Content-Length: ' . filesize(__FILE__));
+		$this->assertHeaderEmitted('Date:');
+	}
+
 }

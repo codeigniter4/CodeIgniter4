@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Forge;
 use CodeIgniter\Test\CIDatabaseTestCase;
 
 /**
@@ -16,7 +17,7 @@ class ForgeTest extends CIDatabaseTestCase
 	 */
 	protected $forge;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 		$this->forge = \Config\Database::forge($this->DBGroup);
@@ -358,5 +359,15 @@ class ForgeTest extends CIDatabaseTestCase
 		{
 			$this->expectNotToPerformAssertions();
 		}
+	}
+
+	public function testConnectWithArrayGroup()
+	{
+		$group = config('Database');
+		$group = $group->tests;
+
+		$forge = \Config\Database::forge($group);
+
+		$this->assertInstanceOf(Forge::class, $forge);
 	}
 }

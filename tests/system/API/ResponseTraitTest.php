@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\API;
+<?php
+namespace CodeIgniter\API;
 
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
@@ -9,6 +10,7 @@ use Tests\Support\HTTP\MockIncomingRequest;
 
 class ResponseTraitTest extends \CIUnitTestCase
 {
+
 	protected $request;
 	protected $response;
 
@@ -17,7 +19,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 	 */
 	protected $formatter;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
@@ -45,8 +47,8 @@ class ResponseTraitTest extends \CIUnitTestCase
 
 		if (is_null($this->request))
 		{
-			$this->request  = new MockIncomingRequest((object)$config, new URI($uri), null, new UserAgent());
-			$this->response = new MockResponse((object)$config);
+			$this->request  = new MockIncomingRequest((object) $config, new URI($uri), null, new UserAgent());
+			$this->response = new MockResponse((object) $config);
 		}
 
 		// Insert headers into request.
@@ -102,13 +104,64 @@ EOH;
 		$this->assertEquals($expected, $this->response->getBody());
 	}
 
-	public function testNoFormatterHTML()
+	public function testNoFormatter()
 	{
 		$this->formatter = null;
-		$controller      = $this->makeController();
+		$controller      = $this->makeController([], 'http://codeigniter.com', ['Accept' => 'application/json']);
 		$controller->respondCreated('A Custom Reason');
 
 		$this->assertEquals('A Custom Reason', $this->response->getBody());
+	}
+
+	public function testAssociativeArrayPayload()
+	{
+		$this->formatter = null;
+		$controller      = $this->makeController();
+		$payload         = ['answer' => 42];
+		$expected        = <<<EOH
+{
+    "answer": 42
+}
+EOH;
+		$controller->respond($payload);
+		$this->assertEquals($expected, $this->response->getBody());
+	}
+
+	public function testArrayPayload()
+	{
+		$this->formatter = null;
+		$controller      = $this->makeController();
+		$payload         = [
+			1,
+			2,
+			3,
+		];
+		$expected        = <<<EOH
+[
+    1,
+    2,
+    3
+]
+EOH;
+		$controller->respond($payload);
+		$this->assertEquals($expected, $this->response->getBody());
+	}
+
+	public function testPHPtoArrayPayload()
+	{
+		$this->formatter = null;
+		$controller      = $this->makeController();
+		$payload         = new \stdClass();
+		$payload->name   = 'Tom';
+		$payload->id     = 1;
+		$expected        = <<<EOH
+{
+    "name": "Tom",
+    "id": 1
+}
+EOH;
+		$controller->respond((array)$payload);
+		$this->assertEquals($expected, $this->response->getBody());
 	}
 
 	public function testRespondSets404WithNoData()

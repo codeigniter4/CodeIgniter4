@@ -25,14 +25,14 @@ which requires all pull requests to be sent to the "develop" branch. This is
 where the next planned version will be developed. The "master" branch will
 always contain the latest stable version and is kept clean so a "hotfix" (e.g:
 an emergency security patch) can be applied to master to create a new version,
-without worrying about other features holding it up. For this reason all
+without worrying about other features holding it up. For this reason, all
 commits need to be made to "develop" and any sent to "master" will be closed
 automatically. If you have multiple changes to submit, please place each
 change into their own branch on your fork.
 
 One thing at a time: a pull request should only contain one change. That does
 not mean only one commit, but one change - however many commits it took. The
-reason for this is that if you change X and Y but send a pull request for both
+reason for this is that if you change X and Y but send a single pull request for both
 at the same time, we might really want X but disagree with Y, meaning we
 cannot merge the request. Using the Git-Flow branching model you can create
 new branches for both of these features and send two requests.
@@ -45,7 +45,8 @@ in your github account. You can make changes to your forked repository, while
 you cannot do the same with the shared one - you have to submit pull requests
 to it instead.
 
-`Creating a fork <https://help.github.com/articles/fork-a-repo/>`_ is done through the Github website. Navigate to `our
+`Creating a fork <https://help.github.com/articles/fork-a-repo/>`_ 
+is done through the Github website. Navigate to `our
 repository <https://github.com/codeigniter4/CodeIgniter4>`_,
 click the **Fork** button in the top-right of the page, and choose which account or
 organization of yours should contain that fork.
@@ -70,7 +71,7 @@ Synching
 
 Within your local repository, Git will have created an alias, **origin**, for the
 Github repository it is bound to. You want to create an alias for the shared
-repository, so that you can "synch" the two, making sure that your repository
+repository as well, so that you can "synch" the two, making sure that your repository
 includes any other contributions that have been merged by us into the shared repo::
 
     git remote add upstream UPSTREAM_URL
@@ -98,8 +99,11 @@ Branching Revisited
 The top of this page talked about the **master** and **develop** branches.
 The *best practice* for your work is to create a *feature branch* locally,
 to hold a group of related changes (source, unit testing, documentation,
-change log, etc). This local branch should be named appropriately,
-for instance "fix/problem123" or "new/mind-reader".
+change log, etc). 
+
+This local branch should be named appropriately, for instance 
+"fix/problem123" or "new/mind-reader". The slashes in these branch names is
+optional, and implies a sort of namespacing if used.
 
 For instance, make sure you are in the *develop* branch, and create a
 new feature branch, based on *develop*, for a new feature you are creating::
@@ -113,7 +117,7 @@ Committing
 ==========
 
 Your local changes need to be *committed* to save them in your local repository.
-This is where `contribution signing <signing>`_ comes in.
+This is where `contribution signing <./signing.rst>`_ comes in.
 
 You can have as many commits in a branch as you need to "get it right".
 For instance, to commit your work from a debugging session::
@@ -179,13 +183,13 @@ Make sure that the PR title is helpful for the maintainers and other developers.
 Add any comments appropriate, for instance asking for review.
 
 .. note::
-    If you do not provide a title for your PR, the odds of it being summarily rejected
+    If you do not provide a title or description for your PR, the odds of it being summarily rejected
     rise astronomically.
 
 When your PR is submitted, a continuous integration task will be triggered,
 running all the unit tests as well as any other checking we have configured for it.
 If the unit tests fail, or if there are merge conflicts, your PR will not
-be mergeable until fixed.
+be mergeable until those are fixed.
 
 Fix such changes locally, commit them properly, and then push your branch again.
 That will update the PR automatically, and re-run the CI tests. You don't need

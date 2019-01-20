@@ -7,7 +7,7 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 class FileMovingTest extends \CIUnitTestCase
 {
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

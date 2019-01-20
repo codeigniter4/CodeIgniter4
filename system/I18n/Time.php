@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\I18n;
+<?php
+namespace CodeIgniter\I18n;
 
 /**
  * CodeIgniter
@@ -7,7 +8,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2018 British Columbia Institute of Technology
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
@@ -516,12 +517,8 @@ class Time extends DateTime
 		$now  = Time::now()->getTimestamp();
 		$time = $this->getTimestamp();
 
-		if (! $now >= $time)
-		{
-			return 0;
-		}
-
-		return date('Y', $now) - date('Y', $time);
+		// future dates have no age
+		return max(0, date('Y', $now) - date('Y', $time));
 	}
 
 	//--------------------------------------------------------------------
@@ -543,20 +540,20 @@ class Time extends DateTime
 	 */
 	public function getDst()
 	{
-		$start = strtotime('-1 year', $this->getTimestamp());
-		$end   = strtotime('+2 year', $start);
-
+		// grab the transactions that would affect today
+		$start       = strtotime('-1 year', $this->getTimestamp());
+		$end         = strtotime('+2 year', $start);
 		$transitions = $this->timezone->getTransitions($start, $end);
 
+		$daylightSaving = false;
 		foreach ($transitions as $transition)
 		{
 			if ($transition['time'] > $this->format('U'))
 			{
-				return (bool) $transition['isdst'];
+				$daylightSaving = (bool) $transition['isdst'] ?? $daylightSaving;
 			}
 		}
-
-		return false;
+		return $daylightSaving;
 	}
 
 	//--------------------------------------------------------------------
@@ -644,11 +641,11 @@ class Time extends DateTime
 			throw I18nException::forInvalidDay($value);
 		}
 
-			   $date    = $this->getYear() . '-' . $this->getMonth();
-			   $lastDay = date('t', strtotime($date));
+		$date    = $this->getYear() . '-' . $this->getMonth();
+		$lastDay = date('t', strtotime($date));
 		if ($value > $lastDay)
-			   {
-				 throw I18nException::forInvalidOverDay($lastDay, $value);
+		{
+			throw I18nException::forInvalidOverDay($lastDay, $value);
 		}
 
 		return $this->setValue('day', $value);
@@ -980,15 +977,14 @@ class Time extends DateTime
 	 *
 	 * @return string
 	 */
-	public function toLocalizedString(string $format = null)
+	public function toLocalizedString(?string $format = null)
 	{
-		$format = is_null($format) ? $this->toStringFormat : $format;
+		$format = $format ?? $this->toStringFormat;
 
 		return IntlDateFormatter::formatObject($this->toDateTime(), $format, $this->locale);
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Comparison
 	//--------------------------------------------------------------------
@@ -1009,8 +1005,8 @@ class Time extends DateTime
 		$testTime = $this->getUTCObject($testTime, $timezone);
 
 		$ourTime = $this->toDateTime()
-						->setTimezone(new DateTimeZone('UTC'))
-						->format('Y-m-d H:i:s');
+				->setTimezone(new DateTimeZone('UTC'))
+				->format('Y-m-d H:i:s');
 
 		return $testTime->format('Y-m-d H:i:s') === $ourTime;
 	}
@@ -1083,7 +1079,6 @@ class Time extends DateTime
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Differences
 	//--------------------------------------------------------------------
@@ -1132,9 +1127,7 @@ class Time extends DateTime
 			// Yesterday/Tommorrow special cases
 			if (abs($days) === 1)
 			{
-				return $before
-					? lang('Time.yesterday')
-					: lang('Time.tomorrow');
+				return $before ? lang('Time.yesterday') : lang('Time.tomorrow');
 			}
 
 			$phrase = lang('Time.days', [abs($days)]);
@@ -1154,9 +1147,7 @@ class Time extends DateTime
 			return lang('Time.now');
 		}
 
-		return $before
-			? lang('Time.ago', [$phrase])
-			: lang('Time.inFuture', [$phrase]);
+		return $before ? lang('Time.ago', [$phrase]) : lang('Time.inFuture', [$phrase]);
 	}
 
 	/**
@@ -1190,7 +1181,7 @@ class Time extends DateTime
 		if ($time instanceof Time)
 		{
 			$time = $time->toDateTime()
-						 ->setTimezone(new DateTimeZone('UTC'));
+					->setTimezone(new DateTimeZone('UTC'));
 		}
 		else if ($time instanceof \DateTime)
 		{
@@ -1260,6 +1251,11 @@ class Time extends DateTime
 	/**
 	 * Allow for property-type access to any getX method...
 	 *
+	 * Note that we cannot use this for any of our setX methods,
+	 * as they return new Time objects, but the __set ignores
+	 * return values.
+	 * See http://php.net/manual/en/language.oop5.overloading.php
+	 *
 	 * @param $name
 	 *
 	 * @return mixed
@@ -1271,18 +1267,6 @@ class Time extends DateTime
 		if (method_exists($this, $method))
 		{
 			return $this->$method();
-		}
-	}
-
-	//--------------------------------------------------------------------
-
-	public function __set($name, $value)
-	{
-		$method = 'set' . ucfirst($name);
-
-		if (method_exists($this, $method))
-		{
-			return $this->$method($value);
 		}
 	}
 

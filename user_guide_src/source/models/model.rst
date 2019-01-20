@@ -14,7 +14,7 @@ instance of the database connection and you're good to go.
 
 ::
 
-	use \CodeIgniter\Database\ConnectionInterface;
+	use CodeIgniter\Database\ConnectionInterface;
 
 	class UserModel
 	{

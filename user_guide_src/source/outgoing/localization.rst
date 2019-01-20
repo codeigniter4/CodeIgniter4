@@ -14,10 +14,10 @@ CodeIgniter provides several tools to help you localize your application for dif
 localization of an application is a complex subject, it's simple to swap out strings in your application
 with different supported languages.
 
-Language strings are stored in the **application/Language** directory, with a sub-directory for each
+Language strings are stored in the **app/Language** directory, with a sub-directory for each
 supported language::
 
-    /application
+    /app
         /Language
             /en
                 app.php
@@ -42,7 +42,7 @@ to this can be found on the `W3C's site <https://www.w3.org/International/articl
 The system is smart enough to fallback to more generic language codes if an exact match
 cannot be found. If the locale code was set to **en-US** and we only have language files setup for **en**
 then those will be used since nothing exists for the more specific **en-US**. If, however, a language
-directory existed at **application/Language/en-US** then that would be used first.
+directory existed at **app/Language/en-US** then that would be used first.
 
 Locale Detection
 ================
@@ -263,3 +263,36 @@ Language files also allow nested arrays to make working with lists, etc... easie
 
     // Displays "Apples, Bananas, Grapes, Lemons, Oranges, Strawberries"
     echo implode(', ', lang('Fruit.list'));
+
+Language Fallback
+=================
+
+If you have a set of messages for a given locale, for instance
+``Language/en/app.php``, you can add language variants for that locale,
+each in its own folder, for instance ``Language/en-US/app.php``.
+
+You only need to provide values for those messages that would be
+localized differently for that locale variant. Any missing message
+definitions will be automatically pulled from the main locale settings.
+
+It gets better - the localization can fall all the way back to English,
+in case new messages are added to the framework and you haven't had
+a chance to translate them yet for your locale.
+
+So, if you are using the locale ``fr-CA``, then a localized
+message will first be sought in ``Language/fr/CA``, then in
+``Language/fr``, and finally in ``Language/en``.
+
+Message Translations
+====================
+
+We have an "official" set of translations in their
+`own repository <https://github.com/codeigniter4/translations>`_.
+
+You can download that repository, and copy its ``Language`` folder
+into your ``app``. The incorporated translations will be automatically
+picked up because the ``App`` namespace is mapped to your ``app`` folder.
+
+Alternately, you could use ``composer install codeigniter4/translations``
+inside your project, and the translated messages will be automatically picked
+up because the ``Translations`` namespace gets mapped appropriately.

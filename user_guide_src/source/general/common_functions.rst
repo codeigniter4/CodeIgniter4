@@ -215,7 +215,7 @@ Miscellaneous Functions
 	:returns: TRUE if was logged succesfully or FALSE if there was a problem logging it
 	:rtype: bool
 
-	Logs a message using the Log Handlers defined in **application/Config/Logger.php**.
+	Logs a message using the Log Handlers defined in **app/Config/Logger.php**.
 
 	Level can be one of the following values: **emergency**, **alert**, **critical**, **error**, **warning**,
 	**notice**, **info**, or **debug**.
@@ -243,6 +243,12 @@ Miscellaneous Functions
 
 		// Set a flash message
 		return redirect()->back()->with('foo', 'message');
+
+	When passing a URI into the function, it is treated as a reverse-route request, not a relative/full URI, treating
+        it the same as using redirect()->route()::
+
+                // Go to a named/reverse-routed URI
+		return redirect('named_route');
 
 .. php:function:: remove_invisible_characters($str[, $url_encoded = TRUE])
 
@@ -314,25 +320,21 @@ The following constants are always available anywhere within your application.
 Core Constants
 ==============
 
-.. php:const:: ROOTPATH
-
-	The path to the main application directory. Just above ``public``.
-
 .. php:const:: APPPATH
 
-	The path to the **application** directory.
+	The path to the **app** directory.
 
-.. php:const:: BASEPATH
+.. php:const:: ROOTPATH
+
+	The path to the project root directory. Just above ``APPPATH``.
+
+.. php:const:: SYSTEMPATH
 
 	The path to the **system** directory.
 
 .. php:const:: FCPATH
 
 	The path to the directory that holds the front controller.
-
-.. php:const:: SELF
-
-	The path to the front controller, **index.php**.
 
 .. php:const:: WRITEPATH
 

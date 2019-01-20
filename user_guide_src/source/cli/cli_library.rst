@@ -21,7 +21,7 @@ You do not need to create an instance of the CLI library, since all of it's meth
 need to ensure your controller can locate it via a ``use`` statement above your class::
 
 	<?php
-	use \CodeIgniter\CLI\CLI;
+	use CodeIgniter\CLI\CLI;
 
 	class MyController extends \CodeIgniter\Controller
 	{

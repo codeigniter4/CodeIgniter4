@@ -35,8 +35,8 @@ Create the Entity Class
 -----------------------
 
 Now create a new Entity class. Since there's no default location to store these classes, and it doesn't fit
-in with the existing directory structure, create a new directory at **application/Entities**. Create the
-Entity itself at **application/Entities/User.php**.
+in with the existing directory structure, create a new directory at **app/Entities**. Create the
+Entity itself at **app/Entities/User.php**.
 
 ::
 
@@ -60,7 +60,7 @@ database columns are represented in the Entity. This is required for the Model t
 Create the Model
 ----------------
 
-Create the model first at **application/Models/UserModel.php** so that we can interact with it::
+Create the model first at **app/Models/UserModel.php** so that we can interact with it::
 
     <?php namespace App\Models;
 
@@ -181,7 +181,10 @@ The first thing to notice is the name of the methods we've added. For each one, 
 column name to be converted into PascalCase, and prefixed with either ``set`` or ``get``. These methods will then
 be automatically called whenever you set or retrieve the class property using the direct syntax (i.e. $user->email).
 The methods do not need to be public unless you want them accessed from other classes. For example, the ``created_at``
-class property will be access through the ``setCreatedAt()`` and ``getCreatedAt()`` methods.
+class property will be accessed through the ``setCreatedAt()`` and ``getCreatedAt()`` methods.
+
+.. note:: This only works when trying to access the properties from outside of the track. Any methods internal to the
+    class must call the ``setX()`` and ``getX()`` methods directly.
 
 In the ``setPassword()`` method we ensure that the password is always hashed.
 
@@ -296,7 +299,7 @@ You can define which properties are automatically converted by adding the name t
     }
 
 Now, when any of those properties are set, they will be converted to a Time instance, using the application's
-current timezone, as set in **application/Config/App.php**::
+current timezone, as set in **app/Config/App.php**::
 
     $user = new App\Entities\User();
 
@@ -315,7 +318,7 @@ the **$_options** property. The **casts** option should be an array where the ke
 and the value is the data type it should be cast to. Casting only affects when values are read. No conversions happen
 that affect the permanent value in either the entity or the database. Properties can be cast to any of the following
 data types: **integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, and
-**timestamp**.
+**timestamp**. Add question mark at the beginning of type to mark property as nullable, i.e. **?string**, **?integer**.
 
 For example, if you had a User entity with an **is_banned** property, you can cast it as a boolean::
 
@@ -329,7 +332,8 @@ For example, if you had a User entity with an **is_banned** property, you can ca
 
         protected $_options = [
             'casts' => [
-                'is_banned' => 'boolean'
+                'is_banned' => 'boolean',
+                'is_banned_nullable' => '?boolean'
             ],
             'dates' => ['created_at', 'updated_at', 'deleted_at'],
             'datamap' => []

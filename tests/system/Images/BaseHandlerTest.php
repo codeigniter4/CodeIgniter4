@@ -14,7 +14,7 @@ use org\bovigo\vfs\vfsStream;
 class BaseHandlerTest extends \CIUnitTestCase
 {
 
-	public function setUp()
+	protected function setUp()
 	{
 		if (! extension_loaded('gd'))
 		{

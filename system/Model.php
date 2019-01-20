@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2018 British Columbia Institute of Technology
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
@@ -343,6 +343,8 @@ class Model
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
+		$this->reset();
+
 		return $row['data'];
 	}
 
@@ -398,7 +400,7 @@ class Model
 
 		// Some databases, like PostgreSQL, need order
 		// information to consistently return correct results.
-		if (empty($builder->QBOrderBy))
+		if (empty($builder->QBOrderBy) && ! empty($this->primaryKey))
 		{
 			$builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
 		}
@@ -1264,8 +1266,8 @@ class Model
 			// the value found in $data, if exists.
 			$rules = $this->fillPlaceholders($this->validationRules, $data);
 
-			$this->validation->setRules($rules, $this->validationMessages, $this->DBGroup);
-			$valid = $this->validation->run($data);
+			$this->validation->setRules($rules, $this->validationMessages);
+			$valid = $this->validation->run($data, null, $this->DBGroup);
 		}
 
 		return (bool) $valid;
@@ -1362,6 +1364,24 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Override countAllResults to account for soft deleted accounts.
+	 *
+	 * @param boolean $reset
+	 * @param boolean $test
+	 *
+	 * @return mixed
+	 */
+	public function countAllResults(bool $reset = true, bool $test = false)
+	{
+		if ($this->tempUseSoftDeletes === true)
+		{
+			$this->builder()->where($this->deletedField, 0);
+		}
+
+		return $this->builder()->countAllResults($reset, $test);
+	}
+
+	/**
 	 * A simple event trigger for Model Events that allows additional
 	 * data manipulation within the model. Specifically intended for
 	 * usage by child models this can be used to format data,
@@ -1416,7 +1436,7 @@ class Model
 	 */
 	public function __get(string $name)
 	{
-		if (in_array($name, ['primaryKey', 'table', 'returnType']))
+		if (in_array($name, ['primaryKey', 'table', 'returnType', 'DBGroup']))
 		{
 			return $this->{$name};
 		}

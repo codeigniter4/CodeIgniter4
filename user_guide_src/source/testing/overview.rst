@@ -152,7 +152,7 @@ between expected and actual time is within the prescribed tolerance.::
     $timer->start('longjohn', strtotime('-11 minutes'));
     $this->assertCloseEnough(11 * 60, $timer->getElapsedTime('longjohn'));
 
-The above test will allow the actual time to be either 600 or 601 seconds.
+The above test will allow the actual time to be either 660 or 661 seconds.
 
 **assertCloseEnoughString($expected, $actual, $message='', $tolerance=1)**
 
@@ -163,7 +163,8 @@ between expected and actual time, formatted as strings, is within the prescribed
     $timer->start('longjohn', strtotime('-11 minutes'));
     $this->assertCloseEnoughString(11 * 60, $timer->getElapsedTime('longjohn'));
 
-The above test will allow the actual time to be either 600 or 601 seconds.
+The above test will allow the actual time to be either 660 or 661 seconds.
+
 
 Accessing Protected/Private Properties
 --------------------------------------
@@ -216,7 +217,7 @@ parameter is the name of the property to set the value of. The third parameter i
 Mocking Services
 ================
 
-You will often find that you need to mock one of the services defined in **application/Config/Services.php** to limit
+You will often find that you need to mock one of the services defined in **app/Config/Services.php** to limit
 your tests to only the code in question, while simulating various responses from the services. This is especially
 true when testing controllers and other integration testing. The **Services** class provides two methods to make this
 simple: ``injectMock()``, and ``reset()``.

@@ -19,39 +19,38 @@ You can access config files within your classes by creating a new instance or us
 are public, so you access the settings like any other property::
 
 	// Creating new class by hand
-	$config = new \Config\EmailConfig();
+	$config = new \Config\Pager();
 
 	// Creating new class with config function
-	$config = config( 'EmailConfig', false );
+	$config = config( 'Pager', false );
 
 	// Get shared instance with config function
-	$config = config( 'EmailConfig' );
+	$config = config( 'Pager' );
 
 	// Access config class with namespace
-	$config = config( 'Config\\EmailConfig' );
+	$config = config( 'Config\\Pager' );
 
 	// Access settings as class properties
-	$protocol = $config->protocol;
-	$mailpath = $config->mailpath;
+	$pageSize = $pager->perPage;
 
 If no namespace is provided, it will look for the files in all available namespaces that have
-been defined, as well as **/application/Config/**. All of the configuration files
+been defined, as well as **/app/Config/**. All of the configuration files
 that ship with CodeIgniter are namespaced with ``Config``. Using this namespace in your
 application will provide the best performance since it knows exactly what directory to find the
 files in and doesn't have to scan several locations in the filesystem to get there.
 
 You can locate the configuration files any place on your server by using a different namespace.
 This allows you to pull configuration files on the production server to a folder that is not in
-the web-accessible space at all, while keeping it under **/application** for ease of access during development.
+the web-accessible space at all, while keeping it under **/app** for ease of access during development.
 
 Creating Configuration Files
 ============================
 
 If you need to create a new configuration file you would create a new file at your desired location,
-**/application/Config** by default. Then create the class and fill it with public properties that
+**/app/Config** by default. Then create the class and fill it with public properties that
 represent your settings::
 
-    namespace Config;    
+    namespace Config;
     use CodeIgniter\Config\BaseConfig;
 
     class App extends BaseConfig
@@ -95,6 +94,10 @@ the environment. This will work in any environment. These variables are then ava
 	$s3_bucket = getenv('S3_BUCKET');
 	$s3_bucket = $_ENV['S3_BUCKET'];
 	$s3_bucket = $_SERVER['S3_BUCKET'];
+
+.. note:: If you are using Apache, then the CI_ENVIRONMENT can be set at the top of
+    ``public/.htaccess``, which comes with a commented line to do that. Change the
+    environment setting to the one you want to use, and uncomment that line.
 
 Nesting Variables
 =================

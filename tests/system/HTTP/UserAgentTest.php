@@ -12,7 +12,7 @@ class UserAgent_test extends \CIUnitTestCase {
 	 */
 	protected $agent;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

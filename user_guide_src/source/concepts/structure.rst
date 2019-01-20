@@ -8,18 +8,18 @@ can change to meet the needs of your application.
 Default Directories
 ===================
 
-A fresh install has six directories: ``/application``, ``/system``, ``/public``,
-``/writable``, ``/tests`` and ``/docs``.
+A fresh install has six directories: ``/app``, ``/system``, ``/public``,
+``/writable``, ``/tests`` and possibly ``/docs``.
 Each of these directories has a very specific part to play.
 
-application
------------
-The ``application`` directory is where all of your application code lives. This comes with a default directory
+app
+---
+The ``app`` directory is where all of your application code lives. This comes with a default directory
 structure that works well for many applications. The following folders make up the basic contents:
 
 .. code-block:: none
 
-	/application
+	/app
 		/Config         Stores the configuration files
 		/Controllers    Controllers determine the program flow
 		/Database       Stores the database migrations and seeds files
@@ -31,7 +31,7 @@ structure that works well for many applications. The following folders make up t
 		/ThirdParty     ThirdParty libraries that can be used in application
 		/Views          Views make up the HTML that is displayed to the client.
 
-Because the ``application`` directory is already namespaced, you should feel free to modify the structure
+Because the ``app`` directory is already namespaced, you should feel free to modify the structure
 of this directory to suit your application's needs. For example, you might decide to start using the Repository
 pattern and Entity Models to work with your data. In this case, you could rename the ``Models`` directory to
 ``Repositories``, and add a new ``Entities`` directory.
@@ -40,7 +40,7 @@ pattern and Entity Models to work with your data. In this case, you could rename
 		routing to controllers, and will need to define all of your routes in the routes file.
 
 All files in this directory live under the ``App`` namespace, though you are free to change that in
-**application/Config/Constants.php**.
+**app/Config/Constants.php**.
 
 system
 ------
@@ -77,11 +77,13 @@ production servers.
 
 docs
 ----
-This directory holds a local copy of the CodeIgniter4
+If this directory is part of your project, it holds a local copy of the CodeIgniter4
 User Guide.
 
 Modifying Directory Locations
 -----------------------------
 
 If you've relocated any of the main directories, you can change the configuration
-settings inside ``application/Config/Paths``.
+settings inside ``app/Config/Paths``.
+
+Please read `Managing your Applications <../general/managing.html>`_

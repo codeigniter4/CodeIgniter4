@@ -24,7 +24,7 @@ class FileHandlerTest extends \CIUnitTestCase
 	private $fileHandler;
 	private $config;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 

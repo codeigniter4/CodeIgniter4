@@ -3,18 +3,19 @@ Running Your App
 ################
 
 A CodeIgniter 4 app can be run in a number of different ways: using a web server,
-using virtualization, or using PHP's built-in server. This section addresses how to use
+using virtualization, or using CodeIgniter's command line tool for testing. 
+This section addresses how to use
 each technique, and explains some of the pros and cons of them.
 
 Initial Configuration & Setup
 =================================================
 
-#. Open the **application/Config/App.php** file with a text editor and
+#. Open the **app/Config/App.php** file with a text editor and
    set your base URL. If you intend to use encryption or sessions, set
    your encryption key. If you need more flexibility, the baseURL may
    be set within the .env file as **app.baseURL="http://example.com"**.
 #. If you intend to use a database, open the
-   **application/Config/Database.php** file with a text editor and set your
+   **app/Config/Database.php** file with a text editor and set your
    database settings.
 
 One additional measure to take in production environments is to disable
@@ -28,23 +29,33 @@ to "develop".
 Hosting with Apache
 =================================================
 
-Directions coming with the next release.
+Directions coming soon.
 
 Hosting with NGINX
 =================================================
 
-Directions coming with the next release.
+Directions coming soon.
 
 Hosting with Vagrant
 =================================================
 
-Directions coming with the next release.
+Directions coming soon.
+
+Hosting with Docker
+=================================================
+
+Directions coming soon.
+
+Hosting on the Cloud
+=================================================
+
+Directions coming soon.
 
 Local Development Server
 =================================================
 
-CodeIgniter 4 comes with a local development server, leveraging PHP's built-in web server 
-with CodeIgniter routing. You can use the ``serve`` script to launch it, 
+CodeIgniter 4 comes with a local development server, leveraging PHP's built-in web server
+with CodeIgniter routing. You can use the ``serve`` script to launch it,
 with the following command line in the main directory::
 
     > php spark serve
@@ -60,7 +71,7 @@ all *nix-type systems (include OS X) will typically keep the file at **/etc/host
 
 The local development server can be customized with three command line options:
 
-- Once that is done you can use the ``--host`` CLI option to specify a different host to run the application at::
+- You can use the ``--host`` CLI option to specify a different host to run the application at::
 
     > php spark serve --host=example.dev
 

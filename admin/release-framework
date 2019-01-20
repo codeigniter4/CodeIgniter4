@@ -12,7 +12,7 @@ git checkout $branch
 echo -e "${BOLD}Build the framework distributable${NORMAL}"
 
 echo -e "${BOLD}Copy the main files/folders...${NORMAL}"
-releasable='application docs public system writable README.md composer.json contributing.md env license.txt spark'
+releasable='app docs public system writable contributing.md env license.txt spark'
 for fff in $releasable ; do
     if [ -d "$fff" ] ; then
         rm -rf $fff

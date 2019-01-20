@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Autoloader;
 
+use Composer\Autoload\ClassLoader;
+
 /**
  * CodeIgniter
  *
@@ -7,7 +9,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2018 British Columbia Institute of Technology
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +31,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
@@ -76,7 +78,6 @@
  */
 class Autoloader
 {
-
 	/**
 	 * Stores namespaces as key, and path as values.
 	 *
@@ -98,8 +99,11 @@ class Autoloader
 	 * the valid parts that we'll need.
 	 *
 	 * @param \Config\Autoload $config
+	 * @param \Config\Modules  $moduleConfig
+	 *
+	 * @return $this
 	 */
-	public function initialize(\Config\Autoload $config)
+	public function initialize(\Config\Autoload $config, \Config\Modules $moduleConfig)
 	{
 		// We have to have one or the other, though we don't enforce the need
 		// to have both present in order to work.
@@ -110,7 +114,7 @@ class Autoloader
 
 		if (isset($config->psr4))
 		{
-			$this->prefixes = $config->psr4;
+			$this->addNamespace($config->psr4);
 		}
 
 		if (isset($config->classmap))
@@ -118,15 +122,19 @@ class Autoloader
 			$this->classmap = $config->classmap;
 		}
 
-		unset($config);
+		// Should we load through Composer's namespaces, also?
+		if ($moduleConfig->discoverInComposer)
+		{
+			$this->discoverComposerNamespaces();
+		}
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
 	 * Register the loader with the SPL autoloader stack.
-	 *
-	 * @codeCoverageIgnore
 	 */
 	public function register()
 	{
@@ -144,44 +152,75 @@ class Autoloader
 		$config = is_array($this->classmap) ? $this->classmap : [];
 
 		spl_autoload_register(function ($class) use ($config) {
-			if (! array_key_exists($class, $config))
+			if (empty($config[$class]))
 			{
 				return false;
 			}
 
 			include_once $config[$class];
 		}, true, // Throw exception
-						   true // Prepend
+			true // Prepend
 		);
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Registers a namespace with the autoloader.
+	 * Registers namespaces with the autoloader.
 	 *
-	 * @param string $namespace
-	 * @param string $path
+	 * @param array|string $namespace
+	 * @param string       $path
 	 *
 	 * @return Autoloader
 	 */
-	public function addNamespace(string $namespace, string $path)
+	public function addNamespace($namespace, string $path = null)
 	{
-		if (isset($this->prefixes[$namespace]))
+		if (is_array($namespace))
 		{
-			if (is_string($this->prefixes[$namespace]))
+			foreach ($namespace as $prefix => $path)
 			{
-				$this->prefixes[$namespace] = [$this->prefixes[$namespace]];
-			}
+				$prefix = trim($prefix, '\\');
 
-			$this->prefixes[$namespace] = array_merge($this->prefixes[$namespace], [$path]);
+				if (is_array($path))
+				{
+					foreach ($path as $dir)
+					{
+						$this->prefixes[$prefix][] = rtrim($dir, '/') . '/';
+					}
+
+					continue;
+				}
+
+				$this->prefixes[$prefix][] = rtrim($path, '/') . '/';
+			}
 		}
 		else
 		{
-			$this->prefixes[$namespace] = [$path];
+			$this->prefixes[trim($namespace, '\\')][] = rtrim($path, '/') . '/';
 		}
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Get namespaces with prefixes as keys and paths as values.
+	 *
+	 * If a prefix param is set, returns only paths to the given prefix.
+	 *
+	 * @var string|null $prefix
+	 *
+	 * @return array
+	 */
+	public function getNamespace(string $prefix = null)
+	{
+		if ($prefix === null)
+		{
+			return $this->prefixes;
+		}
+
+		return $this->prefixes[trim($prefix, '\\')] ?? [];
 	}
 
 	//--------------------------------------------------------------------
@@ -195,7 +234,7 @@ class Autoloader
 	 */
 	public function removeNamespace(string $namespace)
 	{
-		unset($this->prefixes[$namespace]);
+		unset($this->prefixes[trim($namespace, '\\')]);
 
 		return $this;
 	}
@@ -207,7 +246,7 @@ class Autoloader
 	 *
 	 * @param string $class The fully qualified class name.
 	 *
-	 * @return mixed            The mapped file on success, or boolean false
+	 * @return string|false The mapped file on success, or boolean false
 	 *                          on failure.
 	 */
 	public function loadClass(string $class)
@@ -234,7 +273,7 @@ class Autoloader
 	 *
 	 * @param string $class The fully-qualified class name
 	 *
-	 * @return mixed            The mapped file name on success, or boolean false on fail
+	 * @return string|false The mapped file name on success, or boolean false on fail
 	 */
 	protected function loadInNamespace(string $class)
 	{
@@ -245,18 +284,14 @@ class Autoloader
 
 		foreach ($this->prefixes as $namespace => $directories)
 		{
-			if (is_string($directories))
-			{
-				$directories = [$directories];
-			}
-
 			foreach ($directories as $directory)
 			{
 				$directory = rtrim($directory, '/');
 
 				if (strpos($class, $namespace) === 0)
 				{
-					$filePath = $directory . str_replace('\\', '/', substr($class, strlen($namespace))) . '.php';
+					$filePath = $directory . str_replace('\\', '/',
+							substr($class, strlen($namespace))) . '.php';
 					$filename = $this->requireFile($filePath);
 
 					if ($filename)
@@ -275,8 +310,8 @@ class Autoloader
 
 	/**
 	 * Attempts to load the class from common locations in previous
-	 * version of CodeIgniter, namely 'application/libraries', and
-	 * 'application/Models'.
+	 * version of CodeIgniter, namely 'app/Libraries', and
+	 * 'app/Models'.
 	 *
 	 * @param string $class The class name. This typically should NOT have a namespace.
 	 *
@@ -316,11 +351,9 @@ class Autoloader
 	 * A central way to require a file is loaded. Split out primarily
 	 * for testing purposes.
 	 *
-	 * @codeCoverageIgnore
-	 *
 	 * @param string $file
 	 *
-	 * @return boolean
+	 * @return string|false The filename on success, false if the file is not loaded
 	 */
 	protected function requireFile(string $file)
 	{
@@ -367,4 +400,35 @@ class Autoloader
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Locates all PSR4 compatible namespaces from Composer.
+	 */
+	protected function discoverComposerNamespaces()
+	{
+		if (! is_file(COMPOSER_PATH))
+		{
+			return false;
+		}
+
+		$composer = include COMPOSER_PATH;
+
+		$paths = $composer->getPrefixesPsr4();
+		unset($composer);
+
+		// Get rid of CodeIgniter so we don't have duplicates
+		if (isset($paths['CodeIgniter\\']))
+		{
+			unset($paths['CodeIgniter\\']);
+		}
+
+		// Composer stores paths with trailng slash. We don't.
+		$newPaths = [];
+		foreach ($paths as $key => $value)
+		{
+			$newPaths[rtrim($key, '\\ ')] = $value;
+		}
+
+		$this->prefixes = array_merge($this->prefixes, $newPaths);
+	}
 }

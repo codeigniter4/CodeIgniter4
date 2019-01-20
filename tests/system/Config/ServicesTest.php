@@ -1,4 +1,7 @@
-<?php namespace Config;
+<?php
+namespace Config;
+
+use Tests\Support\HTTP\MockResponse;
 
 class ServicesTest extends \CIUnitTestCase
 {
@@ -6,7 +9,7 @@ class ServicesTest extends \CIUnitTestCase
 	protected $config;
 	protected $original;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
@@ -20,6 +23,30 @@ class ServicesTest extends \CIUnitTestCase
 	public function tearDown()
 	{
 		$_SERVER = $this->original;
+	}
+
+	public function testNewAutoloader()
+	{
+		$actual = Services::autoloader();
+		$this->assertInstanceOf(\CodeIgniter\Autoloader\Autoloader::class, $actual);
+	}
+
+	public function testNewUnsharedAutoloader()
+	{
+		$actual = Services::autoloader(false);
+		$this->assertInstanceOf(\CodeIgniter\Autoloader\Autoloader::class, $actual);
+	}
+
+	public function testNewFileLocator()
+	{
+		$actual = Services::locator();
+		$this->assertInstanceOf(\CodeIgniter\Autoloader\FileLocator::class, $actual);
+	}
+
+	public function testNewUnsharedFileLocator()
+	{
+		$actual = Services::locator(false);
+		$this->assertInstanceOf(\CodeIgniter\Autoloader\FileLocator::class, $actual);
 	}
 
 	public function testNewCurlRequest()
@@ -79,6 +106,26 @@ class ServicesTest extends \CIUnitTestCase
 	{
 		$actual = Services::clirequest(null, false);
 		$this->assertInstanceOf(\CodeIgniter\HTTP\CLIRequest::class, $actual);
+	}
+
+	public function testNewLanguage()
+	{
+		$actual = Services::language();
+		$this->assertInstanceOf(\CodeIgniter\Language\Language::class, $actual);
+		$this->assertEquals('en', $actual->getLocale());
+
+		Services::language('la');
+		$this->assertEquals('la', $actual->getLocale());
+	}
+
+	public function testNewUnsharedLanguage()
+	{
+		$actual = Services::language(null, false);
+		$this->assertInstanceOf(\CodeIgniter\Language\Language::class, $actual);
+		$this->assertEquals('en', $actual->getLocale());
+
+		Services::language('la', false);
+		$this->assertEquals('en', $actual->getLocale());
 	}
 
 	public function testNewPager()
@@ -161,6 +208,113 @@ class ServicesTest extends \CIUnitTestCase
 		// __callStatic should kick in for this
 		$actual = \CodeIgniter\Config\Services::SeSsIoN(null, false);
 		$this->assertInstanceOf(\CodeIgniter\Session\Session::class, $actual);
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testCallStaticDirectly()
+	{
+		//      $actual = \CodeIgniter\Config\Services::SeSsIoN(null, false); // original
+		$actual = \CodeIgniter\Config\Services::__callStatic('SeSsIoN', [null, false]);
+		$this->assertInstanceOf(\CodeIgniter\Session\Session::class, $actual);
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testMockInjection()
+	{
+		Services::injectMock('response', new MockResponse(new App()));
+		$response = service('response');
+		$this->assertInstanceOf(MockResponse::class, $response);
+
+		Services::injectMock('response', new MockResponse(new App()));
+		$response2 = service('response');
+		$this->assertInstanceOf(MockResponse::class, $response2);
+
+		$this->assertEquals($response, $response2);
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testReset()
+	{
+		Services::injectMock('response', new MockResponse(new App()));
+		$response = service('response');
+		$this->assertInstanceOf(MockResponse::class, $response);
+
+		Services::reset(true); // reset mocks & shared instances
+
+		Services::injectMock('response', new MockResponse(new App()));
+		$response2 = service('response');
+		$this->assertInstanceOf(MockResponse::class, $response2);
+
+		$this->assertTrue($response !== $response2);
+	}
+
+	public function testFilters()
+	{
+		$result = Services::filters();
+		$this->assertInstanceOf(\CodeIgniter\Filters\Filters::class, $result);
+	}
+
+	public function testHoneypot()
+	{
+		$result = Services::honeypot();
+		$this->assertInstanceOf(\CodeIgniter\Honeypot\Honeypot::class, $result);
+	}
+
+	public function testMigrations()
+	{
+		$result = Services::migrations();
+		$this->assertInstanceOf(\CodeIgniter\Database\MigrationRunner::class, $result);
+	}
+
+	public function testParser()
+	{
+		$result = Services::parser();
+		$this->assertInstanceOf(\CodeIgniter\View\Parser::class, $result);
+	}
+
+	public function testRedirectResponse()
+	{
+		$result = Services::redirectResponse();
+		$this->assertInstanceOf(\CodeIgniter\HTTP\RedirectResponse::class, $result);
+	}
+
+	public function testRoutes()
+	{
+		$result = Services::routes();
+		$this->assertInstanceOf(\CodeIgniter\Router\RouteCollection::class, $result);
+	}
+
+	public function testRouter()
+	{
+		$result = Services::router();
+		$this->assertInstanceOf(\CodeIgniter\Router\Router::class, $result);
+	}
+
+	public function testSecurity()
+	{
+		$result = Services::security();
+		$this->assertInstanceOf(\CodeIgniter\Security\Security::class, $result);
+	}
+
+	public function testTimer()
+	{
+		$result = Services::timer();
+		$this->assertInstanceOf(\CodeIgniter\Debug\Timer::class, $result);
+	}
+
+	public function testTypography()
+	{
+		$result = Services::typography();
+		$this->assertInstanceOf(\CodeIgniter\Typography\Typography::class, $result);
 	}
 
 }

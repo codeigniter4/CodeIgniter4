@@ -8,7 +8,7 @@ class ImageTest extends \CIUnitTestCase
 
 	protected $path = 'tests/_support/ci-logo.png';
 
-	public function setup()
+	protected function setUp()
 	{
 		// create virtual file system
 		$this->root = vfsStream::setup();

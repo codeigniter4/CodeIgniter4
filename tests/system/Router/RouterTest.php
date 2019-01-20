@@ -1,7 +1,7 @@
 <?php
 namespace CodeIgniter\Router;
 
-use Tests\Support\Autoloader\MockFileLocator;
+use CodeIgniter\Config\Services;
 
 class RouterTest extends \CIUnitTestCase
 {
@@ -18,16 +18,18 @@ class RouterTest extends \CIUnitTestCase
 	 */
 	protected $root;
 
-	public function setUp()
+	protected function setUp()
 	{
 		parent::setUp();
 
 		$moduleConfig          = new \Config\Modules;
 		$moduleConfig->enabled = false;
-		$this->collection      = new RouteCollection(new MockFileLocator(new \Config\Autoload()), $moduleConfig);
+		$this->collection      = new RouteCollection(Services::locator(), $moduleConfig);
 
 		$routes = [
 			'users'                                           => 'Users::index',
+			'user-setting/show-list'                          => 'User_setting::show_list',
+			'user-setting/(:segment)'                         => 'User_setting::detail/$1',
 			'posts'                                           => 'Blog::posts',
 			'pages'                                           => 'App\Pages::list_all',
 			'posts/(:num)'                                    => 'Blog::show/$1',
@@ -439,4 +441,53 @@ class RouterTest extends \CIUnitTestCase
 		$this->assertEquals('auth_post', $router->methodName());
 	}
 
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1564
+	 */
+	public function testTranslateURIDashes()
+	{
+		$router = new Router($this->collection);
+
+		$router->handle('user-setting/show-list');
+
+		$router->setTranslateURIDashes(true);
+
+		$this->assertEquals('\User_setting', $router->controllerName());
+		$this->assertEquals('show_list', $router->methodName());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1564
+	 */
+	public function testTranslateURIDashesForParams()
+	{
+		$router = new Router($this->collection);
+		$router->setTranslateURIDashes(true);
+
+		$router->handle('user-setting/2018-12-02');
+
+		$this->assertEquals('\User_setting', $router->controllerName());
+		$this->assertEquals('detail', $router->methodName());
+		$this->assertEquals(['2018-12-02'], $router->params());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1564
+	 */
+	public function testTranslateURIDashesForAutoRoute()
+	{
+		$router = new Router($this->collection);
+		$router->setTranslateURIDashes(true);
+
+		$router->autoRoute('admin-user/show-list');
+
+		$this->assertEquals('Admin_user', $router->controllerName());
+		$this->assertEquals('show_list', $router->methodName());
+	}
+
+	//--------------------------------------------------------------------
 }

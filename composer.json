@@ -5,11 +5,12 @@
     "homepage": "https://codeigniter.com",
     "license": "MIT",
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.2",
         "ext-curl": "*",
         "ext-intl": "*",
         "ext-json": "*",
         "kint-php/kint": "^2.1",
+        "psr/log": "^1.1",
         "zendframework/zend-escaper": "^2.5"
     },
     "require-dev": {
@@ -20,8 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "CodeIgniter\\": "system/",
-            "Psr\\Log\\": "system/ThirdParty/PSR/Log/"
+            "CodeIgniter\\": "system/"
         }
     },
     "scripts": {
