@@ -307,7 +307,7 @@ PRs merged:
 - #1460 remove unneeded ternary check at HoneyPot
 - #1457 use $paths->systemDirectory in public/index.php 
 - #1456 Beef up HTTP URI & Response testing
-- #1455 un-ignore application/Database/Migrations directory
+- #1455 un-ignore app/Database/Migrations directory
 - #1454 add missing break; in loop at Email::getEncoding()
 - #1453 BugFix if there extension has only one mime type
 - #1451 remove unneeded $session->start(); check on RedirectResponse
@@ -318,7 +318,7 @@ PRs merged:
 - #1445 using existing is_cli() function in HTTP\IncomingRequest
 - #1444 Dox for reorganized repo admin (4 of 4)
 - #1443 Fixes unit test output not captured
-- #1442 remove form view in application/View/ and form helper usage in create new items tutorial
+- #1442 remove form view in app/View/ and form helper usage in create new items tutorial
 - #1440 Access to model's last inserted ID
 - #1438 Tailor the last few repo org names (3 of 4)
 - #1437 Replace repo org name in MOST php docs (2 of 4)

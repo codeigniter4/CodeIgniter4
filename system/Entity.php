@@ -268,15 +268,15 @@ class Entity
 		}
 
 		$isNullable = false;
-		$castTo = false;
+		$castTo     = false;
 
-		if(array_key_exists($key, $this->_options['casts']))
+		if (array_key_exists($key, $this->_options['casts']))
 		{
-			$isNullable = substr($this->_options['casts'][$key],0,1) === '?';
-			$castTo = $isNullable ? substr($this->_options['casts'][$key], 1) : $this->_options['casts'][$key];
+			$isNullable = substr($this->_options['casts'][$key], 0, 1) === '?';
+			$castTo     = $isNullable ? substr($this->_options['casts'][$key], 1) : $this->_options['casts'][$key];
 		}
 
-		if(!$isNullable || !is_null($value))
+		if (! $isNullable || ! is_null($value))
 		{
 			// Array casting requires that we serialize the value
 			// when setting it so that it can easily be stored
@@ -293,7 +293,6 @@ class Entity
 			{
 				$value = json_encode($value);
 			}
-
 		}
 
 		// if a set* method exists for this key,
@@ -317,7 +316,6 @@ class Entity
 
 		return $this;
 	}
-
 
 	//--------------------------------------------------------------------
 
@@ -443,13 +441,13 @@ class Entity
 
 	protected function castAs($value, string $type)
 	{
-		if(substr($type,0,1) === '?')
+		if (substr($type, 0, 1) === '?')
 		{
-			if($value === null)
+			if ($value === null)
 			{
 				return null;
 			}
-			$type = substr($type,1);
+			$type = substr($type, 1);
 		}
 
 		switch($type)

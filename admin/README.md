@@ -1,8 +1,8 @@
-#CodeIgniter 4 Admin
+# CodeIgniter 4 Admin
 
 This folder contains tools or docs useful for project maintainers.
 
-##Repositories inside https://github.com/codeigniter4
+## Repositories inside https://github.com/codeigniter4
 
 -   **CodeIgniter4** is the main development repository.  
     It supports issues and pull requests, and has a rule to enforce GPG-signed commits.  
@@ -35,7 +35,7 @@ This folder contains tools or docs useful for project maintainers.
     It is community-maintained, and accepts issues and pull requests.  
     It could be downloaded, forked or composer-installed.
 
-##Contributor Scripts
+## Contributor Scripts
 
 -   **setup.sh** installs a git pre-commit hook into a contributor's
     local clone of their fork of the `CodeIgniter4` repository.
@@ -43,7 +43,7 @@ This folder contains tools or docs useful for project maintainers.
     to be added as part of a git commit, ensuring that they conform to the
     framework coding style standards, and automatically fixing what can be.
 
-##Maintainer Scripts
+## Maintainer Scripts
 
 -   **release-config** holds variables used for the maintainer & release building
 -   **docbot** re-builds the user guide from the RST source for it,
@@ -51,7 +51,7 @@ This folder contains tools or docs useful for project maintainers.
     repository (if the user running it has maintainer rights on that repo).  
     See the [writeup](./docbot.md).
 
-##Release Building Scripts
+## Release Building Scripts
 
 The release workflow is detailed in its own writeup; these are the main
 scripts used by the release manager:
@@ -79,7 +79,7 @@ scripts used by the release manager:
     Remember to be polite when running it.
 
 
-##Other Stuff
+## Other Stuff
 
 -   **release-notes.bb** is a boilerplate for forum announcements of a new release.  
     It is marked up using [BBcode](https://en.wikipedia.org/wiki/BBCode).

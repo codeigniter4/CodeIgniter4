@@ -310,8 +310,8 @@ class Autoloader
 
 	/**
 	 * Attempts to load the class from common locations in previous
-	 * version of CodeIgniter, namely 'application/libraries', and
-	 * 'application/Models'.
+	 * version of CodeIgniter, namely 'app/Libraries', and
+	 * 'app/Models'.
 	 *
 	 * @param string $class The class name. This typically should NOT have a namespace.
 	 *
@@ -406,6 +406,11 @@ class Autoloader
 	 */
 	protected function discoverComposerNamespaces()
 	{
+		if (! is_file(COMPOSER_PATH))
+		{
+			return false;
+		}
+
 		$composer = include COMPOSER_PATH;
 
 		$paths = $composer->getPrefixesPsr4();

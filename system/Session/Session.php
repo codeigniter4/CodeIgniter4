@@ -42,7 +42,7 @@ use Psr\Log\LoggerAwareTrait;
  * Implementation of CodeIgniter session container.
  *
  * Session configuration is done through session variables and cookie related
- * variables in application/config/App.php
+ * variables in app/config/App.php
  */
 class Session implements SessionInterface
 {

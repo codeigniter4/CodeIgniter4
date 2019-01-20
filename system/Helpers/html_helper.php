@@ -161,7 +161,6 @@ if (! function_exists('img'))
 			$src['alt'] = $attributes['alt'] ?? '';
 		}
 
-
 		$img = '<img';
 
 		foreach ($src as $k => $v)
@@ -185,7 +184,7 @@ if (! function_exists('img'))
 		}
 
 		// prevent passing "alt" to stringify_attributes
-		if(is_array($attributes) && isset($attributes['alt']))
+		if (is_array($attributes) && isset($attributes['alt']))
 		{
 			unset($attributes['alt']);
 		}

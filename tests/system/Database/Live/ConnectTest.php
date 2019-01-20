@@ -1,11 +1,12 @@
 <?php namespace CodeIgniter\Database\Live;
 
-;
-
 use CodeIgniter\Config\Config;
 use CodeIgniter\Test\CIDatabaseTestCase;
 use Config\Database;
 
+/**
+ * @group DatabaseLive
+ */
 class ConnectTest extends CIDatabaseTestCase
 {
 	protected $group1;

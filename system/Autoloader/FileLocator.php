@@ -202,8 +202,8 @@ class FileLocator
 	 *  $locator->search('Config/Routes.php');
 	 *  // Assuming PSR4 namespaces include foo and bar, might return:
 	 *  [
-	 *      'application/modules/foo/Config/Routes.php',
-	 *      'application/modules/bar/Config/Routes.php',
+	 *      'app/Modules/foo/Config/Routes.php',
+	 *      'app/Modules/bar/Config/Routes.php',
 	 *  ]
 	 *
 	 * @param string $path
