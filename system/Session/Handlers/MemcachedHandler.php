@@ -189,7 +189,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 			return $session_data;
 		}
 
-		return false;
+		return '';
 	}
 
 	//--------------------------------------------------------------------
