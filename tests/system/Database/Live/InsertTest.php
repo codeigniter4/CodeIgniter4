@@ -25,6 +25,26 @@ class InsertTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testInsertNoEscape()
+	{
+		$timestamp = time();
+
+		$job_data = [
+			'name'        => '1',
+			'description' => $this->db->DBDriver === 'SQLite3'
+				? "date({$timestamp}, 'unixepoch', 'localtime')"
+				: 'DATE()',
+		];
+
+		$this->db->table('job')->insert($job_data, false);
+
+		$lastRecord = $this->db->table('job')->orderBy('id', 'desc')->limit(1)->get()->getResultArray()[0];
+
+		$this->assertEquals(date('Y-m-d'), date('Y-m-d', strtotime($lastRecord['description'])));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testInsertBatch()
 	{
 		$job_data = [
@@ -42,6 +62,31 @@ class InsertTest extends CIDatabaseTestCase
 
 		$this->seeInDatabase('job', ['name' => 'Comedian']);
 		$this->seeInDatabase('job', ['name' => 'Cab Driver']);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1667
+	 */
+	public function testInsertBatchNoEscape()
+	{
+		$timestamp = time();
+
+		$job_data = [
+			[
+				'name'        => '1',
+				'description' => $this->db->DBDriver === 'SQLite3'
+					? "date({$timestamp}, 'unixepoch', 'localtime')"
+					: 'DATE()',
+			],
+		];
+
+		$this->db->table('job')->insertBatch($job_data, false);
+
+		$lastRecord = $this->db->table('job')->orderBy('id', 'desc')->limit(1)->get()->getResultArray()[0];
+
+		$this->assertEquals(date('Y-m-d'), date('Y-m-d', strtotime($lastRecord['description'])));
 	}
 
 	//--------------------------------------------------------------------

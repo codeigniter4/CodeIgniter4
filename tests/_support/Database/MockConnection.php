@@ -27,7 +27,7 @@ class MockConnection extends BaseConnection
 
 		$query = new $queryClass($this);
 
-		$query->setQuery($sql, $binds);
+		$query->setQuery($sql, $binds, $this->setEscapeFlags);
 
 		if (! empty($this->swapPre) && ! empty($this->DBPrefix))
 		{
