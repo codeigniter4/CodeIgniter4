@@ -469,7 +469,7 @@ class Router implements RouterInterface
 				{
 					$val = preg_replace('#^' . $key . '$#', $val, $uri);
 				}
-				elseif (strpos($key, '/') !== false)
+				elseif (strpos($val, '/') !== false)
 				{
 					$val = str_replace('/', '\\', $val);
 				}
