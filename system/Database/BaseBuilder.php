@@ -227,6 +227,9 @@ class BaseBuilder
 
 		$this->db = $db;
 
+		// turn off automatic escape flags
+		$this->db->setEscapeFlags(false);
+
 		$this->from($tableName);
 
 		if (! empty($options))
@@ -664,7 +667,7 @@ class BaseBuilder
 				$op = $this->getOperator($k);
 				$k  = trim(str_replace($op, '', $k));
 
-				$bind = $this->setBind($k, $v);
+				$bind = $this->setBind($k, $v, $escape);
 
 				if (empty($op))
 				{
@@ -814,7 +817,7 @@ class BaseBuilder
 		$not = ($not) ? ' NOT' : '';
 
 		$where_in = array_values($values);
-		$ok       = $this->setBind($ok, $where_in);
+		$ok       = $this->setBind($ok, $where_in, $escape);
 
 		$prefix = empty($this->QBWhere) ? $this->groupGetType('') : $this->groupGetType($type);
 
@@ -955,19 +958,19 @@ class BaseBuilder
 
 			if ($side === 'none')
 			{
-				$bind = $this->setBind($k, $v);
+				$bind = $this->setBind($k, $v, $escape);
 			}
 			elseif ($side === 'before')
 			{
-				$bind = $this->setBind($k, "%$v");
+				$bind = $this->setBind($k, "%$v", $escape);
 			}
 			elseif ($side === 'after')
 			{
-				$bind = $this->setBind($k, "$v%");
+				$bind = $this->setBind($k, "$v%", $escape);
 			}
 			else
 			{
-				$bind = $this->setBind($k, "%$v%");
+				$bind = $this->setBind($k, "%$v%", $escape);
 			}
 
 			$like_statement = $this->_like_statement($prefix, $k, $not, $bind, $insensitiveSearch);
@@ -1345,7 +1348,7 @@ class BaseBuilder
 		{
 			if ($escape)
 			{
-				$bind                                                           = $this->setBind($k, $v);
+				$bind                                                           = $this->setBind($k, $v, $escape);
 				$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ":$bind:";
 			}
 			else
@@ -1415,7 +1418,7 @@ class BaseBuilder
 	protected function compileFinalQuery(string $sql): string
 	{
 		$query = new Query($this->db);
-		$query->setQuery($sql, $this->binds);
+		$query->setQuery($sql, $this->binds, false);
 
 		if (! empty($this->db->swapPre) && ! empty($this->db->DBPrefix))
 		{
@@ -1718,7 +1721,7 @@ class BaseBuilder
 			$clean = [];
 			foreach ($row as $k => $value)
 			{
-				$clean[] = ':' . $this->setBind($k, $value) . ':';
+				$clean[] = ':' . $this->setBind($k, $value, $escape) . ':';
 			}
 
 			$row = $clean;
@@ -2225,7 +2228,7 @@ class BaseBuilder
 					$index_set = true;
 				}
 
-				$bind = $this->setBind($k2, $v2);
+				$bind = $this->setBind($k2, $v2, $escape);
 
 				$clean[$this->db->protectIdentifiers($k2, false, $escape)] = ":$bind:";
 			}
@@ -2940,17 +2943,24 @@ class BaseBuilder
 
 	/**
 	 * Stores a bind value after ensuring that it's unique.
+	 * While it might be nicer to have named keys for our binds array
+	 * with PHP 7+ we get a huge memory/performance gain with indexed
+	 * arrays instead, so lets take advantage of that here.
 	 *
-	 * @param string $key
-	 * @param null   $value
+	 * @param string  $key
+	 * @param null    $value
+	 * @param boolean $escape
 	 *
 	 * @return string
 	 */
-	protected function setBind(string $key, $value = null)
+	protected function setBind(string $key, $value = null, bool $escape = true)
 	{
 		if (! array_key_exists($key, $this->binds))
 		{
-			$this->binds[$key] = $value;
+			$this->binds[$key] = [
+				$value,
+				$escape,
+			];
 
 			return $key;
 		}
@@ -2962,7 +2972,10 @@ class BaseBuilder
 			++$count;
 		}
 
-		$this->binds[$key . $count] = $value;
+		$this->binds[$key . $count] = [
+			$value,
+			$escape,
+		];
 
 		return $key . $count;
 	}

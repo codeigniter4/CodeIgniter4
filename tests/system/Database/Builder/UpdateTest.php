@@ -27,8 +27,14 @@ class UpdateTest extends \CIUnitTestCase
 
 		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1';
 		$expectedBinds = [
-			'id'   => 1,
-			'name' => 'Programmer',
+			'id'   => [
+				1,
+				true,
+			],
+			'name' => [
+				'Programmer',
+				true,
+			],
 		];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
@@ -45,8 +51,14 @@ class UpdateTest extends \CIUnitTestCase
 
 		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1  LIMIT 5';
 		$expectedBinds = [
-			'id'   => 1,
-			'name' => 'Programmer',
+			'id'   => [
+				1,
+				true,
+			],
+			'name' => [
+				'Programmer',
+				true,
+			],
 		];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
@@ -63,8 +75,14 @@ class UpdateTest extends \CIUnitTestCase
 
 		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1';
 		$expectedBinds = [
-			'id'   => 1,
-			'name' => 'Programmer',
+			'id'   => [
+				1,
+				true,
+			],
+			'name' => [
+				'Programmer',
+				true,
+			],
 		];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
@@ -179,8 +197,14 @@ WHERE "id" IN(2,3)';
 
 		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'foobar\' WHERE "name" = \'Programmer\'';
 		$expectedBinds = [
-			'name'  => 'foobar',
-			'name0' => 'Programmer',
+			'name'  => [
+				'foobar',
+				true,
+			],
+			'name0' => [
+				'Programmer',
+				true,
+			],
 		];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
@@ -200,8 +224,14 @@ WHERE "id" IN(2,3)';
 
 		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'foobar\' WHERE "name" = \'Programmer\'';
 		$expectedBinds = [
-			'name'  => 'foobar',
-			'name0' => 'Programmer',
+			'name'  => [
+				'foobar',
+				true,
+			],
+			'name0' => [
+				'Programmer',
+				true,
+			],
 		];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
@@ -220,8 +250,14 @@ WHERE "id" IN(2,3)';
 
 		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'foobar\' WHERE "name" = \'Programmer\'';
 		$expectedBinds = [
-			'name'  => 'Programmer',
-			'name0' => 'foobar',
+			'name'  => [
+				'Programmer',
+				true,
+			],
+			'name0' => [
+				'foobar',
+				true,
+			],
 		];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
@@ -240,7 +276,12 @@ WHERE "id" IN(2,3)';
 			->update(null, null, null, true);
 
 		$expectedSQL   = 'UPDATE "mytable" SET field = field+1 WHERE "id" = 2';
-		$expectedBinds = ['id' => 2];
+		$expectedBinds = [
+			'id' => [
+				2,
+				true,
+			],
+		];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
 		$this->assertEquals($expectedBinds, $builder->getBinds());
