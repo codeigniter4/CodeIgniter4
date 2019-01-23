@@ -22,7 +22,12 @@ class WhereTest extends \CIUnitTestCase
 		$builder = $this->db->table('users');
 
 		$expectedSQL   = 'SELECT * FROM "users" WHERE "id" = 3';
-		$expectedBinds = ['id' => 3];
+		$expectedBinds = [
+			'id' => [
+				3,
+				true,
+			],
+		];
 
 		$builder->where('id', 3);
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
@@ -36,7 +41,12 @@ class WhereTest extends \CIUnitTestCase
 		$builder = $this->db->table('users');
 
 		$expectedSQL   = 'SELECT * FROM "users" WHERE id = 3';
-		$expectedBinds = ['id' => 3];
+		$expectedBinds = [
+			'id' => [
+				3,
+				false,
+			],
+		];
 
 		$builder->where('id', 3, false);
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
@@ -50,7 +60,12 @@ class WhereTest extends \CIUnitTestCase
 		$builder = $this->db->table('users');
 
 		$expectedSQL   = 'SELECT * FROM "users" WHERE "id" != 3';
-		$expectedBinds = ['id' => 3];
+		$expectedBinds = [
+			'id' => [
+				3,
+				true,
+			],
+		];
 
 		$builder->where('id !=', 3);
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
@@ -70,8 +85,14 @@ class WhereTest extends \CIUnitTestCase
 
 		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "id" = 2 AND "name" != \'Accountant\'';
 		$expectedBinds = [
-			'id'   => 2,
-			'name' => 'Accountant',
+			'id'   => [
+				2,
+				true,
+			],
+			'name' => [
+				'Accountant',
+				true,
+			],
 		];
 
 		$builder->where($where);
@@ -106,8 +127,14 @@ class WhereTest extends \CIUnitTestCase
 
 		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" != \'Accountant\' OR "id" > 3';
 		$expectedBinds = [
-			'name' => 'Accountant',
-			'id'   => 3,
+			'name' => [
+				'Accountant',
+				true,
+			],
+			'id'   => [
+				3,
+				true,
+			],
 		];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
@@ -125,8 +152,14 @@ class WhereTest extends \CIUnitTestCase
 
 		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" = \'Accountant\' OR "name" = \'foobar\'';
 		$expectedBinds = [
-			'name'  => 'Accountant',
-			'name0' => 'foobar',
+			'name'  => [
+				'Accountant',
+				true,
+			],
+			'name0' => [
+				'foobar',
+				true,
+			],
 		];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
@@ -144,8 +177,11 @@ class WhereTest extends \CIUnitTestCase
 		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" IN (\'Politician\',\'Accountant\')';
 		$expectedBinds = [
 			'name' => [
-				'Politician',
-				'Accountant',
+				[
+					'Politician',
+					'Accountant',
+				],
+				true,
 			],
 		];
 
@@ -164,8 +200,11 @@ class WhereTest extends \CIUnitTestCase
 		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" NOT IN (\'Politician\',\'Accountant\')';
 		$expectedBinds = [
 			'name' => [
-				'Politician',
-				'Accountant',
+				[
+					'Politician',
+					'Accountant',
+				],
+				true,
 			],
 		];
 
@@ -183,10 +222,16 @@ class WhereTest extends \CIUnitTestCase
 
 		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "id" = 2 OR "name" IN (\'Politician\',\'Accountant\')';
 		$expectedBinds = [
-			'id'   => 2,
+			'id'   => [
+				2,
+				true,
+			],
 			'name' => [
-				'Politician',
-				'Accountant',
+				[
+					'Politician',
+					'Accountant',
+				],
+				true,
 			],
 		];
 
@@ -204,10 +249,16 @@ class WhereTest extends \CIUnitTestCase
 
 		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "id" = 2 OR "name" NOT IN (\'Politician\',\'Accountant\')';
 		$expectedBinds = [
-			'id'   => 2,
+			'id'   => [
+				2,
+				true,
+			],
 			'name' => [
-				'Politician',
-				'Accountant',
+				[
+					'Politician',
+					'Accountant',
+				],
+				true,
 			],
 		];
 

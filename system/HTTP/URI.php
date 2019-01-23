@@ -760,7 +760,7 @@ class URI
 			// URL Decode the value to protect
 			// from double-encoding a URL.
 			// Especially useful with the Pager.
-			$parts[$key] = $this->decode($value);
+			$parts[$this->decode($key)] = $this->decode($value);
 		}
 
 		$this->query = $parts;

@@ -129,17 +129,32 @@ class Query implements QueryInterface
 	/**
 	 * Sets the raw query string to use for this statement.
 	 *
-	 * @param string $sql
-	 * @param array  $binds
+	 * @param string  $sql
+	 * @param array   $binds
+	 * @param boolean $setEscape
 	 *
 	 * @return mixed
 	 */
-	public function setQuery(string $sql, $binds = null)
+	public function setQuery(string $sql, $binds = null, bool $setEscape = true)
 	{
 		$this->originalQueryString = $sql;
 
 		if (! is_null($binds))
 		{
+			if (! is_array($binds))
+			{
+				$binds = [$binds];
+			}
+
+			if ($setEscape)
+			{
+				array_walk($binds, function (&$item) {
+					$item = [
+						$item,
+						true,
+					];
+				});
+			}
 			$this->binds = $binds;
 		}
 
@@ -407,12 +422,13 @@ class Query implements QueryInterface
 
 		foreach ($binds as $placeholder => $value)
 		{
-			$escapedValue = $this->db->escape($value);
+			// $value[1] contains the boolean whether should be escaped or not
+			$escapedValue = $value[1] ? $this->db->escape($value[0]) : $value[0];
 
 			// In order to correctly handle backlashes in saved strings
 			// we will need to preg_quote, so remove the wrapping escape characters
 			// otherwise it will get escaped.
-			if (is_array($value))
+			if (is_array($value[0]))
 			{
 				$escapedValue = '(' . implode(',', $escapedValue) . ')';
 			}
@@ -460,7 +476,7 @@ class Query implements QueryInterface
 		do
 		{
 			$c --;
-			$escapedValue = $this->db->escape($binds[$c]);
+			$escapedValue = $binds[$c][1] ? $this->db->escape($binds[$c][0]) : $binds[$c[0]];
 			if (is_array($escapedValue))
 			{
 				$escapedValue = '(' . implode(',', $escapedValue) . ')';
