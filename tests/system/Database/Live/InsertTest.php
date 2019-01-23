@@ -33,7 +33,7 @@ class InsertTest extends CIDatabaseTestCase
 			'name'        => '1',
 			'description' => $this->db->DBDriver === 'SQLite3'
 				? "date({$timestamp}, 'unixepoch', 'localtime')"
-				: 'DATE()',
+				: 'current_date()',
 		];
 
 		$this->db->table('job')->insert($job_data, false);
@@ -78,7 +78,7 @@ class InsertTest extends CIDatabaseTestCase
 				'name'        => '1',
 				'description' => $this->db->DBDriver === 'SQLite3'
 					? "date({$timestamp}, 'unixepoch', 'localtime')"
-					: 'DATE()',
+					: 'current_date()',
 			],
 		];
 
