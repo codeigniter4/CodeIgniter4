@@ -270,8 +270,9 @@ You can easily negotiate content types with the request through the ``negotiate(
 
 See the :doc:`Content Negotiation </incoming/content_negotiation>` page for more details.
 
+***************
 Class Reference
----------------
+***************
 
 .. note:: In addition to the methods listed here, this class inherits the methods from the
 	:doc:`Request Class </incoming/request>` and the :doc:`Message Class </incoming/message>`.
