@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Managing Databases &mdash; CodeIgniter4 4.0.0-alpha.4 documentation</title>
+  <title>HTTP Method Spoofing &mdash; CodeIgniter4 4.0.0-alpha.4 documentation</title>
   
 
   
@@ -35,8 +35,9 @@
 
   
     <link rel="top" title="CodeIgniter4 4.0.0-alpha.4 documentation" href="../index.html"/>
-        <link rel="next" title="Database Forge Class" href="forge.html"/>
-        <link rel="prev" title="Working With Entities" href="../models/entities.html"/> 
+        <link rel="up" title="Controllers and Routing" href="index.html"/>
+        <link rel="next" title="Building Responses" href="../outgoing/index.html"/>
+        <link rel="prev" title="Content Negotiation" href="content_negotiation.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -97,8 +98,18 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Controllers and Routing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="controllers.html">Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routing.html">URI Routing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="content_negotiation.html">Content Negotiation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">HTTP Method Spoofing</a></li>
+</ul>
+</li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
@@ -109,13 +120,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Managing Databases</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="forge.html">Database Manipulation with Database Forge</a></li>
-<li class="toctree-l2"><a class="reference internal" href="migration.html">Database Migrations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="seeds.html">Database Seeding</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
@@ -179,7 +185,9 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Managing Databases</li>
+          <li><a href="index.html">Controllers and Routing</a> &raquo;</li>
+        
+      <li>HTTP Method Spoofing</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -196,15 +204,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="managing-databases">
-<h1>Managing Databases<a class="headerlink" href="#managing-databases" title="Permalink to this headline">¶</a></h1>
-<p>CodeIgniter comes with tools to restructure or sees your database.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="forge.html">Database Manipulation with Database Forge</a></li>
-<li class="toctree-l1"><a class="reference internal" href="migration.html">Database Migrations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="seeds.html">Database Seeding</a></li>
-</ul>
+  <div class="section" id="http-method-spoofing">
+<h1>HTTP Method Spoofing<a class="headerlink" href="#http-method-spoofing" title="Permalink to this headline">¶</a></h1>
+<p>When working with HTML forms you can only use GET or POST HTTP verbs. In most cases this is just fine. However, to
+support REST-ful routing you need to support other, more correct, verbs, like DELETE or PUT. Since the browsers
+don&#8217;t support this, CodeIgniter provides you with a way to spoof the method that is being used. This allows you to
+make a POST request, but tell the application that it should be treated as a different request type.</p>
+<p>To spoof the method, a hidden input is added to the form with the name of <code class="docutils literal"><span class="pre">_method</span></code>. It&#8217;s value is the HTTP verb
+that you want the request to be:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;_method&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;PUT&quot;</span> <span class="o">/&gt;</span>
+
+<span class="o">&lt;/</span><span class="nx">form</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>This form is converted into a PUT request and is a true PUT request as far as the routing and the IncomingRequest
+class are concerned.</p>
+<p>The form that you are using must be a POST request. GET requests cannot be spoofed.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Be sure to check your web server&#8217;s configuration as some servers do not support all HTTP verbs
+with the default configuration, and must have additional packages enabled to work.</p>
 </div>
 </div>
 
@@ -218,10 +238,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="forge.html" class="btn btn-neutral float-right" title="Database Forge Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../outgoing/index.html" class="btn btn-neutral float-right" title="Building Responses" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../models/entities.html" class="btn btn-neutral" title="Working With Entities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="content_negotiation.html" class="btn btn-neutral" title="Content Negotiation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
