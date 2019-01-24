@@ -1253,7 +1253,7 @@ class Model
 		{
 			$data = (array) $data;
 		}
-
+		dd($this->validationRules);
 		// ValidationRules can be either a string, which is the group name,
 		// or an array of rules.
 		if (is_string($this->validationRules))
