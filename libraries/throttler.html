@@ -221,6 +221,7 @@
 <li><a class="reference internal" href="#applying-the-filter" id="id4">Applying the Filter</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#class-reference" id="id5">Class Reference</a></li>
 </ul>
 </div>
 <p>The Throttler class provides a very simple way to limit an activity to be performed to a certain number of attempts
@@ -259,17 +260,50 @@ one request per second per IP address. Here we will run through how it works, an
 start using it in your application.</p>
 <div class="section" id="the-code">
 <h3><a class="toc-backref" href="#id3">The Code</a><a class="headerlink" href="#the-code" title="Permalink to this headline">¶</a></h3>
-<p>You can find this file at <strong>app/Filters/Throttle.php</strong> but the relevant method is reproduced here:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">)</span>
-<span class="p">{</span>
-        <span class="nv">$throttler</span> <span class="o">=</span> <span class="nx">Services</span><span class="o">::</span><span class="na">throttler</span><span class="p">();</span>
+<p>You could make your own Throttler filter, at <strong>app/Filters/Throttle.php</strong>,
+along the lines of:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Filters</span><span class="p">;</span>
 
-        <span class="c1">// Restrict an IP address to no more</span>
-        <span class="c1">// than 1 request per second across the</span>
-        <span class="c1">// entire site.</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nv">$throttler</span><span class="o">-&gt;</span><span class="na">check</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getIPAddress</span><span class="p">(),</span> <span class="mi">60</span><span class="p">,</span> <span class="nx">MINUTE</span><span class="p">)</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Filters\FilterInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\RequestInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\ResponseInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Throttle</span> <span class="k">implements</span> <span class="nx">FilterInterface</span>
+<span class="p">{</span>
+        <span class="sd">/**</span>
+<span class="sd">         * This is a demo implementation of using the Throttler class</span>
+<span class="sd">         * to implement rate limiting for your application.</span>
+<span class="sd">         *</span>
+<span class="sd">         * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request</span>
+<span class="sd">         *</span>
+<span class="sd">         * @return mixed</span>
+<span class="sd">         */</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">429</span><span class="p">);</span>
+                <span class="nv">$throttler</span> <span class="o">=</span> <span class="nx">Services</span><span class="o">::</span><span class="na">throttler</span><span class="p">();</span>
+
+                <span class="c1">// Restrict an IP address to no more</span>
+                <span class="c1">// than 1 request per second across the</span>
+                <span class="c1">// entire site.</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nv">$throttler</span><span class="o">-&gt;</span><span class="na">check</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getIPAddress</span><span class="p">(),</span> <span class="mi">60</span><span class="p">,</span> <span class="nx">MINUTE</span><span class="p">)</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span>
+                <span class="p">{</span>
+                        <span class="k">return</span> <span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">429</span><span class="p">);</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">//--------------------------------------------------------------------</span>
+
+        <span class="sd">/**</span>
+<span class="sd">         * We don&#39;t have anything to do here.</span>
+<span class="sd">         *</span>
+<span class="sd">         * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request</span>
+<span class="sd">         * @param ResponseInterface|\CodeIgniter\HTTP\Response       $response</span>
+<span class="sd">         *</span>
+<span class="sd">         * @return mixed</span>
+<span class="sd">         */</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">after</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">)</span>
+        <span class="p">{</span>
         <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -287,8 +321,7 @@ to apply only to POST requests, though API&#8217;s might want to limit every req
 this to incoming requests, you need to edit <strong>/app/Config/Filters.php</strong> and first add an alias to the
 filter:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$aliases</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;csrf&#39;</span>    <span class="o">=&gt;</span> <span class="nx">\App\Filters\CSRF</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-        <span class="s1">&#39;toolbar&#39;</span> <span class="o">=&gt;</span> <span class="nx">\App\Filters\DebugToolbar</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="o">...</span>
         <span class="s1">&#39;throttle&#39;</span> <span class="o">=&gt;</span> <span class="nx">\App\Filters\Throttle</span><span class="o">::</span><span class="na">class</span>
 <span class="p">];</span>
 </pre></div>
@@ -300,8 +333,10 @@ filter:</p>
 </pre></div>
 </div>
 <p>And that&#8217;s all there is to it. Now all POST requests made on the site will have be rate limited.</p>
+</div>
+</div>
 <div class="section" id="class-reference">
-<h4>Class Reference<a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h4>
+<h2><a class="toc-backref" href="#id5">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
 <dl class="method">
 <dt id="check">
 <code class="descname">check</code><span class="sig-paren">(</span><em>string $key</em>, <em>int $capacity</em>, <em>int $seconds</em><span class="optional">[</span>, <em>int $cost = 1</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#check" title="Permalink to this definition">¶</a></dt>
@@ -348,8 +383,6 @@ to determine the time until a new token should be available and the action can b
 tried again. In this case the minimum enforced wait time is one second.</p>
 </dd></dl>
 
-</div>
-</div>
 </div>
 </div>
 

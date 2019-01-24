@@ -218,7 +218,8 @@
 <li>updated PHP dependency to 7.2</li>
 <li>new feature branches have been created for the email and queue modules, so they don&#8217;t impact the release of 4.0.0</li>
 <li>dropped several language messages that were unused (eg Migrations.missingTable) and added some new (eg Migrations.invalidType)</li>
-<li>lots of bug fixes</li>
+<li>lots of bug fixes, especially for the database support</li>
+<li>revisited the installation and tutorial sections of the user guide</li>
 <li>code coverage is up to 78%</li>
 </ul>
 <p>The list of changed files follows, with PR numbers shown.</p>
@@ -277,6 +278,14 @@
 </dl>
 </li>
 <li><dl class="first docutils">
+<dt>Commands/</dt>
+<dd><ul class="first last">
+<li>Database/MigrationRollback #1683</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
 <dt>Config/</dt>
 <dd><ul class="first last">
 <li>BaseConfig #1635</li>
@@ -291,9 +300,19 @@
 <li><dl class="first docutils">
 <dt>Database/</dt>
 <dd><ul class="first last">
-<li>BaseBuilder #1640, #1663</li>
+<li>BaseBuilder #1640, #1663, #1677</li>
+<li>BaseConnection #1677</li>
 <li>Config #6b8b8b, #1660</li>
 <li>MigrationRunner #81d371, #1660</li>
+<li>Query #1677</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Database/Postgre/</dt>
+<dd><ul class="first last">
+<li>Builder #d2b377</li>
 </ul>
 </dd>
 </dl>
@@ -354,6 +373,7 @@
 <dt>HTTP/</dt>
 <dd><ul class="first last">
 <li>ContentSecurityPolicy #1641, #1642</li>
+<li>URI #2e698a</li>
 </ul>
 </dd>
 </dl>
@@ -379,7 +399,16 @@
 <dt>Router/</dt>
 <dd><ul class="first last">
 <li>RouteCollection #1665</li>
-<li>Router #9e435c, #7993a7</li>
+<li>Router #9e435c, #7993a7, #1678</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Session/Handlers/</dt>
+<dd><ul class="first last">
+<li>BaseHandler #1684</li>
+<li>FileHandler #1684</li>
 </ul>
 </dd>
 </dl>
@@ -442,12 +471,13 @@
 <li><dl class="first docutils">
 <dt>Database/Builder/</dt>
 <dd><ul class="first last">
+<li>DeleteTest #1677</li>
 <li>GroupTest #1640</li>
-<li>InsertTest #1640</li>
-<li>LikeTest #1640</li>
+<li>InsertTest #1640, #1677</li>
+<li>LikeTest #1640, #1677</li>
 <li>SelectTest #1663</li>
-<li>UpdateTest #1640</li>
-<li>WhereTest #1640</li>
+<li>UpdateTest #1640, #1677</li>
+<li>WhereTest #1640, #1677</li>
 </ul>
 </dd>
 </dl>
@@ -455,9 +485,11 @@
 <li><dl class="first docutils">
 <dt>Database/Live/</dt>
 <dd><ul class="first last">
-<li>ConnectTest #1660</li>
+<li>AliasTest #1675</li>
+<li>ConnectTest #1660, #1675</li>
 <li>ForgeTest #6b8b8b</li>
-<li>Migrations/MigrationRunnerTest #1660</li>
+<li>InsertTest #1677</li>
+<li>Migrations/MigrationRunnerTest #1660, #1675</li>
 <li>ModelTest #1617</li>
 </ul>
 </dd>
@@ -566,6 +598,15 @@
 </dl>
 </li>
 <li><dl class="first docutils">
+<dt>incoming/</dt>
+<dd><ul class="first last">
+<li>index #4a1886</li>
+<li>methodspoofing #4a1886</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
 <dt>installation/</dt>
 <dd><ul class="first last">
 <li>downloads.rst #1673</li>
@@ -599,6 +640,15 @@
 <div class="section" id="prs-merged">
 <h2>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
+<li>#1684 Updating session id cleanup for filehandler</li>
+<li>#1683 Fix migrate:refresh bug</li>
+<li>#d2b377 Fix Postgres replace command to work new way of storing binds</li>
+<li>#4a1886 Document method spoofing</li>
+<li>#2e698a urldecode URI keys as well as values.</li>
+<li>#1678 fix route not replacing forward slashes</li>
+<li>#1677 Implement Don&#8217;t Escape feature for db engine</li>
+<li>#1675 Add missing test group directives</li>
+<li>#1674 Update changelog</li>
 <li>#1673 Updated download &amp; installation docs</li>
 <li>#1672 Update Autoloader.php</li>
 <li>#1670 Update PHP dependency to 7.2</li>
