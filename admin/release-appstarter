@@ -23,10 +23,6 @@ done
 echo -e "${BOLD}Override as needed...${NORMAL}"
 cp -rf ${CI_DIR}/admin/starter/* .
 
-############# this can only happen after composer create-project/update
-#echo -e "${BOLD}Fix paths...${NORMAL}"
-#sed -i "/public $systemDirectory = 'system';/s/'system'/'vendor/codeigniter4/framework/system'/" app/Config/Paths.php
-
 #---------------------------------------------------
 # And finally, get ready for merging
 echo -e "${BOLD}Assemble the pieces...${NORMAL}"
