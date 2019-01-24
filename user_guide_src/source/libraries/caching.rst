@@ -71,9 +71,9 @@ This is an array of servers that will be used when using the ``Memcache(d)`` han
 
 The settings for the Redis server that you wish to use when using the ``Redis`` handler.
 
-===============
+***************
 Class Reference
-===============
+***************
 
 .. php:method:: isSupported()
 

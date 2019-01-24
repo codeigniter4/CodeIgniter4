@@ -7,8 +7,6 @@ use CodeIgniter\Filters\Filters;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\Test\CIUnitTestCase;
 
-require_once __DIR__ . '/fixtures/HoneyTrap.php';
-
 /**
  * @backupGlobals enabled
  */
@@ -90,7 +88,7 @@ class HoneypotTest extends CIUnitTestCase
 	public function testHoneypotFilterBefore()
 	{
 		$config = [
-			'aliases' => ['trap' => 'CodeIgniter\Honeypot\fixtures\HoneyTrap'],
+			'aliases' => ['trap' => '\CodeIgniter\Filters\Honeypot'],
 			'globals' => [
 				'before' => ['trap'],
 				'after'  => [],
@@ -107,7 +105,7 @@ class HoneypotTest extends CIUnitTestCase
 	public function testHoneypotFilterAfter()
 	{
 		$config = [
-			'aliases' => ['trap' => 'CodeIgniter\Honeypot\fixtures\HoneyTrap'],
+			'aliases' => ['trap' => '\CodeIgniter\Filters\Honeypot'],
 			'globals' => [
 				'before' => [],
 				'after'  => ['trap'],

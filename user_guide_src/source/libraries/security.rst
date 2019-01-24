@@ -28,6 +28,7 @@ and enabling the `csrf` filter globally::
 
 	public $globals = [
 		'before' => [
+			//'honeypot'
 			'csrf'
 		]
 	];
