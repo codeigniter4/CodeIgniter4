@@ -727,6 +727,7 @@ class Model
 		{
 			if ($this->validate($data) === false)
 			{
+				dd($this->errors());
 				return false;
 			}
 		}
@@ -1253,18 +1254,28 @@ class Model
 		{
 			$data = (array) $data;
 		}
-		dd($this->validationRules);
+
+		$rules = $this->validationRules;
+		$rules = $this->cleanValidationRules($rules, $data);
+
+		// If no data existed that needs validation
+		// our job is done here.
+		if (empty($rules))
+		{
+			return true;
+		}
+
 		// ValidationRules can be either a string, which is the group name,
 		// or an array of rules.
-		if (is_string($this->validationRules))
+		if (is_string($rules))
 		{
-			$valid = $this->validation->run($data, $this->validationRules, $this->DBGroup);
+			$valid = $this->validation->run($data, $rules, $this->DBGroup);
 		}
 		else
 		{
 			// Replace any placeholders (i.e. {id}) in the rules with
 			// the value found in $data, if exists.
-			$rules = $this->fillPlaceholders($this->validationRules, $data);
+			$rules = $this->fillPlaceholders($rules, $data);
 
 			$this->validation->setRules($rules, $this->validationMessages);
 			$valid = $this->validation->run($data, null, $this->DBGroup);
@@ -1274,6 +1285,33 @@ class Model
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Removes any rules that apply to fields that have not been set
+	 * currently so that rules don't block updating when only updating
+	 * a partial row.
+	 *
+	 * @param array $rules
+	 *
+	 * @return array
+	 */
+	protected function cleanValidationRules(array $rules, array $data = null)
+	{
+		if (empty($data))
+		{
+			return [];
+		}
+
+		foreach ($rules as $field => $rule)
+		{
+			if (! array_key_exists($field, $data))
+			{
+				unset($rules[$field]);
+			}
+		}
+
+		return $rules;
+	}
 
 	/**
 	 * Replace any placeholders within the rules with the values that

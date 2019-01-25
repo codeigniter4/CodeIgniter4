@@ -515,17 +515,73 @@ class ModelTest extends CIDatabaseTestCase
 												   ->insert($data));
 	}
 
-	public function testValidationSkipsNonExistingFields()
+	public function testCleanValidationRemovesAllWhenNoDataProvided()
 	{
-		$model = new ValidModel($this->db);
+		$model   = new Model($this->db);
+		$cleaner = $this->getPrivateMethodInvoker($model, 'cleanValidationRules');
 
-		$data = [
-			'description' => 'some great marketing stuff',
-			'id'          => 42,
-			'token'       => 42,
+		$rules = [
+			'name' => 'required',
+			'foo'  => 'bar',
 		];
 
-		$this->assertEquals(5, $model->insert($data));
+		$rules = $cleaner($rules, null);
+
+		$this->assertEmpty($rules);
+	}
+
+	public function testCleanValidationRemovesOnlyForFieldsNotProvided()
+	{
+		$model   = new Model($this->db);
+		$cleaner = $this->getPrivateMethodInvoker($model, 'cleanValidationRules');
+
+		$rules = [
+			'name' => 'required',
+			'foo'  => 'required',
+		];
+
+		$data = [
+			'foo' => 'bar',
+		];
+
+		$rules = $cleaner($rules, $data);
+
+		$this->assertTrue(array_key_exists('foo', $rules));
+		$this->assertFalse(array_key_exists('name', $rules));
+	}
+
+	public function testCleanValidationReturnsAllWhenAllExist()
+	{
+		$model   = new Model($this->db);
+		$cleaner = $this->getPrivateMethodInvoker($model, 'cleanValidationRules');
+
+		$rules = [
+			'name' => 'required',
+			'foo'  => 'required',
+		];
+
+		$data = [
+			'foo'  => 'bar',
+			'name' => null,
+		];
+
+		$rules = $cleaner($rules, $data);
+
+		$this->assertTrue(array_key_exists('foo', $rules));
+		$this->assertTrue(array_key_exists('name', $rules));
+	}
+
+	public function testValidationPassesWithMissingFields()
+	{
+		$model = new ValidModel();
+
+		$data = [
+			'foo' => 'bar',
+		];
+
+		$result = $model->validate($data);
+
+		$this->assertTrue($result);
 	}
 
 	//--------------------------------------------------------------------
@@ -893,6 +949,7 @@ class ModelTest extends CIDatabaseTestCase
 		$data['description'] = 'This is a second test!';
 		unset($data['name']);
 
-		$this->assertTrue($model->update($id, $data));
+		$result = $model->update($id, $data);
+		$this->assertTrue($result);
 	}
 }
