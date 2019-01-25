@@ -34,7 +34,7 @@ class RulesTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->validation = new Validation((object) $this->config, \Config\Services::renderer());
+		$this->validation = new Validation((object)$this->config, \Config\Services::renderer());
 		$this->validation->reset();
 
 		$_FILES = [];
@@ -51,7 +51,7 @@ class RulesTest extends \CIUnitTestCase
 		];
 
 		$this->validation->setRules([
-			'foo' => 'required',
+			'foo' => 'required|alpha',
 		]);
 
 		$this->assertFalse($this->validation->run($data));
@@ -77,6 +77,7 @@ class RulesTest extends \CIUnitTestCase
 	public function testRequiredFalseString()
 	{
 		$data = [
+			'foo' => null,
 			'bar' => 123,
 		];
 
@@ -160,7 +161,7 @@ class RulesTest extends \CIUnitTestCase
 			],
 			[
 				['foo' => 'required'],
-				[],
+				['foo' => null],
 				false,
 			],
 			[
@@ -387,11 +388,12 @@ class RulesTest extends \CIUnitTestCase
 	public function testIsUniqueFalse()
 	{
 		$db = Database::connect();
-		$db->table('user')->insert([
-			'name'    => 'Derek Travis',
-			'email'   => 'derek@world.com',
-			'country' => 'Elbonia',
-		]);
+		$db->table('user')
+		   ->insert([
+			   'name'    => 'Derek Travis',
+			   'email'   => 'derek@world.com',
+			   'country' => 'Elbonia',
+		   ]);
 
 		$data = [
 			'email' => 'derek@world.com',
@@ -431,15 +433,15 @@ class RulesTest extends \CIUnitTestCase
 	{
 		$db   = Database::connect();
 		$user = $db->table('user')
-				->insert([
-					'name'    => 'Developer A',
-					'email'   => 'deva@example.com',
-					'country' => 'Elbonia',
-				]);
+				   ->insert([
+					   'name'    => 'Developer A',
+					   'email'   => 'deva@example.com',
+					   'country' => 'Elbonia',
+				   ]);
 		$row  = $db->table('user')
-				->limit(1)
-				->get()
-				->getRow();
+				   ->limit(1)
+				   ->get()
+				   ->getRow();
 
 		$data = [
 			'email' => 'derek@world.co.uk',
