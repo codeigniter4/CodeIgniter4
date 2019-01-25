@@ -49,4 +49,34 @@ class AliasTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1599
+	 */
+	public function testAliasLeftJoinWithShortTableName()
+	{
+		$this->setPrivateProperty($this->db, 'DBPrefix', 'db_');
+		$builder = $this->db->table('jobs');
+
+		$builder->join('users as u', 'u.id = jobs.id', 'left');
+
+		$expectedSQL = 'SELECT * FROM "db_jobs" LEFT JOIN "db_users" as "u" ON "u"."id" = "db_jobs"."id"';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1599
+	 */
+	public function testAliasLeftJoinWithLongTableName()
+	{
+		$this->setPrivateProperty($this->db, 'DBPrefix', 'db_');
+		$builder = $this->db->table('jobs');
+
+		$builder->join('users as u', 'users.id = jobs.id', 'left');
+
+		$expectedSQL = 'SELECT * FROM "db_jobs" LEFT JOIN "db_users" as "u" ON "db_users"."id" = "db_jobs"."id"';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
 }
