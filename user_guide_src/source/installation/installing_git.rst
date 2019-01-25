@@ -1,13 +1,16 @@
 Git Installation
 ###############################################################################
 
+This would *not* be suitable for app development, but *is* suitable
+for contributing to the framework.
+
+Installation
+-------------------------------------------------------
+
 Install the latest version of the codebase by
 
 - forking the `codebase  <https://github.com/codeigniter4/CodeIgniter4>`_ to your github account
 - cloning **your** forked repository locally
-
-This would *not* be suitable for app development, but *is* suitable
-for contributing to the framework.
 
 Setup
 -------------------------------------------------------
