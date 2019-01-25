@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Downloading CodeIgniter &mdash; CodeIgniter4 4.0.0-alpha.4 documentation</title>
+  <title>CodeIgniter Repositories &mdash; CodeIgniter4 4.0.0-alpha.4 documentation</title>
   
 
   
@@ -36,8 +36,8 @@
   
     <link rel="top" title="CodeIgniter4 4.0.0-alpha.4 documentation" href="../index.html"/>
         <link rel="up" title="Installation" href="index.html"/>
-        <link rel="next" title="Installation" href="installing.html"/>
-        <link rel="prev" title="Installation" href="index.html"/> 
+        <link rel="next" title="Tutorial" href="../tutorial/index.html"/>
+        <link rel="prev" title="Troubleshooting" href="troubleshooting.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -88,11 +88,13 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Downloading CodeIgniter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_git.html">Git Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">CodeIgniter Repositories</a></li>
 </ul>
 </li>
 </ul>
@@ -184,7 +186,7 @@
         
           <li><a href="index.html">Installation</a> &raquo;</li>
         
-      <li>Downloading CodeIgniter</li>
+      <li>CodeIgniter Repositories</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -201,11 +203,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="downloading-codeigniter">
-<h1>Downloading CodeIgniter<a class="headerlink" href="#downloading-codeigniter" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="codeigniter-repositories">
+<h1>CodeIgniter Repositories<a class="headerlink" href="#codeigniter-repositories" title="Permalink to this headline">¶</a></h1>
 <p>The CodeIgniter 4 open source project has its own
 <a class="reference external" href="https://github.com/codeigniter4">Github organization</a>.</p>
-<p>There are a number of repositories there of interest:</p>
+<p>There are several development repositories, of interest to potential contributors:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="19%" />
@@ -225,6 +227,47 @@
 <td rowspan="2">Project codebase, including tests &amp; user guide sources</td>
 </tr>
 <tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="3">devstarter</td>
+<td rowspan="3">developers</td>
+<td rowspan="3">Starter project (app/public/writable).
+Dependent on develop branch of codebase repository</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2">translations</td>
+<td rowspan="2">developers</td>
+<td rowspan="2">System message translations</td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2">coding-standard</td>
+<td rowspan="2">contributors</td>
+<td rowspan="2">Coding style conventions &amp; rules</td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2">&nbsp;</td>
+<td rowspan="2">&nbsp;</td>
+<td rowspan="2">&nbsp;</td>
+</tr>
+<tr class="row-odd"></tr>
+</tbody>
+</table>
+<p>There are also several deployment repositories, referenced in the installation directions.
+The deployment repositories are built automatically when a new version is released, and they
+are not directly contributed to.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="14%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" rowspan="2">Repository</th>
+<th class="head" rowspan="2">Audience</th>
+<th class="head" rowspan="2">Description</th>
+</tr>
+<tr class="row-even"></tr>
+</thead>
+<tbody valign="top">
 <tr class="row-odd"><td rowspan="2">framework</td>
 <td rowspan="2">developers</td>
 <td rowspan="2">Released versions of the framework</td>
@@ -237,33 +280,16 @@ Dependent on &#8220;framework&#8221;</td>
 </tr>
 <tr class="row-even"></tr>
 <tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="3">devstarter</td>
-<td rowspan="3">developers</td>
-<td rowspan="3">Starter project (app/public/writable).
-Dependent on develop branch of codebase repository</td>
-</tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="2">userguide</td>
+<tr class="row-even"><td rowspan="2">userguide</td>
 <td rowspan="2">anyone</td>
 <td rowspan="2">Pre-built user guide</td>
 </tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="2">translations</td>
-<td rowspan="2">developers</td>
-<td rowspan="2">System message translations</td>
-</tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="2">coding-standard</td>
-<td rowspan="2">contributors</td>
-<td rowspan="2">Coding style conventions &amp; rules</td>
-</tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="2">&nbsp;</td>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2">&nbsp;</td>
 <td rowspan="2">&nbsp;</td>
 <td rowspan="2">&nbsp;</td>
 </tr>
-<tr class="row-even"></tr>
+<tr class="row-odd"></tr>
 </tbody>
 </table>
 <p>In all the above, the latest version of a repository can be downloaded
@@ -298,10 +324,10 @@ These correspond to the repositories mentioned above:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="installing.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../tutorial/index.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="troubleshooting.html" class="btn btn-neutral" title="Troubleshooting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -311,7 +337,7 @@ These correspond to the repositories mentioned above:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Jan 24, 2019.
+      Last updated on Jan 25, 2019.
 
     </p>
   </div>

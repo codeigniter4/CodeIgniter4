@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Conclusion &mdash; CodeIgniter4 4.0.0-alpha.4 documentation</title>
+  <title>Manual Installation &mdash; CodeIgniter4 4.0.0-alpha.4 documentation</title>
   
 
   
@@ -35,9 +35,9 @@
 
   
     <link rel="top" title="CodeIgniter4 4.0.0-alpha.4 documentation" href="../index.html"/>
-        <link rel="up" title="Tutorial" href="index.html"/>
-        <link rel="next" title="CodeIgniter4 Overview" href="../concepts/index.html"/>
-        <link rel="prev" title="Create news items" href="create_news_items.html"/> 
+        <link rel="up" title="Installation" href="index.html"/>
+        <link rel="next" title="Composer Installation" href="installing_composer.html"/>
+        <link rel="prev" title="Installation" href="index.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -86,17 +86,20 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
-</ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorial</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="static_pages.html">Static pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="news_section.html">News section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="create_news_items.html">Create news items</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Conclusion</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_git.html">Git Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
 </ul>
 </li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
@@ -181,9 +184,9 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">Tutorial</a> &raquo;</li>
+          <li><a href="index.html">Installation</a> &raquo;</li>
         
-      <li>Conclusion</li>
+      <li>Manual Installation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -200,25 +203,55 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="conclusion">
-<h1>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h1>
-<p>This tutorial did not cover all of the things you might expect of a
-full-fledged content management system, but it introduced you to the
-more important topics of routing, writing controllers, and models. We
-hope this tutorial gave you an insight into some of CodeIgniter&#8217;s basic
-design patterns, which you can expand upon.</p>
-<p>Now that you&#8217;ve completed this tutorial, we recommend you check out the
-rest of the documentation. CodeIgniter is often praised because of its
-comprehensive documentation. Use this to your advantage and read the
-&#8220;Introduction&#8221; and &#8220;General Topics&#8221; sections thoroughly. You should read
-the class and helper references when needed.</p>
-<p>Every intermediate PHP programmer should be able to get the hang of
-CodeIgniter within a few days.</p>
-<p>If you still have questions about the framework or your own CodeIgniter
-code, you can:</p>
-<ul class="simple">
-<li>Check out our <a class="reference external" href="http://forum.codeigniter.com/">forums</a></li>
-</ul>
+  <div class="section" id="manual-installation">
+<h1>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference external" href="https://github.com/codeigniter4/framework">CodeIgniter 4 framework</a>
+repository holds the released versions of the framework.
+It is intended for developers who do not wish to use Composer.</p>
+<p>Develop your app inside the <code class="docutils literal"><span class="pre">app</span></code> folder, and the <code class="docutils literal"><span class="pre">public</span></code> folder
+will be your public-facing document root.  Do not change anything inside the <code class="docutils literal"><span class="pre">system</span></code>
+folder!</p>
+<p><strong>Note</strong>: This is the installation technique closest to that described
+for <a class="reference external" href="https://www.codeigniter.com/user_guide/installation/index.html">CodeIgniter 3</a>.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Download the <a class="reference external" href="https://github.com/CodeIgniter4/codeigniter4/releases/latest">latest version</a>,
+and extract it to become your project root.</p>
+<div class="section" id="setup">
+<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h3>
+<p>None</p>
+</div>
+<div class="section" id="upgrading">
+<h3>Upgrading<a class="headerlink" href="#upgrading" title="Permalink to this headline">¶</a></h3>
+<p>Download a new copy of the framework, and then follow the upgrade
+instructions in the release notice or changelog to merge that with your project.</p>
+<p>Typically, you replace the <code class="docutils literal"><span class="pre">system</span></code> folder, and check designated
+<code class="docutils literal"><span class="pre">app/Config</span></code> folders for affected changes.</p>
+</div>
+<div class="section" id="pros">
+<h3>Pros<a class="headerlink" href="#pros" title="Permalink to this headline">¶</a></h3>
+<p>Download and run</p>
+</div>
+<div class="section" id="cons">
+<h3>Cons<a class="headerlink" href="#cons" title="Permalink to this headline">¶</a></h3>
+<p>You are responsible for merge conflicts when updating</p>
+</div>
+<div class="section" id="structure">
+<h3>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h3>
+<p>Folders in your project after setup:
+app, public, system, writable</p>
+</div>
+</div>
+<div class="section" id="translations-installation">
+<h2>Translations Installation<a class="headerlink" href="#translations-installation" title="Permalink to this headline">¶</a></h2>
+<p>If you want to take advantage of the system message translations,
+they can be added to your project in a similar fashion.</p>
+<p>Download the <a class="reference external" href="https://github.com/codeigniter4/translations/releases/latest">latest version of them</a>.
+Extract the downloaded zip, and copy the <code class="docutils literal"><span class="pre">Language</span></code> folder contents in it
+to your <code class="docutils literal"><span class="pre">PROJECT_ROOT/app/Languages</span></code> folder.</p>
+<p>This would need to be repeated to incorporate any updates
+to the translations.</p>
+</div>
 </div>
 
 
@@ -231,10 +264,10 @@ code, you can:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../concepts/index.html" class="btn btn-neutral float-right" title="CodeIgniter4 Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="installing_composer.html" class="btn btn-neutral float-right" title="Composer Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="create_news_items.html" class="btn btn-neutral" title="Create news items" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

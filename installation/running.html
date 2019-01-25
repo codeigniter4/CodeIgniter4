@@ -37,7 +37,7 @@
     <link rel="top" title="CodeIgniter4 4.0.0-alpha.4 documentation" href="../index.html"/>
         <link rel="up" title="Installation" href="index.html"/>
         <link rel="next" title="Upgrading From a Previous Version" href="upgrading.html"/>
-        <link rel="prev" title="Installation" href="installing.html"/> 
+        <link rel="prev" title="Git Installation" href="installing_git.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -88,11 +88,13 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="downloads.html">Downloading CodeIgniter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_git.html">Git Installation</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
 </ul>
 </li>
 </ul>
@@ -203,7 +205,7 @@
             
   <div class="section" id="running-your-app">
 <h1>Running Your App<a class="headerlink" href="#running-your-app" title="Permalink to this headline">¶</a></h1>
-<p>A CodeIgniter 4 app can be run in a number of different ways: using a web server,
+<p>A CodeIgniter 4 app can be run in a number of different ways: hosted on a web server,
 using virtualization, or using CodeIgniter&#8217;s command line tool for testing.
 This section addresses how to use
 each technique, and explains some of the pros and cons of them.</p>
@@ -213,10 +215,10 @@ each technique, and explains some of the pros and cons of them.</p>
 <li>Open the <strong>app/Config/App.php</strong> file with a text editor and
 set your base URL. If you intend to use encryption or sessions, set
 your encryption key. If you need more flexibility, the baseURL may
-be set within the .env file as <strong>app.baseURL=&#8221;http://example.com&#8221;</strong>.</li>
+be set within the <code class="docutils literal"><span class="pre">.env</span></code> file as <strong>app.baseURL=&#8221;http://example.com&#8221;</strong>.</li>
 <li>If you intend to use a database, open the
 <strong>app/Config/Database.php</strong> file with a text editor and set your
-database settings.</li>
+database settings. Alternately, these could be set in your <code class="docutils literal"><span class="pre">.env</span></code> file.</li>
 </ol>
 <p>One additional measure to take in production environments is to disable
 PHP error reporting and any other development-only functionality. In
@@ -302,7 +304,7 @@ to begin learning how to build dynamic PHP applications. Enjoy!</p>
         <a href="upgrading.html" class="btn btn-neutral float-right" title="Upgrading From a Previous Version" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="installing.html" class="btn btn-neutral" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="installing_git.html" class="btn btn-neutral" title="Git Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -312,7 +314,7 @@ to begin learning how to build dynamic PHP applications. Enjoy!</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Jan 24, 2019.
+      Last updated on Jan 25, 2019.
 
     </p>
   </div>

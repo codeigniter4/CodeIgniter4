@@ -35,7 +35,7 @@
 
   
     <link rel="top" title="CodeIgniter4 4.0.0-alpha.4 documentation" href="../index.html"/>
-        <link rel="next" title="Downloading CodeIgniter" href="downloads.html"/>
+        <link rel="next" title="Manual Installation" href="installing_manual.html"/>
         <link rel="prev" title="PSR Compliance" href="../intro/psr.html"/> 
 
   
@@ -87,11 +87,13 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="downloads.html">Downloading CodeIgniter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_git.html">Git Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
 </ul>
 </li>
 </ul>
@@ -200,19 +202,36 @@
             
   <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>There are a number of ways to download, install and run a
+<p>CodeIgniter4 can be installed in a number of different ways: manually,
+using <a class="reference external" href="https://getcomposer.org">Composer</a>, or using
+<a class="reference external" href="https://git-scm.com/">Git</a>. If you are not sure which is most
+appropriate for you, read the introduction for
+each technique, and consider their pros and cons.</p>
+<p>Once installed, there are several ways to run a
 CodeIgniter4 app. Read on :)</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="downloads.html">Downloading CodeIgniter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing_git.html">Git Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="running.html">Running Your App</a></li>
 <li class="toctree-l1"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="upgrade_4xx.html">Upgrading from 3.x to 4.x</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
 </ul>
+</div>
+<p>However you choose to install and run CodeIgniter4, the
+<a class="reference external" href="https://codeigniter4.github.io/userguide/">user guide</a> is accessible online.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Before using CodeIgniter 4, make sure that your server meets the
+<a class="reference internal" href="../intro/requirements.html"><span class="doc">requirements</span></a>, in particular the PHP
+version and the PHP extensions that are needed.
+You may find that you have to uncomment the <code class="docutils literal"><span class="pre">php.ini</span></code> &#8220;extension&#8221;
+lines to enable &#8220;curl&#8221; and &#8220;intl&#8221;, for instance.</p>
 </div>
 </div>
 
@@ -226,7 +245,7 @@ CodeIgniter4 app. Read on :)</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="downloads.html" class="btn btn-neutral float-right" title="Downloading CodeIgniter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="installing_manual.html" class="btn btn-neutral float-right" title="Manual Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../intro/psr.html" class="btn btn-neutral" title="PSR Compliance" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -239,7 +258,7 @@ CodeIgniter4 app. Read on :)</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Jan 24, 2019.
+      Last updated on Jan 25, 2019.
 
     </p>
   </div>
