@@ -8,7 +8,8 @@ Release Date: Not released
 - updated PHP dependency to 7.2
 - new feature branches have been created for the email and queue modules, so they don't impact the release of 4.0.0
 - dropped several language messages that were unused (eg Migrations.missingTable) and added some new (eg Migrations.invalidType)
-- lots of bug fixes
+- lots of bug fixes, especially for the database support
+- revisited the installation and tutorial sections of the user guide
 - code coverage is up to 78%
 
 The list of changed files follows, with PR numbers shown.
@@ -31,6 +32,8 @@ The list of changed files follows, with PR numbers shown.
 	- Autoloader/
 		- Autoloader #1665, #1672
 		- FileLocator #1665
+	- Commands/
+		- Database/MigrationRollback #1683
 	- Config/
 		- BaseConfig #1635
 		- BaseService #1635, #1665
@@ -38,9 +41,13 @@ The list of changed files follows, with PR numbers shown.
 		- Services #614216, #3a4ade, #1643
 		- View #1616
 	- Database/
-		- BaseBuilder #1640, #1663
+		- BaseBuilder #1640, #1663, #1677
+		- BaseConnection #1677
 		- Config #6b8b8b, #1660
 		- MigrationRunner #81d371, #1660
+		- Query #1677
+	- Database/Postgre/
+		- Builder #d2b377
 	- Debug/Toolbar/Collectors/
 		- Logs #1654
 		- Views #3a4ade
@@ -59,6 +66,7 @@ The list of changed files follows, with PR numbers shown.
 		- xml_helper #1641
 	- HTTP/
 		- ContentSecurityPolicy #1641, #1642
+		- URI #2e698a
 	- Language/
 		- /en/Files #1636
 		- Language #1641
@@ -66,7 +74,10 @@ The list of changed files follows, with PR numbers shown.
 		- Handlers/FileHandler #1641
 	- Router/
 		- RouteCollection #1665
-		- Router #9e435c, #7993a7
+		- Router #9e435c, #7993a7, #1678
+	- Session/Handlers/
+		- BaseHandler #1684
+		- FileHandler #1684
 	- bootstrap #81d371, #1665
 	- Common #1660
 	- Entity #1623, #1622
@@ -89,16 +100,19 @@ The list of changed files follows, with PR numbers shown.
 		- ConfigTest #1643
 		- ServicesTest #1635, #1643
 	- Database/Builder/
+		- DeleteTest #1677
 		- GroupTest #1640
-		- InsertTest #1640
- 		- LikeTest #1640
+		- InsertTest #1640, #1677
+ 		- LikeTest #1640, #1677
 		- SelectTest #1663
-		- UpdateTest #1640
-		- WhereTest #1640
+		- UpdateTest #1640, #1677
+		- WhereTest #1640, #1677
 	- Database/Live/
-		- ConnectTest #1660
+		- AliasTest #1675
+		- ConnectTest #1660, #1675
 		- ForgeTest #6b8b8b
-		- Migrations/MigrationRunnerTest #1660
+		- InsertTest #1677
+		- Migrations/MigrationRunnerTest #1660, #1675
 		- ModelTest #1617
 	- Events/
 		- EventTest #1635
@@ -132,6 +146,9 @@ The list of changed files follows, with PR numbers shown.
 		- modules #1613, #1665
 	- helpers/
 		- form_helper #1633
+	- incoming/
+		- index #4a1886
+		- methodspoofing #4a1886
 	- installation/
 		- downloads.rst #1673
 		- installation #1673
@@ -147,6 +164,15 @@ The list of changed files follows, with PR numbers shown.
 PRs merged:
 -----------
 
+- #1684 Updating session id cleanup for filehandler
+- #1683 Fix migrate:refresh bug
+- #d2b377 Fix Postgres replace command to work new way of storing binds
+- #4a1886 Document method spoofing
+- #2e698a urldecode URI keys as well as values.
+- #1678 fix route not replacing forward slashes
+- #1677 Implement Don't Escape feature for db engine
+- #1675 Add missing test group directives
+- #1674 Update changelog
 - #1673 Updated download & installation docs
 - #1672 Update Autoloader.php
 - #1670 Update PHP dependency to 7.2

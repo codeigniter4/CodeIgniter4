@@ -209,5 +209,4 @@ abstract class BaseHandler implements \SessionHandlerInterface
 
 		return false;
 	}
-
 }

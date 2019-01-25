@@ -117,7 +117,7 @@ class MigrateRollback extends BaseCommand
 		}
 		try
 		{
-			if (! $this->isAllNamespace())
+			if (! $this->isAllNamespace($params))
 			{
 				$namespace = $params['-n'] ?? CLI::getOption('n');
 				$runner->version(0, $namespace);

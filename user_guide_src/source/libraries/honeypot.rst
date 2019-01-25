@@ -28,7 +28,9 @@ from the ``$globals`` array, like...::
             ]
         ];
 
-A sample Honeypot filter is bundled, as ``app/Filters/Honeypot.php``.
+A sample Honeypot filter is bundled, as ``system/Filters/Honeypot.php``.
+If it is not suitable, make your own at ``app/Filters/Honeypot.php``,
+and modify the ``$aliases`` in the configuration appropriately.
 
 Customizing Honeypot
 =====================
