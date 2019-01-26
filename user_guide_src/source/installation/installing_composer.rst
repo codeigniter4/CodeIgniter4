@@ -1,6 +1,10 @@
 Composer Installation
 ###############################################################################
 
+.. contents::
+    :local:
+    :depth: 1
+
 Composer can be used in several ways to install CodeIgniter4 on your system.
 
 The first two techniques describe creating a skeleton project

@@ -1,10 +1,16 @@
 Running Your App
 ###############################################################################
 
-A CodeIgniter 4 app can be run in a number of different ways: hosted on a web server,
-using virtualization, or using CodeIgniter's command line tool for testing. 
-This section addresses how to use
-each technique, and explains some of the pros and cons of them.
+.. contents::
+    :local:
+    :depth: 1
+
+A CodeIgniter 4 app can be run in a number of different ways: hosted on a web server, 
+using virtualization, or using CodeIgniter’s command line tool for testing. 
+This section addresses how to use each technique, and explains some of the pros and cons of them.
+
+If you’re new to CodeIgniter, please read the :doc:`Getting Started </intro/index>`
+section of the User Guide to begin learning how to build dynamic PHP applications. Enjoy!
 
 Initial Configuration & Setup
 =================================================
@@ -25,31 +31,6 @@ By default, the application will run using the "production" environment. To
 take advantage of the debugging tools provided, you should set the environment
 to "develop".
 
-Hosting with Apache
-=================================================
-
-Directions coming soon.
-
-Hosting with NGINX
-=================================================
-
-Directions coming soon.
-
-Hosting with Vagrant
-=================================================
-
-Directions coming soon.
-
-Hosting with Docker
-=================================================
-
-Directions coming soon.
-
-Hosting on the Cloud
-=================================================
-
-Directions coming soon.
-
 Local Development Server
 =================================================
 
@@ -57,7 +38,7 @@ CodeIgniter 4 comes with a local development server, leveraging PHP's built-in w
 with CodeIgniter routing. You can use the ``serve`` script to launch it,
 with the following command line in the main directory::
 
-    > php spark serve
+    php spark serve
 
 This will launch the server and you can now view your application in your browser at http://localhost:8080.
 
@@ -66,26 +47,137 @@ This will launch the server and you can now view your application in your browse
 
 If you need to run the site on a host other than simply localhost, you'll first need to add the host
 to your ``hosts`` file. The exact location of the file varies in each of the main operating systems, though
-all *nix-type systems (include OS X) will typically keep the file at **/etc/hosts**.
+all unix-type systems (include OS X) will typically keep the file at **/etc/hosts**.
 
 The local development server can be customized with three command line options:
 
 - You can use the ``--host`` CLI option to specify a different host to run the application at::
 
-    > php spark serve --host=example.dev
+    php spark serve --host=example.dev
 
 - By default, the server runs on port 8080 but you might have more than one site running, or already have
   another application using that port. You can use the ``--port`` CLI option to specify a different one::
 
-    > php spark serve --port=8081
+    php spark serve --port=8081
 
 - You can also specify a specific version of PHP to use, with the ``--php`` CLI option, with its value
   set to the path of the PHP executable you want to use::
 
-    > php spark serve --php=/usr/bin/php7.6.5.4
+    php spark serve --php=/usr/bin/php7.6.5.4
 
+Hosting with Apache
+=================================================
 
+A CodeIgniter4 webapp is normally hosted on a web server. 
+Apache’s ``httpd`` is the "standard" platform, and assumed in much of our documentation.
 
-If you're new to CodeIgniter, please read the :doc:`Getting
-Started <../intro/index>` section of the User Guide
-to begin learning how to build dynamic PHP applications. Enjoy!
+Apache is bundled with many platforms, but can also be downloaded in a bundle 
+with a database engine and PHP from [Bitnami](https://bitnami.com/stacks/infrastructure).
+
+.htaccess
+-------------------------------------------------------
+
+The “mod_rewrite” module enables URLs without “index.php” in them, and is assumed 
+in our user guide.
+
+Make sure that the rewrite module is enabled (uncommented) in the main 
+configuration file, eg. ``apache2/conf/httpd.conf``::
+
+    LoadModule rewrite_module modules/mod_rewrite.so
+
+Also make sure that the default document root's <Directory> element enables this too, 
+in the "AllowOverride" setting::
+
+    <Directory "/opt/lamp7.2/apache2/htdocs">
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+Virtual Hosting
+-------------------------------------------------------
+
+We recommend using “virtual hosting” to run your apps. 
+You can setup different aliases for each of the apps you work on,
+
+Make sure that the virtual hosting module is enabled (uncommented) in the main 
+configuration file, eg. ``apache2/conf/httpd.conf``::
+
+    LoadModule vhost_alias_module modules/mod_vhost_alias.so
+
+Add a host alias in your “hosts” file, typically ``/etc/hosts`` on unix-type platforms, 
+or ``c:/Windows/System32/drivers/etc/hosts`` on Windows. 
+Add a line to the file. This could be "myproject.local" or "myproject.test", for instance::
+
+    127.0.0.1 myproject.local
+
+Add a <VirtualHost> element for your webapp inside the virtual hosting configuration, 
+eg. ``apache2/conf/extra/httpd-vhost.conf``::
+
+    <VirtualHost *:80>
+        DocumentRoot "/opt/lamp7.2/apache2/htdocs/myproject/public"
+        ServerName myproject.local
+        ErrorLog "logs/myproject-error_log"
+        CustomLog "logs/myproject-access_log" common
+    </VirtualHost>
+
+If your project folder is not a subfolder of the Apache document root, then your 
+<VirtualHost> element may need a nested <Directory> element to grant the web s
+erver access to the files.
+
+Testing
+-------------------------------------------------------
+
+With the above configuration, your webapp would be accessed with the URL ``http://myproject.local`` in your browser.
+
+Apache needs to be restarted whenever you change its configuration.
+
+Hosting with NGINX
+=================================================
+
+Directions coming soon?
+
+Hosting with Vagrant
+=================================================
+
+Virtualization is an effective way to test your webapp in the environment you 
+plan to deploy on, even if you develop on a different one. 
+Even if you are using the same platform for both, virtualization provides an 
+isolated environment for testing.
+
+The codebase comes with a ``VagrantFile.dist``, that can be copied to ``VagrantFile``
+and tailored for your system, for instance enabling access to specific database or caching engines.
+
+Setup
+-------------------------------------------------------
+
+It assumes that you have installed `VirtualBox <https://www.virtualbox.org/wiki/Downloads>`_ and 
+`Vagrant <https://www.vagrantup.com/downloads.html>`_ 
+for your platform.
+
+The Vagrant configuration file assumes you have the `ubuntu/bionic64 Vagrant box 
+<https://app.vagrantup.com/ubuntu/boxes/bionic64>`_ setup on your system::
+
+    vagrant box add ubuntu/bionic64
+
+Testing
+-------------------------------------------------------
+
+Once setup, you can then launch your webapp inside a VM, with the command::
+
+    vagrant up
+
+Your webapp will be accessible at ``http://localhost:8080``, with the code coverage 
+report for your build at ``http://localhost:8081`` and the user guide for 
+it at ``http://localhost:8082``.
+
+Hosting with Docker
+=================================================
+
+Directions coming soon?
+
+Hosting on the Cloud
+=================================================
+
+Directions coming soon?
+
