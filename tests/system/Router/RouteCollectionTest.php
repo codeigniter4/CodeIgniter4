@@ -772,6 +772,28 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$_SERVER['HTTP_HOST'] = 'adm.example.com';
 
 		$routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'adm']);
+		$routes->add('/objects/(:alphanum)', 'App::objectsList/$1');
+
+		$expects = [
+			'objects/([a-zA-Z0-9]+)' => '\Admin::objectsList/$1',
+		];
+
+		$this->assertEquals($expects, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1692
+	 */
+	public function testWithSubdomainOrdered()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['HTTP_HOST'] = 'adm.example.com';
+
+		$routes->add('/objects/(:alphanum)', 'App::objectsList/$1');
+		$routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'adm']);
 
 		$expects = [
 			'objects/([a-zA-Z0-9]+)' => '\Admin::objectsList/$1',
