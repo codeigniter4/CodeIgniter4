@@ -1,30 +1,39 @@
-#######################
-Downloading CodeIgniter
-#######################
+CodeIgniter Repositories
+########################
 
 The CodeIgniter 4 open source project has its own
 `Github organization <https://github.com/codeigniter4>`_.
 
-There are a number of repositories there of interest:
+There are several development repositories, of interest to potential contributors:
 
 +------------------+--------------+-----------------------------------------------------------------+
 + Repository       + Audience     + Description                                                     +
 +==================+==============+=================================================================+
 + CodeIgniter4     + contributors + Project codebase, including tests & user guide sources          +
 +------------------+--------------+-----------------------------------------------------------------+
++ devstarter       + developers   + Starter project (app/public/writable).                          +
++                  +              + Dependent on develop branch of codebase repository              +
++------------------+--------------+-----------------------------------------------------------------+
++ translations     + developers   + System message translations                                     +
++------------------+--------------+-----------------------------------------------------------------+
++ coding-standard  + contributors + Coding style conventions & rules                                +
++------------------+--------------+-----------------------------------------------------------------+
++                  +              +                                                                 +
++------------------+--------------+-----------------------------------------------------------------+
+
+There are also several deployment repositories, referenced in the installation directions.
+The deployment repositories are built automatically when a new version is released, and they
+are not directly contributed to.
+
++------------------+--------------+-----------------------------------------------------------------+
++ Repository       + Audience     + Description                                                     +
++==================+==============+=================================================================+
 + framework        + developers   + Released versions of the framework                              +
 +------------------+--------------+-----------------------------------------------------------------+
 + appstarter       + developers   + Starter project (app/public/writable).                          +
 +                  +              + Dependent on "framework"                                        +
 +------------------+--------------+-----------------------------------------------------------------+
-+ devstarter       + developers   + Starter project (app/public/writable).                          +
-+                  +              + Dependent on develop branch of codebase repository              +
-+------------------+--------------+-----------------------------------------------------------------+
 + userguide        + anyone       + Pre-built user guide                                            +
-+------------------+--------------+-----------------------------------------------------------------+
-+ translations     + developers   + System message translations                                     +
-+------------------+--------------+-----------------------------------------------------------------+
-+ coding-standard  + contributors + Coding style conventions & rules                                +
 +------------------+--------------+-----------------------------------------------------------------+
 +                  +              +                                                                 +
 +------------------+--------------+-----------------------------------------------------------------+

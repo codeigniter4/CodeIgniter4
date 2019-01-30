@@ -1,6 +1,5 @@
-=====================
 IncomingRequest Class
-=====================
+*********************
 
 The IncomingRequest class provides an object-oriented representation of an HTTP request from a client, like a browser.
 It extends from, and has access to all the methods of the :doc:`Request </incoming/request>` and :doc:`Message </incoming/message>`
@@ -270,7 +269,6 @@ You can easily negotiate content types with the request through the ``negotiate(
 
 See the :doc:`Content Negotiation </incoming/content_negotiation>` page for more details.
 
-***************
 Class Reference
 ***************
 
