@@ -1232,7 +1232,8 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	protected function create(string $verb, string $from, $to, array $options = null)
 	{
-		$prefix = is_null($this->group) ? '' : $this->group . '/';
+		$overwrite = false;
+		$prefix    = is_null($this->group) ? '' : $this->group . '/';
 
 		$from = filter_var($prefix . $from, FILTER_SANITIZE_STRING);
 
@@ -1253,6 +1254,8 @@ class RouteCollection implements RouteCollectionInterface
 			{
 				return;
 			}
+
+			$overwrite = true;
 		}
 
 		// Limiting to subdomains?
@@ -1264,6 +1267,8 @@ class RouteCollection implements RouteCollectionInterface
 			{
 				return;
 			}
+
+			$overwrite = true;
 		}
 
 		// Are we offsetting the binds?
@@ -1312,7 +1317,7 @@ class RouteCollection implements RouteCollectionInterface
 		// routes should always be the "source of truth".
 		// this works only because discovered routes are added just prior
 		// to attempting to route the request.
-		if (isset($this->routes[$verb][$name]))
+		if (isset($this->routes[$verb][$name]) && ! $overwrite)
 		{
 			return;
 		}
