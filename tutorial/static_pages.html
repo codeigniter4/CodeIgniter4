@@ -210,30 +210,40 @@ static pages. A controller is simply a class that helps delegate work.
 It is the glue of your web application.</p>
 <p>For example, when a call is made to:</p>
 <blockquote>
-<div><a class="reference external" href="http://example.com/news/latest/10">http://example.com/news/latest/10</a></div></blockquote>
+<div><code class="docutils literal"><span class="pre">http://example.com/news/latest/10</span></code></div></blockquote>
 <p>We might imagine that there is a controller named &#8220;news&#8221;. The method
 being called on news would be &#8220;latest&#8221;. The news method&#8217;s job could be to
 grab 10 news items, and render them on the page. Very often in MVC,
 you&#8217;ll see URL patterns that match:</p>
 <blockquote>
-<div><a class="reference external" href="http://example.com/[controller-class]/[controller-method]/[arguments">http://example.com/[controller-class]/[controller-method]/[arguments</a>]</div></blockquote>
+<div><code class="docutils literal"><span class="pre">http://example.com/[controller-class]/[controller-method]/[arguments]</span></code></div></blockquote>
 <p>As URL schemes become more complex, this may change. But for now, this
 is all we will need to know.</p>
-<p>Create a file at <em>app/Controllers/Pages.php</em> with the following
+<div class="section" id="let-s-make-our-first-controller">
+<h2>Let&#8217;s make our first controller<a class="headerlink" href="#let-s-make-our-first-controller" title="Permalink to this headline">¶</a></h2>
+<p>Create a file at <strong>app/Controllers/Pages.php</strong> with the following
 code.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">Pages</span> <span class="k">extends</span> <span class="nx">Controller</span> <span class="p">{</span>
 
-        <span class="k">public</span> <span class="k">function</span> <span class="nf">view</span><span class="p">(</span><span class="nv">$page</span> <span class="o">=</span> <span class="s1">&#39;home&#39;</span><span class="p">)</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+        <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;welcome_message&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">showme</span><span class="p">(</span><span class="nv">$page</span> <span class="o">=</span> <span class="s1">&#39;home&#39;</span><span class="p">)</span>
         <span class="p">{</span>
         <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>You have created a class named <code class="docutils literal"><span class="pre">Pages</span></code>, with a view method that accepts
-one argument named <code class="docutils literal"><span class="pre">$page</span></code>. The <code class="docutils literal"><span class="pre">Pages</span></code> class is extending the
+<p>You have created a class named <code class="docutils literal"><span class="pre">Pages</span></code>, with a <code class="docutils literal"><span class="pre">showme</span></code> method that accepts
+one argument named <code class="docutils literal"><span class="pre">$page</span></code>. It also has an <code class="docutils literal"><span class="pre">index()</span></code> method, the same
+as the defaut controller found in <strong>app/Controllers/Home.php</strong>; that method
+displays the CodeIgniter welcome page.</p>
+<p>The <code class="docutils literal"><span class="pre">Pages</span></code> class is extending the
 <code class="docutils literal"><span class="pre">CodeIgniter\Controller</span></code> class. This means that the new Pages class can access the
 methods and variables defined in the <code class="docutils literal"><span class="pre">CodeIgniter\Controller</span></code> class
 (<em>system/Controller.php</em>).</p>
@@ -243,7 +253,7 @@ it within your controllers as <code class="docutils literal"><span class="pre">$
 <p>Now that you&#8217;ve created your first method, it&#8217;s time to make some basic page
 templates. We will be creating two &#8220;views&#8221; (page templates) that act as
 our page footer and header.</p>
-<p>Create the header at <em>app/Views/templates/header.php</em> and add
+<p>Create the header at <strong>app/Views/templates/header.php</strong> and add
 the following code:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;!</span><span class="nx">doctype</span> <span class="nx">html</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
@@ -258,25 +268,27 @@ the following code:</p>
 <p>The header contains the basic HTML code that you&#8217;ll want to display
 before loading the main view, together with a heading. It will also
 output the <code class="docutils literal"><span class="pre">$title</span></code> variable, which we&#8217;ll define later in the controller.
-Now, create a footer at <em>app/Views/templates/footer.php</em> that
+Now, create a footer at <strong>app/Views/templates/footer.php</strong> that
 includes the following code:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span>        <span class="o">&lt;</span><span class="nx">em</span><span class="o">&gt;&amp;</span><span class="nb">copy</span><span class="p">;</span> <span class="mi">2016</span><span class="o">&lt;/</span><span class="nx">em</span><span class="o">&gt;</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span>        <span class="o">&lt;</span><span class="nx">em</span><span class="o">&gt;&amp;</span><span class="nb">copy</span><span class="p">;</span> <span class="mi">2019</span><span class="o">&lt;/</span><span class="nx">em</span><span class="o">&gt;</span>
 <span class="o">&lt;/</span><span class="nx">body</span><span class="o">&gt;</span>
 <span class="o">&lt;/</span><span class="nx">html</span><span class="o">&gt;</span>
 </pre></div>
 </div>
+</div>
 <div class="section" id="adding-logic-to-the-controller">
 <h2>Adding logic to the controller<a class="headerlink" href="#adding-logic-to-the-controller" title="Permalink to this headline">¶</a></h2>
-<p>Earlier you set up a controller with a <code class="docutils literal"><span class="pre">view()</span></code> method. The method
+<p>Earlier you set up a controller with a <code class="docutils literal"><span class="pre">showme()</span></code> method. The method
 accepts one parameter, which is the name of the page to be loaded. The
-static page templates will be located in the <em>app/Views/pages/</em>
+static page bodies will be located in the <strong>app/Views/pages/</strong>
 directory.</p>
-<p>In that directory, create two files named <em>home.php</em> and <em>about.php</em>.
+<p>In that directory, create two files named <strong>home.php</strong> and <strong>about.php</strong>.
 Within those files, type some text − anything you&#8217;d like − and save them.
 If you like to be particularly un-original, try &#8220;Hello World!&#8221;.</p>
 <p>In order to load those pages, you&#8217;ll have to check whether the requested
-page actually exists:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">view</span><span class="p">(</span><span class="nv">$page</span> <span class="o">=</span> <span class="s1">&#39;home&#39;</span><span class="p">)</span>
+page actually exists. This will be the body of the <code class="docutils literal"><span class="pre">showme()</span></code> method
+in the <code class="docutils literal"><span class="pre">Pages</span></code> controller created above:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">showme</span><span class="p">(</span><span class="nv">$page</span> <span class="o">=</span> <span class="s1">&#39;home&#39;</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nb">is_file</span><span class="p">(</span><span class="nx">APPPATH</span><span class="o">.</span><span class="s1">&#39;/Views/pages/&#39;</span><span class="o">.</span><span class="nv">$page</span><span class="o">.</span><span class="s1">&#39;.php&#39;</span><span class="p">))</span>
         <span class="p">{</span>
@@ -292,8 +304,8 @@ page actually exists:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Now, when the page does exist, it is loaded, including the header and
-footer, and displayed to the user. If the page doesn&#8217;t exist, a &#8220;404
+<p>Now, when the requested page does exist, it is loaded, including the header and
+footer, and displayed to the user. If the requested page doesn&#8217;t exist, a &#8220;404
 Page not found&#8221; error is shown.</p>
 <p>The first line in this method checks whether the page actually exists.
 PHP&#8217;s native <code class="docutils literal"><span class="pre">is_file()</span></code> function is used to check whether the file
@@ -304,7 +316,8 @@ page title. The value of title is defined in this method, but instead of
 assigning the value to a variable, it is assigned to the title element
 in the <code class="docutils literal"><span class="pre">$data</span></code> array.</p>
 <p>The last thing that has to be done is loading the views in the order
-they should be displayed. The second parameter in the <code class="docutils literal"><span class="pre">view()</span></code> method is
+they should be displayed. The <code class="docutils literal"><span class="pre">view()</span></code> method built-in to
+CodeIgniter will be used to do this. The second parameter in the <code class="docutils literal"><span class="pre">view()</span></code> method is
 used to pass values to the view. Each value in the <code class="docutils literal"><span class="pre">$data</span></code> array is
 assigned to a variable with the name of its key. So the value of
 <code class="docutils literal"><span class="pre">$data['title']</span></code> in the controller is equivalent to <code class="docutils literal"><span class="pre">$title</span></code> in the
@@ -323,8 +336,9 @@ since it will not properly process the <code class="docutils literal"><span clas
 <code class="docutils literal"><span class="pre">public</span></code>, and which eliminate the need to specify &#8220;index.php/&#8221;
 as part of a URL. CodeIgniter has its own command that you can use though.</p>
 <p>From the command line, at the root of your project:</p>
-<blockquote>
-<div>php spark serve</div></blockquote>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span>
+</pre></div>
+</div>
 <p>will start a web server, accessible on port 8080. If you set the location field
 in your browser to <code class="docutils literal"><span class="pre">localhost:8080</span></code>, you should see the CodeIgniter welcome page.</p>
 <p>You can now try several URLs in the browser location field, to see what the <cite>Pages</cite>
@@ -335,13 +349,13 @@ inside our <cite>Pages</cite> controller, which is to display the CodeIgniter &#
 because &#8220;index&#8221; is the default controller method</li>
 <li><code class="docutils literal"><span class="pre">localhost:8080/pages/index</span></code> will also show the CodeIgniter &#8220;welcome&#8221; page,
 because we explicitly asked for the &#8220;index&#8221; methid</li>
-<li><code class="docutils literal"><span class="pre">localhost:8080/pages/view</span></code> will show the &#8220;home&#8221; page that you made above,
-because it is the default &#8220;page&#8221; parameter to the <cite>view()</cite> method.</li>
-<li><code class="docutils literal"><span class="pre">localhost:8080/pages/view/home</span></code> will also show the &#8220;home&#8221; page that you made above,
+<li><code class="docutils literal"><span class="pre">localhost:8080/pages/showme</span></code> will show the &#8220;home&#8221; page that you made above,
+because it is the default &#8220;page&#8221; parameter to the <cite>showme()</cite> method.</li>
+<li><code class="docutils literal"><span class="pre">localhost:8080/pages/showme/home</span></code> will also show the &#8220;home&#8221; page that you made above,
 because we explicitly asked for it</li>
-<li><code class="docutils literal"><span class="pre">localhost:8080/pages/view/about</span></code> will show the &#8220;about&#8221; page that you made above,
+<li><code class="docutils literal"><span class="pre">localhost:8080/pages/showme/about</span></code> will show the &#8220;about&#8221; page that you made above,
 because we explicitly asked for it</li>
-<li><code class="docutils literal"><span class="pre">localhost:8080/pages/view/shop</span></code> will show a &#8220;404 - File Not Found&#8221; error page,
+<li><code class="docutils literal"><span class="pre">localhost:8080/pages/showme/shop</span></code> will show a &#8220;404 - File Not Found&#8221; error page,
 because there is no <cite>app/Views/pages/shop.php</cite></li>
 </ul>
 </div>
@@ -361,11 +375,11 @@ section of the configuration file.</p>
 <p>This directive says that any incoming request without any content
 specified should be handled by the <code class="docutils literal"><span class="pre">index</span></code> method inside the <code class="docutils literal"><span class="pre">Home</span></code> controller.</p>
 <p>Set the default controller to run your new method:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Pages/view&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Pages/showme&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Add the following line, <strong>after</strong> the route directive for &#8216;/&#8217;.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::view/$1&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::showme/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>CodeIgniter reads its routing rules from top to bottom and routes the
@@ -379,8 +393,10 @@ arguments.</p>
 <p>Here, the second rule in the <code class="docutils literal"><span class="pre">$routes</span></code> array matches <strong>any</strong> request
 using the wildcard string <code class="docutils literal"><span class="pre">(:any)</span></code>. and passes the parameter to the
 <code class="docutils literal"><span class="pre">view()</span></code> method of the <code class="docutils literal"><span class="pre">Pages</span></code> class.</p>
-<p>Now visit <code class="docutils literal"><span class="pre">index.php/about</span></code>. Did it get routed correctly to the <code class="docutils literal"><span class="pre">view()</span></code>
+<p>Now visit <code class="docutils literal"><span class="pre">home</span></code>. Did it get routed correctly to the <code class="docutils literal"><span class="pre">showme()</span></code>
 method in the pages controller? Awesome!</p>
+<p>You should see something like the following:</p>
+<img alt="../_images/tutorial1.png" class="align-center" src="../_images/tutorial1.png" />
 </div>
 </div>
 
@@ -407,7 +423,7 @@ method in the pages controller? Awesome!</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Jan 25, 2019.
+      Last updated on Jan 30, 2019.
 
     </p>
   </div>

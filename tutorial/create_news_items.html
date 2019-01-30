@@ -212,27 +212,28 @@ this functionality.</p>
 input the information to be stored. This means you&#8217;ll be needing a form
 with two fields, one for the title and one for the text. You&#8217;ll derive
 the slug from our title in the model. Create the new view at
-<em>app/Views/news/create.php</em>.</p>
+<strong>app/Views/news/create.php</strong>.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$title</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 
 <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">validation</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">listErrors</span><span class="p">();</span> <span class="cp">?&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;/news/create&quot;</span><span class="p">&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;title&quot;</span><span class="p">&gt;</span>Title<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;input&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;title&quot;</span> <span class="p">/&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
 
-    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">&gt;</span>Text<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">textarea</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;body&quot;</span><span class="p">&gt;</span>Text<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;body&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">textarea</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Create news item&quot;</span> <span class="p">/&gt;</span>
 
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </pre></div>
 </div>
-<p>There is only one thing here that probably look unfamiliar to you: the <code class="docutils literal"><span class="pre">\Config\Services::validation()-&gt;listErrors()</span></code> function. It is used to report
+<p>There is only one thing here that probably look unfamiliar to you: the
+<code class="docutils literal"><span class="pre">\Config\Services::validation()-&gt;listErrors()</span></code> function. It is used to report
 errors related to form validation.</p>
-<p>Go back to your news controller. You&#8217;re going to do two things here,
+<p>Go back to your <code class="docutils literal"><span class="pre">News</span></code> controller. You&#8217;re going to do two things here,
 check whether the form was submitted and whether the submitted data
 passed the validation rules. You&#8217;ll use the <a class="reference internal" href="../libraries/validation.html"><span class="doc">form
 validation</span></a> library to do this.</p>
@@ -243,7 +244,7 @@ validation</span></a> library to do this.</p>
 
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
         <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|min_length[3]|max_length[255]&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;text&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span>
+        <span class="s1">&#39;body&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span>
     <span class="p">]))</span>
     <span class="p">{</span>
         <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/header&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Create a news item&#39;</span><span class="p">]);</span>
@@ -256,7 +257,7 @@ validation</span></a> library to do this.</p>
         <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">([</span>
             <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">),</span>
             <span class="s1">&#39;slug&#39;</span>  <span class="o">=&gt;</span> <span class="nx">url_title</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)),</span>
-            <span class="s1">&#39;text&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;body&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">),</span>
         <span class="p">]);</span>
         <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;news/success&#39;</span><span class="p">);</span>
     <span class="p">}</span>
@@ -271,7 +272,7 @@ text fields are required.</p>
 above. You can read <a class="reference internal" href="../libraries/validation.html"><span class="doc">more about this library
 here</span></a>.</p>
 <p>Continuing down, you can see a condition that checks whether the form
-validation ran successfully. If it did not, the form is displayed, if it
+validation ran successfully. If it did not, the form is displayed; if it
 was submitted <strong>and</strong> passed all the rules, the model is called. This
 takes care of passing the news item into the model.
 This contains a new function, url_title(). This function -
@@ -281,9 +282,13 @@ sure everything is in lowercase characters. This leaves you with a nice
 slug, perfect for creating URIs.</p>
 <p>After this, a view is loaded to display a success message. Create a view at
 <strong>app/Views/news/success.php</strong> and write a success message.</p>
+<p>This could be as simple as::</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">News</span> <span class="nx">item</span> <span class="nx">created</span> <span class="nx">successfully</span><span class="o">.</span>
+</pre></div>
 </div>
-<div class="section" id="model">
-<h2>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="model-updating">
+<h2>Model Updating<a class="headerlink" href="#model-updating" title="Permalink to this headline">¶</a></h2>
 <p>The only thing that remains is ensuring that your model is setup
 to allow data to be saved properly. The <code class="docutils literal"><span class="pre">save()</span></code> method that was
 used will determine whether the information should be inserted
@@ -294,14 +299,14 @@ so it will insert a new row into it&#8217;s table, <strong>news</strong>.</p>
 not actually save any data because it doesn&#8217;t know what fields are
 safe to be updated. Edit the model to provide it a list of updatable
 fields in the <code class="docutils literal"><span class="pre">$allowedFields</span></code> property.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">NewsModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">&#39;news&#39;</span><span class="p">;</span>
 
-    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;slug&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">];</span>
+    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;slug&#39;</span><span class="p">,</span> <span class="s1">&#39;body&#39;</span><span class="p">];</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -314,7 +319,7 @@ handling your timestamps, you would also leave those out.</p>
 <div class="section" id="routing">
 <h2>Routing<a class="headerlink" href="#routing" title="Permalink to this headline">¶</a></h2>
 <p>Before you can start adding news items into your CodeIgniter application
-you have to add an extra rule to <em>Config/Routes.php</em> file. Make sure your
+you have to add an extra rule to <strong>app/Config/Routes.php</strong> file. Make sure your
 file contains the following. This makes sure CodeIgniter sees &#8216;create&#8217;
 as a method instead of a news item&#8217;s slug.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">match</span><span class="p">([</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;post&#39;</span><span class="p">],</span> <span class="s1">&#39;news/create&#39;</span><span class="p">,</span> <span class="s1">&#39;News::create&#39;</span><span class="p">);</span>
@@ -324,9 +329,18 @@ as a method instead of a news item&#8217;s slug.</p>
 </pre></div>
 </div>
 <p>Now point your browser to your local development environment where you
-installed CodeIgniter and add index.php/news/create to the URL.
-Congratulations, you just created your first CodeIgniter application!
+installed CodeIgniter and add <code class="docutils literal"><span class="pre">/news/create</span></code> to the URL.
 Add some news and check out the different pages you made.</p>
+<a class="reference internal image-reference" href="../_images/tutorial3.png"><img alt="../_images/tutorial3.png" class="align-center" src="../_images/tutorial3.png" style="width: 45%; height: 415px;" /></a>
+<a class="reference internal image-reference" href="../_images/tutorial4.png"><img alt="../_images/tutorial4.png" class="align-center" src="../_images/tutorial4.png" style="width: 45%; height: 415px;" /></a>
+<img alt="../_images/tutorial9.png" class="align-left" src="../_images/tutorial9.png" />
+</div>
+<div class="section" id="congratulations">
+<h2>Congratulations<a class="headerlink" href="#congratulations" title="Permalink to this headline">¶</a></h2>
+<p>You just completed your first CodeIgniter4 application!</p>
+<p>The image to the left shows your project&#8217;s <strong>app</strong> folder,
+with all of the files that you created in green.
+The two modified configuration files (Database &amp; Routes) are not shown.</p>
 </div>
 </div>
 
@@ -353,7 +367,7 @@ Add some news and check out the different pages you made.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Jan 25, 2019.
+      Last updated on Jan 30, 2019.
 
     </p>
   </div>
