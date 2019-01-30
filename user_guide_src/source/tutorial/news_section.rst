@@ -35,7 +35,11 @@ and :doc:`Seeds <../dbmgmt/seeds>` to create more useful database setups later.
 		KEY slug (slug)
 	);
 
+A note of interest: a "slug", in the context of web publishing, is a 
+user- and SEO-friendly short text used in a URL to identify and describe a resource.
+
 The seed records might be something like:::
+
 
     INSERT INTO news VALUES 
     (1,'Elvis sighted','elvis-sighted','Elvis was sighted at the Podunk internet cafe. It looked like he was writing a CodeIgniter app.'),
@@ -157,7 +161,7 @@ which provides a couple of helper methods, and makes sure that you have
 access to the current ``Request`` and ``Response`` objects, as well as the
 ``Logger`` class, for saving information to disk.
 
-Next, there are two methods to view all news items and one for a specific
+Next, there are two methods, one to view all news items, and one for a specific
 news item. You can see that the ``$slug`` variable is passed to the model's
 method in the second method. The model is using this slug to identify the
 news item to be returned.

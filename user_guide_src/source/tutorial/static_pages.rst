@@ -230,10 +230,10 @@ Here, the second rule in the ``$routes`` array matches **any** request
 using the wildcard string ``(:any)``. and passes the parameter to the
 ``view()`` method of the ``Pages`` class.
 
-Now visit ``index.php/about``. Did it get routed correctly to the ``showme()``
+Now visit ``home``. Did it get routed correctly to the ``showme()``
 method in the pages controller? Awesome!
 
-You should see something like the following (which actually shows the "home" page in your browser:
+You should see something like the following:
 
 .. image:: ../images/tutorial1.png
     :align: center
