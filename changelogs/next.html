@@ -219,15 +219,26 @@
 <li>new feature branches have been created for the email and queue modules, so they don&#8217;t impact the release of 4.0.0</li>
 <li>dropped several language messages that were unused (eg Migrations.missingTable) and added some new (eg Migrations.invalidType)</li>
 <li>lots of bug fixes, especially for the database support</li>
+<li>provided filters (CSRF, Honeypot, DebugToolbar) have been moved from app/Filters/ to system/Filters/</li>
 <li>revisited the installation and tutorial sections of the user guide</li>
-<li>code coverage is up to 78%</li>
+<li>code coverage is at 77% ... getting ever closer to our target of 80% :)</li>
 </ul>
+<p>We hope this will be the last alpha, and that the next pre-release will be our first beta ... fingers crossed!</p>
 <p>The list of changed files follows, with PR numbers shown.</p>
 <ul>
 <li><dl class="first docutils">
 <dt>admin/</dt>
 <dd><ul class="first last simple">
-<li>starter/README.md #1637</li>
+<li><dl class="first docutils">
+<dt>starter/</dt>
+<dd><ul class="first last">
+<li>README.md #1637</li>
+<li>app/Config/Paths.php #1685</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>release-appstarter #1685</li>
 </ul>
 </dd>
 </dl>
@@ -238,6 +249,7 @@
 <li><dl class="first docutils">
 <dt>Config/</dt>
 <dd><ul class="first last">
+<li>Filters #1686</li>
 <li>Modules #1665</li>
 <li>Services #614216</li>
 </ul>
@@ -355,6 +367,9 @@
 <dt>Filters/</dt>
 <dd><ul class="first last">
 <li>Filters #1635, #1625, #6dab8f</li>
+<li>CSRF #1686</li>
+<li>DebugToolbar #1686</li>
+<li>Honeypot #1686</li>
 </ul>
 </dd>
 </dl>
@@ -398,17 +413,19 @@
 <li><dl class="first docutils">
 <dt>Router/</dt>
 <dd><ul class="first last">
-<li>RouteCollection #1665</li>
+<li>RouteCollection #1665, #5951c3</li>
 <li>Router #9e435c, #7993a7, #1678</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Session/Handlers/</dt>
+<dt>Session/</dt>
 <dd><ul class="first last">
-<li>BaseHandler #1684</li>
-<li>FileHandler #1684</li>
+<li>Handlers/BaseHandler #1684</li>
+<li>Handlers/FileHandler #1684</li>
+<li>Handlers/MemcachedHandler #1679</li>
+<li>Session #1679</li>
 </ul>
 </dd>
 </dl>
@@ -416,7 +433,7 @@
 <li>bootstrap #81d371, #1665</li>
 <li>Common #1660</li>
 <li>Entity #1623, #1622</li>
-<li>Model #1617, #1632, #1656</li>
+<li>Model #1617, #1632, #1656, #1689</li>
 </ul>
 </dd>
 </dl>
@@ -444,7 +461,7 @@
 <dt>Autoloader/</dt>
 <dd><ul class="first last">
 <li>AutoloaderTest #1665</li>
-<li>FileLocatorTest #1665</li>
+<li>FileLocatorTest #1665, #1686</li>
 </ul>
 </dd>
 </dl>
@@ -471,6 +488,7 @@
 <li><dl class="first docutils">
 <dt>Database/Builder/</dt>
 <dd><ul class="first last">
+<li>AliasTest #bea1dd</li>
 <li>DeleteTest #1677</li>
 <li>GroupTest #1640</li>
 <li>InsertTest #1640, #1677</li>
@@ -490,7 +508,7 @@
 <li>ForgeTest #6b8b8b</li>
 <li>InsertTest #1677</li>
 <li>Migrations/MigrationRunnerTest #1660, #1675</li>
-<li>ModelTest #1617</li>
+<li>ModelTest #1617, #1689</li>
 </ul>
 </dd>
 </dl>
@@ -506,7 +524,10 @@
 <li><dl class="first docutils">
 <dt>Filters/</dt>
 <dd><ul class="first last">
-<li>FiltersTest #1635, #6dab8f</li>
+<li>CSRFTest #1686</li>
+<li>DebugToolbarTest #1686</li>
+<li>FiltersTest #1635, #6dab8f, #1686</li>
+<li>HoneypotTest #1686</li>
 </ul>
 </dd>
 </dl>
@@ -516,6 +537,14 @@
 <dd><ul class="first last">
 <li>FormHelperTest #1633</li>
 <li>XMLHelperTest #1641</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Honeypot/</dt>
+<dd><ul class="first last">
+<li>HoneypotTest #1686</li>
 </ul>
 </dd>
 </dl>
@@ -540,7 +569,16 @@
 <li><dl class="first docutils">
 <dt>Router/</dt>
 <dd><ul class="first last">
+<li>RouteCollectionTest #5951c3</li>
 <li>RouterTest #9e435c</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Validation/</dt>
+<dd><ul class="first last">
+<li>RulesTest #1689</li>
 </ul>
 </dd>
 </dl>
@@ -600,6 +638,7 @@
 <li><dl class="first docutils">
 <dt>incoming/</dt>
 <dd><ul class="first last">
+<li>filters #1686</li>
 <li>index #4a1886</li>
 <li>methodspoofing #4a1886</li>
 </ul>
@@ -609,8 +648,13 @@
 <li><dl class="first docutils">
 <dt>installation/</dt>
 <dd><ul class="first last">
-<li>downloads.rst #1673</li>
-<li>installation #1673</li>
+<li>index #1690, #1693</li>
+<li>installing_composer #1673, #1690</li>
+<li>installing_git #1673, #1690</li>
+<li>installing_manual #1673, #1690</li>
+<li>repositories #1673, #1690</li>
+<li>running #1690, #1691</li>
+<li>troubleshooting #1690, #1693</li>
 </ul>
 </dd>
 </dl>
@@ -618,7 +662,20 @@
 <li><dl class="first docutils">
 <dt>libraries/</dt>
 <dd><ul class="first last">
-<li>index #1643</li>
+<li>honeypot #1686</li>
+<li>index #1643, #1690</li>
+<li>throttler #1686</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>tutorial/</dt>
+<dd><ul class="first last">
+<li>create_news_item  #1693</li>
+<li>index #1693</li>
+<li>news_section #1693</li>
+<li>static_pages #1693</li>
 </ul>
 </dd>
 </dl>
@@ -640,11 +697,21 @@
 <div class="section" id="prs-merged">
 <h2>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
+<li>#1693 Docs/tutorial</li>
+<li>#5951c3 Allow domain/sub-domain routes to overwrite existing routes</li>
+<li>#1691 Update the running docs</li>
+<li>#1690 Rework install docs</li>
+<li>#bea1dd Additional AliasTests for potential LeftJoin issue</li>
+<li>#1689 Model Validation Fix</li>
+<li>#1687 Add copyright blocks to filters</li>
+<li>#1686 Refactor/filters</li>
+<li>#1685 Fix admin - app starter creation</li>
 <li>#1684 Updating session id cleanup for filehandler</li>
 <li>#1683 Fix migrate:refresh bug</li>
 <li>#d2b377 Fix Postgres replace command to work new way of storing binds</li>
 <li>#4a1886 Document method spoofing</li>
 <li>#2e698a urldecode URI keys as well as values.</li>
+<li>#1679 save_path - for memcached</li>
 <li>#1678 fix route not replacing forward slashes</li>
 <li>#1677 Implement Don&#8217;t Escape feature for db engine</li>
 <li>#1675 Add missing test group directives</li>
