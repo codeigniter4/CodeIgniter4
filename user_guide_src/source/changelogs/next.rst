@@ -9,15 +9,23 @@ Release Date: Not released
 - new feature branches have been created for the email and queue modules, so they don't impact the release of 4.0.0
 - dropped several language messages that were unused (eg Migrations.missingTable) and added some new (eg Migrations.invalidType)
 - lots of bug fixes, especially for the database support
+- provided filters (CSRF, Honeypot, DebugToolbar) have been moved from app/Filters/ to system/Filters/
 - revisited the installation and tutorial sections of the user guide
-- code coverage is up to 78%
+- code coverage is at 77% ... getting ever closer to our target of 80% :)
+
+We hope this will be the last alpha, and that the next pre-release will be our first beta ... fingers crossed!
 
 The list of changed files follows, with PR numbers shown.
 
 - admin/
-	- starter/README.md #1637
+	- starter/
+		- README.md #1637
+		- app/Config/Paths.php #1685
+	- release-appstarter #1685
+
 - app/
 	- Config/
+		- Filters #1686
 		- Modules #1665
 		- Services #614216
 
@@ -60,6 +68,9 @@ The list of changed files follows, with PR numbers shown.
 		- File #1636
 	- Filters/
 		- Filters #1635, #1625, #6dab8f
+		- CSRF #1686
+		- DebugToolbar #1686
+		- Honeypot #1686
 	- Helpers/
 		- form_helper #1633
 		- html_helper #1538
@@ -73,15 +84,17 @@ The list of changed files follows, with PR numbers shown.
 	- Log/
 		- Handlers/FileHandler #1641
 	- Router/
-		- RouteCollection #1665
+		- RouteCollection #1665, #5951c3
 		- Router #9e435c, #7993a7, #1678
-	- Session/Handlers/
-		- BaseHandler #1684
-		- FileHandler #1684
+	- Session/
+		- Handlers/BaseHandler #1684
+		- Handlers/FileHandler #1684
+		- Handlers/MemcachedHandler #1679
+		- Session #1679
 	- bootstrap #81d371, #1665
 	- Common #1660
 	- Entity #1623, #1622
-	- Model #1617, #1632, #1656
+	- Model #1617, #1632, #1656, #1689
 
 - tests/
 	- README.md #1671
@@ -91,7 +104,7 @@ The list of changed files follows, with PR numbers shown.
 		- ResponseTraitTest #1635
 	- Autoloader/
 		- AutoloaderTest #1665
-		- FileLocatorTest #1665
+		- FileLocatorTest #1665, #1686
 	- CLI/
 		- CommandRunnerTest #1635
 		- CommandsTest #1635
@@ -100,6 +113,7 @@ The list of changed files follows, with PR numbers shown.
 		- ConfigTest #1643
 		- ServicesTest #1635, #1643
 	- Database/Builder/
+		- AliasTest #bea1dd
 		- DeleteTest #1677
 		- GroupTest #1640
 		- InsertTest #1640, #1677
@@ -113,21 +127,29 @@ The list of changed files follows, with PR numbers shown.
 		- ForgeTest #6b8b8b
 		- InsertTest #1677
 		- Migrations/MigrationRunnerTest #1660, #1675
-		- ModelTest #1617
+		- ModelTest #1617, #1689
 	- Events/
 		- EventTest #1635
 	- Filters/
-		- FiltersTest #1635, #6dab8f
+		- CSRFTest #1686
+		- DebugToolbarTest #1686
+		- FiltersTest #1635, #6dab8f, #1686
+		- HoneypotTest #1686
 	- Helpers/
 		- FormHelperTest #1633
 		- XMLHelperTest #1641
+	- Honeypot/
+		- HoneypotTest #1686
 	- HTTP/
 		- ContentSecurityPolicyTest #1641
 		- IncomingRequestTest #1641
 	- Language/
 		- LanguageTest #1643
 	- Router/
+		- RouteCollectionTest #5951c3
 		- RouterTest #9e435c
+	- Validation/
+		- RulesTest #1689
 	- View/
 		- ParserPluginTest #1669
 		- ParserTest #1669
@@ -147,13 +169,26 @@ The list of changed files follows, with PR numbers shown.
 	- helpers/
 		- form_helper #1633
 	- incoming/
+		- filters #1686
 		- index #4a1886
 		- methodspoofing #4a1886
 	- installation/
-		- downloads.rst #1673
-		- installation #1673
+		- index #1690, #1693
+		- installing_composer #1673, #1690
+		- installing_git #1673, #1690
+		- installing_manual #1673, #1690
+		- repositories #1673, #1690
+		- running #1690, #1691
+		- troubleshooting #1690, #1693
 	- libraries/
-		- index #1643
+		- honeypot #1686
+		- index #1643, #1690
+		- throttler #1686
+	- tutorial/
+		- create_news_item  #1693
+		- index #1693
+		- news_section #1693
+		- static_pages #1693
 
 - composer.json #1670
 - contributing.md #1670
@@ -164,11 +199,21 @@ The list of changed files follows, with PR numbers shown.
 PRs merged:
 -----------
 
+- #1693 Docs/tutorial
+- #5951c3 Allow domain/sub-domain routes to overwrite existing routes
+- #1691 Update the running docs
+- #1690 Rework install docs
+- #bea1dd Additional AliasTests for potential LeftJoin issue
+- #1689 Model Validation Fix
+- #1687 Add copyright blocks to filters
+- #1686 Refactor/filters
+- #1685 Fix admin - app starter creation
 - #1684 Updating session id cleanup for filehandler
 - #1683 Fix migrate:refresh bug
 - #d2b377 Fix Postgres replace command to work new way of storing binds
 - #4a1886 Document method spoofing
 - #2e698a urldecode URI keys as well as values.
+- #1679 save_path - for memcached
 - #1678 fix route not replacing forward slashes
 - #1677 Implement Don't Escape feature for db engine
 - #1675 Add missing test group directives
