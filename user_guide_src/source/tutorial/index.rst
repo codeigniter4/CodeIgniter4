@@ -2,9 +2,12 @@
 Tutorial
 ########
 
-This tutorial is intended to introduce you to the CodeIgniter framework
+This tutorial is intended to introduce you to the CodeIgniter4 framework
 and the basic principles of MVC architecture. It will show you how a
 basic CodeIgniter application is constructed in step-by-step fashion.
+
+If you are not familiar with PHP, we recommend that you check out
+the ``W3Schools PHP Tutorial <https://www.w3schools.com/php/default.asp>`_ before continuing.
 
 In this tutorial, you will be creating a **basic news application**. You
 will begin by writing the code that can load static pages. Next, you
@@ -16,7 +19,7 @@ This tutorial will primarily focus on:
 -  Model-View-Controller basics
 -  Routing basics
 -  Form validation
--  Performing basic database queries using "Query Builder"
+-  Performing basic database queries using CodeIgniter's "Query Builder"
 
 The entire tutorial is split up over several pages, each explaining a
 small part of the functionality of the CodeIgniter framework. You'll go

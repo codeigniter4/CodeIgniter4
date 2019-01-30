@@ -4,12 +4,15 @@ Installation
 
 CodeIgniter4 can be installed in a number of different ways: manually,
 using `Composer <https://getcomposer.org>`_, or using
-`Git <https://git-scm.com/>`_. If you are not sure which is most
-appropriate for you, read the introduction for
-each technique, and consider their pros and cons.
+`Git <https://git-scm.com/>`_. 
+Which is right for you?
 
-Once installed, there are several ways to run a
-CodeIgniter4 app. Read on :)
+- If you would like the simple "download & go" install that CodeIgniter3
+  is known for, choose the manual installation.
+- If you plan to add third party packages to your project, we
+  recommend the Composer installation.
+- If you are thinking of contributing to the framework,
+  then the Git installation is right for you.
 
 .. toctree::
     :titlesonly:
