@@ -5,7 +5,16 @@ Change Logs
 Version |version|
 ====================================================
 
-Release Date: Not Released
+Release Date: Unreleased
+
+Highlights:
+
+:doc:`See all the changes. </changelogs/next>`
+
+Version 4.0.0-alpha.5
+====================================================
+
+Release Date: Jan 30, 2019
 
 **Alpha 5**
 
@@ -19,7 +28,7 @@ Highlights:
 - lots of bug fixes
 - code coverage is up to 78%
 
-:doc:`See all the changes. </changelogs/next>`
+:doc:`See all the changes. </changelogs/v4.0.0-alpha.5>`
 
 Version 4.0.0-alpha.4
 ====================================================

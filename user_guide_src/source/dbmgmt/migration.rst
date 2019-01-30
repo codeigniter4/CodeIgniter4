@@ -115,14 +115,16 @@ another database is used for mission critical data. You can ensure that migratio
 against the proper group by setting the ``$DBGroup`` property on your migration. This name must
 match the name of the database group exactly::
 
-  class Migration_Add_blog extends \CodeIgniter\Database\Migration
-  {
-    protected $DBGroup = 'alternate_db_group';
+    <?php namespace App\Database\Migrations;
 
-    public function up() { . . . }
+    class Migration_Add_blog extends \CodeIgniter\Database\Migration
+    {
+        protected $DBGroup = 'alternate_db_group';
 
-    public function down() { . . . }
-  }
+        public function up() { . . . }
+
+        public function down() { . . . }
+    }
 
 Namespaces
 ==========
@@ -152,7 +154,7 @@ Usage Example
 In this example some simple code is placed in **app/Controllers/Migrate.php**
 to update the schema::
 
-	<?php
+        <?php namespace App\Controllers;
 
 	class Migrate extends \CodeIgniter\Controller
 	{
@@ -184,7 +186,7 @@ that wish to use them. The tools primarily provide access to the same methods th
 
 Migrates all database groups to the latest available migrations::
 
-> php spark migrate:latest
+    > php spark migrate:latest
 
 You can use (latest) with the following options:
 
@@ -194,14 +196,14 @@ You can use (latest) with the following options:
 
 This example will migrate Blog namespace to latest::
 
-> php spark migrate:latest -g test -n Blog
+    p> hp spark migrate:latest -g test -n Blog
 
 **current**
 
 Migrates the (App) namespace to match the version set in ``$currentVersion``. This will migrate both
 up and down as needed to match the specified version::
 
-  > php spark migrate:current
+    > php spark migrate:current
 
 You can use (current) with the following options:
 
@@ -214,7 +216,7 @@ for the version. ::
 
   // Asks you for the version...
   > php spark migrate:version
-  > Version:
+  Version:
 
   // Sequential
   > php spark migrate:version 007
