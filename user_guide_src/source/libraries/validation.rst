@@ -1,6 +1,5 @@
-##########
 Validation
-##########
+##################################################
 
 CodeIgniter provides a comprehensive data validation class that
 helps minimize the amount of code you'll write.
@@ -9,9 +8,8 @@ helps minimize the amount of code you'll write.
     :local:
     :depth: 2
 
-********
 Overview
-********
+************************************************
 
 Before explaining CodeIgniter's approach to data validation, let's
 describe the ideal scenario:
@@ -43,9 +41,8 @@ messages, various control structures are usually placed within the form
 HTML. Form validation, while simple to create, is generally very messy
 and tedious to implement.
 
-************************
 Form Validation Tutorial
-************************
+************************************************
 
 What follows is a "hands on" tutorial for implementing CodeIgniter's Form
 Validation.
@@ -62,7 +59,7 @@ Let's create those three things, using a member sign-up form as the
 example.
 
 The Form
-========
+================================================
 
 Using a text editor, create a form called **Signup.php**. In it, place this
 code and save it to your **app/Views/** folder::
@@ -97,7 +94,7 @@ code and save it to your **app/Views/** folder::
 	</html>
 
 The Success Page
-================
+================================================
 
 Using a text editor, create a form called **Success.php**. In it, place
 this code and save it to your **app/Views/** folder::
@@ -116,7 +113,7 @@ this code and save it to your **app/Views/** folder::
 	</html>
 
 The Controller
-==============
+================================================
 
 Using a text editor, create a controller called **Form.php**. In it, place
 this code and save it to your **app/Controllers/** folder::
@@ -145,7 +142,7 @@ this code and save it to your **app/Controllers/** folder::
 	}
 
 Try it!
-=======
+================================================
 
 To try your form, visit your site using a URL similar to this one::
 
@@ -160,7 +157,7 @@ only returns true if it has successfully applied your rules without any
 of them failing.**
 
 Explanation
-===========
+================================================
 
 You'll notice several things about the above pages:
 
@@ -186,7 +183,7 @@ Based on whether the validation was successful it either presents the
 form or the success page.
 
 Loading the Library
-===================
+================================================
 
 The library is loaded as a service named **validation**::
 
@@ -199,7 +196,7 @@ for including multiple Rule sets, and collections of rules that can be easily re
     the :doc:`Model </models/model>` provide methods to make validation even easier.
 
 Setting Validation Rules
-========================
+================================================
 
 CodeIgniter lets you set as many validation rules as you need for a
 given field, cascading them in order. To set validation rules you
@@ -247,9 +244,11 @@ data to be validated::
     $validation->withRequest($this->request)
                ->run();
 
-*******************************
+Working with Validation
+************************************************
+
 Validating Keys that are Arrays
-*******************************
+================================================
 
 If your data is in a nested associative array, you can use "dot array syntax" to
 easily validate your data::
@@ -284,17 +283,15 @@ You can use the '*' wildcard symbol to match any one level of the array::
         'contacts.*.name' => 'required'
     ]);
 
-****************
 Validate 1 Value
-****************
+================================================
 
 Validate one value against a rule::
 
     $validation->check($value, 'required');
 
-**************************************************
 Saving Sets of Validation Rules to the Config File
-**************************************************
+================================================
 
 A nice feature of the Validation class is that it permits you to store all
 your validation rules for your entire application in a config file. You organize
@@ -304,7 +301,7 @@ the validation.
 .. _validation-array:
 
 How to save your rules
-======================
+-------------------------------------------------------
 
 To store your validation rules, simply create a new public property in the ``Config\Validation``
 class with the name of your group. This element will hold an array with your validation
@@ -372,25 +369,22 @@ Or pass all settings in an array::
 See below for details on the formatting of the array.
 
 Getting & Setting Rule Groups
-=============================
+-------------------------------------------------------
 
-Get Rule Group
---------------
+**Get Rule Group**
 
 This method gets a rule group from the validation configuration::
 
     $validation->getRuleGroup('signup');
 
-Set Rule Group
---------------
+**Set Rule Group**
 
 This method sets a rule group from the validation configuration to the validation service::
 
     $validation->setRuleGroup('signup');
 
-*******************
 Working With Errors
-*******************
+************************************************
 
 The Validation library provides several methods to help you set error messages, provide
 custom error messages, and retrieve one or more errors to display.
@@ -491,9 +485,8 @@ You can check to see if an error exists with the ``hasError()`` method. The only
         echo $validation->getError('username');
     }
 
-*************************
 Customizing Error Display
-*************************
+************************************************
 
 When you call ``$validation->listErrors()`` or ``$validation->showError()``, it loads a view file in the background
 that determines how the errors are displayed. By default, they display in a manner compatible with the
@@ -554,9 +547,8 @@ right after the name of the field the error should belong to::
 
     <?= $validation->showError('username', 'my_single') ?>
 
-*********************
 Creating Custom Rules
-*********************
+************************************************
 
 Rules are stored within simple, namespaced classes. They can be stored any location you would like, as long as the
 autoloader can find it. These files are called RuleSets. To add a new RuleSet, edit **Config/Validation.php** and

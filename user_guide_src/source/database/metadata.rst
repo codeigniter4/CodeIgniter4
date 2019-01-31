@@ -134,4 +134,19 @@ List the Indexes in a Table
 
 **$db->getIndexData()**
 
-please write this, someone...
+Returns an array of objects containing index information.
+
+Usage example::
+
+	$keys = $db->getIndexData('table_name');
+
+	foreach ($keys as $key)
+	{
+		echo $key->name;
+		echo $key->type;
+		echo $key->fields;  // array of field names
+	}
+
+The key types may be unique to the database you are using.
+For instance, MySQL will return one of primary, fulltext, spatial, index or unique
+for each key associated with a table.
