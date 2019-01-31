@@ -16,6 +16,16 @@ Version 4.0.0-alpha.5
 
 Release Date: Jan 30, 2019
 
+**Next release of CodeIgniter4**
+
+
+:doc:`See all the changes. </changelogs/next>`
+
+Version 4.0.0-alpha.5
+====================================================
+
+Release Date: January 30, 2019
+
 **Alpha 5**
 
 Highlights:
