@@ -259,7 +259,8 @@ the web-accessible space at all, while keeping it under <strong>/app</strong> fo
 <p>If you need to create a new configuration file you would create a new file at your desired location,
 <strong>/app/Config</strong> by default. Then create the class and fill it with public properties that
 represent your settings:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
 <span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
@@ -401,7 +402,8 @@ designated classes in <code class="docutils literal"><span class="pre">$registra
 the configuration class, it will invoke that method, and incorporate any returned properties
 the same way as described for namespaced variables.</p>
 <p>A sample configuration class setup for this:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Config</span><span class="p">;</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Config</span><span class="p">;</span>
+
 <span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">MySalesConfig</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
@@ -415,7 +417,7 @@ the same way as described for namespaced variables.</p>
 </pre></div>
 </div>
 <p>... and the associated regional sales model might look like:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">RegionalSales</span>
 <span class="p">{</span>

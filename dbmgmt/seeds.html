@@ -209,7 +209,8 @@ event or setting information, and more.</p>
 Within the <strong>run()</strong> the class can create any form of data that it needs to. It has access to the database
 connection and the forge through <code class="docutils literal"><span class="pre">$this-&gt;db</span></code> and <code class="docutils literal"><span class="pre">$this-&gt;forge</span></code>, respectively. Seed files must be
 stored within the <strong>app/Database/Seeds</strong> directory. The name of the file must match the name of the class.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// app/Database/Seeds/SimpleSeeder.php</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Database\Seeds</span><span class="p">;</span>
+
 <span class="k">class</span> <span class="nc">SimpleSeeder</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Database\Seeder</span>
 <span class="p">{</span>
         <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
@@ -234,7 +235,9 @@ stored within the <strong>app/Database/Seeds</strong> directory. The name of the
 <h2>Nesting Seeders<a class="headerlink" href="#nesting-seeders" title="Permalink to this headline">¶</a></h2>
 <p>Seeders can call other seeders, with the <strong>call()</strong> method. This allows you to easily organize a central seeder,
 but organize the tasks into separate seeder files:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TestSeeder</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Database\Seeder</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Database\Seeds</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">TestSeeder</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Database\Seeder</span>
 <span class="p">{</span>
         <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
         <span class="p">{</span>

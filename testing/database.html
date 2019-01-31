@@ -217,8 +217,12 @@
 <div class="section" id="the-test-class">
 <h2><a class="toc-backref" href="#id1">The Test Class</a><a class="headerlink" href="#the-test-class" title="Permalink to this headline">¶</a></h2>
 <p>In order to take advantage of the built-in database tools that CodeIgniter provides for testing, your
-tests must extend <code class="docutils literal"><span class="pre">\CIDatabaseTestCase</span></code>:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyTests</span> <span class="k">extends</span> <span class="nx">\CIDatabaseTestCase</span>
+tests must extend <code class="docutils literal"><span class="pre">CIDatabaseTestCase</span></code>:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Database</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIDatabaseTestCase</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyTests</span> <span class="k">extends</span> <span class="nx">CIDatabaseTestCase</span>
 <span class="p">{</span>
     <span class="o">.</span> <span class="o">.</span> <span class="o">.</span>
 <span class="p">}</span>
@@ -227,7 +231,11 @@ tests must extend <code class="docutils literal"><span class="pre">\CIDatabaseTe
 <p>Because special functionality executed during the <code class="docutils literal"><span class="pre">setUp()</span></code> and <code class="docutils literal"><span class="pre">tearDown()</span></code> phases, you must ensure
 that you call the parent&#8217;s methods if you need to use those methods, otherwise you will lose much
 of the functionality described here:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyTests</span> <span class="k">extends</span> <span class="nx">\CIDatabaseTestCase</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Database</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIDatabaseTestCase</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyTests</span> <span class="k">extends</span> <span class="nx">CIDatabaseTestCase</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span>
     <span class="p">{</span>
@@ -266,7 +274,11 @@ correct information:</p>
 <p>When running tests you need to ensure that your database has the correct schema setup, and that
 it is in a known state for every test. You can use migrations and seeds to setup your database,
 by adding a couple of class properties to your test.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyTests</span> <span class="k">extends</span> <span class="nx">\CIDatabaseTestCase</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Database</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIDatabaseTestCase</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyTests</span> <span class="k">extends</span><span class="nx">\CIDatabaseTestCase</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$refresh</span>  <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$seed</span>     <span class="o">=</span> <span class="s1">&#39;TestSeeder&#39;</span><span class="p">;</span>

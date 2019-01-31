@@ -607,133 +607,178 @@ left to right:</p>
 <p>The following filters are available when using the parser:</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="13%" />
-<col width="17%" />
+<col width="11%" />
+<col width="16%" />
 <col width="46%" />
-<col width="23%" />
+<col width="27%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Filter</th>
-<th class="head">Arguments</th>
-<th class="head">Description</th>
-<th class="head">Example</th>
-</tr>
-</thead>
 <tbody valign="top">
-<tr class="row-even"><td>abs</td>
-<td>&nbsp;</td>
-<td>Displays the absolute value of a number.</td>
-<td>{ v|abs }</td>
+<tr class="row-odd"><td rowspan="2"><strong>Filter</strong></td>
+<td rowspan="2"><strong>Arguments</strong></td>
+<td rowspan="2"><strong>Description</strong></td>
+<td rowspan="2"><strong>Example</strong></td>
 </tr>
-<tr class="row-odd"><td>capitalize</td>
-<td>&nbsp;</td>
-<td>Displays the string in sentence case: all lowercase with first
-letter capitalized.</td>
-<td>{ v|capitalize}</td>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2">abs</td>
+<td rowspan="2">&nbsp;</td>
+<td rowspan="2">Displays the absolute value of a number.</td>
+<td rowspan="2">{ v|abs }</td>
 </tr>
-<tr class="row-even"><td>date</td>
-<td>format (Y-m-d)</td>
-<td>A PHP <strong>date</strong>-compatible formatting string.</td>
-<td>{ v|date(Y-m-d) }</td>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="3">capitalize</td>
+<td rowspan="3">&nbsp;</td>
+<td rowspan="3">Displays the string in sentence case: all lowercase
+with firstletter capitalized.</td>
+<td rowspan="3">{ v|capitalize}</td>
 </tr>
-<tr class="row-odd"><td>date_modify</td>
-<td>value to add/subtract</td>
-<td>A <strong>strtotime</strong> compatible string to modify the date, like
-<code class="docutils literal"><span class="pre">+5</span> <span class="pre">day</span></code> or <code class="docutils literal"><span class="pre">-1</span> <span class="pre">week</span></code>.</td>
-<td>{ v|date_modify(+1 day) }</td>
+<tr class="row-even"></tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2">date</td>
+<td rowspan="2">format (Y-m-d)</td>
+<td rowspan="2">A PHP <strong>date</strong>-compatible formatting string.</td>
+<td rowspan="2">{ v|date(Y-m-d) }</td>
 </tr>
-<tr class="row-even"><td>default</td>
-<td>default value</td>
-<td>Displays the default value if the variable is empty or undefined.</td>
-<td>{ v|default(just in case) }</td>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="3">date_modify</td>
+<td rowspan="3">value to add
+/ subtract</td>
+<td rowspan="3">A <strong>strtotime</strong> compatible string to modify the date,
+like <code class="docutils literal"><span class="pre">+5</span> <span class="pre">day</span></code> or <code class="docutils literal"><span class="pre">-1</span> <span class="pre">week</span></code>.</td>
+<td rowspan="3">{ v|date_modify(+1 day) }</td>
 </tr>
-<tr class="row-odd"><td>esc</td>
-<td>html, attr, css, js</td>
-<td>Specifies the context to escape the data.</td>
-<td>{ v|esc(attr) }</td>
+<tr class="row-odd"></tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="3">default</td>
+<td rowspan="3">default value</td>
+<td rowspan="3">Displays the default value if the variable is empty or
+undefined.</td>
+<td rowspan="3">{ v|default(just in case) }</td>
 </tr>
-<tr class="row-even"><td>excerpt</td>
-<td>phrase, radius</td>
-<td>Returns the text within a radius of words from a given phrase.
-Same as <strong>excerpt</strong> helper function.</td>
-<td>{ v|excerpt(green giant, 20) }</td>
+<tr class="row-even"></tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2">esc</td>
+<td rowspan="2">html, attr, css, js</td>
+<td rowspan="2">Specifies the context to escape the data.</td>
+<td rowspan="2">{ v|esc(attr) }</td>
 </tr>
-<tr class="row-odd"><td>highlight</td>
-<td>phrase</td>
-<td>Highlights a given phrase within the text using &#8216;&lt;mark&gt;&lt;/mark&gt;&#8217;
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="3">excerpt</td>
+<td rowspan="3">phrase, radius</td>
+<td rowspan="3">Returns the text within a radius of words from a given
+phrase. Same as <strong>excerpt</strong> helper function.</td>
+<td rowspan="3">{ v|excerpt(green giant, 20) }</td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="3">highlight</td>
+<td rowspan="3">phrase</td>
+<td rowspan="3">Highlights a given phrase within the text using
+&#8216;&lt;mark&gt;&lt;/mark&gt;&#8217; tags.</td>
+<td rowspan="3">{ v|highlight(view parser) }</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2">highlight_code</td>
+<td rowspan="2">&nbsp;</td>
+<td rowspan="2">Highlights code samples with HTML/CSS.</td>
+<td rowspan="2">{ v|highlight_code }</td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2">limit_chars</td>
+<td rowspan="2">limit</td>
+<td rowspan="2">Limits the number of chracters to $limit.</td>
+<td rowspan="2">{ v|limit_chars(100) }</td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2">limit_words</td>
+<td rowspan="2">limit</td>
+<td rowspan="2">Limits the number of words to $limit.</td>
+<td rowspan="2">{ v|limit_words(20) }</td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="3">local_currency</td>
+<td rowspan="3">currency, locale</td>
+<td rowspan="3">Displays a localized version of a currency. &#8220;currency&#8221;
+valueis any 3-letter ISO 4217 currency code.</td>
+<td rowspan="3">{ v|local_currency(EUR,en_US) }</td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="4">local_number</td>
+<td rowspan="4">type, precision,
+locale</td>
+<td rowspan="4">Displays a localized version of a number. &#8220;type&#8221; can be
+one of: decimal, currency, percent, scientific, spellout,
+ordinal, duration.</td>
+<td rowspan="4">{ v|local_number(decimal,2,en_US) }</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2">lower</td>
+<td rowspan="2">&nbsp;</td>
+<td rowspan="2">Converts a string to lowercase.</td>
+<td rowspan="2">{ v|lower }</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2">nl2br</td>
+<td rowspan="2">&nbsp;</td>
+<td rowspan="2">Replaces all newline characters (n) to an HTML &lt;br/&gt; tag.</td>
+<td rowspan="2">{ v|nl2br }</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="3">number_format</td>
+<td rowspan="3">places</td>
+<td rowspan="3">Wraps PHP <strong>number_format</strong> function for use within the
+parser.</td>
+<td rowspan="3">{ v|number_format(3) }</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="3">prose</td>
+<td rowspan="3">&nbsp;</td>
+<td rowspan="3">Takes a body of text and uses the <strong>auto_typography()</strong>
+method to turn it into prettier, easier-to-read, prose.</td>
+<td rowspan="3">{ v|prose }</td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="3">round</td>
+<td rowspan="3">places, type</td>
+<td rowspan="3">Rounds a number to the specified places. Types of <strong>ceil</strong>
+and <strong>floor</strong> can be passed to use those functions instead.</td>
+<td rowspan="3">{ v|round(3) } { v|round(ceil) }</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="3">strip_tags</td>
+<td rowspan="3">allowed chars</td>
+<td rowspan="3">Wraps PHP <strong>strip_tags</strong>. Can accept a string of allowed
 tags.</td>
-<td>{ v|highlight(view parser) }</td>
+<td rowspan="3">{ v|strip_tags(&lt;br&gt;) }</td>
 </tr>
-<tr class="row-even"><td>highlight_code</td>
-<td>&nbsp;</td>
-<td>Highlights code samples with HTML/CSS.</td>
-<td>{ v|highlight_code }</td>
+<tr class="row-odd"></tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="3">title</td>
+<td rowspan="3">&nbsp;</td>
+<td rowspan="3">Displays a &#8220;title case&#8221; version of the string, with all
+lowercase, and each word capitalized.</td>
+<td rowspan="3">{ v|title }</td>
 </tr>
-<tr class="row-odd"><td>limit_chars</td>
-<td>limit</td>
-<td>Limits the number of chracters to $limit.</td>
-<td>{ v|limit_chars(100) }</td>
+<tr class="row-even"></tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2">upper</td>
+<td rowspan="2">&nbsp;</td>
+<td rowspan="2">Displays the string in all uppercase.</td>
+<td rowspan="2">{ v|upper }</td>
 </tr>
-<tr class="row-even"><td>limit_words</td>
-<td>limit</td>
-<td>Limits the number of words to $limit.</td>
-<td>{ v|limit_words(20) }</td>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2">&nbsp;</td>
+<td rowspan="2">&nbsp;</td>
+<td rowspan="2">&nbsp;</td>
+<td rowspan="2">&nbsp;</td>
 </tr>
-<tr class="row-odd"><td>local_currency</td>
-<td>currency, locale</td>
-<td>Displays a localized version of a currency. &#8220;currency&#8221; value is any
-3-letter ISO 4217 currency code.</td>
-<td>{ v|local_currency(EUR,en_US) }</td>
-</tr>
-<tr class="row-even"><td>local_number</td>
-<td>type, precision, locale</td>
-<td>Displays a localized version of a number. &#8220;type&#8221; can be one of:
-decimal, currency, percent, scientific, spellout, ordinal, duration.</td>
-<td>{ v|local_number(decimal,2,en_US) }</td>
-</tr>
-<tr class="row-odd"><td>lower</td>
-<td>&nbsp;</td>
-<td>Converts a string to lowercase.</td>
-<td>{ v|lower }</td>
-</tr>
-<tr class="row-even"><td>nl2br</td>
-<td>&nbsp;</td>
-<td>Replaces all newline characters (n) to an HTML &lt;br/&gt; tag.</td>
-<td>{ v|nl2br }</td>
-</tr>
-<tr class="row-odd"><td>number_format</td>
-<td>places</td>
-<td>Wraps PHP <strong>number_format</strong> function for use within the parser.</td>
-<td>{ v|number_format(3) }</td>
-</tr>
-<tr class="row-even"><td>prose</td>
-<td>&nbsp;</td>
-<td>Takes a body of text and uses the <strong>auto_typography()</strong> method to
-turn it into prettier, easier-to-read, prose.</td>
-<td>{ v|prose }</td>
-</tr>
-<tr class="row-odd"><td>round</td>
-<td>places, type</td>
-<td>Rounds a number to the specified places. Types of <strong>ceil</strong> and
-<strong>floor</strong> can be passed to use those functions instead.</td>
-<td>{ v|round(3) } { v|round(ceil) }</td>
-</tr>
-<tr class="row-even"><td>strip_tags</td>
-<td>allowed chars</td>
-<td>Wraps PHP <strong>strip_tags</strong>. Can accept a string of allowed tags.</td>
-<td>{ v|strip_tags(&lt;br&gt;) }</td>
-</tr>
-<tr class="row-odd"><td>title</td>
-<td>&nbsp;</td>
-<td>Displays a &#8220;title case&#8221; version of the string, with all lowercase,
-and each word capitalized.</td>
-<td>{ v|title }</td>
-</tr>
-<tr class="row-even"><td>upper</td>
-<td>&nbsp;</td>
-<td>Displays the string in all uppercase.</td>
-<td>{ v|upper }</td>
-</tr>
+<tr class="row-odd"></tr>
 </tbody>
 </table>
 <p>See <a class="reference external" href="http://php.net/manual/en/numberformatter.create.php">PHP&#8217;s NumberFormatter</a> for details relevant to the
@@ -792,9 +837,9 @@ key/value pairs:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="10%" />
-<col width="13%" />
-<col width="41%" />
-<col width="36%" />
+<col width="14%" />
+<col width="43%" />
+<col width="33%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Plugin</th>

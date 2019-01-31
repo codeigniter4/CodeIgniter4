@@ -234,7 +234,7 @@ and more.</p>
 <p>Feature testing requires that all of your test classes extend the <code class="docutils literal"><span class="pre">CodeIgniter\Test\FeatureTestCase</span></code> class. Since this
 extends <a class="reference external" href="/testing/database">CIDatabaseTestCase</a> you must always ensure that <code class="docutils literal"><span class="pre">parent::setUp()</span></code> and <code class="docutils literal"><span class="pre">parent::tearDown()</span></code>
 are called before you take your actions.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\FeatureTestCase</span><span class="p">;</span>
 

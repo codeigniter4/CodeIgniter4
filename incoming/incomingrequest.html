@@ -105,9 +105,7 @@
 <li class="toctree-l2"><a class="reference internal" href="filters.html">Controller Filters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="request.html">Request Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="request.html#class-reference">Class Reference</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">IncomingRequest Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#class-reference">Class Reference</a></li>
 <li class="toctree-l2"><a class="reference internal" href="content_negotiation.html">Content Negotiation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="methodspoofing.html">HTTP Method Spoofing</a></li>
 </ul>
@@ -215,21 +213,22 @@ classes, in addition to the methods listed below.</p>
 <ul class="simple">
 <li><a class="reference internal" href="#accessing-the-request" id="id1">Accessing the Request</a></li>
 <li><a class="reference internal" href="#determining-request-type" id="id2">Determining Request Type</a></li>
-<li><a class="reference internal" href="#retrieving-input" id="id3">Retrieving Input</a><ul>
-<li><a class="reference internal" href="#filtering-input-data" id="id4">Filtering Input Data</a></li>
+<li><a class="reference internal" href="#retrieving-input" id="id3">Retrieving Input</a></li>
+<li><a class="reference internal" href="#retrieving-headers" id="id4">Retrieving Headers</a></li>
+<li><a class="reference internal" href="#the-request-url" id="id5">The Request URL</a></li>
+<li><a class="reference internal" href="#uploaded-files" id="id6">Uploaded Files</a></li>
+<li><a class="reference internal" href="#content-negotiation" id="id7">Content Negotiation</a><ul>
+<li><a class="reference internal" href="#class-reference" id="id8">Class Reference</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#retrieving-headers" id="id5">Retrieving Headers</a></li>
-<li><a class="reference internal" href="#the-request-url" id="id6">The Request URL</a></li>
-<li><a class="reference internal" href="#uploaded-files" id="id7">Uploaded Files</a></li>
-<li><a class="reference internal" href="#content-negotiation" id="id8">Content Negotiation</a></li>
 </ul>
 </div>
 <div class="section" id="accessing-the-request">
 <h2><a class="toc-backref" href="#id1">Accessing the Request</a><a class="headerlink" href="#accessing-the-request" title="Permalink to this headline">¶</a></h2>
 <p>An instance of the request class already populated for you if the current class is a descendant of
 <code class="docutils literal"><span class="pre">CodeIgniter\Controller</span></code> and can be accessed as a class property:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+
 <span class="nx">user</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">Controller</span>
@@ -251,7 +250,8 @@ get a copy of it through the <a class="reference internal" href="../concepts/ser
 </div>
 <p>It&#8217;s preferable, though, to pass the request in as a dependency if the class is anything other than
 the controller, where you can save it as a class property:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\RequestInterface</span><span class="p">;</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\RequestInterface</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">SomeClass</span>
 <span class="p">{</span>
@@ -360,8 +360,7 @@ arrays, pass in <code class="docutils literal"><span class="pre">true</span></co
 <span class="p">]</span>
 </pre></div>
 </div>
-<div class="section" id="filtering-input-data">
-<h3><a class="toc-backref" href="#id4">Filtering Input Data</a><a class="headerlink" href="#filtering-input-data" title="Permalink to this headline">¶</a></h3>
+<p><strong>Filtering Input Data</strong></p>
 <p>To maintain security of your application, you will want to filter all input as you access it. You can
 pass the type of filter to use in as the last parameter of any of these methods. The native <code class="docutils literal"><span class="pre">filter_var()</span></code>
 function is used for the filtering. Head over to the PHP manual for a list of <a class="reference external" href="http://php.net/manual/en/filter.filters.php">valid
@@ -373,9 +372,8 @@ filter types</a>.</p>
 <p>All of the methods mentioned above support the filter type passed in as the last parameter, with the
 exception of <code class="docutils literal"><span class="pre">getJSON()</span></code>.</p>
 </div>
-</div>
 <div class="section" id="retrieving-headers">
-<h2><a class="toc-backref" href="#id5">Retrieving Headers</a><a class="headerlink" href="#retrieving-headers" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4">Retrieving Headers</a><a class="headerlink" href="#retrieving-headers" title="Permalink to this headline">¶</a></h2>
 <p>You can get access to any header that was sent with the request with the <code class="docutils literal"><span class="pre">getHeaders()</span></code> method, which returns
 an array of all headers, with the key as the name of the header, and the value being an instance of
 <code class="docutils literal"><span class="pre">CodeIgniter\HTTP\Header</span></code>:</p>
@@ -414,7 +412,7 @@ specified header object in a case-insensitive manner if it exists. If not, then 
 </div>
 </div>
 <div class="section" id="the-request-url">
-<h2><a class="toc-backref" href="#id6">The Request URL</a><a class="headerlink" href="#the-request-url" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5">The Request URL</a><a class="headerlink" href="#the-request-url" title="Permalink to this headline">¶</a></h2>
 <p>You can retrieve a <a class="reference internal" href="../libraries/uri.html"><span class="doc">URI</span></a> object that represents the current URI for this request through the
 <code class="docutils literal"><span class="pre">$request-&gt;uri</span></code> property. You can cast this object as a string to get a full URL for the current request:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">uri</span><span class="p">;</span>
@@ -437,7 +435,7 @@ specified header object in a case-insensitive manner if it exists. If not, then 
 </div>
 </div>
 <div class="section" id="uploaded-files">
-<h2><a class="toc-backref" href="#id7">Uploaded Files</a><a class="headerlink" href="#uploaded-files" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">Uploaded Files</a><a class="headerlink" href="#uploaded-files" title="Permalink to this headline">¶</a></h2>
 <p>Information about all uploaded files can be retrieved through <code class="docutils literal"><span class="pre">$request-&gt;getFiles()</span></code>, which returns a
 <a class="reference internal" href="../libraries/uploaded_files.html"><span class="doc">FileCollection</span></a> instance. This helps to ease the pain of working with uploaded files,
 and uses best practices to minimize any security risks.</p>
@@ -466,7 +464,7 @@ and uses best practices to minimize any security risks.</p>
 </div>
 </div>
 <div class="section" id="content-negotiation">
-<h2><a class="toc-backref" href="#id8">Content Negotiation</a><a class="headerlink" href="#content-negotiation" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">Content Negotiation</a><a class="headerlink" href="#content-negotiation" title="Permalink to this headline">¶</a></h2>
 <p>You can easily negotiate content types with the request through the <code class="docutils literal"><span class="pre">negotiate()</span></code> method:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$language</span>    <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;language&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;en-US&#39;</span><span class="p">,</span> <span class="s1">&#39;en-GB&#39;</span><span class="p">,</span> <span class="s1">&#39;fr&#39;</span><span class="p">,</span> <span class="s1">&#39;es-mx&#39;</span><span class="p">]);</span>
 <span class="nv">$imageType</span>   <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;image/png&#39;</span><span class="p">,</span> <span class="s1">&#39;image/jpg&#39;</span><span class="p">]);</span>
@@ -476,10 +474,8 @@ and uses best practices to minimize any security risks.</p>
 </pre></div>
 </div>
 <p>See the <a class="reference internal" href="content_negotiation.html"><span class="doc">Content Negotiation</span></a> page for more details.</p>
-</div>
-</div>
 <div class="section" id="class-reference">
-<h1>Class Reference<a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h1>
+<h3><a class="toc-backref" href="#id8">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h3>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">In addition to the methods listed here, this class inherits the methods from the
@@ -725,17 +721,19 @@ then in POST:</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<tr class="field-odd field"><th class="field-name">Noindex:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$index</strong> (<em>mixed</em>) &#8211; COOKIE name</li>
 <li><strong>$filter</strong> (<em>int</em>) &#8211; The type of filter to apply. A list of filters can be found <a class="reference external" href="http://php.net/manual/en/filter.filters.php">here</a>.</li>
 <li><strong>$flags</strong> (<em>int</em>) &#8211; Flags to apply. A list of flags can be found <a class="reference external" href="http://php.net/manual/en/filter.filters.flags.php">here</a>.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">$_COOKIE if no parameters supplied, otherwise the COOKIE value if found or null if not</p>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">$_COOKIE if no parameters supplied, otherwise the COOKIE value if found or null if not</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
 </td>
 </tr>
 </tbody>
@@ -819,6 +817,8 @@ as an array.</p>
 
 </dd></dl>
 
+</div>
+</div>
 </div>
 
 
