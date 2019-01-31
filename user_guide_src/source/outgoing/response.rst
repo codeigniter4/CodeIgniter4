@@ -507,6 +507,7 @@ The methods provided by the parent class that are available are:
 			if ($response->hasCookie($name)) ...
 
 	.. php:method:: getCookie($name = ''[, $prefix = ''])
+                :noindex:
 
 		:param	mixed	$name: Cookie name
 		:param	string	$prefix: Cookie name prefix

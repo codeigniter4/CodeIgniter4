@@ -5,12 +5,8 @@ Session Library
 The Session class permits you maintain a user's "state" and track their
 activity while they browse your site.
 
-CodeIgniter comes with a few session storage drivers:
-
-  - CodeIgniter\Session\Handlers\FileHandler (default; file-system based)
-  - CodeIgniter\Session\Handlers\DatabaseHandler
-  - CodeIgniter\Session\Handlers\MemcachedHandler
-  - CodeIgniter\Session\Handlers\RedisHandler
+CodeIgniter comes with a few session storage drivers, that you can see
+in the last section of the table of contents:
 
 .. contents::
     :local:
@@ -20,12 +16,11 @@ CodeIgniter comes with a few session storage drivers:
 
   <div class="custom-index container"></div>
 
-***********************
 Using the Session Class
-***********************
+*********************************************************************
 
 Initializing a Session
-======================
+==================================================================
 
 Sessions will typically run globally with each page load, so the Session
 class should be magically initialized.
@@ -429,7 +424,7 @@ accessing them:
   - last_activity: Depends on the storage, no straightforward way. Sorry!
 
 Session Preferences
-===================
+*********************************************************************
 
 CodeIgniter will usually make everything work out of the box. However,
 Sessions are a very sensitive component of any application, so some
@@ -484,7 +479,7 @@ Preference         Default         Description
 	ignored.
 
 Session Drivers
-===============
+*********************************************************************
 
 As already mentioned, the Session library comes with 4 handlers, or storage
 engines, that you can use:
@@ -503,8 +498,8 @@ line in your **app/Config/App.php** file, if you chose to do so.
 Have it in mind though, every driver has different caveats, so be sure to
 get yourself familiar with them (below) before you make that choice.
 
-FileHandler Driver
-------------------
+FileHandler Driver (the default)
+==================================================================
 
 The 'FileHandler' driver uses your file system for storing session data.
 
@@ -541,7 +536,7 @@ Instead, you should do something like this, depending on your environment
 	chown www-data /<path to your application directory>/Writable/sessions/
 
 Bonus Tip
-^^^^^^^^^
+--------------------------------------------------------
 
 Some of you will probably opt to choose another session driver because
 file storage is usually slower. This is only half true.
@@ -557,7 +552,7 @@ into using `tmpfs <http://eddmann.com/posts/storing-php-sessions-file-caches-in-
 (warning: external resource), which can make your sessions blazing fast.
 
 DatabaseHandler Driver
-----------------------
+==================================================================
 
 The 'DatabaseHandler' driver uses a relational database such as MySQL or
 PostgreSQL to store sessions. This is a popular choice among many users,
@@ -636,7 +631,7 @@ when it generates the code.
 	issues.
 
 RedisHandler Driver
--------------------
+==================================================================
 
 .. note:: Since Redis doesn't have a locking mechanism exposed, locks for
 	this driver are emulated by a separate value that is kept for up
@@ -673,7 +668,7 @@ sufficient::
 	public $sessionSavePath = 'tcp://localhost:6379';
 
 MemcachedHandler Driver
------------------------
+==================================================================
 
 .. note:: Since Memcached doesn't have a locking mechanism exposed, locks
 	for this driver are emulated by a separate value that is kept for
@@ -701,7 +696,7 @@ being just a ``host:port`` pair::
 	public $sessionSavePath = 'localhost:11211';
 
 Bonus Tip
-^^^^^^^^^
+--------------------------------------------------------
 
 Multi-server configuration with an optional *weight* parameter as the
 third colon-separated (``:weight``) value is also supported, but we have
