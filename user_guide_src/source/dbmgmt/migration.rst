@@ -196,7 +196,7 @@ You can use (latest) with the following options:
 
 This example will migrate Blog namespace to latest::
 
-    p> hp spark migrate:latest -g test -n Blog
+    > php spark migrate:latest -g test -n Blog
 
 **current**
 
