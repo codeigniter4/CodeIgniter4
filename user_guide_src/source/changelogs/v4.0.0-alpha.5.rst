@@ -1,9 +1,11 @@
 Version 4.0.0-alpha.5
 ====================================================
 
-Release Date: Not released
+Release Date: Jan 30, 2019
 
 **Next alpha release of CodeIgniter4**
+
+Highlights:
 
 - updated PHP dependency to 7.2
 - new feature branches have been created for the email and queue modules, so they don't impact the release of 4.0.0

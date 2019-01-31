@@ -15,7 +15,8 @@ Accessing the Request
 An instance of the request class already populated for you if the current class is a descendant of
 ``CodeIgniter\Controller`` and can be accessed as a class property::
 
-        namespace App\Controllers;
+        <?php namespace App\Controllers;
+
         user CodeIgniter\Controller;
 
 	class UserController extends Controller
@@ -37,7 +38,8 @@ get a copy of it through the :doc:`Services class </concepts/services>`::
 It's preferable, though, to pass the request in as a dependency if the class is anything other than
 the controller, where you can save it as a class property::
 
-	use CodeIgniter\HTTP\RequestInterface;
+	<?php 
+        use CodeIgniter\HTTP\RequestInterface;
 
 	class SomeClass
 	{

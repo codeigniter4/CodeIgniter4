@@ -3,7 +3,7 @@ Version |version|
 
 Release Date: Not released
 
-**Next alpha release of CodeIgniter4**
+Highlights:
 
 
 The list of changed files follows, with PR numbers shown.
