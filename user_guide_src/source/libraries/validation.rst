@@ -291,7 +291,7 @@ Validate one value against a rule::
     $validation->check($value, 'required');
 
 Saving Sets of Validation Rules to the Config File
-================================================
+=======================================================
 
 A nice feature of the Validation class is that it permits you to store all
 your validation rules for your entire application in a config file. You organize
@@ -630,7 +630,6 @@ for rules like ``require_with`` that needs to check the value of another submitt
 
 Custom errors can be returned as the fourth parameter, just as described above.
 
-***************
 Available Rules
 ***************
 

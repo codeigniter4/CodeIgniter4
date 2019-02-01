@@ -489,7 +489,7 @@ engines, that you can use:
   - CodeIgniter\Session\Handlers\MemcachedHandler
   - CodeIgniter\Session\Handlers\RedisHandler
 
-By default, the `FileHandler Driver`_ will be used when a session is initialized,
+By default, the ``FileHandler`` Driver will be used when a session is initialized,
 because it is the most safe choice and is expected to work everywhere
 (virtually every environment has a file system).
 
