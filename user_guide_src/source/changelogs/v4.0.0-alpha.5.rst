@@ -7,6 +7,7 @@ Release Date: Jan 30, 2019
 
 Highlights:
 
+- added $maxQueries setting to app/Config/Toolbar.php
 - updated PHP dependency to 7.2
 - new feature branches have been created for the email and queue modules, so they don't impact the release of 4.0.0
 - dropped several language messages that were unused (eg Migrations.missingTable) and added some new (eg Migrations.invalidType)
@@ -30,6 +31,7 @@ The list of changed files follows, with PR numbers shown.
 		- Filters #1686
 		- Modules #1665
 		- Services #614216
+                - Toolbar
 
 - contributing/
 	- guidelines.rst #1671, #1673
