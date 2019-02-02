@@ -5,7 +5,26 @@ Change Logs
 Version |version|
 ====================================================
 
-Release Date: Not Released
+Release Date: Unreleased
+
+Highlights:
+
+:doc:`See all the changes. </changelogs/next>`
+
+Version 4.0.0-alpha.5
+====================================================
+
+Release Date: Jan 30, 2019
+
+**Next release of CodeIgniter4**
+
+
+:doc:`See all the changes. </changelogs/next>`
+
+Version 4.0.0-alpha.5
+====================================================
+
+Release Date: January 30, 2019
 
 **Alpha 5**
 
@@ -19,7 +38,7 @@ Highlights:
 - lots of bug fixes
 - code coverage is up to 78%
 
-:doc:`See all the changes. </changelogs/next>`
+:doc:`See all the changes. </changelogs/v4.0.0-alpha.5>`
 
 Version 4.0.0-alpha.4
 ====================================================
@@ -82,8 +101,8 @@ Release Date: September 28, 2018
 
 Non-code changes:
     - User Guide adapted or rewritten
-    - [System message translations repository](https://github.com/bcit-ci/CodeIgniter4-translations)
-    - [Roadmap subforum](https://forum.codeigniter.com/forum-33.html) for more transparent planning
+    - `System message translations repository <https://github.com/bcit-ci/CodeIgniter4-translations>`_
+    - `Roadmap subforum  <https://forum.codeigniter.com/forum-33.html>`_ for more transparent planning
 
 New core classes:
     - CodeIgniter (bootstrap)
@@ -102,6 +121,8 @@ Some new, some old & some borrowed packages, all namespaced.
     :titlesonly:
 
     next
+    v4.0.0-alpha.5
+    v4.0.0-alpha.4
     v4.0.0-alpha.3
     v4.0.0-alpha.2
     v4.0.0-alpha.1
