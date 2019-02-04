@@ -458,6 +458,8 @@ class MigrationRunner
 				$migrations[$migration->version] = $migration;
 			}
 		}
+		
+		ksort($migrations);
 
 		return $migrations;
 	}
