@@ -727,7 +727,6 @@ class Model
 		{
 			if ($this->validate($data) === false)
 			{
-				dd($this->errors());
 				return false;
 			}
 		}
