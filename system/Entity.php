@@ -170,7 +170,7 @@ class Entity
 				continue;
 			}
 
-			if ($onlyChanged && $this->_original[$key] === null && $value === null)
+			if ($onlyChanged && ! $this->hasPropertyChanged($key, $value))
 			{
 				continue;
 			}
@@ -191,6 +191,54 @@ class Entity
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Converts the properties of this class into an array. Unlike toArray()
+	 * this will not cast the data or use any magic accessors. It simply
+	 * returns the raw data for use when saving to the model, etc.
+	 *
+	 * @param boolean $onlyChanged
+	 *
+	 * @return array
+	 */
+	public function toRawArray(bool $onlyChanged = false): array
+	{
+		$return = [];
+
+		$properties = get_object_vars($this);
+
+		foreach ($properties as $key => $value)
+		{
+			if (substr($key, 0, 1) === '_')
+			{
+				continue;
+			}
+
+			if ($onlyChanged && ! $this->hasPropertyChanged($key, $value))
+			{
+				continue;
+			}
+
+			$return[$key] = $this->$key;
+		}
+
+		return $return;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Checks a property to see if it has changed since the entity was created.
+	 *
+	 * @param string $key
+	 * @param null   $value
+	 *
+	 * @return boolean
+	 */
+	protected function hasPropertyChanged(string $key, $value = null)
+	{
+		return ! (($this->_original[$key] === null && $value === null) || $this->_original[$key] === $value);
+	}
 
 	/**
 	 * Magic method to allow retrieval of protected and private
