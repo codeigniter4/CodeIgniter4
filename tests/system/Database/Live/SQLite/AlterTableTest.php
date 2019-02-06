@@ -108,6 +108,50 @@ class AlterTableTest extends CIDatabaseTestCase
 		$this->assertTrue(in_array('email', $columns));
 	}
 
+	public function testDropColumnMaintainsKeys()
+	{
+		$this->createTable('foo');
+
+		$oldKeys = $this->db->getIndexData('foo');
+
+		$this->assertTrue(array_key_exists('foo_name', $oldKeys));
+		$this->assertTrue(array_key_exists('foo_email', $oldKeys));
+
+		$result = $this->table
+			->fromTable('foo')
+			->dropColumn('name')
+			->run();
+
+		$newKeys = $this->db->getIndexData('foo');
+
+		$this->assertFalse(array_key_exists('foo_name', $newKeys));
+		$this->assertTrue(array_key_exists('foo_email', $newKeys));
+
+		$this->assertTrue($result);
+	}
+
+	public function testModifyColumnSuccess()
+	{
+		$this->createTable('foo');
+
+		$result = $this->table
+			->fromTable('foo')
+			->modifyColumn([
+				'name' => [
+					'name'       => 'serial',
+					'type'       => 'int',
+					'constraint' => 11,
+					'null'       => true,
+				],
+			])
+			->run();
+
+		$this->assertTrue($result);
+
+		$this->assertFalse($this->db->fieldExists('name', 'foo'));
+		$this->assertTrue($this->db->fieldExists('serial', 'foo'));
+	}
+
 	public function testProcessCopiesOldData()
 	{
 		$this->createTable('foo');

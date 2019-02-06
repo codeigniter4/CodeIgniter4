@@ -138,9 +138,16 @@ class Table
 	 * renaming, etc.
 	 *
 	 * @param array $field
+	 *
+	 * @return \CodeIgniter\Database\SQLite3\Table
 	 */
 	public function modifyColumn(array $field)
 	{
+		$oldName = key($field);
+
+		$this->fields[$oldName] = $field[$oldName];
+
+		return $this;
 	}
 
 	/**
@@ -148,7 +155,31 @@ class Table
 	 */
 	protected function createTable()
 	{
+		$this->dropIndexes();
+
 		$this->forge->addField($this->fields);
+
+		// Unique/Index keys
+		if (is_array($this->keys))
+		{
+			foreach ($this->keys as $key)
+			{
+				switch ($key['type'])
+				{
+					case 'primary':
+						$this->forge->addPrimaryKey($key['fields']);
+						break;
+					case 'unique':
+						$this->forge->addUniqueKey($key['fields']);
+						break;
+					case 'index':
+						$this->forge->addKey($key['fields']);
+						break;
+				}
+			}
+		}
+
+		// Foreign Keys
 
 		return $this->forge->createTable($this->tableName);
 	}
@@ -160,8 +191,14 @@ class Table
 	 */
 	protected function copyData()
 	{
-		$fields = implode(', ', array_keys($this->fields));
+		$fields = [];
+		foreach ($this->fields as $name => $details)
+		{
+			//          if (isset($details))
+		}
 
+		//      $fields = implode(', ', array_keys($this->fields));
+		d($fields);
 		$this->db->query("INSERT INTO {$this->tableName} SELECT {$fields} FROM temp_{$this->tableName}");
 	}
 
@@ -228,5 +265,27 @@ class Table
 		}
 
 		return $return;
+	}
+
+	/**
+	 * Attempts to drop all indexes and constraints
+	 * from the database for this table.
+	 */
+	protected function dropIndexes()
+	{
+		if (! is_array($this->keys) || ! count($this->keys))
+		{
+			return;
+		}
+
+		foreach ($this->keys as $name => $key)
+		{
+			if ($key['type'] === 'primary' || $key['type'] === 'unique')
+			{
+				continue;
+			}
+
+			$this->db->query('DROP INDEX ?', $name);
+		}
 	}
 }
