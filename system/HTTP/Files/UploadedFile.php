@@ -266,19 +266,19 @@ class UploadedFile extends File implements UploadedFileInterface
 	public function getErrorString()
 	{
 		$errors = [
-			UPLOAD_ERR_OK         => lang('UploadedFile.uploadErrOk'),
-			UPLOAD_ERR_INI_SIZE   => lang('UploadedFile.uploadErrIniSize'),
-			UPLOAD_ERR_FORM_SIZE  => lang('UploadedFile.uploadErrFormSize'),
-			UPLOAD_ERR_PARTIAL    => lang('UploadedFile.uploadErrPartial'),
-			UPLOAD_ERR_NO_FILE    => lang('UploadedFile.uploadErrNoFile'),
-			UPLOAD_ERR_CANT_WRITE => lang('UploadedFile.uploadErrCantWrite'),
-			UPLOAD_ERR_NO_TMP_DIR => lang('UploadedFile.uploadErrNoTmpDir'),
-			UPLOAD_ERR_EXTENSION  => lang('UploadedFile.uploadErrExtension')
+			UPLOAD_ERR_OK         => lang('HTTP.uploadErrOk'),
+			UPLOAD_ERR_INI_SIZE   => lang('HTTP.uploadErrIniSize'),
+			UPLOAD_ERR_FORM_SIZE  => lang('HTTP.uploadErrFormSize'),
+			UPLOAD_ERR_PARTIAL    => lang('HTTP.uploadErrPartial'),
+			UPLOAD_ERR_NO_FILE    => lang('HTTP.uploadErrNoFile'),
+			UPLOAD_ERR_CANT_WRITE => lang('HTTP.uploadErrCantWrite'),
+			UPLOAD_ERR_NO_TMP_DIR => lang('HTTP.uploadErrNoTmpDir'),
+			UPLOAD_ERR_EXTENSION  => lang('HTTP.uploadErrExtension')
 		];
 
 		$error = is_null($this->error) ? UPLOAD_ERR_OK : $this->error;
 
-		return sprintf($errors[$error] ?? lang('UploadedFile.uploadErrUnknown'), $this->getName());
+		return sprintf($errors[$error] ?? lang('HTTP.uploadErrUnknown'), $this->getName());
 	}
 
 	//--------------------------------------------------------------------
