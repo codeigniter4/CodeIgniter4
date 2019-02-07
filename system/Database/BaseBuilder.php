@@ -227,9 +227,6 @@ class BaseBuilder
 
 		$this->db = $db;
 
-		// turn off automatic escape flags
-		$this->db->setEscapeFlags(false);
-
 		$this->from($tableName);
 
 		if (! empty($options))
@@ -1448,7 +1445,11 @@ class BaseBuilder
 			$this->limit($limit, $offset);
 		}
 
-		$result = $returnSQL ? $this->getCompiledSelect() : $this->db->query($this->compileSelect(), $this->binds);
+		$result = $returnSQL
+			? $this->getCompiledSelect()
+			: $this->db
+				->setEscapeFlags(false)
+				->query($this->compileSelect(), $this->binds);
 
 		if ($reset === true)
 		{
@@ -1486,7 +1487,7 @@ class BaseBuilder
 			return $sql;
 		}
 
-		$query = $this->db->query($sql);
+		$query = $this->db->setEscapeFlags(false)->query($sql);
 		if (empty($query->getResult()))
 		{
 			return 0;
@@ -1535,7 +1536,9 @@ class BaseBuilder
 			return $sql;
 		}
 
-		$result = $this->db->query($sql, $this->binds);
+		$result = $this->db
+			->setEscapeFlags(false)
+			->query($sql, $this->binds);
 
 		if ($reset === true)
 		{
@@ -1584,7 +1587,9 @@ class BaseBuilder
 			$this->limit($limit, $offset);
 		}
 
-		$result = $this->db->query($this->compileSelect(), $this->binds);
+		$result = $this->db
+			->setEscapeFlags(false)
+			->query($this->compileSelect(), $this->binds);
 		$this->resetSelect();
 
 		return $result;
@@ -1649,7 +1654,9 @@ class BaseBuilder
 			}
 			else
 			{
-				$this->db->query($sql, $this->binds);
+				$this->db
+					->setEscapeFlags(false)
+					->query($sql, $this->binds);
 				$affected_rows += $this->db->affectedRows();
 			}
 		}
@@ -1804,7 +1811,7 @@ class BaseBuilder
 		{
 			$this->resetWrite();
 
-			$result = $this->db->query($sql, $this->binds);
+			$result = $this->db->setEscapeFlags(false)->query($sql, $this->binds);
 
 			// Clear our binds so we don't eat up memory
 			$this->binds = [];
@@ -1893,7 +1900,7 @@ class BaseBuilder
 
 		$this->resetWrite();
 
-		return $returnSQL ? $sql : $this->db->query($sql, $this->binds);
+		return $returnSQL ? $sql : $this->db->setEscapeFlags(false)->query($sql, $this->binds);
 	}
 
 	//--------------------------------------------------------------------
@@ -2006,7 +2013,7 @@ class BaseBuilder
 		{
 			$this->resetWrite();
 
-			if ($this->db->query($sql, $this->binds))
+			if ($this->db->setEscapeFlags(false)->query($sql, $this->binds))
 			{
 				// Clear our binds so we don't eat up memory
 				$this->binds = [];
@@ -2140,7 +2147,7 @@ class BaseBuilder
 			}
 			else
 			{
-				$this->db->query($sql, $this->binds);
+				$this->db->setEscapeFlags(false)->query($sql, $this->binds);
 				$affected_rows += $this->db->affectedRows();
 			}
 
@@ -2267,7 +2274,7 @@ class BaseBuilder
 
 		$this->resetWrite();
 
-		return $this->db->query($sql);
+		return $this->db->setEscapeFlags(false)->query($sql);
 	}
 
 	//--------------------------------------------------------------------
@@ -2296,7 +2303,7 @@ class BaseBuilder
 
 		$this->resetWrite();
 
-		return $this->db->query($sql);
+		return $this->db->setEscapeFlags(false)->query($sql);
 	}
 
 	//--------------------------------------------------------------------
@@ -2396,7 +2403,7 @@ class BaseBuilder
 			$this->resetWrite();
 		}
 
-		return ($returnSQL === true) ? $sql : $this->db->query($sql, $this->binds);
+		return ($returnSQL === true) ? $sql : $this->db->setEscapeFlags(false)->query($sql, $this->binds);
 	}
 
 	//--------------------------------------------------------------------
@@ -2415,7 +2422,7 @@ class BaseBuilder
 
 		$sql = $this->_update($this->QBFrom[0], [$column => "{$column} + {$value}"]);
 
-		return $this->db->query($sql, $this->binds);
+		return $this->db->setEscapeFlags(false)->query($sql, $this->binds);
 	}
 
 	//--------------------------------------------------------------------
@@ -2434,7 +2441,7 @@ class BaseBuilder
 
 		$sql = $this->_update($this->QBFrom[0], [$column => "{$column}-{$value}"]);
 
-		return $this->db->query($sql, $this->binds);
+		return $this->db->setEscapeFlags(false)->query($sql, $this->binds);
 	}
 
 	//--------------------------------------------------------------------
