@@ -863,16 +863,16 @@ class RouteCollection implements RouteCollectionInterface
 			$this->delete($name . '/' . $id, $new_name . '::delete/$1', $options);
 		}
 
-		// Web Safe?
+		// Web Safe? delete needs checking before update because of method name
 		if (isset($options['websafe']))
 		{
-			if (in_array('update', $methods))
-			{
-				$this->post($name . '/' . $id, $new_name . '::update/$1', $options);
-			}
 			if (in_array('delete', $methods))
 			{
 				$this->post($name . '/' . $id . '/delete', $new_name . '::delete/$1', $options);
+			}
+			if (in_array('update', $methods))
+			{
+				$this->post($name . '/' . $id, $new_name . '::update/$1', $options);
 			}
 		}
 
