@@ -1267,6 +1267,14 @@ class Model
 		}
 
 		$rules = $this->validationRules;
+
+		// ValidationRules can be either a string, which is the group name,
+		// or an array of rules.
+		if (is_string($rules))
+		{
+			$rules = $this->validation->loadRuleGroup($rules);
+		}
+
 		$rules = $this->cleanValidationRules($rules, $data);
 
 		// If no data existed that needs validation
@@ -1276,21 +1284,12 @@ class Model
 			return true;
 		}
 
-		// ValidationRules can be either a string, which is the group name,
-		// or an array of rules.
-		if (is_string($rules))
-		{
-			$valid = $this->validation->run($data, $rules, $this->DBGroup);
-		}
-		else
-		{
-			// Replace any placeholders (i.e. {id}) in the rules with
-			// the value found in $data, if exists.
-			$rules = $this->fillPlaceholders($rules, $data);
+		// Replace any placeholders (i.e. {id}) in the rules with
+		// the value found in $data, if exists.
+		$rules = $this->fillPlaceholders($rules, $data);
 
-			$this->validation->setRules($rules, $this->validationMessages);
-			$valid = $this->validation->run($data, null, $this->DBGroup);
-		}
+		$this->validation->setRules($rules, $this->validationMessages);
+		$valid = $this->validation->run($data, null, $this->DBGroup);
 
 		return (bool) $valid;
 	}
@@ -1306,7 +1305,7 @@ class Model
 	 *
 	 * @return array
 	 */
-	protected function cleanValidationRules(array $rules, array $data = null)
+	protected function cleanValidationRules($rules, array $data = null)
 	{
 		if (empty($data))
 		{

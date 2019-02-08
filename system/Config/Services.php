@@ -448,7 +448,7 @@ class Services extends BaseService
 
 		if (is_null($viewPath))
 		{
-			$paths = config('Paths');
+			$paths    = config('Paths');
 			$viewPath = $paths->viewDirectory;
 		}
 
@@ -785,7 +785,7 @@ class Services extends BaseService
 
 		if (is_null($config))
 		{
-			$config = new \Config\Validation();
+			$config = config('Validation');
 		}
 
 		return new \CodeIgniter\Validation\Validation($config, static::renderer());
