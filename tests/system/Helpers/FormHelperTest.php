@@ -225,7 +225,7 @@ EOH;
 			$Value    = csrf_hash();
 			$Name     = csrf_token();
 			$expected = <<<EOH
-<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart&#x2F;form-data" accept-charset="utf-8">
+<form action="http://example.com/index.php/foo/bar" enctype="multipart/form-data" name="form" id="form" method="POST" accept-charset="utf-8">
 <input type="hidden" name="$Name" value="$Value" style="display:none;" />
 
 EOH;
@@ -233,7 +233,7 @@ EOH;
 		else
 		{
 			$expected = <<<EOH
-<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart&#x2F;form-data" accept-charset="utf-8">
+<form action="http://example.com/index.php/foo/bar" enctype="multipart/form-data" name="form" id="form" method="POST" accept-charset="utf-8">
 
 EOH;
 		}
