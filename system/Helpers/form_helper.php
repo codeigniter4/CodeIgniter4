@@ -53,16 +53,12 @@ if (! function_exists('form_open'))
 	 *
 	 * @return string
 	 */
-	function form_open(string $action = '', $attributes = [], array $hidden = []): string
+	function form_open(?string $action = '', $attributes = [], array $hidden = []): string
 	{
 		// If no action is provided then set to the current url
-		if (! $action)
+		if ($action === '')
 		{
 			$action = current_url(true);
-		} // If an action is not a full URL then turn it into one
-		elseif (strpos($action, '://') === false)
-		{
-			$action = site_url($action);
 		}
 
 		if(is_array($attributes) && array_key_exists('csrf_id', $attributes))
@@ -83,7 +79,7 @@ if (! function_exists('form_open'))
 			$attributes .= ' accept-charset="' . strtolower($config->charset) . '"';
 		}
 
-		$form = '<form action="' . $action . '"' . $attributes . ">\n";
+		$form = '<form ' . ($action !== null ? 'action="' . $action . '"':'') . $attributes . ">\n";
 
 		// Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
 		$before = Services::filters()->getFilters()['before'];
