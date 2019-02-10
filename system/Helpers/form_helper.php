@@ -70,7 +70,13 @@ if (! function_exists('form_open'))
 			$csrfId = $attributes['csrf_id'];
 			unset($attributes['csrf_id']);
 		}
-
+		
+		if(is_array($attributes) && array_key_exists('enctype', $attributes))
+		{
+			$enctype = trim($attributes['enctype']);
+			unset($attributes['enctype']);
+		}
+		
 		$attributes = stringify_attributes($attributes);
 
 		if (stripos($attributes, 'method=') === false)
@@ -83,7 +89,7 @@ if (! function_exists('form_open'))
 			$attributes .= ' accept-charset="' . strtolower($config->charset) . '"';
 		}
 
-		$form = '<form action="' . $action . '"' . $attributes . ">\n";
+		$form = '<form action="' . $action . '"' . (isset($enctype) ? ' enctype="' . $enctype . '" ' : '') . $attributes . ">\n";
 
 		// Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
 		$before = Services::filters()->getFilters()['before'];
