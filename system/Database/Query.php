@@ -434,8 +434,6 @@ class Query implements QueryInterface
 			}
 
 			$replacers[":{$placeholder}:"] = $escapedValue;
-
-			//          $sql = preg_replace('|:' . $placeholder . '(?!\w)|', $escapedValue, $sql);
 		}
 
 		$sql = strtr($sql, $replacers);

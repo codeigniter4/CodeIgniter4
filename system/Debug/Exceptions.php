@@ -37,6 +37,7 @@
  */
 
 use CodeIgniter\API\ResponseTrait;
+use Config\Paths;
 
 /**
  * Exceptions manager
@@ -259,7 +260,8 @@ class Exceptions
 		$path = $this->viewPath;
 		if (empty($path))
 		{
-			$path = APPPATH . 'Views/errors/';
+			$paths = new Paths();
+			$path = $paths->viewDirectory . '/errors/';
 		}
 
 		$path = is_cli()

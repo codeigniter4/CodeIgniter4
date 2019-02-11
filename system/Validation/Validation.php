@@ -540,8 +540,10 @@ class Validation implements ValidationInterface
 	 * for {group}_errors for an array of custom error messages.
 	 *
 	 * @param string|null $group
+	 *
+	 * @return array|void
 	 */
-	protected function loadRuleGroup(string $group = null)
+	public function loadRuleGroup(string $group = null)
 	{
 		if (empty($group))
 		{
@@ -568,6 +570,8 @@ class Validation implements ValidationInterface
 		{
 			$this->customErrors = $this->config->$errorName;
 		}
+
+		return $this->rules;
 	}
 
 	//--------------------------------------------------------------------

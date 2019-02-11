@@ -434,7 +434,7 @@ class Services extends BaseService
 	 *
 	 * @return \CodeIgniter\View\Parser
 	 */
-	public static function parser($viewPath = APPPATH . 'Views/', $config = null, bool $getShared = true)
+	public static function parser($viewPath = null, $config = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -444,6 +444,12 @@ class Services extends BaseService
 		if (is_null($config))
 		{
 			$config = new \Config\View();
+		}
+
+		if (is_null($viewPath))
+		{
+			$paths    = config('Paths');
+			$viewPath = $paths->viewDirectory;
 		}
 
 		return new \CodeIgniter\View\Parser($config, $viewPath, static::locator(true), CI_DEBUG, static::logger(true));
@@ -779,7 +785,7 @@ class Services extends BaseService
 
 		if (is_null($config))
 		{
-			$config = new \Config\Validation();
+			$config = config('Validation');
 		}
 
 		return new \CodeIgniter\Validation\Validation($config, static::renderer());

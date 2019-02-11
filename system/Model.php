@@ -454,6 +454,7 @@ class Model
 	 * @param array|object $data
 	 *
 	 * @return boolean
+	 * @throws \ReflectionException
 	 */
 	public function save($data)
 	{
@@ -462,7 +463,12 @@ class Model
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
-			$data = static::classToArray($data, $this->dateFormat);
+			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
+		}
+
+		if (empty($data))
+		{
+			return true;
 		}
 
 		if (is_object($data) && isset($data->{$this->primaryKey}))
@@ -493,11 +499,17 @@ class Model
 	 * @return array
 	 * @throws \ReflectionException
 	 */
-	public static function classToArray($data, string $dateFormat = 'datetime'): array
+	public static function classToArray($data, $pk = null, string $dateFormat = 'datetime'): array
 	{
-		if (method_exists($data, 'toArray'))
+		if (method_exists($data, 'toRawArray'))
 		{
-			$properties = $data->toArray(true, false);
+			$properties = $data->toRawArray(true);
+
+			// Always grab the primary key otherwise updates will fail.
+			if (! empty($properties) && ! empty($pk) && ! in_array($pk, $properties))
+			{
+				$properties[$pk] = $data->$pk;
+			}
 		}
 		else
 		{
@@ -588,7 +600,7 @@ class Model
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
-			$data = static::classToArray($data, $this->dateFormat);
+			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
 		}
 
 		// If it's still a stdClass, go ahead and convert to
@@ -711,7 +723,7 @@ class Model
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
-			$data = static::classToArray($data, $this->dateFormat);
+			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
 		}
 
 		// If it's still a stdClass, go ahead and convert to
@@ -1255,6 +1267,14 @@ class Model
 		}
 
 		$rules = $this->validationRules;
+
+		// ValidationRules can be either a string, which is the group name,
+		// or an array of rules.
+		if (is_string($rules))
+		{
+			$rules = $this->validation->loadRuleGroup($rules);
+		}
+
 		$rules = $this->cleanValidationRules($rules, $data);
 
 		// If no data existed that needs validation
@@ -1264,21 +1284,12 @@ class Model
 			return true;
 		}
 
-		// ValidationRules can be either a string, which is the group name,
-		// or an array of rules.
-		if (is_string($rules))
-		{
-			$valid = $this->validation->run($data, $rules, $this->DBGroup);
-		}
-		else
-		{
-			// Replace any placeholders (i.e. {id}) in the rules with
-			// the value found in $data, if exists.
-			$rules = $this->fillPlaceholders($rules, $data);
+		// Replace any placeholders (i.e. {id}) in the rules with
+		// the value found in $data, if exists.
+		$rules = $this->fillPlaceholders($rules, $data);
 
-			$this->validation->setRules($rules, $this->validationMessages);
-			$valid = $this->validation->run($data, null, $this->DBGroup);
-		}
+		$this->validation->setRules($rules, $this->validationMessages);
+		$valid = $this->validation->run($data, null, $this->DBGroup);
 
 		return (bool) $valid;
 	}
@@ -1294,7 +1305,7 @@ class Model
 	 *
 	 * @return array
 	 */
-	protected function cleanValidationRules(array $rules, array $data = null)
+	protected function cleanValidationRules($rules, array $data = null)
 	{
 		if (empty($data))
 		{

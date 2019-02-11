@@ -1,10 +1,13 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Config\Config;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIDatabaseTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Database;
+use Config\Services;
+use Config\Validation;
 use Myth\Auth\Entities\User;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
@@ -30,6 +33,14 @@ class ModelTest extends CIDatabaseTestCase
 		parent::setUp();
 
 		$this->model = new Model($this->db);
+	}
+
+	public function tearDown()
+	{
+		parent::tearDown();
+
+		Services::reset();
+		Config::reset();
 	}
 
 	//--------------------------------------------------------------------
@@ -582,6 +593,31 @@ class ModelTest extends CIDatabaseTestCase
 		$result = $model->validate($data);
 
 		$this->assertTrue($result);
+	}
+
+	public function testValidationWithGroupName()
+	{
+		$config            = new \Config\Validation();
+		$config->grouptest = [
+			'name'  => [
+				'required',
+				'min_length[3]',
+			],
+			'token' => 'in_list[{id}]',
+		];
+
+		$data = [
+			'name'  => 'abc',
+			'id'    => 13,
+			'token' => 13,
+		];
+
+		\CodeIgniter\Config\Config::injectMock('Validation', $config);
+
+		$model = new ValidModel($this->db);
+		$this->setPrivateProperty($model, 'validationRules', 'grouptest');
+
+		$this->assertTrue($model->validate($data));
 	}
 
 	//--------------------------------------------------------------------
