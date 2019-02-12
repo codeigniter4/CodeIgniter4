@@ -988,4 +988,47 @@ class ModelTest extends CIDatabaseTestCase
 		$result = $model->update($id, $data);
 		$this->assertTrue($result);
 	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1717
+	 */
+	public function testRequiredWithValidationEmptyString()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name' => '',
+		];
+
+		$this->assertFalse($model->insert($data));
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1717
+	 */
+	public function testRequiredWithValidationNull()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name' => null,
+		];
+
+		$this->assertFalse($model->insert($data));
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1717
+	 */
+	public function testRequiredWithValidationTrue()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name'        => 'foobar',
+			'description' => 'just becaues we have to',
+		];
+
+		$this->assertTrue($model->insert($data) !== false);
+	}
 }
