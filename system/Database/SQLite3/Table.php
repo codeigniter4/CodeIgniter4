@@ -157,7 +157,20 @@ class Table
 	{
 		$this->dropIndexes();
 
-		$this->forge->addField($this->fields);
+		// Handle any modified columns.
+		$fields = [];
+		foreach ($this->fields as $name => $field)
+		{
+			if (isset($field['name']))
+			{
+				$fields[$field['name']] = $field;
+				continue;
+			}
+
+			$fields[$name] = $field;
+		}
+
+		$this->forge->addField($fields);
 
 		// Unique/Index keys
 		if (is_array($this->keys))
@@ -191,15 +204,28 @@ class Table
 	 */
 	protected function copyData()
 	{
-		$fields = [];
+		$exFields  = [];
+		$newFields = [];
+
 		foreach ($this->fields as $name => $details)
 		{
-			//          if (isset($details))
+			// Are we modifying the column?
+			if (isset($details['name']))
+			{
+				$newFields[] = $details['name'];
+			}
+			else
+			{
+				$newFields[] = $name;
+			}
+
+			$exFields[] = $name;
 		}
 
-		//      $fields = implode(', ', array_keys($this->fields));
-		d($fields);
-		$this->db->query("INSERT INTO {$this->tableName} SELECT {$fields} FROM temp_{$this->tableName}");
+		$exFields  = implode(', ', $exFields);
+		$newFields = implode(', ', $newFields);
+
+		$this->db->query("INSERT INTO {$this->tableName}({$newFields}) SELECT {$exFields} FROM temp_{$this->tableName}");
 	}
 
 	/**
@@ -273,19 +299,21 @@ class Table
 	 */
 	protected function dropIndexes()
 	{
-		if (! is_array($this->keys) || ! count($this->keys))
-		{
-			return;
-		}
-
-		foreach ($this->keys as $name => $key)
-		{
-			if ($key['type'] === 'primary' || $key['type'] === 'unique')
-			{
-				continue;
-			}
-
-			$this->db->query('DROP INDEX ?', $name);
-		}
+		$indexes = $this->db->getIndexData($this->tableName);
+		dd($indexes);
+		//      if (! is_array($this->keys) || ! count($this->keys))
+		//      {
+		//          return;
+		//      }
+		//
+		//      foreach ($this->keys as $name => $key)
+		//      {
+		//          if ($key['type'] === 'primary' || $key['type'] === 'unique')
+		//          {
+		//              continue;
+		//          }
+		//
+		//          $this->db->query('DROP INDEX IF EXISTS ?', $name);
+		//      }
 	}
 }
