@@ -149,7 +149,7 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
-	 * The column used for insert timestampes
+	 * The column used for insert timestamps
 	 *
 	 * @var string
 	 */
@@ -487,28 +487,27 @@ class Model
 		return $response;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Takes a class an returns an array of it's public and protected
 	 * properties as an array suitable for use in creates and updates.
 	 *
 	 * @param string|object $data
-	 * @param string        $dateFormat
+	 * @param string|null $primaryKey
+	 * @param string $dateFormat
 	 *
 	 * @return array
 	 * @throws \ReflectionException
 	 */
-	public static function classToArray($data, $pk = null, string $dateFormat = 'datetime'): array
+	public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime'): array
 	{
 		if (method_exists($data, 'toRawArray'))
 		{
 			$properties = $data->toRawArray(true);
 
 			// Always grab the primary key otherwise updates will fail.
-			if (! empty($properties) && ! empty($pk) && ! in_array($pk, $properties))
+			if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties))
 			{
-				$properties[$pk] = $data->$pk;
+				$properties[$primaryKey] = $data->{$primaryKey};
 			}
 		}
 		else
@@ -573,14 +572,16 @@ class Model
 
 	//--------------------------------------------------------------------
 
+
 	/**
 	 * Inserts data into the current table. If an object is provided,
 	 * it will attempt to convert it to an array.
 	 *
 	 * @param array|object $data
-	 * @param boolean      $returnID Whether insert ID should be returned or not.
+	 * @param boolean $returnID Whether insert ID should be returned or not.
 	 *
 	 * @return integer|string|boolean
+	 * @throws \ReflectionException
 	 */
 	public function insert($data = null, bool $returnID = true)
 	{
@@ -698,9 +699,10 @@ class Model
 	 * it will attempt to convert it into an array.
 	 *
 	 * @param integer|array|string $id
-	 * @param array|object         $data
+	 * @param array|object $data
 	 *
 	 * @return boolean
+	 * @throws \ReflectionException
 	 */
 	public function update($id = null, $data = null)
 	{
