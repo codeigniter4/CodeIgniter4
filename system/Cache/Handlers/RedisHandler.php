@@ -122,7 +122,7 @@ class RedisHandler implements CacheInterface
 
 			if (isset($config['database']) && ! $this->redis->select($config['database']))
 			{
-				//              log_message('error', 'Cache: Redis select database failed.');
+				log_message('error', 'Cache: Redis select database failed.');
 			}
 		}
 		catch (\RedisException $e)
