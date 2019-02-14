@@ -117,7 +117,7 @@ class RedisHandler implements CacheInterface
 
 			if (isset($config['password']) && ! $this->redis->auth($config['password']))
 			{
-				//              log_message('error', 'Cache: Redis authentication failed.');
+				log_message('error', 'Cache: Redis authentication failed.');
 			}
 
 			if (isset($config['database']) && ! $this->redis->select($config['database']))
