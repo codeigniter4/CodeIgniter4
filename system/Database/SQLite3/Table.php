@@ -299,21 +299,19 @@ class Table
 	 */
 	protected function dropIndexes()
 	{
-		$indexes = $this->db->getIndexData($this->tableName);
-		dd($indexes);
-		//      if (! is_array($this->keys) || ! count($this->keys))
-		//      {
-		//          return;
-		//      }
-		//
-		//      foreach ($this->keys as $name => $key)
-		//      {
-		//          if ($key['type'] === 'primary' || $key['type'] === 'unique')
-		//          {
-		//              continue;
-		//          }
-		//
-		//          $this->db->query('DROP INDEX IF EXISTS ?', $name);
-		//      }
+		if (! is_array($this->keys) || ! count($this->keys))
+		{
+			return;
+		}
+
+		foreach ($this->keys as $name => $key)
+		{
+			if ($key['type'] === 'primary' || $key['type'] === 'unique')
+			{
+				continue;
+			}
+
+			$this->db->query("DROP INDEX IF EXISTS '{$name}'");
+		}
 	}
 }
