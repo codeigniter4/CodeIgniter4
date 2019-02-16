@@ -409,7 +409,7 @@ class Request extends Message implements RequestInterface
 			}
 		}
 
-		if (empty($value))
+		if (!isset($value))
 		{
 			$value = $this->globals[$method][$index] ?? null;
 		}
