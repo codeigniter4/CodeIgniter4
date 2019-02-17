@@ -370,4 +370,68 @@ class ForgeTest extends CIDatabaseTestCase
 
 		$this->assertInstanceOf(Forge::class, $forge);
 	}
+
+	public function testDropColumn()
+	{
+		$this->forge->addField([
+			'id'   => [
+				'type'           => 'INTEGER',
+				'constraint'     => 11,
+				'unsigned'       => false,
+				'auto_increment' => true,
+			],
+			'name' => [
+				'type'       => 'varchar',
+				'constraint' => 255,
+				'null'       => true,
+			],
+		]);
+
+		$this->forge->addKey('id', true);
+		$this->forge->createTable('forge_test_two');
+
+		$this->assertTrue($this->db->fieldExists('name', 'forge_test_two'));
+
+		$this->forge->dropColumn('forge_test_two', 'name');
+
+		$this->assertFalse($this->db->fieldExists('name', 'forge_test_two'));
+
+		$this->forge->dropTable('forge_test_two', true);
+	}
+
+	public function testModifyColumnRename()
+	{
+		$this->forge->addField([
+			'id'   => [
+				'type'           => 'INTEGER',
+				'constraint'     => 11,
+				'unsigned'       => false,
+				'auto_increment' => true,
+			],
+			'name' => [
+				'type'       => 'varchar',
+				'constraint' => 255,
+				'null'       => true,
+			],
+		]);
+
+		$this->forge->addKey('id', true);
+		$this->forge->createTable('forge_test_three');
+
+		$this->assertTrue($this->db->fieldExists('name', 'forge_test_three'));
+
+		$this->forge->modifyColumn('forge_test_three', [
+			'name' => [
+				'name'       => 'altered',
+				'type'       => 'varchar',
+				'constraint' => 255,
+				'null'       => true,
+			],
+		]);
+
+		$this->assertFalse($this->db->fieldExists('name', 'forge_test_three'));
+		$this->assertTrue($this->db->fieldExists('altered', 'forge_test_three'));
+
+		$this->forge->dropTable('forge_test_three', true);
+	}
 }

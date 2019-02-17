@@ -44,6 +44,13 @@ class Table
 	protected $tableName;
 
 	/**
+	 * The name of the table, with database prefix
+	 *
+	 * @var string
+	 */
+	protected $prefixedTableName;
+
+	/**
 	 * @var Connection
 	 */
 	protected $db;
@@ -75,9 +82,22 @@ class Table
 	 */
 	public function fromTable(string $table)
 	{
-		if (! $this->db->tableExists($table))
+		$this->prefixedTableName = $table;
+
+		// Remove the prefix, if any, since it's
+		// already been added by the time we get here...
+		$prefix = $this->db->DBPrefix;
+		if (! empty($prefix))
 		{
-			throw DataException::forTableNotFound($table);
+			if (strpos($table, $prefix) === 0)
+			{
+				$table = substr($table, strlen($prefix));
+			}
+		}
+
+		if (! $this->db->tableExists($this->prefixedTableName))
+		{
+			throw DataException::forTableNotFound($this->prefixedTableName);
 		}
 
 		$this->tableName = $table;
@@ -105,6 +125,8 @@ class Table
 		$this->db->transStart();
 
 		$this->forge->renameTable($this->tableName, "temp_{$this->tableName}");
+
+		$this->forge->reset();
 
 		$this->createTable();
 
@@ -143,9 +165,12 @@ class Table
 	 */
 	public function modifyColumn(array $field)
 	{
-		$oldName = key($field);
+		$field = $field[0];
 
-		$this->fields[$oldName] = $field[$oldName];
+		$oldName = $field['name'];
+		unset($field['name']);
+
+		$this->fields[$oldName] = $field;
 
 		return $this;
 	}
@@ -156,14 +181,15 @@ class Table
 	protected function createTable()
 	{
 		$this->dropIndexes();
+		$this->db->resetDataCache();
 
 		// Handle any modified columns.
 		$fields = [];
 		foreach ($this->fields as $name => $field)
 		{
-			if (isset($field['name']))
+			if (isset($field['new_name']))
 			{
-				$fields[$field['name']] = $field;
+				$fields[$field['new_name']] = $field;
 				continue;
 			}
 
@@ -210,9 +236,9 @@ class Table
 		foreach ($this->fields as $name => $details)
 		{
 			// Are we modifying the column?
-			if (isset($details['name']))
+			if (isset($details['new_name']))
 			{
-				$newFields[] = $details['name'];
+				$newFields[] = $details['new_name'];
 			}
 			else
 			{
@@ -225,7 +251,7 @@ class Table
 		$exFields  = implode(', ', $exFields);
 		$newFields = implode(', ', $newFields);
 
-		$this->db->query("INSERT INTO {$this->tableName}({$newFields}) SELECT {$exFields} FROM temp_{$this->tableName}");
+		$this->db->query("INSERT INTO {$this->prefixedTableName}({$newFields}) SELECT {$exFields} FROM {$this->db->DBPrefix}temp_{$this->tableName}");
 	}
 
 	/**

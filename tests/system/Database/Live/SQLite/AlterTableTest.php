@@ -132,13 +132,14 @@ class AlterTableTest extends CIDatabaseTestCase
 
 	public function testModifyColumnSuccess()
 	{
-		$this->createTable('foo');
+		$this->createTable('janky');
 
 		$result = $this->table
-			->fromTable('foo')
+			->fromTable('janky')
 			->modifyColumn([
-				'name' => [
-					'name'       => 'serial',
+				[
+					'name'       => 'name',
+					'new_name'   => 'serial',
 					'type'       => 'int',
 					'constraint' => 11,
 					'null'       => true,
@@ -148,8 +149,8 @@ class AlterTableTest extends CIDatabaseTestCase
 
 		$this->assertTrue($result);
 
-		$this->assertFalse($this->db->fieldExists('name', 'foo'));
-		$this->assertTrue($this->db->fieldExists('serial', 'foo'));
+		$this->assertFalse($this->db->fieldExists('name', 'janky'));
+		$this->assertTrue($this->db->fieldExists('serial', 'janky'));
 	}
 
 	public function testProcessCopiesOldData()

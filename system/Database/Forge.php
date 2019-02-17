@@ -468,7 +468,7 @@ class Forge
 
 		if (is_bool($sql))
 		{
-			$this->_reset();
+			$this->reset();
 			if ($sql === false)
 			{
 				if ($this->db->DBDebug)
@@ -494,7 +494,7 @@ class Forge
 			}
 		}
 
-		$this->_reset();
+		$this->reset();
 
 		return $result;
 	}
@@ -730,7 +730,7 @@ class Forge
 		}
 
 		$sqls = $this->_alterTable('ADD', $this->db->DBPrefix . $table, $this->_processFields());
-		$this->_reset();
+		$this->reset();
 		if ($sqls === false)
 		{
 			if ($this->db->DBDebug)
@@ -806,7 +806,7 @@ class Forge
 		}
 
 		$sqls = $this->_alterTable('CHANGE', $this->db->DBPrefix . $table, $this->_processFields());
-		$this->_reset();
+		$this->reset();
 		if ($sqls === false)
 		{
 			if ($this->db->DBDebug)
@@ -817,11 +817,14 @@ class Forge
 			return false;
 		}
 
-		for ($i = 0, $c = count($sqls); $i < $c; $i++)
+		if ($sqls !== null)
 		{
-			if ($this->db->query($sqls[$i]) === false)
+			for ($i = 0, $c = count($sqls); $i < $c; $i++)
 			{
-				return false;
+				if ($this->db->query($sqls[$i]) === false)
+				{
+					return false;
+				}
 			}
 		}
 
@@ -1251,7 +1254,7 @@ class Forge
 	 *
 	 * @return void
 	 */
-	protected function _reset()
+	public function reset()
 	{
 		$this->fields = $this->keys = $this->uniqueKeys = $this->primaryKeys = $this->foreignKeys = [];
 	}
