@@ -1250,7 +1250,7 @@ class RouteCollection implements RouteCollectionInterface
 		if (! empty($options['hostname']))
 		{
 			// @todo determine if there's a way to whitelist hosts?
-			if (strtolower($_SERVER['HTTP_HOST']) !== strtolower($options['hostname']))
+			if (isset($_SERVER['HTTP_HOST']) && strtolower($_SERVER['HTTP_HOST']) !== strtolower($options['hostname']))
 			{
 				return;
 			}
@@ -1347,6 +1347,12 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	private function checkSubdomains($subdomains)
 	{
+		// CLI calls can't be on subdomain.
+		if (! isset($_SERVER['HTTP_HOST']))
+		{
+			return false;
+		}
+
 		if (is_null($this->currentSubdomain))
 		{
 			$this->currentSubdomain = $this->determineCurrentSubdomain();
