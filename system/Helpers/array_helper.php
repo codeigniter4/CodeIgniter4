@@ -80,3 +80,195 @@ if (! function_exists('_array_search_dot'))
 		return $array[$currentIndex];
 	}
 }
+
+if (!function_exists('sort_array_by_column'))
+{
+	/**
+	 * Sort an array by column name in multidimensional array
+	 *
+	 * @param array  $array
+	 * @param string $column
+	 * @param int    $direction
+	 * @param int    $sort_type
+	 *
+	 * @return void
+	 */
+	function sort_array_by_column(array &$array, string $column, int $direction = SORT_ASC, int $sort_type = SORT_REGULAR)
+	{
+		$sort_col = [];
+		foreach ($array as $key => $row)
+		{
+			$sort_col[$key] = $row[$column];
+		}
+		array_multisort($sort_col, $direction, $array, $sort_type);
+	}
+}
+
+if (!function_exists('reduce_array'))
+{
+	/**
+	 * Eliminate the keys from single dimensional array
+	 * 
+	 * @param array $array
+	 * @param array $keys
+	 *
+	 * @return array
+	 */
+	function reduce_array(array $array, array $keys)
+	{
+		$return_array = [];
+		foreach ($array as $key => $value)
+		{
+			if (!in_array($key, $keys))
+			{
+				$return_array[$key] = $value;
+			}
+		}
+
+		return $return_array;
+	}
+}
+
+if (!function_exists('array_non_empty_items'))
+{
+	/**
+	 * Return all non-empty elements of array
+	 * 
+	 * @param array|string $array
+	 *
+	 * @return array|string
+	 */
+	function array_non_empty_items($array)
+	{
+		// If it is an element, then just return it
+		if (!is_array($array))
+		{
+			return $array;
+		}
+		else
+		{
+			$array = array_filter($array);
+		}
+		$non_empty_items = [];
+		foreach ($array as $key => $value)
+		{
+			// Ignore empty cells
+			if (is_array($value))
+			{
+				$value = array_filter($value);
+			}
+			if (count($value))
+			{
+				// Use recursion to evaluate cells
+				$non_empty_items[$key] = array_non_empty_items($value);
+			}
+		}
+		// Finally return the array without empty items
+		return $non_empty_items;
+	}
+}
+
+if (!function_exists('array_search_by_key'))
+{
+	/**
+	 * Search key in array and return the value
+	 *
+	 * @param string $needle
+	 * @param array $array
+	 *
+	 * @return bool|string|array
+	 */
+	function array_search_by_key(string $needle, array $array)
+	{
+		foreach ($array as $key => $value)
+		{
+			if ($key == $needle)
+			{
+				return $value;
+			}
+			if (is_array($value))
+			{
+				if (($result = array_search_by_key($needle, $value)) !== false)
+				{
+					return $result;
+				}
+			}
+		}
+
+		return false;
+	}
+}
+
+if (!function_exists('array_change_key_case_recursive'))
+{
+	/**
+	 * Change the case of keys of an array
+	 *
+	 * @param array $array
+	 * @param bool  $is_lower
+	 *
+	 * @return array
+	 */
+	function array_change_key_case_recursive(array $array, bool $is_lower = true)
+	{
+		return array_map(function ($item) {
+			if (is_array($item))
+			{
+				$item = array_change_key_case_recursive($item);
+			}
+
+			return $item;
+		}, array_change_key_case($array, ($is_lower) ? CASE_LOWER : CASE_UPPER));
+	}
+}
+
+if (!function_exists('trim_array'))
+{
+	/**
+	 * Trim the array recursively
+	 * 
+	 * @param array $array
+	 *
+	 * @return array
+	 */
+	function trim_array(array $array)
+	{
+		$result = [];
+		foreach ($array as $key => $val)
+		{
+			$result[$key] = (is_array($val) ? trim_array($val) : trim($val));
+		}
+
+		return $result;
+	}
+}
+
+if (!function_exists('search_in_array'))
+{
+	function search_in_array($needle, $array)
+	{
+		if (is_array($array))
+		{
+			$foundkey = array_search($needle, $array);
+			if ($foundkey === false)
+			{
+				foreach ($array as $key => $value)
+				{
+					if (is_array($value) && count($value) > 0)
+					{
+						$foundkey = search_in_array($needle, $value);
+						if ($foundkey != false)
+						{
+							return $foundkey;
+						}
+					}
+				}
+			}
+			else
+			{
+				return $array;
+			}
+		}
+		return false;
+	}
+}
