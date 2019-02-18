@@ -154,6 +154,9 @@ class Seeder
 				throw new \InvalidArgumentException('The specified Seeder is not a valid file: ' . $path);
 			}
 
+			// Assume the class has the correct namespace
+			$class = APP_NAMESPACE . '\Database\Seeds\\' . $class;
+
 			if (! class_exists($class, false))
 			{
 				require_once $path;

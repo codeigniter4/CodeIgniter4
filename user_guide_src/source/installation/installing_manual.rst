@@ -15,7 +15,7 @@ for `CodeIgniter 3 <https://www.codeigniter.com/user_guide/installation/index.ht
 Installation
 ============================================================
 
-Download the `latest version <https://github.com/CodeIgniter4/codeigniter4/releases/latest>`_,
+Download the `latest version <https://github.com/CodeIgniter4/framework/releases/latest>`_,
 and extract it to become your project root.
 
 Setup

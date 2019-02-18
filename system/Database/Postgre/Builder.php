@@ -105,7 +105,7 @@ class Builder extends BaseBuilder
 
 		$sql = $this->_update($this->QBFrom[0], [$column => "to_number({$column}, '9999999') + {$value}"]);
 
-		return $this->db->query($sql, $this->binds);
+		return $this->db->query($sql, $this->binds, false);
 	}
 
 	//--------------------------------------------------------------------
@@ -124,7 +124,7 @@ class Builder extends BaseBuilder
 
 		$sql = $this->_update($this->QBFrom[0], [$column => "to_number({$column}, '9999999') - {$value}"]);
 
-		return $this->db->query($sql, $this->binds);
+		return $this->db->query($sql, $this->binds, false);
 	}
 
 	//--------------------------------------------------------------------

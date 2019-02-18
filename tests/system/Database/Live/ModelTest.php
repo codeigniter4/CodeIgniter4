@@ -1,10 +1,13 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Config\Config;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIDatabaseTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Database;
+use Config\Services;
+use Config\Validation;
 use Myth\Auth\Entities\User;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
@@ -30,6 +33,14 @@ class ModelTest extends CIDatabaseTestCase
 		parent::setUp();
 
 		$this->model = new Model($this->db);
+	}
+
+	public function tearDown()
+	{
+		parent::tearDown();
+
+		Services::reset();
+		Config::reset();
 	}
 
 	//--------------------------------------------------------------------
@@ -584,6 +595,31 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertTrue($result);
 	}
 
+	public function testValidationWithGroupName()
+	{
+		$config            = new \Config\Validation();
+		$config->grouptest = [
+			'name'  => [
+				'required',
+				'min_length[3]',
+			],
+			'token' => 'in_list[{id}]',
+		];
+
+		$data = [
+			'name'  => 'abc',
+			'id'    => 13,
+			'token' => 13,
+		];
+
+		\CodeIgniter\Config\Config::injectMock('Validation', $config);
+
+		$model = new ValidModel($this->db);
+		$this->setPrivateProperty($model, 'validationRules', 'grouptest');
+
+		$this->assertTrue($model->validate($data));
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testCanCreateAndSaveEntityClasses()
@@ -951,5 +987,48 @@ class ModelTest extends CIDatabaseTestCase
 
 		$result = $model->update($id, $data);
 		$this->assertTrue($result);
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1717
+	 */
+	public function testRequiredWithValidationEmptyString()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name' => '',
+		];
+
+		$this->assertFalse($model->insert($data));
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1717
+	 */
+	public function testRequiredWithValidationNull()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name' => null,
+		];
+
+		$this->assertFalse($model->insert($data));
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1717
+	 */
+	public function testRequiredWithValidationTrue()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name'        => 'foobar',
+			'description' => 'just becaues we have to',
+		];
+
+		$this->assertTrue($model->insert($data) !== false);
 	}
 }

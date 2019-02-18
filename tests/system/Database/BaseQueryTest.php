@@ -253,4 +253,41 @@ class QueryTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1705
+	 */
+	public function testSetQueryBindsWithSetEscapeTrue()
+	{
+		$query = new Query($this->db);
+
+		$query->setQuery('UPDATE user_table SET `x` = NOW() WHERE `id` = :id:', ['id' => 22], true);
+
+		$expected = 'UPDATE user_table SET `x` = NOW() WHERE `id` = 22';
+
+		$this->assertEquals($expected, $query->getQuery());
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1705
+	 */
+	public function testSetQueryBindsWithSetEscapeFalse()
+	{
+		$query = new Query($this->db);
+
+		// The only time setQuery is called with setEscape = false
+		// is when the query builder has already stored the escaping info...
+		$binds = [
+			'id' => [
+				22,
+				1,
+			],
+		];
+
+		$query->setQuery('UPDATE user_table SET `x` = NOW() WHERE `id` = :id:', $binds, false);
+
+		$expected = 'UPDATE user_table SET `x` = NOW() WHERE `id` = 22';
+
+		$this->assertEquals($expected, $query->getQuery());
+	}
 }

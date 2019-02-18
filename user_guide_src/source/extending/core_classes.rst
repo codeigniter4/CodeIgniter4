@@ -48,7 +48,8 @@ can find your class, that  your new class extends the appropriate interface, and
 For example, if you have a new ``App\Libraries\RouteCollection`` class that you would like to use in place of
 the core system class, you would create your class like this::
 
-    namespace App\Libraries;
+    <?php namespace App\Libraries;
+
     use CodeIgniter\Router\RouteCollectionInterface;
 
     class RouteCollection implements RouteCollectionInterface
@@ -79,7 +80,8 @@ identical to replacing a class with a one exception:
 
 For example, to extend the native RouteCollection class, you would declare your class with::
 
-    namespace App\Libraries;
+    <?php namespace App\Libraries;
+
     use CodeIgniter\Router\RouteCollection;
 
     class RouteCollection extends RouteCollection
@@ -89,7 +91,8 @@ For example, to extend the native RouteCollection class, you would declare your 
 
 If you need to use a constructor in your class make sure you extend the parent constructor::
 
-    namespace App\Libraries;
+    <?php namespace App\Libraries;
+
     use CodeIgniter\Router\RouteCollection;
 
     class RouteCollection extends RouteCollection
@@ -106,7 +109,8 @@ instead of the native ones (this is known as “method overriding”). This allo
 If you are extending the Controller core class, then be sure to extend your new class in your application controller’s
 constructors::
 
-    namespace App\Controllers;
+    <?php namespace App\Controllers;
+
     use App\BaseController;
 
     class Home extends BaseController {

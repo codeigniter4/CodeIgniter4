@@ -246,6 +246,7 @@ Available options are::
 	$config['password'] = NULL;
 	$config['port'] = 6379;
 	$config['timeout'] = 0;
+	$config['database'] = 0;
 
 For more information on Redis, please see
 `http://redis.io <http://redis.io>`_.

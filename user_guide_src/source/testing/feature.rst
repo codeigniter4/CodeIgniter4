@@ -19,7 +19,7 @@ extends `CIDatabaseTestCase </testing/database>`_ you must always ensure that ``
 are called before you take your actions.
 ::
 
-    <?php
+    <?php namespace App;
 
     use CodeIgniter\Test\FeatureTestCase;
 

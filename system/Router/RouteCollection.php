@@ -863,16 +863,16 @@ class RouteCollection implements RouteCollectionInterface
 			$this->delete($name . '/' . $id, $new_name . '::delete/$1', $options);
 		}
 
-		// Web Safe?
+		// Web Safe? delete needs checking before update because of method name
 		if (isset($options['websafe']))
 		{
-			if (in_array('update', $methods))
-			{
-				$this->post($name . '/' . $id, $new_name . '::update/$1', $options);
-			}
 			if (in_array('delete', $methods))
 			{
 				$this->post($name . '/' . $id . '/delete', $new_name . '::delete/$1', $options);
+			}
+			if (in_array('update', $methods))
+			{
+				$this->post($name . '/' . $id, $new_name . '::update/$1', $options);
 			}
 		}
 
@@ -1250,7 +1250,7 @@ class RouteCollection implements RouteCollectionInterface
 		if (! empty($options['hostname']))
 		{
 			// @todo determine if there's a way to whitelist hosts?
-			if (strtolower($_SERVER['HTTP_HOST']) !== strtolower($options['hostname']))
+			if (isset($_SERVER['HTTP_HOST']) && strtolower($_SERVER['HTTP_HOST']) !== strtolower($options['hostname']))
 			{
 				return;
 			}
@@ -1347,6 +1347,12 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	private function checkSubdomains($subdomains)
 	{
+		// CLI calls can't be on subdomain.
+		if (! isset($_SERVER['HTTP_HOST']))
+		{
+			return false;
+		}
+
 		if (is_null($this->currentSubdomain))
 		{
 			$this->currentSubdomain = $this->determineCurrentSubdomain();

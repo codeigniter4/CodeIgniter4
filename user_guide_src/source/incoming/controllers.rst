@@ -28,7 +28,8 @@ Let's try it: Hello World!
 Let's create a simple controller so you can see it in action. Using your text editor, create a file called Blog.php,
 and put the following code in it::
 
-	namespace App\Controllers;
+	<?php namespace App\Controllers;
+
         use CodeIgniter\Controller;
 
 	class Blog extends Controller
@@ -55,7 +56,8 @@ If you did it right, you should see::
 
 This is valid::
 
-	namespace App\Controllers;
+	<?php namespace App\Controllers;
+
         use CodeIgniter\Controller;
 
 	class Blog extends Controller {
@@ -64,7 +66,8 @@ This is valid::
 
 This is **not** valid::
 
-	namespace App\Controllers;
+	<?php namespace App\Controllers;
+
         use CodeIgniter\Controller;
 
 	class blog extends Controller {
@@ -88,7 +91,8 @@ controller gets called.**
 
 Let's try it. Add a new method to your controller::
 
-	namespace App\Controllers;
+	<?php namespace App\Controllers;
+
         use CodeIgniter\Controller;
 
 	class Blog extends Controller
@@ -123,7 +127,8 @@ For example, let's say you have a URI like this::
 
 Your method will be passed URI segments 3 and 4 ("sandals" and "123")::
 
-	namespace App\Controllers;
+	<?php namespace App\Controllers;
+
         use CodeIgniter\Controller;
 
 	class Products extends Controller
