@@ -1581,12 +1581,6 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function getFieldNames($table)
 	{
-		// Is there a cached result?
-		if (isset($this->dataCache['field_names'][$table]))
-		{
-			return $this->dataCache['field_names'][$table];
-		}
-
 		if (empty($this->connID))
 		{
 			$this->initialize();

@@ -373,6 +373,8 @@ class ForgeTest extends CIDatabaseTestCase
 
 	public function testDropColumn()
 	{
+		$this->forge->dropTable('forge_test_two', true);
+
 		$this->forge->addField([
 			'id'   => [
 				'type'           => 'INTEGER',
@@ -401,6 +403,8 @@ class ForgeTest extends CIDatabaseTestCase
 
 	public function testModifyColumnRename()
 	{
+		$this->forge->dropTable('forge_test_three', true);
+
 		$this->forge->addField([
 			'id'   => [
 				'type'           => 'INTEGER',
