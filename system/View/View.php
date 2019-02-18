@@ -119,6 +119,29 @@ class View implements RendererInterface
 	 */
 	protected $viewsCount = 0;
 
+	/**
+	 * The name of the layout being used, if any.
+	 * Set by the `extend` method used within views.
+	 *
+	 * @var string
+	 */
+	protected $layout;
+
+	/**
+	 * Holds the sections and their data.
+	 *
+	 * @var array
+	 */
+	protected $sections = [];
+
+	/**
+	 * The name of the current section being rendered,
+	 * if any.
+	 *
+	 * @var string
+	 */
+	protected $currentSection;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -210,6 +233,16 @@ class View implements RendererInterface
 		include($this->renderVars['file']); // PHP will be processed
 		$output = ob_get_contents();
 		@ob_end_clean();
+
+		// When using layouts, the data has already been stored
+		// in $this->sections, and no other valid output
+		// is allowed in $output so we'll overwrite it.
+		if (! is_null($this->layout))
+		{
+			$layoutView   = $this->layout;
+			$this->layout = null;
+			$output       = $this->render($layoutView, $options, $saveData);
+		}
 
 		$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 
@@ -372,6 +405,82 @@ class View implements RendererInterface
 	public function getData()
 	{
 		return $this->data;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Specifies that the current view should extend an existing layout.
+	 *
+	 * @param string $layout
+	 *
+	 * @return $this
+	 */
+	public function extend(string $layout)
+	{
+		$this->layout = $layout;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Starts holds content for a section within the layout.
+	 *
+	 * @param string $name
+	 */
+	public function section(string $name)
+	{
+		$this->currentSection = $name;
+
+		ob_start();
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 *
+	 *
+	 * @throws \Zend\Escaper\Exception\RuntimeException
+	 */
+	public function endSection()
+	{
+		$contents = ob_get_clean();
+
+		if (empty($this->currentSection))
+		{
+			throw new \RuntimeException('View themes, no current section.');
+		}
+
+		// Ensure an array exists so we can store multiple entries for this.
+		if (! array_key_exists($this->currentSection, $this->sections))
+		{
+			$this->sections[$this->currentSection] = [];
+		}
+		$this->sections[$this->currentSection][] = $contents;
+
+		$this->currentSection = null;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Renders a section's contents.
+	 *
+	 * @param string $sectionName
+	 */
+	public function renderSection(string $sectionName)
+	{
+		if (! isset($this->sections[$sectionName]))
+		{
+			echo '';
+
+			return;
+		}
+
+		foreach ($this->sections[$sectionName] as $contents)
+		{
+			echo $contents;
+		}
 	}
 
 	//--------------------------------------------------------------------
