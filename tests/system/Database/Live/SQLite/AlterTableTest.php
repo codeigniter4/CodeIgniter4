@@ -4,6 +4,9 @@ use CodeIgniter\Test\CIDatabaseTestCase;
 use CodeIgniter\Database\SQLite3\Table;
 use Config\Database;
 
+/**
+ * @group DatabaseLive
+ */
 class AlterTableTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;

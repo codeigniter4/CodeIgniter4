@@ -3,7 +3,6 @@
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
 use PHPUnit\Framework\TestCase;
-use Tests\Support\DOM\DOMParser;
 
 class FeatureResponse extends TestCase
 {
@@ -13,7 +12,7 @@ class FeatureResponse extends TestCase
 	public $response;
 
 	/**
-	 * @var \Tests\Support\DOM\DOMParser
+	 * @var \CodeIgniter\Test\DOMParser
 	 */
 	protected $domParser;
 
