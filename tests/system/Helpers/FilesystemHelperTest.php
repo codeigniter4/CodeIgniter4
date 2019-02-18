@@ -349,7 +349,7 @@ class FilesystemHelperTest extends \CIUnitTestCase
 
 	public function testRealPathResolved()
 	{
-		$this->assertEquals(SUPPORTPATH . 'Helpers/', set_realpath(SUPPORTPATH . 'Files/../Helpers', true));
+		$this->assertEquals(SUPPORTPATH . 'Models/', set_realpath(SUPPORTPATH . 'Files/../Models', true));
 	}
 
 }
