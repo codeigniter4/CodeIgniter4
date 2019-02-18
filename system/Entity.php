@@ -78,7 +78,7 @@ class Entity
 	protected $_original = [];
 
 	/**
-	 * Holds info whenever prperties have to be casted
+	 * Holds info whenever properties have to be casted
 	 *
 	 * @var boolean
 	 **/
