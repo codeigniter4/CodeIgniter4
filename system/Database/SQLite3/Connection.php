@@ -307,6 +307,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			throw new DatabaseException(lang('Database.failGetFieldData'));
 		}
 		$query = $query->getResultObject();
+
 		if (empty($query))
 		{
 			return [];
@@ -319,7 +320,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$retval[$i]->type        = $query[$i]->type;
 			$retval[$i]->max_length  = null;
 			$retval[$i]->default     = $query[$i]->dflt_value;
-			$retval[$i]->primary_key = isset($query[$i]->pk) ? (int)$query[$i]->pk : 0;
+			$retval[$i]->primary_key = isset($query[$i]->pk) ? (bool)$query[$i]->pk : false;
+			$retval[$i]->nullable    = isset($query[$i]->notnull) ? ! (bool)$query[$i]->notnull : false;
 		}
 
 		return $retval;

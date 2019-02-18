@@ -24,4 +24,5 @@ return [
    'failGetForeignKeyData' => 'Failed to get foreign key data from database.',
    'parseStringFail'       => 'Parsing key string failed.',
    'featureUnavailable'    => 'This feature is not available for the database you are using.',
+   'tableNotFound'         => 'Table `{0}` was not found in the current database.',
 ];
