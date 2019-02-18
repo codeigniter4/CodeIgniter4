@@ -174,7 +174,7 @@ class EntityTest extends \CIUnitTestCase
 		$time = $entity->created_at;
 
 		$this->assertInstanceOf(Time::class, $time);
-		$this->assertEquals(date('Y-m-d H:i:s', $stamp), $time->format('Y-m-d H:i:s'));
+		$this->assertCloseEnoughString(date('Y-m-d H:i:s', $stamp), $time->format('Y-m-d H:i:s'));
 	}
 
 	public function testDateMutationFromDatetime()
@@ -186,7 +186,7 @@ class EntityTest extends \CIUnitTestCase
 		$time = $entity->created_at;
 
 		$this->assertInstanceOf(Time::class, $time);
-		$this->assertEquals($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
+		$this->assertCloseEnoughString($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
 	}
 
 	public function testDateMutationFromTime()
@@ -198,7 +198,7 @@ class EntityTest extends \CIUnitTestCase
 		$time = $entity->created_at;
 
 		$this->assertInstanceOf(Time::class, $time);
-		$this->assertEquals($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
+		$this->assertCloseEnoughString($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
 	}
 
 	public function testDateMutationStringToTime()
@@ -223,7 +223,7 @@ class EntityTest extends \CIUnitTestCase
 		$time = $this->getPrivateProperty($entity, 'created_at');
 
 		$this->assertInstanceOf(Time::class, $time);
-		$this->assertEquals(date('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
+		$this->assertCloseEnoughString(date('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
 	}
 
 	public function testDateMutationDatetimeToTime()
@@ -236,7 +236,7 @@ class EntityTest extends \CIUnitTestCase
 		$time = $this->getPrivateProperty($entity, 'created_at');
 
 		$this->assertInstanceOf(Time::class, $time);
-		$this->assertEquals($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
+		$this->assertCloseEnoughString($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
 	}
 
 	public function testDateMutationTimeToTime()
@@ -249,7 +249,7 @@ class EntityTest extends \CIUnitTestCase
 		$time = $this->getPrivateProperty($entity, 'created_at');
 
 		$this->assertInstanceOf(Time::class, $time);
-		$this->assertEquals($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
+		$this->assertCloseEnoughString($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
 	}
 
 	//--------------------------------------------------------------------
