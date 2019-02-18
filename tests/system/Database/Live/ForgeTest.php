@@ -396,6 +396,8 @@ class ForgeTest extends CIDatabaseTestCase
 
 		$this->forge->dropColumn('forge_test_two', 'name');
 
+		$this->db->resetDataCache();
+
 		$this->assertFalse($this->db->fieldExists('name', 'forge_test_two'));
 
 		$this->forge->dropTable('forge_test_two', true);
@@ -432,6 +434,8 @@ class ForgeTest extends CIDatabaseTestCase
 				'null'       => true,
 			],
 		]);
+
+		$this->db->resetDataCache();
 
 		$this->assertFalse($this->db->fieldExists('name', 'forge_test_three'));
 		$this->assertTrue($this->db->fieldExists('altered', 'forge_test_three'));

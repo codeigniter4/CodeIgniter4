@@ -448,18 +448,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Empties our data cache. Especially helpful during testing.
-	 *
-	 * @return $this
-	 */
-	public function resetDataCache()
-	{
-		$this->dataCache = [];
-
-		return $this;
-	}
-
-	/**
 	 * Begin Transaction
 	 *
 	 * @return boolean
