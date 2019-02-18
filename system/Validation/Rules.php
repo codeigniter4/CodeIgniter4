@@ -326,7 +326,7 @@ class Rules
 
 		// Remove any keys with empty values since, that means they
 		// weren't truly there, as far as this is concerned.
-		$requiredFields = array_filter($requiredFields, function ($item) use ($data, $str) {
+		$requiredFields = array_filter($requiredFields, function ($item) use ($data) {
 			return ! empty($data[$item]);
 		});
 
