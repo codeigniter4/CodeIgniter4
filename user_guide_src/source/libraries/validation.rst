@@ -609,23 +609,33 @@ for rules like ``require_with`` that needs to check the value of another submitt
 		// If the field is present we can safely assume that
 		// the field is here, no matter whether the corresponding
 		// search field is present or not.
-		$present = $this->required($data[$str] ?? null);
+		$present = $this->required($str ?? '');
 
-		if ($present === true)
+		if ($present)
 		{
 			return true;
 		}
 
-		// Still here? Then we fail this test if
+        // Still here? Then we fail this test if
 		// any of the fields are present in $data
-		$requiredFields = array_intersect($fields, $data);
+		// as $fields is the lis
+		$requiredFields = [];
 
-		$requiredFields = array_filter($requiredFields, function($item)
+		foreach ($fields as $field)
 		{
-			return ! empty($item);
+			if (array_key_exists($field, $data))
+			{
+				$requiredFields[] = $field;
+			}
+		}
+
+		// Remove any keys with empty values since, that means they
+		// weren't truly there, as far as this is concerned.
+		$requiredFields = array_filter($requiredFields, function ($item) use ($data) {
+			return ! empty($data[$item]);
 		});
 
-		return ! (bool)count($requiredFields);
+		return empty($requiredFields);
 	}
 
 Custom errors can be returned as the fourth parameter, just as described above.
