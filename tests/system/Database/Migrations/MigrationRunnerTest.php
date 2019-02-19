@@ -181,8 +181,8 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$migrations = $runner->findMigrations();
 
 		$this->assertCount(2, $migrations);
-		$this->assertEquals($mig1, array_shift($migrations));
 		$this->assertEquals($mig2, array_shift($migrations));
+		$this->assertEquals($mig1, array_shift($migrations));
 	}
 
 	public function testFindMigrationsSuccessOrder()
@@ -211,8 +211,8 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$migrations = $runner->findMigrations();
 
-		$this->assertEquals($mig1, array_shift($migrations));
 		$this->assertEquals($mig2, array_shift($migrations));
+		$this->assertEquals($mig1, array_shift($migrations));
 	}
 
 	/**

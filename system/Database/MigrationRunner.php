@@ -459,6 +459,8 @@ class MigrationRunner
 			}
 		}
 
+		ksort($migrations);
+
 		return $migrations;
 	}
 
