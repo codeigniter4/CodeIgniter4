@@ -207,6 +207,15 @@ class ForgeTest extends CIDatabaseTestCase
 			$this->assertEquals($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
 			$this->assertEquals($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
 		}
+		elseif ($this->db->DBDriver === 'SQLite3')
+		{
+			$this->assertEquals($keys['sqlite_autoindex_db_forge_test_1_1']->name, 'sqlite_autoindex_db_forge_test_1_1');
+			$this->assertEquals($keys['sqlite_autoindex_db_forge_test_1_1']->fields, ['id']);
+			$this->assertEquals($keys['db_forge_test_1_code_company']->name, 'db_forge_test_1_code_company');
+			$this->assertEquals($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
+			$this->assertEquals($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
+			$this->assertEquals($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+		}
 
 		$this->forge->dropTable('forge_test_1', true);
 	}
