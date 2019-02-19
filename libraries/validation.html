@@ -833,23 +833,33 @@ for rules like <code class="docutils literal"><span class="pre">require_with</sp
         <span class="c1">// If the field is present we can safely assume that</span>
         <span class="c1">// the field is here, no matter whether the corresponding</span>
         <span class="c1">// search field is present or not.</span>
-        <span class="nv">$present</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">required</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="nv">$str</span><span class="p">]</span> <span class="o">??</span> <span class="k">null</span><span class="p">);</span>
+        <span class="nv">$present</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">required</span><span class="p">(</span><span class="nv">$str</span> <span class="o">??</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="nv">$present</span> <span class="o">===</span> <span class="k">true</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$present</span><span class="p">)</span>
         <span class="p">{</span>
                 <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
         <span class="p">}</span>
 
-        <span class="c1">// Still here? Then we fail this test if</span>
+<span class="c1">// Still here? Then we fail this test if</span>
         <span class="c1">// any of the fields are present in $data</span>
-        <span class="nv">$requiredFields</span> <span class="o">=</span> <span class="nb">array_intersect</span><span class="p">(</span><span class="nv">$fields</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+        <span class="c1">// as $fields is the lis</span>
+        <span class="nv">$requiredFields</span> <span class="o">=</span> <span class="p">[];</span>
 
-        <span class="nv">$requiredFields</span> <span class="o">=</span> <span class="nb">array_filter</span><span class="p">(</span><span class="nv">$requiredFields</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$item</span><span class="p">)</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$fields</span> <span class="k">as</span> <span class="nv">$field</span><span class="p">)</span>
         <span class="p">{</span>
-                <span class="k">return</span> <span class="o">!</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$item</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nb">array_key_exists</span><span class="p">(</span><span class="nv">$field</span><span class="p">,</span> <span class="nv">$data</span><span class="p">))</span>
+                <span class="p">{</span>
+                        <span class="nv">$requiredFields</span><span class="p">[]</span> <span class="o">=</span> <span class="nv">$field</span><span class="p">;</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Remove any keys with empty values since, that means they</span>
+        <span class="c1">// weren&#39;t truly there, as far as this is concerned.</span>
+        <span class="nv">$requiredFields</span> <span class="o">=</span> <span class="nb">array_filter</span><span class="p">(</span><span class="nv">$requiredFields</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$item</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="o">!</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="nv">$item</span><span class="p">]);</span>
         <span class="p">});</span>
 
-        <span class="k">return</span> <span class="o">!</span> <span class="p">(</span><span class="nx">bool</span><span class="p">)</span><span class="nb">count</span><span class="p">(</span><span class="nv">$requiredFields</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$requiredFields</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>

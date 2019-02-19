@@ -340,6 +340,7 @@ the class properties directly, allowing you to enforce any business logic or dat
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Entity</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">Entity</span>
 <span class="p">{</span>
@@ -359,16 +360,17 @@ the class properties directly, allowing you to enforce any business logic or dat
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">setCreatedAt</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$dateString</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">created_at</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\DateTime</span><span class="p">(</span><span class="nv">$datetime</span><span class="p">,</span> <span class="k">new</span> <span class="nx">\DateTimeZone</span><span class="p">(</span><span class="s1">&#39;UTC&#39;</span><span class="p">));</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">created_at</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="nv">$dateString</span><span class="p">,</span> <span class="s1">&#39;UTC&#39;</span><span class="p">);</span>
 
         <span class="k">return</span> <span class="nv">$this</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">getCreatedAt</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$format</span> <span class="o">=</span> <span class="s1">&#39;Y-m-d H:i:s&#39;</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="nv">$timezone</span> <span class="o">=</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">timezone</span><span class="p">)</span>
-        <span class="o">?</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">timezone</span>
-        <span class="o">:</span> <span class="nx">app_timezone</span><span class="p">();</span>
+        <span class="c1">// Convert to CodeIgniter\I18n\Time object</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">created_at</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">mutateDate</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">created_at</span><span class="p">);</span>
+
+        <span class="nv">$timezone</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">timezone</span> <span class="o">??</span> <span class="nx">app_timezone</span><span class="p">();</span>
 
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">created_at</span><span class="o">-&gt;</span><span class="na">setTimezone</span><span class="p">(</span><span class="nv">$timezone</span><span class="p">);</span>
 
