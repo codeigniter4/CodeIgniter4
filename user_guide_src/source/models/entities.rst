@@ -141,6 +141,7 @@ Here's an updated User entity to provide some examples of how this could be used
     <?php namespace App\Entities;
 
     use CodeIgniter\Entity;
+    use CodeIgniter\I18n\Time;
 
     class User extends Entity
     {
@@ -160,16 +161,17 @@ Here's an updated User entity to provide some examples of how this could be used
 
         public function setCreatedAt(string $dateString)
         {
-            $this->created_at = new \DateTime($datetime, new \DateTimeZone('UTC'));
+            $this->created_at = new Time($dateString, 'UTC');
 
             return $this;
         }
 
         public function getCreatedAt(string $format = 'Y-m-d H:i:s')
         {
-            $timezone = isset($this->timezone)
-            ? $this->timezone
-            : app_timezone();
+            // Convert to CodeIgniter\I18n\Time object
+            $this->created_at = $this->mutateDate($this->created_at);
+
+            $timezone = $this->timezone ?? app_timezone();
 
             $this->created_at->setTimezone($timezone);
 
