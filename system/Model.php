@@ -630,10 +630,16 @@ class Model
 		// strip out created_at values.
 		$data = $this->doProtectFields($data);
 
-		if ($this->useTimestamps && ! array_key_exists($this->createdField, $data))
+		// Set created_at and updated_at with same time
+		$date = $this->setDate();
+
+		if ($this->useTimestamps && ! empty($this->createdField) && ! array_key_exists($this->createdField, $data))
 		{
-			$date                      = $this->setDate();
 			$data[$this->createdField] = $date;
+		}
+
+		if ($this->useTimestamps && ! empty($this->updatedField) && ! array_key_exists($this->updatedField, $data))
+		{
 			$data[$this->updatedField] = $date;
 		}
 
@@ -674,7 +680,7 @@ class Model
 	 * @param integer $batchSize
 	 * @param boolean $testing
 	 *
-	 * @return integer Number of rows inserted or FALSE on failure
+	 * @return integer|boolean Number of rows inserted or FALSE on failure
 	 */
 	public function insertBatch($set = null, $escape = null, $batchSize = 100, $testing = false)
 	{
@@ -754,7 +760,7 @@ class Model
 		// strip out updated_at values.
 		$data = $this->doProtectFields($data);
 
-		if ($this->useTimestamps && ! array_key_exists($this->updatedField, $data))
+		if ($this->useTimestamps && ! empty($this->updatedField) && ! array_key_exists($this->updatedField, $data))
 		{
 			$data[$this->updatedField] = $this->setDate();
 		}
@@ -845,7 +851,7 @@ class Model
 		{
 			$set[$this->deletedField] = 1;
 
-			if ($this->useTimestamps)
+			if ($this->useTimestamps && ! empty($this->updatedField))
 			{
 				$set[$this->updatedField] = $this->setDate();
 			}

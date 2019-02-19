@@ -104,6 +104,8 @@ what table to use and how we can find the required records::
 		protected $allowedFields = ['name', 'email'];
 
 		protected $useTimestamps = false;
+		protected $createdField  = 'created_at';
+		protected $updatedField  = 'updated_at';
 
 		protected $validationRules    = [];
 		protected $validationMessages = [];
@@ -153,6 +155,16 @@ This boolean value determines whether the current date is automatically added to
 and updates. If true, will set the current time in the format specified by $dateFormat. This
 requires that the table have columns named 'created_at' and 'updated_at' in the appropriate
 data type.
+
+**$createdField**
+
+Specifies which database field should use for keep data record create timestamp.
+Leave it empty to avoid update it (even useTimestamps is enabled)
+
+**$updatedField**
+
+Specifies which database field should use for keep data record update timestamp.
+Leave it empty to avoid update it (even useTimestamps is enabled)
 
 **$dateFormat**
 
