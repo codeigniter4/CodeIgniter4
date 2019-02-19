@@ -600,44 +600,62 @@ if (! function_exists('helper'))
 				$filename .= '_helper';
 			}
 
-			$paths = $loader->search('Helpers/' . $filename);
-
-			if (! empty($paths))
+			// If the file is namespaced, we'll just grab that
+			// file and not search for any others
+			if (strpos($filename, '\\') !== false)
 			{
-				foreach ($paths as $path)
+				$path = $loader->locateFile($filename, 'Helpers');
+
+				if (empty($path))
 				{
-					if (strpos($path, APPPATH) === 0)
+					throw \CodeIgniter\Files\Exceptions\FileNotFoundException::forFileNotFound($filename);
+				}
+
+				$includes[] = $path;
+			}
+
+			// No namespaces, so search in all available locations
+			else
+			{
+				$paths = $loader->search('Helpers/' . $filename);
+
+				if (! empty($paths))
+				{
+					foreach ($paths as $path)
 					{
-						// @codeCoverageIgnoreStart
-						$appHelper = $path;
-						// @codeCoverageIgnoreEnd
-					}
-					elseif (strpos($path, SYSTEMPATH) === 0)
-					{
-						$systemHelper = $path;
-					}
-					else
-					{
-						$localIncludes[] = $path;
+						if (strpos($path, APPPATH) === 0)
+						{
+							// @codeCoverageIgnoreStart
+							$appHelper = $path;
+							// @codeCoverageIgnoreEnd
+						}
+						elseif (strpos($path, SYSTEMPATH) === 0)
+						{
+							$systemHelper = $path;
+						}
+						else
+						{
+							$localIncludes[] = $path;
+						}
 					}
 				}
-			}
 
-			// App-level helpers should override all others
-			if (! empty($appHelper))
-			{
-				// @codeCoverageIgnoreStart
-				$includes[] = $appHelper;
-				// @codeCoverageIgnoreEnd
-			}
+				// App-level helpers should override all others
+				if (! empty($appHelper))
+				{
+					// @codeCoverageIgnoreStart
+					$includes[] = $appHelper;
+					// @codeCoverageIgnoreEnd
+				}
 
-			// All namespaced files get added in next
-			$includes = array_merge($includes, $localIncludes);
+				// All namespaced files get added in next
+				$includes = array_merge($includes, $localIncludes);
 
-			// And the system default one should be added in last.
-			if (! empty($systemHelper))
-			{
-				$includes[] = $systemHelper;
+				// And the system default one should be added in last.
+				if (! empty($systemHelper))
+				{
+					$includes[] = $systemHelper;
+				}
 			}
 		}
 
