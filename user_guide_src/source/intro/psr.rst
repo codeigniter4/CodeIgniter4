@@ -10,7 +10,7 @@ status of our compliance with the various accepted, and some draft, proposals.
 **PSR-1: Basic Coding Standard**
 
 This recommendation covers basic class, method, and file-naming standards. Our 
-`style guide <https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/styleguide.rst>_`
+`style guide <https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/styleguide.rst>`_
 meets PSR-1 and adds its own requirements on top of it.
 
 **PSR-2: Coding Style Guide**
