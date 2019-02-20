@@ -16,8 +16,7 @@ Initial Configuration & Setup
 =================================================
 
 #. Open the **app/Config/App.php** file with a text editor and
-   set your base URL. If you intend to use encryption or sessions, set
-   your encryption key. If you need more flexibility, the baseURL may
+   set your base URL. If you need more flexibility, the baseURL may
    be set within the ``.env`` file as **app.baseURL="http://example.com"**.
 #. If you intend to use a database, open the
    **app/Config/Database.php** file with a text editor and set your
