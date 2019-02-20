@@ -364,10 +364,10 @@ class Rules
 		}
 
 		// Still here? Then we fail this test if
-		// any of the fields are not present in $data
+		// any of the fields are not present or value is '' in $data
 		foreach ($fields as $field)
 		{
-			if (! array_key_exists($field, $data))
+			if (! array_key_exists($field, $data) || trim($data[$field]) === '')
 			{
 				return false;
 			}
