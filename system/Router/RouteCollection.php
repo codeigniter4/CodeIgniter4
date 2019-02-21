@@ -767,25 +767,27 @@ class RouteCollection implements RouteCollectionInterface
 	 * Possible Options:
 	 *      'controller'    - Customize the name of the controller used in the 'to' route
 	 *      'placeholder'   - The regex used by the Router. Defaults to '(:any)'
+	 *      'websafe'   -	- '1' if only GET and POST HTTP verbs are supported
 	 *
 	 * Example:
+	 * 
 	 *      $route->resource('photos');
 	 *
 	 *      // Generates the following routes:
 	 *      HTTP Verb | Path        | Action        | Used for...
 	 *      ----------+-------------+---------------+-----------------
-	 *      GET         /photos             index           display a list of photos
-	 *      GET         /photos/new         new             new a specific photo
-	 *      GET         /photos/{id}/edit   edit            edit a specific photo
-	 *      GET         /photos/{id}        show            display a specific photo
-	 *      POST        /photos             create          create a new photo
-	 *      PUT/PATCH   /photos/{id}        update          update an existing photo
-	 *      DELETE      /photos/{id}        delete          delete an existing photo
+	 *      GET         /photos             index           an array of photo objects
+	 *      GET         /photos/new         new             an empty photo object, with default properties
+	 *      GET         /photos/{id}/edit   edit            a specific photo object, editable properties
+	 *      GET         /photos/{id}        show            a specific photo object, all properties
+	 *      POST        /photos             create          a new photo object, to add to the resource
+	 *      DELETE      /photos/{id}        delete          deletes the specified photo object
+	 *      PUT/PATCH   /photos/{id}        update          replacement properties for existing photo
 	 *
 	 *  If 'websafe' option is present, the following paths are also available:
 	 *
+	 *      POST		/photos/{id}/delete delete
 	 *      POST        /photos/{id}        update
-	 *      DELETE      /photos/{id}/delete delete
 	 *
 	 * @param string $name    The name of the controller to route to.
 	 * @param array  $options An list of possible ways to customize the routing.
