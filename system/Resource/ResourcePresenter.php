@@ -10,7 +10,11 @@ use CodeIgniter\Controller;
 class ResourcePresenter extends Controller
 {
 
-	use ResponseTrait;
+	/**
+	 *
+	 * @var string Name of the model class managing this resource's data
+	 */
+	protected $modelName = null;
 
 	/**
 	 *
@@ -22,9 +26,30 @@ class ResourcePresenter extends Controller
 
 	//--------------------------------------------------------------------
 
+	public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+	{
+		parent::initController($request, $response, $logger);
+
+		// instantiate our model, if needed
+		if (! empty($this->modelName))
+		{
+			try
+			{
+				$this->model = $this->modelName();
+			}
+			catch (\Exception $e)
+			{
+				// ignored. we just own't use a model for now
+			}
+		}
+	}
+
+	//--------------------------------------------------------------------
+
 	/**
 	 * Present a view of resource objects
-	 * @return string	
+	 *
+	 * @return string
 	 */
 	public function index()
 	{
@@ -33,7 +58,8 @@ class ResourcePresenter extends Controller
 
 	/**
 	 * Present a view to present a specific resource object
-	 * @param type $id
+	 *
+	 * @param  type $id
 	 * @return string
 	 */
 	public function show($id = null)
@@ -43,7 +69,8 @@ class ResourcePresenter extends Controller
 
 	/**
 	 * Present a view to present a new single resource object
-	 * @param type $id
+	 *
+	 * @param  type $id
 	 * @return string
 	 */
 	public function new()
@@ -53,6 +80,7 @@ class ResourcePresenter extends Controller
 
 	/**
 	 * Process the creation/insertion of a new resource object
+	 *
 	 * @return string
 	 */
 	public function create()
@@ -62,7 +90,8 @@ class ResourcePresenter extends Controller
 
 	/**
 	 * Present a view to confirm the deletion of a specific resource object
-	 * @param type $id
+	 *
+	 * @param  type $id
 	 * @return string
 	 */
 	public function remove($id = null)
@@ -72,7 +101,8 @@ class ResourcePresenter extends Controller
 
 	/**
 	 * Process the deletion of a specific resource object
-	 * @param type $id
+	 *
+	 * @param  type $id
 	 * @return string
 	 */
 	public function delete($id = null)
@@ -82,7 +112,8 @@ class ResourcePresenter extends Controller
 
 	/**
 	 * Present a view to edit the properties of a specific resource object
-	 * @param type $id
+	 *
+	 * @param  type $id
 	 * @return string
 	 */
 	public function edit($id = null)
@@ -92,7 +123,8 @@ class ResourcePresenter extends Controller
 
 	/**
 	 * Process the updating, full or partial, of a specific resource object
-	 * @param type $id
+	 *
+	 * @param  type $id
 	 * @return string
 	 */
 	public function update($id = null)
@@ -104,6 +136,7 @@ class ResourcePresenter extends Controller
 
 	/**
 	 * Set/change the model that this controller is bound to
+	 *
 	 * @param type $which
 	 */
 	public function setModel($which = null)
