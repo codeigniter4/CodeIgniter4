@@ -150,7 +150,7 @@ if (! function_exists('ascii_to_entities'))
 			{
 				/*
 				  If the $temp array has a value but we have moved on, then it seems only
-				  fair that we output that entity and restart $temp before continuing. -Paul
+				  fair that we output that entity and restart $temp before continuing.
 				 */
 				if (count($temp) === 1)
 				{
@@ -281,7 +281,7 @@ if (! function_exists('word_censor'))
 		// \w, \b and a few others do not match on a unicode character
 		// set for performance reasons. As a result words like über
 		// will not match on a word boundary. Instead, we'll assume that
-		// a bad word will be bookeneded by any of these characters.
+		// a bad word will be bookended by any of these characters.
 		$delim = '[-_\'\"`(){}<>\[\]|!?@#%&,.:;^~*+=\/ 0-9\n\r\t]';
 
 		foreach ($censored as $badword)
@@ -402,7 +402,7 @@ if (! function_exists('highlight_phrase'))
 	 *
 	 * @param string $str       the text string
 	 * @param string $phrase    the phrase you'd like to highlight
-	 * @param string $tag_open  the openging tag to precede the phrase with
+	 * @param string $tag_open  the opening tag to precede the phrase with
 	 * @param string $tag_close the closing tag to end the phrase with
 	 *
 	 * @return string
@@ -460,7 +460,7 @@ if (! function_exists('word_wrap'))
 	 * Anything placed between {unwrap}{/unwrap} will not be word wrapped, nor
 	 * will URLs.
 	 *
-	 * @param string  $str     the text string
+	 * @param string  $str             the text string
 	 * @param integer $charlim = 76    the number of characters to wrap at
 	 *
 	 * @return string
@@ -604,9 +604,9 @@ if (! function_exists('strip_slashes'))
 	 *
 	 * Removes slashes contained in a string or in an array
 	 *
-	 * @param mixed    string or array
+	 * @param mixed  $str  string or array
 	 *
-	 * @return mixed    string or array
+	 * @return mixed  string or array
 	 */
 	function strip_slashes($str)
 	{
@@ -632,7 +632,7 @@ if (! function_exists('strip_quotes'))
 	 *
 	 * Removes single and double quotes from a string
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return string
 	 */
@@ -651,7 +651,7 @@ if (! function_exists('quotes_to_entities'))
 	 *
 	 * Converts single and double quotes to entities
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return string
 	 */
@@ -677,7 +677,7 @@ if (! function_exists('reduce_double_slashes'))
 	 *
 	 * http://www.some-site.com/index.php
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return string
 	 */
@@ -712,7 +712,7 @@ if (! function_exists('reduce_multiples'))
 	{
 		$str = preg_replace('#' . preg_quote($character, '#') . '{2,}#', $character, $str);
 
-		return ($trim === true) ? trim($str, $character) : $str;
+		return ($trim) ? trim($str, $character) : $str;
 	}
 }
 
@@ -814,7 +814,7 @@ if (! function_exists('alternator'))
 
 		$args = func_get_args();
 
-		return $args[($i ++ % count($args))];
+		return $args[($i++ % count($args))];
 	}
 }
 
@@ -829,13 +829,13 @@ if (! function_exists('excerpt'))
 	 *
 	 * @param string  $text     String to search the phrase
 	 * @param string  $phrase   Phrase that will be searched for.
-	 * @param integer $radius   The amount of characters returned arround the phrase.
+	 * @param integer $radius   The amount of characters returned around the phrase.
 	 * @param string  $ellipsis Ending that will be appended
 	 *
 	 * @return string
 	 *
 	 * If no $phrase is passed, will generate an excerpt of $radius characters
-	 * from the begining of $text.
+	 * from the beginning of $text.
 	 */
 	function excerpt(string $text, string $phrase = null, int $radius = 100, string $ellipsis = '...'): string
 	{

@@ -334,7 +334,7 @@ if (! function_exists('mailto'))
 	 */
 	function mailto($email, string $title = '', $attributes = ''): string
 	{
-		if ($title === '')
+		if (trim($title) === '')
 		{
 			$title = $email;
 		}
@@ -360,7 +360,7 @@ if (! function_exists('safe_mailto'))
 	 */
 	function safe_mailto($email, string $title = '', $attributes = ''): string
 	{
-		if ($title === '')
+		if (trim($title) === '')
 		{
 			$title = $email;
 		}
