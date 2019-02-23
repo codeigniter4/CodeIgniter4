@@ -45,9 +45,9 @@ if (! function_exists('number_to_size'))
 	 * @param integer $precision
 	 * @param string  $locale
 	 *
-	 * @return string
+	 * @return boolean|string
 	 */
-	function number_to_size($num, int $precision = 1, string $locale = null): string
+	function number_to_size($num, int $precision = 1, string $locale = null)
 	{
 		// Strip any formatting & ensure numeric input
 		try
