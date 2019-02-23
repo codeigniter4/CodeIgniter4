@@ -47,7 +47,7 @@ if (! function_exists('now'))
 	 *
 	 * @return integer
 	 */
-	function now(string $timezone = null)
+	function now(string $timezone = null): int
 	{
 		$timezone = empty($timezone) ? app_timezone() : $timezone;
 
