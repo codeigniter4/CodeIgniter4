@@ -492,7 +492,7 @@ if (! function_exists('word_wrap'))
 			}
 		}
 
-		// Use PHPs native function to do the initial wordwrap.
+		// Use PHP's native function to do the initial wordwrap.
 		// We set the cut flag to FALSE so that any individual words that are
 		// too long get left alone. In the next step we'll deal with them.
 		$str = wordwrap($str, $charlim, "\n", false);
@@ -756,8 +756,9 @@ if (! function_exists('random_string'))
 
 				return substr(str_shuffle(str_repeat($pool, ceil($len / strlen($pool)))), 0, $len);
 			case 'md5':
+				return md5(uniqid(mt_rand(), true));
 			case 'sha1':
-				return $type(uniqid(mt_rand(), true));
+				return sha1(uniqid(mt_rand(), true));
 			case 'crypto':
 				return bin2hex(random_bytes($len / 2));
 		}

@@ -374,7 +374,7 @@ if (! function_exists('safe_mailto'))
 
 		$x[] = '"';
 
-		if (trim($attributes) !== '')
+		if ($attributes !== '')
 		{
 			if (is_array($attributes))
 			{
