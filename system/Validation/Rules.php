@@ -367,7 +367,7 @@ class Rules
 		// any of the fields are not present or value is '' in $data
 		foreach ($fields as $field)
 		{
-			if (! array_key_exists($field, $data) || trim($data[$field]) === '')
+			if (! array_key_exists($field, $data) || ! $this->required($data[$field] ?? ''))
 			{
 				return false;
 			}
