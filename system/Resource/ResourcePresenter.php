@@ -53,7 +53,7 @@ class ResourcePresenter extends Controller
 	 */
 	public function index()
 	{
-		return NOT_THERE;
+		return 'index: ' . NOT_THERE;
 	}
 
 	/**
@@ -64,7 +64,7 @@ class ResourcePresenter extends Controller
 	 */
 	public function show($id = null)
 	{
-		return NOT_THERE;
+		return 'show: ' . NOT_THERE;
 	}
 
 	/**
@@ -75,7 +75,7 @@ class ResourcePresenter extends Controller
 	 */
 	public function new()
 	{
-		return NOT_THERE;
+		return 'new: ' . NOT_THERE;
 	}
 
 	/**
@@ -85,7 +85,7 @@ class ResourcePresenter extends Controller
 	 */
 	public function create()
 	{
-		return NOT_THERE;
+		return 'create: ' . NOT_THERE;
 	}
 
 	/**
@@ -96,7 +96,7 @@ class ResourcePresenter extends Controller
 	 */
 	public function remove($id = null)
 	{
-		return NOT_THERE;
+		return 'remove: ' . NOT_THERE;
 	}
 
 	/**
@@ -107,7 +107,7 @@ class ResourcePresenter extends Controller
 	 */
 	public function delete($id = null)
 	{
-		return NOT_THERE;
+		return 'delete: ' . NOT_THERE;
 	}
 
 	/**
@@ -118,7 +118,7 @@ class ResourcePresenter extends Controller
 	 */
 	public function edit($id = null)
 	{
-		return NOT_THERE;
+		return 'edit: ' . NOT_THERE;
 	}
 
 	/**
@@ -129,7 +129,7 @@ class ResourcePresenter extends Controller
 	 */
 	public function update($id = null)
 	{
-		return NOT_THERE;
+		return 'update: ' . NOT_THERE;
 	}
 
 	//--------------------------------------------------------------------

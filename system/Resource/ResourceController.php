@@ -59,10 +59,16 @@ class ResourceController extends Controller
 	 */
 	public function index()
 	{
-		if ($this->model instanceof \CodeIgniter\Model)
-		{
-			$this->respond($this->model->findAll());
-		}
+		return $this->fail('index: Action not implemented', 501);
+	}
+
+	/**
+	 * Return the properties of a resource object
+	 *
+	 * @return array	an array
+	 */
+	public function show($id = null)
+	{
 		$this->fail('Action not implemented', 501);
 	}
 
@@ -72,6 +78,16 @@ class ResourceController extends Controller
 	 * @return array	an array
 	 */
 	public function new()
+	{
+		$this->fail('Action not implemented', 501);
+	}
+
+	/**
+	 * Create a new resource object, from "posted" parameters
+	 *
+	 * @return array	an array
+	 */
+	public function create()
 	{
 		$this->fail('Action not implemented', 501);
 	}
@@ -87,25 +103,11 @@ class ResourceController extends Controller
 	}
 
 	/**
-	 * Return the properties of a resource object
+	 * Add or update a model resource, from "posted" properties
 	 *
 	 * @return array	an array
 	 */
-	public function show($id = null)
-	{
-		if ($this->model instanceof \CodeIgniter\Model)
-		{
-			$this->respond($this->model->find($id));
-		}
-		$this->fail('Action not implemented', 501);
-	}
-
-	/**
-	 * Create a new resource object, from "posted" parameters
-	 *
-	 * @return array	an array
-	 */
-	public function create()
+	public function update($id = null)
 	{
 		$this->fail('Action not implemented', 501);
 	}
@@ -116,16 +118,6 @@ class ResourceController extends Controller
 	 * @return array	an array
 	 */
 	public function delete($id = null)
-	{
-		$this->fail('Action not implemented', 501);
-	}
-
-	/**
-	 * Add or update a model resource, from "posted" properties
-	 *
-	 * @return array	an array
-	 */
-	public function update($id = null)
 	{
 		$this->fail('Action not implemented', 501);
 	}
