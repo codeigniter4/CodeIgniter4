@@ -226,17 +226,17 @@ code.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">Pages</span> <span class="k">extends</span> <span class="nx">Controller</span> <span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Pages</span> <span class="k">extends</span> <span class="nx">Controller</span> <span class="p">{</span>
 
-        <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
-        <span class="p">{</span>
-                <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;welcome_message&#39;</span><span class="p">);</span>
-        <span class="p">}</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;welcome_message&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
 
-        <span class="k">public</span> <span class="k">function</span> <span class="nf">showme</span><span class="p">(</span><span class="nv">$page</span> <span class="o">=</span> <span class="s1">&#39;home&#39;</span><span class="p">)</span>
-        <span class="p">{</span>
-        <span class="p">}</span>
-<span class="p">}</span>
+            <span class="k">public</span> <span class="k">function</span> <span class="nf">showme</span><span class="p">(</span><span class="nv">$page</span> <span class="o">=</span> <span class="s1">&#39;home&#39;</span><span class="p">)</span>
+            <span class="p">{</span>
+            <span class="p">}</span>
+    <span class="p">}</span>
 </pre></div>
 </div>
 <p>You have created a class named <code class="docutils literal"><span class="pre">Pages</span></code>, with a <code class="docutils literal"><span class="pre">showme</span></code> method that accepts
@@ -374,10 +374,6 @@ section of the configuration file.</p>
 </div>
 <p>This directive says that any incoming request without any content
 specified should be handled by the <code class="docutils literal"><span class="pre">index</span></code> method inside the <code class="docutils literal"><span class="pre">Home</span></code> controller.</p>
-<p>Set the default controller to run your new method:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Pages/showme&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
 <p>Add the following line, <strong>after</strong> the route directive for &#8216;/&#8217;.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::showme/$1&#39;</span><span class="p">);</span>
 </pre></div>
@@ -423,7 +419,7 @@ method in the pages controller? Awesome!</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Feb 21, 2019.
+      Last updated on Feb 27, 2019.
 
     </p>
   </div>
