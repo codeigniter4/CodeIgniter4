@@ -31,15 +31,15 @@ code.
 
 ::
 
-        <?php namespace App\Controllers;
-        use CodeIgniter\Controller;
+    <?php namespace App\Controllers;
+    use CodeIgniter\Controller;
 
 	class Pages extends Controller {
 
-                public function index()
-                {
-                        return view('welcome_message');
-                }
+        public function index()
+        {
+            return view('welcome_message');
+        }
 
 		public function showme($page = 'home')
 		{
@@ -203,12 +203,6 @@ The only uncommented line there to start with should be:::
 
 This directive says that any incoming request without any content
 specified should be handled by the ``index`` method inside the ``Home`` controller.
-
-Set the default controller to run your new method:
-
-::
-
-    $routes->setDefaultController('Pages/showme');
 
 Add the following line, **after** the route directive for '/'.
 
