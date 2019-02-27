@@ -15,6 +15,7 @@ use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
 use Tests\Support\Models\SimpleEntity;
 use Tests\Support\Models\UserModel;
+use Tests\Support\Models\ValidErrorsModel;
 use Tests\Support\Models\ValidModel;
 
 /**
@@ -1030,5 +1031,28 @@ class ModelTest extends CIDatabaseTestCase
 		];
 
 		$this->assertTrue($model->insert($data) !== false);
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1574
+	 */
+	public function testValidationIncludingErrors()
+	{
+		$model = new ValidErrorsModel($this->db);
+
+		$data = [
+			'description' => 'This is a first test!',
+			'name'        => 'valid',
+			'id'          => 42,
+			'token'       => 42,
+		];
+
+		$id = $model->insert($data);
+
+		$this->assertFalse((bool)$id);
+
+		$errors = $model->errors();
+
+		$this->assertEquals('Minimum Length Error', $model->errors()['name']);
 	}
 }
