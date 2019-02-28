@@ -152,12 +152,17 @@ class IncomingRequest extends Request
 	 * @param string                      $body
 	 * @param \CodeIgniter\HTTP\UserAgent $userAgent
 	 */
-	public function __construct($config, $uri = null, $body = 'php://input', UserAgent $userAgent)
+	public function __construct($config, $uri = null, $body = 'php://input', UserAgent $userAgent = null)
 	{
 		// Get our body from php://input
 		if ($body === 'php://input')
 		{
 			$body = file_get_contents('php://input');
+		}
+
+		if($userAgent === null)
+		{
+			$userAgent = new \CodeIgniter\HTTP\UserAgent();
 		}
 
 		$this->body      = $body;

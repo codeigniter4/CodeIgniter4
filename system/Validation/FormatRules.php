@@ -196,7 +196,7 @@ class FormatRules
 	 *
 	 * @return boolean
 	 */
-	public function regex_match(string $str = null, string $pattern, array $data): bool
+	public function regex_match(string $str, string $pattern, array $data): bool
 	{
 		if (strpos($pattern, '/') !== 0)
 		{
@@ -320,7 +320,7 @@ class FormatRules
 	 *
 	 * @return boolean
 	 */
-	public function valid_ip(string $ip = null, string $which = null, array $data): bool
+	public function valid_ip(string $ip, string $which, array $data): bool
 	{
 		switch (strtolower($which))
 		{

@@ -106,7 +106,7 @@ class Controller
 	 * @param ResponseInterface        $response
 	 * @param \Psr\Log\LoggerInterface $logger
 	 *
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException
 	 */
 	public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
 	{
@@ -135,7 +135,7 @@ class Controller
 	 *                          considered secure for. Only with HSTS header.
 	 *                          Default value is 1 year.
 	 *
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException
 	 */
 	public function forceHTTPS(int $duration = 31536000)
 	{
@@ -179,14 +179,14 @@ class Controller
 	 * A shortcut to performing validation on input data. If validation
 	 * is not successful, a $errors property will be set on this class.
 	 *
-	 * @param array $rules
-	 * @param array $messages An array of custom error messages
+	 * @param array|string  $rules
+	 * @param array         $messages An array of custom error messages
 	 *
 	 * @return boolean
 	 */
 	public function validate($rules, array $messages = []): bool
 	{
-		$this->validator = Services::validation();
+		$this->validator = \Config\Services::validation();
 
 		// If you replace the $rules array with the name of the group
 		if (is_string($rules))
@@ -211,9 +211,8 @@ class Controller
 		}
 
 		$success = $this->validator
-			->withRequest($this->request)
 			->setRules($rules, $messages)
-			->run();
+			->run($this->request->getPost());
 
 		return $success;
 	}

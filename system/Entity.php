@@ -566,7 +566,7 @@ class Entity
 
 				if (json_last_error() !== JSON_ERROR_NONE)
 				{
-					throw CastException::forInvalidJsonFormatException(json_last_error());
+					throw \CodeIgniter\Exceptions\CastException::forInvalidJsonFormatException(json_last_error());
 				}
 			}
 		}
