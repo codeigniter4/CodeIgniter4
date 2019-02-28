@@ -466,7 +466,7 @@ class Model
 
 			$originalPrimaryKey = method_exists($data, 'getOriginalValue') ?
 				$data->getOriginalValue($this->primaryKey) :
-				($data->{$this->primaryKey} ?? null);
+				($data->{$this->primaryKey} ?? false);
 
 			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
 
@@ -475,7 +475,7 @@ class Model
 				return true;
 			}
 
-			if($originalPrimaryKey === null)
+			if($originalPrimaryKey === false)
 			{
 				$response = $this->insert($data);
 			}
