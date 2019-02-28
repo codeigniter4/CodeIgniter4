@@ -35,7 +35,7 @@
  * @since      Version 3.0.0
  * @filesource
  */
-
+use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Validation\Validation;
@@ -186,7 +186,7 @@ class Controller
 	 */
 	public function validate($rules, array $messages = []): bool
 	{
-		$this->validator = \Config\Services::validation();
+		$this->validator = Services::validation();
 
 		// If you replace the $rules array with the name of the group
 		if (is_string($rules))
@@ -211,8 +211,9 @@ class Controller
 		}
 
 		$success = $this->validator
+			->withRequest($this->request)
 			->setRules($rules, $messages)
-			->run($this->request->getPost());
+			->run();
 
 		return $success;
 	}

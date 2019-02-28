@@ -196,7 +196,7 @@ class FormatRules
 	 *
 	 * @return boolean
 	 */
-	public function regex_match(string $str, string $pattern, array $data): bool
+	public function regex_match(string $str = null, string $pattern, array $data): bool
 	{
 		if (strpos($pattern, '/') !== 0)
 		{

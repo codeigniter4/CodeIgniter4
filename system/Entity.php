@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter;
 
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Exceptions\CastException;
 
 /**
  * CodeIgniter
@@ -566,7 +567,7 @@ class Entity
 
 				if (json_last_error() !== JSON_ERROR_NONE)
 				{
-					throw \CodeIgniter\Exceptions\CastException::forInvalidJsonFormatException(json_last_error());
+					throw CastException::forInvalidJsonFormatException(json_last_error());
 				}
 			}
 		}
