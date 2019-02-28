@@ -474,7 +474,7 @@ class Query implements QueryInterface
 		do
 		{
 			$c --;
-			$escapedValue = $binds[$c][1] ? $this->db->escape($binds[$c][0]) : $binds[$c[0]];
+			$escapedValue = $binds[$c][1] ? $this->db->escape($binds[$c][0]) : $binds[$c][0];
 			if (is_array($escapedValue))
 			{
 				$escapedValue = '(' . implode(',', $escapedValue) . ')';
