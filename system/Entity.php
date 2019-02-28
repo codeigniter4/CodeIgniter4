@@ -252,7 +252,7 @@ class Entity
 	
 	public function getOriginalValue(string $key)
 	{
-		return $this->_original[$key] ?? null;
+		return $this->_original[$key] ?? false;
 	}
 	
 	//--------------------------------------------------------------------
