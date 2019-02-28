@@ -443,7 +443,7 @@ class Model
 	}
 
 	//--------------------------------------------------------------------
-
+	
 	/**
 	 * A convenience method that will attempt to determine whether the
 	 * data should be inserted or updated. Will work with either
@@ -458,11 +458,20 @@ class Model
 	 */
 	public function save($data)
 	{
+		$asInsert = null;
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
+			// Assuming we should insert if primaryKey was null;
+			// Fix: #1770: insert instead of update
+			// Fix: no no.: inserting entities with non-autoincrement primaryKeys
+			if(method_exists($data, 'getOriginalValue'))
+			{
+				$asInsert = is_null($data->getOriginalValue($this->primaryKey));
+			}
+
 			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
 		}
 
@@ -471,11 +480,11 @@ class Model
 			return true;
 		}
 
-		if (is_object($data) && isset($data->{$this->primaryKey}))
+		if (is_object($data) && isset($data->{$this->primaryKey}) && (! $asInsert || $asInsert === null))
 		{
 			$response = $this->update($data->{$this->primaryKey}, $data);
 		}
-		elseif (is_array($data) && ! empty($data[$this->primaryKey]))
+		elseif (is_array($data) && ! empty($data[$this->primaryKey]) && (! $asInsert || $asInsert === null))
 		{
 			$response = $this->update($data[$this->primaryKey], $data);
 		}
