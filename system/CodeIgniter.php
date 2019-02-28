@@ -280,7 +280,7 @@ class CodeIgniter
 	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
 	 * @throws \CodeIgniter\Filters\Exceptions\FilterException
 	 */
-	protected function handleRequest(RouteCollectionInterface $routes, $cacheConfig, bool $returnResponse = false)
+	protected function handleRequest(RouteCollectionInterface $routes = null, $cacheConfig, bool $returnResponse = false)
 	{
 		$routeFilter = $this->tryToRouteIt($routes);
 
@@ -685,7 +685,7 @@ class CodeIgniter
 	 *
 	 * @return string
 	 */
-	protected function tryToRouteIt(RouteCollectionInterface $routes)
+	protected function tryToRouteIt(RouteCollectionInterface $routes = null)
 	{
 		if (empty($routes) || ! $routes instanceof RouteCollectionInterface)
 		{

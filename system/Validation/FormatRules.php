@@ -320,7 +320,7 @@ class FormatRules
 	 *
 	 * @return boolean
 	 */
-	public function valid_ip(string $ip, string $which, array $data): bool
+	public function valid_ip(string $ip = null, string $which = null, array $data): bool
 	{
 		switch (strtolower($which))
 		{
