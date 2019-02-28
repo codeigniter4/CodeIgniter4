@@ -458,26 +458,33 @@ class Model
 	 */
 	public function save($data)
 	{
-		$asInsert = null;
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
-			// Assuming we should insert if primaryKey was null;
-			// Fix: #1770: insert instead of update
-			// Fix: no no.: inserting entities with non-autoincrement primaryKeys
-			if(method_exists($data, 'getOriginalValue'))
-			{
-				$asInsert = is_null($data->getOriginalValue($this->primaryKey));
-			}
+
+			$originalPrimaryKey = method_exists($data, 'getOriginalValue') ?
+				$data->getOriginalValue($this->primaryKey) :
+				($data->{$this->primaryKey} ?? null);
 
 			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
-			
-			if(! $asInsert && count($data) === 1 && isset($data[$this->primaryKey]))
+
+			if(empty($data))
 			{
 				return true;
 			}
+
+			if($originalPrimaryKey === null)
+			{
+				$response = $this->insert($data);
+			}
+			else
+			{
+				$response =  $this->update($originalPrimaryKey, $data);
+			}
+			return $response;
+
 		}
 
 		if (empty($data))
@@ -485,11 +492,11 @@ class Model
 			return true;
 		}
 
-		if (is_object($data) && isset($data->{$this->primaryKey}) && (! $asInsert || $asInsert === null))
+		if (is_object($data) && isset($data->{$this->primaryKey}))
 		{
 			$response = $this->update($data->{$this->primaryKey}, $data);
 		}
-		elseif (is_array($data) && ! empty($data[$this->primaryKey]) && (! $asInsert || $asInsert === null))
+		elseif (is_array($data) && ! empty($data[$this->primaryKey]))
 		{
 			$response = $this->update($data[$this->primaryKey], $data);
 		}
