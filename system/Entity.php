@@ -199,10 +199,9 @@ class Entity
 	 *
 	 * @param boolean $onlyChanged
 	 *
-	 * @param null|string $primaryKey
 	 * @return array
 	 */
-	public function toRawArray(bool $onlyChanged = false, ?string $primaryKey = null): array
+	public function toRawArray(bool $onlyChanged = false): array
 	{
 		$return = [];
 
@@ -215,7 +214,7 @@ class Entity
 				continue;
 			}
 
-			if ($onlyChanged && ! $this->hasPropertyChanged($key, $value) && $key !== $primaryKey)
+			if ($onlyChanged && ! $this->hasPropertyChanged($key, $value))
 			{
 				continue;
 			}
