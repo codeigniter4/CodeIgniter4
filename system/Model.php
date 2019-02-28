@@ -473,6 +473,11 @@ class Model
 			}
 
 			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
+			
+			if(! $asInsert && count($data) === 1 && isset($data[$this->primaryKey]))
+			{
+				return true;
+			}
 		}
 
 		if (empty($data))
