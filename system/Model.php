@@ -524,6 +524,12 @@ class Model
 		if (method_exists($data, 'toRawArray'))
 		{
 			$properties = $data->toRawArray(true, $primaryKey);
+			
+			// Always grab the primary key otherwise updates will fail.
+			if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties))
+			{
+				$properties[$primaryKey] = $data->{$primaryKey};
+			}
 		}
 		else
 		{
