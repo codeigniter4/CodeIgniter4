@@ -45,7 +45,7 @@ if (! function_exists('number_to_size'))
 	 * @param integer $precision
 	 * @param string  $locale
 	 *
-	 * @return string
+	 * @return boolean|string
 	 */
 	function number_to_size($num, int $precision = 1, string $locale = null)
 	{
@@ -178,7 +178,7 @@ if (! function_exists('number_to_currency'))
 	 *
 	 * @return string
 	 */
-	function number_to_currency($num, string $currency, string $locale = null)
+	function number_to_currency($num, string $currency, string $locale = null): string
 	{
 		return format_number($num, 1, $locale, [
 			'type'     => NumberFormatter::CURRENCY,
@@ -202,7 +202,7 @@ if (! function_exists('format_number'))
 	 *
 	 * @return string
 	 */
-	function format_number($num, int $precision = 1, string $locale = null, array $options = [])
+	function format_number($num, int $precision = 1, string $locale = null, array $options = []): string
 	{
 		// Locale is either passed in here, negotiated with client, or grabbed from our config file.
 		$locale = $locale ?? \CodeIgniter\Config\Services::request()->getLocale();
@@ -259,14 +259,14 @@ if (! function_exists('number_to_roman'))
 	 *
 	 * @param integer $num it will convert to int
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	function number_to_roman($num)
 	{
 		$num = (int) $num;
 		if ($num < 1 || $num > 3999)
 		{
-			return;
+			return null;
 		}
 
 		$_number_to_roman = function ($num, $th) use (&$_number_to_roman) {
