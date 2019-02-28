@@ -240,6 +240,23 @@ class Entity
 	{
 		return ! (($this->_original[$key] === null && $value === null) || $this->_original[$key] === $value);
 	}
+	
+	//--------------------------------------------------------------------
+
+	/**
+	 * Gets original property value
+	 *
+	 * @param string $key
+	 *
+	 * @return mixed
+	 */
+	
+	public function getOriginalValue(string $key)
+	{
+		return $this->_original[$key] ?? null;
+	}
+	
+	//--------------------------------------------------------------------
 
 	/**
 	 * Magic method to allow retrieval of protected and private
