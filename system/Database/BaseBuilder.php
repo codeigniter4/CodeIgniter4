@@ -662,7 +662,11 @@ class BaseBuilder
 			if ($v !== null)
 			{
 				$op = $this->getOperator($k);
-				$k  = trim(str_replace($op, '', $k));
+				
+				if(is_string($op))
+				{
+					$k = strrev(preg_replace(strrev("/$op/"),strrev(' '),strrev($k),1));
+				}
 
 				$bind = $this->setBind($k, $v, $escape);
 
@@ -2935,7 +2939,7 @@ class BaseBuilder
 			];
 		}
 
-		return preg_match('/' . implode('|', $_operators) . '/i', $str, $match) ? $match[0] : false;
+		return preg_match_all('/' . implode('|', $_operators) . '/i', $str, $match) ? $match[0][count($match[0])-1] : false;
 	}
 
 	// --------------------------------------------------------------------
