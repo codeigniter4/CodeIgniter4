@@ -458,47 +458,49 @@ class Model
 	 */
 	public function save($data)
 	{
+		$originalPrimaryKey = null;
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
-		if (is_object($data) && ! $data instanceof \stdClass)
+		if (is_object($data))
 		{
-
-			$originalPrimaryKey = method_exists($data, 'getOriginalValue') ?
-				$data->getOriginalValue($this->primaryKey) :
-				($data->{$this->primaryKey} ?? false);
-
-			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
-
-			if(empty($data))
+			if( ! $data instanceof \stdClass)
 			{
-				return true;
-			}
 
-			if($originalPrimaryKey === false)
-			{
-				$response = $this->insert($data);
+				$originalPrimaryKey = method_exists($data, 'getOriginalValue') ?
+					$data->getOriginalValue($this->primaryKey) :
+					($data->{$this->primaryKey} ?? null);
+
+				$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
 			}
 			else
 			{
-				$response =  $this->update($originalPrimaryKey, $data);
+				$originalPrimaryKey = $data->{$this->primaryKey} ?? null;
 			}
-			return $response;
 
 		}
+		else if(is_array($data))
+		{
+			$originalPrimaryKey = $data[$this->primaryKey] ?? null;
+		}
 
-		if (empty($data) || (is_array($data) && count($data) === 1 && array_key_exists($this->primaryKey, $data)))
+		// If originalPrimaryKey is not null there is only one item in $data array and
+		// $data[$primaryKey] = $originalPrimaryKey
+		// then nothing has been changed in other case someone wants to update only primaryKey value.
+		// We do not have possibilities to check object here :(
+		if(empty($data) || ($originalPrimaryKey !== null && is_array($data) && ! empty($data[$this->primaryKey]) && count($data) === 1 && $data[$this->primaryKey] === $originalPrimaryKey))
 		{
 			return true;
 		}
 
-		if (is_object($data) && isset($data->{$this->primaryKey}))
+		if (is_object($data) && !empty($originalPrimaryKey))
 		{
-			$response = $this->update($data->{$this->primaryKey}, $data);
+			$response = $this->update($originalPrimaryKey, $data);
 		}
-		elseif (is_array($data) && ! empty($data[$this->primaryKey]))
+		// Adding support for UPDATE table SET primaryKey = 'newVal' WHERE primaryKey = 'oldVal'
+		elseif (is_array($data) && ! empty($originalPrimaryKey))
 		{
-			$response = $this->update($data[$this->primaryKey], $data);
+			$response = $this->update($originalPrimaryKey, $data);
 		}
 		else
 		{
@@ -507,6 +509,7 @@ class Model
 
 		return $response;
 	}
+
 
 	/**
 	 * Takes a class an returns an array of it's public and protected
