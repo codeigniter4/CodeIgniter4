@@ -243,16 +243,16 @@ class Entity
 	//--------------------------------------------------------------------
 
 	/**
-	 * Gets original property value
+	 * Gets original property value or $defaultValue specified by parameter if original value is not set OR null
 	 *
 	 * @param string $key
+	 * @param null $defaultValue
 	 *
 	 * @return mixed
 	 */
-	
-	public function getOriginalValue(string $key)
+	public function getOriginalValue(string $key, $defaultValue = null)
 	{
-		return $this->_original[$key] ?? false;
+		return $this->_original[$key] ?? $defaultValue;
 	}
 	
 	//--------------------------------------------------------------------
@@ -390,6 +390,7 @@ class Entity
 	 * attribute will be reset to that default value.
 	 *
 	 * @param string $key
+	 * @throws \ReflectionException
 	 */
 	public function __unset(string $key)
 	{
