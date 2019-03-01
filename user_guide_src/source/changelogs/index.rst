@@ -37,7 +37,7 @@ App changes:
 - composer.json has a case correction
 - env adds CI_ENVIRONMENT suggestion
 
-:doc:`See all the changes. </changelogs/next>`
+:doc:`See all the changes. </changelogs/v4.0.0-beta.1>`
 
 Version 4.0.0-alpha.5
 ====================================================
