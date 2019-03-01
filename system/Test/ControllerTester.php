@@ -37,6 +37,7 @@
  */
 
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
 use Config\App;
@@ -90,7 +91,7 @@ trait ControllerTester
 
 		if (empty($this->request))
 		{
-			$this->request = new IncomingRequest($this->appConfig, $this->uri, $this->body);
+			$this->request = new IncomingRequest($this->appConfig, $this->uri, $this->body, new UserAgent());
 		}
 
 		if (empty($this->response))
