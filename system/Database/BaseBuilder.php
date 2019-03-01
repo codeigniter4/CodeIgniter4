@@ -665,7 +665,7 @@ class BaseBuilder
 				
 				if(is_string($op))
 				{
-					$k = strrev(preg_replace(strrev("/$op/"),strrev(' '),strrev($k),1));
+					$k = strrev(preg_replace(strrev("/$op/"),strrev(''),strrev($k),1));
 				}
 
 				$bind = $this->setBind($k, $v, $escape);
