@@ -32,7 +32,7 @@ Installation
 
 In the folder above your project root::
 
-    composer create-project codeigniter4/appstarter -s alpha
+    composer create-project codeigniter4/appstarter -s beta
 
 Setup
 -------------------------------------------------------
@@ -139,7 +139,7 @@ will be your document root.
 
 In your project root::
 
-    composer require codeigniter4/framework @alpha
+    composer require codeigniter4/framework @beta
 
 Setup
 -------------------------------------------------------
@@ -190,6 +190,6 @@ they can be added to your project in a similar fashion.
 
 From the command line inside your project root::
 
-    composer require codeigniter4/translations
+    composer require codeigniter4/translations @beta
 
 These will be updated along with the framework whenever you do a ``composer update``.

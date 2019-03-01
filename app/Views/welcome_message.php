@@ -12,8 +12,9 @@
 				height: 200px;
 				width: 155px;
 				display: inline-block;
-				opacity: 0.08;
+				opacity: 0.12;
 				position: absolute;
+				z-index: 0;
 				top: 2rem;
 				left: 50%;
 				margin-left: -73px;
@@ -32,6 +33,8 @@
 				margin-top: 145px;
 				margin-bottom: 0;
 				color: #222;
+				position: relative;
+				z-index: 1;
 			}
 			.wrap {
 				max-width: 1024px;
@@ -81,15 +84,11 @@
 
 		<div class="wrap">
 
-			<h1>Welcome to CodeIgniter</h1>
-
-			<p class="version">version <?= CodeIgniter\CodeIgniter::CI_VERSION ?></p>
-
 			<div class="logo">
 				<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
 					 width="155.000000px" height="200.000000px" viewBox="0 0 155.000000 200.000000"
 					 preserveAspectRatio="xMidYMid meet">
-				<g transform="translate(0.000000,200.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+				<g transform="translate(0.000000,200.000000) scale(0.100000,-0.100000)" fill="#ee2600" stroke="none">
 				<path d="M737 1963 c22 -79 -7 -185 -78 -290 -18 -26 -107 -122 -197 -213
 					  -239 -240 -336 -371 -403 -544 -79 -206 -78 -408 5 -582 64 -134 212 -264 361
 					  -314 l60 -20 -30 22 c-210 152 -229 387 -48 588 25 27 48 50 51 50 4 0 7 -27
@@ -103,6 +102,10 @@
 				</g>
 				</svg>
 			</div>
+
+			<h1>Welcome to CodeIgniter</h1>
+
+			<p class="version">version <?= CodeIgniter\CodeIgniter::CI_VERSION ?></p>
 
 			<div class="guide">
 				<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>

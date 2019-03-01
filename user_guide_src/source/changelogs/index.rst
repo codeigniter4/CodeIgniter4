@@ -9,15 +9,23 @@ Release Date: Unreleased
 
 Highlights:
 
-:doc:`See all the changes. </changelogs/next>`
+- New View Layouts provide simple way to create site site view templates.
+- Fixed user guide CSS for proper wide table display
+- Converted UploadedFile to use system messages
+- Numerous database, migration & model bugs fixed
+- Refactored unit testing for appstarter & framework distributions
 
-Version 4.0.0-alpha.5
-====================================================
+New messages:
 
-Release Date: Jan 30, 2019
+- Database.tableNotFound
+- HTTP.uploadErr...
 
-**Next release of CodeIgniter4**
+App changes:
 
+- app/Config/Cache has new setting: database
+- app/Views/welcome_message has logo tinted
+- composer.json has a case correction
+- env adds CI_ENVIRONMENT suggestion
 
 :doc:`See all the changes. </changelogs/next>`
 

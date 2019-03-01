@@ -80,4 +80,4 @@ This is bound and installed automatically as part of the
 codebase installation.
 
 If you wish to use it inside your project too,
-``composer require codeigniter4/translations @alpha``
+``composer require codeigniter4/translations @beta``
