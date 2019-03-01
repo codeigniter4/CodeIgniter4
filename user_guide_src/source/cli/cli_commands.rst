@@ -83,6 +83,7 @@ should contain the following code::
     <?php namespace App\Commands;
 
     use CodeIgniter\CLI\BaseCommand;
+    use CodeIgniter\CLI\CLI;
 
     class AppInfo extends BaseCommand
     {
