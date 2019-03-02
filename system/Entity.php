@@ -342,6 +342,11 @@ class Entity
 			{
 				$value = json_encode($value);
 			}
+			
+			if($castTo === 'boolean')
+			{
+				$value = (int)(is_bool($value) ? $value : ($value !== '0' && $value !== 0);
+			}
 		}
 
 		// if a set* method exists for this key,
