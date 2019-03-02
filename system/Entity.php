@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter;
 
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Exceptions\CastException;
 
 /**
  * CodeIgniter

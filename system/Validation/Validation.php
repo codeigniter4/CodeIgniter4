@@ -540,13 +540,13 @@ class Validation implements ValidationInterface
 	 *
 	 * @param string|null $group
 	 *
-	 * @return array|void
+	 * @return array|ValidationException|null
 	 */
 	public function loadRuleGroup(string $group = null)
 	{
 		if (empty($group))
 		{
-			return;
+			return null;
 		}
 
 		if (! isset($this->config->$group))

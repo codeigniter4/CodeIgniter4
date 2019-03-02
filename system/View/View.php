@@ -81,7 +81,7 @@ class View implements RendererInterface
 	/**
 	 * Logger instance.
 	 *
-	 * @var Logger
+	 * @var \CodeIgniter\Log\Logger
 	 */
 	protected $logger;
 
@@ -414,7 +414,7 @@ class View implements RendererInterface
 	 *
 	 * @param string $layout
 	 *
-	 * @return $this
+	 * @return void
 	 */
 	public function extend(string $layout)
 	{
