@@ -673,7 +673,7 @@ class BaseBuilder
 
 					if(substr($k,  -1 * strlen($op)) === $op)
 					{
-						$k = strrev(preg_replace(strrev("/" .  $op . "/"),strrev(''),strrev($k),1));
+						$k = rtrim(strrev(preg_replace(strrev("/" .  $op . "/"),strrev(''),strrev($k),1)));
 					}
 
 				}
