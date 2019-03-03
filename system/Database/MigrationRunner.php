@@ -196,7 +196,7 @@ class MigrationRunner
 	 * @param string|null $namespace
 	 * @param string|null $group
 	 *
-	 * @return mixed TRUE if no migrations are found, current version string on success, Exception on failure
+	 * @return mixed TRUE if no migrations are found, current version string on success, False on failure
 	 * @throws ConfigException
 	 */
 	public function version(string $targetVersion, string $namespace = null, string $group = null)
@@ -223,10 +223,6 @@ class MigrationRunner
 		// Sequential versions need adjusting to 3 places so they can be found later.
 		if ($this->type === 'sequential')
 		{
-			if ($targetVersion == '0')
-			{
-				return true;
-			}
 			$targetVersion = str_pad($targetVersion, 3, '0', STR_PAD_LEFT);
 		}
 
@@ -260,7 +256,8 @@ class MigrationRunner
 		foreach ($migrations as $version => $migration)
 		{
 			// Only include migrations within the scoop
-			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion))
+			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion)
+			)
 			{
 				include_once $migration->path;
 				// Get namespaced class name
@@ -294,7 +291,7 @@ class MigrationRunner
 			}
 		}
 
-		return $targetVersion;
+		return true;
 	}
 
 	//--------------------------------------------------------------------
