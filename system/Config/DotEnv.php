@@ -71,7 +71,7 @@ class DotEnv
 	 *
 	 * @return boolean
 	 */
-	public function load()
+	public function load(): bool
 	{
 		// We don't want to enforce the presence of a .env file,
 		// they should be optional.

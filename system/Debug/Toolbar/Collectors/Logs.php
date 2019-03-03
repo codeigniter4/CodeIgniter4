@@ -93,8 +93,10 @@ class Logs extends BaseCollector
 
 	/**
 	 * Does this collector actually have any data to display?
+	 *
+	 * @return boolean
 	 */
-	public function isEmpty()
+	public function isEmpty(): bool
 	{
 		$this->collectLogs();
 
@@ -119,6 +121,8 @@ class Logs extends BaseCollector
 
 	/**
 	 * Ensures the data has been collected.
+	 *
+	 * @return mixed
 	 */
 	protected function collectLogs()
 	{

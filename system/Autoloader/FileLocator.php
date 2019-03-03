@@ -73,7 +73,7 @@ class FileLocator
 	 * @param string $folder The folder within the namespace that we should look for the file.
 	 * @param string $ext    The file extension the file should have.
 	 *
-	 * @return string|false The path to the file, or false if not found.
+	 * @return string|boolean The path to the file, or false if not found.
 	 */
 	public function locateFile(string $file, string $folder = null, string $ext = 'php')
 	{
@@ -298,7 +298,7 @@ class FileLocator
 	 *
 	 * @param string $path
 	 *
-	 * @return string|false The qualified name or false if the path is not found
+	 * @return string|boolean The qualified name or false if the path is not found
 	 */
 	public function findQualifiedNameFromPath(string $path)
 	{
@@ -383,7 +383,7 @@ class FileLocator
 	 * @param string      $file
 	 * @param string|null $folder
 	 *
-	 * @return string|false The path to the file, or false if not found.
+	 * @return string|boolean The path to the file, or false if not found.
 	 */
 	protected function legacyLocate(string $file, string $folder = null)
 	{

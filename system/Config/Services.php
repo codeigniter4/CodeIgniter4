@@ -123,7 +123,7 @@ class Services extends BaseService
 	 *
 	 * @return \CodeIgniter\HTTP\CURLRequest
 	 */
-	public static function curlrequest(array $options = [], $response = null, \Config\App $config = null, bool $getShared = true)
+	public static function curlrequest(array $options = [], \CodeIgniter\HTTP\ResponseInterface $response = null, \Config\App $config = null, bool $getShared = true)
 	{
 		if ($getShared === true)
 		{
@@ -168,7 +168,7 @@ class Services extends BaseService
 		\Config\Exceptions $config = null,
 		\CodeIgniter\HTTP\IncomingRequest $request = null,
 		\CodeIgniter\HTTP\Response $response = null,
-		$getShared = true
+		bool $getShared = true
 	)
 	{
 		if ($getShared)
@@ -233,7 +233,7 @@ class Services extends BaseService
 	 *
 	 * @return \CodeIgniter\Honeypot\Honeypot|mixed
 	 */
-	public static function honeypot(BaseConfig $config = null, $getShared = true)
+	public static function honeypot(BaseConfig $config = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -290,7 +290,7 @@ class Services extends BaseService
 	 *
 	 * @return \CodeIgniter\Debug\Iterator
 	 */
-	public static function iterator($getShared = true)
+	public static function iterator(bool $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -336,7 +336,7 @@ class Services extends BaseService
 	 *
 	 * @return \CodeIgniter\Log\Logger
 	 */
-	public static function logger($getShared = true)
+	public static function logger(bool $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -434,7 +434,7 @@ class Services extends BaseService
 	 *
 	 * @return \CodeIgniter\View\Parser
 	 */
-	public static function parser($viewPath = null, $config = null, bool $getShared = true)
+	public static function parser(string $viewPath = null, $config = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -468,7 +468,7 @@ class Services extends BaseService
 	 *
 	 * @return \CodeIgniter\View\View
 	 */
-	public static function renderer($viewPath = null, $config = null, bool $getShared = true)
+	public static function renderer(string $viewPath = null, $config = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -584,7 +584,7 @@ class Services extends BaseService
 	 *
 	 * @return \CodeIgniter\Router\RouteCollection
 	 */
-	public static function routes($getShared = true)
+	public static function routes(bool $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -693,7 +693,7 @@ class Services extends BaseService
 	 *
 	 * @return \CodeIgniter\Throttle\Throttler
 	 */
-	public static function throttler($getShared = true)
+	public static function throttler(bool $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -713,7 +713,7 @@ class Services extends BaseService
 	 *
 	 * @return \CodeIgniter\Debug\Timer
 	 */
-	public static function timer($getShared = true)
+	public static function timer(bool $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -756,7 +756,7 @@ class Services extends BaseService
 	 *
 	 * @return \CodeIgniter\HTTP\URI
 	 */
-	public static function uri($uri = null, bool $getShared = true)
+	public static function uri(string $uri = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -801,7 +801,7 @@ class Services extends BaseService
 	 *
 	 * @return \CodeIgniter\View\Cell
 	 */
-	public static function viewcell($getShared = true)
+	public static function viewcell(bool $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -820,7 +820,7 @@ class Services extends BaseService
 	 *
 	 * @return \CodeIgniter\Typography\Typography
 	 */
-	public static function typography($getShared = true)
+	public static function typography(bool $getShared = true)
 	{
 		if ($getShared)
 		{

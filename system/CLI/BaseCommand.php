@@ -227,7 +227,7 @@ abstract class BaseCommand
 	 *
 	 * @return integer
 	 */
-	public function getPad($array, int $pad)
+	public function getPad($array, int $pad): int
 	{
 		$max = 0;
 		foreach ($array as $key => $value)

@@ -61,6 +61,11 @@ class Serve extends BaseCommand
 		'-port' => 'The HTTP Host Port [default: "8080"]',
 	];
 
+	/**
+	 * Start the CodeIgniter Development Server
+	 *
+	 * @param array $params
+	 */
 	public function run(array $params)
 	{
 		// Valid PHP Version?

@@ -161,7 +161,7 @@ class Events extends BaseCollector
 	/**
 	 * Gets the "badge" value for the button.
 	 */
-	public function getBadgeValue()
+	public function getBadgeValue(): int
 	{
 		return count(\CodeIgniter\Events\Events::getPerformanceLogs());
 	}

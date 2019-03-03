@@ -123,7 +123,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getResult($type = 'object'): array
+	public function getResult(string $type = 'object'): array
 	{
 		if ($type === 'array')
 		{
@@ -293,7 +293,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getRow($n = 0, $type = 'object')
+	public function getRow(int $n = 0, string $type = 'object')
 	{
 		if (! is_numeric($n))
 		{
@@ -333,7 +333,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getCustomRowObject($n, string $className)
+	public function getCustomRowObject(int $n, string $className)
 	{
 		isset($this->customResultObject[$className]) || $this->getCustomResultObject($className);
 
@@ -361,7 +361,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getRowArray($n = 0)
+	public function getRowArray(int $n = 0)
 	{
 		$result = $this->getResultArray();
 		if (empty($result))
@@ -388,7 +388,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getRowObject($n = 0)
+	public function getRowObject(int $n = 0)
 	{
 		$result = $this->getResultObject();
 		if (empty($result))
@@ -447,7 +447,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getFirstRow($type = 'object')
+	public function getFirstRow(string $type = 'object')
 	{
 		$result = $this->getResult($type);
 
@@ -463,7 +463,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getLastRow($type = 'object')
+	public function getLastRow(string $type = 'object')
 	{
 		$result = $this->getResult($type);
 
@@ -479,7 +479,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getNextRow($type = 'object')
+	public function getNextRow(string $type = 'object')
 	{
 		$result = $this->getResult($type);
 		if (empty($result))
@@ -499,7 +499,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getPreviousRow($type = 'object')
+	public function getPreviousRow(string $type = 'object')
 	{
 		$result = $this->getResult($type);
 		if (empty($result))
@@ -524,7 +524,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getUnbufferedRow($type = 'object')
+	public function getUnbufferedRow(string $type = 'object')
 	{
 		if ($type === 'array')
 		{
@@ -585,7 +585,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return mixed
 	 */
-	abstract public function dataSeek($n = 0);
+	abstract public function dataSeek(int $n = 0);
 
 	//--------------------------------------------------------------------
 
@@ -609,7 +609,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return object
 	 */
-	abstract protected function fetchObject($className = 'stdClass');
+	abstract protected function fetchObject(string $className = 'stdClass');
 
 	//--------------------------------------------------------------------
 }

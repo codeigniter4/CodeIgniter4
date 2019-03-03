@@ -170,7 +170,7 @@ class Views extends BaseCollector
 	 *
 	 * @return integer
 	 */
-	public function getBadgeValue()
+	public function getBadgeValue(): int
 	{
 		return count($this->viewer->getPerformanceData());
 	}

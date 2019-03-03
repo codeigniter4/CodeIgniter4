@@ -90,7 +90,7 @@ class BaseCollector
 	 * @param  boolean $safe
 	 * @return string
 	 */
-	public function getTitle($safe = false): string
+	public function getTitle(bool $safe = false): string
 	{
 		if ($safe)
 		{
@@ -249,7 +249,7 @@ class BaseCollector
 	 *
 	 * @return string
 	 */
-	public function cleanPath($file)
+	public function cleanPath(string $file): string
 	{
 		if (strpos($file, APPPATH) === 0)
 		{
@@ -284,7 +284,7 @@ class BaseCollector
 	 *
 	 * @return boolean
 	 */
-	public function isEmpty()
+	public function isEmpty(): bool
 	{
 		return false;
 	}

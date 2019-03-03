@@ -79,8 +79,9 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 * @param array $data
 	 *
 	 * @return \CodeIgniter\Database\ResultInterface
+	 * @throws \BadMethodCallException
 	 */
-	public function _execute($data)
+	public function _execute(array $data)
 	{
 		if (is_null($this->statement))
 		{

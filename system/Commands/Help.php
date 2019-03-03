@@ -37,7 +37,6 @@
  */
 
 use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
 
 /**
  * CI Help command for the spark script.

@@ -134,7 +134,7 @@ abstract class BaseUtils
 	 * @param  string $database_name
 	 * @return boolean
 	 */
-	public function databaseExists($database_name)
+	public function databaseExists(string $database_name): bool
 	{
 		return in_array($database_name, $this->listDatabases());
 	}
@@ -148,7 +148,7 @@ abstract class BaseUtils
 	 * @return boolean|mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function optimizeTable($table_name)
+	public function optimizeTable(string $table_name)
 	{
 		if ($this->optimizeTable === false)
 		{
@@ -219,7 +219,7 @@ abstract class BaseUtils
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function repairTable($table_name)
+	public function repairTable(string $table_name)
 	{
 		if ($this->repairTable === false)
 		{
@@ -252,7 +252,7 @@ abstract class BaseUtils
 	 *
 	 * @return string
 	 */
-	public function getCSVFromResult(ResultInterface $query, $delim = ',', $newline = "\n", $enclosure = '"')
+	public function getCSVFromResult(ResultInterface $query, string $delim = ',', string $newline = "\n", string $enclosure = '"'): string
 	{
 		$out = '';
 		// First generate the headings from the table column names
@@ -287,7 +287,7 @@ abstract class BaseUtils
 	 *
 	 * @return string
 	 */
-	public function getXMLFromResult(ResultInterface $query, $params = [])
+	public function getXMLFromResult(ResultInterface $query, array $params = []): string
 	{
 		// Set our default values
 		foreach (['root' => 'root', 'element' => 'element', 'newline' => "\n", 'tab' => "\t"] as $key => $val)
@@ -323,7 +323,7 @@ abstract class BaseUtils
 	/**
 	 * Database Backup
 	 *
-	 * @param  array $params
+	 * @param  array|string $params
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */

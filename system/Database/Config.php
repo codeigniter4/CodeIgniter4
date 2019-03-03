@@ -124,7 +124,7 @@ class Config extends BaseConfig
 	 *
 	 * @return array
 	 */
-	public static function getConnections()
+	public static function getConnections(): array
 	{
 		return static::$instances;
 	}

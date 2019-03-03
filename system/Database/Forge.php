@@ -202,7 +202,7 @@ class Forge
 	 * @return boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function createDatabase($db_name)
+	public function createDatabase(string $db_name): bool
 	{
 		if ($this->createDatabaseStr === false)
 		{
@@ -242,7 +242,7 @@ class Forge
 	 * @return boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function dropDatabase($db_name)
+	public function dropDatabase(string $db_name): bool
 	{
 		if ($this->dropDatabaseStr === false)
 		{
@@ -392,7 +392,7 @@ class Forge
 	 * @return \CodeIgniter\Database\Forge
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function addForeignKey($fieldName = '', $tableName = '', $tableField = '', $onUpdate = false, $onDelete = false)
+	public function addForeignKey(string $fieldName = '', string $tableName = '', string $tableField = '', bool $onUpdate = false, bool $onDelete = false)
 	{
 		if (! isset($this->fields[$fieldName]))
 		{
@@ -420,7 +420,7 @@ class Forge
 	 * @return boolean|\CodeIgniter\Database\BaseResult|\CodeIgniter\Database\Query|false|mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function dropForeignKey($table, $foreign_name)
+	public function dropForeignKey(string $table, string $foreign_name)
 	{
 		$sql = sprintf($this->dropConstraintStr, $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
 			$this->db->escapeIdentifiers($this->db->DBPrefix . $foreign_name));
@@ -450,7 +450,7 @@ class Forge
 	 * @return boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function createTable($table, $if_not_exists = false, array $attributes = [])
+	public function createTable(string $table, bool $if_not_exists = false, array $attributes = []): bool
 	{
 		if ($table === '')
 		{
@@ -482,7 +482,7 @@ class Forge
 
 		if (($result = $this->db->query($sql)) !== false)
 		{
-			empty($this->db->dataCache['table_names']) || $this->db->dataCache['table_names'][] = $table;
+			empty($this->db->dataCache['table_names']) OR $this->db->dataCache['table_names'][] = $table;
 
 			// Most databases don't support creating indexes from within the CREATE TABLE statement
 			if (! empty($this->keys))
@@ -510,7 +510,7 @@ class Forge
 	 *
 	 * @return mixed
 	 */
-	protected function _createTable($table, $if_not_exists, $attributes)
+	protected function _createTable(string $table, bool $if_not_exists, array $attributes)
 	{
 		// For any platforms that don't support Create If Not Exists...
 		if ($if_not_exists === true && $this->createTableIfStr === false)
@@ -560,7 +560,7 @@ class Forge
 	 *
 	 * @return string
 	 */
-	protected function _createTableAttributes($attributes)
+	protected function _createTableAttributes(array $attributes): string
 	{
 		$sql = '';
 
@@ -587,7 +587,7 @@ class Forge
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function dropTable($table_name, $if_exists = false, $cascade = false)
+	public function dropTable(string $table_name, bool $if_exists = false, bool $cascade = false)
 	{
 		if ($table_name === '')
 		{
@@ -639,7 +639,7 @@ class Forge
 	 *
 	 * @return string
 	 */
-	protected function _dropTable($table, $if_exists, $cascade)
+	protected function _dropTable(string $table, bool $if_exists, bool $cascade)
 	{
 		$sql = 'DROP TABLE';
 
@@ -674,7 +674,7 @@ class Forge
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function renameTable($table_name, $new_table_name)
+	public function renameTable(string $table_name, string $new_table_name)
 	{
 		if ($table_name === '' || $new_table_name === '')
 		{
@@ -719,7 +719,7 @@ class Forge
 	 * @return boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function addColumn($table, $field)
+	public function addColumn(string $table, array $field): bool
 	{
 		// Work-around for literal column definitions
 		is_array($field) || $field = [$field];
@@ -763,7 +763,7 @@ class Forge
 	 * @return boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function dropColumn($table, $column_name)
+	public function dropColumn(string $table, string $column_name): bool
 	{
 		$sql = $this->_alterTable('DROP', $this->db->DBPrefix . $table, $column_name);
 		if ($sql === false)
@@ -790,7 +790,7 @@ class Forge
 	 * @return boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function modifyColumn($table, $field)
+	public function modifyColumn(string $table, string $field): bool
 	{
 		// Work-around for literal column definitions
 		is_array($field) || $field = [$field];
@@ -842,7 +842,7 @@ class Forge
 	 *
 	 * @return string|string[]
 	 */
-	protected function _alterTable($alter_type, $table, $field)
+	protected function _alterTable(string $alter_type, string $table, $field)
 	{
 		$sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) . ' ';
 
@@ -873,7 +873,7 @@ class Forge
 	 *
 	 * @return array
 	 */
-	protected function _processFields($create_table = false)
+	protected function _processFields(bool $create_table = false): array
 	{
 		$fields = [];
 
@@ -973,7 +973,7 @@ class Forge
 	 *
 	 * @return string
 	 */
-	protected function _processColumn($field)
+	protected function _processColumn(array $field): string
 	{
 		return $this->db->escapeIdentifiers($field['name'])
 			   . ' ' . $field['type'] . $field['length']
@@ -995,7 +995,7 @@ class Forge
 	 *
 	 * @return void
 	 */
-	protected function _attributeType(&$attributes)
+	protected function _attributeType(array &$attributes): void
 	{
 		// Usually overridden by drivers
 	}
@@ -1019,7 +1019,7 @@ class Forge
 	 *
 	 * @return void
 	 */
-	protected function _attributeUnsigned(&$attributes, &$field)
+	protected function _attributeUnsigned(array &$attributes, array &$field): void
 	{
 		if (empty($attributes['UNSIGNED']) || $attributes['UNSIGNED'] !== true)
 		{
@@ -1061,9 +1061,9 @@ class Forge
 	 * @param array &$attributes
 	 * @param array &$field
 	 *
-	 * @return void
+	 * @return null|void
 	 */
-	protected function _attributeDefault(&$attributes, &$field)
+	protected function _attributeDefault(array &$attributes, array &$field)
 	{
 		if ($this->default === false)
 		{
@@ -1097,7 +1097,7 @@ class Forge
 	 *
 	 * @return void
 	 */
-	protected function _attributeUnique(&$attributes, &$field)
+	protected function _attributeUnique(array &$attributes, array &$field): void
 	{
 		if (! empty($attributes['UNIQUE']) && $attributes['UNIQUE'] === true)
 		{
@@ -1115,7 +1115,7 @@ class Forge
 	 *
 	 * @return void
 	 */
-	protected function _attributeAutoIncrement(&$attributes, &$field)
+	protected function _attributeAutoIncrement(array &$attributes, array &$field): void
 	{
 		if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true
 			&& stripos($field['type'], 'int') !== false
@@ -1134,7 +1134,7 @@ class Forge
 	 *
 	 * @return string
 	 */
-	protected function _processPrimaryKeys($table)
+	protected function _processPrimaryKeys(string $table): string
 	{
 		$sql = '';
 
@@ -1164,7 +1164,7 @@ class Forge
 	 *
 	 * @return array
 	 */
-	protected function _processIndexes($table)
+	protected function _processIndexes(string $table): array
 	{
 		$sqls = [];
 
@@ -1209,7 +1209,7 @@ class Forge
 	 *
 	 * @return string
 	 */
-	protected function _processForeignKeys($table)
+	protected function _processForeignKeys(string $table): string
 	{
 		$sql = '';
 
@@ -1254,7 +1254,7 @@ class Forge
 	 *
 	 * @return void
 	 */
-	public function reset()
+	public function reset(): void
 	{
 		$this->fields = $this->keys = $this->uniqueKeys = $this->primaryKeys = $this->foreignKeys = [];
 	}

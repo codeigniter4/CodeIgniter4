@@ -75,7 +75,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function connect($persistent = false)
+	public function connect(bool $persistent = false)
 	{
 		if ($persistent && $this->db->DBDebug)
 		{
@@ -114,7 +114,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return void
 	 */
-	protected function _close()
+	protected function _close(): void
 	{
 		$this->connID->close();
 	}
@@ -159,9 +159,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @param string $sql
 	 *
-	 * @return mixed    \SQLite3Result object or bool
+	 * @return mixed    \SQLite3Result object or boolean
 	 */
-	public function execute($sql)
+	public function execute(string $sql)
 	{
 		return $this->isWriteType($sql)
 			? $this->connID->exec($sql)
@@ -203,7 +203,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	protected function _listTables($prefixLimit = false): string
+	protected function _listTables(bool $prefixLimit = false): string
 	{
 		return 'SELECT "NAME" FROM "SQLITE_MASTER" WHERE "TYPE" = \'table\''
 			   . (($prefixLimit !== false && $this->DBPrefix !== '')
@@ -231,10 +231,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @param string $table Table name
 	 *
-	 * @return array|false
+	 * @return array|boolean
 	 * @throws DatabaseException
 	 */
-	public function getFieldNames($table)
+	public function getFieldNames(string $table)
 	{
 		// Is there a cached result?
 		if (isset($this->dataCache['field_names'][$table]))
@@ -296,7 +296,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with field data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return array
 	 * @throws DatabaseException
 	 */
 	public function _fieldData(string $table): array
@@ -333,7 +333,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with index data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return array
 	 * @throws DatabaseException
 	 */
 	public function _indexData(string $table): array
@@ -378,7 +378,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Returns an array of objects with Foreign key data
 	 *
 	 * @param  string $table
-	 * @return \stdClass[]
+	 * @return array
 	 */
 	public function _foreignKeyData(string $table): array
 	{
@@ -485,6 +485,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	/**
 	 * Determines if the statement is a write-type query or not.
+	 *
+	 * @param $sql
 	 *
 	 * @return boolean
 	 */

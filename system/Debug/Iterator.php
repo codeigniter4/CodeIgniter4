@@ -90,7 +90,7 @@ class Iterator
 	 *
 	 * @return string
 	 */
-	public function run($iterations = 1000, $output = true)
+	public function run($iterations = 1000, $output = true): string
 	{
 		foreach ($this->tests as $name => $test)
 		{
@@ -129,7 +129,7 @@ class Iterator
 	 *
 	 * @return string
 	 */
-	public function getReport()
+	public function getReport(): string
 	{
 		if (empty($this->results))
 		{

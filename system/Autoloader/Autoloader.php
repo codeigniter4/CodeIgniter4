@@ -213,7 +213,7 @@ class Autoloader
 	 *
 	 * @return array
 	 */
-	public function getNamespace(string $prefix = null)
+	public function getNamespace(string $prefix = null): array
 	{
 		if ($prefix === null)
 		{
@@ -246,7 +246,7 @@ class Autoloader
 	 *
 	 * @param string $class The fully qualified class name.
 	 *
-	 * @return string|false The mapped file on success, or boolean false
+	 * @return string|boolean The mapped file on success, or boolean false
 	 *                          on failure.
 	 */
 	public function loadClass(string $class)
@@ -273,7 +273,7 @@ class Autoloader
 	 *
 	 * @param string $class The fully-qualified class name
 	 *
-	 * @return string|false The mapped file name on success, or boolean false on fail
+	 * @return string|boolean The mapped file name on success, or boolean false on fail
 	 */
 	protected function loadInNamespace(string $class)
 	{
@@ -353,7 +353,7 @@ class Autoloader
 	 *
 	 * @param string $file
 	 *
-	 * @return string|false The filename on success, false if the file is not loaded
+	 * @return string|boolean The filename on success, false if the file is not loaded
 	 */
 	protected function requireFile(string $file)
 	{
@@ -422,7 +422,7 @@ class Autoloader
 			unset($paths['CodeIgniter\\']);
 		}
 
-		// Composer stores paths with trailng slash. We don't.
+		// Composer stores paths with trailing slash. We don't.
 		$newPaths = [];
 		foreach ($paths as $key => $value)
 		{

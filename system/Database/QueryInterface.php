@@ -55,7 +55,7 @@ interface QueryInterface
 	 *
 	 * @return mixed
 	 */
-	public function setQuery(string $sql, $binds = null);
+	public function setQuery(string $sql, array $binds = null);
 
 	//--------------------------------------------------------------------
 

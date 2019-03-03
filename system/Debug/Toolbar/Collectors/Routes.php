@@ -137,7 +137,7 @@ class Routes extends BaseCollector
 	 *
 	 * @return integer
 	 */
-	public function getBadgeValue()
+	public function getBadgeValue(): int
 	{
 		$rawRoutes = Services::routes(true);
 

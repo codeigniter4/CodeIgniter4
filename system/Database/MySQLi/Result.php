@@ -124,7 +124,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function dataSeek($n = 0)
+	public function dataSeek(int $n = 0)
 	{
 		return $this->resultID->data_seek($n);
 	}
@@ -138,7 +138,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return array
 	 */
-	protected function fetchAssoc()
+	protected function fetchAssoc(): array
 	{
 		return $this->resultID->fetch_assoc();
 	}
@@ -154,7 +154,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return object
 	 */
-	protected function fetchObject($className = 'stdClass')
+	protected function fetchObject(string $className = 'stdClass'): object
 	{
 		return $this->resultID->fetch_object($className);
 	}

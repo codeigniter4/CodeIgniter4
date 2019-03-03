@@ -135,7 +135,7 @@ class Query implements QueryInterface
 	 *
 	 * @return mixed
 	 */
-	public function setQuery(string $sql, $binds = null, bool $setEscape = true)
+	public function setQuery(string $sql, array $binds = null, bool $setEscape = true)
 	{
 		$this->originalQueryString = $sql;
 
@@ -183,7 +183,7 @@ class Query implements QueryInterface
 	 * Returns the final, processed query string after binding, etal
 	 * has been performed.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function getQuery(): string
 	{
@@ -233,7 +233,7 @@ class Query implements QueryInterface
 	 *
 	 * @return mixed
 	 */
-	public function getStartTime($returnRaw = false, int $decimals = 6)
+	public function getStartTime(bool $returnRaw = false, int $decimals = 6)
 	{
 		if ($returnRaw)
 		{
@@ -350,7 +350,7 @@ class Query implements QueryInterface
 	 *
 	 * @return string
 	 */
-	public function getOriginalQuery()
+	public function getOriginalQuery(): string
 	{
 		return $this->originalQueryString;
 	}
@@ -416,7 +416,7 @@ class Query implements QueryInterface
 	 * @param  array  $binds
 	 * @return string
 	 */
-	protected function matchNamedBinds(string $sql, array $binds)
+	protected function matchNamedBinds(string $sql, array $binds): string
 	{
 		$replacers = [];
 
@@ -452,7 +452,7 @@ class Query implements QueryInterface
 	 * @param  integer $ml
 	 * @return string
 	 */
-	protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml)
+	protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml): string
 	{
 		// Make sure not to replace a chunk inside a string that happens to match the bind marker
 		if ($c = preg_match_all("/'[^']*'/i", $sql, $matches))
@@ -491,7 +491,7 @@ class Query implements QueryInterface
 	/**
 	 * Return text representation of the query
 	 *
-	 * @return mixed|string
+	 * @return string
 	 */
 	public function __toString()
 	{

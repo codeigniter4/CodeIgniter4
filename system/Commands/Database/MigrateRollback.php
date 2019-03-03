@@ -162,7 +162,7 @@ class MigrateRollback extends BaseCommand
 	 * @param  array $params
 	 * @return boolean
 	 */
-	private function isAllNamespace(array $params)
+	private function isAllNamespace(array $params): bool
 	{
 		if (array_search('-all', $params) !== false)
 		{

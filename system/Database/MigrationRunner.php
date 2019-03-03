@@ -36,7 +36,6 @@
  * @filesource
  */
 
-use Config\Autoload;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Exceptions\ConfigException;
@@ -122,7 +121,7 @@ class MigrationRunner
 	/**
 	 * used to return messages for CLI.
 	 *
-	 * @var boolean
+	 * @var array
 	 */
 	protected $cliMessages = [];
 
@@ -405,7 +404,7 @@ class MigrationRunner
 	 *
 	 * @return array    list of migrations as $version for one namespace
 	 */
-	public function findMigrations()
+	public function findMigrations(): array
 	{
 		$migrations = [];
 		helper('filesystem');
@@ -477,7 +476,7 @@ class MigrationRunner
 	 *
 	 * @return boolean
 	 */
-	protected function checkMigrations(array $migrations, string $method, string $targetversion)
+	protected function checkMigrations(array $migrations, string $method, string $targetversion): bool
 	{
 		// Check if no migrations found
 		if (empty($migrations))
@@ -603,7 +602,7 @@ class MigrationRunner
 	 *
 	 * @return array
 	 */
-	public function getHistory(string $group = 'default')
+	public function getHistory(string $group = 'default'): array
 	{
 		$this->ensureTable();
 
@@ -647,7 +646,7 @@ class MigrationRunner
 	 *
 	 * @return string    Numeric portion of a migration filename
 	 */
-	protected function getMigrationNumber(string $migration)
+	protected function getMigrationNumber(string $migration): string
 	{
 		return sscanf($migration, '%[0-9]+', $number) ? $number : '0';
 	}
@@ -661,7 +660,7 @@ class MigrationRunner
 	 *
 	 * @return string    text portion of a migration filename
 	 */
-	protected function getMigrationName(string $migration)
+	protected function getMigrationName(string $migration): string
 	{
 		$parts = explode('_', $migration);
 		array_shift($parts);
@@ -676,7 +675,7 @@ class MigrationRunner
 	 *
 	 * @return string    Current migration version
 	 */
-	protected function getVersion()
+	protected function getVersion(): string
 	{
 		$this->ensureTable();
 
@@ -695,9 +694,9 @@ class MigrationRunner
 	/**
 	 * Retrieves current schema version
 	 *
-	 * @return string    Current migration version
+	 * @return array    Return messages for CLI
 	 */
-	public function getCliMessages()
+	public function getCliMessages(): array
 	{
 		return $this->cliMessages;
 	}

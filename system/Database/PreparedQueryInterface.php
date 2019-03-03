@@ -47,7 +47,7 @@ interface PreparedQueryInterface
 	 *
 	 * @return ResultInterface
 	 */
-	public function execute(...$data);
+	public function execute(array ...$data);
 
 	//--------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ interface PreparedQueryInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Explicity closes the statement.
+	 * Explicitly closes the statement.
 	 */
 	public function close();
 

@@ -177,8 +177,10 @@ class Table
 
 	/**
 	 * Creates the new table based on our current fields.
+	 *
+	 * @return boolean
 	 */
-	protected function createTable()
+	protected function createTable(): bool
 	{
 		$this->dropIndexes();
 		$this->db->resetDataCache();
@@ -262,7 +264,7 @@ class Table
 	 *
 	 * @return array
 	 */
-	protected function formatFields($fields)
+	protected function formatFields($fields): array
 	{
 		if (! is_array($fields))
 		{
