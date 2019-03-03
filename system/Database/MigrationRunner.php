@@ -223,6 +223,10 @@ class MigrationRunner
 		// Sequential versions need adjusting to 3 places so they can be found later.
 		if ($this->type === 'sequential')
 		{
+			if ($targetVersion == '0')
+			{
+				return true;
+			}
 			$targetVersion = str_pad($targetVersion, 3, '0', STR_PAD_LEFT);
 		}
 
@@ -256,8 +260,7 @@ class MigrationRunner
 		foreach ($migrations as $version => $migration)
 		{
 			// Only include migrations within the scoop
-			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion)
-			)
+			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion))
 			{
 				include_once $migration->path;
 				// Get namespaced class name
