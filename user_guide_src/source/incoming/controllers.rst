@@ -311,13 +311,13 @@ inside the controller::
 		protected $helpers = ['url', 'form'];
 	}
 
-Validating $_POST data
+Validating data
 ======================
 
-The controller also provides a convenience method to make validating $_POST data a little simpler, ``validate()`` that
+The controller also provides a convenience method to make validating data a little simpler, ``validate()`` that
 takes an array of rules to test against as the first parameter, and, optionally,
 an array of custom error messages to display if the items don't pass. Internally, this uses the controller's
-**$this->request** instance to get the POST data through. The :doc:`Validation Library docs </libraries/validation>`
+**$this->request** instance to get the data through. The :doc:`Validation Library docs </libraries/validation>`
 has details on the format of the rules and messages arrays, as well as available rules.::
 
     public function updateUser(int $userID)
