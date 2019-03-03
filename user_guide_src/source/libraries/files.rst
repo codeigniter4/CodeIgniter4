@@ -30,8 +30,8 @@ Once you have an instance, you have the full power of the SplFileInfo class at t
     echo $file->getBasename();
     // Get last modified time
     echo $file->getMTime();
-    // Get the true realpath
-    echo $file->getRealpath();
+    // Get the true real path
+    echo $file->getRealPath();
     // Get the file permissions
     echo $file->getPerms();
 
