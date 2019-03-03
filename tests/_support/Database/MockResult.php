@@ -57,7 +57,7 @@ class MockResult extends BaseResult
 	 *
 	 * @return mixed
 	 */
-	public function dataSeek($n = 0)
+	public function dataSeek(int $n = 0)
 	{
 	}
 
@@ -85,7 +85,7 @@ class MockResult extends BaseResult
 	 *
 	 * @return object
 	 */
-	protected function fetchObject($className = 'stdClass')
+	protected function fetchObject(string $className = 'stdClass'): object
 	{
 	}
 

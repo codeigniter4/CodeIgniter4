@@ -21,7 +21,7 @@ class MockConnection extends BaseConnection
 
 	//--------------------------------------------------------------------
 
-	public function query(string $sql, $binds = null, bool $setEscapeFlags = true, $queryClass = 'CodeIgniter\\Database\\Query')
+	public function query(string $sql, array $binds = null, bool $setEscapeFlags = true, $queryClass = 'CodeIgniter\\Database\\Query')
 	{
 		$queryClass = str_replace('Connection', 'Query', get_class($this));
 
@@ -154,7 +154,7 @@ class MockConnection extends BaseConnection
 	 *
 	 * @return array
 	 */
-	public function error()
+	public function error(): array
 	{
 		return [
 			'code'    => null,
@@ -169,7 +169,7 @@ class MockConnection extends BaseConnection
 	 *
 	 * @return integer
 	 */
-	public function insertID()
+	public function insertID(): int
 	{
 		return $this->connID->insert_id;
 	}
