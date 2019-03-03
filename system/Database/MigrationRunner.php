@@ -122,7 +122,7 @@ class MigrationRunner
 	/**
 	 * used to return messages for CLI.
 	 *
-	 * @var boolean
+	 * @var array
 	 */
 	protected $cliMessages = [];
 
@@ -196,7 +196,7 @@ class MigrationRunner
 	 * @param string|null $namespace
 	 * @param string|null $group
 	 *
-	 * @return mixed TRUE if no migrations are found, current version string on success, FALSE on failure
+	 * @return mixed TRUE if no migrations are found, current version string on success, Exception on failure
 	 * @throws ConfigException
 	 */
 	public function version(string $targetVersion, string $namespace = null, string $group = null)
@@ -291,7 +291,7 @@ class MigrationRunner
 			}
 		}
 
-		return true;
+		return $targetVersion;
 	}
 
 	//--------------------------------------------------------------------
@@ -608,10 +608,10 @@ class MigrationRunner
 		$this->ensureTable();
 
 		$query = $this->db->table($this->table)
-				->where('group', $group)
-				->where('namespace', $this->namespace)
-				->orderBy('version', 'ASC')
-				->get();
+		                  ->where('group', $group)
+		                  ->where('namespace', $this->namespace)
+		                  ->orderBy('version', 'ASC')
+		                  ->get();
 
 		if (! $query)
 		{
@@ -681,11 +681,11 @@ class MigrationRunner
 		$this->ensureTable();
 
 		$row = $this->db->table($this->table)
-				->select('version')
-				->where('group', $this->group)
-				->where('namespace', $this->namespace)
-				->orderBy('version', 'DESC')
-				->get();
+		                ->select('version')
+		                ->where('group', $this->group)
+		                ->where('namespace', $this->namespace)
+		                ->orderBy('version', 'DESC')
+		                ->get();
 
 		return $row && ! is_null($row->getRow()) ? $row->getRow()->version : '0';
 	}
@@ -695,7 +695,7 @@ class MigrationRunner
 	/**
 	 * Retrieves current schema version
 	 *
-	 * @return string    Current migration version
+	 * @return array    Return messages for CLI
 	 */
 	public function getCliMessages()
 	{
@@ -714,13 +714,13 @@ class MigrationRunner
 	protected function addHistory(string $version)
 	{
 		$this->db->table($this->table)
-				->insert([
-					'version'   => $version,
-					'name'      => $this->name,
-					'group'     => $this->group,
-					'namespace' => $this->namespace,
-					'time'      => time(),
-				]);
+		         ->insert([
+			                  'version'   => $version,
+			                  'name'      => $this->name,
+			                  'group'     => $this->group,
+			                  'namespace' => $this->namespace,
+			                  'time'      => time(),
+		                  ]);
 		if (is_cli())
 		{
 			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.added'), 'yellow') . "($this->namespace) " . $version . '_' . $this->name;
@@ -737,10 +737,10 @@ class MigrationRunner
 	protected function removeHistory(string $version)
 	{
 		$this->db->table($this->table)
-				->where('version', $version)
-				->where('group', $this->group)
-				->where('namespace', $this->namespace)
-				->delete();
+		         ->where('version', $version)
+		         ->where('group', $this->group)
+		         ->where('namespace', $this->namespace)
+		         ->delete();
 		if (is_cli())
 		{
 			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.removed'), 'yellow') . "($this->namespace) " . $version . '_' . $this->name;
@@ -763,32 +763,32 @@ class MigrationRunner
 		$forge = \Config\Database::forge($this->db);
 
 		$forge->addField([
-			'version'   => [
-				'type'       => 'VARCHAR',
-				'constraint' => 255,
-				'null'       => false,
-			],
-			'name'      => [
-				'type'       => 'VARCHAR',
-				'constraint' => 255,
-				'null'       => false,
-			],
-			'group'     => [
-				'type'       => 'VARCHAR',
-				'constraint' => 255,
-				'null'       => false,
-			],
-			'namespace' => [
-				'type'       => 'VARCHAR',
-				'constraint' => 255,
-				'null'       => false,
-			],
-			'time'      => [
-				'type'       => 'INT',
-				'constraint' => 11,
-				'null'       => false,
-			],
-		]);
+			                 'version'   => [
+				                 'type'       => 'VARCHAR',
+				                 'constraint' => 255,
+				                 'null'       => false,
+			                 ],
+			                 'name'      => [
+				                 'type'       => 'VARCHAR',
+				                 'constraint' => 255,
+				                 'null'       => false,
+			                 ],
+			                 'group'     => [
+				                 'type'       => 'VARCHAR',
+				                 'constraint' => 255,
+				                 'null'       => false,
+			                 ],
+			                 'namespace' => [
+				                 'type'       => 'VARCHAR',
+				                 'constraint' => 255,
+				                 'null'       => false,
+			                 ],
+			                 'time'      => [
+				                 'type'       => 'INT',
+				                 'constraint' => 11,
+				                 'null'       => false,
+			                 ],
+		                 ]);
 
 		$forge->createTable($this->table, true);
 

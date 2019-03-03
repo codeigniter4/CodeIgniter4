@@ -580,11 +580,11 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Executes the query against the database.
 	 *
-	 * @param $sql
+	 * @param string $sql
 	 *
 	 * @return mixed
 	 */
-	abstract protected function execute($sql);
+	abstract protected function execute(string $sql);
 
 	//--------------------------------------------------------------------
 
@@ -1262,7 +1262,7 @@ abstract class BaseConnection implements ConnectionInterface
 		}
 		// Avoid breaking functions and literal values inside queries
 		elseif (ctype_digit($item) || $item[0] === "'" || ( $this->escapeChar !== '"' && $item[0] === '"') ||
-				strpos($item, '(') !== false
+			strpos($item, '(') !== false
 		)
 		{
 			return $item;
@@ -1413,14 +1413,14 @@ abstract class BaseConnection implements ConnectionInterface
 		if ($like === true)
 		{
 			return str_replace([
-				$this->likeEscapeChar,
-				'%',
-				'_',
-			], [
-				$this->likeEscapeChar . $this->likeEscapeChar,
-				$this->likeEscapeChar . '%',
-				$this->likeEscapeChar . '_',
-			], $str
+				                   $this->likeEscapeChar,
+				                   '%',
+				                   '_',
+			                   ], [
+				                   $this->likeEscapeChar . $this->likeEscapeChar,
+				                   $this->likeEscapeChar . '%',
+				                   $this->likeEscapeChar . '_',
+			                   ], $str
 			);
 		}
 

@@ -1,7 +1,5 @@
 <?php namespace CodeIgniter\Autoloader;
 
-use Composer\Autoload\ClassLoader;
-
 /**
  * CodeIgniter
  *
@@ -159,7 +157,7 @@ class Autoloader
 
 			include_once $config[$class];
 		}, true, // Throw exception
-			true // Prepend
+		   true // Prepend
 		);
 	}
 
@@ -291,7 +289,7 @@ class Autoloader
 				if (strpos($class, $namespace) === 0)
 				{
 					$filePath = $directory . str_replace('\\', '/',
-							substr($class, strlen($namespace))) . '.php';
+					                                     substr($class, strlen($namespace))) . '.php';
 					$filename = $this->requireFile($filePath);
 
 					if ($filename)
@@ -422,7 +420,7 @@ class Autoloader
 			unset($paths['CodeIgniter\\']);
 		}
 
-		// Composer stores paths with trailng slash. We don't.
+		// Composer stores paths with trailing slash. We don't.
 		$newPaths = [];
 		foreach ($paths as $key => $value)
 		{

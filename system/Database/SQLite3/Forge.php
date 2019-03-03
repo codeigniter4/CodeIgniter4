@@ -98,7 +98,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param string $db_name
 	 *
 	 * @return boolean
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function dropDatabase($db_name): bool
 	{
@@ -158,8 +158,8 @@ class Forge extends \CodeIgniter\Database\Forge
 				$sqlTable = new Table($this->db, $this);
 
 				$sqlTable->fromTable($table)
-					->dropColumn($field)
-					->run();
+				         ->dropColumn($field)
+				         ->run();
 
 				return '';
 				break;
@@ -167,8 +167,8 @@ class Forge extends \CodeIgniter\Database\Forge
 				$sqlTable = new Table($this->db, $this);
 
 				$sqlTable->fromTable($table)
-						 ->modifyColumn($field)
-						 ->run();
+				         ->modifyColumn($field)
+				         ->run();
 
 				return null;
 				break;
@@ -195,11 +195,11 @@ class Forge extends \CodeIgniter\Database\Forge
 		}
 
 		return $this->db->escapeIdentifiers($field['name'])
-			   . ' ' . $field['type']
-			   . $field['auto_increment']
-			   . $field['null']
-			   . $field['unique']
-			   . $field['default'];
+			. ' ' . $field['type']
+			. $field['auto_increment']
+			. $field['null']
+			. $field['unique']
+			. $field['default'];
 	}
 
 	//--------------------------------------------------------------------
@@ -234,14 +234,14 @@ class Forge extends \CodeIgniter\Database\Forge
 			if (in_array($i, $this->uniqueKeys))
 			{
 				$sqls[] = 'CREATE UNIQUE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
-						  . ' ON ' . $this->db->escapeIdentifiers($table)
-						  . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+					. ' ON ' . $this->db->escapeIdentifiers($table)
+					. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
 				continue;
 			}
 
 			$sqls[] = 'CREATE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
-					  . ' ON ' . $this->db->escapeIdentifiers($table)
-					  . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+				. ' ON ' . $this->db->escapeIdentifiers($table)
+				. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
 		}
 
 		return $sqls;

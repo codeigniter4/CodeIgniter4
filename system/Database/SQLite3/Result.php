@@ -37,6 +37,7 @@
  */
 
 use CodeIgniter\Database\BaseResult;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\ResultInterface;
 
 /**
@@ -130,7 +131,7 @@ class Result extends BaseResult implements ResultInterface
 	 * @param integer $n
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function dataSeek($n = 0)
 	{
@@ -168,7 +169,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @param string $className
 	 *
-	 * @return object
+	 * @return bool|object
 	 */
 	protected function fetchObject($className = 'stdClass')
 	{

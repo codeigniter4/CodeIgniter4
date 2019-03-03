@@ -68,7 +68,7 @@ class Console
 	 * @param boolean $useSafeOutput
 	 *
 	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Filters\Exceptions\FilterException
 	 */
 	public function run(bool $useSafeOutput = false)
 	{
@@ -90,8 +90,8 @@ class Console
 		CLI::newLine(1);
 
 		CLI::write(CLI::color('CodeIgniter CLI Tool', 'green')
-				. ' - Version ' . CodeIgniter::CI_VERSION
-				. ' - Server-Time: ' . date('Y-m-d H:i:sa'));
+		           . ' - Version ' . CodeIgniter::CI_VERSION
+		           . ' - Server-Time: ' . date('Y-m-d H:i:sa'));
 
 		CLI::newLine(1);
 	}

@@ -161,7 +161,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed    \SQLite3Result object or bool
 	 */
-	public function execute($sql)
+	public function execute(string $sql)
 	{
 		return $this->isWriteType($sql)
 			? $this->connID->exec($sql)
@@ -206,9 +206,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	protected function _listTables($prefixLimit = false): string
 	{
 		return 'SELECT "NAME" FROM "SQLITE_MASTER" WHERE "TYPE" = \'table\''
-			   . (($prefixLimit !== false && $this->DBPrefix !== '')
+			. (($prefixLimit !== false && $this->DBPrefix !== '')
 				? ' AND "NAME" LIKE \'' . $this->escapeLikeString($this->DBPrefix) . '%\' ' . sprintf($this->likeEscapeStr,
-					$this->likeEscapeChar)
+				                                                                                      $this->likeEscapeChar)
 				: '');
 	}
 
@@ -231,7 +231,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @param string $table Table name
 	 *
-	 * @return array|false
+	 * @return array|bool
 	 * @throws DatabaseException
 	 */
 	public function getFieldNames($table)
@@ -302,7 +302,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	public function _fieldData(string $table): array
 	{
 		if (($query = $this->query('PRAGMA TABLE_INFO(' . $this->protectIdentifiers($table, true, null,
-					false) . ')')) === false)
+		                                                                            false) . ')')) === false)
 		{
 			throw new DatabaseException(lang('Database.failGetFieldData'));
 		}
@@ -485,6 +485,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	/**
 	 * Determines if the statement is a write-type query or not.
+	 *
+	 * @param $sql
 	 *
 	 * @return boolean
 	 */

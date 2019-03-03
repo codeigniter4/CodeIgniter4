@@ -116,39 +116,39 @@ class Forge extends \CodeIgniter\Database\Forge
 			if (version_compare($this->db->getVersion(), '8', '>=') && isset($data['type']))
 			{
 				$sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-						. " TYPE {$data['type']}{$data['length']}";
+					. " TYPE {$data['type']}{$data['length']}";
 			}
 
 			if (! empty($data['default']))
 			{
 				$sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-						. " SET DEFAULT {$data['default']}";
+					. " SET DEFAULT {$data['default']}";
 			}
 
 			if (isset($data['null']))
 			{
 				$sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-						. ($data['null'] === true ? ' DROP' : ' SET') . ' NOT NULL';
+					. ($data['null'] === true ? ' DROP' : ' SET') . ' NOT NULL';
 			}
 
 			if (! empty($data['new_name']))
 			{
 				$sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-						. ' TO ' . $this->db->escapeIdentifiers($data['new_name']);
+					. ' TO ' . $this->db->escapeIdentifiers($data['new_name']);
 			}
 
 			if (! empty($data['comment']))
 			{
 				$sqls[] = 'COMMENT ON COLUMN' . $this->db->escapeIdentifiers($table)
-						. '.' . $this->db->escapeIdentifiers($data['name'])
-						. " IS {$data['comment']}";
+					. '.' . $this->db->escapeIdentifiers($data['name'])
+					. " IS {$data['comment']}";
 			}
 		}
 
 		return $sqls;
 	}
 
-		//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Process column
@@ -159,11 +159,11 @@ class Forge extends \CodeIgniter\Database\Forge
 	protected function _processColumn($field)
 	{
 		return $this->db->escapeIdentifiers($field['name'])
-				. ' ' . $field['type'] . $field['length']
-				. $field['default']
-				. $field['null']
-				. $field['auto_increment']
-				. $field['unique'];
+			. ' ' . $field['type'] . $field['length']
+			. $field['default']
+			. $field['null']
+			. $field['auto_increment']
+			. $field['unique'];
 	}
 
 	//--------------------------------------------------------------------
@@ -190,15 +190,14 @@ class Forge extends \CodeIgniter\Database\Forge
 			case 'TINYINT':
 				$attributes['TYPE']     = 'SMALLINT';
 				$attributes['UNSIGNED'] = false;
-				return;
+				break;
 			case 'MEDIUMINT':
 				$attributes['TYPE']     = 'INTEGER';
 				$attributes['UNSIGNED'] = false;
-				return;
+				break;
 			case 'DATETIME':
 				$attributes['TYPE'] = 'TIMESTAMP';
-			default:
-				return;
+				break;
 		}
 	}
 
