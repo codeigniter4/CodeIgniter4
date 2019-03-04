@@ -79,7 +79,7 @@ class Rules
 			return false;
 		}
 
-		return ((int) $val === mb_strlen($str));
+		return ((int) $val === strlen($str));
 	}
 
 	//--------------------------------------------------------------------
@@ -238,7 +238,7 @@ class Rules
 			return false;
 		}
 
-		return ($val >= mb_strlen($str));
+		return ($val >= strlen($str));
 	}
 
 	//--------------------------------------------------------------------
@@ -259,7 +259,7 @@ class Rules
 			return false;
 		}
 
-		return ($val <= mb_strlen($str));
+		return ($val <= strlen($str));
 	}
 
 	//--------------------------------------------------------------------
