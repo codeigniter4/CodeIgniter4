@@ -74,12 +74,7 @@ class Rules
 	 */
 	public function exact_length(string $str = null, string $val, array $data): bool
 	{
-		if (! is_numeric($val))
-		{
-			return false;
-		}
-
-		return ((int) $val === strlen($str));
+		return ((int) $val === mb_strlen($str));
 	}
 
 	//--------------------------------------------------------------------
@@ -233,12 +228,7 @@ class Rules
 	 */
 	public function max_length(string $str = null, string $val, array $data): bool
 	{
-		if (! is_numeric($val))
-		{
-			return false;
-		}
-
-		return ($val >= strlen($str));
+		return ($val >= mb_strlen($str));
 	}
 
 	//--------------------------------------------------------------------
@@ -254,12 +244,7 @@ class Rules
 	 */
 	public function min_length(string $str = null, string $val, array $data): bool
 	{
-		if (! is_numeric($val))
-		{
-			return false;
-		}
-
-		return ($val <= strlen($str));
+		return ($val <= mb_strlen($str));
 	}
 
 	//--------------------------------------------------------------------
