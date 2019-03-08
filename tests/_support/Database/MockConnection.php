@@ -21,13 +21,13 @@ class MockConnection extends BaseConnection
 
 	//--------------------------------------------------------------------
 
-	public function query(string $sql, $binds = null, $queryClass = 'CodeIgniter\\Database\\Query')
+	public function query(string $sql, $binds = null, bool $setEscapeFlags = true, $queryClass = 'CodeIgniter\\Database\\Query')
 	{
 		$queryClass = str_replace('Connection', 'Query', get_class($this));
 
 		$query = new $queryClass($this);
 
-		$query->setQuery($sql, $binds);
+		$query->setQuery($sql, $binds, $setEscapeFlags);
 
 		if (! empty($this->swapPre) && ! empty($this->DBPrefix))
 		{

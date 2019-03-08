@@ -19,20 +19,19 @@ You can access config files within your classes by creating a new instance or us
 are public, so you access the settings like any other property::
 
 	// Creating new class by hand
-	$config = new \Config\EmailConfig();
+	$config = new \Config\Pager();
 
 	// Creating new class with config function
-	$config = config( 'EmailConfig', false );
+	$config = config( 'Pager', false );
 
 	// Get shared instance with config function
-	$config = config( 'EmailConfig' );
+	$config = config( 'Pager' );
 
 	// Access config class with namespace
-	$config = config( 'Config\\EmailConfig' );
+	$config = config( 'Config\\Pager' );
 
 	// Access settings as class properties
-	$protocol = $config->protocol;
-	$mailpath = $config->mailpath;
+	$pageSize = $pager->perPage;
 
 If no namespace is provided, it will look for the files in all available namespaces that have
 been defined, as well as **/app/Config/**. All of the configuration files
@@ -51,7 +50,8 @@ If you need to create a new configuration file you would create a new file at yo
 **/app/Config** by default. Then create the class and fill it with public properties that
 represent your settings::
 
-    namespace Config;
+    <?php namespace Config;
+
     use CodeIgniter\Config\BaseConfig;
 
     class App extends BaseConfig
@@ -203,7 +203,8 @@ the same way as described for namespaced variables.
 
 A sample configuration class setup for this::
 
-    namespace App\Config;
+    <?php namespace App\Config;
+
     use CodeIgniter\Config\BaseConfig;
 
     class MySalesConfig extends BaseConfig
@@ -217,7 +218,7 @@ A sample configuration class setup for this::
 
 ... and the associated regional sales model might look like::
 
-    namespace App\Models;
+    <?php namespace App\Models;
 
     class RegionalSales
     {

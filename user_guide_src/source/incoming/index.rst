@@ -14,3 +14,4 @@ Controllers handle incoming requests.
     request
     incomingrequest
     content_negotiation
+    methodspoofing

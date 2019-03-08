@@ -97,6 +97,7 @@ class Cache extends BaseConfig
 		'password' => null,
 		'port'     => 6379,
 		'timeout'  => 0,
+		'database' => 0,
 	];
 
 	/*

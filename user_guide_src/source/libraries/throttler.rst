@@ -49,20 +49,53 @@ start using it in your application.
 The Code
 ========
 
-You can find this file at **app/Filters/Throttle.php** but the relevant method is reproduced here::
+You could make your own Throttler filter, at **app/Filters/Throttle.php**, 
+along the lines of:: 
 
-	public function before(RequestInterface $request)
-	{
-		$throttler = Services::throttler();
+    <?php namespace App\Filters;
 
-		// Restrict an IP address to no more
-		// than 1 request per second across the
-		// entire site.
-		if ($throttler->check($request->getIPAddress(), 60, MINUTE) === false)
-		{
-		    return Services::response()->setStatusCode(429);
-		}
-	}
+    use CodeIgniter\Filters\FilterInterface;
+    use CodeIgniter\HTTP\RequestInterface;
+    use CodeIgniter\HTTP\ResponseInterface;
+    use Config\Services;
+
+    class Throttle implements FilterInterface
+    {
+            /**
+             * This is a demo implementation of using the Throttler class
+             * to implement rate limiting for your application.
+             *
+             * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
+             *
+             * @return mixed
+             */
+            public function before(RequestInterface $request)
+            {
+                    $throttler = Services::throttler();
+
+                    // Restrict an IP address to no more
+                    // than 1 request per second across the
+                    // entire site.
+                    if ($throttler->check($request->getIPAddress(), 60, MINUTE) === false)
+                    {
+                            return Services::response()->setStatusCode(429);
+                    }
+            }
+
+            //--------------------------------------------------------------------
+
+            /**
+             * We don't have anything to do here.
+             *
+             * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
+             * @param ResponseInterface|\CodeIgniter\HTTP\Response       $response
+             *
+             * @return mixed
+             */
+            public function after(RequestInterface $request, ResponseInterface $response)
+            {
+            }
+    }
 
 When run, this method first grabs an instance of the throttler. Next it uses the IP address as the bucket name,
 and sets things to limit them to one request per second. If the throttler rejects the check, returning false,
@@ -79,8 +112,7 @@ this to incoming requests, you need to edit **/app/Config/Filters.php** and firs
 filter::
 
 	public $aliases = [
-		'csrf' 	  => \App\Filters\CSRF::class,
-		'toolbar' => \App\Filters\DebugToolbar::class,
+		...
 		'throttle' => \App\Filters\Throttle::class
 	];
 
@@ -92,9 +124,9 @@ Next, we assign it to all POST requests made on the site::
 
 And that's all there is to it. Now all POST requests made on the site will have be rate limited.
 
-===============
+***************
 Class Reference
-===============
+***************
 
 .. php:method:: check(string $key, int $capacity, int $seconds[, int $cost = 1])
 

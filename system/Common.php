@@ -102,6 +102,35 @@ if (! function_exists('config'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('db_connnect'))
+{
+	/**
+	 * Grabs a database connection and returns it to the user.
+	 *
+	 * This is a convenience wrapper for \Config\Database::connect()
+	 * and supports the same parameters. Namely:
+	 *
+	 * When passing in $db, you may pass any of the following to connect:
+	 * - group name
+	 * - existing connection instance
+	 * - array of database configuration values
+	 *
+	 * If $getShared === false then a new connection instance will be provided,
+	 * otherwise it will all calls will return the same instance.
+	 *
+	 * @param \CodeIgniter\Database\ConnectionInterface|array|string $db
+	 * @param boolean                                                $getShared
+	 *
+	 * @return \CodeIgniter\Database\BaseConnection
+	 */
+	function db_connect($db = null, bool $getShared = true)
+	{
+		return \Config\Database::connect($db, $getShared);
+	}
+}
+
+//--------------------------------------------------------------------
+
 if (! function_exists('view'))
 {
 	/**
@@ -540,7 +569,7 @@ if (! function_exists('helper'))
 	 * both in and out of the 'helpers' directory of a namespaced directory.
 	 *
 	 * Will load ALL helpers of the matching name, in the following order:
-	 *   1. application/Helpers
+	 *   1. app/Helpers
 	 *   2. {namespace}/Helpers
 	 *   3. system/Helpers
 	 *
@@ -571,44 +600,62 @@ if (! function_exists('helper'))
 				$filename .= '_helper';
 			}
 
-			$paths = $loader->search('Helpers/' . $filename);
-
-			if (! empty($paths))
+			// If the file is namespaced, we'll just grab that
+			// file and not search for any others
+			if (strpos($filename, '\\') !== false)
 			{
-				foreach ($paths as $path)
+				$path = $loader->locateFile($filename, 'Helpers');
+
+				if (empty($path))
 				{
-					if (strpos($path, APPPATH) === 0)
+					throw \CodeIgniter\Files\Exceptions\FileNotFoundException::forFileNotFound($filename);
+				}
+
+				$includes[] = $path;
+			}
+
+			// No namespaces, so search in all available locations
+			else
+			{
+				$paths = $loader->search('Helpers/' . $filename);
+
+				if (! empty($paths))
+				{
+					foreach ($paths as $path)
 					{
-						// @codeCoverageIgnoreStart
-						$appHelper = $path;
-						// @codeCoverageIgnoreEnd
-					}
-					elseif (strpos($path, SYSTEMPATH) === 0)
-					{
-						$systemHelper = $path;
-					}
-					else
-					{
-						$localIncludes[] = $path;
+						if (strpos($path, APPPATH) === 0)
+						{
+							// @codeCoverageIgnoreStart
+							$appHelper = $path;
+							// @codeCoverageIgnoreEnd
+						}
+						elseif (strpos($path, SYSTEMPATH) === 0)
+						{
+							$systemHelper = $path;
+						}
+						else
+						{
+							$localIncludes[] = $path;
+						}
 					}
 				}
-			}
 
-			// App-level helpers should override all others
-			if (! empty($appHelper))
-			{
-				// @codeCoverageIgnoreStart
-				$includes[] = $appHelper;
-				// @codeCoverageIgnoreEnd
-			}
+				// App-level helpers should override all others
+				if (! empty($appHelper))
+				{
+					// @codeCoverageIgnoreStart
+					$includes[] = $appHelper;
+					// @codeCoverageIgnoreEnd
+				}
 
-			// All namespaced files get added in next
-			$includes = array_merge($includes, $localIncludes);
+				// All namespaced files get added in next
+				$includes = array_merge($includes, $localIncludes);
 
-			// And the system default one should be added in last.
-			if (! empty($systemHelper))
-			{
-				$includes[] = $systemHelper;
+				// And the system default one should be added in last.
+				if (! empty($systemHelper))
+				{
+					$includes[] = $systemHelper;
+				}
 			}
 		}
 

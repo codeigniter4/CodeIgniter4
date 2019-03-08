@@ -60,6 +60,7 @@ class RedisHandler implements CacheInterface
 		'password' => null,
 		'port'     => 6379,
 		'timeout'  => 0,
+		'database' => 0,
 	];
 
 	/**
@@ -116,7 +117,12 @@ class RedisHandler implements CacheInterface
 
 			if (isset($config['password']) && ! $this->redis->auth($config['password']))
 			{
-				//              log_message('error', 'Cache: Redis authentication failed.');
+				log_message('error', 'Cache: Redis authentication failed.');
+			}
+
+			if (isset($config['database']) && ! $this->redis->select($config['database']))
+			{
+				log_message('error', 'Cache: Redis select database failed.');
 			}
 		}
 		catch (\RedisException $e)

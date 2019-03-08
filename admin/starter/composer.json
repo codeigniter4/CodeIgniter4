@@ -5,11 +5,11 @@
     "homepage": "https://codeigniter.com",
     "license": "MIT",
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.2",
         "codeigniter4/framework": "^4@alpha"
     },
     "require-dev": {
-        "mikey179/vfsStream": "1.6.*",
+        "mikey179/vfsstream": "1.6.*",
         "phpunit/phpunit": "^7.0"
     },
     "scripts": {

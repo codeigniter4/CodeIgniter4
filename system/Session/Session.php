@@ -42,7 +42,7 @@ use Psr\Log\LoggerAwareTrait;
  * Implementation of CodeIgniter session container.
  *
  * Session configuration is done through session variables and cookie related
- * variables in application/config/App.php
+ * variables in app/config/App.php
  */
 class Session implements SessionInterface
 {
@@ -52,7 +52,7 @@ class Session implements SessionInterface
 	/**
 	 * Instance of the driver to use.
 	 *
-	 * @var HandlerInterface
+	 * @var \CodeIgniter\Log\Handlers\HandlerInterface
 	 */
 	protected $driver;
 
@@ -302,6 +302,11 @@ class Session implements SessionInterface
 		else
 		{
 			ini_set('session.gc_maxlifetime', (int) $this->sessionExpiration);
+		}
+		
+		if(!empty($this->sessionSavePath))
+		{
+			ini_set('session.save_path', $this->sessionSavePath);
 		}
 
 		// Security is king

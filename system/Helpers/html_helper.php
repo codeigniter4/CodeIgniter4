@@ -156,10 +156,9 @@ if (! function_exists('img'))
 			$src = ['src' => $src];
 		}
 
-		//If there is no alt attribute defined, set it to an empty string.
 		if (! isset($src['alt']))
 		{
-			$src['alt'] = '';
+			$src['alt'] = $attributes['alt'] ?? '';
 		}
 
 		$img = '<img';
@@ -182,6 +181,12 @@ if (! function_exists('img'))
 			{
 				$img .= ' ' . $k . '="' . $v . '"';
 			}
+		}
+
+		// prevent passing "alt" to stringify_attributes
+		if (is_array($attributes) && isset($attributes['alt']))
+		{
+			unset($attributes['alt']);
 		}
 
 		return $img . stringify_attributes($attributes) . ' />';

@@ -1,6 +1,7 @@
 <?php
 namespace CodeIgniter\Filters;
 
+use Config\Filters as FilterConfig;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -635,6 +636,48 @@ class FiltersTest extends \CIUnitTestCase
 		$filters = $filters->initialize('admin/foo/bar');
 
 		$filters->enableFilter('goggle', 'before');
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1664
+	 */
+	public function testMatchesURICaseInsensitively()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config  = [
+			'globals' => [
+				'before' => [
+					'foo' => ['except' => 'Admin/*'],
+					'bar'
+				],
+				'after'  => [
+					'foo' => ['except' => 'Admin/*'],
+					'baz'
+				],
+			],
+			'filters' => [
+				'frak' => [
+					'before' => ['Admin/*'],
+					'after'  => ['Admin/*'],
+				],
+			],
+		];
+		$filters = new Filters((object) $config, $this->request, $this->response);
+		$uri     = 'admin/foo/bar';
+
+		$expected = [
+			'before' => [
+				'bar',
+				'frak',
+			],
+			'after'  => [
+				'baz',
+				'frak',
+			],
+		];
+
+		$this->assertEquals($expected, $filters->initialize($uri)->getFilters());
 	}
 
 }

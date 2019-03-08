@@ -64,16 +64,17 @@ Change Log
 
 The change-log, in the user guide root, needs to be kept up-to-date.
 Not all changes will need an entry in it, but new classes, major or BC changes
-to existing classes, and bug fixes should.
+to existing classes should. Once we have a stable release, bug fixes would
+appear in the changelog too.
 
-See the `CodeIgniter 4 change log
-<https://github.com/codeigniter4/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_
-for an example.
+The changelog is independently maintained by the framework release manager
+Make sure that your PR descriptions help us decide if the contribution should
+be highlighted in the next release after it has been merged.
 
 PHP Compatibility
 =================
 
-CodeIgniter4 requires PHP 7.1.
+CodeIgniter4 requires PHP 7.2.
 
 Backwards Compatibility
 =======================
@@ -89,7 +90,7 @@ with earlier versions of the framework.
 Mergeability
 ============
 
-Your PRs need to be mergeable before they will be considered.
+Your PRs need to be mergeable and GPG-signed before they will be considered.
 
 We suggest that you synchronize your repository's ``develop`` branch with
 that in the main repository, and then your feature branch and

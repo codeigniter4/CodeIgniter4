@@ -596,12 +596,14 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Should automatically handle different connections for read/write
 	 * queries if needed.
 	 *
-	 * @param  string $sql
-	 * @param  array  ...$binds
-	 * @param  string $queryClass
+	 * @param string  $sql
+	 * @param array   ...$binds
+	 * @param boolean $setEscapeFlags
+	 * @param string  $queryClass
+	 *
 	 * @return BaseResult|Query|false
 	 */
-	public function query(string $sql, $binds = null, $queryClass = 'CodeIgniter\\Database\\Query')
+	public function query(string $sql, $binds = null, bool $setEscapeFlags = true, $queryClass = 'CodeIgniter\\Database\\Query')
 	{
 		if (empty($this->connID))
 		{
@@ -609,13 +611,12 @@ abstract class BaseConnection implements ConnectionInterface
 		}
 
 		$resultClass = str_replace('Connection', 'Result', get_class($this));
-
 		/**
 		 * @var Query $query
 		 */
 		$query = new $queryClass($this);
 
-		$query->setQuery($sql, $binds);
+		$query->setQuery($sql, $binds, $setEscapeFlags);
 
 		if (! empty($this->swapPre) && ! empty($this->DBPrefix))
 		{
@@ -1703,6 +1704,20 @@ abstract class BaseConnection implements ConnectionInterface
 	public function pretend(bool $pretend = true)
 	{
 		$this->pretend = $pretend;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Empties our data cache. Especially helpful during testing.
+	 *
+	 * @return $this
+	 */
+	public function resetDataCache()
+	{
+		$this->dataCache = [];
 
 		return $this;
 	}

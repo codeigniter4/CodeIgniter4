@@ -1,6 +1,5 @@
-##########
 Conclusion
-##########
+###############################################################################
 
 This tutorial did not cover all of the things you might expect of a
 full-fledged content management system, but it introduced you to the

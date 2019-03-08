@@ -91,7 +91,10 @@ if (! defined('TESTPATH'))
  * GRAB OUR CONSTANTS & COMMON
  * ---------------------------------------------------------------
  */
-require_once APPPATH . 'Config/Constants.php';
+if (! defined('APP_NAMESPACE'))
+{
+	require_once APPPATH . 'Config/Constants.php';
+}
 
 require_once SYSTEMPATH . 'Common.php';
 
@@ -105,8 +108,13 @@ require_once SYSTEMPATH . 'Common.php';
  * that the config files can use the path constants.
  */
 
+if (! class_exists(Config\Autoload::class, false))
+{
+	require_once APPPATH . 'Config/Autoload.php';
+	require_once APPPATH . 'Config/Modules.php';
+}
+
 require_once SYSTEMPATH . 'Autoloader/Autoloader.php';
-require_once APPPATH . 'Config/Autoload.php';
 require_once SYSTEMPATH . 'Config/BaseService.php';
 require_once APPPATH . 'Config/Services.php';
 
@@ -117,7 +125,7 @@ if (! class_exists('CodeIgniter\Services', false))
 }
 
 $loader = CodeIgniter\Services::autoloader();
-$loader->initialize(new Config\Autoload());
+$loader->initialize(new Config\Autoload(), new Config\Modules());
 $loader->register();    // Register the loader with the SPL autoloader stack.
 
 // Now load Composer's if it's available

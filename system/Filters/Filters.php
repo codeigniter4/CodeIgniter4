@@ -119,7 +119,7 @@ class Filters
 	 */
 	public function run(string $uri, $position = 'before')
 	{
-		$this->initialize($uri);
+		$this->initialize(strtolower($uri));
 
 		foreach ($this->filters[$position] as $alias => $rules)
 		{
@@ -350,7 +350,7 @@ class Filters
 				foreach ($rules as $path)
 				{
 					// Prep it for regex
-					$path = str_replace('/*', '*', $path);
+					$path = strtolower(str_replace('/*', '*', $path));
 					$path = trim(str_replace('*', '.+', $path), '/ ');
 
 					// Path doesn't match the URI? continue on...
@@ -388,7 +388,7 @@ class Filters
 				foreach ($rules as $path)
 				{
 					// Prep it for regex
-					$path = str_replace('/*', '*', $path);
+					$path = strtolower(str_replace('/*', '*', $path));
 					$path = trim(str_replace('*', '.+', $path), '/ ');
 
 					// Path doesn't match the URI? continue on...
@@ -434,7 +434,7 @@ class Filters
 			return;
 		}
 
-		$uri = trim($uri, '/ ');
+		$uri = strtolower(trim($uri, '/ '));
 
 		$matches = [];
 
@@ -446,7 +446,7 @@ class Filters
 				foreach ($settings['before'] as $path)
 				{
 					// Prep it for regex
-					$path = str_replace('/*', '*', $path);
+					$path = strtolower(str_replace('/*', '*', $path));
 					$path = trim(str_replace('*', '.+', $path), '/ ');
 
 					if (preg_match('#' . $path . '#', $uri) !== 1)
@@ -467,7 +467,7 @@ class Filters
 				foreach ($settings['after'] as $path)
 				{
 					// Prep it for regex
-					$path = str_replace('/*', '*', $path);
+					$path = strtolower(str_replace('/*', '*', $path));
 					$path = trim(str_replace('*', '.+', $path), '/ ');
 
 					if (preg_match('#' . $path . '#', $uri) !== 1)
@@ -479,6 +479,7 @@ class Filters
 				}
 
 				$this->filters['after'] = array_merge($this->filters['after'], $matches);
+				$matches                = [];
 			}
 		}
 	}

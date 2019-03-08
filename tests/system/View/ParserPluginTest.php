@@ -72,6 +72,24 @@ class ParserPluginTest extends \CIUnitTestCase
 		$this->assertEquals($this->setHints($this->validator->showError('email')), $this->setHints($this->parser->renderString($template)));
 	}
 
+	public function testRoute()
+	{
+		// prime the pump
+		$routes = service('routes');
+		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
+
+		$template = '{+ route myController::goto string 13 +}';
+
+		$this->assertEquals('/path/string/to/13', $this->parser->renderString($template));
+	}
+
+	public function testSiteURL()
+	{
+		$template = '{+ siteURL +}';
+
+		$this->assertEquals('http://example.com/index.php', $this->parser->renderString($template));
+	}
+
 	public function testValidationErrorsList()
 	{
 		$this->validator->setError('email', 'Invalid email address');

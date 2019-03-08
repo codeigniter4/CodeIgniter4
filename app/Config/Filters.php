@@ -7,9 +7,9 @@ class Filters extends BaseConfig
 	// Makes reading things below nicer,
 	// and simpler to change out script that's used.
 	public $aliases = [
-		'csrf'     => \App\Filters\CSRF::class,
-		'toolbar'  => \App\Filters\DebugToolbar::class,
-		'honeypot' => \App\Filters\Honeypot::class,
+		'csrf'     => \CodeIgniter\Filters\CSRF::class,
+		'toolbar'  => \CodeIgniter\Filters\DebugToolbar::class,
+		'honeypot' => \CodeIgniter\Filters\Honeypot::class,
 	];
 
 	// Always applied before every request

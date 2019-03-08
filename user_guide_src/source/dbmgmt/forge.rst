@@ -188,9 +188,6 @@ and unique keys with specific methods::
 	$forge->addPrimaryKey('blog_id');
 	// gives PRIMARY KEY `blog_id` (`blog_id`)
 
-Foreign Keys help to enforce relationships and actions across your tables. For tables that support Foreign Keys,
-you may add them directly in forge::
-
 	$forge->addUniqueKey(['blog_id', 'uri']);
 	// gives UNIQUE KEY `blog_id_uri` (`blog_id`, `uri`)
 
@@ -198,7 +195,8 @@ you may add them directly in forge::
 Adding Foreign Keys
 ===================
 
-::
+Foreign Keys help to enforce relationships and actions across your tables. For tables that support Foreign Keys,
+you may add them directly in forge::
 
         $forge->addForeignKey('users_id','users','id');
         // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`)

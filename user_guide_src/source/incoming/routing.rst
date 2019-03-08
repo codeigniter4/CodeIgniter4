@@ -490,7 +490,7 @@ When a user visits the root of your site (i.e. example.com) the controller to us
 the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
 which matches the controller at ``/app/Controllers/Home.php``::
 
-	// example.com routes to application/Controllers/Welcome.php
+	// example.com routes to app/Controllers/Welcome.php
 	$routes->setDefaultController('Welcome');
 
 The default controller is also used when no matching route has been found, and the URI would point to a directory

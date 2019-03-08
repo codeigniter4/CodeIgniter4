@@ -98,6 +98,16 @@ class Config
 	//--------------------------------------------------------------------
 
 	/**
+	 * Resets the instances array
+	 */
+	public static function reset()
+	{
+		static::$instances = [];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Find configuration class and create instance
 	 *
 	 * @param string $name Classname

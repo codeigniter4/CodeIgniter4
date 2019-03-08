@@ -71,9 +71,9 @@ This is an array of servers that will be used when using the ``Memcache(d)`` han
 
 The settings for the Redis server that you wish to use when using the ``Redis`` handler.
 
-===============
+***************
 Class Reference
-===============
+***************
 
 .. php:method:: isSupported()
 
@@ -239,13 +239,14 @@ Redis Caching
 Redis is an in-memory key-value store which can operate in LRU cache mode.
 To use it, you need `Redis server and phpredis PHP extension <https://github.com/phpredis/phpredis>`_.
 
-Config options to connect to redis server must be stored in the application/config/redis.php file.
+Config options to connect to redis server must be stored in the app/Config/redis.php file.
 Available options are::
 
 	$config['host'] = '127.0.0.1';
 	$config['password'] = NULL;
 	$config['port'] = 6379;
 	$config['timeout'] = 0;
+	$config['database'] = 0;
 
 For more information on Redis, please see
 `http://redis.io <http://redis.io>`_.

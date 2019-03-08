@@ -149,7 +149,7 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
-	 * The column used for insert timestampes
+	 * The column used for insert timestamps
 	 *
 	 * @var string
 	 */
@@ -343,8 +343,6 @@ class Model
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
-		$this->reset();
-
 		return $row['data'];
 	}
 
@@ -454,6 +452,7 @@ class Model
 	 * @param array|object $data
 	 *
 	 * @return boolean
+	 * @throws \ReflectionException
 	 */
 	public function save($data)
 	{
@@ -462,7 +461,12 @@ class Model
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
-			$data = static::classToArray($data, $this->dateFormat);
+			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
+		}
+
+		if (empty($data))
+		{
+			return true;
 		}
 
 		if (is_object($data) && isset($data->{$this->primaryKey}))
@@ -481,23 +485,28 @@ class Model
 		return $response;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Takes a class an returns an array of it's public and protected
 	 * properties as an array suitable for use in creates and updates.
 	 *
 	 * @param string|object $data
+	 * @param string|null   $primaryKey
 	 * @param string        $dateFormat
 	 *
 	 * @return array
 	 * @throws \ReflectionException
 	 */
-	public static function classToArray($data, string $dateFormat = 'datetime'): array
+	public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime'): array
 	{
-		if (method_exists($data, 'toArray'))
+		if (method_exists($data, 'toRawArray'))
 		{
-			$properties = $data->toArray(true, false);
+			$properties = $data->toRawArray(true);
+
+			// Always grab the primary key otherwise updates will fail.
+			if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties))
+			{
+				$properties[$primaryKey] = $data->{$primaryKey};
+			}
 		}
 		else
 		{
@@ -569,6 +578,7 @@ class Model
 	 * @param boolean      $returnID Whether insert ID should be returned or not.
 	 *
 	 * @return integer|string|boolean
+	 * @throws \ReflectionException
 	 */
 	public function insert($data = null, bool $returnID = true)
 	{
@@ -588,7 +598,7 @@ class Model
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
-			$data = static::classToArray($data, $this->dateFormat);
+			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
 		}
 
 		// If it's still a stdClass, go ahead and convert to
@@ -689,6 +699,7 @@ class Model
 	 * @param array|object         $data
 	 *
 	 * @return boolean
+	 * @throws \ReflectionException
 	 */
 	public function update($id = null, $data = null)
 	{
@@ -711,7 +722,7 @@ class Model
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
-			$data = static::classToArray($data, $this->dateFormat);
+			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
 		}
 
 		// If it's still a stdClass, go ahead and convert to
@@ -994,7 +1005,7 @@ class Model
 				throw DataException::forEmptyDataset('chunk');
 			}
 
-			$rows = $rows->getResult();
+			$rows = $rows->getResult($this->tempReturnType);
 
 			$offset += $size;
 
@@ -1254,26 +1265,62 @@ class Model
 			$data = (array) $data;
 		}
 
+		$rules = $this->validationRules;
+
 		// ValidationRules can be either a string, which is the group name,
 		// or an array of rules.
-		if (is_string($this->validationRules))
+		if (is_string($rules))
 		{
-			$valid = $this->validation->run($data, $this->validationRules, $this->DBGroup);
+			$rules = $this->validation->loadRuleGroup($rules);
 		}
-		else
-		{
-			// Replace any placeholders (i.e. {id}) in the rules with
-			// the value found in $data, if exists.
-			$rules = $this->fillPlaceholders($this->validationRules, $data);
 
-			$this->validation->setRules($rules, $this->validationMessages);
-			$valid = $this->validation->run($data, null, $this->DBGroup);
+		$rules = $this->cleanValidationRules($rules, $data);
+
+		// If no data existed that needs validation
+		// our job is done here.
+		if (empty($rules))
+		{
+			return true;
 		}
+
+		// Replace any placeholders (i.e. {id}) in the rules with
+		// the value found in $data, if exists.
+		$rules = $this->fillPlaceholders($rules, $data);
+
+		$this->validation->setRules($rules, $this->validationMessages);
+		$valid = $this->validation->run($data, null, $this->DBGroup);
 
 		return (bool) $valid;
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Removes any rules that apply to fields that have not been set
+	 * currently so that rules don't block updating when only updating
+	 * a partial row.
+	 *
+	 * @param array $rules
+	 *
+	 * @return array
+	 */
+	protected function cleanValidationRules($rules, array $data = null)
+	{
+		if (empty($data))
+		{
+			return [];
+		}
+
+		foreach ($rules as $field => $rule)
+		{
+			if (! array_key_exists($field, $data))
+			{
+				unset($rules[$field]);
+			}
+		}
+
+		return $rules;
+	}
 
 	/**
 	 * Replace any placeholders within the rules with the values that
@@ -1312,6 +1359,13 @@ class Model
 				{
 					foreach ($rule as &$row)
 					{
+						// Should only be an `errors` array
+						// which doesn't take placeholders.
+						if (is_array($row))
+						{
+							continue;
+						}
+
 						$row = strtr($row, $replacements);
 					}
 					continue;
@@ -1436,7 +1490,7 @@ class Model
 	 */
 	public function __get(string $name)
 	{
-		if (in_array($name, ['primaryKey', 'table', 'returnType']))
+		if (in_array($name, ['primaryKey', 'table', 'returnType', 'DBGroup']))
 		{
 			return $this->{$name};
 		}

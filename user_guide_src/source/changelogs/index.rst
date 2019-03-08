@@ -12,6 +12,52 @@ Release Date: Not Released
 
 :doc:`See all the changes. </changelogs/next>`
 
+Version 4.0.0-beta.1
+====================================================
+
+Release Date: Unreleased
+
+Highlights:
+
+- New View Layouts provide simple way to create site site view templates.
+- Fixed user guide CSS for proper wide table display
+- Converted UploadedFile to use system messages
+- Numerous database, migration & model bugs fixed
+- Refactored unit testing for appstarter & framework distributions
+
+New messages:
+
+- Database.tableNotFound
+- HTTP.uploadErr...
+
+App changes:
+
+- app/Config/Cache has new setting: database
+- app/Views/welcome_message has logo tinted
+- composer.json has a case correction
+- env adds CI_ENVIRONMENT suggestion
+
+:doc:`See all the changes. </changelogs/v4.0.0-beta.1>`
+
+Version 4.0.0-alpha.5
+====================================================
+
+Release Date: January 30, 2019
+
+**Alpha 5**
+
+Highlights:
+
+- updated PHP dependency to 7.2
+- new feature branches have been created for the email and queue modules, 
+    so they don't impact the release of 4.0.0
+- dropped several language messages that were unused (eg Migrations.missingTable) 
+    and added some new (eg Migrations.invalidType)
+- lots of bug fixes
+- code coverage is up to 78%
+
+:doc:`See all the changes. </changelogs/v4.0.0-alpha.5>`
+
 Version 4.0.0-alpha.4
 ====================================================
 
@@ -73,8 +119,8 @@ Release Date: September 28, 2018
 
 Non-code changes:
     - User Guide adapted or rewritten
-    - [System message translations repository](https://github.com/bcit-ci/CodeIgniter4-translations)
-    - [Roadmap subforum](https://forum.codeigniter.com/forum-33.html) for more transparent planning
+    - `System message translations repository <https://github.com/bcit-ci/CodeIgniter4-translations>`_
+    - `Roadmap subforum  <https://forum.codeigniter.com/forum-33.html>`_ for more transparent planning
 
 New core classes:
     - CodeIgniter (bootstrap)
@@ -93,6 +139,8 @@ Some new, some old & some borrowed packages, all namespaced.
     :titlesonly:
 
     next
+    v4.0.0-alpha.5
+    v4.0.0-alpha.4
     v4.0.0-alpha.3
     v4.0.0-alpha.2
     v4.0.0-alpha.1

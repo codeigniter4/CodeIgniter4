@@ -105,7 +105,7 @@ class Builder extends BaseBuilder
 
 		$sql = $this->_update($this->QBFrom[0], [$column => "to_number({$column}, '9999999') + {$value}"]);
 
-		return $this->db->query($sql, $this->binds);
+		return $this->db->query($sql, $this->binds, false);
 	}
 
 	//--------------------------------------------------------------------
@@ -124,7 +124,7 @@ class Builder extends BaseBuilder
 
 		$sql = $this->_update($this->QBFrom[0], [$column => "to_number({$column}, '9999999') - {$value}"]);
 
-		return $this->db->query($sql, $this->binds);
+		return $this->db->query($sql, $this->binds, false);
 	}
 
 	//--------------------------------------------------------------------
@@ -162,7 +162,14 @@ class Builder extends BaseBuilder
 
 		$table = $this->QBFrom[0];
 
-		$set    = $this->binds;
+		$set = $this->binds;
+
+		// We need to grab out the actual values from
+		// the way binds are stored with escape flag.
+		array_walk($set, function (&$item) {
+			$item = $item[0];
+		});
+
 		$keys   = array_keys($set);
 		$values = array_values($set);
 

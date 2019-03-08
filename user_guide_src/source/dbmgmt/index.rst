@@ -2,7 +2,7 @@
 Managing Databases
 ##################
 
-CodeIgniter comes with tools to restructure or sees your database.
+CodeIgniter comes with tools to restructure or seed your database.
 
 .. toctree::
     :titlesonly:

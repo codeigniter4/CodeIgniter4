@@ -13,7 +13,8 @@ connection and the forge through ``$this->db`` and ``$this->forge``, respectivel
 stored within the **app/Database/Seeds** directory. The name of the file must match the name of the class.
 ::
 
-	// app/Database/Seeds/SimpleSeeder.php
+        <?php namespace App\Database\Seeds;
+
 	class SimpleSeeder extends \CodeIgniter\Database\Seeder
 	{
 		public function run()
@@ -38,6 +39,8 @@ Nesting Seeders
 
 Seeders can call other seeders, with the **call()** method. This allows you to easily organize a central seeder,
 but organize the tasks into separate seeder files::
+
+        <?php namespace App\Database\Seeds;
 
 	class TestSeeder extends \CodeIgniter\Database\Seeder
 	{

@@ -73,7 +73,7 @@ if (! function_exists('xml_convert'))
 			'&apos;',
 			'&#45;',
 		];
-		$str         = str_replace($original, $replacements, $str);
+		$str         = str_replace($original, $replacement, $str);
 
 		// Decode the temp markers back to entities
 		$str = preg_replace('/' . $temp . '(\d+);/', '&#\\1;', $str);

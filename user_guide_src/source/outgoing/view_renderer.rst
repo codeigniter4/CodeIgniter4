@@ -6,6 +6,9 @@ View Renderer
     :local:
     :depth: 2
 
+Using the View Renderer
+***************************
+
 The ``view()`` function is a convenience function that grabs an instance of the
 ``renderer`` service, sets the data, and renders the view. While this is often
 exactly what you want, you may find times where you want to work with it more directly.
@@ -100,7 +103,7 @@ Several options can be passed to the ``render()`` or ``renderString()`` methods:
 -   ``saveData`` - true if the view data parameters should be retained for subsequent calls
 
 Class Reference
-===============
+***************
 
 .. php:class:: CodeIgniter\\View\\View
 

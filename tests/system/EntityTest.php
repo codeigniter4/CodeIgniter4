@@ -174,7 +174,7 @@ class EntityTest extends \CIUnitTestCase
 		$time = $entity->created_at;
 
 		$this->assertInstanceOf(Time::class, $time);
-		$this->assertEquals(date('Y-m-d H:i:s', $stamp), $time->format('Y-m-d H:i:s'));
+		$this->assertCloseEnoughString(date('Y-m-d H:i:s', $stamp), $time->format('Y-m-d H:i:s'));
 	}
 
 	public function testDateMutationFromDatetime()
@@ -186,7 +186,7 @@ class EntityTest extends \CIUnitTestCase
 		$time = $entity->created_at;
 
 		$this->assertInstanceOf(Time::class, $time);
-		$this->assertEquals($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
+		$this->assertCloseEnoughString($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
 	}
 
 	public function testDateMutationFromTime()
@@ -198,7 +198,7 @@ class EntityTest extends \CIUnitTestCase
 		$time = $entity->created_at;
 
 		$this->assertInstanceOf(Time::class, $time);
-		$this->assertEquals($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
+		$this->assertCloseEnoughString($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
 	}
 
 	public function testDateMutationStringToTime()
@@ -223,7 +223,7 @@ class EntityTest extends \CIUnitTestCase
 		$time = $this->getPrivateProperty($entity, 'created_at');
 
 		$this->assertInstanceOf(Time::class, $time);
-		$this->assertEquals(date('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
+		$this->assertCloseEnoughString(date('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
 	}
 
 	public function testDateMutationDatetimeToTime()
@@ -236,7 +236,7 @@ class EntityTest extends \CIUnitTestCase
 		$time = $this->getPrivateProperty($entity, 'created_at');
 
 		$this->assertInstanceOf(Time::class, $time);
-		$this->assertEquals($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
+		$this->assertCloseEnoughString($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
 	}
 
 	public function testDateMutationTimeToTime()
@@ -249,7 +249,7 @@ class EntityTest extends \CIUnitTestCase
 		$time = $this->getPrivateProperty($entity, 'created_at');
 
 		$this->assertInstanceOf(Time::class, $time);
-		$this->assertEquals($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
+		$this->assertCloseEnoughString($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
 	}
 
 	//--------------------------------------------------------------------
@@ -385,9 +385,8 @@ class EntityTest extends \CIUnitTestCase
 		$this->assertEquals(['foo' => 'bar'], $entity->seventh);
 	}
 
-	
 	//--------------------------------------------------------------------
-	
+
 	public function testCastNullable()
 	{
 		$entity = $this->getCastNullableEntity();
@@ -458,6 +457,46 @@ class EntityTest extends \CIUnitTestCase
 			'simple' => ':oo',
 			'bar'    => null,
 			'orig'   => ':oo',
+		]);
+	}
+
+	public function testAsArrayOnlyChanged()
+	{
+		$entity = $this->getEntity();
+
+		$entity->bar = 'foo';
+
+		$result = $entity->toArray(true);
+
+		$this->assertEquals($result, [
+			'bar' => 'bar:foo:bar',
+		]);
+	}
+
+	public function testToRawArray()
+	{
+		$entity = $this->getEntity();
+
+		$result = $entity->toRawArray();
+
+		$this->assertEquals($result, [
+			'foo'        => null,
+			'bar'        => null,
+			'default'    => 'sumfin',
+			'created_at' => null,
+		]);
+	}
+
+	public function testToRawArrayOnlyChanged()
+	{
+		$entity = $this->getEntity();
+
+		$entity->bar = 'foo';
+
+		$result = $entity->toRawArray(true);
+
+		$this->assertEquals($result, [
+			'bar' => 'bar:foo',
 		]);
 	}
 
@@ -594,31 +633,28 @@ class EntityTest extends \CIUnitTestCase
 			}
 		};
 	}
-	
-	
-	
+
 	protected function getCastNullableEntity()
 	{
 		return new class extends Entity
 		{
 
-			protected $string_null = null;
+			protected $string_null  = null;
 			protected $string_empty = null;
 			protected $integer_null = null;
-			protected $integer_0 = null;
+			protected $integer_0    = null;
 			// 'bar' is db column, 'foo' is internal representation
 			protected $_options = [
 				'casts'   => [
-					'string_null'    => '?string',
-					'string_empty'   => 'string',
-					'integner_null'  => '?integer',
-					'integer_0'      => 'integer'
+					'string_null'   => '?string',
+					'string_empty'  => 'string',
+					'integner_null' => '?integer',
+					'integer_0'     => 'integer',
 				],
 				'dates'   => [],
 				'datamap' => [],
 			];
 		};
 	}
-
 
 }

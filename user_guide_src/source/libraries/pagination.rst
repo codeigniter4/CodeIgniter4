@@ -25,6 +25,10 @@ It even reads the current page it should display from the current URL via a ``pa
 
 To provide a paginated list of users in your application, your controller's method would look something like::
 
+    <?php namespace App\Constrollers;
+
+    use CodeIgniter\Controller;
+
     class UserController extends Controller
     {
         public function index()

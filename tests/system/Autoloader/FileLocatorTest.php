@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Autoloader;
 
+use Config\Modules;
+
 class FileLocatorTest extends \CIUnitTestCase
 {
 	/**
@@ -14,7 +16,7 @@ class FileLocatorTest extends \CIUnitTestCase
 		parent::setUp();
 
 		$autoloader = new Autoloader();
-		$autoloader->initialize(new \Config\Autoload());
+		$autoloader->initialize(new \Config\Autoload(), new Modules());
 		$autoloader->addNamespace([
 			'Unknown'       => '/i/do/not/exist',
 			'Tests/Support' => TESTPATH . '_support/',
@@ -207,8 +209,8 @@ class FileLocatorTest extends \CIUnitTestCase
 	{
 		$files = $this->locator->listFiles('Filters/');
 
-		$expectedWin = APPPATH . 'Filters\DebugToolbar.php';
-		$expectedLin = APPPATH . 'Filters/DebugToolbar.php';
+		$expectedWin = SYSTEMPATH . 'Filters\DebugToolbar.php';
+		$expectedLin = SYSTEMPATH . 'Filters/DebugToolbar.php';
 		$this->assertTrue(in_array($expectedWin, $files) || in_array($expectedLin, $files));
 
 		$expectedWin = SYSTEMPATH . 'Filters\Filters.php';

@@ -683,7 +683,7 @@ class ContentSecurityPolicy
 
 					$this->styleSrc[] = 'nonce-' . $nonce;
 
-					return "nonce={$nonce}";
+					return "nonce=\"{$nonce}\"";
 				}, $body
 		);
 
@@ -694,7 +694,7 @@ class ContentSecurityPolicy
 
 					$this->scriptSrc[] = 'nonce-' . $nonce;
 
-					return "nonce={$nonce}";
+					return "nonce=\"{$nonce}\"";
 				}, $body
 		);
 
@@ -799,12 +799,6 @@ class ContentSecurityPolicy
 	 */
 	protected function addToHeader(string $name, $values = null)
 	{
-		if (empty($values))
-		{
-			$this->tempHeaders[$name] = null;
-			return;
-		}
-
 		if (is_string($values))
 		{
 			$values = [$values => 0];

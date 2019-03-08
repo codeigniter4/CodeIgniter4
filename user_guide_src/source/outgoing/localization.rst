@@ -88,7 +88,7 @@ Retrieving the Current Locale
 The current locale can always be retrieved from the IncomingRequest object, through the ``getLocale()`` method.
 If your controller is extending ``CodeIgniter\Controller``, this will be available through ``$this->request``::
 
-    namespace App\Controllers;
+    <?php namespace App\Controllers;
 
     class UserController extends \CodeIgniter\Controller
     {

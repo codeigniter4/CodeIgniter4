@@ -1,7 +1,5 @@
 <?php namespace CodeIgniter\Test;
 
-use Tests\Support\DOM\DOMParser;
-
 class DOMParserTest extends CIUnitTestCase
 {
 	protected function setUp()

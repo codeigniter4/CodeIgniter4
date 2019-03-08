@@ -61,7 +61,7 @@ class CodeIgniter
 	/**
 	 * The current version of CodeIgniter Framework
 	 */
-	const CI_VERSION = '4.0.0-alpha.4';
+	const CI_VERSION = '4.0.0-beta.1';
 
 	/**
 	 * App startup time.
@@ -199,7 +199,7 @@ class CodeIgniter
 	 * @param \CodeIgniter\Router\RouteCollectionInterface $routes
 	 * @param boolean                                      $returnResponse
 	 *
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Filters\Exceptions\FilterException
 	 * @throws \Exception
 	 */
 	public function run(RouteCollectionInterface $routes = null, bool $returnResponse = false)
@@ -234,7 +234,7 @@ class CodeIgniter
 		{
 			return $this->handleRequest($routes, $cacheConfig, $returnResponse);
 		}
-		catch (Router\RedirectException $e)
+		catch (\CodeIgniter\Filters\Exceptions\FilterException $e)
 		{
 			$logger = Services::logger();
 			$logger->info('REDIRECTED ROUTE at ' . $e->getMessage());
@@ -533,7 +533,7 @@ class CodeIgniter
 	 *
 	 * @throws \Exception
 	 *
-	 * @return boolean
+	 * @return bool|\CodeIgniter\HTTP\ResponseInterface
 	 */
 	public function displayCache($config)
 	{
@@ -564,7 +564,9 @@ class CodeIgniter
 			$this->response->setBody($output);
 
 			return $this->response;
-		};
+		}
+
+		return false;
 	}
 
 	//--------------------------------------------------------------------
@@ -574,7 +576,7 @@ class CodeIgniter
 	 *
 	 * @param integer $time
 	 *
-	 * @return $this
+	 * @return void
 	 */
 	public static function cache(int $time)
 	{

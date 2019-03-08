@@ -266,4 +266,33 @@ class ViewTest extends \CIUnitTestCase
 		$this->assertEquals(0, count($view->getPerformanceData()));
 	}
 
+	public function testRenderLayoutExtendsCorrectly()
+	{
+		$view = new View($this->config, $this->viewsDir, $this->loader);
+
+		$view->setVar('testString', 'Hello World');
+		$expected = "<p>Open</p>\n<h1>Hello World</h1>";
+
+		$this->assertContains($expected, $view->render('extend'));
+	}
+
+	public function testRenderLayoutMakesDataAvailableToBoth()
+	{
+		$view = new View($this->config, $this->viewsDir, $this->loader);
+
+		$view->setVar('testString', 'Hello World');
+		$expected = "<p>Open</p>\n<h1>Hello World</h1>\n<p>Hello World</p>";
+
+		$this->assertContains($expected, $view->render('extend'));
+	}
+
+	public function testRenderLayoutSupportsMultipleOfSameSection()
+	{
+		$view = new View($this->config, $this->viewsDir, $this->loader);
+
+		$view->setVar('testString', 'Hello World');
+		$expected = "<p>First</p>\n<p>Second</p>";
+
+		$this->assertContains($expected, $view->render('extend_two'));
+	}
 }

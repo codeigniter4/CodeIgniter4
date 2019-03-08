@@ -16,9 +16,9 @@ The Helper Trait
 You can use either of the base test classes, but you do need to use the ``ControllerTester`` trait
 within your tests::
 
-    namespace CodeIgniter;
+    <?php namespace CodeIgniter;
 
-    use Tests\Support\Helpers\ControllerTester;
+    use CodeIgniter\Test\ControllerTester;
 
     class TestControllerA extends \CIDatabaseTestCase
     {
@@ -30,9 +30,9 @@ the request body, URI, and more. You specify the controller to use with the ``co
 fully qualified class name of your controller. Finally, call the ``execute()`` method with the name of the method
 to run as the parameter::
 
-    namespace CodeIgniter;
+    <?php namespace CodeIgniter;
 
-    use Tests\Support\Helpers\ControllerTester;
+    use CodeIgniter\Test\ControllerTester;
 
     class TestControllerA extends \CIDatabaseTestCase
     {

@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter;
 
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Exceptions\CastException;
 
 /**
  * CodeIgniter
@@ -78,7 +79,7 @@ class Entity
 	protected $_original = [];
 
 	/**
-	 * Holds info whenever prperties have to be casted
+	 * Holds info whenever properties have to be casted
 	 *
 	 * @var boolean
 	 **/
@@ -170,7 +171,7 @@ class Entity
 				continue;
 			}
 
-			if ($onlyChanged && $this->_original[$key] === null && $value === null)
+			if ($onlyChanged && ! $this->hasPropertyChanged($key, $value))
 			{
 				continue;
 			}
@@ -191,6 +192,54 @@ class Entity
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Converts the properties of this class into an array. Unlike toArray()
+	 * this will not cast the data or use any magic accessors. It simply
+	 * returns the raw data for use when saving to the model, etc.
+	 *
+	 * @param boolean $onlyChanged
+	 *
+	 * @return array
+	 */
+	public function toRawArray(bool $onlyChanged = false): array
+	{
+		$return = [];
+
+		$properties = get_object_vars($this);
+
+		foreach ($properties as $key => $value)
+		{
+			if (substr($key, 0, 1) === '_')
+			{
+				continue;
+			}
+
+			if ($onlyChanged && ! $this->hasPropertyChanged($key, $value))
+			{
+				continue;
+			}
+
+			$return[$key] = $this->$key;
+		}
+
+		return $return;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Checks a property to see if it has changed since the entity was created.
+	 *
+	 * @param string $key
+	 * @param null   $value
+	 *
+	 * @return boolean
+	 */
+	protected function hasPropertyChanged(string $key, $value = null)
+	{
+		return ! (($this->_original[$key] === null && $value === null) || $this->_original[$key] === $value);
+	}
 
 	/**
 	 * Magic method to allow retrieval of protected and private
@@ -267,24 +316,37 @@ class Entity
 			$value = $this->mutateDate($value);
 		}
 
-		// Array casting requires that we serialize the value
-		// when setting it so that it can easily be stored
-		// back to the database.
-		if (array_key_exists($key, $this->_options['casts']) && $this->_options['casts'][$key] === 'array')
+		$isNullable = false;
+		$castTo     = false;
+
+		if (array_key_exists($key, $this->_options['casts']))
 		{
-			$value = serialize($value);
+			$isNullable = substr($this->_options['casts'][$key], 0, 1) === '?';
+			$castTo     = $isNullable ? substr($this->_options['casts'][$key], 1) : $this->_options['casts'][$key];
 		}
 
-		// JSON casting requires that we JSONize the value
-		// when setting it so that it can easily be stored
-		// back to the database.
-		if (function_exists('json_encode') && array_key_exists($key, $this->_options['casts']) && ($this->_options['casts'][$key] === 'json' || $this->_options['casts'][$key] === 'json-array'))
+		if (! $isNullable || ! is_null($value))
 		{
-			$value = json_encode($value);
+			// Array casting requires that we serialize the value
+			// when setting it so that it can easily be stored
+			// back to the database.
+			if ($castTo === 'array')
+			{
+				$value = serialize($value);
+			}
+
+			// JSON casting requires that we JSONize the value
+			// when setting it so that it can easily be stored
+			// back to the database.
+			if (($castTo === 'json' || $castTo === 'json-array') && function_exists('json_encode'))
+			{
+				$value = json_encode($value);
+			}
 		}
 
 		// if a set* method exists for this key,
 		// use that method to insert this value.
+		// *) should be outside $isNullable check - SO maybe wants to do sth with null value automatically
 		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 		if (method_exists($this, $method))
 		{
@@ -428,13 +490,13 @@ class Entity
 
 	protected function castAs($value, string $type)
 	{
-		if(substr($type,0,1) === '?')
+		if (substr($type, 0, 1) === '?')
 		{
-			if($value === null)
+			if ($value === null)
 			{
 				return null;
 			}
-			$type = substr($type,1);
+			$type = substr($type, 1);
 		}
 
 		switch($type)

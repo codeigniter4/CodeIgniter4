@@ -664,7 +664,7 @@ class BaseBuilder
 				$op = $this->getOperator($k);
 				$k  = trim(str_replace($op, '', $k));
 
-				$bind = $this->setBind($k, $v);
+				$bind = $this->setBind($k, $v, $escape);
 
 				if (empty($op))
 				{
@@ -813,8 +813,8 @@ class BaseBuilder
 
 		$not = ($not) ? ' NOT' : '';
 
-		$where_in         = array_values($values);
-		$this->binds[$ok] = $where_in;
+		$where_in = array_values($values);
+		$ok       = $this->setBind($ok, $where_in, $escape);
 
 		$prefix = empty($this->QBWhere) ? $this->groupGetType('') : $this->groupGetType($type);
 
@@ -955,19 +955,19 @@ class BaseBuilder
 
 			if ($side === 'none')
 			{
-				$bind = $this->setBind($k, $v);
+				$bind = $this->setBind($k, $v, $escape);
 			}
 			elseif ($side === 'before')
 			{
-				$bind = $this->setBind($k, "%$v");
+				$bind = $this->setBind($k, "%$v", $escape);
 			}
 			elseif ($side === 'after')
 			{
-				$bind = $this->setBind($k, "$v%");
+				$bind = $this->setBind($k, "$v%", $escape);
 			}
 			else
 			{
-				$bind = $this->setBind($k, "%$v%");
+				$bind = $this->setBind($k, "%$v%", $escape);
 			}
 
 			$like_statement = $this->_like_statement($prefix, $k, $not, $bind, $insensitiveSearch);
@@ -1345,7 +1345,7 @@ class BaseBuilder
 		{
 			if ($escape)
 			{
-				$bind                                                           = $this->setBind($k, $v);
+				$bind                                                           = $this->setBind($k, $v, $escape);
 				$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ":$bind:";
 			}
 			else
@@ -1399,10 +1399,31 @@ class BaseBuilder
 			$this->resetSelect();
 		}
 
-		return $select;
+		return $this->compileFinalQuery($select);
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a finalized, compiled query string with the bindings
+	 * inserted and prefixes swapped out.
+	 *
+	 * @param string $sql
+	 *
+	 * @return mixed|string
+	 */
+	protected function compileFinalQuery(string $sql): string
+	{
+		$query = new Query($this->db);
+		$query->setQuery($sql, $this->binds, false);
+
+		if (! empty($this->db->swapPre) && ! empty($this->db->DBPrefix))
+		{
+			$query->swapPrefix($this->db->DBPrefix, $this->db->swapPre);
+		}
+
+		return $query->getQuery();
+	}
 
 	/**
 	 * Get
@@ -1423,7 +1444,10 @@ class BaseBuilder
 		{
 			$this->limit($limit, $offset);
 		}
-		$result = $returnSQL ? $this->getCompiledSelect() : $this->db->query($this->compileSelect(), $this->binds);
+
+		$result = $returnSQL
+			? $this->getCompiledSelect()
+			: $this->db->query($this->compileSelect(), $this->binds, false);
 
 		if ($reset === true)
 		{
@@ -1461,7 +1485,7 @@ class BaseBuilder
 			return $sql;
 		}
 
-		$query = $this->db->query($sql);
+		$query = $this->db->query($sql, null, false);
 		if (empty($query->getResult()))
 		{
 			return 0;
@@ -1510,7 +1534,7 @@ class BaseBuilder
 			return $sql;
 		}
 
-		$result = $this->db->query($sql, $this->binds);
+		$result = $this->db->query($sql, $this->binds, false);
 
 		if ($reset === true)
 		{
@@ -1559,7 +1583,7 @@ class BaseBuilder
 			$this->limit($limit, $offset);
 		}
 
-		$result = $this->db->query($this->compileSelect(), $this->binds);
+		$result = $this->db->query($this->compileSelect(), $this->binds, false);
 		$this->resetSelect();
 
 		return $result;
@@ -1624,7 +1648,7 @@ class BaseBuilder
 			}
 			else
 			{
-				$this->db->query($sql, $this->binds);
+				$this->db->query($sql, $this->binds, false);
 				$affected_rows += $this->db->affectedRows();
 			}
 		}
@@ -1696,7 +1720,7 @@ class BaseBuilder
 			$clean = [];
 			foreach ($row as $k => $value)
 			{
-				$clean[] = ':' . $this->setBind($k, $value) . ':';
+				$clean[] = ':' . $this->setBind($k, $value, $escape) . ':';
 			}
 
 			$row = $clean;
@@ -1741,7 +1765,7 @@ class BaseBuilder
 			$this->resetWrite();
 		}
 
-		return $sql;
+		return $this->compileFinalQuery($sql);
 	}
 
 	//--------------------------------------------------------------------
@@ -1779,7 +1803,7 @@ class BaseBuilder
 		{
 			$this->resetWrite();
 
-			$result = $this->db->query($sql, $this->binds);
+			$result = $this->db->query($sql, $this->binds, false);
 
 			// Clear our binds so we don't eat up memory
 			$this->binds = [];
@@ -1868,7 +1892,7 @@ class BaseBuilder
 
 		$this->resetWrite();
 
-		return $returnSQL ? $sql : $this->db->query($sql, $this->binds);
+		return $returnSQL ? $sql : $this->db->query($sql, $this->binds, false);
 	}
 
 	//--------------------------------------------------------------------
@@ -1931,7 +1955,7 @@ class BaseBuilder
 			$this->resetWrite();
 		}
 
-		return $sql;
+		return $this->compileFinalQuery($sql);
 	}
 
 	//--------------------------------------------------------------------
@@ -1981,7 +2005,7 @@ class BaseBuilder
 		{
 			$this->resetWrite();
 
-			if ($this->db->query($sql, $this->binds))
+			if ($this->db->query($sql, $this->binds, false))
 			{
 				// Clear our binds so we don't eat up memory
 				$this->binds = [];
@@ -2115,7 +2139,7 @@ class BaseBuilder
 			}
 			else
 			{
-				$this->db->query($sql, $this->binds);
+				$this->db->query($sql, $this->binds, false);
 				$affected_rows += $this->db->affectedRows();
 			}
 
@@ -2203,7 +2227,7 @@ class BaseBuilder
 					$index_set = true;
 				}
 
-				$bind = $this->setBind($k2, $v2);
+				$bind = $this->setBind($k2, $v2, $escape);
 
 				$clean[$this->db->protectIdentifiers($k2, false, $escape)] = ":$bind:";
 			}
@@ -2242,7 +2266,7 @@ class BaseBuilder
 
 		$this->resetWrite();
 
-		return $this->db->query($sql);
+		return $this->db->query($sql, null, false);
 	}
 
 	//--------------------------------------------------------------------
@@ -2271,7 +2295,7 @@ class BaseBuilder
 
 		$this->resetWrite();
 
-		return $this->db->query($sql);
+		return $this->db->query($sql, null, false);
 	}
 
 	//--------------------------------------------------------------------
@@ -2312,7 +2336,7 @@ class BaseBuilder
 		$sql                   = $this->delete($table, '', null, $reset);
 		$this->returnDeleteSQL = false;
 
-		return $sql;
+		return $this->compileFinalQuery($sql);
 	}
 
 	//--------------------------------------------------------------------
@@ -2371,7 +2395,7 @@ class BaseBuilder
 			$this->resetWrite();
 		}
 
-		return ($returnSQL === true) ? $sql : $this->db->query($sql, $this->binds);
+		return ($returnSQL === true) ? $sql : $this->db->query($sql, $this->binds, false);
 	}
 
 	//--------------------------------------------------------------------
@@ -2390,7 +2414,7 @@ class BaseBuilder
 
 		$sql = $this->_update($this->QBFrom[0], [$column => "{$column} + {$value}"]);
 
-		return $this->db->query($sql, $this->binds);
+		return $this->db->query($sql, $this->binds, false);
 	}
 
 	//--------------------------------------------------------------------
@@ -2409,7 +2433,7 @@ class BaseBuilder
 
 		$sql = $this->_update($this->QBFrom[0], [$column => "{$column}-{$value}"]);
 
-		return $this->db->query($sql, $this->binds);
+		return $this->db->query($sql, $this->binds, false);
 	}
 
 	//--------------------------------------------------------------------
@@ -2918,17 +2942,24 @@ class BaseBuilder
 
 	/**
 	 * Stores a bind value after ensuring that it's unique.
+	 * While it might be nicer to have named keys for our binds array
+	 * with PHP 7+ we get a huge memory/performance gain with indexed
+	 * arrays instead, so lets take advantage of that here.
 	 *
-	 * @param string $key
-	 * @param null   $value
+	 * @param string  $key
+	 * @param null    $value
+	 * @param boolean $escape
 	 *
 	 * @return string
 	 */
-	protected function setBind(string $key, $value = null)
+	protected function setBind(string $key, $value = null, bool $escape = true)
 	{
 		if (! array_key_exists($key, $this->binds))
 		{
-			$this->binds[$key] = $value;
+			$this->binds[$key] = [
+				$value,
+				$escape,
+			];
 
 			return $key;
 		}
@@ -2937,10 +2968,13 @@ class BaseBuilder
 
 		while (array_key_exists($key . $count, $this->binds))
 		{
-			++ $count;
+			++$count;
 		}
 
-		$this->binds[$key . $count] = $value;
+		$this->binds[$key . $count] = [
+			$value,
+			$escape,
+		];
 
 		return $key . $count;
 	}

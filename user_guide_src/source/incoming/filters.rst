@@ -80,9 +80,9 @@ and you cannot stop script execution. This does allow you to modify the final ou
 the final output. This could be used to ensure certain security headers were set the correct way, or to cache
 the final output, or even to filter the final output with a bad words filter.
 
-===================
+*******************
 Configuring Filters
-===================
+*******************
 
 Once you've created your filters, you need to configure when they get run. This is done in ``app/Config/Filters.php``.
 This file contains four properties that allow you to configure exactly when the filters run.
@@ -94,7 +94,7 @@ The ``$aliases`` array is used to associate a simple name with one or more fully
 filters to run::
 
     public $aliases = [
-        'csrf' => \App\Filters\CSRF::class
+        'csrf' => \CodeIgniter\Filters\CSRF::class
     ];
 
 Aliases are mandatory and if you try to use a full class name later, the system will throw an error. Defining them
@@ -181,4 +181,4 @@ a list of URI patterns that filter should apply to::
 Provided Filters
 ****************
 
-Three filters are bundled with CodeIgniter4: Honeypot, Security, and Throttler.
+Three filters are bundled with CodeIgniter4: Honeypot, Security, and DebugToolbar.

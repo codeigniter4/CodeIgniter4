@@ -207,6 +207,15 @@ class ForgeTest extends CIDatabaseTestCase
 			$this->assertEquals($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
 			$this->assertEquals($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
 		}
+		elseif ($this->db->DBDriver === 'SQLite3')
+		{
+			$this->assertEquals($keys['sqlite_autoindex_db_forge_test_1_1']->name, 'sqlite_autoindex_db_forge_test_1_1');
+			$this->assertEquals($keys['sqlite_autoindex_db_forge_test_1_1']->fields, ['id']);
+			$this->assertEquals($keys['db_forge_test_1_code_company']->name, 'db_forge_test_1_code_company');
+			$this->assertEquals($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
+			$this->assertEquals($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
+			$this->assertEquals($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+		}
 
 		$this->forge->dropTable('forge_test_1', true);
 	}
@@ -369,5 +378,77 @@ class ForgeTest extends CIDatabaseTestCase
 		$forge = \Config\Database::forge($group);
 
 		$this->assertInstanceOf(Forge::class, $forge);
+	}
+
+	public function testDropColumn()
+	{
+		$this->forge->dropTable('forge_test_two', true);
+
+		$this->forge->addField([
+			'id'   => [
+				'type'           => 'INTEGER',
+				'constraint'     => 11,
+				'unsigned'       => false,
+				'auto_increment' => true,
+			],
+			'name' => [
+				'type'       => 'varchar',
+				'constraint' => 255,
+				'null'       => true,
+			],
+		]);
+
+		$this->forge->addKey('id', true);
+		$this->forge->createTable('forge_test_two');
+
+		$this->assertTrue($this->db->fieldExists('name', 'forge_test_two'));
+
+		$this->forge->dropColumn('forge_test_two', 'name');
+
+		$this->db->resetDataCache();
+
+		$this->assertFalse($this->db->fieldExists('name', 'forge_test_two'));
+
+		$this->forge->dropTable('forge_test_two', true);
+	}
+
+	public function testModifyColumnRename()
+	{
+		$this->forge->dropTable('forge_test_three', true);
+
+		$this->forge->addField([
+			'id'   => [
+				'type'           => 'INTEGER',
+				'constraint'     => 11,
+				'unsigned'       => false,
+				'auto_increment' => true,
+			],
+			'name' => [
+				'type'       => 'varchar',
+				'constraint' => 255,
+				'null'       => true,
+			],
+		]);
+
+		$this->forge->addKey('id', true);
+		$this->forge->createTable('forge_test_three');
+
+		$this->assertTrue($this->db->fieldExists('name', 'forge_test_three'));
+
+		$this->forge->modifyColumn('forge_test_three', [
+			'name' => [
+				'name'       => 'altered',
+				'type'       => 'varchar',
+				'constraint' => 255,
+				'null'       => true,
+			],
+		]);
+
+		$this->db->resetDataCache();
+
+		$this->assertFalse($this->db->fieldExists('name', 'forge_test_three'));
+		$this->assertTrue($this->db->fieldExists('altered', 'forge_test_three'));
+
+		$this->forge->dropTable('forge_test_three', true);
 	}
 }
