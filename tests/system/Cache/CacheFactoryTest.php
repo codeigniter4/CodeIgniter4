@@ -15,7 +15,7 @@ class CacheFactoryTest extends \CIUnitTestCase
 		$this->cacheFactory = new CacheFactory();
 
 		//Initialize path
-		$this->config = new \Config\Cache();
+		$this->config             = new \Config\Cache();
 		$this->config->storePath .= self::$directory;
 	}
 
@@ -79,7 +79,7 @@ class CacheFactoryTest extends \CIUnitTestCase
 
 	public function testGetDummyHandler()
 	{
-		if ( ! is_dir($this->config->storePath))
+		if (! is_dir($this->config->storePath))
 		{
 			mkdir($this->config->storePath, 0555, true);
 		}
@@ -89,13 +89,13 @@ class CacheFactoryTest extends \CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\Cache\Handlers\DummyHandler::class, $this->cacheFactory->getHandler($this->config));
 
 		//Initialize path
-		$this->config = new \Config\Cache();
+		$this->config             = new \Config\Cache();
 		$this->config->storePath .= self::$directory;
 	}
 
 	public function testHandlesBadHandler()
 	{
-		if ( ! is_dir($this->config->storePath))
+		if (! is_dir($this->config->storePath))
 		{
 			mkdir($this->config->storePath, 0555, true);
 		}
@@ -103,12 +103,16 @@ class CacheFactoryTest extends \CIUnitTestCase
 		$this->config->handler = 'dummy';
 
 		if (stripos('win', php_uname()) === 0)
+		{
 			$this->assertTrue(true); // can't test properly if we are on Windows
+		}
 		else
+		{
 			$this->assertInstanceOf(\CodeIgniter\Cache\Handlers\DummyHandler::class, $this->cacheFactory->getHandler($this->config, 'wincache', 'wincache'));
+		}
 
 		//Initialize path
-		$this->config = new \Config\Cache();
+		$this->config             = new \Config\Cache();
 		$this->config->storePath .= self::$directory;
 	}
 

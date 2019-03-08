@@ -1,15 +1,18 @@
-<?php namespace CodeIgniter\Cache\Handlers;
+<?php
+namespace CodeIgniter\Cache\Handlers;
 
-set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline, array $errcontext) {
+set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline, array $errcontext)
+{
 	//throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
 });
 
 class FileHandlerTest extends \CIUnitTestCase
 {
+
 	private static $directory = 'FileHandler';
-	private static $key1      = 'key1';
-	private static $key2      = 'key2';
-	private static $key3      = 'key3';
+	private static $key1 = 'key1';
+	private static $key2 = 'key2';
+	private static $key3 = 'key3';
 
 	private static function getKeyArray()
 	{
@@ -29,10 +32,10 @@ class FileHandlerTest extends \CIUnitTestCase
 		parent::setUp();
 
 		//Initialize path
-		$this->config             = new \Config\Cache();
+		$this->config = new \Config\Cache();
 		$this->config->storePath .= self::$directory;
 
-		if (! is_dir($this->config->storePath))
+		if ( ! is_dir($this->config->storePath))
 		{
 			mkdir($this->config->storePath, 0777, true);
 		}
@@ -77,7 +80,7 @@ class FileHandlerTest extends \CIUnitTestCase
 	public function testSetDefaultPath()
 	{
 		//Initialize path
-		$config            = new \Config\Cache();
+		$config = new \Config\Cache();
 		$config->storePath = null;
 
 		$this->fileHandler = new FileHandler($config);
@@ -127,7 +130,9 @@ class FileHandlerTest extends \CIUnitTestCase
 	{
 		$this->fileHandler->save(self::$key1, 10);
 		$this->fileHandler->save(self::$key2, 'value');
-		$this->fileHandler->save(self::$key3, 0);
+
+//	Line following commented out to force the cache to add a zero entry for key3		
+//		$this->fileHandler->save(self::$key3, 0);
 
 		$this->assertSame(9, $this->fileHandler->decrement(self::$key1, 1));
 		$this->assertFalse($this->fileHandler->decrement(self::$key2, 1));
@@ -158,6 +163,17 @@ class FileHandlerTest extends \CIUnitTestCase
 		$this->assertSame('value', $actual['data']);
 	}
 
+	public function testGetCacheInfo()
+	{
+		$time = time();
+		$this->fileHandler->save(self::$key1, 'value');
+
+		$actual = $this->fileHandler->getCacheInfo();
+		$this->assertArrayHasKey(self::$key1, $actual);
+		$this->assertEquals(self::$key1,$actual[self::$key1]['name']);
+		$this->assertArrayHasKey('server_path', $actual[self::$key1]);
+	}
+
 	public function testIsSupported()
 	{
 		$this->assertTrue($this->fileHandler->isSupported());
@@ -179,16 +195,18 @@ class FileHandlerTest extends \CIUnitTestCase
 		$this->assertArrayHasKey('executable', $actual);
 		$this->assertArrayHasKey('fileperms', $actual);
 	}
+
 }
 
 final class BaseTestFileHandler extends FileHandler
 {
+
 	private static $directory = 'FileHandler';
 	private $config;
 
 	public function __construct()
 	{
-		$this->config             = new \Config\Cache();
+		$this->config = new \Config\Cache();
 		$this->config->storePath .= self::$directory;
 
 		parent::__construct($this->config);
@@ -200,14 +218,15 @@ final class BaseTestFileHandler extends FileHandler
 		stream_get_meta_data($tmp_handle)['uri'];
 
 		return $this->getFileInfo(stream_get_meta_data($tmp_handle)['uri'], [
-			'name',
-			'server_path',
-			'size',
-			'date',
-			'readable',
-			'writable',
-			'executable',
-			'fileperms',
+					'name',
+					'server_path',
+					'size',
+					'date',
+					'readable',
+					'writable',
+					'executable',
+					'fileperms',
 		]);
 	}
+
 }

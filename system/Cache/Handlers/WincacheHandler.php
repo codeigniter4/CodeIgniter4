@@ -36,13 +36,13 @@ namespace CodeIgniter\Cache\Handlers;
  * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Cache\CacheInterface;
 
 /**
  * Cache handler for WinCache from Microsoft & IIS.
  * Windows-only, so not testable on travis-ci.
  * Unusable methods flagged for code coverage ignoring.
- * 
  */
 class WincacheHandler implements CacheInterface
 {
@@ -65,6 +65,7 @@ class WincacheHandler implements CacheInterface
 
 	/**
 	 * Takes care of any handler-specific setup that must be done.
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public function initialize()
@@ -76,6 +77,7 @@ class WincacheHandler implements CacheInterface
 
 	/**
 	 * Attempts to fetch an item from the cache store.
+	 *
 	 * @codeCoverageIgnore
 	 *
 	 * @param string $key Cache item name
@@ -87,7 +89,7 @@ class WincacheHandler implements CacheInterface
 		$key = $this->prefix . $key;
 
 		$success = false;
-		$data = wincache_ucache_get($key, $success);
+		$data    = wincache_ucache_get($key, $success);
 
 		// Success returned by reference from wincache_ucache_get()
 		return ($success) ? $data : false;
@@ -97,6 +99,7 @@ class WincacheHandler implements CacheInterface
 
 	/**
 	 * Saves an item to the cache store.
+	 *
 	 * @codeCoverageIgnore
 	 *
 	 * @param string  $key   Cache item name
@@ -116,6 +119,7 @@ class WincacheHandler implements CacheInterface
 
 	/**
 	 * Deletes a specific item from the cache store.
+	 *
 	 * @codeCoverageIgnore
 	 *
 	 * @param string $key Cache item name
@@ -135,8 +139,8 @@ class WincacheHandler implements CacheInterface
 	 * Performs atomic incrementation of a raw stored value.
 	 *
 	 * @codeCoverageIgnore
-	 * @param string  $key    Cache ID
-	 * @param integer $offset Step/value to increase by
+	 * @param              string  $key    Cache ID
+	 * @param              integer $offset Step/value to increase by
 	 *
 	 * @return mixed
 	 */
@@ -145,7 +149,7 @@ class WincacheHandler implements CacheInterface
 		$key = $this->prefix . $key;
 
 		$success = false;
-		$value = wincache_ucache_inc($key, $offset, $success);
+		$value   = wincache_ucache_inc($key, $offset, $success);
 
 		return ($success === true) ? $value : false;
 	}
@@ -154,6 +158,7 @@ class WincacheHandler implements CacheInterface
 
 	/**
 	 * Performs atomic decrementation of a raw stored value.
+	 *
 	 * @codeCoverageIgnore
 	 *
 	 * @param string  $key    Cache ID
@@ -166,7 +171,7 @@ class WincacheHandler implements CacheInterface
 		$key = $this->prefix . $key;
 
 		$success = false;
-		$value = wincache_ucache_dec($key, $offset, $success);
+		$value   = wincache_ucache_dec($key, $offset, $success);
 
 		return ($success === true) ? $value : false;
 	}
@@ -175,6 +180,7 @@ class WincacheHandler implements CacheInterface
 
 	/**
 	 * Will delete all items in the entire cache.
+	 *
 	 * @codeCoverageIgnore
 	 *
 	 * @return mixed
@@ -188,6 +194,7 @@ class WincacheHandler implements CacheInterface
 
 	/**
 	 * Returns information on the entire cache.
+	 *
 	 * @codeCoverageIgnore
 	 *
 	 * The information returned and the structure of the data
@@ -206,7 +213,7 @@ class WincacheHandler implements CacheInterface
 	 * Returns detailed information about the specific item in the cache.
 	 *
 	 * @codeCoverageIgnore
-	 * @param string $key Cache item name.
+	 * @param              string $key Cache item name.
 	 *
 	 * @return mixed
 	 */
@@ -216,15 +223,15 @@ class WincacheHandler implements CacheInterface
 
 		if ($stored = wincache_ucache_info(false, $key))
 		{
-			$age = $stored['ucache_entries'][1]['age_seconds'];
-			$ttl = $stored['ucache_entries'][1]['ttl_seconds'];
+			$age      = $stored['ucache_entries'][1]['age_seconds'];
+			$ttl      = $stored['ucache_entries'][1]['ttl_seconds'];
 			$hitcount = $stored['ucache_entries'][1]['hitcount'];
 
 			return [
-				'expire'	 => $ttl - $age,
-				'hitcount'	 => $hitcount,
-				'age'		 => $age,
-				'ttl'		 => $ttl,
+				'expire'   => $ttl - $age,
+				'hitcount' => $hitcount,
+				'age'      => $age,
+				'ttl'      => $ttl,
 			];
 		}
 
