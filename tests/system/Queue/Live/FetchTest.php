@@ -4,7 +4,7 @@ use CodeIgniter\Test\CIDatabaseTestCase;
 
 class FetchTest extends CIDatabaseTestCase
 {
-	protected $refresh = true;
+	protected $refresh  = true;
 	protected $basePath = SUPPORTPATH . 'Queue';
 
 	public function setUp()
@@ -24,8 +24,7 @@ class FetchTest extends CIDatabaseTestCase
 	{
 		$message = '';
 		$this->queue->fetch(
-			function($data) use ($message)
-			{
+			function ($data) use ($message) {
 				$message = $data;
 			}
 		);
@@ -41,8 +40,7 @@ class FetchTest extends CIDatabaseTestCase
 
 		$message = '';
 		$this->queue->fetch(
-			function($data) use (&$message)
-			{
+			function ($data) use (&$message) {
 				$message = $data;
 			}
 		);
@@ -58,8 +56,7 @@ class FetchTest extends CIDatabaseTestCase
 
 		$message = '';
 		$this->queue->receive(
-			function($data) use (&$message)
-			{
+			function ($data) use (&$message) {
 				$message = $data;
 			}
 		);
