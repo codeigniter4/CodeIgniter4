@@ -1,9 +1,24 @@
-<?php namespace CodeIgniter\Queue\LiveDatabase;
+<?php namespace CodeIgniter\Queue\Live;
 
+use CodeIgniter\Test\CIDatabaseTestCase;
 
-class FetchTest extends \CodeIgniter\CIQueueDatabaseTestCase
+class FetchTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
+	protected $basePath = SUPPORTPATH . 'Queue';
+
+	public function setUp()
+	{
+		parent::setUp();
+		$this->queue = \CodeIgniter\Config\Services::queue(false);
+	}
+
+	public function tearDown()
+	{
+		$this->db->table('ci_queue')->truncate();
+	}
+
+	//--------------------------------------------------------------------
 
 	public function testFetchNoData()
 	{
@@ -31,7 +46,7 @@ class FetchTest extends \CodeIgniter\CIQueueDatabaseTestCase
 				$message = $data;
 			}
 		);
-		
+
 		$this->assertEquals('It’s fine today', $message);
 	}
 
@@ -48,7 +63,7 @@ class FetchTest extends \CodeIgniter\CIQueueDatabaseTestCase
 				$message = $data;
 			}
 		);
-		
+
 		$this->assertEquals('It’s fine today. It’s fine today.', $message);
 	}
 }
