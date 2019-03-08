@@ -222,7 +222,7 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Constructor
 	 *
-	 * @param FileLocator    $locator
+	 * @param FileLocator     $locator
 	 * @param \Config\Modules $moduleConfig
 	 */
 	public function __construct(FileLocator $locator, $moduleConfig)

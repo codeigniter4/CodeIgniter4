@@ -303,8 +303,8 @@ class Session implements SessionInterface
 		{
 			ini_set('session.gc_maxlifetime', (int) $this->sessionExpiration);
 		}
-		
-		if(!empty($this->sessionSavePath))
+
+		if (! empty($this->sessionSavePath))
 		{
 			ini_set('session.save_path', $this->sessionSavePath);
 		}

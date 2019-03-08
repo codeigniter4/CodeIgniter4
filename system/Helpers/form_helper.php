@@ -65,7 +65,7 @@ if (! function_exists('form_open'))
 			$action = site_url($action);
 		}
 
-		if(is_array($attributes) && array_key_exists('csrf_id', $attributes))
+		if (is_array($attributes) && array_key_exists('csrf_id', $attributes))
 		{
 			$csrfId = $attributes['csrf_id'];
 			unset($attributes['csrf_id']);
