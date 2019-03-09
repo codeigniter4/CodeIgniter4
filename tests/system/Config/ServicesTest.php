@@ -228,11 +228,11 @@ class ServicesTest extends \CIUnitTestCase
 	public function testNothingToDiscover()
 	{
 		$service = new \Tests\Support\Config\MockServices();
-		
+
 		// doctor the autoloader & filelocator so they don't see anything useful
-		$autoloader = new \Tests\Support\Config\MockAutoload();
+		$autoloader    = new \Tests\Support\Config\MockAutoload();
 		$this->locator = new \CodeIgniter\Autoloader\FileLocator($autoloader);
-				
+
 		// __callStatic should kick in for this but fail
 		$actual = MockServices::SeSsIoNs(null, false);
 		$this->assertNull($actual);

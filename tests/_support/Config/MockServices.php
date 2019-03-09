@@ -6,7 +6,7 @@ use \CodeIgniter\Config\BaseService;
 class MockServices extends BaseService
 {
 
-	public $psr4 = [
+	public $psr4     = [
 		'Tests/Support' => TESTPATH . '_support/',
 	];
 	public $classmap = [];
