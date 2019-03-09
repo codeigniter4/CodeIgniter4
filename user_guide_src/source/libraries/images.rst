@@ -269,7 +269,7 @@ products.
 	text(string $text, array $options = [])
 
 The first parameter is the string of text that you wish to display. The second parameter is an array of options
-that allows you to specify how the text should be displayed::
+that allow you to specify how the text should be displayed::
 
 	Services::image('imagick')
 		->withFile('/path/to/image/mypic.jpg')

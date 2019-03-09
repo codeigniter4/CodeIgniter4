@@ -22,7 +22,7 @@ With the Timer, you can measure the time between two moments in the execution of
 it simple to measure the performance of different aspects of your application. All measurement is done using
 the ``start()`` and ``stop()`` methods.
 
-The ``start()`` methods take a single parameter: the name of this timer. You can use any string as the name
+The ``start()`` methods takes a single parameter: the name of this timer. You can use any string as the name
 of the timer. It is only used for you to reference later to know which measurement is which::
 
 	$benchmark = \Config\Services::timer();

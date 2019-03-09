@@ -441,7 +441,7 @@ Offsetting the Matched Parameters
 ---------------------------------
 
 You can offset the matched parameters in your route by any numeric value with the ``offset`` option, with the
-value is the number of segments to offset.
+value being the number of segments to offset.
 
 This can be beneficial when developing API's with the first URI segment being the version number. It can also
 be used when the first parameter is a language string::

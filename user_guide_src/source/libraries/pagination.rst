@@ -228,7 +228,7 @@ usefulness. It is easiest to demonstrate creating a new view by showing you the 
 
 **setSurroundCount()**
 
-In the first line, the ``setSurroundCount()`` method specifies that we want to show two links to either side of
+In the first line, the ``setSurroundCount()`` method specifies than we want to show two links to either side of
 the current page link. The only parameter that it accepts is the number of links to show.
 
 **hasPrevious()** & **hasNext()**

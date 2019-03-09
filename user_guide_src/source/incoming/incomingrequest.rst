@@ -154,7 +154,7 @@ This will retrieve data and convert it to an array. Like this::
 **Filtering Input Data**
 
 To maintain security of your application, you will want to filter all input as you access it. You can
-pass the type of filter to use it as the last parameter of any of these methods. The native ``filter_var()``
+pass the type of filter to use as the last parameter of any of these methods. The native ``filter_var()``
 function is used for the filtering. Head over to the PHP manual for a list of `valid
 filter types <http://php.net/manual/en/filter.filters.php>`_.
 

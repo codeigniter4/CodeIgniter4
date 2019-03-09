@@ -2,7 +2,7 @@
 HTTP Messages
 =============
 
-The Message class provides an interface to the portions of an HTTP message that is common to both
+The Message class provides an interface to the portions of an HTTP message that are common to both
 requests and responses, including the message body, protocol version, utilities for working with
 the headers, and methods for handling content negotiation.
 

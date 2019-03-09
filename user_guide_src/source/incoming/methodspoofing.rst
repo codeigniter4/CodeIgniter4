@@ -16,7 +16,7 @@ that you want the request to be::
     </form>
 
 This form is converted into a PUT request and is a true PUT request as far as the routing and the IncomingRequest
-class is concerned.
+class are concerned.
 
 The form that you are using must be a POST request. GET requests cannot be spoofed.
 
