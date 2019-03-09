@@ -1005,7 +1005,7 @@ class Model
 				throw DataException::forEmptyDataset('chunk');
 			}
 
-			$rows = $rows->getResult();
+			$rows = $rows->getResult($this->tempReturnType);
 
 			$offset += $size;
 
