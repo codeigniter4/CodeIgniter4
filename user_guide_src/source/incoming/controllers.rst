@@ -80,7 +80,7 @@ class so that it can inherit all its methods.
 Methods
 =======
 
-In the above example the method name is ``index()``. The "index" method
+In the above example, the method name is ``index()``. The "index" method
 is always loaded by default if the **second segment** of the URI is
 empty. Another way to show your "Hello World" message would be this::
 
@@ -155,7 +155,7 @@ file and set this variable::
 
 	$routes->setDefaultController('Blog');
 
-Where 'Blog' is the name of the controller class you want used. If you now
+Where 'Blog' is the name of the controller class you want to be used. If you now
 load your main index.php file without specifying any URI segments you'll
 see your "Hello World" message by default.
 
@@ -212,7 +212,7 @@ Example::
 Private methods
 ===============
 
-In some cases you may want certain methods hidden from public access.
+In some cases, you may want certain methods hidden from public access.
 In order to achieve this, simply declare the method as being private
 or protected and it will not be served via a URL request. For example,
 if you were to have a method like this::

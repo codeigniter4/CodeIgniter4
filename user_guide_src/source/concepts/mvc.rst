@@ -9,7 +9,7 @@ application as separate parts. It should be noted that there are many views on t
 but this document describes our take on it. If you think of it differently, you're free to modify how you use
 each piece as you need.
 
-**Models** manage the data of the application, and help to enforce any special business rules the application might need.
+**Models** manage the data of the application and help to enforce any special business rules the application might need.
 
 **Views** are simple files, with little to no logic, that display the information to the user.
 
@@ -17,7 +17,7 @@ each piece as you need.
 the data storage.
 
 At their most basic, controllers and models are simply classes that have a specific job. They are not the only class
-types that you can use, obviously, but the make up the core of how this framework is designed to be used. They even
+types that you can use, obviously, but they make up the core of how this framework is designed to be used. They even
 have designated directories in the **/app** directory for their storage, though you're free to store them
 wherever you desire, as long as they are properly namespaced. We will discuss that in more detail below.
 
@@ -39,7 +39,7 @@ common header or footer on every page.
 
 Views are generally stored in **/app/Views**, but can quickly become unwieldy if not organized in some fashion.
 CodeIgniter does not enforce any type of organization, but a good rule of thumb would be to create a new directory in
-the **Views** directory for each controller. Then, name views by the method name. This makes them very easy find later
+the **Views** directory for each controller. Then, name views by the method name. This makes them very easy to find later
 on. For example, a user's profile might be displayed in a controller named ``User``, and a method named ``profile``.
 You might store the view file for this method in **/app/Views/User/Profile.php**.
 

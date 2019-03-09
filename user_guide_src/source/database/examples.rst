@@ -104,7 +104,7 @@ means of retrieving data::
 
 The above get() function retrieves all the results from the supplied
 table. The :doc:`Query Builder <query_builder>` class contains a full
-compliment of functions for working with data.
+complement of functions for working with data.
 
 Query Builder Insert
 ====================

@@ -146,7 +146,7 @@ parameter:
 	| **$row = $query->getPreviousRow('array')**
 
 .. note:: All the methods above will load the whole result into memory
-	(prefetching). Use ``getUnbufferredRow()`` for processing large
+	(prefetching). Use ``getUnbufferedRow()`` for processing large
 	result sets.
 
 **getUnbufferedRow()**

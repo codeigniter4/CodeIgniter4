@@ -4,7 +4,7 @@ Query Builder Class
 
 CodeIgniter gives you access to a Query Builder class. This pattern
 allows information to be retrieved, inserted, and updated in your
-database with minimal scripting. In some cases only one or two lines
+database with minimal scripting. In some cases, only one or two lines
 of code are necessary to perform a database action.
 CodeIgniter does not require that each database table be its own class
 file. It instead provides a more simplified interface.
@@ -106,7 +106,7 @@ function::
 
 	$query = $builder->getWhere(['id' => $id], $limit, $offset);
 
-Please read the about the where function below for more information.
+Please read about the where function below for more information.
 
 **$builder->select()**
 
@@ -344,7 +344,7 @@ searches.
 
 .. note:: All values passed to this method are escaped automatically.
 
-.. note:: All ``like*`` method variations can be forced to be perform case-insensitive searches by passing
+.. note:: All ``like*`` method variations can be forced to perform case-insensitive searches by passing
         a fifth parameter of ``true`` to the method. This will use platform-specific features where available
         otherwise, will force the values to be lowercase, i.e. ``WHERE LOWER(column) LIKE '%search%'``. This
         may require indexes to be made for ``LOWER(column)`` instead of ``column`` to be effective.
@@ -509,7 +509,7 @@ The second parameter lets you set a result offset.
 
 ::
 
-	$builder->limit(10, 20);  // Produces: LIMIT 20, 10 (in MySQL.  Other databases have slightly different syntax)
+	$builder->limit(10, 20);  // Produces: LIMIT 20, 10 (in MySQL. Other databases have slightly different syntax)
 
 
 **$builder->countAllResults()**
@@ -581,7 +581,7 @@ Starts a new group by adding an opening parenthesis to the WHERE clause of the q
 
 **$builder->groupEnd()**
 
-Ends the current group by adding an closing parenthesis to the WHERE clause of the query.
+Ends the current group by adding a closing parenthesis to the WHERE clause of the query.
 
 **************
 Inserting Data
@@ -653,7 +653,7 @@ will be reset (by default it will be--just like $builder->insert())::
 
 The key thing to notice in the above example is that the second query did not
 utilize `$builder->from()` nor did it pass a table name into the first
-parameter. The reason this worked is because the query has not been executed
+parameter. The reason this worked is that the query has not been executed
 using `$builder->insert()` which resets values or reset directly using
 `$builder->resetQuery()`.
 
@@ -987,7 +987,7 @@ Class Reference
 		:returns:	BaseBuilder instance (method chaining)
 		:rtype:	BaseBuilder
 
-		Resets the current Query Builder state.  Useful when you want
+		Resets the current Query Builder state. Useful when you want
 		to build a query that can be canceled under certain conditions.
 
 	.. php:method:: countAllResults([$reset = TRUE])

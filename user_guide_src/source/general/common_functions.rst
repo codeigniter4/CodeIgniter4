@@ -212,7 +212,7 @@ Miscellaneous Functions
 	:param   string   $level: The level of severity
 	:param   string   $message: The message that is to be logged.
 	:param   array    $context: An associative array of tags and their values that should be replaced in $message
-	:returns: TRUE if was logged succesfully or FALSE if there was a problem logging it
+	:returns: TRUE if was logged successfully or FALSE if there was a problem logging it
 	:rtype: bool
 
 	Logs a message using the Log Handlers defined in **app/Config/Logger.php**.

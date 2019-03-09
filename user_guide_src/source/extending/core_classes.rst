@@ -42,7 +42,7 @@ Replacing Core Classes
 ======================
 
 To use one of your own system classes instead of a default one, ensure that the :doc:`Autoloader <../concepts/autoloader>`
-can find your class, that  your new class extends the appropriate interface, and modify the appropriate
+can find your class, that your new class extends the appropriate interface, and modify the appropriate
 :doc:`Service <../concepts/services>` to load your class in place of the core class.
 
 For example, if you have a new ``App\Libraries\RouteCollection`` class that you would like to use in place of
@@ -73,8 +73,8 @@ Extending Core Classes
 ======================
 
 If all you need to is add some functionality to an existing library - perhaps add a method or two - then it's overkill
-to recreate the entire library. In this case it's better to simply extend the class. Extending the class is nearly
-identical to replacing a class with a one exception:
+to recreate the entire library. In this case, it's better to simply extend the class. Extending the class is nearly
+identical to replacing a class with one exception:
 
 * The class declaration must extend the parent class.
 

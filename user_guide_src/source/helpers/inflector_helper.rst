@@ -2,7 +2,7 @@
 Inflector Helper
 ################
 
-The Inflector Helper file contains functions that permits you to change
+The Inflector Helper file contains functions that permit you to change
 **English** words to plural, singular, camel case, etc.
 
 .. contents::
