@@ -4,7 +4,7 @@ Benchmarking
 
 CodeIgniter provides two separate tools to help you benchmark your code and test different options:
 the Timer and the Iterator. The Timer allows you to easily calculate the time between two points in the
-execution of your script. The Iterator allows you to setup several variations and run those tests, recording
+execution of your script. The Iterator allows you to setup several variations and runs those tests, recording
 performance and memory statistics to help you decide which version is the best.
 
 The Timer class is always active, being started from the moment the framework is invoked until right before
@@ -22,7 +22,7 @@ With the Timer, you can measure the time between two moments in the execution of
 it simple to measure the performance of different aspects of your application. All measurement is done using
 the ``start()`` and ``stop()`` methods.
 
-The ``start()`` methods takes a single parameter: the name of this timer. You can use any string as the name
+The ``start()`` methods take a single parameter: the name of this timer. You can use any string as the name
 of the timer. It is only used for you to reference later to know which measurement is which::
 
 	$benchmark = \Config\Services::timer();
@@ -61,7 +61,7 @@ This returns an array of benchmark information, including start, end, and durati
 		]
 	]
 
-You can change the precision of the calculated duration by passing in the number of decimal places you want shown as
+You can change the precision of the calculated duration by passing in the number of decimal places you want to be shown as
 the only parameter. The default value is 4 numbers behind the decimal point::
 
 	$timers = $benchmark->getTimers(6);
@@ -85,7 +85,7 @@ Using the Iterator
 The Iterator is a simple tool that is designed to allow you to try out multiple variations on a solution to
 see the speed differences and different memory usage patterns. You can add any number of "tasks" for it to
 run and the class will run the task hundreds or thousands of times to get a clearer picture of performance.
-The results can then be retrieved and used by your script, or displayed as an HTML table.
+The results can then be retrieved and used by your script or displayed as an HTML table.
 
 Creating Tasks To Run
 =====================

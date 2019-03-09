@@ -2,7 +2,7 @@
 Upgrading from 3.x to 4.x
 #############################
 
-CodeIgniter 4 is a rewrite of the framework, and is not backwards compatible.
+CodeIgniter 4 is a rewrite of the framework and is not backwards compatible.
 It is more appropriate to think of converting your app, rather than upgrading it.
 Once you have done that, upgrading from one version of CodeIgniter 4 to the next
 will be straightforward.
@@ -18,7 +18,7 @@ We'll try to point out the most important considerations here.
 
 Not all of the CI3 libraries have been ported or rewritten for CI4!
 See the threads in the `CodeIgniter 4 Roadmap <https://forum.codeigniter.com/forum-33.html>`_
-subforum for an uptodate list!
+subforum for an up-to-date list!
 
 **Do read the user guide** before embarking on a project conversion!
 

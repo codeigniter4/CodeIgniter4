@@ -48,7 +48,7 @@ code.
 
 You have created a class named ``Pages``, with a ``showme`` method that accepts
 one argument named ``$page``. It also has an ``index()`` method, the same
-as the defaut controller found in **app/Controllers/Home.php**; that method
+as the default controller found in **app/Controllers/Home.php**; that method
 displays the CodeIgniter welcome page.
 
 The ``Pages`` class is extending the
@@ -173,7 +173,7 @@ controller you made above produces...
   inside our `Pages` controller, which is to display the CodeIgniter "welcome" page,
   because "index" is the default controller method
 - ``localhost:8080/pages/index`` will also show the CodeIgniter "welcome" page,
-  because we explicitly asked for the "index" methid
+  because we explicitly asked for the "index" method
 - ``localhost:8080/pages/showme`` will show the "home" page that you made above,
   because it is the default "page" parameter to the `showme()` method.
 - ``localhost:8080/pages/showme/home`` will also show the "home" page that you made above,

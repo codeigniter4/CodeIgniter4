@@ -6,7 +6,7 @@ repository holds the released versions of the framework.
 It is intended for developers who do not wish to use Composer.
 
 Develop your app inside the ``app`` folder, and the ``public`` folder 
-will be your public-facing document root.  Do not change anything inside the ``system``
+will be your public-facing document root. Do not change anything inside the ``system``
 folder!
 
 **Note**: This is the installation technique closest to that described 

@@ -63,7 +63,7 @@ and a number of additional convenience methods.
 Connecting to the Database
 --------------------------
 
-When the class is first instantiated, if no database connection instance is passed to constructor,
+When the class is first instantiated, if no database connection instance is passed to the constructor,
 it will automatically connect to the default database group, as set in the configuration. You can
 modify which group is used on a per-model basis by adding the DBGroup property to your class.
 This ensures that within the model any references to ``$this->db`` are made through the appropriate
@@ -119,7 +119,7 @@ queries.
 **$primaryKey**
 
 This is the name of the column that uniquely identifies the records in this table. This
-does not necessarilly have to match the primary key that is specified in the database, but
+does not necessarily have to match the primary key that is specified in the database, but
 is used with methods like ``find()`` to know what column to match the specified value to.
 
 **$returnType**
@@ -138,7 +138,7 @@ can maintain a "recycle bin" of objects that can be restored, or even simply pre
 part of a security trail. If true, the find* methods will only return non-deleted rows, unless
 the withDeleted() method is called prior to calling the find* method.
 
-This requires an INT or TINYINT field to be present in the table for storing state.The default field name is  ``deleted`` however this name can be configured to any name of your choice by using $deletedField property.
+This requires an INT or TINYINT field to be present in the table for storing state. The default field name is  ``deleted`` however this name can be configured to any name of your choice by using $deletedField property.
 
 **$allowedFields**
 
@@ -264,7 +264,7 @@ Saving Data
 **insert()**
 
 An associative array of data is passed into this method as the only parameter to create a new
-row of data in the database. The array's keys must match the name of the columns in $table, while
+row of data in the database. The array's keys must match the name of the columns in a $table, while
 the array's values are the values to save for that key::
 
 	$data = [
@@ -278,7 +278,7 @@ the array's values are the values to save for that key::
 
 Updates an existing record in the database. The first parameter is the $primaryKey of the record to update.
 An associative array of data is passed into this method as the second parameter. The array's keys must match the name
-of the columns in $table, while the array's values are the values to save for that key::
+of the columns in a $table, while the array's values are the values to save for that key::
 
 	$data = [
 		'username' => 'darth',
@@ -295,7 +295,7 @@ Multiple records may be updated with a single call by passing an array of primar
 
 	$userModel->update([1, 2, 3], $data);
 
-When you need a more flexible solution, you can leaven the parameters empty and it functions like the Query Builder's
+When you need a more flexible solution, you can leave the parameters empty and it functions like the Query Builder's
 update command, with the added benefit of validation, events, etc::
 
     $userModel
@@ -305,7 +305,7 @@ update command, with the added benefit of validation, events, etc::
 
 **save()**
 
-This is a wrapper around the insert() and update() methods that handles inserting or updating the record
+This is a wrapper around the insert() and update() methods that handle inserting or updating the record
 automatically, based on whether it finds an array key matching the $primaryKey value::
 
 	// Defined as a model property
@@ -374,7 +374,7 @@ A very simple model to work with this might look like::
 	}
 
 This model works with data from the ``jobs`` table, and returns all results as an instance of ``App\Entities\Job``.
-When you need to persist that record to the database, you will need to either write custom methods, or use the
+When you need to persist that record to the database, you will need to either write custom methods or use the
 model's ``save()`` method to inspect the class, grab any public and private properties, and save them to the database::
 
 	// Retrieve a Job instance
@@ -595,7 +595,7 @@ Defining Callbacks
 
 You specify the callbacks by first creating a new class method in your model to use. This class will always
 receive a $data array as its only parameter. The exact contents of the $data array will vary between events, but
-will always contain a key named **data** that contains the primary data passed to original method. In the case
+will always contain a key named **data** that contains the primary data passed to the original method. In the case
 of the insert* or update* methods, that will be the key/value pairs that are being inserted into the database. The
 main array will also contain the other values passed to the method, and be detailed later. The callback method
 must return the original $data array so other callbacks have the full information.

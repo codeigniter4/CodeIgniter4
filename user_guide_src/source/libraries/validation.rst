@@ -161,7 +161,7 @@ Explanation
 
 You'll notice several things about the above pages:
 
-The form (Signup.php) is a standard web form with a couple exceptions:
+The form (Signup.php) is a standard web form with a couple of exceptions:
 
 #. It uses a form helper to create the form opening. Technically, this
    isn't necessary. You could create the form using standard HTML.
@@ -190,7 +190,7 @@ The library is loaded as a service named **validation**::
     $validation =  \Config\Services::validation();
 
 This automatically loads the ``Config\Validation`` file which contains settings
-for including multiple Rule sets, and collections of rules that can be easily reused.
+for including multiple Rulesets, and collections of rules that can be easily reused.
 
 .. note:: You may never need to use this method, as both the :doc:`Controller </incoming/controllers>` and
     the :doc:`Model </models/model>` provide methods to make validation even easier.
@@ -206,7 +206,7 @@ methods.
 setRule()
 ---------
 
-This method sets a single rule. It takes the name of field as
+This method sets a single rule. It takes the name of the field as
 the first parameter, an optional label and a string with a pipe-delimited list of rules
 that should be applied::
 
@@ -496,8 +496,8 @@ application.
 Creating the Views
 ==================
 
-The first step is to create the custom views. These can be placed anywhere that the ``view()`` method can locate them,
-which means the standard View directory, or any namespaced View folder will work. For example, you could create
+The first step is to create custom views. These can be placed anywhere that the ``view()`` method can locate them,
+which means the standard View directory or any namespaced View folder will work. For example, you could create
 a new view at **/app/Views/_errors_list.php**::
 
     <div class="alert alert-danger" role="alert">
@@ -508,7 +508,7 @@ a new view at **/app/Views/_errors_list.php**::
         </ul>
     </div>
 
-An array named ``$errors`` is available within the view that contains a list of the errors, where the key is
+An array named ``$errors`` is available within the view that contains a list of the errors where the key is
 the name of the field that had the error, and the value is the error message, like this::
 
     $errors = [
@@ -560,7 +560,7 @@ add the new file to the ``$ruleSets`` array::
 		\CodeIgniter\Validation\CreditCardRules::class,
 	];
 
-You can add it as either a simple string with the fully qualified class name, or using the ``::class`` suffix as
+You can add it as either a simple string with the fully qualified class name or using the ``::class`` suffix as
 shown above. The primary benefit here is that it provides some extra navigation capabilities in more advanced IDEs.
 
 Within the file itself, each method is a rule and must accept a string as the first parameter, and must return
@@ -575,7 +575,7 @@ a boolean true or false value signifying true if it passed the test or false if 
     }
 
 By default, the system will look within ``CodeIgniter\Language\en\Validation.php`` for the language strings used
-within errors. In custom rules you may provide error messages by accepting an $error variable by reference in the
+within errors. In custom rules, you may provide error messages by accepting a $error variable by reference in the
 second parameter::
 
     public function even(string $str, string &$error = null): bool
@@ -645,7 +645,7 @@ Available Rules
 
 The following is a list of all the native rules that are available to use:
 
-.. note:: Rule is string; there must be no spaces between the parameters, especially the "is_unique" rule.
+.. note:: Rule is a string; there must be no spaces between the parameters, especially the "is_unique" rule.
 	There can be no spaces before and after "ignore_value".
 
 - "is_unique[supplier.name,uuid, $uuid]"   is not ok

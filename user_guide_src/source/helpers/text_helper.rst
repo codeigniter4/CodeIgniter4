@@ -217,7 +217,7 @@ The following functions are available:
 	The third parameter is an optional suffix added to the string, if
 	undeclared this helper uses an ellipsis.
 
-	.. note:: If you need to truncate to an exact number of characters please
+	.. note:: If you need to truncate to an exact number of characters, please
 		see the :php:func:`ellipsize()` function below.
 
 .. php:function:: ascii_to_entities($str)
@@ -231,7 +231,7 @@ The following functions are available:
 	they can be shown consistently regardless of browser settings or stored
 	reliably in a database. There is some dependence on your server's
 	supported character sets, so it may not be 100% reliable in all cases,
-	but for the most part it should correctly identify characters outside
+	but for the most part, it should correctly identify characters outside
 	the normal range (like accented characters).
 
 	Example::
@@ -372,7 +372,7 @@ The following functions are available:
 	example. a value of 1 will place the ellipsis at the right of the
 	string, .5 in the middle, and 0 at the left.
 
-	An optional forth parameter is the kind of ellipsis. By default,
+	An optional fourth parameter is the kind of ellipsis. By default,
 	&hellip; will be inserted.
 
 	Example::

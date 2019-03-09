@@ -39,7 +39,7 @@ recommended that a `BCP 47 <http://www.rfc-editor.org/rfc/bcp/bcp47.txt>`_ langu
 language codes like en-US for American English, or fr-FR, for French/France. A more readable introduction
 to this can be found on the `W3C's site <https://www.w3.org/International/articles/language-tags/>`_.
 
-The system is smart enough to fallback to more generic language codes if an exact match
+The system is smart enough to fall back to more generic language codes if an exact match
 cannot be found. If the locale code was set to **en-US** and we only have language files setup for **en**
 then those will be used since nothing exists for the more specific **en-US**. If, however, a language
 directory existed at **app/Language/en-US** then that would be used first.
@@ -113,7 +113,7 @@ Languages do not have any specific naming convention that are required. The file
 describe the type of content it holds. For example, let's say you want to create a file containing error messages.
 You might name it simply: **Errors.php**.
 
-Within the file you would return an array, where each element in the array has a language key and the string to return::
+Within the file, you would return an array, where each element in the array has a language key and the string to return::
 
         'language_key' => 'The actual message to be shown.'
 
@@ -133,7 +133,7 @@ Basic Usage
 ===========
 
 You can use the ``lang()`` helper function to retrieve text from any of the language files, by passing the
-filename and the language key as the first paremeter, separated by a period (.). For example, to load the
+filename and the language key as the first parameter, separated by a period (.). For example, to load the
 ``errorEmailMissing`` string from the ``Errors`` language file, you would do the following::
 
     echo lang('Errors.errorEmailMissing');
@@ -224,7 +224,7 @@ Here are a few examples::
     echo lang('Tests.ordinal', [time()]);
 
 You should be sure to read up on the MessageFormatter class and the underlying ICU formatting to get a better
-idea on what capabilities it has, like permorming conditional replacement, pluralization, and more. Both of the links provided
+idea on what capabilities it has, like performing the conditional replacement, pluralization, and more. Both of the links provided
 earlier will give you an excellent idea as to the options available.
 
 Specifying Locale

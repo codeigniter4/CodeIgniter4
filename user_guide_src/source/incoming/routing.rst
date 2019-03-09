@@ -34,7 +34,7 @@ Routes can be specified using placeholders or Regular Expressions.
 A route simply takes the URI on the left, and maps it to the controller and method on the right,
 along with any parameters that should be passed to the controller. The controller and method should
 be listed in the same way that you would use a static method, by separating the fully-namespaced class
-and its method with a double-colon, like ``Users::list``.  If that method requires parameters to be
+and its method with a double-colon, like ``Users::list``. If that method requires parameters to be
 passed to it, then they would be listed after the method name, separated by forward-slashes::
 
 	// Calls the $Users->list()
@@ -64,7 +64,7 @@ The following placeholders are available for you to use in your routes:
 * **(:segment)** will match any character except for a forward slash (/) restricting the result to a single segment.
 * **(:num)** will match any integer.
 * **(:alpha)** will match any string of alphabetic characters
-* **(:alphanum)** will match any string of alphabetic characters or integers, or any combination of the two.
+* **(:alphanum)** will match any string of alphabetic characters or integers or any combination of the two.
 * **(:hash)** is the same as **:segment**, but can be used to easily see which routes use hashed ids (see the :doc:`Model </models/model>` docs).
 
 .. note:: **{locale}** cannot be used as a placeholder or other part of the route, as it is reserved for use
@@ -87,17 +87,17 @@ The ID will be set to “34”::
 
 	$routes->add('product/(:any)', 'Catalog::productLookup');
 
-A URL with “product” as the first segment, and anything in the second will be remapped to the “\Catalog” class
+A URL with “product” as the first segment and anything in the second will be remapped to the “\Catalog” class
 and the “productLookup” method::
 
 	$routes->add('product/(:num)', 'Catalog::productLookupByID/$1';
 
-A URL with “product” as the first segment, and a number in the second will be remapped to the “\Catalog” class
+A URL with “product” as the first segment and a number in the second will be remapped to the “\Catalog” class
 and the “productLookupByID” method passing in the match as a variable to the method.
 
 .. important:: While the ``add()`` method is convenient, it is recommended to always use the HTTP-verb-based
     routes, described below, as it is more secure. It will also provide a slight performance increase, since
-    only routes that match the current request method are stored, resulting in less routes to scan through
+    only routes that match the current request method are stored, resulting in fewer routes to scan through
     when trying to find a match.
 
 Custom Placeholders
@@ -234,7 +234,7 @@ The value for the filter must match one of the aliases defined within ``app/Conf
 Environment Restrictions
 ========================
 
-You can create a set of routes that will only be viewable under a certain environment. This allows you to create
+You can create a set of routes that will only be viewable in a certain environment. This allows you to create
 tools that only the developer can use on their local machines that are not reachable on testing or production servers.
 This can be done with the ``environment()`` method. The first parameter is the name of the environment. Any
 routes defined within this closure are only accessible from the given environment::
@@ -326,7 +326,7 @@ name::
     $routes->put('photos/(:segment)',      'Photos::update/$1');
     $routes->delete('photos/(:segment)',   'Photos::delete/$1');
 
-.. important:: The routes are matched in the order they are specified, so if you have a resource photos above a get 'photos/poll' the show action's route for the resource line will be matched before the get line. To fix this, move the get line above the resource line so that it is matched first.
+.. important:: The routes are matched in the order they are specified, so if you have resource photos above a get 'photos/poll' the show action's route for the resource line will be matched before the get line. To fix this, move the get line above the resource line so that it is matched first.
 
 The second parameter accepts an array of options that can be used to modify the routes that are generated. While these
 routes are geared toward API-usage, where more methods are allowed, you can pass in the 'websafe' option to have it
@@ -441,7 +441,7 @@ Offsetting the Matched Parameters
 ---------------------------------
 
 You can offset the matched parameters in your route by any numeric value with the ``offset`` option, with the
-value being the number of segments to offset.
+value is the number of segments to offset.
 
 This can be beneficial when developing API's with the first URI segment being the version number. It can also
 be used when the first parameter is a language string::
@@ -513,7 +513,7 @@ Translate URI Dashes
 --------------------
 
 This option enables you to automatically replace dashes (‘-‘) with underscores in the controller and method
-URI segments, thus saving you additional route entries if you need to do that. This is required, because the
+URI segments, thus saving you additional route entries if you need to do that. This is required because the
 dash isn’t a valid class or method name character and would cause a fatal error if you try to use it::
 
 	$routes->setTranslateURIDashes(true);

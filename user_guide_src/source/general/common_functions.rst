@@ -20,7 +20,7 @@ Service Accessors
 .. php:function:: cache ( [$key] )
 
     :param  string $key: The cache name of the item to retrieve from cache (Optional)
-    :returns: Either the cache object, or the item retrieved from the cache
+    :returns: Either the cache object or the item retrieved from the cache
     :rtype: mixed
 
     If no $key is provided, will return the Cache engine instance. If a $key
@@ -212,7 +212,7 @@ Miscellaneous Functions
 	:param   string   $level: The level of severity
 	:param   string   $message: The message that is to be logged.
 	:param   array    $context: An associative array of tags and their values that should be replaced in $message
-	:returns: TRUE if was logged succesfully or FALSE if there was a problem logging it
+	:returns: TRUE if was logged successfully or FALSE if there was a problem logging it
 	:rtype: bool
 
 	Logs a message using the Log Handlers defined in **app/Config/Logger.php**.
@@ -267,10 +267,10 @@ Miscellaneous Functions
 
 .. php:function:: route_to ( $method [, ...$params] )
 
-	:param   string   $method: The named route alias, or name of the controller/method to match.
+	:param   string   $method: The named route alias or name of the controller/method to match.
 	:param   mixed   $params: One or more parameters to be passed to be matched in the route.
 
-	Generates a relative URI for you based on either a named route alias, or a controller::method
+	Generates a relative URI for you based on either a named route alias or a controller::method
 	combination. Will take parameters into effect, if provided.
 
 	For full details, see the :doc:`/incoming/routing` page.

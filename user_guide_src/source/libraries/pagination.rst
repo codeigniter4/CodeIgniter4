@@ -44,7 +44,7 @@ To provide a paginated list of users in your application, your controller's meth
         }
     }
 
-In this example, we first create a new instance of our UserModel. Then we populate the data to sent to the view.
+In this example, we first create a new instance of our UserModel. Then we populate the data to send to the view.
 The first element is the results from the database, **users**, which is retrieved for the correct page, returning
 10 users per page. The second item that must be sent to the view is the Pager instance itself. As a convenience,
 the Model will hold on to the instance it used and store it in the public class variable, **$pager**. So, we grab
@@ -95,7 +95,7 @@ Manual Pagination
 =================
 
 You may find times where you just need to create pagination based on known data. You can create links manually
-with the ``makeLinks()`` method, which takes the current page, the amount of results per page, and
+with the ``makeLinks()`` method, which takes the current page, the number of results per page, and
 the total number of items as the first, second, and third parameters, respectively::
 
     <?= $pager->makeLinks($page, $perPage, $total) ?>
@@ -111,12 +111,12 @@ It is also possible to use a URI segment for the page number, instead of the pag
 
 <?= $pager->makeLinks($page, $perPage, $total, 'template_name', $segment) ?>
 
-Please note: ``$segment`` value can not be greater than the number of URI segments plus 1.
+Please note: ``$segment`` value cannot be greater than the number of URI segments plus 1.
 
 Paginating with Only Expected Queries
 =====================================
 
-By default all GET queries are shown in the pagination links.
+By default, all GET queries are shown in the pagination links.
 
 For example, when accessing the URL *http://domain.tld?search=foo&order=asc&hello=i+am+here&page=2*, the page 3 link can be generated, along with the other links, as follows::
 
@@ -157,7 +157,7 @@ the view file through it's namespace::
     'default_full'   => 'App\Views\Pagers\foundation_full',
 
 Since it is under the standard **app/Views** directory, though, you do not need to namespace it since the
-``view()`` method can locate it by filename. In that case, you can simple give the sub-directory and file name::
+``view()`` method can locate it by filename. In that case, you can simply give the sub-directory and file name::
 
     'default_full'   => 'Pagers/foundation_full',
 
@@ -233,9 +233,9 @@ the current page link. The only parameter that it accepts is the number of links
 
 **hasPrevious()** & **hasNext()**
 
-These methods return a boolean true if there are more links than can be displayed on either side of the current page,
+These methods return a boolean true if there are more links that can be displayed on either side of the current page,
 based on the value passed to ``setSurroundCount``. For example, let's say we have 20 pages of data. The current
-page is page 3. If the surround count is 2, then the following links would show up in the list: 1, 2, 3, 4, and 5.
+page is page 3. If the surrounding count is 2, then the following links would show up in the list: 1, 2, 3, 4, and 5.
 Since the first link displayed is page one, ``hasPrevious()`` would return **false** since there is no page zero. However,
 ``hasNext()`` would return **true** since there are 15 additional pages of results after page five.
 

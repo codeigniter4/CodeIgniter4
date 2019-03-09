@@ -20,7 +20,7 @@ There are eight different log levels, matching to the `RFC 5424 <http://tools.ie
 * **debug** - Detailed debug information.
 * **info** - Interesting events in your application, like a user logging in, logging SQL queries, etc.
 * **notice** - Normal, but significant events in your application.
-* **warning** - Exceptional occurrences that are not errors, like the user of deprecated APIs, poor use of an API, or other undesirable things that are not necessarily wrong.
+* **warning** - Exceptional occurrences that are not errors, like the use of deprecated APIs, poor use of an API, or other undesirable things that are not necessarily wrong.
 * **error** - Runtime errors that do not require immediate action but should typically be logged and monitored.
 * **critical** - Critical conditions, like an application component not available, or an unexpected exception.
 * **alert** - Action must be taken immediately, like when an entire website is down, the database unavailable, etc.
@@ -39,7 +39,7 @@ the ``/app/Config/Logger.php`` configuration file.
 The ``threshold`` value of the config file determines which levels are logged across your application. If any levels
 are requested to be logged by the application, but the threshold doesn't allow them to log currently, they will be
 ignored. The simplest method to use is to set this value to the minimum level that you want to have logged. For example,
-if you want to log debug messages, and not information messages, you would set the threshold to ``5``. Any log requests with
+if you want to log debug messages and not information messages, you would set the threshold to ``5``. Any log requests with
 a level of 5 or less (which includes runtime errors, system errors, etc) would be logged and info, notices, and warnings
 would be ignored::
 
@@ -103,7 +103,7 @@ into the message string::
 
 If you want to log an Exception or an Error, you can use the key of 'exception', and the value being the
 Exception or Error itself. A string will be generated from that object containing the error message, the
-file name and line number.  You must still provide the exception placeholder in the message::
+file name and line number. You must still provide the exception placeholder in the message::
 
 	try
 	{

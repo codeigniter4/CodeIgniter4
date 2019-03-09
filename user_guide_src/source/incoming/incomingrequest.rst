@@ -154,7 +154,7 @@ This will retrieve data and convert it to an array. Like this::
 **Filtering Input Data**
 
 To maintain security of your application, you will want to filter all input as you access it. You can
-pass the type of filter to use in as the last parameter of any of these methods. The native ``filter_var()``
+pass the type of filter to use it as the last parameter of any of these methods. The native ``filter_var()``
 function is used for the filtering. Head over to the PHP manual for a list of `valid
 filter types <http://php.net/manual/en/filter.filters.php>`_.
 
@@ -169,7 +169,7 @@ Retrieving Headers
 ----------------------------------------------------------------------------
 
 You can get access to any header that was sent with the request with the ``getHeaders()`` method, which returns
-an array of all headers, with the key as the name of the header, and the value being an instance of
+an array of all headers, with the key as the name of the header, and the value is an instance of
 ``CodeIgniter\HTTP\Header``::
 
 	var_dump($request->getHeaders());
@@ -344,7 +344,7 @@ The methods provided by the parent classes that are available are:
 
 			$request->getVar(null, FILTER_SANITIZE_STRING); // returns all POST items with string sanitation
 
-		To return an array of multiple  POST parameters, pass all the required keys as an array::
+		To return an array of multiple POST parameters, pass all the required keys as an array::
 
 			$request->getVar(['field1', 'field2']);
 

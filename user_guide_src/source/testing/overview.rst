@@ -41,7 +41,7 @@ Phar
 ----
 
 The other option is to download the .phar file from the `phpUnit <https://phpunit.de/getting-started/phpunit-7.html>`__ site.
-This is standalone file that should be placed within your project root.
+This is a standalone file that should be placed within your project root.
 
 
 ************************

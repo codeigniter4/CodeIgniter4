@@ -41,8 +41,8 @@ potentially slowing down the requests enough that they attack is no longer worth
 Rate Limiting
 *************
 
-The Throttler class does not do any rate limiting or request throttling on its own, but is the key to making
-one work. An example :doc:`Filter </incoming/filters>` is provided that implements very simple rate limiting at
+The Throttler class does not do any rate limiting or request throttling on its own but is the key to making
+one work. An example :doc:`Filter </incoming/filters>` is provided that implements a very simple rate limiting at
 one request per second per IP address. Here we will run through how it works, and how you could set it up and
 start using it in your application.
 
@@ -97,7 +97,7 @@ along the lines of::
             }
     }
 
-When run, this method first grabs an instance of the throttler. Next it uses the IP address as the bucket name,
+When run, this method first grabs an instance of the throttler. Next, it uses the IP address as the bucket name,
 and sets things to limit them to one request per second. If the throttler rejects the check, returning false,
 then we return a Response with the status code set to 429 - Too Many Attempts, and the script execution ends
 before it ever hits the controller. This example will throttle based on a single IP address across all requests
@@ -106,7 +106,7 @@ made to the site, not per page.
 Applying the Filter
 ===================
 
-We don't necessarily need to throttle every page on the site. For many web applications this makes the most sense
+We don't necessarily need to throttle every page on the site. For many web applications, this makes the most sense
 to apply only to POST requests, though API's might want to limit every request made by a user. In order to apply
 this to incoming requests, you need to edit **/app/Config/Filters.php** and first add an alias to the
 filter::
@@ -122,7 +122,7 @@ Next, we assign it to all POST requests made on the site::
         'post' => ['throttle', 'CSRF']
     ];
 
-And that's all there is to it. Now all POST requests made on the site will have be rate limited.
+And that's all there is to it. Now all POST requests made on the site will have to be rate limited.
 
 ***************
 Class Reference
@@ -133,7 +133,7 @@ Class Reference
     :param string $key: The name of the bucket
     :param int $capacity: The number of tokens the bucket holds
     :param int $seconds: The number of seconds it takes for a bucket to completely fill
-    :param int $cost: The number of tokens that are spent for this action
+    :param int $cost: The number of tokens that are spent on this action
     :returns: TRUE if action can be performed, FALSE if not
     :rtype: bool
 
@@ -148,4 +148,4 @@ Class Reference
 
     After ``check()`` has been run and returned FALSE, this method can be used
     to determine the time until a new token should be available and the action can be
-    tried again. In this case the minimum enforced wait time is one second.
+    tried again. In this case, the minimum enforced wait time is one second.

@@ -183,7 +183,7 @@ The following functions are available:
 	different site than yours, which contains different configuration preferences.
 	We use this for unit testing the framework itself.
 
-	.. note:: Attributes passed into the anchor function are automatically escaped to protected against XSS attacks.
+	.. note:: Attributes passed into the anchor function are automatically escaped to protect against XSS attacks.
 
 .. php:function:: anchor_popup([$uri = ''[, $title = ''[, $attributes = FALSE[, $altConfig = NULL]]]])
 
@@ -234,7 +234,7 @@ The following functions are available:
         different site than yours, which contains different configuration preferences.
         We use this for unit testing the framework itself.
 
-	.. note:: Attributes passed into the anchor_popup function are automatically escaped to protected against XSS attacks.
+	.. note:: Attributes passed into the anchor_popup function are automatically escaped to protect against XSS attacks.
 
 .. php:function:: mailto($email[, $title = ''[, $attributes = '']])
 
@@ -254,7 +254,7 @@ The following functions are available:
 		$attributes = ['title' => 'Mail me'];
 		echo mailto('me@my-site.com', 'Contact Me', $attributes);
 
-	.. note:: Attributes passed into the mailto function are automatically escaped to protected against XSS attacks.
+	.. note:: Attributes passed into the mailto function are automatically escaped to protect against XSS attacks.
 
 .. php:function:: safe_mailto($email[, $title = ''[, $attributes = '']])
 
@@ -282,7 +282,7 @@ The following functions are available:
 		$string = auto_link($string);
 
 	The second parameter determines whether URLs and e-mails are converted or
-	just one or the other. Default behavior is both if the parameter is not
+	just one or the other. The default behavior is both if the parameter is not
 	specified. E-mail links are encoded as :php:func:`safe_mailto()` as shown
 	above.
 
