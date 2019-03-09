@@ -68,8 +68,8 @@ Handling Different Environments
 ===============================
 
 Because your site can operate within multiple environments, such as the developer's local machine or
-the server used for the production site, you can modify your values based on the environment.  Within these
-you will have settings that might change depending on the server it's running on.This can include
+the server used for the production site, you can modify your values based on the environment. Within these
+you will have settings that might change depending on the server it's running on. This can include
 database settings, API credentials, and other settings that will vary between deploys.
 
 You can store values in a **.env** file in the root directory, alongside the system and application directories.
@@ -136,7 +136,7 @@ Incorporating Environment Variables Into a Configuration
 ========================================================
 
 When you instantiate a configuration file, any namespaced environment variables
-are considered for merging into the a configuration objects' properties.
+are considered for merging into the configuration objects' properties.
 
 If the prefix of a namespaced variable matches the configuration class name exactly,
 case-sensitive, then the trailing part of the variable name (after the dot) is

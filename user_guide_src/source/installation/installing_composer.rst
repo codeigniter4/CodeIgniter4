@@ -95,7 +95,7 @@ In the folder above your project root::
 Setup
 -------------------------------------------------------
 
-The command above will create an "devstarter" folder.
+The command above will create a "devstarter" folder.
 Feel free to rename that for your project.
 
 Upgrading

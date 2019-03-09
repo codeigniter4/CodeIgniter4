@@ -282,7 +282,7 @@ The following functions are available:
 		$string = auto_link($string);
 
 	The second parameter determines whether URLs and e-mails are converted or
-	just one or the other. Default behavior is both if the parameter is not
+	just one or the other. The default behavior is both if the parameter is not
 	specified. E-mail links are encoded as :php:func:`safe_mailto()` as shown
 	above.
 

@@ -46,7 +46,7 @@ items:
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^(.*)$ index.php/$1 [L]
 
-In this example, any HTTP request other than those for existsing directories and existing files is treated as a
+In this example, any HTTP request other than those for existing directories and existing files are treated as a
 request for your index.php file.
 
 .. note:: These specific rules might not work for all server configurations.
