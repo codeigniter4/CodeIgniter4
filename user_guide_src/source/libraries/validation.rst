@@ -497,7 +497,7 @@ Creating the Views
 ==================
 
 The first step is to create custom views. These can be placed anywhere that the ``view()`` method can locate them,
-which means the standard View directory or any namespaced View folder will work. For example, you could create
+which means the standard View directory, or any namespaced View folder will work. For example, you could create
 a new view at **/app/Views/_errors_list.php**::
 
     <div class="alert alert-danger" role="alert">
@@ -508,7 +508,7 @@ a new view at **/app/Views/_errors_list.php**::
         </ul>
     </div>
 
-An array named ``$errors`` is available within the view that contains a list of the errors where the key is
+An array named ``$errors`` is available within the view that contains a list of the errors, where the key is
 the name of the field that had the error, and the value is the error message, like this::
 
     $errors = [
@@ -560,7 +560,7 @@ add the new file to the ``$ruleSets`` array::
 		\CodeIgniter\Validation\CreditCardRules::class,
 	];
 
-You can add it as either a simple string with the fully qualified class name or using the ``::class`` suffix as
+You can add it as either a simple string with the fully qualified class name, or using the ``::class`` suffix as
 shown above. The primary benefit here is that it provides some extra navigation capabilities in more advanced IDEs.
 
 Within the file itself, each method is a rule and must accept a string as the first parameter, and must return

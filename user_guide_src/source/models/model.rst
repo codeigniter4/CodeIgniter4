@@ -374,7 +374,7 @@ A very simple model to work with this might look like::
 	}
 
 This model works with data from the ``jobs`` table, and returns all results as an instance of ``App\Entities\Job``.
-When you need to persist that record to the database, you will need to either write custom methods or use the
+When you need to persist that record to the database, you will need to either write custom methods, or use the
 model's ``save()`` method to inspect the class, grab any public and private properties, and save them to the database::
 
 	// Retrieve a Job instance

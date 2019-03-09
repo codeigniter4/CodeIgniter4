@@ -15,10 +15,10 @@ transactions.
 CodeIgniter's Approach to Transactions
 ======================================
 
-CodeIgniter utilizes an approach to transactions that are very similar to
+CodeIgniter utilizes an approach to transactions that is very similar to
 the process used by the popular database class ADODB. We've chosen that
 approach because it greatly simplifies the process of running
-transactions. In most cases, all that is required are two lines of code.
+transactions. In most cases, all that is required is two lines of code.
 
 Traditionally, transactions have required a fair amount of work to
 implement since they demand that you keep track of your queries and

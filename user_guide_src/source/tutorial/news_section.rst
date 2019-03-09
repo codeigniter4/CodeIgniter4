@@ -119,7 +119,7 @@ query; :doc:`Query Builder <../database/query_builder>` does this for you.
 The two methods used here, ``findAll()`` and ``first()``, are provided
 by the Model class. They already know the table to use based on the ``$table``
 property we set in **NewsModel** class, earlier. They are helper methods
-that use the Query Builder to run their commands on the current table and
+that use the Query Builder to run their commands on the current table, and
 returning an array of results in the format of your choice. In this example,
 ``findAll()`` returns an array of objects.
 
@@ -167,7 +167,7 @@ method in the second method. The model is using this slug to identify the
 news item to be returned.
 
 Now the data is retrieved by the controller through our model, but
-nothing is displayed yet. The next thing to do is pass this data to
+nothing is displayed yet. The next thing to do is, passing this data to
 the views. Modify the ``index()`` method to look like this::
 
 	public function index()

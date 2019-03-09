@@ -14,7 +14,7 @@ action when that event is triggered.
 Enabling Events
 ===============
 
-Events are always enabled and are available globally.
+Events are always enabled, and are available globally.
 
 Defining an Event
 =================

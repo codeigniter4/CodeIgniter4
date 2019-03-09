@@ -77,7 +77,7 @@ at the same time. To use a more appropriate technical term - requests were
 non-blocking.
 
 However, non-blocking requests in the context of sessions also means
-unsafe, because of modifications to session data (or session ID regeneration)
+unsafe, because, modifications to session data (or session ID regeneration)
 in one request can interfere with the execution of a second, concurrent
 request. This detail was at the root of many issues and the main reason why
 CodeIgniter 3.0 has a completely re-written Session library.

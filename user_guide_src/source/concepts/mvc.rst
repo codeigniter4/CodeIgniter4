@@ -11,7 +11,7 @@ each piece as you need.
 
 **Models** manage the data of the application and help to enforce any special business rules the application might need.
 
-**Views** are simple files, with little to no logic, that displays the information to the user.
+**Views** are simple files, with little to no logic, that display the information to the user.
 
 **Controllers** act as glue code, marshaling data back and forth between the view (or the user that's seeing it) and
 the data storage.
@@ -69,7 +69,7 @@ Controllers
 ===========
 
 Controllers have a couple of different roles to play. The most obvious one is that they receive input from the user and
-then determine what to do with it. This often involves passing the data to a model to save it or requesting data from
+then determine what to do with it. This often involves passing the data to a model to save it, or requesting data from
 the model that is then passed on to the view to be displayed. This also includes loading up other utility classes,
 if needed, to handle specialized tasks that is outside of the purview of the model.
 

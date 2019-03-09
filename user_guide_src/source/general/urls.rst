@@ -16,7 +16,7 @@ The segments in the URL, in following with the Model-View-Controller approach, u
 
 1. The first segment represents the controller **class** that should be invoked.
 2. The second segment represents the class **method** that should be called.
-3. The third and any additional segments represent the ID and any variables that will be passed to the controller.
+3. The third, and any additional segments, represent the ID and any variables that will be passed to the controller.
 
 The :doc:`URI Library <../libraries/uri>` and the :doc:`URL Helper <../helpers/url_helper>` contain functions that make it easy
 to work with your URI data. In addition, your URLs can be remapped using the :doc:`URI Routing </incoming/routing>`

@@ -64,7 +64,7 @@ The following placeholders are available for you to use in your routes:
 * **(:segment)** will match any character except for a forward slash (/) restricting the result to a single segment.
 * **(:num)** will match any integer.
 * **(:alpha)** will match any string of alphabetic characters
-* **(:alphanum)** will match any string of alphabetic characters or integers or any combination of the two.
+* **(:alphanum)** will match any string of alphabetic characters or integers, or any combination of the two.
 * **(:hash)** is the same as **:segment**, but can be used to easily see which routes use hashed ids (see the :doc:`Model </models/model>` docs).
 
 .. note:: **{locale}** cannot be used as a placeholder or other part of the route, as it is reserved for use
@@ -87,12 +87,12 @@ The ID will be set to “34”::
 
 	$routes->add('product/(:any)', 'Catalog::productLookup');
 
-A URL with “product” as the first segment and anything in the second will be remapped to the “\Catalog” class
+A URL with “product” as the first segment, and anything in the second will be remapped to the “\Catalog” class
 and the “productLookup” method::
 
 	$routes->add('product/(:num)', 'Catalog::productLookupByID/$1';
 
-A URL with “product” as the first segment and a number in the second will be remapped to the “\Catalog” class
+A URL with “product” as the first segment, and a number in the second will be remapped to the “\Catalog” class
 and the “productLookupByID” method passing in the match as a variable to the method.
 
 .. important:: While the ``add()`` method is convenient, it is recommended to always use the HTTP-verb-based

@@ -297,9 +297,9 @@ The following functions are available:
 
     	Lets you create a standard drop-down field. The first parameter will
     	contain the name of the field, the second parameter will contain an
-    	associative array of options and the third parameter will contain the
+    	associative array of options, and the third parameter will contain the
     	value you wish to be selected. You can also pass an array of multiple
-    	items through the third parameter and the helper will create a
+    	items through the third parameter, and the helper will create a
     	multiple select for you.
 
     	Example::
@@ -368,7 +368,7 @@ The following functions are available:
 
     	Lets you create a standard multiselect field. The first parameter will
     	contain the name of the field, the second parameter will contain an
-    	associative array of options and the third parameter will contain the
+    	associative array of options, and the third parameter will contain the
     	value or values you wish to be selected.
 
     	The parameter usage is identical to using :php:func:`form_dropdown()` above,

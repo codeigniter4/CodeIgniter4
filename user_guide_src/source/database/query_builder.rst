@@ -589,7 +589,7 @@ Inserting Data
 
 **$builder->insert()**
 
-Generates an insert string based on the data you supply and runs the
+Generates an insert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
 function. Here is an example using an array::
 
@@ -661,7 +661,7 @@ using `$builder->insert()` which resets values or reset directly using
 
 **$builder->insertBatch()**
 
-Generates an insert string based on the data you supply and runs the
+Generates an insert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
 function. Here is an example using an array::
 
@@ -833,7 +833,7 @@ performing updates.
 
 **$builder->updateBatch()**
 
-Generates an update string based on the data you supply and runs the query.
+Generates an update string based on the data you supply, and runs the query.
 You can either pass an **array** or an **object** to the function.
 Here is an example using an array::
 

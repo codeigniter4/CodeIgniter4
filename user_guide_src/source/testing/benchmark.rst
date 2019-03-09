@@ -85,7 +85,7 @@ Using the Iterator
 The Iterator is a simple tool that is designed to allow you to try out multiple variations on a solution to
 see the speed differences and different memory usage patterns. You can add any number of "tasks" for it to
 run and the class will run the task hundreds or thousands of times to get a clearer picture of performance.
-The results can then be retrieved and used by your script or displayed as an HTML table.
+The results can then be retrieved and used by your script, or displayed as an HTML table.
 
 Creating Tasks To Run
 =====================

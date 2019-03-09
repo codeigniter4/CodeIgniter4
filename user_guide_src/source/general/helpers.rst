@@ -53,7 +53,7 @@ A helper can be loaded anywhere within your controller methods (or
 even within your View files, although that's not a good practice), as
 long as you load it before you use it. You can load your helpers in your
 controller constructor so that they become available automatically in
-any function or you can load a helper in a specific function that needs
+any function, or you can load a helper in a specific function that needs
 it.
 
 .. note:: The Helper loading method above does not return a value, so
@@ -111,7 +111,7 @@ your version. In this case, it's better to simply "extend" the Helper.
 .. note:: The term "extend" is used loosely since Helper functions are
 	procedural and discrete and cannot be extended in the traditional
 	programmatic sense. Under the hood, this gives you the ability to
-	add or replace the functions a Helper provides.
+	add to, or to replace the functions a Helper provides.
 
 For example, to extend the native **Array Helper** you'll create a file
 named **app/Helpers/array_helper.php**, and add or override

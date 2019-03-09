@@ -14,7 +14,7 @@ Entity Usage
 ============
 
 At its core, an Entity class is simply a class that represents a single database row. It has class properties
-to represent the database columns and provides any additional methods to implement the business logic for
+to represent the database columns, and provides any additional methods to implement the business logic for
 that row. The core feature, though, is that it doesn't know anything about how to persist itself. That's the
 responsibility of the model or the repository class. That way, if anything changes on how you need to save the
 object, you don't have to change how that object is used throughout the application. This makes it possible to

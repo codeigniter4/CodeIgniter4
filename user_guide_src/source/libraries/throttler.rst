@@ -41,7 +41,7 @@ potentially slowing down the requests enough that they attack is no longer worth
 Rate Limiting
 *************
 
-The Throttler class does not do any rate limiting or request throttling on its own but is the key to making
+The Throttler class does not do any rate limiting or request throttling on its own,  but is the key to making
 one work. An example :doc:`Filter </incoming/filters>` is provided that implements a very simple rate limiting at
 one request per second per IP address. Here we will run through how it works, and how you could set it up and
 start using it in your application.

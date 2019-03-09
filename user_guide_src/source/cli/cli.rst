@@ -2,7 +2,7 @@
 Running via the Command Line
 ############################
 
-As well as calling an application :doc:`Controllers </incoming/controllers>`
+As well as calling an application's :doc:`Controllers </incoming/controllers>`
 via the URL in a browser they can also be loaded via the command-line
 interface (CLI).
 
