@@ -213,7 +213,7 @@
             
   <div class="section" id="session-library">
 <h1>Session Library<a class="headerlink" href="#session-library" title="Permalink to this headline">¶</a></h1>
-<p>The Session class permits you maintain a user&#8217;s &#8220;state&#8221; and track their
+<p>The Session class permits you to maintain a user&#8217;s &#8220;state&#8221; and track their
 activity while they browse your site.</p>
 <p>CodeIgniter comes with a few session storage drivers, that you can see
 in the last section of the table of contents:</p>
@@ -295,7 +295,7 @@ which meant that two HTTP requests using the same session could run exactly
 at the same time. To use a more appropriate technical term - requests were
 non-blocking.</p>
 <p>However, non-blocking requests in the context of sessions also means
-unsafe, because modifications to session data (or session ID regeneration)
+unsafe, because, modifications to session data (or session ID regeneration)
 in one request can interfere with the execution of a second, concurrent
 request. This detail was at the root of many issues and the main reason why
 CodeIgniter 3.0 has a completely re-written Session library.</p>
@@ -769,7 +769,7 @@ engines, that you can use:</p>
 </ul>
 </div></blockquote>
 <p>By default, the <code class="docutils literal"><span class="pre">FileHandler</span></code> Driver will be used when a session is initialized,
-because it is the most safe choice and is expected to work everywhere
+because it is the safest choice and is expected to work everywhere
 (virtually every environment has a file system).</p>
 <p>However, any other driver may be selected via the <code class="docutils literal"><span class="pre">public</span> <span class="pre">$sessionDriver</span></code>
 line in your <strong>app/Config/App.php</strong> file, if you chose to do so.
@@ -797,7 +797,7 @@ attack).</p>
 allows only the directory&#8217;s owner to perform read and write operations on
 it. But be careful because the system user <em>running</em> the script is usually
 not your own, but something like &#8216;www-data&#8217; instead, so only setting those
-permissions will probable break your application.</p>
+permissions will probably break your application.</p>
 <p>Instead, you should do something like this, depending on your environment</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nb">mkdir</span> <span class="o">/&lt;</span><span class="nx">path</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">application</span> <span class="nx">directory</span><span class="o">&gt;/</span><span class="nx">Writable</span><span class="o">/</span><span class="nx">sessions</span><span class="o">/</span>
 <span class="nb">chmod</span> <span class="mo">0700</span> <span class="o">/&lt;</span><span class="nx">path</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">application</span> <span class="nx">directory</span><span class="o">&gt;/</span><span class="nx">Writable</span><span class="o">/</span><span class="nx">sessions</span><span class="o">/</span>
@@ -1001,7 +1001,7 @@ separate the multiple server paths with commas:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 06, 2019.
+      Last updated on Mar 09, 2019.
 
     </p>
   </div>

@@ -203,15 +203,15 @@
   <div class="section" id="create-news-items">
 <h1>Create news items<a class="headerlink" href="#create-news-items" title="Permalink to this headline">¶</a></h1>
 <p>You now know how you can read data from a database using CodeIgniter, but
-you haven&#8217;t written any information to the database yet. In this section
+you haven&#8217;t written any information to the database yet. In this section,
 you&#8217;ll expand your news controller and model created earlier to include
 this functionality.</p>
 <div class="section" id="create-a-form">
 <h2>Create a form<a class="headerlink" href="#create-a-form" title="Permalink to this headline">¶</a></h2>
-<p>To input data into the database you need to create a form where you can
+<p>To input data into the database, you need to create a form where you can
 input the information to be stored. This means you&#8217;ll be needing a form
 with two fields, one for the title and one for the text. You&#8217;ll derive
-the slug from our title in the model. Create the new view at
+the slug from our title in the model. Create a new view at
 <strong>app/Views/news/create.php</strong>.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$title</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 
@@ -266,7 +266,7 @@ validation</span></a> library to do this.</p>
 </div>
 <p>The code above adds a lot of functionality. The first few lines load the
 form helper and the NewsModel. After that, the Controller-provided helper
-function is used to validate the $_POST fields. In this case the title and
+function is used to validate the $_POST fields. In this case, the title and
 text fields are required.</p>
 <p>CodeIgniter has a powerful validation library as demonstrated
 above. You can read <a class="reference internal" href="../libraries/validation.html"><span class="doc">more about this library
@@ -367,7 +367,7 @@ The two modified configuration files (Database &amp; Routes) are not shown.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 06, 2019.
+      Last updated on Mar 09, 2019.
 
     </p>
   </div>

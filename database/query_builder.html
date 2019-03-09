@@ -212,7 +212,7 @@
 <h1>Query Builder Class<a class="headerlink" href="#query-builder-class" title="Permalink to this headline">¶</a></h1>
 <p>CodeIgniter gives you access to a Query Builder class. This pattern
 allows information to be retrieved, inserted, and updated in your
-database with minimal scripting. In some cases only one or two lines
+database with minimal scripting. In some cases, only one or two lines
 of code are necessary to perform a database action.
 CodeIgniter does not require that each database table be its own class
 file. It instead provides a more simplified interface.</p>
@@ -314,7 +314,7 @@ function:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">getWhere</span><span class="p">([</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">],</span> <span class="nv">$limit</span><span class="p">,</span> <span class="nv">$offset</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Please read the about the where function below for more information.</p>
+<p>Please read about the where function below for more information.</p>
 <p><strong>$builder-&gt;select()</strong></p>
 <p>Permits you to write the SELECT portion of your query:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title, content, date&#39;</span><span class="p">);</span>
@@ -523,7 +523,7 @@ searches.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">All <code class="docutils literal"><span class="pre">like*</span></code> method variations can be forced to be perform case-insensitive searches by passing
+<p class="last">All <code class="docutils literal"><span class="pre">like*</span></code> method variations can be forced to perform case-insensitive searches by passing
 a fifth parameter of <code class="docutils literal"><span class="pre">true</span></code> to the method. This will use platform-specific features where available
 otherwise, will force the values to be lowercase, i.e. <code class="docutils literal"><span class="pre">WHERE</span> <span class="pre">LOWER(column)</span> <span class="pre">LIKE</span> <span class="pre">'%search%'</span></code>. This
 may require indexes to be made for <code class="docutils literal"><span class="pre">LOWER(column)</span></code> instead of <code class="docutils literal"><span class="pre">column</span></code> to be effective.</p>
@@ -665,7 +665,7 @@ will default to ASC instead.</p>
 </pre></div>
 </div>
 <p>The second parameter lets you set a result offset.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>  <span class="c1">// Produces: LIMIT 20, 10 (in MySQL.  Other databases have slightly different syntax)</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>  <span class="c1">// Produces: LIMIT 20, 10 (in MySQL. Other databases have slightly different syntax)</span>
 </pre></div>
 </div>
 <p><strong>$builder-&gt;countAllResults()</strong></p>
@@ -725,7 +725,7 @@ you to create queries with complex WHERE clauses. Nested groups are supported. E
 <p><strong>$builder-&gt;orNotGroupStart()</strong></p>
 <p>Starts a new group by adding an opening parenthesis to the WHERE clause of the query, prefixing it with &#8216;OR NOT&#8217;.</p>
 <p><strong>$builder-&gt;groupEnd()</strong></p>
-<p>Ends the current group by adding an closing parenthesis to the WHERE clause of the query.</p>
+<p>Ends the current group by adding a closing parenthesis to the WHERE clause of the query.</p>
 </div>
 <div class="section" id="inserting-data">
 <h2><a class="toc-backref" href="#id8">Inserting Data</a><a class="headerlink" href="#inserting-data" title="Permalink to this headline">¶</a></h2>
@@ -792,7 +792,7 @@ will be reset (by default it will be&#8211;just like $builder-&gt;insert()):</p>
 </div>
 <p>The key thing to notice in the above example is that the second query did not
 utilize <cite>$builder-&gt;from()</cite> nor did it pass a table name into the first
-parameter. The reason this worked is because the query has not been executed
+parameter. The reason this worked is that the query has not been executed
 using <cite>$builder-&gt;insert()</cite> which resets values or reset directly using
 <cite>$builder-&gt;resetQuery()</cite>.</p>
 <div class="admonition note">
@@ -1110,7 +1110,7 @@ run the query:</p>
 </tr>
 </tbody>
 </table>
-<p>Resets the current Query Builder state.  Useful when you want
+<p>Resets the current Query Builder state. Useful when you want
 to build a query that can be canceled under certain conditions.</p>
 </dd></dl>
 
@@ -2323,7 +2323,7 @@ a DELETE statement will be used instead.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 06, 2019.
+      Last updated on Mar 09, 2019.
 
     </p>
   </div>

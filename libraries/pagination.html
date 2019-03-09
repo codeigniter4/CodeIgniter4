@@ -250,7 +250,7 @@ It even reads the current page it should display from the current URL via a <cod
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In this example, we first create a new instance of our UserModel. Then we populate the data to sent to the view.
+<p>In this example, we first create a new instance of our UserModel. Then we populate the data to send to the view.
 The first element is the results from the database, <strong>users</strong>, which is retrieved for the correct page, returning
 10 users per page. The second item that must be sent to the view is the Pager instance itself. As a convenience,
 the Model will hold on to the instance it used and store it in the public class variable, <strong>$pager</strong>. So, we grab
@@ -297,7 +297,7 @@ methods to keep the data separate:</p>
 <div class="section" id="manual-pagination">
 <h3>Manual Pagination<a class="headerlink" href="#manual-pagination" title="Permalink to this headline">¶</a></h3>
 <p>You may find times where you just need to create pagination based on known data. You can create links manually
-with the <code class="docutils literal"><span class="pre">makeLinks()</span></code> method, which takes the current page, the amount of results per page, and
+with the <code class="docutils literal"><span class="pre">makeLinks()</span></code> method, which takes the current page, the number of results per page, and
 the total number of items as the first, second, and third parameters, respectively:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">makeLinks</span><span class="p">(</span><span class="nv">$page</span><span class="p">,</span> <span class="nv">$perPage</span><span class="p">,</span> <span class="nv">$total</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
@@ -312,11 +312,11 @@ sections.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">makeLinks</span><span class="p">(</span><span class="nv">$page</span><span class="p">,</span> <span class="nv">$perPage</span><span class="p">,</span> <span class="nv">$total</span><span class="p">,</span> <span class="s1">&#39;template_name&#39;</span><span class="p">,</span> <span class="nv">$segment</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>Please note: <code class="docutils literal"><span class="pre">$segment</span></code> value can not be greater than the number of URI segments plus 1.</p>
+<p>Please note: <code class="docutils literal"><span class="pre">$segment</span></code> value cannot be greater than the number of URI segments plus 1.</p>
 </div>
 <div class="section" id="paginating-with-only-expected-queries">
 <h3>Paginating with Only Expected Queries<a class="headerlink" href="#paginating-with-only-expected-queries" title="Permalink to this headline">¶</a></h3>
-<p>By default all GET queries are shown in the pagination links.</p>
+<p>By default, all GET queries are shown in the pagination links.</p>
 <p>For example, when accessing the URL <em>http://domain.tld?search=foo&amp;order=asc&amp;hello=i+am+here&amp;page=2</em>, the page 3 link can be generated, along with the other links, as follows:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">();</span>
 <span class="c1">// Page 3 link: http://domain.tld?search=foo&amp;order=asc&amp;hello=i+am+here&amp;page=3</span>
@@ -353,7 +353,7 @@ the view file through it&#8217;s namespace:</p>
 </pre></div>
 </div>
 <p>Since it is under the standard <strong>app/Views</strong> directory, though, you do not need to namespace it since the
-<code class="docutils literal"><span class="pre">view()</span></code> method can locate it by filename. In that case, you can simple give the sub-directory and file name:</p>
+<code class="docutils literal"><span class="pre">view()</span></code> method can locate it by filename. In that case, you can simply give the sub-directory and file name:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="s1">&#39;default_full&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Pagers/foundation_full&#39;</span><span class="p">,</span>
 </pre></div>
 </div>
@@ -422,12 +422,12 @@ usefulness. It is easiest to demonstrate creating a new view by showing you the 
 </pre></div>
 </div>
 <p><strong>setSurroundCount()</strong></p>
-<p>In the first line, the <code class="docutils literal"><span class="pre">setSurroundCount()</span></code> method specifies that we want to show two links to either side of
+<p>In the first line, the <code class="docutils literal"><span class="pre">setSurroundCount()</span></code> method specifies than we want to show two links to either side of
 the current page link. The only parameter that it accepts is the number of links to show.</p>
 <p><strong>hasPrevious()</strong> &amp; <strong>hasNext()</strong></p>
-<p>These methods return a boolean true if there are more links than can be displayed on either side of the current page,
+<p>These methods return a boolean true if there are more links that can be displayed on either side of the current page,
 based on the value passed to <code class="docutils literal"><span class="pre">setSurroundCount</span></code>. For example, let&#8217;s say we have 20 pages of data. The current
-page is page 3. If the surround count is 2, then the following links would show up in the list: 1, 2, 3, 4, and 5.
+page is page 3. If the surrounding count is 2, then the following links would show up in the list: 1, 2, 3, 4, and 5.
 Since the first link displayed is page one, <code class="docutils literal"><span class="pre">hasPrevious()</span></code> would return <strong>false</strong> since there is no page zero. However,
 <code class="docutils literal"><span class="pre">hasNext()</span></code> would return <strong>true</strong> since there are 15 additional pages of results after page five.</p>
 <p><strong>getPrevious()</strong> &amp; <strong>getNext()</strong></p>
@@ -473,7 +473,7 @@ title, which is just the number, and a boolean that tells whether the link is th
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 06, 2019.
+      Last updated on Mar 09, 2019.
 
     </p>
   </div>

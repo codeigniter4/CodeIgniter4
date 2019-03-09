@@ -402,7 +402,7 @@ of them failing.</strong></p>
 <div class="section" id="explanation">
 <h3><a class="toc-backref" href="#id7">Explanation</a><a class="headerlink" href="#explanation" title="Permalink to this headline">¶</a></h3>
 <p>You&#8217;ll notice several things about the above pages:</p>
-<p>The form (Signup.php) is a standard web form with a couple exceptions:</p>
+<p>The form (Signup.php) is a standard web form with a couple of exceptions:</p>
 <ol class="arabic">
 <li><p class="first">It uses a form helper to create the form opening. Technically, this
 isn&#8217;t necessary. You could create the form using standard HTML.
@@ -431,7 +431,7 @@ form or the success page.</p>
 </pre></div>
 </div>
 <p>This automatically loads the <code class="docutils literal"><span class="pre">Config\Validation</span></code> file which contains settings
-for including multiple Rule sets, and collections of rules that can be easily reused.</p>
+for including multiple Rulesets, and collections of rules that can be easily reused.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">You may never need to use this method, as both the <a class="reference internal" href="../incoming/controllers.html"><span class="doc">Controller</span></a> and
@@ -446,7 +446,7 @@ will use the <code class="docutils literal"><span class="pre">setRule()</span></
 methods.</p>
 <div class="section" id="setrule">
 <h4>setRule()<a class="headerlink" href="#setrule" title="Permalink to this headline">¶</a></h4>
-<p>This method sets a single rule. It takes the name of field as
+<p>This method sets a single rule. It takes the name of the field as
 the first parameter, an optional label and a string with a pipe-delimited list of rules
 that should be applied:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRule</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="s1">&#39;required&#39;</span><span class="p">);</span>
@@ -722,7 +722,7 @@ that determines how the errors are displayed. By default, they display in a mann
 application.</p>
 <div class="section" id="creating-the-views">
 <h3><a class="toc-backref" href="#id20">Creating the Views</a><a class="headerlink" href="#creating-the-views" title="Permalink to this headline">¶</a></h3>
-<p>The first step is to create the custom views. These can be placed anywhere that the <code class="docutils literal"><span class="pre">view()</span></code> method can locate them,
+<p>The first step is to create custom views. These can be placed anywhere that the <code class="docutils literal"><span class="pre">view()</span></code> method can locate them,
 which means the standard View directory, or any namespaced View folder will work. For example, you could create
 a new view at <strong>/app/Views/_errors_list.php</strong>:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;alert alert-danger&quot;</span> <span class="nx">role</span><span class="o">=</span><span class="s2">&quot;alert&quot;</span><span class="o">&gt;</span>
@@ -801,7 +801,7 @@ a boolean true or false value signifying true if it passed the test or false if 
 </pre></div>
 </div>
 <p>By default, the system will look within <code class="docutils literal"><span class="pre">CodeIgniter\Language\en\Validation.php</span></code> for the language strings used
-within errors. In custom rules you may provide error messages by accepting an $error variable by reference in the
+within errors. In custom rules, you may provide error messages by accepting a $error variable by reference in the
 second parameter:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">even</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$str</span><span class="p">,</span> <span class="nx">string</span> <span class="o">&amp;</span><span class="nv">$error</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span><span class="o">:</span> <span class="nx">bool</span>
 <span class="p">{</span>
@@ -871,7 +871,7 @@ for rules like <code class="docutils literal"><span class="pre">require_with</sp
 <p>The following is a list of all the native rules that are available to use:</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Rule is string; there must be no spaces between the parameters, especially the &#8220;is_unique&#8221; rule.
+<p class="last">Rule is a string; there must be no spaces between the parameters, especially the &#8220;is_unique&#8221; rule.
 There can be no spaces before and after &#8220;ignore_value&#8221;.</p>
 </div>
 <ul class="simple">
@@ -1185,7 +1185,7 @@ the field data).</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 06, 2019.
+      Last updated on Mar 09, 2019.
 
     </p>
   </div>

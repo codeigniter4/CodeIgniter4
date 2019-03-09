@@ -226,12 +226,12 @@ be used directly with the <a class="reference internal" href="model.html"><span 
 <h2><a class="toc-backref" href="#id1">Entity Usage</a><a class="headerlink" href="#entity-usage" title="Permalink to this headline">¶</a></h2>
 <p>At its core, an Entity class is simply a class that represents a single database row. It has class properties
 to represent the database columns, and provides any additional methods to implement the business logic for
-that row.  The core feature, though, is that it doesn&#8217;t know anything about how to persist itself. That&#8217;s the
+that row. The core feature, though, is that it doesn&#8217;t know anything about how to persist itself. That&#8217;s the
 responsibility of the model or the repository class. That way, if anything changes on how you need to save the
 object, you don&#8217;t have to change how that object is used throughout the application. This makes it possible to
 use JSON or XML files to store the objects during a rapid prototyping stage, and then easily switch to a
 database when you&#8217;ve proven the concept works.</p>
-<p>Lets walk through a very simple User Entity and how we&#8217;d work with it to help make things clear.</p>
+<p>Let&#8217;s walk through a very simple User Entity and how we&#8217;d work with it to help make things clear.</p>
 <p>Assume you have a database table named <code class="docutils literal"><span class="pre">users</span></code> that has the following schema:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">id</span>          <span class="o">-</span> <span class="nx">integer</span>
 <span class="nx">username</span>    <span class="o">-</span> <span class="nx">string</span>
@@ -321,7 +321,7 @@ a new row, or update an existing one.</p>
 <div class="section" id="filling-properties-quickly">
 <h3><a class="toc-backref" href="#id5">Filling Properties Quickly</a><a class="headerlink" href="#filling-properties-quickly" title="Permalink to this headline">¶</a></h3>
 <p>The Entity class also provides a method, <code class="docutils literal"><span class="pre">fill()</span></code> that allows you to shove an array of key/value pairs into the class
-and populate the class properties. Only properties that already exist on the class can be populated in this way.</p>
+and populate the class properties. Only properties that already exist in the class can be populated in this way.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">();</span>
 
 <span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">App\Entities\User</span><span class="p">();</span>
@@ -391,7 +391,7 @@ class must call the <code class="docutils literal"><span class="pre">setX()</spa
 </div>
 <p>In the <code class="docutils literal"><span class="pre">setPassword()</span></code> method we ensure that the password is always hashed.</p>
 <p>In <code class="docutils literal"><span class="pre">setCreatedAt()</span></code> we convert the string we receive from the model into a DateTime object, ensuring that our timezone
-is UTC so we can easily convert the the viewer&#8217;s current timezone. In <code class="docutils literal"><span class="pre">getCreatedAt()</span></code>, it converts the time to
+is UTC so we can easily convert the viewer&#8217;s current timezone. In <code class="docutils literal"><span class="pre">getCreatedAt()</span></code>, it converts the time to
 a formatted string in the application&#8217;s current timezone.</p>
 <p>While fairly simple, these examples show that using Entity classes can provide a very flexible way to enforce
 business logic and create objects that are pleasant to use.</p>
@@ -407,7 +407,7 @@ business logic and create objects that are pleasant to use.</p>
 original column names in the database no longer make sense. Or you find that your coding style prefers camelCase
 class properties, but your database schema required snake_case names. These situations can be easily handled
 with the Entity class&#8217; data mapping features.</p>
-<p>As an example, imagine your have the simplified User Entity that is used throughout your application:</p>
+<p>As an example, imagine you have the simplified User Entity that is used throughout your application:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Entity</span><span class="p">;</span>
@@ -428,7 +428,7 @@ But they do want to personalize the application a bit, so they want you to chang
 full name now, not their username like it does currently. To keep things tidy and ensure things continue making sense
 in the database you whip up a migration to rename the <cite>name</cite> field to <cite>full_name</cite> for clarity.</p>
 <p>Ignoring how contrived this example is, we now have two choices on how to fix the User class. We could modify the class
-property from <code class="docutils literal"><span class="pre">$name</span></code> to <code class="docutils literal"><span class="pre">$full_name</span></code>, but that would require  changes throughout the application. Instead, we can
+property from <code class="docutils literal"><span class="pre">$name</span></code> to <code class="docutils literal"><span class="pre">$full_name</span></code>, but that would require changes throughout the application. Instead, we can
 simply map the <code class="docutils literal"><span class="pre">full_name</span></code> column in the database to the <code class="docutils literal"><span class="pre">$name</span></code> property, and be done with the Entity changes:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
 
@@ -468,7 +468,7 @@ to the database. However, <code class="docutils literal"><span class="pre">unset
 <h3><a class="toc-backref" href="#id9">Date Mutators</a><a class="headerlink" href="#date-mutators" title="Permalink to this headline">¶</a></h3>
 <p>By default, the Entity class will convert fields named <cite>created_at</cite>, <cite>updated_at</cite>, or <cite>deleted_at</cite> into
 <a class="reference internal" href="../libraries/time.html"><span class="doc">Time</span></a> instances whenever they are set or retrieved. The Time class provides a large number
-of helpful methods in a immutable, localized way.</p>
+of helpful methods in an immutable, localized way.</p>
 <p>You can define which properties are automatically converted by adding the name to the <strong>options[&#8216;dates&#8217;]</strong> array:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
 
@@ -539,7 +539,7 @@ data types: <strong>integer</strong>, <strong>float</strong>, <strong>double</st
 <ul class="simple">
 <li>an <strong>array</strong>, they will automatically be unserialized,</li>
 <li>a <strong>json</strong>, they will automatically be set as an value of json_decode($value, false),</li>
-<li>a <strong>json-array</strong>, they will automatically be set as an value of  json_decode($value, true),</li>
+<li>a <strong>json-array</strong>, they will automatically be set as an value of json_decode($value, true),</li>
 </ul>
 <p>when you read the property&#8217;s value.
 Unlike the rest of the data types that you can cast properties into, the:</p>
@@ -603,7 +603,7 @@ Unlike the rest of the data types that you can cast properties into, the:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 06, 2019.
+      Last updated on Mar 09, 2019.
 
     </p>
   </div>

@@ -216,7 +216,7 @@ commands (mysql, MySQL Workbench, or phpMyAdmin).</p>
 <p>You need to create a database that can be used for this tutorial,
 and then configure CodeIgniter to use it.</p>
 <p>Using your database client, connect to your database and run the SQL command below (MySQL).
-Also add some seed records. For now, we&#8217;ll just show you the SQL statements needed
+Also, add some seed records. For now, we&#8217;ll just show you the SQL statements needed
 to create the table, but you should be aware that this can be done programmatically
 once you are more familiar with CodeIgniter; you can read about <a class="reference internal" href="../dbmgmt/migration.html"><span class="doc">Migrations</span></a>
 and <a class="reference internal" href="../dbmgmt/seeds.html"><span class="doc">Seeds</span></a> to create more useful database setups later.</p>
@@ -298,7 +298,7 @@ following code to your model.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>With this code you can perform two different queries. You can get all
+<p>With this code, you can perform two different queries. You can get all
 news records, or get a news item by its <a class="reference external" href="#">slug</a>. You might have
 noticed that the <code class="docutils literal"><span class="pre">$slug</span></code> variable wasn&#8217;t sanitized before running the
 query; <a class="reference internal" href="../database/query_builder.html"><span class="doc">Query Builder</span></a> does this for you.</p>
@@ -348,7 +348,7 @@ news item. You can see that the <code class="docutils literal"><span class="pre"
 method in the second method. The model is using this slug to identify the
 news item to be returned.</p>
 <p>Now the data is retrieved by the controller through our model, but
-nothing is displayed yet. The next thing to do is passing this data to
+nothing is displayed yet. The next thing to do is, passing this data to
 the views. Modify the <code class="docutils literal"><span class="pre">index()</span></code> method to look like this:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
 <span class="p">{</span>
@@ -400,7 +400,7 @@ language, you can use CodeIgniter&#8217;s <a class="reference internal" href="..
 Parser</span></a> or a third party parser.</p>
 <p>The news overview page is now done, but a page to display individual
 news items is still absent. The model created earlier is made in such
-way that it can easily be used for this functionality. You only need to
+a way that it can easily be used for this functionality. You only need to
 add some code to the controller and create a new view. Go back to the
 <code class="docutils literal"><span class="pre">News</span></code> controller and update the <code class="docutils literal"><span class="pre">view()</span></code> method with the following:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">view</span><span class="p">(</span><span class="nv">$slug</span> <span class="o">=</span> <span class="k">NULL</span><span class="p">)</span>
@@ -475,7 +475,7 @@ to display just the one article.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 06, 2019.
+      Last updated on Mar 09, 2019.
 
     </p>
   </div>

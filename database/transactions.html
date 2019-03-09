@@ -223,7 +223,7 @@ transactions.</p>
 <p>CodeIgniter utilizes an approach to transactions that is very similar to
 the process used by the popular database class ADODB. We&#8217;ve chosen that
 approach because it greatly simplifies the process of running
-transactions. In most cases all that is required are two lines of code.</p>
+transactions. In most cases, all that is required is two lines of code.</p>
 <p>Traditionally, transactions have required a fair amount of work to
 implement since they demand that you keep track of your queries and
 determine whether to commit or rollback based on the success or failure
@@ -245,12 +245,12 @@ follows:</p>
 </pre></div>
 </div>
 <p>You can run as many queries as you want between the start/complete
-functions and they will all be committed or rolled back based on success
+functions and they will all be committed or rolled back based on the success
 or failure of any given query.</p>
 </div>
 <div class="section" id="strict-mode">
 <h2>Strict Mode<a class="headerlink" href="#strict-mode" title="Permalink to this headline">¶</a></h2>
-<p>By default CodeIgniter runs all transactions in Strict Mode. When strict
+<p>By default, CodeIgniter runs all transactions in Strict Mode. When strict
 mode is enabled, if you are running multiple groups of transactions, if
 one group fails all groups will be rolled back. If strict mode is
 disabled, each group is treated independently, meaning a failure of one
@@ -288,7 +288,7 @@ can do so using $this-&gt;db-&gt;transOff():</p>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transComplete</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>When transactions are disabled, your queries will be auto-commited, just
+<p>When transactions are disabled, your queries will be auto-committed, just
 as they are when running queries without transactions.</p>
 </div>
 <div class="section" id="test-mode">
@@ -353,7 +353,7 @@ transactions, <strong>NOT</strong> $this-&gt;db-&gt;transStart().</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 06, 2019.
+      Last updated on Mar 09, 2019.
 
     </p>
   </div>

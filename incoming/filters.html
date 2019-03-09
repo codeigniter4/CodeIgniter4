@@ -269,7 +269,7 @@ but may leave the methods empty if they are not needed. A skeleton filter class 
 to make changes that will still be present when the controller executes.</p>
 <p>Since before filters are executed prior to your controller being executed, you may at times want to stop the
 actions in the controller from happening. You can do this by passing back anything that is not the request object.
-This is typically used to peform redirects, like in this example:</p>
+This is typically used to perform redirects, like in this example:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nv">$auth</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;auth&#39;</span><span class="p">);</span>
@@ -375,7 +375,7 @@ would apply to every AJAX request.</p>
 </div>
 <div class="section" id="filters">
 <h3><a class="toc-backref" href="#id8">$filters</a><a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h3>
-<p>This property is an array of filter aliases. For each alias you can specify before and after arrays that contain
+<p>This property is an array of filter aliases. For each alias, you can specify before and after arrays that contain
 a list of URI patterns that filter should apply to:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">filters</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;admin/*&#39;</span><span class="p">],</span> <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;users/*&#39;</span><span class="p">]],</span>
@@ -414,7 +414,7 @@ a list of URI patterns that filter should apply to:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 06, 2019.
+      Last updated on Mar 09, 2019.
 
     </p>
   </div>

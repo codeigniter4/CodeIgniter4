@@ -280,7 +280,7 @@ that extends <code class="docutils literal"><span class="pre">CodeIgniter\Model<
 and a number of additional convenience methods.</p>
 <div class="section" id="connecting-to-the-database">
 <h3><a class="toc-backref" href="#id4">Connecting to the Database</a><a class="headerlink" href="#connecting-to-the-database" title="Permalink to this headline">¶</a></h3>
-<p>When the class is first instantiated, if no database connection instance is passed to constructor,
+<p>When the class is first instantiated, if no database connection instance is passed to the constructor,
 it will automatically connect to the default database group, as set in the configuration. You can
 modify which group is used on a per-model basis by adding the DBGroup property to your class.
 This ensures that within the model any references to <code class="docutils literal"><span class="pre">$this-&gt;db</span></code> are made through the appropriate
@@ -331,7 +331,7 @@ built-in CRUD methods. You are not restricted to using only this table in your o
 queries.</p>
 <p><strong>$primaryKey</strong></p>
 <p>This is the name of the column that uniquely identifies the records in this table. This
-does not necessarilly have to match the primary key that is specified in the database, but
+does not necessarily have to match the primary key that is specified in the database, but
 is used with methods like <code class="docutils literal"><span class="pre">find()</span></code> to know what column to match the specified value to.</p>
 <p><strong>$returnType</strong></p>
 <p>The Model&#8217;s CRUD methods will take a step of work away from you and automatically return
@@ -345,7 +345,7 @@ actually deleting the row. This can preserve data when it might be referenced el
 can maintain a &#8220;recycle bin&#8221; of objects that can be restored, or even simply preserve it as
 part of a security trail. If true, the find* methods will only return non-deleted rows, unless
 the withDeleted() method is called prior to calling the find* method.</p>
-<p>This requires an INT or TINYINT field to be present in the table for storing state.The default field name is  <code class="docutils literal"><span class="pre">deleted</span></code> however this name can be configured to any name of your choice by using $deletedField property.</p>
+<p>This requires an INT or TINYINT field to be present in the table for storing state. The default field name is  <code class="docutils literal"><span class="pre">deleted</span></code> however this name can be configured to any name of your choice by using $deletedField property.</p>
 <p><strong>$allowedFields</strong></p>
 <p>This array should be updated with the field names that can be set during save, insert, or
 update methods. Any field names other than these will be discarded. This helps to protect
@@ -445,7 +445,7 @@ the next find* methods to return only soft deleted rows:</p>
 <h3><a class="toc-backref" href="#id8">Saving Data</a><a class="headerlink" href="#saving-data" title="Permalink to this headline">¶</a></h3>
 <p><strong>insert()</strong></p>
 <p>An associative array of data is passed into this method as the only parameter to create a new
-row of data in the database. The array&#8217;s keys must match the name of the columns in $table, while
+row of data in the database. The array&#8217;s keys must match the name of the columns in a $table, while
 the array&#8217;s values are the values to save for that key:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;darth&#39;</span><span class="p">,</span>
@@ -458,7 +458,7 @@ the array&#8217;s values are the values to save for that key:</p>
 <p><strong>update()</strong></p>
 <p>Updates an existing record in the database. The first parameter is the $primaryKey of the record to update.
 An associative array of data is passed into this method as the second parameter. The array&#8217;s keys must match the name
-of the columns in $table, while the array&#8217;s values are the values to save for that key:</p>
+of the columns in a $table, while the array&#8217;s values are the values to save for that key:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;darth&#39;</span><span class="p">,</span>
         <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;d.vader@theempire.com&#39;</span>
@@ -475,7 +475,7 @@ of the columns in $table, while the array&#8217;s values are the values to save 
     <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="nv">$data</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>When you need a more flexible solution, you can leaven the parameters empty and it functions like the Query Builder&#8217;s
+<p>When you need a more flexible solution, you can leave the parameters empty and it functions like the Query Builder&#8217;s
 update command, with the added benefit of validation, events, etc:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$userModel</span>
     <span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
@@ -484,7 +484,7 @@ update command, with the added benefit of validation, events, etc:</p>
 </pre></div>
 </div>
 <p><strong>save()</strong></p>
-<p>This is a wrapper around the insert() and update() methods that handles inserting or updating the record
+<p>This is a wrapper around the insert() and update() methods that handle inserting or updating the record
 automatically, based on whether it finds an array key matching the $primaryKey value:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Defined as a model property</span>
 <span class="nv">$primaryKey</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span><span class="p">;</span>
@@ -767,7 +767,7 @@ points in the model&#8217;s execution can be affected, each through a class prop
 <h3><a class="toc-backref" href="#id17">Defining Callbacks</a><a class="headerlink" href="#defining-callbacks" title="Permalink to this headline">¶</a></h3>
 <p>You specify the callbacks by first creating a new class method in your model to use. This class will always
 receive a $data array as its only parameter. The exact contents of the $data array will vary between events, but
-will always contain a key named <strong>data</strong> that contains the primary data passed to original method. In the case
+will always contain a key named <strong>data</strong> that contains the primary data passed to the original method. In the case
 of the insert* or update* methods, that will be the key/value pairs that are being inserted into the database. The
 main array will also contain the other values passed to the method, and be detailed later. The callback method
 must return the original $data array so other callbacks have the full information.</p>
@@ -901,7 +901,7 @@ insert method, it is first converted to an array.</td>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 06, 2019.
+      Last updated on Mar 09, 2019.
 
     </p>
   </div>

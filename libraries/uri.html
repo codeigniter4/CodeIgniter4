@@ -256,7 +256,7 @@ into its appropriate sections:</p>
 <div class="section" id="the-current-uri">
 <h3><a class="toc-backref" href="#id2">The Current URI</a><a class="headerlink" href="#the-current-uri" title="Permalink to this headline">¶</a></h3>
 <p>Many times, all you really want is an object representing the current URL of this request. This can be accessed
-in two different ways. The first, is to grab it directly from the current request object. Assuming that you&#8217;re in
+in two different ways. The first is to grab it directly from the current request object. Assuming that you&#8217;re in
 a controller that extends <code class="docutils literal"><span class="pre">CodeIgniter\Controller</span></code> you can get it like:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">uri</span><span class="p">;</span>
 </pre></div>
@@ -265,7 +265,7 @@ a controller that extends <code class="docutils literal"><span class="pre">CodeI
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">current_url</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You must pass <code class="docutils literal"><span class="pre">true</span></code> as the first parameter, otherwise it will return the string representation of the current URL.</p>
+<p>You must pass <code class="docutils literal"><span class="pre">true</span></code> as the first parameter, otherwise, it will return the string representation of the current URL.</p>
 </div>
 </div>
 <div class="section" id="uri-strings">
@@ -415,7 +415,7 @@ parameter is the name of the variable, and the second parameter is the value:</p
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">([</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;bar&#39;</span><span class="p">]]);</span>
 </pre></div>
 </div>
-<p>This only changes the values returned during this one call. If you need to modify the URI&#8217;s query values more permenantly,
+<p>This only changes the values returned during this one call. If you need to modify the URI&#8217;s query values more permanently,
 you can use the <code class="docutils literal"><span class="pre">stripQuery()</span></code> and <code class="docutils literal"><span class="pre">keepQuery()</span></code> methods to change the actual object&#8217;s query variable collection:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com?foo=bar&amp;bar=baz&amp;baz=foz&#39;</span><span class="p">);</span>
 
@@ -441,7 +441,7 @@ to an on-page anchor. Media URI&#8217;s can make use of them in various other wa
 </div>
 <div class="section" id="uri-segments">
 <h2><a class="toc-backref" href="#id13">URI Segments</a><a class="headerlink" href="#uri-segments" title="Permalink to this headline">¶</a></h2>
-<p>Each section of the path between the slashes are a single segment. The URI class provides a simple way to determine
+<p>Each section of the path between the slashes is a single segment. The URI class provides a simple way to determine
 what the values of the segments are. The segments start at 1 being the furthest left of the path.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// URI = http://example.com/users/15/profile</span>
 
@@ -493,7 +493,7 @@ what the values of the segments are. The segments start at 1 being the furthest 
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 06, 2019.
+      Last updated on Mar 09, 2019.
 
     </p>
   </div>

@@ -328,7 +328,7 @@ match the name of the database group exactly:</p>
 <strong>app/Config/Autoload.php</strong> and its <code class="docutils literal"><span class="pre">$psr4</span></code> property for matching directory
 names. It will include all migrations it finds in Database/Migrations.</p>
 <p>Each namespace has it&#8217;s own version sequence, this will help you upgrade and downgrade each module (namespace) without affecting other namespaces.</p>
-<p>For example, assume that we have the the following namespaces defined in our Autoload
+<p>For example, assume that we have the following namespaces defined in our Autoload
 configuration file:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$psr4</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;App&#39;</span>       <span class="o">=&gt;</span> <span class="nx">APPPATH</span><span class="p">,</span>
@@ -415,7 +415,7 @@ for the version.</p>
 <p>You can use (version) with the following options:</p>
 <ul class="simple">
 <li>(-g) to chose database group, otherwise default database group will be used.</li>
-<li>(-n) to choose namespace, , otherwise (App) namespace will be used.</li>
+<li>(-n) to choose namespace, otherwise (App) namespace will be used.</li>
 </ul>
 <p><strong>rollback</strong></p>
 <p>Rolls back all migrations, taking all database groups to a blank slate, effectively migration 0:</p>
@@ -722,7 +722,7 @@ specific versions. It works just like <code class="docutils literal"><span class
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 06, 2019.
+      Last updated on Mar 09, 2019.
 
     </p>
   </div>

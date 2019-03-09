@@ -233,7 +233,7 @@ The second parameter is the message itself:</p>
 <li><strong>debug</strong> - Detailed debug information.</li>
 <li><strong>info</strong> - Interesting events in your application, like a user logging in, logging SQL queries, etc.</li>
 <li><strong>notice</strong> - Normal, but significant events in your application.</li>
-<li><strong>warning</strong> - Exceptional occurrences that are not errors, like the user of deprecated APIs, poor use of an API, or other undesirable things that are not necessarily wrong.</li>
+<li><strong>warning</strong> - Exceptional occurrences that are not errors, like the use of deprecated APIs, poor use of an API, or other undesirable things that are not necessarily wrong.</li>
 <li><strong>error</strong> - Runtime errors that do not require immediate action but should typically be logged and monitored.</li>
 <li><strong>critical</strong> - Critical conditions, like an application component not available, or an unexpected exception.</li>
 <li><strong>alert</strong> - Action must be taken immediately, like when an entire website is down, the database unavailable, etc.</li>
@@ -311,7 +311,7 @@ into the message string:</p>
 </div>
 <p>If you want to log an Exception or an Error, you can use the key of &#8216;exception&#8217;, and the value being the
 Exception or Error itself. A string will be generated from that object containing the error message, the
-file name and line number.  You must still provide the exception placeholder in the message:</p>
+file name and line number. You must still provide the exception placeholder in the message:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">try</span>
 <span class="p">{</span>
         <span class="o">...</span> <span class="nx">Something</span> <span class="nx">throws</span> <span class="nx">error</span> <span class="nx">here</span>
@@ -401,7 +401,7 @@ still be able to log as it would expect, as long as it can find a PSR3 compatibl
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 06, 2019.
+      Last updated on Mar 09, 2019.
 
     </p>
   </div>

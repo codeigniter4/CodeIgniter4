@@ -335,7 +335,7 @@ to set the Cache values to what you need, though, through the <code class="docut
 </pre></div>
 </div>
 <p>The <code class="docutils literal"><span class="pre">$options</span></code> array simply takes an array of key/value pairs that are, with a couple of exceptions, assigned
-to the <code class="docutils literal"><span class="pre">Cache-Control</span></code> header. You are free to set all of the options exactly as you need for you specific
+to the <code class="docutils literal"><span class="pre">Cache-Control</span></code> header. You are free to set all of the options exactly as you need for your specific
 situation. While most of the options are applied to the <code class="docutils literal"><span class="pre">Cache-Control</span></code> header, it intelligently handles
 the <code class="docutils literal"><span class="pre">etag</span></code> and <code class="docutils literal"><span class="pre">last-modified</span></code> options to their appropriate header.</p>
 </div>
@@ -364,7 +364,7 @@ visit the following sites:</p>
 </pre></div>
 </div>
 <p>When enabled, the response object will contain an instance of <code class="docutils literal"><span class="pre">CodeIgniter\HTTP\ContentSecurityPolicy</span></code>. The
-values set in <strong>app/Config/ContentSecurityPolicy.php</strong> are applied to that instance and, if no changes are
+values set in <strong>app/Config/ContentSecurityPolicy.php</strong> are applied to that instance, and if no changes are
 needed during runtime, then the correctly formatted header is sent and you&#8217;re all done.</p>
 <p>With CSP enabled, two header lines are added to the HTTP response: a Content-Security-Policy header, with
 policies identifying content types or origins that are explicitly allowed for different
@@ -373,7 +373,7 @@ or origins that will be allowed but which will also be reported to the destinati
 of your choice.</p>
 <p>Our implementation provides for a default treatment, changeable through the <code class="docutils literal"><span class="pre">reportOnly()</span></code> method.
 When an additional entry is added to a CSP directive, as shown below, it will be added
-to the CSP header appropriate for blocking or preventing. That can be over-ridden on a per
+to the CSP header appropriate for blocking or preventing. That can be overridden on a per
 call basis, by providing an optional second parameter to the adding method call.</p>
 </div>
 <div class="section" id="runtime-configuration">
@@ -902,7 +902,7 @@ that the cookie exists, and that it has the prescribed value.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 06, 2019.
+      Last updated on Mar 09, 2019.
 
     </p>
   </div>

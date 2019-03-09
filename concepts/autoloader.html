@@ -241,7 +241,7 @@ those classes can be found in:</p>
 </pre></div>
 </div>
 <p>The key of each row is the namespace itself. This does not need a trailing slash. If you use double-quotes
-to define the array, be sure to escape the backwards slash. That means that it would be <code class="docutils literal"><span class="pre">My\\App</span></code>,
+to define the array, be sure to escape the backward slash. That means that it would be <code class="docutils literal"><span class="pre">My\\App</span></code>,
 not <code class="docutils literal"><span class="pre">My\App</span></code>. The value is the location to the directory the classes can be found in. They should
 have a trailing slash.</p>
 <p>By default, the application folder is namespace to the <code class="docutils literal"><span class="pre">App</span></code> namespace. While you are not forced to namespace the controllers,
@@ -273,14 +273,14 @@ third-party libraries that are not namespaced:</p>
 </div>
 <div class="section" id="legacy-support">
 <h2>Legacy Support<a class="headerlink" href="#legacy-support" title="Permalink to this headline">¶</a></h2>
-<p>If neither of the above methods find the class, and the class is not namespaced, the autoloader will look in the
+<p>If neither of the above methods finds the class, and the class is not namespaced, the autoloader will look in the
 <strong>/app/Libraries</strong> and <strong>/app/Models</strong> directories to attempt to locate the files. This provides
 a measure to help ease the transition from previous versions.</p>
 <p>There are no configuration options for legacy support.</p>
 </div>
 <div class="section" id="composer-support">
 <h2>Composer Support<a class="headerlink" href="#composer-support" title="Permalink to this headline">¶</a></h2>
-<p>Composer support is automatically initialized by default. By default it looks for Composer&#8217;s autoload file at
+<p>Composer support is automatically initialized by default. By default, it looks for Composer&#8217;s autoload file at
 ROOTPATH.&#8217;vendor/autoload.php&#8217;. If you need to change the location of that file for any reason, you can modify
 the value defined in <code class="docutils literal"><span class="pre">Config\Constants.php</span></code>.</p>
 <div class="admonition note">
@@ -314,7 +314,7 @@ the first one to get a chance to locate the file.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 06, 2019.
+      Last updated on Mar 09, 2019.
 
     </p>
   </div>

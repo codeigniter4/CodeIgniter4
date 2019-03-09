@@ -270,7 +270,7 @@ Routes can be specified using placeholders or Regular Expressions.</p>
 <p>A route simply takes the URI on the left, and maps it to the controller and method on the right,
 along with any parameters that should be passed to the controller. The controller and method should
 be listed in the same way that you would use a static method, by separating the fully-namespaced class
-and its method with a double-colon, like <code class="docutils literal"><span class="pre">Users::list</span></code>.  If that method requires parameters to be
+and its method with a double-colon, like <code class="docutils literal"><span class="pre">Users::list</span></code>. If that method requires parameters to be
 passed to it, then they would be listed after the method name, separated by forward-slashes:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Calls the $Users-&gt;list()</span>
 <span class="nx">Users</span><span class="o">::</span><span class="na">list</span>
@@ -334,7 +334,7 @@ and the “productLookupByID” method passing in the match as a variable to the
 <p class="first admonition-title">Important</p>
 <p class="last">While the <code class="docutils literal"><span class="pre">add()</span></code> method is convenient, it is recommended to always use the HTTP-verb-based
 routes, described below, as it is more secure. It will also provide a slight performance increase, since
-only routes that match the current request method are stored, resulting in less routes to scan through
+only routes that match the current request method are stored, resulting in fewer routes to scan through
 when trying to find a match.</p>
 </div>
 </div>
@@ -467,7 +467,7 @@ run the filter before or after the controller. This is especially handy during a
 </div>
 <div class="section" id="environment-restrictions">
 <h2><a class="toc-backref" href="#id10">Environment Restrictions</a><a class="headerlink" href="#environment-restrictions" title="Permalink to this headline">¶</a></h2>
-<p>You can create a set of routes that will only be viewable under a certain environment. This allows you to create
+<p>You can create a set of routes that will only be viewable in a certain environment. This allows you to create
 tools that only the developer can use on their local machines that are not reachable on testing or production servers.
 This can be done with the <code class="docutils literal"><span class="pre">environment()</span></code> method. The first parameter is the name of the environment. Any
 routes defined within this closure are only accessible from the given environment:</p>
@@ -559,7 +559,7 @@ name:</p>
 </div>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p class="last">The routes are matched in the order they are specified, so if you have a resource photos above a get &#8216;photos/poll&#8217; the show action&#8217;s route for the resource line will be matched before the get line. To fix this, move the get line above the resource line so that it is matched first.</p>
+<p class="last">The routes are matched in the order they are specified, so if you have resource photos above a get &#8216;photos/poll&#8217; the show action&#8217;s route for the resource line will be matched before the get line. To fix this, move the get line above the resource line so that it is matched first.</p>
 </div>
 <p>The second parameter accepts an array of options that can be used to modify the routes that are generated. While these
 routes are geared toward API-usage, where more methods are allowed, you can pass in the &#8216;websafe&#8217; option to have it
@@ -740,7 +740,7 @@ when a controller is found that matches the URI, but no segment exists for the m
 <div class="section" id="translate-uri-dashes">
 <h3><a class="toc-backref" href="#id28">Translate URI Dashes</a><a class="headerlink" href="#translate-uri-dashes" title="Permalink to this headline">¶</a></h3>
 <p>This option enables you to automatically replace dashes (‘-‘) with underscores in the controller and method
-URI segments, thus saving you additional route entries if you need to do that. This is required, because the
+URI segments, thus saving you additional route entries if you need to do that. This is required because the
 dash isn’t a valid class or method name character and would cause a fatal error if you try to use it:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setTranslateURIDashes</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
@@ -797,7 +797,7 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 06, 2019.
+      Last updated on Mar 09, 2019.
 
     </p>
   </div>
