@@ -221,7 +221,7 @@
 <li><a class="reference internal" href="#helpers" id="id10">helpers</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#validating-post-data" id="id11">Validating $_POST data</a></li>
+<li><a class="reference internal" href="#validating-data" id="id11">Validating data</a></li>
 <li><a class="reference internal" href="#that-s-it" id="id12">That&#8217;s it!</a></li>
 </ul>
 </div>
@@ -516,12 +516,12 @@ inside the controller:</p>
 </div>
 </div>
 </div>
-<div class="section" id="validating-post-data">
-<h2><a class="toc-backref" href="#id11">Validating $_POST data</a><a class="headerlink" href="#validating-post-data" title="Permalink to this headline">¶</a></h2>
-<p>The controller also provides a convenience method to make validating $_POST data a little simpler, <code class="docutils literal"><span class="pre">validate()</span></code> that
+<div class="section" id="validating-data">
+<h2><a class="toc-backref" href="#id11">Validating data</a><a class="headerlink" href="#validating-data" title="Permalink to this headline">¶</a></h2>
+<p>The controller also provides a convenience method to make validating data a little simpler, <code class="docutils literal"><span class="pre">validate()</span></code> that
 takes an array of rules to test against as the first parameter, and, optionally,
 an array of custom error messages to display if the items don&#8217;t pass. Internally, this uses the controller&#8217;s
-<strong>$this-&gt;request</strong> instance to get the POST data through. The <a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation Library docs</span></a>
+<strong>$this-&gt;request</strong> instance to get the data through. The <a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation Library docs</span></a>
 has details on the format of the rules and messages arrays, as well as available rules.:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">updateUser</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$userID</span><span class="p">)</span>
 <span class="p">{</span>
@@ -589,7 +589,7 @@ and you will find that some situations are simpler in the controller than then m
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 09, 2019.
+      Last updated on Mar 10, 2019.
 
     </p>
   </div>
