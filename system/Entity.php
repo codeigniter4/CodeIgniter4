@@ -154,6 +154,7 @@ class Entity
 	 * @param boolean $cast        If true, properties will be casted.
 	 *
 	 * @return array
+	 * @throws \Exception
 	 */
 	public function toArray(bool $onlyChanged = false, bool $cast = true): array
 	{
@@ -254,6 +255,7 @@ class Entity
 	 * @param string $key
 	 *
 	 * @return mixed
+	 * @throws \Exception
 	 */
 	public function __get(string $key)
 	{
@@ -341,6 +343,11 @@ class Entity
 			if (($castTo === 'json' || $castTo === 'json-array') && function_exists('json_encode'))
 			{
 				$value = json_encode($value);
+			}
+			
+			if($castTo === 'datetime')
+			{
+				$value = $this->mutateDate($value);
 			}
 		}
 
@@ -486,6 +493,7 @@ class Entity
 	 * @param string $type
 	 *
 	 * @return mixed
+	 * @throws \Exception
 	 */
 
 	protected function castAs($value, string $type)
