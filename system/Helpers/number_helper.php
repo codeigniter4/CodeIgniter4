@@ -257,11 +257,11 @@ if (! function_exists('number_to_roman'))
 	/**
 	 * Convert a number to a roman numeral.
 	 *
-	 * @param integer $num it will convert to int
+	 * @param string $num it will convert to int
 	 *
 	 * @return string|null
 	 */
-	function number_to_roman($num)
+	function number_to_roman(string $num): ?string
 	{
 		$num = (int) $num;
 		if ($num < 1 || $num > 3999)

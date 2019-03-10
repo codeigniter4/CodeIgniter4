@@ -264,14 +264,14 @@ if (! function_exists('word_censor'))
 	 * word you've submitted.
 	 *
 	 * @param string $str         the text string
-	 * @param string $censored    the array of censored words
+	 * @param array  $censored    the array of censored words
 	 * @param string $replacement the optional replacement value
 	 *
 	 * @return string
 	 */
-	function word_censor(string $str, $censored, string $replacement = ''): string
+	function word_censor(string $str, array $censored, string $replacement = ''): string
 	{
-		if (! is_array($censored))
+		if (empty($censored))
 		{
 			return $str;
 		}

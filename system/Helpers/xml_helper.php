@@ -40,11 +40,11 @@ if (! function_exists('xml_convert'))
 	/**
 	 * Convert Reserved XML characters to Entities
 	 *
-	 * @param  string
-	 * @param  boolean
+	 * @param  string   $str
+	 * @param  boolean  $protect_all
 	 * @return string
 	 */
-	function xml_convert(string $str, $protect_all = false): string
+	function xml_convert(string $str, bool $protect_all = false): string
 	{
 		$temp = '__TEMP_AMPERSANDS__';
 
