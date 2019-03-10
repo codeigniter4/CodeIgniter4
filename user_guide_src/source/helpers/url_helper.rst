@@ -23,7 +23,7 @@ The following functions are available:
 
 .. php:function:: site_url([$uri = ''[, $protocol = NULL[, $altConfig = NULL]]])
 
-	:param	string	$uri: URI string
+	:param	mixed	$uri: URI string or array of URI segments
 	:param	string	$protocol: Protocol, e.g. 'http' or 'https'
 	:param	\\Config\\App	$altConfig: Alternate configuration to use
 	:returns:	Site URL
@@ -57,7 +57,7 @@ The following functions are available:
 
 .. php:function:: base_url([$uri = ''[, $protocol = NULL]])
 
-	:param	string	$uri: URI string
+	:param	mixed	$uri: URI string or array of URI segments
 	:param	string	$protocol: Protocol, e.g. 'http' or 'https'
 	:returns:	Base URL
 	:rtype:	string
