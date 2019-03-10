@@ -42,7 +42,7 @@ interface ValidationInterface
 {
 
 	/**
-	 * Runs the validation process, returning true/false determing whether
+	 * Runs the validation process, returning true/false determining whether
 	 * or not validation was successful.
 	 *
 	 * @param array  $data  The array of data to validate.
@@ -50,7 +50,7 @@ interface ValidationInterface
 	 *
 	 * @return boolean
 	 */
-	public function run(array $data, string $group = null): bool;
+	public function run(array $data = null, string $group = null): bool;
 
 	//--------------------------------------------------------------------
 
@@ -86,10 +86,11 @@ interface ValidationInterface
 	 * Stores the rules that should be used to validate the items.
 	 *
 	 * @param array $rules
+	 * @param array $messages
 	 *
 	 * @return \CodeIgniter\Validation\ValidationInterface
 	 */
-	public function setRules(array $rules): ValidationInterface;
+	public function setRules(array $rules, array $messages = []): ValidationInterface;
 
 	//--------------------------------------------------------------------
 
@@ -120,7 +121,7 @@ interface ValidationInterface
 
 	/**
 	 * Returns the array of errors that were encountered during
-	 * a run() call. The array should be in the followig format:
+	 * a run() call. The array should be in the following format:
 	 *
 	 *    [
 	 *        'field1' => 'error message',
