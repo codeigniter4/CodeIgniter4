@@ -1,8 +1,5 @@
 <?php namespace CodeIgniter;
 
-use CodeIgniter\I18n\Time;
-use CodeIgniter\Exceptions\CastException;
-
 /**
  * CodeIgniter
  *
@@ -315,7 +312,7 @@ class Entity
 		// Check if the field should be mutated into a date
 		if (in_array($key, $this->_options['dates']))
 		{
-			$value = $this->mutateDate($value);
+			$value = $this->mutateDate($value, new \DateTimeZone('UTC'));
 		}
 
 		$isNullable = false;
@@ -347,7 +344,7 @@ class Entity
 			
 			if($castTo === 'datetime' && $value instanceof \DateTime)
 			{
-				$value = $value->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i:s');
+				$value = $this->mutateDate($value, new \DateTimeZone('UTC'));
 			}
 		}
 
@@ -381,6 +378,7 @@ class Entity
 	 * attribute will be reset to that default value.
 	 *
 	 * @param string $key
+	 * @throws \ReflectionException
 	 */
 	public function __unset(string $key)
 	{
@@ -455,32 +453,38 @@ class Entity
 	 * into a \CodeIgniter\I18n\Time object.
 	 *
 	 * @param $value
+	 * @param \DateTimeZone|null $timezone
 	 *
-	 * @return \CodeIgniter\I18n\Time
+	 * @return \DateTime
 	 */
-	protected function mutateDate($value)
+	protected function mutateDate($value, ?\DateTimeZone $timezone = null)
 	{
-		if ($value instanceof Time)
-		{
-			return $value;
-		}
-
-		if ($value instanceof \DateTime)
-		{
-			return Time::instance($value);
-		}
-
 		if (is_numeric($value))
 		{
-			return Time::createFromTimestamp($value);
+			$value = '@' . $value;
 		}
-
-		if (is_string($value))
+		else if ($value instanceof \DateTime)
 		{
-			return Time::parse($value);
+			$value = $value->format('c ') . ' CET';
 		}
 
-		return $value;
+		$value = (new class extends \DateTime {
+
+			public function __toString()
+			{
+				return $this->format('Y-m-d H:i:s');
+			}
+
+			public function set($time='now', \DateTimeZone $timezone=null)
+			{
+				parent::__construct($time, $timezone);
+				return $this;
+			}
+
+		})->set($value, new \DateTimeZone('UTC'));
+
+
+		return $timezone ? $value->setTimezone($timezone) : $value;
 	}
 
 	//--------------------------------------------------------------------
@@ -544,7 +548,7 @@ class Entity
 				$value = $this->castAsJson($value, true);
 				break;
 			case 'datetime':
-				return (new \DateTime($value, new \DateTimeZone('UTC')))->setTimezone(new \DateTimeZone(app_timezone()));
+				$value = $this->mutateDate($value, new \DateTimeZone(app_timezone()));
 				break;
 			case 'timestamp':
 				return strtotime($value);
