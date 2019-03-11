@@ -479,7 +479,7 @@ class Model
 		}
 		else
 		{
-			$response = $this->insert($data);
+			$response = $this->insert($data, false);
 		}
 
 		return $response;
