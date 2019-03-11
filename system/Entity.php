@@ -465,26 +465,33 @@ class Entity
 		}
 		else if ($value instanceof \DateTime)
 		{
-			$value = $value->format('c') . ' CET';
+			$value = $value->format('c ') . ' CET';
+		}
+		if(is_string($value))
+		{
+			$value = (new class extends \DateTime
+			{
+
+				public function __toString()
+				{
+					return $this->format('Y-m-d H:i:s');
+				}
+
+				public function set($time = 'now', \DateTimeZone $timezone = null)
+				{
+					parent::__construct($time, $timezone);
+					return $this;
+				}
+
+			})->set($value, new \DateTimeZone('UTC'));
+
+			if(!is_null($timezone))
+			{
+				$value->setTimezone($timezone);
+			}
 		}
 
-		$value = (new class extends \DateTime {
-
-			public function __toString()
-			{
-				return $this->format('Y-m-d H:i:s');
-			}
-
-			public function set($time='now', \DateTimeZone $timezone=null)
-			{
-				parent::__construct($time, $timezone);
-				return $this;
-			}
-
-		})->set($value, new \DateTimeZone('UTC'));
-
-
-		return $timezone ? $value->setTimezone($timezone) : $value;
+		return $value;
 	}
 
 	//--------------------------------------------------------------------
