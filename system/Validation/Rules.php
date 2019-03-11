@@ -78,7 +78,6 @@ class Rules
 		if(strpos($val, ',') !== 1)
 		{
 			$val = explode(',', $val);
-			$lengths = [];
 			foreach ($val as $tmp)
 			{
 				if(is_numeric($tmp) && (int) $tmp === mb_strlen($str))
