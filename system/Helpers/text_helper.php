@@ -460,7 +460,7 @@ if (! function_exists('word_wrap'))
 	 * Anything placed between {unwrap}{/unwrap} will not be word wrapped, nor
 	 * will URLs.
 	 *
-	 * @param string  $str             the text string
+	 * @param string  $str     the text string
 	 * @param integer $charlim = 76    the number of characters to wrap at
 	 *
 	 * @return string
@@ -604,7 +604,7 @@ if (! function_exists('strip_slashes'))
 	 *
 	 * Removes slashes contained in a string or in an array
 	 *
-	 * @param mixed  $str  string or array
+	 * @param mixed $str string or array
 	 *
 	 * @return mixed  string or array
 	 */

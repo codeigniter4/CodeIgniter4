@@ -94,8 +94,8 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			$this->keyPrefix .= $this->ipAddress . ':';
 		}
-		
-		if(!empty($this->keyPrefix))
+
+		if (! empty($this->keyPrefix))
 		{
 			ini_set('memcached.sess_prefix', $this->keyPrefix);
 		}

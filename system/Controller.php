@@ -35,6 +35,7 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -179,8 +180,8 @@ class Controller
 	 * A shortcut to performing validation on input data. If validation
 	 * is not successful, a $errors property will be set on this class.
 	 *
-	 * @param array|string  $rules
-	 * @param array         $messages An array of custom error messages
+	 * @param array|string $rules
+	 * @param array        $messages An array of custom error messages
 	 *
 	 * @return boolean
 	 */

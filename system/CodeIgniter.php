@@ -535,7 +535,7 @@ class CodeIgniter
 	 *
 	 * @throws \Exception
 	 *
-	 * @return bool|\CodeIgniter\HTTP\ResponseInterface
+	 * @return boolean|\CodeIgniter\HTTP\ResponseInterface
 	 */
 	public function displayCache($config)
 	{

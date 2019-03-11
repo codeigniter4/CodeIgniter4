@@ -273,7 +273,7 @@ class UploadedFile extends File implements UploadedFileInterface
 			UPLOAD_ERR_NO_FILE    => lang('HTTP.uploadErrNoFile'),
 			UPLOAD_ERR_CANT_WRITE => lang('HTTP.uploadErrCantWrite'),
 			UPLOAD_ERR_NO_TMP_DIR => lang('HTTP.uploadErrNoTmpDir'),
-			UPLOAD_ERR_EXTENSION  => lang('HTTP.uploadErrExtension')
+			UPLOAD_ERR_EXTENSION  => lang('HTTP.uploadErrExtension'),
 		];
 
 		$error = is_null($this->error) ? UPLOAD_ERR_OK : $this->error;
