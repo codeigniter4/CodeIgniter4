@@ -471,21 +471,6 @@ class RulesTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testMinLengthReturnsFalseWithNonNumericVal()
-	{
-		$data = [
-			'foo' => 'bar',
-		];
-
-		$this->validation->setRules([
-			'foo' => 'min_length[bar]',
-		]);
-
-		$this->assertFalse($this->validation->run($data));
-	}
-
-	//--------------------------------------------------------------------
-
 	public function testMinLengthReturnsTrueWithSuccess()
 	{
 		$data = [
