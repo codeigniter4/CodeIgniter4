@@ -850,7 +850,7 @@ class CodeIgniter
 		{
 			if ($override instanceof \Closure)
 			{
-				echo $override();
+				echo $override($e->getMessage());
 			}
 			else if (is_array($override))
 			{
