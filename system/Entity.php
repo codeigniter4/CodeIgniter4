@@ -345,9 +345,9 @@ class Entity
 				$value = json_encode($value);
 			}
 			
-			if($castTo === 'datetime')
+			if($castTo === 'datetime' && $value instanceof \DateTime)
 			{
-				$value = $this->mutateDate($value);
+				$value = $value->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i:s');
 			}
 		}
 
@@ -544,7 +544,7 @@ class Entity
 				$value = $this->castAsJson($value, true);
 				break;
 			case 'datetime':
-				return new \DateTime($value);
+				return (new \DateTime($value, new \DateTimeZone('UTC')))->setTimezone(new \DateTimeZone(app_timezone()));
 				break;
 			case 'timestamp':
 				return strtotime($value);
