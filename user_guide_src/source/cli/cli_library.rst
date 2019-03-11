@@ -125,7 +125,7 @@ window and not go off screen::
 	CLI::color("task1\t", 'yellow');
 	CLI::wrap("Some long description goes here that might be longer than the current window.");
 
-By default the string will wrap at the terminal width. Windows currently doesn't provide a way to determine
+By default, the string will wrap at the terminal width. Windows currently doesn't provide a way to determine
 the window size, so we default to 80 characters. If you want to restrict the width to something shorter that
 you can be pretty sure fits within the window, pass the maximum line-length as the second parameter. This
 will break the string at the nearest word barrier so that words are not broken.

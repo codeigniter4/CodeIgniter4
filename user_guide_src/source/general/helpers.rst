@@ -106,12 +106,12 @@ with an identical name to the existing Helper.
 If all you need to do is add some functionality to an existing helper -
 perhaps add a function or two, or change how a particular helper
 function operates - then it's overkill to replace the entire helper with
-your version. In this case it's better to simply "extend" the Helper.
+your version. In this case, it's better to simply "extend" the Helper.
 
 .. note:: The term "extend" is used loosely since Helper functions are
 	procedural and discrete and cannot be extended in the traditional
 	programmatic sense. Under the hood, this gives you the ability to
-	add to or or to replace the functions a Helper provides.
+	add to, or to replace the functions a Helper provides.
 
 For example, to extend the native **Array Helper** you'll create a file
 named **app/Helpers/array_helper.php**, and add or override
@@ -152,5 +152,5 @@ is as follows:
 Now What?
 =========
 
-In the Table of Contents you'll find a list of all the available Helper
+In the Table of Contents, you'll find a list of all the available Helper
 Files. Browse each one to see what they do.

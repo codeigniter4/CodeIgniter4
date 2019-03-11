@@ -56,7 +56,7 @@ to make changes that will still be present when the controller executes.
 
 Since before filters are executed prior to your controller being executed, you may at times want to stop the
 actions in the controller from happening. You can do this by passing back anything that is not the request object.
-This is typically used to peform redirects, like in this example::
+This is typically used to perform redirects, like in this example::
 
     public function before(RequestInterface $request)
     {
@@ -169,7 +169,7 @@ would apply to every AJAX request.
 $filters
 ========
 
-This property is an array of filter aliases. For each alias you can specify before and after arrays that contain
+This property is an array of filter aliases. For each alias, you can specify before and after arrays that contain
 a list of URI patterns that filter should apply to::
 
     public filters = [

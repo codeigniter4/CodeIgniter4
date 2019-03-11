@@ -130,10 +130,10 @@ class Query implements QueryInterface
 	 * Sets the raw query string to use for this statement.
 	 *
 	 * @param string  $sql
-	 * @param array   $binds
+	 * @param mixed   $binds
 	 * @param boolean $setEscape
 	 *
-	 * @return mixed
+	 * @return $this
 	 */
 	public function setQuery(string $sql, $binds = null, bool $setEscape = true)
 	{
@@ -183,7 +183,7 @@ class Query implements QueryInterface
 	 * Returns the final, processed query string after binding, etal
 	 * has been performed.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function getQuery(): string
 	{
@@ -207,7 +207,7 @@ class Query implements QueryInterface
 	 * @param float $start
 	 * @param float $end
 	 *
-	 * @return mixed
+	 * @return $this
 	 */
 	public function setDuration(float $start, float $end = null)
 	{
@@ -231,9 +231,9 @@ class Query implements QueryInterface
 	 * @param boolean $returnRaw
 	 * @param integer $decimals
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getStartTime($returnRaw = false, int $decimals = 6)
+	public function getStartTime(bool $returnRaw = false, int $decimals = 6): string
 	{
 		if ($returnRaw)
 		{
@@ -250,9 +250,9 @@ class Query implements QueryInterface
 	 *
 	 * @param integer $decimals The accuracy of the returned time.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getDuration(int $decimals = 6)
+	public function getDuration(int $decimals = 6): string
 	{
 		return number_format(($this->endTime - $this->startTime), $decimals);
 	}
@@ -265,7 +265,7 @@ class Query implements QueryInterface
 	 * @param integer $code
 	 * @param string  $error
 	 *
-	 * @return Query
+	 * @return $this
 	 */
 	public function setError(int $code, string $error)
 	{
@@ -332,7 +332,7 @@ class Query implements QueryInterface
 	 * @param string $orig
 	 * @param string $swap
 	 *
-	 * @return mixed
+	 * @return $this
 	 */
 	public function swapPrefix(string $orig, string $swap)
 	{
@@ -350,7 +350,7 @@ class Query implements QueryInterface
 	 *
 	 * @return string
 	 */
-	public function getOriginalQuery()
+	public function getOriginalQuery(): string
 	{
 		return $this->originalQueryString;
 	}
@@ -359,6 +359,8 @@ class Query implements QueryInterface
 
 	/**
 	 * Escapes and inserts any binds into the finalQueryString object.
+	 *
+	 * @return null|void
 	 */
 	protected function compileBinds()
 	{
@@ -416,7 +418,7 @@ class Query implements QueryInterface
 	 * @param  array  $binds
 	 * @return string
 	 */
-	protected function matchNamedBinds(string $sql, array $binds)
+	protected function matchNamedBinds(string $sql, array $binds): string
 	{
 		$replacers = [];
 
@@ -452,7 +454,7 @@ class Query implements QueryInterface
 	 * @param  integer $ml
 	 * @return string
 	 */
-	protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml)
+	protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml): string
 	{
 		// Make sure not to replace a chunk inside a string that happens to match the bind marker
 		if ($c = preg_match_all("/'[^']*'/i", $sql, $matches))
@@ -473,7 +475,7 @@ class Query implements QueryInterface
 
 		do
 		{
-			$c --;
+			$c--;
 			$escapedValue = $binds[$c][1] ? $this->db->escape($binds[$c][0]) : $binds[$c][0];
 			if (is_array($escapedValue))
 			{
@@ -491,9 +493,9 @@ class Query implements QueryInterface
 	/**
 	 * Return text representation of the query
 	 *
-	 * @return mixed|string
+	 * @return string
 	 */
-	public function __toString()
+	public function __toString(): string
 	{
 		return $this->getQuery();
 	}

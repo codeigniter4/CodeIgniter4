@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Cache\Handlers;
+<?php
+namespace CodeIgniter\Cache\Handlers;
 
 set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline, array $errcontext) {
 	//throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
@@ -6,6 +7,7 @@ set_error_handler(function (int $errno, string $errstr, string $errfile, int $er
 
 class FileHandlerTest extends \CIUnitTestCase
 {
+
 	private static $directory = 'FileHandler';
 	private static $key1      = 'key1';
 	private static $key2      = 'key2';
@@ -127,7 +129,9 @@ class FileHandlerTest extends \CIUnitTestCase
 	{
 		$this->fileHandler->save(self::$key1, 10);
 		$this->fileHandler->save(self::$key2, 'value');
-		$this->fileHandler->save(self::$key3, 0);
+
+		//  Line following commented out to force the cache to add a zero entry for key3
+		//      $this->fileHandler->save(self::$key3, 0);
 
 		$this->assertSame(9, $this->fileHandler->decrement(self::$key1, 1));
 		$this->assertFalse($this->fileHandler->decrement(self::$key2, 1));
@@ -158,6 +162,17 @@ class FileHandlerTest extends \CIUnitTestCase
 		$this->assertSame('value', $actual['data']);
 	}
 
+	public function testGetCacheInfo()
+	{
+		$time = time();
+		$this->fileHandler->save(self::$key1, 'value');
+
+		$actual = $this->fileHandler->getCacheInfo();
+		$this->assertArrayHasKey(self::$key1, $actual);
+		$this->assertEquals(self::$key1, $actual[self::$key1]['name']);
+		$this->assertArrayHasKey('server_path', $actual[self::$key1]);
+	}
+
 	public function testIsSupported()
 	{
 		$this->assertTrue($this->fileHandler->isSupported());
@@ -179,10 +194,12 @@ class FileHandlerTest extends \CIUnitTestCase
 		$this->assertArrayHasKey('executable', $actual);
 		$this->assertArrayHasKey('fileperms', $actual);
 	}
+
 }
 
 final class BaseTestFileHandler extends FileHandler
 {
+
 	private static $directory = 'FileHandler';
 	private $config;
 
@@ -210,4 +227,5 @@ final class BaseTestFileHandler extends FileHandler
 			'fileperms',
 		]);
 	}
+
 }

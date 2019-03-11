@@ -28,7 +28,7 @@ The simplest method to set the variable is in your :doc:`.env file </general/con
 Apache
 ------
 
-This server variable can be set in your ``.htaccess`` file, or Apache
+This server variable can be set in your ``.htaccess`` file or Apache
 config using `SetEnv <https://httpd.apache.org/docs/2.2/mod/mod_env.html#setenv>`_.
 
 .. code-block:: apache

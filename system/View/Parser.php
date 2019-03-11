@@ -530,7 +530,7 @@ class Parser extends View
 		extract($this->data);
 		try
 		{
-			$result = eval('?>' . $template . '<?php ');
+			eval('?>' . $template . '<?php ');
 		}
 		catch (\ParseError $e)
 		{
@@ -627,7 +627,7 @@ class Parser extends View
 	 *
 	 * @param string $key
 	 *
-	 * @return false|html
+	 * @return false|string
 	 */
 	public function shouldAddEscaping(string $key)
 	{

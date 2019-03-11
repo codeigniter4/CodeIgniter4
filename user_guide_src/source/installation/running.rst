@@ -131,11 +131,6 @@ With the above configuration, your webapp would be accessed with the URL ``http:
 
 Apache needs to be restarted whenever you change its configuration.
 
-Hosting with NGINX
-=================================================
-
-Directions coming soon?
-
 Hosting with Vagrant
 =================================================
 
@@ -169,14 +164,3 @@ Once setup, you can then launch your webapp inside a VM, with the command::
 Your webapp will be accessible at ``http://localhost:8080``, with the code coverage 
 report for your build at ``http://localhost:8081`` and the user guide for 
 it at ``http://localhost:8082``.
-
-Hosting with Docker
-=================================================
-
-Directions coming soon?
-
-Hosting on the Cloud
-=================================================
-
-Directions coming soon?
-

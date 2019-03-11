@@ -57,11 +57,11 @@ Address a single issue in a report.
 Identify the CodeIgniter version (eg 4.0.1) and the component if you know it (eg. parser library)
 
 Explain what you expected to happen, and what did happen.
-Include error messages and stacktrace, if any.
+Include error messages and stack trace, if any.
 
 Include short code segments if they help to explain.
 Use a pastebin or dropbox facility to include longer segments of code or screenshots - do not include them in the issue report itself.
-This means setting a reasonable expiry for those, until the issue is resolved or closed.
+This means setting a reasonable expiry for those until the issue is resolved or closed.
 
 If you know how to fix the issue, you can do so in your own fork & branch, and submit a pull request.
 The issue report information above should be part of that.

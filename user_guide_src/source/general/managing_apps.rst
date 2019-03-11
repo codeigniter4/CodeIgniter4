@@ -2,7 +2,7 @@
 Managing your Applications
 ##########################
 
-By default it is assumed that you only intend to use CodeIgniter to
+By default, it is assumed that you only intend to use CodeIgniter to
 manage one application, which you will build in your **application**
 directory. It is possible, however, to have multiple sets of
 applications that share a single CodeIgniter installation, or even to
