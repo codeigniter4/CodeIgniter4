@@ -23,7 +23,7 @@ The following functions are available:
 
 .. php:function:: site_url([$uri = ''[, $protocol = NULL[, $altConfig = NULL]]])
 
-	:param	string	$uri: URI string
+	:param	mixed	$uri: URI string or array of URI segments
 	:param	string	$protocol: Protocol, e.g. 'http' or 'https'
 	:param	\\Config\\App	$altConfig: Alternate configuration to use
 	:returns:	Site URL
@@ -57,7 +57,7 @@ The following functions are available:
 
 .. php:function:: base_url([$uri = ''[, $protocol = NULL]])
 
-	:param	string	$uri: URI string
+	:param	mixed	$uri: URI string or array of URI segments
 	:param	string	$protocol: Protocol, e.g. 'http' or 'https'
 	:returns:	Base URL
 	:rtype:	string
@@ -282,7 +282,7 @@ The following functions are available:
 		$string = auto_link($string);
 
 	The second parameter determines whether URLs and e-mails are converted or
-	just one or the other. Default behavior is both if the parameter is not
+	just one or the other. The default behavior is both if the parameter is not
 	specified. E-mail links are encoded as :php:func:`safe_mailto()` as shown
 	above.
 

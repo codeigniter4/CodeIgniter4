@@ -46,7 +46,7 @@ those classes can be found in::
 	];
 
 The key of each row is the namespace itself. This does not need a trailing slash. If you use double-quotes
-to define the array, be sure to escape the backwards slash. That means that it would be ``My\\App``,
+to define the array, be sure to escape the backward slash. That means that it would be ``My\\App``,
 not ``My\App``. The value is the location to the directory the classes can be found in. They should
 have a trailing slash.
 
@@ -79,7 +79,7 @@ The key of each row is the name of the class that you want to locate. The value 
 Legacy Support
 ==============
 
-If neither of the above methods find the class, and the class is not namespaced, the autoloader will look in the
+If neither of the above methods finds the class, and the class is not namespaced, the autoloader will look in the
 **/app/Libraries** and **/app/Models** directories to attempt to locate the files. This provides
 a measure to help ease the transition from previous versions.
 
@@ -88,7 +88,7 @@ There are no configuration options for legacy support.
 Composer Support
 ================
 
-Composer support is automatically initialized by default. By default it looks for Composer's autoload file at
+Composer support is automatically initialized by default. By default, it looks for Composer's autoload file at
 ROOTPATH.'vendor/autoload.php'. If you need to change the location of that file for any reason, you can modify
 the value defined in ``Config\Constants.php``.
 

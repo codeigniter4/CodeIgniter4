@@ -1,7 +1,9 @@
-<?php namespace CodeIgniter\Cache;
+<?php
+namespace CodeIgniter\Cache;
 
 class CacheFactoryTest extends \CIUnitTestCase
 {
+
 	private static $directory = 'CacheFactory';
 	private $cacheFactory;
 	private $config;
@@ -90,4 +92,28 @@ class CacheFactoryTest extends \CIUnitTestCase
 		$this->config             = new \Config\Cache();
 		$this->config->storePath .= self::$directory;
 	}
+
+	public function testHandlesBadHandler()
+	{
+		if (! is_dir($this->config->storePath))
+		{
+			mkdir($this->config->storePath, 0555, true);
+		}
+
+		$this->config->handler = 'dummy';
+
+		if (stripos('win', php_uname()) === 0)
+		{
+			$this->assertTrue(true); // can't test properly if we are on Windows
+		}
+		else
+		{
+			$this->assertInstanceOf(\CodeIgniter\Cache\Handlers\DummyHandler::class, $this->cacheFactory->getHandler($this->config, 'wincache', 'wincache'));
+		}
+
+		//Initialize path
+		$this->config             = new \Config\Cache();
+		$this->config->storePath .= self::$directory;
+	}
+
 }

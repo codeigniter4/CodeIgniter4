@@ -5,7 +5,7 @@ Error Handling
 CodeIgniter builds error reporting into your system through Exceptions, both the `SPL collection <http://php.net/manual/en/spl.exceptions.php>`_, as
 well as a few custom exceptions that are provided by the framework. Depending on your environment's setup, the
 default action when an error or exception is thrown is to display a detailed error report, unless the application
-is running under the ``production`` environment. In this case, a more generic  message is displayed to
+is running under the ``production`` environment. In this case, a more generic message is displayed to
 keep the best user experience for your users.
 
 .. contents::
@@ -15,7 +15,7 @@ keep the best user experience for your users.
 Using Exceptions
 ================
 
-This section is a quick overview for newer programmers, or developers who are not experienced with using exceptions.
+This section is a quick overview for newer programmers, or for developers who are not experienced with using exceptions.
 
 Exceptions are simply events that happen when the exception is "thrown". This halts the current flow of the script, and
 execution is then sent to the error handler which displays the appropriate error page::
@@ -112,7 +112,7 @@ is not the right type, etc::
 
 	throw new \CodeIgniter\Exceptions\ConfigException();
 
-This provides an HTTP status code of 500, and an exit code of 3.
+This provides an HTTP status code of 500 and an exit code of 3.
 
 DatabaseException
 -----------------
@@ -122,4 +122,4 @@ or when it is temporarily lost::
 
 	throw new \CodeIgniter\Database\Exceptions\DatabaseException();
 
-This provides an HTTP status code of 500, and an exit code of 8.
+This provides an HTTP status code of 500 and an exit code of 8.

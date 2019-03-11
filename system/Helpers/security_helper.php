@@ -45,7 +45,7 @@ if (! function_exists('sanitize_filename'))
 	 *
 	 * @return string
 	 */
-	function sanitize_filename(string $filename)
+	function sanitize_filename(string $filename): string
 	{
 		return Services::security()->sanitizeFilename($filename);
 	}
@@ -61,7 +61,7 @@ if (! function_exists('strip_image_tags'))
 	 * @param  string $str
 	 * @return string
 	 */
-	function strip_image_tags(string $str)
+	function strip_image_tags(string $str): string
 	{
 		return preg_replace([
 			'#<img[\s/]+.*?src\s*=\s*(["\'])([^\\1]+?)\\1.*?\>#i',

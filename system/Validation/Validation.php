@@ -373,22 +373,21 @@ class Validation implements ValidationInterface
 	 */
 	public function setRules(array $rules, array $errors = []): ValidationInterface
 	{
-		$this->rules = $rules;
+		$this->customErrors = $errors;
 
-		if (empty($errors))
+		foreach ($rules as $field => &$rule)
 		{
-			foreach ($rules as $field => $setup)
+			if (is_array($rule))
 			{
-				if (isset($setup['errors']))
+				if (array_key_exists('errors', $rule))
 				{
-					$this->customErrors[$field] = $setup['errors'];
+					$this->customErrors[$field] = $rule['errors'];
+					unset($rule['errors']);
 				}
 			}
 		}
-		else
-		{
-			$this->customErrors = $errors;
-		}
+
+		$this->rules = $rules;
 
 		return $this;
 	}
@@ -541,13 +540,13 @@ class Validation implements ValidationInterface
 	 *
 	 * @param string|null $group
 	 *
-	 * @return array|void
+	 * @return array|ValidationException|null
 	 */
 	public function loadRuleGroup(string $group = null)
 	{
 		if (empty($group))
 		{
-			return;
+			return null;
 		}
 
 		if (! isset($this->config->$group))

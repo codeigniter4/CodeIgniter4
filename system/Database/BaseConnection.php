@@ -1711,6 +1711,20 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Empties our data cache. Especially helpful during testing.
+	 *
+	 * @return $this
+	 */
+	public function resetDataCache()
+	{
+		$this->dataCache = [];
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the last error code and message.
 	 *
 	 * Must return an array with keys 'code' and 'message':

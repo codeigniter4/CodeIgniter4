@@ -152,12 +152,29 @@ class Forge extends \CodeIgniter\Database\Forge
 	 */
 	protected function _alterTable($alter_type, $table, $field)
 	{
-		if (in_array($alter_type, ['DROP', 'CHANGE'], true))
+		switch ($alter_type)
 		{
-			return false;
-		}
+			case 'DROP':
+				$sqlTable = new Table($this->db, $this);
 
-		return parent::_alterTable($alter_type, $table, $field);
+				$sqlTable->fromTable($table)
+					->dropColumn($field)
+					->run();
+
+				return '';
+				break;
+			case 'CHANGE':
+				$sqlTable = new Table($this->db, $this);
+
+				$sqlTable->fromTable($table)
+						 ->modifyColumn($field)
+						 ->run();
+
+				return null;
+				break;
+			default:
+				return parent::_alterTable($alter_type, $table, $field);
+		}
 	}
 
 	//--------------------------------------------------------------------

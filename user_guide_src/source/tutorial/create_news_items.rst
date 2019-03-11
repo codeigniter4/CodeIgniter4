@@ -2,17 +2,17 @@ Create news items
 ###############################################################################
 
 You now know how you can read data from a database using CodeIgniter, but
-you haven't written any information to the database yet. In this section
+you haven't written any information to the database yet. In this section,
 you'll expand your news controller and model created earlier to include
 this functionality.
 
 Create a form
 -------------------------------------------------------
 
-To input data into the database you need to create a form where you can
+To input data into the database, you need to create a form where you can
 input the information to be stored. This means you'll be needing a form
 with two fields, one for the title and one for the text. You'll derive
-the slug from our title in the model. Create the new view at
+the slug from our title in the model. Create a new view at
 **app/Views/news/create.php**.
 
 ::
@@ -72,7 +72,7 @@ validation <../libraries/validation>` library to do this.
 
 The code above adds a lot of functionality. The first few lines load the
 form helper and the NewsModel. After that, the Controller-provided helper
-function is used to validate the $_POST fields. In this case the title and
+function is used to validate the $_POST fields. In this case, the title and
 text fields are required.
 
 CodeIgniter has a powerful validation library as demonstrated

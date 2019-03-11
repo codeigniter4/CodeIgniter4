@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter;
 
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Exceptions\CastException;
 
 /**
  * CodeIgniter
@@ -78,7 +79,7 @@ class Entity
 	protected $_original = [];
 
 	/**
-	 * Holds info whenever prperties have to be casted
+	 * Holds info whenever properties have to be casted
 	 *
 	 * @var boolean
 	 **/

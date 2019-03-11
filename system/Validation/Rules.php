@@ -304,9 +304,9 @@ class Rules
 		// If the field is present we can safely assume that
 		// the field is here, no matter whether the corresponding
 		// search field is present or not.
-		$present = $this->required($data[$str] ?? null);
+		$present = $this->required($str ?? '');
 
-		if ($present === true)
+		if ($present)
 		{
 			return true;
 		}
@@ -356,9 +356,9 @@ class Rules
 		// If the field is present we can safely assume that
 		// the field is here, no matter whether the corresponding
 		// search field is present or not.
-		$present = $this->required($data[$str] ?? null);
+		$present = $this->required($str ?? '');
 
-		if ($present === true)
+		if ($present)
 		{
 			return true;
 		}

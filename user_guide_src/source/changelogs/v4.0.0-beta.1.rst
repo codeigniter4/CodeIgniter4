@@ -1,0 +1,179 @@
+Version 4.0.0-beta.1
+====================================================
+
+Release Date: Not released
+
+Highlights:
+
+- New View Layouts provide simple way to create site site view templates.
+- Fixed user guide CSS for proper wide table display
+- Converted UploadedFile to use system messages
+- Numerous database, migration & model bugs fixed
+- Refactored unit testing for appstarter & framework distributions
+
+New messages:
+
+- Database.tableNotFound
+- HTTP.uploadErr...
+
+App changes:
+
+- app/Config/Cache has new setting: database
+- app/Views/welcome_message has logo tinted
+- composer.json has a case correction
+- env adds CI_ENVIRONMENT suggestion
+
+The list of changed files follows, with PR numbers shown.
+
+- app/
+	- Config/
+		- Cache #1719
+	- Views/
+		- welome_message #1774
+
+- system/
+	- Cache/Handlers/
+		- RedisHandler #1719, #1723
+	- Config/
+		- Config #37dbc1
+		- Services #1704, #37dbc1
+	- Database/
+		- Exceptions/DatabaseException #1739
+		- Postgre/
+			- Builder #1733
+		- SQLite3/
+			- Connection #1739
+			- Forge #1739
+			- Table #1739
+		- BaseBuilder #36fbb8, #549d7d
+		- BaseConnection #549d7d, #1739
+		- Forge #1739
+		- MigrationRunner #1743
+		- Query #36fbb8
+		- Seeder #1722
+	- Debug/
+		- Exceptions #1704
+	- Files/
+		- UploadedFile #1708
+	- Helpers/
+		- date_helper #1768
+		- number_helper #1768
+		- security_helper #1768
+		- text_helper #1768
+		- url_helper #1768
+	- HTTP/
+		- Request #1725
+	- Language/en/
+		- Database #1739
+		- HTTP #1708
+		- View #1757
+	- Router/
+		- RouteCollection #1709, #1732
+		- Router #1764
+	- Test/
+		- ControllerResponse #1740
+		- ControllerTester #1740
+		- DOMParser #1740
+		- FeatureResponse #1740
+	- Validation/
+		- Rules #1738, #1743
+		- Validation #37dbc1, #1763
+	- View/
+		- View #1729
+	- Common #1741
+	- Entity #6e549a, #1739
+	- Model #4f4a37, #6e549a, #37dbc1, #1712, #1763
+
+- tests/system/
+	- Database/
+		- BaseQueryTest #36fbb8
+		- Live/
+			- SQLite3/AlterTableTest #1739, #1740
+			- ForgeTest #1739, #1745
+			- ModelTest #37dbc1, #4ff1f5, #1763
+		- Migrations/MigrationRunnerTest #1743
+	- Helpers/
+		- FilesystemHelperTest #1740
+	- I18n/
+		- TimeTest # 1736
+	- Test/
+		- DOMParserTest #1740
+	- Validation/
+		- ValidationTest #1763
+	- View/
+		- ViewTest #1729
+	- EntityTest #6e549a, #1736
+
+- user_guide_src/
+	- _themes/.../
+		- citheme.css #1696
+	- changelogs/
+		- v4.0.0-alpha.5 #1699
+	- database/
+		- migrate #1696
+	- dbmgmt/
+		- forge #1751
+	- installation/
+		- install_manual #1699
+		- running #1750
+	- intro/
+		- psr #1752
+	- libraries/
+		- caching #1719
+		- validation #1742
+	- models/
+		- entities #1744
+	- outgoing/
+		- index #1729
+		- view_layouts #1729
+	- testing/
+		- controllers #1740
+	- tutorial/
+		- static_pages #1763
+
+- composer.json #1755
+- .env #1749
+
+PRs merged:
+-----------
+
+- #1774 Housekeeping for beta.1
+- #1768 Helper changes - signatures & typos
+- #1764 Fix routing when no default route has been specified. Fixes #1758
+- #1763 Ensure validation works in Model with errors as part of rules. Fixes #1574
+- #1757 Correct the unneeded double-quote (typo)
+- #1755 lowercase 'vfsStream' in composer files
+- #1752 Fixed typo preventing link format
+- #1751 Guide: Moving misplaced text under correct heading
+- #1750 Remove reference to Encryption Key in User Guide
+- #1749 Adding environment to .env
+- #1745 Updated composite key tests for SQLite3 support. Fixes #1478
+- #1744 Update entity docs for current framework state. Fixes #1727
+- #1743 Manually sort migrations found instead of relying on the OS. Fixes #1666
+- #1742 Fix required_without rule bug.
+- #1741 Helpers with a specific namespace can be loaded now. Fixes #1726
+- #1740 Refactor test support for app starter
+- #1739 Fix typo
+- #1738 Fix required_with rule bug. Fixes #1728
+- #1737 Added support for dropTable and modifyTable with SQLite driver
+- #1736 Accommodate long travis execution times
+- #1733 Fix increment and decrement errors with Postgres
+- #1732 Don't check from CLI in Routes. Fixes #1724 
+- #1729 New View Layout functionality for simple template
+- #1725 Update Request.php
+- #1723 Log an error if redis authentication is failed
+- #1722 Seeder adds default namespace to seeds
+- #1719 Update Cache RedisHandler to support select database
+- #4ff1f5 Additional tests for inserts and required validation failing (#1717)
+- #549d7d Another try at getting escaping working correctly both when in and out of models
+- #1712 Minor readability changes
+- #37dbc1 Ensure Model validation rules can be a group name
+- #1709 Fix resource routing websafe method order checking
+- #1708 Language for UploadedFile
+- #36fbb8 BaseBuilder should only turn off Connection's setEscapeFlags when running a query...
+- #6e549a Provide default baseURL that works with the development server for easier first time setup (Fixes #1646)
+- #1704 Fix viewsDirectory bug (#1701)
+- #4f4a37 remove debugging from Model.
+- #1699 Fix install link in user guide
+- #1696 Fix page structure etc
+- #1695 Tidy up code blocks in the user guide

@@ -18,7 +18,7 @@ within your tests::
 
     <?php namespace CodeIgniter;
 
-    use Tests\Support\Helpers\ControllerTester;
+    use CodeIgniter\Test\ControllerTester;
 
     class TestControllerA extends \CIDatabaseTestCase
     {
@@ -32,7 +32,7 @@ to run as the parameter::
 
     <?php namespace CodeIgniter;
 
-    use Tests\Support\Helpers\ControllerTester;
+    use CodeIgniter\Test\ControllerTester;
 
     class TestControllerA extends \CIDatabaseTestCase
     {

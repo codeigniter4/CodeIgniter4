@@ -343,8 +343,6 @@ class Model
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
-		$this->reset();
-
 		return $row['data'];
 	}
 
@@ -492,8 +490,8 @@ class Model
 	 * properties as an array suitable for use in creates and updates.
 	 *
 	 * @param string|object $data
-	 * @param string|null $primaryKey
-	 * @param string $dateFormat
+	 * @param string|null   $primaryKey
+	 * @param string        $dateFormat
 	 *
 	 * @return array
 	 * @throws \ReflectionException
@@ -572,13 +570,12 @@ class Model
 
 	//--------------------------------------------------------------------
 
-
 	/**
 	 * Inserts data into the current table. If an object is provided,
 	 * it will attempt to convert it to an array.
 	 *
 	 * @param array|object $data
-	 * @param boolean $returnID Whether insert ID should be returned or not.
+	 * @param boolean      $returnID Whether insert ID should be returned or not.
 	 *
 	 * @return integer|string|boolean
 	 * @throws \ReflectionException
@@ -699,7 +696,7 @@ class Model
 	 * it will attempt to convert it into an array.
 	 *
 	 * @param integer|array|string $id
-	 * @param array|object $data
+	 * @param array|object         $data
 	 *
 	 * @return boolean
 	 * @throws \ReflectionException
@@ -1008,7 +1005,7 @@ class Model
 				throw DataException::forEmptyDataset('chunk');
 			}
 
-			$rows = $rows->getResult();
+			$rows = $rows->getResult($this->tempReturnType);
 
 			$offset += $size;
 
@@ -1362,6 +1359,13 @@ class Model
 				{
 					foreach ($rule as &$row)
 					{
+						// Should only be an `errors` array
+						// which doesn't take placeholders.
+						if (is_array($row))
+						{
+							continue;
+						}
+
 						$row = strtr($row, $replacements);
 					}
 					continue;

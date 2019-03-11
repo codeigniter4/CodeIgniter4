@@ -109,7 +109,7 @@ The following functions are available:
 
     :param string $num: The number want to convert
     :returns: The roman number converted from given parameter
-    :rtype: string
+    :rtype: string|null
 
     Converts a number into roman::
 
