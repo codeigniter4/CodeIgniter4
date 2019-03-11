@@ -128,7 +128,7 @@ class FormatRules
 	 */
 	public function decimal(string $str = null): bool
 	{
-		return (bool) preg_match('/^[\-+]?[0-9]+\.[0-9]+$/', $str);
+		return (bool) preg_match('/^[\-+]?[0-9]+(|\.[0-9]+)$/', $str);
 	}
 
 	//--------------------------------------------------------------------
