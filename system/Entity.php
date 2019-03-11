@@ -234,7 +234,7 @@ class Entity
 	 *
 	 * @return boolean
 	 */
-	protected function hasPropertyChanged(string $key, $value = null)
+	protected function hasPropertyChanged(string $key, $value = null): bool
 	{
 		return ! (($this->_original[$key] === null && $value === null) || $this->_original[$key] === $value);
 	}
@@ -493,7 +493,7 @@ class Entity
 	 * Provides the ability to cast an item as a specific data type.
 	 * Add ? at the beginning of $type  (i.e. ?string) to get NULL instead of castig $value if $value === null
 	 *
-	 * @param $value
+	 * @param        $value
 	 * @param string $type
 	 *
 	 * @return mixed
@@ -567,6 +567,7 @@ class Entity
 	 * @param boolean $asArray
 	 *
 	 * @return mixed
+	 * @throws \CodeIgniter\Exceptions\CastException
 	 */
 	private function castAsJson($value, bool $asArray = false)
 	{
