@@ -442,6 +442,37 @@ be applied. If you have custom error message that you want to use, place them in
 		];
 	}
 
+The other way to set the validation message to fields by functions,
+
+.. php:function:: setValidationMessage($field, $fieldMessages)
+
+	:param	string	$field
+	:param	array	$fieldMessages
+
+	This function will set the field wise error messages.
+
+	Usage example::
+        $fieldName = 'name';
+        $fieldValidationMessage = array(
+			'required'   => 'Your name is required here',
+		);
+        $model->setValidationMessage($fieldName, $fieldValidationMessage);
+
+.. php:function:: setValidationMessages($fieldMessages)
+
+	:param	array	$fieldMessages
+
+	This function will set the field messages.
+
+	Usage example::
+        $fieldValidationMessage = array(
+	        'name' => array(
+		        'required'   => 'Your baby name is missing.',
+		        'min_length' => 'Too short, man!',
+	        ),
+        );
+        $model->setValidationMessages($fieldValidationMessage);
+
 Now, whenever you call the ``insert()``, ``update()``, or ``save()`` methods, the data will be validated. If it fails,
 the model will return boolean **false**. You can use the ``errors()`` method to retrieve the validation errors::
 
