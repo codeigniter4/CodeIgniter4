@@ -465,7 +465,7 @@ class Entity
 		}
 		else if ($value instanceof \DateTime)
 		{
-			$value = $value->format('c ') . ' CET';
+			$value = $value->format('c') . ' CET';
 		}
 
 		$value = (new class extends \DateTime {
