@@ -480,6 +480,11 @@ class Model
 		else
 		{
 			$response = $this->insert($data, false);
+			// call insert directly if you want the ID or the record object
+			if ($response !== false)
+			{
+				$response = true;
+			}
 		}
 
 		return $response;
