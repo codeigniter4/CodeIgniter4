@@ -661,8 +661,22 @@ class BaseBuilder
 
 			if ($v !== null)
 			{
-				$op = $this->getOperator($k);
-				$k  = trim(str_replace($op, '', $k));
+				$op = $this->getOperator($k, true);
+				
+				if(!empty($op))
+				{
+					$k = trim($k);
+
+					end($op);
+
+					$op = trim(current($op));
+
+					if(substr($k,  -1 * strlen($op)) === $op)
+					{
+						$k = rtrim(strrev(preg_replace(strrev("/" .  $op . "/"),strrev(''),strrev($k),1)));
+					}
+
+				}
 
 				$bind = $this->setBind($k, $v, $escape);
 
@@ -2909,10 +2923,11 @@ class BaseBuilder
 	 * Returns the SQL string operator
 	 *
 	 * @param string $str
+	 * @param bool $list
 	 *
 	 * @return string
 	 */
-	protected function getOperator($str)
+	protected function getOperator($str, bool $list = false)
 	{
 		static $_operators;
 
@@ -2935,7 +2950,7 @@ class BaseBuilder
 			];
 		}
 
-		return preg_match('/' . implode('|', $_operators) . '/i', $str, $match) ? $match[0] : false;
+		return preg_match_all('/' . implode('|', $_operators) . '/i', $str, $match) ? ($list ? $match[0] : $match[0][count($match[0])-1]) : false;
 	}
 
 	// --------------------------------------------------------------------
