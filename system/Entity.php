@@ -486,7 +486,7 @@ class Entity
 	 * Provides the ability to cast an item as a specific data type.
 	 * Add ? at the beginning of $type  (i.e. ?string) to get NULL instead of castig $value if $value === null
 	 *
-	 * @param        $value
+	 * @param $value
 	 * @param string $type
 	 *
 	 * @return mixed

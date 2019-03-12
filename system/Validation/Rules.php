@@ -75,18 +75,18 @@ class Rules
 	 */
 	public function exact_length(string $str = null, string $val, array $data): bool
 	{
-		if(strpos($val, ',') !== 1)
+		if (strpos($val, ',') !== 1)
 		{
 			$val = explode(',', $val);
 			foreach ($val as $tmp)
 			{
-				if(is_numeric($tmp) && (int) $tmp === mb_strlen($str))
+				if (is_numeric($tmp) && (int) $tmp === mb_strlen($str))
 				{
 					return true;
 				}
 			}
 		}
-		
+
 		return ((int) $val === mb_strlen($str));
 	}
 

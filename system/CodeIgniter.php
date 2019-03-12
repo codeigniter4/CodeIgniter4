@@ -200,7 +200,7 @@ class CodeIgniter
 	 * @param \CodeIgniter\Router\RouteCollectionInterface $routes
 	 * @param boolean                                      $returnResponse
 	 *
-	 * @return bool|\CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
+	 * @return boolean|\CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
 	 * @throws \CodeIgniter\Filters\Exceptions\FilterException
 	 * @throws \Exception
 	 */
@@ -276,7 +276,7 @@ class CodeIgniter
 	 * Handles the main request logic and fires the controller.
 	 *
 	 * @param \CodeIgniter\Router\RouteCollectionInterface $routes
-	 * @param                                              $cacheConfig
+	 * @param $cacheConfig
 	 * @param boolean                                      $returnResponse
 	 *
 	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
