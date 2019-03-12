@@ -1249,6 +1249,36 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Allows to set validation messages.
+	 * It could be used when you have to change default or override current validate messages.
+	 *
+	 * @param array $validationMessages
+	 *
+	 * @return void
+	 */
+	public function setValidationMessages(array $validationMessages)
+	{
+		$this->validationMessages = $validationMessages;
+	}
+	//--------------------------------------------------------------------
+
+	/**
+	 * Allows to set field wise validation message.
+	 * It could be used when you have to change default or override current validate messages.
+	 *
+	 * @param string $field
+	 * @param array  $fieldMessages
+	 *
+	 * @return void
+	 */
+	public function setValidationMessage(string $field, array $fieldMessages)
+	{
+		$this->validationMessages[$field] = $fieldMessages;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Validate the data against the validation rules (or the validation group)
 	 * specified in the class property, $validationRules.
 	 *
