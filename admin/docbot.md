@@ -8,6 +8,10 @@ optionally pushed to the `gh-pages` branch of the repo.
 That would then be publically visible as the in-progress
 version of the [User Guide](https://codeigniter4.github.io/CodeIgniter4/).
 
+## Requirements
+
+You must have python & sphinx installed.
+
 ## Audience
 
 This script is intended for use by framework maintainers,
@@ -31,3 +35,5 @@ a trial run, and nothing is pushed to the repo.
 
 Whether or not deployed, the results are left inside
 user_guide_src/build (which is git ignored).
+
+Generate these and the API docs together with the 'alldocs' script.
