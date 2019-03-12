@@ -1,8 +1,5 @@
 <?php namespace CodeIgniter;
 
-use CodeIgniter\I18n\Time;
-use CodeIgniter\Exceptions\CastException;
-
 /**
  * CodeIgniter
  *
@@ -86,11 +83,25 @@ class Entity
 	private $_cast = true;
 
 	/**
+	 * Contains information about type returned by mutateDate for:
+	 * - datetime casted properties and
+	 * - $_options['dates'] defined properties
+	 * Allowed values are:
+	 * 'Time' for: \CodeIgniter\I18n\Time
+	 * 'DateTime' for: \DateTime
+	 *
+	 * @var string
+	 */
+	private $_mutateDateAs = 'Time';
+	private $_mutateDateTimezone = null;
+
+	/**
 	 * Allows filling in Entity parameters during construction.
 	 *
 	 * @param array|null $data
+	 * @param array|null $opts
 	 */
-	public function __construct(array $data = null)
+	public function __construct(array $data = null, array $opts = null)
 	{
 		// Collect any original values of things
 		// so we can compare later to see what's changed
@@ -105,6 +116,12 @@ class Entity
 		}
 
 		$this->_original = $properties;
+
+		if(isset($opts['dateMutateAs']) && is_string($opts['dateMutateAs']))
+		{
+			$this->setMutateDateAs($opts['dateMutateAs']);
+		}
+		$this->setMutateDateTimezone($opts['dateMutateTimezone'] ?? app_timezone());
 
 		if (is_array($data))
 		{
@@ -281,7 +298,7 @@ class Entity
 		// Do we need to mutate this into a date?
 		if (in_array($key, $this->_options['dates']))
 		{
-			$result = $this->mutateDate($result);
+			$result = $this->mutateDate($result, $this->getMutateDateTimezone());
 		}
 		// Or cast it as something?
 		else if ($this->_cast && isset($this->_options['casts'][$key]) && ! empty($this->_options['casts'][$key]))
@@ -315,7 +332,7 @@ class Entity
 		// Check if the field should be mutated into a date
 		if (in_array($key, $this->_options['dates']))
 		{
-			$value = $this->mutateDate($value);
+			$value = $this->mutateDate($value, new \DateTimeZone('UTC'));
 		}
 
 		$isNullable = false;
@@ -343,6 +360,11 @@ class Entity
 			if (($castTo === 'json' || $castTo === 'json-array') && function_exists('json_encode'))
 			{
 				$value = json_encode($value);
+			}
+			
+			if($castTo === 'datetime' && $value instanceof \DateTime)
+			{
+				$value = $this->mutateDate($value, new \DateTimeZone('UTC'));
 			}
 		}
 
@@ -376,7 +398,6 @@ class Entity
 	 * attribute will be reset to that default value.
 	 *
 	 * @param string $key
-	 *
 	 * @throws \ReflectionException
 	 */
 	public function __unset(string $key)
@@ -453,31 +474,118 @@ class Entity
 	 *
 	 * @param $value
 	 *
-	 * @return \CodeIgniter\I18n\Time
+	 * @param \DateTimeZone|null $timezone
+	 * @return Time|\DateTime
 	 */
-	protected function mutateDate($value)
+	protected function mutateDate($value, ?\DateTimeZone $timezone = null)
 	{
-		if ($value instanceof Time)
+		// Default behaviour - return value as \CodeIgniter\I18n\Time
+		if($this->_mutateDateAs !== 'DateTime')
 		{
-			return $value;
-		}
+			if ($value instanceof Time)
+			{
+				;//Do nothing. We are ready to go.
+			}
+			else if ($value instanceof \DateTime)
+			{
+				$value = Time::instance($value);
+			}
+			else if (is_numeric($value))
+			{
+				$value = Time::createFromTimestamp($value);
+			}
+			else if (is_string($value))
+			{
+				$value = Time::parse($value);
+			}
 
-		if ($value instanceof \DateTime)
-		{
-			return Time::instance($value);
+			if(!is_null($timezone))
+			{
+				$value = $value->setTimezone($timezone);
+			}
 		}
-
-		if (is_numeric($value))
+		// Return value as \DateTime
+		else
 		{
-			return Time::createFromTimestamp($value);
-		}
+			if (is_numeric($value))
+			{
+				$value = '@' . $value;
+			}
+			else if ($value instanceof \DateTime)
+			{
+				$value = $value->format('c ') . ' CET';
+			}
+			if(is_string($value))
+			{
+				$value = (new class extends \DateTime
+				{
 
-		if (is_string($value))
-		{
-			return Time::parse($value);
+					public function __toString()
+					{
+						return $this->format('Y-m-d H:i:s');
+					}
+
+					public function set($time = 'now', \DateTimeZone $timezone = null)
+					{
+						parent::__construct($time, $timezone);
+						return $this;
+					}
+
+				})->set($value, new \DateTimeZone('UTC'));
+
+				if(!is_null($timezone))
+				{
+					$value->setTimezone($timezone);
+				}
+			}
 		}
 
 		return $value;
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getMutateDateAs(): string
+	{
+		return $this->_mutateDateAs;
+	}
+
+	/**
+	 * @param string $mutateDateAs
+	 * @return bool
+	 */
+	protected function setMutateDateAs(string $mutateDateAs): bool
+	{
+		if(in_array($mutateDateAs, ['DateTime', 'Time']))
+		{
+			$this->_mutateDateAs = $mutateDateAs;
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @return \DateTimeZone|null
+	 */
+	public function getMutateDateTimezone()
+	{
+		return $this->_mutateDateTimezone ?? new \DateTimeZone(app_timezone());
+	}
+
+	/**
+	 * @param \DateTimeZone|string $dateTimeZone
+	 */
+	public function setMutateDateTimezone($dateTimeZone): void
+	{
+		if(is_string($dateTimeZone) || is_null($dateTimeZone))
+		{
+			$this->_mutateDateTimezone = new \DateTimeZone($dateTimeZone ?? app_timezone());
+		}
+		elseif ($dateTimeZone instanceof \DateTimeZone)
+		{
+			$this->_mutateDateTimezone = $dateTimeZone;
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -486,7 +594,7 @@ class Entity
 	 * Provides the ability to cast an item as a specific data type.
 	 * Add ? at the beginning of $type  (i.e. ?string) to get NULL instead of castig $value if $value === null
 	 *
-	 * @param $value
+	 * @param        $value
 	 * @param string $type
 	 *
 	 * @return mixed
@@ -541,7 +649,7 @@ class Entity
 				$value = $this->castAsJson($value, true);
 				break;
 			case 'datetime':
-				return new \DateTime($value);
+				$value = $this->mutateDate($value,  $this->getMutateDateTimezone());
 				break;
 			case 'timestamp':
 				return strtotime($value);
