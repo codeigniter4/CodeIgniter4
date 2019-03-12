@@ -251,6 +251,7 @@ class BaseService
 
 				if (empty($files))
 				{
+					// no files at all found - this would be really, really bad
 					return null;
 				}
 
@@ -271,6 +272,7 @@ class BaseService
 
 		if (! static::$services)
 		{
+			// we found stuff, but no services - this would be really bad
 			return null;
 		}
 

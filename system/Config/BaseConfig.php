@@ -177,8 +177,9 @@ class BaseConfig
 
 		if (! static::$didDiscovery)
 		{
-			$locator            = \Config\Services::locator();
-			static::$registrars = $locator->search('Config/Registrar.php');
+			$locator              = \Config\Services::locator();
+			static::$registrars   = $locator->search('Config/Registrar.php');
+			static::$didDiscovery = true;
 		}
 
 		$shortName = (new \ReflectionClass($this))->getShortName();
