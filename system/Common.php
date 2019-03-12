@@ -575,7 +575,7 @@ if (! function_exists('helper'))
 	 *   2. {namespace}/Helpers
 	 *   3. system/Helpers
 	 *
-	 * @param string|array $filenames
+	 * @param  string|array $filenames
 	 * @throws \CodeIgniter\Files\Exceptions\FileNotFoundException
 	 */
 	function helper($filenames)
@@ -825,6 +825,12 @@ if (! function_exists('old'))
 	 */
 	function old(string $key, $default = null, $escape = 'html')
 	{
+		// Ensure the session is loaded
+		if (session_status() === PHP_SESSION_NONE && ENVIRONMENT !== 'testing')
+		{
+			session();
+		}
+
 		$request = Services::request();
 
 		$value = $request->getOldInput($key);
