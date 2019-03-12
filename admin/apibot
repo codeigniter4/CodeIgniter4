@@ -8,25 +8,25 @@
 #
 # This is not meant for updating the "stable" user guide.
 
-UPSTREAM=https://github.com/codeigniter4/CodeIgniter4.git
+UPSTREAM=https://github.com/codeigniter4/api.git
 
 # Prepare the nested repo clone folder
-cd user_guide_src
-rm -rf build/*
-mkdir build/html
+rm -rf build/api*
+mkdir -p build/api/docs
 
 # Get ready for git
-cd build/html
+cd build/api
 git init
 git remote add origin $UPSTREAM
 git fetch 
-git checkout gh-pages
-git reset --hard origin/gh-pages
-rm -r *
+git checkout master
+git reset --hard origin/master
+rm -r docs/*
 
 # Make the new user guide
 cd ../..
-make html
+phpdoc
+cp -R api/build/* build/api/docs
 
 # All done?
 if [ $# -lt 1 ]; then
@@ -35,8 +35,8 @@ fi
 
 # Optionally update the remote repo
 if [ $1 = "deploy" ]; then
-  cd build/html
+  cd build/api
   git add .
-  git commit -S -m "Docbot synching"
-  git push -f origin gh-pages
+  git commit -S -m "APIbot synching"
+  git push -f origin master
 fi
