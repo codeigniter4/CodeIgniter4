@@ -502,7 +502,7 @@ class Entity
 				$value = Time::parse($value);
 			}
 
-			if(!is_null($timezone))
+			if(!is_null($timezone) && !is_null($value))
 			{
 				$value = $value->setTimezone($timezone);
 			}
