@@ -700,7 +700,7 @@ class FormatRulesTest extends \CIUnitTestCase
 			],
 			[
 				'0',
-				false,
+				true,
 			],
 			[
 				'1.0a',

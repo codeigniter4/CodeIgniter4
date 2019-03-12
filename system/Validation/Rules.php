@@ -65,6 +65,7 @@ class Rules
 
 	/**
 	 * Returns true if $str is $val characters long.
+	 * $val = "5" (one) | "5,8,12" (multiple values)
 	 *
 	 * @param string $str
 	 * @param string $val
@@ -74,9 +75,16 @@ class Rules
 	 */
 	public function exact_length(string $str = null, string $val, array $data): bool
 	{
-		if (! is_numeric($val))
+		if (strpos($val, ',') !== 1)
 		{
-			return false;
+			$val = explode(',', $val);
+			foreach ($val as $tmp)
+			{
+				if (is_numeric($tmp) && (int) $tmp === mb_strlen($str))
+				{
+					return true;
+				}
+			}
 		}
 
 		return ((int) $val === mb_strlen($str));
@@ -233,11 +241,6 @@ class Rules
 	 */
 	public function max_length(string $str = null, string $val, array $data): bool
 	{
-		if (! is_numeric($val))
-		{
-			return false;
-		}
-
 		return ($val >= mb_strlen($str));
 	}
 
@@ -254,11 +257,6 @@ class Rules
 	 */
 	public function min_length(string $str = null, string $val, array $data): bool
 	{
-		if (! is_numeric($val))
-		{
-			return false;
-		}
-
 		return ($val <= mb_strlen($str));
 	}
 

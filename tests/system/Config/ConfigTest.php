@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Config;
+<?php
+namespace CodeIgniter\Config;
 
 use Config\DocTypes;
 
@@ -23,7 +24,7 @@ class ConfigTest extends \CIUnitTestCase
 
 	public function testCreateSharedInstance()
 	{
-		$Config  = Config::get('DocTypes' );
+		$Config  = Config::get('DocTypes');
 		$Config2 = Config::get('Config\\DocTypes');
 
 		$this->assertTrue($Config === $Config2);
@@ -35,4 +36,16 @@ class ConfigTest extends \CIUnitTestCase
 
 		$this->assertNull($Config);
 	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testInjection()
+	{
+		Config::reset();
+		Config::injectMock('Banana', '\stdClass');
+		$this->assertNotNull(Config::get('Banana'));
+	}
+
 }

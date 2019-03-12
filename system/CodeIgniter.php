@@ -36,6 +36,7 @@
  * @filesource
  */
 
+use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
@@ -199,6 +200,7 @@ class CodeIgniter
 	 * @param \CodeIgniter\Router\RouteCollectionInterface $routes
 	 * @param boolean                                      $returnResponse
 	 *
+	 * @return boolean|\CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
 	 * @throws \CodeIgniter\Filters\Exceptions\FilterException
 	 * @throws \Exception
 	 */
@@ -234,7 +236,7 @@ class CodeIgniter
 		{
 			return $this->handleRequest($routes, $cacheConfig, $returnResponse);
 		}
-		catch (\CodeIgniter\Filters\Exceptions\FilterException $e)
+		catch (FilterException $e)
 		{
 			$logger = Services::logger();
 			$logger->info('REDIRECTED ROUTE at ' . $e->getMessage());
@@ -278,7 +280,7 @@ class CodeIgniter
 	 * @param boolean                                      $returnResponse
 	 *
 	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
-	 * @throws \CodeIgniter\Filters\Exceptions\FilterException
+	 * @throws \CodeIgniter\Router\RedirectException
 	 */
 	protected function handleRequest(RouteCollectionInterface $routes = null, $cacheConfig, bool $returnResponse = false)
 	{
@@ -684,6 +686,7 @@ class CodeIgniter
 	 *                                         of the config file.
 	 *
 	 * @return string
+	 * @throws \CodeIgniter\Router\RedirectException
 	 */
 	protected function tryToRouteIt(RouteCollectionInterface $routes = null)
 	{
@@ -847,7 +850,7 @@ class CodeIgniter
 		{
 			if ($override instanceof \Closure)
 			{
-				echo $override();
+				echo $override($e->getMessage());
 			}
 			else if (is_array($override))
 			{
