@@ -626,15 +626,14 @@ be applied. If you have custom error message that you want to use, place them in
 <dd><p>:param  string  $field
 :param  array   $fieldMessages</p>
 <p>This function will set the field wise error messages.</p>
-<p>Usage example::
-$fieldName = &#8216;name&#8217;;
-$fieldValidationMessage = array(</p>
-<blockquote>
-<div><blockquote>
-<div>&#8216;required&#8217;   =&gt; &#8216;Your name is required here&#8217;,</div></blockquote>
-<p>);</p>
-</div></blockquote>
-<p>$model-&gt;setValidationMessage($fieldName, $fieldValidationMessage);</p>
+<p>Usage example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fieldName</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span><span class="p">;</span>
+<span class="nv">$fieldValidationMessage</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;required&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Your name is required here&#39;</span><span class="p">,</span>
+        <span class="p">);</span>
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">setValidationMessage</span><span class="p">(</span><span class="nv">$fieldName</span><span class="p">,</span> <span class="nv">$fieldValidationMessage</span><span class="p">);</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
@@ -642,18 +641,16 @@ $fieldValidationMessage = array(</p>
 <code class="descname">setValidationMessages</code><span class="sig-paren">(</span><em>$fieldMessages</em><span class="sig-paren">)</span><a class="headerlink" href="#setValidationMessages" title="Permalink to this definition">¶</a></dt>
 <dd><p>:param  array   $fieldMessages</p>
 <p>This function will set the field messages.</p>
-<p>Usage example::
-$fieldValidationMessage = array(</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>&#8216;name&#8217; =&gt; array(</dt>
-<dd>&#8216;required&#8217;   =&gt; &#8216;Your baby name is missing.&#8217;,
-&#8216;min_length&#8217; =&gt; &#8216;Too short, man!&#8217;,</dd>
-</dl>
-<p>),</p>
-</div></blockquote>
-<p>);
-$model-&gt;setValidationMessages($fieldValidationMessage);</p>
+<p>Usage example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fieldValidationMessage</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;required&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Your baby name is missing.&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;min_length&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Too short, man!&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+<span class="p">);</span>
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">setValidationMessages</span><span class="p">(</span><span class="nv">$fieldValidationMessage</span><span class="p">);</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <p>Now, whenever you call the <code class="docutils literal"><span class="pre">insert()</span></code>, <code class="docutils literal"><span class="pre">update()</span></code>, or <code class="docutils literal"><span class="pre">save()</span></code> methods, the data will be validated. If it fails,
