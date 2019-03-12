@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter;
 
+use CodeIgniter\I18n\Time;
+
 /**
  * CodeIgniter
  *
