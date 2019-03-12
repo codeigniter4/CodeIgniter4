@@ -619,6 +619,43 @@ be applied. If you have custom error message that you want to use, place them in
 <span class="p">}</span>
 </pre></div>
 </div>
+<p>The other way to set the validation message to fields by functions,</p>
+<dl class="function">
+<dt id="setValidationMessage">
+<code class="descname">setValidationMessage</code><span class="sig-paren">(</span><em>$field</em>, <em>$fieldMessages</em><span class="sig-paren">)</span><a class="headerlink" href="#setValidationMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>:param  string  $field
+:param  array   $fieldMessages</p>
+<p>This function will set the field wise error messages.</p>
+<p>Usage example::
+$fieldName = &#8216;name&#8217;;
+$fieldValidationMessage = array(</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;required&#8217;   =&gt; &#8216;Your name is required here&#8217;,</div></blockquote>
+<p>);</p>
+</div></blockquote>
+<p>$model-&gt;setValidationMessage($fieldName, $fieldValidationMessage);</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="setValidationMessages">
+<code class="descname">setValidationMessages</code><span class="sig-paren">(</span><em>$fieldMessages</em><span class="sig-paren">)</span><a class="headerlink" href="#setValidationMessages" title="Permalink to this definition">¶</a></dt>
+<dd><p>:param  array   $fieldMessages</p>
+<p>This function will set the field messages.</p>
+<p>Usage example::
+$fieldValidationMessage = array(</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>&#8216;name&#8217; =&gt; array(</dt>
+<dd>&#8216;required&#8217;   =&gt; &#8216;Your baby name is missing.&#8217;,
+&#8216;min_length&#8217; =&gt; &#8216;Too short, man!&#8217;,</dd>
+</dl>
+<p>),</p>
+</div></blockquote>
+<p>);
+$model-&gt;setValidationMessages($fieldValidationMessage);</p>
+</dd></dl>
+
 <p>Now, whenever you call the <code class="docutils literal"><span class="pre">insert()</span></code>, <code class="docutils literal"><span class="pre">update()</span></code>, or <code class="docutils literal"><span class="pre">save()</span></code> methods, the data will be validated. If it fails,
 the model will return boolean <strong>false</strong>. You can use the <code class="docutils literal"><span class="pre">errors()</span></code> method to retrieve the validation errors:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$model</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span>
@@ -901,7 +938,7 @@ insert method, it is first converted to an array.</td>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 10, 2019.
+      Last updated on Mar 12, 2019.
 
     </p>
   </div>
