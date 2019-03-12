@@ -488,6 +488,54 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testValidationWithSetValidationMessage()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name'        => null,
+			'description' => 'some great marketing stuff',
+		];
+
+		$model->setValidationMessage('name', [
+			'required'   => 'Your baby name is missing.',
+			'min_length' => 'Too short, man!',
+		]);
+		$this->assertFalse($model->insert($data));
+
+		$errors = $model->errors();
+
+		$this->assertEquals('Your baby name is missing.', $errors['name']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testValidationWithSetValidationMessages()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name'        => null,
+			'description' => 'some great marketing stuff',
+		];
+
+		$model->setValidationMessages(
+			[
+				'name' => [
+					'required'   => 'Your baby name is missing.',
+					'min_length' => 'Too short, man!',
+				],
+			]
+		);
+
+		$this->assertFalse($model->insert($data));
+
+		$errors = $model->errors();
+
+		$this->assertEquals('Your baby name is missing.', $errors['name']);
+	}
+	//--------------------------------------------------------------------
+
 	public function testValidationPlaceholdersSuccess()
 	{
 		$model = new ValidModel($this->db);
