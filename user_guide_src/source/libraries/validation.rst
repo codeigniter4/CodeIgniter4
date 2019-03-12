@@ -662,7 +662,7 @@ alpha_numeric           No          Fails if field contains anything other than 
 alpha_numeric_space     No          Fails if field contains anything other than alpha-numeric characters, numbers or space.
 decimal                 No          Fails if field contains anything other than a decimal number.
 differs                 Yes         Fails if field does not differ from the one in the parameter.                                   differs[field_name]
-exact_length            Yes         Fails if field is not exactly the parameter value.                                              exact_length[5]
+exact_length            Yes         Fails if field is not exactly the parameter value. One or more comma-separated values.                                             exact_length[5] or exact_length[5,8,12]
 greater_than            Yes         Fails if field is less than or equal to the parameter value or not numeric.                     greater_than[8]
 greater_than_equal_to   Yes         Fails if field is less than the parameter value, or not numeric.                                greater_than_equal_to[5]
 in_list                 Yes         Fails if field is not within a predetermined list.                                              in_list[red,blue,green]
