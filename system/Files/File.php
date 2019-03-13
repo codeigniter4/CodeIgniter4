@@ -37,7 +37,6 @@ namespace CodeIgniter\Files;
  * @filesource
  */
 
-use CodeIgniter\HTTP\Exceptions\HTTPException;
 use SplFileInfo;
 use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
@@ -162,17 +161,13 @@ class File extends SplFileInfo
 	public function move(string $targetPath, string $name = null, bool $overwrite = false)
 	{
 		$targetPath  = rtrim($targetPath, '/') . '/';
-		$name        = is_null($name) ? $this->getBasename() : $name;
+		$name        = $name ?? $this->getBaseName();
 		$destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
-		try
-		{
-			move_uploaded_file($this->getRealPath(), $destination);
-		}
-		catch (\Exception $e)
+		if (! @rename($this->getPath(), $destination))
 		{
 			$error = error_get_last();
-			throw HTTPException::forMoveFailed(basename($this->path), $targetPath, strip_tags($error['message']));
+			throw FileException::forUnableToMove($this->getBasename(), $targetPath, strip_tags($error['message']));
 		}
 
 		@chmod($targetPath, 0777 & ~umask());
