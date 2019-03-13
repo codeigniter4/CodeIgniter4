@@ -256,9 +256,9 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 
 		$routes->group(
-			'admin', function ($routes) {
-				$routes->add('users/list', '\Users::list');
-			}
+				'admin', function ($routes) {
+					$routes->add('users/list', '\Users::list');
+				}
 		);
 
 		$expected = [
@@ -275,9 +275,9 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 
 		$routes->group(
-			'<script>admin', function ($routes) {
-				$routes->add('users/list', '\Users::list');
-			}
+				'<script>admin', function ($routes) {
+					$routes->add('users/list', '\Users::list');
+				}
 		);
 
 		$expected = [
@@ -294,9 +294,9 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 
 		$routes->group(
-			'admin', ['namespace' => 'Admin'], function ($routes) {
-				$routes->add('users/list', 'Users::list');
-			}
+				'admin', ['namespace' => 'Admin'], function ($routes) {
+					$routes->add('users/list', 'Users::list');
+				}
 		);
 
 		$expected = [
@@ -416,6 +416,42 @@ class RouteCollectionTest extends \CIUnitTestCase
 			'photos/new'           => '\Photos::new',
 			'photos/([0-9]+)/edit' => '\Photos::edit/$1',
 			'photos/([0-9]+)'      => '\Photos::show/$1',
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	public function testResourcesWithDefaultPlaceholder()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes                    = $this->getCollector();
+
+		$routes->setDefaultConstraint('num');
+		$routes->resource('photos');
+
+		$expected = [
+			'photos'               => '\Photos::index',
+			'photos/new'           => '\Photos::new',
+			'photos/([0-9]+)/edit' => '\Photos::edit/$1',
+			'photos/([0-9]+)'      => '\Photos::show/$1',
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	public function testResourcesWithBogusDefaultPlaceholder()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes                    = $this->getCollector();
+
+		$routes->setDefaultConstraint(':num');
+		$routes->resource('photos');
+
+		$expected = [
+			'photos'           => '\Photos::index',
+			'photos/new'       => '\Photos::new',
+			'photos/(.*)/edit' => '\Photos::edit/$1',
+			'photos/(.*)'      => '\Photos::show/$1',
 		];
 
 		$this->assertEquals($expected, $routes->getRoutes());
@@ -619,15 +655,15 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$expected = ['here' => '\there'];
 
 		$routes->environment(
-			'testing', function ($routes) {
-				$routes->get('here', 'there');
-			}
+				'testing', function ($routes) {
+					$routes->get('here', 'there');
+				}
 		);
 
 		$routes->environment(
-			'badenvironment', function ($routes) {
-				$routes->get('from', 'to');
-			}
+				'badenvironment', function ($routes) {
+					$routes->get('from', 'to');
+				}
 		);
 
 		$this->assertEquals($expected, $routes->getRoutes());
@@ -715,12 +751,12 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$routes->get('user/insert', 'myController::goto/$1/$2', ['as' => 'namedRoute1']);
 		$routes->post(
-			'user/insert', function () {
-			}, ['as' => 'namedRoute2']
+				'user/insert', function () {
+				}, ['as' => 'namedRoute2']
 		);
 		$routes->put(
-			'user/insert', function () {
-			}, ['as' => 'namedRoute3']
+				'user/insert', function () {
+				}, ['as' => 'namedRoute3']
 		);
 
 		$match1 = $routes->reverseRoute('namedRoute1');
@@ -758,6 +794,26 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$this->assertEquals($expected, $routes->getRoutes());
 		$this->assertTrue($routes->isRedirect('users'));
 		$this->assertEquals(307, $routes->getRedirectCode('users'));
+		$this->assertEquals(0, $routes->getRedirectCode('bosses'));
+	}
+
+	public function testAddRedirectNamed()
+	{
+		$routes = $this->getCollector();
+
+		$routes->add('zombies', 'Zombies::index', ['as' => 'namedRoute']);
+		$routes->addRedirect('users', 'namedRoute', 307);
+
+		$expected = [
+			'users'   => [
+				'zombies' => '\Zombies::index',
+			],
+			'zombies' => '\Zombies::index',
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+		$this->assertTrue($routes->isRedirect('users'));
+		$this->assertEquals(307, $routes->getRedirectCode('users'));
 	}
 
 	//--------------------------------------------------------------------
@@ -776,6 +832,86 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$expects = [
 			'objects/([a-zA-Z0-9]+)' => '\Admin::objectsList/$1',
+		];
+
+		$this->assertEquals($expects, $routes->getRoutes());
+	}
+
+	public function testWithSubdomainMissing()
+	{
+		$routes = $this->getCollector();
+
+		//      $_SERVER['HTTP_HOST'] = 'adm.example.com';
+
+		$routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'adm']);
+		$routes->add('/objects/(:alphanum)', 'App::objectsList/$1');
+
+		$expects = [
+			'objects/([a-zA-Z0-9]+)' => '\App::objectsList/$1',
+		];
+
+		$this->assertEquals($expects, $routes->getRoutes());
+	}
+
+	public function testWithDifferentSubdomain()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['HTTP_HOST'] = 'adm.example.com';
+
+		$routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'sales']);
+		$routes->add('/objects/(:alphanum)', 'App::objectsList/$1');
+
+		$expects = [
+			'objects/([a-zA-Z0-9]+)' => '\App::objectsList/$1',
+		];
+
+		$this->assertEquals($expects, $routes->getRoutes());
+	}
+
+	public function testWithWWWSubdomain()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['HTTP_HOST'] = 'www.example.com';
+
+		$routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'sales']);
+		$routes->add('/objects/(:alphanum)', 'App::objectsList/$1');
+
+		$expects = [
+			'objects/([a-zA-Z0-9]+)' => '\App::objectsList/$1',
+		];
+
+		$this->assertEquals($expects, $routes->getRoutes());
+	}
+
+	public function testWithDotCoSubdomain()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['HTTP_HOST'] = 'example.uk.co';
+
+		$routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'sales']);
+		$routes->add('/objects/(:alphanum)', 'App::objectsList/$1');
+
+		$expects = [
+			'objects/([a-zA-Z0-9]+)' => '\App::objectsList/$1',
+		];
+
+		$this->assertEquals($expects, $routes->getRoutes());
+	}
+
+	public function testWithDifferentSubdomainMissing()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['HTTP_HOST'] = 'adm.example.com';
+
+		$routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'nothere']);
+		$routes->add('/objects/(:alphanum)', 'App::objectsList/$1', ['subdomain' => '*']);
+
+		$expects = [
+			'objects/([a-zA-Z0-9]+)' => '\App::objectsList/$1',
 		];
 
 		$this->assertEquals($expects, $routes->getRoutes());
@@ -812,8 +948,8 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 
 		$routes->add(
-			'login', function () {
-			}
+				'login', function () {
+				}
 		);
 
 		$match = $routes->reverseRoute('login');
@@ -873,8 +1009,8 @@ class RouteCollectionTest extends \CIUnitTestCase
 			'foo' => 'baz',
 		];
 		$routes->add(
-			'administrator', function () {
-			}, $options
+				'administrator', function () {
+				}, $options
 		);
 
 		$options = $routes->getRoutesOptions('administrator');
@@ -888,14 +1024,15 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes                    = $this->getCollector();
 
 		$routes->group(
-			'admin', ['filter' => 'role'], function ($routes) {
-				$routes->add('users', '\Users::list');
-			}
+				'admin', ['filter' => 'role'], function ($routes) {
+					$routes->add('users', '\Users::list');
+				}
 		);
 
 		$this->assertTrue($routes->isFiltered('admin/users'));
 		$this->assertFalse($routes->isFiltered('admin/franky'));
 		$this->assertEquals('role', $routes->getFilterForRoute('admin/users'));
+		$this->assertEquals('', $routes->getFilterForRoute('admin/bosses'));
 	}
 
 	public function testRouteGroupWithFilterWithParams()
@@ -904,14 +1041,57 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes                    = $this->getCollector();
 
 		$routes->group(
-			'admin', ['filter' => 'role:admin,manager'], function ($routes) {
-				$routes->add('users', '\Users::list');
-			}
+				'admin', ['filter' => 'role:admin,manager'], function ($routes) {
+					$routes->add('users', '\Users::list');
+				}
 		);
 
 		$this->assertTrue($routes->isFiltered('admin/users'));
 		$this->assertFalse($routes->isFiltered('admin/franky'));
 		$this->assertEquals('role:admin,manager', $routes->getFilterForRoute('admin/users'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function test404OverrideNot()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes                    = $this->getCollector();
+
+		$this->assertEquals(null, $routes->get404Override());
+	}
+
+	public function test404OverrideString()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes                    = $this->getCollector();
+
+		$routes->set404Override('Explode');
+		$this->assertEquals('Explode', $routes->get404Override());
+	}
+
+	public function test404OverrideCallable()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes                    = $this->getCollector();
+
+		$routes->set404Override(function () {
+			echo 'Explode now';
+		}
+		);
+		$this->assertTrue(is_callable($routes->get404Override()));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testOffsetParameters()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes                    = $this->getCollector();
+
+		$routes->get('users/(:num)', 'users/show/$1', ['offset' => 1]);
+		$expected = ['users/([0-9]+)' => '\users/show/$2'];
+		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
 }
