@@ -216,6 +216,20 @@ class UploadedFile extends File implements UploadedFileInterface
 
 	//--------------------------------------------------------------------
 
+	public function getPath()
+	{
+		return $this->path;
+	}
+
+	//--------------------------------------------------------------------
+
+	public function getRealPath()
+	{
+		return $this->path . DIRECTORY_SEPARATOR . $this->name;
+	}
+
+	//--------------------------------------------------------------------
+
 	/**
 	 * Returns whether the file has been moved or not. If it has,
 	 * the move() method will not work and certain properties, like
