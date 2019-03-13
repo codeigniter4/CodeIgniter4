@@ -54,9 +54,8 @@ Within the view, we then need to tell it where to display the resulting links::
 
     <?= $pager->links() ?>
 
-And that's all it takes. The Pager class will render a series of links that are compatible with the Bootstrap CSS
-framework by default. It will have First and Last page links, as well as Next and Previous links for any pages more
-than two pages on either side of the current page.
+And that's all it takes. The Pager class will render First and Last page links, as well as Next and Previous links
+for any pages more than two pages on either side of the current page.
 
 If you prefer a simpler output, you can use the ``simpleLinks()`` method, which only uses "Older" and "Newer" links,
 instead of the details pagination links::
@@ -149,7 +148,7 @@ This setting stores the alias and :doc:`namespaced view paths </outgoing/views>`
 should be used. The *default_full* and *default_simple* views are used for the ``links()`` and ``simpleLinks()``
 methods, respectively. To change the way those are displayed application-wide, you could assign a new view here.
 
-For example, say you create a new view file that works with the Foundation CSS framework, instead of Bootstrap, and
+For example, say you create a new view file that works with the Foundation CSS framework, and
 you place that file at **app/Views/Pagers/foundation_full.php**. Since the **application** directory is
 namespaced as ``App``, and all directories underneath it map directly to segments of the namespace, you can locate
 the view file through it's namespace::
