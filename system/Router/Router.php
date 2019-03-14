@@ -469,11 +469,7 @@ class Router implements RouterInterface
 				{
 					$val = preg_replace('#^' . $key . '$#', $val, $uri);
 				}
-				elseif (strpos($val, '/') !== false)
-				{
-					$val = str_replace('/', '\\', $val);
-				}
-
+			
 				// Is this route supposed to redirect to another?
 				if ($this->collection->isRedirect($key))
 				{
