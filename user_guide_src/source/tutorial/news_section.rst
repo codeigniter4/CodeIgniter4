@@ -271,7 +271,7 @@ with a slug to the ``view()`` method in the ``News`` controller.
 
 	$routes->get('news/(:segment)', 'News::view/$1');
 	$routes->get('news', 'News::index');
-	$routes->get('(:any)', 'Pages::view/$1');
+	$routes->get('(:any)', 'Pages::showme/$1');
 
 Point your browser to your "news" page, i.e. ``localhost:8080/news``,
 you should see a list of the news items, each of which has a link

@@ -31,7 +31,7 @@ are public, so you access the settings like any other property::
 	$config = config( 'Config\\Pager' );
 
 	// Access settings as class properties
-	$pageSize = $pager->perPage;
+	$pageSize = $config->perPage;
 
 If no namespace is provided, it will look for the files in all available namespaces that have
 been defined, as well as **/app/Config/**. All of the configuration files
