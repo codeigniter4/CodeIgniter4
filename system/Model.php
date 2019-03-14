@@ -36,6 +36,7 @@
  * @filesource
  */
 
+use CodeIgniter\Exceptions\ModelException;
 use Config\Database;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
@@ -1091,6 +1092,14 @@ class Model
 		if ($this->builder instanceof BaseBuilder)
 		{
 			return $this->builder;
+		}
+
+		// We're going to force a primary key to exist
+		// so we don't have overly convoluted code,
+		// and future features are likely to require them.
+		if (empty($this->primaryKey))
+		{
+			throw ModelException::forNoPrimaryKey(get_class($this));
 		}
 
 		$table = empty($table) ? $this->table : $table;

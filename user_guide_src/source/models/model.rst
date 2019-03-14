@@ -14,7 +14,7 @@ instance of the database connection and you're good to go.
 
 ::
 
-        <?php namespace App\Models;
+    <?php namespace App\Models;
 
 	use CodeIgniter\Database\ConnectionInterface;
 
@@ -70,9 +70,9 @@ This ensures that within the model any references to ``$this->db`` are made thro
 connection.
 ::
 
-         <?php namespace App\Models;
+    <?php namespace App\Models;
 
-       use CodeIgniter\Model;
+    use CodeIgniter\Model;
 
 	class UserModel extends Model
 	{
@@ -121,6 +121,9 @@ queries.
 This is the name of the column that uniquely identifies the records in this table. This
 does not necessarily have to match the primary key that is specified in the database, but
 is used with methods like ``find()`` to know what column to match the specified value to.
+
+.. note:: All Models must have a primaryKey specified to allow all of the features to work
+    as expected.
 
 **$returnType**
 

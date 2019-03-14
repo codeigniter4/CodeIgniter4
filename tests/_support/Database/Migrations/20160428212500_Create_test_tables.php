@@ -88,6 +88,11 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 
 		//No Primary Key
 		$this->forge->addField([
+			'id'    => [
+				'type'          => 'INTEGER',
+				'constraint'    => 3,
+				$unique_or_auto => true,
+			],
 			'key'   => [
 				'type'       => 'VARCHAR',
 				'constraint' => 40,
