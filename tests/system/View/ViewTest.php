@@ -295,4 +295,26 @@ class ViewTest extends \CIUnitTestCase
 
 		$this->assertContains($expected, $view->render('extend_two'));
 	}
+
+	public function testRenderLayoutBroken()
+	{
+		$view = new View($this->config, $this->viewsDir, $this->loader);
+
+		$view->setVar('testString', 'Hello World');
+		$expected = '';
+
+		$this->expectException(\RuntimeException::class);
+		$this->assertContains($expected, $view->render('broken'));
+	}
+
+	public function testRenderLayoutNoContentSection()
+	{
+		$view = new View($this->config, $this->viewsDir, $this->loader);
+
+		$view->setVar('testString', 'Hello World');
+		$expected = '';
+
+		$this->assertContains($expected, $view->render('apples'));
+	}
+
 }
