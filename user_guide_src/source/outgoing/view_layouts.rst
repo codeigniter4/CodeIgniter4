@@ -91,4 +91,4 @@ view to view. When using view layouts you must use ``$this->include()`` to inclu
     <?= $this->endSection() ?>
 
 When calling the include() method, you can pass it all of the same options that can when rendering a normal view, including
-cache directives, etc. 
+cache directives, etc.
