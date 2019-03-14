@@ -235,17 +235,17 @@
 instance of the database connection and you&#8217;re good to go.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Database\ConnectionInterface</span><span class="p">;</span>
+    <span class="k">use</span> <span class="nx">CodeIgniter\Database\ConnectionInterface</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">UserModel</span>
-<span class="p">{</span>
-        <span class="k">protected</span> <span class="nv">$db</span><span class="p">;</span>
+    <span class="k">class</span> <span class="nc">UserModel</span>
+    <span class="p">{</span>
+            <span class="k">protected</span> <span class="nv">$db</span><span class="p">;</span>
 
-        <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(</span><span class="nx">ConnectionInterface</span> <span class="o">&amp;</span><span class="nv">$db</span><span class="p">)</span>
-        <span class="p">{</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span> <span class="o">=&amp;</span> <span class="nv">$db</span><span class="p">;</span>
-        <span class="p">}</span>
-<span class="p">}</span>
+            <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(</span><span class="nx">ConnectionInterface</span> <span class="o">&amp;</span><span class="nv">$db</span><span class="p">)</span>
+            <span class="p">{</span>
+                    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span> <span class="o">=&amp;</span> <span class="nv">$db</span><span class="p">;</span>
+            <span class="p">}</span>
+    <span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -285,14 +285,14 @@ it will automatically connect to the default database group, as set in the confi
 modify which group is used on a per-model basis by adding the DBGroup property to your class.
 This ensures that within the model any references to <code class="docutils literal"><span class="pre">$this-&gt;db</span></code> are made through the appropriate
 connection.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span>  <span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
 
- <span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
- <span class="p">{</span>
-         <span class="k">protected</span> <span class="nv">$DBGroup</span> <span class="o">=</span> <span class="s1">&#39;group_name&#39;</span><span class="p">;</span>
- <span class="p">}</span>
+    <span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+    <span class="p">{</span>
+            <span class="k">protected</span> <span class="nv">$DBGroup</span> <span class="o">=</span> <span class="s1">&#39;group_name&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
 </pre></div>
 </div>
 <p>You would replace &#8220;group_name&#8221; with the name of a defined database group from the database
@@ -318,6 +318,8 @@ what table to use and how we can find the required records:</p>
         <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">];</span>
 
         <span class="k">protected</span> <span class="nv">$useTimestamps</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+        <span class="k">protected</span> <span class="nv">$createdField</span>  <span class="o">=</span> <span class="s1">&#39;created_at&#39;</span><span class="p">;</span>
+        <span class="k">protected</span> <span class="nv">$updatedField</span>  <span class="o">=</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">;</span>
 
         <span class="k">protected</span> <span class="nv">$validationRules</span>    <span class="o">=</span> <span class="p">[];</span>
         <span class="k">protected</span> <span class="nv">$validationMessages</span> <span class="o">=</span> <span class="p">[];</span>
@@ -333,6 +335,11 @@ queries.</p>
 <p>This is the name of the column that uniquely identifies the records in this table. This
 does not necessarily have to match the primary key that is specified in the database, but
 is used with methods like <code class="docutils literal"><span class="pre">find()</span></code> to know what column to match the specified value to.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All Models must have a primaryKey specified to allow all of the features to work
+as expected.</p>
+</div>
 <p><strong>$returnType</strong></p>
 <p>The Model&#8217;s CRUD methods will take a step of work away from you and automatically return
 the resulting data, instead of the Result object. This setting allows you to define
@@ -356,6 +363,12 @@ potential mass assignment vulnerabilities.</p>
 and updates. If true, will set the current time in the format specified by $dateFormat. This
 requires that the table have columns named &#8216;created_at&#8217; and &#8216;updated_at&#8217; in the appropriate
 data type.</p>
+<p><strong>$createdField</strong></p>
+<p>Specifies which database field should use for keep data record create timestamp.
+Leave it empty to avoid update it (even useTimestamps is enabled)</p>
+<p><strong>$updatedField</strong></p>
+<p>Specifies which database field should use for keep data record update timestamp.
+Leave it empty to avoid update it (even useTimestamps is enabled)</p>
 <p><strong>$dateFormat</strong></p>
 <p>This value works with $useTimestamps to ensure that the correct type of date value gets
 inserted into the database. By default, this creates DATETIME values, but valid options
@@ -935,7 +948,7 @@ insert method, it is first converted to an array.</td>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 12, 2019.
+      Last updated on Mar 13, 2019.
 
     </p>
   </div>

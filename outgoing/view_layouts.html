@@ -212,6 +212,7 @@
 <li><a class="reference internal" href="#creating-a-layout" id="id1">Creating A Layout</a></li>
 <li><a class="reference internal" href="#using-layouts-in-views" id="id2">Using Layouts in Views</a></li>
 <li><a class="reference internal" href="#rendering-the-view" id="id3">Rendering the View</a></li>
+<li><a class="reference internal" href="#including-view-partials" id="id4">Including View Partials</a></li>
 </ul>
 </div>
 <p>CodeIgniter supports a simple, yet very flexible, layout system that makes it simple to use one or more
@@ -272,6 +273,22 @@ matches the section name exists.:</p>
 </div>
 <p>The renderer is smart enough to detect whether the view should be rendered on its own, or if it needs a layout.</p>
 </div>
+<div class="section" id="including-view-partials">
+<h2><a class="toc-backref" href="#id4">Including View Partials</a><a class="headerlink" href="#including-view-partials" title="Permalink to this headline">¶</a></h2>
+<p>View partials are view files that do not extend any layout. They typically include content that can be reused from
+view to view. When using view layouts you must use <code class="docutils literal"><span class="pre">$this-&gt;include()</span></code> to include any view partials.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+
+<span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">section</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Hello World!<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+
+    <span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">include</span><span class="p">(</span><span class="s1">&#39;sidebar&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">endSection</span><span class="p">()</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+<p>When calling the include() method, you can pass it all of the same options that can when rendering a normal view, including
+cache directives, etc.</p>
+</div>
 </div>
 
 
@@ -297,7 +314,7 @@ matches the section name exists.:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 12, 2019.
+      Last updated on Mar 13, 2019.
 
     </p>
   </div>

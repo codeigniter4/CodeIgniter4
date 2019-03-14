@@ -259,9 +259,8 @@ that and assign it to the $pager variable in the view.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>And that&#8217;s all it takes. The Pager class will render a series of links that are compatible with the Bootstrap CSS
-framework by default. It will have First and Last page links, as well as Next and Previous links for any pages more
-than two pages on either side of the current page.</p>
+<p>And that&#8217;s all it takes. The Pager class will render First and Last page links, as well as Next and Previous links
+for any pages more than two pages on either side of the current page.</p>
 <p>If you prefer a simpler output, you can use the <code class="docutils literal"><span class="pre">simpleLinks()</span></code> method, which only uses &#8220;Older&#8221; and &#8220;Newer&#8221; links,
 instead of the details pagination links:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">simpleLinks</span><span class="p">()</span> <span class="cp">?&gt;</span>
@@ -345,7 +344,7 @@ that is used by editing <strong>app/Config/Pager.php</strong>:</p>
 <p>This setting stores the alias and <a class="reference internal" href="../outgoing/views.html"><span class="doc">namespaced view paths</span></a> for the view that
 should be used. The <em>default_full</em> and <em>default_simple</em> views are used for the <code class="docutils literal"><span class="pre">links()</span></code> and <code class="docutils literal"><span class="pre">simpleLinks()</span></code>
 methods, respectively. To change the way those are displayed application-wide, you could assign a new view here.</p>
-<p>For example, say you create a new view file that works with the Foundation CSS framework, instead of Bootstrap, and
+<p>For example, say you create a new view file that works with the Foundation CSS framework, and
 you place that file at <strong>app/Views/Pagers/foundation_full.php</strong>. Since the <strong>application</strong> directory is
 namespaced as <code class="docutils literal"><span class="pre">App</span></code>, and all directories underneath it map directly to segments of the namespace, you can locate
 the view file through it&#8217;s namespace:</p>
@@ -473,7 +472,7 @@ title, which is just the number, and a boolean that tells whether the link is th
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 12, 2019.
+      Last updated on Mar 13, 2019.
 
     </p>
   </div>
