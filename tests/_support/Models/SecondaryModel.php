@@ -6,7 +6,7 @@ class SecondaryModel extends Model
 {
 	protected $table = 'secondary';
 
-	protected $primaryKey = null;
+	protected $primaryKey = 'id';
 
 	protected $returnType = 'object';
 
