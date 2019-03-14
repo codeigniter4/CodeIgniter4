@@ -3,8 +3,7 @@ Version |version|
 
 Release Date: Not released
 
-Highlights:
-- New View Layouts provide simple way to create site site view templates.
+**Next alpha release of CodeIgniter4**
 
 
 The list of changed files follows, with PR numbers shown.

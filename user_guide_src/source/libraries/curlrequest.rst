@@ -10,7 +10,7 @@ or communicate with an API, among many other things.
     :local:
     :depth: 2
 
-This class is modelled after the `Guzzle HTTP Client <http://docs.guzzlephp.org/en/latest/>`_ library since
+This class is modeled after the `Guzzle HTTP Client <http://docs.guzzlephp.org/en/latest/>`_ library since
 it is one of the more widely used libraries. Where possible, the syntax has been kept the same so that if
 your application needs something a little more powerful than what this library provides, you will have
 to change very little to move over to use Guzzle.

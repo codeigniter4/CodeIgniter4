@@ -20,7 +20,7 @@ There are eight different log levels, matching to the `RFC 5424 <http://tools.ie
 * **debug** - Detailed debug information.
 * **info** - Interesting events in your application, like a user logging in, logging SQL queries, etc.
 * **notice** - Normal, but significant events in your application.
-* **warning** - Exceptional occurrences that are not errors, like the user of deprecated APIs, poor use of an API, or other undesirable things that are not necessarily wrong.
+* **warning** - Exceptional occurrences that are not errors, like the use of deprecated APIs, poor use of an API, or other undesirable things that are not necessarily wrong.
 * **error** - Runtime errors that do not require immediate action but should typically be logged and monitored.
 * **critical** - Critical conditions, like an application component not available, or an unexpected exception.
 * **alert** - Action must be taken immediately, like when an entire website is down, the database unavailable, etc.
@@ -103,7 +103,7 @@ into the message string::
 
 If you want to log an Exception or an Error, you can use the key of 'exception', and the value being the
 Exception or Error itself. A string will be generated from that object containing the error message, the
-file name and line number.  You must still provide the exception placeholder in the message::
+file name and line number. You must still provide the exception placeholder in the message::
 
 	try
 	{

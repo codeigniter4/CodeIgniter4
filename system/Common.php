@@ -36,6 +36,7 @@
  * @filesource
  */
 
+use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
@@ -148,7 +149,7 @@ if (! function_exists('view'))
 	 *
 	 * @return string
 	 */
-	function view(string $name, array $data = [], array $options = [])
+	function view(string $name, array $data = [], array $options = []): string
 	{
 		/**
 		 * @var CodeIgniter\View\View $renderer
@@ -182,7 +183,7 @@ if (! function_exists('view_cell'))
 	 *
 	 * @return string
 	 */
-	function view_cell(string $library, $params = null, int $ttl = 0, string $cacheName = null)
+	function view_cell(string $library, $params = null, int $ttl = 0, string $cacheName = null): string
 	{
 		return Services::viewcell()
 						->render($library, $params, $ttl, $cacheName);
@@ -254,8 +255,9 @@ if (! function_exists('esc'))
 	 * @param string       $encoding
 	 *
 	 * @return string|array
+	 * @throws \InvalidArgumentException
 	 */
-	function esc($data, $context = 'html', $encoding = null)
+	function esc($data, string $context = 'html', string $encoding = null)
 	{
 		if (is_array($data))
 		{
@@ -325,7 +327,7 @@ if (! function_exists('session'))
 	 *
 	 * @return \CodeIgniter\Session\Session|mixed|null
 	 */
-	function session($val = null)
+	function session(string $val = null)
 	{
 		$session = Services::session();
 
@@ -431,7 +433,7 @@ if (! function_exists('lang'))
 	 *
 	 * @return string
 	 */
-	function lang(string $line, array $args = [], string $locale = null)
+	function lang(string $line, array $args = [], string $locale = null): string
 	{
 		return Services::language($locale)
 						->getLine($line, $args);
@@ -492,7 +494,7 @@ if (! function_exists('is_cli'))
 	 *
 	 * @return boolean
 	 */
-	function is_cli()
+	function is_cli(): bool
 	{
 		return (PHP_SAPI === 'cli' || defined('STDIN'));
 	}
@@ -515,7 +517,7 @@ if (! function_exists('route_to'))
 	 *
 	 * @return false|string
 	 */
-	function route_to(string $method, ...$params): string
+	function route_to(string $method, ...$params)
 	{
 		return Services::routes()->reverseRoute($method, ...$params);
 	}
@@ -536,7 +538,7 @@ if (! function_exists('remove_invisible_characters'))
 	 *
 	 * @return string
 	 */
-	function remove_invisible_characters($str, $url_encoded = true)
+	function remove_invisible_characters(string $str, bool $url_encoded = true): string
 	{
 		$non_displayables = [];
 
@@ -573,7 +575,8 @@ if (! function_exists('helper'))
 	 *   2. {namespace}/Helpers
 	 *   3. system/Helpers
 	 *
-	 * @param string|array $filenames
+	 * @param  string|array $filenames
+	 * @throws \CodeIgniter\Files\Exceptions\FileNotFoundException
 	 */
 	function helper($filenames)
 	{
@@ -682,7 +685,7 @@ if (! function_exists('app_timezone'))
 	 *
 	 * @return string
 	 */
-	function app_timezone()
+	function app_timezone(): string
 	{
 		$config = config(\Config\App::class);
 
@@ -701,7 +704,7 @@ if (! function_exists('csrf_token'))
 	 *
 	 * @return string
 	 */
-	function csrf_token()
+	function csrf_token(): string
 	{
 		$config = config(\Config\App::class);
 
@@ -720,7 +723,7 @@ if (! function_exists('csrf_hash'))
 	 *
 	 * @return string
 	 */
-	function csrf_hash()
+	function csrf_hash(): string
 	{
 		$security = Services::security(null, true);
 
@@ -735,9 +738,11 @@ if (! function_exists('csrf_field'))
 	/**
 	 * Generates a hidden input field for use within manually generated forms.
 	 *
+	 * @param string|null $id
+	 *
 	 * @return string
 	 */
-	function csrf_field(string $id = null)
+	function csrf_field(string $id = null): string
 	{
 		return '<input type="hidden"' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '" />';
 	}
@@ -820,6 +825,12 @@ if (! function_exists('old'))
 	 */
 	function old(string $key, $default = null, $escape = 'html')
 	{
+		// Ensure the session is loaded
+		if (session_status() === PHP_SESSION_NONE && ENVIRONMENT !== 'testing')
+		{
+			session();
+		}
+
 		$request = Services::request();
 
 		$value = $request->getOldInput($key);
@@ -861,7 +872,7 @@ if (! function_exists('redirect'))
 	 *
 	 * @return \CodeIgniter\HTTP\RedirectResponse
 	 */
-	function redirect(string $uri = null)
+	function redirect(string $uri = null): RedirectResponse
 	{
 		$response = Services::redirectResponse(null, true);
 
@@ -889,7 +900,7 @@ if (! function_exists('stringify_attributes'))
 	 *
 	 * @return string
 	 */
-	function stringify_attributes($attributes, $js = false): string
+	function stringify_attributes($attributes, bool $js = false): string
 	{
 		$atts = '';
 
@@ -933,7 +944,7 @@ if (! function_exists('is_really_writable'))
 	 *
 	 * @codeCoverageIgnore Not practical to test, as travis runs on linux
 	 */
-	function is_really_writable($file)
+	function is_really_writable(string $file): bool
 	{
 		// If we're on a Unix server with safe_mode off we call is_writable
 		if (DIRECTORY_SEPARATOR === '/' || ! ini_get('safe_mode'))
@@ -983,7 +994,7 @@ if (! function_exists('slash_item'))
 	 * @return string|null The configuration item or NULL if
 	 * the item doesn't exist
 	 */
-	function slash_item($item)
+	function slash_item(string $item): ?string
 	{
 		$config     = config(\Config\App::class);
 		$configItem = $config->{$item};
@@ -1014,7 +1025,7 @@ if (! function_exists('function_usable'))
 	 * terminate script execution if a disabled function is executed.
 	 *
 	 * The above described behavior turned out to be a bug in Suhosin,
-	 * but even though a fix was commited for 0.9.34 on 2012-02-12,
+	 * but even though a fix was committed for 0.9.34 on 2012-02-12,
 	 * that version is yet to be released. This function will therefore
 	 * be just temporary, but would probably be kept for a few years.
 	 *
@@ -1025,7 +1036,7 @@ if (! function_exists('function_usable'))
 	 *
 	 * @codeCoverageIgnore This is too exotic
 	 */
-	function function_usable($function_name)
+	function function_usable(string $function_name): bool
 	{
 		static $_suhosin_func_blacklist;
 

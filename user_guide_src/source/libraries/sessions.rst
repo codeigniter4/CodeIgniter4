@@ -2,7 +2,7 @@
 Session Library
 ###############
 
-The Session class permits you maintain a user's "state" and track their
+The Session class permits you to maintain a user's "state" and track their
 activity while they browse your site.
 
 CodeIgniter comes with a few session storage drivers, that you can see
@@ -77,7 +77,7 @@ at the same time. To use a more appropriate technical term - requests were
 non-blocking.
 
 However, non-blocking requests in the context of sessions also means
-unsafe, because modifications to session data (or session ID regeneration)
+unsafe, because, modifications to session data (or session ID regeneration)
 in one request can interfere with the execution of a second, concurrent
 request. This detail was at the root of many issues and the main reason why
 CodeIgniter 3.0 has a completely re-written Session library.
@@ -490,7 +490,7 @@ engines, that you can use:
   - CodeIgniter\Session\Handlers\RedisHandler
 
 By default, the ``FileHandler`` Driver will be used when a session is initialized,
-because it is the most safe choice and is expected to work everywhere
+because it is the safest choice and is expected to work everywhere
 (virtually every environment has a file system).
 
 However, any other driver may be selected via the ``public $sessionDriver``
@@ -526,7 +526,7 @@ On UNIX-like operating systems, this is usually achieved by setting the
 allows only the directory's owner to perform read and write operations on
 it. But be careful because the system user *running* the script is usually
 not your own, but something like 'www-data' instead, so only setting those
-permissions will probable break your application.
+permissions will probably break your application.
 
 Instead, you should do something like this, depending on your environment
 ::

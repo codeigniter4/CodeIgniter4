@@ -6,7 +6,7 @@ $db->callFunction();
 ============================
 
 This function enables you to call PHP database functions that are not
-natively included in CodeIgniter, in a platform independent manner. For
+natively included in CodeIgniter, in a platform-independent manner. For
 example, let's say you want to call the mysql_get_client_info()
 function, which is **not** natively supported by CodeIgniter. You could
 do so like this::
@@ -16,7 +16,7 @@ do so like this::
 You must supply the name of the function, **without** the mysql\_
 prefix, in the first parameter. The prefix is added automatically based
 on which database driver is currently being used. This permits you to
-run the same function on different database platforms. Obviously not all
+run the same function on different database platforms. Obviously, not all
 function calls are identical between platforms, so there are limits to
 how useful this function can be in terms of portability.
 

@@ -53,7 +53,7 @@ Service Accessors
 	:param   string   $context: The escaping context. Default is 'html'.
 	:param   string   $encoding: The character encoding of the string.
 	:returns: The escaped data.
-	:rtype: string
+	:rtype: mixed
 
 	Escapes data for inclusion in web pages, to help prevent XSS attacks.
 	This uses the Zend Escaper library to handle the actual filtering of the data.
@@ -71,10 +71,11 @@ Service Accessors
 
 	For full details, see the :doc:`helpers` page.
 
-.. php:function:: lang(string $line[, array $args]): string
+.. php:function:: lang($line[, $args[, $locale ]])
 
 	:param string $line: The line of text to retrieve
 	:param array  $args: An array of data to substitute for placeholders.
+	:param string $locale: Specify a different locale to be used instead of default one.
 
 	Retrieves a locale-specific file based on an alias string.
 
@@ -207,12 +208,12 @@ Miscellaneous Functions
 	:returns: TRUE if the script is being executed from the command line or FALSE otherwise.
 	:rtype: bool
 
-.. php:function:: log_message ($level, $message [, array $context])
+.. php:function:: log_message ($level, $message [, $context])
 
 	:param   string   $level: The level of severity
 	:param   string   $message: The message that is to be logged.
 	:param   array    $context: An associative array of tags and their values that should be replaced in $message
-	:returns: TRUE if was logged succesfully or FALSE if there was a problem logging it
+	:returns: TRUE if was logged successfully or FALSE if there was a problem logging it
 	:rtype: bool
 
 	Logs a message using the Log Handlers defined in **app/Config/Logger.php**.

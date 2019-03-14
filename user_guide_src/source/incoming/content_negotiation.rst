@@ -32,7 +32,7 @@ second is an array of supported values.
 Negotiating
 ===========
 
-In this section we will discuss the 4 types of content that can be negotiated and show how that would look using
+In this section, we will discuss the 4 types of content that can be negotiated and show how that would look using
 both of the methods described above to access the negotiator.
 
 Media

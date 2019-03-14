@@ -15,6 +15,7 @@ use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
 use Tests\Support\Models\SimpleEntity;
 use Tests\Support\Models\UserModel;
+use Tests\Support\Models\ValidErrorsModel;
 use Tests\Support\Models\ValidModel;
 
 /**
@@ -246,11 +247,13 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->db->table('secondary')
 				 ->insert([
+					 'id'    => 1,
 					 'key'   => 'foo',
 					 'value' => 'bar',
 				 ]);
 		$this->db->table('secondary')
 				 ->insert([
+					 'id'    => 2,
 					 'key'   => 'bar',
 					 'value' => 'baz',
 				 ]);
@@ -485,6 +488,52 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertEquals('You forgot to name the baby.', $errors['name']);
 	}
 
+	//--------------------------------------------------------------------
+
+	public function testValidationWithSetValidationMessage()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name'        => null,
+			'description' => 'some great marketing stuff',
+		];
+
+		$model->setValidationMessage('name', [
+			'required'   => 'Your baby name is missing.',
+			'min_length' => 'Too short, man!',
+		]);
+		$this->assertFalse($model->insert($data));
+
+		$errors = $model->errors();
+
+		$this->assertEquals('Your baby name is missing.', $errors['name']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testValidationWithSetValidationMessages()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name'        => null,
+			'description' => 'some great marketing stuff',
+		];
+
+		$model->setValidationMessages([
+			'name' => [
+				'required'   => 'Your baby name is missing.',
+				'min_length' => 'Too short, man!',
+			],
+		]);
+
+		$this->assertFalse($model->insert($data));
+
+		$errors = $model->errors();
+
+		$this->assertEquals('Your baby name is missing.', $errors['name']);
+	}
 	//--------------------------------------------------------------------
 
 	public function testValidationPlaceholdersSuccess()
@@ -930,6 +979,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->db->table('secondary')
 				 ->insert([
+					 'id'    => 1,
 					 'key'   => 'foo',
 					 'value' => 'bar',
 				 ]);
@@ -1030,5 +1080,40 @@ class ModelTest extends CIDatabaseTestCase
 		];
 
 		$this->assertTrue($model->insert($data) !== false);
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1574
+	 */
+	public function testValidationIncludingErrors()
+	{
+		$model = new ValidErrorsModel($this->db);
+
+		$data = [
+			'description' => 'This is a first test!',
+			'name'        => 'valid',
+			'id'          => 42,
+			'token'       => 42,
+		];
+
+		$id = $model->insert($data);
+
+		$this->assertFalse((bool)$id);
+
+		$errors = $model->errors();
+
+		$this->assertEquals('Minimum Length Error', $model->errors()['name']);
+	}
+
+	/**
+	 * @expectedException        CodeIgniter\Exceptions\ModelException
+	 * @expectedExceptionMessage `Tests\Support\Models\UserModel` model class does not specify a Primary Key.
+	 */
+	public function testThrowsWithNoPrimaryKey()
+	{
+		$model = new UserModel();
+		$this->setPrivateProperty($model, 'primaryKey', '');
+
+		$model->find(1);
 	}
 }

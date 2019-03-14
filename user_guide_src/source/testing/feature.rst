@@ -42,7 +42,7 @@ Requesting A Page
 Essentially, the FeatureTestCase simply allows you to call an endpoint on your application and get the results back.
 to do this, you use the ``call()`` method. The first parameter is the HTTP method to use (most frequently either GET or POST).
 The second parameter is the path on your site to test. The third parameter accepts an array that is used to populate the
-the superglobal variables for the HTTP verb you are using. So, a method of **GET** would have the **$_GET** variable
+superglobal variables for the HTTP verb you are using. So, a method of **GET** would have the **$_GET** variable
 populated, while a **post** request would have the **$_POST** array populated.
 ::
 
@@ -118,7 +118,7 @@ Checking Response Status
 
 **isOK()**
 
-Returns a boolean true/false based on whether the response is percieved to be "ok". This is primarily determined by
+Returns a boolean true/false based on whether the response is perceived to be "ok". This is primarily determined by
 a response status code in the 200 or 300's.
 ::
 

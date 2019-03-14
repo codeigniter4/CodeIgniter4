@@ -811,16 +811,14 @@ EOH;
 		$this->assertEquals(' checked="checked"', set_radio('code', 'alpha', true));
 		$this->assertEquals('', set_radio('code', 'beta', false));
 	}
-	
-	
+
 	// ------------------------------------------------------------------------
 	public function testFormParseFormAttributesTrue()
 	{
 		$expected = 'readonly ';
 		$this->assertEquals($expected, parse_form_attributes(['readonly' => true], []));
 	}
-	
-	
+
 	// ------------------------------------------------------------------------
 	public function testFormParseFormAttributesFalse()
 	{
@@ -828,23 +826,20 @@ EOH;
 		$this->assertEquals($expected, parse_form_attributes(['disabled' => false], []));
 	}
 
-	
 	// ------------------------------------------------------------------------
 	public function testFormParseFormAttributesNull()
 	{
 		$expected = 'bar="" ';
 		$this->assertEquals($expected, parse_form_attributes(['bar' => null], []));
 	}
-	
-	
+
 	// ------------------------------------------------------------------------
 	public function testFormParseFormAttributesStringEmpty()
 	{
 		$expected = 'bar="" ';
 		$this->assertEquals($expected, parse_form_attributes(['bar' => ''], []));
 	}
-	
-	
+
 	// ------------------------------------------------------------------------
 	public function testFormParseFormAttributesStringFoo()
 	{
@@ -852,15 +847,13 @@ EOH;
 		$this->assertEquals($expected, parse_form_attributes(['bar' => 'foo'], []));
 	}
 
-	
 	// ------------------------------------------------------------------------
 	public function testFormParseFormAttributesInt0()
 	{
 		$expected = 'ok="0" ';
 		$this->assertEquals($expected, parse_form_attributes(['ok' => 0], []));
 	}
-	
-	
+
 	// ------------------------------------------------------------------------
 	public function testFormParseFormAttributesInt1()
 	{
