@@ -72,3 +72,23 @@ Rendering the view and it's layout is done exactly as any other view would be di
     }
 
 The renderer is smart enough to detect whether the view should be rendered on its own, or if it needs a layout.
+
+***********************
+Including View Partials
+***********************
+
+View partials are view files that do not extend any layout. They typically include content that can be reused from
+view to view. When using view layouts you must use ``$this->include()`` to include any view partials.
+
+::
+
+    <?= $this->extend('default') ?>
+
+    <?= $this->section('content') ?>
+        <h1>Hello World!</h1>
+
+        <?= $this->include('sidebar') ?>
+    <?= $this->endSection() ?>
+
+When calling the include() method, you can pass it all of the same options that can when rendering a normal view, including
+cache directives, etc.

@@ -247,11 +247,13 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->db->table('secondary')
 				 ->insert([
+					 'id'    => 1,
 					 'key'   => 'foo',
 					 'value' => 'bar',
 				 ]);
 		$this->db->table('secondary')
 				 ->insert([
+					 'id'    => 2,
 					 'key'   => 'bar',
 					 'value' => 'baz',
 				 ]);
@@ -519,14 +521,12 @@ class ModelTest extends CIDatabaseTestCase
 			'description' => 'some great marketing stuff',
 		];
 
-		$model->setValidationMessages(
-			[
-				'name' => [
-					'required'   => 'Your baby name is missing.',
-					'min_length' => 'Too short, man!',
-				],
-			]
-		);
+		$model->setValidationMessages([
+			'name' => [
+				'required'   => 'Your baby name is missing.',
+				'min_length' => 'Too short, man!',
+			],
+		]);
 
 		$this->assertFalse($model->insert($data));
 
@@ -979,6 +979,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->db->table('secondary')
 				 ->insert([
+					 'id'    => 1,
 					 'key'   => 'foo',
 					 'value' => 'bar',
 				 ]);
@@ -1102,5 +1103,17 @@ class ModelTest extends CIDatabaseTestCase
 		$errors = $model->errors();
 
 		$this->assertEquals('Minimum Length Error', $model->errors()['name']);
+	}
+
+	/**
+	 * @expectedException        CodeIgniter\Exceptions\ModelException
+	 * @expectedExceptionMessage `Tests\Support\Models\UserModel` model class does not specify a Primary Key.
+	 */
+	public function testThrowsWithNoPrimaryKey()
+	{
+		$model = new UserModel();
+		$this->setPrivateProperty($model, 'primaryKey', '');
+
+		$model->find(1);
 	}
 }

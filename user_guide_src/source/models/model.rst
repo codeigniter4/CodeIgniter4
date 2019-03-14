@@ -14,7 +14,7 @@ instance of the database connection and you're good to go.
 
 ::
 
-        <?php namespace App\Models;
+    <?php namespace App\Models;
 
 	use CodeIgniter\Database\ConnectionInterface;
 
@@ -70,9 +70,9 @@ This ensures that within the model any references to ``$this->db`` are made thro
 connection.
 ::
 
-         <?php namespace App\Models;
+    <?php namespace App\Models;
 
-       use CodeIgniter\Model;
+    use CodeIgniter\Model;
 
 	class UserModel extends Model
 	{
@@ -104,6 +104,8 @@ what table to use and how we can find the required records::
 		protected $allowedFields = ['name', 'email'];
 
 		protected $useTimestamps = false;
+		protected $createdField  = 'created_at';
+		protected $updatedField  = 'updated_at';
 
 		protected $validationRules    = [];
 		protected $validationMessages = [];
@@ -121,6 +123,9 @@ queries.
 This is the name of the column that uniquely identifies the records in this table. This
 does not necessarily have to match the primary key that is specified in the database, but
 is used with methods like ``find()`` to know what column to match the specified value to.
+
+.. note:: All Models must have a primaryKey specified to allow all of the features to work
+    as expected.
 
 **$returnType**
 
@@ -153,6 +158,16 @@ This boolean value determines whether the current date is automatically added to
 and updates. If true, will set the current time in the format specified by $dateFormat. This
 requires that the table have columns named 'created_at' and 'updated_at' in the appropriate
 data type.
+
+**$createdField**
+
+Specifies which database field should use for keep data record create timestamp.
+Leave it empty to avoid update it (even useTimestamps is enabled)
+
+**$updatedField**
+
+Specifies which database field should use for keep data record update timestamp.
+Leave it empty to avoid update it (even useTimestamps is enabled)
 
 **$dateFormat**
 
