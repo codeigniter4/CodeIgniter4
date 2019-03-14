@@ -237,7 +237,7 @@ class View implements RendererInterface
 		// When using layouts, the data has already been stored
 		// in $this->sections, and no other valid output
 		// is allowed in $output so we'll overwrite it.
-		if (! is_null($this->layout))
+		if (! is_null($this->layout) && empty($this->currentSection))
 		{
 			$layoutView   = $this->layout;
 			$this->layout = null;
@@ -481,6 +481,22 @@ class View implements RendererInterface
 		{
 			echo $contents;
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Used within layout views to include additional views.
+	 *
+	 * @param string     $view
+	 * @param array|null $options
+	 * @param null       $saveData
+	 *
+	 * @return string
+	 */
+	public function include(string $view, array $options = null, $saveData = null)
+	{
+		return $this->render($view, $options, $saveData);
 	}
 
 	//--------------------------------------------------------------------
