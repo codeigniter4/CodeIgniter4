@@ -147,9 +147,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	}
 
 	/**
-	 * get mimetype
-	 *
-	 * @return string
+	 * Set content type by guessing mime type from file extension
 	 */
 	private function setContentTypeByMimeType()
 	{

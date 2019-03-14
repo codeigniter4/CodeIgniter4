@@ -311,7 +311,7 @@ class Message
 	 * @param string $name
 	 * @param string $value
 	 *
-	 * @return string
+	 * @return Message
 	 */
 	public function appendHeader(string $name, $value)
 	{
@@ -331,7 +331,7 @@ class Message
 	 * @param string $name
 	 * @param string $value
 	 *
-	 * @return string
+	 * @return Message
 	 */
 	public function prependHeader(string $name, $value)
 	{
