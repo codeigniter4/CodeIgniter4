@@ -47,7 +47,10 @@ class DOMParser
 	{
 		if (! extension_loaded('DOM'))
 		{
+			// always there in travis-ci
+			// @codeCoverageIgnoreStart
 			throw new \BadMethodCallException('DOM extension is required, but not currently loaded.');
+			// @codeCoverageIgnoreEnd
 		}
 
 		$this->dom = new \DOMDocument('1.0', 'utf-8');
@@ -78,8 +81,10 @@ class DOMParser
 		//turning off some errors
 		libxml_use_internal_errors(true);
 
-		if (! $this->dom->loadHTML($content))
+		$this->dom->loadHTML($content);
+		if (sizeof(libxml_get_errors()) > 0)
 		{
+			libxml_clear_errors();
 			throw new \BadMethodCallException('Invalid HTML');
 		}
 
@@ -248,7 +253,7 @@ class DOMParser
 		{
 			foreach ($selector['attr'] as $key => $value)
 			{
-				$path .= "[{$key}={$value}]";
+				$path .= "[@{$key}=\"{$value}\"]";
 			}
 		}
 
