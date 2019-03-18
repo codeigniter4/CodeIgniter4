@@ -340,10 +340,11 @@ if (! function_exists('form_dropdown'))
 	 * @param mixed $options
 	 * @param mixed $selected
 	 * @param mixed $extra
-	 *
+	 * @param array $disabled
+	 * 
 	 * @return string
 	 */
-	function form_dropdown($data = '', $options = [], $selected = [], $extra = ''): string
+	function form_dropdown($data = '', $options = [], $selected = [], $extra = '', $disabled = []): string
 	{
 		$defaults = [];
 		if (is_array($data))
@@ -398,7 +399,8 @@ if (! function_exists('form_dropdown'))
 				$form .= '<optgroup label="' . $key . "\">\n";
 				foreach ($val as $optgroup_key => $optgroup_val)
 				{
-					$sel   = in_array($optgroup_key, $selected) ? ' selected="selected"' : '';
+					$sel   = (in_array($optgroup_key, $selected) ? ' selected="selected"' : '') 
+						. (in_array($optgroup_key, $disabled) ? ' disabled' : '');
 					$form .= '<option value="' . htmlspecialchars($optgroup_key) . '"' . $sel . '>'
 							. (string) $optgroup_val . "</option>\n";
 				}
@@ -407,7 +409,8 @@ if (! function_exists('form_dropdown'))
 			else
 			{
 				$form .= '<option value="' . htmlspecialchars($key) . '"'
-						. (in_array($key, $selected) ? ' selected="selected"' : '') . '>'
+						. (in_array($key, $selected) ? ' selected="selected"' : '') 
+						. (in_array($key, $disabled) ? ' disabled' : '') .'>'
 						. (string) $val . "</option>\n";
 			}
 		}
