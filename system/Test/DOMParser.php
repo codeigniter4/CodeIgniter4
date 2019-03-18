@@ -81,8 +81,7 @@ class DOMParser
 		//turning off some errors
 		libxml_use_internal_errors(true);
 
-		$this->dom->loadHTML($content);
-		if (sizeof(libxml_get_errors()) > 0)
+		if (! $this->dom->loadHTML($content))
 		{
 			libxml_clear_errors();
 			throw new \BadMethodCallException('Invalid HTML');

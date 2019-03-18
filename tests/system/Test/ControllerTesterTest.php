@@ -1,109 +1,54 @@
 <?php
 namespace CodeIgniter\Test;
 
-use CodeIgniter\Events\Events;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
-use CodeIgniter\HTTP\Response;
-use Config\App;
+use CodeIgniter\Log\Logger;
+use Tests\Support\Config\MockLogger as LoggerConfig;
 
-class TestCaseTest extends \CIUnitTestCase
+class ControllerTesterTest extends \CIUnitTestCase
 {
 
-	//  protected function tearDown()
-	//  {
-	//      $buffer = ob_clean();
-	//      if (ob_get_level() > 0)
-	//      {
-	//          ob_end_clean();
-	//      }
-	//  }
-	//
-	public function testGetPrivatePropertyWithObject()
+	use ControllerTester;
+
+	public function setUp()
 	{
-		$obj    = new __TestForReflectionHelper();
-		$actual = $this->getPrivateProperty($obj, 'private');
-		$this->assertEquals('secret', $actual);
+		parent::setUp();
 	}
 
-	//--------------------------------------------------------------------
-
-	public function testLogging()
+	public function tearDown()
 	{
-		log_message('error', 'Some variable did not contain a value.');
-		$this->assertLogged('error', 'Some variable did not contain a value.');
+		parent::tearDown();
 	}
 
-	//--------------------------------------------------------------------
-
-	public function testEventTriggering()
+	public function testBadController()
 	{
-		Events::on('foo', function ($arg) use (&$result) {
-			$result = $arg;
-		});
-
-		Events::trigger('foo', 'bar');
-
-		$this->assertEventTriggered('foo');
+		$this->expectException(\InvalidArgumentException::class);
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withURI('http://example.com')
+				->withLogger($logger)
+				->controller(\App\Controllers\NeverHeardOfIt::class)
+				->execute('index');
 	}
 
-	//--------------------------------------------------------------------
-
-	public function testStreamFilter()
+	public function testBadControllerMethod()
 	{
-		CITestStreamFilter::$buffer = '';
-		$this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
-		\CodeIgniter\CLI\CLI::write('first.');
-		$expected = "first.\n";
-		$this->assertEquals($expected, CITestStreamFilter::$buffer);
-		stream_filter_remove($this->stream_filter);
+		$this->expectException(\InvalidArgumentException::class);
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withURI('http://example.com')
+				->withLogger($logger)
+				->controller(\App\Controllers\Home::class)
+				->execute('nothere');
 	}
 
-	//--------------------------------------------------------------------
-	/**
-	 * PHPunit emits headers before we get nominal control of
-	 * the output stream, making header testing awkward, to say
-	 * the least. This test is intended to make sure that this
-	 * is happening as expected.
-	 *
-	 * TestCaseEmissionsTest is intended to circumvent PHPunit,
-	 * and allow us to test our own header emissions.
-	 */
-	public function testPHPUnitHeadersEmitted()
+	public function testController()
 	{
-		$response = new Response(new App());
-		$response->pretend(true);
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withURI('http://example.com')
+				->withLogger($logger)
+				->controller(\App\Controllers\Home::class)
+				->execute('index');
 
-		$body = 'Hello';
-		$response->setBody($body);
-
-		ob_start();
-		$response->send();
-		ob_end_clean();
-
-		// Did PHPunit do its thing?
-		$this->assertHeaderEmitted('Content-type: text/html;');
-		$this->assertHeaderNotEmitted('Set-Cookie: foo=bar;');
-	}
-
-	//--------------------------------------------------------------------
-	public function testCloseEnough()
-	{
-		$this->assertCloseEnough(1, 1);
-		$this->assertCloseEnough(1, 0);
-		$this->assertCloseEnough(1, 2);
-	}
-
-	public function testCloseEnoughString()
-	{
-		$this->assertCloseEnoughString(strtotime('10:00:00'), strtotime('09:59:59'));
-		$this->assertCloseEnoughString(strtotime('10:00:00'), strtotime('10:00:00'));
-		$this->assertCloseEnoughString(strtotime('10:00:00'), strtotime('10:00:01'));
-	}
-
-	public function testCloseEnoughStringBadLength()
-	{
-		$result = $this->assertCloseEnoughString('apples & oranges', 'apples');
-		$this->assertFalse($result, 'Different string lengths should have returned false');
+		$body = $result->getBody();
+		$this->assertTrue($result->isOK());
 	}
 
 }

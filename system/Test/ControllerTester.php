@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Test;
+<?php
+namespace CodeIgniter\Test;
 
 /**
  * CodeIgniter
@@ -58,16 +59,13 @@ use Config\App;
  */
 trait ControllerTester
 {
+
 	protected $appConfig;
-
 	protected $request;
-
 	protected $response;
-
+	protected $logger;
 	protected $controller;
-
 	protected $uri = 'http://example.com';
-
 	protected $body;
 
 	/**
@@ -99,7 +97,13 @@ trait ControllerTester
 			$this->response = new Response($this->appConfig);
 		}
 
-		$this->controller = new $name($this->request, $this->response);
+		if (empty($this->logger))
+		{
+			$this->logger = new \CodeIgniter\Log\Handlers\FileHandler();
+		}
+
+		$this->controller = new $name();
+		$this->controller->initController($this->request, $this->response, $this->logger);
 
 		return $this;
 	}
@@ -124,8 +128,8 @@ trait ControllerTester
 		helper('url');
 
 		$result = (new ControllerResponse())
-			->setRequest($this->request)
-			->setResponse($this->response);
+				->setRequest($this->request)
+				->setResponse($this->response);
 
 		try
 		{
@@ -136,7 +140,7 @@ trait ControllerTester
 		catch (\Throwable $e)
 		{
 			$result->response()
-				   ->setStatusCode($e->getCode());
+					->setStatusCode($e->getCode());
 		}
 		finally
 		{
@@ -147,6 +151,12 @@ trait ControllerTester
 			if (isset($response) && $response instanceof Response)
 			{
 				$result->setResponse($response);
+			}
+
+			// check if controller returned a view rather than echoing it
+			if (is_string($response))
+			{
+				$output = $response;
 			}
 
 			$result->response()->setBody($output);
@@ -194,6 +204,18 @@ trait ControllerTester
 	public function withResponse($response)
 	{
 		$this->response = $response;
+
+		return $this;
+	}
+
+	/**
+	 * @param mixed $logger
+	 *
+	 * @return mixed
+	 */
+	public function withLogger($logger)
+	{
+		$this->logger = $logger;
 
 		return $this;
 	}

@@ -108,6 +108,20 @@ Allows you to provide a **Response** instance::
 If you do not provide one, a new Response instance with the default application values will be passed
 into your controller.
 
+**withLogger($logger)**
+
+Allows you to provide a **Logger** instance::
+
+    $logger = new CodeIgniter\Log\Handlers\FileHandler();
+
+    $results = $this->withResponse($response)
+                    -> withLogger($logger)
+                     ->controller(\App\Controllers\ForumController::class)
+                     ->execute('showCategories');
+
+If you do not provide one, a new Logger instance with the default configuration values will be passed
+into your controller.
+
 **withURI($uri)**
 
 Allows you to provide a new URI that simulates the URL the client was visiting when this controller was run.
