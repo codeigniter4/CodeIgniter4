@@ -9,9 +9,9 @@ class PageNotFoundException extends \OutOfBoundsException implements ExceptionIn
 	 */
 	protected $code = 404;
 
-	public static function forPageNotFound($Message)
+	public static function forPageNotFound(string $message = null)
 	{
-		return new static($Message ?? lang('HTTP.pageNotFound'));
+		return new static($message ?? lang('HTTP.pageNotFound'));
 	}
 
 	public static function forEmptyController()
