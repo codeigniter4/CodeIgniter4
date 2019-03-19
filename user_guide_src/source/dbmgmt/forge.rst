@@ -22,7 +22,7 @@ Load the Forge Class as follows::
 You can also pass another database group name to the DB Forge loader, in case
 the database you want to manage isn't the default one::
 
-	$this->myforge = $this->load->dbforge('other_db');
+	$this->myforge = \Config\Database::forge('other_db');
 
 In the above example, we're passing the name of a different database group
 to connect to as the first parameter.
