@@ -482,7 +482,7 @@ class Forge
 
 		if (($result = $this->db->query($sql)) !== false)
 		{
-			if(empty($this->db->dataCache['table_names']))
+			if(!empty($this->db->dataCache['table_names']))
 			{
 				$this->db->dataCache['table_names'][] = $table;
 			}
