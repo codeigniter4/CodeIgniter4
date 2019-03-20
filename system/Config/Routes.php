@@ -49,5 +49,11 @@ $routes->cli('migrations/(:segment)/(:segment)', '\CodeIgniter\Commands\Migratio
 $routes->cli('migrations/(:segment)', '\CodeIgniter\Commands\MigrationsCommand::$1');
 $routes->cli('migrations', '\CodeIgniter\Commands\MigrationsCommand::index');
 
-// CLI Catchall - uses a _remap to
+// CLI Catchall - uses a _remap to call Commands
 $routes->cli('ci(:any)', '\CodeIgniter\CLI\CommandRunner::index/$1');
+
+// Prevent access to BaseController
+$routes->add('basecontroller/(:any)', function()
+{
+    throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+}); 
