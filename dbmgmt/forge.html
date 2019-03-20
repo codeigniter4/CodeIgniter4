@@ -239,7 +239,7 @@ driver must already be running, since the forge class relies on it.</p>
 </div>
 <p>You can also pass another database group name to the DB Forge loader, in case
 the database you want to manage isn&#8217;t the default one:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">myforge</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">dbforge</span><span class="p">(</span><span class="s1">&#39;other_db&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">myforge</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">forge</span><span class="p">(</span><span class="s1">&#39;other_db&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>In the above example, we&#8217;re passing the name of a different database group
@@ -841,7 +841,7 @@ change the name, you can add a &#8220;name&#8221; key into the field defining ar
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 14, 2019.
+      Last updated on Mar 20, 2019.
 
     </p>
   </div>

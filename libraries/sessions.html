@@ -635,7 +635,7 @@ accessing them:</p>
 <div><ul class="simple">
 <li>session_id: <code class="docutils literal"><span class="pre">session_id()</span></code></li>
 <li>ip_address: <code class="docutils literal"><span class="pre">$_SERVER['REMOTE_ADDR']</span></code></li>
-<li>user_agent: <code class="docutils literal"><span class="pre">$this-&gt;input-&gt;user_agent()</span></code> (unused by sessions)</li>
+<li>user_agent: <code class="docutils literal"><span class="pre">$_SERVER['HTTP_USER_AGENT']</span></code> (unused by sessions)</li>
 <li>last_activity: Depends on the storage, no straightforward way. Sorry!</li>
 </ul>
 </div></blockquote>
@@ -1001,7 +1001,7 @@ separate the multiple server paths with commas:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 14, 2019.
+      Last updated on Mar 20, 2019.
 
     </p>
   </div>
