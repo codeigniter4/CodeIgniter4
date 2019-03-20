@@ -76,16 +76,6 @@ class DOMParserTest extends CIUnitTestCase
 		$this->assertTrue($dom->see('Hello World'));
 	}
 
-	public function testBadHTML()
-	{
-		$dom = new DOMParser();
-
-		$html = '<peanut><banana><h1>Hello World</body></h2></butter>';
-
-		$this->expectException(\BadMethodCallException::class);
-		$dom->withString($html);
-	}
-
 	public function testSeeHTML()
 	{
 		$dom = new DOMParser();
