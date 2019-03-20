@@ -86,7 +86,7 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('empty', true);
 
-		//No Primary Key
+		// Secondary Table
 		$this->forge->addField([
 			'id'    => [
 				'type'          => 'INTEGER',
@@ -99,6 +99,7 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 			],
 			'value' => ['type' => 'TEXT'],
 		]);
+		$this->forge->addKey('id', true);
 		$this->forge->createTable('secondary', true);
 	}
 
