@@ -280,9 +280,9 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Fetch an item from the $_SERVER array.
 	 *
-	 * @param integer|null $index  Index for item to be fetched from $_SERVER
-	 * @param integer|null $filter A filter name to be applied
-	 * @param null         $flags
+	 * @param string|array|null $index  Index for item to be fetched from $_SERVER
+	 * @param integer|null      $filter A filter name to be applied
+	 * @param null              $flags
 	 *
 	 * @return mixed
 	 */
@@ -336,10 +336,10 @@ class Request extends Message implements RequestInterface
 	 *
 	 * http://php.net/manual/en/filter.filters.sanitize.php
 	 *
-	 * @param integer      $method Input filter constant
-	 * @param string|array $index
-	 * @param integer      $filter Filter constant
-	 * @param null         $flags
+	 * @param string            $method Input filter constant
+	 * @param string|array|null $index
+	 * @param integer|null      $filter Filter constant
+	 * @param mixed             $flags
 	 *
 	 * @return mixed
 	 */
@@ -409,7 +409,7 @@ class Request extends Message implements RequestInterface
 			}
 		}
 
-		if (!isset($value))
+		if (! isset($value))
 		{
 			$value = $this->globals[$method][$index] ?? null;
 		}

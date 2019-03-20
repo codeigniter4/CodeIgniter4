@@ -319,7 +319,7 @@ The following functions are available:
 
 			<select name="shirts">
 				<option value="small">Small Shirt</option>
-				<option value="med">Medium  Shirt</option>
+				<option value="med">Medium Shirt</option>
 				<option value="large" selected="selected">Large Shirt</option>
 				<option value="xlarge">Extra Large Shirt</option>
 			</select>
@@ -332,7 +332,7 @@ The following functions are available:
 
 			<select name="shirts" multiple="multiple">
 				<option value="small" selected="selected">Small Shirt</option>
-				<option value="med">Medium  Shirt</option>
+				<option value="med">Medium Shirt</option>
 				<option value="large" selected="selected">Large Shirt</option>
 				<option value="xlarge">Extra Large Shirt</option>
 			</select>

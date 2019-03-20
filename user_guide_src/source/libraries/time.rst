@@ -73,7 +73,7 @@ for the timezone and locale in the second and third parameters::
 tomorrow()
 -----------
 
-Returns a new instance with the date set to the tomorrow's date and the time set to midnight. It accepts strings
+Returns a new instance with the date set to tomorrow's date and the time set to midnight. It accepts strings
 for the timezone and locale in the second and third parameters::
 
     $myTime = Time::tomorrow('America/Chicago', 'en_US');
@@ -148,7 +148,7 @@ Displaying the Value
 ====================
 
 Since the Time class extends DateTime, you get all of the output methods that provides, including the format() method.
-However, the DateTime methods do not provide a localize result. The Time class does provide a number of helper methods
+However, the DateTime methods do not provide a localized result. The Time class does provide a number of helper methods
 to display localized versions of the value, though.
 
 toLocalizedString()

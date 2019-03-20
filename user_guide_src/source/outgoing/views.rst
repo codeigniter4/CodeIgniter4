@@ -92,7 +92,7 @@ Storing Views within Sub-directories
 ====================================
 
 Your view files can also be stored within sub-directories if you prefer that type of organization.
-When doing so you will need to include the directory name loading the view.  Example::
+When doing so you will need to include the directory name loading the view. Example::
 
 	echo view('directory_name/file_name');
 

@@ -81,7 +81,7 @@ for familiar directories/files.
 
 When at the **acme** namespace above, we would need to make one small adjustment to make it so the files could be found:
 each "module" within the namespace would have to have it's own namespace defined there. **Acme** would be changed
-to **Acme\Blog**. Once  your module folder has been defined, the discover process would look for a Routes file, for example,
+to **Acme\Blog**. Once your module folder has been defined, the discover process would look for a Routes file, for example,
 at **/acme/Blog/Config/Routes.php**, just as if it was another application.
 
 Enable/Disable Discover

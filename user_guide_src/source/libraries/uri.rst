@@ -32,7 +32,7 @@ The Current URI
 ---------------
 
 Many times, all you really want is an object representing the current URL of this request. This can be accessed
-in two different ways. The first, is to grab it directly from the current request object. Assuming that you're in
+in two different ways. The first is to grab it directly from the current request object. Assuming that you're in
 a controller that extends ``CodeIgniter\Controller`` you can get it like::
 
 	$uri = $this->request->uri;
@@ -41,7 +41,7 @@ Second, you can use one of the functions available in the **url_helper**::
 
 	$uri = current_url(true);
 
-You must pass ``true`` as the first parameter, otherwise it will return the string representation of the current URL.
+You must pass ``true`` as the first parameter, otherwise, it will return the string representation of the current URL.
 
 ===========
 URI Strings
@@ -195,7 +195,7 @@ You can filter the query values returned by passing an options array to the ``ge
     // Returns 'foo=bar&baz=foz'
     echo $uri->getQuery(['except' => ['bar']]);
 
-This only changes the values returned during this one call. If you need to modify the URI's query values more permenantly,
+This only changes the values returned during this one call. If you need to modify the URI's query values more permanently,
 you can use the ``stripQuery()`` and ``keepQuery()`` methods to change the actual object's query variable collection::
 
     $uri = new \CodeIgniter\HTTP\URI('http://www.example.com?foo=bar&bar=baz&baz=foz');
@@ -222,7 +222,7 @@ to an on-page anchor. Media URI's can make use of them in various other ways.
 URI Segments
 ============
 
-Each section of the path between the slashes are a single segment. The URI class provides a simple way to determine
+Each section of the path between the slashes is a single segment. The URI class provides a simple way to determine
 what the values of the segments are. The segments start at 1 being the furthest left of the path.
 ::
 

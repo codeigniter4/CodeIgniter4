@@ -135,7 +135,7 @@ names. It will include all migrations it finds in Database/Migrations.
 
 Each namespace has it's own version sequence, this will help you upgrade and downgrade each module (namespace) without affecting other namespaces.
 
-For example, assume that we have the the following namespaces defined in our Autoload
+For example, assume that we have the following namespaces defined in our Autoload
 configuration file::
 
 	$psr4 = [
@@ -227,7 +227,7 @@ for the version. ::
 You can use (version) with the following options:
 
 - (-g) to chose database group, otherwise default database group will be used.
-- (-n) to choose namespace, , otherwise (App) namespace will be used.
+- (-n) to choose namespace, otherwise (App) namespace will be used.
 
 **rollback**
 

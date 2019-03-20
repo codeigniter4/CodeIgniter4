@@ -76,7 +76,7 @@ without needing to create a new connection you can use this method::
 Protecting identifiers
 **********************
 
-In many databases it is advisable to protect table and field names - for
+In many databases, it is advisable to protect table and field names - for
 example with backticks in MySQL. **Query Builder queries are
 automatically protected**, but if you need to manually protect an
 identifier you can use::

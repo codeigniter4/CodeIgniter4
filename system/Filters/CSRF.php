@@ -34,6 +34,10 @@
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
  * @filesource
+ *
+ * This filter is not intended to be used from the command line.
+ *
+ * @codeCoverageIgnore
  */
 
 use CodeIgniter\Filters\FilterInterface;
@@ -42,6 +46,11 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use Config\Services;
 
+/**
+ * This filter is not intended to be used from the command line.
+ *
+ * @codeCoverageIgnore
+ */
 class CSRF implements FilterInterface
 {
 	/**

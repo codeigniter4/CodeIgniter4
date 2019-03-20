@@ -261,7 +261,7 @@ class Exceptions
 		if (empty($path))
 		{
 			$paths = new Paths();
-			$path = $paths->viewDirectory . '/errors/';
+			$path  = $paths->viewDirectory . '/errors/';
 		}
 
 		$path = is_cli()

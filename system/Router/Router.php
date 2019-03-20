@@ -561,6 +561,8 @@ class Router implements RouterInterface
 	 */
 	protected function validateRequest(array $segments)
 	{
+		$segments = array_filter($segments);
+
 		$c                  = count($segments);
 		$directory_override = isset($this->directory);
 
@@ -571,8 +573,7 @@ class Router implements RouterInterface
 			$test = $this->directory . ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]
 			);
 
-			if (! is_file(APPPATH . 'Controllers/' . $test . '.php') && $directory_override === false && is_dir(APPPATH . 'Controllers/' . $this->directory . ucfirst($segments[0]))
-			)
+			if (! is_file(APPPATH . 'Controllers/' . $test . '.php') && $directory_override === false && is_dir(APPPATH . 'Controllers/' . $this->directory . ucfirst($segments[0])))
 			{
 				$this->setDirectory(array_shift($segments), true);
 				continue;

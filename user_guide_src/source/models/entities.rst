@@ -15,13 +15,13 @@ Entity Usage
 
 At its core, an Entity class is simply a class that represents a single database row. It has class properties
 to represent the database columns, and provides any additional methods to implement the business logic for
-that row.  The core feature, though, is that it doesn't know anything about how to persist itself. That's the
+that row. The core feature, though, is that it doesn't know anything about how to persist itself. That's the
 responsibility of the model or the repository class. That way, if anything changes on how you need to save the
 object, you don't have to change how that object is used throughout the application. This makes it possible to
 use JSON or XML files to store the objects during a rapid prototyping stage, and then easily switch to a
 database when you've proven the concept works.
 
-Lets walk through a very simple User Entity and how we'd work with it to help make things clear.
+Let's walk through a very simple User Entity and how we'd work with it to help make things clear.
 
 Assume you have a database table named ``users`` that has the following schema::
 
@@ -119,7 +119,7 @@ Filling Properties Quickly
 --------------------------
 
 The Entity class also provides a method, ``fill()`` that allows you to shove an array of key/value pairs into the class
-and populate the class properties. Only properties that already exist on the class can be populated in this way.
+and populate the class properties. Only properties that already exist in the class can be populated in this way.
 
 ::
 
@@ -191,7 +191,7 @@ class property will be accessed through the ``setCreatedAt()`` and ``getCreatedA
 In the ``setPassword()`` method we ensure that the password is always hashed.
 
 In ``setCreatedAt()`` we convert the string we receive from the model into a DateTime object, ensuring that our timezone
-is UTC so we can easily convert the the viewer's current timezone. In ``getCreatedAt()``, it converts the time to
+is UTC so we can easily convert the viewer's current timezone. In ``getCreatedAt()``, it converts the time to
 a formatted string in the application's current timezone.
 
 While fairly simple, these examples show that using Entity classes can provide a very flexible way to enforce
@@ -211,7 +211,7 @@ original column names in the database no longer make sense. Or you find that you
 class properties, but your database schema required snake_case names. These situations can be easily handled
 with the Entity class' data mapping features.
 
-As an example, imagine your have the simplified User Entity that is used throughout your application::
+As an example, imagine you have the simplified User Entity that is used throughout your application::
 
     <?php namespace App\Entities;
 
@@ -233,7 +233,7 @@ full name now, not their username like it does currently. To keep things tidy an
 in the database you whip up a migration to rename the `name` field to `full_name` for clarity.
 
 Ignoring how contrived this example is, we now have two choices on how to fix the User class. We could modify the class
-property from ``$name`` to ``$full_name``, but that would require  changes throughout the application. Instead, we can
+property from ``$name`` to ``$full_name``, but that would require changes throughout the application. Instead, we can
 simply map the ``full_name`` column in the database to the ``$name`` property, and be done with the Entity changes::
 
     <?php namespace App\Entities;
@@ -276,7 +276,7 @@ Date Mutators
 
 By default, the Entity class will convert fields named `created_at`, `updated_at`, or `deleted_at` into
 :doc:`Time </libraries/time>` instances whenever they are set or retrieved. The Time class provides a large number
-of helpful methods in a immutable, localized way.
+of helpful methods in an immutable, localized way.
 
 You can define which properties are automatically converted by adding the name to the **options['dates']** array::
 
@@ -349,7 +349,7 @@ Array/Json casting is especially useful with fields that store serialized arrays
 
 * an **array**, they will automatically be unserialized,
 * a **json**, they will automatically be set as an value of json_decode($value, false),
-* a **json-array**, they will automatically be set as an value of  json_decode($value, true),
+* a **json-array**, they will automatically be set as an value of json_decode($value, true),
 
 when you read the property's value.
 Unlike the rest of the data types that you can cast properties into, the:

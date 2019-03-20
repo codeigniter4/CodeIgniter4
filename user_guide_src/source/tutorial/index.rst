@@ -4,7 +4,7 @@ Tutorial
 
 This tutorial is intended to introduce you to the CodeIgniter4 framework
 and the basic principles of MVC architecture. It will show you how a
-basic CodeIgniter application is constructed in step-by-step fashion.
+basic CodeIgniter application is constructed in a step-by-step fashion.
 
 If you are not familiar with PHP, we recommend that you check out
 the `W3Schools PHP Tutorial <https://www.w3schools.com/php/default.asp>`_ before continuing.

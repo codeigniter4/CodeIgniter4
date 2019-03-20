@@ -31,15 +31,15 @@ code.
 
 ::
 
-        <?php namespace App\Controllers;
-        use CodeIgniter\Controller;
+    <?php namespace App\Controllers;
+    use CodeIgniter\Controller;
 
 	class Pages extends Controller {
 
-                public function index()
-                {
-                        return view('welcome_message');
-                }
+        public function index()
+        {
+            return view('welcome_message');
+        }
 
 		public function showme($page = 'home')
 		{
@@ -48,7 +48,7 @@ code.
 
 You have created a class named ``Pages``, with a ``showme`` method that accepts
 one argument named ``$page``. It also has an ``index()`` method, the same
-as the defaut controller found in **app/Controllers/Home.php**; that method
+as the default controller found in **app/Controllers/Home.php**; that method
 displays the CodeIgniter welcome page.
 
 The ``Pages`` class is extending the
@@ -173,7 +173,7 @@ controller you made above produces...
   inside our `Pages` controller, which is to display the CodeIgniter "welcome" page,
   because "index" is the default controller method
 - ``localhost:8080/pages/index`` will also show the CodeIgniter "welcome" page,
-  because we explicitly asked for the "index" methid
+  because we explicitly asked for the "index" method
 - ``localhost:8080/pages/showme`` will show the "home" page that you made above,
   because it is the default "page" parameter to the `showme()` method.
 - ``localhost:8080/pages/showme/home`` will also show the "home" page that you made above,
@@ -203,12 +203,6 @@ The only uncommented line there to start with should be:::
 
 This directive says that any incoming request without any content
 specified should be handled by the ``index`` method inside the ``Home`` controller.
-
-Set the default controller to run your new method:
-
-::
-
-    $routes->setDefaultController('Pages/showme');
 
 Add the following line, **after** the route directive for '/'.
 

@@ -209,8 +209,6 @@ class TextHelperTest extends \CIUnitTestCase
 		{
 			$this->assertEquals($expect, word_censor($str, $censored, '$*#'));
 		}
-		// test censored words being sent as a string
-		$this->assertEquals('this is a test', word_censor('this is a test', 'test'));
 	}
 
 	// ------------------------------------------------------------------------

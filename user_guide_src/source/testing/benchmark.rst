@@ -4,7 +4,7 @@ Benchmarking
 
 CodeIgniter provides two separate tools to help you benchmark your code and test different options:
 the Timer and the Iterator. The Timer allows you to easily calculate the time between two points in the
-execution of your script. The Iterator allows you to setup several variations and run those tests, recording
+execution of your script. The Iterator allows you to setup several variations and runs those tests, recording
 performance and memory statistics to help you decide which version is the best.
 
 The Timer class is always active, being started from the moment the framework is invoked until right before
@@ -61,7 +61,7 @@ This returns an array of benchmark information, including start, end, and durati
 		]
 	]
 
-You can change the precision of the calculated duration by passing in the number of decimal places you want shown as
+You can change the precision of the calculated duration by passing in the number of decimal places you want to be shown as
 the only parameter. The default value is 4 numbers behind the decimal point::
 
 	$timers = $benchmark->getTimers(6);

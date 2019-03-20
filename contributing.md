@@ -5,7 +5,7 @@
 
 We expect all contributions to conform to our style guide, be commented (inside the PHP source files), 
 be documented (in the user guide), and unit tested (in the test folder). 
-There is a [Contributing to CodeIgniter](./contributing/index.rst) section in the repository which describes the contribution process; this page is an overview.
+There is a [Contributing to CodeIgniter](./contributing/README.rst) section in the repository which describes the contribution process; this page is an overview.
 
 ## Issues
 
@@ -15,7 +15,7 @@ Issues are a quick way to point out a bug. If you find a bug or documentation er
 2. The issue has already been fixed (check the develop branch, or look for closed Issues)
 3. Is it something really obvious that you can fix yourself?
 
-Reporting issues is helpful but an even [better approach](https://codeigniter4.github.io/CodeIgniter4/contributing/workflow.html) is to send a Pull Request, which is done by "Forking" the main repository and committing to your own copy. This will require you to use the version control system called Git.
+Reporting issues is helpful but an even [better approach](./contributing/workflow.rst) is to send a Pull Request, which is done by "Forking" the main repository and committing to your own copy. This will require you to use the version control system called Git.
 
 ## Guidelines
 
@@ -26,7 +26,7 @@ for us to maintain quality of the code-base.
 
 ### PHP Style
 
-All code must meet the [Style Guide](https://codeigniter4.github.io/CodeIgniter4/contributing/styleguide.html).
+All code must meet the [Style Guide](./contributing/styleguide.rst).
 This makes certain that all code is the same format as the existing code and means it will be as readable as possible.
 
 ### Documentation
@@ -46,7 +46,7 @@ One thing at a time: A pull request should only contain one change. That does no
 
 ### Signing
 
-You must [GPG-sign](https://codeigniter4.github.io/CodeIgniter4/contributing/signing.html) your work, certifying that you either wrote the work or otherwise have the right to pass it on to an open source project. This is *not* just a "signed-off-by" commit, but instead a digitally signed one.
+You must [GPG-sign](./contributing/signing.rst) your work, certifying that you either wrote the work or otherwise have the right to pass it on to an open source project. This is *not* just a "signed-off-by" commit, but instead a digitally signed one.
 
 ## How-to Guide
 

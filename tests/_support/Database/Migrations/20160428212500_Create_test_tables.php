@@ -86,14 +86,20 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('empty', true);
 
-		//No Primary Key
+		// Secondary Table
 		$this->forge->addField([
+			'id'    => [
+				'type'          => 'INTEGER',
+				'constraint'    => 3,
+				$unique_or_auto => true,
+			],
 			'key'   => [
 				'type'       => 'VARCHAR',
 				'constraint' => 40,
 			],
 			'value' => ['type' => 'TEXT'],
 		]);
+		$this->forge->addKey('id', true);
 		$this->forge->createTable('secondary', true);
 	}
 

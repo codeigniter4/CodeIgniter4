@@ -36,6 +36,7 @@
  * @filesource
  */
 
+use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Validation\Validation;
@@ -106,7 +107,7 @@ class Controller
 	 * @param ResponseInterface        $response
 	 * @param \Psr\Log\LoggerInterface $logger
 	 *
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException
 	 */
 	public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
 	{
@@ -135,7 +136,7 @@ class Controller
 	 *                          considered secure for. Only with HSTS header.
 	 *                          Default value is 1 year.
 	 *
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException
 	 */
 	public function forceHTTPS(int $duration = 31536000)
 	{
@@ -179,8 +180,8 @@ class Controller
 	 * A shortcut to performing validation on input data. If validation
 	 * is not successful, a $errors property will be set on this class.
 	 *
-	 * @param array $rules
-	 * @param array $messages An array of custom error messages
+	 * @param array|string $rules
+	 * @param array        $messages An array of custom error messages
 	 *
 	 * @return boolean
 	 */

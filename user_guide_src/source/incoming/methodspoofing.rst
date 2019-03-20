@@ -2,7 +2,7 @@
 HTTP Method Spoofing
 ====================
 
-When working with HTML forms you can only use GET or POST HTTP verbs. In most cases this is just fine. However, to
+When working with HTML forms you can only use GET or POST HTTP verbs. In most cases, this is just fine. However, to
 support REST-ful routing you need to support other, more correct, verbs, like DELETE or PUT. Since the browsers
 don't support this, CodeIgniter provides you with a way to spoof the method that is being used. This allows you to
 make a POST request, but tell the application that it should be treated as a different request type.

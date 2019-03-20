@@ -49,7 +49,7 @@ You can't follow the tutorial using PHP's built-in web server.
 It doesn't process the `.htaccess` file needed to route
 requests properly.
 
-The solution: use Apache to server your site, or else the built-in
+The solution: use Apache to serve your site, or else the built-in
 CodeIgniter equivalent, ``php spark serve`` from your project root.
 
 .. |CodeIgniter4 Welcome| image:: ../images/welcome.png

@@ -309,7 +309,7 @@ class Filters
 	 *
 	 * @return string
 	 */
-	public static function round($value, $precision = 2, $type = 'common')
+	public static function round($value, $precision = 2, $type = 'common'): string
 	{
 		if (! is_numeric($precision))
 		{

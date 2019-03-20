@@ -164,7 +164,9 @@ class File extends SplFileInfo
 		$name        = $name ?? $this->getBaseName();
 		$destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
-		if (! @rename($this->getPath(), $destination))
+		$oldName = empty($this->getRealPath()) ? $this->getPath() : $this->getRealPath();
+
+		if (! @rename($oldName, $destination))
 		{
 			$error = error_get_last();
 			throw FileException::forUnableToMove($this->getBasename(), $targetPath, strip_tags($error['message']));

@@ -2,7 +2,7 @@
 Running via the Command Line
 ############################
 
-As well as calling an applications :doc:`Controllers </incoming/controllers>`
+As well as calling an application's :doc:`Controllers </incoming/controllers>`
 via the URL in a browser they can also be loaded via the command-line
 interface (CLI).
 
@@ -52,7 +52,7 @@ in it::
 
 Then save the file to your **app/Controllers/** directory.
 
-Now normally you would visit the your site using a URL similar to this::
+Now normally you would visit your site using a URL similar to this::
 
 	example.com/index.php/tools/message/to
 
@@ -70,8 +70,8 @@ If you did it right, you should see *Hello World!* printed.
 
 	$ php index.php tools message "John Smith"
 
-Here we are passing it a argument in the same way that URL parameters
-work. "John Smith" is passed as a argument and output is::
+Here we are passing it an argument in the same way that URL parameters
+work. "John Smith" is passed as an argument and output is::
 
 	Hello John Smith!
 

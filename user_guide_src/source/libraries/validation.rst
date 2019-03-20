@@ -161,7 +161,7 @@ Explanation
 
 You'll notice several things about the above pages:
 
-The form (Signup.php) is a standard web form with a couple exceptions:
+The form (Signup.php) is a standard web form with a couple of exceptions:
 
 #. It uses a form helper to create the form opening. Technically, this
    isn't necessary. You could create the form using standard HTML.
@@ -190,7 +190,7 @@ The library is loaded as a service named **validation**::
     $validation =  \Config\Services::validation();
 
 This automatically loads the ``Config\Validation`` file which contains settings
-for including multiple Rule sets, and collections of rules that can be easily reused.
+for including multiple Rulesets, and collections of rules that can be easily reused.
 
 .. note:: You may never need to use this method, as both the :doc:`Controller </incoming/controllers>` and
     the :doc:`Model </models/model>` provide methods to make validation even easier.
@@ -206,7 +206,7 @@ methods.
 setRule()
 ---------
 
-This method sets a single rule. It takes the name of field as
+This method sets a single rule. It takes the name of the field as
 the first parameter, an optional label and a string with a pipe-delimited list of rules
 that should be applied::
 
@@ -489,14 +489,13 @@ Customizing Error Display
 ************************************************
 
 When you call ``$validation->listErrors()`` or ``$validation->showError()``, it loads a view file in the background
-that determines how the errors are displayed. By default, they display in a manner compatible with the
-`Bootstrap <http://getbootstrap.com/>`_ CSS framework. You can easily create new views and use them throughout your
-application.
+that determines how the errors are displayed. By default, they display with a class of ``errors`` on the wrapping div.
+You can easily create new views and use them throughout your application.
 
 Creating the Views
 ==================
 
-The first step is to create the custom views. These can be placed anywhere that the ``view()`` method can locate them,
+The first step is to create custom views. These can be placed anywhere that the ``view()`` method can locate them,
 which means the standard View directory, or any namespaced View folder will work. For example, you could create
 a new view at **/app/Views/_errors_list.php**::
 
@@ -575,7 +574,7 @@ a boolean true or false value signifying true if it passed the test or false if 
     }
 
 By default, the system will look within ``CodeIgniter\Language\en\Validation.php`` for the language strings used
-within errors. In custom rules you may provide error messages by accepting an $error variable by reference in the
+within errors. In custom rules, you may provide error messages by accepting a $error variable by reference in the
 second parameter::
 
     public function even(string $str, string &$error = null): bool
@@ -645,7 +644,7 @@ Available Rules
 
 The following is a list of all the native rules that are available to use:
 
-.. note:: Rule is string; there must be no spaces between the parameters, especially the "is_unique" rule.
+.. note:: Rule is a string; there must be no spaces between the parameters, especially the "is_unique" rule.
 	There can be no spaces before and after "ignore_value".
 
 - "is_unique[supplier.name,uuid, $uuid]"   is not ok
@@ -662,7 +661,7 @@ alpha_numeric           No          Fails if field contains anything other than 
 alpha_numeric_space     No          Fails if field contains anything other than alpha-numeric characters, numbers or space.
 decimal                 No          Fails if field contains anything other than a decimal number.
 differs                 Yes         Fails if field does not differ from the one in the parameter.                                   differs[field_name]
-exact_length            Yes         Fails if field is not exactly the parameter value.                                              exact_length[5]
+exact_length            Yes         Fails if field is not exactly the parameter value. One or more comma-separated values.                                             exact_length[5] or exact_length[5,8,12]
 greater_than            Yes         Fails if field is less than or equal to the parameter value or not numeric.                     greater_than[8]
 greater_than_equal_to   Yes         Fails if field is less than the parameter value, or not numeric.                                greater_than_equal_to[5]
 in_list                 Yes         Fails if field is not within a predetermined list.                                              in_list[red,blue,green]

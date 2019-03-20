@@ -19,7 +19,7 @@ You need to create a database that can be used for this tutorial,
 and then configure CodeIgniter to use it.
 
 Using your database client, connect to your database and run the SQL command below (MySQL).
-Also add some seed records. For now, we'll just show you the SQL statements needed
+Also, add some seed records. For now, we'll just show you the SQL statements needed
 to create the table, but you should be aware that this can be done programmatically
 once you are more familiar with CodeIgniter; you can read about :doc:`Migrations <../dbmgmt/migration>`
 and :doc:`Seeds <../dbmgmt/seeds>` to create more useful database setups later.
@@ -111,7 +111,7 @@ following code to your model.
 		             ->first();
 	}
 
-With this code you can perform two different queries. You can get all
+With this code, you can perform two different queries. You can get all
 news records, or get a news item by its `slug <#>`_. You might have
 noticed that the ``$slug`` variable wasn't sanitized before running the
 query; :doc:`Query Builder <../database/query_builder>` does this for you.
@@ -167,7 +167,7 @@ method in the second method. The model is using this slug to identify the
 news item to be returned.
 
 Now the data is retrieved by the controller through our model, but
-nothing is displayed yet. The next thing to do is passing this data to
+nothing is displayed yet. The next thing to do is, passing this data to
 the views. Modify the ``index()`` method to look like this::
 
 	public function index()
@@ -222,7 +222,7 @@ Parser </outgoing/view_parser>` or a third party parser.
 
 The news overview page is now done, but a page to display individual
 news items is still absent. The model created earlier is made in such
-way that it can easily be used for this functionality. You only need to
+a way that it can easily be used for this functionality. You only need to
 add some code to the controller and create a new view. Go back to the
 ``News`` controller and update the ``view()`` method with the following:
 
@@ -271,7 +271,7 @@ with a slug to the ``view()`` method in the ``News`` controller.
 
 	$routes->get('news/(:segment)', 'News::view/$1');
 	$routes->get('news', 'News::index');
-	$routes->get('(:any)', 'Pages::view/$1');
+	$routes->get('(:any)', 'Pages::showme/$1');
 
 Point your browser to your "news" page, i.e. ``localhost:8080/news``,
 you should see a list of the news items, each of which has a link

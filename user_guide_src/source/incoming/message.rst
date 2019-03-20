@@ -18,7 +18,7 @@ At it's heart Content Negotiation is simply a part of the HTTP specification tha
 resource to serve more than one type of content, allowing the clients to request the type of
 data that works best for them.
 
-A classic example of this is a browser than cannot display PNG files can request only GIF or
+A classic example of this is a browser that cannot display PNG files can request only GIF or
 JPEG images. When the getServer receives the request, it looks at the available file types the client
 is requesting and selects the best match from the image formats that it supports, in this case
 likely choosing a JPEG image to return.
@@ -208,7 +208,7 @@ Class Reference
 	.. php:method:: negotiateCharset($supported)
 
 		:param array $supported: An array of character sets the application supports.
-		:returns: The supported character set that best matches what is required..
+		:returns: The supported character set that best matches what is required.
 		:rtype: string
 
 		This is used identically to the ``negotiateMedia()`` method, except that it matches against the ``Accept-Charset``
@@ -225,7 +225,7 @@ Class Reference
 	.. php:method:: negotiateEncoding($supported)
 
 		:param array $supported: An array of character encodings the application supports.
-		:returns: The supported character set that best matches what is required..
+		:returns: The supported character set that best matches what is required.
 		:rtype: string
 
 		Determines the best match between the application-supported values and the ``Accept-Encoding`` header value.
@@ -240,7 +240,7 @@ Class Reference
 	.. php:method:: negotiateLanguage($supported)
 
 		:param array $supported: An array of languages the application supports.
-		:returns: The supported language that best matches what is required..
+		:returns: The supported language that best matches what is required.
 		:rtype: string
 
 		Determines the best match between the application-supported languages and the ``Accept-Language`` header value.
@@ -253,5 +253,5 @@ Class Reference
 			];
 			$language = $message->negotiateLanguage($supported);
 
-		More information about the language tags are available in `RFC 1766 <https://www.ietf.org/rfc/rfc1766.txt>`_.
+		More information about the language tags is available in `RFC 1766 <https://www.ietf.org/rfc/rfc1766.txt>`_.
 
