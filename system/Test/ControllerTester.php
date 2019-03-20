@@ -42,6 +42,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
 use Config\App;
+use Config\Services;
 
 /**
  * ControllerTester Trait
@@ -99,7 +100,7 @@ trait ControllerTester
 
 		if (empty($this->logger))
 		{
-			$this->logger = new \CodeIgniter\Log\Handlers\FileHandler();
+			$this->logger = Services::logger();
 		}
 
 		$this->controller = new $name();
@@ -131,6 +132,7 @@ trait ControllerTester
 				->setRequest($this->request)
 				->setResponse($this->response);
 
+		$response = null;
 		try
 		{
 			ob_start();
@@ -146,8 +148,7 @@ trait ControllerTester
 		{
 			$output = ob_get_clean();
 
-			// If the controller returned a redirect response
-			// then we need to use that...
+			// If the controller returned a response, use it
 			if (isset($response) && $response instanceof Response)
 			{
 				$result->setResponse($response);

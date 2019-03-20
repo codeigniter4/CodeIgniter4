@@ -83,8 +83,11 @@ class DOMParser
 
 		if (! $this->dom->loadHTML($content))
 		{
+			// unclear how we would get here, given that we are trapping libxml errors
+			// @codeCoverageIgnoreStart
 			libxml_clear_errors();
 			throw new \BadMethodCallException('Invalid HTML');
+			// @codeCoverageIgnoreEnd
 		}
 
 		// ignore the whitespace.
