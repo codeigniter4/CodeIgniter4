@@ -469,7 +469,16 @@ class Router implements RouterInterface
 				{
 					$val = preg_replace('#^' . $key . '$#', $val, $uri);
 				}
-			
+				elseif (strpos($val, '/') !== false)
+				{
+					[ $controller, $method ] = explode( '::', $val );
+					
+					// Only replace slashes in the controller, not in the method.
+					$controller = str_replace('/', '\\', $controller);
+					
+					$val = $controller . '::' . $method;
+				}
+
 				// Is this route supposed to redirect to another?
 				if ($this->collection->isRedirect($key))
 				{
