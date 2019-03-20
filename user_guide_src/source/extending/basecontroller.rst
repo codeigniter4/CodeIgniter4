@@ -18,7 +18,7 @@ Preloading Components
 =====================
 
 The base controller is a great place to load any helpers, models, libraries, services, etc. that you intend to
-use every time your project runs. Helpers should be added to the pre-defined $helpers array. For example, if
+use every time your project runs. Helpers should be added to the pre-defined ``$helpers`` array. For example, if
 you want the HTML and Text helpers universally available::
 
 	protected $helpers = ['html', 'text'];
@@ -26,7 +26,7 @@ you want the HTML and Text helpers universally available::
 Any other components to load or data to process should be added to the constructor ``initController()``. For
 example, if your project uses the Session Library heavily you may want to initiate it here::
 
-	public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+	public function initController(...)
 	{
 		// Do Not Edit This Line
 		parent::initController($request, $response, $logger);
@@ -37,17 +37,16 @@ example, if your project uses the Session Library heavily you may want to initia
 Additional Methods
 ==================
 
-The base controller is not routable (system config routes it to 404 Page Not Found), but as an added security
-measure **all** new methods should be declared as protected or private and only accessed through the
-controllers you create that extend BaseController.
+The base controller is not routable (system config routes it to 404 Page Not Found). As an added security
+measure **all** new methods you create should be declared as ``protected`` or ``private`` and only be accessed through the
+controllers you create that extend ``BaseController``.
 
 Other Options
 =============
 
-You may find that you need more than one base controller, in which case you can create new base controllers to
-be extended - just make sure any controller that you make extends the correct base. For example if your project
-has an involved public interface and a simple administrative portal, you may want to extend BaseController to
-the public controllers and AdminController to any administrative controllers.
+You may find that you need more than one base controller. You can create new base controllers as long as any other controllers that you make extend the correct base. For example, if your project
+has an involved public interface and a simple administrative portal you may want to extend ``BaseController`` to
+the public controllers and make ``AdminController`` for any administrative controllers.
 
 If you do not want to use the base controller you may bypass it by having your controllers extend the system
 Controller instead::
