@@ -224,11 +224,6 @@ class Forge
 			return false;
 		}
 
-		if (! empty($this->db->dataCache['db_names']))
-		{
-			$this->db->dataCache['db_names'][] = $db_name;
-		}
-
 		return true;
 	}
 
@@ -482,11 +477,6 @@ class Forge
 
 		if (($result = $this->db->query($sql)) !== false)
 		{
-			if(!empty($this->db->dataCache['table_names']))
-			{
-				$this->db->dataCache['table_names'][] = $table;
-			}
-
 			// Most databases don't support creating indexes from within the CREATE TABLE statement
 			if (! empty($this->keys))
 			{
