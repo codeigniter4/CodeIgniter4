@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Pager;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,6 +35,11 @@
  * @filesource
  */
 
+namespace CodeIgniter\Pager;
+
+/**
+ * Pager interface
+ */
 interface PagerInterface
 {
 

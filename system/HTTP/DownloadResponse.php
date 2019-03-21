@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\HTTP;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,12 +35,18 @@
  * @filesource
  */
 
+namespace CodeIgniter\HTTP;
+
 use CodeIgniter\Exceptions\DownloadException;
 use CodeIgniter\Files\File;
 use Config\Mimes;
 
+/**
+ * Download response
+ */
 class DownloadResponse extends Message implements ResponseInterface
 {
+
 	/**
 	 * Download file name
 	 *
@@ -132,7 +137,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	 *
 	 * @return integer
 	 */
-	public function getContentLength() : int
+	public function getContentLength(): int
 	{
 		if (is_string($this->binary))
 		{
@@ -191,8 +196,7 @@ class DownloadResponse extends Message implements ResponseInterface
 		 * Reference: http://digiblog.de/2011/04/19/android-and-the-download-file-headers/
 		 */
 		// @todo: depend super global
-		if (count($x) !== 1 && isset($_SERVER['HTTP_USER_AGENT'])
-				&& preg_match('/Android\s(1|2\.[01])/', $_SERVER['HTTP_USER_AGENT']))
+		if (count($x) !== 1 && isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/Android\s(1|2\.[01])/', $_SERVER['HTTP_USER_AGENT']))
 		{
 			$x[count($x) - 1] = strtoupper($extension);
 			$filename         = implode('.', $x);
@@ -206,7 +210,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	 *
 	 * @return string
 	 */
-	private function getContentDisponsition() : string
+	private function getContentDisponsition(): string
 	{
 		$download_filename = $this->getDownloadFileName();
 
@@ -378,7 +382,7 @@ class DownloadResponse extends Message implements ResponseInterface
 		$this->setHeader('Content-Disposition', $this->getContentDisponsition());
 		$this->setHeader('Expires-Disposition', '0');
 		$this->setHeader('Content-Transfer-Encoding', 'binary');
-		$this->setHeader('Content-Length', (string)$this->getContentLength());
+		$this->setHeader('Content-Length', (string) $this->getContentLength());
 		$this->noCache();
 	}
 
@@ -465,4 +469,5 @@ class DownloadResponse extends Message implements ResponseInterface
 
 		return $this;
 	}
+
 }

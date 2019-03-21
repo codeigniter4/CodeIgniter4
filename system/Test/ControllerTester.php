@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Test;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,6 +35,8 @@
  * @filesource
  */
 
+namespace CodeIgniter\Test;
+
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\HTTP\Response;
@@ -58,16 +59,12 @@ use Config\App;
  */
 trait ControllerTester
 {
+
 	protected $appConfig;
-
 	protected $request;
-
 	protected $response;
-
 	protected $controller;
-
 	protected $uri = 'http://example.com';
-
 	protected $body;
 
 	/**
@@ -124,8 +121,8 @@ trait ControllerTester
 		helper('url');
 
 		$result = (new ControllerResponse())
-			->setRequest($this->request)
-			->setResponse($this->response);
+				->setRequest($this->request)
+				->setResponse($this->response);
 
 		try
 		{
@@ -136,7 +133,7 @@ trait ControllerTester
 		catch (\Throwable $e)
 		{
 			$result->response()
-				   ->setStatusCode($e->getCode());
+					->setStatusCode($e->getCode());
 		}
 		finally
 		{

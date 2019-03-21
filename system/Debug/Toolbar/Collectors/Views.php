@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Debug\Toolbar\Collectors;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\View\RendererInterface;

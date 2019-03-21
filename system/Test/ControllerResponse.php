@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Test;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,11 +35,17 @@
  * @filesource
  */
 
+namespace CodeIgniter\Test;
+
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class ControllerResponse {
+/**
+ * Controller response
+ */
+class ControllerResponse
+{
 
 	/**
 	 * @var \CodeIgniter\HTTP\IncomingRequest

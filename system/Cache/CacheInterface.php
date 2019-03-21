@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Cache;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,6 +35,11 @@
  * @filesource
  */
 
+namespace CodeIgniter\Cache;
+
+/**
+ * Cache interface
+ */
 interface CacheInterface
 {
 

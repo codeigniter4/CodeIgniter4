@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Debug\Toolbar\Collectors;
+<?php
 
 /**
  * CodeIgniter
@@ -36,10 +36,12 @@
  * @filesource
  */
 
+namespace CodeIgniter\Debug\Toolbar\Collectors;
+
 use CodeIgniter\Config\Services;
 
 /**
- * Loags collector
+ * Logs collector
  */
 class Logs extends BaseCollector
 {

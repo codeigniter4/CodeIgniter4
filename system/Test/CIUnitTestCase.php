@@ -1,6 +1,4 @@
 <?php
-namespace CodeIgniter\Test;
-
 /**
  * CodeIgniter
  *
@@ -36,6 +34,8 @@ namespace CodeIgniter\Test;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Test;
 
 use Config\Paths;
 use CodeIgniter\Events\Events;
@@ -238,6 +238,7 @@ class CIUnitTestCase extends TestCase
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Return first matching emitted header.
 	 *
@@ -246,7 +247,7 @@ class CIUnitTestCase extends TestCase
 	 *
 	 * @return string|null The value of the header found, null if not found
 	 */
-		//
+	//
 	protected function getHeaderEmitted(string $header, bool $ignoreCase = false): ?string
 	{
 		$found = false;

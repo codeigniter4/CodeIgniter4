@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Test;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Test;
 
 use Config\Services;
 use CodeIgniter\Database\BaseConnection;
@@ -316,7 +317,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 		];
 
 		return $this->db->table($table)
-					->insert($data);
+						->insert($data);
 	}
 
 	//--------------------------------------------------------------------

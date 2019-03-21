@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Cache;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Cache;
 
 use CodeIgniter\Cache\Exceptions\CacheException;
 

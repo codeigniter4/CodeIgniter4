@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Filters;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,11 +35,16 @@
  * @filesource
  */
 
+namespace CodeIgniter\Filters;
+
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\Exceptions\FilterException;
 
+/**
+ * Filters
+ */
 class Filters
 {
 
@@ -312,9 +316,7 @@ class Filters
 	 */
 	public function getArguments(string $key = null)
 	{
-		return is_null($key)
-			? $this->arguments
-			: $this->arguments[$key];
+		return is_null($key) ? $this->arguments : $this->arguments[$key];
 	}
 
 	//--------------------------------------------------------------------

@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\View;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\View;
 
 use CodeIgniter\Log\Logger;
 use CodeIgniter\View\Exceptions\ViewException;
@@ -369,7 +370,7 @@ class Parser extends View
 				// Otherwise, cast as an array and it will grab public properties.
 				else if (is_object($row))
 				{
-					$row = (array)$row;
+					$row = (array) $row;
 				}
 
 				$temp  = [];
@@ -384,8 +385,8 @@ class Parser extends View
 
 						if (! empty($pair))
 						{
-							$pairs[array_keys( $pair )[0]] = true;
-							$temp                          = array_merge($temp, $pair);
+							$pairs[array_keys($pair)[0]] = true;
+							$temp                        = array_merge($temp, $pair);
 						}
 
 						continue;
@@ -405,7 +406,7 @@ class Parser extends View
 				// Now replace our placeholders with the new content.
 				foreach ($temp as $pattern => $content)
 				{
-					$out = $this->replaceSingle($pattern, $content, $out, ! isset( $pairs[$pattern] ) );
+					$out = $this->replaceSingle($pattern, $content, $out, ! isset($pairs[$pattern]));
 				}
 
 				$str .= $out;
@@ -841,7 +842,7 @@ class Parser extends View
 		// Otherwise, cast as an array and it will grab public properties.
 		else if (is_object($value))
 		{
-			$value = (array)$value;
+			$value = (array) $value;
 		}
 
 		return $value;

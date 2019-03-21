@@ -1,6 +1,4 @@
 <?php
-namespace CodeIgniter\Router;
-
 /**
  * CodeIgniter
  *
@@ -36,6 +34,8 @@ namespace CodeIgniter\Router;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Router;
 
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Router\Exceptions\RouterException;
@@ -758,7 +758,6 @@ class RouteCollection implements RouteCollectionInterface
 	// The options array is typically used to pass in an 'as' or var, but may
 	// be expanded in the future. See the docblock for 'add' method above for
 	// current list of globally available options.
-
 	//
 
 	/**

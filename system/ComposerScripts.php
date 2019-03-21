@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,6 +35,8 @@
  * @filesource
  */
 
+namespace CodeIgniter;
+
 /**
  * ComposerScripts
  *
@@ -49,6 +50,7 @@
  */
 class ComposerScripts
 {
+
 	protected static $basePath = 'ThirdParty/';
 
 	/**
@@ -208,4 +210,5 @@ class ComposerScripts
 			}
 		}
 	}
+
 }

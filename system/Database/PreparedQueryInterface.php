@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Database;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,6 +35,11 @@
  * @filesource
  */
 
+namespace CodeIgniter\Database;
+
+/**
+ * Prepared query interface
+ */
 interface PreparedQueryInterface
 {
 

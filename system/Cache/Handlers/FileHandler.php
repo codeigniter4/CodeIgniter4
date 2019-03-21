@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Cache\Handlers;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,9 +35,14 @@
  * @filesource
  */
 
+namespace CodeIgniter\Cache\Handlers;
+
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\Exceptions\CacheException;
 
+/**
+ * File system cache handler
+ */
 class FileHandler implements CacheInterface
 {
 

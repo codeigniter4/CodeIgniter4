@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Validation;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Validation;
 
 use Config\Database;
 
@@ -78,7 +79,7 @@ class Rules
 		$val = explode(',', $val);
 		foreach ($val as $tmp)
 		{
-			if (is_numeric($tmp) && (int)$tmp === mb_strlen($str))
+			if (is_numeric($tmp) && (int) $tmp === mb_strlen($str))
 			{
 				return true;
 			}
@@ -166,9 +167,9 @@ class Rules
 		$db = Database::connect($data['DBGroup'] ?? null);
 
 		$row = $db->table($table)
-				  ->select('1')
-				  ->where($field, $str)
-				  ->limit(1);
+				->select('1')
+				->where($field, $str)
+				->limit(1);
 
 		if (! empty($ignoreField) && ! empty($ignoreValue))
 		{

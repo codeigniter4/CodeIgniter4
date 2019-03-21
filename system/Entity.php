@@ -1,8 +1,4 @@
-<?php namespace CodeIgniter;
-
-use CodeIgniter\I18n\Time;
-use CodeIgniter\Exceptions\CastException;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -38,8 +34,18 @@ use CodeIgniter\Exceptions\CastException;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter;
+
+use CodeIgniter\I18n\Time;
+use CodeIgniter\Exceptions\CastException;
+
+/**
+ * An entity that might be used with a Model.
+ */
 class Entity
 {
+
 	protected $_options = [
 		/*
 		 * Maps names used in sets and gets against unique
@@ -52,7 +58,6 @@ class Entity
 		 *  ];
 		 */
 		'datamap' => [],
-
 		/*
 		 * Define properties that are automatically converted to Time instances.
 		 */
@@ -61,7 +66,6 @@ class Entity
 			'updated_at',
 			'deleted_at',
 		],
-
 		/*
 		 * Array of field names and the type of value to cast them as
 		 * when they are accessed.
@@ -82,7 +86,7 @@ class Entity
 	 * Holds info whenever properties have to be casted
 	 *
 	 * @var boolean
-	 **/
+	 * */
 	private $_cast = true;
 
 	/**
@@ -492,7 +496,6 @@ class Entity
 	 * @return mixed
 	 * @throws \Exception
 	 */
-
 	protected function castAs($value, string $type)
 	{
 		if (substr($type, 0, 1) === '?')
@@ -504,27 +507,27 @@ class Entity
 			$type = substr($type, 1);
 		}
 
-		switch($type)
+		switch ($type)
 		{
 			case 'int':
 			case 'integer': //alias for 'integer'
-				$value = (int)$value;
+				$value = (int) $value;
 				break;
 			case 'float':
-				$value = (float)$value;
+				$value = (float) $value;
 				break;
 			case 'double':
-				$value = (double)$value;
+				$value = (double) $value;
 				break;
 			case 'string':
-				$value = (string)$value;
+				$value = (string) $value;
 				break;
 			case 'bool':
 			case 'boolean': //alias for 'boolean'
-				$value = (bool)$value;
+				$value = (bool) $value;
 				break;
 			case 'object':
-				$value = (object)$value;
+				$value = (object) $value;
 				break;
 			case 'array':
 				if (is_string($value) && (strpos($value, 'a:') === 0 || strpos($value, 's:') === 0))
@@ -532,7 +535,7 @@ class Entity
 					$value = unserialize($value);
 				}
 
-				$value = (array)$value;
+				$value = (array) $value;
 				break;
 			case 'json':
 				$value = $this->castAsJson($value, false);
@@ -579,4 +582,5 @@ class Entity
 		}
 		return $tmp;
 	}
+
 }

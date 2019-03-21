@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Pager;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Pager;
 
 use CodeIgniter\Pager\Exceptions\PagerException;
 use Config\Services;
@@ -200,7 +201,7 @@ class Pager implements PagerInterface
 		$this->groups[$group]['currentPage'] = $page;
 		$this->groups[$group]['perPage']     = $perPage;
 		$this->groups[$group]['total']       = $total;
-		$this->groups[$group]['pageCount']   = (int)ceil($total / $perPage);
+		$this->groups[$group]['pageCount']   = (int) ceil($total / $perPage);
 
 		return $this;
 	}
@@ -290,7 +291,7 @@ class Pager implements PagerInterface
 			return null;
 		}
 
-		return (int)ceil($this->groups[$group]['total'] / $this->groups[$group]['perPage']);
+		return (int) ceil($this->groups[$group]['total'] / $this->groups[$group]['perPage']);
 	}
 
 	//--------------------------------------------------------------------
@@ -471,7 +472,7 @@ class Pager implements PagerInterface
 	 *
 	 * @return Pager
 	 */
-	public function only(array $queries):Pager
+	public function only(array $queries): Pager
 	{
 		$this->only = $queries;
 

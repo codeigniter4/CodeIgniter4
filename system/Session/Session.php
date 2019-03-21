@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Session;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Session;
 
 use Psr\Log\LoggerAwareTrait;
 
@@ -337,12 +338,8 @@ class Session implements SessionInterface
 	 */
 	protected function configureSidLength()
 	{
-		$bits_per_character = (int) (ini_get('session.sid_bits_per_character') !== false
-			? ini_get('session.sid_bits_per_character')
-			: 4);
-		$sid_length         = (int) (ini_get('session.sid_length') !== false
-			? ini_get('session.sid_length')
-			: 40);
+		$bits_per_character = (int) (ini_get('session.sid_bits_per_character') !== false ? ini_get('session.sid_bits_per_character') : 4);
+		$sid_length         = (int) (ini_get('session.sid_length') !== false ? ini_get('session.sid_length') : 40);
 		if (($sid_length * $bits_per_character) < 160)
 		{
 			$bits = ($sid_length * $bits_per_character);
@@ -502,7 +499,7 @@ class Session implements SessionInterface
 
 		$userdata = [];
 		$_exclude = array_merge(
-			['__ci_vars'], $this->getFlashKeys(), $this->getTempKeys()
+				['__ci_vars'], $this->getFlashKeys(), $this->getTempKeys()
 		);
 
 		$keys = array_keys($_SESSION);
@@ -531,20 +528,20 @@ class Session implements SessionInterface
 		return isset($_SESSION[$key]);
 	}
 
-	   //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-	  /**
-	   * Push new value onto session value that is array.
-	   *
-	   * @param string $key  Identifier of the session property we are interested in.
-	   * @param array  $data value to be pushed to existing session key.
-	   *
-	   * @return void
-	   */
+	/**
+	 * Push new value onto session value that is array.
+	 *
+	 * @param string $key  Identifier of the session property we are interested in.
+	 * @param array  $data value to be pushed to existing session key.
+	 *
+	 * @return void
+	 */
 	public function push(string $key, array $data)
 	{
 		if ($this->has($key) && is_array($value = $this->get($key)))
-			   {
+		{
 			$this->set($key, array_merge($value, $data));
 		}
 	}

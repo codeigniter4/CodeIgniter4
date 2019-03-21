@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\View;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\View;
 
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\Services;
@@ -246,7 +247,7 @@ class View implements RendererInterface
 
 		$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 
-		if (CI_DEBUG && (! isset($options['debug']) || $options['debug'] === true))
+		if (CI_DEBUG && ( ! isset($options['debug']) || $options['debug'] === true))
 		{
 			$toolbarCollectors = config(\Config\Toolbar::class)->collectors;
 
@@ -261,10 +262,10 @@ class View implements RendererInterface
 						break;
 					}
 				}
-				$this->renderVars['file'] = ++$this->viewsCount . ' ' . $this->renderVars['file'];
+				$this->renderVars['file'] = ++ $this->viewsCount . ' ' . $this->renderVars['file'];
 				$output                   = '<!-- DEBUG-VIEW START ' . $this->renderVars['file'] . ' -->' . PHP_EOL
-					. $output . PHP_EOL
-					. '<!-- DEBUG-VIEW ENDED ' . $this->renderVars['file'] . ' -->' . PHP_EOL;
+						. $output . PHP_EOL
+						. '<!-- DEBUG-VIEW ENDED ' . $this->renderVars['file'] . ' -->' . PHP_EOL;
 			}
 		}
 

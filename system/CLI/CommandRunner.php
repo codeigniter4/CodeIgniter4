@@ -1,6 +1,4 @@
 <?php
-namespace CodeIgniter\CLI;
-
 /**
  * CodeIgniter
  *
@@ -37,9 +35,14 @@ namespace CodeIgniter\CLI;
  * @filesource
  */
 
+namespace CodeIgniter\CLI;
+
 use CodeIgniter\Config\Services;
 use CodeIgniter\Controller;
 
+/**
+ * COmmand runner
+ */
 class CommandRunner extends Controller
 {
 

@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\HTTP;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,11 +35,17 @@
  * @filesource
  */
 
+namespace CodeIgniter\HTTP;
+
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\Services;
 
+/**
+ * Redirect Response
+ */
 class RedirectResponse extends Response
 {
+
 	/**
 	 * Sets the URI to redirect to and, optionally, the HTTP status code to use.
 	 * If no code is provided it will be automatically determined.
@@ -58,7 +63,7 @@ class RedirectResponse extends Response
 		if (strpos($uri, 'http') !== 0)
 		{
 			$url = current_url(true)->resolveRelativeURI($uri);
-			$uri = (string)$url;
+			$uri = (string) $url;
 		}
 
 		return $this->redirect($uri, $method, $code);
@@ -163,4 +168,5 @@ class RedirectResponse extends Response
 	{
 		return Services::session();
 	}
+
 }

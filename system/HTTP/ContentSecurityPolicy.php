@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\HTTP;
+
 
 /**
  * CodeIgniter
@@ -36,6 +36,8 @@ namespace CodeIgniter\HTTP;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\HTTP;
 
 /**
  * Class ContentSecurityPolicy
@@ -132,7 +134,7 @@ class ContentSecurityPolicy
 	/**
 	 * Used for security enforcement
 	 *
-	 * @var string|string
+	 * @var string
 	 */
 	protected $reportURI = null;
 

@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\HTTP\Files;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\HTTP\Files;
 
 /**
  * Value object representing a single file uploaded through an

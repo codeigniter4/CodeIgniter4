@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\View;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,8 +35,14 @@
  * @filesource
  */
 
+namespace CodeIgniter\View;
+
+/**
+ * Class Filters
+ */
 class Filters
 {
+
 	/**
 	 * Returns $value as all lowercase with the first letter capitalized.
 	 *
@@ -104,9 +109,7 @@ class Filters
 	 */
 	public static function default($value, string $default): string
 	{
-		return empty($value)
-			? $default
-			: $value;
+		return empty($value) ? $default : $value;
 	}
 
 	//--------------------------------------------------------------------
@@ -349,5 +352,4 @@ class Filters
 	}
 
 	//--------------------------------------------------------------------
-
 }

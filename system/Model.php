@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter;
 
 use CodeIgniter\Exceptions\ModelException;
 use Config\Database;
@@ -431,9 +432,7 @@ class Model
 	 */
 	public function set($key, $value = '', bool $escape = null)
 	{
-		$data = is_array($key)
-			? $key
-			: [$key => $value];
+		$data = is_array($key) ? $key : [$key => $value];
 
 		$this->tempData['escape'] = $escape;
 		$this->tempData['data']   = array_merge($this->tempData['data'] ?? [], $data);
@@ -551,7 +550,7 @@ class Model
 							$converted = $value->getTimestamp();
 							break;
 						default:
-							$converted = (string)$value;
+							$converted = (string) $value;
 					}
 
 					$properties[$key] = $converted;
@@ -1275,6 +1274,7 @@ class Model
 	{
 		$this->validationMessages = $validationMessages;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1530,7 +1530,6 @@ class Model
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Magic
 	//--------------------------------------------------------------------

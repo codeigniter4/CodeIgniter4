@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Test;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,8 +35,14 @@
  * @filesource
  */
 
+namespace CodeIgniter\Test;
+
+/**
+ * DOMParser
+ */
 class DOMParser
 {
+
 	/**
 	 * @var \DOMDocument
 	 */
@@ -127,7 +132,7 @@ class DOMParser
 
 		$result = $this->doXPath($search, $element);
 
-		return (bool)$result->length;
+		return (bool) $result->length;
 	}
 
 	/**
@@ -194,7 +199,7 @@ class DOMParser
 	{
 		$result = $this->doXPath(null, 'input', ["[@value=\"{$value}\"][@name=\"{$field}\"]"]);
 
-		return (bool)$result->length;
+		return (bool) $result->length;
 	}
 
 	/**
@@ -211,7 +216,7 @@ class DOMParser
 			'[@checked="checked"]',
 		]);
 
-		return (bool)$result->length;
+		return (bool) $result->length;
 	}
 
 	//--------------------------------------------------------------------
@@ -227,16 +232,12 @@ class DOMParser
 		// By ID
 		if (! empty($selector['id']))
 		{
-			$path = empty($selector['tag'])
-				? "id(\"{$selector['id']}\")"
-				: "//body//{$selector['tag']}[@id=\"{$selector['id']}\"]";
+			$path = empty($selector['tag']) ? "id(\"{$selector['id']}\")" : "//body//{$selector['tag']}[@id=\"{$selector['id']}\"]";
 		}
 		// By Class
 		else if (! empty($selector['class']))
 		{
-			$path = empty($selector['tag'])
-				? "//*[@class=\"{$selector['class']}\"]"
-				: "//body//{$selector['tag']}[@class=\"{$selector['class']}\"]";
+			$path = empty($selector['tag']) ? "//*[@class=\"{$selector['class']}\"]" : "//body//{$selector['tag']}[@class=\"{$selector['class']}\"]";
 		}
 		// By tag only
 		else if (! empty($selector['tag']))

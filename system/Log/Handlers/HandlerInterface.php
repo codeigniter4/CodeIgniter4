@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Log\Handlers;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,6 +35,11 @@
  * @filesource
  */
 
+namespace CodeIgniter\Log\Handlers;
+
+/**
+ * Interface for Log handlers
+ */
 interface HandlerInterface
 {
 

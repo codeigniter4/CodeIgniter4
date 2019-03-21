@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\View;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,6 +35,11 @@
  * @filesource
  */
 
+namespace CodeIgniter\View;
+
+/**
+ * Class Plugins
+ */
 class Plugins
 {
 
@@ -148,4 +152,5 @@ class Plugins
 	{
 		return site_url(...$params);
 	}
+
 }

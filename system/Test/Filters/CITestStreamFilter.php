@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Test\Filters;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Test\Filters;
 
 /**
  * Class to extract an output snapshot.

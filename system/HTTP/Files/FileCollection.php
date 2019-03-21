@@ -1,6 +1,4 @@
 <?php
-namespace CodeIgniter\HTTP\Files;
-
 /**
  * CodeIgniter
  *
@@ -36,6 +34,8 @@ namespace CodeIgniter\HTTP\Files;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\HTTP\Files;
 
 /**
  * Class FileCollection
@@ -93,14 +93,14 @@ class FileCollection
 				$name         = explode('.', $name);
 				$uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
 				return ($uploadedFile instanceof UploadedFile) ?
-					 $uploadedFile : null;
+						$uploadedFile : null;
 			}
 
 			if (array_key_exists($name, $this->files))
 			{
 				$uploadedFile = $this->files[$name];
-				return  ($uploadedFile instanceof UploadedFile) ?
-					$uploadedFile : null;
+				return ($uploadedFile instanceof UploadedFile) ?
+						$uploadedFile : null;
 			}
 		}
 

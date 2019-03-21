@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Database;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Database;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
@@ -482,7 +484,7 @@ class Forge
 
 		if (($result = $this->db->query($sql)) !== false)
 		{
-			empty($this->db->dataCache['table_names']) OR $this->db->dataCache['table_names'][] = $table;
+			empty($this->db->dataCache['table_names']) || $this->db->dataCache['table_names'][] = $table;
 
 			// Most databases don't support creating indexes from within the CREATE TABLE statement
 			if (! empty($this->keys))

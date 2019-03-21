@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Session\Handlers;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Config\BaseConfig;
 use Psr\Log\LoggerAwareTrait;
@@ -209,4 +210,5 @@ abstract class BaseHandler implements \SessionHandlerInterface
 
 		return false;
 	}
+
 }

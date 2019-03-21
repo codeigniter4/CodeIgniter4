@@ -1,5 +1,4 @@
 <?php
-namespace CodeIgniter\I18n;
 
 /**
  * CodeIgniter
@@ -36,6 +35,8 @@ namespace CodeIgniter\I18n;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\I18n;
 
 use CodeIgniter\I18n\Exceptions\I18nException;
 use Locale;

@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Router;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Router;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Router\Exceptions\RouterException;
@@ -170,9 +171,7 @@ class Router implements RouterInterface
 		// everything runs off of it's default settings.
 		if (empty($uri))
 		{
-			return strpos($this->controller, '\\') === false
-				? $this->collection->getDefaultNamespace() . $this->controller
-				: $this->controller;
+			return strpos($this->controller, '\\') === false ? $this->collection->getDefaultNamespace() . $this->controller : $this->controller;
 		}
 
 		if ($this->checkRoutes($uri))
@@ -219,9 +218,7 @@ class Router implements RouterInterface
 	 */
 	public function controllerName()
 	{
-		return $this->translateURIDashes
-			? str_replace('-', '_', $this->controller)
-			: $this->controller;
+		return $this->translateURIDashes ? str_replace('-', '_', $this->controller) : $this->controller;
 	}
 
 	//--------------------------------------------------------------------
@@ -234,9 +231,7 @@ class Router implements RouterInterface
 	 */
 	public function methodName(): string
 	{
-		return $this->translateURIDashes
-			? str_replace('-', '_', $this->method)
-			: $this->method;
+		return $this->translateURIDashes ? str_replace('-', '_', $this->method) : $this->method;
 	}
 
 	//--------------------------------------------------------------------
@@ -255,7 +250,7 @@ class Router implements RouterInterface
 
 			return [
 				$routeArray[0], // Controller
-				$routeArray[1] ?? 'index',   // Method
+				$routeArray[1] ?? 'index', // Method
 			];
 		}
 
@@ -398,9 +393,7 @@ class Router implements RouterInterface
 	{
 		$routes = $this->collection->getRoutes($this->collection->getHTTPVerb());
 
-		$uri = $uri === '/'
-			? $uri
-			: ltrim($uri, '/ ');
+		$uri = $uri === '/' ? $uri : ltrim($uri, '/ ');
 
 		// Don't waste any time
 		if (empty($routes))
@@ -456,7 +449,6 @@ class Router implements RouterInterface
 					return true;
 				}
 				// Are we using the default method for back-references?
-
 				// Support resource route when function with subdirectory
 				// ex: $routes->resource('Admin/Admins');
 				if (strpos($val, '$') !== false && strpos($key, '(') !== false && strpos($key, '/') !== false)

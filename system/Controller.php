@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\RequestInterface;
@@ -212,9 +213,9 @@ class Controller
 		}
 
 		$success = $this->validator
-			->withRequest($this->request)
-			->setRules($rules, $messages)
-			->run();
+				->withRequest($this->request)
+				->setRules($rules, $messages)
+				->run();
 
 		return $success;
 	}

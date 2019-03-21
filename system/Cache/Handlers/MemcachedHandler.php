@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Cache\Handlers;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,8 +35,13 @@
  * @filesource
  */
 
+namespace CodeIgniter\Cache\Handlers;
+
 use CodeIgniter\Cache\CacheInterface;
 
+/**
+ * Mamcached cache handler
+ */
 class MemcachedHandler implements CacheInterface
 {
 
@@ -71,7 +75,7 @@ class MemcachedHandler implements CacheInterface
 
 	public function __construct($config)
 	{
-		$config       = (array)$config;
+		$config       = (array) $config;
 		$this->prefix = $config['prefix'] ?? '';
 
 		if (! empty($config))

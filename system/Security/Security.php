@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Security;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Security;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
@@ -149,7 +150,7 @@ class Security
 		'%24', // $
 		'%3f', // ?
 		'%3b', // ;
-		'%3d',       // =
+		'%3d', // =
 	];
 
 	//--------------------------------------------------------------------

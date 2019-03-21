@@ -1,8 +1,4 @@
 <?php
-namespace CodeIgniter\HTTP;
-
-use CodeIgniter\HTTP\Exceptions\HTTPException;
-
 /**
  * CodeIgniter
  *
@@ -37,6 +33,14 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
  * @filesource
+ */
+
+namespace CodeIgniter\HTTP;
+
+use CodeIgniter\HTTP\Exceptions\HTTPException;
+
+/**
+ * Message
  */
 class Message
 {
