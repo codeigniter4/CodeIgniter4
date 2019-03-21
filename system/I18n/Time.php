@@ -1029,7 +1029,7 @@ class Time extends DateTime
 		}
 		else if (is_string($testTime))
 		{
-			$timezone = $timezone ?: $this->timezone;
+			$timezone = $timezone ?? $this->timezone;
 			$timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
 			$testTime = new DateTime($testTime, $timezone);
 			$testTime = $testTime->format('Y-m-d H:i:s');
@@ -1189,7 +1189,7 @@ class Time extends DateTime
 		}
 		else if (is_string($time))
 		{
-			$timezone = $timezone ?: $this->timezone;
+			$timezone = $timezone ?? $this->timezone;
 			$timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
 			$time     = new DateTime($time, $timezone);
 			$time     = $time->setTimezone(new DateTimeZone('UTC'));

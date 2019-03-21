@@ -112,7 +112,7 @@ class Database extends BaseCollector
 		$config = config('Toolbar');
 
 		// Provide default in case it's not set
-		$max = $config->maxQueries ?: 100;
+		$max = $config->maxQueries ?? 100;
 
 		if (count(static::$queries) < $max)
 		{

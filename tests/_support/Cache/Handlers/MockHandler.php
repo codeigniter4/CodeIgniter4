@@ -98,7 +98,7 @@ class MockHandler implements CacheInterface
 	{
 		$key = $this->prefix . $key;
 
-		$data = $this->cache[$key] ?: null;
+		$data = $this->cache[$key] ?? null;
 
 		if (empty($data))
 		{
@@ -126,7 +126,7 @@ class MockHandler implements CacheInterface
 	{
 		$key = $this->prefix . $key;
 
-		$data = $this->cache[$key] ?: null;
+		$data = $this->cache[$key] ?? null;
 
 		if (empty($data))
 		{

@@ -66,7 +66,7 @@ class FileHandler implements CacheInterface
 			throw CacheException::forUnableToWrite($path);
 		}
 
-		$this->prefix = $config->prefix ?: '';
+		$this->prefix = $config->prefix ?? '';
 		$this->path   = rtrim($path, '/') . '/';
 	}
 

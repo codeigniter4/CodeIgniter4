@@ -245,7 +245,7 @@ class CLI
 		fwrite(STDOUT, $field . $extra_output . ': ');
 
 		// Read the input from keyboard.
-		$input = trim(static::input()) ?: $default;
+		$input = trim(static::input()) ?? $default;
 
 		if (isset($validation))
 		{

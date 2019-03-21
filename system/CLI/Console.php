@@ -72,7 +72,7 @@ class Console
 	 */
 	public function run(bool $useSafeOutput = false)
 	{
-		$path = CLI::getURI() ?: 'list';
+		$path = CLI::getURI() ?? 'list';
 
 		// Set the path for the application to route to.
 		$this->app->setPath("ci{$path}");

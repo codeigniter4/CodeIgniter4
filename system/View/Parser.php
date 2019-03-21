@@ -131,7 +131,7 @@ class Parser extends View
 		// Was it cached?
 		if (isset($options['cache']))
 		{
-			$cacheName = $options['cache_name'] ?: $view;
+			$cacheName = $options['cache_name'] ?? $view;
 
 			if ($output = cache($cacheName))
 			{

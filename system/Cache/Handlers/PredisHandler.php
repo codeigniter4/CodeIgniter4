@@ -74,7 +74,7 @@ class PredisHandler implements CacheInterface
 
 	public function __construct($config)
 	{
-		$this->prefix = $config->prefix ?: '';
+		$this->prefix = $config->prefix ?? '';
 
 		if (isset($config->redis))
 		{
