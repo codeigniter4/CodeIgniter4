@@ -51,3 +51,9 @@ $routes->cli('migrations', '\CodeIgniter\Commands\MigrationsCommand::index');
 
 // CLI Catchall - uses a _remap to
 $routes->cli('ci(:any)', '\CodeIgniter\CLI\CommandRunner::index/$1');
+
+// Prevent access to initController method
+$routes->add('(:any)/initController', function()
+{
+    throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+}); 
