@@ -28,19 +28,16 @@ Events::on('pre_system', function () {
 	\ob_start(function ($buffer) {
 		return $buffer;
 	});
-});
 
-/*
- * --------------------------------------------------------------------
- * Debug Toolbar Listeners.
- * --------------------------------------------------------------------
- * If you delete, they will no longer be collected.
- */
-if (ENVIRONMENT !== 'production')
-{
-	Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
-
-	Events::on('pre_system', function () {
+	/*
+	   * --------------------------------------------------------------------
+	 * Debug Toolbar Listeners.
+	 * --------------------------------------------------------------------
+	 * If you delete, they will no longer be collected.
+	 */
+	if (ENVIRONMENT !== 'production')
+	{
+		Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
 		Services::toolbar()->respond();
-	});
-}
+	}
+});
