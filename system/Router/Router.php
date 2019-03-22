@@ -463,7 +463,15 @@ class Router implements RouterInterface
 				}
 				elseif (strpos($val, '/') !== false)
 				{
-					$val = str_replace('/', '\\', $val);
+					[
+						$controller,
+						$method,
+					] = explode( '::', $val );
+
+					// Only replace slashes in the controller, not in the method.
+					$controller = str_replace('/', '\\', $controller);
+
+					$val = $controller . '::' . $method;
 				}
 
 				// Is this route supposed to redirect to another?

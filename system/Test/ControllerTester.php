@@ -42,6 +42,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
 use Config\App;
+use Config\Services;
 
 /**
  * ControllerTester Trait
@@ -63,6 +64,7 @@ trait ControllerTester
 	protected $appConfig;
 	protected $request;
 	protected $response;
+	protected $logger;
 	protected $controller;
 	protected $uri = 'http://example.com';
 	protected $body;
@@ -96,7 +98,13 @@ trait ControllerTester
 			$this->response = new Response($this->appConfig);
 		}
 
-		$this->controller = new $name($this->request, $this->response);
+		if (empty($this->logger))
+		{
+			$this->logger = Services::logger();
+		}
+
+		$this->controller = new $name();
+		$this->controller->initController($this->request, $this->response, $this->logger);
 
 		return $this;
 	}
@@ -124,6 +132,7 @@ trait ControllerTester
 				->setRequest($this->request)
 				->setResponse($this->response);
 
+		$response = null;
 		try
 		{
 			ob_start();
@@ -139,11 +148,16 @@ trait ControllerTester
 		{
 			$output = ob_get_clean();
 
-			// If the controller returned a redirect response
-			// then we need to use that...
+			// If the controller returned a response, use it
 			if (isset($response) && $response instanceof Response)
 			{
 				$result->setResponse($response);
+			}
+
+			// check if controller returned a view rather than echoing it
+			if (is_string($response))
+			{
+				$output = $response;
 			}
 
 			$result->response()->setBody($output);
@@ -191,6 +205,18 @@ trait ControllerTester
 	public function withResponse($response)
 	{
 		$this->response = $response;
+
+		return $this;
+	}
+
+	/**
+	 * @param mixed $logger
+	 *
+	 * @return mixed
+	 */
+	public function withLogger($logger)
+	{
+		$this->logger = $logger;
 
 		return $this;
 	}
