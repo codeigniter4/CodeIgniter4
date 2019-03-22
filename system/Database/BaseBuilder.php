@@ -2478,7 +2478,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function trackAliases($table): ?string
+	protected function trackAliases($table): string
 	{
 		if (is_array($table))
 		{
