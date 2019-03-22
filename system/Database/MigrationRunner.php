@@ -36,7 +36,6 @@
  * @filesource
  */
 
-use Config\Autoload;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Exceptions\ConfigException;
@@ -122,7 +121,7 @@ class MigrationRunner
 	/**
 	 * used to return messages for CLI.
 	 *
-	 * @var boolean
+	 * @var array
 	 */
 	protected $cliMessages = [];
 
@@ -416,7 +415,7 @@ class MigrationRunner
 			$dir = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
 		}
 		// Otherwise, get namespace location form  PSR4 paths
-		// and add Database/Migrations for a standard loation.
+		// and add Database/Migrations for a standard location.
 		else
 		{
 			$config = config('Autoload');
@@ -695,7 +694,7 @@ class MigrationRunner
 	/**
 	 * Retrieves current schema version
 	 *
-	 * @return string    Current migration version
+	 * @return array    Current migration version
 	 */
 	public function getCliMessages()
 	{

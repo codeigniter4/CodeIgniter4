@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Database\SQLite3;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
+
 /**
  * CodeIgniter
  *
