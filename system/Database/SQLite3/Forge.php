@@ -39,7 +39,7 @@
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
- * Forge for Postgre
+ * Forge for SQLite3
  */
 class Forge extends \CodeIgniter\Database\Forge
 {
@@ -98,7 +98,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param string $db_name
 	 *
 	 * @return boolean
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function dropDatabase($db_name): bool
 	{
