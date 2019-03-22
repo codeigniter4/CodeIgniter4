@@ -95,7 +95,6 @@ class ControllerTesterTest extends \CIUnitTestCase
 				->controller(\Tests\Support\Controllers\Popcorn::class)
 				->execute('pop');
 
-		$body = $result->getBody();
 		$this->assertEquals(567, $result->response()->getStatusCode());
 	}
 
@@ -107,7 +106,6 @@ class ControllerTesterTest extends \CIUnitTestCase
 				->controller(\Tests\Support\Controllers\Popcorn::class)
 				->execute('popper');
 
-		$body = $result->getBody();
 		$this->assertEquals(500, $result->response()->getStatusCode());
 	}
 
@@ -163,6 +161,7 @@ class ControllerTesterTest extends \CIUnitTestCase
 				->execute('weasel');
 
 		$body = $result->getBody(); // empty
+		$this->assertEmpty($body);
 		$this->assertFalse($result->isOK());
 	}
 
@@ -198,6 +197,17 @@ class ControllerTesterTest extends \CIUnitTestCase
 
 		// won't fail, but doesn't do anything
 		$this->assertNull($result->ohno('Hi'));
+	}
+
+	// @see https://github.com/codeigniter4/CodeIgniter4/issues/1834
+	public function testResponseOverriding()
+	{
+		$result = $this->withURI('http://example.com/rest/')
+				->controller(\Tests\Support\Controllers\Popcorn::class)
+				->execute('index3');
+
+		$response = json_decode($result->getBody());
+		$this->assertEquals('en', $response->lang);
 	}
 
 }

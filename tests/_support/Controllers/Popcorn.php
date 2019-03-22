@@ -31,7 +31,7 @@ class Popcorn extends Controller
 
 	public function weasel()
 	{
-		$this->respond(['Nothing to see here'], 200);
+		$this->respond('', 200);
 	}
 
 	public function oops()
@@ -43,4 +43,16 @@ class Popcorn extends Controller
 	{
 		return redirect()->to('/');
 	}
+
+	// @see https://github.com/codeigniter4/CodeIgniter4/issues/1834
+	public function index3()
+	{
+		$response = $this->response->setJSON([
+			'lang' => $this->request->getLocale(),
+		]);
+
+		//      echo var_dump($this->response->getBody());
+		return $response;
+	}
+
 }
