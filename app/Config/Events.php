@@ -19,6 +19,17 @@ use CodeIgniter\Events\Events;
  *      Events::on('create', [$myInstance, 'myMethod']);
  */
 
+Events::on('pre_system', function () {
+	while (\ob_get_level() > 0)
+	{
+		\ob_end_flush();
+	}
+
+	\ob_start(function ($buffer) {
+		return $buffer;
+	});
+});
+
 /*
  * --------------------------------------------------------------------
  * Debug Toolbar Listeners.
@@ -30,15 +41,6 @@ if (ENVIRONMENT !== 'production')
 	Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
 
 	Events::on('pre_system', function () {
-		while (\ob_get_level() > 0)
-		{
-			\ob_end_flush();
-		}
-
-		\ob_start(function ($buffer) {
-			return $buffer;
-		});
-
 		Services::toolbar()->respond();
 	});
 }
