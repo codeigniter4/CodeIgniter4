@@ -122,7 +122,7 @@ class MigrationRunner
 	/**
 	 * used to return messages for CLI.
 	 *
-	 * @var boolean
+	 * @var array
 	 */
 	protected $cliMessages = [];
 
@@ -698,7 +698,7 @@ class MigrationRunner
 	/**
 	 * Retrieves current schema version
 	 *
-	 * @return string    Current migration version
+	 * @return array    Current migration version
 	 */
 	public function getCliMessages()
 	{
