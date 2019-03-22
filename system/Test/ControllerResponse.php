@@ -143,7 +143,7 @@ class ControllerResponse {
 	//--------------------------------------------------------------------
 
 	/**
-	 * Boils down the possible responses into a bolean valid/not-valid
+	 * Boils down the possible responses into a boolean valid/not-valid
 	 * response type.
 	 *
 	 * @return boolean
@@ -180,6 +180,13 @@ class ControllerResponse {
 	// Utility
 	//--------------------------------------------------------------------
 
+	/**
+	 * Forward any unrecognized method calls to our DOMParser instance.
+	 *
+	 * @param  string $function Method name
+	 * @param  mixed  $params   Any method parameters
+	 * @return mixed
+	 */
 	public function __call($function, $params)
 	{
 		if (method_exists($this->dom, $function))

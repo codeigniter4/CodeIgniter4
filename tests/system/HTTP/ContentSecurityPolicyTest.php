@@ -39,6 +39,7 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -52,6 +53,7 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -66,6 +68,7 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -86,6 +89,7 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -306,6 +310,7 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -455,6 +460,34 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 		$this->assertContains('nonce=', $this->response->getBody());
 		$result = $this->getHeaderEmitted('Content-Security-Policy');
 		$this->assertContains('nonce-', $result);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testHeaderWrongCaseNotFound()
+	{
+		$this->prepare();
+		$result = $this->work();
+
+		$result = $this->getHeaderEmitted('content-security-policy');
+		$this->assertNull($result);
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testHeaderIgnoreCase()
+	{
+		$this->prepare();
+		$result = $this->work();
+
+		$result = $this->getHeaderEmitted('content-security-policy', true);
+		$this->assertContains("base-uri 'self';", $result);
 	}
 
 }
