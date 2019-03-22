@@ -154,7 +154,7 @@ class MockConnection extends BaseConnection
 	 *
 	 * @return array
 	 */
-	public function error()
+	public function error(): array
 	{
 		return [
 			'code'    => null,
@@ -169,7 +169,7 @@ class MockConnection extends BaseConnection
 	 *
 	 * @return integer
 	 */
-	public function insertID()
+	public function insertID(): int
 	{
 		return $this->connID->insert_id;
 	}
