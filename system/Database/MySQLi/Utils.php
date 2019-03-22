@@ -37,6 +37,8 @@
 
 namespace CodeIgniter\Database\MySQLi;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
+
 /**
  * Utils for MySQLi
  */

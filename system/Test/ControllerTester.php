@@ -158,10 +158,17 @@ trait ControllerTester
 			if (is_string($response))
 			{
 				$output = $response;
+				$result->response()->setBody($output);
+				$result->setBody($output);
 			}
-
-			$result->response()->setBody($output);
-			$result->setBody($output);
+			elseif (! empty($response) && ! empty($response->getBody()))
+			{
+				$result->setBody($response->getBody());
+			}
+			else
+			{
+				$result->setBody('');
+			}
 		}
 
 		// If not response code has been sent, assume a success

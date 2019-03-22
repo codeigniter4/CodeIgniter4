@@ -38,6 +38,7 @@
 namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\BaseResult;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\ResultInterface;
 
 /**
@@ -131,7 +132,7 @@ class Result extends BaseResult implements ResultInterface
 	 * @param integer $n
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function dataSeek($n = 0)
 	{

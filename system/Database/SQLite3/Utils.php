@@ -37,6 +37,8 @@
 
 namespace CodeIgniter\Database\SQLite3;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
+
 /**
  * Utils for SQLite3
  */

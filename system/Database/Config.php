@@ -39,7 +39,6 @@
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Config\BaseConfig;
-use Config\Database;
 
 /**
  * Class Config

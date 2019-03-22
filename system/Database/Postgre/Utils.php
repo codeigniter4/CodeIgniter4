@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -36,6 +37,8 @@
  */
 
 namespace CodeIgniter\Database\Postgre;
+
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Utils for Postgre
