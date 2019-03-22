@@ -51,7 +51,7 @@ interface QueryInterface
 	 * Sets the raw query string to use for this statement.
 	 *
 	 * @param string $sql
-	 * @param array  $binds
+	 * @param mixed  $binds
 	 *
 	 * @return mixed
 	 */

@@ -177,6 +177,8 @@ class Table
 
 	/**
 	 * Creates the new table based on our current fields.
+	 *
+	 * @return mixed
 	 */
 	protected function createTable()
 	{

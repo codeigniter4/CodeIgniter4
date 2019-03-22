@@ -59,7 +59,7 @@ interface ConnectionInterface
 	 * @param  boolean $persistent
 	 * @return mixed
 	 */
-	public function connect($persistent = false);
+	public function connect(bool $persistent = false);
 
 	//--------------------------------------------------------------------
 
@@ -176,11 +176,11 @@ interface ConnectionInterface
 	/**
 	 * Returns an instance of the query builder for this connection.
 	 *
-	 * @param string|array $tableName Table name.
+	 * @param string $tableName Table name.
 	 *
 	 * @return BaseBuilder Builder.
 	 */
-	public function table($tableName);
+	public function table(string $tableName);
 
 	//--------------------------------------------------------------------
 

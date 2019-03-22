@@ -51,7 +51,7 @@ interface ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getResult($type = 'object'): array;
+	public function getResult(string $type = 'object'): array;
 
 	//--------------------------------------------------------------------
 
@@ -99,7 +99,7 @@ interface ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getRow($n = 0, $type = 'object');
+	public function getRow(int $n = 0, string $type = 'object');
 
 	//--------------------------------------------------------------------
 
@@ -113,7 +113,7 @@ interface ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getCustomRowObject($n, string $className);
+	public function getCustomRowObject(int $n, string $className);
 
 	//--------------------------------------------------------------------
 
@@ -126,7 +126,7 @@ interface ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getRowArray($n = 0);
+	public function getRowArray(int $n = 0);
 
 	//--------------------------------------------------------------------
 
@@ -139,7 +139,7 @@ interface ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getRowObject($n = 0);
+	public function getRowObject(int $n = 0);
 
 	//--------------------------------------------------------------------
 
@@ -162,7 +162,7 @@ interface ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getFirstRow($type = 'object');
+	public function getFirstRow(string $type = 'object');
 
 	//--------------------------------------------------------------------
 
@@ -173,7 +173,7 @@ interface ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getLastRow($type = 'object');
+	public function getLastRow(string $type = 'object');
 
 	//--------------------------------------------------------------------
 
@@ -184,7 +184,7 @@ interface ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getNextRow($type = 'object');
+	public function getNextRow(string $type = 'object');
 
 	//--------------------------------------------------------------------
 
@@ -195,7 +195,7 @@ interface ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getPreviousRow($type = 'object');
+	public function getPreviousRow(string $type = 'object');
 
 	//--------------------------------------------------------------------
 
@@ -206,7 +206,7 @@ interface ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getUnbufferedRow($type = 'object');
+	public function getUnbufferedRow(string $type = 'object');
 
 	//--------------------------------------------------------------------
 
@@ -255,7 +255,7 @@ interface ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function dataSeek($n = 0);
+	public function dataSeek(int $n = 0);
 
 	//--------------------------------------------------------------------
 }

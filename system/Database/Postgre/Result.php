@@ -102,7 +102,7 @@ class Result extends BaseResult implements ResultInterface
 	/**
 	 * Frees the current result.
 	 *
-	 * @return mixed
+	 * @return void
 	 */
 	public function freeResult()
 	{
@@ -124,7 +124,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function dataSeek($n = 0)
+	public function dataSeek(int $n = 0)
 	{
 		return pg_result_seek($this->resultID, $n);
 	}
@@ -138,7 +138,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return array
 	 */
-	protected function fetchAssoc()
+	protected function fetchAssoc(): array
 	{
 		return pg_fetch_assoc($this->resultID);
 	}
@@ -154,7 +154,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return object
 	 */
-	protected function fetchObject($className = 'stdClass')
+	protected function fetchObject(string $className = 'stdClass'): object
 	{
 		return pg_fetch_object($this->resultID, null, $className);
 	}

@@ -53,7 +53,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 * @param array  $options Passed to the connection's prepare statement.
 	 *                        Unused in the MySQLi driver.
 	 *
-	 * @return mixed
+	 * @return $this
 	 */
 	public function _prepare(string $sql, array $options = [])
 	{
@@ -80,7 +80,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @return \CodeIgniter\Database\ResultInterface
 	 */
-	public function _execute($data)
+	public function _execute(array $data)
 	{
 		if (is_null($this->statement))
 		{

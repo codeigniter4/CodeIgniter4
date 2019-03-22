@@ -94,6 +94,8 @@ class Seeder
 	 *
 	 * @param BaseConfig     $config
 	 * @param BaseConnection $db
+	 *
+	 * @throws \InvalidArgumentException
 	 */
 	public function __construct(BaseConfig $config, BaseConnection $db = null)
 	{

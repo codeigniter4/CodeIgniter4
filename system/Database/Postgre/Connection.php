@@ -77,7 +77,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @param  boolean $persistent
 	 * @return mixed
 	 */
-	public function connect($persistent = false)
+	public function connect(bool $persistent = false)
 	{
 		if (empty($this->DSN))
 		{
@@ -120,7 +120,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Keep or establish the connection if no queries have been sent for
 	 * a length of time exceeding the server's idle timeout.
 	 *
-	 * @return mixed
+	 * @return void
 	 */
 	public function reconnect()
 	{
@@ -185,7 +185,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return resource
 	 */
-	public function execute($sql)
+	public function execute(string $sql)
 	{
 		return pg_query($this->connID, $sql);
 	}
@@ -195,7 +195,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Returns the total number of rows affected by this query.
 	 *
-	 * @return mixed
+	 * @return int
 	 */
 	public function affectedRows(): int
 	{
@@ -209,7 +209,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * Escapes data based on type
 	 *
-	 * @param  string $str
+	 * @param  mixed $str
 	 * @return mixed
 	 */
 	public function escape($str)
@@ -258,7 +258,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	protected function _listTables($prefixLimit = false): string
+	protected function _listTables(bool $prefixLimit = false): string
 	{
 		$sql = 'SELECT "table_name" FROM "information_schema"."tables" WHERE "table_schema" = \'' . $this->schema . "'";
 
@@ -424,7 +424,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return array
 	 */
-	public function error()
+	public function error(): array
 	{
 		return [
 			'code'    => '',
@@ -439,7 +439,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return integer
 	 */
-	public function insertID()
+	public function insertID(): int
 	{
 		$v = pg_version($this->connID);
 		// 'server' key is only available since PostgreSQL 7.4
@@ -539,7 +539,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @param  string $charset The client encoding to which the data will be converted.
 	 * @return boolean
 	 */
-	protected function setClientEncoding($charset)
+	protected function setClientEncoding(string $charset): bool
 	{
 		return pg_set_client_encoding($this->connID, $charset) === 0;
 	}

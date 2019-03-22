@@ -66,8 +66,10 @@ class Database
 	 *
 	 * @return   mixed
 	 * @internal param bool $useBuilder
+	 *
+	 * @throws \InvalidArgumentException
 	 */
-	public function load(array $params = [], string $alias)
+	public function load(array $params, string $alias)
 	{
 		// No DB specified? Beat them senseless...
 		if (empty($params['DBDriver']))

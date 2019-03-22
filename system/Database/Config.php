@@ -37,7 +37,6 @@
  */
 
 use CodeIgniter\Config\BaseConfig;
-use Config\Database;
 
 /**
  * Class Config
@@ -66,8 +65,8 @@ class Config extends BaseConfig
 	/**
 	 * Creates the default
 	 *
-	 * @param string|array $group     The name of the connection group to use,
-	 *                                or an array of configuration settings.
+	 * @param mixed        $group     The name of the connection group to use,
+	 *                                an array of configuration settings, or BaseConnection object.
 	 * @param boolean      $getShared Whether to return a shared instance of the connection.
 	 *
 	 * @return BaseConnection
@@ -124,7 +123,7 @@ class Config extends BaseConfig
 	 *
 	 * @return array
 	 */
-	public static function getConnections()
+	public static function getConnections(): array
 	{
 		return static::$instances;
 	}

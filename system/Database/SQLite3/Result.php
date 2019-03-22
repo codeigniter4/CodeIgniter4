@@ -37,6 +37,7 @@
  */
 
 use CodeIgniter\Database\BaseResult;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\ResultInterface;
 
 /**
@@ -109,7 +110,7 @@ class Result extends BaseResult implements ResultInterface
 	/**
 	 * Frees the current result.
 	 *
-	 * @return mixed
+	 * @return void
 	 */
 	public function freeResult()
 	{
@@ -130,7 +131,7 @@ class Result extends BaseResult implements ResultInterface
 	 * @param integer $n
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function dataSeek($n = 0)
 	{
@@ -154,7 +155,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return array
 	 */
-	protected function fetchAssoc()
+	protected function fetchAssoc(): array
 	{
 		return $this->resultID->fetchArray(SQLITE3_ASSOC);
 	}
@@ -170,7 +171,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return object
 	 */
-	protected function fetchObject($className = 'stdClass')
+	protected function fetchObject(string $className = 'stdClass'): object
 	{
 		// No native support for fetching rows as objects
 		if (($row = $this->fetchAssoc()) === false)

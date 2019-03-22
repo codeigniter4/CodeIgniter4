@@ -36,7 +36,6 @@
  * @filesource
  */
 
-use Config\Autoload;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Exceptions\ConfigException;
@@ -122,7 +121,7 @@ class MigrationRunner
 	/**
 	 * used to return messages for CLI.
 	 *
-	 * @var boolean
+	 * @var array
 	 */
 	protected $cliMessages = [];
 
@@ -337,7 +336,7 @@ class MigrationRunner
 	 *
 	 * @return boolean
 	 */
-	public function latestAll(string $group = null)
+	public function latestAll(string $group = null): bool
 	{
 		$this->ensureTable();
 
@@ -405,7 +404,7 @@ class MigrationRunner
 	 *
 	 * @return array    list of migrations as $version for one namespace
 	 */
-	public function findMigrations()
+	public function findMigrations(): array
 	{
 		$migrations = [];
 		helper('filesystem');
@@ -416,7 +415,7 @@ class MigrationRunner
 			$dir = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
 		}
 		// Otherwise, get namespace location form  PSR4 paths
-		// and add Database/Migrations for a standard loation.
+		// and add Database/Migrations for a standard location.
 		else
 		{
 			$config = config('Autoload');
@@ -473,11 +472,11 @@ class MigrationRunner
 	 *
 	 * @param array  $migrations
 	 * @param string $method
-	 * @param string $targetversion
+	 * @param string $targetVersion
 	 *
 	 * @return boolean
 	 */
-	protected function checkMigrations(array $migrations, string $method, string $targetversion)
+	protected function checkMigrations(array $migrations, string $method, string $targetVersion): bool
 	{
 		// Check if no migrations found
 		if (empty($migrations))
@@ -489,14 +488,14 @@ class MigrationRunner
 			throw new \RuntimeException(lang('Migrations.empty'));
 		}
 
-		// Check if $targetversion file is found
-		if ((int)$targetversion !== 0 && ! array_key_exists($targetversion, $migrations))
+		// Check if $targetVersion file is found
+		if ((int)$targetVersion !== 0 && ! array_key_exists($targetVersion, $migrations))
 		{
 			if ($this->silent)
 			{
 				return false;
 			}
-			throw new \RuntimeException(lang('Migrations.notFound') . $targetversion);
+			throw new \RuntimeException(lang('Migrations.notFound') . $targetVersion);
 		}
 
 		ksort($migrations);
@@ -603,7 +602,7 @@ class MigrationRunner
 	 *
 	 * @return array
 	 */
-	public function getHistory(string $group = 'default')
+	public function getHistory(string $group = 'default'): array
 	{
 		$this->ensureTable();
 
@@ -647,7 +646,7 @@ class MigrationRunner
 	 *
 	 * @return string    Numeric portion of a migration filename
 	 */
-	protected function getMigrationNumber(string $migration)
+	protected function getMigrationNumber(string $migration): string
 	{
 		return sscanf($migration, '%[0-9]+', $number) ? $number : '0';
 	}
@@ -661,7 +660,7 @@ class MigrationRunner
 	 *
 	 * @return string    text portion of a migration filename
 	 */
-	protected function getMigrationName(string $migration)
+	protected function getMigrationName(string $migration): string
 	{
 		$parts = explode('_', $migration);
 		array_shift($parts);
@@ -676,7 +675,7 @@ class MigrationRunner
 	 *
 	 * @return string    Current migration version
 	 */
-	protected function getVersion()
+	protected function getVersion(): string
 	{
 		$this->ensureTable();
 
@@ -695,9 +694,9 @@ class MigrationRunner
 	/**
 	 * Retrieves current schema version
 	 *
-	 * @return string    Current migration version
+	 * @return array    Current migration version
 	 */
-	public function getCliMessages()
+	public function getCliMessages(): array
 	{
 		return $this->cliMessages;
 	}

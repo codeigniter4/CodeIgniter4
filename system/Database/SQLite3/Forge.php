@@ -98,7 +98,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param string $db_name
 	 *
 	 * @return boolean
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function dropDatabase($db_name): bool
 	{
@@ -150,7 +150,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @return string|array
 	 */
-	protected function _alterTable($alter_type, $table, $field)
+	protected function _alterTable(string $alter_type, string $table, $field)
 	{
 		switch ($alter_type)
 		{
@@ -186,7 +186,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @return string
 	 */
-	protected function _processColumn($field)
+	protected function _processColumn(array $field): string
 	{
 		if ($field['type'] === 'TEXT' && strpos($field['length'], "('") === 0)
 		{
@@ -211,7 +211,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @return array
 	 */
-	protected function _processIndexes($table)
+	protected function _processIndexes(string $table): array
 	{
 		$sqls = [];
 
@@ -257,7 +257,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @return void
 	 */
-	protected function _attributeType(&$attributes)
+	protected function _attributeType(array &$attributes)
 	{
 		switch (strtoupper($attributes['TYPE']))
 		{
@@ -281,7 +281,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @return void
 	 */
-	protected function _attributeAutoIncrement(&$attributes, &$field)
+	protected function _attributeAutoIncrement(array &$attributes, array &$field)
 	{
 		if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true
 			&& stripos($field['type'], 'int') !== false)
@@ -304,10 +304,10 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param string $table        Table name
 	 * @param string $foreign_name Foreign name
 	 *
-	 * @return boolean
+	 * @return void
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function dropForeignKey($table, $foreign_name)
+	public function dropForeignKey(string $table, string $foreign_name)
 	{
 		throw new DatabaseException(lang('Database.dropForeignKeyUnsupported'));
 	}
