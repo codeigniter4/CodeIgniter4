@@ -36,6 +36,7 @@
  * @filesource
  */
 
+use Config\Services;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Exceptions\ConfigException;
@@ -121,7 +122,7 @@ class MigrationRunner
 	/**
 	 * used to return messages for CLI.
 	 *
-	 * @var array
+	 * @var boolean
 	 */
 	protected $cliMessages = [];
 
@@ -346,11 +347,11 @@ class MigrationRunner
 			$this->setGroup($group);
 		}
 
-		// Get all namespaces form  PSR4 paths.
-		$config     = config('Autoload');
-		$namespaces = $config->psr4;
+		// Get all namespaces and their paths from the autoloader
+		$autoloader = Services::autoloader(true);
+		$namespaces = $autoloader->getNamespace();
 
-		foreach ($namespaces as $namespace => $path)
+		foreach ($namespaces as $namespace => $paths)
 		{
 			$this->setNamespace($namespace);
 			$migrations = $this->findMigrations();
@@ -412,18 +413,21 @@ class MigrationRunner
 		// If $this->path contains a valid directory use it.
 		if (! empty($this->path))
 		{
-			$dir = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
+			$dirs = [rtrim($this->path, DIRECTORY_SEPARATOR) . '/'];
 		}
-		// Otherwise, get namespace location form  PSR4 paths
+		// Otherwise, get namespace location from the autoloader
 		// and add Database/Migrations for a standard location.
 		else
 		{
-			$config = config('Autoload');
-
-			$location = $config->psr4[$this->namespace];
-
-			// Setting migration directories.
-			$dir = rtrim($location, DIRECTORY_SEPARATOR) . '/Database/Migrations/';
+			// Get all namespaces and their paths from the autoloader
+			$autoloader = Services::autoloader(true);
+			$namespaces = $autoloader->getNamespace();
+			
+			// Append the directory structure to each path in the namespace
+			foreach ($namespaces[$this->namespace] as $path) {
+				// Setting migration directories.
+				$dir = rtrim($path, DIRECTORY_SEPARATOR) . '/Database/Migrations/';
+			}
 		}
 
 		// Load all *_*.php files in the migrations path
@@ -449,7 +453,7 @@ class MigrationRunner
 				// Get migration version number
 				$migration->version = $this->getMigrationNumber($name);
 				$migration->name    = $this->getMigrationName($name);
-				$migration->path    = ! empty($this->path) && strpos($file, $this->path) !== 0
+				$migration->path    = ! empty($this->path) && strpos($file, set_realpath($this->path)) !== 0
 					? $this->path . $file
 					: $file;
 
@@ -694,7 +698,7 @@ class MigrationRunner
 	/**
 	 * Retrieves current schema version
 	 *
-	 * @return array    Current migration version
+	 * @return string    Current migration version
 	 */
 	public function getCliMessages()
 	{
