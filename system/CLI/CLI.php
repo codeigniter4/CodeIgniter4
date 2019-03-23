@@ -438,7 +438,7 @@ class CLI
 	 *
 	 * @return string    The color coded string
 	 */
-	public static function color(string $text, string $foreground, string $background = null, string $format = null): bool
+	public static function color(string $text, string $foreground, string $background = null, string $format = null): string
 	{
 		if (static::isWindows() && ! isset($_SERVER['ANSICON']))
 		{
