@@ -122,11 +122,14 @@ class Routes extends BaseCommand
 
 			foreach ($routes as $from => $to)
 			{
-				$tbody[] = [
-					$from,
-					$method,
-					$to,
-				];
+				// filter for strings, as callbacks aren't displayable
+				if (is_string($to)) {
+					$tbody[] = [
+						$from,
+						$method,
+						$to,
+					];
+				}
 			}
 		}
 
