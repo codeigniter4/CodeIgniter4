@@ -286,7 +286,7 @@ class Time extends DateTime
 	 * @return \CodeIgniter\I18n\Time
 	 * @throws \Exception
 	 */
-	public static function createFromFormat($format, $datetime, DateTimeZone $timeZone = null)
+	public static function createFromFormat($format, $datetime, $timeZone = null)
 	{
 		$date = parent::createFromFormat($format, $datetime);
 

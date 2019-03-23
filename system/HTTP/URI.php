@@ -285,7 +285,7 @@ class URI
 	 *
 	 * @return string The URI user information, in "username[:password]" format.
 	 */
-	public function getUserInfo(): string
+	public function getUserInfo()
 	{
 		$userInfo = $this->user;
 
