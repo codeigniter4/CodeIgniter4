@@ -113,7 +113,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$job = $model->findColumn('name',1);
 
-		$this->assertEquals('Developer', $job[0]->name);
+		$this->assertEquals('Developer', $job->name);
 	}
 
 	//--------------------------------------------------------------------
