@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use CodeIgniter\Services;
+use CodeIgniter\Config\Services;
 use CodeIgniter\View\RendererInterface;
 
 /**
@@ -160,8 +160,10 @@ class Events extends BaseCollector
 
 	/**
 	 * Gets the "badge" value for the button.
+	 *
+	 * @return integer
 	 */
-	public function getBadgeValue()
+	public function getBadgeValue(): int
 	{
 		return count(\CodeIgniter\Events\Events::getPerformanceLogs());
 	}

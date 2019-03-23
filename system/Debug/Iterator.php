@@ -129,7 +129,7 @@ class Iterator
 	 *
 	 * @return string
 	 */
-	public function getReport()
+	public function getReport(): string
 	{
 		if (empty($this->results))
 		{
