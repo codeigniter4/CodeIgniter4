@@ -679,8 +679,8 @@ if_exist                No          If this rule is present, validation will onl
                                     regardless of its value.
 permit_empty            No          Allows the field to receive an empty array, empty string, null or false.
 required                No          Fails if the field is an empty array, empty string, null or false.
-required_with           Yes         The field is required if any of the fields in the parameter are set.                            required_with[field1,field2]
-required_without        Yes         The field is required when any of the fields in the parameter are not set.                      required_without[field1,field2]
+required_with           Yes         The field is required when any of the other required fields are present in the data.            required_with[field1,field2]
+required_without        Yes         The field is required when all of the other fields are present in the data but not required.    required_without[field1,field2]
 is_unique               Yes         Checks if this field value exists in the database. Optionally set a                             is_unique[table.field,ignore_field,ignore_value]
                                     column and value to ignore, useful when updating records to ignore itself.
 timezone                No          Fails if field does match a timezone per ``timezone_identifiers_list``
