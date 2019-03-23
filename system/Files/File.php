@@ -156,7 +156,7 @@ class File extends SplFileInfo
 	 * @param string|null $name
 	 * @param boolean     $overwrite
 	 *
-	 * @return boolean
+	 * @return \CodeIgniter\Files\File
 	 */
 	public function move(string $targetPath, string $name = null, bool $overwrite = false)
 	{
