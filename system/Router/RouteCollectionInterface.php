@@ -192,7 +192,7 @@ interface RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns the current value of the translateURIDashses setting.
+	 * Returns the current value of the translateURIDashes setting.
 	 *
 	 * @return mixed
 	 */
