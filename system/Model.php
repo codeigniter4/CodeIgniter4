@@ -358,7 +358,7 @@ class Model
 	 *
 	 * @return array|object|null    The resulting row of data, or null.
 	 */
-	public function findColumn($columnName, $id = null): ?array
+	public function findColumn($columnName, $id = null)
 	{
 		return $this->select($columnName)
 		            ->find($id);
