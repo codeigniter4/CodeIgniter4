@@ -356,26 +356,12 @@ class Model
 	 * @param string|array                $column_name Column name
 	 * @param integer|string|array        $id          One primary key or an array of primary keys
 	 *
-	 * @return array|null array of table's column values
+	 * @return array|object|null    The resulting row of data, or null.
 	 */
 	public function findColumn($columnName, $id = null): ?array
 	{
-		$tmp = $this->select($columnName)
-		            ->asArray()
+		return $this->select($columnName)
 		            ->find($id);
-
-		if (count($tmp))
-		{
-			$data = [];
-			foreach ($tmp as $item)
-			{
-				$data[] = $item[$columnName];
-			}
-
-			return $data;
-		}
-
-		return null;
 	}
 
 	//--------------------------------------------------------------------
