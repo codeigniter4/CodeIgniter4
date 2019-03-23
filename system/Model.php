@@ -350,6 +350,37 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Fetches the column of database from $this->table with a primary key
+	 * matching $id.
+	 *
+	 * @param string|array                $column_name Column name
+	 * @param integer|string|array        $id          One primary key or an array of primary keys
+	 *
+	 * @return array|null array of table's column values
+	 */
+	public function findColumn($columnName, $id = null): ?array
+	{
+		$tmp = $this->select($columnName)
+		            ->asArray()
+		            ->find($id);
+
+		if (count($tmp))
+		{
+			$data = [];
+			foreach ($tmp as $item)
+			{
+				$data[] = $item[$columnName];
+			}
+
+			return $data;
+		}
+
+		return null;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Works with the current Query Builder instance to return
 	 * all results, while optionally limiting them.
 	 *
