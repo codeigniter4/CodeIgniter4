@@ -60,7 +60,7 @@ interface RendererInterface
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $options = null, $saveData = false): string;
+	public function render(string $view, array $options = null, bool $saveData = false): string;
 
 	//--------------------------------------------------------------------
 
@@ -78,7 +78,7 @@ interface RendererInterface
 	 *
 	 * @return string
 	 */
-	public function renderString(string $view, array $options = null, $saveData = false): string;
+	public function renderString(string $view, array $options = null, bool $saveData = false): string;
 
 	//--------------------------------------------------------------------
 
