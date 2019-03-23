@@ -63,6 +63,8 @@ class CommandRunner extends Controller
 	 *
 	 * @param string $method
 	 * @param array  ...$params
+	 *
+	 * @throws \ReflectionException
 	 */
 	public function _remap($method, ...$params)
 	{
@@ -81,6 +83,7 @@ class CommandRunner extends Controller
 	 * @param array $params
 	 *
 	 * @return mixed
+	 * @throws \ReflectionException
 	 */
 	public function index(array $params)
 	{
@@ -128,6 +131,8 @@ class CommandRunner extends Controller
 	/**
 	 * Scans all Commands directories and prepares a list
 	 * of each command with it's group and file.
+	 *
+	 * @throws \ReflectionException
 	 */
 	protected function createCommandList()
 	{
