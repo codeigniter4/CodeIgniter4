@@ -115,7 +115,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return boolean
 	 */
-	public function open($save_path, $name)
+	public function open($save_path, $name): bool
 	{
 		$this->memcached = new \Memcached();
 		$this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, true); // required for touch() usage
@@ -176,7 +176,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return string    Serialized session data
 	 */
-	public function read($sessionID)
+	public function read($sessionID): string
 	{
 		if (isset($this->memcached) && $this->lockSession($sessionID))
 		{
@@ -204,7 +204,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return boolean
 	 */
-	public function write($sessionID, $sessionData)
+	public function write($sessionID, $sessionData): bool
 	{
 		if (! isset($this->memcached))
 		{
@@ -253,7 +253,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return boolean
 	 */
-	public function close()
+	public function close(): bool
 	{
 		if (isset($this->memcached))
 		{
@@ -283,7 +283,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return boolean
 	 */
-	public function destroy($session_id)
+	public function destroy($session_id): bool
 	{
 		if (isset($this->memcached, $this->lockKey))
 		{
@@ -306,7 +306,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return boolean
 	 */
-	public function gc($maxlifetime)
+	public function gc($maxlifetime): bool
 	{
 		// Not necessary, Memcached takes care of that.
 		return true;
