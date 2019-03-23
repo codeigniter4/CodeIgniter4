@@ -232,7 +232,7 @@ like findAll(), though less explicit.
 
  Returns null or an indexed array of column values for a specified $id::
 
- 	$user = $userModel->find($column_name, $id);
+ 	$user = $userModel->findColumn($column_name, $id);
 
  First parameter is either name of single column, comma separated column names, or array of column names.
 
