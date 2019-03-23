@@ -130,7 +130,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @param BaseConfig $config
 	 */
-	public function __construct(BaseConfig $config, string $ipAddress)
+	public function __construct($config, string $ipAddress)
 	{
 		$this->cookiePrefix = $config->cookiePrefix;
 		$this->cookieDomain = $config->cookieDomain;
