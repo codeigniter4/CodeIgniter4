@@ -454,6 +454,7 @@ class Entity
 	 * @param $value
 	 *
 	 * @return \CodeIgniter\I18n\Time
+	 * @throws \Exception
 	 */
 	protected function mutateDate($value)
 	{
@@ -484,7 +485,7 @@ class Entity
 
 	/**
 	 * Provides the ability to cast an item as a specific data type.
-	 * Add ? at the beginning of $type  (i.e. ?string) to get NULL instead of castig $value if $value === null
+	 * Add ? at the beginning of $type  (i.e. ?string) to get NULL instead of casting $value if $value === null
 	 *
 	 * @param $value
 	 * @param string $type
