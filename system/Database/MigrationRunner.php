@@ -254,7 +254,8 @@ class MigrationRunner
 
 		// loop migration for each namespace (module)
 
-		$migrationStatus = false;
+		$migrationStatus = true;
+		$executedVersion = true;
 		foreach ($migrations as $version => $migration)
 		{
 			// Only include migrations within the scoop
@@ -262,6 +263,7 @@ class MigrationRunner
 			)
 			{
 				$migrationStatus = false;
+				$executedVersion = $version;
 				include_once $migration->path;
 				// Get namespaced class name
 				$class = $this->namespace . '\Database\Migrations\Migration_' . ($migration->name);
@@ -296,7 +298,7 @@ class MigrationRunner
 			}
 		}
 
-		return ($migrationStatus) ? $targetVersion : false;
+		return ($migrationStatus) ? $executedVersion : false;
 	}
 
 	//--------------------------------------------------------------------
