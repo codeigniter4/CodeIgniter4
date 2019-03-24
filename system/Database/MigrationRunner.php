@@ -259,8 +259,7 @@ class MigrationRunner
 		foreach ($migrations as $version => $migration)
 		{
 			// Only include migrations within the scoop
-			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion)
-			)
+			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion))
 			{
 				$migrationStatus = false;
 				$executedVersion = $version;
@@ -298,7 +297,7 @@ class MigrationRunner
 			}
 		}
 
-		return ($migrationStatus) ? $executedVersion : false;
+		return ($migrationStatus) ? (($targetVersion == '0') ? '0' : $executedVersion) : false;
 	}
 
 	//--------------------------------------------------------------------
