@@ -5,7 +5,15 @@ use org\bovigo\vfs\vfsStream;
 class FileWithVfsTest extends \CIUnitTestCase
 {
 
+	// For VFS stuff
 	protected $root;
+	protected $path;
+	protected $start;
+
+	/**
+	 * @var \CodeIgniter\Files\File
+	 */
+	protected $file;
 
 	protected function setUp()
 	{
@@ -117,4 +125,16 @@ class FileWithVfsTest extends \CIUnitTestCase
 		$this->file->move($destination); // try to move our file there
 	}
 
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1782
+	 */
+	public function testMoveReturnsNewInstance()
+	{
+		$destination = $this->start . 'baker';
+		$file        = $this->file->move($destination);
+
+		$this->assertTrue($this->root->hasChild('baker/apple.php'));
+		$this->assertInstanceOf(File::class, $file);
+		$this->assertEquals($destination . '/apple.php', $file->getPathname());
+	}
 }

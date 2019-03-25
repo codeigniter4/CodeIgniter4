@@ -161,7 +161,7 @@ class File extends SplFileInfo
 	 * @param string|null $name
 	 * @param boolean     $overwrite
 	 *
-	 * @return boolean
+	 * @return \CodeIgniter\Files\File
 	 */
 	public function move(string $targetPath, string $name = null, bool $overwrite = false)
 	{
@@ -179,7 +179,7 @@ class File extends SplFileInfo
 
 		@chmod($targetPath, 0777 & ~umask());
 
-		return true;
+		return new File($destination);
 	}
 
 	//--------------------------------------------------------------------
