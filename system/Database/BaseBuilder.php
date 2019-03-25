@@ -269,11 +269,13 @@ class BaseBuilder
      *
      * Set ignore Flag for next insert query.
      *
+     * @param bool        $ignore
+     *
      * @return BaseBuilder
      */
-    public function ignore()
+    public function ignore(bool $ignore = true)
     {
-        $this->insertIgnore = true;
+        $this->insertIgnore = $ignore;
 
         return $this;
     }
