@@ -325,8 +325,9 @@ match the name of the database group exactly:</p>
 <div class="section" id="namespaces">
 <h3><a class="toc-backref" href="#id5">Namespaces</a><a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h3>
 <p>The migration library can automatically scan all namespaces you have defined within
-<strong>app/Config/Autoload.php</strong> and its <code class="docutils literal"><span class="pre">$psr4</span></code> property for matching directory
-names. It will include all migrations it finds in Database/Migrations.</p>
+<strong>app/Config/Autoload.php</strong> or loaded from an external source like Composer, using
+the <code class="docutils literal"><span class="pre">$psr4</span></code> property for matching directory names. It will include all migrations
+it finds in Database/Migrations.</p>
 <p>Each namespace has it&#8217;s own version sequence, this will help you upgrade and downgrade each module (namespace) without affecting other namespaces.</p>
 <p>For example, assume that we have the following namespaces defined in our Autoload
 configuration file:</p>
@@ -722,7 +723,7 @@ specific versions. It works just like <code class="docutils literal"><span class
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 21, 2019.
+      Last updated on Mar 24, 2019.
 
     </p>
   </div>

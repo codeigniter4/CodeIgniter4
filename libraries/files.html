@@ -306,6 +306,11 @@ the file to as the first parameter:</p>
 <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span><span class="o">.</span><span class="s1">&#39;uploads&#39;</span><span class="p">,</span> <span class="nv">$newName</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>The move() method returns a new File instance that for the relocated file, so you must capture the result if the
+resulting location is needed:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$file</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span><span class="o">.</span><span class="s1">&#39;uploads&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -333,7 +338,7 @@ the file to as the first parameter:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 21, 2019.
+      Last updated on Mar 24, 2019.
 
     </p>
   </div>
