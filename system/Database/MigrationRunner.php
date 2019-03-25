@@ -254,7 +254,7 @@ class MigrationRunner
 
 		// loop migration for each namespace (module)
 
-		$migrationStatus = true;
+		$migrationStatus = false;
 		foreach ($migrations as $version => $migration)
 		{
 			// Only include migrations within the scoop

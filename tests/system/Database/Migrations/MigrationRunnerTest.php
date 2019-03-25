@@ -290,7 +290,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$version = $runner->version(0);
 
-		$this->assertFalse($version);
+		$this->assertEquals('000', $version);
 		$this->assertFalse(db_connect()->tableExists('foo'));
 	}
 
