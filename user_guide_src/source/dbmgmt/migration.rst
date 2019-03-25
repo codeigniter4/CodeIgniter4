@@ -343,7 +343,7 @@ Class Reference
 		:param	mixed	$namespace: application namespace, if null (App) namespace will be used.
 		:param	mixed	$group: database group name, if null default database group will be used.
 		:param	mixed	$target_version: Migration version to process
-		:returns:	TRUE if no migrations are found, current version string on success, FALSE on failure
+		:returns:	Current version string on success, FALSE on failure or no migrations are found
 		:rtype:	mixed
 
 		Version can be used to roll back changes or step forwards programmatically to
