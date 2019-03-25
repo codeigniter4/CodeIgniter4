@@ -208,6 +208,14 @@ class BaseBuilder
 	 */
 	protected $canLimitWhereUpdates = true;
 
+    /**
+     * Ignore errors on insert statements
+     * for example for duplicate keys.
+     *
+     * @var bool
+     */
+	protected $insertIgnore = false;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -253,6 +261,22 @@ class BaseBuilder
 	{
 		return $this->binds;
 	}
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Ignore
+     *
+     * Set ignore Flag for next insert query.
+     *
+     * @return BaseBuilder
+     */
+    public function ignore()
+    {
+        $this->insertIgnore = true;
+
+        return $this;
+    }
 
 	//--------------------------------------------------------------------
 
@@ -1666,6 +1690,8 @@ class BaseBuilder
 			}
 		}
 
+        $this->insertIgnore = false;
+
 		if (! $testing)
 		{
 			$this->resetWrite();
@@ -1758,6 +1784,8 @@ class BaseBuilder
 	 *
 	 * @param boolean $reset TRUE: reset QB values; FALSE: leave QB values alone
 	 *
+     * @throws DatabaseException
+     *
 	 * @return string
 	 */
 	public function getCompiledInsert($reset = true)
@@ -1791,6 +1819,8 @@ class BaseBuilder
 	 * @param array   $set    An associative array of insert values
 	 * @param boolean $escape Whether to escape values and identifiers
 	 * @param boolean $test   Used when running tests
+     *
+     * @throws DatabaseException
 	 *
 	 * @return BaseResult|Query|false
 	 */
@@ -1811,6 +1841,8 @@ class BaseBuilder
 						$this->QBFrom[0], true, $escape, false
 				), array_keys($this->QBSet), array_values($this->QBSet)
 		);
+
+        $this->insertIgnore = false;
 
 		if ($test === false)
 		{

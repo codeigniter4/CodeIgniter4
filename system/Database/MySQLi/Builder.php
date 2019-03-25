@@ -51,4 +51,40 @@ class Builder extends BaseBuilder
 	 */
 	protected $escapeChar = '`';
 
+    //--------------------------------------------------------------------
+
+    /**
+     * Insert batch statement
+     *
+     * Generates a platform-specific insert string from the supplied data.
+     *
+     * @param string $table  Table name
+     * @param array  $keys   INSERT keys
+     * @param array  $values INSERT values
+     *
+     * @return string
+     */
+    protected function _insertBatch($table, $keys, $values)
+    {
+        return 'INSERT ' . ($this->insertIgnore ? 'IGNORE' : '') . ' INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Insert statement
+     *
+     * Generates a platform-specific insert string from the supplied data
+     *
+     * @param string $table         The table name
+     * @param array  $keys          The insert keys
+     * @param array  $unescapedKeys The insert values
+     *
+     * @return string
+     */
+    protected function _insert($table, array $keys, array $unescapedKeys)
+    {
+        return 'INSERT ' . ($this->insertIgnore ? 'IGNORE' : '') . ' INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $unescapedKeys) . ')';
+    }
+
 }
