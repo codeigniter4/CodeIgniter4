@@ -148,4 +148,63 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$response->assertSessionMissing('popcorn');
 	}
 
+	public function testResponseReturned()
+	{
+		$this->withRoutes([
+			[
+				'get',
+				'',
+				'Tests\Support\Controllers\Popcorn::index',
+			],
+		]);
+
+		$response->assertSee('Hi');
+	}
+
+	public function testResponseEchoed()
+	{
+		$this->withRoutes([
+			[
+				'get',
+				'',
+				'Tests\Support\Controllers\Popcorn::index',
+			],
+		]);
+
+		$response->assertSee('Hi');
+	}
+
+	public function testResponseResponded()
+	{
+		$response = $this->withSession([
+			'fruit'    => 'apple',
+			'greeting' => 'hello',
+		])->get('home');
+
+		$response->assertSessionHas('fruit', 'apple');
+		$response->assertSessionMissing('popcorn');
+	}
+
+	public function testResponseJSON()
+	{
+		$response = $this->withSession([
+			'fruit'    => 'apple',
+			'greeting' => 'hello',
+		])->get('home');
+
+		$response->assertSessionHas('fruit', 'apple');
+		$response->assertSessionMissing('popcorn');
+	}
+
+	public function testResponseXML()
+	{
+		$response = $this->withSession([
+			'fruit'    => 'apple',
+			'greeting' => 'hello',
+		])->get('home');
+
+		$response->assertSessionHas('fruit', 'apple');
+		$response->assertSessionMissing('popcorn');
+	}
+
 }

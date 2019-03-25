@@ -43,4 +43,31 @@ class Popcorn extends Controller
 	{
 		return redirect()->to('/');
 	}
+
+	// @see https://github.com/codeigniter4/CodeIgniter4/issues/1834
+	public function index3()
+	{
+		$response = $this->response->setJSON([
+			'lang' => $this->request->getLocale(),
+		]);
+
+		//      echo var_dump($this->response->getBody());
+		return $response;
+	}
+
+	public function canyon()
+	{
+		echo 'Hello-o-o';
+	}
+
+	public function json()
+	{
+		$this->responsd(['answer' => 42]);
+	}
+
+	public function xml()
+	{
+		$this->respond('<my><pet>cat</pet></my>');
+	}
+
 }
