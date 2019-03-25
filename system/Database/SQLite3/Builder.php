@@ -118,7 +118,7 @@ class Builder extends BaseBuilder
      */
     protected function _insertBatch($table, $keys, $values)
     {
-        return 'INSERT ' . ($this->insertIgnore ? 'OR IGNORE' : '') . ' INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
+        return 'INSERT ' . ($this->insertIgnore ? 'OR IGNORE ' : '') . 'INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
     }
 
     //--------------------------------------------------------------------
@@ -136,7 +136,7 @@ class Builder extends BaseBuilder
      */
     protected function _insert($table, array $keys, array $unescapedKeys)
     {
-        return 'INSERT ' . ($this->insertIgnore ? 'OR IGNORE' : '') . ' INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $unescapedKeys) . ')';
+        return 'INSERT ' . ($this->insertIgnore ? 'OR IGNORE ' : '') . 'INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $unescapedKeys) . ')';
     }
 
 }
