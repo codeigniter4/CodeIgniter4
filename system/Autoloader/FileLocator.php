@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Autoloader;
+<?php namespace CodeIgniter\Database;
 
 /**
  * CodeIgniter
@@ -36,414 +36,757 @@
  * @filesource
  */
 
+use Config\Services;
+use CodeIgniter\CLI\CLI;
+use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Exceptions\ConfigException;
+
 /**
- * Class FileLocator
- *
- * Allows loading non-class files in a namespaced manner.
- * Works with Helpers, Views, etc.
- *
- * @package CodeIgniter
+ * Class MigrationRunner
  */
-class FileLocator
+class MigrationRunner
 {
+
 	/**
-	 * @var \CodeIgniter\Autoloader\Autoloader
+	 * Whether or not migrations are allowed to run.
+	 *
+	 * @var boolean
 	 */
-	protected $autoloader;
+	protected $enabled = false;
+
+	/**
+	 * The type of migrations to use (sequential or timestamp)
+	 *
+	 * @var string
+	 */
+	protected $type;
+
+	/**
+	 * Name of table to store meta information
+	 *
+	 * @var string
+	 */
+	protected $table;
+
+	/**
+	 * The version that current() will take us to.
+	 *
+	 * @var integer
+	 */
+	protected $currentVersion = 0;
+
+	/**
+	 * The Namespace  where migrations can be found.
+	 *
+	 * @var string
+	 */
+	protected $namespace;
+
+	/**
+	 * The database Group to migrate.
+	 *
+	 * @var string
+	 */
+	protected $group;
+
+	/**
+	 * The migration name.
+	 *
+	 * @var string
+	 */
+	protected $name;
+
+	/**
+	 * The pattern used to locate migration file versions.
+	 *
+	 * @var string
+	 */
+	protected $regex;
+
+	/**
+	 * The main database connection. Used to store
+	 * migration information in.
+	 *
+	 * @var ConnectionInterface
+	 */
+	protected $db;
+
+	/**
+	 * If true, will continue instead of throwing
+	 * exceptions.
+	 *
+	 * @var boolean
+	 */
+	protected $silent = false;
+
+	/**
+	 * used to return messages for CLI.
+	 *
+	 * @var array
+	 */
+	protected $cliMessages = [];
+
+	/**
+	 * Tracks whether we have already ensured
+	 * the table exists or not.
+	 *
+	 * @var boolean
+	 */
+	protected $tableChecked = false;
+
+	/**
+	 * The full path to locate migration files.
+	 *
+	 * @var string
+	 */
+	protected $path;
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
-	 * @param Autoloader $autoloader
+	 * When passing in $db, you may pass any of the following to connect:
+	 * - group name
+	 * - existing connection instance
+	 * - array of database configuration values
+	 *
+	 * @param BaseConfig                                             $config
+	 * @param \CodeIgniter\Database\ConnectionInterface|array|string $db
+	 *
+	 * @throws ConfigException
 	 */
-	public function __construct(Autoloader $autoloader)
+	public function __construct(BaseConfig $config, $db = null)
 	{
-		$this->autoloader = $autoloader;
+		$this->enabled        = $config->enabled ?? false;
+		$this->type           = $config->type ?? 'timestamp';
+		$this->table          = $config->table ?? 'migrations';
+		$this->currentVersion = $config->currentVersion ?? 0;
+
+		// Default name space is the app namespace
+		$this->namespace = APP_NAMESPACE;
+
+		// get default database group
+		$config      = config('Database');
+		$this->group = $config->defaultGroup;
+		unset($config);
+
+		if (! in_array($this->type, ['sequential', 'timestamp']))
+		{
+			throw ConfigException::forInvalidMigrationType($this->type);
+		}
+
+		// Migration basename regex
+		$this->regex = ($this->type === 'timestamp') ? '/^\d{14}_(\w+)$/' : '/^\d{3}_(\w+)$/';
+
+		// If no db connection passed in, use
+		// default database group.
+		$this->db = db_connect($db);
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Attempts to locate a file by examining the name for a namespace
-	 * and looking through the PSR-4 namespaced files that we know about.
+	 * Migrate to a schema version
 	 *
-	 * @param string $file   The namespaced file to locate
-	 * @param string $folder The folder within the namespace that we should look for the file.
-	 * @param string $ext    The file extension the file should have.
+	 * Calls each migration step required to get to the schema version of
+	 * choice
 	 *
-	 * @return string|false The path to the file, or false if not found.
+	 * @param string      $targetVersion Target schema version
+	 * @param string|null $namespace
+	 * @param string|null $group
+	 *
+	 * @return mixed TRUE if no migrations are found, current version string on success, FALSE on failure
+	 * @throws ConfigException
 	 */
-	public function locateFile(string $file, string $folder = null, string $ext = 'php')
+	public function version(string $targetVersion, string $namespace = null, string $group = null)
 	{
-		$file = $this->ensureExt($file, $ext);
-
-		// Clears the folder name if it is at the beginning of the filename
-		if (! empty($folder) && ($pos = strpos($file, $folder)) === 0)
+		if (! $this->enabled)
 		{
-			$file = substr($file, strlen($folder . '/'));
+			throw ConfigException::forDisabledMigrations();
 		}
 
-		// Is not namespaced? Try the application folder.
-		if (strpos($file, '\\') === false)
+		$this->ensureTable();
+
+		// Set Namespace if not null
+		if (! is_null($namespace))
 		{
-			return $this->legacyLocate($file, $folder);
+			$this->setNamespace($namespace);
 		}
 
-		// Standardize slashes to handle nested directories.
-		$file = strtr($file, '/', '\\');
-
-		$segments = explode('\\', $file);
-
-		// The first segment will be empty if a slash started the filename.
-		if (empty($segments[0]))
+		// Set database group if not null
+		if (! is_null($group))
 		{
-			unset($segments[0]);
+			$this->setGroup($group);
 		}
 
-		$path     = '';
-		$prefix   = '';
-		$filename = '';
-
-		// Namespaces always comes with arrays of paths
-		$namespaces = $this->autoloader->getNamespace();
-
-		while (! empty($segments))
+		// Sequential versions need adjusting to 3 places so they can be found later.
+		if ($this->type === 'sequential')
 		{
-			$prefix .= empty($prefix)
-				? ucfirst(array_shift($segments))
-				: '\\' . ucfirst(array_shift($segments));
+			$targetVersion = str_pad($targetVersion, 3, '0', STR_PAD_LEFT);
+		}
 
-			if (empty($namespaces[$prefix]))
+		$migrations = $this->findMigrations();
+
+		if (empty($migrations))
+		{
+			return true;
+		}
+
+		// Get Namespace current version
+		// Note: We use strings, so that timestamp versions work on 32-bit systems
+		$currentVersion = $this->getVersion();
+		if ($targetVersion > $currentVersion)
+		{
+			// Moving Up
+			$method = 'up';
+			ksort($migrations);
+		}
+		else
+		{
+			// Moving Down, apply in reverse order
+			$method = 'down';
+			krsort($migrations);
+		}
+
+		// Check Migration consistency
+		$this->checkMigrations($migrations, $method, $targetVersion);
+
+		// loop migration for each namespace (module)
+		foreach ($migrations as $version => $migration)
+		{
+			// Only include migrations within the scoop
+			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion)
+			)
+			{
+				include_once $migration->path;
+				// Get namespaced class name
+				$class = $this->namespace . '\Database\Migrations\Migration_' . ($migration->name);
+
+				$this->setName($migration->name);
+
+				// Validate the migration file structure
+				if (! class_exists($class, false))
+				{
+					throw new \RuntimeException(sprintf(lang('Migrations.classNotFound'), $class));
+				}
+
+				// Forcing migration to selected database group
+				$instance = new $class(\Config\Database::forge($this->group));
+
+				if (! is_callable([$instance, $method]))
+				{
+					throw new \RuntimeException(sprintf(lang('Migrations.missingMethod'), $method));
+				}
+
+				$instance->{$method}();
+				if ($method === 'up')
+				{
+					$this->addHistory($migration->version);
+				}
+				elseif ($method === 'down')
+				{
+					$this->removeHistory($migration->version);
+				}
+			}
+		}
+
+		return true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the schema to the latest migration
+	 *
+	 * @param string|null $namespace
+	 * @param string|null $group
+	 *
+	 * @return mixed    Current version string on success, FALSE on failure
+	 */
+	public function latest(string $namespace = null, string $group = null)
+	{
+		$this->ensureTable();
+
+		// Set Namespace if not null
+		if (! is_null($namespace))
+		{
+			$this->setNamespace($namespace);
+		}
+		// Set database group if not null
+		if (! is_null($group))
+		{
+			$this->setGroup($group);
+		}
+
+		$migrations = $this->findMigrations();
+
+		$lastMigration = end($migrations)->version ?? 0;
+
+		// Calculate the last migration step from existing migration
+		// filenames and proceed to the standard version migration
+		return $this->version($lastMigration);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the schema to the latest migration for all namespaces
+	 *
+	 * @param string|null $group
+	 *
+	 * @return boolean
+	 */
+	public function latestAll(string $group = null)
+	{
+		$this->ensureTable();
+
+		// Set database group if not null
+		if (! is_null($group))
+		{
+			$this->setGroup($group);
+		}
+
+		// Get all namespaces from the autoloader
+		$namespaces = Services::autoloader()->getNamespace();
+
+		foreach ($namespaces as $namespace => $paths)
+		{
+			$this->setNamespace($namespace);
+			$migrations = $this->findMigrations();
+
+			if (empty($migrations))
 			{
 				continue;
 			}
-			$path = $this->getNamespaces($prefix);
 
-			$filename = implode('/', $segments);
-			break;
-		}
-
-		// IF we have a folder name, then the calling function
-		// expects this file to be within that folder, like 'Views',
-		// or 'libraries'.
-		if (! empty($folder) && strpos($path . $filename, '/' . $folder . '/') === false)
-		{
-			$filename = $folder . '/' . $filename;
-		}
-
-		$path .= $filename;
-
-		return is_file($path) ? $path : false;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Examines a file and returns the fully qualified domain name.
-	 *
-	 * @param string $file
-	 *
-	 * @return string
-	 */
-	public function getClassname(string $file) : string
-	{
-		$php        = file_get_contents($file);
-		$tokens     = token_get_all($php);
-		$count      = count($tokens);
-		$dlm        = false;
-		$namespace  = '';
-		$class_name = '';
-
-		for ($i = 2; $i < $count; $i++)
-		{
-			if ((isset($tokens[$i - 2][1]) && ($tokens[$i - 2][1] === 'phpnamespace' || $tokens[$i - 2][1] === 'namespace')) || ($dlm && $tokens[$i - 1][0] === T_NS_SEPARATOR && $tokens[$i][0] === T_STRING))
-			{
-				if (! $dlm)
-				{
-					$namespace = 0;
-				}
-				if (isset($tokens[$i][1]))
-				{
-					$namespace = $namespace ? $namespace . '\\' . $tokens[$i][1] : $tokens[$i][1];
-					$dlm       = true;
-				}
-			}
-			elseif ($dlm && ($tokens[$i][0] !== T_NS_SEPARATOR) && ($tokens[$i][0] !== T_STRING))
-			{
-				$dlm = false;
-			}
-			if (($tokens[$i - 2][0] === T_CLASS || (isset($tokens[$i - 2][1]) && $tokens[$i - 2][1] === 'phpclass'))
-				&& $tokens[$i - 1][0] === T_WHITESPACE
-				&& $tokens[$i][0] === T_STRING)
-			{
-				$class_name = $tokens[$i][1];
-				break;
-			}
-		}
-
-		if (empty( $class_name ))
-		{
-			return '';
-		}
-
-		return $namespace . '\\' . $class_name;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Searches through all of the defined namespaces looking for a file.
-	 * Returns an array of all found locations for the defined file.
-	 *
-	 * Example:
-	 *
-	 *  $locator->search('Config/Routes.php');
-	 *  // Assuming PSR4 namespaces include foo and bar, might return:
-	 *  [
-	 *      'app/Modules/foo/Config/Routes.php',
-	 *      'app/Modules/bar/Config/Routes.php',
-	 *  ]
-	 *
-	 * @param string $path
-	 * @param string $ext
-	 *
-	 * @return array
-	 */
-	public function search(string $path, string $ext = 'php'): array
-	{
-		$path = $this->ensureExt($path, $ext);
-
-		$foundPaths = [];
-
-		foreach ($this->getNamespaces() as $namespace)
-		{
-			if (is_file($namespace['path'] . $path))
-			{
-				$foundPaths[] = $namespace['path'] . $path;
-			}
-		}
-
-		// Remove any duplicates
-		$foundPaths = array_unique($foundPaths);
-
-		return $foundPaths;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Ensures a extension is at the end of a filename
-	 *
-	 * @param string $path
-	 * @param string $ext
-	 *
-	 * @return string
-	 */
-	protected function ensureExt(string $path, string $ext): string
-	{
-		if ($ext)
-		{
-			$ext = '.' . $ext;
-
-			if (substr($path, -strlen($ext)) !== $ext)
-			{
-				$path .= $ext;
-			}
-		}
-
-		return $path;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * @param string|null $prefix
-	 *
-	 * @return array|string
-	 */
-	protected function getNamespaces(string $prefix = null)
-	{
-		if ($prefix)
-		{
-			$path = $this->autoloader->getNamespace($prefix);
-
-			return isset($path[0])
-				? rtrim($path[0], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR
-				: '';
-		}
-
-		$namespaces = [];
-
-		foreach ($this->autoloader->getNamespace() as $prefix => $paths)
-		{
-			foreach ($paths as $path)
-			{
-				$namespaces[] = [
-					'prefix' => $prefix,
-					'path'   => rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
-				];
-			}
-		}
-
-		return $namespaces;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Find the qualified name of a file according to
-	 * the namespace of the first matched namespace path.
-	 *
-	 * @param string $path
-	 *
-	 * @return string|false The qualified name or false if the path is not found
-	 */
-	public function findQualifiedNameFromPath(string $path)
-	{
-		$path = realpath($path);
-
-		if (! $path)
-		{
-			return false;
-		}
-
-		foreach ($this->getNamespaces() as $namespace)
-		{
-			$namespace['path'] = realpath($namespace['path']);
-
-			if (empty($namespace['path']))
+			$lastMigration = end($migrations)->version;
+			// No New migrations to add
+			if ($lastMigration === $this->getVersion())
 			{
 				continue;
 			}
 
-			if (mb_strpos($path, $namespace['path']) === 0)
-			{
-				$className = '\\' . $namespace['prefix'] . '\\' .
-						ltrim(str_replace('/', '\\', mb_substr(
-							$path, mb_strlen($namespace['path']))
-						), '\\');
-				// Remove the file extension (.php)
-				$className = mb_substr($className, 0, -4);
-
-				return $className;
-			}
+			// Calculate the last migration step from existing migration
+			// filenames and proceed to the standard version migration
+			$this->version($lastMigration);
 		}
 
-		return false;
+		return true;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Scans the defined namespaces, returning a list of all files
-	 * that are contained within the subpath specified by $path.
+	 * Sets the (APP_NAMESPACE) schema to $currentVersion in migration config file
 	 *
-	 * @param string $path
+	 * @param string|null $group
+	 *
+	 * @return mixed    TRUE if no migrations are found, current version string on success, FALSE on failure
+	 */
+	public function current(string $group = null)
+	{
+		$this->ensureTable();
+
+		// Set database group if not null
+		if (! is_null($group))
+		{
+			$this->setGroup($group);
+		}
+
+		return $this->version($this->currentVersion);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Retrieves list of available migration scripts for one namespace
+	 *
+	 * @return array    list of migrations as $version for one namespace
+	 */
+	public function findMigrations()
+	{
+		$migrations = [];
+
+		// If $this->path contains a valid directory use it.
+		if (! empty($this->path))
+		{
+			helper('filesystem');
+			$dir = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
+			$files = get_filenames($dir, true);
+		}
+		// Otherwise use FileLocator to search files in the subdirectory of the namespace
+		else
+		{
+			$locator = Services::locator(true);
+			$files = $locator->listNamespaceFiles($this->namespace, '/Database/Migrations/');
+		}
+
+		// Load all *_*.php files in the migrations path
+		// We can't use glob if we want it to be testable....
+		foreach ($files as $file)
+		{
+			if (substr($file, -4) !== '.php')
+			{
+				continue;
+			}
+
+			// Remove the extension
+			$name = basename($file, '.php');
+
+			// Filter out non-migration files
+			if (preg_match($this->regex, $name))
+			{
+				// Create migration object using stdClass
+				$migration = new \stdClass();
+
+				// Get migration version number
+				$migration->version   = $this->getMigrationNumber($name);
+				$migration->name      = $this->getMigrationName($name);
+				$migration->path      = ! empty($this->path) && strpos($file, $this->path) !== 0
+					? $this->path . $file
+					: $file;
+
+				// Add to migrations[version]
+				$migrations[$migration->version] = $migration;
+			}
+		}
+
+		ksort($migrations);
+
+		return $migrations;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 *  checks if the list of available migration scripts list are consistent
+	 *  if sequential check if no gaps and check if all consistent with migrations table if downgrading
+	 *  if timestamp check if consistent with migrations table if downgrading
+	 *
+	 * @param array  $migrations
+	 * @param string $method
+	 * @param string $targetversion
+	 *
+	 * @return boolean
+	 */
+	protected function checkMigrations(array $migrations, string $method, string $targetversion)
+	{
+		// Check if no migrations found
+		if (empty($migrations))
+		{
+			if ($this->silent)
+			{
+				return false;
+			}
+			throw new \RuntimeException(lang('Migrations.empty'));
+		}
+
+		// Check if $targetversion file is found
+		if ((int)$targetversion !== 0 && ! array_key_exists($targetversion, $migrations))
+		{
+			if ($this->silent)
+			{
+				return false;
+			}
+			throw new \RuntimeException(lang('Migrations.notFound') . $targetversion);
+		}
+
+		ksort($migrations);
+
+		if ($method === 'down')
+		{
+			$history_migrations = $this->getHistory($this->group);
+			$history_size       = count($history_migrations) - 1;
+		}
+		// Check for sequence gaps
+		$loop = 0;
+		foreach ($migrations as $migration)
+		{
+			if ($this->type === 'sequential' && abs($migration->version - $loop) > 1)
+			{
+				throw new \RuntimeException(lang('Migrations.gap') . ' ' . $migration->version);
+			}
+			// Check if all old migration files are all available to do downgrading
+			if ($method === 'down')
+			{
+				if ($loop <= $history_size && $history_migrations[$loop]['version'] !== $migration->version)
+				{
+					throw new \RuntimeException(lang('Migrations.gap') . ' ' . $migration->version);
+				}
+			}
+			$loop ++;
+		}
+
+		return true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the path to the base directory that will be used
+	 * when locating migrations. If left null, the value will
+	 * be chosen from $this->namespace's directory.
+	 *
+	 * @param string|null $path
+	 *
+	 * @return $this
+	 */
+	public function setPath(string $path = null)
+	{
+		$this->path = $path;
+
+		return $this;
+	}
+
+	/**
+	 * Set namespace.
+	 * Allows other scripts to modify on the fly as needed.
+	 *
+	 * @param string $namespace
+	 *
+	 * @return MigrationRunner
+	 */
+	public function setNamespace(string $namespace)
+	{
+		$this->namespace = $namespace;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Set database Group.
+	 * Allows other scripts to modify on the fly as needed.
+	 *
+	 * @param string $group
+	 *
+	 * @return MigrationRunner
+	 */
+	public function setGroup(string $group)
+	{
+		$this->group = $group;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Set migration Name.
+	 *
+	 * @param string $name
+	 *
+	 * @return \CodeIgniter\Database\MigrationRunner
+	 */
+	public function setName(string $name)
+	{
+		$this->name = $name;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Grabs the full migration history from the database.
+	 *
+	 * @param string $group
 	 *
 	 * @return array
 	 */
-	public function listFiles(string $path): array
+	public function getHistory(string $group = 'default')
 	{
-		if (empty($path))
+		$this->ensureTable();
+
+		$query = $this->db->table($this->table)
+				->where('group', $group)
+				->where('namespace', $this->namespace)
+				->orderBy('version', 'ASC')
+				->get();
+
+		if (! $query)
 		{
 			return [];
 		}
 
-		$files = [];
-		helper('filesystem');
-
-		foreach ($this->getNamespaces() as $namespace)
-		{
-			$fullPath = realpath($namespace['path'] . $path);
-
-			if (! is_dir($fullPath))
-			{
-				continue;
-			}
-
-			$tempFiles = get_filenames($fullPath, true);
-
-			if (! empty($tempFiles))
-			{
-				$files = array_merge($files, $tempFiles);
-			}
-		}
-
-		return $files;
+		return $query->getResultArray();
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Scans the provided namespace, returning a list of all files
-	 * that are contained within the subpath specified by $path.
+	 * If $silent == true, then will not throw exceptions and will
+	 * attempt to continue gracefully.
 	 *
-	 * @param string $prefix
-	 * @param string $path
+	 * @param boolean $silent
 	 *
-	 * @return array
+	 * @return MigrationRunner
 	 */
-	public function listNamespaceFiles(string $prefix, string $path): array
+	public function setSilent(bool $silent)
 	{
-		if (empty($path) || empty($prefix))
-		{
-			return [];
-		}
+		$this->silent = $silent;
 
-		$files = [];
-		helper('filesystem');
-		
-		// autoloader->getNamespace($prefix) returns an array of paths for that namespace
-		foreach ($this->autoloader->getNamespace($prefix) as $namespacePath)
-		{
-			$fullPath = realpath($namespacePath . $path);
-
-			if (! is_dir($fullPath))
-			{
-				continue;
-			}
-
-			$tempFiles = get_filenames($fullPath, true);
-
-			if (! empty($tempFiles))
-			{
-				$files = array_merge($files, $tempFiles);
-			}
-		}
-
-		return $files;
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Checks the application folder to see if the file can be found.
-	 * Only for use with filenames that DO NOT include namespacing.
+	 * Extracts the migration number from a filename
 	 *
-	 * @param string      $file
-	 * @param string|null $folder
+	 * @param string $migration
 	 *
-	 * @return string|false The path to the file, or false if not found.
+	 * @return string    Numeric portion of a migration filename
 	 */
-	protected function legacyLocate(string $file, string $folder = null)
+	protected function getMigrationNumber(string $migration)
 	{
-		$paths = [
-			APPPATH,
-			SYSTEMPATH,
-		];
+		return sscanf($migration, '%[0-9]+', $number) ? $number : '0';
+	}
 
-		foreach ($paths as $path)
+	//--------------------------------------------------------------------
+
+	/**
+	 * Extracts the migration class name from a filename
+	 *
+	 * @param string $migration
+	 *
+	 * @return string    text portion of a migration filename
+	 */
+	protected function getMigrationName(string $migration)
+	{
+		$parts = explode('_', $migration);
+		array_shift($parts);
+
+		return implode('_', $parts);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Retrieves current schema version
+	 *
+	 * @return string    Current migration version
+	 */
+	protected function getVersion()
+	{
+		$this->ensureTable();
+
+		$row = $this->db->table($this->table)
+				->select('version')
+				->where('group', $this->group)
+				->where('namespace', $this->namespace)
+				->orderBy('version', 'DESC')
+				->get();
+
+		return $row && ! is_null($row->getRow()) ? $row->getRow()->version : '0';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Retrieves current schema version
+	 *
+	 * @return array    Current migration version
+	 */
+	public function getCliMessages()
+	{
+		return $this->cliMessages;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Stores the current schema version.
+	 *
+	 * @param string $version
+	 *
+	 * @internal param string $migration Migration reached
+	 */
+	protected function addHistory(string $version)
+	{
+		$this->db->table($this->table)
+				->insert([
+					'version'   => $version,
+					'name'      => $this->name,
+					'group'     => $this->group,
+					'namespace' => $this->namespace,
+					'time'      => time(),
+				]);
+		if (is_cli())
 		{
-			$path .= empty($folder) ? $file : $folder . '/' . $file;
+			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.added'), 'yellow') . "($this->namespace) " . $version . '_' . $this->name;
+		}
+	}
 
-			if (is_file($path))
-			{
-				return $path;
-			}
+	//--------------------------------------------------------------------
+
+	/**
+	 * Removes a single history
+	 *
+	 * @param string $version
+	 */
+	protected function removeHistory(string $version)
+	{
+		$this->db->table($this->table)
+				->where('version', $version)
+				->where('group', $this->group)
+				->where('namespace', $this->namespace)
+				->delete();
+		if (is_cli())
+		{
+			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.removed'), 'yellow') . "($this->namespace) " . $version . '_' . $this->name;
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Ensures that we have created our migrations table
+	 * in the database.
+	 */
+	public function ensureTable()
+	{
+		if ($this->tableChecked || $this->db->tableExists($this->table))
+		{
+			return;
 		}
 
-		return false;
+		$forge = \Config\Database::forge($this->db);
+
+		$forge->addField([
+			'version'   => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+				'null'       => false,
+			],
+			'name'      => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+				'null'       => false,
+			],
+			'group'     => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+				'null'       => false,
+			],
+			'namespace' => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+				'null'       => false,
+			],
+			'time'      => [
+				'type'       => 'INT',
+				'constraint' => 11,
+				'null'       => false,
+			],
+		]);
+
+		$forge->createTable($this->table, true);
+
+		$this->tableChecked = true;
 	}
+
+	//--------------------------------------------------------------------
 }
