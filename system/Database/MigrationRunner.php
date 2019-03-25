@@ -196,7 +196,7 @@ class MigrationRunner
 	 * @param string|null $namespace
 	 * @param string|null $group
 	 *
-	 * @return mixed TRUE if no migrations are found, current version string on success, FALSE on failure
+	 * @return mixed Current version string on success, FALSE on failure or no migrations are found
 	 * @throws ConfigException
 	 */
 	public function version(string $targetVersion, string $namespace = null, string $group = null)
@@ -255,14 +255,12 @@ class MigrationRunner
 		// loop migration for each namespace (module)
 
 		$migrationStatus = true;
-		$executedVersion = true;
 		foreach ($migrations as $version => $migration)
 		{
 			// Only include migrations within the scoop
 			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion))
 			{
 				$migrationStatus = false;
-				$executedVersion = $version;
 				include_once $migration->path;
 				// Get namespaced class name
 				$class = $this->namespace . '\Database\Migrations\Migration_' . ($migration->name);
@@ -297,7 +295,7 @@ class MigrationRunner
 			}
 		}
 
-		return ($migrationStatus) ? (($targetVersion == '0') ? '0' : $executedVersion) : false;
+		return ($migrationStatus) ? $targetVersion : false;
 	}
 
 	//--------------------------------------------------------------------

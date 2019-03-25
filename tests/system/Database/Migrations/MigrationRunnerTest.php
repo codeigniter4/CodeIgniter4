@@ -231,10 +231,10 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$version = $runner->version(0);
 
-		$this->assertEquals($version, '002');
+		$this->assertFalse($version);
 	}
 
-	public function testVersionReturnsTrueWhenNothingToDo()
+	public function testVersionReturnsFalseWhenNothingToDo()
 	{
 		$config       = $this->config;
 		$config->type = 'sequential';
@@ -246,7 +246,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$version = $runner->version(0);
 
-		$this->assertTrue($version);
+		$this->assertFalse($version);
 	}
 
 	/**
@@ -266,7 +266,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$version = $runner->version(1);
 
-		$this->assertEquals('001', $version);
+		$this->assertFalse($version);
 	}
 
 	public function testVersionReturnsUpDownSuccess()
@@ -290,7 +290,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$version = $runner->version(0);
 
-		$this->assertEquals('000', $version);
+		$this->assertFalse($version);
 		$this->assertFalse(db_connect()->tableExists('foo'));
 	}
 
