@@ -350,18 +350,37 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
-	 * Fetches the column of database from $this->table with a primary key
-	 * matching $id.
+	 * Fetches the column of database from $this->table
 	 *
-	 * @param string|array                $column_name Column name
-	 * @param integer|string|array        $id          One primary key or an array of primary keys
+	 * @param string        $column_name Column name
 	 *
-	 * @return array|object|null    The resulting row of data, or null.
+	 * @return array|null   The resulting row of data, or null if no data found.
+	 *
+	 * @throws \CodeIgniter\Database\Exceptions\DataException
 	 */
-	public function findColumn($columnName, $id = null)
+	public function findColumn(string $columnName)
 	{
-		return $this->select($columnName)
-		            ->find($id);
+		if (strpos($columnName, ',') !== false)
+		{
+			throw DataException::forFindColumnHaveMultipleColumns();
+		}
+
+		$resultSet = $this->select($columnName)
+		                  ->asArray()
+		                  ->find();
+
+		if (count($resultSet))
+		{
+			$data = [];
+			foreach ($resultSet as $item)
+			{
+				$data[] = $item[$columnName];
+			}
+
+			return $data;
+		}
+
+		return null;
 	}
 
 	//--------------------------------------------------------------------

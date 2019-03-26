@@ -75,10 +75,10 @@ class ModelTest extends CIDatabaseTestCase
 
 		$job = $model->findColumn('name');
 
-		$this->assertEquals('Developer', $job[0]->name);
-		$this->assertEquals('Politician', $job[1]->name);
-		$this->assertEquals('Accountant', $job[2]->name);
-		$this->assertEquals('Musician', $job[3]->name);
+		$this->assertEquals('Developer', $job[0]);
+		$this->assertEquals('Politician', $job[1]);
+		$this->assertEquals('Accountant', $job[2]);
+		$this->assertEquals('Musician', $job[3]);
 	}
 
 	//--------------------------------------------------------------------
@@ -89,43 +89,8 @@ class ModelTest extends CIDatabaseTestCase
 
 		$job = $model->findColumn('name,description');
 
-		$this->assertEquals('Developer', $job[0]->name);
-		$this->assertEquals('Awesome job, but sometimes makes you bored', $job[0]->description);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testGetColumnsWithArrayOfColumnNames()
-	{
-		$model = new JobModel($this->db);
-
-		$job = $model->findColumn(['name','description']);
-
-		$this->assertEquals('Developer', $job[0]->name);
-		$this->assertEquals('Awesome job, but sometimes makes you bored', $job[0]->description);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testGetColumnWithSinglePrimaryKey()
-	{
-		$model = new JobModel($this->db);
-
-		$job = $model->findColumn('name',1);
-
-		$this->assertEquals('Developer', $job->name);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testGetColumnWithArrayOfPrimaryKey()
-	{
-		$model = new JobModel($this->db);
-
-		$job = $model->findColumn('name', [1, 3]);
-
-		$this->assertEquals('Developer', $job[0]->name);
-		$this->assertEquals('Accountant', $job[1]->name);
+		$this->expectException('\CodeIgniter\Database\Exceptions\DataException');
+		$this->expectExceptionMessage('Only single column allowed in Column name.');
 	}
 
 	//--------------------------------------------------------------------
@@ -1167,7 +1132,7 @@ class ModelTest extends CIDatabaseTestCase
 	}
 
 	/**
-	 * @expectedException        CodeIgniter\Exceptions\ModelException
+	 * @expectedException        \CodeIgniter\Exceptions\ModelException
 	 * @expectedExceptionMessage `Tests\Support\Models\UserModel` model class does not specify a Primary Key.
 	 */
 	public function testThrowsWithNoPrimaryKey()
