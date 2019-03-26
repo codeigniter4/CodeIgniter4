@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Config\Config;
+use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -87,10 +88,10 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new JobModel($this->db);
 
-		$job = $model->findColumn('name,description');
-
-		$this->expectException('\CodeIgniter\Database\Exceptions\DataException');
+		$this->expectException(DataException::class);
 		$this->expectExceptionMessage('Only single column allowed in Column name.');
+
+		$job = $model->findColumn('name,description');
 	}
 
 	//--------------------------------------------------------------------
