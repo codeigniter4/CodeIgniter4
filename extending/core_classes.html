@@ -129,6 +129,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Extending CodeIgniter</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Creating Core System Classes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basecontroller.html">Extending the Controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing to CodeIgniter</a></li>
 </ul>
 </li>
@@ -302,17 +303,6 @@ identical to replacing a class with one exception:</p>
 </div>
 <p><strong>Tip:</strong>  Any functions in your class that are named identically to the methods in the parent class will be used
 instead of the native ones (this is known as “method overriding”). This allows you to substantially alter the CodeIgniter core.</p>
-<p>If you are extending the Controller core class, then be sure to extend your new class in your application controller’s
-constructors:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
-
-<span class="k">use</span> <span class="nx">App\BaseController</span><span class="p">;</span>
-
-<span class="k">class</span> <span class="nc">Home</span> <span class="k">extends</span> <span class="nx">BaseController</span> <span class="p">{</span>
-
-<span class="p">}</span>
-</pre></div>
-</div>
 </div>
 </div>
 
@@ -339,7 +329,7 @@ constructors:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 24, 2019.
+      Last updated on Mar 25, 2019.
 
     </p>
   </div>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Extending CodeIgniter &mdash; CodeIgniter4 4.0.0-beta.1 documentation</title>
+  <title>Extending the Controller &mdash; CodeIgniter4 4.0.0-beta.1 documentation</title>
   
 
   
@@ -35,8 +35,9 @@
 
   
     <link rel="top" title="CodeIgniter4 4.0.0-beta.1 documentation" href="../index.html"/>
-        <link rel="next" title="Creating Core System Classes" href="core_classes.html"/>
-        <link rel="prev" title="CLIRequest Class" href="../cli/cli_request.html"/> 
+        <link rel="up" title="Extending CodeIgniter" href="index.html"/>
+        <link rel="next" title="Contributing to CodeIgniter" href="contributing.html"/>
+        <link rel="prev" title="Events" href="events.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -125,10 +126,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
 </ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Extending CodeIgniter</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Extending CodeIgniter</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core_classes.html">Creating Core System Classes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events.html">Events</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basecontroller.html">Extending the Controller</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Extending the Controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing to CodeIgniter</a></li>
 </ul>
 </li>
@@ -180,7 +181,9 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Extending CodeIgniter</li>
+          <li><a href="index.html">Extending CodeIgniter</a> &raquo;</li>
+        
+      <li>Extending the Controller</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -197,16 +200,59 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="extending-codeigniter">
-<h1>Extending CodeIgniter<a class="headerlink" href="#extending-codeigniter" title="Permalink to this headline">¶</a></h1>
-<p>CodeIgniter 4 has been designed to be easy to extend or build upon.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="core_classes.html">Creating Core System Classes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basecontroller.html">Extending the Controller</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to CodeIgniter</a></li>
-</ul>
+  <div class="section" id="extending-the-controller">
+<h1>Extending the Controller<a class="headerlink" href="#extending-the-controller" title="Permalink to this headline">¶</a></h1>
+<p>CodeIgniter&#8217;s core Controller should not be changed, but a default class extension is provided for you at
+<strong>app/Controllers/BaseController.php</strong>. Any new controllers you make should extend <code class="docutils literal"><span class="pre">BaseController</span></code> to take
+advantage of preloaded components and any additional functionality you provide:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Home</span> <span class="k">extends</span> <span class="nx">BaseController</span> <span class="p">{</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="preloading-components">
+<h2>Preloading Components<a class="headerlink" href="#preloading-components" title="Permalink to this headline">¶</a></h2>
+<p>The base controller is a great place to load any helpers, models, libraries, services, etc. that you intend to
+use every time your project runs. Helpers should be added to the pre-defined <code class="docutils literal"><span class="pre">$helpers</span></code> array. For example, if
+you want the HTML and Text helpers universally available:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="nv">$helpers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;html&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">];</span>
+</pre></div>
+</div>
+<p>Any other components to load or data to process should be added to the constructor <code class="docutils literal"><span class="pre">initController()</span></code>. For
+example, if your project uses the Session Library heavily you may want to initiate it here:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">initController</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="c1">// Do Not Edit This Line</span>
+        <span class="k">parent</span><span class="o">::</span><span class="na">initController</span><span class="p">(</span><span class="nv">$request</span><span class="p">,</span> <span class="nv">$response</span><span class="p">,</span> <span class="nv">$logger</span><span class="p">);</span>
+
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">session</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">session</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="additional-methods">
+<h2>Additional Methods<a class="headerlink" href="#additional-methods" title="Permalink to this headline">¶</a></h2>
+<p>The base controller is not routable (system config routes it to 404 Page Not Found). As an added security
+measure <strong>all</strong> new methods you create should be declared as <code class="docutils literal"><span class="pre">protected</span></code> or <code class="docutils literal"><span class="pre">private</span></code> and only be accessed through the
+controllers you create that extend <code class="docutils literal"><span class="pre">BaseController</span></code>.</p>
+</div>
+<div class="section" id="other-options">
+<h2>Other Options<a class="headerlink" href="#other-options" title="Permalink to this headline">¶</a></h2>
+<p>You may find that you need more than one base controller. You can create new base controllers as long as any other controllers that you make extend the correct base. For example, if your project
+has an involved public interface and a simple administrative portal you may want to extend <code class="docutils literal"><span class="pre">BaseController</span></code> to
+the public controllers and make <code class="docutils literal"><span class="pre">AdminController</span></code> for any administrative controllers.</p>
+<p>If you do not want to use the base controller you may bypass it by having your controllers extend the system
+Controller instead:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Home</span> <span class="k">extends</span> <span class="nx">Controller</span>
+<span class="p">{</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -220,10 +266,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="core_classes.html" class="btn btn-neutral float-right" title="Creating Core System Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing to CodeIgniter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../cli/cli_request.html" class="btn btn-neutral" title="CLIRequest Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="events.html" class="btn btn-neutral" title="Events" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

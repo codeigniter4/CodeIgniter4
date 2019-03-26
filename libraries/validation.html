@@ -1016,12 +1016,12 @@ regardless of its value.</td>
 </tr>
 <tr class="row-even"><td>required_with</td>
 <td>Yes</td>
-<td>The field is required if any of the fields in the parameter are set.</td>
+<td>The field is required when any of the other required fields are present in the data.</td>
 <td>required_with[field1,field2]</td>
 </tr>
 <tr class="row-odd"><td>required_without</td>
 <td>Yes</td>
-<td>The field is required when any of the fields in the parameter are not set.</td>
+<td>The field is required when all of the other fields are present in the data but not required.</td>
 <td>required_without[field1,field2]</td>
 </tr>
 <tr class="row-even"><td>is_unique</td>
@@ -1184,7 +1184,7 @@ the field data).</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 24, 2019.
+      Last updated on Mar 25, 2019.
 
     </p>
   </div>
