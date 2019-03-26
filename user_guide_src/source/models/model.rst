@@ -230,13 +230,11 @@ like findAll(), though less explicit.
 
 **findColumn()**
 
- Returns null or an indexed array of column values for a specified $id::
+ Returns null or an indexed array of column values::
 
- 	$user = $userModel->findColumn($column_name, $id);
+ 	$user = $userModel->findColumn($column_name);
 
- First parameter is either name of single column, comma separated column names, or array of column names.
-
- If the second parameter equals null, will return complete result set.
+ $column_name should be a name of single column else you will get the DataException.
 
 **findAll()**
 
