@@ -226,7 +226,7 @@ class Database extends BaseCollector
 	 *
 	 * @return integer
 	 */
-	public function getBadgeValue()
+	public function getBadgeValue(): int
 	{
 		return count(static::$queries);
 	}
@@ -251,7 +251,7 @@ class Database extends BaseCollector
 	 *
 	 * @return boolean
 	 */
-	public function isEmpty()
+	public function isEmpty(): bool
 	{
 		return empty(static::$queries);
 	}

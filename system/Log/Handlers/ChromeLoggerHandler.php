@@ -38,7 +38,7 @@
 
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Services;
+use CodeIgniter\Config\Services;
 
 /**
  * Class ChromeLoggerHandler
@@ -61,7 +61,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	const VERSION = 1.0;
 
 	/**
-	 * The number of strack frames returned from the backtrace.
+	 * The number of track frames returned from the backtrace.
 	 *
 	 * @var integer
 	 */

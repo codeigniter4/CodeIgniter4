@@ -6,7 +6,7 @@ use CodeIgniter\CodeIgniter;
 
 class Config
 {
-	public static function display()
+	public static function display(): array
 	{
 		$config = config(App::class);
 

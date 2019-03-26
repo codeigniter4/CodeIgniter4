@@ -162,7 +162,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return string    Serialized session data
 	 */
-	public function read($sessionID)
+	public function read($sessionID): string
 	{
 		// This might seem weird, but PHP 5.6 introduced session_reset(),
 		// which re-reads session data

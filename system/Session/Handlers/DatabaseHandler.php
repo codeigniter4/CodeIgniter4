@@ -152,7 +152,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return string    Serialized session data
 	 */
-	public function read($sessionID)
+	public function read($sessionID): string
 	{
 		if ($this->lockSession($sessionID) === false)
 		{

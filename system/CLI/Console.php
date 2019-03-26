@@ -68,7 +68,7 @@ class Console
 	 * @param boolean $useSafeOutput
 	 *
 	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Router\RedirectException
 	 */
 	public function run(bool $useSafeOutput = false)
 	{

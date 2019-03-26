@@ -97,7 +97,7 @@ class Throttler implements ThrottlerInterface
 	 *
 	 * @return integer
 	 */
-	public function getTokenTime()
+	public function getTokenTime(): int
 	{
 		return $this->tokenTime;
 	}
@@ -123,7 +123,7 @@ class Throttler implements ThrottlerInterface
 	 * @return   boolean
 	 * @internal param int $maxRequests
 	 */
-	public function check(string $key, int $capacity, int $seconds, int $cost = 1)
+	public function check(string $key, int $capacity, int $seconds, int $cost = 1): bool
 	{
 		$tokenName = $this->prefix . $key;
 
@@ -193,7 +193,7 @@ class Throttler implements ThrottlerInterface
 	 *
 	 * @return integer
 	 */
-	public function time()
+	public function time(): int
 	{
 		return $this->testTime ?? time();
 	}

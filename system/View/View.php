@@ -179,7 +179,7 @@ class View implements RendererInterface
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $options = null, $saveData = null): string
+	public function render(string $view, array $options = null, bool $saveData = null): string
 	{
 		$this->renderVars['start'] = microtime(true);
 
@@ -294,7 +294,7 @@ class View implements RendererInterface
 	 *
 	 * @return string
 	 */
-	public function renderString(string $view, array $options = null, $saveData = null): string
+	public function renderString(string $view, array $options = null, bool $saveData = null): string
 	{
 		$start = microtime(true);
 		if (is_null($saveData))
@@ -388,7 +388,7 @@ class View implements RendererInterface
 	 *
 	 * @return RendererInterface
 	 */
-	public function resetData()
+	public function resetData(): RendererInterface
 	{
 		$this->data = [];
 
@@ -402,7 +402,7 @@ class View implements RendererInterface
 	 *
 	 * @return array
 	 */
-	public function getData()
+	public function getData(): array
 	{
 		return $this->data;
 	}
@@ -494,7 +494,7 @@ class View implements RendererInterface
 	 *
 	 * @return string
 	 */
-	public function include(string $view, array $options = null, $saveData = null)
+	public function include(string $view, array $options = null, $saveData = null): string
 	{
 		return $this->render($view, $options, $saveData);
 	}

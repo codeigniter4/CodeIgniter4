@@ -167,6 +167,8 @@ class BaseConfig
 	/**
 	 * Provides external libraries a simple way to register one or more
 	 * options into a config file.
+	 *
+	 * @throws \ReflectionException
 	 */
 	protected function registerProperties()
 	{

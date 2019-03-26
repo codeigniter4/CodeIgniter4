@@ -147,12 +147,12 @@ class History extends BaseCollector
 	 *
 	 * @return integer
 	 */
-	public function getBadgeValue()
+	public function getBadgeValue(): int
 	{
 		return count($this->files);
 	}
 
-	public function isEmpty()
+	public function isEmpty(): bool
 	{
 		return empty($this->files);
 	}

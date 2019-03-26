@@ -74,6 +74,7 @@ class Routes extends BaseCollector
 	 * Returns the data of this collector to be formatted in the toolbar
 	 *
 	 * @return array
+	 * @throws \ReflectionException
 	 */
 	public function display(): array
 	{
@@ -137,7 +138,7 @@ class Routes extends BaseCollector
 	 *
 	 * @return integer
 	 */
-	public function getBadgeValue()
+	public function getBadgeValue(): int
 	{
 		$rawRoutes = Services::routes(true);
 

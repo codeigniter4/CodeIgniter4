@@ -127,7 +127,7 @@ class Files extends BaseCollector
 	 *
 	 * @return integer
 	 */
-	public function getBadgeValue()
+	public function getBadgeValue(): int
 	{
 		return count(get_included_files());
 	}

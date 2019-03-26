@@ -36,7 +36,6 @@
  * @filesource
  */
 
-use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
@@ -48,7 +47,7 @@ class DebugToolbar implements FilterInterface
 	 *
 	 * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
 	 *
-	 * @return mixed
+	 * @return void
 	 */
 	public function before(RequestInterface $request)
 	{
@@ -63,7 +62,7 @@ class DebugToolbar implements FilterInterface
 	 * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
 	 * @param ResponseInterface|\CodeIgniter\HTTP\Response       $response
 	 *
-	 * @return mixed
+	 * @return void
 	 */
 	public function after(RequestInterface $request, ResponseInterface $response)
 	{

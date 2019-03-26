@@ -1,7 +1,5 @@
 <?php namespace CodeIgniter\Autoloader;
 
-use Composer\Autoload\ClassLoader;
-
 /**
  * CodeIgniter
  *

@@ -807,7 +807,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Set a cookie
 	 *
-	 * Accepts an arbitrary number of binds (up to 7) or an associateive
+	 * Accepts an arbitrary number of binds (up to 7) or an associative
 	 * array in the first parameter containing all the values.
 	 *
 	 * @param string|array  $name     Cookie name or array containing binds

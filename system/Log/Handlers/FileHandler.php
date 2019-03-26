@@ -36,8 +36,6 @@
  * @filesource
  */
 
-use CodeIgniter\Log\Exceptions\LogException;
-
 /**
  * Log error messages to file system
  */
@@ -96,6 +94,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 	 * @param $message
 	 *
 	 * @return boolean
+	 * @throws \Exception
 	 */
 	public function handle($level, $message): bool
 	{

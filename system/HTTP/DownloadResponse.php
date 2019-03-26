@@ -202,11 +202,11 @@ class DownloadResponse extends Message implements ResponseInterface
 	}
 
 	/**
-	 * get Content-Disponsition Header string.
+	 * get Content-Disposition Header string.
 	 *
 	 * @return string
 	 */
-	private function getContentDisponsition() : string
+	private function getContentDisposition() : string
 	{
 		$download_filename = $this->getDownloadFileName();
 
@@ -375,7 +375,7 @@ class DownloadResponse extends Message implements ResponseInterface
 			$this->setContentTypeByMimeType();
 		}
 
-		$this->setHeader('Content-Disposition', $this->getContentDisponsition());
+		$this->setHeader('Content-Disposition', $this->getContentDisposition());
 		$this->setHeader('Expires-Disposition', '0');
 		$this->setHeader('Content-Transfer-Encoding', 'binary');
 		$this->setHeader('Content-Length', (string)$this->getContentLength());
