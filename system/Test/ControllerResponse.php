@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Test;
+<?php
 
 /**
  * CodeIgniter
@@ -36,10 +36,15 @@
  * @filesource
  */
 
+namespace CodeIgniter\Test;
+
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
+/**
+ * Testable response from a controller
+ */
 class ControllerResponse {
 
 	/**
