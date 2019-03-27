@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Filters;
+<?php
 
 /**
  * CodeIgniter
@@ -40,12 +40,16 @@
  * @codeCoverageIgnore
  */
 
+namespace CodeIgniter\Filters;
+
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use Config\Services;
 
 /**
+ * CSRF filter.
+ *
  * This filter is not intended to be used from the command line.
  *
  * @codeCoverageIgnore

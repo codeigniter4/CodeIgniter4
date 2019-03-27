@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Filters;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,11 +35,16 @@
  * @filesource
  */
 
+namespace CodeIgniter\Filters;
+
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 
+/**
+ * Honeypot filter
+ */
 class Honeypot implements FilterInterface
 {
 
