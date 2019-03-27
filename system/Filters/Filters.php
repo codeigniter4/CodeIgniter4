@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Filters;
+<?php
 
 /**
  * CodeIgniter
@@ -36,11 +36,16 @@
  * @filesource
  */
 
+namespace CodeIgniter\Filters;
+
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\Exceptions\FilterException;
 
+/**
+ * Filters
+ */
 class Filters
 {
 

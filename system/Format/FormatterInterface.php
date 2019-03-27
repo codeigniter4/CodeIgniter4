@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Format;
+<?php
 
 /**
  * CodeIgniter
@@ -36,6 +36,11 @@
  * @filesource
  */
 
+namespace CodeIgniter\Format;
+
+/**
+ * Formatter interface
+ */
 interface FormatterInterface
 {
 

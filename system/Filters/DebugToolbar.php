@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Filters;
+<?php
 
 /**
  * CodeIgniter
@@ -36,10 +36,15 @@
  * @filesource
  */
 
+namespace CodeIgniter\Filters;
+
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 
+/**
+ * Debug toolbar filter
+ */
 class DebugToolbar implements FilterInterface
 {
 	/**
