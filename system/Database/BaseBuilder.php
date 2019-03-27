@@ -209,12 +209,21 @@ class BaseBuilder
 	protected $canLimitWhereUpdates = true;
 
     /**
-     * Ignore errors on insert statements
-     * for example for duplicate keys.
+     * Ignore data that cause certain
+     * exceptions, for example in case of
+     * duplicate keys.
      *
      * @var bool
      */
-	protected $insertIgnore = false;
+	protected $ignore = false;
+
+    /**
+     * Specifies which sql statements
+     * support the ignore option.
+     *
+     * @var array
+     */
+	protected $supportedIgnoreStatements = [];
 
 	//--------------------------------------------------------------------
 
@@ -267,7 +276,8 @@ class BaseBuilder
     /**
      * Ignore
      *
-     * Set ignore Flag for next insert query.
+     * Set ignore Flag for next insert,
+     * update or delete query.
      *
      * @param bool        $ignore
      *
@@ -275,7 +285,7 @@ class BaseBuilder
      */
     public function ignore(bool $ignore = true)
     {
-        $this->insertIgnore = $ignore;
+        $this->ignore = $ignore;
 
         return $this;
     }
@@ -1692,7 +1702,7 @@ class BaseBuilder
 			}
 		}
 
-        $this->insertIgnore = false;
+        $this->ignore = false;
 
 		if (! $testing)
 		{
@@ -1717,7 +1727,7 @@ class BaseBuilder
 	 */
 	protected function _insertBatch($table, $keys, $values)
 	{
-		return 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
+		return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
 	}
 
 	//--------------------------------------------------------------------
@@ -1844,7 +1854,7 @@ class BaseBuilder
 				), array_keys($this->QBSet), array_values($this->QBSet)
 		);
 
-        $this->insertIgnore = false;
+        $this->ignore = false;
 
 		if ($test === false)
 		{
@@ -1901,7 +1911,7 @@ class BaseBuilder
 	 */
 	protected function _insert($table, array $keys, array $unescapedKeys)
 	{
-		return 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $unescapedKeys) . ')';
+		return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $unescapedKeys) . ')';
 	}
 
 	//--------------------------------------------------------------------
@@ -2016,6 +2026,8 @@ class BaseBuilder
 	 * @param mixed   $where
 	 * @param integer $limit
 	 * @param boolean $test  Are we testing the code?
+     *
+     * @throws DatabaseException
 	 *
 	 * @return boolean    TRUE on success, FALSE on failure
 	 */
@@ -2047,6 +2059,8 @@ class BaseBuilder
 		}
 
 		$sql = $this->_update($this->QBFrom[0], $this->QBSet);
+
+		$this->ignore = false;
 
 		if (! $test)
 		{
@@ -2080,12 +2094,14 @@ class BaseBuilder
 	 */
 	protected function _update($table, $values)
 	{
+	    $valStr = [];
+
 		foreach ($values as $key => $val)
 		{
-			$valstr[] = $key . ' = ' . $val;
+			$valStr[] = $key . ' = ' . $val;
 		}
 
-		return 'UPDATE ' . $table . ' SET ' . implode(', ', $valstr)
+		return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . implode(', ', $valStr)
 				. $this->compileWhereHaving('QBWhere')
 				. $this->compileOrderBy()
 				. ($this->QBLimit ? $this->_limit(' ') : '');
@@ -2193,6 +2209,8 @@ class BaseBuilder
 			$this->QBWhere = [];
 		}
 
+		$this->ignore = false;
+
 		$this->resetWrite();
 
 		return $returnSQL ? $savedSQL : $affected_rows;
@@ -2214,6 +2232,8 @@ class BaseBuilder
 	protected function _updateBatch($table, $values, $index)
 	{
 		$ids = [];
+		$final = [];
+
 		foreach ($values as $key => $val)
 		{
 			$ids[] = $val[$index];
@@ -2237,7 +2257,7 @@ class BaseBuilder
 
 		$this->where($index . ' IN(' . implode(',', $ids) . ')', null, false);
 
-		return 'UPDATE ' . $table . ' SET ' . substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
+		return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
 	}
 
 	//--------------------------------------------------------------------
@@ -2305,6 +2325,8 @@ class BaseBuilder
 		$table = $this->QBFrom[0];
 
 		$sql = $this->_delete($table);
+
+		$this->ignore = false;
 
 		if ($test)
 		{
@@ -2422,6 +2444,8 @@ class BaseBuilder
 
 		$sql = $this->_delete($table);
 
+		$this->ignore = false;
+
 		if (! empty($limit))
 		{
 			$this->QBLimit = $limit;
@@ -2496,7 +2520,7 @@ class BaseBuilder
 	 */
 	protected function _delete($table)
 	{
-		return 'DELETE FROM ' . $table . $this->compileWhereHaving('QBWhere')
+		return 'DELETE ' . $this->compileIgnore('delete') . 'FROM ' . $table . $this->compileWhereHaving('QBWhere')
 				. ($this->QBLimit ? ' LIMIT ' . $this->QBLimit : '');
 	}
 
@@ -2610,6 +2634,32 @@ class BaseBuilder
 
 		return $sql;
 	}
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Compile Ignore Statement
+     *
+     * Checks if the ignore option is supported by
+     * the Database Driver for the specific statement.
+     *
+     * @param string $statement
+     *
+     * @return string
+     */
+    protected function compileIgnore(string $statement)
+    {
+	    $sql = '';
+
+	    if(
+	        $this->ignore &&
+            isset($this->supportedIgnoreStatements[$statement])
+        ) {
+            $sql = trim($this->supportedIgnoreStatements[$statement]).' ';
+        }
+
+	    return $sql;
+    }
 
 	//--------------------------------------------------------------------
 

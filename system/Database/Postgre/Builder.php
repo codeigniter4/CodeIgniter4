@@ -55,9 +55,41 @@ class Builder extends BaseBuilder
 		'RANDOM()',
 	];
 
+    /**
+     * Specifies which sql statements
+     * support the ignore option.
+     *
+     * @var array
+     */
+	protected $supportedIgnoreStatements = [
+	    'insert' => 'ON CONFLICT DO NOTHING'
+    ];
+
 	//--------------------------------------------------------------------
 
-	/**
+    /**
+     * Compile Ignore Statement
+     *
+     * Checks if the ignore option is supported by
+     * the Database Driver for the specific statement.
+     *
+     * @param string $statement
+     *
+     * @return string
+     */
+    protected function compileIgnore(string $statement) {
+        $sql = parent::compileIgnore($statement);
+
+        if(!empty($sql)) {
+            $sql = ' '.trim($sql);
+        }
+
+        return $sql;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
 	 * ORDER BY
 	 *
 	 * @param string  $orderby
@@ -96,6 +128,8 @@ class Builder extends BaseBuilder
 	 *
 	 * @param string  $column
 	 * @param integer $value
+     *
+     * @throws DatabaseException
 	 *
 	 * @return boolean
 	 */
@@ -115,6 +149,8 @@ class Builder extends BaseBuilder
 	 *
 	 * @param string  $column
 	 * @param integer $value
+     *
+     * @throws DatabaseException
 	 *
 	 * @return boolean
 	 */
@@ -126,6 +162,42 @@ class Builder extends BaseBuilder
 
 		return $this->db->query($sql, $this->binds, false);
 	}
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Insert batch statement
+     *
+     * Generates a platform-specific insert string from the supplied data.
+     *
+     * @param string $table  Table name
+     * @param array  $keys   INSERT keys
+     * @param array  $values INSERT values
+     *
+     * @return string
+     */
+    protected function _insertBatch($table, $keys, $values)
+    {
+        return 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values) . $this->compileIgnore('insert');
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Insert statement
+     *
+     * Generates a platform-specific insert string from the supplied data
+     *
+     * @param string $table         The table name
+     * @param array  $keys          The insert keys
+     * @param array  $unescapedKeys The insert values
+     *
+     * @return string
+     */
+    protected function _insert($table, array $keys, array $unescapedKeys)
+    {
+        return 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $unescapedKeys) . ')' . $this->compileIgnore('insert');
+    }
 
 	//--------------------------------------------------------------------
 

@@ -36,4 +36,27 @@ class DeleteTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+    public function testDeleteIgnore()
+    {
+        $builder = $this->db->table('jobs');
+
+        $answer = $builder->ignore()->delete(['id' => 1], null, true, true);
+
+        if($this->db->getPlatform() == 'MySQLi') {
+            $expectedSQL   = 'DELETE IGNORE FROM "jobs" WHERE "id" = :id:';
+        } else {
+            $expectedSQL   = 'DELETE FROM "jobs" WHERE "id" = :id:';
+        }
+
+        $expectedBinds = [
+            'id' => [
+                1,
+                true,
+            ],
+        ];
+
+        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
+        $this->assertEquals($expectedBinds, $builder->getBinds());
+    }
 }

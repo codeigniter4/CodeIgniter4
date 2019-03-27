@@ -41,6 +41,35 @@ class UpdateTest extends \CIUnitTestCase
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
 
+    //--------------------------------------------------------------------
+
+    public function testUpdateIgnore()
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+
+        $builder->where('id', 1)->ignore()->update(['name' => 'Programmer'], null, null, true);
+
+        if($this->db->getPlatform() == 'MySQLi') {
+            $expectedSQL = 'UPDATE IGNORE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1';
+        } else {
+            $expectedSQL = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1';
+        }
+
+        $expectedBinds = [
+            'id'   => [
+                1,
+                true,
+            ],
+            'name' => [
+                'Programmer',
+                true,
+            ],
+        ];
+
+        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertEquals($expectedBinds, $builder->getBinds());
+    }
+
 	//--------------------------------------------------------------------
 
 	public function testUpdateInternalWhereAndLimit()

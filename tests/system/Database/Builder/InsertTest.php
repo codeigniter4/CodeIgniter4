@@ -44,6 +44,46 @@ class InsertTest extends \CIUnitTestCase
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
 
+    //--------------------------------------------------------------------
+
+	public function testInsertIgnore()
+    {
+        $builder = $this->db->table('jobs');
+
+        $insertData = [
+            'id'   => 1,
+            'name' => 'Grocery Sales',
+        ];
+
+        $builder->ignore()->insert($insertData, true, true);
+
+        switch($this->db->getPlatform()) {
+            case 'MySQLi':
+                $expectedSQL   = 'INSERT IGNORE INTO "jobs" ("id", "name") VALUES (1, \'Grocery Sales\')';
+                break;
+            case 'postgre':
+                $expectedSQL   = 'INSERT INTO "jobs" ("id", "name") VALUES (1, \'Grocery Sales\') ON CONFLICT DO NOTHING';
+                break;
+            case 'SQLite3':
+                $expectedSQL   = 'INSERT OR IGNORE INTO "jobs" ("id", "name") VALUES (1, \'Grocery Sales\') ';
+                breaK;
+        }
+
+        $expectedBinds = [
+            'id'   => [
+                1,
+                true,
+            ],
+            'name' => [
+                'Grocery Sales',
+                true,
+            ],
+        ];
+
+        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
+        $this->assertEquals($expectedBinds, $builder->getBinds());
+    }
+
 	//--------------------------------------------------------------------
 
 	public function testThrowsExceptionOnNoValuesSet()
