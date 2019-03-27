@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Debug;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Debug;
 
 use CodeIgniter\API\ResponseTrait;
 use Config\Paths;
@@ -403,9 +405,9 @@ class Exceptions
 	/**
 	 * Creates a syntax-highlighted version of a PHP file.
 	 *
-	 * @param string    $file
-	 * @param integer   $lineNumber
-	 * @param integer   $lines
+	 * @param string  $file
+	 * @param integer $lineNumber
+	 * @param integer $lines
 	 *
 	 * @return boolean|string
 	 */
