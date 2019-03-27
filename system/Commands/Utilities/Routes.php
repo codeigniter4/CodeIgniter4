@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Commands\Utilities;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
@@ -123,7 +125,8 @@ class Routes extends BaseCommand
 			foreach ($routes as $from => $to)
 			{
 				// filter for strings, as callbacks aren't displayable
-				if (is_string($to)) {
+				if (is_string($to))
+				{
 					$tbody[] = [
 						$from,
 						$method,
