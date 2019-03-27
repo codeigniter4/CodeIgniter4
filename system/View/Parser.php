@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\View;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\View;
 
 use CodeIgniter\Log\Logger;
 use CodeIgniter\View\Exceptions\ViewException;

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Validation;
+<?php
 
 /**
  * CodeIgniter
@@ -36,10 +36,15 @@
  * @filesource
  */
 
+namespace CodeIgniter\Validation;
+
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
 
+/**
+ * Validator
+ */
 class Validation implements ValidationInterface
 {
 
