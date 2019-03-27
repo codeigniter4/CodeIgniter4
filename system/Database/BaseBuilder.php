@@ -2635,7 +2635,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	public function compileIgnore(string $statement)
+	protected function compileIgnore(string $statement)
 	{
 		$sql = '';
 
