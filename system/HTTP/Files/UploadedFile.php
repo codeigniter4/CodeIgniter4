@@ -259,11 +259,11 @@ class UploadedFile extends File implements UploadedFileInterface
 	/**
 	 * Get error string
 	 *
-	 * @staticvar array $errors
+	 * @var array $errors
 	 *
 	 * @return string
 	 */
-	public function getErrorString()
+	public function getErrorString(): string
 	{
 		$errors = [
 			UPLOAD_ERR_OK         => lang('HTTP.uploadErrOk'),
@@ -393,7 +393,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 * @param  string $fileName   the name to rename the file to.
 	 * @return string file full path
 	 */
-	public function store($folderName = null, $fileName = null): string
+	public function store(string $folderName = null, string $fileName = null): string
 	{
 		$folderName = $folderName ?? date('Ymd');
 		$fileName   = $fileName ?? $this->getRandomName();

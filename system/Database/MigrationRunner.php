@@ -196,7 +196,7 @@ class MigrationRunner
 	 * @param string|null $namespace
 	 * @param string|null $group
 	 *
-	 * @return mixed TRUE if no migrations are found, current version string on success, FALSE on failure
+	 * @return mixed Current version string on success, FALSE on failure or no migrations are found
 	 * @throws ConfigException
 	 */
 	public function version(string $targetVersion, string $namespace = null, string $group = null)
@@ -253,12 +253,14 @@ class MigrationRunner
 		$this->checkMigrations($migrations, $method, $targetVersion);
 
 		// loop migration for each namespace (module)
+
+		$migrationStatus = false;
 		foreach ($migrations as $version => $migration)
 		{
 			// Only include migrations within the scoop
-			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion)
-			)
+			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion))
 			{
+				$migrationStatus = false;
 				include_once $migration->path;
 				// Get namespaced class name
 				$class = $this->namespace . '\Database\Migrations\Migration_' . ($migration->name);
@@ -288,10 +290,12 @@ class MigrationRunner
 				{
 					$this->removeHistory($migration->version);
 				}
+
+				$migrationStatus = true;
 			}
 		}
 
-		return true;
+		return ($migrationStatus) ? $targetVersion : false;
 	}
 
 	//--------------------------------------------------------------------

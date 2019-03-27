@@ -204,13 +204,13 @@ class CLI
 	 * $email = CLI::prompt('What is your email?', null, 'required|valid_email');
 	 *
 	 * @param string       $field      Output "field" question
-	 * @param string|array $options    String to a defaul value, array to a list of options (the first option will be the default value)
+	 * @param string|array $options    String to a default value, array to a list of options (the first option will be the default value)
 	 * @param string       $validation Validation rules
 	 *
 	 * @return             string                   The user input
 	 * @codeCoverageIgnore
 	 */
-	public static function prompt($field, $options = null, $validation = null): string
+	public static function prompt(string $field, $options = null, string $validation = null): string
 	{
 		$extra_output = '';
 		$default      = '';
@@ -270,7 +270,7 @@ class CLI
 	 * @return             boolean
 	 * @codeCoverageIgnore
 	 */
-	protected static function validate($field, $value, $rules)
+	protected static function validate(string $field, string $value, string $rules): bool
 	{
 		$validation = \Config\Services::validation(null, false);
 		$validation->setRule($field, null, $rules);
@@ -380,10 +380,12 @@ class CLI
 
 	/**
 	 * if operating system === windows
+	 *
+	 * @return boolean
 	 */
-	public static function isWindows()
+	public static function isWindows(): bool
 	{
-			   return stripos(PHP_OS, 'WIN') === 0;
+		return stripos(PHP_OS, 'WIN') === 0;
 	}
 
 	//--------------------------------------------------------------------
@@ -436,7 +438,7 @@ class CLI
 	 *
 	 * @return string    The color coded string
 	 */
-	public static function color(string $text, string $foreground, string $background = null, string $format = null)
+	public static function color(string $text, string $foreground, string $background = null, string $format = null): string
 	{
 		if (static::isWindows() && ! isset($_SERVER['ANSICON']))
 		{
@@ -655,7 +657,7 @@ class CLI
 	 * Parses the command line it was called from and collects all
 	 * options and valid segments.
 	 *
-	 * I tried to use getopt but had it fail occassionally to find any
+	 * I tried to use getopt but had it fail occasionally to find any
 	 * options but argc has always had our back. We don't have all of the power
 	 * of getopt but this does us just fine.
 	 */
@@ -706,7 +708,7 @@ class CLI
 	 *
 	 * @return string
 	 */
-	public static function getURI()
+	public static function getURI(): string
 	{
 		return implode('/', static::$segments);
 	}
@@ -743,7 +745,7 @@ class CLI
 	 *
 	 * @return array
 	 */
-	public static function getSegments()
+	public static function getSegments(): array
 	{
 		return static::$segments;
 	}
@@ -779,7 +781,7 @@ class CLI
 	 *
 	 * @return array
 	 */
-	public static function getOptions()
+	public static function getOptions(): array
 	{
 		return static::$options;
 	}
@@ -819,12 +821,12 @@ class CLI
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns a well formated table
+	 * Returns a well formatted table
 	 *
 	 * @param array $tbody List of rows
 	 * @param array $thead List of columns
 	 *
-	 * @return string
+	 * @return void
 	 */
 	public static function table(array $tbody, array $thead = [])
 	{

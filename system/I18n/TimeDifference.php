@@ -260,7 +260,7 @@ class TimeDifference
 	}
 
 	/**
-	 * Allow property-like access to our calucalated values.
+	 * Allow property-like access to our calculated values.
 	 *
 	 * @param $name
 	 *

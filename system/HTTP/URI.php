@@ -327,7 +327,7 @@ class URI
 	 * @see    http://tools.ietf.org/html/rfc3986#section-3.2.2
 	 * @return string The URI host.
 	 */
-	public function getHost()
+	public function getHost(): string
 	{
 		return $this->host;
 	}
@@ -539,15 +539,15 @@ class URI
 	/**
 	 * Builds a representation of the string from the component parts.
 	 *
-	 * @param $scheme
-	 * @param $authority
-	 * @param $path
-	 * @param $query
-	 * @param $fragment
+	 * @param string $scheme
+	 * @param string $authority
+	 * @param string $path
+	 * @param string $query
+	 * @param string $fragment
 	 *
 	 * @return string
 	 */
-	public static function createURIString($scheme = null, $authority = null, $path = null, $query = null, $fragment = null)
+	public static function createURIString(string $scheme = null, string $authority = null, string $path = null, string $query = null, string $fragment = null): string
 	{
 		$uri = '';
 		if (! empty($scheme))
@@ -962,9 +962,9 @@ class URI
 	/**
 	 * Saves our parts from a parse_url call.
 	 *
-	 * @param $parts
+	 * @param array $parts
 	 */
-	protected function applyParts($parts)
+	protected function applyParts(array $parts)
 	{
 		if (! empty($parts['host']))
 		{
@@ -1107,7 +1107,7 @@ class URI
 	 *
 	 * @return string
 	 */
-	protected function mergePaths(URI $base, URI $reference)
+	protected function mergePaths(URI $base, URI $reference): string
 	{
 		if (! empty($base->getAuthority()) && empty($base->getPath()))
 		{

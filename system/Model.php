@@ -384,7 +384,7 @@ class Model
 
 	/**
 	 * Returns the first row of the result set. Will take any previous
-	 * Query Builder calls into account when determing the result set.
+	 * Query Builder calls into account when determining the result set.
 	 *
 	 * @return array|object|null
 	 */
@@ -429,7 +429,7 @@ class Model
 	 *
 	 * @return $this
 	 */
-	public function set($key, $value = '', bool $escape = null)
+	public function set($key, string $value = '', bool $escape = null)
 	{
 		$data = is_array($key)
 			? $key
@@ -1356,7 +1356,7 @@ class Model
 	 *
 	 * @return array
 	 */
-	protected function cleanValidationRules($rules, array $data = null): array
+	protected function cleanValidationRules(array $rules, array $data = null): array
 	{
 		if (empty($data))
 		{

@@ -37,7 +37,7 @@
  */
 
 use CodeIgniter\Cache\CacheInterface;
-use CodeIgniter\CriticalError;
+use CodeIgniter\Exceptions\CriticalError;
 
 class PredisHandler implements CacheInterface
 {

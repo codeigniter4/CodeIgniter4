@@ -264,7 +264,7 @@ class Security
 	 *
 	 * @return string
 	 */
-	public function getCSRFHash()
+	public function getCSRFHash(): string
 	{
 		return $this->CSRFHash;
 	}
@@ -276,7 +276,7 @@ class Security
 	 *
 	 * @return string
 	 */
-	public function getCSRFTokenName()
+	public function getCSRFTokenName(): string
 	{
 		return $this->CSRFTokenName;
 	}
@@ -287,8 +287,9 @@ class Security
 	 * Sets the CSRF Hash and cookie.
 	 *
 	 * @return string
+	 * @throws \Exception
 	 */
-	protected function CSRFSetHash()
+	protected function CSRFSetHash(): string
 	{
 		if ($this->CSRFHash === null)
 		{

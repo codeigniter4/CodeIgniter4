@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Autoloader;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Autoloader;
 
 /**
  * Class FileLocator
@@ -394,7 +396,7 @@ class FileLocator
 
 		$files = [];
 		helper('filesystem');
-		
+
 		// autoloader->getNamespace($prefix) returns an array of paths for that namespace
 		foreach ($this->autoloader->getNamespace($prefix) as $namespacePath)
 		{

@@ -243,7 +243,7 @@ class FileCollection
 						new \RecursiveArrayIterator($value), \RecursiveIteratorIterator::SELF_FIRST
 				);
 
-				foreach ($iterator as $key => $value)
+				foreach ($iterator as $key => $val)
 				{
 					array_splice($stack, $iterator->getDepth() + 1);
 					$pointer = &$stack[count($stack) - 1];
@@ -251,7 +251,7 @@ class FileCollection
 					$stack[] = &$pointer;
 					if (! $iterator->hasChildren())
 					{
-						$pointer[$field] = $value;
+						$pointer[$field] = $val;
 					}
 				}
 			}
@@ -270,7 +270,7 @@ class FileCollection
 	 *
 	 * @return mixed
 	 */
-	protected function getValueDotNotationSyntax($index, $value)
+	protected function getValueDotNotationSyntax(array $index, array $value)
 	{
 		if (is_array($index) && ! empty($index))
 		{

@@ -615,7 +615,7 @@ class CodeIgniter
 	 *
 	 * @return array
 	 */
-	public function getPerformanceStats()
+	public function getPerformanceStats(): array
 	{
 		return [
 			'startTime' => $this->startTime,
