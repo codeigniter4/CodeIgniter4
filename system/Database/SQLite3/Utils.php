@@ -1,6 +1,4 @@
-<?php namespace CodeIgniter\Database\SQLite3;
-
-use CodeIgniter\Database\Exceptions\DatabaseException;
+<?php
 
 /**
  * CodeIgniter
@@ -37,6 +35,10 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Database\SQLite3;
+
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Utils for SQLite3
