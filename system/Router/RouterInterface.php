@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Router;
+<?php
 
 /**
  * CodeIgniter
@@ -36,8 +36,10 @@
  * @filesource
  */
 
+namespace CodeIgniter\Router;
+
 /**
- * Expected behaviour of a Router.
+ * Expected behavior of a Router.
  */
 interface RouterInterface
 {

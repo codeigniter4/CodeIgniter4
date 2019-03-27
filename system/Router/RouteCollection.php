@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\Router;
+
 
 /**
  * CodeIgniter
@@ -36,6 +36,8 @@ namespace CodeIgniter\Router;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Router;
 
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Router\Exceptions\RouterException;
@@ -887,10 +889,10 @@ class RouteCollection implements RouteCollectionInterface
 	 * Example:
 	 *  $route->match( ['get', 'post'], 'users/(:num)', 'users/$1);
 	 *
-	 * @param array         $verbs
-	 * @param string        $from
-	 * @param string|array  $to
-	 * @param array         $options
+	 * @param array        $verbs
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -911,9 +913,9 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Specifies a route that is only available to GET requests.
 	 *
-	 * @param string        $from
-	 * @param string|array  $to
-	 * @param array         $options
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -929,9 +931,9 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Specifies a route that is only available to POST requests.
 	 *
-	 * @param string        $from
-	 * @param string|array  $to
-	 * @param array         $options
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -947,9 +949,9 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Specifies a route that is only available to PUT requests.
 	 *
-	 * @param string        $from
-	 * @param string|array  $to
-	 * @param array         $options
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -965,9 +967,9 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Specifies a route that is only available to DELETE requests.
 	 *
-	 * @param string        $from
-	 * @param string|array  $to
-	 * @param array         $options
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -983,9 +985,9 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Specifies a route that is only available to HEAD requests.
 	 *
-	 * @param string        $from
-	 * @param string|array  $to
-	 * @param array         $options
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -1001,9 +1003,9 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Specifies a route that is only available to PATCH requests.
 	 *
-	 * @param string        $from
-	 * @param string|array  $to
-	 * @param array         $options
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -1019,9 +1021,9 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Specifies a route that is only available to OPTIONS requests.
 	 *
-	 * @param string        $from
-	 * @param string|array  $to
-	 * @param array         $options
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -1037,9 +1039,9 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Specifies a route that is only available to command-line requests.
 	 *
-	 * @param string        $from
-	 * @param string|array  $to
-	 * @param array         $options
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -1225,10 +1227,10 @@ class RouteCollection implements RouteCollectionInterface
 	 * the request method(s) that this route will work for. They can be separated
 	 * by a pipe character "|" if there is more than one.
 	 *
-	 * @param string        $verb
-	 * @param string        $from
-	 * @param string|array  $to
-	 * @param array         $options
+	 * @param string       $verb
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 */
 	protected function create(string $verb, string $from, $to, array $options = null)
 	{
