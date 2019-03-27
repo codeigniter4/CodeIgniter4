@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\Config;
+
 
 /**
  * CodeIgniter
@@ -36,6 +36,8 @@ namespace CodeIgniter\Config;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Config;
 
 /**
  * Class BaseConfig

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\CLI;
+<?php
 
 /**
  * CodeIgniter
@@ -36,8 +36,13 @@
  * @filesource
  */
 
+namespace CodeIgniter\CLI;
+
 use CodeIgniter\CodeIgniter;
 
+/**
+ * Console
+ */
 class Console
 {
 

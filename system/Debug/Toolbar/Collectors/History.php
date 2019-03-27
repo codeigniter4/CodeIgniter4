@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Debug\Toolbar\Collectors;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 /**
  * History collector
@@ -106,7 +108,7 @@ class History extends BaseCollector
 			$contents = file_get_contents($filename);
 
 			$contents = @json_decode($contents);
-			if(json_last_error() === JSON_ERROR_NONE)
+			if (json_last_error() === JSON_ERROR_NONE)
 			{
 				preg_match_all('/\d+/', $filename, $time);
 				$time = (int)$time[0][0];
