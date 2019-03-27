@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Database;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Database;
 
 use Config\Services;
 use CodeIgniter\CLI\CLI;
@@ -416,14 +417,14 @@ class MigrationRunner
 		if (! empty($this->path))
 		{
 			helper('filesystem');
-			$dir = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
+			$dir   = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
 			$files = get_filenames($dir, true);
 		}
 		// Otherwise use FileLocator to search files in the subdirectory of the namespace
 		else
 		{
 			$locator = Services::locator(true);
-			$files = $locator->listNamespaceFiles($this->namespace, '/Database/Migrations/');
+			$files   = $locator->listNamespaceFiles($this->namespace, '/Database/Migrations/');
 		}
 
 		// Load all *_*.php files in the migrations path
@@ -445,9 +446,9 @@ class MigrationRunner
 				$migration = new \stdClass();
 
 				// Get migration version number
-				$migration->version   = $this->getMigrationNumber($name);
-				$migration->name      = $this->getMigrationName($name);
-				$migration->path      = ! empty($this->path) && strpos($file, $this->path) !== 0
+				$migration->version = $this->getMigrationNumber($name);
+				$migration->name    = $this->getMigrationName($name);
+				$migration->path    = ! empty($this->path) && strpos($file, $this->path) !== 0
 					? $this->path . $file
 					: $file;
 
