@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Images\Handlers;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Images\Handlers;
 
 use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Image;

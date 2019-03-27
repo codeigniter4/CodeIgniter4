@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Images;
+<?php
 
 /**
  * CodeIgniter
@@ -36,9 +36,14 @@
  * @filesource
  */
 
+namespace CodeIgniter\Images;
+
 use CodeIgniter\Files\File;
 use CodeIgniter\Images\Exceptions\ImageException;
 
+/**
+ * Encapsulation of an Image file
+ */
 class Image extends File
 {
 

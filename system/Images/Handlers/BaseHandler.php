@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Images\Handlers;
+<?php
 
 /**
  * CodeIgniter
@@ -36,10 +36,15 @@
  * @filesource
  */
 
+namespace CodeIgniter\Images\Handlers;
+
 use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Image;
 use CodeIgniter\Images\ImageHandlerInterface;
 
+/**
+ * Base image handling implementation
+ */
 abstract class BaseHandler implements ImageHandlerInterface
 {
 

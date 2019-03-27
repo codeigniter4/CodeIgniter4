@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Images\Handlers;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,8 +35,13 @@
  * @filesource
  */
 
+namespace CodeIgniter\Images\Handlers;
+
 use CodeIgniter\Images\Exceptions\ImageException;
 
+/**
+ * Image handler for GD package
+ */
 class GDHandler extends BaseHandler
 {
 
