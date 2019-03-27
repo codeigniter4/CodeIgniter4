@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\Cache\Handlers;
+
 
 /**
  * CodeIgniter
@@ -36,6 +36,8 @@ namespace CodeIgniter\Cache\Handlers;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheInterface;
 

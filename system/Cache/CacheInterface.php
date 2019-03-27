@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Cache;
+<?php
 
 /**
  * CodeIgniter
@@ -34,6 +34,12 @@
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
  * @filesource
+ */
+
+namespace CodeIgniter\Cache;
+
+/**
+ * Cache interface
  */
 
 interface CacheInterface
