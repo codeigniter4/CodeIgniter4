@@ -157,6 +157,15 @@ class BaseBuilder
 	protected $QBWhereGroupCount = 0;
 
 	/**
+	 * Ignore data that cause certain
+	 * exceptions, for example in case of
+	 * duplicate keys.
+	 *
+	 * @var boolean
+	 */
+	protected $QBIgnore = false;
+
+	/**
 	 * A reference to the database connection.
 	 *
 	 * @var BaseConnection
@@ -208,21 +217,12 @@ class BaseBuilder
 	 */
 	protected $canLimitWhereUpdates = true;
 
-    /**
-     * Ignore data that cause certain
-     * exceptions, for example in case of
-     * duplicate keys.
-     *
-     * @var bool
-     */
-	protected $ignore = false;
-
-    /**
-     * Specifies which sql statements
-     * support the ignore option.
-     *
-     * @var array
-     */
+	/**
+	 * Specifies which sql statements
+	 * support the ignore option.
+	 *
+	 * @var array
+	 */
 	protected $supportedIgnoreStatements = [];
 
 	//--------------------------------------------------------------------
@@ -271,24 +271,24 @@ class BaseBuilder
 		return $this->binds;
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Ignore
-     *
-     * Set ignore Flag for next insert,
-     * update or delete query.
-     *
-     * @param bool        $ignore
-     *
-     * @return BaseBuilder
-     */
-    public function ignore(bool $ignore = true)
-    {
-        $this->ignore = $ignore;
+	/**
+	 * Ignore
+	 *
+	 * Set ignore Flag for next insert,
+	 * update or delete query.
+	 *
+	 * @param boolean $ignore
+	 *
+	 * @return BaseBuilder
+	 */
+	public function ignore(bool $ignore = true)
+	{
+		$this->QBIgnore = $ignore;
 
-        return $this;
-    }
+		return $this;
+	}
 
 	//--------------------------------------------------------------------
 
@@ -1702,8 +1702,6 @@ class BaseBuilder
 			}
 		}
 
-        $this->ignore = false;
-
 		if (! $testing)
 		{
 			$this->resetWrite();
@@ -1796,8 +1794,8 @@ class BaseBuilder
 	 *
 	 * @param boolean $reset TRUE: reset QB values; FALSE: leave QB values alone
 	 *
-     * @throws DatabaseException
-     *
+	 * @throws DatabaseException
+	 *
 	 * @return string
 	 */
 	public function getCompiledInsert($reset = true)
@@ -1831,8 +1829,8 @@ class BaseBuilder
 	 * @param array   $set    An associative array of insert values
 	 * @param boolean $escape Whether to escape values and identifiers
 	 * @param boolean $test   Used when running tests
-     *
-     * @throws DatabaseException
+	 *
+	 * @throws DatabaseException
 	 *
 	 * @return BaseResult|Query|false
 	 */
@@ -1853,8 +1851,6 @@ class BaseBuilder
 						$this->QBFrom[0], true, $escape, false
 				), array_keys($this->QBSet), array_values($this->QBSet)
 		);
-
-        $this->ignore = false;
 
 		if ($test === false)
 		{
@@ -2026,8 +2022,8 @@ class BaseBuilder
 	 * @param mixed   $where
 	 * @param integer $limit
 	 * @param boolean $test  Are we testing the code?
-     *
-     * @throws DatabaseException
+	 *
+	 * @throws DatabaseException
 	 *
 	 * @return boolean    TRUE on success, FALSE on failure
 	 */
@@ -2059,8 +2055,6 @@ class BaseBuilder
 		}
 
 		$sql = $this->_update($this->QBFrom[0], $this->QBSet);
-
-		$this->ignore = false;
 
 		if (! $test)
 		{
@@ -2094,7 +2088,7 @@ class BaseBuilder
 	 */
 	protected function _update($table, $values)
 	{
-	    $valStr = [];
+		$valStr = [];
 
 		foreach ($values as $key => $val)
 		{
@@ -2209,8 +2203,6 @@ class BaseBuilder
 			$this->QBWhere = [];
 		}
 
-		$this->ignore = false;
-
 		$this->resetWrite();
 
 		return $returnSQL ? $savedSQL : $affected_rows;
@@ -2231,7 +2223,7 @@ class BaseBuilder
 	 */
 	protected function _updateBatch($table, $values, $index)
 	{
-		$ids = [];
+		$ids   = [];
 		$final = [];
 
 		foreach ($values as $key => $val)
@@ -2325,8 +2317,6 @@ class BaseBuilder
 		$table = $this->QBFrom[0];
 
 		$sql = $this->_delete($table);
-
-		$this->ignore = false;
 
 		if ($test)
 		{
@@ -2443,8 +2433,6 @@ class BaseBuilder
 		}
 
 		$sql = $this->_delete($table);
-
-		$this->ignore = false;
 
 		if (! empty($limit))
 		{
@@ -2635,31 +2623,31 @@ class BaseBuilder
 		return $sql;
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Compile Ignore Statement
-     *
-     * Checks if the ignore option is supported by
-     * the Database Driver for the specific statement.
-     *
-     * @param string $statement
-     *
-     * @return string
-     */
-    protected function compileIgnore(string $statement)
-    {
-	    $sql = '';
+	/**
+	 * Compile Ignore Statement
+	 *
+	 * Checks if the ignore option is supported by
+	 * the Database Driver for the specific statement.
+	 *
+	 * @param string $statement
+	 *
+	 * @return string
+	 */
+	public function compileIgnore(string $statement)
+	{
+		$sql = '';
 
-	    if(
-	        $this->ignore &&
-            isset($this->supportedIgnoreStatements[$statement])
-        ) {
-            $sql = trim($this->supportedIgnoreStatements[$statement]).' ';
-        }
+		if ($this->QBIgnore &&
+			isset($this->supportedIgnoreStatements[$statement])
+		)
+		{
+			$sql = trim($this->supportedIgnoreStatements[$statement]) . ' ';
+		}
 
-	    return $sql;
-    }
+		return $sql;
+	}
 
 	//--------------------------------------------------------------------
 
@@ -2983,6 +2971,7 @@ class BaseBuilder
 			'QBOrderBy' => [],
 			'QBKeys'    => [],
 			'QBLimit'   => false,
+			'QBIgnore'  => false,
 		]);
 	}
 
