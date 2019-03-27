@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\CLI;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\CLI;
 
 use Psr\Log\LoggerInterface;
 
@@ -94,6 +95,8 @@ abstract class BaseCommand
 	protected $arguments = [];
 
 	/**
+	 * The Logger to use for a command
+	 *
 	 * @var \Psr\Log\LoggerInterface
 	 */
 	protected $logger;
@@ -122,6 +125,12 @@ abstract class BaseCommand
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Actually execute a command.
+	 * This has to be over-ridden in any concrete implementation.
+	 *
+	 * @param array $params
+	 */
 	abstract public function run(array $params);
 
 	//--------------------------------------------------------------------
