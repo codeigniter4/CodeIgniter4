@@ -15,7 +15,7 @@
     </files>
 
     <logging>
-        <level>warn</level>
+        <level>err</level>
         <paths>
             <default>api/log/{DATE}.log</default>
             <errors>api/{DATE}.errors.log</errors>
