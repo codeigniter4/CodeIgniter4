@@ -39,6 +39,7 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -55,6 +56,7 @@ use Config\Services;
  */
 class FeatureTestCase extends CIDatabaseTestCase
 {
+
 	/**
 	 * If present, will override application
 	 * routes when using call().
@@ -154,20 +156,55 @@ class FeatureTestCase extends CIDatabaseTestCase
 		Services::injectMock('request', $request);
 		$_SERVER['REQUEST_METHOD'] = $method;
 
+		//      $response = $this->app
+		//              ->setRequest($request)
+		//              ->run($this->routes, true);
+		//
+		//      // Clean up any open output buffers
+		//      // not relevant to unit testing
+		//      // @codeCoverageIgnoreStart
+		//      if (ob_get_level() > 0 && $this->clean)
+		//      {
+		//          ob_end_clean();
+		//      }
+		//      // @codeCoverageIgnoreEnd
+		//
+		//      $featureResponse = new FeatureResponse($response);
+		//
+		//      return $featureResponse;
+
+		$result = new Response(new App());
+		//      ob_start();
+
 		$response = $this->app
-			->setRequest($request)
-			->run($this->routes, true);
+				->setRequest($request)
+				->run($this->routes, true);
 
-		// Clean up any open output buffers
-		// not relevant to unit testing
-		// @codeCoverageIgnoreStart
-		if (ob_get_level() > 0 && $this->clean)
+		$output = ob_get_clean();
+		//      ob_get_clean(); // flush earlier cruft too
+
+		// If the controller returned a response, use it
+		if (isset($response) && $response instanceof Response)
 		{
-			ob_end_clean();
+			$result = $response;
 		}
-		// @codeCoverageIgnoreEnd
+		// check if controller returned a view rather than echoing it
+		elseif (is_string($response))
+		{
+			$result->setBody($response);
+		}
+		else
+		{
+			$result->setBody('');
+		}
 
-		$featureResponse = new FeatureResponse($response);
+		// If not response code has been sent, assume a success
+		if (empty($result->getStatusCode()))
+		{
+			$result->setStatusCode(200);
+		}
+
+		$featureResponse = new FeatureResponse($result);
 
 		return $featureResponse;
 	}
@@ -310,4 +347,5 @@ class FeatureTestCase extends CIDatabaseTestCase
 
 		return $request;
 	}
+
 }

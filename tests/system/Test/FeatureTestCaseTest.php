@@ -17,26 +17,6 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$this->clean = false;
 	}
 
-	public function testCallGet()
-	{
-		$this->withRoutes([
-			[
-				'get',
-				'home',
-				function () {
-					return 'Hello World';
-				},
-			],
-		]);
-		$response = $this->get('home');
-
-		// close open buffer
-		ob_end_clean();
-
-		$response->assertSee('Hello World');
-		$response->assertDontSee('Again');
-	}
-
 	public function testCallSimpleGet()
 	{
 		$this->withRoutes([
@@ -55,6 +35,23 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$this->assertTrue($response->isOK());
 		$this->assertEquals('Hello World', $response->response->getBody());
 		$this->assertEquals(200, $response->response->getStatusCode());
+	}
+
+	public function testCallGet()
+	{
+		$this->withRoutes([
+			[
+				'add',
+				'home/(:any)',
+				function () {
+					return 'Hello World';
+				},
+			],
+		]);
+		$response = $this->call('get', '/home/free');
+
+		$response->assertSee('Hello World');
+		$response->assertDontSee('Again');
 	}
 
 	public function testCallPost()
@@ -150,28 +147,29 @@ class FeatureTestCaseTest extends FeatureTestCase
 
 	public function testResponseReturned()
 	{
-		$this->withRoutes([
+		$response = $this->withRoutes([
 			[
 				'get',
-				'',
+				'(:any)',
 				'Tests\Support\Controllers\Popcorn::index',
 			],
-		]);
+		])->get('home');
 
-		$response->assertSee('Hi');
+		$response->assertSee('Hello');
 	}
 
 	public function testResponseEchoed()
 	{
-		$this->withRoutes([
+		$response = $this->withRoutes([
 			[
 				'get',
-				'',
-				'Tests\Support\Controllers\Popcorn::index',
+				'home',
+				'Tests\Support\Controllers\Popcorn::canyon',
 			],
-		]);
+		])->get('home');
 
-		$response->assertSee('Hi');
+		//      echo var_dump($response->response);
+		$response->assertSee('Hello-o-o');
 	}
 
 	public function testResponseResponded()
