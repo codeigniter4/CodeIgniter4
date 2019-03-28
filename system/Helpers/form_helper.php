@@ -38,6 +38,16 @@
 
 use Config\Services;
 
+/**
+ * CodeIgniter Form Helpers
+ *
+ * @package    CodeIgniter
+ * @subpackage Helpers
+ * @category   Helpers
+ * @author     CodeIgniter Dev Team
+ * @link       https://codeigniter.com/user_guide/helpers/cookie_helper.html
+ */
+
 //--------------------------------------------------------------------
 
 if (! function_exists('form_open'))
@@ -309,10 +319,10 @@ if (! function_exists('form_multiselect'))
 	/**
 	 * Multi-select menu
 	 *
-	 * @param string  $name
-	 * @param array   $options
-	 * @param array   $selected
-	 * @param mixed   $extra
+	 * @param string $name
+	 * @param array  $options
+	 * @param array  $selected
+	 * @param mixed  $extra
 	 *
 	 * @return string
 	 */
@@ -905,8 +915,8 @@ if (! function_exists('parse_form_attributes'))
 	 *
 	 * Helper function used by some of the form helpers
 	 *
-	 * @param string|array  $attributes List of attributes
-	 * @param array         $default    Default values
+	 * @param string|array $attributes List of attributes
+	 * @param array        $default    Default values
 	 *
 	 * @return string
 	 */

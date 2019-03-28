@@ -35,12 +35,22 @@
  * @filesource
  */
 
+/**
+ * CodeIgniter URL Helpers
+ *
+ * @package    CodeIgniter
+ * @subpackage Helpers
+ * @category   Helpers
+ * @author     CodeIgniter Dev Team
+ * @link       https://codeigniter.com/user_guide/helpers/cookie_helper.html
+ */
+
 if (! function_exists('site_url'))
 {
 	/**
 	 * Return a site URL to use in views
 	 *
-	 * @param mixed            $uri        URI string or array of URI segments
+	 * @param mixed            $uri       URI string or array of URI segments
 	 * @param string|null      $protocol
 	 * @param \Config\App|null $altConfig Alternate configuration to use
 	 *
@@ -88,8 +98,8 @@ if (! function_exists('base_url'))
 	/**
 	 * Return the base URL to use in views
 	 *
-	 * @param  mixed   $uri        URI string or array of URI segments
-	 * @param  string  $protocol
+	 * @param  mixed  $uri      URI string or array of URI segments
+	 * @param  string $protocol
 	 * @return string
 	 */
 	function base_url($uri = '', string $protocol = null): string

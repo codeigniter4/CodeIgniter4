@@ -38,7 +38,7 @@
 // --------------------------------------------------------------------
 
 /**
- * CodeIgniter HTML Helper
+ * CodeIgniter HTML Helpers
  *
  * @package    CodeIgniter
  * @subpackage Helpers
@@ -462,7 +462,6 @@ if (! function_exists('audio'))
 if (! function_exists('_media'))
 {
 	/**
-	 *
 	 * Generate media based tag
 	 *
 	 * @param string $name
@@ -702,7 +701,7 @@ if (! function_exists('_has_protocol'))
 	/**
 	 * @param string $url
 	 *
-	 * @return false|int
+	 * @return false|integer
 	 */
 	function _has_protocol(string $url)
 	{
@@ -715,7 +714,7 @@ if (! function_exists('_has_protocol'))
 if (! function_exists('_space_indent'))
 {
 	/**
-	 * @param int $depth
+	 * @param integer $depth
 	 *
 	 * @return string
 	 */

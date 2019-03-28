@@ -1,6 +1,5 @@
 <?php
 
-namespace CodeIgniter\Honeypot;
 
 /**
  * CodeIgniter
@@ -38,11 +37,16 @@ namespace CodeIgniter\Honeypot;
  * @filesource
  */
 
+namespace CodeIgniter\Honeypot;
+
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 
+/**
+ * class Honeypot
+ */
 class Honeypot
 {
 
