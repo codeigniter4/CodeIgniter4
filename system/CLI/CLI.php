@@ -482,12 +482,16 @@ class CLI
 	 * Get the number of characters in string having encoded characters
 	 * and ignores styles set by the color() function
 	 *
-	 * @param string $string
+	 * @param ?string $string
 	 *
 	 * @return integer
 	 */
-	public static function strlen(string $string): int
+	public static function strlen(?string $string): int
 	{
+		if (is_null($string))
+		{
+			return 0;
+		}
 		foreach (static::$foreground_colors as $color)
 		{
 			$string = strtr($string, ["\033[" . $color . 'm' => '']);
