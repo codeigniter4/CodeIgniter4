@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\Test;
+
 
 /**
  * CodeIgniter
@@ -36,6 +36,8 @@ namespace CodeIgniter\Test;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\UserAgent;
