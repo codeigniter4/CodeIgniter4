@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Router;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Router;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Router\Exceptions\RouterException;
@@ -471,11 +473,14 @@ class Router implements RouterInterface
 				}
 				elseif (strpos($val, '/') !== false)
 				{
-					[ $controller, $method ] = explode( '::', $val );
-					
+					[
+						$controller,
+						$method,
+					] = explode( '::', $val );
+
 					// Only replace slashes in the controller, not in the method.
 					$controller = str_replace('/', '\\', $controller);
-					
+
 					$val = $controller . '::' . $method;
 				}
 
