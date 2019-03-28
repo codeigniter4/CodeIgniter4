@@ -102,6 +102,16 @@ class CURLRequest extends Request
 	 */
 	protected $delay = 0.0;
 
+	/**
+	 * Allowed to get response content if HTTP exception occurs.
+	 * To make it work pass: 'ignoreHTTPException' => true as one of $options array.
+	 * 
+	 * @var bool 
+	 */
+	protected $ignoreHTTPException = false;
+		
+	public $httpCode = null;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -341,7 +351,14 @@ class CURLRequest extends Request
 			$this->baseURI = $this->baseURI->setURI($options['baseURI']);
 			unset($options['baseURI']);
 		}
-
+		
+		// Allows to get response content if HTTP status code != 200.
+		if(array_key_exists('ignoreHTTPException', $options))
+		{
+			$this->ignoreHTTPException =  (bool)$options['ignoreHTTPException'];
+			unset($options['ignoreHTTPException']);
+		}
+		
 		if (array_key_exists('headers', $options) && is_array($options['headers']))
 		{
 			foreach ($options['headers'] as $name => $value)
@@ -802,17 +819,26 @@ class CURLRequest extends Request
 	 */
 	protected function sendRequest(array $curl_options = []): string
 	{
+		$this->httpCode = null;
+
 		$ch = curl_init();
+
+		if($this->ignoreHTTPException === true)
+		{
+			$curl_options[CURLOPT_FAILONERROR] = false;
+		}
 
 		curl_setopt_array($ch, $curl_options);
 
 		// Send the request and wait for a response.
 		$output = curl_exec($ch);
 
-		if ($output === false)
+		if ($output === false && $this->ignoreHTTPException === false)
 		{
 			throw HTTPException::forCurlError(curl_errno($ch), curl_error($ch));
 		}
+
+		$this->httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 		curl_close($ch);
 
