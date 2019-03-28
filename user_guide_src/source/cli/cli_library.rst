@@ -75,7 +75,7 @@ even set background colors by passing the color name in as the third parameter::
 
 	CLI::write('File overwritten.', 'light_red', 'dark_gray');
 
-The following colors are available:
+The following foreground colors are available:
 
 * black
 * dark_gray
@@ -94,6 +94,17 @@ The following colors are available:
 * yellow
 * light_gray
 * white
+
+And a smaller number are available as background colors:
+
+* black
+* blue
+* green
+* cyan
+* red
+* yellow
+* light_gray
+* magenta
 
 **color()**
 
