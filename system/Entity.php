@@ -1,7 +1,4 @@
-<?php namespace CodeIgniter;
-
-use CodeIgniter\I18n\Time;
-use CodeIgniter\Exceptions\CastException;
+<?php
 
 /**
  * CodeIgniter
@@ -37,6 +34,15 @@ use CodeIgniter\Exceptions\CastException;
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
  * @filesource
+ */
+
+namespace CodeIgniter;
+
+use CodeIgniter\I18n\Time;
+use CodeIgniter\Exceptions\CastException;
+
+/**
+ * Entity encapsulation, for use with CodeIgniter\Model
  */
 class Entity
 {
