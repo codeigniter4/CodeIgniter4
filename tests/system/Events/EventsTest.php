@@ -2,7 +2,10 @@
 namespace CodeIgniter\Events;
 
 use CodeIgniter\Config\Config;
+use Config\Logger;
+use Config\Services;
 use Tests\Support\Events\MockEvents;
+use Tests\Support\Log\TestLogger;
 
 class EventsTest extends \CIUnitTestCase
 {
@@ -271,6 +274,40 @@ class EventsTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	// Basically if it doesn't crash this should be good...
+	public function testHandleEventCallableInternalFunc()
+	{
+		$result = null;
+
+		Events::on('foo', 'strlen');
+
+		$this->assertTrue(Events::trigger('foo', 'bar'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testHandleEventCallableClass()
+	{
+		$result = null;
+
+		$box = new class() {
+			public $logged;
+
+			public function hold(string $value)
+			{
+				$this->logged = $value;
+			}
+		};
+
+		Events::on('foo', [$box, 'hold']);
+
+		$this->assertTrue(Events::trigger('foo', 'bar'));
+
+		$this->assertEquals('bar', $box->logged);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testSimulate()
 	{
 		$result = 0;
@@ -286,5 +323,4 @@ class EventsTest extends \CIUnitTestCase
 
 		$this->assertEquals(0, $result);
 	}
-
 }

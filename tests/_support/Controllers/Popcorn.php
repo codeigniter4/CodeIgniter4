@@ -31,7 +31,7 @@ class Popcorn extends Controller
 
 	public function weasel()
 	{
-		$this->respond(['Nothing to see here'], 200);
+		$this->respond('', 200);
 	}
 
 	public function oops()

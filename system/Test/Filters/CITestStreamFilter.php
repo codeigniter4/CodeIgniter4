@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Test\Filters;
+<?php
 
 /**
  * CodeIgniter
@@ -36,12 +36,14 @@
  * @filesource
  */
 
+namespace CodeIgniter\Test\Filters;
+
 /**
  * Class to extract an output snapshot.
  * Used to capture output during unit testing, so that it can
  * be used in assertions.
  */
-// class to extract output snapshot
+
 class CITestStreamFilter extends \php_user_filter
 {
 

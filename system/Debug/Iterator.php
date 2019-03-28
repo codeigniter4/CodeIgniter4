@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Debug;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Debug;
 
 /**
  * Iterator for debugging.
@@ -129,7 +130,7 @@ class Iterator
 	 *
 	 * @return string
 	 */
-	public function getReport()
+	public function getReport(): string
 	{
 		if (empty($this->results))
 		{

@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Database;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,7 +35,9 @@
  * @filesource
  */
 
-use Config\Autoload;
+namespace CodeIgniter\Database;
+
+use Config\Services;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Exceptions\ConfigException;
@@ -122,7 +123,7 @@ class MigrationRunner
 	/**
 	 * used to return messages for CLI.
 	 *
-	 * @var boolean
+	 * @var array
 	 */
 	protected $cliMessages = [];
 
@@ -196,7 +197,7 @@ class MigrationRunner
 	 * @param string|null $namespace
 	 * @param string|null $group
 	 *
-	 * @return mixed TRUE if no migrations are found, current version string on success, FALSE on failure
+	 * @return mixed Current version string on success, FALSE on failure or no migrations are found
 	 * @throws ConfigException
 	 */
 	public function version(string $targetVersion, string $namespace = null, string $group = null)
@@ -253,12 +254,14 @@ class MigrationRunner
 		$this->checkMigrations($migrations, $method, $targetVersion);
 
 		// loop migration for each namespace (module)
+
+		$migrationStatus = false;
 		foreach ($migrations as $version => $migration)
 		{
 			// Only include migrations within the scoop
-			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion)
-			)
+			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion))
 			{
+				$migrationStatus = false;
 				include_once $migration->path;
 				// Get namespaced class name
 				$class = $this->namespace . '\Database\Migrations\Migration_' . ($migration->name);
@@ -288,10 +291,12 @@ class MigrationRunner
 				{
 					$this->removeHistory($migration->version);
 				}
+
+				$migrationStatus = true;
 			}
 		}
 
-		return true;
+		return ($migrationStatus) ? $targetVersion : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -347,11 +352,10 @@ class MigrationRunner
 			$this->setGroup($group);
 		}
 
-		// Get all namespaces form  PSR4 paths.
-		$config     = config('Autoload');
-		$namespaces = $config->psr4;
+		// Get all namespaces from the autoloader
+		$namespaces = Services::autoloader()->getNamespace();
 
-		foreach ($namespaces as $namespace => $path)
+		foreach ($namespaces as $namespace => $paths)
 		{
 			$this->setNamespace($namespace);
 			$migrations = $this->findMigrations();
@@ -401,36 +405,30 @@ class MigrationRunner
 	//--------------------------------------------------------------------
 
 	/**
-	 * Retrieves list of available migration scripts
+	 * Retrieves list of available migration scripts for one namespace
 	 *
 	 * @return array    list of migrations as $version for one namespace
 	 */
 	public function findMigrations()
 	{
 		$migrations = [];
-		helper('filesystem');
 
 		// If $this->path contains a valid directory use it.
 		if (! empty($this->path))
 		{
-			$dir = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
+			helper('filesystem');
+			$dir   = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
+			$files = get_filenames($dir, true);
 		}
-		// Otherwise, get namespace location form  PSR4 paths
-		// and add Database/Migrations for a standard loation.
+		// Otherwise use FileLocator to search files in the subdirectory of the namespace
 		else
 		{
-			$config = config('Autoload');
-
-			$location = $config->psr4[$this->namespace];
-
-			// Setting migration directories.
-			$dir = rtrim($location, DIRECTORY_SEPARATOR) . '/Database/Migrations/';
+			$locator = Services::locator(true);
+			$files   = $locator->listNamespaceFiles($this->namespace, '/Database/Migrations/');
 		}
 
 		// Load all *_*.php files in the migrations path
 		// We can't use glob if we want it to be testable....
-		$files = get_filenames($dir, true);
-
 		foreach ($files as $file)
 		{
 			if (substr($file, -4) !== '.php')
@@ -695,7 +693,7 @@ class MigrationRunner
 	/**
 	 * Retrieves current schema version
 	 *
-	 * @return string    Current migration version
+	 * @return array    Current migration version
 	 */
 	public function getCliMessages()
 	{

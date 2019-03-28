@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Cache\Handlers;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,9 +35,14 @@
  * @filesource
  */
 
-use CodeIgniter\Cache\CacheInterface;
-use CodeIgniter\CriticalError;
+namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Exceptions\CriticalError;
+
+/**
+ * Predis cache handler
+ */
 class PredisHandler implements CacheInterface
 {
 

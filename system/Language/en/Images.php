@@ -21,7 +21,7 @@ return [
    'gifNotSupported'        => 'GIF images are often not supported due to licensing restrictions. You may have to use JPG or PNG images instead.',
    'jpgNotSupported'        => 'JPG images are not supported.',
    'pngNotSupported'        => 'PNG images are not supported.',
-   'unsupportedImagecreate' => 'Your server does not support the GD function required to process this type of image.',
+   'unsupportedImageCreate' => 'Your server does not support the GD function required to process this type of image.',
    'jpgOrPngRequired'       => 'The image resize protocol specified in your preferences only works with JPEG or PNG image types.',
    'rotateUnsupported'      => 'Image rotation does not appear to be supported by your server.',
    'libPathInvalid'         => 'The path to your image library is not correct. Please set the correct path in your image preferences. {0, string)',

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Database;
+<?php
 
 /**
  * CodeIgniter
@@ -36,8 +36,9 @@
  * @filesource
  */
 
+namespace CodeIgniter\Database;
+
 use CodeIgniter\Config\BaseConfig;
-use Config\Database;
 
 /**
  * Class Config

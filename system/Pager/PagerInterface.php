@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Pager;
+<?php
 
 /**
  * CodeIgniter
@@ -36,6 +36,11 @@
  * @filesource
  */
 
+namespace CodeIgniter\Pager;
+
+/**
+ * Expected behavior for a Pager
+ */
 interface PagerInterface
 {
 

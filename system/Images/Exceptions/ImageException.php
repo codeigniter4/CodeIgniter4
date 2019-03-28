@@ -22,7 +22,7 @@ class ImageException extends FrameworkException implements ExceptionInterface
 
 	public static function forInvalidImageCreate(string $extra = null)
 	{
-		return new static(lang('Images.unsupportedImagecreate') . ' ' . $extra);
+		return new static(lang('Images.unsupportedImageCreate') . ' ' . $extra);
 	}
 
 	public static function forSaveFailed()

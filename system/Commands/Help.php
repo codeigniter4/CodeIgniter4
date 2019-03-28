@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Commands;
+<?php
 
 /**
  * CodeIgniter
@@ -36,8 +36,9 @@
  * @filesource
  */
 
+namespace CodeIgniter\Commands;
+
 use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
 
 /**
  * CI Help command for the spark script.

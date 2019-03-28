@@ -98,3 +98,8 @@ By default, the original filename was used. You can specify a new filename by pa
 
 	$newName = $file->getRandomName();
 	$file->move(WRITEPATH.'uploads', $newName);
+
+The move() method returns a new File instance that for the relocated file, so you must capture the result if the
+resulting location is needed::
+
+    $file = $file->move(WRITEPATH.'uploads');

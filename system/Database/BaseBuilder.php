@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Database;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Database;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
@@ -2659,7 +2661,7 @@ class BaseBuilder
 	 *
 	 * Escapes identifiers in GROUP BY statements at execution time.
 	 *
-	 * Required so that aliases are tracked properly, regardless of wether
+	 * Required so that aliases are tracked properly, regardless of whether
 	 * groupBy() is called prior to from(), join() and prefixTable is added
 	 * only if needed.
 	 *
@@ -2694,7 +2696,7 @@ class BaseBuilder
 	 *
 	 * Escapes identifiers in ORDER BY statements at execution time.
 	 *
-	 * Required so that aliases are tracked properly, regardless of wether
+	 * Required so that aliases are tracked properly, regardless of whether
 	 * orderBy() is called prior to from(), join() and prefixTable is added
 	 * only if needed.
 	 *

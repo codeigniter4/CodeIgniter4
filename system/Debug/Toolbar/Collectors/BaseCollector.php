@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Debug\Toolbar\Collectors;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 /**
  * Base Toolbar collector
@@ -172,9 +173,9 @@ class BaseCollector
 	 * Does this Collector have data that should be shown in the
 	 * 'Vars' tab?
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
-	public function hasVarData()
+	public function hasVarData(): bool
 	{
 		return (bool) $this->hasVarData;
 	}
@@ -249,7 +250,7 @@ class BaseCollector
 	 *
 	 * @return string
 	 */
-	public function cleanPath($file)
+	public function cleanPath(string $file): string
 	{
 		if (strpos($file, APPPATH) === 0)
 		{
@@ -284,7 +285,7 @@ class BaseCollector
 	 *
 	 * @return boolean
 	 */
-	public function isEmpty()
+	public function isEmpty(): bool
 	{
 		return false;
 	}
@@ -302,7 +303,7 @@ class BaseCollector
 		return '';
 	}
 
-	public function getAsArray()
+	public function getAsArray(): array
 	{
 		return [
 			'title'           => $this->getTitle(),

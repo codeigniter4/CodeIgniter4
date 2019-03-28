@@ -35,13 +35,23 @@
  * @filesource
  */
 
+/**
+ * CodeIgniter XML Helpers
+ *
+ * @package    CodeIgniter
+ * @subpackage Helpers
+ * @category   Helpers
+ * @author     CodeIgniter Dev Team
+ * @link       https://codeigniter.com/user_guide/helpers/cookie_helper.html
+ */
+
 if (! function_exists('xml_convert'))
 {
 	/**
 	 * Convert Reserved XML characters to Entities
 	 *
-	 * @param  string   $str
-	 * @param  boolean  $protect_all
+	 * @param  string  $str
+	 * @param  boolean $protect_all
 	 * @return string
 	 */
 	function xml_convert(string $str, bool $protect_all = false): string

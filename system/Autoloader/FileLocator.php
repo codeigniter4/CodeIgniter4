@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Autoloader;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Autoloader;
 
 /**
  * Class FileLocator
@@ -357,6 +359,48 @@ class FileLocator
 		foreach ($this->getNamespaces() as $namespace)
 		{
 			$fullPath = realpath($namespace['path'] . $path);
+
+			if (! is_dir($fullPath))
+			{
+				continue;
+			}
+
+			$tempFiles = get_filenames($fullPath, true);
+
+			if (! empty($tempFiles))
+			{
+				$files = array_merge($files, $tempFiles);
+			}
+		}
+
+		return $files;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Scans the provided namespace, returning a list of all files
+	 * that are contained within the subpath specified by $path.
+	 *
+	 * @param string $prefix
+	 * @param string $path
+	 *
+	 * @return array
+	 */
+	public function listNamespaceFiles(string $prefix, string $path): array
+	{
+		if (empty($path) || empty($prefix))
+		{
+			return [];
+		}
+
+		$files = [];
+		helper('filesystem');
+
+		// autoloader->getNamespace($prefix) returns an array of paths for that namespace
+		foreach ($this->autoloader->getNamespace($prefix) as $namespacePath)
+		{
+			$fullPath = realpath($namespacePath . $path);
 
 			if (! is_dir($fullPath))
 			{

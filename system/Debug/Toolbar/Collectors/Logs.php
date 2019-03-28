@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Debug\Toolbar\Collectors;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\Config\Services;
 
@@ -93,8 +95,10 @@ class Logs extends BaseCollector
 
 	/**
 	 * Does this collector actually have any data to display?
+	 *
+	 * @return boolean
 	 */
-	public function isEmpty()
+	public function isEmpty(): bool
 	{
 		$this->collectLogs();
 

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Debug\Toolbar\Collectors;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 /**
  * History collector
@@ -104,22 +106,25 @@ class History extends BaseCollector
 
 			// Get the contents of this specific history request
 			$contents = file_get_contents($filename);
-			$contents = json_decode($contents);
 
-			\preg_match_all('/\d+/', $filename, $time);
-			$time = (int)$time[0][0];
+			$contents = @json_decode($contents);
+			if (json_last_error() === JSON_ERROR_NONE)
+			{
+				preg_match_all('/\d+/', $filename, $time);
+				$time = (int)$time[0][0];
 
-			// Debugbar files shown in History Collector
-			$files[] = [
-				'time'        => $time,
-				'datetime'    => date('Y-m-d H:i:s', $time),
-				'active'      => $time === $current,
-				'status'      => $contents->vars->response->statusCode,
-				'method'      => $contents->method,
-				'url'         => $contents->url,
-				'isAJAX'      => $contents->isAJAX ? 'Yes' : 'No',
-				'contentType' => $contents->vars->response->contentType,
-			];
+				// Debugbar files shown in History Collector
+				$files[] = [
+					'time'        => $time,
+					'datetime'    => date('Y-m-d H:i:s', $time),
+					'active'      => $time === $current,
+					'status'      => $contents->vars->response->statusCode,
+					'method'      => $contents->method,
+					'url'         => $contents->url,
+					'isAJAX'      => $contents->isAJAX ? 'Yes' : 'No',
+					'contentType' => $contents->vars->response->contentType,
+				];
+			}
 		}
 
 		$this->files = $files;
@@ -144,12 +149,12 @@ class History extends BaseCollector
 	 *
 	 * @return integer
 	 */
-	public function getBadgeValue()
+	public function getBadgeValue(): int
 	{
 		return count($this->files);
 	}
 
-	public function isEmpty()
+	public function isEmpty(): bool
 	{
 		return empty($this->files);
 	}

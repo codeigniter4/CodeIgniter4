@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
 
 /**
  * CodeIgniter
@@ -36,9 +36,14 @@
  * @filesource
  */
 
+namespace CodeIgniter\HTTP;
+
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\Services;
 
+/**
+ * Handle a redirect response
+ */
 class RedirectResponse extends Response
 {
 	/**

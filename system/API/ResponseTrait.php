@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\API;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\API;
 
 use Config\Format;
 use CodeIgniter\HTTP\Response;

@@ -1,7 +1,49 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
 
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
+ * @filesource
+ */
+
+namespace CodeIgniter\HTTP;
+
+use CodeIgniter\Database\BasePreparedQuery;
 use Config\UserAgents;
 
+/**
+ * Abstraction for an HTTP user agent
+ */
 class UserAgent
 {
 	/**
@@ -113,7 +155,7 @@ class UserAgent
 	 *
 	 * @return boolean
 	 */
-	public function isBrowser($key = null)
+	public function isBrowser(string $key = null): bool
 	{
 		if (! $this->isBrowser)
 		{
@@ -139,7 +181,7 @@ class UserAgent
 	 *
 	 * @return boolean
 	 */
-	public function isRobot($key = null)
+	public function isRobot(string $key = null): bool
 	{
 		if (! $this->isRobot)
 		{
@@ -165,7 +207,7 @@ class UserAgent
 	 *
 	 * @return boolean
 	 */
-	public function isMobile($key = null)
+	public function isMobile(string $key = null): bool
 	{
 		if (! $this->isMobile)
 		{
@@ -189,7 +231,7 @@ class UserAgent
 	 *
 	 * @return boolean
 	 */
-	public function isReferral()
+	public function isReferral(): bool
 	{
 		if (! isset($this->referrer))
 		{
@@ -216,7 +258,7 @@ class UserAgent
 	 *
 	 * @return string
 	 */
-	public function getAgentString()
+	public function getAgentString(): string
 	{
 		return $this->agent;
 	}
@@ -228,7 +270,7 @@ class UserAgent
 	 *
 	 * @return string
 	 */
-	public function getPlatform()
+	public function getPlatform(): string
 	{
 		return $this->platform;
 	}
@@ -240,7 +282,7 @@ class UserAgent
 	 *
 	 * @return string
 	 */
-	public function getBrowser()
+	public function getBrowser(): string
 	{
 		return $this->browser;
 	}
@@ -252,7 +294,7 @@ class UserAgent
 	 *
 	 * @return string
 	 */
-	public function getVersion()
+	public function getVersion(): string
 	{
 		return $this->version;
 	}
@@ -264,7 +306,7 @@ class UserAgent
 	 *
 	 * @return string
 	 */
-	public function getRobot()
+	public function getRobot(): string
 	{
 		return $this->robot;
 	}
@@ -275,7 +317,7 @@ class UserAgent
 	 *
 	 * @return string
 	 */
-	public function getMobile()
+	public function getMobile(): string
 	{
 		return $this->mobile;
 	}
@@ -285,9 +327,9 @@ class UserAgent
 	/**
 	 * Get the referrer
 	 *
-	 * @return boolean
+	 * @return string
 	 */
-	public function getReferrer()
+	public function getReferrer(): string
 	{
 		return empty($_SERVER['HTTP_REFERER']) ? '' : trim($_SERVER['HTTP_REFERER']);
 	}
@@ -301,7 +343,7 @@ class UserAgent
 	 *
 	 * @return void
 	 */
-	public function parse($string)
+	public function parse(string $string)
 	{
 		// Reset values
 		$this->isBrowser = false;
@@ -325,7 +367,7 @@ class UserAgent
 	/**
 	 * Compile the User Agent Data
 	 *
-	 * @return boolean
+	 * @return void
 	 */
 	protected function compileData()
 	{
@@ -347,7 +389,7 @@ class UserAgent
 	 *
 	 * @return boolean
 	 */
-	protected function setPlatform()
+	protected function setPlatform(): bool
 	{
 		if (is_array($this->config->platforms) && $this->config->platforms)
 		{
@@ -374,7 +416,7 @@ class UserAgent
 	 *
 	 * @return boolean
 	 */
-	protected function setBrowser()
+	protected function setBrowser(): bool
 	{
 		if (is_array($this->config->browsers) && $this->config->browsers)
 		{
@@ -402,7 +444,7 @@ class UserAgent
 	 *
 	 * @return boolean
 	 */
-	protected function setRobot()
+	protected function setRobot(): bool
 	{
 		if (is_array($this->config->robots) && $this->config->robots)
 		{
@@ -429,7 +471,7 @@ class UserAgent
 	 *
 	 * @return boolean
 	 */
-	protected function setMobile()
+	protected function setMobile(): bool
 	{
 		if (is_array($this->config->mobiles) && $this->config->mobiles)
 		{
@@ -455,7 +497,7 @@ class UserAgent
 	 *
 	 * @return string
 	 */
-	public function __toString()
+	public function __toString(): string
 	{
 		return $this->getAgentString();
 	}

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Debug;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Debug;
 
 /**
  * Class Timer
@@ -146,7 +148,7 @@ class Timer
 	 *
 	 * @return array
 	 */
-	public function getTimers(int $decimals = 4)
+	public function getTimers(int $decimals = 4): array
 	{
 		$timers = $this->timers;
 
@@ -172,7 +174,7 @@ class Timer
 	 *
 	 * @return boolean
 	 */
-	public function has(string $name)
+	public function has(string $name): bool
 	{
 		return array_key_exists(strtolower($name), $this->timers);
 	}

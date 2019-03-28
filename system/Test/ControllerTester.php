@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\Test;
+
 
 /**
  * CodeIgniter
@@ -36,6 +36,8 @@ namespace CodeIgniter\Test;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\UserAgent;
@@ -158,10 +160,17 @@ trait ControllerTester
 			if (is_string($response))
 			{
 				$output = $response;
+				$result->response()->setBody($output);
+				$result->setBody($output);
 			}
-
-			$result->response()->setBody($output);
-			$result->setBody($output);
+			elseif (! empty($response) && ! empty($response->getBody()))
+			{
+				$result->setBody($response->getBody());
+			}
+			else
+			{
+				$result->setBody('');
+			}
 		}
 
 		// If not response code has been sent, assume a success

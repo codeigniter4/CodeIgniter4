@@ -1,7 +1,4 @@
-<?php namespace CodeIgniter;
-
-use CodeIgniter\I18n\Time;
-use CodeIgniter\Exceptions\CastException;
+<?php
 
 /**
  * CodeIgniter
@@ -37,6 +34,15 @@ use CodeIgniter\Exceptions\CastException;
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
  * @filesource
+ */
+
+namespace CodeIgniter;
+
+use CodeIgniter\I18n\Time;
+use CodeIgniter\Exceptions\CastException;
+
+/**
+ * Entity encapsulation, for use with CodeIgniter\Model
  */
 class Entity
 {
@@ -454,6 +460,7 @@ class Entity
 	 * @param $value
 	 *
 	 * @return \CodeIgniter\I18n\Time
+	 * @throws \Exception
 	 */
 	protected function mutateDate($value)
 	{
@@ -484,7 +491,7 @@ class Entity
 
 	/**
 	 * Provides the ability to cast an item as a specific data type.
-	 * Add ? at the beginning of $type  (i.e. ?string) to get NULL instead of castig $value if $value === null
+	 * Add ? at the beginning of $type  (i.e. ?string) to get NULL instead of casting $value if $value === null
 	 *
 	 * @param $value
 	 * @param string $type

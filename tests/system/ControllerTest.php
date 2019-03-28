@@ -87,7 +87,8 @@ class ControllerTest extends \CIUnitTestCase
 		$this->controller = new Controller();
 		$this->controller->initController($this->request, $this->response, $this->logger);
 
-		$this->assertNull($this->controller->cachePage(10));
+		$method = $this->getPrivateMethodInvoker($this->controller, 'cachePage');
+		$this->assertNull($method(10));
 	}
 
 	public function testValidate()
@@ -97,7 +98,8 @@ class ControllerTest extends \CIUnitTestCase
 		$this->controller->initController($this->request, $this->response, $this->logger);
 
 		// and that we can attempt validation, with no rules
-		$this->assertFalse($this->controller->validate([]));
+		$method = $this->getPrivateMethodInvoker($this->controller, 'validate');
+		$this->assertFalse($method([]));
 	}
 
 	//--------------------------------------------------------------------

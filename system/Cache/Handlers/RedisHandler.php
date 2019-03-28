@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Cache\Handlers;
+<?php
 
 /**
  * CodeIgniter
@@ -36,9 +36,13 @@
  * @filesource
  */
 
-use CodeIgniter\Exceptions\CriticalError;
+namespace CodeIgniter\Cache\Handlers;
+
 use CodeIgniter\Cache\CacheInterface;
 
+/**
+ * Redis cache handler
+ */
 class RedisHandler implements CacheInterface
 {
 
@@ -106,28 +110,19 @@ class RedisHandler implements CacheInterface
 		$config = $this->config;
 
 		$this->redis = new \Redis();
-
-		try
+		if (! $this->redis->connect($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout']))
 		{
-			if (! $this->redis->connect($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout'])
-			)
-			{
-				//              log_message('error', 'Cache: Redis connection failed. Check your configuration.');
-			}
-
-			if (isset($config['password']) && ! $this->redis->auth($config['password']))
-			{
-				log_message('error', 'Cache: Redis authentication failed.');
-			}
-
-			if (isset($config['database']) && ! $this->redis->select($config['database']))
-			{
-				log_message('error', 'Cache: Redis select database failed.');
-			}
+			log_message('error', 'Cache: Redis connection failed. Check your configuration.');
 		}
-		catch (\RedisException $e)
+
+		if (isset($config['password']) && ! $this->redis->auth($config['password']))
 		{
-			throw new CriticalError('Cache: Redis connection refused (' . $e->getMessage() . ')');
+			log_message('error', 'Cache: Redis authentication failed.');
+		}
+
+		if (isset($config['database']) && ! $this->redis->select($config['database']))
+		{
+			log_message('error', 'Cache: Redis select database failed.');
 		}
 	}
 
