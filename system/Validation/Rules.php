@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Validation;
+<?php
 
 /**
  * CodeIgniter
@@ -36,10 +36,12 @@
  * @filesource
  */
 
+namespace CodeIgniter\Validation;
+
 use Config\Database;
 
 /**
- * Rules.
+ * Validation Rules.
  *
  * @package CodeIgniter\Validation
  */
