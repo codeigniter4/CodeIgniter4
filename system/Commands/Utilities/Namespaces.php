@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Commands\Utilities;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;

@@ -38,6 +38,16 @@
 
 use Config\Services;
 
+/**
+ * CodeIgniter Security Helpers
+ *
+ * @package    CodeIgniter
+ * @subpackage Helpers
+ * @category   Helpers
+ * @author     CodeIgniter Dev Team
+ * @link       https://codeigniter.com/user_guide/helpers/cookie_helper.html
+ */
+
 if (! function_exists('sanitize_filename'))
 {
 	/**

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Debug;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Debug;
 
 use CodeIgniter\API\ResponseTrait;
 use Config\Paths;
@@ -298,7 +300,7 @@ class Exceptions
 	 *
 	 * @return array
 	 */
-	protected function collectVars(\Throwable $exception, int $statusCode)
+	protected function collectVars(\Throwable $exception, int $statusCode): array
 	{
 		return [
 			'title'   => get_class($exception),
@@ -356,7 +358,7 @@ class Exceptions
 	 *
 	 * @return string
 	 */
-	public static function cleanPath($file)
+	public static function cleanPath(string $file): string
 	{
 		if (strpos($file, APPPATH) === 0)
 		{
@@ -403,13 +405,13 @@ class Exceptions
 	/**
 	 * Creates a syntax-highlighted version of a PHP file.
 	 *
-	 * @param $file
-	 * @param $lineNumber
-	 * @param integer    $lines
+	 * @param string  $file
+	 * @param integer $lineNumber
+	 * @param integer $lines
 	 *
 	 * @return boolean|string
 	 */
-	public static function highlightFile($file, $lineNumber, $lines = 15)
+	public static function highlightFile(string $file, int $lineNumber, int $lines = 15)
 	{
 		if (empty($file) || ! is_readable($file))
 		{

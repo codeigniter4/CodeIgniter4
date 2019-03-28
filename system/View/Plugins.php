@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\View;
+<?php
 
 /**
  * CodeIgniter
@@ -36,6 +36,11 @@
  * @filesource
  */
 
+namespace CodeIgniter\View;
+
+ /**
+  * View plugins
+  */
 class Plugins
 {
 
@@ -68,7 +73,7 @@ class Plugins
 	 *
 	 * @return string
 	 */
-	public static function mailto(array $params = [])
+	public static function mailto(array $params = []): string
 	{
 		$email = $params['email'] ?? '';
 		$title = $params['title'] ?? '';
@@ -84,7 +89,7 @@ class Plugins
 	 *
 	 * @return string
 	 */
-	public static function safeMailto(array $params = [])
+	public static function safeMailto(array $params = []): string
 	{
 		$email = $params['email'] ?? '';
 		$title = $params['title'] ?? '';
@@ -100,7 +105,7 @@ class Plugins
 	 *
 	 * @return string
 	 */
-	public static function lang(array $params = [])
+	public static function lang(array $params = []): string
 	{
 		$line = array_shift($params);
 
@@ -114,7 +119,7 @@ class Plugins
 	 *
 	 * @return string
 	 */
-	public static function ValidationErrors(array $params = [])
+	public static function ValidationErrors(array $params = []): string
 	{
 		$validator = \Config\Services::validation();
 		if (empty($params))
@@ -130,7 +135,7 @@ class Plugins
 	/**
 	 * @param array $params
 	 *
-	 * @return string|
+	 * @return string|false
 	 */
 	public static function route(array $params = [])
 	{
@@ -144,7 +149,7 @@ class Plugins
 	 *
 	 * @return string
 	 */
-	public static function siteURL(array $params = [])
+	public static function siteURL(array $params = []): string
 	{
 		return site_url(...$params);
 	}

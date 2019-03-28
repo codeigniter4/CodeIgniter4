@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Session\Handlers;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
@@ -162,7 +164,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return string    Serialized session data
 	 */
-	public function read($sessionID)
+	public function read($sessionID): string
 	{
 		// This might seem weird, but PHP 5.6 introduced session_reset(),
 		// which re-reads session data

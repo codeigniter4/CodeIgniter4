@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Session\Handlers;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Session\Exceptions\SessionException;
 use CodeIgniter\Config\BaseConfig;
@@ -152,7 +154,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return string    Serialized session data
 	 */
-	public function read($sessionID)
+	public function read($sessionID): string
 	{
 		if ($this->lockSession($sessionID) === false)
 		{

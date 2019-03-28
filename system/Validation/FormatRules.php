@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Validation;
+<?php
 
 /**
  * CodeIgniter
@@ -36,8 +36,10 @@
  * @filesource
  */
 
+namespace CodeIgniter\Validation;
+
 /**
- * Rules.
+ * Format validation Rules.
  *
  * @package CodeIgniter\Validation
  */
@@ -287,11 +289,6 @@ class FormatRules
 	 */
 	public function valid_emails(string $str = null): bool
 	{
-		if (strpos($str, ',') === false)
-		{
-			return $this->valid_email(trim($str));
-		}
-
 		foreach (explode(',', $str) as $email)
 		{
 			$email = trim($email);

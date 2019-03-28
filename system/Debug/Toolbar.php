@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Debug;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Debug;
 
 use CodeIgniter\Debug\Toolbar\Collectors\History;
 use CodeIgniter\Format\JSONFormatter;
@@ -273,7 +274,7 @@ class Toolbar
 	 *
 	 * @return array
 	 */
-	protected function collectVarData()// : array
+	protected function collectVarData(): array
 	{
 		$data = [];
 
@@ -300,7 +301,7 @@ class Toolbar
 	 *
 	 * @return float
 	 */
-	protected function roundTo($number, $increments = 5)
+	protected function roundTo($number, $increments = 5): float
 	{
 		$increments = 1 / $increments;
 
@@ -440,7 +441,7 @@ class Toolbar
 	 *
 	 * @return string
 	 */
-	protected function format(string $data, string $format = 'html')
+	protected function format(string $data, string $format = 'html'): string
 	{
 		$data = json_decode($data, true);
 

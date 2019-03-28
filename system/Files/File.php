@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\Files;
+
 
 /**
  * CodeIgniter
@@ -37,10 +37,17 @@ namespace CodeIgniter\Files;
  * @filesource
  */
 
+namespace CodeIgniter\Files;
+
 use SplFileInfo;
 use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 
+/**
+ * Wrapper for PHP's built-in SplFileInfo, with goodies.
+ *
+ * @package CodeIgniter\Files
+ */
 class File extends SplFileInfo
 {
 
@@ -156,7 +163,7 @@ class File extends SplFileInfo
 	 * @param string|null $name
 	 * @param boolean     $overwrite
 	 *
-	 * @return boolean
+	 * @return \CodeIgniter\Files\File
 	 */
 	public function move(string $targetPath, string $name = null, bool $overwrite = false)
 	{
@@ -174,7 +181,7 @@ class File extends SplFileInfo
 
 		@chmod($targetPath, 0777 & ~umask());
 
-		return true;
+		return new File($destination);
 	}
 
 	//--------------------------------------------------------------------

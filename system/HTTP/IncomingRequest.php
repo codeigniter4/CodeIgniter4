@@ -1,6 +1,5 @@
 <?php
 
-namespace CodeIgniter\HTTP;
 
 /**
  * CodeIgniter
@@ -37,6 +36,8 @@ namespace CodeIgniter\HTTP;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\FileCollection;
@@ -528,7 +529,7 @@ class IncomingRequest extends Request
 	 * Returns an array of all files that have been uploaded with this
 	 * request. Each file is represented by an UploadedFile instance.
 	 *
-	 * @return Files\FileCollection
+	 * @return array
 	 */
 	public function getFiles()
 	{
@@ -570,7 +571,7 @@ class IncomingRequest extends Request
 	 * @param string $protocol
 	 * @param string $baseURL
 	 */
-	protected function detectURI($protocol, $baseURL)
+	protected function detectURI(string $protocol, string $baseURL)
 	{
 		$this->uri->setPath($this->detectPath($protocol));
 
@@ -612,7 +613,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return string
 	 */
-	public function detectPath($protocol = '')
+	public function detectPath(string $protocol = ''): string
 	{
 		if (empty($protocol))
 		{
@@ -648,7 +649,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return string
 	 */
-	public function negotiate(string $type, array $supported, bool $strictMatch = false)
+	public function negotiate(string $type, array $supported, bool $strictMatch = false): string
 	{
 		if (is_null($this->negotiator))
 		{
@@ -773,7 +774,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return string
 	 */
-	protected function removeRelativeDirectory($uri)
+	protected function removeRelativeDirectory(string $uri): string
 	{
 		$uris = [];
 		$tok  = strtok($uri, '/');

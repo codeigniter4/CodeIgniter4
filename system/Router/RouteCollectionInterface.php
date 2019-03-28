@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Router;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Router;
 
 /**
  * Interface RouteCollectionInterface
@@ -192,7 +194,7 @@ interface RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns the current value of the translateURIDashses setting.
+	 * Returns the current value of the translateURIDashes setting.
 	 *
 	 * @return mixed
 	 */

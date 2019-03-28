@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Database\Postgre;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\PreparedQueryInterface;
 use CodeIgniter\Database\BasePreparedQuery;

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Database;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Database;
 
 use CodeIgniter\Events\Events;
 use CodeIgniter\Database\Exceptions\DatabaseException;
@@ -1093,10 +1095,10 @@ abstract class BaseConnection implements ConnectionInterface
 		// This is basically a bug fix for queries that use MAX, MIN, etc.
 		// If a parenthesis is found we know that we do not need to
 		// escape the data or add a prefix. There's probably a more graceful
-		// way to deal with this, but I'm not thinking of it -- Rick
+		// way to deal with this, but I'm not thinking of it
 		//
 		// Added exception for single quotes as well, we don't want to alter
-		// literal strings. -- Narf
+		// literal strings.
 		if (strcspn($item, "()'") !== strlen($item))
 		{
 			return $item;

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Security;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Security;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
@@ -264,7 +266,7 @@ class Security
 	 *
 	 * @return string
 	 */
-	public function getCSRFHash()
+	public function getCSRFHash(): string
 	{
 		return $this->CSRFHash;
 	}
@@ -276,7 +278,7 @@ class Security
 	 *
 	 * @return string
 	 */
-	public function getCSRFTokenName()
+	public function getCSRFTokenName(): string
 	{
 		return $this->CSRFTokenName;
 	}
@@ -287,8 +289,9 @@ class Security
 	 * Sets the CSRF Hash and cookie.
 	 *
 	 * @return string
+	 * @throws \Exception
 	 */
-	protected function CSRFSetHash()
+	protected function CSRFSetHash(): string
 	{
 		if ($this->CSRFHash === null)
 		{

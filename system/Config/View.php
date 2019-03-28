@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Config;
+<?php
 
 /**
  * CodeIgniter
@@ -36,6 +36,11 @@
  * @filesource
  */
 
+namespace CodeIgniter\Config;
+
+/**
+ * View configuration
+ */
 class View extends BaseConfig
 {
 

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
 
 /**
  * CodeIgniter
@@ -36,8 +36,10 @@
  * @filesource
  */
 
+namespace CodeIgniter\HTTP;
+
 /**
- * Representation of an iHTTP request.
+ * Representation of an HTTP request.
  */
 class Request extends Message implements RequestInterface
 {

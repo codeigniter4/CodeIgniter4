@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Validation;
+<?php
 
 /**
  * CodeIgniter
@@ -36,9 +36,14 @@
  * @filesource
  */
 
+namespace CodeIgniter\Validation;
+
 use CodeIgniter\HTTP\RequestInterface;
 use Config\Services;
 
+/**
+ * File validation rules
+ */
 class FileRules
 {
 

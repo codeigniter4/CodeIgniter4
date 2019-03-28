@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Database\MySQLi;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,10 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Database\MySQLi;
+
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Utils for MySQLi

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Session\Handlers;
+<?php
 
 /**
  * CodeIgniter
@@ -36,6 +36,8 @@
  * @filesource
  */
 
+namespace CodeIgniter\Session\Handlers;
+
 use CodeIgniter\Config\BaseConfig;
 use Psr\Log\LoggerAwareTrait;
 
@@ -64,49 +66,49 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	/**
 	 * Cookie prefix
 	 *
-	 * @var type
+	 * @var string
 	 */
 	protected $cookiePrefix = '';
 
 	/**
 	 * Cookie domain
 	 *
-	 * @var type
+	 * @var string
 	 */
 	protected $cookieDomain = '';
 
 	/**
 	 * Cookie path
 	 *
-	 * @var type
+	 * @var string
 	 */
 	protected $cookiePath = '/';
 
 	/**
 	 * Cookie secure?
 	 *
-	 * @var type
+	 * @var boolean
 	 */
 	protected $cookieSecure = false;
 
 	/**
 	 * Cookie name to use
 	 *
-	 * @var type
+	 * @var string
 	 */
 	protected $cookieName;
 
 	/**
 	 * Match IP addresses for cookies?
 	 *
-	 * @var type
+	 * @var boolean
 	 */
 	protected $matchIP = false;
 
 	/**
 	 * Current session ID
 	 *
-	 * @var type
+	 * @var string
 	 */
 	protected $sessionID;
 
@@ -201,9 +203,9 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 * so that the INI is set just in time for the error message to
 	 * be properly generated.
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
-	protected function fail()
+	protected function fail(): bool
 	{
 		ini_set('session.save_path', $this->savePath);
 
