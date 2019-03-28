@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Database;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,8 +35,13 @@
  * @filesource
  */
 
+namespace CodeIgniter\Database;
+
 use CodeIgniter\Events\Events;
 
+/**
+ * Base prepared query
+ */
 abstract class BasePreparedQuery implements PreparedQueryInterface
 {
 

@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\Language;
+
 
 /**
  * CodeIgniter
@@ -36,6 +36,8 @@ namespace CodeIgniter\Language;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Language;
 
 use CodeIgniter\Config\Services;
 

@@ -1,6 +1,4 @@
-<?php namespace CodeIgniter\Autoloader;
-
-use Composer\Autoload\ClassLoader;
+<?php
 
 /**
  * CodeIgniter
@@ -37,6 +35,8 @@ use Composer\Autoload\ClassLoader;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Autoloader;
 
 /**
  * CodeIgniter Autoloader

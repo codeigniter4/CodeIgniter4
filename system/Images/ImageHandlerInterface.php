@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Images;
+<?php
 
 /**
  * CodeIgniter
@@ -36,6 +36,11 @@
  * @filesource
  */
 
+namespace CodeIgniter\Images;
+
+/**
+ * Expected behavior of an Image handler
+ */
 interface ImageHandlerInterface
 {
 

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Filters;
+<?php
 
 /**
  * CodeIgniter
@@ -36,11 +36,16 @@
  * @filesource
  */
 
+namespace CodeIgniter\Filters;
+
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\Exceptions\FilterException;
 
+/**
+ * Filters
+ */
 class Filters
 {
 
@@ -117,7 +122,7 @@ class Filters
 	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\ResponseInterface|mixed
 	 * @throws \CodeIgniter\Filters\Exceptions\FilterException
 	 */
-	public function run(string $uri, $position = 'before')
+	public function run(string $uri, string $position = 'before')
 	{
 		$this->initialize(strtolower($uri));
 
@@ -142,7 +147,7 @@ class Filters
 
 			if ($position === 'before')
 			{
-				$result = $class->before($this->request, $this->arguments[$alias] ?? null);
+				$result = $class->before($this->request);
 
 				if ($result instanceof RequestInterface)
 				{

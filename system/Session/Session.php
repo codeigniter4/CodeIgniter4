@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Session;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Session;
 
 use Psr\Log\LoggerAwareTrait;
 

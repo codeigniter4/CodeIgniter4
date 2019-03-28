@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Format;
+<?php
 
 /**
  * CodeIgniter
@@ -36,8 +36,13 @@
  * @filesource
  */
 
+namespace CodeIgniter\Format;
+
 use CodeIgniter\Format\Exceptions\FormatException;
 
+/**
+ * JSON data formatter
+ */
 class JSONFormatter implements FormatterInterface
 {
 

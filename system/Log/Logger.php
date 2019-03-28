@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Log;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Log;
 
 use Psr\Log\LoggerInterface;
 use CodeIgniter\Log\Exceptions\LogException;

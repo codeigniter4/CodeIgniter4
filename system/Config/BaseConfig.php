@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\Config;
+
 
 /**
  * CodeIgniter
@@ -36,6 +36,8 @@ namespace CodeIgniter\Config;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Config;
 
 /**
  * Class BaseConfig
@@ -167,6 +169,8 @@ class BaseConfig
 	/**
 	 * Provides external libraries a simple way to register one or more
 	 * options into a config file.
+	 *
+	 * @throws \ReflectionException
 	 */
 	protected function registerProperties()
 	{

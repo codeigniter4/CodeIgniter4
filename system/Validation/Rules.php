@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Validation;
+<?php
 
 /**
  * CodeIgniter
@@ -36,10 +36,12 @@
  * @filesource
  */
 
+namespace CodeIgniter\Validation;
+
 use Config\Database;
 
 /**
- * Rules.
+ * Validation Rules.
  *
  * @package CodeIgniter\Validation
  */
@@ -279,7 +281,7 @@ class Rules
 	//--------------------------------------------------------------------
 
 	/**
-	 * The field is required when any of the other fields are present
+	 * The field is required when any of the other required fields are present
 	 * in the data.
 	 *
 	 * Example (field is required when the password field is present):
@@ -331,8 +333,8 @@ class Rules
 	//--------------------------------------------------------------------
 
 	/**
-	 * The field is required when all of the other fields are not present
-	 * in the data.
+	 * The field is required when all of the other fields are present
+	 * in the data but not required.
 	 *
 	 * Example (field is required when the id or email field is missing):
 	 *

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Format;
+<?php
 
 use CodeIgniter\Format\Exceptions\FormatException;
 
@@ -36,6 +36,11 @@ use CodeIgniter\Format\Exceptions\FormatException;
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
  * @filesource
+ */
+namespace CodeIgniter\Format;
+
+/**
+ * XML data formatter
  */
 class XMLFormatter implements FormatterInterface
 {

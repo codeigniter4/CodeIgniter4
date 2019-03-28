@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Test;
+<?php
 
 /**
  * CodeIgniter
@@ -36,6 +36,11 @@
  * @filesource
  */
 
+namespace CodeIgniter\Test;
+
+/**
+ * Load a response into a DOMDocument for testing assertions based on that
+ */
 class DOMParser
 {
 	/**

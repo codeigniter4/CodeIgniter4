@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\CLI;
+<?php
 
 /**
  * CodeIgniter
@@ -36,8 +36,13 @@
  * @filesource
  */
 
+namespace CodeIgniter\CLI;
+
 use CodeIgniter\CodeIgniter;
 
+/**
+ * Console
+ */
 class Console
 {
 
@@ -68,7 +73,7 @@ class Console
 	 * @param boolean $useSafeOutput
 	 *
 	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Router\RedirectException
 	 */
 	public function run(bool $useSafeOutput = false)
 	{

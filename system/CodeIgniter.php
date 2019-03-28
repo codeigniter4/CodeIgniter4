@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter;
 
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\DownloadResponse;
@@ -615,7 +616,7 @@ class CodeIgniter
 	 *
 	 * @return array
 	 */
-	public function getPerformanceStats()
+	public function getPerformanceStats(): array
 	{
 		return [
 			'startTime' => $this->startTime,
