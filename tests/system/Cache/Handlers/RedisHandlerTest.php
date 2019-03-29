@@ -95,7 +95,7 @@ class RedisHandlerTest extends \CIUnitTestCase
 		$this->redisHandler->save(self::$key1, 'value', 1);
 
 		$this->assertSame('value', $this->redisHandler->get(self::$key1));
-		$this->assertFalse($this->redisHandler->get(self::$dummy));
+		$this->assertNull($this->redisHandler->get(self::$dummy));
 
 		\CodeIgniter\CLI\CLI::wait(2);
 		$this->assertFalse($this->redisHandler->get(self::$key1));
