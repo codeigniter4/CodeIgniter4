@@ -121,9 +121,9 @@ class Serve extends BaseCommand
 		}
 
 		// Collect any user-supplied options and apply them.
-		$php  = escapeshellarg(CLI::getOption('php')) ?? PHP_BINARY;
-		$host = escapeshellarg(CLI::getOption('host')) ?? 'localhost';
-		$port = escapeshellarg(CLI::getOption('port')) ?? '8080';
+		$php  = CLI::getOption('php') ?? PHP_BINARY;
+		$host = CLI::getOption('host') ?? 'localhost';
+		$port = CLI::getOption('port') ?? '8080';
 
 		// Get the party started.
 		CLI::write('CodeIgniter development server started on http://' . $host . ':' . $port, 'green');
