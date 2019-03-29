@@ -169,7 +169,7 @@ class MemcachedHandler implements CacheInterface
 			$data = $this->memcached->get($key, $flags);
 
 			// check for unmatched key (i.e. $flags is untouched)
-			if ($data===false)
+			if ($flags===false)
 			{
 				return null;
 			}
