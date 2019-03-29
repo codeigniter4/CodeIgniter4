@@ -369,18 +369,7 @@ class Model
 		                  ->asArray()
 		                  ->find();
 
-		if (count($resultSet))
-		{
-			$data = [];
-			foreach ($resultSet as $item)
-			{
-				$data[] = $item[$columnName];
-			}
-
-			return $data;
-		}
-
-		return null;
+		return (!empty($resultSet)) ? array_column($resultSet, $columnName) : null;
 	}
 
 	//--------------------------------------------------------------------
