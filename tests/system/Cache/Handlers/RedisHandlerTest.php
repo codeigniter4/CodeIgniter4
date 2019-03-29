@@ -98,7 +98,7 @@ class RedisHandlerTest extends \CIUnitTestCase
 		$this->assertNull($this->redisHandler->get(self::$dummy));
 
 		\CodeIgniter\CLI\CLI::wait(2);
-		$this->assertFalse($this->redisHandler->get(self::$key1));
+		$this->assertNull($this->redisHandler->get(self::$key1));
 	}
 
 	public function testSave()
@@ -143,7 +143,7 @@ class RedisHandlerTest extends \CIUnitTestCase
 		$time = time();
 		$this->redisHandler->save(self::$key1, 'value');
 
-		$this->assertFalse($this->redisHandler->getMetaData(self::$dummy));
+		$this->assertNull($this->redisHandler->getMetaData(self::$dummy));
 
 		$actual = $this->redisHandler->getMetaData(self::$key1);
 		$this->assertLessThanOrEqual(60, $actual['expire'] - $time);
