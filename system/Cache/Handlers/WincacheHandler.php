@@ -94,7 +94,7 @@ class WincacheHandler implements CacheInterface
 		$data    = wincache_ucache_get($key, $success);
 
 		// Success returned by reference from wincache_ucache_get()
-		return ($success) ? $data : false;
+		return ($success) ? $data : null;
 	}
 
 	//--------------------------------------------------------------------

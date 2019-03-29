@@ -100,7 +100,7 @@ class FileHandler implements CacheInterface
 
 		$data = $this->getItem($key);
 
-		return is_array($data) ? $data['data'] : false;
+		return is_array($data) ? $data['data'] : null;
 	}
 
 	//--------------------------------------------------------------------
