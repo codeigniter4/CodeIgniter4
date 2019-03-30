@@ -90,13 +90,14 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 */
 	protected function withRoutes(array $routes = null)
 	{
-		$collection = \Config\Services::routes();
+		$collection = Services::routes(false);
 
 		if ($routes)
 		{
 			foreach ($routes as $route)
 			{
-				$collection->{$route[0]}($route[1], $route[2]);
+				$options = $route[3] ?? [];
+				$collection->{$route[0]}($route[1], $route[2], $options);
 			}
 		}
 
@@ -156,56 +157,17 @@ class FeatureTestCase extends CIDatabaseTestCase
 		Services::injectMock('request', $request);
 		$_SERVER['REQUEST_METHOD'] = $method;
 
-		//      $response = $this->app
-		//              ->setRequest($request)
-		//              ->run($this->routes, true);
-		//
-		//      // Clean up any open output buffers
-		//      // not relevant to unit testing
-		//      // @codeCoverageIgnoreStart
-		//      if (ob_get_level() > 0 && $this->clean)
-		//      {
-		//          ob_end_clean();
-		//      }
-		//      // @codeCoverageIgnoreEnd
-		//
-		//      $featureResponse = new FeatureResponse($response);
-		//
-		//      return $featureResponse;
-
-		$result = new Response(new App());
-		//      ob_start();
-
 		$response = $this->app
 				->setRequest($request)
 				->run($this->routes, true);
 
 		$output = ob_get_clean();
-		//      ob_get_clean(); // flush earlier cruft too
-
-		// If the controller returned a response, use it
-		if (isset($response) && $response instanceof Response)
+		if (empty($response->getBody()))
 		{
-			$result = $response;
-		}
-		// check if controller returned a view rather than echoing it
-		elseif (is_string($response))
-		{
-			$result->setBody($response);
-		}
-		else
-		{
-			$result->setBody('');
+			$response->setBody($output);
 		}
 
-		// If not response code has been sent, assume a success
-		if (empty($result->getStatusCode()))
-		{
-			$result->setStatusCode(200);
-		}
-
-		$featureResponse = new FeatureResponse($result);
-
+		$featureResponse = new FeatureResponse($response);
 		return $featureResponse;
 	}
 
