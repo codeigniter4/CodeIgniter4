@@ -138,6 +138,13 @@ class BaseBuilder
 	public $QBOrderBy = [];
 
 	/**
+	 * QB NO ESCAPE data
+	 *
+	 * @var array
+	 */
+	public $QBNoEscape = [];
+
+	/**
 	 * QB data sets
 	 *
 	 * @var array
@@ -689,6 +696,8 @@ class BaseBuilder
 				{
 					$k .= $op;
 				}
+
+				$v = " :$bind:";
 			}
 			elseif (! $this->hasOperator($k))
 			{
@@ -699,8 +708,6 @@ class BaseBuilder
 			{
 				$k = substr($k, 0, $match[0][1]) . ($match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL');
 			}
-
-			$v = ! is_null($v) ? " :$bind:" : $v;
 
 			$this->{$qb_key}[] = [
 				'condition' => $prefix . $k . $v,
@@ -1017,7 +1024,6 @@ class BaseBuilder
 	 */
 	public function _like_statement(string $prefix = null, string $column, string $not = null, string $bind, bool $insensitiveSearch = false): string
 	{
-		// TODO fmertins: $column param seems to require a default value? Because $prefix has...
 		$like_statement = "{$prefix} {$column} {$not} LIKE :{$bind}:";
 
 		if ($insensitiveSearch === true)
@@ -1254,16 +1260,19 @@ class BaseBuilder
 			$qb_orderby = [];
 			foreach (explode(',', $orderby) as $field)
 			{
-				$qb_orderby[] = ($direction === '' &&
-						preg_match('/\s+(ASC|DESC)$/i', rtrim($field), $match, PREG_OFFSET_CAPTURE)) ? [
-																										   'field'     => ltrim(substr($field, 0, $match[0][1])),
-																										   'direction' => ' ' . $match[1][0],
-																										   'escape'    => true,
-																									   ] : [
-																											   'field'     => trim($field),
-																											   'direction' => $direction,
-																											   'escape'    => true,
-																										   ];
+				$qb_orderby[] = ($direction === '' && preg_match('/\s+(ASC|DESC)$/i', rtrim($field), $match, PREG_OFFSET_CAPTURE))
+					?
+					[
+						'field'     => ltrim(substr($field, 0, $match[0][1])),
+						'direction' => ' ' . $match[1][0],
+						'escape'    => true,
+					]
+					:
+					[
+						'field'     => trim($field),
+						'direction' => $direction,
+						'escape'    => true,
+					];
 			}
 		}
 
@@ -1703,7 +1712,7 @@ class BaseBuilder
 	 * @param string  $value
 	 * @param boolean $escape
 	 *
-	 * @return BaseBuilder
+	 * @return BaseBuilder|null
 	 */
 	public function setInsertBatch($key, $value = '', $escape = null)
 	{
@@ -1727,7 +1736,7 @@ class BaseBuilder
 				// batch function above returns an error on an empty array
 				$this->QBSet[] = [];
 
-				return;
+				return null;
 			}
 
 			ksort($row); // puts $row in the same order as our keys
@@ -1825,6 +1834,8 @@ class BaseBuilder
 
 			return $result;
 		}
+
+		return false;
 	}
 
 	//--------------------------------------------------------------------
@@ -2048,6 +2059,8 @@ class BaseBuilder
 	 */
 	protected function _update($table, $values)
 	{
+		$valstr = [];
+
 		foreach ($values as $key => $val)
 		{
 			$valstr[] = $key . ' = ' . $val;
@@ -2182,6 +2195,7 @@ class BaseBuilder
 	protected function _updateBatch($table, $values, $index)
 	{
 		$ids = [];
+		$final = [];
 		foreach ($values as $key => $val)
 		{
 			$ids[] = $val[$index];
@@ -2213,11 +2227,11 @@ class BaseBuilder
 	/**
 	 * The "setUpdateBatch" function.  Allows key/value pairs to be set for batch updating
 	 *
-	 * @param array   $key
-	 * @param string  $index
-	 * @param boolean $escape
+	 * @param array|object   $key
+	 * @param string         $index
+	 * @param boolean        $escape
 	 *
-	 * @return BaseBuilder
+	 * @return BaseBuilder|null
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function setUpdateBatch($key, $index = '', $escape = null)
@@ -2226,7 +2240,7 @@ class BaseBuilder
 
 		if (! is_array($key))
 		{
-			return;
+			return null;
 		}
 
 		is_bool($escape) || $escape = $this->db->protectIdentifiers;
@@ -2347,9 +2361,7 @@ class BaseBuilder
 	{
 		$table = $this->QBFrom[0];
 
-		$this->returnDeleteSQL = true;
-		$sql                   = $this->delete($table, '', null, $reset);
-		$this->returnDeleteSQL = false;
+		$sql = $this->delete($table, '', null, $reset);
 
 		return $this->compileFinalQuery($sql);
 	}
@@ -2475,9 +2487,9 @@ class BaseBuilder
 	 *
 	 * Used to track SQL statements written with aliased tables.
 	 *
-	 * @param string $table The table to inspect
+	 * @param string|array $table The table to inspect
 	 *
-	 * @return string
+	 * @return string|void
 	 */
 	protected function trackAliases($table)
 	{
@@ -2487,8 +2499,6 @@ class BaseBuilder
 			{
 				$this->trackAliases($t);
 			}
-
-			return;
 		}
 
 		// Does the string contain a comma?  If so, we need to separate
@@ -2733,7 +2743,7 @@ class BaseBuilder
 	 *
 	 * Takes an object as input and converts the class variables to array key/vals
 	 *
-	 * @param object $object
+	 * @param mixed $object
 	 *
 	 * @return array
 	 */
@@ -2764,7 +2774,7 @@ class BaseBuilder
 	 *
 	 * Takes an object as input and converts the class variables to array key/vals
 	 *
-	 * @param object $object
+	 * @param mixed $object
 	 *
 	 * @return array
 	 */
@@ -2926,7 +2936,7 @@ class BaseBuilder
 	 * @param string  $str
 	 * @param boolean $list
 	 *
-	 * @return string
+	 * @return mixed
 	 */
 	protected function getOperator($str, bool $list = false)
 	{
