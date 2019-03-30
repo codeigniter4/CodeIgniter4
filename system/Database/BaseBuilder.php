@@ -668,10 +668,7 @@ class BaseBuilder
 				if (! empty($op))
 				{
 					$k = trim($k);
-
-					end($op);
-
-					$op = trim(current($op));
+					$op = trim($op);
 
 					if (substr($k, -1 * strlen($op)) === $op)
 					{
