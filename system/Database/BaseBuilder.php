@@ -1186,12 +1186,12 @@ class BaseBuilder
 	 * Separates multiple calls with 'AND'.
 	 *
 	 * @param string|array  $key
-	 * @param string        $value
+	 * @param mixed         $value
 	 * @param boolean       $escape
 	 *
 	 * @return BaseBuilder
 	 */
-	public function having($key, string $value = null, bool $escape = null)
+	public function having($key, $value = null, bool $escape = null)
 	{
 		return $this->whereHaving('QBHaving', $key, $value, 'AND ', $escape);
 	}
@@ -1204,12 +1204,12 @@ class BaseBuilder
 	 * Separates multiple calls with 'OR'.
 	 *
 	 * @param string|array  $key
-	 * @param string        $value
+	 * @param mixed         $value
 	 * @param boolean       $escape
 	 *
 	 * @return BaseBuilder
 	 */
-	public function orHaving($key, string $value = null, bool $escape = null)
+	public function orHaving($key, $value = null, bool $escape = null)
 	{
 		return $this->whereHaving('QBHaving', $key, $value, 'OR ', $escape);
 	}
@@ -1315,7 +1315,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function offset($offset)
+	public function offset(int $offset)
 	{
 		if (! empty($offset))
 		{
@@ -1336,7 +1336,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _limit($sql)
+	protected function _limit(string $sql): string
 	{
 		return $sql . ' LIMIT ' . ($this->QBOffset ? $this->QBOffset . ', ' : '') . $this->QBLimit;
 	}
@@ -1354,7 +1354,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function set($key, $value = '', $escape = null)
+	public function set($key, string $value = '', bool $escape = null)
 	{
 		$key = $this->objectToArray($key);
 
@@ -1369,7 +1369,7 @@ class BaseBuilder
 		{
 			if ($escape)
 			{
-				$bind                                                           = $this->setBind($k, $v, $escape);
+				$bind = $this->setBind($k, $v, $escape);
 				$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ":$bind:";
 			}
 			else
@@ -1391,7 +1391,7 @@ class BaseBuilder
 	 *
 	 * @return array
 	 */
-	public function getSetData(bool $clean = false)
+	public function getSetData(bool $clean = false): array
 	{
 		$data = $this->QBSet;
 
@@ -1414,7 +1414,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	public function getCompiledSelect($reset = true)
+	public function getCompiledSelect(bool $reset = true): string
 	{
 		$select = $this->compileSelect();
 
@@ -1434,7 +1434,7 @@ class BaseBuilder
 	 *
 	 * @param string $sql
 	 *
-	 * @return mixed|string
+	 * @return string
 	 */
 	protected function compileFinalQuery(string $sql): string
 	{
@@ -1462,7 +1462,7 @@ class BaseBuilder
 	 *
 	 * @return ResultInterface
 	 */
-	public function get(int $limit = null, int $offset = 0, $returnSQL = false, $reset = true)
+	public function get(int $limit = null, int $offset = 0, bool $returnSQL = false, bool $reset = true)
 	{
 		if (! is_null($limit))
 		{
@@ -1497,7 +1497,7 @@ class BaseBuilder
 	 *
 	 * @return integer
 	 */
-	public function countAll($reset = true, $test = false)
+	public function countAll(bool $reset = true, bool $test = false): int
 	{
 		$table = $this->QBFrom[0];
 
@@ -1538,15 +1538,15 @@ class BaseBuilder
 	 *
 	 * @return integer
 	 */
-	public function countAllResults($reset = true, $test = false)
+	public function countAllResults(bool $reset = true, bool $test = false): int
 	{
 		// ORDER BY usage is often problematic here (most notably
 		// on Microsoft SQL Server) and ultimately unnecessary
 		// for selecting COUNT(*) ...
-		$orderby = [];
+		$orderBy = [];
 		if (! empty($this->QBOrderBy))
 		{
-			$orderby         = $this->QBOrderBy;
+			$orderBy         = $this->QBOrderBy;
 			$this->QBOrderBy = null;
 		}
 
@@ -1567,7 +1567,7 @@ class BaseBuilder
 		// If we've previously reset the QBOrderBy values, get them back
 		elseif (! isset($this->QBOrderBy))
 		{
-			$this->QBOrderBy = $orderby ?? [];
+			$this->QBOrderBy = $orderBy ?? [];
 		}
 
 		$row = (! $result instanceof ResultInterface)
