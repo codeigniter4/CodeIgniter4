@@ -1967,7 +1967,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	public function getCompiledUpdate($reset = true)
+	public function getCompiledUpdate(bool $reset = true): string
 	{
 		if ($this->validateUpdate() === false)
 		{
@@ -1998,7 +1998,7 @@ class BaseBuilder
 	 *
 	 * @return boolean    TRUE on success, FALSE on failure
 	 */
-	public function update($set = null, $where = null, int $limit = null, $test = false)
+	public function update(array $set = null, $where = null, int $limit = null, bool $test = false)
 	{
 		if ($set !== null)
 		{
@@ -2057,7 +2057,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _update($table, $values)
+	protected function _update(string $table, array $values): string
 	{
 		$valstr = [];
 
@@ -2084,7 +2084,7 @@ class BaseBuilder
 	 * @return boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	protected function validateUpdate()
+	protected function validateUpdate(): bool
 	{
 		if (empty($this->QBSet))
 		{
@@ -2114,7 +2114,7 @@ class BaseBuilder
 	 * @return mixed    Number of rows affected, SQL string, or FALSE on failure
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function updateBatch($set = null, $index = null, $batchSize = 100, $returnSQL = false)
+	public function updateBatch(array $set = null, string $index = null, int $batchSize = 100, bool $returnSQL = false)
 	{
 		if ($index === null)
 		{
@@ -2192,7 +2192,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _updateBatch($table, $values, $index)
+	protected function _updateBatch(string $table, array $values, string $index): string
 	{
 		$ids = [];
 		$final = [];
@@ -2234,7 +2234,7 @@ class BaseBuilder
 	 * @return BaseBuilder|null
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function setUpdateBatch($key, $index = '', $escape = null)
+	public function setUpdateBatch($key, string $index = '', bool $escape = null)
 	{
 		$key = $this->batchObjectToArray($key);
 
