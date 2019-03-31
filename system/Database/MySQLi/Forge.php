@@ -118,7 +118,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param  array $attributes Associative array of table attributes
 	 * @return string
 	 */
-	protected function _createTableAttributes($attributes)
+	protected function _createTableAttributes(array $attributes): string
 	{
 		$sql = '';
 
@@ -162,7 +162,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param  mixed  $field      Column definition
 	 * @return string|string[]
 	 */
-	protected function _alterTable($alter_type, $table, $field)
+	protected function _alterTable(string $alter_type, string $table, $field)
 	{
 		if ($alter_type === 'DROP')
 		{
@@ -202,7 +202,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param  array $field
 	 * @return string
 	 */
-	protected function _processColumn($field)
+	protected function _processColumn(array $field): string
 	{
 		$extra_clause = isset($field['after']) ? ' AFTER ' . $this->db->escapeIdentifiers($field['after']) : '';
 
@@ -229,42 +229,42 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * Process indexes
 	 *
 	 * @param  string $table (ignored)
-	 * @return string
+	 * @return array
 	 */
-	protected function _processIndexes($table)
+	protected function _processIndexes(string $table): array
 	{
-		$sql = '';
+		$sqls = [];
 
-		for ($i = 0, $c = count($this->keys); $i < $c; $i ++)
+		for ($i = 0, $c = count($this->keys); $i < $c; $i++)
 		{
-			if (is_array($this->keys[$i]))
+			$this->keys[$i] = (array)$this->keys[$i];
+
+			for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
 			{
-				for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2 ++)
+				if (! isset($this->fields[$this->keys[$i][$i2]]))
 				{
-					if (! isset($this->fields[$this->keys[$i][$i2]]))
-					{
-						unset($this->keys[$i][$i2]);
-						continue;
-					}
+					unset($this->keys[$i][$i2]);
 				}
 			}
-			elseif (! isset($this->fields[$this->keys[$i]]))
+			if (count($this->keys[$i]) <= 0)
 			{
-				unset($this->keys[$i]);
 				continue;
 			}
 
-			is_array($this->keys[$i]) || $this->keys[$i] = [$this->keys[$i]];
+			if (in_array($i, $this->uniqueKeys))
+			{
+				$sqls[] = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table)
+					. ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+					. ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+				continue;
+			}
 
-			$unique = in_array($i, $this->uniqueKeys) ? 'UNIQUE ' : '';
-
-			$sql .= ",\n\t{$unique}KEY " . $this->db->escapeIdentifiers(implode('_', $this->keys[$i]))
-					. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
+			$sqls[] = 'CREATE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+				. ' ON ' . $this->db->escapeIdentifiers($table)
+				. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
 		}
 
-		$this->keys = [];
-
-		return $sql;
+		return $sqls;
 	}
 
 	//--------------------------------------------------------------------
