@@ -222,4 +222,17 @@ class SelectTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testSelectMinThrowsExceptionOnMultipleColumn()
+	{
+		$builder = new BaseBuilder('users', $this->db);
+
+		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
+		$this->expectExceptionMessage('Only single column allowed.');
+
+		$builder->selectSum('name,role');
+	}
+
+	//--------------------------------------------------------------------
+
 }

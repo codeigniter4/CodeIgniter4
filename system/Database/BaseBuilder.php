@@ -324,7 +324,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function selectMax($select = '', $alias = '')
+	public function selectMax(string $select = '', string $alias = '')
 	{
 		return $this->maxMinAvgSum($select, $alias, 'MAX');
 	}
@@ -341,7 +341,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function selectMin($select = '', $alias = '')
+	public function selectMin(string $select = '', string $alias = '')
 	{
 		return $this->maxMinAvgSum($select, $alias, 'MIN');
 	}
@@ -358,7 +358,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function selectAvg($select = '', $alias = '')
+	public function selectAvg(string $select = '', string $alias = '')
 	{
 		return $this->maxMinAvgSum($select, $alias, 'AVG');
 	}
@@ -375,7 +375,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function selectSum($select = '', $alias = '')
+	public function selectSum(string $select = '', string $alias = '')
 	{
 		return $this->maxMinAvgSum($select, $alias, 'SUM');
 	}
@@ -397,11 +397,16 @@ class BaseBuilder
 	 * @return BaseBuilder
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	protected function maxMinAvgSum($select = '', $alias = '', $type = 'MAX')
+	protected function maxMinAvgSum(string $select = '', string $alias = '', string $type = 'MAX')
 	{
-		if (! is_string($select) || $select === '')
+		if ($select === '')
 		{
 			throw new DatabaseException('The query you submitted is not valid.');
+		}
+
+		if (strpos($select, ',') !== false)
+		{
+			throw new DatabaseException('Only single column allowed.');
 		}
 
 		$type = strtoupper($type);
@@ -433,7 +438,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function createAliasFromTable($item)
+	protected function createAliasFromTable(string $item): string
 	{
 		if (strpos($item, '.') !== false)
 		{
