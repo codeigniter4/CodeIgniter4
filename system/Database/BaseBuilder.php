@@ -1185,13 +1185,13 @@ class BaseBuilder
 	 *
 	 * Separates multiple calls with 'AND'.
 	 *
-	 * @param string  $key
-	 * @param string  $value
-	 * @param boolean $escape
+	 * @param string|array  $key
+	 * @param string        $value
+	 * @param boolean       $escape
 	 *
 	 * @return BaseBuilder
 	 */
-	public function having($key, $value = null, $escape = null)
+	public function having($key, string $value = null, bool $escape = null)
 	{
 		return $this->whereHaving('QBHaving', $key, $value, 'AND ', $escape);
 	}
@@ -1203,13 +1203,13 @@ class BaseBuilder
 	 *
 	 * Separates multiple calls with 'OR'.
 	 *
-	 * @param string  $key
-	 * @param string  $value
-	 * @param boolean $escape
+	 * @param string|array  $key
+	 * @param string        $value
+	 * @param boolean       $escape
 	 *
 	 * @return BaseBuilder
 	 */
-	public function orHaving($key, $value = null, $escape = null)
+	public function orHaving($key, string $value = null, bool $escape = null)
 	{
 		return $this->whereHaving('QBHaving', $key, $value, 'OR ', $escape);
 	}
@@ -1219,13 +1219,13 @@ class BaseBuilder
 	/**
 	 * ORDER BY
 	 *
-	 * @param string  $orderby
+	 * @param string  $orderBy
 	 * @param string  $direction ASC, DESC or RANDOM
 	 * @param boolean $escape
 	 *
 	 * @return BaseBuilder
 	 */
-	public function orderBy($orderby, $direction = '', $escape = null)
+	public function orderBy(string $orderBy, string $direction = '', bool $escape = null)
 	{
 		$direction = strtoupper(trim($direction));
 
@@ -1234,9 +1234,9 @@ class BaseBuilder
 			$direction = '';
 
 			// Do we have a seed value?
-			$orderby = ctype_digit((string) $orderby) ? sprintf($this->randomKeyword[1], $orderby) : $this->randomKeyword[0];
+			$orderBy = ctype_digit((string) $orderBy) ? sprintf($this->randomKeyword[1], $orderBy) : $this->randomKeyword[0];
 		}
-		elseif (empty($orderby))
+		elseif (empty($orderBy))
 		{
 			return $this;
 		}
@@ -1250,7 +1250,7 @@ class BaseBuilder
 		if ($escape === false)
 		{
 			$qb_orderby[] = [
-				'field'     => $orderby,
+				'field'     => $orderBy,
 				'direction' => $direction,
 				'escape'    => false,
 			];
@@ -1258,7 +1258,7 @@ class BaseBuilder
 		else
 		{
 			$qb_orderby = [];
-			foreach (explode(',', $orderby) as $field)
+			foreach (explode(',', $orderBy) as $field)
 			{
 				$qb_orderby[] = ($direction === '' && preg_match('/\s+(ASC|DESC)$/i', rtrim($field), $match, PREG_OFFSET_CAPTURE))
 					?
