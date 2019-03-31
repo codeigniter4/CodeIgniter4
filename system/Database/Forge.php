@@ -449,10 +449,10 @@ class Forge
 	 * @param boolean $if_not_exists Whether to add IF NOT EXISTS condition
 	 * @param array   $attributes    Associative array of table attributes
 	 *
-	 * @return boolean
+	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function createTable(string $table, bool $if_not_exists = false, array $attributes = []): bool
+	public function createTable(string $table, bool $if_not_exists = false, array $attributes = [])
 	{
 		if ($table === '')
 		{
@@ -1166,7 +1166,7 @@ class Forge
 	 *
 	 * @return array
 	 */
-	protected function _processIndexes(string $table): array
+	protected function _processIndexes(string $table)
 	{
 		$sqls = [];
 

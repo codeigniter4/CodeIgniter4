@@ -229,42 +229,42 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * Process indexes
 	 *
 	 * @param  string $table (ignored)
-	 * @return array
+	 * @return string
 	 */
-	protected function _processIndexes(string $table): array
+	protected function _processIndexes(string $table): string
 	{
-		$sqls = [];
+		$sql = '';
 
-		for ($i = 0, $c = count($this->keys); $i < $c; $i++)
+		for ($i = 0, $c = count($this->keys); $i < $c; $i ++)
 		{
-			$this->keys[$i] = (array)$this->keys[$i];
-
-			for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
+			if (is_array($this->keys[$i]))
 			{
-				if (! isset($this->fields[$this->keys[$i][$i2]]))
+				for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2 ++)
 				{
-					unset($this->keys[$i][$i2]);
+					if (! isset($this->fields[$this->keys[$i][$i2]]))
+					{
+						unset($this->keys[$i][$i2]);
+						continue;
+					}
 				}
 			}
-			if (count($this->keys[$i]) <= 0)
+			elseif (! isset($this->fields[$this->keys[$i]]))
 			{
+				unset($this->keys[$i]);
 				continue;
 			}
 
-			if (in_array($i, $this->uniqueKeys))
-			{
-				$sqls[] = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table)
-					. ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
-					. ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
-				continue;
-			}
+			is_array($this->keys[$i]) || $this->keys[$i] = [$this->keys[$i]];
 
-			$sqls[] = 'CREATE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
-				. ' ON ' . $this->db->escapeIdentifiers($table)
-				. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+			$unique = in_array($i, $this->uniqueKeys) ? 'UNIQUE ' : '';
+
+			$sql .= ",\n\t{$unique}KEY " . $this->db->escapeIdentifiers(implode('_', $this->keys[$i]))
+				. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
 		}
 
-		return $sqls;
+		$this->keys = [];
+
+		return $sql;
 	}
 
 	//--------------------------------------------------------------------
