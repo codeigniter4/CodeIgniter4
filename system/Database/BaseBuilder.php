@@ -271,11 +271,11 @@ class BaseBuilder
 	 * Generates the SELECT portion of the query
 	 *
 	 * @param string|array $select
-	 * @param mixed        $escape
+	 * @param boolean      $escape
 	 *
 	 * @return BaseBuilder
 	 */
-	public function select($select = '*', $escape = null)
+	public function select($select = '*', bool $escape = null)
 	{
 		if (is_string($select))
 		{
@@ -2001,7 +2001,7 @@ class BaseBuilder
 	 *
 	 * @return boolean    TRUE on success, FALSE on failure
 	 */
-	public function update(array $set = null, $where = null, int $limit = null, bool $test = false)
+	public function update(array $set = null, $where = null, int $limit = null, bool $test = false): bool
 	{
 		if ($set !== null)
 		{
@@ -2158,7 +2158,7 @@ class BaseBuilder
 
 		// Batch this baby
 		$affected_rows = 0;
-		$savedSQL      = [];
+		$savedSQL = [];
 		for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batchSize)
 		{
 			$sql = $this->_updateBatch($table, array_slice($this->QBSet, $i, $batchSize), $this->db->protectIdentifiers($index)
@@ -2638,18 +2638,8 @@ class BaseBuilder
 						continue;
 					}
 
-					// $matches = array(
-					//	0 => '(test <= foo)',	/* the whole thing */
-					//	1 => '(',		/* optional */
-					//	2 => 'test',		/* the field name */
-					//	3 => ' <= ',		/* $op */
-					//	4 => 'foo',		/* optional, if $op is e.g. 'IS NULL' */
-					//	5 => ')'		/* optional */
-					// );
-
 					if (! empty($matches[4]))
 					{
-						//                      $this->isLiteral($matches[4]) OR $matches[4] = $this->db->protectIdentifiers(trim($matches[4]));
 						$matches[4] = ' ' . $matches[4];
 					}
 
@@ -2863,6 +2853,8 @@ class BaseBuilder
 	 * Resets the query builder values.  Called by the get() function
 	 *
 	 * @param array $qb_reset_items An array of fields to reset
+	 *
+	 * @return void
 	 */
 	protected function resetRun(array $qb_reset_items)
 	{
@@ -2976,7 +2968,7 @@ class BaseBuilder
 	 * arrays instead, so lets take advantage of that here.
 	 *
 	 * @param string  $key
-	 * @param null    $value
+	 * @param mixed   $value
 	 * @param boolean $escape
 	 *
 	 * @return string

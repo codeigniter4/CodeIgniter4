@@ -200,7 +200,7 @@ class Builder extends BaseBuilder
 	 *
 	 * Compiles a delete string and runs the query
 	 *
-	 * @param string  $where
+	 * @param mixed   $where
 	 * @param integer $limit
 	 * @param boolean $reset_data
 	 * @param boolean $returnSQL
@@ -211,7 +211,7 @@ class Builder extends BaseBuilder
 	 * @internal param the $mixed limit clause
 	 * @internal param $bool
 	 */
-	public function delete($where = '', int $limit = null, $reset_data = true, $returnSQL = false)
+	public function delete($where = '', int $limit = null, bool $reset_data = true, bool $returnSQL = false)
 	{
 		if (! empty($limit) || ! empty($this->QBLimit))
 		{
