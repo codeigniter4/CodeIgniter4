@@ -522,14 +522,14 @@ class BaseBuilder
 	 *
 	 * Generates the JOIN portion of the query
 	 *
-	 * @param string $table
-	 * @param string $cond   The join condition
-	 * @param string $type   The type of join
-	 * @param mixed  $escape Whether not to try to escape identifiers
+	 * @param string    $table
+	 * @param string    $cond   The join condition
+	 * @param string    $type   The type of join
+	 * @param boolean   $escape Whether not to try to escape identifiers
 	 *
 	 * @return BaseBuilder
 	 */
-	public function join(string $table, string $cond, string $type = '', $escape = null)
+	public function join(string $table, string $cond, string $type = '', bool $escape = null)
 	{
 		if ($type !== '')
 		{
