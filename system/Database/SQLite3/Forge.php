@@ -147,8 +147,6 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * ALTER TABLE
 	 *
-	 * @todo implement drop_column(), modify_column()
-	 *
 	 * @param string $alter_type ALTER type
 	 * @param string $table      Table name
 	 * @param mixed  $field      Column definition

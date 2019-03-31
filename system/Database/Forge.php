@@ -762,10 +762,10 @@ class Forge
 	 * @param string $table       Table name
 	 * @param string $column_name Column name
 	 *
-	 * @return boolean
+	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function dropColumn(string $table, string $column_name): bool
+	public function dropColumn(string $table, string $column_name)
 	{
 		$sql = $this->_alterTable('DROP', $this->db->DBPrefix . $table, $column_name);
 		if ($sql === false)
