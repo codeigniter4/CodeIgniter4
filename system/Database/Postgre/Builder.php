@@ -145,7 +145,7 @@ class Builder extends BaseBuilder
 	 * @throws   DatabaseException
 	 * @internal param true $bool returns the generated SQL, false executes the query.
 	 */
-	public function replace($set = null, $returnSQL = false)
+	public function replace(array $set = null, bool $returnSQL = false)
 	{
 		if ($set !== null)
 		{

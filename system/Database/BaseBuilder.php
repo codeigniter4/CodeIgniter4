@@ -1495,9 +1495,9 @@ class BaseBuilder
 	 * @param boolean $reset Are we want to clear query builder values?
 	 * @param boolean $test  Are we running automated tests?
 	 *
-	 * @return integer
+	 * @return integer|string when $test = true
 	 */
-	public function countAll(bool $reset = true, bool $test = false): int
+	public function countAll(bool $reset = true, bool $test = false)
 	{
 		$table = $this->QBFrom[0];
 
@@ -1536,9 +1536,9 @@ class BaseBuilder
 	 * @param boolean $reset
 	 * @param boolean $test  The reset clause
 	 *
-	 * @return integer
+	 * @return integer|string when $test = true
 	 */
-	public function countAllResults(bool $reset = true, bool $test = false): int
+	public function countAllResults(bool $reset = true, bool $test = false)
 	{
 		// ORDER BY usage is often problematic here (most notably
 		// on Microsoft SQL Server) and ultimately unnecessary
@@ -1589,13 +1589,13 @@ class BaseBuilder
 	 *
 	 * Allows the where clause, limit and offset to be added directly
 	 *
-	 * @param string  $where
-	 * @param integer $limit
-	 * @param integer $offset
+	 * @param string|array  $where
+	 * @param integer       $limit
+	 * @param integer       $offset
 	 *
 	 * @return ResultInterface
 	 */
-	public function getWhere($where = null, $limit = null, $offset = null)
+	public function getWhere($where = null, int $limit = null, int $offset = null)
 	{
 		if ($where !== null)
 		{
@@ -1629,7 +1629,7 @@ class BaseBuilder
 	 * @return integer Number of rows inserted or FALSE on failure
 	 * @throws DatabaseException
 	 */
-	public function insertBatch($set = null, $escape = null, $batchSize = 100, $testing = false)
+	public function insertBatch(array $set = null, bool $escape = null, int $batchSize = 100, bool $testing = false)
 	{
 		if ($set === null)
 		{
@@ -1698,7 +1698,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _insertBatch($table, $keys, $values)
+	protected function _insertBatch(string $table, array $keys, array $values): string
 	{
 		return 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
 	}
@@ -1714,7 +1714,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder|null
 	 */
-	public function setInsertBatch($key, $value = '', $escape = null)
+	public function setInsertBatch($key, string $value = '', bool $escape = null)
 	{
 		$key = $this->batchObjectToArray($key);
 
@@ -1771,7 +1771,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	public function getCompiledInsert($reset = true)
+	public function getCompiledInsert(bool $reset = true): string
 	{
 		if ($this->validateInsert() === false)
 		{
@@ -1805,7 +1805,7 @@ class BaseBuilder
 	 *
 	 * @return BaseResult|Query|false
 	 */
-	public function insert($set = null, $escape = null, $test = false)
+	public function insert(array $set = null, bool $escape = null, bool $test = false)
 	{
 		if ($set !== null)
 		{
@@ -1847,10 +1847,10 @@ class BaseBuilder
 	 * validate that the there data is actually being set and that table
 	 * has been chosen to be inserted into.
 	 *
-	 * @return string
+	 * @return bool
 	 * @throws DatabaseException
 	 */
-	protected function validateInsert()
+	protected function validateInsert(): bool
 	{
 		if (empty($this->QBSet))
 		{
@@ -1878,7 +1878,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _insert($table, array $keys, array $unescapedKeys)
+	protected function _insert(string $table, array $keys, array $unescapedKeys): string
 	{
 		return 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $unescapedKeys) . ')';
 	}
@@ -1896,7 +1896,7 @@ class BaseBuilder
 	 * @return BaseResult|Query|string|false
 	 * @throws DatabaseException
 	 */
-	public function replace($set = null, $returnSQL = false)
+	public function replace(array $set = null, bool $returnSQL = false)
 	{
 		if ($set !== null)
 		{
@@ -1934,7 +1934,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _replace($table, $keys, $values)
+	protected function _replace(string $table, array $keys, array $values): string
 	{
 		return 'REPLACE INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $values) . ')';
 	}
@@ -1951,7 +1951,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _fromTables()
+	protected function _fromTables(): string
 	{
 		return implode(', ', $this->QBFrom);
 	}
