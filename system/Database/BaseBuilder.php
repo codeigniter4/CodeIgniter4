@@ -461,9 +461,9 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function distinct($val = true)
+	public function distinct(bool $val = true)
 	{
-		$this->QBDistinct = is_bool($val) ? $val : true;
+		$this->QBDistinct = $val;
 
 		return $this;
 	}
@@ -480,7 +480,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function from($from, $overwrite = false)
+	public function from($from, bool $overwrite = false)
 	{
 		if ($overwrite === true)
 		{
@@ -525,11 +525,11 @@ class BaseBuilder
 	 * @param string $table
 	 * @param string $cond   The join condition
 	 * @param string $type   The type of join
-	 * @param string $escape Whether not to try to escape identifiers
+	 * @param mixed  $escape Whether not to try to escape identifiers
 	 *
 	 * @return BaseBuilder
 	 */
-	public function join($table, $cond, $type = '', $escape = null)
+	public function join(string $table, string $cond, string $type = '', $escape = null)
 	{
 		if ($type !== '')
 		{
@@ -617,7 +617,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function where($key, $value = null, $escape = null)
+	public function where($key, $value = null, bool $escape = null)
 	{
 		return $this->whereHaving('QBWhere', $key, $value, 'AND ', $escape);
 	}
@@ -636,7 +636,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function orWhere($key, $value = null, $escape = null)
+	public function orWhere($key, $value = null, bool $escape = null)
 	{
 		return $this->whereHaving('QBWhere', $key, $value, 'OR ', $escape);
 	}
@@ -659,7 +659,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	protected function whereHaving($qb_key, $key, $value = null, $type = 'AND ', $escape = null)
+	protected function whereHaving(string $qb_key, $key, $value = null, string $type = 'AND ', bool $escape = null)
 	{
 		if (! is_array($key))
 		{
@@ -737,7 +737,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function whereIn($key = null, $values = null, $escape = null)
+	public function whereIn(string $key = null, array $values = null, bool $escape = null)
 	{
 		return $this->_whereIn($key, $values, false, 'AND ', $escape);
 	}
@@ -756,7 +756,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function orWhereIn($key = null, $values = null, $escape = null)
+	public function orWhereIn(string $key = null, array $values = null, bool $escape = null)
 	{
 		return $this->_whereIn($key, $values, false, 'OR ', $escape);
 	}
@@ -775,7 +775,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function whereNotIn($key = null, $values = null, $escape = null)
+	public function whereNotIn(string $key = null, array $values = null, bool $escape = null)
 	{
 		return $this->_whereIn($key, $values, true, 'AND ', $escape);
 	}
@@ -794,7 +794,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function orWhereNotIn($key = null, $values = null, $escape = null)
+	public function orWhereNotIn(string $key = null, array $values = null, bool $escape = null)
 	{
 		return $this->_whereIn($key, $values, true, 'OR ', $escape);
 	}
@@ -817,16 +817,11 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	protected function _whereIn($key = null, $values = null, $not = false, $type = 'AND ', $escape = null)
+	protected function _whereIn(string $key = null, array $values = null, bool $not = false, string $type = 'AND ', bool $escape = null)
 	{
 		if ($key === null || $values === null)
 		{
 			return $this;
-		}
-
-		if (! is_array($values))
-		{
-			$values = [$values];
 		}
 
 		is_bool($escape) || $escape = $this->db->protectIdentifiers;
