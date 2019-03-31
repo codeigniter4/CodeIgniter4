@@ -1550,8 +1550,11 @@ class BaseBuilder
 			$this->QBOrderBy = null;
 		}
 
-		$sql = ($this->QBDistinct === true) ? $this->countString . $this->db->protectIdentifiers('numrows') . "\nFROM (\n" .
-				$this->compileSelect() . "\n) CI_count_all_results" : $this->compileSelect($this->countString . $this->db->protectIdentifiers('numrows'));
+		$sql = ($this->QBDistinct === true)
+			?
+			$this->countString . $this->db->protectIdentifiers('numrows') . "\nFROM (\n" . $this->compileSelect() . "\n) CI_count_all_results"
+			:
+			$this->compileSelect($this->countString . $this->db->protectIdentifiers('numrows'));
 
 		if ($test)
 		{
@@ -2530,11 +2533,11 @@ class BaseBuilder
 	 * Generates a query string based on which functions were used.
 	 * Should not be called directly.
 	 *
-	 * @param boolean $select_override
+	 * @param mixed $select_override
 	 *
 	 * @return string
 	 */
-	protected function compileSelect(bool $select_override = false): string
+	protected function compileSelect($select_override = false): string
 	{
 		// Write the "select" portion of the query
 		if ($select_override !== false)
