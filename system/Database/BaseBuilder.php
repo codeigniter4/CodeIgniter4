@@ -866,7 +866,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function like($field, $match = '', $side = 'both', $escape = null, $insensitiveSearch = false)
+	public function like($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
 	{
 		return $this->_like($field, $match, 'AND ', $side, '', $escape, $insensitiveSearch);
 	}
@@ -887,7 +887,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function notLike($field, $match = '', $side = 'both', $escape = null, $insensitiveSearch = false)
+	public function notLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
 	{
 		return $this->_like($field, $match, 'AND ', $side, 'NOT', $escape, $insensitiveSearch);
 	}
@@ -908,7 +908,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function orLike($field, $match = '', $side = 'both', $escape = null, $insensitiveSearch = false)
+	public function orLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
 	{
 		return $this->_like($field, $match, 'OR ', $side, '', $escape, $insensitiveSearch);
 	}
@@ -929,7 +929,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function orNotLike($field, $match = '', $side = 'both', $escape = null, $insensitiveSearch = false)
+	public function orNotLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
 	{
 		return $this->_like($field, $match, 'OR ', $side, 'NOT', $escape, $insensitiveSearch);
 	}
@@ -954,7 +954,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	protected function _like($field, $match = '', $type = 'AND ', $side = 'both', $not = '', $escape = null, $insensitiveSearch = false)
+	protected function _like($field, string $match = '', string $type = 'AND ', string $side = 'both', string $not = '', bool $escape = null, bool $insensitiveSearch = false)
 	{
 		if (! is_array($field))
 		{
@@ -1014,15 +1014,15 @@ class BaseBuilder
 	/**
 	 * Platform independent LIKE statement builder.
 	 *
-	 * @param string|null $prefix
-	 * @param string      $column
-	 * @param string|null $not
-	 * @param string      $bind
-	 * @param boolean     $insensitiveSearch
+	 * @param string    $prefix
+	 * @param string    $column
+	 * @param string    $not
+	 * @param string    $bind
+	 * @param boolean   $insensitiveSearch
 	 *
 	 * @return string     $like_statement
 	 */
-	public function _like_statement(string $prefix = null, string $column, string $not = null, string $bind, bool $insensitiveSearch = false): string
+	public function _like_statement(string $prefix, string $column, string $not, string $bind, bool $insensitiveSearch = false): string
 	{
 		$like_statement = "{$prefix} {$column} {$not} LIKE :{$bind}:";
 
@@ -1044,7 +1044,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	public function groupStart($not = '', $type = 'AND ')
+	public function groupStart(string $not = '', string $type = 'AND ')
 	{
 		$type = $this->groupGetType($type);
 
@@ -1130,11 +1130,11 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function groupGetType($type)
+	protected function groupGetType(string $type): string
 	{
 		if ($this->QBWhereGroupStarted)
 		{
-			$type                      = '';
+			$type = '';
 			$this->QBWhereGroupStarted = false;
 		}
 
@@ -1146,12 +1146,12 @@ class BaseBuilder
 	/**
 	 * GROUP BY
 	 *
-	 * @param string  $by
-	 * @param boolean $escape
+	 * @param string|array  $by
+	 * @param boolean       $escape
 	 *
 	 * @return BaseBuilder
 	 */
-	public function groupBy($by, $escape = null)
+	public function groupBy($by, bool $escape = null)
 	{
 		is_bool($escape) || $escape = $this->db->protectIdentifiers;
 
