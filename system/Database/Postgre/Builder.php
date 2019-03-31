@@ -201,7 +201,7 @@ class Builder extends BaseBuilder
 	 * Compiles a delete string and runs the query
 	 *
 	 * @param string  $where
-	 * @param null    $limit
+	 * @param integer $limit
 	 * @param boolean $reset_data
 	 * @param boolean $returnSQL
 	 *
@@ -211,7 +211,7 @@ class Builder extends BaseBuilder
 	 * @internal param the $mixed limit clause
 	 * @internal param $bool
 	 */
-	public function delete($where = '', $limit = null, $reset_data = true, $returnSQL = false)
+	public function delete($where = '', int $limit = null, $reset_data = true, $returnSQL = false)
 	{
 		if (! empty($limit) || ! empty($this->QBLimit))
 		{
@@ -316,7 +316,7 @@ class Builder extends BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _delete($table)
+	protected function _delete(string $table): string
 	{
 		$this->QBLimit = false;
 		return parent::_delete($table);
@@ -336,7 +336,7 @@ class Builder extends BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _truncate($table)
+	protected function _truncate(string $table): string
 	{
 		return 'TRUNCATE ' . $table . ' RESTART IDENTITY';
 	}

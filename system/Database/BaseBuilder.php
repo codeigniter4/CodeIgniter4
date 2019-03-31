@@ -2282,7 +2282,7 @@ class BaseBuilder
 	 * @param  boolean $test
 	 * @return boolean    TRUE on success, FALSE on failure
 	 */
-	public function emptyTable($test = false)
+	public function emptyTable(bool $test = false)
 	{
 		$table = $this->QBFrom[0];
 
@@ -2311,7 +2311,7 @@ class BaseBuilder
 	 *
 	 * @return boolean    TRUE on success, FALSE on failure
 	 */
-	public function truncate($test = false)
+	public function truncate(bool $test = false)
 	{
 		$table = $this->QBFrom[0];
 
@@ -2341,7 +2341,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _truncate($table)
+	protected function _truncate(string $table): string
 	{
 		return 'TRUNCATE ' . $table;
 	}
@@ -2357,7 +2357,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	public function getCompiledDelete($reset = true)
+	public function getCompiledDelete(bool $reset = true): string
 	{
 		$table = $this->QBFrom[0];
 
@@ -2374,14 +2374,14 @@ class BaseBuilder
 	 * Compiles a delete string and runs the query
 	 *
 	 * @param mixed   $where      The where clause
-	 * @param mixed   $limit      The limit clause
+	 * @param integer $limit      The limit clause
 	 * @param boolean $reset_data
 	 * @param boolean $returnSQL
 	 *
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function delete($where = '', $limit = null, $reset_data = true, $returnSQL = false)
+	public function delete($where = '', int $limit = null, bool $reset_data = true, bool $returnSQL = false)
 	{
 		$table = $this->db->protectIdentifiers($this->QBFrom[0], true, null, false);
 
@@ -2474,7 +2474,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _delete($table)
+	protected function _delete(string $table): string
 	{
 		return 'DELETE FROM ' . $table . $this->compileWhereHaving('QBWhere')
 				. ($this->QBLimit ? ' LIMIT ' . $this->QBLimit : '');
@@ -2534,7 +2534,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function compileSelect($select_override = false)
+	protected function compileSelect(bool $select_override = false): string
 	{
 		// Write the "select" portion of the query
 		if ($select_override !== false)
@@ -2604,7 +2604,7 @@ class BaseBuilder
 	 *
 	 * @return string    SQL statement
 	 */
-	protected function compileWhereHaving($qb_key)
+	protected function compileWhereHaving(string $qb_key): string
 	{
 		if (! empty($this->$qb_key))
 		{
@@ -2677,7 +2677,7 @@ class BaseBuilder
 	 *
 	 * @return string    SQL statement
 	 */
-	protected function compileGroupBy()
+	protected function compileGroupBy(): string
 	{
 		if (! empty($this->QBGroupBy))
 		{
@@ -2712,7 +2712,7 @@ class BaseBuilder
 	 *
 	 * @return string    SQL statement
 	 */
-	protected function compileOrderBy()
+	protected function compileOrderBy(): string
 	{
 		if (is_array($this->QBOrderBy) && ! empty($this->QBOrderBy))
 		{
@@ -2745,7 +2745,7 @@ class BaseBuilder
 	 *
 	 * @param mixed $object
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	protected function objectToArray($object)
 	{
@@ -2776,7 +2776,7 @@ class BaseBuilder
 	 *
 	 * @param mixed $object
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	protected function batchObjectToArray($object)
 	{
@@ -2816,7 +2816,7 @@ class BaseBuilder
 	 *
 	 * @return boolean
 	 */
-	protected function isLiteral($str)
+	protected function isLiteral(string $str): bool
 	{
 		$str = trim($str);
 
@@ -2861,7 +2861,7 @@ class BaseBuilder
 	 *
 	 * @param array $qb_reset_items An array of fields to reset
 	 */
-	protected function resetRun($qb_reset_items)
+	protected function resetRun(array $qb_reset_items)
 	{
 		foreach ($qb_reset_items as $item => $default_value)
 		{
@@ -2923,7 +2923,7 @@ class BaseBuilder
 	 *
 	 * @return boolean
 	 */
-	protected function hasOperator($str)
+	protected function hasOperator(string $str): bool
 	{
 		return (bool) preg_match('/(<|>|!|=|\sIS NULL|\sIS NOT NULL|\sEXISTS|\sBETWEEN|\sLIKE|\sIN\s*\(|\s)/i', trim($str));
 	}
@@ -2938,7 +2938,7 @@ class BaseBuilder
 	 *
 	 * @return mixed
 	 */
-	protected function getOperator($str, bool $list = false)
+	protected function getOperator(string $str, bool $list = false)
 	{
 		static $_operators;
 
@@ -2978,7 +2978,7 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function setBind(string $key, $value = null, bool $escape = true)
+	protected function setBind(string $key, $value = null, bool $escape = true): string
 	{
 		if (! array_key_exists($key, $this->binds))
 		{

@@ -100,7 +100,7 @@ class Builder extends BaseBuilder
 	 * @param  string $table
 	 * @return string
 	 */
-	protected function _truncate($table)
+	protected function _truncate(string $table): string
 	{
 		return 'DELETE FROM ' . $table;
 	}
