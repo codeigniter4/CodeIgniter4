@@ -123,10 +123,13 @@ class WhereTest extends CIDatabaseTestCase
 
 	public function testSubQuery()
 	{
-		$subQuery = $this->db->table('job')->where('name', 'Developer')->getCompiledSelect();
-
+		$subQuery = $this->db->table('job')
+		                     ->select('id')
+		                     ->where('name', 'Developer')
+		                     ->getCompiledSelect();
+		
 		$jobs = $this->db->table('job')
-						 ->where('id not in (' . $subQuery . ')', null, false)
+		                 ->where('id not in (' . $subQuery . ')', null, false)
 		                 ->get()
 		                 ->getResult();
 
@@ -136,12 +139,17 @@ class WhereTest extends CIDatabaseTestCase
 		$this->assertEquals('Musician', $jobs[2]->name);
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testSubQueryAnotherType()
 	{
-		$subQuery = $this->db->table('job')->where('name', 'Developer')->getCompiledSelect();
+		$subQuery = $this->db->table('job')
+		                     ->select('id')
+		                     ->where('name', 'Developer')
+		                     ->getCompiledSelect();
 
 		$jobs = $this->db->table('job')
-						 ->where('id = (' . $subQuery . ')', null, false)
+		                 ->where('id = (' . $subQuery . ')', null, false)
 		                 ->get()
 		                 ->getResult();
 
