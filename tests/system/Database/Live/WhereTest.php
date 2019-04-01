@@ -138,8 +138,10 @@ class WhereTest extends CIDatabaseTestCase
 
 	public function testSubQueryAnotherType()
 	{
+		$subQuery = $this->db->table('job')->where('name', 'Developer')->getCompiledSelect();
+
 		$jobs = $this->db->table('job')
-		                 ->where('id = (select id from job where name = "Developer")', null, false)
+						 ->where('id = (' . $subQuery . ')', null, false)
 		                 ->get()
 		                 ->getResult();
 
