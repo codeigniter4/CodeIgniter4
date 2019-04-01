@@ -39,7 +39,6 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\Request;
-use CodeIgniter\HTTP\Response;
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -90,14 +89,14 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 */
 	protected function withRoutes(array $routes = null)
 	{
-		$collection = Services::routes(false);
+		$collection = \Config\Services::routes();
+		$collection->resetRoutes();
 
 		if ($routes)
 		{
 			foreach ($routes as $route)
 			{
-				$options = $route[3] ?? [];
-				$collection->{$route[0]}($route[1], $route[2], $options);
+				$collection->{$route[0]}($route[1], $route[2]);
 			}
 		}
 
@@ -161,13 +160,18 @@ class FeatureTestCase extends CIDatabaseTestCase
 				->setRequest($request)
 				->run($this->routes, true);
 
-		$output = ob_get_clean();
+		// Clean up any open output buffers
+		if (ob_get_level() > 0 && $this->clean)
+		{
+			$output = ob_end_clean();
+		}
 		if (empty($response->getBody()))
 		{
 			$response->setBody($output);
 		}
 
 		$featureResponse = new FeatureResponse($response);
+
 		return $featureResponse;
 	}
 

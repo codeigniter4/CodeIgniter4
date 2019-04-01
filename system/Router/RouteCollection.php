@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * CodeIgniter
  *
@@ -141,6 +139,7 @@ class RouteCollection implements RouteCollectionInterface
 		'get'     => [],
 		'head'    => [],
 		'post'    => [],
+		'patch'   => [],
 		'put'     => [],
 		'delete'  => [],
 		'trace'   => [],
@@ -173,6 +172,7 @@ class RouteCollection implements RouteCollectionInterface
 		'get',
 		'head',
 		'post',
+		'patch',
 		'put',
 		'delete',
 		'trace',
@@ -760,7 +760,6 @@ class RouteCollection implements RouteCollectionInterface
 	// The options array is typically used to pass in an 'as' or var, but may
 	// be expanded in the future. See the docblock for 'add' method above for
 	// current list of globally available options.
-
 	//
 
 	/**
@@ -1432,4 +1431,18 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Reset the routes, so that a FeatureTestCase can provide the
+	 * explicit ones needed for it.
+	 */
+	public function resetRoutes()
+	{
+		$this->routes = ['*' => []];
+		foreach ($this->defaultHTTPMethods as $verb)
+		{
+			$this->routes[$verb] = [];
+		}
+	}
+
 }
