@@ -399,8 +399,8 @@ Class Reference
 		:param	string	$table: Name of the table to create
 		:param	string	$if_not_exists: Set to TRUE to add an 'IF NOT EXISTS' clause
 		:param	string	$attributes: An associative array of table attributes
-		:returns:  TRUE on success, FALSE on failure
-		:rtype:	bool
+		:returns:  Query object on success, FALSE on failure
+		:rtype:	mixed
 
 		Creates a new table. Usage:  See `Creating a table`_.
 
@@ -443,7 +443,7 @@ Class Reference
 
 		:param	string	$table: Current of the table
 		:param	string	$new_table_name: New name of the table
-		:returns:	TRUE on success, FALSE on failure
-		:rtype:	bool
+		:returns:  Query object on success, FALSE on failure
+		:rtype:	mixed
 
 		Renames a table. Usage:  See `Renaming a table`_.
