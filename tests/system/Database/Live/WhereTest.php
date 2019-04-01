@@ -123,8 +123,10 @@ class WhereTest extends CIDatabaseTestCase
 
 	public function testSubQuery()
 	{
+		$subQuery = $this->db->table('job')->where('name', 'Developer')->getCompiledSelect();
+
 		$jobs = $this->db->table('job')
-		                 ->where('id not in (select id from job where name = "Developer")', null, false)
+						 ->where('id not in (' . $subQuery . ')', null, false)
 		                 ->get()
 		                 ->getResult();
 
