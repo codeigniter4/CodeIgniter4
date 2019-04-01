@@ -2951,7 +2951,7 @@ class BaseBuilder
 			];
 		}
 
-		return preg_match_all('/' . implode('|', $_operators) . '/i', $str, $match) ? ($list ? $match[0] : $match[0][count($match[0]) - 1]) : false;
+		return preg_match_all('/(?=(((?!\)).)*\()|[^\(\)]*$)(' . implode('|', $_operators) . ')/i', $str, $match) ? ($list ? $match[0] : $match[0][count($match[0]) - 1]) : false;
 	}
 
 	// --------------------------------------------------------------------
