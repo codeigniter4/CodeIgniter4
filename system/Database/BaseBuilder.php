@@ -39,6 +39,7 @@
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Exceptions\DataException;
 
 /**
  * Class BaseBuilder
@@ -395,18 +396,19 @@ class BaseBuilder
 	 * @param string $type
 	 *
 	 * @return BaseBuilder
+	 * @throws \CodeIgniter\Database\Exceptions\DataException
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	protected function maxMinAvgSum(string $select = '', string $alias = '', string $type = 'MAX')
 	{
 		if ($select === '')
 		{
-			throw new DatabaseException('The query you submitted is not valid.');
+			throw DataException::forEmptyInputGiven('Select');
 		}
 
 		if (strpos($select, ',') !== false)
 		{
-			throw new DatabaseException('Only single column allowed.');
+			throw DataException::forInvalidArgument('column name not separated by comma');
 		}
 
 		$type = strtoupper($type);
@@ -1022,7 +1024,7 @@ class BaseBuilder
 	 *
 	 * @return string     $like_statement
 	 */
-	public function _like_statement(string $prefix, string $column, string $not, string $bind, bool $insensitiveSearch = false): string
+	public function _like_statement(string $prefix = null, string $column, string $not = null, string $bind, bool $insensitiveSearch = false): string
 	{
 		$like_statement = "{$prefix} {$column} {$not} LIKE :{$bind}:";
 
@@ -2364,7 +2366,7 @@ class BaseBuilder
 	{
 		$table = $this->QBFrom[0];
 
-		$sql = $this->delete($table, '', null, $reset);
+		$sql = $this->delete($table, '', $reset, true);
 
 		return $this->compileFinalQuery($sql);
 	}
@@ -2637,6 +2639,15 @@ class BaseBuilder
 					{
 						continue;
 					}
+
+					// $matches = array(
+					//	0 => '(test <= foo)',	/* the whole thing */
+					//	1 => '(',		/* optional */
+					//	2 => 'test',		/* the field name */
+					//	3 => ' <= ',		/* $op */
+					//	4 => 'foo',		/* optional, if $op is e.g. 'IS NULL' */
+					//	5 => ')'		/* optional */
+					// );
 
 					if (! empty($matches[4]))
 					{

@@ -50,4 +50,9 @@ class DataException extends \RuntimeException implements ExceptionInterface
 	{
 		return new static(lang('Database.tableNotFound', [$table]));
 	}
+
+	public static function forEmptyInputGiven(string $argument)
+	{
+		return new static(lang('Database.forEmptyInputGiven', [$argument]));
+	}
 }
