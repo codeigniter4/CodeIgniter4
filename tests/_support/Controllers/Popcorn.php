@@ -62,7 +62,7 @@ class Popcorn extends Controller
 
 	public function json()
 	{
-		$this->responsd(['answer' => 42]);
+		$this->respond(['answer' => 42]);
 	}
 
 	public function xml()
