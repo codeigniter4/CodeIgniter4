@@ -158,7 +158,7 @@ class MemcachedHandler implements CacheInterface
 			$data = $this->memcached->get($key);
 
 			// check for unmatched key
-			if ($this->memcached->getResultCode()==$this->memcached->RES_NOTFOUND)
+			if ($this->memcached->getResultCode()==\Memcached::RES_NOTFOUND)
 			{
 				return null;
 			}
