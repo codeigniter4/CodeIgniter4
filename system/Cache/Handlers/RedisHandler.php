@@ -299,7 +299,7 @@ class RedisHandler implements CacheInterface
 
 		$value = $this->get($key);
 
-		if ($value !== false)
+		if ($value !== null)
 		{
 			$time = time();
 			return [
@@ -309,7 +309,7 @@ class RedisHandler implements CacheInterface
 			];
 		}
 
-		return false;
+		return null;
 	}
 
 	//--------------------------------------------------------------------
