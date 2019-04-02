@@ -202,8 +202,8 @@ class SelectTest extends \CIUnitTestCase
 	{
 		$builder = new BaseBuilder('invoices', $this->db);
 
-		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
-		$this->expectExceptionMessage('The query you submitted is not valid.');
+		$this->expectException(DataException::class);
+		$this->expectExceptionMessage('Empty statement is given for the field `Select`');
 
 		$builder->selectSum('');
 	}
@@ -227,8 +227,8 @@ class SelectTest extends \CIUnitTestCase
 	{
 		$builder = new BaseBuilder('users', $this->db);
 
-		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
-		$this->expectExceptionMessage('Only single column allowed.');
+		$this->expectException(DataException::class);
+		$this->expectExceptionMessage('You must provide a valid column name not separated by comma.');
 
 		$builder->selectSum('name,role');
 	}
