@@ -396,11 +396,11 @@ can modify the generated routes, or further restrict them. The ``$options`` arra
 Applying Filters
 ----------------
 
-You can alter the behavior of specific routes by supplying a filter to run, before or after the controller. This is especially handy during authentication or api logging::
+You can alter the behavior of specific routes by supplying a filter to run before or after the controller. This is especially handy during authentication or api logging::
 
     $routes->add('admin', AdminController::index, ['filter' => 'admin-auth']);
 
-The value for the filter must match one of the aliases defined within ``app/Config/Filters.php``. You may also supply parameters to be passed to the filter's ``before()`` and ``after()`` methods:
+The value for the filter must match one of the aliases defined within ``app/Config/Filters.php``. You may also supply parameters to be passed to the filter's ``before()`` and ``after()`` methods::
 
     $routes->add('users/delete/(:segment)', AdminController::index, ['filter' => 'admin-auth:dual,noreturn']);
 
