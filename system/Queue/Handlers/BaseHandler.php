@@ -1,26 +1,30 @@
 <?php namespace CodeIgniter\Queue\Handlers;
 
 /**
- * Queue handler Interface.
+ * Base Queue handler.
  */
-interface QueueHandlerInterface
+
+abstract class BaseHandler
 {
+	protected $groupConfig;
+	protected $config;
+
 	/**
 	 * constructor.
 	 *
-	 * @param  array $groupConfig
-	 * @param  \Codeigniter\Config\Queue $config
+	 * @param array         $groupConfig
+	 * @param \Config\Queue $config
 	 */
-	public function __construct($groupConfig, \Codeigniter\Config\Queue $config);
+	abstract public function __construct($groupConfig, $config);
 
 	/**
 	 * send message to queueing system.
 	 *
-	 * @param  array  $data
-	 * @param  string $routingKey
-	 * @param  string $exchangeName
+	 * @param array  $data
+	 * @param string $routingKey
+	 * @param string $exchangeName
 	 */
-	public function send($data, string $routingKey = '', string $exchangeName = '');
+	abstract public function send($data, string $routingKey = '', string $exchangeName = '');
 
 	/**
 	 * Fetch message from queueing system.
@@ -30,7 +34,7 @@ interface QueueHandlerInterface
 	 * @param  string   $queueName
 	 * @return boolean  whether callback is done or not.
 	 */
-	public function fetch(callable $callback, string $queueName = '') : bool;
+	abstract public function fetch(callable $callback, string $queueName = '') : bool;
 
 	/**
 	 * Receive message from queueing system.
@@ -40,5 +44,5 @@ interface QueueHandlerInterface
 	 * @param  string   $queueName
 	 * @return boolean  whether callback is done or not.
 	 */
-	public function receive(callable $callback, string $queueName = '') : bool;
+	abstract public function receive(callable $callback, string $queueName = '') : bool;
 }

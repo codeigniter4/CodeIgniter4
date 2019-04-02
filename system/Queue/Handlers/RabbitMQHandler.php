@@ -7,30 +7,28 @@ use PhpAmqpLib\Exception\AMQPTimeoutException;
 /**
  * Queue handler for RabbitMQ.
  */
-class RabbitMQHandler implements QueueHandlerInterface
+class RabbitMQHandler extends BaseHandler
 {
-	protected $groupConfig;
-	protected $config;
 	protected $connection;
 
 	/**
 	 * constructor.
 	 *
-	 * @param  array $groupConfig
-	 * @param  \Codeigniter\Config\Queue $config
+	 * @param array         $groupConfig
+	 * @param \Config\Queue $config
 	 */
-	public function __construct($groupConfig, \Codeigniter\Config\Queue $config)
+	public function __construct($groupConfig, $config)
 	{
 		$this->groupConfig = $groupConfig;
-		$this->config       = clone $config;
-		$this->connection   = new AMQPStreamConnection(
+		$this->config      = clone $config;
+		$this->connection  = new AMQPStreamConnection(
 			$this->groupConfig['host'],
 			$this->groupConfig['port'],
 			$this->groupConfig['user'],
 			$this->groupConfig['password'],
 			$this->groupConfig['vhost']
 		);
-		$this->channel = $this->connection->channel();
+		$this->channel     = $this->connection->channel();
 		if ($this->groupConfig['do_setup'])
 		{
 			$this->setup();
@@ -67,15 +65,15 @@ class RabbitMQHandler implements QueueHandlerInterface
 	/**
 	 * send message to queueing system.
 	 *
-	 * @param  array  $data
-	 * @param  string $routingKey
-	 * @param  string $exchangeName
+	 * @param array  $data
+	 * @param string $routingKey
+	 * @param string $exchangeName
 	 */
 	public function send($data, string $routingKey = '', string $exchangeName = '')
 	{
 		$this->channel->basic_publish(
 			new AMQPMessage(json_encode($data), ['delivery_mode' => 2]),
-			$exchangeName != '' ? $exchangeName : $this->config->defaultExchange,
+			$exchangeName !== '' ? $exchangeName : $this->config->defaultExchange,
 			$routingKey
 		);
 	}
@@ -90,7 +88,7 @@ class RabbitMQHandler implements QueueHandlerInterface
 	 */
 	public function fetch(callable $callback, string $queueName = '') : bool
 	{
-		return $this->consume($callback, $queueName, 0.001);	// timeout 0.001sec: dummy for non-waiting
+		return $this->consume($callback, $queueName, 0.001);    // timeout 0.001sec: dummy for non-waiting
 	}
 
 	/**
@@ -110,14 +108,13 @@ class RabbitMQHandler implements QueueHandlerInterface
 	{
 		$this->channel->basic_qos(null, 1, null);
 		$this->channel->basic_consume(
-			$queueName != '' ? $queueName : $this->config->defaultQueue,
+			$queueName !== '' ? $queueName : $this->config->defaultQueue,
 			'',
 			false,
 			false,
 			false,
 			false,
-			function ($msg) use ($callback)
-			{
+			function ($msg) use ($callback) {
 				$callback(json_decode($msg->body));
 				$msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
 			}
@@ -135,7 +132,8 @@ class RabbitMQHandler implements QueueHandlerInterface
 			// do nothing.
 		}
 
-		if ($consumer_tag !== null) {
+		if ($consumer_tag !== null)
+		{
 			$this->channel->basic_cancel($consumer_tag);
 		}
 

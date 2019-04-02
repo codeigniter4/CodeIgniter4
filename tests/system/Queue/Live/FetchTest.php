@@ -10,7 +10,7 @@ class FetchTest extends CIDatabaseTestCase
 	public function setUp()
 	{
 		parent::setUp();
-		$this->queue = \CodeIgniter\Config\Services::queue(false);
+		$this->queue = \CodeIgniter\Config\Services::queue(null, false);
 	}
 
 	public function tearDown()

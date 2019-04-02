@@ -1,16 +1,17 @@
 <?php namespace CodeIgniter\Queue\Handlers;
 
+use CodeIgniter\Queue\Exceptions\QueueException;
+
 /**
  * Queue handler for database.
  */
-class DatabaseHandler implements QueueHandlerInterface
+class DatabaseHandler extends BaseHandler
 {
 	const STATUS_WAITING   = 10;
 	const STATUS_EXECUTING = 20;
 	const STATUS_DONE      = 30;
 	const STATUS_FAILED    = 40;
-	protected $groupConfig;
-	protected $config;
+
 	protected $db;
 
 	/**
@@ -19,8 +20,14 @@ class DatabaseHandler implements QueueHandlerInterface
 	public static function migrateUp(\CodeIgniter\Database\Forge $forge)
 	{
 		$forge->addField([
-			'id'          => [ 'type' => 'INTEGER', 'auto_increment' => true ],
-			'queue_name'  => [ 'type' => 'VARCHAR', 'constraint' => 255 ],
+			'id'          => [
+				'type'           => 'INTEGER',
+				'auto_increment' => true,
+			],
+			'queue_name'  => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
 			'status'      => [ 'type' => 'INTEGER' ],
 			'weight'      => [ 'type' => 'INTEGER' ],
 			'retry_count' => [ 'type' => 'INTEGER' ],
@@ -30,7 +37,7 @@ class DatabaseHandler implements QueueHandlerInterface
 			'updated_at'  => [ 'type' => 'DATETIME' ],
 		]);
 		$forge->addKey('id', true);
-//		$forge->addKey(['weight', 'id', 'queue_name', 'status', 'exec_after']);
+		//      $forge->addKey(['weight', 'id', 'queue_name', 'status', 'exec_after']);
 		$forge->createTable('ci_queue', true);
 	}
 
@@ -45,10 +52,10 @@ class DatabaseHandler implements QueueHandlerInterface
 	/**
 	 * constructor.
 	 *
-	 * @param  array $groupConfig
-	 * @param  \Codeigniter\Config\Queue $config
+	 * @param array         $groupConfig
+	 * @param \Config\Queue $config
 	 */
-	public function __construct($groupConfig, \Codeigniter\Config\Queue $config)
+	public function __construct($groupConfig, $config)
 	{
 		$this->groupConfig = $groupConfig;
 		$this->config      = $config;
@@ -58,18 +65,19 @@ class DatabaseHandler implements QueueHandlerInterface
 	/**
 	 * send message to queueing system.
 	 *
-	 * @param  array  $data
-	 * @param  string $routingKey
-	 * @param  string $exchangeName
+	 * @param array  $data
+	 * @param string $routingKey
+	 * @param string $exchangeName
 	 */
 	public function send($data, string $routingKey = '', string $exchangeName = '')
 	{
-		if ($exchangeName == '') {
+		if ($exchangeName === '')
+		{
 			$exchangeName = $this->config->defaultExchange;
 		}
-		if ( ! isset($this->config->exchangeMap[$exchangeName]))
+		if (! isset($this->config->exchangeMap[$exchangeName]))
 		{
-			throw new \InvalidArgumentException($exchangeName.' is not a valid exchange name.');
+			throw QueueException::forInvalidExchangeName($exchangeName . ' is not a valid exchange name.');
 		}
 
 		$this->db->transStart();
@@ -104,16 +112,16 @@ class DatabaseHandler implements QueueHandlerInterface
 	public function fetch(callable $callback, string $queueName = '') : bool
 	{
 		$query = $this->db->table($this->groupConfig['table'])
-			->where('queue_name', $queueName != '' ? $queueName : $this->config->defaultQueue)
+			->where('queue_name', $queueName !== '' ? $queueName : $this->config->defaultQueue)
 			->where('status', self::STATUS_WAITING)
 			->where('exec_after <', date('Y-m-d H:i:s'))
 			->orderBy('weight')
 			->orderBy('id')
 			->limit(1)
 			->get();
-		if ( ! $query) {
-			throw new \RuntimeException('something occers on running a query: meybe '
-									   . $this->groupConfig['table'] . ' table is not found.');
+		if (! $query)
+		{
+			throw QueueException::forFailGetQueueDatabase($this->groupConfig['table']);
 		}
 
 		$row = $query->getRow();
@@ -145,7 +153,7 @@ class DatabaseHandler implements QueueHandlerInterface
 	 */
 	public function receive(callable $callback, string $queueName = '') : bool
 	{
-		while( ! $this->fetch($callback, $queueName))
+		while (! $this->fetch($callback, $queueName))
 		{
 			usleep(1000000);
 		}
@@ -181,11 +189,17 @@ class DatabaseHandler implements QueueHandlerInterface
 
 	protected function isMatchedRouting($routingKey, $routing): bool
 	{
-		$regex = str_replace(
-			['\*',             '#'],
-			['[-_a-zA-Z0-9]+', '.*'],
-			preg_quote($routing, '/')
-		);
-		return (bool) preg_match('/^'.$regex.'$/', $routingKey);
+		// to avoid phpcs error(infinite loop), use one-time variant.
+		$from = [
+			'\*',
+			'#',
+		];
+		$to   = [
+			'[-_a-zA-Z0-9]+',
+			'.*',
+		];
+
+		$regex = str_replace($from, $to, preg_quote($routing, '/'));
+		return (bool) preg_match('/^' . $regex . '$/', $routingKey);
 	}
 }

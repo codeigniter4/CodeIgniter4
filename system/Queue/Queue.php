@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Queue;
 
+use CodeIgniter\Queue\Exceptions\QueueException;
+
 /**
  * Queue class.
  *
@@ -13,51 +15,65 @@
  * Message is deleted when process is completed.
  * When incompleted, message is returnd to queueing system.
  */
-class Queue
+class Queue implements QueueInterface
 {
-	protected static $instances = [];
+	/**
+	 * Config object.
+	 *
+	 * @var \Config\Queue
+	 */
+	protected $config;
+
+	/**
+	 * Config of the connection group to use
+	 *
+	 * @var array
+	 */
+	protected $groupConfig;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param \Config\Queue $config
+	 * @param string|array  $group  The name of the connection group to use,
+	 *                               or an array of configuration settings.
+	 */
+	public function __construct($config, $group = '')
+	{
+		if (is_array($group))
+		{
+			$groupConfig = $group;
+			$group       = 'custom';
+		}
+		else
+		{
+			if ($group === '')
+			{
+				$group = ENVIRONMENT === 'testing' ? 'tests' : (string) $config->defaultGroup;
+			}
+
+			if (isset($config->$group))
+			{
+				$groupConfig = $config->$group;
+			}
+			else
+			{
+				throw QueueException::forInvalidGroup($group);
+			}
+		}
+
+		$this->groupConfig = $groupConfig;
+		$this->config      = $config;
+	}
 
 	/**
 	 * connecting queueing system.
 	 *
-	 *
-	 * @param  string|array  $group     The name of the connection group to use,
-	 *                                  or an array of configuration settings.
-	 * @param  bool          $getShared Whether to return a shared instance of the connection.
 	 * @return CodeIgniter\Queue\Handlers\QueueHandlerInterface
 	 */
-	public static function connect($group = '', bool $getShared = true)
+	public function connect()
 	{
-		if (is_array($group))
-		{
-			$group_config = $group;
-			$group        = 'custom';
-		}
-
-		if ($getShared && isset(self::$instances[$group]))
-		{
-			return self::$instances[$group];
-		}
-
-		$config = new \Config\Queue();
-
-		if ($group == '')
-		{
-			$group = ENVIRONMENT == 'testing' ? 'tests' : (string) $config->defaultGroup;
-		}
-
-		if (isset($config->$group))
-		{
-			$group_config = $config->$group;
-		}
-		elseif ($group != 'custom')
-		{
-			throw new \InvalidArgumentException($group.' is not a valid queue connection group.');
-		}
-
-		$handler                 = '\\CodeIgniter\\Queue\\Handlers\\'.$group_config['handler'].'Handler';
-		self::$instances[$group] = new $handler($group_config, $config);
-
-		return self::$instances[$group];
+		$handler = '\\CodeIgniter\\Queue\\Handlers\\' . $this->groupConfig['handler'] . 'Handler';
+		return new $handler($this->groupConfig, $this->config);
 	}
 }
