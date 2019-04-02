@@ -6,8 +6,20 @@
 
 abstract class BaseHandler
 {
-	protected $groupConfig;
-	protected $config;
+	/**
+	 * @var string
+	 */
+	protected $defaultExchange;
+
+	/**
+	 * @var string
+	 */
+	protected $defaultQueue;
+
+	/**
+	 * @var array
+	 */
+	protected $exchangeMap;
 
 	/**
 	 * constructor.
@@ -15,7 +27,12 @@ abstract class BaseHandler
 	 * @param array         $groupConfig
 	 * @param \Config\Queue $config
 	 */
-	abstract public function __construct($groupConfig, $config);
+	public function __construct($groupConfig, $config)
+	{
+		$this->defaultExchange = $config->defaultExchange;
+		$this->defaultQueue    = $config->defaultQueue;
+		$this->exchangeMap     = $config->exchangeMap;
+	}
 
 	/**
 	 * send message to queueing system.

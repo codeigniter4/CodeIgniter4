@@ -12,6 +12,39 @@ class DatabaseHandler extends BaseHandler
 	const STATUS_DONE      = 30;
 	const STATUS_FAILED    = 40;
 
+	/**
+	 * @var string
+	 */
+	protected $table;
+
+	/**
+	 * @var string
+	 */
+	protected $dbGroup;
+
+	/**
+	 * @var boolean
+	 */
+	protected $sharedConnection;
+
+	/**
+	 * @var integer
+	 */
+	protected $timeout;
+
+	/**
+	 * @var integer
+	 */
+	protected $maxRetry;
+
+	/**
+	 * @var integer
+	 */
+	protected $remainingDoneMessage;
+
+	/**
+	 * @var \CodeIgniter\Database\BaseConnection
+	 */
 	protected $db;
 
 	/**
@@ -57,9 +90,17 @@ class DatabaseHandler extends BaseHandler
 	 */
 	public function __construct($groupConfig, $config)
 	{
-		$this->groupConfig = $groupConfig;
-		$this->config      = $config;
-		$this->db          = \Config\Database::connect($this->groupConfig['dbGroup'], $this->groupConfig['sharedConnection']);
+		parent::__construct($groupConfig, $config);
+
+		$this->table            = $groupConfig['table'];
+		$this->dbGroup          = $groupConfig['dbGroup'];
+		$this->sharedConnection = $groupConfig['sharedConnection'];
+
+		$this->timeout              = $config->timeout;
+		$this->maxRetry             = $config->maxRetry;
+		$this->remainingDoneMessage = $config->remainingDoneMessage;
+
+		$this->db = \Config\Database::connect($this->dbGroup, $this->sharedConnection);
 	}
 
 	/**
@@ -73,20 +114,20 @@ class DatabaseHandler extends BaseHandler
 	{
 		if ($exchangeName === '')
 		{
-			$exchangeName = $this->config->defaultExchange;
+			$exchangeName = $this->defaultExchange;
 		}
-		if (! isset($this->config->exchangeMap[$exchangeName]))
+		if (! isset($this->exchangeMap[$exchangeName]))
 		{
 			throw QueueException::forInvalidExchangeName($exchangeName . ' is not a valid exchange name.');
 		}
 
 		$this->db->transStart();
-		foreach ($this->config->exchangeMap[$exchangeName] as $routing => $queueName)
+		foreach ($this->exchangeMap[$exchangeName] as $routing => $queueName)
 		{
 			if ($this->isMatchedRouting($routingKey, $routing))
 			{
 				$datetime = date('Y-m-d H:i:s');
-				$this->db->table($this->groupConfig['table'])->insert([
+				$this->db->table($this->table)->insert([
 					'queue_name'  => $queueName,
 					'status'      => self::STATUS_WAITING,
 					'weight'      => 100,
@@ -111,8 +152,8 @@ class DatabaseHandler extends BaseHandler
 	 */
 	public function fetch(callable $callback, string $queueName = '') : bool
 	{
-		$query = $this->db->table($this->groupConfig['table'])
-			->where('queue_name', $queueName !== '' ? $queueName : $this->config->defaultQueue)
+		$query = $this->db->table($this->table)
+			->where('queue_name', $queueName !== '' ? $queueName : $this->defaultQueue)
 			->where('status', self::STATUS_WAITING)
 			->where('exec_after <', date('Y-m-d H:i:s'))
 			->orderBy('weight')
@@ -121,20 +162,20 @@ class DatabaseHandler extends BaseHandler
 			->get();
 		if (! $query)
 		{
-			throw QueueException::forFailGetQueueDatabase($this->groupConfig['table']);
+			throw QueueException::forFailGetQueueDatabase($this->table);
 		}
 
 		$row = $query->getRow();
 		if ($row)
 		{
-			$this->db->table($this->groupConfig['table'])
+			$this->db->table($this->table)
 				->where('id', (int) $row->id)
 				->where('status', (int)self::STATUS_WAITING)
 				->update(['status' => self::STATUS_EXECUTING, 'updated_at' => date('Y-m-d H:i:s')]);
 			if ($this->db->affectedRows() > 0)
 			{
 				$callback(json_decode($row->data));
-				$this->db->table($this->groupConfig['table'])
+				$this->db->table($this->table)
 					->where('id', $row->id)
 					->update(['status' => self::STATUS_DONE, 'updated_at' => date('Y-m-d H:i:s')]);
 				return true;
@@ -165,25 +206,25 @@ class DatabaseHandler extends BaseHandler
 	 */
 	public function keepHouse()
 	{
-		$this->db->table($this->groupConfig['table'])
+		$this->db->table($this->table)
 			->set('retry_count', 'retry_count + 1', false)
 			->set('status', self::STATUS_WAITING)
 			->set('updated_at', date('Y-m-d H:i:s'))
 			->where('status', self::STATUS_EXECUTING)
-			->where('updated_at <', date('Y-m-d H:i:s', time() - $this->config->timeout))
-			->where('retry_count <', $this->config->MaxRetry)
+			->where('updated_at <', date('Y-m-d H:i:s', time() - $this->timeout))
+			->where('retry_count <', $this->maxRetry)
 			->update();
-		$this->db->table($this->groupConfig['table'])
+		$this->db->table($this->table)
 			->set('retry_count', 'retry_count + 1', false)
 			->set('status', self::STATUS_FAILED)
 			->set('updated_at', date('Y-m-d H:i:s'))
 			->where('status', self::STATUS_EXECUTING)
-			->where('updated_at <', date('Y-m-d H:i:s', time() - $this->config->timeout))
-			->where('retry_count >=', $this->config->maxRetry)
+			->where('updated_at <', date('Y-m-d H:i:s', time() - $this->timeout))
+			->where('retry_count >=', $this->maxRetry)
 			->update();
-		$this->db->table($this->groupConfig['table'])
+		$this->db->table($this->table)
 			->where('status', self::STATUS_DONE)
-			->where('updated_at <', date('Y-m-d H:i:s', time() - $this->config->remainingDoneMessage))
+			->where('updated_at <', date('Y-m-d H:i:s', time() - $this->remainingDoneMessage))
 			->delete();
 	}
 

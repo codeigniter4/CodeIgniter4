@@ -10,6 +10,7 @@ use PhpAmqpLib\Exception\AMQPTimeoutException;
 class RabbitMQHandler extends BaseHandler
 {
 	protected $connection;
+	protected $channel;
 
 	/**
 	 * constructor.
@@ -19,17 +20,17 @@ class RabbitMQHandler extends BaseHandler
 	 */
 	public function __construct($groupConfig, $config)
 	{
-		$this->groupConfig = $groupConfig;
-		$this->config      = clone $config;
-		$this->connection  = new AMQPStreamConnection(
-			$this->groupConfig['host'],
-			$this->groupConfig['port'],
-			$this->groupConfig['user'],
-			$this->groupConfig['password'],
-			$this->groupConfig['vhost']
+		parent::__construct($groupConfig, $config);
+
+		$this->connection = new AMQPStreamConnection(
+			$groupConfig['host'],
+			$groupConfig['port'],
+			$groupConfig['user'],
+			$groupConfig['password'],
+			$groupConfig['vhost']
 		);
-		$this->channel     = $this->connection->channel();
-		if ($this->groupConfig['do_setup'])
+		$this->channel    = $this->connection->channel();
+		if ($groupConfig['do_setup'])
 		{
 			$this->setup();
 		}
@@ -40,7 +41,7 @@ class RabbitMQHandler extends BaseHandler
 	 */
 	public function setup()
 	{
-		foreach ($this->config->exchangeMap as $exchangeName => $queues)
+		foreach ($this->exchangeMap as $exchangeName => $queues)
 		{
 			$this->channel->exchange_declare($exchangeName, 'topic', false, true, false);
 			foreach ($queues as $routingKey => $queueName)
@@ -73,7 +74,7 @@ class RabbitMQHandler extends BaseHandler
 	{
 		$this->channel->basic_publish(
 			new AMQPMessage(json_encode($data), ['delivery_mode' => 2]),
-			$exchangeName !== '' ? $exchangeName : $this->config->defaultExchange,
+			$exchangeName !== '' ? $exchangeName : $this->defaultExchange,
 			$routingKey
 		);
 	}
@@ -108,7 +109,7 @@ class RabbitMQHandler extends BaseHandler
 	{
 		$this->channel->basic_qos(null, 1, null);
 		$this->channel->basic_consume(
-			$queueName !== '' ? $queueName : $this->config->defaultQueue,
+			$queueName !== '' ? $queueName : $this->defaultQueue,
 			'',
 			false,
 			false,

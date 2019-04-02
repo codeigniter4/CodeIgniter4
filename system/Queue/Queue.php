@@ -69,7 +69,7 @@ class Queue implements QueueInterface
 	/**
 	 * connecting queueing system.
 	 *
-	 * @return CodeIgniter\Queue\Handlers\QueueHandlerInterface
+	 * @return CodeIgniter\Queue\Handlers\BaseHandler
 	 */
 	public function connect()
 	{
