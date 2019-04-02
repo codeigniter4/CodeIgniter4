@@ -51,7 +51,7 @@ class MemcachedHandlerTest extends \CIUnitTestCase
 		$this->memcachedHandler->save(self::$key1, 'value', 1);
 
 		$this->assertSame('value', $this->memcachedHandler->get(self::$key1));
-		$this->assertFalse($this->memcachedHandler->get(self::$dummy));
+		$this->assertNull($this->memcachedHandler->get(self::$dummy));
 
 		\CodeIgniter\CLI\CLI::wait(2);
 		$this->assertNull($this->memcachedHandler->get(self::$key1));
