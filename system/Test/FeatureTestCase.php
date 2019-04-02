@@ -83,7 +83,11 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * Sets a RouteCollection that will override
 	 * the application's route collection.
 	 *
-	 * @param array $routes
+	 * Example routes:
+	 * [
+	 *    ['get', 'home', 'Home::index']
+	 * ]
+	 *      * @param array $routes
 	 *
 	 * @return $this
 	 */
@@ -151,6 +155,12 @@ class FeatureTestCase extends CIDatabaseTestCase
 		$request = $this->setupRequest($method, $path, $params);
 		$request = $this->populateGlobals($method, $request, $params);
 
+		// Make sure the RouteCollection knows what method we're using...
+		if (! empty($this->routes))
+		{
+			$this->routes->setHTTPVerb($method);
+		}
+
 		// Make sure any other classes that might call the request
 		// instance get the right one.
 		Services::injectMock('request', $request);
@@ -160,8 +170,9 @@ class FeatureTestCase extends CIDatabaseTestCase
 				->setRequest($request)
 				->run($this->routes, true);
 
+		$output = null;
 		// Clean up any open output buffers
-		if (ob_get_level() > 0 && $this->clean)
+		if (ob_get_level() >= 0 && $this->clean)
 		{
 			$output = ob_end_clean();
 		}
