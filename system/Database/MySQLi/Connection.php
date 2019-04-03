@@ -158,13 +158,13 @@ class Connection extends BaseConnection implements ConnectionInterface
 					//
 					// https://secure.php.net/ChangeLog-5.php#5.6.16
 					// https://bugs.php.net/bug.php?id=68344
-					elseif (defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT'))
+					elseif (defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT') && version_compare($this->mysqli->client_info, '5.6', '>='))
 					{
-						$this->mysqli->options(MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT, true);
+						$client_flags += MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT;
 					}
 				}
 
-				$client_flags |= MYSQLI_CLIENT_SSL;
+				$client_flags += MYSQLI_CLIENT_SSL;
 				$this->mysqli->ssl_set(
 					$ssl['key'] ?? null, $ssl['cert'] ?? null, $ssl['ca'] ?? null,
 					$ssl['capath'] ?? null, $ssl['cipher'] ?? null

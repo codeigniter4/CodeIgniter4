@@ -25,7 +25,7 @@ Service Accessors
 
     If no $key is provided, will return the Cache engine instance. If a $key
     is provided, will return the value of $key as stored in the cache currently,
-    or false if no value is found.
+    or null if no value is found.
 
     Examples::
 

@@ -127,7 +127,7 @@ class PredisHandler implements CacheInterface
 
 		if (! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false)
 		{
-			return false;
+			return null;
 		}
 
 		switch ($data['__ci_type'])
@@ -140,10 +140,10 @@ class PredisHandler implements CacheInterface
 			case 'double': // Yes, 'double' is returned and NOT 'float'
 			case 'string':
 			case 'NULL':
-				return settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : false;
+				return settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : null;
 			case 'resource':
 			default:
-				return false;
+				return null;
 		}
 	}
 

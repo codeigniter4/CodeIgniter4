@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Config\Config;
+use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -65,6 +66,32 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertEquals('Developer', $job[0]->name);
 		$this->assertEquals('Musician', $job[1]->name);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetColumnWithStringColumnName()
+	{
+		$model = new JobModel($this->db);
+
+		$job = $model->findColumn('name');
+
+		$this->assertEquals('Developer', $job[0]);
+		$this->assertEquals('Politician', $job[1]);
+		$this->assertEquals('Accountant', $job[2]);
+		$this->assertEquals('Musician', $job[3]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetColumnsWithMultipleColumnNames()
+	{
+		$model = new JobModel($this->db);
+
+		$this->expectException(DataException::class);
+		$this->expectExceptionMessage('Only single column allowed in Column name.');
+
+		$job = $model->findColumn('name,description');
 	}
 
 	//--------------------------------------------------------------------
@@ -1106,7 +1133,7 @@ class ModelTest extends CIDatabaseTestCase
 	}
 
 	/**
-	 * @expectedException        CodeIgniter\Exceptions\ModelException
+	 * @expectedException        \CodeIgniter\Exceptions\ModelException
 	 * @expectedExceptionMessage `Tests\Support\Models\UserModel` model class does not specify a Primary Key.
 	 */
 	public function testThrowsWithNoPrimaryKey()

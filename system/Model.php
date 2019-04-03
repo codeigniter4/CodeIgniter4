@@ -352,6 +352,31 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Fetches the column of database from $this->table
+	 *
+	 * @param string        $column_name Column name
+	 *
+	 * @return array|null   The resulting row of data, or null if no data found.
+	 *
+	 * @throws \CodeIgniter\Database\Exceptions\DataException
+	 */
+	public function findColumn(string $columnName)
+	{
+		if (strpos($columnName, ',') !== false)
+		{
+			throw DataException::forFindColumnHaveMultipleColumns();
+		}
+
+		$resultSet = $this->select($columnName)
+		                  ->asArray()
+		                  ->find();
+
+		return (!empty($resultSet)) ? array_column($resultSet, $columnName) : null;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Works with the current Query Builder instance to return
 	 * all results, while optionally limiting them.
 	 *

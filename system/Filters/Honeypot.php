@@ -54,7 +54,9 @@ class Honeypot implements FilterInterface
 	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface $request
 	 *
-	 * @return mixed
+	 * @return void
+	 *
+	 * @throws \CodeIgniter\Honeypot\Exceptions\HoneypotException
 	 */
 	public function before(RequestInterface $request)
 	{
@@ -66,11 +68,12 @@ class Honeypot implements FilterInterface
 	}
 
 	/**
-	 * Attach a honypot to the current response.
+	 * Attach a honeypot to the current response.
 	 *
-	 * @param  \CodeIgniter\HTTP\RequestInterface  $request
-	 * @param  \CodeIgniter\HTTP\ResponseInterface $response
-	 * @return mixed
+	 * @param  CodeIgniter\HTTP\RequestInterface  $request
+	 * @param  CodeIgniter\HTTP\ResponseInterface $response
+   *
+	 * @return void
 	 */
 	public function after(RequestInterface $request, ResponseInterface $response)
 	{

@@ -676,7 +676,7 @@ abstract class BaseConnection implements ConnectionInterface
 
 		if (! $this->pretend)
 		{
-			// Let others do somethign with this query
+			// Let others do something with this query
 			Events::trigger('DBQuery', $query);
 		}
 
