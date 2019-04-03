@@ -274,7 +274,7 @@ even set background colors by passing the color name in as the third parameter:<
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;File overwritten.&#39;</span><span class="p">,</span> <span class="s1">&#39;light_red&#39;</span><span class="p">,</span> <span class="s1">&#39;dark_gray&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The following colors are available:</p>
+<p>The following foreground colors are available:</p>
 <ul class="simple">
 <li>black</li>
 <li>dark_gray</li>
@@ -294,6 +294,28 @@ even set background colors by passing the color name in as the third parameter:<
 <li>light_gray</li>
 <li>white</li>
 </ul>
+<p>And a smaller number are available as background colors:</p>
+<ul class="simple">
+<li>black</li>
+<li>blue</li>
+<li>green</li>
+<li>cyan</li>
+<li>red</li>
+<li>yellow</li>
+<li>light_gray</li>
+<li>magenta</li>
+</ul>
+<p><strong>print()</strong></p>
+<p>Print functions identically to the <code class="docutils literal"><span class="pre">write()</span></code> method, except that it does not force a newline either before or after.
+Instead it prints it to the screen wherever the cursor is currently. This allows you to print multiple items all on
+the same line, from different calls. This is especially helpful when you want to show a status, do something, then
+print &#8220;Done&#8221; on the same line:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nx">CLI</span><span class="o">::</span><span class="na">print</span><span class="p">(</span><span class="nv">$i</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <p><strong>color()</strong></p>
 <p>While the <code class="docutils literal"><span class="pre">write()</span></code> command will write a single line to the terminal, ending it with a EOL character, you can
 use the <code class="docutils literal"><span class="pre">color()</span></code> method to make a string fragment that can be used in the same way, except that it will not force
@@ -449,7 +471,7 @@ waiting for a key press.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 25, 2019.
+      Last updated on Apr 03, 2019.
 
     </p>
   </div>

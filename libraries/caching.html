@@ -306,7 +306,7 @@ here that is prepended to all key names.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Item value or FALSE if not found</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Item value or NULL if not found</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
@@ -315,7 +315,7 @@ here that is prepended to all key names.</p>
 </tbody>
 </table>
 <p>This method will attempt to fetch an item from the cache store. If the
-item does not exist, the method will return FALSE.</p>
+item does not exist, the method will return NULL.</p>
 <p>Example:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$foo</span> <span class="o">=</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;my_cached_item&#39;</span><span class="p">);</span>
 </pre></div>
@@ -599,7 +599,7 @@ support your chosen cache.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 25, 2019.
+      Last updated on Apr 03, 2019.
 
     </p>
   </div>

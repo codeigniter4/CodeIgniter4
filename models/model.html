@@ -414,6 +414,14 @@ of just one:</p>
 </div>
 <p>If no parameters are passed in, will return all rows in that model&#8217;s table, effectively acting
 like findAll(), though less explicit.</p>
+<p><strong>findColumn()</strong></p>
+<blockquote>
+<div><p>Returns null or an indexed array of column values:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">findColumn</span><span class="p">(</span><span class="nv">$column_name</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>$column_name should be a name of single column else you will get the DataException.</p>
+</div></blockquote>
 <p><strong>findAll()</strong></p>
 <p>Returns all results:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
@@ -948,7 +956,7 @@ insert method, it is first converted to an array.</td>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 25, 2019.
+      Last updated on Apr 03, 2019.
 
     </p>
   </div>

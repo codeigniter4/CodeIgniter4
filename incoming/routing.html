@@ -229,19 +229,20 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#global-options" id="id19">Global Options</a><ul>
-<li><a class="reference internal" href="#assigning-namespace" id="id20">Assigning Namespace</a></li>
-<li><a class="reference internal" href="#limit-to-hostname" id="id21">Limit to Hostname</a></li>
-<li><a class="reference internal" href="#limit-to-subdomains" id="id22">Limit to Subdomains</a></li>
-<li><a class="reference internal" href="#offsetting-the-matched-parameters" id="id23">Offsetting the Matched Parameters</a></li>
+<li><a class="reference internal" href="#applying-filters" id="id20">Applying Filters</a></li>
+<li><a class="reference internal" href="#assigning-namespace" id="id21">Assigning Namespace</a></li>
+<li><a class="reference internal" href="#limit-to-hostname" id="id22">Limit to Hostname</a></li>
+<li><a class="reference internal" href="#limit-to-subdomains" id="id23">Limit to Subdomains</a></li>
+<li><a class="reference internal" href="#offsetting-the-matched-parameters" id="id24">Offsetting the Matched Parameters</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#routes-configuration-options" id="id24">Routes Configuration Options</a><ul>
-<li><a class="reference internal" href="#default-namespace" id="id25">Default Namespace</a></li>
-<li><a class="reference internal" href="#default-controller" id="id26">Default Controller</a></li>
-<li><a class="reference internal" href="#default-method" id="id27">Default Method</a></li>
-<li><a class="reference internal" href="#translate-uri-dashes" id="id28">Translate URI Dashes</a></li>
-<li><a class="reference internal" href="#use-defined-routes-only" id="id29">Use Defined Routes Only</a></li>
-<li><a class="reference internal" href="#override" id="id30">404 Override</a></li>
+<li><a class="reference internal" href="#routes-configuration-options" id="id25">Routes Configuration Options</a><ul>
+<li><a class="reference internal" href="#default-namespace" id="id26">Default Namespace</a></li>
+<li><a class="reference internal" href="#default-controller" id="id27">Default Controller</a></li>
+<li><a class="reference internal" href="#default-method" id="id28">Default Method</a></li>
+<li><a class="reference internal" href="#translate-uri-dashes" id="id29">Translate URI Dashes</a></li>
+<li><a class="reference internal" href="#use-defined-routes-only" id="id30">Use Defined Routes Only</a></li>
+<li><a class="reference internal" href="#override" id="id31">404 Override</a></li>
 </ul>
 </li>
 </ul>
@@ -455,7 +456,7 @@ It is possible to nest groups within groups for finer organization if you need i
 </pre></div>
 </div>
 <p>This would handle a resource route to the <code class="docutils literal"><span class="pre">App\API\v1\Users</span></code> controller with the <code class="docutils literal"><span class="pre">/api/users</span></code> URI.</p>
-<p>You can also use ensure that a specific <a class="reference external" href="/incoming/filters.html">filter</a> gets ran for a group of routes. This will always
+<p>You can also use ensure that a specific <a class="reference external" href="/incoming/filters.html">filter</a> runs for a group of routes. This will always
 run the filter before or after the controller. This is especially handy during authentication or api logging:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;api-auth&#39;</span><span class="p">],</span> <span class="k">function</span><span class="p">(</span><span class="nv">$routes</span><span class="p">)</span>
 <span class="p">{</span>
@@ -625,8 +626,20 @@ can modify the generated routes, or further restrict them. The <code class="docu
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="k">function</span><span class="p">());</span>
 </pre></div>
 </div>
+<div class="section" id="applying-filters">
+<h3><a class="toc-backref" href="#id20">Applying Filters</a><a class="headerlink" href="#applying-filters" title="Permalink to this headline">¶</a></h3>
+<p>You can alter the behavior of specific routes by supplying a filter to run before or after the controller. This is especially handy during authentication or api logging:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span><span class="s1">&#39; AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;admin-auth&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>The value for the filter must match one of the aliases defined within <code class="docutils literal"><span class="pre">app/Config/Filters.php</span></code>. You may also supply parameters to be passed to the filter&#8217;s <code class="docutils literal"><span class="pre">before()</span></code> and <code class="docutils literal"><span class="pre">after()</span></code> methods:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;users/delete/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;admin-auth:dual,noreturn&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="/incoming/filters.html">Controller filters</a> for more information on setting up filters.</p>
+</div>
 <div class="section" id="assigning-namespace">
-<h3><a class="toc-backref" href="#id20">Assigning Namespace</a><a class="headerlink" href="#assigning-namespace" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id21">Assigning Namespace</a><a class="headerlink" href="#assigning-namespace" title="Permalink to this headline">¶</a></h3>
 <p>While a default namespace will be prepended to the generated controllers (see below), you can also specify
 a different namespace to be used in any options array, with the <code class="docutils literal"><span class="pre">namespace</span></code> option. The value should be the
 namespace you want modified:</p>
@@ -639,7 +652,7 @@ For any methods that create multiple routes, the new namespace is attached to al
 or, in the case of <code class="docutils literal"><span class="pre">group()</span></code>, all routes generated while in the closure.</p>
 </div>
 <div class="section" id="limit-to-hostname">
-<h3><a class="toc-backref" href="#id21">Limit to Hostname</a><a class="headerlink" href="#limit-to-hostname" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id22">Limit to Hostname</a><a class="headerlink" href="#limit-to-hostname" title="Permalink to this headline">¶</a></h3>
 <p>You can restrict groups of routes to function only in certain domain or sub-domains of your application
 by passing the &#8220;hostname&#8221; option along with the desired domain to allow it on as part of the options array:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;accounts.example.com&#39;</span><span class="p">]);</span>
@@ -649,7 +662,7 @@ by passing the &#8220;hostname&#8221; option along with the desired domain to al
 It would not work under the main site at &#8220;example.com&#8221;.</p>
 </div>
 <div class="section" id="limit-to-subdomains">
-<h3><a class="toc-backref" href="#id22">Limit to Subdomains</a><a class="headerlink" href="#limit-to-subdomains" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id23">Limit to Subdomains</a><a class="headerlink" href="#limit-to-subdomains" title="Permalink to this headline">¶</a></h3>
 <p>When the <code class="docutils literal"><span class="pre">subdomain</span></code> option is present, the system will restrict the routes to only be available on that
 sub-domain. The route will only be matched if the subdomain is the one the application is being viewed through:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Limit to media.example.com</span>
@@ -670,7 +683,7 @@ to separate suffixes or www) can potentially lead to false positives.</p>
 </div>
 </div>
 <div class="section" id="offsetting-the-matched-parameters">
-<h3><a class="toc-backref" href="#id23">Offsetting the Matched Parameters</a><a class="headerlink" href="#offsetting-the-matched-parameters" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id24">Offsetting the Matched Parameters</a><a class="headerlink" href="#offsetting-the-matched-parameters" title="Permalink to this headline">¶</a></h3>
 <p>You can offset the matched parameters in your route by any numeric value with the <code class="docutils literal"><span class="pre">offset</span></code> option, with the
 value being the number of segments to offset.</p>
 <p>This can be beneficial when developing API&#8217;s with the first URI segment being the version number. It can also
@@ -684,11 +697,11 @@ be used when the first parameter is a language string:</p>
 </div>
 </div>
 <div class="section" id="routes-configuration-options">
-<h2><a class="toc-backref" href="#id24">Routes Configuration Options</a><a class="headerlink" href="#routes-configuration-options" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id25">Routes Configuration Options</a><a class="headerlink" href="#routes-configuration-options" title="Permalink to this headline">¶</a></h2>
 <p>The RoutesCollection class provides several options that affect all routes, and can be modified to meet your
 application&#8217;s needs. These options are available at the top of <cite>/app/Config/Routes.php</cite>.</p>
 <div class="section" id="default-namespace">
-<h3><a class="toc-backref" href="#id25">Default Namespace</a><a class="headerlink" href="#default-namespace" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id26">Default Namespace</a><a class="headerlink" href="#default-namespace" title="Permalink to this headline">¶</a></h3>
 <p>When matching a controller to a route, the router will add the default namespace value to the front of the controller
 specified by the route. By default, this value is empty, which leaves each route to specify the fully namespaced
 controller:</p>
@@ -714,7 +727,7 @@ then you can change this value to save typing:</p>
 </div>
 </div>
 <div class="section" id="default-controller">
-<h3><a class="toc-backref" href="#id26">Default Controller</a><a class="headerlink" href="#default-controller" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id27">Default Controller</a><a class="headerlink" href="#default-controller" title="Permalink to this headline">¶</a></h3>
 <p>When a user visits the root of your site (i.e. example.com) the controller to use is determined by the value set by
 the <code class="docutils literal"><span class="pre">setDefaultController()</span></code> method, unless a route exists for it explicitly. The default value for this is <code class="docutils literal"><span class="pre">Home</span></code>
 which matches the controller at <code class="docutils literal"><span class="pre">/app/Controllers/Home.php</span></code>:</p>
@@ -727,7 +740,7 @@ in the controllers directory. For example, if the user visits <code class="docut
 <code class="docutils literal"><span class="pre">/app/Controllers/admin/Home.php</span></code> it would be used.</p>
 </div>
 <div class="section" id="default-method">
-<h3><a class="toc-backref" href="#id27">Default Method</a><a class="headerlink" href="#default-method" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id28">Default Method</a><a class="headerlink" href="#default-method" title="Permalink to this headline">¶</a></h3>
 <p>This works similar to the default controller setting, but is used to determine the default method that is used
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
 <code class="docutils literal"><span class="pre">index</span></code>:</p>
@@ -738,7 +751,7 @@ when a controller is found that matches the URI, but no segment exists for the m
 <code class="docutils literal"><span class="pre">Products::listAll()</span></code> method would be executed.</p>
 </div>
 <div class="section" id="translate-uri-dashes">
-<h3><a class="toc-backref" href="#id28">Translate URI Dashes</a><a class="headerlink" href="#translate-uri-dashes" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id29">Translate URI Dashes</a><a class="headerlink" href="#translate-uri-dashes" title="Permalink to this headline">¶</a></h3>
 <p>This option enables you to automatically replace dashes (‘-‘) with underscores in the controller and method
 URI segments, thus saving you additional route entries if you need to do that. This is required because the
 dash isn’t a valid class or method name character and would cause a fatal error if you try to use it:</p>
@@ -747,7 +760,7 @@ dash isn’t a valid class or method name character and would cause a fatal erro
 </div>
 </div>
 <div class="section" id="use-defined-routes-only">
-<h3><a class="toc-backref" href="#id29">Use Defined Routes Only</a><a class="headerlink" href="#use-defined-routes-only" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id30">Use Defined Routes Only</a><a class="headerlink" href="#use-defined-routes-only" title="Permalink to this headline">¶</a></h3>
 <p>When no defined route is found that matches the URI, the system will attempt to match that URI against the
 controllers and methods as described above. You can disable this automatic matching, and restrict routes
 to only those defined by you, by setting the <code class="docutils literal"><span class="pre">setAutoRoute()</span></code> option to false:</p>
@@ -756,7 +769,7 @@ to only those defined by you, by setting the <code class="docutils literal"><spa
 </div>
 </div>
 <div class="section" id="override">
-<h3><a class="toc-backref" href="#id30">404 Override</a><a class="headerlink" href="#override" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id31">404 Override</a><a class="headerlink" href="#override" title="Permalink to this headline">¶</a></h3>
 <p>When a page is not found that matches the current URI, the system will show a generic 404 view. You can change
 what happens by specifying an action to happen with the <code class="docutils literal"><span class="pre">set404Override()</span></code> option. The value can be either
 a valid class/method pair, just like you would show in any route, or a Closure:</p>
@@ -797,7 +810,7 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Mar 25, 2019.
+      Last updated on Apr 03, 2019.
 
     </p>
   </div>
