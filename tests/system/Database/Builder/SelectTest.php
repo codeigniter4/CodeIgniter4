@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\Exceptions\DataException;
 use Tests\Support\Database\MockConnection;
 
 class SelectTest extends \CIUnitTestCase
@@ -202,8 +203,8 @@ class SelectTest extends \CIUnitTestCase
 	{
 		$builder = new BaseBuilder('invoices', $this->db);
 
-		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
-		$this->expectExceptionMessage('The query you submitted is not valid.');
+		$this->expectException(DataException::class);
+		$this->expectExceptionMessage('Empty statement is given for the field `Select`');
 
 		$builder->selectSum('');
 	}
@@ -222,4 +223,17 @@ class SelectTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testSelectMinThrowsExceptionOnMultipleColumn()
+	{
+		$builder = new BaseBuilder('users', $this->db);
+
+		$this->expectException(DataException::class);
+		$this->expectExceptionMessage('You must provide a valid column name not separated by comma.');
+
+		$builder->selectSum('name,role');
+	}
+
+	//--------------------------------------------------------------------
+
 }

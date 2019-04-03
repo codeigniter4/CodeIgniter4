@@ -82,7 +82,7 @@ class Builder extends BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _replace($table, $keys, $values)
+	protected function _replace(string $table, array $keys, array $values): string
 	{
 		return 'INSERT OR ' . parent::_replace($table, $keys, $values);
 	}
@@ -100,7 +100,7 @@ class Builder extends BaseBuilder
 	 * @param  string $table
 	 * @return string
 	 */
-	protected function _truncate($table)
+	protected function _truncate(string $table): string
 	{
 		return 'DELETE FROM ' . $table;
 	}

@@ -61,33 +61,33 @@ class Builder extends BaseBuilder
 	/**
 	 * ORDER BY
 	 *
-	 * @param string  $orderby
+	 * @param string  $orderBy
 	 * @param string  $direction ASC, DESC or RANDOM
 	 * @param boolean $escape
 	 *
 	 * @return BaseBuilder
 	 */
-	public function orderBy($orderby, $direction = '', $escape = null)
+	public function orderBy(string $orderBy, string $direction = '', bool $escape = null)
 	{
 		$direction = strtoupper(trim($direction));
 		if ($direction === 'RANDOM')
 		{
-			if (! is_float($orderby) && ctype_digit((string) $orderby))
+			if (! is_float($orderBy) && ctype_digit((string) $orderBy))
 			{
-				$orderby = (float) ($orderby > 1 ? "0.{$orderby}" : $orderby);
+				$orderBy = (float) ($orderBy > 1 ? "0.{$orderBy}" : $orderBy);
 			}
 
-			if (is_float($orderby))
+			if (is_float($orderBy))
 			{
-				$this->db->simpleQuery("SET SEED {$orderby}");
+				$this->db->simpleQuery("SET SEED {$orderBy}");
 			}
 
-			$orderby   = $this->randomKeyword[0];
+			$orderBy   = $this->randomKeyword[0];
 			$direction = '';
 			$escape    = false;
 		}
 
-		return parent::orderBy($orderby, $direction, $escape);
+		return parent::orderBy($orderBy, $direction, $escape);
 	}
 
 	//--------------------------------------------------------------------
@@ -145,7 +145,7 @@ class Builder extends BaseBuilder
 	 * @throws   DatabaseException
 	 * @internal param true $bool returns the generated SQL, false executes the query.
 	 */
-	public function replace($set = null, $returnSQL = false)
+	public function replace(array $set = null, bool $returnSQL = false)
 	{
 		if ($set !== null)
 		{
@@ -200,8 +200,8 @@ class Builder extends BaseBuilder
 	 *
 	 * Compiles a delete string and runs the query
 	 *
-	 * @param string  $where
-	 * @param null    $limit
+	 * @param mixed   $where
+	 * @param integer $limit
 	 * @param boolean $reset_data
 	 * @param boolean $returnSQL
 	 *
@@ -211,7 +211,7 @@ class Builder extends BaseBuilder
 	 * @internal param the $mixed limit clause
 	 * @internal param $bool
 	 */
-	public function delete($where = '', $limit = null, $reset_data = true, $returnSQL = false)
+	public function delete($where = '', int $limit = null, bool $reset_data = true, bool $returnSQL = false)
 	{
 		if (! empty($limit) || ! empty($this->QBLimit))
 		{
@@ -232,7 +232,7 @@ class Builder extends BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _limit($sql)
+	protected function _limit(string $sql): string
 	{
 		return $sql . ' LIMIT ' . $this->QBLimit . ($this->QBOffset ? " OFFSET {$this->QBOffset}" : '');
 	}
@@ -252,7 +252,7 @@ class Builder extends BaseBuilder
 	 * @internal param the $string table name
 	 * @internal param the $array update data
 	 */
-	protected function _update($table, $values)
+	protected function _update(string $table, array $values): string
 	{
 		if (! empty($this->QBLimit))
 		{
@@ -276,7 +276,7 @@ class Builder extends BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _updateBatch($table, $values, $index)
+	protected function _updateBatch(string $table, array $values, string $index): string
 	{
 		$ids = [];
 		foreach ($values as $key => $val)
@@ -316,7 +316,7 @@ class Builder extends BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _delete($table)
+	protected function _delete(string $table): string
 	{
 		$this->QBLimit = false;
 		return parent::_delete($table);
@@ -336,7 +336,7 @@ class Builder extends BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _truncate($table)
+	protected function _truncate(string $table): string
 	{
 		return 'TRUNCATE ' . $table . ' RESTART IDENTITY';
 	}
@@ -351,11 +351,11 @@ class Builder extends BaseBuilder
 	 *
 	 * @see https://www.postgresql.org/docs/9.2/static/functions-matching.html
 	 *
-	 * @param string|null $prefix
-	 * @param string      $column
-	 * @param string|null $not
-	 * @param string      $bind
-	 * @param boolean     $insensitiveSearch
+	 * @param string    $prefix
+	 * @param string    $column
+	 * @param string    $not
+	 * @param string    $bind
+	 * @param boolean   $insensitiveSearch
 	 *
 	 * @return string     $like_statement
 	 */
