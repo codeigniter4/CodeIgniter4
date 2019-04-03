@@ -170,15 +170,11 @@ class FeatureTestCase extends CIDatabaseTestCase
 				->setRequest($request)
 				->run($this->routes, true);
 
-		$output = null;
+		$output = ob_get_contents();
 		// Clean up any open output buffers
-		if (ob_get_level() >= 0 && $this->clean)
+		if (ob_get_level() > 1 && $this->clean)
 		{
-			$output = ob_end_clean();
-		}
-		if (empty($response->getBody()))
-		{
-			$response->setBody($output);
+			ob_end_flush();
 		}
 
 		$featureResponse = new FeatureResponse($response);

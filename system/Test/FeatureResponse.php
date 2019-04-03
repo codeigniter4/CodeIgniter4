@@ -60,9 +60,10 @@ class FeatureResponse extends TestCase
 	{
 		$this->response = $response;
 
-		if (is_string($this->response->getBody()))
+		$body = $response->getBody();
+		if (! empty($body) && is_string($body))
 		{
-			$this->domParser = (new DOMParser())->withString($this->response->getBody());
+			$this->domParser = (new DOMParser())->withString($body);
 		}
 	}
 
