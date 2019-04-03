@@ -454,6 +454,16 @@ class EntityTest extends \CIUnitTestCase
 		$this->getPrivateProperty($entity, 'tenth');
 	}
 
+	public function testCastAsJSONErrorUTF8()
+	{
+		$entity = $this->getCastEntity();
+
+		$this->expectException(CastException::class);
+		$this->expectExceptionMessage('Malformed UTF-8 characters, possibly incorrectly encoded');
+
+		$entity->tenth = "\xB1\x31";
+		$this->getPrivateProperty($entity, 'tenth');
+	}
 	//--------------------------------------------------------------------
 
 	public function testAsArray()
