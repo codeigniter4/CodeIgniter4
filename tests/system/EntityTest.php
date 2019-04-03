@@ -464,6 +464,18 @@ class EntityTest extends \CIUnitTestCase
 		$entity->tenth = "\xB1\x31";
 		$this->getPrivateProperty($entity, 'tenth');
 	}
+
+	public function testCastAsJSONSyntaxError()
+	{
+		$entity = $this->getCastEntity();
+
+		$this->expectException(CastException::class);
+		$this->expectExceptionMessage('Syntax error, malformed JSON');
+
+		$method = $this->getPrivateMethodInvoker($entity,'castAsJson');
+
+		$method("'{ bar: \"baz\" }'", true);
+	}
 	//--------------------------------------------------------------------
 
 	public function testAsArray()
