@@ -140,6 +140,15 @@ class CLI
 	 */
 	protected static $options = [];
 
+	/**
+	 * Helps track internally whether the last
+	 * output was a "write" or a "print" to
+	 * keep the output clean and as expected.
+	 *
+	 * @var string
+	 */
+	protected static $lastWrite;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -291,7 +300,27 @@ class CLI
 	//--------------------------------------------------------------------
 
 	/**
-	 * Outputs a string to the cli.
+	 * Outputs a string to the CLI without any surrounding newlines.
+	 * Useful for showing repeating elements on a single line.
+	 *
+	 * @param string      $text
+	 * @param string|null $foreground
+	 * @param string|null $background
+	 */
+	public static function print(string $text = '', string $foreground = null, string $background = null)
+	{
+		if ($foreground || $background)
+		{
+			$text = static::color($text, $foreground, $background);
+		}
+
+		static::$lastWrite = null;
+
+		fwrite(STDOUT, $text);
+	}
+
+	/**
+	 * Outputs a string to the cli on it's own line.
 	 *
 	 * @param string $text       The text to output
 	 * @param string $foreground
@@ -302,6 +331,12 @@ class CLI
 		if ($foreground || $background)
 		{
 			$text = static::color($text, $foreground, $background);
+		}
+
+		if (static::$lastWrite !== 'write')
+		{
+			$text              = PHP_EOL . $text;
+			static::$lastWrite = 'write';
 		}
 
 		fwrite(STDOUT, $text . PHP_EOL);
@@ -482,7 +517,7 @@ class CLI
 	 * Get the number of characters in string having encoded characters
 	 * and ignores styles set by the color() function
 	 *
-	 * @param ?string $string
+	 * @param string $string
 	 *
 	 * @return integer
 	 */
