@@ -1095,6 +1095,120 @@ class RouteCollectionTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+	// Battery of tests for reported issue
+	// @see https://github.com/codeigniter4/CodeIgniter4/issues/1697
+
+	/**
+	 */
+	public function testRouteToWithSubdomainMatch()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'doc.example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => 'doc', 'as' => 'doc_item']);
+
+		$this->assertEquals('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	public function testRouteToWithSubdomainMismatch()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'dev.example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => 'doc', 'as' => 'doc_item']);
+
+		$this->assertFalse($routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	public function testRouteToWithSubdomainNot()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => 'doc', 'as' => 'doc_item']);
+
+		$this->assertFalse($routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	public function testRouteToWithGenericSubdomainMatch()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'doc.example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
+
+		$this->assertEquals('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	public function testRouteToWithGenericSubdomainMismatch()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'dev.example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
+
+		$this->assertEquals('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	public function testRouteToWithGenericSubdomainNot()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
+
+		$this->assertEquals('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	public function testRouteToWithoutSubdomainMatch()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'doc.example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['hostname' => 'example.com', 'as' => 'doc_item']);
+
+		$this->assertFalse($routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	public function testRouteToWithoutSubdomainMismatch()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'dev.example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['hostname' => 'example.com', 'as' => 'doc_item']);
+
+		$this->assertFalse($routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	public function testRouteToWithoutSubdomainNot()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['hostname' => 'example.com', 'as' => 'doc_item']);
+
+		$this->assertEquals('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	//--------------------------------------------------------------------
 	// Tests for router overwritting issue
 	// @see https://github.com/codeigniter4/CodeIgniter4/issues/1692
 
