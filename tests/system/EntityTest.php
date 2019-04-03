@@ -467,7 +467,7 @@ class EntityTest extends \CIUnitTestCase
 
 	public function testCastAsJSONSyntaxError()
 	{
-		$entity = $this->getCastEntity();
+		$entity = new Entity();
 
 		$this->expectException(CastException::class);
 		$this->expectExceptionMessage('Syntax error, malformed JSON');
