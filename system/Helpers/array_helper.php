@@ -45,6 +45,37 @@
  * @link       https://codeigniter.com/user_guide/helpers/cookie_helper.html
  */
 
+
+
+if(! function_exists('is_array_associative'))
+{
+	/**
+	 * Checking if array is associative
+	 *
+	 * @param $a
+	 * @return bool
+	 */
+	function is_array_associative($a): bool
+	{
+		return is_array($a) && (array_keys($a) !== range(0, count($a) - 1));
+	}
+}
+
+if(! function_exists('is_array_sequential'))
+{
+	/**
+	 * Checking if array is sequential
+	 *
+	 * @param $a
+	 * @return bool
+	 */
+	function is_array_sequential($a): bool
+	{
+		return is_array($a) && ! is_array_associative($a);
+	}
+}
+
+
 if (! function_exists('dot_array_search'))
 {
 	/**
