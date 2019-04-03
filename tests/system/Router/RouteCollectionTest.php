@@ -1094,4 +1094,109 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
+	//--------------------------------------------------------------------
+	// Tests for router overwritting issue
+	// @see https://github.com/codeigniter4/CodeIgniter4/issues/1692
+
+	public function testRouteOverwritingDifferentSubdomains()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'doc.domain.com';
+
+		$routes = $this->getCollector();
+		$router = new Router($routes);
+
+		$routes->setDefaultNamespace('App\Controllers');
+		$routes->setDefaultController('Home');
+		$routes->setDefaultMethod('index');
+
+		$routes->get('/', 'App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
+		$routes->get('/', 'Home::index', ['subdomain' => 'dev']);
+
+		$expects = '\App\Controllers\Site\CDoc';
+
+		$this->assertEquals($expects, $router->handle('/'));
+	}
+
+	public function testRouteOverwritingTwoRules()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'doc.domain.com';
+
+		$routes = $this->getCollector();
+		$router = new Router($routes);
+
+		$routes->setDefaultNamespace('App\Controllers');
+		$routes->setDefaultController('Home');
+		$routes->setDefaultMethod('index');
+
+		$routes->get('/', 'App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
+		$routes->get('/', 'Home::index');
+
+		// the second rule applies, so overwrites the first
+		$expects = '\App\Controllers\Home';
+
+		$this->assertEquals($expects, $router->handle('/'));
+	}
+
+	public function testRouteOverwritingTwoRulesLastApplies()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'doc.domain.com';
+
+		$routes = $this->getCollector();
+		$router = new Router($routes);
+
+		$routes->setDefaultNamespace('App\Controllers');
+		$routes->setDefaultController('Home');
+		$routes->setDefaultMethod('index');
+
+		$routes->get('/', 'Home::index');
+		$routes->get('/', 'App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
+
+		$expects = '\App\Controllers\Site\CDoc';
+
+		$this->assertEquals($expects, $router->handle('/'));
+	}
+
+	public function testRouteOverwritingMatchingSubdomain()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'doc.domain.com';
+
+		$routes = $this->getCollector();
+		$router = new Router($routes);
+
+		$routes->setDefaultNamespace('App\Controllers');
+		$routes->setDefaultController('Home');
+		$routes->setDefaultMethod('index');
+
+		$routes->get('/', 'Home::index', ['as' => 'ddd']);
+		$routes->get('/', 'App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
+
+		$expects = '\App\Controllers\Site\CDoc';
+
+		$this->assertEquals($expects, $router->handle('/'));
+	}
+
+	public function testRouteOverwritingMatchingHost()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'doc.domain.com';
+
+		$routes = $this->getCollector();
+		$router = new Router($routes);
+
+		$routes->setDefaultNamespace('App\Controllers');
+		$routes->setDefaultController('Home');
+		$routes->setDefaultMethod('index');
+
+		$routes->get('/', 'Home::index', ['as' => 'ddd']);
+		$routes->get('/', 'App\Controllers\Site\CDoc::index', ['hostname' => 'doc.domain.com', 'as' => 'doc_index']);
+
+		$expects = '\App\Controllers\Site\CDoc';
+
+		$this->assertEquals($expects, $router->handle('/'));
+	}
+
 }
