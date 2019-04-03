@@ -147,7 +147,7 @@ class CLI
 	 *
 	 * @var string
 	 */
-	protected static $lastWrite;
+	protected static $lastWrite = 'write';
 
 	//--------------------------------------------------------------------
 

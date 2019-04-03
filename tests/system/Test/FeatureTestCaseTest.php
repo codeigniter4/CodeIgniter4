@@ -4,7 +4,9 @@ use CodeIgniter\Test\FeatureTestCase;
 use CodeIgniter\Test\FeatureResponse;
 
 /**
- * @group DatabaseLive
+ * @group                       DatabaseLive
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState         disabled
  */
 class FeatureTestCaseTest extends FeatureTestCase
 {
