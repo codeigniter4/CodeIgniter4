@@ -2,6 +2,7 @@
 
 namespace CodeIgniter;
 
+use CodeIgniter\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\ReflectionHelper;
 use Tests\Support\SomeEntity;
@@ -430,6 +431,29 @@ class EntityTest extends \CIUnitTestCase
 		$this->assertEquals($data, $entity->eleventh);
 	}
 
+	public function testCastAsJSONErrorDepth()
+	{
+		$entity = $this->getCastEntity();
+
+		// Create array with depth 513 to get depth error
+		$array = [];
+		$value = "test value";
+		$keys = rtrim(str_repeat('test.', 513), '.');
+		$keys = explode(".", $keys);
+		$current = &$array;
+		foreach ($keys as $key)
+		{
+			$current = &$current[$key];
+		}
+		$current = $value;
+
+		$this->expectException(CastException::class);
+		$this->expectExceptionMessage('Maximum stack depth exceeded');
+
+		$entity->tenth = $array;
+		$this->getPrivateProperty($entity, 'tenth');
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testAsArray()
@@ -648,7 +672,7 @@ class EntityTest extends \CIUnitTestCase
 				'casts'   => [
 					'string_null'   => '?string',
 					'string_empty'  => 'string',
-					'integner_null' => '?integer',
+					'integer_null' => '?integer',
 					'integer_0'     => 'integer',
 				],
 				'dates'   => [],
