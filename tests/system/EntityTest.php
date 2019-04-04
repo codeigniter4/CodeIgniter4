@@ -476,7 +476,7 @@ class EntityTest extends \CIUnitTestCase
 
 		
 
-		$method("( this is bad string", true);
+		$method("{ this is bad string", true);
 	}
 	//--------------------------------------------------------------------
 
