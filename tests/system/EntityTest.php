@@ -504,6 +504,20 @@ class EntityTest extends \CIUnitTestCase
 		
 		$method($string, true);
 	}
+	
+	public function testCastAsJSONStateMismatch()
+	{
+		$entity = new Entity();
+
+		$method = $this->getPrivateMethodInvoker($entity,'castAsJson');
+		
+		$this->expectException(CastException::class);
+		$this->expectExceptionMessage('Underflow or the modes mismatch');
+
+		$string = '[{"name":"jack","product_id":"1234"]';
+		
+		$method($string, true);
+	}
 	//--------------------------------------------------------------------
 
 	public function testAsArray()
