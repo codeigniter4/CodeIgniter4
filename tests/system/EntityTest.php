@@ -490,6 +490,20 @@ class EntityTest extends \CIUnitTestCase
 		
 		$method($string, true);
 	}
+	
+	public function testCastAsJSONControlCharCheck()
+	{
+		$entity = new Entity();
+
+		$method = $this->getPrivateMethodInvoker($entity,'castAsJson');
+		
+		$this->expectException(CastException::class);
+		$this->expectExceptionMessage('Unexpected control character found');
+
+		$string = "{\n\t\"property1\": \"The quick brown fox\njumps over the lazy dog\",\n\t\"property2\":\"value2\"\n}";
+		
+		$method($string, true);
+	}
 	//--------------------------------------------------------------------
 
 	public function testAsArray()
