@@ -11,13 +11,6 @@ It has been built from the
 
 **This is pre-release code and should not be used in production sites.**
 
---- 
- 
-**CAUTION: This app starter is EXPERIMENTAL, and likely to change before
-the framework release. We are looking for feedback and suggestions!**  
-
----
-
 More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
 
 The user guide corresponding to this version of the framework can be found
@@ -27,6 +20,10 @@ The user guide corresponding to this version of the framework can be found
 
 `composer create-project codeigniter4/appstarter` then `composer update` whenever
 there is a new release of the framework.
+
+When updating, check the release notes to see if there are any changes you might need to apply
+to your `app` folder. The affected files can be copied or merged from
+`vendor/codeigniter4/framework/app`.
 
 ## Setup
 
@@ -44,6 +41,15 @@ framework are exposed.
 
 **Please** read the user guide for a better explanation of how CI4 works!
 The user guide updating and deployment is a bit awkward at the moment, but we are working on it!
+
+## Repository Management
+
+We use Github issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
+We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
+FEATURE REQUESTS.
+
+This repository is a "distribution" one, built by our release preparation script. 
+Problems with it can be raised on our forum, or as issues in the main repository.
 
 ## Server Requirements
 
