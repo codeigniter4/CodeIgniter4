@@ -469,12 +469,14 @@ class EntityTest extends \CIUnitTestCase
 	{
 		$entity = new Entity();
 
+		$method = $this->getPrivateMethodInvoker($entity,'castAsJson');
+		
 		$this->expectException(CastException::class);
 		$this->expectExceptionMessage('Syntax error, malformed JSON');
 
-		$method = $this->getPrivateMethodInvoker($entity,'castAsJson');
+		
 
-		$method("'{ bar: \"baz\" }'", true);
+		$method("( this is bad string", true);
 	}
 	//--------------------------------------------------------------------
 
