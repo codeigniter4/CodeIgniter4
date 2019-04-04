@@ -69,7 +69,7 @@ class GetTest extends CIDatabaseTestCase
 		                 ->get()
 		                 ->getFieldCount();
 
-		$this->assertCount(4, $jobs);
+		$this->assertCount(3, $jobs);
 	}
 
 	//--------------------------------------------------------------------
