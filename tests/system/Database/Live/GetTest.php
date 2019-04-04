@@ -62,4 +62,40 @@ class GetTest extends CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testGetFieldCount()
+	{
+		$jobs = $this->db->table('job')
+		                 ->get()
+		                 ->getFieldCount();
+
+		$this->assertCount(4, $jobs);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetFieldNames()
+	{
+		$jobs = $this->db->table('job')
+		                 ->get()
+		                 ->getFieldNames();
+
+		$this->assertTrue(in_array('name', $jobs));
+		$this->assertTrue(in_array('description', $jobs));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetFieldData()
+	{
+		$jobs = $this->db->table('job')
+		                 ->get()
+		                 ->getFieldData();
+
+		$this->assertEquals('id', $jobs[0]->name);
+		$this->assertEquals('name', $jobs[1]->name);
+	}
+
+	//--------------------------------------------------------------------
+
 }
