@@ -474,9 +474,21 @@ class EntityTest extends \CIUnitTestCase
 		$this->expectException(CastException::class);
 		$this->expectExceptionMessage('Syntax error, malformed JSON');
 
-		
-
 		$method("{ this is bad string", true);
+	}
+	
+	public function testCastAsJSONAnotherErrorDepth()
+	{
+		$entity = new Entity();
+
+		$method = $this->getPrivateMethodInvoker($entity,'castAsJson');
+		
+		$this->expectException(CastException::class);
+		$this->expectExceptionMessage('Maximum stack depth exceeded');
+
+		$string = '{'.str_repeat('"test":{', 513).'"test":"value"'.str_repeat('}', 513).'}';
+		
+		$method($string, true);
 	}
 	//--------------------------------------------------------------------
 
