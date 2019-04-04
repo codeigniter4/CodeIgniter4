@@ -6,7 +6,7 @@ use CodeIgniter\Test\CIDatabaseTestCase;
 /**
  * @group DatabaseLive
  */
-class DbUtils extends CIDatabaseTestCase
+class DbUtilsTest extends CIDatabaseTestCase
 {
 	//--------------------------------------------------------------------
 
