@@ -50,7 +50,7 @@ class XMLFormatter implements FormatterInterface
 	 *
 	 * @param $data
 	 *
-	 * @return mixed
+	 * @return string|bool (XML string | false)
 	 */
 	public function format($data)
 	{
