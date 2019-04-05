@@ -51,5 +51,5 @@ interface FormatterInterface
 	 *
 	 * @return mixed
 	 */
-	public function format(array $data);
+	public function format($data);
 }
