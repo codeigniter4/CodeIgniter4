@@ -52,7 +52,7 @@ class XMLFormatter implements FormatterInterface
 	 *
 	 * @return mixed
 	 */
-	public function format(array $data)
+	public function format($data)
 	{
 		// SimpleXML is installed but default
 		// but best to check, and then provide a fallback.
@@ -66,7 +66,7 @@ class XMLFormatter implements FormatterInterface
 
 		$output = new \SimpleXMLElement('<?xml version="1.0"?><response></response>');
 
-		$this->arrayToXML($data, $output);
+		$this->arrayToXML((array)$data, $output);
 
 		return $output->asXML();
 	}
