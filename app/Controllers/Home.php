@@ -7,9 +7,6 @@ class Home extends BaseController
 {
 	public function index()
 	{
-		$model = new UserModel();
-		dd($model->findAll());
-
 		return view('welcome_message');
 	}
 

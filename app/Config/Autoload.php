@@ -53,7 +53,6 @@ class Autoload extends \CodeIgniter\Config\AutoloadConfig
 			'Config'      => APPPATH . 'Config',
 			APP_NAMESPACE => APPPATH,                // For custom namespace
 			'App'         => APPPATH,                // To ensure filters, etc still found,
-			'Vulcan'      => ROOTPATH . '../vulcan/',
 		];
 
 		/**
