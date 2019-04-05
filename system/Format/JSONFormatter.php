@@ -53,7 +53,7 @@ class JSONFormatter implements FormatterInterface
 	 *
 	 * @return mixed
 	 */
-	public function format(array $data)
+	public function format($data) : ?string
 	{
 		$options = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
 
