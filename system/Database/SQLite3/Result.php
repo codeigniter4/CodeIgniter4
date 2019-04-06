@@ -111,7 +111,7 @@ class Result extends BaseResult implements ResultInterface
 	/**
 	 * Frees the current result.
 	 *
-	 * @return mixed
+	 * @return void
 	 */
 	public function freeResult()
 	{
@@ -138,12 +138,9 @@ class Result extends BaseResult implements ResultInterface
 	{
 		if ($n !== 0)
 		{
-			if ($this->db->DBDebug)
-			{
-				throw new DatabaseException('SQLite3 doesn\'t support seeking to other offset.');
-			}
-			return false;
+			throw new DatabaseException('SQLite3 doesn\'t support seeking to other offset.');
 		}
+
 		return $this->resultID->reset();
 	}
 

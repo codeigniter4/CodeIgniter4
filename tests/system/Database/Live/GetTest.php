@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIDatabaseTestCase;
 
 /**
@@ -102,6 +103,13 @@ class GetTest extends CIDatabaseTestCase
 	{
 		$data = $this->db->table('job')
 		                 ->get();
+
+		if ($this->db->DBDriver === 'SQLite3')
+		{
+			$this->expectException(DatabaseException::class);
+			$this->expectExceptionMessage('SQLite3 doesn\'t support seeking to other offset.');
+		}
+
 		$data->dataSeek(3);
 
 		$details = $data->getResult();
