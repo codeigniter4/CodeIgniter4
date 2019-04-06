@@ -98,4 +98,16 @@ class GetTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testGetDataSeek()
+	{
+		$data = $this->db->table('job')
+		                 ->get();
+		$data->dataSeek(3);
+
+		$details = $data->getResult();
+		$this->assertEquals('Musician', $details[0]->name);
+	}
+
+	//--------------------------------------------------------------------
+
 }

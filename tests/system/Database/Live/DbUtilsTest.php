@@ -9,6 +9,10 @@ use CodeIgniter\Test\CIDatabaseTestCase;
  */
 class DbUtilsTest extends CIDatabaseTestCase
 {
+	protected $refresh = true;
+
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+
 	//--------------------------------------------------------------------
 
 	public function testUtilsBackup()
@@ -73,6 +77,77 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 			$util->databaseExists('test');
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUtilsOptimizeDatabase()
+	{
+		$util = (new Database())->loadUtils($this->db);
+
+		$d = $util->optimizeDatabase();
+
+		$this->assertTrue((bool)$d);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUtilsOptimizeTable()
+	{
+		$util = (new Database())->loadUtils($this->db);
+
+		$d = $util->optimizeTable('db_job');
+
+		$this->assertTrue((bool)$d);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUtilsRepairTable()
+	{
+		$util = (new Database())->loadUtils($this->db);
+
+		$this->expectException(DatabaseException::class);
+		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+
+		$util->repairTable('db_job');
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUtilsCSVFromResult()
+	{
+		$data = $this->db->table('job')
+		                 ->get();
+
+		$util = (new Database())->loadUtils($this->db);
+
+		$data = $util->getCSVFromResult($data);
+
+		$data = array_filter(preg_split('/(\r\n|\n|\r)/', $data));
+
+		$this->assertEquals('"1","Developer","Awesome job, but sometimes makes you bored",""', $data[1]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUtilsXMLFromResult()
+	{
+		$data = $this->db->table('job')
+		                 ->get();
+
+		$data->dataSeek(3);
+
+		$util = (new Database())->loadUtils($this->db);
+
+		$data = $util->getXMLFromResult($data);
+
+		$expected = '<root><element><id>4</id><name>Musician</name><description>Only Coldplay can actually called Musician</description><created_at></created_at></element></root>';
+
+		$actual = preg_replace('#\R+#', '', $data);
+		$actual = preg_replace('/[ ]{2,}|[\t]/', '', $actual);
+
+		$this->assertEquals($expected, $actual);
 	}
 
 	//--------------------------------------------------------------------
