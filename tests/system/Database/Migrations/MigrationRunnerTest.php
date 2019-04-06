@@ -216,6 +216,10 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$this->assertEquals($mig1, array_shift($migrations));
 	}
 
+	/**
+	 * @expectedException           \CodeIgniter\Exceptions\ConfigException
+	 * @expectedExceptionMessage    Migrations have been loaded but are disabled or setup incorrectly.
+	 */
 	public function testMigrationThrowsDisabledException()
 	{
 		$config = $this->config;
@@ -237,6 +241,11 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$runner->version(1);
 	}
+
+	/**
+	 * @expectedException        \RuntimeException
+	 * @expectedExceptionMessage There is a gap in the migration sequence near version number:  002
+	 */
 
 	public function testVersionThrowsMigrationGapException()
 	{
