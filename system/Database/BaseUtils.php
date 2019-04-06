@@ -200,11 +200,21 @@ abstract class BaseUtils
 			}
 
 			// Build the result array...
+
 			$res  = $res->getResultArray();
-			$res  = current($res);
-			$key  = str_replace($this->db->database . '.', '', current($res));
-			$keys = array_keys($res);
-			unset($res[$keys[0]]);
+
+			// Postgre & SQLite3 returns empty array
+			if (empty($res))
+			{
+				$key = $table_name;
+			}
+			else
+			{
+				$res  = current($res);
+				$key = str_replace($this->db->database . '.', '', current($res));
+				$keys = array_keys($res);
+				unset($res[$keys[0]]);
+			}
 
 			$result[$key] = $res;
 		}
@@ -304,7 +314,7 @@ abstract class BaseUtils
 		extract($params);
 
 		// Load the xml helper
-			  helper('xml');
+		helper('xml');
 		// Generate the result
 		$xml = '<' . $root . '>' . $newline;
 		while ($row = $query->getUnbufferedRow())
@@ -312,7 +322,8 @@ abstract class BaseUtils
 			$xml .= $tab . '<' . $element . '>' . $newline;
 			foreach ($row as $key => $val)
 			{
-				$xml .= $tab . $tab . '<' . $key . '>' . xml_convert($val) . '</' . $key . '>' . $newline;
+				$val = (!empty($val)) ? xml_convert($val) : '';
+				$xml .= $tab . $tab . '<' . $key . '>' . $val . '</' . $key . '>' . $newline;
 			}
 			$xml .= $tab . '</' . $element . '>' . $newline;
 		}

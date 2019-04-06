@@ -215,7 +215,7 @@ abstract class BaseResult implements ResultInterface
 		// In the event that query caching is on, the result_id variable
 		// will not be a valid resource so we'll simply return an empty
 		// array.
-		if (! $this->resultID || $this->numRows === 0)
+		if (is_bool($this->resultID) || ! $this->resultID || $this->numRows === 0)
 		{
 			return [];
 		}

@@ -98,7 +98,14 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 		$d = $util->optimizeTable('db_job');
 
-		$this->assertTrue((bool)$d);
+		if ($this->db->DBDriver === 'Postgre' || $this->db->DBDriver === 'SQLite3')
+		{
+			$this->assertFalse((bool)$d);
+		}
+		else
+		{
+			$this->assertTrue((bool)$d);
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -134,9 +141,8 @@ class DbUtilsTest extends CIDatabaseTestCase
 	public function testUtilsXMLFromResult()
 	{
 		$data = $this->db->table('job')
+		                 ->where('id', 4)
 		                 ->get();
-
-		$data->dataSeek(3);
 
 		$util = (new Database())->loadUtils($this->db);
 
