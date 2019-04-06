@@ -31,13 +31,13 @@ class DbUtilsTest extends CIDatabaseTestCase
 		{
 			$databases = $util->listDatabases();
 
-			$this->assertEquals('test', $databases[0]);
+			$this->assertTrue(in_array('test', $databases));
 		}
 		elseif ($this->db->DBDriver === 'Postgre')
 		{
 			$databases = $util->listDatabases();
 
-			$this->assertEquals('test', $databases[0]);
+			$this->assertTrue(in_array('test', $databases));
 		}
 		elseif ($this->db->DBDriver === 'SQLite3')
 		{
