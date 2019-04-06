@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Database;
 
+use CodeIgniter\Exceptions\ConfigException;
 use Config\Migrations;
 use org\bovigo\vfs\vfsStream;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -215,10 +216,28 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$this->assertEquals($mig1, array_shift($migrations));
 	}
 
-	/**
-	 * @expectedException        \RuntimeException
-	 * @expectedExceptionMessage There is a gap in the migration sequence near version number:  002
-	 */
+	public function testMigrationThrowsDisabledException()
+	{
+		$config = $this->config;
+		$config->type = 'sequential';
+		$config->enabled = false;
+		$runner = new MigrationRunner($config);
+
+		$runner->setSilent(false);
+
+		$runner = $runner->setPath($this->start);
+
+		vfsStream::copyFromFileSystem(
+			TESTPATH . '_support/Database/SupportMigrations',
+			$this->root
+		);
+
+		$this->expectException(ConfigException::class);
+		$this->expectExceptionMessage('Migrations have been loaded but are disabled or setup incorrectly.');
+
+		$runner->version(1);
+	}
+
 	public function testVersionThrowsMigrationGapException()
 	{
 		$config       = $this->config;
