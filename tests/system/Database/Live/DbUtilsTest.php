@@ -27,6 +27,33 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testUtilsBackupWithParamsArray()
+	{
+		$util = (new Database())->loadUtils($this->db);
+
+		$params = [
+			'format' => 'json',
+		];
+		$this->expectException(DatabaseException::class);
+		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+
+		$util->backup($params);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUtilsBackupWithParamsString()
+	{
+		$util = (new Database())->loadUtils($this->db);
+
+		$this->expectException(DatabaseException::class);
+		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+
+		$util->backup('db_jobs');
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testUtilsListDatabases()
 	{
 		$util = (new Database())->loadUtils($this->db);
@@ -92,6 +119,20 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testUtilsOptimizeTableFalseOptimizeDatabase()
+	{
+		$util = (new Database())->loadUtils($this->db);
+
+		$this->setPrivateProperty($util,'optimizeTable', false);
+
+		$this->expectException(DatabaseException::class);
+		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+
+		$util->optimizeDatabase();
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testUtilsOptimizeTable()
 	{
 		$util = (new Database())->loadUtils($this->db);
@@ -106,6 +147,20 @@ class DbUtilsTest extends CIDatabaseTestCase
 		{
 			$this->assertTrue((bool)$d);
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUtilsOptimizeTableFalseOptimizeTable()
+	{
+		$util = (new Database())->loadUtils($this->db);
+
+		$this->setPrivateProperty($util,'optimizeTable', false);
+
+		$this->expectException(DatabaseException::class);
+		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+
+		$util->optimizeTable('db_job');
 	}
 
 	//--------------------------------------------------------------------
