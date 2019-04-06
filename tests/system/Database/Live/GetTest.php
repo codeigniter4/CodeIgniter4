@@ -117,6 +117,22 @@ class GetTest extends CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
+	public function testGetAnotherDataSeek()
+	{
+		$data = $this->db->table('job')
+		                 ->get();
+
+		$data->dataSeek(0);
+
+		$details = $data->getResult();
+
+		$this->assertEquals('Developer', $details[0]->name);
+		$this->assertEquals('Politician', $details[1]->name);
+		$this->assertEquals('Accountant', $details[2]->name);
+		$this->assertEquals('Musician', $details[3]->name);
+	}
+
+	//--------------------------------------------------------------------
 
 	public function testFreeResult()
 	{
@@ -170,4 +186,52 @@ class GetTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testGetFirstRow()
+	{
+
+		$user = $this->db->table('user')
+		                 ->get()
+		                 ->getFirstRow();
+
+		$this->assertEquals('Derek Jones', $user->name);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetLastRow()
+	{
+
+		$user = $this->db->table('user')
+		                 ->get()
+		                 ->getLastRow();
+
+		$this->assertEquals('Chris Martin', $user->name);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetNextRow()
+	{
+
+		$user = $this->db->table('user')
+		                 ->get()
+		                 ->getNextRow();
+
+		$this->assertEquals('Ahmadinejad', $user->name);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetPreviousRow()
+	{
+		$user = $this->db->table('user')
+		                 ->get();
+
+		$user->currentRow = 3;
+		$user = $user->getPreviousRow();
+
+		$this->assertEquals('Richard A Causey', $user->name);
+	}
+
+	//--------------------------------------------------------------------
 }
