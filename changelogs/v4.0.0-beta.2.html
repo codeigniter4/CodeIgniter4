@@ -1,0 +1,812 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Version 4.0.0-beta.2 &mdash; CodeIgniter4 4.0.0-beta.2 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-beta.2 documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Change Logs</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Version 4.0.0-beta.2</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="version-4-0-0-beta-2">
+<h1>Version 4.0.0-beta.2<a class="headerlink" href="#version-4-0-0-beta-2" title="Permalink to this headline">¶</a></h1>
+<p>Release Date: April 4, 2019</p>
+<p>Highlights:</p>
+<ul class="simple">
+<li>A number of fixes &amp; improvements, importantly for the Model and testing classes</li>
+<li>Models now require a primary key</li>
+<li>Generated API docs accessible at <a class="reference external" href="https://codeigniter4.github.io/api/">https://codeigniter4.github.io/api/</a></li>
+<li>Validation rules have been enhanced</li>
+<li>.htaccess beefed up</li>
+</ul>
+<p>New messages:</p>
+<ul class="simple">
+<li>Database.noPrimaryKey, forFindColumnHaveMultipleColumns, Database.forEmptyInputGiven</li>
+</ul>
+<p>App changes:</p>
+<ul class="simple">
+<li>updated app/Config/Events</li>
+<li>added app/Controllers/BaseController</li>
+<li>added tests/ folder for unit testing</li>
+<li>added phpunit.xml.dist for unit testing configuration</li>
+</ul>
+<p>The list of changed files follows, with PR numbers shown.</p>
+<ul class="simple">
+<li>.htaccess #1900</li>
+<li><dl class="first docutils">
+<dt>app/</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Config/</dt>
+<dd><ul class="first last">
+<li>Events #1856</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Controllers/</dt>
+<dd><ul class="first last">
+<li>BaseController #1847</li>
+<li>Home #1847</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>contributing/</dt>
+<dd><ul class="first last">
+<li>README.rst #1846</li>
+<li>styleguide #1872</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>contributing.md #1846</li>
+<li>phpdoc.dist.xml #1872</li>
+<li><dl class="first docutils">
+<dt>system/</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Autoloader/</dt>
+<dd><ul class="first last">
+<li>FileLocator #1860</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Cache/Handlers/</dt>
+<dd><ul class="first last">
+<li>FileHandler #1895</li>
+<li>MemcachedHandler #1895</li>
+<li>PredisHandler #1895</li>
+<li>RedisHandler #1863, #1895</li>
+<li>WincacheHandler #1895</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>CLI/</dt>
+<dd><ul class="first last">
+<li>CLI #1891, #1910</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Commands/</dt>
+<dd><ul class="first last">
+<li>Server/Serve #1893</li>
+<li>Utilities/Routes #1859</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Config/</dt>
+<dd><ul class="first last">
+<li>BaseConfig #1811</li>
+<li>Routes #1847, #1850</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Database/</dt>
+<dd><ul class="first last">
+<li>BaseBuilder $1776, #1902</li>
+<li>BaseConnection #1899</li>
+<li>Forge #1844, #1899</li>
+<li>MigrationRunner #1860, #1865</li>
+<li>MySQLi/Connection #1896</li>
+<li>MySQLi/Forge #1899</li>
+<li>Postgre/Builder #1902</li>
+<li>Postgre/Forge #1899</li>
+<li>Query #1805, #1771</li>
+<li>SQLite3/Builder #1902</li>
+<li>SQLite3/Forge #1899</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Debug/</dt>
+<dd><ul class="first last">
+<li>Toolbar/Collectors/History #1869</li>
+<li>Toolbar #1897</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Events/</dt>
+<dd><ul class="first last">
+<li>Events #1867</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Exceptions/</dt>
+<dd><ul class="first last">
+<li>ModelException #1829</li>
+<li>PageNotFoundException #1844</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Files/</dt>
+<dd><ul class="first last">
+<li>File #1809, #1854</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Helpers/</dt>
+<dd><ul class="first last">
+<li>date_helper #d08b68</li>
+<li>form_helper #1803</li>
+<li>html_helper #1803</li>
+<li>number_helper #d08b68, #1803</li>
+<li>security_helper #d08b68</li>
+<li>text_helper #d08b68, #1803</li>
+<li>url_helper #d08b68, #1803</li>
+<li>xml_helper #1803</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Honeypot/</dt>
+<dd><ul class="first last">
+<li>Honeypot #1894</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>HTTP/</dt>
+<dd><ul class="first last">
+<li>Header #1769</li>
+<li>IncomingRequest #1831</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Language/en/</dt>
+<dd><ul class="first last">
+<li>Database #1829, #1861, #1902</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Router/</dt>
+<dd><ul class="first last">
+<li>RouteCollection #1769</li>
+<li>Router #1839, #1882</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Session/</dt>
+<dd><ul class="first last">
+<li>Session #1769</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Test/</dt>
+<dd><ul class="first last">
+<li>ControllerTester #1769, #1848, #1855</li>
+<li>DOMParser #1848</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Validation/</dt>
+<dd><ul class="first last">
+<li>FormatRules #1762, #1863</li>
+<li>Rules #1791, #1814, #1818, #1862</li>
+<li>Validation #1769</li>
+<li>Views/list #1828</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>View/</dt>
+<dd><ul class="first last">
+<li>Filters #1769</li>
+<li>Parser #1769</li>
+<li>View #1769, #1827</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>CodeIgniter #1769, #1804, #1590</li>
+<li>Common #1802, #895ae0</li>
+<li>ComposerScripts #1804</li>
+<li>Controller #1769, #1850</li>
+<li>Entity #1769, #1804</li>
+<li>Model #1793, #1769, #1804, #1808, #1812, #1813, #1817, #1829, #1746, #1861</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>tests/system/</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Cache/</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Handlers/</dt>
+<dd><ul class="first last">
+<li>FileHandlerTest #1796, #1895</li>
+<li>MemcachedHandlerTest #1895</li>
+<li>RedisHandlerTest #1895</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>CacheFactoryTest #1796</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>CLI/</dt>
+<dd><ul class="first last">
+<li>CLITest #1910</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Config/</dt>
+<dd><ul class="first last">
+<li>BaseConfigTest #1811</li>
+<li>ConfigTest #1811</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Database/</dt>
+<dd><ul class="first last">
+<li>Builder/EmptyTest #1902</li>
+<li>Builder/SelectTest #1902</li>
+<li>Live/ModelTest #1817, #1829, #1861</li>
+<li>Live/WhereTest #1906</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Events/</dt>
+<dd><ul class="first last">
+<li>EventsTest #1867</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>HTTP/</dt>
+<dd><ul class="first last">
+<li>ContentSecurityPolicyTest #1848</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Router/</dt>
+<dd><ul class="first last">
+<li>RouteCollectionTest #1822, #1912, #1913</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Test/</dt>
+<dd><ul class="first last">
+<li>ControllerTesterTest #1848, #1855</li>
+<li>DOMParserTest #1848</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Validation/</dt>
+<dd><ul class="first last">
+<li>FormatRulesTest #1762</li>
+<li>RulesTest #1791</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>View/</dt>
+<dd><ul class="first last">
+<li>ViewTest #1827, #1836</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>ControllerTest #1850</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>user_guide_src/</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>cli/</dt>
+<dd><ul class="first last">
+<li>cli_commands #1777</li>
+<li>cli_library #1892, #1910</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>concepts/</dt>
+<dd><ul class="first last">
+<li>services #1811</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>database/</dt>
+<dd><ul class="first last">
+<li>examples #1794</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>dbmgmt/</dt>
+<dd><ul class="first last">
+<li>forge #1844, #1899</li>
+<li>migration #1860, #1865</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>extending/</dt>
+<dd><ul class="first last">
+<li>basecontroller #1847</li>
+<li>core_classes #1847</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>general/</dt>
+<dd><ul class="first last">
+<li>common_functions #1802, #1895</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>helpers/</dt>
+<dd><ul class="first last">
+<li>number_helper #d08b68</li>
+<li>url_helper #1803</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>incoming/</dt>
+<dd><ul class="first last">
+<li>routing #1908</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>libraries/</dt>
+<dd><ul class="first last">
+<li>caching #1895</li>
+<li>files #1790, #1854</li>
+<li>pagination #1823</li>
+<li>sessions #1843</li>
+<li>validation #1814, #1828, #1862</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>models/</dt>
+<dd><ul class="first last">
+<li>models #1817, #1820, #1829, #1746, #1861</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>outgoing/</dt>
+<dd><ul class="first last">
+<li>view_layouts #1827</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>testing/</dt>
+<dd><ul class="first last">
+<li>controllers #1848</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="section" id="prs-merged">
+<h2>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>#1913 More RouteCollection tests for overwriting. Closes #1692</li>
+<li>#1912 Additional RouteCollectionTests</li>
+<li>#1910 Added print method to CLI library so you can print multiple times on same line</li>
+<li>#1908 Add filter parameters to User Guide</li>
+<li>#1906 SubQuery related test cases w.r.t #1775</li>
+<li>#1902 BaseBuilder corrections</li>
+<li>#1900 Update .htaccess for better security and caching</li>
+<li>#1899 Database Forge correction</li>
+<li>#1897 Toolbar fix w.r.t #1779</li>
+<li>#1896 Mysql connection issue with SSL cert (#1219)</li>
+<li>#1894 Typos fixings</li>
+<li>#1893 Fix spark serve with remove escapeshellarg()</li>
+<li>#1892 Add CLI background color list to the user guide</li>
+<li>#1891 Allow CLI::strlen null parameter</li>
+<li>#1886 Fixed issue #1880, fixed a few typos and updated code style</li>
+<li>#1882 Router Changes w.r.t #1541</li>
+<li>#1873-1889 Docs: move namespace declarations &amp; add missing class docblocks</li>
+<li>#1872 Docs: fix phpdoc config</li>
+<li>#1871 Unmatched Cache Library <cite>get()</cite> return null</li>
+<li>#1869 History::SetFiles check #1778</li>
+<li>#1863 Module wise Typos changes</li>
+<li>#1861 New method Find Column w.r.t. #1619</li>
+<li>#1860 Migrationrunner use autoloader</li>
+<li>#1867 Events should actually work with any callable now. Fixes #1835</li>
+<li>#1865 MigrationRunner issue with definition resolved</li>
+<li>#1862 required_with and required_without definition changes</li>
+<li>#1859 Ignore callbacks in routes list</li>
+<li>#1858 Typos correction in DB module</li>
+<li>#1856 ensure ob_end_flush() when ob_get_level() &gt; 0 on pre_system event</li>
+<li>#1855 Fix: ControllerTester::execute. Fixes #1834</li>
+<li>#1854 <a class="reference external" href="File::move">File::move</a> now returns new file instance for relocated file. Fixes #1782</li>
+<li>#1851 Replace old CI3 .gitignore with root CI4 version</li>
+<li>#1850 Secure routable controller methods</li>
+<li>#1848 Test: fix &amp; test Test/ControllerTest, tested</li>
+<li>#1847 Extend Controller to BaseController by default</li>
+<li>#1846 Fix contributing links</li>
+<li>#1844 Model Fix</li>
+<li>#1843 Replace CI3 $this-&gt;input reference</li>
+<li>#1842 Exception &#8216;forPageNotFound&#8217; missing default value</li>
+<li>#1839 Dont replace slashes with backslashes in the to route</li>
+<li>#1836 Test: Improve ViewView coverage</li>
+<li>#1831 Fix some PHPDoc comments error</li>
+<li>#1829 Improve: Models now require a primary key. This is partially to keep the code …</li>
+<li>#1828 Fix: Remove bootstrap styles from validation views.</li>
+<li>#1827 Fix: Adding include method to View library to render view partials... views.</li>
+<li>#1823 Docs: Remove legacy Bootstrap references in Pagination class</li>
+<li>#1822 Test: enhance RouteCollection coverage</li>
+<li>#1820 Fix: Correct sphinx errors in model.rst</li>
+<li>#1819 Improve: Add apibot for API docs using phpDocumentor</li>
+<li>#1818 Improve: Code improvement in exact_length Rule</li>
+<li>#1817 Improve: Model setValidationMessage functions introduced</li>
+<li>#895ae0 Fix: Start session whenver using the old command</li>
+<li>#1814 Enhance: extended exact_length[1,3,5]</li>
+<li>#1813 Fix: Model::save fix for earlier PRs</li>
+<li>#1812 Test: Improve Filters coverage</li>
+<li>#1811 Test: Config module coverage improved</li>
+<li>#1809 Fix file move failed. Fixex #1785</li>
+<li>#1808 Fix: Fix save method return value</li>
+<li>#1805 Docs: Query Class Changes</li>
+<li>#1804 Docs: Some Base Functional Changes</li>
+<li>#1803 Docs: Some Helper Changes</li>
+<li>#1802 Docs: Common function correction</li>
+<li>#1796 Test: Improve Cache coverage</li>
+<li>#1794 Replace nonexistent &#8220;getAffectedRows&#8221;</li>
+<li>#1793 Set Model-&gt;chunk return type</li>
+<li>#1791 Fix: Remove is_numeric tests in ValidationRules</li>
+<li>#d08b68 Fix in ControllerTester for missing UserAgent</li>
+<li>#1790 Correction of typos in documentation as mentioned in issue #1781</li>
+<li>#1777 Add CLI namespace to example</li>
+<li>#1776 Fix: replace only last operator in field name</li>
+<li>#1771 Fix: fix typo in matchSimpleBinds</li>
+<li>#1769 Correction in Methods and Spellings</li>
+<li>#1762 Fix: decimal rule. shouldn&#8217;t it accept integers?</li>
+<li>#1746 Improve: Update Model, to selective update created_at / updated_at field.</li>
+<li>#1590 Improve: Enhance 404Override</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
+      Last updated on Apr 07, 2019.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-beta.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
