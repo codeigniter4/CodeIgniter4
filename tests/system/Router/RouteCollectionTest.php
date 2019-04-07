@@ -1094,4 +1094,223 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
+	//--------------------------------------------------------------------
+	// Battery of tests for reported issue
+	// @see https://github.com/codeigniter4/CodeIgniter4/issues/1697
+
+	/**
+	 */
+	public function testRouteToWithSubdomainMatch()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'doc.example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => 'doc', 'as' => 'doc_item']);
+
+		$this->assertEquals('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	public function testRouteToWithSubdomainMismatch()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'dev.example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => 'doc', 'as' => 'doc_item']);
+
+		$this->assertFalse($routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	public function testRouteToWithSubdomainNot()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => 'doc', 'as' => 'doc_item']);
+
+		$this->assertFalse($routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	public function testRouteToWithGenericSubdomainMatch()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'doc.example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
+
+		$this->assertEquals('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	public function testRouteToWithGenericSubdomainMismatch()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'dev.example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
+
+		$this->assertEquals('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	public function testRouteToWithGenericSubdomainNot()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
+
+		$this->assertEquals('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	public function testRouteToWithoutSubdomainMatch()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'doc.example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['hostname' => 'example.com', 'as' => 'doc_item']);
+
+		$this->assertFalse($routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	public function testRouteToWithoutSubdomainMismatch()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'dev.example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['hostname' => 'example.com', 'as' => 'doc_item']);
+
+		$this->assertFalse($routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	public function testRouteToWithoutSubdomainNot()
+	{
+		$routes = $this->getCollector();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'example.com';
+
+		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['hostname' => 'example.com', 'as' => 'doc_item']);
+
+		$this->assertEquals('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+	}
+
+	//--------------------------------------------------------------------
+	// Tests for router overwritting issue
+	// @see https://github.com/codeigniter4/CodeIgniter4/issues/1692
+
+	public function testRouteOverwritingDifferentSubdomains()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'doc.domain.com';
+
+		$routes = $this->getCollector();
+		$router = new Router($routes);
+
+		$routes->setDefaultNamespace('App\Controllers');
+		$routes->setDefaultController('Home');
+		$routes->setDefaultMethod('index');
+
+		$routes->get('/', 'App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
+		$routes->get('/', 'Home::index', ['subdomain' => 'dev']);
+
+		$expects = '\App\Controllers\Site\CDoc';
+
+		$this->assertEquals($expects, $router->handle('/'));
+	}
+
+	public function testRouteOverwritingTwoRules()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'doc.domain.com';
+
+		$routes = $this->getCollector();
+		$router = new Router($routes);
+
+		$routes->setDefaultNamespace('App\Controllers');
+		$routes->setDefaultController('Home');
+		$routes->setDefaultMethod('index');
+
+		$routes->get('/', 'App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
+		$routes->get('/', 'Home::index');
+
+		// the second rule applies, so overwrites the first
+		$expects = '\App\Controllers\Home';
+
+		$this->assertEquals($expects, $router->handle('/'));
+	}
+
+	public function testRouteOverwritingTwoRulesLastApplies()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'doc.domain.com';
+
+		$routes = $this->getCollector();
+		$router = new Router($routes);
+
+		$routes->setDefaultNamespace('App\Controllers');
+		$routes->setDefaultController('Home');
+		$routes->setDefaultMethod('index');
+
+		$routes->get('/', 'Home::index');
+		$routes->get('/', 'App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
+
+		$expects = '\App\Controllers\Site\CDoc';
+
+		$this->assertEquals($expects, $router->handle('/'));
+	}
+
+	public function testRouteOverwritingMatchingSubdomain()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'doc.domain.com';
+
+		$routes = $this->getCollector();
+		$router = new Router($routes);
+
+		$routes->setDefaultNamespace('App\Controllers');
+		$routes->setDefaultController('Home');
+		$routes->setDefaultMethod('index');
+
+		$routes->get('/', 'Home::index', ['as' => 'ddd']);
+		$routes->get('/', 'App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
+
+		$expects = '\App\Controllers\Site\CDoc';
+
+		$this->assertEquals($expects, $router->handle('/'));
+	}
+
+	public function testRouteOverwritingMatchingHost()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['HTTP_HOST']      = 'doc.domain.com';
+
+		$routes = $this->getCollector();
+		$router = new Router($routes);
+
+		$routes->setDefaultNamespace('App\Controllers');
+		$routes->setDefaultController('Home');
+		$routes->setDefaultMethod('index');
+
+		$routes->get('/', 'Home::index', ['as' => 'ddd']);
+		$routes->get('/', 'App\Controllers\Site\CDoc::index', ['hostname' => 'doc.domain.com', 'as' => 'doc_index']);
+
+		$expects = '\App\Controllers\Site\CDoc';
+
+		$this->assertEquals($expects, $router->handle('/'));
+	}
+
 }
