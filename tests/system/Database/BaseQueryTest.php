@@ -47,11 +47,11 @@ class QueryTest extends \CIUnitTestCase
 	{
 		$query = new Query($this->db);
 
-		$start = microtime(true);
+		$start = round(microtime(true));
 
 		$query->setDuration($start, $start + 5);
 
-		$this->assertEquals(round($start, 4), $query->getStartTime(true));
+		$this->assertEquals($start, $query->getStartTime(true));
 	}
 
 	//--------------------------------------------------------------------
