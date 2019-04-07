@@ -140,13 +140,22 @@ class Toolbar
 		{
 			foreach ($_SESSION as $key => $value)
 			{
-				// Replace the binary data with string to avoid json_encode failure.
-				if (preg_match('~[^\x20-\x7E\t\r\n]~', $value))
+				if (is_string($value))
 				{
-					$value = 'binary data';
+					// Replace the binary data with string to avoid json_encode failure.
+					if (preg_match('~[^\x20-\x7E\t\r\n]~', $value))
+					{
+						$value = 'binary data';
+					}
+
+					$value = esc($value);
+				}
+				else
+				{
+					$value = print_r($value, true);
 				}
 
-				$data['vars']['session'][esc($key)] = is_string($value) ? esc($value) : print_r($value, true);
+				$data['vars']['session'][esc($key)] = $value;
 			}
 		}
 
