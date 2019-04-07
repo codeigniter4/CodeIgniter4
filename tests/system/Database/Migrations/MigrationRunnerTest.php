@@ -382,4 +382,24 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$this->assertEquals('001', $version);
 		$this->assertTrue(db_connect()->tableExists('foo'));
 	}
+
+	public function testLatestAll()
+	{
+		$config = $this->config;
+		$config->type = 'sequential';
+		$runner = new MigrationRunner($config);
+		$runner->setSilent(false);
+
+		$runner = $runner->setPath($this->start);
+
+		vfsStream::copyFromFileSystem(
+			TESTPATH . '_support/Database/SupportMigrations',
+			$this->root
+		);
+
+		$version = $runner->latestAll();
+
+		$this->assertTrue($version);
+		$this->assertTrue(db_connect()->tableExists('foo'));
+	}
 }
