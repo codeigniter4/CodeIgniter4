@@ -763,6 +763,7 @@ class CURLRequest extends Request
 			$json = json_encode($config['json']);
 			$this->setBody($json);
 			$this->setHeader('Content-Type', 'application/json');
+			$this->setHeader('Content-Length', (string) strlen($json));
 		}
 
 		// version
