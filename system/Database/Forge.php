@@ -220,7 +220,7 @@ class Forge
 		{
 			if ($this->db->DBDebug)
 			{
-				throw new DatabaseException('Unable to drop the specified database.');
+				throw new DatabaseException('Unable to create the specified database.');
 			}
 
 			return false;
@@ -388,13 +388,13 @@ class Forge
 	 * @param string  $fieldName
 	 * @param string  $tableName
 	 * @param string  $tableField
-	 * @param boolean $onUpdate
-	 * @param boolean $onDelete
+	 * @param string  $onUpdate
+	 * @param string  $onDelete
 	 *
 	 * @return \CodeIgniter\Database\Forge
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function addForeignKey(string $fieldName = '', string $tableName = '', string $tableField = '', bool $onUpdate = false, bool $onDelete = false)
+	public function addForeignKey(string $fieldName = '', string $tableName = '', string $tableField = '', string $onUpdate = '', string $onDelete = '')
 	{
 		if (! isset($this->fields[$fieldName]))
 		{

@@ -64,7 +64,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected $_random_keyword = [
 		'RANDOM()',
-		'RANDOM()',
 	];
 
 	//--------------------------------------------------------------------
