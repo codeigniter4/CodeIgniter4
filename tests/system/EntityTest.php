@@ -2,6 +2,7 @@
 
 namespace CodeIgniter;
 
+use CodeIgniter\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\ReflectionHelper;
 use Tests\Support\SomeEntity;
@@ -430,6 +431,93 @@ class EntityTest extends \CIUnitTestCase
 		$this->assertEquals($data, $entity->eleventh);
 	}
 
+	public function testCastAsJSONErrorDepth()
+	{
+		$entity = $this->getCastEntity();
+
+		// Create array with depth 513 to get depth error
+		$array = [];
+		$value = "test value";
+		$keys = rtrim(str_repeat('test.', 513), '.');
+		$keys = explode(".", $keys);
+		$current = &$array;
+		foreach ($keys as $key)
+		{
+			$current = &$current[$key];
+		}
+		$current = $value;
+
+		$this->expectException(CastException::class);
+		$this->expectExceptionMessage('Maximum stack depth exceeded');
+
+		$entity->tenth = $array;
+		$this->getPrivateProperty($entity, 'tenth');
+	}
+
+	public function testCastAsJSONErrorUTF8()
+	{
+		$entity = $this->getCastEntity();
+
+		$this->expectException(CastException::class);
+		$this->expectExceptionMessage('Malformed UTF-8 characters, possibly incorrectly encoded');
+
+		$entity->tenth = "\xB1\x31";
+		$this->getPrivateProperty($entity, 'tenth');
+	}
+
+	public function testCastAsJSONSyntaxError()
+	{
+		$entity = new Entity();
+
+		$method = $this->getPrivateMethodInvoker($entity,'castAsJson');
+		
+		$this->expectException(CastException::class);
+		$this->expectExceptionMessage('Syntax error, malformed JSON');
+
+		$method("{ this is bad string", true);
+	}
+	
+	public function testCastAsJSONAnotherErrorDepth()
+	{
+		$entity = new Entity();
+
+		$method = $this->getPrivateMethodInvoker($entity,'castAsJson');
+		
+		$this->expectException(CastException::class);
+		$this->expectExceptionMessage('Maximum stack depth exceeded');
+
+		$string = '{'.str_repeat('"test":{', 513).'"test":"value"'.str_repeat('}', 513).'}';
+		
+		$method($string, true);
+	}
+	
+	public function testCastAsJSONControlCharCheck()
+	{
+		$entity = new Entity();
+
+		$method = $this->getPrivateMethodInvoker($entity,'castAsJson');
+		
+		$this->expectException(CastException::class);
+		$this->expectExceptionMessage('Unexpected control character found');
+
+		$string = "{\n\t\"property1\": \"The quick brown fox\njumps over the lazy dog\",\n\t\"property2\":\"value2\"\n}";
+		
+		$method($string, true);
+	}
+	
+	public function testCastAsJSONStateMismatch()
+	{
+		$entity = new Entity();
+
+		$method = $this->getPrivateMethodInvoker($entity,'castAsJson');
+		
+		$this->expectException(CastException::class);
+		$this->expectExceptionMessage('Underflow or the modes mismatch');
+
+		$string = '[{"name":"jack","product_id":"1234"]';
+		
+		$method($string, true);
+	}
 	//--------------------------------------------------------------------
 
 	public function testAsArray()
@@ -648,7 +736,7 @@ class EntityTest extends \CIUnitTestCase
 				'casts'   => [
 					'string_null'   => '?string',
 					'string_empty'  => 'string',
-					'integner_null' => '?integer',
+					'integer_null' => '?integer',
 					'integer_0'     => 'integer',
 				],
 				'dates'   => [],

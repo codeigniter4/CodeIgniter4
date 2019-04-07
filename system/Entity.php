@@ -313,6 +313,7 @@ class Entity
 	 * @param null   $value
 	 *
 	 * @return $this
+	 * @throws \Exception
 	 */
 	public function __set(string $key, $value = null)
 	{
@@ -349,6 +350,11 @@ class Entity
 			if (($castTo === 'json' || $castTo === 'json-array') && function_exists('json_encode'))
 			{
 				$value = json_encode($value);
+
+				if (json_last_error() !== JSON_ERROR_NONE)
+				{
+					throw CastException::forInvalidJsonFormatException(json_last_error());
+				}
 			}
 		}
 
