@@ -141,7 +141,7 @@ class Toolbar
 			foreach ($_SESSION as $key => $value)
 			{
 				// Replace the binary data with string to avoid json_encode failure.
-				if (preg_match('~[^\x20-\x7E\t\r\n]~', $value))
+				if (is_string($value) && preg_match('~[^\x20-\x7E\t\r\n]~', $value))
 				{
 					$value = 'binary data';
 				}
