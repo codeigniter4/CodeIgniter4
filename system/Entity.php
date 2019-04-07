@@ -245,7 +245,8 @@ class Entity
 	 */
 	protected function hasPropertyChanged(string $key, $value = null): bool
 	{
-		return ! (($this->_original[$key] === null && $value === null) || $this->_original[$key] === $value);
+		// Skip the validation if old and new value are NULL else go for changed value check
+		return ($this->_original[$key] === null && $value === null) || !($this->_original[$key] === $value);
 	}
 
 	/**
