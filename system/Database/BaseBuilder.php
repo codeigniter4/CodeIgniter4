@@ -2504,6 +2504,7 @@ class BaseBuilder
 			{
 				$this->trackAliases($t);
 			}
+			return;
 		}
 
 		// Does the string contain a comma?  If so, we need to separate
