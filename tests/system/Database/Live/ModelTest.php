@@ -1010,8 +1010,8 @@ class ModelTest extends CIDatabaseTestCase
 		             ->where('name', 'Rocket Scientist')
 		             ->first();
 
-		// check whether the blank value successfully updated or not
-		$this->assertEquals('', $job->description);
+		// check whether the Null value successfully updated or not
+		$this->assertNull($job->description);
 	}
 
 	public function testUpdateNoPrimaryKey()
