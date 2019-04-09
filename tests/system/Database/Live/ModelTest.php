@@ -976,6 +976,7 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testSelectAndEntitiesSaveOnlyChangedValues()
 	{
+		// Insert value in job table
 		$this->hasInDatabase('job', [
 			'name'        => 'Rocket Scientist',
 			'description' => 'Plays guitar for Queen',
@@ -984,20 +985,35 @@ class ModelTest extends CIDatabaseTestCase
 
 		$model = new EntityModel();
 
+		// get only id, name column
 		$job = $model->select('id, name')
-					 ->where('name', 'Rocket Scientist')
-					 ->first();
+		             ->where('name', 'Rocket Scientist')
+		             ->first();
 
+		// Hence getting Null as description column not in select clause
 		$this->assertNull($job->description);
+
+		// Equals with name to check, correct record fetched or not.
 		$this->assertEquals('Rocket Scientist', $job->name);
 
+		$job->description = 'Some guitar description';
+
+		// saving the result set with description as empty
 		$model->save($job);
 
+		// check for the record to same entry exists or not
 		$this->seeInDatabase('job', [
-			'id'          => $job->id,
-			'name'        => 'Rocket Scientist',
-			'description' => 'Plays guitar for Queen',
+			'id'   => $job->id,
+			'name' => 'Rocket Scientist',
 		]);
+
+		// select all columns from job table
+		$job = $model->select('id, name, description')
+		             ->where('name', 'Rocket Scientist')
+		             ->first();
+
+		// check whether the Null value successfully updated or not
+		$this->assertEquals('Some guitar description', $job->description);
 	}
 
 	public function testUpdateNoPrimaryKey()
