@@ -27,18 +27,26 @@ the latest released version of the framework.
 This installation technique would suit a developer who wishes to start
 a new CodeIgniter4 based project.
 
-Installation
+Installation & Setup
 -------------------------------------------------------
 
 In the folder above your project root::
 
-    composer create-project codeigniter4/appstarter -s beta
+    composer create-project codeigniter4/appstarter project-root -s beta
 
-Setup
--------------------------------------------------------
+The command above will create a "project-root" folder.
 
-The command above will create an "appstarter" folder.
-Feel free to rename that for your project.
+If you omit the "project-root" argument, the command will create an
+"appstarter" folder, which can be renamed as appropriate.
+
+If you don't need or want phpunit installed, and all of its composer
+dependencies, then add the "--no-dev" option to the end of the above
+command line. That will result in only the framework, and the three
+trusted dependencies that we bundle, being composer-installed.
+
+A sample such installation command, using the default project-root "appstarter"::
+
+    composer create-project codeigniter4/appstarter -s beta --no-dev
 
 Upgrading
 -------------------------------------------------------
@@ -46,6 +54,9 @@ Upgrading
 Whenever there is a new release, then from the command line in your project root::
 
     composer update 
+
+If you used the "--no-dev" option when you created the project, it
+would be appropriate to do so here too, i.e. ``composer update --no-dev``.
 
 Read the upgrade instructions, and check designated  ``app/Config`` folders for affected changes.
 
@@ -64,14 +75,14 @@ Structure
 
 Folders in your project after setup:
 
-- app, public, writable 
+- app, public, tests, writable 
 - vendor/codeigniter4/framework/system
-- vendor/codeigniter4/codeigniter4/app & public (compare with yours after updating)
+- vendor/codeigniter4/framework/app & public (compare with yours after updating)
 
 Dev Starter
 ============================================================
 
-Installation
+Installation & Setup
 -------------------------------------------------------
 
 The `CodeIgniter 4 dev starter <https://github.com/codeigniter4/devstarter>`_ 
@@ -92,16 +103,22 @@ In the folder above your project root::
 
     composer create-project codeigniter4/devstarter -s dev
 
-Setup
--------------------------------------------------------
-
 The command above will create a "devstarter" folder.
 Feel free to rename that for your project.
+
+Just like the appstarter, you can provide your own project
+name as the third composer argument, and you can add
+the "--no-dev" argument if your don't want phpunit and its dependencies included.
+An example::
+
+    composer create-project codeigniter4/devstarter my-awesome-project -s dev --no-dev
+
 
 Upgrading
 -------------------------------------------------------
 
-``composer update`` whenever you are ready for the latest changes.
+``composer update`` whenever you are ready for the latest changes,
+or ``composer update --no-dev`` if you used that argument when creating your project.
 
 Check the changelog to see if any recent changes affect your app,
 bearing in mind that the most recent changes may not have made it
@@ -123,7 +140,7 @@ Structure
 
 Folders in your project after setup:
 
-- app, public, writable 
+- app, public, tests, writable 
 - vendor/codeigniter4/codeigniter4/system
 - vendor/codeigniter4/codeigniter4/app & public (compare with yours after updating)
 
@@ -141,10 +158,13 @@ In your project root::
 
     composer require codeigniter4/framework @beta
 
+As with the earlier two composer install methods, you can omit installing
+phpunit and its dependencies by adding the "--no-dev" argument to the "composer require" command.
+
 Setup
 -------------------------------------------------------
 
-Copy the app, public and writable folders from ``vendor/codeigniter4/framework`` 
+Copy the app, public, tests and writable folders from ``vendor/codeigniter4/framework`` 
 to your project root
 
 Copy the ``env``, ``phpunit.xml.dist`` and ``spark`` files, from
@@ -178,7 +198,7 @@ Structure
 
 Folders in your project after setup:
 
-- app, public, writable 
+- app, public, tests, writable 
 - vendor/codeigniter4/framework/system
 
 
