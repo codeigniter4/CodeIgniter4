@@ -297,7 +297,7 @@ class Entity
 		
 		if(! isset($result) && ! property_exists($this, $key))
 		{
-			throw EntityException::forTryingToAccessNonExistentProperty($key, __CLASS__);
+			throw EntityException::forTryingToAccessNonExistentProperty($key, get_called_class());
 		}
 
 		return $result;
