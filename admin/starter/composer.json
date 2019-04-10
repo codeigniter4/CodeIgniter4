@@ -14,7 +14,7 @@
     },
     "scripts": {
         "post-update-cmd": [
-            "composer dump-autoload"
+            "@composer dump-autoload"
         ]
     },
     "support": {
