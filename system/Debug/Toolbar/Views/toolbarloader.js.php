@@ -61,7 +61,11 @@ function loadDoc(time) {
 }
 
 // Track all AJAX requests
-var oldXHR = window.XMLHttpRequest;
+if (window.ActiveXObject) {
+    var oldXHR = new ActiveXObject('Microsoft.XMLHTTP');
+} else {
+    var oldXHR = window.XMLHttpRequest;
+}
 
 function newXHR() {
 	var realXHR = new oldXHR();
