@@ -394,7 +394,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	protected function _listTables($prefixLimit = false): string
+	protected function _listTables(bool $prefixLimit = false): string
 	{
 		$sql = 'SHOW TABLES FROM ' . $this->escapeIdentifiers($this->database);
 

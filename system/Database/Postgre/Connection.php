@@ -259,7 +259,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	protected function _listTables($prefixLimit = false): string
+	protected function _listTables(bool $prefixLimit = false): string
 	{
 		$sql = 'SELECT "table_name" FROM "information_schema"."tables" WHERE "table_schema" = \'' . $this->schema . "'";
 

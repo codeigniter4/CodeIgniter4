@@ -1755,7 +1755,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	abstract protected function _listTables($constrainByPrefix = false): string;
+	abstract protected function _listTables(bool $constrainByPrefix = false): string;
 
 	//--------------------------------------------------------------------
 
