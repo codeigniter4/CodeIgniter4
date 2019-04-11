@@ -61,7 +61,7 @@ interface ConnectionInterface
 	 * @param  boolean $persistent
 	 * @return mixed
 	 */
-	public function connect($persistent = false);
+	public function connect(bool $persistent = false);
 
 	//--------------------------------------------------------------------
 
@@ -130,18 +130,18 @@ interface ConnectionInterface
 	/**
 	 * The name of the platform in use (MySQLi, mssql, etc)
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getPlatform();
+	public function getPlatform(): string;
 
 	//--------------------------------------------------------------------
 
 	/**
 	 * Returns a string containing the version of the database being used.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getVersion();
+	public function getVersion(): string;
 
 	//--------------------------------------------------------------------
 
@@ -154,7 +154,7 @@ interface ConnectionInterface
 	 * queries if needed.
 	 *
 	 * @param string $sql
-	 * @param array  ...$binds
+	 * @param mixed  ...$binds
 	 *
 	 * @return mixed
 	 */
@@ -201,7 +201,7 @@ interface ConnectionInterface
 	 * Escapes data based on type.
 	 * Sets boolean and null types.
 	 *
-	 * @param string $str
+	 * @param mixed $str
 	 *
 	 * @return mixed
 	 */

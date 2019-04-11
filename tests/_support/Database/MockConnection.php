@@ -1,5 +1,6 @@
 <?php namespace Tests\Support\Database;
 
+use CodeIgniter\CodeIgniter;
 use CodeIgniter\Database\BaseConnection;
 
 class MockConnection extends BaseConnection
@@ -21,7 +22,23 @@ class MockConnection extends BaseConnection
 
 	//--------------------------------------------------------------------
 
-	public function query(string $sql, $binds = null, bool $setEscapeFlags = true, $queryClass = 'CodeIgniter\\Database\\Query')
+	/**
+	 * Orchestrates a query against the database. Queries must use
+	 * Database\Statement objects to store the query and build it.
+	 * This method works with the cache.
+	 *
+	 * Should automatically handle different connections for read/write
+	 * queries if needed.
+	 *
+	 * @param string  $sql
+	 * @param mixed   ...$binds
+	 * @param boolean $setEscapeFlags
+	 * @param string  $queryClass
+	 *
+	 * @return \CodeIgniter\Database\BaseResult|\CodeIgniter\Database\Query|false
+	 */
+
+	public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = 'CodeIgniter\\Database\\Query')
 	{
 		$queryClass = str_replace('Connection', 'Query', get_class($this));
 
@@ -60,9 +77,11 @@ class MockConnection extends BaseConnection
 	/**
 	 * Connect to the database.
 	 *
+	 * @param boolean $persistent
+	 *
 	 * @return mixed
 	 */
-	public function connect($persistent = false)
+	public function connect(bool $persistent = false)
 	{
 		$return = $this->returnValues['connect'] ?? true;
 
@@ -82,9 +101,9 @@ class MockConnection extends BaseConnection
 	 * Keep or establish the connection if no queries have been sent for
 	 * a length of time exceeding the server's idle timeout.
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
-	public function reconnect()
+	public function reconnect(): bool
 	{
 		return true;
 	}
@@ -110,11 +129,11 @@ class MockConnection extends BaseConnection
 	/**
 	 * Returns a string containing the version of the database being used.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getVersion()
+	public function getVersion(): string
 	{
-		return \CodeIgniter\CodeIgniter::CI_VERSION;
+		return CodeIgniter::CI_VERSION;
 	}
 
 	//--------------------------------------------------------------------
@@ -122,11 +141,11 @@ class MockConnection extends BaseConnection
 	/**
 	 * Executes the query against the database.
 	 *
-	 * @param $sql
+	 * @param string    $sql
 	 *
 	 * @return mixed
 	 */
-	protected function execute($sql)
+	protected function execute(string $sql)
 	{
 		return $this->returnValues['execute'];
 	}
@@ -136,7 +155,7 @@ class MockConnection extends BaseConnection
 	/**
 	 * Returns the total number of rows affected by this query.
 	 *
-	 * @return mixed
+	 * @return int
 	 */
 	public function affectedRows(): int
 	{
@@ -154,7 +173,7 @@ class MockConnection extends BaseConnection
 	 *
 	 * @return array
 	 */
-	public function error()
+	public function error(): array
 	{
 		return [
 			'code'    => null,
@@ -169,7 +188,7 @@ class MockConnection extends BaseConnection
 	 *
 	 * @return integer
 	 */
-	public function insertID()
+	public function insertID(): int
 	{
 		return $this->connID->insert_id;
 	}
@@ -183,7 +202,7 @@ class MockConnection extends BaseConnection
 	 *
 	 * @return string
 	 */
-	protected function _listTables($constrainByPrefix = false): string
+	protected function _listTables(bool $constrainByPrefix = false): string
 	{
 		return '';
 	}

@@ -53,7 +53,6 @@ class Builder extends BaseBuilder
 	 */
 	protected $randomKeyword = [
 		'RANDOM()',
-		'RANDOM()',
 	];
 
 	//--------------------------------------------------------------------
@@ -98,7 +97,7 @@ class Builder extends BaseBuilder
 	 * @param string  $column
 	 * @param integer $value
 	 *
-	 * @return boolean
+	 * @return mixed
 	 */
 	public function increment(string $column, int $value = 1)
 	{
@@ -117,7 +116,7 @@ class Builder extends BaseBuilder
 	 * @param string  $column
 	 * @param integer $value
 	 *
-	 * @return boolean
+	 * @return mixed
 	 */
 	public function decrement(string $column, int $value = 1)
 	{
@@ -141,7 +140,7 @@ class Builder extends BaseBuilder
 	 * @param array   $set       An associative array of insert values
 	 * @param boolean $returnSQL
 	 *
-	 * @return   boolean TRUE on success, FALSE on failure
+	 * @return   mixed
 	 * @throws   DatabaseException
 	 * @internal param true $bool returns the generated SQL, false executes the query.
 	 */

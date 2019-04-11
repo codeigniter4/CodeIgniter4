@@ -92,18 +92,18 @@ class Result extends BaseResult implements ResultInterface
 			SQLITE3_NULL    => 'null',
 		];
 
-		$retval = [];
+		$retVal = [];
 
 		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
 		{
-			$retval[$i]             = new \stdClass();
-			$retval[$i]->name       = $this->resultID->columnName($i);
+			$retVal[$i]             = new \stdClass();
+			$retVal[$i]->name       = $this->resultID->columnName($i);
 			$type                   = $this->resultID->columnType($i);
-			$retval[$i]->type       = isset($data_types[$type]) ? $data_types[$type] : $type;
-			$retval[$i]->max_length = null;
+			$retVal[$i]->type       = isset($data_types[$type]) ? $data_types[$type] : $type;
+			$retVal[$i]->max_length = null;
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------
@@ -134,7 +134,7 @@ class Result extends BaseResult implements ResultInterface
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function dataSeek($n = 0)
+	public function dataSeek(int $n = 0)
 	{
 		if ($n !== 0)
 		{
@@ -151,7 +151,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * Overridden by driver classes.
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	protected function fetchAssoc()
 	{
@@ -167,9 +167,9 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @param string $className
 	 *
-	 * @return object
+	 * @return object|boolean
 	 */
-	protected function fetchObject($className = 'stdClass')
+	protected function fetchObject(string $className = 'stdClass')
 	{
 		// No native support for fetching rows as objects
 		if (($row = $this->fetchAssoc()) === false)

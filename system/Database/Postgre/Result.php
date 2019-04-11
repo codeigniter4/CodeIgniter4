@@ -84,19 +84,19 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function getFieldData(): array
 	{
-		$retval = [];
+		$retVal = [];
 
 		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
 		{
-			$retval[$i]             = new \stdClass();
-			$retval[$i]->name       = pg_field_name($this->resultID, $i);
-			$retval[$i]->type       = pg_field_type($this->resultID, $i);
-			$retval[$i]->max_length = pg_field_size($this->resultID, $i);
-			// $retval[$i]->primary_key = (int)($fieldData[$i]->flags & 2);
-			// $retval[$i]->default     = $fieldData[$i]->def;
+			$retVal[$i]             = new \stdClass();
+			$retVal[$i]->name       = pg_field_name($this->resultID, $i);
+			$retVal[$i]->type       = pg_field_type($this->resultID, $i);
+			$retVal[$i]->max_length = pg_field_size($this->resultID, $i);
+			// $retVal[$i]->primary_key = (int)($fieldData[$i]->flags & 2);
+			// $retVal[$i]->default     = $fieldData[$i]->def;
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------
@@ -104,7 +104,7 @@ class Result extends BaseResult implements ResultInterface
 	/**
 	 * Frees the current result.
 	 *
-	 * @return mixed
+	 * @return void
 	 */
 	public function freeResult()
 	{
@@ -126,7 +126,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function dataSeek($n = 0)
+	public function dataSeek(int $n = 0)
 	{
 		return pg_result_seek($this->resultID, $n);
 	}
@@ -138,7 +138,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * Overridden by driver classes.
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	protected function fetchAssoc()
 	{
@@ -156,7 +156,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return object
 	 */
-	protected function fetchObject($className = 'stdClass')
+	protected function fetchObject(string $className = 'stdClass')
 	{
 		return pg_fetch_object($this->resultID, null, $className);
 	}

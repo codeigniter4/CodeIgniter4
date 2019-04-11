@@ -74,6 +74,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 *                        Unused in the MySQLi driver.
 	 *
 	 * @return mixed
+	 * @throws \Exception
 	 */
 	public function _prepare(string $sql, array $options = [])
 	{
@@ -104,7 +105,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @return boolean
 	 */
-	public function _execute($data)
+	public function _execute(array $data): bool
 	{
 		if (is_null($this->statement))
 		{
