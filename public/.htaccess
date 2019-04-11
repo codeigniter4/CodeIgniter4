@@ -60,12 +60,6 @@ AddDefaultCharset utf-8
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^(.*)$ index.php/$1 [L]
 
-    # Disable image hotlinkiing start
-    RewriteCond %{HTTP_REFERER} !^$
-    RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?example.com [NC]
-    RewriteRule \.(jpg|jpeg|png|gif)$ – [NC,F,L]
-    # Disable image hotlinkiing end
-
 	# Ensure Authorization header is passed along
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
