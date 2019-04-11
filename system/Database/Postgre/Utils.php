@@ -37,12 +37,13 @@
 
 namespace CodeIgniter\Database\Postgre;
 
+use CodeIgniter\Database\BaseUtils;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Utils for Postgre
  */
-class Utils extends \CodeIgniter\Database\BaseUtils
+class Utils extends BaseUtils
 {
 
 	/**
