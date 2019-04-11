@@ -80,9 +80,9 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @param array $data
 	 *
-	 * @return \CodeIgniter\Database\ResultInterface
+	 * @return bool
 	 */
-	public function _execute($data)
+	public function _execute(array $data): bool
 	{
 		if (is_null($this->statement))
 		{
