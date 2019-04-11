@@ -89,7 +89,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function connect($persistent = false)
+	public function connect(bool $persistent = false)
 	{
 		// Do we have a socket path?
 		if ($this->hostname[0] === '/')
@@ -287,9 +287,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Returns a string containing the version of the database being used.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getVersion()
+	public function getVersion(): string
 	{
 		if (isset($this->dataCache['version']))
 		{
@@ -313,7 +313,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function execute($sql)
+	public function execute(string $sql)
 	{
 		while ($this->connID->more_results())
 		{

@@ -78,7 +78,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @param  boolean $persistent
 	 * @return mixed
 	 */
-	public function connect($persistent = false)
+	public function connect(bool $persistent = false)
 	{
 		if (empty($this->DSN))
 		{
@@ -160,9 +160,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Returns a string containing the version of the database being used.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getVersion()
+	public function getVersion(): string
 	{
 		if (isset($this->dataCache['version']))
 		{
@@ -186,7 +186,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return resource
 	 */
-	public function execute($sql)
+	public function execute(string $sql)
 	{
 		return pg_query($this->connID, $sql);
 	}

@@ -76,7 +76,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function connect($persistent = false)
+	public function connect(bool $persistent = false)
 	{
 		if ($persistent && $this->db->DBDebug)
 		{
@@ -139,9 +139,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Returns a string containing the version of the database being used.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getVersion()
+	public function getVersion(): string
 	{
 		if (isset($this->dataCache['version']))
 		{
@@ -162,7 +162,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed    \SQLite3Result object or bool
 	 */
-	public function execute($sql)
+	public function execute(string $sql)
 	{
 		return $this->isWriteType($sql)
 			? $this->connID->exec($sql)

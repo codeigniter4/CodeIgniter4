@@ -422,7 +422,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @param  boolean $persistent
 	 * @return mixed
 	 */
-	abstract public function connect($persistent = false);
+	abstract public function connect(bool $persistent = false);
 
 	//--------------------------------------------------------------------
 
@@ -526,9 +526,9 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * The name of the platform in use (MySQLi, mssql, etc)
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getPlatform()
+	public function getPlatform(): string
 	{
 		return $this->DBDriver;
 	}
@@ -538,9 +538,9 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Returns a string containing the version of the database being used.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	abstract public function getVersion();
+	abstract public function getVersion(): string;
 
 	//--------------------------------------------------------------------
 
@@ -586,7 +586,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	abstract protected function execute($sql);
+	abstract protected function execute(string $sql);
 
 	//--------------------------------------------------------------------
 
@@ -599,13 +599,13 @@ abstract class BaseConnection implements ConnectionInterface
 	 * queries if needed.
 	 *
 	 * @param string  $sql
-	 * @param array   ...$binds
+	 * @param mixed   ...$binds
 	 * @param boolean $setEscapeFlags
 	 * @param string  $queryClass
 	 *
 	 * @return BaseResult|Query|false
 	 */
-	public function query(string $sql, $binds = null, bool $setEscapeFlags = true, $queryClass = 'CodeIgniter\\Database\\Query')
+	public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = 'CodeIgniter\\Database\\Query')
 	{
 		if (empty($this->connID))
 		{
@@ -750,7 +750,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @param  boolean $test_mode = FALSE
 	 * @return boolean
 	 */
-	public function transStart($test_mode = false)
+	public function transStart(bool $test_mode = false)
 	{
 		if (! $this->transEnabled)
 		{
@@ -924,7 +924,7 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Returns an instance of the query builder for this connection.
 	 *
-	 * @param string $tableName
+	 * @param string|array $tableName
 	 *
 	 * @return BaseBuilder
 	 * @throws DatabaseException
@@ -1008,7 +1008,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	public function showLastQuery()
+	public function showLastQuery(): string
 	{
 		return (string) $this->lastQuery;
 	}
@@ -1023,7 +1023,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return float
 	 */
-	public function getConnectStart()
+	public function getConnectStart(): float
 	{
 		return $this->connectTime;
 	}
@@ -1040,7 +1040,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function getConnectDuration($decimals = 6)
+	public function getConnectDuration(int $decimals = 6)
 	{
 		return number_format($this->connectDuration, $decimals);
 	}
@@ -1067,14 +1067,14 @@ abstract class BaseConnection implements ConnectionInterface
 	 * insert the table prefix (if it exists) in the proper position, and escape only
 	 * the correct identifiers.
 	 *
-	 * @param string|array
-	 * @param boolean
-	 * @param mixed
-	 * @param boolean
+	 * @param string|array  $item
+	 * @param boolean       $prefixSingle
+	 * @param boolean       $protectIdentifiers
+	 * @param boolean       $fieldExists
 	 *
 	 * @return string|array
 	 */
-	public function protectIdentifiers($item, $prefixSingle = false, $protectIdentifiers = null, $fieldExists = true)
+	public function protectIdentifiers($item, bool $prefixSingle = false, bool $protectIdentifiers = null, bool $fieldExists = true)
 	{
 		if (! is_bool($protectIdentifiers))
 		{
@@ -1313,7 +1313,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @return string
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function prefixTable($table = '')
+	public function prefixTable(string $table = ''): string
 	{
 		if ($table === '')
 		{
@@ -1334,7 +1334,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	public function setPrefix($prefix = '')
+	public function setPrefix(string $prefix = ''): string
 	{
 		return $this->DBPrefix = $prefix;
 	}
@@ -1356,7 +1356,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Escapes data based on type.
 	 * Sets boolean and null types
 	 *
-	 * @param $str
+	 * @param mixed $str
 	 *
 	 * @return mixed
 	 */
@@ -1395,9 +1395,9 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @param  string|string[] $str  Input string
 	 * @param  boolean         $like Whether or not the string will be used in a LIKE condition
-	 * @return string
+	 * @return string|string[]
 	 */
-	public function escapeString($str, $like = false)
+	public function escapeString($str, bool $like = false)
 	{
 		if (is_array($str))
 		{
@@ -1507,7 +1507,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @return boolean|array
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function listTables($constrain_by_prefix = false)
+	public function listTables(bool $constrain_by_prefix = false)
 	{
 		// Is there a cached result?
 		if (isset($this->dataCache['table_names']) && $this->dataCache['table_names'])
@@ -1566,7 +1566,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @param  string $table_name
 	 * @return boolean
 	 */
-	public function tableExists($table_name)
+	public function tableExists(string $table_name): bool
 	{
 		return in_array($this->protectIdentifiers($table_name, true, false, false), $this->listTables());
 	}
@@ -1581,7 +1581,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @return array|false
 	 * @throws DatabaseException
 	 */
-	public function getFieldNames($table)
+	public function getFieldNames(string $table)
 	{
 		// Is there a cached result?
 		if (isset($this->dataCache['field_names'][$table]))
@@ -1637,11 +1637,11 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Determine if a particular field exists
 	 *
-	 * @param  string
-	 * @param  string
+	 * @param  string   $fieldName
+	 * @param  string   $tableName
 	 * @return boolean
 	 */
-	public function fieldExists($fieldName, $tableName)
+	public function fieldExists(string $fieldName, string $tableName): bool
 	{
 		return in_array($fieldName, $this->getFieldNames($tableName));
 	}
@@ -1803,12 +1803,19 @@ abstract class BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
-	public function __get($key)
+	/**
+	 * @param string $key
+	 *
+	 * @return mixed
+	 */
+	public function __get(string $key)
 	{
 		if (property_exists($this, $key))
 		{
 			return $this->$key;
 		}
+
+		return null;
 	}
 
 	//--------------------------------------------------------------------

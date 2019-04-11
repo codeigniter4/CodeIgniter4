@@ -110,9 +110,9 @@ class MockConnection extends BaseConnection
 	/**
 	 * Returns a string containing the version of the database being used.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getVersion()
+	public function getVersion(): string
 	{
 		return \CodeIgniter\CodeIgniter::CI_VERSION;
 	}
