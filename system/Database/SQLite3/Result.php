@@ -134,7 +134,7 @@ class Result extends BaseResult implements ResultInterface
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function dataSeek($n = 0)
+	public function dataSeek(int $n = 0)
 	{
 		if ($n !== 0)
 		{
@@ -151,7 +151,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * Overridden by driver classes.
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	protected function fetchAssoc()
 	{
@@ -167,9 +167,9 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @param string $className
 	 *
-	 * @return object
+	 * @return object|boolean
 	 */
-	protected function fetchObject($className = 'stdClass')
+	protected function fetchObject(string $className = 'stdClass')
 	{
 		// No native support for fetching rows as objects
 		if (($row = $this->fetchAssoc()) === false)
