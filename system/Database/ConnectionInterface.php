@@ -154,7 +154,7 @@ interface ConnectionInterface
 	 * queries if needed.
 	 *
 	 * @param string $sql
-	 * @param array  ...$binds
+	 * @param mixed  ...$binds
 	 *
 	 * @return mixed
 	 */
@@ -201,7 +201,7 @@ interface ConnectionInterface
 	 * Escapes data based on type.
 	 * Sets boolean and null types.
 	 *
-	 * @param string $str
+	 * @param mixed $str
 	 *
 	 * @return mixed
 	 */

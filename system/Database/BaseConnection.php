@@ -428,6 +428,8 @@ abstract class BaseConnection implements ConnectionInterface
 
 	/**
 	 * Close the database connection.
+	 *
+	 * @return void
 	 */
 	public function close()
 	{
@@ -713,6 +715,8 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Disable Transactions
 	 *
 	 * This permits transactions to be disabled at run-time.
+	 *
+	 * @return void
 	 */
 	public function transOff()
 	{
@@ -750,7 +754,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @param  boolean $test_mode = FALSE
 	 * @return boolean
 	 */
-	public function transStart(bool $test_mode = false)
+	public function transStart(bool $test_mode = false): bool
 	{
 		if (! $this->transEnabled)
 		{
@@ -767,7 +771,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return boolean
 	 */
-	public function transComplete()
+	public function transComplete(): bool
 	{
 		if (! $this->transEnabled)
 		{
@@ -1038,9 +1042,9 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @param integer $decimals
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getConnectDuration(int $decimals = 6)
+	public function getConnectDuration(int $decimals = 6): string
 	{
 		return number_format($this->connectDuration, $decimals);
 	}
@@ -1473,7 +1477,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @return boolean
 	 * @throws DatabaseException
 	 */
-	public function callFunction(string $functionName, ...$params)
+	public function callFunction(string $functionName, ...$params): bool
 	{
 		$driver = ($this->DBDriver === 'postgre' ? 'pg' : strtolower($this->DBDriver)) . '_';
 
@@ -1735,7 +1739,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return array
 	 */
-	abstract public function error();
+	abstract public function error(): array;
 
 	//--------------------------------------------------------------------
 
@@ -1744,7 +1748,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return integer
 	 */
-	abstract public function insertID();
+	abstract public function insertID(): int;
 
 	//--------------------------------------------------------------------
 

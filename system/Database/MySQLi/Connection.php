@@ -245,6 +245,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	/**
 	 * Close the database connection.
+	 *
+	 * @return void
 	 */
 	protected function _close()
 	{
@@ -258,9 +260,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @param string $databaseName
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
-	public function setDatabase(string $databaseName)
+	public function setDatabase(string $databaseName): bool
 	{
 		if ($databaseName === '')
 		{
@@ -338,7 +340,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	protected function prepQuery($sql)
+	protected function prepQuery(string $sql): string
 	{
 		// mysqli_affected_rows() returns 0 for "DELETE FROM TABLE" queries. This hack
 		// modifies the query so that it a proper number of affected rows is returned.
@@ -355,7 +357,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Returns the total number of rows affected by this query.
 	 *
-	 * @return mixed
+	 * @return int
 	 */
 	public function affectedRows(): int
 	{
@@ -575,7 +577,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return array
 	 */
-	public function error()
+	public function error(): array
 	{
 		if (! empty($this->mysqli->connect_errno))
 		{
@@ -598,7 +600,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return integer
 	 */
-	public function insertID()
+	public function insertID(): int
 	{
 		return $this->connID->insert_id;
 	}

@@ -100,7 +100,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Keep or establish the connection if no queries have been sent for
 	 * a length of time exceeding the server's idle timeout.
 	 *
-	 * @return mixed
+	 * @return void
 	 */
 	public function reconnect()
 	{
@@ -127,9 +127,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @param string $databaseName
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
-	public function setDatabase(string $databaseName)
+	public function setDatabase(string $databaseName): bool
 	{
 		return false;
 	}
@@ -174,7 +174,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Returns the total number of rows affected by this query.
 	 *
-	 * @return mixed
+	 * @return int
 	 */
 	public function affectedRows(): int
 	{
@@ -235,7 +235,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @return array|false
 	 * @throws DatabaseException
 	 */
-	public function getFieldNames($table)
+	public function getFieldNames(string $table)
 	{
 		// Is there a cached result?
 		if (isset($this->dataCache['field_names'][$table]))
