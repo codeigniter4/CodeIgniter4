@@ -1251,7 +1251,7 @@ class BaseBuilder
 
 		if ($escape === false)
 		{
-			$qb_orderby[] = [
+			$qb_orderBy[] = [
 				'field'     => $orderBy,
 				'direction' => $direction,
 				'escape'    => false,
@@ -1259,10 +1259,10 @@ class BaseBuilder
 		}
 		else
 		{
-			$qb_orderby = [];
+			$qb_orderBy = [];
 			foreach (explode(',', $orderBy) as $field)
 			{
-				$qb_orderby[] = ($direction === '' && preg_match('/\s+(ASC|DESC)$/i', rtrim($field), $match, PREG_OFFSET_CAPTURE))
+				$qb_orderBy[] = ($direction === '' && preg_match('/\s+(ASC|DESC)$/i', rtrim($field), $match, PREG_OFFSET_CAPTURE))
 					?
 					[
 						'field'     => ltrim(substr($field, 0, $match[0][1])),
@@ -1278,7 +1278,7 @@ class BaseBuilder
 			}
 		}
 
-		$this->QBOrderBy = array_merge($this->QBOrderBy, $qb_orderby);
+		$this->QBOrderBy = array_merge($this->QBOrderBy, $qb_orderBy);
 
 		return $this;
 	}
