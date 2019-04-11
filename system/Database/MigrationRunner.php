@@ -342,7 +342,7 @@ class MigrationRunner
 	 *
 	 * @return boolean
 	 */
-	public function latestAll(string $group = null)
+	public function latestAll(string $group = null): bool
 	{
 		$this->ensureTable();
 
@@ -387,7 +387,7 @@ class MigrationRunner
 	 *
 	 * @param string|null $group
 	 *
-	 * @return mixed    TRUE if no migrations are found, current version string on success, FALSE on failure
+	 * @return mixed    Current version string on success, FALSE on failure or no migrations are found
 	 */
 	public function current(string $group = null)
 	{
@@ -409,7 +409,7 @@ class MigrationRunner
 	 *
 	 * @return array    list of migrations as $version for one namespace
 	 */
-	public function findMigrations()
+	public function findMigrations(): array
 	{
 		$migrations = [];
 
@@ -674,7 +674,7 @@ class MigrationRunner
 	 *
 	 * @return string    Current migration version
 	 */
-	protected function getVersion()
+	protected function getVersion(): string
 	{
 		$this->ensureTable();
 
