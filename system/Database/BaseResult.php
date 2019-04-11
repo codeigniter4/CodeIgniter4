@@ -123,7 +123,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @param string $type The row type. Either 'array', 'object', or a class name to use
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function getResult(string $type = 'object'): array
 	{
@@ -291,7 +291,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * If row doesn't exist, returns null.
 	 *
-	 * @param integer $n    The index of the results to return
+	 * @param mixed   $n    The index of the results to return
 	 * @param string  $type The type of result object. 'array', 'object' or class name.
 	 *
 	 * @return mixed
@@ -412,8 +412,8 @@ abstract class BaseResult implements ResultInterface
 	/**
 	 * Assigns an item into a particular column slot.
 	 *
-	 * @param $key
-	 * @param null $value
+	 * @param mixed $key
+	 * @param mixed $value
 	 *
 	 * @return mixed
 	 */
