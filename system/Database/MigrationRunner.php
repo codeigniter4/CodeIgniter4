@@ -601,7 +601,7 @@ class MigrationRunner
 	 *
 	 * @return array
 	 */
-	public function getHistory(string $group = 'default')
+	public function getHistory(string $group = 'default'): array
 	{
 		$this->ensureTable();
 
@@ -645,7 +645,7 @@ class MigrationRunner
 	 *
 	 * @return string    Numeric portion of a migration filename
 	 */
-	protected function getMigrationNumber(string $migration)
+	protected function getMigrationNumber(string $migration): string
 	{
 		return sscanf($migration, '%[0-9]+', $number) ? $number : '0';
 	}
@@ -659,7 +659,7 @@ class MigrationRunner
 	 *
 	 * @return string    text portion of a migration filename
 	 */
-	protected function getMigrationName(string $migration)
+	protected function getMigrationName(string $migration): string
 	{
 		$parts = explode('_', $migration);
 		array_shift($parts);
@@ -695,7 +695,7 @@ class MigrationRunner
 	 *
 	 * @return array    Current migration version
 	 */
-	public function getCliMessages()
+	public function getCliMessages(): array
 	{
 		return $this->cliMessages;
 	}
@@ -708,6 +708,8 @@ class MigrationRunner
 	 * @param string $version
 	 *
 	 * @internal param string $migration Migration reached
+	 *
+	 * @return void
 	 */
 	protected function addHistory(string $version)
 	{
@@ -731,6 +733,7 @@ class MigrationRunner
 	 * Removes a single history
 	 *
 	 * @param string $version
+	 * @return void
 	 */
 	protected function removeHistory(string $version)
 	{
