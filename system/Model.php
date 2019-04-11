@@ -799,7 +799,14 @@ class Model
 
 		if ($id)
 		{
-			$builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
+			if(is_array($id))
+			{
+				$builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
+			}
+			else
+			{
+				$builder = $builder->where($this->table . '.' . $this->primaryKey, $id);
+			}
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays
