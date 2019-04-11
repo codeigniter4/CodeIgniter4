@@ -471,11 +471,11 @@ class MigrationRunner
 	 *
 	 * @param array  $migrations
 	 * @param string $method
-	 * @param string $targetversion
+	 * @param string $targetVersion
 	 *
 	 * @return boolean
 	 */
-	protected function checkMigrations(array $migrations, string $method, string $targetversion)
+	protected function checkMigrations(array $migrations, string $method, string $targetVersion): bool
 	{
 		// Check if no migrations found
 		if (empty($migrations))
@@ -487,14 +487,14 @@ class MigrationRunner
 			throw new \RuntimeException(lang('Migrations.empty'));
 		}
 
-		// Check if $targetversion file is found
-		if ((int)$targetversion !== 0 && ! array_key_exists($targetversion, $migrations))
+		// Check if $targetVersion file is found
+		if ((int)$targetVersion !== 0 && ! array_key_exists($targetVersion, $migrations))
 		{
 			if ($this->silent)
 			{
 				return false;
 			}
-			throw new \RuntimeException(lang('Migrations.notFound') . $targetversion);
+			throw new \RuntimeException(lang('Migrations.notFound') . $targetVersion);
 		}
 
 		ksort($migrations);
