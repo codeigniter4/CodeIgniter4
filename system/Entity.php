@@ -294,8 +294,14 @@ class Entity
 		{
 			$result = $this->castAs($result, $this->_options['casts'][$key]);
 		}
+		
+		if(! isset($result) && ! property_exists($this, $key))
+		{
+			throw EntityException::forTryingToAccessNonExistentProperty($key, get_called_class());
+		}
 
 		return $result;
+
 	}
 
 	//--------------------------------------------------------------------
