@@ -264,11 +264,23 @@ over-ride this.</p>
 <div class="section" id="the-test-class">
 <h3><a class="toc-backref" href="#id6">The Test Class</a><a class="headerlink" href="#the-test-class" title="Permalink to this headline">¶</a></h3>
 <p>In order to take advantage of the additional tools provided, your tests must extend <code class="docutils literal"><span class="pre">\CIUnitTestCase</span></code>. All tests
-are expected to be located in the <strong>tests/</strong> directory by default.</p>
-<p>To test a new library, <strong>Foo</strong>, you would create a new file at <strong>tests/TestFoo.php</strong>:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">Tests</span><span class="p">;</span>
+are expected to be located in the <strong>tests/app</strong> directory by default.</p>
+<p>To test a new library, <strong>Foo</strong>, you would create a new file at <strong>tests/app/Libraries/FooTest.php</strong>:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Libraries</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">MyTests</span> <span class="k">extends</span> <span class="nx">\CIUnitTestCase</span>
+<span class="k">class</span> <span class="nc">FooTest</span> <span class="k">extends</span> <span class="nx">\CIUnitTestCase</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">testFooNotBar</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="o">.</span> <span class="o">.</span> <span class="o">.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>To test one of your models, you might end up with something like this in <code class="docutils literal"><span class="pre">tests/app/Models/OneOfMyModelsTest.php</span></code>:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">OneOfMyModelsTest</span> <span class="k">extends</span> <span class="nx">\CIUnitTestCase</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">testFooNotBar</span><span class="p">()</span>
     <span class="p">{</span>
@@ -278,11 +290,11 @@ are expected to be located in the <strong>tests/</strong> directory by default.<
 </pre></div>
 </div>
 <p>You can create any directory structure that fits your testing style/needs. When namespacing the test classes,
-remember that the <strong>tests</strong> directory is the root of the <code class="docutils literal"><span class="pre">Tests</span></code> namespace, so any classes you use must
-have the correct namespace relative to <code class="docutils literal"><span class="pre">Tests</span></code>.</p>
+remember that the <strong>app</strong> directory is the root of the <code class="docutils literal"><span class="pre">App</span></code> namespace, so any classes you use must
+have the correct namespace relative to <code class="docutils literal"><span class="pre">App</span></code>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Namespaces are not required for test classes, but they are helpful to ensure no class names collide.</p>
+<p class="last">Namespaces are not strictly required for test classes, but they are helpful to ensure no class names collide.</p>
 </div>
 <p>When testing database results, you must use the <a class="reference external" href="/testing/database">CIDatabaseTestClass</a> class.</p>
 <div class="section" id="additional-assertions">
