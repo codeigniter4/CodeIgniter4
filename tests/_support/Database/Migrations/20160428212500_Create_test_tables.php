@@ -46,7 +46,10 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 				'type'       => 'VARCHAR',
 				'constraint' => 40,
 			],
-			'description' => ['type' => 'TEXT'],
+			'description' => [
+				'type' => 'TEXT',
+				'null' => true,
+			],
 			'created_at'  => [
 				'type' => 'DATETIME',
 				'null' => true,

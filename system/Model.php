@@ -484,14 +484,6 @@ class Model
 	 */
 	public function save($data): bool
 	{
-		// If $data is using a custom class with public or protected
-		// properties representing the table elements, we need to grab
-		// them as an array.
-		if (is_object($data) && ! $data instanceof \stdClass)
-		{
-			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
-		}
-
 		if (empty($data))
 		{
 			return true;
@@ -525,15 +517,16 @@ class Model
 	 * @param string|object $data
 	 * @param string|null   $primaryKey
 	 * @param string        $dateFormat
+	 * @param boolean       $onlyChanged
 	 *
 	 * @return array
 	 * @throws \ReflectionException
 	 */
-	public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime'): array
+	public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = true): array
 	{
 		if (method_exists($data, 'toRawArray'))
 		{
-			$properties = $data->toRawArray(true);
+			$properties = $data->toRawArray($onlyChanged);
 
 			// Always grab the primary key otherwise updates will fail.
 			if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties))
@@ -631,7 +624,7 @@ class Model
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
-			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
+			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat, false);
 		}
 
 		// If it's still a stdClass, go ahead and convert to
