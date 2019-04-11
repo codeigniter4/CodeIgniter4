@@ -85,20 +85,20 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function getFieldData(): array
 	{
-		$retval    = [];
+		$retVal    = [];
 		$fieldData = $this->resultID->fetch_fields();
 
 		foreach ($fieldData as $i => $data)
 		{
-			$retval[$i]              = new \stdClass();
-			$retval[$i]->name        = $data->name;
-			$retval[$i]->type        = $data->type;
-			$retval[$i]->max_length  = $data->max_length;
-			$retval[$i]->primary_key = (int) ($data->flags & 2);
-			$retval[$i]->default     = $data->def;
+			$retVal[$i]              = new \stdClass();
+			$retVal[$i]->name        = $data->name;
+			$retVal[$i]->type        = $data->type;
+			$retVal[$i]->max_length  = $data->max_length;
+			$retVal[$i]->primary_key = (int) ($data->flags & 2);
+			$retVal[$i]->default     = $data->def;
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------

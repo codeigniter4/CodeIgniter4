@@ -198,7 +198,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Returns the total number of rows affected by this query.
 	 *
-	 * @return mixed
+	 * @return int
 	 */
 	public function affectedRows(): int
 	{
@@ -314,17 +314,17 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 		$query = $query->getResultObject();
 
-		$retval = [];
+		$retVal = [];
 		for ($i = 0, $c = count($query); $i < $c; $i ++)
 		{
-			$retval[$i]             = new \stdClass();
-			$retval[$i]->name       = $query[$i]->column_name;
-			$retval[$i]->type       = $query[$i]->data_type;
-			$retval[$i]->default    = $query[$i]->column_default;
-			$retval[$i]->max_length = $query[$i]->character_maximum_length > 0 ? $query[$i]->character_maximum_length : $query[$i]->numeric_precision;
+			$retVal[$i]             = new \stdClass();
+			$retVal[$i]->name       = $query[$i]->column_name;
+			$retVal[$i]->type       = $query[$i]->data_type;
+			$retVal[$i]->default    = $query[$i]->column_default;
+			$retVal[$i]->max_length = $query[$i]->character_maximum_length > 0 ? $query[$i]->character_maximum_length : $query[$i]->numeric_precision;
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------
@@ -349,7 +349,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 		$query = $query->getResultObject();
 
-		$retval = [];
+		$retVal = [];
 		foreach ($query as $row)
 		{
 			$obj         = new \stdClass();
@@ -368,10 +368,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 				$obj->type = (strpos($row->indexdef, 'CREATE UNIQUE') === 0) ? 'UNIQUE' : 'INDEX';
 			}
 
-			$retval[$obj->name] = $obj;
+			$retVal[$obj->name] = $obj;
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------
@@ -403,17 +403,17 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 		$query = $query->getResultObject();
 
-		$retval = [];
+		$retVal = [];
 		foreach ($query as $row)
 		{
 			$obj                     = new \stdClass();
 			$obj->constraint_name    = $row->constraint_name;
 			$obj->table_name         = $row->table_name;
 			$obj->foreign_table_name = $row->foreign_table_name;
-			$retval[]                = $obj;
+			$retVal[]                = $obj;
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------

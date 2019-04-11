@@ -84,19 +84,19 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function getFieldData(): array
 	{
-		$retval = [];
+		$retVal = [];
 
 		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
 		{
-			$retval[$i]             = new \stdClass();
-			$retval[$i]->name       = pg_field_name($this->resultID, $i);
-			$retval[$i]->type       = pg_field_type($this->resultID, $i);
-			$retval[$i]->max_length = pg_field_size($this->resultID, $i);
-			// $retval[$i]->primary_key = (int)($fieldData[$i]->flags & 2);
-			// $retval[$i]->default     = $fieldData[$i]->def;
+			$retVal[$i]             = new \stdClass();
+			$retVal[$i]->name       = pg_field_name($this->resultID, $i);
+			$retVal[$i]->type       = pg_field_type($this->resultID, $i);
+			$retVal[$i]->max_length = pg_field_size($this->resultID, $i);
+			// $retVal[$i]->primary_key = (int)($fieldData[$i]->flags & 2);
+			// $retVal[$i]->default     = $fieldData[$i]->def;
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------

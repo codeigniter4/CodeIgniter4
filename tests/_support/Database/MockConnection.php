@@ -77,6 +77,8 @@ class MockConnection extends BaseConnection
 	/**
 	 * Connect to the database.
 	 *
+	 * @param boolean $persistent
+	 *
 	 * @return mixed
 	 */
 	public function connect(bool $persistent = false)
@@ -101,7 +103,7 @@ class MockConnection extends BaseConnection
 	 *
 	 * @return boolean
 	 */
-	public function reconnect()
+	public function reconnect(): bool
 	{
 		return true;
 	}

@@ -313,19 +313,19 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			return [];
 		}
-		$retval = [];
+		$retVal = [];
 		for ($i = 0, $c = count($query); $i < $c; $i++)
 		{
-			$retval[$i]              = new \stdClass();
-			$retval[$i]->name        = $query[$i]->name;
-			$retval[$i]->type        = $query[$i]->type;
-			$retval[$i]->max_length  = null;
-			$retval[$i]->default     = $query[$i]->dflt_value;
-			$retval[$i]->primary_key = isset($query[$i]->pk) ? (bool)$query[$i]->pk : false;
-			$retval[$i]->nullable    = isset($query[$i]->notnull) ? ! (bool)$query[$i]->notnull : false;
+			$retVal[$i]              = new \stdClass();
+			$retVal[$i]->name        = $query[$i]->name;
+			$retVal[$i]->type        = $query[$i]->type;
+			$retVal[$i]->max_length  = null;
+			$retVal[$i]->default     = $query[$i]->dflt_value;
+			$retVal[$i]->primary_key = isset($query[$i]->pk) ? (bool)$query[$i]->pk : false;
+			$retVal[$i]->nullable    = isset($query[$i]->notnull) ? ! (bool)$query[$i]->notnull : false;
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------
@@ -348,7 +348,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 		$query = $query->getResultObject();
 
-		$retval = [];
+		$retVal = [];
 		foreach ($query as $row)
 		{
 			$obj       = new \stdClass();
@@ -367,10 +367,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 				$obj->fields[] = $field->name;
 			}
 
-			$retval[$obj->name] = $obj;
+			$retVal[$obj->name] = $obj;
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------
@@ -395,7 +395,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			return [];
 		}
 
-		$retval = [];
+		$retVal = [];
 
 		foreach ($tables as $table)
 		{
@@ -408,11 +408,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 				$obj->table_name         = $table;
 				$obj->foreign_table_name = $row->table;
 
-				$retval[] = $obj;
+				$retVal[] = $obj;
 			}
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------

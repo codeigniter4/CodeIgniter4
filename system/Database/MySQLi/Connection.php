@@ -441,19 +441,19 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 		$query = $query->getResultObject();
 
-		$retval = [];
+		$retVal = [];
 		for ($i = 0, $c = count($query); $i < $c; $i++)
 		{
-			$retval[$i]       = new \stdClass();
-			$retval[$i]->name = $query[$i]->Field;
+			$retVal[$i]       = new \stdClass();
+			$retVal[$i]->name = $query[$i]->Field;
 
-			sscanf($query[$i]->Type, '%[a-z](%d)', $retval[$i]->type, $retval[$i]->max_length);
+			sscanf($query[$i]->Type, '%[a-z](%d)', $retVal[$i]->type, $retVal[$i]->max_length);
 
-			$retval[$i]->default     = $query[$i]->Default;
-			$retval[$i]->primary_key = (int)($query[$i]->Key === 'PRI');
+			$retVal[$i]->default     = $query[$i]->Default;
+			$retVal[$i]->primary_key = (int)($query[$i]->Key === 'PRI');
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------
@@ -552,7 +552,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 		$query = $query->getResultObject();
 
-		$retval = [];
+		$retVal = [];
 		foreach ($query as $row)
 		{
 			$obj                     = new \stdClass();
@@ -560,10 +560,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$obj->table_name         = $row->TABLE_NAME;
 			$obj->foreign_table_name = $row->REFERENCED_TABLE_NAME;
 
-			$retval[] = $obj;
+			$retVal[] = $obj;
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------
