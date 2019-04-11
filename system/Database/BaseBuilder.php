@@ -706,7 +706,7 @@ class BaseBuilder
 
 				$v = " :$bind:";
 			}
-			elseif (! $this->hasOperator($k))
+			elseif (! $this->hasOperator($k) && $qb_key !== 'QBHaving')
 			{
 				// value appears not to have been set, assign the test to IS NULL
 				$k .= ' IS NULL';
