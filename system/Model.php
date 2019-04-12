@@ -668,7 +668,7 @@ class Model
 
 		$data = $this->trigger('beforeInsert', ['data' => $data]);
 
-		if (empty($data))
+		if (empty($data['data']))
 		{
 			throw DataException::forEmptyDataset('insert');
 		}
@@ -790,7 +790,7 @@ class Model
 
 		$data = $this->trigger('beforeUpdate', ['id' => $id, 'data' => $data]);
 
-		if (empty($data))
+		if (empty($data['data']))
 		{
 			throw DataException::forEmptyDataset('update');
 		}
