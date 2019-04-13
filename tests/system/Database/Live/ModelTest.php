@@ -1261,4 +1261,15 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testPaginate()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = $model->paginate();
+
+		$this->assertEquals(4, count($data));
+	}
+
+	//--------------------------------------------------------------------
+
 }
