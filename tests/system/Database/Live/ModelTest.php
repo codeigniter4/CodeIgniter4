@@ -1421,4 +1421,21 @@ class ModelTest extends CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testReplaceObject()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'id'          => 1,
+			'name'        => 'my name',
+			'description' => 'some description',
+		];
+
+		$model->replace($data);
+
+		$this->seeInDatabase('job', ['id' => 1, 'name' => 'my name']);
+	}
+
+	//--------------------------------------------------------------------
 }
