@@ -619,6 +619,11 @@ class Model
 			$this->tempData = [];
 		}
 
+		if (empty($data))
+		{
+			throw DataException::forEmptyDataset('insert');
+		}
+
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
@@ -667,11 +672,6 @@ class Model
 		}
 
 		$data = $this->trigger('beforeInsert', ['data' => $data]);
-
-		if (empty($data))
-		{
-			throw DataException::forEmptyDataset('insert');
-		}
 
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $this->builder()
@@ -749,6 +749,11 @@ class Model
 			$this->tempData = [];
 		}
 
+		if (empty($data))
+		{
+			throw DataException::forEmptyDataset('update');
+		}
+
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
@@ -789,11 +794,6 @@ class Model
 		}
 
 		$data = $this->trigger('beforeUpdate', ['id' => $id, 'data' => $data]);
-
-		if (empty($data))
-		{
-			throw DataException::forEmptyDataset('update');
-		}
 
 		$builder = $this->builder();
 

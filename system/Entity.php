@@ -38,6 +38,7 @@
 
 namespace CodeIgniter;
 
+use CodeIgniter\Exceptions\EntityException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Exceptions\CastException;
 
