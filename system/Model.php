@@ -956,9 +956,9 @@ class Model
 	 * @param null    $data
 	 * @param boolean $returnSQL
 	 *
-	 * @return boolean TRUE on success, FALSE on failure
+	 * @return mixed
 	 */
-	public function replace($data = null, bool $returnSQL = false): bool
+	public function replace($data = null, bool $returnSQL = false)
 	{
 		// Validate data before saving.
 		if (! empty($data) && $this->skipValidation === false)
@@ -1317,7 +1317,7 @@ class Model
 	 * Validate the data against the validation rules (or the validation group)
 	 * specified in the class property, $validationRules.
 	 *
-	 * @param array $data
+	 * @param array|object $data
 	 *
 	 * @return boolean
 	 */
