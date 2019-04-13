@@ -1586,4 +1586,44 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testInvalidAllowedFieldException()
+	{
+		$model = new JobModel();
+
+		$data = [
+			'name'        => 'Apprentice',
+			'description' => 'That thing you do.',
+		];
+
+		$this->setPrivateProperty($model,'allowedFields', []);
+
+		$this->expectException(DataException::class);
+		$this->expectExceptionMessage('Allowed fields must be specified for model: Tests\Support\Models\JobModel');
+
+		$model->save($data);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testInvalidEventException()
+	{
+		$model = new EventModel();
+
+		$data = [
+			'name'    => 'Foo',
+			'email'   => 'foo@example.com',
+			'country' => 'US',
+			'deleted' => 0,
+		];
+
+		$this->setPrivateProperty($model,'beforeInsert',['anotherBeforeInsertMethod']);
+
+		$this->expectException(DataException::class);
+		$this->expectExceptionMessage('anotherBeforeInsertMethod is not a valid Model Event callback.');
+
+		$model->insert($data);
+	}
+
+	//--------------------------------------------------------------------
+
 }
