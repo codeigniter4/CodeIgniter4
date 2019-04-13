@@ -34,6 +34,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->model = new Model($this->db);
 	}
 
+	//--------------------------------------------------------------------
+
 	public function tearDown()
 	{
 		parent::tearDown();
@@ -174,6 +176,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertCount(1, $this->getPrivateProperty($query, 'binds'));
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testFindAllReturnsAllRecords()
 	{
 		$model = new UserModel($this->db);
@@ -264,6 +268,8 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertEquals(1, $user->id);
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testFirstWithNoPrimaryKey()
 	{
@@ -573,6 +579,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertTrue($model->validate($data));
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testValidationPlaceholdersFail()
 	{
 		$model = new ValidModel($this->db);
@@ -586,6 +594,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertFalse($model->validate($data));
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testSkipValidation()
 	{
 		$model = new ValidModel($this->db);
@@ -598,6 +608,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertInternalType('numeric', $model->skipValidation(true)
 												   ->insert($data));
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testCleanValidationRemovesAllWhenNoDataProvided()
 	{
@@ -613,6 +625,8 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertEmpty($rules);
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testCleanValidationRemovesOnlyForFieldsNotProvided()
 	{
@@ -633,6 +647,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertTrue(array_key_exists('foo', $rules));
 		$this->assertFalse(array_key_exists('name', $rules));
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testCleanValidationReturnsAllWhenAllExist()
 	{
@@ -655,6 +671,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertTrue(array_key_exists('name', $rules));
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testValidationPassesWithMissingFields()
 	{
 		$model = new ValidModel();
@@ -667,6 +685,8 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertTrue($result);
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testValidationWithGroupName()
 	{
@@ -719,6 +739,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->seeInDatabase('job', ['name' => 'Senior Developer', 'created_at' => $time]);
 	}
 
+	//--------------------------------------------------------------------
+
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/580
 	 */
@@ -740,6 +762,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->seeInDatabase('user', $data);
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testInsertEvent()
 	{
 		$model = new EventModel();
@@ -756,6 +780,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertTrue($model->hasToken('beforeInsert'));
 		$this->assertTrue($model->hasToken('afterInsert'));
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testUpdateEvent()
 	{
@@ -775,6 +801,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertTrue($model->hasToken('afterUpdate'));
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testFindEvent()
 	{
 		$model = new EventModel();
@@ -784,6 +812,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertTrue($model->hasToken('afterFind'));
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testDeleteEvent()
 	{
 		$model = new EventModel();
@@ -792,6 +822,8 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertTrue($model->hasToken('afterDelete'));
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testSetWorksWithInsert()
 	{
@@ -812,6 +844,8 @@ class ModelTest extends CIDatabaseTestCase
 			'email' => 'foo@example.com',
 		]);
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testSetWorksWithUpdate()
 	{
@@ -838,6 +872,8 @@ class ModelTest extends CIDatabaseTestCase
 			'name'  => 'Fred Flintstone',
 		]);
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testSetWorksWithUpdateNoId()
 	{
@@ -867,6 +903,8 @@ class ModelTest extends CIDatabaseTestCase
 		]);
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testUpdateArray()
 	{
 		$model = new EventModel();
@@ -884,6 +922,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->seeInDatabase('user', ['id' => 1, 'name' => 'Foo Bar']);
 		$this->seeInDatabase('user', ['id' => 2, 'name' => 'Foo Bar']);
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testInsertBatchSuccess()
 	{
@@ -905,6 +945,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->seeInDatabase('job', ['name' => 'Cab Driver']);
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testInsertBatchValidationFail()
 	{
 		$job_data = [
@@ -923,6 +965,8 @@ class ModelTest extends CIDatabaseTestCase
 		$error = $model->errors();
 		$this->assertTrue(isset($error['description']));
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testUpdateBatchSuccess()
 	{
@@ -1015,6 +1059,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertEquals('Some guitar description', $job->description);
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testUpdateNoPrimaryKey()
 	{
 		$model = new SecondaryModel();
@@ -1040,6 +1086,8 @@ class ModelTest extends CIDatabaseTestCase
 		]);
 	}
 
+	//--------------------------------------------------------------------
+
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1617
 	 */
@@ -1055,6 +1103,8 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertEquals(3, $model->countAllResults());
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1584
@@ -1081,6 +1131,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertTrue($result);
 	}
 
+	//--------------------------------------------------------------------
+
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1717
 	 */
@@ -1094,6 +1146,8 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertFalse($model->insert($data));
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1717
@@ -1109,6 +1163,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertFalse($model->insert($data));
 	}
 
+	//--------------------------------------------------------------------
+
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1717
 	 */
@@ -1123,6 +1179,8 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertTrue($model->insert($data) !== false);
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1574
@@ -1147,6 +1205,8 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertEquals('Minimum Length Error', $model->errors()['name']);
 	}
 
+	//--------------------------------------------------------------------
+
 	/**
 	 * @expectedException        \CodeIgniter\Exceptions\ModelException
 	 * @expectedExceptionMessage `Tests\Support\Models\UserModel` model class does not specify a Primary Key.
@@ -1158,4 +1218,47 @@ class ModelTest extends CIDatabaseTestCase
 
 		$model->find(1);
 	}
+
+	//--------------------------------------------------------------------
+
+	public function testInsertID()
+	{
+		$model = new JobModel();
+
+		$data = [
+			'name'        => 'Apprentice',
+			'description' => 'That thing you do.',
+		];
+
+		$model->protect(false)
+		      ->save($data);
+
+		$lastInsertId = $model->getInsertID();
+
+		$this->seeInDatabase('job', ['id' => $lastInsertId]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetTable()
+	{
+		$model = new JobModel();
+
+		$model->setTable('db_job');
+
+		$data = [
+			'name'        => 'Apprentice',
+			'description' => 'That thing you do.',
+		];
+
+		$model->protect(false)
+		      ->save($data);
+
+		$lastInsertId = $model->getInsertID();
+
+		$this->seeInDatabase('job', ['id' => $lastInsertId]);
+	}
+
+	//--------------------------------------------------------------------
+
 }
