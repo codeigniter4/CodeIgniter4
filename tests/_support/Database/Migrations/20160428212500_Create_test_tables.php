@@ -50,9 +50,20 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 				'type' => 'TEXT',
 				'null' => true,
 			],
-			'created_at'  => [
-				'type' => 'DATETIME',
-				'null' => true,
+			'deleted' => [
+				'type'       => 'TINYINT',
+				'constraint' => 1,
+				'default'    => '0',
+			],
+			'created_at' => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+				'null'       => true,
+			],
+			'updated_at' => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+				'null'       => true,
 			],
 		]);
 		$this->forge->addKey('id', true);
