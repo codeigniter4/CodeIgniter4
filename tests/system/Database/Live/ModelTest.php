@@ -3,6 +3,7 @@
 use CodeIgniter\Config\Config;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity;
+use CodeIgniter\Exceptions\EntityException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -1534,4 +1535,20 @@ class ModelTest extends CIDatabaseTestCase
 
 		$testModel->truncate();
 	}
+
+	//--------------------------------------------------------------------
+
+	public function testUndefinedEntityPropertyException()
+	{
+		$entity = new class extends Entity
+		{
+			protected $id;
+			protected $name;
+		};
+
+		$this->expectException(EntityException::class);
+		$entity->undefinedProperty;
+	}
+
+	//--------------------------------------------------------------------
 }
