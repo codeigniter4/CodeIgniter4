@@ -1327,4 +1327,16 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testGetGetModelDetails()
+	{
+		$model = new JobModel($this->db);
+
+		$this->assertEquals('job', $model->table);
+		$this->assertEquals('id', $model->primaryKey);
+		$this->assertEquals('object', $model->returnType);
+		$this->assertNull($model->DBGroup);
+	}
+
+	//--------------------------------------------------------------------
+
 }
