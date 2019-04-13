@@ -6,10 +6,7 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIDatabaseTestCase;
 use CodeIgniter\Test\ReflectionHelper;
-use Config\Database;
 use Config\Services;
-use Config\Validation;
-use Myth\Auth\Entities\User;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
@@ -318,8 +315,8 @@ class ModelTest extends CIDatabaseTestCase
 			'description' => 'That thing you do.',
 		];
 
-		$result = $model->protect(false)
-						->save($data);
+		$model->protect(false)
+		      ->save($data);
 
 		$this->seeInDatabase('job', ['name' => 'Apprentice']);
 	}
@@ -709,15 +706,17 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertEquals('Developer', $entity->name);
 		$this->assertEquals('Awesome job, but sometimes makes you bored', $entity->description);
 
+		$time = time();
+
 		$entity->name       = 'Senior Developer';
-		$entity->created_at = '2017-07-15';
+		$entity->created_at = $time;
 
 		$date = $this->getPrivateProperty($entity, 'created_at');
 		$this->assertInstanceOf(Time::class, $date);
 
 		$this->assertTrue($model->save($entity));
 
-		$this->seeInDatabase('job', ['name' => 'Senior Developer', 'created_at' => '2017-07-15 00:00:00']);
+		$this->seeInDatabase('job', ['name' => 'Senior Developer', 'created_at' => $time]);
 	}
 
 	/**
@@ -980,7 +979,7 @@ class ModelTest extends CIDatabaseTestCase
 		$this->hasInDatabase('job', [
 			'name'        => 'Rocket Scientist',
 			'description' => 'Plays guitar for Queen',
-			'created_at'  => date('Y-m-d H:i:s'),
+			'created_at'  => time(),
 		]);
 
 		$model = new EntityModel();

@@ -188,7 +188,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 		$data = array_filter(preg_split('/(\r\n|\n|\r)/', $data));
 
-		$this->assertEquals('"1","Developer","Awesome job, but sometimes makes you bored",""', $data[1]);
+		$this->assertEquals('"1","Developer","Awesome job, but sometimes makes you bored","0","",""', $data[1]);
 	}
 
 	//--------------------------------------------------------------------
@@ -203,7 +203,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 		$data = $util->getXMLFromResult($data);
 
-		$expected = '<root><element><id>4</id><name>Musician</name><description>Only Coldplay can actually called Musician</description><created_at></created_at></element></root>';
+		$expected = '<root><element><id>4</id><name>Musician</name><description>Only Coldplay can actually called Musician</description><deleted></deleted><created_at></created_at><updated_at></updated_at></element></root>';
 
 		$actual = preg_replace('#\R+#', '', $data);
 		$actual = preg_replace('/[ ]{2,}|[\t]/', '', $actual);
