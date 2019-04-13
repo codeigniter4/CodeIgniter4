@@ -1373,4 +1373,21 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testUpdateObject()
+	{
+		$model = new ValidModel($this->db);
+
+		$testModel = new JobModel();
+
+		$testModel->name = 'my name';
+		$testModel->description = 'some description';
+
+		$this->setPrivateProperty($model, 'useTimestamps', true);
+
+		$model->update(1, $testModel);
+
+		$this->seeInDatabase('job', ['id' => 1]);
+	}
+
+	//--------------------------------------------------------------------
 }
