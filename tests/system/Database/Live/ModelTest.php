@@ -1390,4 +1390,35 @@ class ModelTest extends CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testDeleteWithSoftDelete()
+	{
+		$model = new JobModel();
+
+		$this->setPrivateProperty($model, 'useTimestamps', true);
+		$this->setPrivateProperty($model, 'useSoftDeletes', true);
+
+		$model->delete(1);
+
+		$this->seeInDatabase('job', ['id' => 1, 'deleted' => 1]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testPurgeDeletedWithSoftDeleteFalse()
+	{
+		$model = new JobModel();
+
+		$this->db->table('job')
+		         ->where('id', 1)
+		         ->update(['deleted' => 1]);
+
+		$model->purgeDeleted();
+
+		$jobs = $model->findAll();
+
+		$this->assertCount(4, $jobs);
+	}
+
+	//--------------------------------------------------------------------
 }
