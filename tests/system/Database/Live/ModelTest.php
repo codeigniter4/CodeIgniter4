@@ -1272,4 +1272,59 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testValidationByObject()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = new class
+		{
+			public $name  = '';
+			public $id    = '';
+			public $token = '';
+		};
+
+		$data->name = 'abc';
+		$data->id = '13';
+		$data->token = '13';
+
+		$this->assertTrue($model->validate($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetValidationRules()
+	{
+		$model = new JobModel($this->db);
+
+		$this->setPrivateProperty($model, 'validationRules', ['description' => 'required']);
+
+		$rules = $model->getValidationRules();
+
+		$this->assertEquals('required', $rules['description']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetValidationMessages()
+	{
+		$job_data = [
+			[
+				'name'        => 'Comedian',
+				'description' => null,
+			],
+		];
+
+		$model = new JobModel($this->db);
+
+		$this->setPrivateProperty($model, 'validationRules', ['description' => 'required']);
+		$this->setPrivateProperty($model, 'validationMessages', ['description' => 'Description field is required.']);
+
+		$this->assertFalse($model->insertBatch($job_data));
+
+		$error = $model->getValidationMessages();
+		$this->assertEquals('Description field is required.', $error['description']);
+	}
+
+	//--------------------------------------------------------------------
+
 }
