@@ -1438,4 +1438,21 @@ class ModelTest extends CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testGetValidationMessagesForReplace()
+	{
+		$job_data = [
+			'name'        => 'Comedian',
+			'description' => null,
+		];
+
+		$model = new JobModel($this->db);
+
+		$this->setPrivateProperty($model, 'validationRules', ['description' => 'required']);
+
+		$this->assertFalse($model->replace($job_data));
+
+		$error = $model->errors();
+		$this->assertTrue(isset($error['description']));
+	}
 }
