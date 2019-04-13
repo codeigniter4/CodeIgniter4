@@ -12,13 +12,13 @@ class MigrationTest extends CIDatabaseTestCase
 	public function testDBGroup()
 	{
 		$migration = new class extends Migration {
-			protected $DBGroup = 'default';
+			protected $DBGroup = 'tests';
 			function up(){}
 			function down(){}
 		};
 
 		$dbGroup = $migration->getDBGroup();
 
-		$this->assertEquals('default', $dbGroup);
+		$this->assertEquals('tests', $dbGroup);
 	}
 }
