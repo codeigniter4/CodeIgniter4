@@ -1339,4 +1339,38 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testSaveObject()
+	{
+		$model = new ValidModel($this->db);
+
+		$testModel = new JobModel();
+
+		$testModel->name = 'my name';
+		$testModel->description = 'some description';
+
+		$this->setPrivateProperty($model, 'useTimestamps', true);
+
+		$model->insert($testModel);
+
+		$lastInsertId = $model->getInsertID();
+
+		$this->seeInDatabase('job', ['id' => $lastInsertId]);
+	}
+
+	//--------------------------------------------------------------------
+	
+	public function testEmptySaveData()
+	{
+		$model = new JobModel();
+
+		$data = [];
+
+		$data = $model->protect(false)
+		              ->save($data);
+
+		$this->assertTrue($data);
+	}
+
+	//--------------------------------------------------------------------
+
 }
