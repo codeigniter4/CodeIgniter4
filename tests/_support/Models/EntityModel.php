@@ -10,7 +10,9 @@ class EntityModel extends Model
 
 	protected $useSoftDeletes = false;
 
-	protected $dateFormat = 'datetime';
+	protected $dateFormat = 'int';
+
+	protected $deletedField = 'deleted';
 
 	protected $allowedFields = [
 		'name',
