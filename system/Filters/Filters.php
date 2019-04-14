@@ -355,9 +355,7 @@ class Filters
 				foreach ($rules as $path)
 				{
 					// Prep it for regex
-					$path = strtolower(str_replace('/*', '*', $path));
-					$path = trim(str_replace('*', '.+', $path), '/ ');
-
+					$path = trim(str_replace('*', '.+', strtolower($path)), '/ ');
 					// Path doesn't match the URI? continue on...
 					if (preg_match('#' . $path . '#', $uri, $match) !== 1)
 					{
@@ -393,8 +391,7 @@ class Filters
 				foreach ($rules as $path)
 				{
 					// Prep it for regex
-					$path = strtolower(str_replace('/*', '*', $path));
-					$path = trim(str_replace('*', '.+', $path), '/ ');
+					$path = trim(str_replace('*', '.+', strtolower($path)), '/ ');
 
 					// Path doesn't match the URI? continue on...
 					if (preg_match('#' . $path . '#', $uri, $match) !== 1)
@@ -451,8 +448,7 @@ class Filters
 				foreach ($settings['before'] as $path)
 				{
 					// Prep it for regex
-					$path = strtolower(str_replace('/*', '*', $path));
-					$path = trim(str_replace('*', '.+', $path), '/ ');
+					$path = trim(str_replace('*', '.+', strtolower($path)), '/ ');
 
 					if (preg_match('#' . $path . '#', $uri) !== 1)
 					{
@@ -472,8 +468,7 @@ class Filters
 				foreach ($settings['after'] as $path)
 				{
 					// Prep it for regex
-					$path = strtolower(str_replace('/*', '*', $path));
-					$path = trim(str_replace('*', '.+', $path), '/ ');
+					$path = trim(str_replace('*', '.+', strtolower($path)), '/ ');
 
 					if (preg_match('#' . $path . '#', $uri) !== 1)
 					{
