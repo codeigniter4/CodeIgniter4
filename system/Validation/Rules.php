@@ -66,6 +66,21 @@ class Rules
 	//--------------------------------------------------------------------
 
 	/**
+	 * Equals the static value provided.
+	 *
+	 * @param string $str
+	 * @param string $str
+	 *
+	 * @return boolean
+	 */
+	public function equals(string $str = null, string $val): bool
+	{
+		return $str === $val;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns true if $str is $val characters long.
 	 * $val = "5" (one) | "5,8,12" (multiple values)
 	 *
@@ -257,6 +272,21 @@ class Rules
 	public function min_length(string $str = null, string $val, array $data): bool
 	{
 		return ($val <= mb_strlen($str));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Does not equal the static value provided.
+	 *
+	 * @param string $str
+	 * @param string $str
+	 *
+	 * @return boolean
+	 */
+	public function not_equals(string $str = null, string $val): bool
+	{
+		return $str !== $val;
 	}
 
 	//--------------------------------------------------------------------
