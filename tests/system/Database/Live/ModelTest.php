@@ -733,12 +733,13 @@ class ModelTest extends CIDatabaseTestCase
 		$entity->name       = 'Senior Developer';
 		$entity->created_at = $time;
 
-		$date = $this->getPrivateProperty($entity, 'created_at');
-		$this->assertInstanceOf(Time::class, $date);
-
 		$this->assertTrue($model->save($entity));
 
-		$this->seeInDatabase('job', ['name' => 'Senior Developer', 'created_at' => $time]);
+		$result = $model->where('name', 'Senior Developer')
+		                ->get()
+		                ->getFirstRow();
+
+		$this->assertEquals(date('Y-m-d', $time), date('Y-m-d', $result->created_at));
 	}
 
 	//--------------------------------------------------------------------
