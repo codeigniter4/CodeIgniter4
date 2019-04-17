@@ -517,7 +517,7 @@ class CLI
 	 * Get the number of characters in string having encoded characters
 	 * and ignores styles set by the color() function
 	 *
-	 * @param string $string
+	 * @param ?string $string
 	 *
 	 * @return integer
 	 */
@@ -597,7 +597,7 @@ class CLI
 	 * @param integer $thisStep
 	 * @param integer $totalSteps
 	 */
-	public static function showProgress($thisStep = 1, int $totalSteps = 10)
+	public static function showProgress(int $thisStep = 1, int $totalSteps = 10)
 	{
 		static $inProgress = false;
 
