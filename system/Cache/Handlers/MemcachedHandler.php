@@ -38,6 +38,7 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Exceptions\CriticalError;
 
 /**
  * Mamcached cache handler
@@ -133,7 +134,7 @@ class MemcachedHandler implements CacheInterface
 		}
 		elseif ($this->memcached instanceof \Memcache)
 		{
-			// Third parameter is persistance and defaults to TRUE.
+			// Third parameter is persistence and defaults to TRUE.
 			$this->memcached->addServer(
 					$this->config['host'], $this->config['port'], true, $this->config['weight']
 			);
