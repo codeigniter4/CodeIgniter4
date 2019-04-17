@@ -594,10 +594,10 @@ class CLI
 	 * Displays a progress bar on the CLI. You must call it repeatedly
 	 * to update it. Set $thisStep = false to erase the progress bar.
 	 *
-	 * @param integer $thisStep
-	 * @param integer $totalSteps
+	 * @param integer|boolean   $thisStep
+	 * @param integer           $totalSteps
 	 */
-	public static function showProgress(int $thisStep = 1, int $totalSteps = 10)
+	public static function showProgress($thisStep = 1, int $totalSteps = 10)
 	{
 		static $inProgress = false;
 
