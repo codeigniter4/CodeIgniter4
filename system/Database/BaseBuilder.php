@@ -1024,7 +1024,7 @@ class BaseBuilder
 	 *
 	 * @return string     $like_statement
 	 */
-	private function _like_statement(string $prefix = null, string $column, string $not = null, string $bind, bool $insensitiveSearch = false): string
+	protected function _like_statement(string $prefix = null, string $column, string $not = null, string $bind, bool $insensitiveSearch = false): string
 	{
 		$like_statement = "{$prefix} {$column} {$not} LIKE :{$bind}:";
 
