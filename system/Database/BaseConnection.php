@@ -1247,7 +1247,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * This function escapes column and table names
 	 *
-	 * @param mixed
+	 * @param mixed $item
 	 *
 	 * @return mixed
 	 */
@@ -1442,7 +1442,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * specific escaping for LIKE conditions
 	 *
 	 * @param  string|string[]
-	 * @return mixed
+	 * @return string|string[]
 	 */
 	public function escapeLikeString($str)
 	{
@@ -1507,11 +1507,11 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Returns an array of table names
 	 *
-	 * @param  boolean $constrain_by_prefix = FALSE
+	 * @param  boolean $constrainByPrefix = FALSE
 	 * @return boolean|array
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function listTables(bool $constrain_by_prefix = false)
+	public function listTables(bool $constrainByPrefix = false)
 	{
 		// Is there a cached result?
 		if (isset($this->dataCache['table_names']) && $this->dataCache['table_names'])
@@ -1519,7 +1519,7 @@ abstract class BaseConnection implements ConnectionInterface
 			return $this->dataCache['table_names'];
 		}
 
-		if (false === ($sql = $this->_listTables($constrain_by_prefix)))
+		if (false === ($sql = $this->_listTables($constrainByPrefix)))
 		{
 			if ($this->DBDebug)
 			{
@@ -1567,12 +1567,12 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Determine if a particular table exists
 	 *
-	 * @param  string $table_name
+	 * @param  string $tableName
 	 * @return boolean
 	 */
-	public function tableExists(string $table_name): bool
+	public function tableExists(string $tableName): bool
 	{
-		return in_array($this->protectIdentifiers($table_name, true, false, false), $this->listTables());
+		return in_array($this->protectIdentifiers($tableName, true, false, false), $this->listTables());
 	}
 
 	//--------------------------------------------------------------------
