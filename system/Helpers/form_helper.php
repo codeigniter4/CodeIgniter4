@@ -45,7 +45,7 @@ use Config\Services;
  * @subpackage Helpers
  * @category   Helpers
  * @author     CodeIgniter Dev Team
- * @link       https://codeigniter.com/user_guide/helpers/cookie_helper.html
+ * @link       https://codeigniter.com/user_guide/helpers/form_helper.html
  */
 
 //--------------------------------------------------------------------
@@ -66,7 +66,7 @@ if (! function_exists('form_open'))
 	function form_open(string $action = '', $attributes = [], array $hidden = []): string
 	{
 		// If no action is provided then set to the current url
-		if (! $action)
+		if (!$action)
 		{
 			$action = current_url(true);
 		} // If an action is not a full URL then turn it into one
@@ -89,16 +89,17 @@ if (! function_exists('form_open'))
 		}
 		if (stripos($attributes, 'accept-charset=') === false)
 		{
-			$config      = config(\Config\App::class);
+			$config = config(\Config\App::class);
 			$attributes .= ' accept-charset="' . strtolower($config->charset) . '"';
 		}
 
 		$form = '<form action="' . $action . '"' . $attributes . ">\n";
 
 		// Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
-		$before = Services::filters()->getFilters()['before'];
+		$before = Services::filters()
+		                  ->getFilters()['before'];
 
-		if ((in_array('csrf', $before) || array_key_exists('csrf', $before)) && strpos($action, base_url()) !== false && ! stripos($form, 'method="get"'))
+		if ((in_array('csrf', $before) || array_key_exists('csrf', $before)) && strpos($action, base_url()) !== false && !stripos($form, 'method="get"'))
 		{
 			$form .= csrf_field($csrfId ?? null);
 		}
@@ -242,7 +243,7 @@ if (! function_exists('form_password'))
 	function form_password($data = '', string $value = '', $extra = ''): string
 	{
 		is_array($data) || $data = ['name' => $data];
-		$data['type']            = 'password';
+		$data['type'] = 'password';
 
 		return form_input($data, $value, $extra);
 	}
@@ -265,12 +266,12 @@ if (! function_exists('form_upload'))
 	 */
 	function form_upload($data = '', string $value = '', $extra = ''): string
 	{
-		$defaults                = [
+		$defaults = [
 			'type' => 'file',
 			'name' => '',
 		];
 		is_array($data) || $data = ['name' => $data];
-		$data['type']            = 'file';
+		$data['type'] = 'file';
 
 		return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
 	}
