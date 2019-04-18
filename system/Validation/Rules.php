@@ -69,7 +69,7 @@ class Rules
 	 * Equals the static value provided.
 	 *
 	 * @param string $str
-	 * @param string $str
+	 * @param string $val
 	 *
 	 * @return boolean
 	 */
@@ -280,7 +280,7 @@ class Rules
 	 * Does not equal the static value provided.
 	 *
 	 * @param string $str
-	 * @param string $str
+	 * @param string $val
 	 *
 	 * @return boolean
 	 */
