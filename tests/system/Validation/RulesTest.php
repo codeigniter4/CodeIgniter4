@@ -467,7 +467,7 @@ class RulesTest extends \CIUnitTestCase
 			'foo' => 'not_equals[]',
 		]);
 
-		$this->assertFalse($this->validation->run($data));
+		$this->assertTrue($this->validation->run($data));
 	}
 	
 	//--------------------------------------------------------------------
