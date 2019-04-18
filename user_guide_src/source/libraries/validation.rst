@@ -661,7 +661,8 @@ alpha_numeric           No          Fails if field contains anything other than 
 alpha_numeric_space     No          Fails if field contains anything other than alpha-numeric characters, numbers or space.
 decimal                 No          Fails if field contains anything other than a decimal number.
 differs                 Yes         Fails if field does not differ from the one in the parameter.                                   differs[field_name]
-exact_length            Yes         Fails if field is not exactly the parameter value. One or more comma-separated values.                                             exact_length[5] or exact_length[5,8,12]
+equals                  Yes         Fails if field is not exactly the parameter value.
+exact_length            Yes         Fails if field is not exactly the parameter value in length. One or more comma-separated values.                                             exact_length[5] or exact_length[5,8,12]
 greater_than            Yes         Fails if field is less than or equal to the parameter value or not numeric.                     greater_than[8]
 greater_than_equal_to   Yes         Fails if field is less than the parameter value, or not numeric.                                greater_than_equal_to[5]
 in_list                 Yes         Fails if field is not within a predetermined list.                                              in_list[red,blue,green]
@@ -673,6 +674,7 @@ less_then_equal_to      Yes         Fails if field is greater than the parameter
 matches                 Yes         The value must match the value of the field in the parameter.                                   matches[field]
 max_length              Yes         Fails if field is longer than the parameter value.                                              max_length[8]
 min_length              Yes         Fails if field is shorter than the parameter value.                                             min_length[3]
+not_equals              Yes         Fails if field is exactly the parameter value.
 numeric                 No          Fails if field contains anything other than numeric characters.
 regex_match             Yes         Fails if field does not match the regular expression.                                           regex_match[/regex/]
 if_exist                No          If this rule is present, validation will only return possible errors if the field key exists,
