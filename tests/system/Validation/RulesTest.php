@@ -379,6 +379,157 @@ class RulesTest extends \CIUnitTestCase
 
 		$this->assertFalse($this->validation->run($data));
 	}
+	
+	//--------------------------------------------------------------------
+
+	public function testEqualsNull()
+	{
+		$data = [
+			'foo' => null,
+		];
+
+		$this->validation->setRules([
+			'foo' => 'equals[]',
+		]);
+
+		$this->assertFalse($this->validation->run($data));
+	}
+	
+	//--------------------------------------------------------------------
+
+	public function testEqualsEmptyIsEmpty()
+	{
+		$data = [
+			'foo' => '',
+		];
+
+		$this->validation->setRules([
+			'foo' => 'equals[]',
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testEqualsReturnsFalseOnFailure()
+	{
+		$data = [
+			'foo' => 'bar',
+		];
+
+		$this->validation->setRules([
+			'foo' => 'equals[notbar]',
+		]);
+
+		$this->assertFalse($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testEqualsReturnsTrueOnSuccess()
+	{
+		$data = [
+			'foo' => 'bar',
+		];
+
+		$this->validation->setRules([
+			'foo' => 'equals[bar]',
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testEqualsReturnsFalseOnCaseMismatch()
+	{
+		$data = [
+			'foo' => 'bar',
+		];
+
+		$this->validation->setRules([
+			'foo' => 'equals[Bar]',
+		]);
+
+		$this->assertFalse($this->validation->run($data));
+	}
+	
+	//--------------------------------------------------------------------
+
+	public function testNotEqualsNull()
+	{
+		$data = [
+			'foo' => null,
+		];
+
+		$this->validation->setRules([
+			'foo' => 'not_equals[]',
+		]);
+
+		$this->assertFalse($this->validation->run($data));
+	}
+	
+	//--------------------------------------------------------------------
+
+	public function testNotEqualsEmptyIsEmpty()
+	{
+		$data = [
+			'foo' => '',
+		];
+
+		$this->validation->setRules([
+			'foo' => 'not_equals[]',
+		]);
+
+		$this->assertFalse($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testNotEqualsReturnsFalseOnFailure()
+	{
+		$data = [
+			'foo' => 'bar',
+		];
+
+		$this->validation->setRules([
+			'foo' => 'not_equals[bar]',
+		]);
+
+		$this->assertFalse($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testNotEqualsReturnsTrueOnSuccess()
+	{
+		$data = [
+			'foo' => 'bar',
+		];
+
+		$this->validation->setRules([
+			'foo' => 'not_equals[notbar]',
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testNotEqualsReturnsTrueOnCaseMismatch()
+	{
+		$data = [
+			'foo' => 'bar',
+		];
+
+		$this->validation->setRules([
+			'foo' => 'not_equals[Bar]',
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+	
 
 	//--------------------------------------------------------------------
 
