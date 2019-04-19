@@ -41,7 +41,6 @@ namespace CodeIgniter;
 use CodeIgniter\Exceptions\EntityException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Exceptions\CastException;
-use CodeIgniter\Exceptions\EntityException;
 
 /**
  * Entity encapsulation, for use with CodeIgniter\Model
