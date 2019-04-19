@@ -251,10 +251,10 @@ Miscellaneous Functions
                 // Go to a named/reverse-routed URI
 		return redirect('named_route');
 
-.. php:function:: remove_invisible_characters($str[, $url_encoded = TRUE])
+.. php:function:: remove_invisible_characters($str[, $urlEncoded = TRUE])
 
 	:param	string	$str: Input string
-	:param	bool	$url_encoded: Whether to remove URL-encoded characters as well
+	:param	bool	$urlEncoded: Whether to remove URL-encoded characters as well
 	:returns:	Sanitized string
 	:rtype:	string
 
