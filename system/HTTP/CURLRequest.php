@@ -399,7 +399,7 @@ class CURLRequest extends Request
 	 *
 	 * @return string
 	 */
-	public function getMethod($upper = false): string
+	public function getMethod(bool $upper = false): string
 	{
 		return ($upper) ? strtoupper($this->method) : strtolower($this->method);
 	}
@@ -514,9 +514,9 @@ class CURLRequest extends Request
 	 * @param string $method
 	 * @param array  $curl_options
 	 *
-	 * @return array|integer
+	 * @return array
 	 */
-	protected function applyMethod($method, array $curl_options): array
+	protected function applyMethod(string $method, array $curl_options): array
 	{
 		$method = strtoupper($method);
 

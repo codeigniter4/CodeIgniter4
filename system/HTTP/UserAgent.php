@@ -38,7 +38,6 @@
 
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\Database\BasePreparedQuery;
 use Config\UserAgents;
 
 /**
