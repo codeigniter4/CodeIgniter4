@@ -878,6 +878,224 @@ There can be no spaces before and after &#8220;ignore_value&#8221;.</p>
 <li>&#8220;is_unique[supplier.name,uuid,$uuid ]&#8221;   is not ok</li>
 <li>&#8220;is_unique[supplier.name,uuid,$uuid]&#8221;    is ok</li>
 </ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="6%" />
+<col width="53%" />
+<col width="28%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Rule</th>
+<th class="head">Parameter</th>
+<th class="head">Description</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>alpha</td>
+<td>No</td>
+<td>Fails if field has anything other than alphabetic characters.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>alpha_space</td>
+<td>No</td>
+<td>Fails if field contains anything other than alphabetic characters or spaces.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>alpha_dash</td>
+<td>No</td>
+<td>Fails if field contains anything other than alpha-numeric characters, underscores or dashes.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>alpha_numeric</td>
+<td>No</td>
+<td>Fails if field contains anything other than alpha-numeric characters or numbers.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>alpha_numeric_space</td>
+<td>No</td>
+<td>Fails if field contains anything other than alpha-numeric characters, numbers or space.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>decimal</td>
+<td>No</td>
+<td>Fails if field contains anything other than a decimal number.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>differs</td>
+<td>Yes</td>
+<td>Fails if field does not differ from the one in the parameter.</td>
+<td>differs[field_name]</td>
+</tr>
+<tr class="row-odd"><td>equals</td>
+<td>Yes</td>
+<td>Fails if field is not exactly the parameter value.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>exact_length</td>
+<td>Yes</td>
+<td>Fails if field is not exactly the parameter value in length. One or more comma-separated values.</td>
+<td>exact_length[5] or exact_length[5,8,12]</td>
+</tr>
+<tr class="row-odd"><td>greater_than</td>
+<td>Yes</td>
+<td>Fails if field is less than or equal to the parameter value or not numeric.</td>
+<td>greater_than[8]</td>
+</tr>
+<tr class="row-even"><td>greater_than_equal_to</td>
+<td>Yes</td>
+<td>Fails if field is less than the parameter value, or not numeric.</td>
+<td>greater_than_equal_to[5]</td>
+</tr>
+<tr class="row-odd"><td>in_list</td>
+<td>Yes</td>
+<td>Fails if field is not within a predetermined list.</td>
+<td>in_list[red,blue,green]</td>
+</tr>
+<tr class="row-even"><td>integer</td>
+<td>No</td>
+<td>Fails if field contains anything other than an integer.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>is_natural</td>
+<td>No</td>
+<td>Fails if field contains anything other than a natural number: 0, 1, 2, 3, etc.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>is_natural_no_zero</td>
+<td>No</td>
+<td>Fails if field contains anything other than a natural number, except zero: 1, 2, 3, etc.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>less_than</td>
+<td>Yes</td>
+<td>Fails if field is greater than or equal to the parameter value or not numeric.</td>
+<td>less_than[8]</td>
+</tr>
+<tr class="row-even"><td>less_then_equal_to</td>
+<td>Yes</td>
+<td>Fails if field is greater than the parameter value or not numeric.</td>
+<td>less_than_equal_to[8]</td>
+</tr>
+<tr class="row-odd"><td>matches</td>
+<td>Yes</td>
+<td>The value must match the value of the field in the parameter.</td>
+<td>matches[field]</td>
+</tr>
+<tr class="row-even"><td>max_length</td>
+<td>Yes</td>
+<td>Fails if field is longer than the parameter value.</td>
+<td>max_length[8]</td>
+</tr>
+<tr class="row-odd"><td>min_length</td>
+<td>Yes</td>
+<td>Fails if field is shorter than the parameter value.</td>
+<td>min_length[3]</td>
+</tr>
+<tr class="row-even"><td>not_equals</td>
+<td>Yes</td>
+<td>Fails if field is exactly the parameter value.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>numeric</td>
+<td>No</td>
+<td>Fails if field contains anything other than numeric characters.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>regex_match</td>
+<td>Yes</td>
+<td>Fails if field does not match the regular expression.</td>
+<td>regex_match[/regex/]</td>
+</tr>
+<tr class="row-odd"><td>if_exist</td>
+<td>No</td>
+<td>If this rule is present, validation will only return possible errors if the field key exists,
+regardless of its value.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>permit_empty</td>
+<td>No</td>
+<td>Allows the field to receive an empty array, empty string, null or false.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>required</td>
+<td>No</td>
+<td>Fails if the field is an empty array, empty string, null or false.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>required_with</td>
+<td>Yes</td>
+<td>The field is required when any of the other required fields are present in the data.</td>
+<td>required_with[field1,field2]</td>
+</tr>
+<tr class="row-odd"><td>required_without</td>
+<td>Yes</td>
+<td>The field is required when all of the other fields are present in the data but not required.</td>
+<td>required_without[field1,field2]</td>
+</tr>
+<tr class="row-even"><td>is_unique</td>
+<td>Yes</td>
+<td>Checks if this field value exists in the database. Optionally set a
+column and value to ignore, useful when updating records to ignore itself.</td>
+<td>is_unique[table.field,ignore_field,ignore_value]</td>
+</tr>
+<tr class="row-odd"><td>timezone</td>
+<td>No</td>
+<td>Fails if field does match a timezone per <code class="docutils literal"><span class="pre">timezone_identifiers_list</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>valid_base64</td>
+<td>No</td>
+<td>Fails if field contains anything other than valid Base64 characters.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>valid_json</td>
+<td>No</td>
+<td>Fails if field does not contain a valid JSON string.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>valid_email</td>
+<td>No</td>
+<td>Fails if field does not contain a valid email address.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>valid_emails</td>
+<td>No</td>
+<td>Fails if any value provided in a comma separated list is not a valid email.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>valid_ip</td>
+<td>No</td>
+<td>Fails if the supplied IP is not valid. Accepts an optional parameter of ‘ipv4’ or
+‘ipv6’ to specify an IP format.</td>
+<td>valid_ip[ipv6]</td>
+</tr>
+<tr class="row-odd"><td>valid_url</td>
+<td>No</td>
+<td>Fails if field does not contain a valid URL.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>valid_date</td>
+<td>No</td>
+<td>Fails if field does not contain a valid date. Accepts an optional parameter
+to matches a date format.</td>
+<td>valid_date[d/m/Y]</td>
+</tr>
+<tr class="row-odd"><td>valid_cc_number</td>
+<td>Yes</td>
+<td>Verifies that the credit card number matches the format used by the specified provider.
+Current supported providers are: American Express (amex), China Unionpay (unionpay),
+Diners Club CarteBlance (carteblanche), Diners Club (dinersclub), Discover Card (discover),
+Interpayment (interpayment), JCB (jcb), Maestro (maestro), Dankort (dankort), NSPK MIR (mir),
+Troy (troy), MasterCard (mastercard), Visa (visa), UATP (uatp), Verve (verve),
+CIBC Convenience Card (cibc), Royal Bank of Canada Client Card (rbc),
+TD Canada Trust Access Card (tdtrust), Scotiabank Scotia Card (scotia), BMO ABM Card (bmoabm),
+HSBC Canada Card (hsbc)</td>
+<td>valid_cc_number[amex]</td>
+</tr>
+</tbody>
+</table>
 <div class="section" id="rules-for-file-uploads">
 <h3><a class="toc-backref" href="#id26">Rules for File Uploads</a><a class="headerlink" href="#rules-for-file-uploads" title="Permalink to this headline">¶</a></h3>
 <p>These validation rules enable you to do the basic checks you might need to verify that uploaded files meet your business needs.
