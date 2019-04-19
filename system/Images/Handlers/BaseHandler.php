@@ -678,6 +678,8 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @param string $name
 	 * @param array  $args
+	 *
+	 * @return mixed
 	 */
 	public function __call(string $name, array $args = [])
 	{
