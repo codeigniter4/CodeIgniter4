@@ -37,6 +37,8 @@
 
 namespace CodeIgniter\Test;
 
+use Config\Database;
+use Config\Migrations;
 use Config\Services;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\MigrationRunner;
@@ -123,14 +125,14 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	{
 		if ($this->db === null)
 		{
-			$this->db = \Config\Database::connect($this->DBGroup);
+			$this->db = Database::connect($this->DBGroup);
 			$this->db->initialize();
 		}
 
 		if ($this->migrations === null)
 		{
 			// Ensure that we can run migrations
-			$config          = new \Config\Migrations();
+			$config          = new Migrations();
 			$config->enabled = true;
 
 			$this->migrations = Services::migrations($config, $this->db);
@@ -139,7 +141,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 		if ($this->seeder === null)
 		{
-			$this->seeder = \Config\Database::seeder($this->DBGroup);
+			$this->seeder = Database::seeder($this->DBGroup);
 			$this->seeder->setSilent(true);
 		}
 	}
@@ -170,7 +172,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 			if (is_array($tables))
 			{
-				$forge = \Config\Database::forge('tests');
+				$forge = Database::forge('tests');
 
 				foreach ($tables as $table)
 				{

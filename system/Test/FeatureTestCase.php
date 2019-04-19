@@ -88,7 +88,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 */
 	protected function withRoutes(array $routes = null)
 	{
-		$collection = \Config\Services::routes();
+		$collection = Services::routes();
 
 		if ($routes)
 		{
@@ -297,6 +297,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null                $params
 	 *
 	 * @return \CodeIgniter\HTTP\Request
+	 * @throws \ReflectionException
 	 */
 	protected function populateGlobals(string $method, Request $request, array $params = null)
 	{
