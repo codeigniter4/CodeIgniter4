@@ -198,8 +198,9 @@ class BaseConfigTest extends CIUnitTestCase
 		$modulesConfig          = config('Modules');
 		$modulesConfig->enabled = false;
 
-		$config   = new \RegistrarConfig();
-		$expected = $config::$registrars;
+		$config              = new \RegistrarConfig();
+		$config::$registrars = [];
+		$expected            = $config::$registrars;
 
 		$method = $this->getPrivateMethodInvoker($config, 'registerProperties');
 		$method();
@@ -212,7 +213,8 @@ class BaseConfigTest extends CIUnitTestCase
 		$modulesConfig          = config('Modules');
 		$modulesConfig->enabled = true;
 
-		$config = new \RegistrarConfig();
+		$config              = new \RegistrarConfig();
+		$config::$registrars = [];
 		$this->setPrivateProperty($config, 'didDiscovery', false);
 
 		$method = $this->getPrivateMethodInvoker($config, 'registerProperties');
