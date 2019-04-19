@@ -281,7 +281,7 @@ class CodeIgniter
 	 * @param boolean                                      $returnResponse
 	 *
 	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
-	 * @throws \CodeIgniter\Router\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 */
 	protected function handleRequest(RouteCollectionInterface $routes = null, $cacheConfig, bool $returnResponse = false)
 	{
@@ -687,7 +687,7 @@ class CodeIgniter
 	 *                                         of the config file.
 	 *
 	 * @return string
-	 * @throws \CodeIgniter\Router\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 */
 	protected function tryToRouteIt(RouteCollectionInterface $routes = null)
 	{
