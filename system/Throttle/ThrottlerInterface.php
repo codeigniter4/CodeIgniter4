@@ -71,5 +71,5 @@ interface ThrottlerInterface
 	 *
 	 * @return integer
 	 */
-	public function getTokenTime();
+	public function getTokenTime(): int;
 }
