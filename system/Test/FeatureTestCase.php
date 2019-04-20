@@ -88,7 +88,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 */
 	protected function withRoutes(array $routes = null)
 	{
-		$collection = \Config\Services::routes();
+		$collection = Services::routes();
 
 		if ($routes)
 		{
@@ -138,7 +138,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null $params
 	 *
 	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 * @throws \Exception
 	 */
 	public function call(string $method, string $path, array $params = null)
@@ -179,7 +179,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null $params
 	 *
 	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 * @throws \Exception
 	 */
 	public function get(string $path, array $params = null)
@@ -194,7 +194,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null $params
 	 *
 	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 * @throws \Exception
 	 */
 	public function post(string $path, array $params = null)
@@ -209,7 +209,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null $params
 	 *
 	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 * @throws \Exception
 	 */
 	public function put(string $path, array $params = null)
@@ -224,7 +224,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null $params
 	 *
 	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 * @throws \Exception
 	 */
 	public function patch(string $path, array $params = null)
@@ -239,7 +239,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null $params
 	 *
 	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 * @throws \Exception
 	 */
 	public function delete(string $path, array $params = null)
@@ -254,7 +254,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null $params
 	 *
 	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 * @throws \Exception
 	 */
 	public function options(string $path, array $params = null)
@@ -297,6 +297,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null                $params
 	 *
 	 * @return \CodeIgniter\HTTP\Request
+	 * @throws \ReflectionException
 	 */
 	protected function populateGlobals(string $method, Request $request, array $params = null)
 	{

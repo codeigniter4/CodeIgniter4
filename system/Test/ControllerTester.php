@@ -45,6 +45,8 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
 use Config\App;
 use Config\Services;
+use InvalidArgumentException;
+use Throwable;
 
 /**
  * ControllerTester Trait
@@ -82,7 +84,7 @@ trait ControllerTester
 	{
 		if (! class_exists($name))
 		{
-			throw new \InvalidArgumentException('Invalid Controller: ' . $name);
+			throw new InvalidArgumentException('Invalid Controller: ' . $name);
 		}
 
 		if (empty($this->appConfig))
@@ -123,7 +125,7 @@ trait ControllerTester
 	{
 		if (! method_exists($this->controller, $method) || ! is_callable([$this->controller, $method]))
 		{
-			throw new \InvalidArgumentException('Method does not exist or is not callable in controller: ' . $method);
+			throw new InvalidArgumentException('Method does not exist or is not callable in controller: ' . $method);
 		}
 
 		// The URL helper is always loaded by the system
@@ -141,7 +143,7 @@ trait ControllerTester
 
 			$response = $this->controller->{$method}(...$params);
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$result->response()
 					->setStatusCode($e->getCode());

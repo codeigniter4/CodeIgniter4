@@ -38,6 +38,7 @@
 
 namespace CodeIgniter;
 
+use Closure;
 use CodeIgniter\Exceptions\ModelException;
 use Config\Database;
 use CodeIgniter\I18n\Time;
@@ -47,6 +48,9 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Validation\ValidationInterface;
 use CodeIgniter\Database\Exceptions\DataException;
+use ReflectionClass;
+use ReflectionProperty;
+use stdClass;
 
 /**
  * Class Model
@@ -354,11 +358,10 @@ class Model
 	/**
 	 * Fetches the column of database from $this->table
 	 *
-	 * @param string        $column_name Column name
+	 * @param string $columnName
 	 *
 	 * @return array|null   The resulting row of data, or null if no data found.
 	 *
-	 * @throws \CodeIgniter\Database\Exceptions\DataException
 	 */
 	public function findColumn(string $columnName)
 	{
@@ -536,8 +539,8 @@ class Model
 		}
 		else
 		{
-			$mirror = new \ReflectionClass($data);
-			$props  = $mirror->getProperties(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED);
+			$mirror = new ReflectionClass($data);
+			$props  = $mirror->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
 
 			$properties = [];
 
@@ -619,10 +622,15 @@ class Model
 			$this->tempData = [];
 		}
 
+		if (empty($data))
+		{
+			throw DataException::forEmptyDataset('insert');
+		}
+
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
-		if (is_object($data) && ! $data instanceof \stdClass)
+		if (is_object($data) && ! $data instanceof stdClass)
 		{
 			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat, false);
 		}
@@ -667,11 +675,6 @@ class Model
 		}
 
 		$data = $this->trigger('beforeInsert', ['data' => $data]);
-
-		if (empty($data))
-		{
-			throw DataException::forEmptyDataset('insert');
-		}
 
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $this->builder()
@@ -749,10 +752,15 @@ class Model
 			$this->tempData = [];
 		}
 
+		if (empty($data))
+		{
+			throw DataException::forEmptyDataset('update');
+		}
+
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
-		if (is_object($data) && ! $data instanceof \stdClass)
+		if (is_object($data) && ! $data instanceof stdClass)
 		{
 			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
 		}
@@ -789,11 +797,6 @@ class Model
 		}
 
 		$data = $this->trigger('beforeUpdate', ['id' => $id, 'data' => $data]);
-
-		if (empty($data))
-		{
-			throw DataException::forEmptyDataset('update');
-		}
 
 		$builder = $this->builder();
 
@@ -956,9 +959,9 @@ class Model
 	 * @param null    $data
 	 * @param boolean $returnSQL
 	 *
-	 * @return boolean TRUE on success, FALSE on failure
+	 * @return mixed
 	 */
-	public function replace($data = null, bool $returnSQL = false): bool
+	public function replace($data = null, bool $returnSQL = false)
 	{
 		// Validate data before saving.
 		if (! empty($data) && $this->skipValidation === false)
@@ -1019,7 +1022,7 @@ class Model
 	 *
 	 * @throws \CodeIgniter\Database\Exceptions\DataException
 	 */
-	public function chunk(int $size, \Closure $userFunc)
+	public function chunk(int $size, Closure $userFunc)
 	{
 		$total = $this->builder()
 				->countAllResults(false);
@@ -1317,7 +1320,7 @@ class Model
 	 * Validate the data against the validation rules (or the validation group)
 	 * specified in the class property, $validationRules.
 	 *
-	 * @param array $data
+	 * @param array|object $data
 	 *
 	 * @return boolean
 	 */

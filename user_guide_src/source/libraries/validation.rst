@@ -651,9 +651,9 @@ The following is a list of all the native rules that are available to use:
 - "is_unique[supplier.name,uuid,$uuid ]"   is not ok
 - "is_unique[supplier.name,uuid,$uuid]"    is ok
 
-======================= =========== =============================================================================================== ===================================================
-Rule                    Parameter   Description                                                                                     Example
-======================= =========== =============================================================================================== ===================================================
+======================= =========== ================================================================================================ ===================================================
+Rule                    Parameter   Description                                                                                      Example
+======================= =========== ================================================================================================ ===================================================
 alpha                   No          Fails if field has anything other than alphabetic characters.
 alpha_space             No          Fails if field contains anything other than alphabetic characters or spaces.
 alpha_dash              No          Fails if field contains anything other than alpha-numeric characters, underscores or dashes.
@@ -689,12 +689,12 @@ valid_base64            No          Fails if field contains anything other than 
 valid_json              No          Fails if field does not contain a valid JSON string.
 valid_email             No          Fails if field does not contain a valid email address.
 valid_emails            No          Fails if any value provided in a comma separated list is not a valid email.
-valid_ip                No          Fails if the supplied IP is not valid. Accepts an optional parameter of ‘ipv4’ or               valid_ip[ipv6]
+valid_ip                No          Fails if the supplied IP is not valid. Accepts an optional parameter of ‘ipv4’ or                valid_ip[ipv6]
                                     ‘ipv6’ to specify an IP format.
 valid_url               No          Fails if field does not contain a valid URL.
-valid_date              No          Fails if field does not contain a valid date. Accepts an optional parameter                     valid_date[d/m/Y]
+valid_date              No          Fails if field does not contain a valid date. Accepts an optional parameter                      valid_date[d/m/Y]
                                     to matches a date format.
-valid_cc_number         Yes         Verifies that the credit card number matches the format used by the specified provider.         valid_cc_number[amex]
+valid_cc_number         Yes         Verifies that the credit card number matches the format used by the specified provider.          valid_cc_number[amex]
                                     Current supported providers are: American Express (amex), China Unionpay (unionpay),
                                     Diners Club CarteBlance (carteblanche), Diners Club (dinersclub), Discover Card (discover),
                                     Interpayment (interpayment), JCB (jcb), Maestro (maestro), Dankort (dankort), NSPK MIR (mir),
@@ -702,7 +702,7 @@ valid_cc_number         Yes         Verifies that the credit card number matches
                                     CIBC Convenience Card (cibc), Royal Bank of Canada Client Card (rbc),
                                     TD Canada Trust Access Card (tdtrust), Scotiabank Scotia Card (scotia), BMO ABM Card (bmoabm),
                                     HSBC Canada Card (hsbc)
-======================= =========== =============================================================================================== ===================================================
+======================= =========== ================================================================================================ ===================================================
 
 Rules for File Uploads
 ======================

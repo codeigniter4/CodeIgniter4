@@ -480,7 +480,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 		$exif = exif_read_data($this->image->getPathname());
 		if (! is_null($key) && is_array($exif))
 		{
-			$exif = array_key_exists($key, $exif) ? $exif[$key] : false;
+			$exif = $exif[$key] ?? false;
 		}
 
 		return $exif;
@@ -678,6 +678,8 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @param string $name
 	 * @param array  $args
+	 *
+	 * @return mixed
 	 */
 	public function __call(string $name, array $args = [])
 	{

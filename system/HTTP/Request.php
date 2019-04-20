@@ -256,7 +256,7 @@ class Request extends Message implements RequestInterface
 	 *
 	 * @return string
 	 */
-	public function getMethod($upper = false): string
+	public function getMethod(bool $upper = false): string
 	{
 		return ($upper) ? strtoupper($this->method) : strtolower($this->method);
 	}

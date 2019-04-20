@@ -95,7 +95,7 @@ class Image extends File
 	 *
 	 * @return boolean
 	 */
-	public function copy(string $targetPath, string $targetName = null, int $perms = 0644)
+	public function copy(string $targetPath, string $targetName = null, int $perms = 0644): bool
 	{
 		$targetPath = rtrim($targetPath, '/ ') . '/';
 
@@ -132,7 +132,7 @@ class Image extends File
 	 *
 	 * @return mixed
 	 */
-	public function getProperties($return = false)
+	public function getProperties(bool $return = false)
 	{
 		$path = $this->getPathname();
 

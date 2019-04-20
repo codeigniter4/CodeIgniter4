@@ -47,13 +47,14 @@ use ReflectionClass;
  */
 trait ReflectionHelper
 {
-
 	/**
 	 * Find a private method invoker.
 	 *
-	 * @param  object|string $obj    object or class name
-	 * @param  string        $method method name
+	 * @param object|string $obj    object or class name
+	 * @param string        $method method name
+	 *
 	 * @return \Closure
+	 * @throws \ReflectionException
 	 */
 	public static function getPrivateMethodInvoker($obj, $method)
 	{
@@ -74,6 +75,7 @@ trait ReflectionHelper
 	 * @param string $property
 	 *
 	 * @return \ReflectionProperty
+	 * @throws \ReflectionException
 	 */
 	private static function getAccessibleRefProperty($obj, $property)
 	{
@@ -98,6 +100,8 @@ trait ReflectionHelper
 	 * @param object|string $obj      object or class name
 	 * @param string        $property property name
 	 * @param mixed         $value    value
+	 *
+	 * @throws \ReflectionException
 	 */
 	public static function setPrivateProperty($obj, $property, $value)
 	{
@@ -108,9 +112,11 @@ trait ReflectionHelper
 	/**
 	 * Retrieve a private property.
 	 *
-	 * @param  object|string $obj      object or class name
-	 * @param  string        $property property name
+	 * @param object|string $obj      object or class name
+	 * @param string        $property property name
+	 *
 	 * @return mixed value
+	 * @throws \ReflectionException
 	 */
 	public static function getPrivateProperty($obj, $property)
 	{

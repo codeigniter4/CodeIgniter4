@@ -197,7 +197,7 @@ class CommandRunner extends Controller
 	 *
 	 * @return array
 	 */
-	public function getCommands()
+	public function getCommands(): array
 	{
 		return $this->commands;
 	}

@@ -228,7 +228,7 @@ class Filters
 	 *
 	 * @return array
 	 */
-	public function getFilters()
+	public function getFilters(): array
 	{
 		return $this->filters;
 	}
@@ -313,7 +313,7 @@ class Filters
 	/**
 	 * Returns the arguments for a specified key, or all.
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	public function getArguments(string $key = null)
 	{
