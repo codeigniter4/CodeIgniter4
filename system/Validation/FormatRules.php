@@ -122,6 +122,23 @@ class FormatRules
 	//--------------------------------------------------------------------
 
 	/**
+	 * Any type of string
+	 *
+	 * Note: we specifically do NOT type hint $str here so that
+	 * it doesn't convert numbers into strings.
+	 *
+	 * @param string|null $str
+	 *
+	 * @return boolean
+	 */
+	public function string($str = null): bool
+	{
+		return is_string($str);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Decimal number
 	 *
 	 * @param string
