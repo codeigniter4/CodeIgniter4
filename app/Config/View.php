@@ -1,6 +1,8 @@
 <?php namespace Config;
 
-class View extends \CodeIgniter\Config\View
+use CodeIgniter\Config\View as CoreView;
+
+class View extends CoreView
 {
 	/**
 	 * When false, the view method will clear the data between each

@@ -26,7 +26,7 @@ class Exceptions
 	 | Any status codes here will NOT be logged if logging is turned on.
 	 | By default, only 404 (Page Not Found) exceptions are ignored.
 	 */
-	public $ignoreCodes = [ 404 ];
+	public $ignoreCodes = [404];
 
 	/*
 	|--------------------------------------------------------------------------

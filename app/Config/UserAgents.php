@@ -91,6 +91,7 @@ class UserAgents extends BaseConfig
 		'Maxthon'           => 'Maxthon',
 		'Ubuntu'            => 'Ubuntu Web Browser',
 		'Vivaldi'           => 'Vivaldi',
+		'MALGJS'		    => 'LG OEM Windows Devices'
 	];
 
 	public $mobiles = [
@@ -153,6 +154,7 @@ class UserAgents extends BaseConfig
 		'wii'                  => 'Nintendo Wii',
 		'open web'             => 'Open Web',
 		'openweb'              => 'OpenWeb',
+		'nexus'                => 'Nexus',
 
 		// Operating Systems
 		'android'              => 'Android',
