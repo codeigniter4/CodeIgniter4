@@ -177,8 +177,8 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
 
     .. php:method:: getPad($array, $pad)
 
-        :param Exception $array: The  $key => $value array.
-        :param Exception $pad: The pad spaces.
+        :param array    $array: The  $key => $value array.
+        :param integer  $pad: The pad spaces.
 
         A method to calculate padding for $key => $value array output. The padding can be used to output a will formatted table in CLI::
 

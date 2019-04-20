@@ -39,6 +39,7 @@ namespace CodeIgniter\View;
 
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\View\Exceptions\ViewException;
+use ReflectionMethod;
 
 /**
  * Class Cell
@@ -98,6 +99,7 @@ class Cell
 	 * @param string|null $cacheName
 	 *
 	 * @return string
+	 * @throws \ReflectionException
 	 */
 	public function render(string $library, $params = null, int $ttl = 0, string $cacheName = null): string
 	{
@@ -122,7 +124,7 @@ class Cell
 		// Try to match up the parameter list we were provided
 		// with the parameter name in the callback method.
 		$paramArray = $this->prepareParams($params);
-		$refMethod  = new \ReflectionMethod($instance, $method);
+		$refMethod  = new ReflectionMethod($instance, $method);
 		$paramCount = $refMethod->getNumberOfParameters();
 		$refParams  = $refMethod->getParameters();
 
@@ -237,7 +239,7 @@ class Cell
 	 *
 	 * @return array
 	 */
-	protected function determineClass(string $library)
+	protected function determineClass(string $library): array
 	{
 		// We don't want to actually call static methods
 		// by default, so convert any double colons.

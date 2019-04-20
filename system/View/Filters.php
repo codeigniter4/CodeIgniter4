@@ -38,6 +38,9 @@
 
 namespace CodeIgniter\View;
 
+use Config\Services;
+use NumberFormatter;
+
 /**
  * View filters
  */
@@ -183,7 +186,7 @@ class Filters
 	//--------------------------------------------------------------------
 
 	/**
-	 * Limits the number of chracters to $limit, and trails of with an ellipsis.
+	 * Limits the number of characters to $limit, and trails of with an ellipsis.
 	 * Will break at word break so may be more or less than $limit.
 	 *
 	 * @param $value
@@ -232,13 +235,13 @@ class Filters
 		helper('number');
 
 		$types = [
-			'decimal'    => \NumberFormatter::DECIMAL,
-			'currency'   => \NumberFormatter::CURRENCY,
-			'percent'    => \NumberFormatter::PERCENT,
-			'scientific' => \NumberFormatter::SCIENTIFIC,
-			'spellout'   => \NumberFormatter::SPELLOUT,
-			'ordinal'    => \NumberFormatter::ORDINAL,
-			'duration'   => \NumberFormatter::DURATION,
+			'decimal'    => NumberFormatter::DECIMAL,
+			'currency'   => NumberFormatter::CURRENCY,
+			'percent'    => NumberFormatter::PERCENT,
+			'scientific' => NumberFormatter::SCIENTIFIC,
+			'spellout'   => NumberFormatter::SPELLOUT,
+			'ordinal'    => NumberFormatter::ORDINAL,
+			'duration'   => NumberFormatter::DURATION,
 		];
 
 		return format_number($value, $precision, $locale, ['type' => $types[$type]]);
@@ -260,7 +263,7 @@ class Filters
 		helper('number');
 
 		$options = [
-			'type'     => \NumberFormatter::CURRENCY,
+			'type'     => NumberFormatter::CURRENCY,
 			'currency' => $currency,
 		];
 
@@ -277,7 +280,7 @@ class Filters
 	 */
 	public static function nl2br(string $value): string
 	{
-		$typography = \Config\Services::typography();
+		$typography = Services::typography();
 
 		return $typography->nl2brExceptPre($value);
 	}
@@ -294,7 +297,7 @@ class Filters
 	 */
 	public static function prose(string $value): string
 	{
-		$typography = \Config\Services::typography();
+		$typography = Services::typography();
 
 		return $typography->autoTypography($value);
 	}
@@ -309,12 +312,12 @@ class Filters
 	 *  - floor     always rounds down
 	 *
 	 * @param string  $value
-	 * @param integer $precision
+	 * @param mixed   $precision
 	 * @param string  $type
 	 *
 	 * @return string
 	 */
-	public static function round($value, $precision = 2, $type = 'common'): string
+	public static function round(string $value, $precision = 2, string $type = 'common'): string
 	{
 		if (! is_numeric($precision))
 		{

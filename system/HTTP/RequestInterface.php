@@ -76,7 +76,7 @@ interface RequestInterface
 	 *
 	 * @return string
 	 */
-	public function getMethod($upper = false): string;
+	public function getMethod(bool $upper = false): string;
 
 	//--------------------------------------------------------------------
 

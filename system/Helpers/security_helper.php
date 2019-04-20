@@ -45,7 +45,7 @@ use Config\Services;
  * @subpackage Helpers
  * @category   Helpers
  * @author     CodeIgniter Dev Team
- * @link       https://codeigniter.com/user_guide/helpers/cookie_helper.html
+ * @link       https://codeigniter.com/user_guide/helpers/security_helper.html
  */
 
 if (! function_exists('sanitize_filename'))

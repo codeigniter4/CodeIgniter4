@@ -37,6 +37,11 @@
 
 namespace CodeIgniter\Config;
 
+use CodeIgniter\Autoloader\Autoloader;
+use CodeIgniter\Autoloader\FileLocator;
+use Config\Autoload;
+use Config\Modules;
+
 /**
  * Services Configuration file.
  *
@@ -133,13 +138,13 @@ class BaseService
 		{
 			if (empty(static::$instances['autoloader']))
 			{
-				static::$instances['autoloader'] = new \CodeIgniter\Autoloader\Autoloader();
+				static::$instances['autoloader'] = new Autoloader();
 			}
 
 			return static::$instances['autoloader'];
 		}
 
-		return new \CodeIgniter\Autoloader\Autoloader();
+		return new Autoloader();
 	}
 
 	//--------------------------------------------------------------------
@@ -159,7 +164,7 @@ class BaseService
 		{
 			if (empty(static::$instances['locator']))
 			{
-				static::$instances['locator'] = new \CodeIgniter\Autoloader\FileLocator(
+				static::$instances['locator'] = new FileLocator(
 					static::autoloader()
 				);
 			}
@@ -167,7 +172,7 @@ class BaseService
 			return static::$instances['locator'];
 		}
 
-		return new \CodeIgniter\Autoloader\FileLocator(static::autoloader());
+		return new FileLocator(static::autoloader());
 	}
 
 	//--------------------------------------------------------------------
@@ -208,7 +213,7 @@ class BaseService
 
 		if ($init_autoloader)
 		{
-			static::autoloader()->initialize(new \Config\Autoload(), new \Config\Modules());
+			static::autoloader()->initialize(new Autoload(), new Modules());
 		}
 	}
 

@@ -91,7 +91,7 @@ class BaseCollector
 	 * @param  boolean $safe
 	 * @return string
 	 */
-	public function getTitle($safe = false): string
+	public function getTitle(bool $safe = false): string
 	{
 		if ($safe)
 		{

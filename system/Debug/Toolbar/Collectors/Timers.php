@@ -76,7 +76,7 @@ class Timers extends BaseCollector
 	 * Child classes should implement this to return the timeline data
 	 * formatted for correct usage.
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	protected function formatTimelineData(): array
 	{

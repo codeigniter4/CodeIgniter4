@@ -116,7 +116,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 * The 'save path' for the session
 	 * varies between
 	 *
-	 * @var mixed
+	 * @var string
 	 */
 	protected $savePath;
 

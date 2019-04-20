@@ -1,7 +1,5 @@
 <?php
 
-use CodeIgniter\Format\Exceptions\FormatException;
-
 /**
  * CodeIgniter
  *
@@ -38,6 +36,8 @@ use CodeIgniter\Format\Exceptions\FormatException;
  * @filesource
  */
 namespace CodeIgniter\Format;
+
+use CodeIgniter\Format\Exceptions\FormatException;
 
 /**
  * XML data formatter
