@@ -1,11 +1,9 @@
 <!doctype html>
-<html>
+<html lang="en">
 	<head>
 		<title>Welcome to CodeIgniter</title>
 
 		<link rel="shortcut icon" type="image/png" href="/favicon.ico"/>
-	</head>
-	<body>
 
 		<style {csp-style-nonce}>
 			div.logo {
@@ -81,6 +79,8 @@
 				color: #dd4814;
 			}
 		</style>
+	</head>
+	<body>
 
 		<div class="wrap">
 
@@ -128,7 +128,8 @@
 
 				<p>If you are exploring CodeIgniter for the very first time, you
 					should start by reading the
-					<a href="https://codeigniter4.github.io/CodeIgniter4">User Guide</a>.</p>
+					<a href="https://codeigniter4.github.io/CodeIgniter4">User Guide</a>.
+				</p>
 
 			</div>
 

@@ -2,21 +2,22 @@
 // Tabs
 //--------------------------------------------------------------------
 
-var tabLinks = new Array();
-var contentDivs = new Array();
+var tabLinks = [];
+var contentDivs = [];
 
 function init ()
 {
 
     // Grab the tab links and content divs from the page
     var tabListItems = document.getElementById('tabs').childNodes;
-    console.log(tabListItems);
-    for (var i = 0; i < tabListItems.length; i ++)
+    var i = 0;
+    var id = "";
+    for (i; i < tabListItems.length; i ++)
     {
         if (tabListItems[i].nodeName == "LI")
         {
             var tabLink = getFirstChildWithTagName(tabListItems[i], 'A');
-            var id = getHash(tabLink.getAttribute('href'));
+            id = getHash(tabLink.getAttribute('href'));
             tabLinks[id] = tabLink;
             contentDivs[id] = document.getElementById(id);
         }
@@ -24,9 +25,10 @@ function init ()
 
     // Assign onclick events to the tab links, and
     // highlight the first tab
-    var i = 0;
+    i = 0;
+    id = "";
 
-    for (var id in tabLinks)
+    for (id in tabLinks)
     {
         tabLinks[id].onclick = showTab;
         tabLinks[id].onfocus = function () { this.blur() };
@@ -38,13 +40,13 @@ function init ()
     }
 
     // Hide all content divs except the first
-    var i = 0;
+    i = 0;
+    id = "";
 
-    for (var id in contentDivs)
+    for (id in contentDivs)
     {
         if (i != 0)
         {
-            console.log(contentDivs[id]);
             contentDivs[id].className = 'content hide';
         }
         i ++;
@@ -103,21 +105,21 @@ function getHash (url)
 function toggle (elem)
 {
     elem = document.getElementById(elem);
-
+    var disp = "";
     if (elem.style && elem.style['display'])
     {
         // Only works with the "style" attr
-        var disp = elem.style['display'];
+        disp = elem.style['display'];
     }
     else if (elem.currentStyle)
     {
         // For MSIE, naturally
-        var disp = elem.currentStyle['display'];
+        disp = elem.currentStyle['display'];
     }
     else if (window.getComputedStyle)
     {
         // For most other browsers
-        var disp = document.defaultView.getComputedStyle(elem, null).getPropertyValue('display');
+        disp = document.defaultView.getComputedStyle(elem, null).getPropertyValue('display');
     }
 
     // Toggle the state of the "display" style

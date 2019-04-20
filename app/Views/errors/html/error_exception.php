@@ -1,6 +1,10 @@
-<?php $error_id = uniqid('error', true); ?>
+<?php $error_id = uniqid('error', true);
+
+use CodeIgniter\CodeIgniter;
+use Config\Services;
+?>
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="robots" content="noindex">
@@ -43,12 +47,11 @@
 
 		<ul class="tabs" id="tabs">
 			<li><a href="#backtrace">Backtrace</a></li>
-				<li><a href="#server">Server</a></li>
-				<li><a href="#request">Request</a></li>
-				<li><a href="#response">Response</a></li>
-				<li><a href="#files">Files</a></li>
-				<li><a href="#memory">Memory</a></li>
-			</li>
+			<li><a href="#server">Server</a></li>
+			<li><a href="#request">Request</a></li>
+			<li><a href="#response">Response</a></li>
+			<li><a href="#files">Files</a></li>
+			<li><a href="#memory">Memory</a></li>
 		</ul>
 
 		<div class="tab-content">
@@ -91,7 +94,7 @@
 										// Reflection by name is not available for closure function
 										if (substr( $row['function'], -1 ) !== '}')
 										{
-											$mirror = isset( $row['class'] ) ? new \ReflectionMethod( $row['class'], $row['function'] ) : new \ReflectionFunction( $row['function'] );
+											$mirror = isset( $row['class'] ) ? new ReflectionMethod($row['class'], $row['function'] ) : new ReflectionFunction($row['function'] );
 											$params = $mirror->getParameters();
 										}
 										foreach ($row['args'] as $key => $value) : ?>
@@ -132,7 +135,7 @@
 					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var]))
 					{
 						continue;
-} ?>
+					} ?>
 
 					<h3>$<?= $var ?></h3>
 
@@ -193,7 +196,7 @@
 
 			<!-- Request -->
 			<div class="content" id="request">
-				<?php $request = \Config\Services::request(); ?>
+				<?php $request = Services::request(); ?>
 
 				<table>
 					<tbody>
@@ -235,7 +238,7 @@
 					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var]))
 					{
 						continue;
-} ?>
+					} ?>
 
 					<?php $empty = false; ?>
 
@@ -291,11 +294,11 @@
 							<?php if (empty($value))
 							{
 								continue;
-} ?>
+							} ?>
 							<?php if (! is_array($value))
 							{
 								$value = [$value];
-} ?>
+							} ?>
 							<?php foreach ($value as $h) : ?>
 								<tr>
 									<td><?= esc($h->getName(), 'html') ?></td>
@@ -311,7 +314,7 @@
 
 			<!-- Response -->
 			<?php
-				$response = \Config\Services::response();
+				$response = Services::response();
 				$response->setStatusCode(http_response_code());
 			?>
 			<div class="content" id="response">
@@ -391,7 +394,7 @@
 			<p>
 				Displayed at <?= date('H:i:sa') ?> &mdash;
 				PHP: <?= phpversion() ?>  &mdash;
-				CodeIgniter: <?= \CodeIgniter\CodeIgniter::CI_VERSION ?>
+				CodeIgniter: <?= CodeIgniter::CI_VERSION ?>
 			</p>
 
 		</div>
