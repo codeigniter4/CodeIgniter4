@@ -76,7 +76,7 @@ if (! function_exists('site_url'))
 		}
 		if (! empty($uri))
 		{
-			$fullPath .= '/' . $uri;
+			$fullPath .= $uri;
 		}
 
 		$url = new \CodeIgniter\HTTP\URI($fullPath);
