@@ -564,7 +564,7 @@ class Router implements RouterInterface
 	 */
 	protected function validateRequest(array $segments): array
 	{
-		$segments = array_filter($segments);
+		$segments = array_values(array_filter($segments));
 
 		$c                  = count($segments);
 		$directory_override = isset($this->directory);
