@@ -147,7 +147,7 @@ class Filters
 
 			if ($position === 'before')
 			{
-				$result = $class->before($this->request);
+				$result = $class->before($this->request, $this->arguments[$alias] ?? null);
 
 				if ($result instanceof RequestInterface)
 				{
