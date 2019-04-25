@@ -232,9 +232,9 @@ class BaseCollector
 	/**
 	 * Returns the data of this collector to be formatted in the toolbar
 	 *
-	 * @return array
+	 * @return array|string
 	 */
-	public function display(): array
+	public function display()
 	{
 		return [];
 	}
