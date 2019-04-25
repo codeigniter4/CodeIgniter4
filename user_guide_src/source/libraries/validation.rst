@@ -651,9 +651,9 @@ The following is a list of all the native rules that are available to use:
 - "is_unique[supplier.name,uuid,$uuid ]"   is not ok
 - "is_unique[supplier.name,uuid,$uuid]"    is ok
 
-======================= =========== ================================================================================================ ===================================================
-Rule                    Parameter   Description                                                                                      Example
-======================= =========== ================================================================================================ ===================================================
+======================= =========== =============================================================================================== ===================================================
+Rule                    Parameter   Description                                                                                     Example
+======================= =========== =============================================================================================== ===================================================
 alpha                   No          Fails if field has anything other than alphabetic characters.
 alpha_space             No          Fails if field contains anything other than alphabetic characters or spaces.
 alpha_dash              No          Fails if field contains anything other than alpha-numeric characters, underscores or dashes.
@@ -702,7 +702,7 @@ valid_cc_number         Yes         Verifies that the credit card number matches
                                     CIBC Convenience Card (cibc), Royal Bank of Canada Client Card (rbc),
                                     TD Canada Trust Access Card (tdtrust), Scotiabank Scotia Card (scotia), BMO ABM Card (bmoabm),
                                     HSBC Canada Card (hsbc)
-======================= =========== ================================================================================================ ===================================================
+======================= =========== =============================================================================================== ===================================================
 
 Rules for File Uploads
 ======================
