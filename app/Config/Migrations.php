@@ -14,7 +14,7 @@ class Migrations extends BaseConfig
 	| and disable it back when you're done.
 	|
 	*/
-	public $enabled = false;
+	public $enabled = true;
 
 	/*
 	|--------------------------------------------------------------------------

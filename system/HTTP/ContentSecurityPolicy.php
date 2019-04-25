@@ -535,9 +535,9 @@ class ContentSecurityPolicy
 	 *
 	 * @return $this
 	 */
-	public function setReportURI($uri)
+	public function setReportURI(string $uri)
 	{
-		$this->reportURI = (string) $uri;
+		$this->reportURI = $uri;
 
 		return $this;
 	}

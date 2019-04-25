@@ -30,6 +30,11 @@ By default, the application will run using the "production" environment. To
 take advantage of the debugging tools provided, you should set the environment
 to "develop".
 
+.. note:: If you will be running your site using a web server (e.g. Apache or Nginx),
+    you will need to modify the permissions for the ``writable`` folder inside
+    your project, so that it is writable by the user or account used by your
+    web server.
+
 Local Development Server
 =================================================
 

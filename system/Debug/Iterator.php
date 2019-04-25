@@ -65,12 +65,12 @@ class Iterator
 	 * Tests are simply closures that the user can define any sequence of
 	 * things to happen during the test.
 	 *
-	 * @param $name
+	 * @param string   $name
 	 * @param \Closure $closure
 	 *
 	 * @return $this
 	 */
-	public function add($name, \Closure $closure)
+	public function add(string $name, \Closure $closure)
 	{
 		$name = strtolower($name);
 
@@ -89,9 +89,9 @@ class Iterator
 	 * @param integer $iterations
 	 * @param boolean $output
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	public function run($iterations = 1000, $output = true)
+	public function run(int $iterations = 1000, bool $output = true)
 	{
 		foreach ($this->tests as $name => $test)
 		{
@@ -121,6 +121,8 @@ class Iterator
 		{
 			return $this->getReport();
 		}
+
+		return null;
 	}
 
 	//--------------------------------------------------------------------

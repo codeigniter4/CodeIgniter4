@@ -181,8 +181,15 @@ class BaseConfig
 
 		if (! static::$didDiscovery)
 		{
-			$locator              = \Config\Services::locator();
-			static::$registrars   = $locator->search('Config/Registrar.php');
+			$locator         = \Config\Services::locator();
+			$registrarsFiles = $locator->search('Config/Registrar.php');
+
+			foreach ($registrarsFiles as $file)
+			{
+				$className            = $locator->getClassname($file);
+				static::$registrars[] = new $className();
+			}
+
 			static::$didDiscovery = true;
 		}
 

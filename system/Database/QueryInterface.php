@@ -52,12 +52,13 @@ interface QueryInterface
 	/**
 	 * Sets the raw query string to use for this statement.
 	 *
-	 * @param string $sql
-	 * @param array  $binds
+	 * @param string  $sql
+	 * @param mixed   $binds
+	 * @param boolean $setEscape
 	 *
 	 * @return mixed
 	 */
-	public function setQuery(string $sql, $binds = null);
+	public function setQuery(string $sql, $binds = null, bool $setEscape = true);
 
 	//--------------------------------------------------------------------
 
@@ -91,9 +92,9 @@ interface QueryInterface
 	 *
 	 * @param integer $decimals The accuracy of the returned time.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getDuration(int $decimals = 6);
+	public function getDuration(int $decimals = 6): string;
 
 	//--------------------------------------------------------------------
 

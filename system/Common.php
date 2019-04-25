@@ -36,10 +36,18 @@
  * @filesource
  */
 
+use CodeIgniter\Config\Config;
+use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\HTTP\URI;
+use Config\App;
+use Config\Database;
+use Config\Logger;
 use Config\Services;
+use Tests\Support\Log\TestLogger;
+use Zend\Escaper\Escaper;
 
 /**
  * Common Functions
@@ -97,7 +105,7 @@ if (! function_exists('config'))
 	 */
 	function config(string $name, bool $getShared = true)
 	{
-		return \CodeIgniter\Config\Config::get($name, $getShared);
+		return Config::get($name, $getShared);
 	}
 }
 
@@ -126,7 +134,7 @@ if (! function_exists('db_connnect'))
 	 */
 	function db_connect($db = null, bool $getShared = true)
 	{
-		return \Config\Database::connect($db, $getShared);
+		return Database::connect($db, $getShared);
 	}
 }
 
@@ -182,6 +190,7 @@ if (! function_exists('view_cell'))
 	 * @param string|null $cacheName
 	 *
 	 * @return string
+	 * @throws \ReflectionException
 	 */
 	function view_cell(string $library, $params = null, int $ttl = 0, string $cacheName = null): string
 	{
@@ -281,7 +290,7 @@ if (! function_exists('esc'))
 
 			if (! in_array($context, ['html', 'js', 'css', 'url', 'attr']))
 			{
-				throw new \InvalidArgumentException('Invalid escape context provided.');
+				throw new InvalidArgumentException('Invalid escape context provided.');
 			}
 
 			if ($context === 'attr')
@@ -296,12 +305,12 @@ if (! function_exists('esc'))
 			static $escaper;
 			if (! $escaper)
 			{
-				$escaper = new \Zend\Escaper\Escaper($encoding);
+				$escaper = new Escaper($encoding);
 			}
 
 			if ($encoding && $escaper->getEncoding() !== $encoding)
 			{
-				$escaper = new \Zend\Escaper\Escaper($encoding);
+				$escaper = new Escaper($encoding);
 			}
 
 			$data = $escaper->$method($data);
@@ -471,7 +480,7 @@ if (! function_exists('log_message'))
 		// for asserting that logs were called in the test code.
 		if (ENVIRONMENT === 'testing')
 		{
-			$logger = new \Tests\Support\Log\TestLogger(new \Config\Logger());
+			$logger = new TestLogger(new Logger());
 
 			return $logger->log($level, $message, $context);
 		}
@@ -534,27 +543,27 @@ if (! function_exists('remove_invisible_characters'))
 	 * between ascii characters, like Java\0script.
 	 *
 	 * @param string  $str
-	 * @param boolean $url_encoded
+	 * @param boolean $urlEncoded
 	 *
 	 * @return string
 	 */
-	function remove_invisible_characters(string $str, bool $url_encoded = true): string
+	function remove_invisible_characters(string $str, bool $urlEncoded = true): string
 	{
-		$non_displayables = [];
+		$nonDisplayables = [];
 
 		// every control character except newline (dec 10),
 		// carriage return (dec 13) and horizontal tab (dec 09)
-		if ($url_encoded)
+		if ($urlEncoded)
 		{
-			$non_displayables[] = '/%0[0-8bcef]/';  // url encoded 00-08, 11, 12, 14, 15
-			$non_displayables[] = '/%1[0-9a-f]/';   // url encoded 16-31
+			$nonDisplayables[] = '/%0[0-8bcef]/';  // url encoded 00-08, 11, 12, 14, 15
+			$nonDisplayables[] = '/%1[0-9a-f]/';   // url encoded 16-31
 		}
 
-		$non_displayables[] = '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]+/S';   // 00-08, 11, 12, 14-31, 127
+		$nonDisplayables[] = '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]+/S';   // 00-08, 11, 12, 14-31, 127
 
 		do
 		{
-			$str = preg_replace($non_displayables, '', $str, -1, $count);
+			$str = preg_replace($nonDisplayables, '', $str, -1, $count);
 		}
 		while ($count);
 
@@ -611,7 +620,7 @@ if (! function_exists('helper'))
 
 				if (empty($path))
 				{
-					throw \CodeIgniter\Files\Exceptions\FileNotFoundException::forFileNotFound($filename);
+					throw FileNotFoundException::forFileNotFound($filename);
 				}
 
 				$includes[] = $path;
@@ -687,7 +696,7 @@ if (! function_exists('app_timezone'))
 	 */
 	function app_timezone(): string
 	{
-		$config = config(\Config\App::class);
+		$config = config(App::class);
 
 		return $config->appTimezone;
 	}
@@ -706,7 +715,7 @@ if (! function_exists('csrf_token'))
 	 */
 	function csrf_token(): string
 	{
-		$config = config(\Config\App::class);
+		$config = config(App::class);
 
 		return $config->CSRFTokenName;
 	}
@@ -797,7 +806,7 @@ if (! function_exists('force_https'))
 		$uri = $request->uri;
 		$uri->setScheme('https');
 
-		$uri = \CodeIgniter\HTTP\URI::createURIString(
+		$uri = URI::createURIString(
 						$uri->getScheme(), $uri->getAuthority(true), $uri->getPath(), // Absolute URIs should use a "/" for an empty path
 						$uri->getQuery(), $uri->getFragment()
 		);
@@ -942,6 +951,7 @@ if (! function_exists('is_really_writable'))
 	 *
 	 * @return boolean
 	 *
+	 * @throws             \Exception
 	 * @codeCoverageIgnore Not practical to test, as travis runs on linux
 	 */
 	function is_really_writable(string $file): bool
@@ -996,7 +1006,7 @@ if (! function_exists('slash_item'))
 	 */
 	function slash_item(string $item): ?string
 	{
-		$config     = config(\Config\App::class);
+		$config     = config(App::class);
 		$configItem = $config->{$item};
 
 		if (! isset($configItem) || empty(trim($configItem)))

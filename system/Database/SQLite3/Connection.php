@@ -64,7 +64,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected $_random_keyword = [
 		'RANDOM()',
-		'RANDOM()',
 	];
 
 	//--------------------------------------------------------------------
@@ -77,7 +76,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function connect($persistent = false)
+	public function connect(bool $persistent = false)
 	{
 		if ($persistent && $this->db->DBDebug)
 		{
@@ -101,7 +100,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Keep or establish the connection if no queries have been sent for
 	 * a length of time exceeding the server's idle timeout.
 	 *
-	 * @return mixed
+	 * @return void
 	 */
 	public function reconnect()
 	{
@@ -128,9 +127,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @param string $databaseName
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
-	public function setDatabase(string $databaseName)
+	public function setDatabase(string $databaseName): bool
 	{
 		return false;
 	}
@@ -140,9 +139,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Returns a string containing the version of the database being used.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getVersion()
+	public function getVersion(): string
 	{
 		if (isset($this->dataCache['version']))
 		{
@@ -163,7 +162,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed    \SQLite3Result object or bool
 	 */
-	public function execute($sql)
+	public function execute(string $sql)
 	{
 		return $this->isWriteType($sql)
 			? $this->connID->exec($sql)
@@ -175,7 +174,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Returns the total number of rows affected by this query.
 	 *
-	 * @return mixed
+	 * @return integer
 	 */
 	public function affectedRows(): int
 	{
@@ -205,7 +204,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	protected function _listTables($prefixLimit = false): string
+	protected function _listTables(bool $prefixLimit = false): string
 	{
 		return 'SELECT "NAME" FROM "SQLITE_MASTER" WHERE "TYPE" = \'table\''
 			   . (($prefixLimit !== false && $this->DBPrefix !== '')
@@ -236,7 +235,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @return array|false
 	 * @throws DatabaseException
 	 */
-	public function getFieldNames($table)
+	public function getFieldNames(string $table)
 	{
 		// Is there a cached result?
 		if (isset($this->dataCache['field_names'][$table]))
@@ -314,19 +313,19 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			return [];
 		}
-		$retval = [];
+		$retVal = [];
 		for ($i = 0, $c = count($query); $i < $c; $i++)
 		{
-			$retval[$i]              = new \stdClass();
-			$retval[$i]->name        = $query[$i]->name;
-			$retval[$i]->type        = $query[$i]->type;
-			$retval[$i]->max_length  = null;
-			$retval[$i]->default     = $query[$i]->dflt_value;
-			$retval[$i]->primary_key = isset($query[$i]->pk) ? (bool)$query[$i]->pk : false;
-			$retval[$i]->nullable    = isset($query[$i]->notnull) ? ! (bool)$query[$i]->notnull : false;
+			$retVal[$i]              = new \stdClass();
+			$retVal[$i]->name        = $query[$i]->name;
+			$retVal[$i]->type        = $query[$i]->type;
+			$retVal[$i]->max_length  = null;
+			$retVal[$i]->default     = $query[$i]->dflt_value;
+			$retVal[$i]->primary_key = isset($query[$i]->pk) ? (bool)$query[$i]->pk : false;
+			$retVal[$i]->nullable    = isset($query[$i]->notnull) ? ! (bool)$query[$i]->notnull : false;
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------
@@ -349,7 +348,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 		$query = $query->getResultObject();
 
-		$retval = [];
+		$retVal = [];
 		foreach ($query as $row)
 		{
 			$obj       = new \stdClass();
@@ -368,10 +367,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 				$obj->fields[] = $field->name;
 			}
 
-			$retval[$obj->name] = $obj;
+			$retVal[$obj->name] = $obj;
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------
@@ -396,7 +395,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			return [];
 		}
 
-		$retval = [];
+		$retVal = [];
 
 		foreach ($tables as $table)
 		{
@@ -409,11 +408,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 				$obj->table_name         = $table;
 				$obj->foreign_table_name = $row->table;
 
-				$retval[] = $obj;
+				$retVal[] = $obj;
 			}
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------

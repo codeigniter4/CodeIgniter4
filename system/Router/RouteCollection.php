@@ -511,7 +511,7 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Returns the raw array of available routes.
 	 *
-	 * @param null $verb
+	 * @param mixed $verb
 	 *
 	 * @return array
 	 */
@@ -621,7 +621,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param string       $from
 	 * @param array|string $to
-	 * @param $options
+	 * @param array        $options
 	 *
 	 * @return RouteCollectionInterface
 	 */
@@ -724,7 +724,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return void
 	 */
-	public function group($name, ...$params)
+	public function group(string $name, ...$params)
 	{
 		$oldGroup   = $this->group;
 		$oldOptions = $this->currentOptions;

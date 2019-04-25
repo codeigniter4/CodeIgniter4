@@ -326,6 +326,47 @@ class FormatRulesTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
+	 * @dataProvider stringProvider
+	 *
+	 * @param $str
+	 * @param $expected
+	 */
+	public function testString($str, $expected)
+	{
+		$data = [
+			'foo' => $str,
+		];
+
+		$this->validation->setRules([
+			'foo' => 'string',
+		]);
+
+		$this->assertEquals($expected, $this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function stringProvider()
+	{
+		return [
+			[
+				'123',
+				true,
+			],
+			[
+				123,
+				false,
+			],
+			[
+				'hello',
+				true,
+			],
+		];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * @dataProvider alphaProvider
 	 *
 	 * @param $str

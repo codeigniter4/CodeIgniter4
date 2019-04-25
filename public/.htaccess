@@ -1,34 +1,5 @@
-# ----------------------------------------------------------------------
-# Environment Name
-# ----------------------------------------------------------------------
-
-# Sets the environment that CodeIgniter runs under.
-# SetEnv CI_ENVIRONMENT development
-
 # Disable directory browsing
 Options All -Indexes
-
-# ----------------------------------------------------------------------
-# UTF-8 encoding
-# ----------------------------------------------------------------------
-
-# Use UTF-8 encoding for anything served text/plain or text/html
-AddDefaultCharset utf-8
-
-# Force UTF-8 for a number of file formats
-<IfModule mod_mime.c>
-    AddCharset utf-8 .atom .css .js .json .rss .vtt .xml
-</IfModule>
-
-# ----------------------------------------------------------------------
-# Activate CORS
-# ----------------------------------------------------------------------
-
-<IfModule mod_headers.c>
-    <FilesMatch "\.(ttf|ttc|otf|eot|woff|woff2|font.css|css|js|gif|png|jpe?g|svg|svgz|ico|webp)$">
-        Header set Access-Control-Allow-Origin "*"
-    </FilesMatch>
-</IfModule>
 
 # ----------------------------------------------------------------------
 # Rewrite engine
@@ -43,7 +14,7 @@ AddDefaultCharset utf-8
 	# If you installed CodeIgniter in a subfolder, you will need to
 	# change the following line to match the subfolder you need.
 	# http://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewritebase
-	RewriteBase /
+	# RewriteBase /
 
 	# Redirect Trailing Slashes...
     RewriteRule ^(.*)/$ /$1 [L,R=301]
@@ -60,12 +31,6 @@ AddDefaultCharset utf-8
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^(.*)$ index.php/$1 [L]
 
-    # Disable image hotlinkiing start
-    RewriteCond %{HTTP_REFERER} !^$
-    RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?example.com [NC]
-    RewriteRule \.(jpg|jpeg|png|gif)$ – [NC,F,L]
-    # Disable image hotlinkiing end
-
 	# Ensure Authorization header is passed along
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
@@ -80,103 +45,3 @@ AddDefaultCharset utf-8
 # Disable server signature start
     ServerSignature Off
 # Disable server signature end
-
-# BEGIN Expires
-<ifModule mod_expires.c>
-	ExpiresActive On
-    ExpiresByType text/css "access 1 month"
-    ExpiresByType text/html "access 1 month"
-    ExpiresByType image/gif "access 1 year"
-    ExpiresByType image/png "access 1 year"
-    ExpiresByType image/jpg "access 1 year"
-    ExpiresByType image/jpeg "access 1 year"
-    ExpiresByType image/x-icon "access 1 year"
-    ExpiresByType image/svg+xml "access plus 1 month"
-    ExpiresByType audio/ogg "access plus 1 year"
-    ExpiresByType video/mp4 "access plus 1 year"
-    ExpiresByType video/ogg "access plus 1 year"
-    ExpiresByType video/webm "access plus 1 year"
-    ExpiresByType application/atom+xml "access plus 1 hour"
-    ExpiresByType application/rss+xml "access plus 1 hour"
-    ExpiresByType application/pdf "access 1 month"
-    ExpiresByType application/javascript "access 1 month"
-    ExpiresByType text/x-javascript "access 1 month"
-    ExpiresByType text/x-component "access plus 1 month"
-    ExpiresByType application/x-shockwave-flash "access 1 month"
-    ExpiresByType font/opentype "access plus 1 month"
-    ExpiresByType application/vnd.ms-fontobject "access plus 1 month"
-    ExpiresByType application/x-font-ttf "access plus 1 month"
-    ExpiresByType application/font-woff "access plus 1 month"
-    ExpiresByType application/font-woff2 "access plus 1 month"
-    ExpiresDefault "access 1 month"
-</ifModule>
-# END Expires
-
-# ----------------------------------------------------------------------
-# Gzip compression
-# ----------------------------------------------------------------------
-
-# Start gzip compression
-<IfModule mod_gzip.c>
-    mod_gzip_on Yes
-    mod_gzip_dechunk Yes
-    mod_gzip_item_include file \.(html?|txt|css|js|php|pl)$
-    mod_gzip_item_include handler ^cgi-script$
-    mod_gzip_item_include mime ^text/.*
-    mod_gzip_item_include mime ^application/x-javascript.*
-    mod_gzip_item_exclude mime ^image/.*
-    mod_gzip_item_exclude rspheader ^Content-Encoding:.*gzip.*
-</IfModule>
-# End gzip compression
-
-<IfModule mod_deflate.c>
-
-	# Force deflate for mangled headers developer.yahoo.com/blogs/ydn/posts/2010/12/pushing-beyond-gzipping/
-	<IfModule mod_setenvif.c>
-		<IfModule mod_headers.c>
-			SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\s*,?\s*)+|[X~-]{4,13}$ HAVE_Accept-Encoding
-			RequestHeader append Accept-Encoding "gzip,deflate" env=HAVE_Accept-Encoding
-		</IfModule>
-	</IfModule>
-
-	# Compress all output labeled with one of the following MIME-types
-	# (for Apache versions below 2.3.7, you don't need to enable `mod_filter`
-	# and can remove the `<IfModule mod_filter.c>` and `</IfModule>` lines as
-	# `AddOutputFilterByType` is still in the core directives)
-	<IfModule mod_filter.c>
-		AddOutputFilterByType DEFLATE application/atom+xml \
-		                              application/javascript \
-		                              application/json \
-		                              application/rss+xml \
-		                              application/vnd.ms-fontobject \
-		                              application/x-font-ttf \
-		                              application/xhtml+xml \
-		                              application/xml \
-		                              application/x-javascript \
-                                      application/x-font \
-                                      application/x-font-truetype \
-                                      application/x-font-otf \
-                                      application/x-font-woff \
-                                      application/x-font-woff2 \
-                                      application/x-font-opentype \
-		                              font/opentype \
-		                              font/ttf \
-                                      font/otf \
-                                      font/eot \
-                                      font/woff \
-                                      font/woff2 \
-		                              image/svg+xml svg svgz \
-		                              image/x-icon \
-		                              text/css \
-		                              text/html \
-		                              text/plain \
-		                              text/x-component \
-		                              text/xml \
-		                              text/javascript \
-
-          # For Olders Browsers Which Can't Handle Compression
-            BrowserMatch ^Mozilla/4 gzip-only-text/html
-            BrowserMatch ^Mozilla/4\.0[678] no-gzip
-            BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
-    </IfModule>
-</IfModule>

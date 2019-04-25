@@ -38,6 +38,7 @@
 
 namespace CodeIgniter;
 
+use CodeIgniter\Exceptions\EntityException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Exceptions\CastException;
 
@@ -295,6 +296,11 @@ class Entity
 			$result = $this->castAs($result, $this->_options['casts'][$key]);
 		}
 
+		if (! isset($result) && ! property_exists($this, $key))
+		{
+			throw EntityException::forTryingToAccessNonExistentProperty($key, get_called_class());
+		}
+
 		return $result;
 	}
 
@@ -313,6 +319,7 @@ class Entity
 	 * @param null   $value
 	 *
 	 * @return $this
+	 * @throws \Exception
 	 */
 	public function __set(string $key, $value = null)
 	{
@@ -349,6 +356,11 @@ class Entity
 			if (($castTo === 'json' || $castTo === 'json-array') && function_exists('json_encode'))
 			{
 				$value = json_encode($value);
+
+				if (json_last_error() !== JSON_ERROR_NONE)
+				{
+					throw CastException::forInvalidJsonFormatException(json_last_error());
+				}
 			}
 		}
 

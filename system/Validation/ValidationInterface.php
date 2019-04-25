@@ -157,7 +157,7 @@ interface ValidationInterface
 	 * Resets the class to a blank slate. Should be called whenever
 	 * you need to process more than one array.
 	 *
-	 * @return mixed
+	 * @return \CodeIgniter\Validation\ValidationInterface
 	 */
 	public function reset(): ValidationInterface;
 

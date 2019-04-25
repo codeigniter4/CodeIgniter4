@@ -39,6 +39,7 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
+use Config\Format;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -227,10 +228,6 @@ class FeatureResponse extends TestCase
 	 * Assert the Response does not have the specified cookie set.
 	 *
 	 * @param string $key
-	 * @param null   $value
-	 * @param string $prefix
-	 *
-	 * @throws \Exception
 	 */
 	public function assertCookieMissing(string $key)
 	{
@@ -380,7 +377,7 @@ class FeatureResponse extends TestCase
 
 		if (is_array($test))
 		{
-			$config    = new \Config\Format();
+			$config    = new Format();
 			$formatter = $config->getFormatter('application/json');
 			$test      = $formatter->format($test);
 		}

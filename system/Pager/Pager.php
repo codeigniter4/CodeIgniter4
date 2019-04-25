@@ -166,7 +166,7 @@ class Pager implements PagerInterface
 	 *
 	 * @return string
 	 */
-	protected function displayLinks(string $group, string $template)
+	protected function displayLinks(string $group, string $template): string
 	{
 		$pager = new PagerRenderer($this->getDetails($group));
 
@@ -191,7 +191,7 @@ class Pager implements PagerInterface
 	 * @param integer $total
 	 * @param integer $segment
 	 *
-	 * @return mixed
+	 * @return $this
 	 */
 	public function store(string $group, int $page, int $perPage, int $total, int $segment = 0)
 	{
@@ -304,7 +304,7 @@ class Pager implements PagerInterface
 	 *
 	 * @return integer
 	 */
-	public function getFirstPage(string $group = 'default')
+	public function getFirstPage(string $group = 'default'): int
 	{
 		$this->ensureGroup($group);
 
@@ -323,7 +323,7 @@ class Pager implements PagerInterface
 	 *
 	 * @return string|\CodeIgniter\HTTP\URI
 	 */
-	public function getPageURI(int $page = null, string $group = 'default', $returnObject = false)
+	public function getPageURI(int $page = null, string $group = 'default', bool $returnObject = false)
 	{
 		$this->ensureGroup($group);
 
@@ -368,7 +368,7 @@ class Pager implements PagerInterface
 	 *
 	 * @return string|null
 	 */
-	public function getNextPageURI(string $group = 'default', $returnObject = false)
+	public function getNextPageURI(string $group = 'default', bool $returnObject = false)
 	{
 		$this->ensureGroup($group);
 
@@ -399,7 +399,7 @@ class Pager implements PagerInterface
 	 *
 	 * @return string|null
 	 */
-	public function getPreviousPageURI(string $group = 'default', $returnObject = false)
+	public function getPreviousPageURI(string $group = 'default', bool $returnObject = false)
 	{
 		$this->ensureGroup($group);
 

@@ -89,7 +89,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function connect($persistent = false)
+	public function connect(bool $persistent = false)
 	{
 		// Do we have a socket path?
 		if ($this->hostname[0] === '/')
@@ -245,6 +245,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	/**
 	 * Close the database connection.
+	 *
+	 * @return void
 	 */
 	protected function _close()
 	{
@@ -258,9 +260,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @param string $databaseName
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
-	public function setDatabase(string $databaseName)
+	public function setDatabase(string $databaseName): bool
 	{
 		if ($databaseName === '')
 		{
@@ -287,9 +289,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Returns a string containing the version of the database being used.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getVersion()
+	public function getVersion(): string
 	{
 		if (isset($this->dataCache['version']))
 		{
@@ -313,7 +315,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function execute($sql)
+	public function execute(string $sql)
 	{
 		while ($this->connID->more_results())
 		{
@@ -338,7 +340,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	protected function prepQuery($sql)
+	protected function prepQuery(string $sql): string
 	{
 		// mysqli_affected_rows() returns 0 for "DELETE FROM TABLE" queries. This hack
 		// modifies the query so that it a proper number of affected rows is returned.
@@ -355,7 +357,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Returns the total number of rows affected by this query.
 	 *
-	 * @return mixed
+	 * @return integer
 	 */
 	public function affectedRows(): int
 	{
@@ -394,7 +396,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	protected function _listTables($prefixLimit = false): string
+	protected function _listTables(bool $prefixLimit = false): string
 	{
 		$sql = 'SHOW TABLES FROM ' . $this->escapeIdentifiers($this->database);
 
@@ -439,19 +441,19 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 		$query = $query->getResultObject();
 
-		$retval = [];
+		$retVal = [];
 		for ($i = 0, $c = count($query); $i < $c; $i++)
 		{
-			$retval[$i]       = new \stdClass();
-			$retval[$i]->name = $query[$i]->Field;
+			$retVal[$i]       = new \stdClass();
+			$retVal[$i]->name = $query[$i]->Field;
 
-			sscanf($query[$i]->Type, '%[a-z](%d)', $retval[$i]->type, $retval[$i]->max_length);
+			sscanf($query[$i]->Type, '%[a-z](%d)', $retVal[$i]->type, $retVal[$i]->max_length);
 
-			$retval[$i]->default     = $query[$i]->Default;
-			$retval[$i]->primary_key = (int)($query[$i]->Key === 'PRI');
+			$retVal[$i]->default     = $query[$i]->Default;
+			$retVal[$i]->primary_key = (int)($query[$i]->Key === 'PRI');
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------
@@ -550,7 +552,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 		$query = $query->getResultObject();
 
-		$retval = [];
+		$retVal = [];
 		foreach ($query as $row)
 		{
 			$obj                     = new \stdClass();
@@ -558,10 +560,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$obj->table_name         = $row->TABLE_NAME;
 			$obj->foreign_table_name = $row->REFERENCED_TABLE_NAME;
 
-			$retval[] = $obj;
+			$retVal[] = $obj;
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------
@@ -575,7 +577,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return array
 	 */
-	public function error()
+	public function error(): array
 	{
 		if (! empty($this->mysqli->connect_errno))
 		{
@@ -598,7 +600,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return integer
 	 */
-	public function insertID()
+	public function insertID(): int
 	{
 		return $this->connID->insert_id;
 	}

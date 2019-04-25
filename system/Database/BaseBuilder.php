@@ -524,10 +524,10 @@ class BaseBuilder
 	 *
 	 * Generates the JOIN portion of the query
 	 *
-	 * @param string    $table
-	 * @param string    $cond   The join condition
-	 * @param string    $type   The type of join
-	 * @param boolean   $escape Whether not to try to escape identifiers
+	 * @param string  $table
+	 * @param string  $cond   The join condition
+	 * @param string  $type   The type of join
+	 * @param boolean $escape Whether not to try to escape identifiers
 	 *
 	 * @return BaseBuilder
 	 */
@@ -706,7 +706,7 @@ class BaseBuilder
 
 				$v = " :$bind:";
 			}
-			elseif (! $this->hasOperator($k))
+			elseif (! $this->hasOperator($k) && $qb_key !== 'QBHaving')
 			{
 				// value appears not to have been set, assign the test to IS NULL
 				$k .= ' IS NULL';
@@ -1016,15 +1016,15 @@ class BaseBuilder
 	/**
 	 * Platform independent LIKE statement builder.
 	 *
-	 * @param string    $prefix
-	 * @param string    $column
-	 * @param string    $not
-	 * @param string    $bind
-	 * @param boolean   $insensitiveSearch
+	 * @param string  $prefix
+	 * @param string  $column
+	 * @param string  $not
+	 * @param string  $bind
+	 * @param boolean $insensitiveSearch
 	 *
 	 * @return string     $like_statement
 	 */
-	public function _like_statement(string $prefix = null, string $column, string $not = null, string $bind, bool $insensitiveSearch = false): string
+	protected function _like_statement(string $prefix = null, string $column, string $not = null, string $bind, bool $insensitiveSearch = false): string
 	{
 		$like_statement = "{$prefix} {$column} {$not} LIKE :{$bind}:";
 
@@ -1136,7 +1136,7 @@ class BaseBuilder
 	{
 		if ($this->QBWhereGroupStarted)
 		{
-			$type = '';
+			$type                      = '';
 			$this->QBWhereGroupStarted = false;
 		}
 
@@ -1148,8 +1148,8 @@ class BaseBuilder
 	/**
 	 * GROUP BY
 	 *
-	 * @param string|array  $by
-	 * @param boolean       $escape
+	 * @param string|array $by
+	 * @param boolean      $escape
 	 *
 	 * @return BaseBuilder
 	 */
@@ -1187,9 +1187,9 @@ class BaseBuilder
 	 *
 	 * Separates multiple calls with 'AND'.
 	 *
-	 * @param string|array  $key
-	 * @param mixed         $value
-	 * @param boolean       $escape
+	 * @param string|array $key
+	 * @param mixed        $value
+	 * @param boolean      $escape
 	 *
 	 * @return BaseBuilder
 	 */
@@ -1205,9 +1205,9 @@ class BaseBuilder
 	 *
 	 * Separates multiple calls with 'OR'.
 	 *
-	 * @param string|array  $key
-	 * @param mixed         $value
-	 * @param boolean       $escape
+	 * @param string|array $key
+	 * @param mixed        $value
+	 * @param boolean      $escape
 	 *
 	 * @return BaseBuilder
 	 */
@@ -1251,7 +1251,7 @@ class BaseBuilder
 
 		if ($escape === false)
 		{
-			$qb_orderby[] = [
+			$qb_orderBy[] = [
 				'field'     => $orderBy,
 				'direction' => $direction,
 				'escape'    => false,
@@ -1259,10 +1259,10 @@ class BaseBuilder
 		}
 		else
 		{
-			$qb_orderby = [];
+			$qb_orderBy = [];
 			foreach (explode(',', $orderBy) as $field)
 			{
-				$qb_orderby[] = ($direction === '' && preg_match('/\s+(ASC|DESC)$/i', rtrim($field), $match, PREG_OFFSET_CAPTURE))
+				$qb_orderBy[] = ($direction === '' && preg_match('/\s+(ASC|DESC)$/i', rtrim($field), $match, PREG_OFFSET_CAPTURE))
 					?
 					[
 						'field'     => ltrim(substr($field, 0, $match[0][1])),
@@ -1278,7 +1278,7 @@ class BaseBuilder
 			}
 		}
 
-		$this->QBOrderBy = array_merge($this->QBOrderBy, $qb_orderby);
+		$this->QBOrderBy = array_merge($this->QBOrderBy, $qb_orderBy);
 
 		return $this;
 	}
@@ -1371,7 +1371,7 @@ class BaseBuilder
 		{
 			if ($escape)
 			{
-				$bind = $this->setBind($k, $v, $escape);
+				$bind                                                           = $this->setBind($k, $v, $escape);
 				$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ":$bind:";
 			}
 			else
@@ -1594,9 +1594,9 @@ class BaseBuilder
 	 *
 	 * Allows the where clause, limit and offset to be added directly
 	 *
-	 * @param string|array  $where
-	 * @param integer       $limit
-	 * @param integer       $offset
+	 * @param string|array $where
+	 * @param integer      $limit
+	 * @param integer      $offset
 	 *
 	 * @return ResultInterface
 	 */
@@ -1852,7 +1852,7 @@ class BaseBuilder
 	 * validate that the there data is actually being set and that table
 	 * has been chosen to be inserted into.
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws DatabaseException
 	 */
 	protected function validateInsert(): bool
@@ -2160,7 +2160,7 @@ class BaseBuilder
 
 		// Batch this baby
 		$affected_rows = 0;
-		$savedSQL = [];
+		$savedSQL      = [];
 		for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batchSize)
 		{
 			$sql = $this->_updateBatch($table, array_slice($this->QBSet, $i, $batchSize), $this->db->protectIdentifiers($index)
@@ -2199,7 +2199,7 @@ class BaseBuilder
 	 */
 	protected function _updateBatch(string $table, array $values, string $index): string
 	{
-		$ids = [];
+		$ids   = [];
 		$final = [];
 		foreach ($values as $key => $val)
 		{
@@ -2232,9 +2232,9 @@ class BaseBuilder
 	/**
 	 * The "setUpdateBatch" function.  Allows key/value pairs to be set for batch updating
 	 *
-	 * @param array|object   $key
-	 * @param string         $index
-	 * @param boolean        $escape
+	 * @param array|object $key
+	 * @param string       $index
+	 * @param boolean      $escape
 	 *
 	 * @return BaseBuilder|null
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
@@ -2504,6 +2504,7 @@ class BaseBuilder
 			{
 				$this->trackAliases($t);
 			}
+			return;
 		}
 
 		// Does the string contain a comma?  If so, we need to separate

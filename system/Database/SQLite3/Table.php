@@ -214,6 +214,8 @@ class Table
 
 	/**
 	 * Creates the new table based on our current fields.
+	 *
+	 * @return mixed
 	 */
 	protected function createTable()
 	{
@@ -264,6 +266,8 @@ class Table
 	 * Copies data from our old table to the new one,
 	 * taking care map data correctly based on any columns
 	 * that have been renamed.
+	 *
+	 * @return void
 	 */
 	protected function copyData()
 	{
@@ -297,7 +301,7 @@ class Table
 	 *
 	 * @param array|boolean $fields
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	protected function formatFields($fields)
 	{
@@ -332,7 +336,7 @@ class Table
 	 * Converts keys retrieved from the database to
 	 * the format needed to create later.
 	 *
-	 * @param $keys
+	 * @param mixed $keys
 	 *
 	 * @return mixed
 	 */
@@ -359,6 +363,8 @@ class Table
 	/**
 	 * Attempts to drop all indexes and constraints
 	 * from the database for this table.
+	 *
+	 * @return null|void
 	 */
 	protected function dropIndexes()
 	{

@@ -904,7 +904,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return boolean
 	 */
-	public function hasCookie(string $name, $value = null, string $prefix = '')
+	public function hasCookie(string $name, string $value = null, string $prefix = ''): bool
 	{
 		if ($prefix === '' && $this->cookiePrefix !== '')
 		{
@@ -967,14 +967,14 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Sets a cookie to be deleted when the response is sent.
 	 *
-	 * @param $name
+	 * @param string $name
 	 * @param string $domain
 	 * @param string $path
 	 * @param string $prefix
 	 *
 	 * @return $this
 	 */
-	public function deleteCookie($name = '', string $domain = '', string $path = '/', string $prefix = '')
+	public function deleteCookie(string $name = '', string $domain = '', string $path = '/', string $prefix = '')
 	{
 		if (empty($name))
 		{
@@ -1035,9 +1035,9 @@ class Response extends Message implements ResponseInterface
 	 * Generates the headers that force a download to happen. And
 	 * sends the file to the browser.
 	 *
-	 * @param string  $filename The path to the file to send
-	 * @param string  $data     The data to be downloaded
-	 * @param boolean $setMime  Whether to try and send the actual MIME type
+	 * @param string      $filename The path to the file to send
+	 * @param string|null $data     The data to be downloaded
+	 * @param boolean     $setMime  Whether to try and send the actual MIME type
 	 *
 	 * @return \CodeIgniter\HTTP\DownloadResponse|null
 	 */

@@ -70,9 +70,9 @@ class Honeypot implements FilterInterface
 	/**
 	 * Attach a honeypot to the current response.
 	 *
-	 * @param  CodeIgniter\HTTP\RequestInterface  $request
-	 * @param  CodeIgniter\HTTP\ResponseInterface $response
-   *
+	 * @param \CodeIgniter\HTTP\RequestInterface  $request
+	 * @param \CodeIgniter\HTTP\ResponseInterface $response
+	 *
 	 * @return void
 	 */
 	public function after(RequestInterface $request, ResponseInterface $response)

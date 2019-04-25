@@ -148,12 +148,7 @@ class CLIRequest extends Request
 	 */
 	public function getOption(string $key)
 	{
-		if (array_key_exists($key, $this->options))
-		{
-			return $this->options[$key];
-		}
-
-		return null;
+		return $this->options[$key] ?? null;
 	}
 
 	//--------------------------------------------------------------------

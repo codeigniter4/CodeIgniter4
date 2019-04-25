@@ -70,7 +70,7 @@ class GDHandler extends BaseHandler
 	 *
 	 * @return boolean
 	 */
-	protected function _rotate(int $angle)
+	protected function _rotate(int $angle): bool
 	{
 		// Create the image handle
 		$srcImg = $this->createImage();
@@ -311,7 +311,7 @@ class GDHandler extends BaseHandler
 	 *
 	 * @return boolean
 	 */
-	public function save(string $target = null, int $quality = 90)
+	public function save(string $target = null, int $quality = 90): bool
 	{
 		$target = empty($target) ? $this->image->getPathname() : $target;
 
@@ -370,12 +370,12 @@ class GDHandler extends BaseHandler
 	 * This simply creates an image resource handle
 	 * based on the type of image being processed
 	 *
-	 * @param string
-	 * @param string
+	 * @param string $path
+	 * @param string $imageType
 	 *
 	 * @return resource|boolean
 	 */
-	protected function createImage($path = '', $imageType = '')
+	protected function createImage(string $path = '', string $imageType = '')
 	{
 		if ($this->resource !== null)
 		{
@@ -422,6 +422,12 @@ class GDHandler extends BaseHandler
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @param string $text
+	 * @param array  $options
+	 *
+	 * @return void
+	 */
 	protected function _text(string $text, array $options = [])
 	{
 		// Reverse the vertical offset
