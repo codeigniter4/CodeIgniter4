@@ -60,7 +60,6 @@ class Config
 			'timezone'    => app_timezone(),
 			'locale'      => Services::request()->getLocale(),
 			'cspEnabled'  => $config->CSPEnabled,
-			'salt'        => $config->salt,
 		];
 	}
 }
