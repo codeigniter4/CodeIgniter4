@@ -4,7 +4,9 @@ use CodeIgniter\Test\FeatureTestCase;
 use CodeIgniter\Test\FeatureResponse;
 
 /**
- * @group DatabaseLive
+ * @group                       DatabaseLive
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState         disabled
  */
 class FeatureTestCaseTest extends FeatureTestCase
 {
@@ -29,9 +31,6 @@ class FeatureTestCaseTest extends FeatureTestCase
 			],
 		]);
 		$response = $this->get('home');
-
-		// close open buffer
-		ob_end_clean();
 
 		$response->assertSee('Hello World');
 		$response->assertDontSee('Again');
