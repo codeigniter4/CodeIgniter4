@@ -363,6 +363,16 @@ class Entity
 					throw CastException::forInvalidJsonFormatException(json_last_error());
 				}
 			}
+			
+			if ($castTo === 'boolean')
+			{
+				$value = (int)(is_bool($value) ? $value : ($value !== '0' && $value !== 0));
+			}
+
+			if($castTo === 'datetime')
+			{
+				$value = $this->mutateDate($value, new \DateTimeZone('UTC'));
+			}
 		}
 
 		// if a set* method exists for this key,
