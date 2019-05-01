@@ -60,6 +60,10 @@ class Popcorn extends Controller
 		echo 'Hello-o-o';
 	}
 
+	public function cat()
+	{
+	}
+
 	public function json()
 	{
 		$this->responsd(['answer' => 42]);

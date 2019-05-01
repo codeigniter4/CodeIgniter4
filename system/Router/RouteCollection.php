@@ -619,9 +619,9 @@ class RouteCollection implements RouteCollectionInterface
 	 * Example:
 	 *      $routes->add('news', 'Posts::index');
 	 *
-	 * @param string        $from
-	 * @param array|string  $to
-	 * @param array         $options
+	 * @param string       $from
+	 * @param array|string $to
+	 * @param array        $options
 	 *
 	 * @return RouteCollectionInterface
 	 */
@@ -1432,4 +1432,18 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Reset the routes, so that a FeatureTestCase can provide the
+	 * explicit ones needed for it.
+	 */
+	public function resetRoutes()
+	{
+		$this->routes = ['*' => []];
+		foreach ($this->defaultHTTPMethods as $verb)
+		{
+			$this->routes[$verb] = [];
+		}
+	}
+
 }

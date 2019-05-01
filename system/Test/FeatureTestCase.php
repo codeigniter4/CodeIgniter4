@@ -55,6 +55,7 @@ use Config\Services;
  */
 class FeatureTestCase extends CIDatabaseTestCase
 {
+
 	/**
 	 * If present, will override application
 	 * routes when using call().
@@ -82,6 +83,11 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * Sets a RouteCollection that will override
 	 * the application's route collection.
 	 *
+	 * Example routes:
+	 * [
+	 *    ['get', 'home', 'Home::index']
+	 * ]
+	 *
 	 * @param array $routes
 	 *
 	 * @return $this
@@ -92,6 +98,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 
 		if ($routes)
 		{
+			$collection->resetRoutes();
 			foreach ($routes as $route)
 			{
 				$collection->{$route[0]}($route[1], $route[2]);
@@ -149,18 +156,31 @@ class FeatureTestCase extends CIDatabaseTestCase
 		$request = $this->setupRequest($method, $path, $params);
 		$request = $this->populateGlobals($method, $request, $params);
 
+		// Make sure the RouteCollection knows what method we're using...
+		if (! empty($this->routes))
+		{
+			$this->routes->setHTTPVerb($method);
+		}
+
 		// Make sure any other classes that might call the request
 		// instance get the right one.
 		Services::injectMock('request', $request);
 		$_SERVER['REQUEST_METHOD'] = $method;
 
 		$response = $this->app
-			->setRequest($request)
-			->run($this->routes, true);
+				->setRequest($request)
+				->run($this->routes, true);
+
+		$output = ob_get_contents();
+		if (empty($response->getBody()) && ! empty($output))
+		{
+			$response->setBody($output);
+		}
 
 		// Clean up any open output buffers
 		// not relevant to unit testing
 		// @codeCoverageIgnoreStart
+
 		if (ob_get_level() > 0 && $this->clean)
 		{
 			ob_end_clean();
@@ -311,4 +331,5 @@ class FeatureTestCase extends CIDatabaseTestCase
 
 		return $request;
 	}
+
 }
