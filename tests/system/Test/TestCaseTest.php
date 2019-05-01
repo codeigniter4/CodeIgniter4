@@ -53,7 +53,7 @@ class TestCaseTest extends \CIUnitTestCase
 		CITestStreamFilter::$buffer = '';
 		$this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
 		\CodeIgniter\CLI\CLI::write('first.');
-		$expected = "\nfirst.\n";
+		$expected = "first.\n";
 		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 		stream_filter_remove($this->stream_filter);
 	}
