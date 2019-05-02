@@ -4,7 +4,9 @@ use CodeIgniter\Test\FeatureTestCase;
 use CodeIgniter\Test\FeatureResponse;
 
 /**
- * @group DatabaseLive
+ * @group                       DatabaseLive
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState         disabled
  */
 class FeatureTestCaseTest extends FeatureTestCase
 {
@@ -14,7 +16,6 @@ class FeatureTestCaseTest extends FeatureTestCase
 		parent::setUp();
 
 		$this->skipEvents();
-		$this->clean = false;
 	}
 
 	public function testCallGet()
@@ -30,9 +31,6 @@ class FeatureTestCaseTest extends FeatureTestCase
 		]);
 		$response = $this->get('home');
 
-		// close open buffer
-		ob_end_clean();
-
 		$response->assertSee('Hello World');
 		$response->assertDontSee('Again');
 	}
@@ -44,7 +42,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 				'add',
 				'home',
 				function () {
-					return 'Hello World';
+					return 'Hello Earth';
 				},
 			],
 		]);
@@ -53,7 +51,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$this->assertInstanceOf(FeatureResponse::class, $response);
 		$this->assertInstanceOf(\CodeIgniter\HTTP\Response::class, $response->response);
 		$this->assertTrue($response->isOK());
-		$this->assertEquals('Hello World', $response->response->getBody());
+		$this->assertEquals('Hello Earth', $response->response->getBody());
 		$this->assertEquals(200, $response->response->getStatusCode());
 	}
 
@@ -64,13 +62,13 @@ class FeatureTestCaseTest extends FeatureTestCase
 				'post',
 				'home',
 				function () {
-					return 'Hello World';
+					return 'Hello Mars';
 				},
 			],
 		]);
 		$response = $this->post('home');
 
-		$response->assertSee('Hello World');
+		$response->assertSee('Hello Mars');
 	}
 
 	public function testCallPut()
@@ -80,13 +78,13 @@ class FeatureTestCaseTest extends FeatureTestCase
 				'put',
 				'home',
 				function () {
-					return 'Hello World';
+					return 'Hello Pluto';
 				},
 			],
 		]);
 		$response = $this->put('home');
 
-		$response->assertSee('Hello World');
+		$response->assertSee('Hello Pluto');
 	}
 
 	public function testCallPatch()
@@ -96,13 +94,13 @@ class FeatureTestCaseTest extends FeatureTestCase
 				'patch',
 				'home',
 				function () {
-					return 'Hello World';
+					return 'Hello Jupiter';
 				},
 			],
 		]);
 		$response = $this->patch('home');
 
-		$response->assertSee('Hello World');
+		$response->assertSee('Hello Jupiter');
 	}
 
 	public function testCallOptions()
@@ -112,13 +110,13 @@ class FeatureTestCaseTest extends FeatureTestCase
 				'options',
 				'home',
 				function () {
-					return 'Hello World';
+					return 'Hello George';
 				},
 			],
 		]);
 		$response = $this->options('home');
 
-		$response->assertSee('Hello World');
+		$response->assertSee('Hello George');
 	}
 
 	public function testCallDelete()
@@ -128,13 +126,13 @@ class FeatureTestCaseTest extends FeatureTestCase
 				'delete',
 				'home',
 				function () {
-					return 'Hello World';
+					return 'Hello Wonka';
 				},
 			],
 		]);
 		$response = $this->delete('home');
 
-		$response->assertSee('Hello World');
+		$response->assertSee('Hello Wonka');
 	}
 
 	public function testSession()
@@ -146,6 +144,45 @@ class FeatureTestCaseTest extends FeatureTestCase
 
 		$response->assertSessionHas('fruit', 'apple');
 		$response->assertSessionMissing('popcorn');
+	}
+
+	public function testReturns()
+	{
+		$this->withRoutes([
+			[
+				'get',
+				'home',
+				'Tests\Support\Controllers\Popcorn::index',
+			],
+		]);
+		$response = $this->get('home');
+		$response->assertSee('Hi');
+	}
+
+	public function testIgnores()
+	{
+		$this->withRoutes([
+			[
+				'get',
+				'home',
+				'Tests\Support\Controllers\Popcorn::cat',
+			],
+		]);
+		$response = $this->get('home');
+		$response->assertEmpty($response->response->getBody());
+	}
+
+	public function testEchoes()
+	{
+		$this->withRoutes([
+			[
+				'get',
+				'home',
+				'Tests\Support\Controllers\Popcorn::canyon',
+			],
+		]);
+		$response = $this->get('home');
+		$response->assertSee('Hello-o-o');
 	}
 
 }

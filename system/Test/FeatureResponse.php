@@ -47,6 +47,7 @@ use PHPUnit\Framework\TestCase;
  */
 class FeatureResponse extends TestCase
 {
+
 	/**
 	 * @var \CodeIgniter\HTTP\Response
 	 */
@@ -61,9 +62,10 @@ class FeatureResponse extends TestCase
 	{
 		$this->response = $response;
 
-		if (is_string($this->response->getBody()))
+		$body = $response->getBody();
+		if (! empty($body) && is_string($body))
 		{
-			$this->domParser = (new DOMParser())->withString($this->response->getBody());
+			$this->domParser = (new DOMParser())->withString($body);
 		}
 	}
 
@@ -124,7 +126,7 @@ class FeatureResponse extends TestCase
 	 */
 	public function assertStatus(int $code)
 	{
-		$this->assertEquals($code, (int)$this->response->getStatusCode());
+		$this->assertEquals($code, (int) $this->response->getStatusCode());
 	}
 
 	/**
@@ -397,4 +399,5 @@ class FeatureResponse extends TestCase
 	{
 		return $this->response->getXML();
 	}
+
 }
