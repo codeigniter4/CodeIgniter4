@@ -1,0 +1,711 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>HTML Table Class &mdash; CodeIgniter4 4.0.0-beta.2 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-beta.2 documentation" href="../index.html"/>
+        <link rel="up" title="Building Responses" href="index.html"/>
+        <link rel="next" title="HTTP Responses" href="response.html"/>
+        <link rel="prev" title="View Parser" href="view_parser.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Building Responses</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="views.html">Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="view_cells.html">View Cells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="view_renderer.html">View Renderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="view_layouts.html">View Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="view_parser.html">View Parser</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">HTML Table Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="localization.html">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alternative_php.html">Alternate PHP Syntax for View Files</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Building Responses</a> &raquo;</li>
+        
+      <li>HTML Table Class</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="html-table-class">
+<h1>HTML Table Class<a class="headerlink" href="#html-table-class" title="Permalink to this headline">¶</a></h1>
+<p>The Table Class provides methods that enable you to auto-generate HTML
+tables from arrays or database result sets.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#using-the-table-class" id="id1">Using the Table Class</a><ul>
+<li><a class="reference internal" href="#initializing-the-class" id="id2">Initializing the Class</a></li>
+<li><a class="reference internal" href="#examples" id="id3">Examples</a></li>
+<li><a class="reference internal" href="#changing-the-look-of-your-table" id="id4">Changing the Look of Your Table</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#class-reference" id="id5">Class Reference</a></li>
+</ul>
+</div>
+<div class="custom-index container"></div><div class="section" id="using-the-table-class">
+<h2><a class="toc-backref" href="#id1">Using the Table Class</a><a class="headerlink" href="#using-the-table-class" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="initializing-the-class">
+<h3><a class="toc-backref" href="#id2">Initializing the Class</a><a class="headerlink" href="#initializing-the-class" title="Permalink to this headline">¶</a></h3>
+<p>The Table class is not provided as a service, and should be instantiated
+&#8220;normally&#8221;, for instance:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="examples">
+<h3><a class="toc-backref" href="#id3">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<p>Here is an example showing how you can create a table from a
+multi-dimensional array. Note that the first array index will become the
+table heading (or you can set your own headings using the <code class="docutils literal"><span class="pre">setHeading()</span></code>
+method described in the function reference below).</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">),</span>
+        <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Fred&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Small&#39;</span><span class="p">),</span>
+        <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Mary&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Large&#39;</span><span class="p">),</span>
+        <span class="k">array</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">,</span> <span class="s1">&#39;Medium&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Here is an example of a table created from a database query result. The
+table class will automatically generate the headings based on the table
+names (or you can set your own headings using the <code class="docutils literal"><span class="pre">setHeading()</span></code>
+method described in the class reference below).</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
+
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM my_table&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="nv">$query</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Here is an example showing how you might create a table using discrete
+parameters:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">);</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Fred&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Small&#39;</span><span class="p">);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Mary&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Large&#39;</span><span class="p">);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">,</span> <span class="s1">&#39;Medium&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Here is the same example, except instead of individual parameters,
+arrays are used:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">));</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">&#39;Fred&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Small&#39;</span><span class="p">]);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">&#39;Mary&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Large&#39;</span><span class="p">]);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">,</span> <span class="s1">&#39;Medium&#39;</span><span class="p">]);</span>
+
+<span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="changing-the-look-of-your-table">
+<h3><a class="toc-backref" href="#id4">Changing the Look of Your Table</a><a class="headerlink" href="#changing-the-look-of-your-table" title="Permalink to this headline">¶</a></h3>
+<p>The Table Class permits you to set a table template with which you can
+specify the design of your layout. Here is the template prototype:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$template</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;table_open&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;0&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&#39;</span><span class="p">,</span>
+
+        <span class="s1">&#39;thead_open&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;&lt;thead&gt;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;thead_close&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/thead&gt;&#39;</span><span class="p">,</span>
+
+        <span class="s1">&#39;heading_row_start&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;heading_row_end&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;heading_cell_start&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;&lt;th&gt;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;heading_cell_end&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/th&gt;&#39;</span><span class="p">,</span>
+
+        <span class="s1">&#39;tbody_open&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tbody&gt;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;tbody_close&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tbody&gt;&#39;</span><span class="p">,</span>
+
+        <span class="s1">&#39;row_start&#39;</span>             <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;row_end&#39;</span>               <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cell_start&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;&lt;td&gt;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cell_end&#39;</span>              <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/td&gt;&#39;</span><span class="p">,</span>
+
+        <span class="s1">&#39;row_alt_start&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;row_alt_end&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cell_alt_start&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;&lt;td&gt;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cell_alt_end&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/td&gt;&#39;</span><span class="p">,</span>
+
+        <span class="s1">&#39;table_close&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/table&gt;&#39;</span>
+<span class="p">];</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setTemplate</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You&#8217;ll notice there are two sets of &#8220;row&#8221; blocks in the
+template. These permit you to create alternating row colors or design
+elements that alternate with each iteration of the row data.</p>
+</div>
+<p>You are NOT required to submit a complete template. If you only need to
+change parts of the layout you can simply submit those elements. In this
+example, only the table opening tag is being changed:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$template</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;table_open&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;1&quot; cellpadding=&quot;2&quot; cellspacing=&quot;1&quot; class=&quot;mytable&quot;&gt;&#39;</span>
+<span class="p">];</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setTemplate</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You can also set defaults for these by passing an array of template settings
+to the Table constructor.:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$customSettings</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;table_open&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;1&quot; cellpadding=&quot;2&quot; cellspacing=&quot;1&quot; class=&quot;mytable&quot;&gt;&#39;</span>
+<span class="p">];</span>
+
+<span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">(</span><span class="nv">$customSettings</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="class-reference">
+<h2><a class="toc-backref" href="#id5">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Table">
+<em class="property">class </em><code class="descname">Table</code><a class="headerlink" href="#Table" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt>
+<code class="descname">$function = NULL</code></dt>
+<dd><p>Allows you to specify a native PHP function or a valid function array object to be applied to all cell data.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Fred&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;strong&gt;Blue&lt;/strong&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;Small&#39;</span><span class="p">);</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">function</span> <span class="o">=</span> <span class="s1">&#39;htmlspecialchars&#39;</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>In the above example, all cell data would be ran through PHP&#8217;s <code class="xref php php-func docutils literal"><span class="pre">htmlspecialchars()</span></code> function, resulting in:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="nx">Fred</span><span class="o">&lt;/</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">td</span><span class="o">&gt;&amp;</span><span class="nx">lt</span><span class="p">;</span><span class="nx">strong</span><span class="o">&amp;</span><span class="nx">gt</span><span class="p">;</span><span class="nx">Blue</span><span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span><span class="o">/</span><span class="nx">strong</span><span class="o">&amp;</span><span class="nx">gt</span><span class="p">;</span><span class="o">&lt;/</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="nx">Small</span><span class="o">&lt;/</span><span class="nx">td</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Table::generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><span class="optional">[</span><em>$tableData = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::generate" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$tableData</strong> (<em>mixed</em>) &#8211; Data to populate the table rows with</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML table</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Returns a string containing the generated table. Accepts an optional parameter which can be an array or a database result object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Table::setCaption">
+<code class="descname">setCaption</code><span class="sig-paren">(</span><em>$caption</em><span class="sig-paren">)</span><a class="headerlink" href="#Table::setCaption" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$caption</strong> (<em>string</em>) &#8211; Table caption</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Table instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Table</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Permits you to add a caption to the table.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setCaption</span><span class="p">(</span><span class="s1">&#39;Colors&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Table::setHeading">
+<code class="descname">setHeading</code><span class="sig-paren">(</span><span class="optional">[</span><em>$args = []</em><span class="optional">[</span>, <em>...</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::setHeading" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$args</strong> (<em>mixed</em>) &#8211; An array or multiple strings containing the table column titles</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Table instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Table</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Permits you to set the table heading. You can submit an array or discrete params:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">);</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">));</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Table::addRow">
+<code class="descname">addRow</code><span class="sig-paren">(</span><span class="optional">[</span><em>$args = array()</em><span class="optional">[</span>, <em>...</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::addRow" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$args</strong> (<em>mixed</em>) &#8211; An array or multiple strings containing the row values</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Table instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Table</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Permits you to add a row to your table. You can submit an array or discrete params:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">);</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>If you would like to set an individual cell&#8217;s tag attributes, you can use an associative array for that cell.
+The associative key <strong>data</strong> defines the cell&#8217;s data. Any other key =&gt; val pairs are added as key=&#8217;val&#8217; attributes to the tag:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$cell</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;data&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;highlight&#39;</span><span class="p">,</span> <span class="s1">&#39;colspan&#39;</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">];</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="nv">$cell</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">);</span>
+
+<span class="c1">// generates</span>
+<span class="c1">// &lt;td class=&#39;highlight&#39; colspan=&#39;2&#39;&gt;Blue&lt;/td&gt;&lt;td&gt;Red&lt;/td&gt;&lt;td&gt;Green&lt;/td&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Table::makeColumns">
+<code class="descname">makeColumns</code><span class="sig-paren">(</span><span class="optional">[</span><em>$array = []</em><span class="optional">[</span>, <em>$columnLimit = 0</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::makeColumns" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$array</strong> (<em>array</em>) &#8211; An array containing multiple rows&#8217; data</li>
+<li><strong>$columnLimit</strong> (<em>int</em>) &#8211; Count of columns in the table</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An array of HTML table columns</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method takes a one-dimensional array as input and creates a multi-dimensional array with a depth equal to the number of columns desired.
+This allows a single array with many elements to be displayed in a table that has a fixed column count. Consider this example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="s1">&#39;five&#39;</span><span class="p">,</span> <span class="s1">&#39;six&#39;</span><span class="p">,</span> <span class="s1">&#39;seven&#39;</span><span class="p">,</span> <span class="s1">&#39;eight&#39;</span><span class="p">,</span> <span class="s1">&#39;nine&#39;</span><span class="p">,</span> <span class="s1">&#39;ten&#39;</span><span class="p">,</span> <span class="s1">&#39;eleven&#39;</span><span class="p">,</span> <span class="s1">&#39;twelve&#39;</span><span class="p">];</span>
+
+<span class="nv">$newList</span> <span class="o">=</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">makeColumns</span><span class="p">(</span><span class="nv">$list</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="nv">$newList</span><span class="p">);</span>
+
+<span class="c1">// Generates a table with this prototype</span>
+
+<span class="o">&lt;</span><span class="nx">table</span> <span class="nx">border</span><span class="o">=</span><span class="s2">&quot;0&quot;</span> <span class="nx">cellpadding</span><span class="o">=</span><span class="s2">&quot;4&quot;</span> <span class="nx">cellspacing</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="nx">one</span><span class="o">&lt;/</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="nx">two</span><span class="o">&lt;/</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="nx">three</span><span class="o">&lt;/</span><span class="nx">td</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="nx">tr</span><span class="o">&gt;&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="nx">four</span><span class="o">&lt;/</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="nx">five</span><span class="o">&lt;/</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="nx">six</span><span class="o">&lt;/</span><span class="nx">td</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="nx">tr</span><span class="o">&gt;&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="nx">seven</span><span class="o">&lt;/</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="nx">eight</span><span class="o">&lt;/</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="nx">nine</span><span class="o">&lt;/</span><span class="nx">td</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="nx">tr</span><span class="o">&gt;&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="nx">ten</span><span class="o">&lt;/</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="nx">eleven</span><span class="o">&lt;/</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="nx">twelve</span><span class="o">&lt;/</span><span class="nx">td</span><span class="o">&gt;&lt;/</span><span class="nx">tr</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="nx">table</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Table::setTemplate">
+<code class="descname">setTemplate</code><span class="sig-paren">(</span><em>$template</em><span class="sig-paren">)</span><a class="headerlink" href="#Table::setTemplate" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$template</strong> (<em>array</em>) &#8211; An associative array containing template values</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Permits you to set your template. You can submit a full or partial template.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$template</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;table_open&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;1&quot; cellpadding=&quot;2&quot; cellspacing=&quot;1&quot; class=&quot;mytable&quot;&gt;&#39;</span>
+<span class="p">);</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setTemplate</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Table::setEmpty">
+<code class="descname">setEmpty</code><span class="sig-paren">(</span><em>$value</em><span class="sig-paren">)</span><a class="headerlink" href="#Table::setEmpty" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$value</strong> (<em>mixed</em>) &#8211; Value to put in empty cells</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Table instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Table</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Lets you set a default value for use in any table cells that are empty.
+You might, for example, set a non-breaking space:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setEmpty</span><span class="p">(</span><span class="s2">&quot;&amp;nbsp;&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Table::clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::clear" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Table instance (method chaining)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Table</td>
+</tr>
+</tbody>
+</table>
+<p>Lets you clear the table heading, row data and caption. If
+you need to show multiple tables with different data you
+should to call this method after each table has been
+generated to clear the previous table information.</p>
+<p>Example</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
+
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setCaption</span><span class="p">(</span><span class="s1">&#39;Preferences&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Fred&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Small&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Mary&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Large&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">,</span> <span class="s1">&#39;Medium&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">();</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">clear</span><span class="p">();</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setCaption</span><span class="p">(</span><span class="s1">&#39;Shipping&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Day&#39;</span><span class="p">,</span> <span class="s1">&#39;Delivery&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Fred&#39;</span><span class="p">,</span> <span class="s1">&#39;Wednesday&#39;</span><span class="p">,</span> <span class="s1">&#39;Express&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Mary&#39;</span><span class="p">,</span> <span class="s1">&#39;Monday&#39;</span><span class="p">,</span> <span class="s1">&#39;Air&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Saturday&#39;</span><span class="p">,</span> <span class="s1">&#39;Overnight&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">();</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="response.html" class="btn btn-neutral float-right" title="HTTP Responses" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="view_parser.html" class="btn btn-neutral" title="View Parser" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
+      Last updated on May 01, 2019.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-beta.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
