@@ -322,7 +322,7 @@ class Model
 
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$builder->where($this->deletedField, 0);
+			$builder->where($this->table . '.' . $this->deletedField, 0);
 		}
 
 		if (is_array($id))
@@ -361,7 +361,6 @@ class Model
 	 * @param string $columnName
 	 *
 	 * @return array|null   The resulting row of data, or null if no data found.
-	 *
 	 */
 	public function findColumn(string $columnName)
 	{
@@ -371,10 +370,10 @@ class Model
 		}
 
 		$resultSet = $this->select($columnName)
-		                  ->asArray()
-		                  ->find();
+						  ->asArray()
+						  ->find();
 
-		return (!empty($resultSet)) ? array_column($resultSet, $columnName) : null;
+		return (! empty($resultSet)) ? array_column($resultSet, $columnName) : null;
 	}
 
 	//--------------------------------------------------------------------
@@ -394,7 +393,7 @@ class Model
 
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$builder->where($this->deletedField, 0);
+			$builder->where($this->table . '.' . $this->deletedField, 0);
 		}
 
 		$row = $builder->limit($limit, $offset)
@@ -424,7 +423,7 @@ class Model
 
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$builder->where($this->deletedField, 0);
+			$builder->where($this->table . '.' . $this->deletedField, 0);
 		}
 
 		// Some databases, like PostgreSQL, need order
