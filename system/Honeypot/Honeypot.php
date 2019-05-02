@@ -1,6 +1,5 @@
 <?php
 
-namespace CodeIgniter\Honeypot;
 
 /**
  * CodeIgniter
@@ -38,11 +37,16 @@ namespace CodeIgniter\Honeypot;
  * @filesource
  */
 
+namespace CodeIgniter\Honeypot;
+
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 
+/**
+ * class Honeypot
+ */
 class Honeypot
 {
 
@@ -106,7 +110,7 @@ class Honeypot
 	 * @param  string $template
 	 * @return string
 	 */
-	protected function prepareTemplate($template): string
+	protected function prepareTemplate(string $template): string
 	{
 		$template = str_ireplace('{label}', $this->config->label, $template);
 		$template = str_ireplace('{name}', $this->config->name, $template);

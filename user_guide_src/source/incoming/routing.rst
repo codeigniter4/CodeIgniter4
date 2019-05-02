@@ -221,7 +221,7 @@ If you need to assign options to a group, like a `namespace <#assigning-namespac
 
 This would handle a resource route to the ``App\API\v1\Users`` controller with the ``/api/users`` URI.
 
-You can also use ensure that a specific `filter </incoming/filters.html>`_ gets ran for a group of routes. This will always
+You can also use ensure that a specific `filter </incoming/filters.html>`_ runs for a group of routes. This will always
 run the filter before or after the controller. This is especially handy during authentication or api logging::
 
     $routes->group('api', ['filter' => 'api-auth'], function($routes)
@@ -392,6 +392,19 @@ can modify the generated routes, or further restrict them. The ``$options`` arra
 	$routes->resource('photos', $options);
 	$routes->map($array, $options);
 	$routes->group('name', $options, function());
+
+Applying Filters
+----------------
+
+You can alter the behavior of specific routes by supplying a filter to run before or after the controller. This is especially handy during authentication or api logging::
+
+    $routes->add('admin',' AdminController::index', ['filter' => 'admin-auth']);
+
+The value for the filter must match one of the aliases defined within ``app/Config/Filters.php``. You may also supply parameters to be passed to the filter's ``before()`` and ``after()`` methods::
+
+    $routes->add('users/delete/(:segment)', 'AdminController::index', ['filter' => 'admin-auth:dual,noreturn']);
+
+See `Controller filters </incoming/filters.html>`_ for more information on setting up filters.
 
 Assigning Namespace
 -------------------

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Pager;
+<?php
 
 /**
  * CodeIgniter
@@ -36,6 +36,11 @@
  * @filesource
  */
 
+namespace CodeIgniter\Pager;
+
+/**
+ * Expected behavior for a Pager
+ */
 interface PagerInterface
 {
 
@@ -136,7 +141,7 @@ interface PagerInterface
 	 *
 	 * @return string|\CodeIgniter\HTTP\URI
 	 */
-	public function getPageURI(int $page = null, string $group = 'default', $returnObject = false);
+	public function getPageURI(int $page = null, string $group = 'default', bool $returnObject = false);
 
 	//--------------------------------------------------------------------
 

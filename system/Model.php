@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter;
+<?php
 
 /**
  * CodeIgniter
@@ -36,6 +36,9 @@
  * @filesource
  */
 
+namespace CodeIgniter;
+
+use Closure;
 use CodeIgniter\Exceptions\ModelException;
 use Config\Database;
 use CodeIgniter\I18n\Time;
@@ -45,6 +48,9 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Validation\ValidationInterface;
 use CodeIgniter\Database\Exceptions\DataException;
+use ReflectionClass;
+use ReflectionProperty;
+use stdClass;
 
 /**
  * Class Model
@@ -316,7 +322,7 @@ class Model
 
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$builder->where($this->deletedField, 0);
+			$builder->where($this->table . '.' . $this->deletedField, 0);
 		}
 
 		if (is_array($id))
@@ -350,6 +356,29 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Fetches the column of database from $this->table
+	 *
+	 * @param string $columnName
+	 *
+	 * @return array|null   The resulting row of data, or null if no data found.
+	 */
+	public function findColumn(string $columnName)
+	{
+		if (strpos($columnName, ',') !== false)
+		{
+			throw DataException::forFindColumnHaveMultipleColumns();
+		}
+
+		$resultSet = $this->select($columnName)
+						  ->asArray()
+						  ->find();
+
+		return (! empty($resultSet)) ? array_column($resultSet, $columnName) : null;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Works with the current Query Builder instance to return
 	 * all results, while optionally limiting them.
 	 *
@@ -364,7 +393,7 @@ class Model
 
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$builder->where($this->deletedField, 0);
+			$builder->where($this->table . '.' . $this->deletedField, 0);
 		}
 
 		$row = $builder->limit($limit, $offset)
@@ -384,7 +413,7 @@ class Model
 
 	/**
 	 * Returns the first row of the result set. Will take any previous
-	 * Query Builder calls into account when determing the result set.
+	 * Query Builder calls into account when determining the result set.
 	 *
 	 * @return array|object|null
 	 */
@@ -394,7 +423,7 @@ class Model
 
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$builder->where($this->deletedField, 0);
+			$builder->where($this->table . '.' . $this->deletedField, 0);
 		}
 
 		// Some databases, like PostgreSQL, need order
@@ -429,7 +458,7 @@ class Model
 	 *
 	 * @return $this
 	 */
-	public function set($key, $value = '', bool $escape = null)
+	public function set($key, string $value = '', bool $escape = null)
 	{
 		$data = is_array($key)
 			? $key
@@ -457,14 +486,6 @@ class Model
 	 */
 	public function save($data): bool
 	{
-		// If $data is using a custom class with public or protected
-		// properties representing the table elements, we need to grab
-		// them as an array.
-		if (is_object($data) && ! $data instanceof \stdClass)
-		{
-			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
-		}
-
 		if (empty($data))
 		{
 			return true;
@@ -498,15 +519,16 @@ class Model
 	 * @param string|object $data
 	 * @param string|null   $primaryKey
 	 * @param string        $dateFormat
+	 * @param boolean       $onlyChanged
 	 *
 	 * @return array
 	 * @throws \ReflectionException
 	 */
-	public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime'): array
+	public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = true): array
 	{
 		if (method_exists($data, 'toRawArray'))
 		{
-			$properties = $data->toRawArray(true);
+			$properties = $data->toRawArray($onlyChanged);
 
 			// Always grab the primary key otherwise updates will fail.
 			if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties))
@@ -516,8 +538,8 @@ class Model
 		}
 		else
 		{
-			$mirror = new \ReflectionClass($data);
-			$props  = $mirror->getProperties(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED);
+			$mirror = new ReflectionClass($data);
+			$props  = $mirror->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
 
 			$properties = [];
 
@@ -599,12 +621,17 @@ class Model
 			$this->tempData = [];
 		}
 
+		if (empty($data))
+		{
+			throw DataException::forEmptyDataset('insert');
+		}
+
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
-		if (is_object($data) && ! $data instanceof \stdClass)
+		if (is_object($data) && ! $data instanceof stdClass)
 		{
-			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
+			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat, false);
 		}
 
 		// If it's still a stdClass, go ahead and convert to
@@ -647,11 +674,6 @@ class Model
 		}
 
 		$data = $this->trigger('beforeInsert', ['data' => $data]);
-
-		if (empty($data))
-		{
-			throw DataException::forEmptyDataset('insert');
-		}
 
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $this->builder()
@@ -717,7 +739,7 @@ class Model
 	{
 		$escape = null;
 
-		if (is_numeric($id))
+		if (is_numeric($id) || is_string($id))
 		{
 			$id = [$id];
 		}
@@ -729,10 +751,15 @@ class Model
 			$this->tempData = [];
 		}
 
+		if (empty($data))
+		{
+			throw DataException::forEmptyDataset('update');
+		}
+
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
-		if (is_object($data) && ! $data instanceof \stdClass)
+		if (is_object($data) && ! $data instanceof stdClass)
 		{
 			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
 		}
@@ -769,11 +796,6 @@ class Model
 		}
 
 		$data = $this->trigger('beforeUpdate', ['id' => $id, 'data' => $data]);
-
-		if (empty($data))
-		{
-			throw DataException::forEmptyDataset('update');
-		}
 
 		$builder = $this->builder();
 
@@ -936,9 +958,9 @@ class Model
 	 * @param null    $data
 	 * @param boolean $returnSQL
 	 *
-	 * @return boolean TRUE on success, FALSE on failure
+	 * @return mixed
 	 */
-	public function replace($data = null, bool $returnSQL = false): bool
+	public function replace($data = null, bool $returnSQL = false)
 	{
 		// Validate data before saving.
 		if (! empty($data) && $this->skipValidation === false)
@@ -999,7 +1021,7 @@ class Model
 	 *
 	 * @throws \CodeIgniter\Database\Exceptions\DataException
 	 */
-	public function chunk(int $size, \Closure $userFunc)
+	public function chunk(int $size, Closure $userFunc)
 	{
 		$total = $this->builder()
 				->countAllResults(false);
@@ -1297,7 +1319,7 @@ class Model
 	 * Validate the data against the validation rules (or the validation group)
 	 * specified in the class property, $validationRules.
 	 *
-	 * @param array $data
+	 * @param array|object $data
 	 *
 	 * @return boolean
 	 */
@@ -1356,7 +1378,7 @@ class Model
 	 *
 	 * @return array
 	 */
-	protected function cleanValidationRules($rules, array $data = null): array
+	protected function cleanValidationRules(array $rules, array $data = null): array
 	{
 		if (empty($data))
 		{

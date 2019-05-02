@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Database\SQLite3;
+<?php
 
 /**
  * CodeIgniter
@@ -36,10 +36,13 @@
  * @filesource
  */
 
+namespace CodeIgniter\Database\SQLite3;
+
+use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
- * Forge for Postgre
+ * Forge for SQLite3
  */
 class Forge extends \CodeIgniter\Database\Forge
 {
@@ -62,8 +65,10 @@ class Forge extends \CodeIgniter\Database\Forge
 
 	/**
 	 * Constructor.
+	 *
+	 * @param $db ConnectionInterface
 	 */
-	public function __construct($db)
+	public function __construct(ConnectionInterface $db)
 	{
 		parent::__construct($db);
 
@@ -83,7 +88,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @return boolean
 	 */
-	public function createDatabase($db_name): bool
+	public function createDatabase(string $db_name): bool
 	{
 		// In SQLite, a database is created when you connect to the database.
 		// We'll return TRUE so that an error isn't generated.
@@ -98,9 +103,9 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param string $db_name
 	 *
 	 * @return boolean
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function dropDatabase($db_name): bool
+	public function dropDatabase(string $db_name): bool
 	{
 		// In SQLite, a database is dropped when we delete a file
 		if (! is_file($db_name))
@@ -142,15 +147,13 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * ALTER TABLE
 	 *
-	 * @todo implement drop_column(), modify_column()
-	 *
 	 * @param string $alter_type ALTER type
 	 * @param string $table      Table name
 	 * @param mixed  $field      Column definition
 	 *
 	 * @return string|array
 	 */
-	protected function _alterTable($alter_type, $table, $field)
+	protected function _alterTable(string $alter_type, string $table, $field)
 	{
 		switch ($alter_type)
 		{
@@ -186,7 +189,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @return string
 	 */
-	protected function _processColumn($field)
+	protected function _processColumn(array $field): string
 	{
 		if ($field['type'] === 'TEXT' && strpos($field['length'], "('") === 0)
 		{
@@ -211,7 +214,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @return array
 	 */
-	protected function _processIndexes($table)
+	protected function _processIndexes(string $table): array
 	{
 		$sqls = [];
 
@@ -257,17 +260,16 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @return void
 	 */
-	protected function _attributeType(&$attributes)
+	protected function _attributeType(array &$attributes)
 	{
 		switch (strtoupper($attributes['TYPE']))
 		{
 			case 'ENUM':
 			case 'SET':
 				$attributes['TYPE'] = 'TEXT';
-
-				return;
+				break;
 			default:
-				return;
+				break;
 		}
 	}
 
@@ -281,7 +283,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @return void
 	 */
-	protected function _attributeAutoIncrement(&$attributes, &$field)
+	protected function _attributeAutoIncrement(array &$attributes, array &$field)
 	{
 		if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true
 			&& stripos($field['type'], 'int') !== false)
@@ -307,7 +309,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @return boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function dropForeignKey($table, $foreign_name)
+	public function dropForeignKey(string $table, string $foreign_name): bool
 	{
 		throw new DatabaseException(lang('Database.dropForeignKeyUnsupported'));
 	}

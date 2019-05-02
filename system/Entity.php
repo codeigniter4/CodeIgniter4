@@ -1,7 +1,4 @@
-<?php namespace CodeIgniter;
-
-use CodeIgniter\I18n\Time;
-use CodeIgniter\Exceptions\CastException;
+<?php
 
 /**
  * CodeIgniter
@@ -37,6 +34,16 @@ use CodeIgniter\Exceptions\CastException;
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
  * @filesource
+ */
+
+namespace CodeIgniter;
+
+use CodeIgniter\Exceptions\EntityException;
+use CodeIgniter\I18n\Time;
+use CodeIgniter\Exceptions\CastException;
+
+/**
+ * Entity encapsulation, for use with CodeIgniter\Model
  */
 class Entity
 {
@@ -289,6 +296,11 @@ class Entity
 			$result = $this->castAs($result, $this->_options['casts'][$key]);
 		}
 
+		if (! isset($result) && ! property_exists($this, $key))
+		{
+			throw EntityException::forTryingToAccessNonExistentProperty($key, get_called_class());
+		}
+
 		return $result;
 	}
 
@@ -307,6 +319,7 @@ class Entity
 	 * @param null   $value
 	 *
 	 * @return $this
+	 * @throws \Exception
 	 */
 	public function __set(string $key, $value = null)
 	{
@@ -343,6 +356,11 @@ class Entity
 			if (($castTo === 'json' || $castTo === 'json-array') && function_exists('json_encode'))
 			{
 				$value = json_encode($value);
+
+				if (json_last_error() !== JSON_ERROR_NONE)
+				{
+					throw CastException::forInvalidJsonFormatException(json_last_error());
+				}
 			}
 		}
 
@@ -454,6 +472,7 @@ class Entity
 	 * @param $value
 	 *
 	 * @return \CodeIgniter\I18n\Time
+	 * @throws \Exception
 	 */
 	protected function mutateDate($value)
 	{
@@ -484,7 +503,7 @@ class Entity
 
 	/**
 	 * Provides the ability to cast an item as a specific data type.
-	 * Add ? at the beginning of $type  (i.e. ?string) to get NULL instead of castig $value if $value === null
+	 * Add ? at the beginning of $type  (i.e. ?string) to get NULL instead of casting $value if $value === null
 	 *
 	 * @param $value
 	 * @param string $type

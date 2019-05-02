@@ -69,15 +69,19 @@ Shorthand methods for each of the HTTP verbs exist to ease typing and make thing
 Setting Different Routes
 ------------------------
 
-You can use a custom collection of routes by passing an array of routes into the ``withRoutes()`` method. This will
+You can use a custom collection of routes by passing an array of "routes" into the ``withRoutes()`` method. This will
 override any existing routes in the system::
 
     $routes = [
-        'users' => 'UserController::list'
-    ];
+       [ 'get', 'users', 'UserController::list' ]
+     ];
 
     $result = $this->withRoutes($routes)
         ->get('users');
+
+Each of the "routes" is a 3 element array containing the HTTP verb (or "add" for all),
+the URI to match, and the routing destination.
+
 
 Setting Session Values
 ----------------------

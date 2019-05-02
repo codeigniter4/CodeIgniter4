@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Format;
+<?php
 
 /**
  * CodeIgniter
@@ -36,8 +36,13 @@
  * @filesource
  */
 
+namespace CodeIgniter\Format;
+
 use CodeIgniter\Format\Exceptions\FormatException;
 
+/**
+ * JSON data formatter
+ */
 class JSONFormatter implements FormatterInterface
 {
 
@@ -46,9 +51,9 @@ class JSONFormatter implements FormatterInterface
 	 *
 	 * @param $data
 	 *
-	 * @return mixed
+	 * @return string|boolean (JSON string | false)
 	 */
-	public function format(array $data)
+	public function format($data)
 	{
 		$options = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
 

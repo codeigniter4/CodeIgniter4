@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\CLI;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\CLI;
 
 use Psr\Log\LoggerInterface;
 
@@ -94,6 +95,8 @@ abstract class BaseCommand
 	protected $arguments = [];
 
 	/**
+	 * The Logger to use for a command
+	 *
 	 * @var \Psr\Log\LoggerInterface
 	 */
 	protected $logger;
@@ -122,6 +125,12 @@ abstract class BaseCommand
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Actually execute a command.
+	 * This has to be over-ridden in any concrete implementation.
+	 *
+	 * @param array $params
+	 */
 	abstract public function run(array $params);
 
 	//--------------------------------------------------------------------
@@ -133,6 +142,7 @@ abstract class BaseCommand
 	 * @param array  $params
 	 *
 	 * @return mixed
+	 * @throws \ReflectionException
 	 */
 	protected function call(string $command, array $params = [])
 	{
@@ -174,6 +184,8 @@ abstract class BaseCommand
 		{
 			return $this->$key;
 		}
+
+		return null;
 	}
 
 	//--------------------------------------------------------------------
@@ -183,7 +195,7 @@ abstract class BaseCommand
 	 */
 	public function showHelp()
 	{
-		// 4 spaces insted of tab
+		// 4 spaces instead of tab
 		$tab = '   ';
 		CLI::write(lang('CLI.helpDescription'), 'yellow');
 		CLI::write($tab . $this->description);
@@ -227,7 +239,7 @@ abstract class BaseCommand
 	 *
 	 * @return integer
 	 */
-	public function getPad($array, int $pad)
+	public function getPad(array $array, int $pad): int
 	{
 		$max = 0;
 		foreach ($array as $key => $value)

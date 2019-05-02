@@ -38,6 +38,16 @@
 
 use Config\Services;
 
+/**
+ * CodeIgniter Form Helpers
+ *
+ * @package    CodeIgniter
+ * @subpackage Helpers
+ * @category   Helpers
+ * @author     CodeIgniter Dev Team
+ * @link       https://codeigniter.com/user_guide/helpers/form_helper.html
+ */
+
 //--------------------------------------------------------------------
 
 if (! function_exists('form_open'))
@@ -86,7 +96,8 @@ if (! function_exists('form_open'))
 		$form = '<form action="' . $action . '"' . $attributes . ">\n";
 
 		// Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
-		$before = Services::filters()->getFilters()['before'];
+		$before = Services::filters()
+						  ->getFilters()['before'];
 
 		if ((in_array('csrf', $before) || array_key_exists('csrf', $before)) && strpos($action, base_url()) !== false && ! stripos($form, 'method="get"'))
 		{

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,10 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter;
+
+use ReflectionClass;
 
 /**
  * ComposerScripts
@@ -74,7 +78,7 @@ class ComposerScripts
 	 *
 	 * @return boolean
 	 */
-	protected static function moveFile(string $source, string $destination)
+	protected static function moveFile(string $source, string $destination): bool
 	{
 		$source = realpath($source);
 
@@ -103,7 +107,7 @@ class ComposerScripts
 	 */
 	protected static function getClassFilePath(string $class)
 	{
-		$reflector = new \ReflectionClass($class);
+		$reflector = new ReflectionClass($class);
 
 		return $reflector->getFileName();
 	}

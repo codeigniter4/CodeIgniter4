@@ -75,7 +75,7 @@ even set background colors by passing the color name in as the third parameter::
 
 	CLI::write('File overwritten.', 'light_red', 'dark_gray');
 
-The following colors are available:
+The following foreground colors are available:
 
 * black
 * dark_gray
@@ -94,6 +94,29 @@ The following colors are available:
 * yellow
 * light_gray
 * white
+
+And a smaller number are available as background colors:
+
+* black
+* blue
+* green
+* cyan
+* red
+* yellow
+* light_gray
+* magenta
+
+**print()**
+
+Print functions identically to the ``write()`` method, except that it does not force a newline either before or after.
+Instead it prints it to the screen wherever the cursor is currently. This allows you to print multiple items all on
+the same line, from different calls. This is especially helpful when you want to show a status, do something, then
+print "Done" on the same line::
+
+    for ($i = 0; $i <= 10; $i++)
+    {
+        CLI::print($i);
+    }
 
 **color()**
 

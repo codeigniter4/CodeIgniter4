@@ -83,11 +83,11 @@ Class Reference
 .. php:method:: get($key)
 
 	:param	string	$key: Cache item name
-	:returns:	Item value or FALSE if not found
+	:returns:	Item value or NULL if not found
 	:rtype:	mixed
 
 	This method will attempt to fetch an item from the cache store. If the
-	item does not exist, the method will return FALSE.
+	item does not exist, the method will return NULL.
 
 	Example::
 

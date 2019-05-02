@@ -1,6 +1,4 @@
-<?php namespace CodeIgniter\Database\Exceptions;
-
-use CodeIgniter\Exceptions\ExceptionInterface;
+<?php
 
 /**
  * CodeIgniter
@@ -37,6 +35,10 @@ use CodeIgniter\Exceptions\ExceptionInterface;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Database\Exceptions;
+
+use CodeIgniter\Exceptions\ExceptionInterface;
 
 class DatabaseException extends \Error implements ExceptionInterface
 {

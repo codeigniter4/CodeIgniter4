@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Database;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,7 +35,9 @@
  * @filesource
  */
 
-use Config\Autoload;
+namespace CodeIgniter\Database;
+
+use Config\Services;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Exceptions\ConfigException;
@@ -122,7 +123,7 @@ class MigrationRunner
 	/**
 	 * used to return messages for CLI.
 	 *
-	 * @var boolean
+	 * @var array
 	 */
 	protected $cliMessages = [];
 
@@ -196,7 +197,7 @@ class MigrationRunner
 	 * @param string|null $namespace
 	 * @param string|null $group
 	 *
-	 * @return mixed TRUE if no migrations are found, current version string on success, FALSE on failure
+	 * @return mixed Current version string on success, FALSE on failure or no migrations are found
 	 * @throws ConfigException
 	 */
 	public function version(string $targetVersion, string $namespace = null, string $group = null)
@@ -253,12 +254,14 @@ class MigrationRunner
 		$this->checkMigrations($migrations, $method, $targetVersion);
 
 		// loop migration for each namespace (module)
+
+		$migrationStatus = false;
 		foreach ($migrations as $version => $migration)
 		{
 			// Only include migrations within the scoop
-			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion)
-			)
+			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion))
 			{
+				$migrationStatus = false;
 				include_once $migration->path;
 				// Get namespaced class name
 				$class = $this->namespace . '\Database\Migrations\Migration_' . ($migration->name);
@@ -288,10 +291,12 @@ class MigrationRunner
 				{
 					$this->removeHistory($migration->version);
 				}
+
+				$migrationStatus = true;
 			}
 		}
 
-		return true;
+		return ($migrationStatus) ? $targetVersion : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -337,7 +342,7 @@ class MigrationRunner
 	 *
 	 * @return boolean
 	 */
-	public function latestAll(string $group = null)
+	public function latestAll(string $group = null): bool
 	{
 		$this->ensureTable();
 
@@ -347,11 +352,10 @@ class MigrationRunner
 			$this->setGroup($group);
 		}
 
-		// Get all namespaces form  PSR4 paths.
-		$config     = config('Autoload');
-		$namespaces = $config->psr4;
+		// Get all namespaces from the autoloader
+		$namespaces = Services::autoloader()->getNamespace();
 
-		foreach ($namespaces as $namespace => $path)
+		foreach ($namespaces as $namespace => $paths)
 		{
 			$this->setNamespace($namespace);
 			$migrations = $this->findMigrations();
@@ -383,7 +387,7 @@ class MigrationRunner
 	 *
 	 * @param string|null $group
 	 *
-	 * @return mixed    TRUE if no migrations are found, current version string on success, FALSE on failure
+	 * @return mixed    Current version string on success, FALSE on failure or no migrations are found
 	 */
 	public function current(string $group = null)
 	{
@@ -401,36 +405,30 @@ class MigrationRunner
 	//--------------------------------------------------------------------
 
 	/**
-	 * Retrieves list of available migration scripts
+	 * Retrieves list of available migration scripts for one namespace
 	 *
 	 * @return array    list of migrations as $version for one namespace
 	 */
-	public function findMigrations()
+	public function findMigrations(): array
 	{
 		$migrations = [];
-		helper('filesystem');
 
 		// If $this->path contains a valid directory use it.
 		if (! empty($this->path))
 		{
-			$dir = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
+			helper('filesystem');
+			$dir   = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
+			$files = get_filenames($dir, true);
 		}
-		// Otherwise, get namespace location form  PSR4 paths
-		// and add Database/Migrations for a standard loation.
+		// Otherwise use FileLocator to search files in the subdirectory of the namespace
 		else
 		{
-			$config = config('Autoload');
-
-			$location = $config->psr4[$this->namespace];
-
-			// Setting migration directories.
-			$dir = rtrim($location, DIRECTORY_SEPARATOR) . '/Database/Migrations/';
+			$locator = Services::locator(true);
+			$files   = $locator->listNamespaceFiles($this->namespace, '/Database/Migrations/');
 		}
 
 		// Load all *_*.php files in the migrations path
 		// We can't use glob if we want it to be testable....
-		$files = get_filenames($dir, true);
-
 		foreach ($files as $file)
 		{
 			if (substr($file, -4) !== '.php')
@@ -473,11 +471,11 @@ class MigrationRunner
 	 *
 	 * @param array  $migrations
 	 * @param string $method
-	 * @param string $targetversion
+	 * @param string $targetVersion
 	 *
 	 * @return boolean
 	 */
-	protected function checkMigrations(array $migrations, string $method, string $targetversion)
+	protected function checkMigrations(array $migrations, string $method, string $targetVersion): bool
 	{
 		// Check if no migrations found
 		if (empty($migrations))
@@ -489,14 +487,14 @@ class MigrationRunner
 			throw new \RuntimeException(lang('Migrations.empty'));
 		}
 
-		// Check if $targetversion file is found
-		if ((int)$targetversion !== 0 && ! array_key_exists($targetversion, $migrations))
+		// Check if $targetVersion file is found
+		if ((int)$targetVersion !== 0 && ! array_key_exists($targetVersion, $migrations))
 		{
 			if ($this->silent)
 			{
 				return false;
 			}
-			throw new \RuntimeException(lang('Migrations.notFound') . $targetversion);
+			throw new \RuntimeException(lang('Migrations.notFound') . $targetVersion);
 		}
 
 		ksort($migrations);
@@ -603,7 +601,7 @@ class MigrationRunner
 	 *
 	 * @return array
 	 */
-	public function getHistory(string $group = 'default')
+	public function getHistory(string $group = 'default'): array
 	{
 		$this->ensureTable();
 
@@ -647,7 +645,7 @@ class MigrationRunner
 	 *
 	 * @return string    Numeric portion of a migration filename
 	 */
-	protected function getMigrationNumber(string $migration)
+	protected function getMigrationNumber(string $migration): string
 	{
 		return sscanf($migration, '%[0-9]+', $number) ? $number : '0';
 	}
@@ -661,7 +659,7 @@ class MigrationRunner
 	 *
 	 * @return string    text portion of a migration filename
 	 */
-	protected function getMigrationName(string $migration)
+	protected function getMigrationName(string $migration): string
 	{
 		$parts = explode('_', $migration);
 		array_shift($parts);
@@ -676,7 +674,7 @@ class MigrationRunner
 	 *
 	 * @return string    Current migration version
 	 */
-	protected function getVersion()
+	protected function getVersion(): string
 	{
 		$this->ensureTable();
 
@@ -695,9 +693,9 @@ class MigrationRunner
 	/**
 	 * Retrieves current schema version
 	 *
-	 * @return string    Current migration version
+	 * @return array    Current migration version
 	 */
-	public function getCliMessages()
+	public function getCliMessages(): array
 	{
 		return $this->cliMessages;
 	}
@@ -710,6 +708,8 @@ class MigrationRunner
 	 * @param string $version
 	 *
 	 * @internal param string $migration Migration reached
+	 *
+	 * @return void
 	 */
 	protected function addHistory(string $version)
 	{
@@ -732,7 +732,8 @@ class MigrationRunner
 	/**
 	 * Removes a single history
 	 *
-	 * @param string $version
+	 * @param  string $version
+	 * @return void
 	 */
 	protected function removeHistory(string $version)
 	{

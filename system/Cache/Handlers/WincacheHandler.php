@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\Cache\Handlers;
+
 
 /**
  * CodeIgniter
@@ -36,6 +36,8 @@ namespace CodeIgniter\Cache\Handlers;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheInterface;
 
@@ -92,7 +94,7 @@ class WincacheHandler implements CacheInterface
 		$data    = wincache_ucache_get($key, $success);
 
 		// Success returned by reference from wincache_ucache_get()
-		return ($success) ? $data : false;
+		return ($success) ? $data : null;
 	}
 
 	//--------------------------------------------------------------------

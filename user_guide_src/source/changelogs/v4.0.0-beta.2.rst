@@ -1,0 +1,268 @@
+Version 4.0.0-beta.2
+====================================================
+
+Release Date: April 4, 2019
+
+Highlights:
+
+- A number of fixes & improvements, importantly for the Model and testing classes
+- Models now require a primary key
+- Generated API docs accessible at https://codeigniter4.github.io/api/
+- Validation rules have been enhanced
+- .htaccess beefed up
+
+New messages:
+
+- Database.noPrimaryKey, forFindColumnHaveMultipleColumns, Database.forEmptyInputGiven
+
+App changes:
+
+- updated app/Config/Events 
+- added app/Controllers/BaseController 
+- added tests/ folder for unit testing
+- added phpunit.xml.dist for unit testing configuration
+
+The list of changed files follows, with PR numbers shown.
+
+- .htaccess #1900
+
+- app/
+	- Config/
+		- Events #1856
+	- Controllers/
+		- BaseController #1847
+		- Home #1847
+
+- contributing/
+	- README.rst #1846
+	- styleguide #1872
+
+- contributing.md #1846
+
+- phpdoc.dist.xml #1872
+
+- system/
+	- Autoloader/
+		- FileLocator #1860
+	- Cache/Handlers/
+		- FileHandler #1895
+		- MemcachedHandler #1895
+		- PredisHandler #1895
+		- RedisHandler #1863, #1895
+		- WincacheHandler #1895
+	- CLI/
+		- CLI #1891, #1910
+	- Commands/
+		- Server/Serve #1893
+		- Utilities/Routes #1859
+	- Config/
+		- BaseConfig #1811
+		- Routes #1847, #1850
+	- Database/
+		- BaseBuilder $1776, #1902
+		- BaseConnection #1899
+		- Forge #1844, #1899
+		- MigrationRunner #1860, #1865
+		- MySQLi/Connection #1896
+		- MySQLi/Forge #1899
+		- Postgre/Builder #1902
+		- Postgre/Forge #1899
+		- Query #1805, #1771
+		- SQLite3/Builder #1902
+		- SQLite3/Forge #1899
+	- Debug/
+		- Toolbar/Collectors/History #1869
+		- Toolbar #1897
+	- Events/
+		- Events #1867
+	- Exceptions/
+		- ModelException #1829
+		- PageNotFoundException #1844
+	- Files/
+		- File #1809, #1854
+	- Helpers/
+		- date_helper #d08b68
+		- form_helper #1803
+		- html_helper #1803
+		- number_helper #d08b68, #1803
+		- security_helper #d08b68
+		- text_helper #d08b68, #1803
+		- url_helper #d08b68, #1803
+		- xml_helper #1803
+	- Honeypot/
+		- Honeypot #1894
+	- HTTP/
+		- Header #1769
+		- IncomingRequest #1831
+	- Language/en/
+		- Database #1829, #1861, #1902
+	- Router/
+		- RouteCollection #1769
+		- Router #1839, #1882
+	- Session/
+		- Session #1769
+	- Test/
+		- ControllerTester #1769, #1848, #1855
+		- DOMParser #1848
+	- Validation/
+		- FormatRules #1762, #1863
+		- Rules #1791, #1814, #1818, #1862
+		- Validation #1769
+		- Views/list #1828
+	- View/
+		- Filters #1769
+		- Parser #1769
+		- View #1769, #1827
+	- CodeIgniter #1769, #1804, #1590
+	- Common #1802, #895ae0
+	- ComposerScripts #1804
+	- Controller #1769, #1850
+	- Entity #1769, #1804
+	- Model #1793, #1769, #1804, #1808, #1812, #1813, #1817, #1829, #1746, #1861
+
+- tests/system/
+	- Cache/
+		- Handlers/
+			- FileHandlerTest #1796, #1895
+			- MemcachedHandlerTest #1895
+			- RedisHandlerTest #1895
+		- CacheFactoryTest #1796
+	- CLI/
+		- CLITest #1910
+	- Config/
+		- BaseConfigTest #1811
+		- ConfigTest #1811
+	- Database/
+		- Builder/EmptyTest #1902
+		- Builder/SelectTest #1902
+		- Live/ModelTest #1817, #1829, #1861
+		- Live/WhereTest #1906
+	- Events/
+		- EventsTest #1867
+	- HTTP/
+		- ContentSecurityPolicyTest #1848
+	- Router/
+		- RouteCollectionTest #1822, #1912, #1913
+	- Test/
+		- ControllerTesterTest #1848, #1855
+		- DOMParserTest #1848
+	- Validation/
+		- FormatRulesTest #1762
+		- RulesTest #1791
+	- View/
+		- ViewTest #1827, #1836
+	- ControllerTest #1850
+
+
+- user_guide_src/	
+	- cli/
+		- cli_commands #1777
+		- cli_library #1892, #1910
+	- concepts/
+		- services #1811
+	- database/
+		- examples #1794
+	- dbmgmt/
+		- forge #1844, #1899
+		- migration #1860, #1865
+	- extending/
+		- basecontroller #1847
+		- core_classes #1847
+	- general/
+		- common_functions #1802, #1895
+	- helpers/
+		- number_helper #d08b68
+		- url_helper #1803
+	- incoming/
+		- routing #1908
+	- libraries/
+		- caching #1895
+		- files #1790, #1854
+		- pagination #1823
+		- sessions #1843
+		- validation #1814, #1828, #1862
+	- models/
+		- models #1817, #1820, #1829, #1746, #1861
+	- outgoing/
+		- view_layouts #1827
+	- testing/
+		- controllers #1848
+
+PRs merged:
+-----------
+
+- #1913 More RouteCollection tests for overwriting. Closes #1692
+- #1912 Additional RouteCollectionTests
+- #1910 Added print method to CLI library so you can print multiple times on same line
+- #1908 Add filter parameters to User Guide
+- #1906 SubQuery related test cases w.r.t #1775
+- #1902 BaseBuilder corrections
+- #1900 Update .htaccess for better security and caching
+- #1899 Database Forge correction
+- #1897 Toolbar fix w.r.t #1779
+- #1896 Mysql connection issue with SSL cert (#1219)
+- #1894 Typos fixings
+- #1893 Fix spark serve with remove escapeshellarg()
+- #1892 Add CLI background color list to the user guide
+- #1891 Allow CLI::strlen null parameter
+- #1886 Fixed issue #1880, fixed a few typos and updated code style
+- #1882 Router Changes w.r.t #1541
+- #1873-1889 Docs: move namespace declarations & add missing class docblocks
+- #1872 Docs: fix phpdoc config
+- #1871 Unmatched Cache Library `get()` return null
+- #1869 History::SetFiles check #1778
+- #1863 Module wise Typos changes
+- #1861 New method Find Column w.r.t. #1619
+- #1860 Migrationrunner use autoloader
+- #1867 Events should actually work with any callable now. Fixes #1835
+- #1865 MigrationRunner issue with definition resolved
+- #1862 required_with and required_without definition changes
+- #1859 Ignore callbacks in routes list
+- #1858 Typos correction in DB module
+- #1856 ensure ob_end_flush() when ob_get_level() > 0 on pre_system event
+- #1855 Fix: ControllerTester::execute. Fixes #1834
+- #1854 File::move now returns new file instance for relocated file. Fixes #1782
+- #1851 Replace old CI3 .gitignore with root CI4 version
+- #1850 Secure routable controller methods
+- #1848 Test: fix & test Test/ControllerTest, tested
+- #1847 Extend Controller to BaseController by default
+- #1846 Fix contributing links
+- #1844 Model Fix
+- #1843 Replace CI3 $this->input reference
+- #1842 Exception 'forPageNotFound' missing default value
+- #1839 Dont replace slashes with backslashes in the to route
+- #1836 Test: Improve View\View coverage
+- #1831 Fix some PHPDoc comments error
+- #1829 Improve: Models now require a primary key. This is partially to keep the code …
+- #1828 Fix: Remove bootstrap styles from validation views.
+- #1827 Fix: Adding include method to View library to render view partials... views.
+- #1823 Docs: Remove legacy Bootstrap references in Pagination class
+- #1822 Test: enhance RouteCollection coverage
+- #1820 Fix: Correct sphinx errors in model.rst
+- #1819 Improve: Add apibot for API docs using phpDocumentor
+- #1818 Improve: Code improvement in exact_length Rule
+- #1817 Improve: Model setValidationMessage functions introduced
+- #895ae0 Fix: Start session whenver using the old command
+- #1814 Enhance: extended exact_length[1,3,5]
+- #1813 Fix: Model::save fix for earlier PRs
+- #1812 Test: Improve Filters coverage
+- #1811 Test: Config module coverage improved
+- #1809 Fix file move failed. Fixex #1785
+- #1808 Fix: Fix save method return value
+- #1805 Docs: Query Class Changes
+- #1804 Docs: Some Base Functional Changes
+- #1803 Docs: Some Helper Changes
+- #1802 Docs: Common function correction
+- #1796 Test: Improve Cache coverage
+- #1794 Replace nonexistent "getAffectedRows"
+- #1793 Set Model->chunk return type
+- #1791 Fix: Remove is_numeric tests in Validation\Rules
+- #d08b68 Fix in ControllerTester for missing UserAgent
+- #1790 Correction of typos in documentation as mentioned in issue #1781
+- #1777 Add CLI namespace to example
+- #1776 Fix: replace only last operator in field name
+- #1771 Fix: fix typo in matchSimpleBinds
+- #1769 Correction in Methods and Spellings
+- #1762 Fix: decimal rule. shouldn't it accept integers?
+- #1746 Improve: Update Model, to selective update created_at / updated_at field.
+- #1590 Improve: Enhance 404Override

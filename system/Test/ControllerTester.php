@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Test;
+<?php
+
 
 /**
  * CodeIgniter
@@ -36,11 +37,16 @@
  * @filesource
  */
 
+namespace CodeIgniter\Test;
+
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
 use Config\App;
+use Config\Services;
+use InvalidArgumentException;
+use Throwable;
 
 /**
  * ControllerTester Trait
@@ -58,16 +64,13 @@ use Config\App;
  */
 trait ControllerTester
 {
+
 	protected $appConfig;
-
 	protected $request;
-
 	protected $response;
-
+	protected $logger;
 	protected $controller;
-
 	protected $uri = 'http://example.com';
-
 	protected $body;
 
 	/**
@@ -81,7 +84,7 @@ trait ControllerTester
 	{
 		if (! class_exists($name))
 		{
-			throw new \InvalidArgumentException('Invalid Controller: ' . $name);
+			throw new InvalidArgumentException('Invalid Controller: ' . $name);
 		}
 
 		if (empty($this->appConfig))
@@ -99,7 +102,13 @@ trait ControllerTester
 			$this->response = new Response($this->appConfig);
 		}
 
-		$this->controller = new $name($this->request, $this->response);
+		if (empty($this->logger))
+		{
+			$this->logger = Services::logger();
+		}
+
+		$this->controller = new $name();
+		$this->controller->initController($this->request, $this->response, $this->logger);
 
 		return $this;
 	}
@@ -116,7 +125,7 @@ trait ControllerTester
 	{
 		if (! method_exists($this->controller, $method) || ! is_callable([$this->controller, $method]))
 		{
-			throw new \InvalidArgumentException('Method does not exist or is not callable in controller: ' . $method);
+			throw new InvalidArgumentException('Method does not exist or is not callable in controller: ' . $method);
 		}
 
 		// The URL helper is always loaded by the system
@@ -124,33 +133,46 @@ trait ControllerTester
 		helper('url');
 
 		$result = (new ControllerResponse())
-			->setRequest($this->request)
-			->setResponse($this->response);
+				->setRequest($this->request)
+				->setResponse($this->response);
 
+		$response = null;
 		try
 		{
 			ob_start();
 
 			$response = $this->controller->{$method}(...$params);
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$result->response()
-				   ->setStatusCode($e->getCode());
+					->setStatusCode($e->getCode());
 		}
 		finally
 		{
 			$output = ob_get_clean();
 
-			// If the controller returned a redirect response
-			// then we need to use that...
+			// If the controller returned a response, use it
 			if (isset($response) && $response instanceof Response)
 			{
 				$result->setResponse($response);
 			}
 
-			$result->response()->setBody($output);
-			$result->setBody($output);
+			// check if controller returned a view rather than echoing it
+			if (is_string($response))
+			{
+				$output = $response;
+				$result->response()->setBody($output);
+				$result->setBody($output);
+			}
+			elseif (! empty($response) && ! empty($response->getBody()))
+			{
+				$result->setBody($response->getBody());
+			}
+			else
+			{
+				$result->setBody('');
+			}
 		}
 
 		// If not response code has been sent, assume a success
@@ -194,6 +216,18 @@ trait ControllerTester
 	public function withResponse($response)
 	{
 		$this->response = $response;
+
+		return $this;
+	}
+
+	/**
+	 * @param mixed $logger
+	 *
+	 * @return mixed
+	 */
+	public function withLogger($logger)
+	{
+		$this->logger = $logger;
 
 		return $this;
 	}

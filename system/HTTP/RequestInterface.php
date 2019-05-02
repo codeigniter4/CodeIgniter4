@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\HTTP;
 
 /**
  * Expected behavior of an HTTP request
@@ -74,7 +76,7 @@ interface RequestInterface
 	 *
 	 * @return string
 	 */
-	public function getMethod($upper = false): string;
+	public function getMethod(bool $upper = false): string;
 
 	//--------------------------------------------------------------------
 

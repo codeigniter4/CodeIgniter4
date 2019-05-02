@@ -136,7 +136,7 @@
 				<div id="ci-<?= $c['titleSafe'] ?>" class="tab">
 					<h2><?= $c['title'] ?> <span><?= $c['titleDetails'] ?></span></h2>
 
-					<?= $parser->setData($c['display'])->render("_{$c['titleSafe']}.tpl") ?>
+					<?= is_string($c['display']) ? $c['display'] : $parser->setData($c['display'])->render("_{$c['titleSafe']}.tpl") ?>
 				</div>
 			<?php endif ?>
 		<?php endif ?>

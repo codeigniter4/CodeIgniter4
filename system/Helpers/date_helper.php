@@ -35,6 +35,16 @@
  * @filesource
  */
 
+/**
+ * CodeIgniter Date Helpers
+ *
+ * @package    CodeIgniter
+ * @subpackage Helpers
+ * @category   Helpers
+ * @author     CodeIgniter Dev Team
+ * @link       https://codeigniter.com/user_guide/helpers/date_helper.html
+ */
+
 if (! function_exists('now'))
 {
 	/**
@@ -46,6 +56,7 @@ if (! function_exists('now'))
 	 * @param string $timezone
 	 *
 	 * @return integer
+	 * @throws \Exception
 	 */
 	function now(string $timezone = null): int
 	{

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Commands;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
@@ -174,13 +176,13 @@ class ListCommands extends BaseCommand
 	 * Pads our string out so that all titles are the same length to nicely line up descriptions.
 	 *
 	 * @param string  $item
-	 * @param $max
+	 * @param integer $max
 	 * @param integer $extra  // How many extra spaces to add at the end
 	 * @param integer $indent
 	 *
-	 * @return array
+	 * @return string
 	 */
-	protected function padTitle(string $item, $max, $extra = 2, $indent = 0)
+	protected function padTitle(string $item, int $max, int $extra = 2, int $indent = 0): string
 	{
 		$max += $extra + $indent;
 

@@ -35,6 +35,16 @@
  * @filesource
  */
 
+/**
+ * CodeIgniter XML Helpers
+ *
+ * @package    CodeIgniter
+ * @subpackage Helpers
+ * @category   Helpers
+ * @author     CodeIgniter Dev Team
+ * @link       https://codeigniter.com/user_guide/helpers/xml_helper.html
+ */
+
 if (! function_exists('xml_convert'))
 {
 	/**

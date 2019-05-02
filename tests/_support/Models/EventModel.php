@@ -10,7 +10,7 @@ class EventModel extends Model
 
 	protected $useSoftDeletes = false;
 
-	protected $dateFormat = 'integer';
+	protected $dateFormat = 'datetime';
 
 	protected $allowedFields = [
 		'name',

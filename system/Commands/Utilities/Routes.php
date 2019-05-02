@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Commands\Utilities;
+<?php
 
 /**
  * CodeIgniter
@@ -15,7 +15,7 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *RouRouddfdf
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
@@ -122,11 +124,15 @@ class Routes extends BaseCommand
 
 			foreach ($routes as $from => $to)
 			{
-				$tbody[] = [
-					$from,
-					$method,
-					$to,
-				];
+				// filter for strings, as callbacks aren't displayable
+				if (is_string($to))
+				{
+					$tbody[] = [
+						$from,
+						$method,
+						$to,
+					];
+				}
 			}
 		}
 

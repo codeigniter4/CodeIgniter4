@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\Config;
+
 
 /**
  * CodeIgniter
@@ -36,6 +36,8 @@ namespace CodeIgniter\Config;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Config;
 
 /**
  * Class BaseConfig
@@ -167,6 +169,8 @@ class BaseConfig
 	/**
 	 * Provides external libraries a simple way to register one or more
 	 * options into a config file.
+	 *
+	 * @throws \ReflectionException
 	 */
 	protected function registerProperties()
 	{
@@ -177,8 +181,15 @@ class BaseConfig
 
 		if (! static::$didDiscovery)
 		{
-			$locator              = \Config\Services::locator();
-			static::$registrars   = $locator->search('Config/Registrar.php');
+			$locator         = \Config\Services::locator();
+			$registrarsFiles = $locator->search('Config/Registrar.php');
+
+			foreach ($registrarsFiles as $file)
+			{
+				$className            = $locator->getClassname($file);
+				static::$registrars[] = new $className();
+			}
+
 			static::$didDiscovery = true;
 		}
 

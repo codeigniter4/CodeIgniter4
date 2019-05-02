@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,6 +35,9 @@
  * @filesource
  */
 
+namespace CodeIgniter;
+
+use Closure;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\RedirectResponse;
@@ -50,6 +52,7 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use Exception;
 
 /**
  * This class is the core of the framework, and will analyse the
@@ -62,7 +65,7 @@ class CodeIgniter
 	/**
 	 * The current version of CodeIgniter Framework
 	 */
-	const CI_VERSION = '4.0.0-beta.1';
+	const CI_VERSION = '4.0.0-beta.2';
 
 	/**
 	 * App startup time.
@@ -280,7 +283,7 @@ class CodeIgniter
 	 * @param boolean                                      $returnResponse
 	 *
 	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
-	 * @throws \CodeIgniter\Router\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 */
 	protected function handleRequest(RouteCollectionInterface $routes = null, $cacheConfig, bool $returnResponse = false)
 	{
@@ -544,7 +547,7 @@ class CodeIgniter
 			$cachedResponse = unserialize($cachedResponse);
 			if (! is_array($cachedResponse) || ! isset($cachedResponse['output']) || ! isset($cachedResponse['headers']))
 			{
-				throw new \Exception('Error unserializing page cache');
+				throw new Exception('Error unserializing page cache');
 			}
 
 			$headers = $cachedResponse['headers'];
@@ -615,7 +618,7 @@ class CodeIgniter
 	 *
 	 * @return array
 	 */
-	public function getPerformanceStats()
+	public function getPerformanceStats(): array
 	{
 		return [
 			'startTime' => $this->startTime,
@@ -686,7 +689,7 @@ class CodeIgniter
 	 *                                         of the config file.
 	 *
 	 * @return string
-	 * @throws \CodeIgniter\Router\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 */
 	protected function tryToRouteIt(RouteCollectionInterface $routes = null)
 	{
@@ -848,7 +851,7 @@ class CodeIgniter
 		// Is there a 404 Override available?
 		if ($override = $this->router->get404Override())
 		{
-			if ($override instanceof \Closure)
+			if ($override instanceof Closure)
 			{
 				echo $override($e->getMessage());
 			}

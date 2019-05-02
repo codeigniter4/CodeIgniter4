@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Debug\Toolbar\Collectors;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\Config\Services;
 
@@ -74,6 +75,7 @@ class Routes extends BaseCollector
 	 * Returns the data of this collector to be formatted in the toolbar
 	 *
 	 * @return array
+	 * @throws \ReflectionException
 	 */
 	public function display(): array
 	{
@@ -95,7 +97,7 @@ class Routes extends BaseCollector
 			$params[] = [
 				'name'  => $param->getName(),
 				'value' => $router->params()[$key] ??
-				'&lt;empty&gt;&nbsp| default: ' . var_export($param->getDefaultValue(), true),
+					'&lt;empty&gt;&nbsp| default: ' . var_export($param->isDefaultValueAvailable() ? $param->getDefaultValue() : null, true),
 			];
 		}
 
@@ -137,7 +139,7 @@ class Routes extends BaseCollector
 	 *
 	 * @return integer
 	 */
-	public function getBadgeValue()
+	public function getBadgeValue(): int
 	{
 		$rawRoutes = Services::routes(true);
 

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Database;
+<?php
 
 /**
  * CodeIgniter
@@ -36,8 +36,9 @@
  * @filesource
  */
 
+namespace CodeIgniter\Database;
+
 use CodeIgniter\Config\BaseConfig;
-use Config\Database;
 
 /**
  * Class Config
@@ -124,7 +125,7 @@ class Config extends BaseConfig
 	 *
 	 * @return array
 	 */
-	public static function getConnections()
+	public static function getConnections(): array
 	{
 		return static::$instances;
 	}
@@ -185,12 +186,12 @@ class Config extends BaseConfig
 	 */
 	protected static function ensureFactory()
 	{
-		if (static::$factory instanceof \CodeIgniter\Database\Database)
+		if (static::$factory instanceof Database)
 		{
 			return;
 		}
 
-		static::$factory = new \CodeIgniter\Database\Database();
+		static::$factory = new Database();
 	}
 
 	//--------------------------------------------------------------------

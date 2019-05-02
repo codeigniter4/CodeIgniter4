@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Validation;
+<?php
 
 /**
  * CodeIgniter
@@ -36,8 +36,10 @@
  * @filesource
  */
 
+namespace CodeIgniter\Validation;
+
 /**
- * Rules.
+ * Format validation Rules.
  *
  * @package CodeIgniter\Validation
  */
@@ -115,6 +117,23 @@ class FormatRules
 	public function alpha_numeric_space(string $str = null): bool
 	{
 		return (bool) preg_match('/^[A-Z0-9 ]+$/i', $str);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Any type of string
+	 *
+	 * Note: we specifically do NOT type hint $str here so that
+	 * it doesn't convert numbers into strings.
+	 *
+	 * @param string|null $str
+	 *
+	 * @return boolean
+	 */
+	public function string($str = null): bool
+	{
+		return is_string($str);
 	}
 
 	//--------------------------------------------------------------------
@@ -287,11 +306,6 @@ class FormatRules
 	 */
 	public function valid_emails(string $str = null): bool
 	{
-		if (strpos($str, ',') === false)
-		{
-			return $this->valid_email(trim($str));
-		}
-
 		foreach (explode(',', $str) as $email)
 		{
 			$email = trim($email);

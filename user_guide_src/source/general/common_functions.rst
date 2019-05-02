@@ -25,7 +25,7 @@ Service Accessors
 
     If no $key is provided, will return the Cache engine instance. If a $key
     is provided, will return the value of $key as stored in the cache currently,
-    or false if no value is found.
+    or null if no value is found.
 
     Examples::
 
@@ -251,10 +251,10 @@ Miscellaneous Functions
                 // Go to a named/reverse-routed URI
 		return redirect('named_route');
 
-.. php:function:: remove_invisible_characters($str[, $url_encoded = TRUE])
+.. php:function:: remove_invisible_characters($str[, $urlEncoded = TRUE])
 
 	:param	string	$str: Input string
-	:param	bool	$url_encoded: Whether to remove URL-encoded characters as well
+	:param	bool	$urlEncoded: Whether to remove URL-encoded characters as well
 	:returns:	Sanitized string
 	:rtype:	string
 

@@ -10,7 +10,34 @@ Release Date: Not Released
 **Next release of CodeIgniter4**
 
 
+
 :doc:`See all the changes. </changelogs/next>`
+
+Version 4.0.0-beta.2
+====================================================
+
+Release Date: April 04, 2019
+
+Highlights:
+
+- A number of fixes & improvements, importantly for the Model and testing classes
+- Models now require a primary key
+- Generated API docs accessible at https://codeigniter4.github.io/api/
+- Validation rules have been enhanced
+- .htaccess beefed up
+
+New messages:
+
+- Database.noPrimaryKey, forFindColumnHaveMultipleColumns, Database.forEmptyInputGiven
+
+App changes:
+
+- updated app/Config/Events 
+- added app/Controllers/BaseController 
+- added tests/ folder for unit testing
+- added phpunit.xml.dist for unit testing configuration
+
+:doc:`See all the changes. </changelogs/v4.0.0-beta.2>`
 
 Version 4.0.0-beta.1
 ====================================================

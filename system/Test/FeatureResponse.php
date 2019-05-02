@@ -1,11 +1,53 @@
-<?php namespace CodeIgniter\Test;
+<?php
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
+ * @filesource
+ */
+
+namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
+use Config\Format;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Assertions for a response
+ */
 class FeatureResponse extends TestCase
 {
+
 	/**
 	 * @var \CodeIgniter\HTTP\Response
 	 */
@@ -20,9 +62,10 @@ class FeatureResponse extends TestCase
 	{
 		$this->response = $response;
 
-		if (is_string($this->response->getBody()))
+		$body = $response->getBody();
+		if (! empty($body) && is_string($body))
 		{
-			$this->domParser = (new DOMParser())->withString($this->response->getBody());
+			$this->domParser = (new DOMParser())->withString($body);
 		}
 	}
 
@@ -83,7 +126,7 @@ class FeatureResponse extends TestCase
 	 */
 	public function assertStatus(int $code)
 	{
-		$this->assertEquals($code, (int)$this->response->getStatusCode());
+		$this->assertEquals($code, (int) $this->response->getStatusCode());
 	}
 
 	/**
@@ -186,10 +229,6 @@ class FeatureResponse extends TestCase
 	 * Assert the Response does not have the specified cookie set.
 	 *
 	 * @param string $key
-	 * @param null   $value
-	 * @param string $prefix
-	 *
-	 * @throws \Exception
 	 */
 	public function assertCookieMissing(string $key)
 	{
@@ -339,7 +378,7 @@ class FeatureResponse extends TestCase
 
 		if (is_array($test))
 		{
-			$config    = new \Config\Format();
+			$config    = new Format();
 			$formatter = $config->getFormatter('application/json');
 			$test      = $formatter->format($test);
 		}
@@ -360,4 +399,5 @@ class FeatureResponse extends TestCase
 	{
 		return $this->response->getXML();
 	}
+
 }

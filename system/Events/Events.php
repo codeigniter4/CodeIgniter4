@@ -1,7 +1,4 @@
 <?php
-namespace CodeIgniter\Events;
-
-use Config\Services;
 
 /**
  * CodeIgniter
@@ -38,6 +35,11 @@ use Config\Services;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Events;
+
+use Config\Services;
+
 define('EVENT_PRIORITY_LOW', 200);
 define('EVENT_PRIORITY_NORMAL', 100);
 define('EVENT_PRIORITY_HIGH', 10);
@@ -137,7 +139,7 @@ class Events
 	 * @param callable   $callback
 	 * @param integer    $priority
 	 */
-	public static function on($event_name, callable $callback, $priority = EVENT_PRIORITY_NORMAL)
+	public static function on($event_name, $callback, $priority = EVENT_PRIORITY_NORMAL)
 	{
 		if (! isset(static::$listeners[$event_name]))
 		{
@@ -182,7 +184,7 @@ class Events
 		{
 			$start = microtime(true);
 
-			$result = static::$simulate === false ? $listener(...$arguments) : true;
+			$result = static::$simulate === false ? call_user_func($listener, ...$arguments) : true;
 
 			if (CI_DEBUG)
 			{

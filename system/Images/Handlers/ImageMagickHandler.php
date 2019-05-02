@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Images\Handlers;
+<?php
 
 /**
  * CodeIgniter
@@ -36,8 +36,9 @@
  * @filesource
  */
 
+namespace CodeIgniter\Images\Handlers;
+
 use CodeIgniter\Images\Exceptions\ImageException;
-use CodeIgniter\Images\Image;
 
 /**
  * Class ImageMagickHandler
@@ -87,6 +88,7 @@ class ImageMagickHandler extends BaseHandler
 	 * @param boolean $maintainRatio
 	 *
 	 * @return ImageMagickHandler
+	 * @throws \Exception
 	 */
 	public function _resize(bool $maintainRatio = false)
 	{
@@ -112,6 +114,7 @@ class ImageMagickHandler extends BaseHandler
 	 * Crops the image.
 	 *
 	 * @return boolean|\CodeIgniter\Images\Handlers\ImageMagickHandler
+	 * @throws \Exception
 	 */
 	public function _crop()
 	{
@@ -134,6 +137,7 @@ class ImageMagickHandler extends BaseHandler
 	 * @param integer $angle
 	 *
 	 * @return $this
+	 * @throws \Exception
 	 */
 	protected function _rotate(int $angle)
 	{
@@ -159,6 +163,7 @@ class ImageMagickHandler extends BaseHandler
 	 * @param integer $blue
 	 *
 	 * @return $this
+	 * @throws \Exception
 	 */
 	public function _flatten(int $red = 255, int $green = 255, int $blue = 255)
 	{
@@ -182,6 +187,7 @@ class ImageMagickHandler extends BaseHandler
 	 * @param string $direction
 	 *
 	 * @return $this
+	 * @throws \Exception
 	 */
 	public function _flip(string $direction)
 	{
@@ -202,9 +208,9 @@ class ImageMagickHandler extends BaseHandler
 	/**
 	 * Get GD version
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getVersion()
+	public function getVersion(): string
 	{
 		$result = $this->process('-version');
 
@@ -272,7 +278,7 @@ class ImageMagickHandler extends BaseHandler
 	 *
 	 * @return boolean
 	 */
-	public function save(string $target = null, int $quality = 90)
+	public function save(string $target = null, int $quality = 90): bool
 	{
 		$target = empty($target) ? $this->image : $target;
 
@@ -312,6 +318,7 @@ class ImageMagickHandler extends BaseHandler
 	 * during the process, we'll use a PNG as the temp file type.
 	 *
 	 * @return resource|boolean
+	 * @throws \Exception
 	 */
 	protected function getResourcePath()
 	{
@@ -332,6 +339,8 @@ class ImageMagickHandler extends BaseHandler
 	 *
 	 * @param string $text
 	 * @param array  $options
+	 *
+	 * @throws \Exception
 	 */
 	protected function _text(string $text, array $options = [])
 	{
@@ -427,8 +436,6 @@ class ImageMagickHandler extends BaseHandler
 	}
 
 	//--------------------------------------------------------------------
-
-		//--------------------------------------------------------------------
 
 	public function _getWidth()
 	{

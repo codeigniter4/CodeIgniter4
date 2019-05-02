@@ -130,8 +130,9 @@ Namespaces
 ==========
 
 The migration library can automatically scan all namespaces you have defined within
-**app/Config/Autoload.php** and its ``$psr4`` property for matching directory
-names. It will include all migrations it finds in Database/Migrations.
+**app/Config/Autoload.php** or loaded from an external source like Composer, using
+the ``$psr4`` property for matching directory names. It will include all migrations
+it finds in Database/Migrations.
 
 Each namespace has it's own version sequence, this will help you upgrade and downgrade each module (namespace) without affecting other namespaces.
 
@@ -290,7 +291,7 @@ The following is a table of all the config options for migrations, available in 
 ========================== ====================== ========================== =============================================================
 Preference                 Default                Options                    Description
 ========================== ====================== ========================== =============================================================
-**enabled**                FALSE                  TRUE / FALSE               Enable or disable migrations.
+**enabled**                TRUE                   TRUE / FALSE               Enable or disable migrations.
 **path**                   'Database/Migrations/' None                       The path to your migrations folder.
 **currentVersion**         0                      None                       The current version your database should use.
 **table**                  migrations             None                       The table name for storing the schema version number.
@@ -343,7 +344,7 @@ Class Reference
 		:param	mixed	$namespace: application namespace, if null (App) namespace will be used.
 		:param	mixed	$group: database group name, if null default database group will be used.
 		:param	mixed	$target_version: Migration version to process
-		:returns:	TRUE if no migrations are found, current version string on success, FALSE on failure
+		:returns:	Current version string on success, FALSE on failure or no migrations are found
 		:rtype:	mixed
 
 		Version can be used to roll back changes or step forwards programmatically to

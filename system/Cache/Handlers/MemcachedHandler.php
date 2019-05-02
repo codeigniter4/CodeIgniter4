@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Cache\Handlers;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,8 +35,14 @@
  * @filesource
  */
 
-use CodeIgniter\Cache\CacheInterface;
+namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Exceptions\CriticalError;
+
+/**
+ * Mamcached cache handler
+ */
 class MemcachedHandler implements CacheInterface
 {
 
@@ -129,7 +134,7 @@ class MemcachedHandler implements CacheInterface
 		}
 		elseif ($this->memcached instanceof \Memcache)
 		{
-			// Third parameter is persistance and defaults to TRUE.
+			// Third parameter is persistence and defaults to TRUE.
 			$this->memcached->addServer(
 					$this->config['host'], $this->config['port'], true, $this->config['weight']
 			);
@@ -149,7 +154,27 @@ class MemcachedHandler implements CacheInterface
 	{
 		$key = $this->prefix . $key;
 
-		$data = $this->memcached->get($key);
+		if ($this->memcached instanceof \Memcached)
+		{
+			$data = $this->memcached->get($key);
+
+			// check for unmatched key
+			if ($this->memcached->getResultCode() === \Memcached::RES_NOTFOUND)
+			{
+				return null;
+			}
+		}
+		elseif ($this->memcached instanceof \Memcache)
+		{
+			$flags = false;
+			$data  = $this->memcached->get($key, $flags);
+
+			// check for unmatched key (i.e. $flags is untouched)
+			if ($flags === false)
+			{
+				return null;
+			}
+		}
 
 		return is_array($data) ? $data[0] : $data;
 	}

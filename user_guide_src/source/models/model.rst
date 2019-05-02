@@ -228,6 +228,14 @@ of just one::
 If no parameters are passed in, will return all rows in that model's table, effectively acting
 like findAll(), though less explicit.
 
+**findColumn()**
+
+ Returns null or an indexed array of column values::
+
+ 	$user = $userModel->findColumn($column_name);
+
+ $column_name should be a name of single column else you will get the DataException.
+
 **findAll()**
 
 Returns all results::

@@ -43,6 +43,32 @@ class QueryTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testGetStartTime()
+	{
+		$query = new Query($this->db);
+
+		$start = round(microtime(true));
+
+		$query->setDuration($start, $start + 5);
+
+		$this->assertEquals($start, $query->getStartTime(true));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetStartTimeNumberFormat()
+	{
+		$query = new Query($this->db);
+
+		$start = microtime(true);
+
+		$query->setDuration($start, $start + 5);
+
+		$this->assertEquals(number_format($start, 6), $query->getStartTime());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testsStoresErrorInformation()
 	{
 		$query = new Query($this->db);

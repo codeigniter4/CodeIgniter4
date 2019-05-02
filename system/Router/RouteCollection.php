@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\Router;
+
 
 /**
  * CodeIgniter
@@ -36,6 +36,8 @@ namespace CodeIgniter\Router;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Router;
 
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Router\Exceptions\RouterException;
@@ -156,7 +158,7 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * The current method that the script is being called by.
 	 *
-	 * @var
+	 * @var string
 	 */
 	protected $HTTPVerb;
 
@@ -248,7 +250,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string|array $placeholder
 	 * @param string       $pattern
 	 *
-	 * @return mixed
+	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
 	public function addPlaceholder($placeholder, string $pattern = null): RouteCollectionInterface
 	{
@@ -270,7 +272,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param $value
 	 *
-	 * @return mixed
+	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
 	public function setDefaultNamespace(string $value): RouteCollectionInterface
 	{
@@ -288,7 +290,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param $value
 	 *
-	 * @return mixed
+	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
 	public function setDefaultController(string $value): RouteCollectionInterface
 	{
@@ -305,7 +307,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param $value
 	 *
-	 * @return mixed
+	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
 	public function setDefaultMethod(string $value): RouteCollectionInterface
 	{
@@ -325,7 +327,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param boolean $value
 	 *
-	 * @return mixed
+	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
 	public function setTranslateURIDashes(bool $value): RouteCollectionInterface
 	{
@@ -483,9 +485,9 @@ class RouteCollection implements RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns the current value of the translateURIDashses setting.
+	 * Returns the current value of the translateURIDashes setting.
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
 	public function shouldTranslateURIDashes(): bool
 	{
@@ -509,7 +511,7 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Returns the raw array of available routes.
 	 *
-	 * @param null $verb
+	 * @param mixed $verb
 	 *
 	 * @return array
 	 */
@@ -555,7 +557,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return array
 	 */
-	public function getRoutesOptions(string $from = null)
+	public function getRoutesOptions(string $from = null): array
 	{
 		return $from ? $this->routesOptions[$from] ?? [] : $this->routesOptions;
 	}
@@ -619,7 +621,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param string       $from
 	 * @param array|string $to
-	 * @param $options
+	 * @param array        $options
 	 *
 	 * @return RouteCollectionInterface
 	 */
@@ -722,7 +724,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return void
 	 */
-	public function group($name, ...$params)
+	public function group(string $name, ...$params)
 	{
 		$oldGroup   = $this->group;
 		$oldOptions = $this->currentOptions;
@@ -993,10 +995,10 @@ class RouteCollection implements RouteCollectionInterface
 	 * Example:
 	 *  $route->match( ['get', 'post'], 'users/(:num)', 'users/$1);
 	 *
-	 * @param array $verbs
-	 * @param $from
-	 * @param $to
-	 * @param array $options
+	 * @param array        $verbs
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -1017,9 +1019,9 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Specifies a route that is only available to GET requests.
 	 *
-	 * @param $from
-	 * @param $to
-	 * @param array $options
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -1035,9 +1037,9 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Specifies a route that is only available to POST requests.
 	 *
-	 * @param $from
-	 * @param $to
-	 * @param array $options
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -1053,9 +1055,9 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Specifies a route that is only available to PUT requests.
 	 *
-	 * @param $from
-	 * @param $to
-	 * @param array $options
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -1071,9 +1073,9 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Specifies a route that is only available to DELETE requests.
 	 *
-	 * @param $from
-	 * @param $to
-	 * @param array $options
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -1089,9 +1091,9 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Specifies a route that is only available to HEAD requests.
 	 *
-	 * @param $from
-	 * @param $to
-	 * @param array $options
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -1107,9 +1109,9 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Specifies a route that is only available to PATCH requests.
 	 *
-	 * @param $from
-	 * @param $to
-	 * @param array $options
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -1125,9 +1127,9 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Specifies a route that is only available to OPTIONS requests.
 	 *
-	 * @param $from
-	 * @param $to
-	 * @param array $options
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -1143,9 +1145,9 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Specifies a route that is only available to command-line requests.
 	 *
-	 * @param $from
-	 * @param $to
-	 * @param array $options
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 *
 	 * @return \CodeIgniter\Router\RouteCollectionInterface
 	 */
@@ -1331,10 +1333,10 @@ class RouteCollection implements RouteCollectionInterface
 	 * the request method(s) that this route will work for. They can be separated
 	 * by a pipe character "|" if there is more than one.
 	 *
-	 * @param string     $verb
-	 * @param string     $from
-	 * @param $to
-	 * @param array|null $options
+	 * @param string       $verb
+	 * @param string       $from
+	 * @param string|array $to
+	 * @param array        $options
 	 */
 	protected function create(string $verb, string $from, $to, array $options = null)
 	{
@@ -1344,7 +1346,7 @@ class RouteCollection implements RouteCollectionInterface
 		$from = filter_var($prefix . $from, FILTER_SANITIZE_STRING);
 
 		// While we want to add a route within a group of '/',
-		// it doens't work with matching, so remove them...
+		// it doesn't work with matching, so remove them...
 		if ($from !== '/')
 		{
 			$from = trim($from, '/');
@@ -1447,11 +1449,11 @@ class RouteCollection implements RouteCollectionInterface
 	 * Compares the subdomain(s) passed in against the current subdomain
 	 * on this page request.
 	 *
-	 * @param $subdomains
+	 * @param mixed $subdomains
 	 *
 	 * @return boolean
 	 */
-	private function checkSubdomains($subdomains)
+	private function checkSubdomains($subdomains): bool
 	{
 		// CLI calls can't be on subdomain.
 		if (! isset($_SERVER['HTTP_HOST']))
@@ -1536,4 +1538,18 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Reset the routes, so that a FeatureTestCase can provide the
+	 * explicit ones needed for it.
+	 */
+	public function resetRoutes()
+	{
+		$this->routes = ['*' => []];
+		foreach ($this->defaultHTTPMethods as $verb)
+		{
+			$this->routes[$verb] = [];
+		}
+	}
+
 }

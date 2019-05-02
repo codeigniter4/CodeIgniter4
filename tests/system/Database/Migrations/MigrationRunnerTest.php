@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Database;
 
+use CodeIgniter\Exceptions\ConfigException;
 use Config\Migrations;
 use org\bovigo\vfs\vfsStream;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -216,9 +217,36 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 	}
 
 	/**
+	 * @expectedException        \CodeIgniter\Exceptions\ConfigException
+	 * @expectedExceptionMessage Migrations have been loaded but are disabled or setup incorrectly.
+	 */
+	public function testMigrationThrowsDisabledException()
+	{
+		$config          = $this->config;
+		$config->type    = 'sequential';
+		$config->enabled = false;
+		$runner          = new MigrationRunner($config);
+
+		$runner->setSilent(false);
+
+		$runner = $runner->setPath($this->start);
+
+		vfsStream::copyFromFileSystem(
+			TESTPATH . '_support/Database/SupportMigrations',
+			$this->root
+		);
+
+		$this->expectException(ConfigException::class);
+		$this->expectExceptionMessage('Migrations have been loaded but are disabled or setup incorrectly.');
+
+		$runner->version(1);
+	}
+
+	/**
 	 * @expectedException        \RuntimeException
 	 * @expectedExceptionMessage There is a gap in the migration sequence near version number:  002
 	 */
+
 	public function testVersionThrowsMigrationGapException()
 	{
 		$config       = $this->config;
@@ -231,10 +259,10 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$version = $runner->version(0);
 
-		$this->assertEquals($version, '002');
+		$this->assertFalse($version);
 	}
 
-	public function testVersionReturnsTrueWhenNothingToDo()
+	public function testVersionReturnsFalseWhenNothingToDo()
 	{
 		$config       = $this->config;
 		$config->type = 'sequential';
@@ -246,7 +274,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$version = $runner->version(0);
 
-		$this->assertTrue($version);
+		$this->assertFalse($version);
 	}
 
 	/**
@@ -266,7 +294,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$version = $runner->version(1);
 
-		$this->assertEquals('001', $version);
+		$this->assertFalse($version);
 	}
 
 	public function testVersionReturnsUpDownSuccess()
@@ -290,7 +318,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$version = $runner->version(0);
 
-		$this->assertTrue($version);
+		$this->assertEquals('000', $version);
 		$this->assertFalse(db_connect()->tableExists('foo'));
 	}
 
@@ -312,6 +340,26 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$this->assertEquals('001', $version);
 		$this->assertTrue(db_connect()->tableExists('foo'));
+	}
+
+	public function testVersionReturnsDownSuccess()
+	{
+		$config       = $this->config;
+		$config->type = 'sequential';
+		$runner       = new MigrationRunner($config);
+		$runner->setSilent(false);
+
+		$runner = $runner->setPath($this->start);
+
+		vfsStream::copyFromFileSystem(
+			TESTPATH . '_support/Database/SupportMigrations',
+			$this->root
+		);
+
+		$version = $runner->version(0);
+
+		$this->assertEquals('000', $version);
+		$this->assertFalse(db_connect()->tableExists('foo'));
 	}
 
 	public function testCurrentSuccess()

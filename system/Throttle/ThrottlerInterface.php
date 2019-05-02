@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Throttle;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -36,6 +35,11 @@
  * @filesource
  */
 
+namespace CodeIgniter\Throttle;
+
+/**
+ * Expected behavior of a Throttler
+ */
 interface ThrottlerInterface
 {
 
@@ -67,5 +71,5 @@ interface ThrottlerInterface
 	 *
 	 * @return integer
 	 */
-	public function getTokenTime();
+	public function getTokenTime(): int;
 }

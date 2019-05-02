@@ -1,6 +1,5 @@
 <?php
 
-namespace CodeIgniter\HTTP;
 
 /**
  * CodeIgniter
@@ -38,6 +37,8 @@ namespace CodeIgniter\HTTP;
  * @filesource
  */
 
+namespace CodeIgniter\HTTP;
+
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 /**
@@ -67,7 +68,7 @@ class Negotiate
 	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface $request
 	 */
-	public function __construct(\CodeIgniter\HTTP\RequestInterface $request = null)
+	public function __construct(RequestInterface $request = null)
 	{
 		if (! is_null($request))
 		{
@@ -84,7 +85,7 @@ class Negotiate
 	 *
 	 * @return $this
 	 */
-	public function setRequest(\CodeIgniter\HTTP\RequestInterface $request)
+	public function setRequest(RequestInterface $request)
 	{
 		$this->request = $request;
 
@@ -252,7 +253,7 @@ class Negotiate
 	 *
 	 * @return array
 	 */
-	public function parseHeader(string $header)
+	public function parseHeader(string $header): array
 	{
 		$results    = [];
 		$acceptable = explode(',', $header);
@@ -340,7 +341,7 @@ class Negotiate
 	 * @param  boolean $enforceTypes
 	 * @return boolean
 	 */
-	protected function match(array $acceptable, string $supported, bool $enforceTypes = false)
+	protected function match(array $acceptable, string $supported, bool $enforceTypes = false): bool
 	{
 		$supported = $this->parseHeader($supported);
 		if (is_array($supported) && count($supported) === 1)

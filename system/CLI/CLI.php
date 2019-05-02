@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\CLI;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\CLI;
 
 use CodeIgniter\CLI\Exceptions\CLIException;
 
@@ -138,6 +140,15 @@ class CLI
 	 */
 	protected static $options = [];
 
+	/**
+	 * Helps track internally whether the last
+	 * output was a "write" or a "print" to
+	 * keep the output clean and as expected.
+	 *
+	 * @var string
+	 */
+	protected static $lastWrite;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -204,13 +215,13 @@ class CLI
 	 * $email = CLI::prompt('What is your email?', null, 'required|valid_email');
 	 *
 	 * @param string       $field      Output "field" question
-	 * @param string|array $options    String to a defaul value, array to a list of options (the first option will be the default value)
+	 * @param string|array $options    String to a default value, array to a list of options (the first option will be the default value)
 	 * @param string       $validation Validation rules
 	 *
 	 * @return             string                   The user input
 	 * @codeCoverageIgnore
 	 */
-	public static function prompt($field, $options = null, $validation = null): string
+	public static function prompt(string $field, $options = null, string $validation = null): string
 	{
 		$extra_output = '';
 		$default      = '';
@@ -270,7 +281,7 @@ class CLI
 	 * @return             boolean
 	 * @codeCoverageIgnore
 	 */
-	protected static function validate($field, $value, $rules)
+	protected static function validate(string $field, string $value, string $rules): bool
 	{
 		$validation = \Config\Services::validation(null, false);
 		$validation->setRule($field, null, $rules);
@@ -289,7 +300,27 @@ class CLI
 	//--------------------------------------------------------------------
 
 	/**
-	 * Outputs a string to the cli.
+	 * Outputs a string to the CLI without any surrounding newlines.
+	 * Useful for showing repeating elements on a single line.
+	 *
+	 * @param string      $text
+	 * @param string|null $foreground
+	 * @param string|null $background
+	 */
+	public static function print(string $text = '', string $foreground = null, string $background = null)
+	{
+		if ($foreground || $background)
+		{
+			$text = static::color($text, $foreground, $background);
+		}
+
+		static::$lastWrite = null;
+
+		fwrite(STDOUT, $text);
+	}
+
+	/**
+	 * Outputs a string to the cli on it's own line.
 	 *
 	 * @param string $text       The text to output
 	 * @param string $foreground
@@ -300,6 +331,12 @@ class CLI
 		if ($foreground || $background)
 		{
 			$text = static::color($text, $foreground, $background);
+		}
+
+		if (static::$lastWrite !== 'write')
+		{
+			$text              = PHP_EOL . $text;
+			static::$lastWrite = 'write';
 		}
 
 		fwrite(STDOUT, $text . PHP_EOL);
@@ -380,10 +417,12 @@ class CLI
 
 	/**
 	 * if operating system === windows
+	 *
+	 * @return boolean
 	 */
-	public static function isWindows()
+	public static function isWindows(): bool
 	{
-			   return stripos(PHP_OS, 'WIN') === 0;
+		return stripos(PHP_OS, 'WIN') === 0;
 	}
 
 	//--------------------------------------------------------------------
@@ -436,7 +475,7 @@ class CLI
 	 *
 	 * @return string    The color coded string
 	 */
-	public static function color(string $text, string $foreground, string $background = null, string $format = null)
+	public static function color(string $text, string $foreground, string $background = null, string $format = null): string
 	{
 		if (static::isWindows() && ! isset($_SERVER['ANSICON']))
 		{
@@ -482,8 +521,12 @@ class CLI
 	 *
 	 * @return integer
 	 */
-	public static function strlen(string $string): int
+	public static function strlen(?string $string): int
 	{
+		if (is_null($string))
+		{
+			return 0;
+		}
 		foreach (static::$foreground_colors as $color)
 		{
 			$string = strtr($string, ["\033[" . $color . 'm' => '']);
@@ -551,8 +594,8 @@ class CLI
 	 * Displays a progress bar on the CLI. You must call it repeatedly
 	 * to update it. Set $thisStep = false to erase the progress bar.
 	 *
-	 * @param integer $thisStep
-	 * @param integer $totalSteps
+	 * @param integer|boolean $thisStep
+	 * @param integer         $totalSteps
 	 */
 	public static function showProgress($thisStep = 1, int $totalSteps = 10)
 	{
@@ -655,7 +698,7 @@ class CLI
 	 * Parses the command line it was called from and collects all
 	 * options and valid segments.
 	 *
-	 * I tried to use getopt but had it fail occassionally to find any
+	 * I tried to use getopt but had it fail occasionally to find any
 	 * options but argc has always had our back. We don't have all of the power
 	 * of getopt but this does us just fine.
 	 */
@@ -706,7 +749,7 @@ class CLI
 	 *
 	 * @return string
 	 */
-	public static function getURI()
+	public static function getURI(): string
 	{
 		return implode('/', static::$segments);
 	}
@@ -743,7 +786,7 @@ class CLI
 	 *
 	 * @return array
 	 */
-	public static function getSegments()
+	public static function getSegments(): array
 	{
 		return static::$segments;
 	}
@@ -779,7 +822,7 @@ class CLI
 	 *
 	 * @return array
 	 */
-	public static function getOptions()
+	public static function getOptions(): array
 	{
 		return static::$options;
 	}
@@ -819,12 +862,12 @@ class CLI
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns a well formated table
+	 * Returns a well formatted table
 	 *
 	 * @param array $tbody List of rows
 	 * @param array $thead List of columns
 	 *
-	 * @return string
+	 * @return void
 	 */
 	public static function table(array $tbody, array $thead = [])
 	{

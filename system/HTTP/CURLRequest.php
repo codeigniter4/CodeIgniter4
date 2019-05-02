@@ -1,6 +1,5 @@
 <?php
 
-namespace CodeIgniter\HTTP;
 
 /**
  * CodeIgniter
@@ -37,6 +36,8 @@ namespace CodeIgniter\HTTP;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
@@ -398,7 +399,7 @@ class CURLRequest extends Request
 	 *
 	 * @return string
 	 */
-	public function getMethod($upper = false): string
+	public function getMethod(bool $upper = false): string
 	{
 		return ($upper) ? strtoupper($this->method) : strtolower($this->method);
 	}
@@ -513,9 +514,9 @@ class CURLRequest extends Request
 	 * @param string $method
 	 * @param array  $curl_options
 	 *
-	 * @return array|integer
+	 * @return array
 	 */
-	protected function applyMethod($method, array $curl_options): array
+	protected function applyMethod(string $method, array $curl_options): array
 	{
 		$method = strtoupper($method);
 
@@ -762,6 +763,7 @@ class CURLRequest extends Request
 			$json = json_encode($config['json']);
 			$this->setBody($json);
 			$this->setHeader('Content-Type', 'application/json');
+			$this->setHeader('Content-Length', (string) strlen($json));
 		}
 
 		// version

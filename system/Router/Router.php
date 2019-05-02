@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Router;
+<?php
 
 /**
  * CodeIgniter
@@ -36,16 +36,11 @@
  * @filesource
  */
 
+namespace CodeIgniter\Router;
+
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\Exceptions\RouterException;
-
-/**
- * Routing exception
- */
-class RedirectException extends \Exception
-{
-
-}
 
 /**
  * Request router.
@@ -152,15 +147,11 @@ class Router implements RouterInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Scans the URI and attempts to match the current URI to the
-	 * one of the defined routes in the RouteCollection.
+	 * @param string|null $uri
 	 *
-	 * This is the main entry point when using the Router.
-	 *
-	 * @param string $uri
-	 *
-	 * @return mixed
-	 * @throws \CodeIgniter\Router\RedirectException
+	 * @return mixed|string
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
+	 * @throws \CodeIgniter\Exceptions\PageNotFoundException
 	 */
 	public function handle(string $uri = null)
 	{
@@ -392,7 +383,7 @@ class Router implements RouterInterface
 	 * @param string $uri The URI path to compare against the routes
 	 *
 	 * @return boolean Whether the route was matched or not.
-	 * @throws \CodeIgniter\Router\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 */
 	protected function checkRoutes(string $uri): bool
 	{
@@ -411,10 +402,14 @@ class Router implements RouterInterface
 		// Loop through the route array looking for wildcards
 		foreach ($routes as $key => $val)
 		{
+			$key = $key === '/'
+				? $key
+				: ltrim($key, '/ ');
+
 			// Are we dealing with a locale?
 			if (strpos($key, '{locale}') !== false)
 			{
-				$localeSegment = array_search('{locale}', explode('/', $key));
+				$localeSegment = array_search('{locale}', preg_split('/[\/]*((^[a-zA-Z0-9])|\(([^()]*)\))*[\/]+/m', $key));
 
 				// Replace it with a regex so it
 				// will actually match.
@@ -471,13 +466,21 @@ class Router implements RouterInterface
 				}
 				elseif (strpos($val, '/') !== false)
 				{
-					$val = str_replace('/', '\\', $val);
+					[
+						$controller,
+						$method,
+					] = explode( '::', $val );
+
+					// Only replace slashes in the controller, not in the method.
+					$controller = str_replace('/', '\\', $controller);
+
+					$val = $controller . '::' . $method;
 				}
 
 				// Is this route supposed to redirect to another?
 				if ($this->collection->isRedirect($key))
 				{
-					throw new RedirectException($val, $this->collection->getRedirectCode($key));
+					throw RedirectException::forUnableToRedirect($val, $this->collection->getRedirectCode($key));
 				}
 
 				$this->setRequest(explode('/', $val));
@@ -559,9 +562,10 @@ class Router implements RouterInterface
 	 *
 	 * @return array URI segments
 	 */
-	protected function validateRequest(array $segments)
+	protected function validateRequest(array $segments): array
 	{
 		$segments = array_filter($segments);
+		$segments = array_values($segments);
 
 		$c                  = count($segments);
 		$directory_override = isset($this->directory);
@@ -594,7 +598,7 @@ class Router implements RouterInterface
 	 * @param string|null   $dir
 	 * @param boolean|false $append
 	 */
-	protected function setDirectory(string $dir = null, $append = false)
+	protected function setDirectory(string $dir = null, bool $append = false)
 	{
 		$dir = ucfirst($dir);
 

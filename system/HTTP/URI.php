@@ -1,7 +1,4 @@
 <?php
-namespace CodeIgniter\HTTP;
-
-use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 /**
  * CodeIgniter
@@ -37,6 +34,14 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
  * @filesource
+ */
+
+namespace CodeIgniter\HTTP;
+
+use CodeIgniter\HTTP\Exceptions\HTTPException;
+
+/**
+ * Abstraction for a uniform resource identifier (URI).
  */
 class URI
 {
@@ -74,49 +79,49 @@ class URI
 	/**
 	 * The URI Scheme.
 	 *
-	 * @var
+	 * @var string
 	 */
 	protected $scheme = 'http';
 
 	/**
 	 * URI User Info
 	 *
-	 * @var
+	 * @var string
 	 */
 	protected $user;
 
 	/**
 	 * URI User Password
 	 *
-	 * @var
+	 * @var string
 	 */
 	protected $password;
 
 	/**
 	 * URI Host
 	 *
-	 * @var
+	 * @var string
 	 */
 	protected $host;
 
 	/**
 	 * URI Port
 	 *
-	 * @var
+	 * @var integer
 	 */
 	protected $port;
 
 	/**
 	 * URI path.
 	 *
-	 * @var
+	 * @var string
 	 */
 	protected $path;
 
 	/**
 	 * The name of any fragment.
 	 *
-	 * @var
+	 * @var string
 	 */
 	protected $fragment = '';
 
@@ -283,7 +288,7 @@ class URI
 	 * The trailing "@" character is not part of the user information and MUST
 	 * NOT be added.
 	 *
-	 * @return string The URI user information, in "username[:password]" format.
+	 * @return string|null The URI user information, in "username[:password]" format.
 	 */
 	public function getUserInfo()
 	{
@@ -327,7 +332,7 @@ class URI
 	 * @see    http://tools.ietf.org/html/rfc3986#section-3.2.2
 	 * @return string The URI host.
 	 */
-	public function getHost()
+	public function getHost(): string
 	{
 		return $this->host;
 	}
@@ -526,7 +531,7 @@ class URI
 	 * Allow the URI to be output as a string by simply casting it to a string
 	 * or echoing out.
 	 */
-	public function __toString()
+	public function __toString(): string
 	{
 		return static::createURIString(
 						$this->getScheme(), $this->getAuthority(), $this->getPath(), // Absolute URIs should use a "/" for an empty path
@@ -539,15 +544,15 @@ class URI
 	/**
 	 * Builds a representation of the string from the component parts.
 	 *
-	 * @param $scheme
-	 * @param $authority
-	 * @param $path
-	 * @param $query
-	 * @param $fragment
+	 * @param string $scheme
+	 * @param string $authority
+	 * @param string $path
+	 * @param string $query
+	 * @param string $fragment
 	 *
 	 * @return string
 	 */
-	public static function createURIString($scheme = null, $authority = null, $path = null, $query = null, $fragment = null)
+	public static function createURIString(string $scheme = null, string $authority = null, string $path = null, string $query = null, string $fragment = null): string
 	{
 		$uri = '';
 		if (! empty($scheme))
@@ -778,7 +783,7 @@ class URI
 	 *
 	 * @return string
 	 */
-	protected function decode(string $value)
+	protected function decode(string $value): string
 	{
 		if (empty($value))
 		{
@@ -838,7 +843,7 @@ class URI
 	 * Adds a single new element to the query vars.
 	 *
 	 * @param string $key
-	 * @param null   $value
+	 * @param mixed  $value
 	 *
 	 * @return $this
 	 */
@@ -924,9 +929,9 @@ class URI
 	 *
 	 * @param $path
 	 *
-	 * @return mixed|string
+	 * @return string
 	 */
-	protected function filterPath(string $path = null)
+	protected function filterPath(string $path = null): string
 	{
 		$orig = $path;
 
@@ -962,9 +967,9 @@ class URI
 	/**
 	 * Saves our parts from a parse_url call.
 	 *
-	 * @param $parts
+	 * @param array $parts
 	 */
-	protected function applyParts($parts)
+	protected function applyParts(array $parts)
 	{
 		if (! empty($parts['host']))
 		{
@@ -1107,7 +1112,7 @@ class URI
 	 *
 	 * @return string
 	 */
-	protected function mergePaths(URI $base, URI $reference)
+	protected function mergePaths(URI $base, URI $reference): string
 	{
 		if (! empty($base->getAuthority()) && empty($base->getPath()))
 		{

@@ -17,9 +17,9 @@ class FrameworkException extends \RuntimeException implements ExceptionInterface
 		return new static(lang('Core.invalidFile', [$path]));
 	}
 
-	public static function forCopyError()
+	public static function forCopyError(string $path)
 	{
-		return new static(lang('Core.copyError'));
+		return new static(lang('Core.copyError', [$path]));
 	}
 
 	public static function forMissingExtension(string $extension)

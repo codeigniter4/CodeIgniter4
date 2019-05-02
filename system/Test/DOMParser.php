@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Test;
+<?php
 
 /**
  * CodeIgniter
@@ -36,6 +36,11 @@
  * @filesource
  */
 
+namespace CodeIgniter\Test;
+
+/**
+ * Load a response into a DOMDocument for testing assertions based on that
+ */
 class DOMParser
 {
 	/**
@@ -47,7 +52,10 @@ class DOMParser
 	{
 		if (! extension_loaded('DOM'))
 		{
+			// always there in travis-ci
+			// @codeCoverageIgnoreStart
 			throw new \BadMethodCallException('DOM extension is required, but not currently loaded.');
+			// @codeCoverageIgnoreEnd
 		}
 
 		$this->dom = new \DOMDocument('1.0', 'utf-8');
@@ -80,7 +88,11 @@ class DOMParser
 
 		if (! $this->dom->loadHTML($content))
 		{
+			// unclear how we would get here, given that we are trapping libxml errors
+			// @codeCoverageIgnoreStart
+			libxml_clear_errors();
 			throw new \BadMethodCallException('Invalid HTML');
+			// @codeCoverageIgnoreEnd
 		}
 
 		// ignore the whitespace.
@@ -248,7 +260,7 @@ class DOMParser
 		{
 			foreach ($selector['attr'] as $key => $value)
 			{
-				$path .= "[{$key}={$value}]";
+				$path .= "[@{$key}=\"{$value}\"]";
 			}
 		}
 

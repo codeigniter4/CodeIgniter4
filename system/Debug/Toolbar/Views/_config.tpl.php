@@ -44,17 +44,5 @@
 			<td>Content Security Policy Enabled:</td>
 			<td>{ if $cspEnabled } Yes { else } No { endif }</td>
 		</tr>
-		<tr>
-			<td>Salt Set?:</td>
-			<td>
-				{ if $salt == '' }
-					<div class="warning">
-						You have not defined an application-wide $salt. This could lead to a less secure site.
-					</div>
-				{ else }
-					Set
-				{ endif }
-			</td>
-		</tr>
 	</tbody>
 </table>

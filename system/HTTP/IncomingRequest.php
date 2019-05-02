@@ -1,6 +1,5 @@
 <?php
 
-namespace CodeIgniter\HTTP;
 
 /**
  * CodeIgniter
@@ -37,6 +36,8 @@ namespace CodeIgniter\HTTP;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\FileCollection;
@@ -148,11 +149,11 @@ class IncomingRequest extends Request
 	 * Constructor
 	 *
 	 * @param object                      $config
-	 * @param URI                         $uri
-	 * @param string                      $body
+	 * @param \CodeIgniter\HTTP\URI       $uri
+	 * @param string|null                 $body
 	 * @param \CodeIgniter\HTTP\UserAgent $userAgent
 	 */
-	public function __construct($config, $uri = null, $body = 'php://input', UserAgent $userAgent)
+	public function __construct($config, URI $uri = null, $body = 'php://input', UserAgent $userAgent)
 	{
 		// Get our body from php://input
 		if ($body === 'php://input')
@@ -320,9 +321,9 @@ class IncomingRequest extends Request
 	 * to grab data from the request object and can be used in lieu of the
 	 * other get* methods in most cases.
 	 *
-	 * @param null $index
-	 * @param null $filter
-	 * @param null $flags
+	 * @param string|array|null $index
+	 * @param integer|null      $filter Filter constant
+	 * @param mixed             $flags
 	 *
 	 * @return mixed
 	 */
@@ -528,9 +529,9 @@ class IncomingRequest extends Request
 	 * Returns an array of all files that have been uploaded with this
 	 * request. Each file is represented by an UploadedFile instance.
 	 *
-	 * @return Files\FileCollection
+	 * @return array
 	 */
-	public function getFiles()
+	public function getFiles(): array
 	{
 		if (is_null($this->files))
 		{
@@ -570,7 +571,7 @@ class IncomingRequest extends Request
 	 * @param string $protocol
 	 * @param string $baseURL
 	 */
-	protected function detectURI($protocol, $baseURL)
+	protected function detectURI(string $protocol, string $baseURL)
 	{
 		$this->uri->setPath($this->detectPath($protocol));
 
@@ -612,7 +613,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return string
 	 */
-	public function detectPath($protocol = '')
+	public function detectPath(string $protocol = ''): string
 	{
 		if (empty($protocol))
 		{
@@ -648,7 +649,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return string
 	 */
-	public function negotiate(string $type, array $supported, bool $strictMatch = false)
+	public function negotiate(string $type, array $supported, bool $strictMatch = false): string
 	{
 		if (is_null($this->negotiator))
 		{
@@ -773,7 +774,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return string
 	 */
-	protected function removeRelativeDirectory($uri)
+	protected function removeRelativeDirectory(string $uri): string
 	{
 		$uris = [];
 		$tok  = strtok($uri, '/');

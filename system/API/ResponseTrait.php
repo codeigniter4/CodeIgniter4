@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\API;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\API;
 
 use Config\Format;
 use CodeIgniter\HTTP\Response;
@@ -95,9 +97,9 @@ trait ResponseTrait
 	 * Provides a single, simple method to return an API response, formatted
 	 * to match the requested format, with proper content-type and status code.
 	 *
-	 * @param null    $data
-	 * @param integer $status
-	 * @param string  $message
+	 * @param array|string|null $data
+	 * @param integer           $status
+	 * @param string            $message
 	 *
 	 * @return mixed
 	 */

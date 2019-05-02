@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Debug\Toolbar\Collectors;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\Config\Services;
 
@@ -74,7 +76,7 @@ class Timers extends BaseCollector
 	 * Child classes should implement this to return the timeline data
 	 * formatted for correct usage.
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	protected function formatTimelineData(): array
 	{

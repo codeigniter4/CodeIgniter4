@@ -661,13 +661,17 @@ alpha_numeric           No          Fails if field contains anything other than 
 alpha_numeric_space     No          Fails if field contains anything other than alpha-numeric characters, numbers or space.
 decimal                 No          Fails if field contains anything other than a decimal number.
 differs                 Yes         Fails if field does not differ from the one in the parameter.                                   differs[field_name]
-exact_length            Yes         Fails if field is not exactly the parameter value. One or more comma-separated values.                                             exact_length[5] or exact_length[5,8,12]
+exact_length            Yes         Fails if field is not exactly the parameter value. One or more comma-separated values.          exact_length[5] or exact_length[5,8,12]
 greater_than            Yes         Fails if field is less than or equal to the parameter value or not numeric.                     greater_than[8]
 greater_than_equal_to   Yes         Fails if field is less than the parameter value, or not numeric.                                greater_than_equal_to[5]
+if_exist                No          If this rule is present, validation will only return possible errors if the field key exists,
+                                    regardless of its value.
 in_list                 Yes         Fails if field is not within a predetermined list.                                              in_list[red,blue,green]
 integer                 No          Fails if field contains anything other than an integer.
 is_natural              No          Fails if field contains anything other than a natural number: 0, 1, 2, 3, etc.
 is_natural_no_zero      No          Fails if field contains anything other than a natural number, except zero: 1, 2, 3, etc.
+is_unique               Yes         Checks if this field value exists in the database. Optionally set a                             is_unique[table.field,ignore_field,ignore_value]
+                                    column and value to ignore, useful when updating records to ignore itself.
 less_than               Yes         Fails if field is greater than or equal to the parameter value or not numeric.                  less_than[8]
 less_then_equal_to      Yes         Fails if field is greater than the parameter value or not numeric.                              less_than_equal_to[8]
 matches                 Yes         The value must match the value of the field in the parameter.                                   matches[field]
@@ -675,25 +679,22 @@ max_length              Yes         Fails if field is longer than the parameter 
 min_length              Yes         Fails if field is shorter than the parameter value.                                             min_length[3]
 numeric                 No          Fails if field contains anything other than numeric characters.
 regex_match             Yes         Fails if field does not match the regular expression.                                           regex_match[/regex/]
-if_exist                No          If this rule is present, validation will only return possible errors if the field key exists,
-                                    regardless of its value.
 permit_empty            No          Allows the field to receive an empty array, empty string, null or false.
 required                No          Fails if the field is an empty array, empty string, null or false.
-required_with           Yes         The field is required if any of the fields in the parameter are set.                            required_with[field1,field2]
-required_without        Yes         The field is required when any of the fields in the parameter are not set.                      required_without[field1,field2]
-is_unique               Yes         Checks if this field value exists in the database. Optionally set a                             is_unique[table.field,ignore_field,ignore_value]
-                                    column and value to ignore, useful when updating records to ignore itself.
+required_with           Yes         The field is required when any of the other required fields are present in the data.            required_with[field1,field2]
+required_without        Yes         The field is required when all of the other fields are present in the data but not required.    required_without[field1,field2]
+string                  No          A generic alternative to the alpha* rules that confirms the element is a string
 timezone                No          Fails if field does match a timezone per ``timezone_identifiers_list``
 valid_base64            No          Fails if field contains anything other than valid Base64 characters.
 valid_json              No          Fails if field does not contain a valid JSON string.
 valid_email             No          Fails if field does not contain a valid email address.
 valid_emails            No          Fails if any value provided in a comma separated list is not a valid email.
-valid_ip                No          Fails if the supplied IP is not valid. Accepts an optional parameter of ‘ipv4’ or               valid_ip[ipv6]
+valid_ip                No          Fails if the supplied IP is not valid. Accepts an optional parameter of ‘ipv4’ or                valid_ip[ipv6]
                                     ‘ipv6’ to specify an IP format.
 valid_url               No          Fails if field does not contain a valid URL.
-valid_date              No          Fails if field does not contain a valid date. Accepts an optional parameter                     valid_date[d/m/Y]
+valid_date              No          Fails if field does not contain a valid date. Accepts an optional parameter                      valid_date[d/m/Y]
                                     to matches a date format.
-valid_cc_number         Yes         Verifies that the credit card number matches the format used by the specified provider.         valid_cc_number[amex]
+valid_cc_number         Yes         Verifies that the credit card number matches the format used by the specified provider.          valid_cc_number[amex]
                                     Current supported providers are: American Express (amex), China Unionpay (unionpay),
                                     Diners Club CarteBlance (carteblanche), Diners Club (dinersclub), Discover Card (discover),
                                     Interpayment (interpayment), JCB (jcb), Maestro (maestro), Dankort (dankort), NSPK MIR (mir),

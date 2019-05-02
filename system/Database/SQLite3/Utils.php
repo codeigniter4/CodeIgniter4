@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Database\SQLite3;
+<?php
 
 /**
  * CodeIgniter
@@ -36,10 +36,15 @@
  * @filesource
  */
 
+namespace CodeIgniter\Database\SQLite3;
+
+use CodeIgniter\Database\BaseUtils;
+use CodeIgniter\Database\Exceptions\DatabaseException;
+
 /**
  * Utils for SQLite3
  */
-class Utils extends \CodeIgniter\Database\BaseUtils
+class Utils extends BaseUtils
 {
 
 	/**

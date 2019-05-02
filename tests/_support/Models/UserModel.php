@@ -17,5 +17,11 @@ class UserModel extends Model
 
 	protected $useSoftDeletes = true;
 
-	protected $dateFormat = 'integer';
+	protected $dateFormat = 'datetime';
+
+	public $name = '';
+
+	public $email = '';
+
+	public $country = '';
 }

@@ -1,5 +1,4 @@
 <?php
-namespace CodeIgniter\HTTP;
 
 /**
  * CodeIgniter
@@ -36,6 +35,8 @@ namespace CodeIgniter\HTTP;
  * @since      Version 3.0.0
  * @filesource
  */
+
+namespace CodeIgniter\HTTP;
 
 /**
  * Class ContentSecurityPolicy
@@ -534,9 +535,9 @@ class ContentSecurityPolicy
 	 *
 	 * @return $this
 	 */
-	public function setReportURI($uri)
+	public function setReportURI(string $uri)
 	{
-		$this->reportURI = (string) $uri;
+		$this->reportURI = $uri;
 
 		return $this;
 	}
