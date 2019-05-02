@@ -178,14 +178,14 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return string|false	Serialized session data
 	 */
-	public function read($sessionID)
+	public function read($sessionID): string
 	{
 		if (isset($this->redis) && $this->lockSession($sessionID))
 		{
 			// Needed by write() to detect session_regenerate_id() calls
 			$this->sessionID = $sessionID;
 
-			$session_data = $this->redis->get($this->keyPrefix . $sessionID);
+			$session_data                               = $this->redis->get($this->keyPrefix . $sessionID);
 			is_string($session_data) ? $this->keyExists = true : $session_data = '';
 
 			$this->fingerprint = md5($session_data);
@@ -193,7 +193,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 			return $session_data;
 		}
 
-		return false;
+		return '';
 	}
 
 	//--------------------------------------------------------------------
