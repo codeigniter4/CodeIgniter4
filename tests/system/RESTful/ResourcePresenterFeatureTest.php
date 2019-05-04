@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\Resource;
+namespace CodeIgniter\RESTful;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\UserAgent;

@@ -1,7 +1,7 @@
 <?php
-namespace Tests\Support\Resource;
+namespace Tests\Support\RESTful;
 
-use CodeIgniter\Resource\ResourceController;
+use CodeIgniter\RESTful\ResourceController;
 
 /**
  * An extendable controller to provide a RESTful API for a resource.

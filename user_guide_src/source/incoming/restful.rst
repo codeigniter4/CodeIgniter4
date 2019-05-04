@@ -5,6 +5,20 @@ RESTful Resource Handling
     :local:
     :depth: 2
 
+Representational State Transfer (REST) is an architectural style for
+distributed applications, first described by Roy Fielding in his
+2000 PhD dissertation, `Architectural Styles and
+the Design of Network-based Software Architectures 
+<https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm>`_.
+That might be a bit of a dry read, and you might find Martin Fowler's
+`Richardson Maturity Model <https://martinfowler.com/articles/richardsonMaturityModel.html>`_ 
+a gentler introduction.
+
+REST has been interpreted, and mis-interpreted, in more ways than most
+software architectures, and it might be easier to say that the more
+of Roy Fielding's principles that you embrace in an architecture, the
+most "RESTful" your application would be considered.
+
 CodeIgniter makes it easy to create RESTful APIs for your resources,
 with its resource routes and `ResourceController`.
 
@@ -87,7 +101,7 @@ implement those methods that you want handled.::
 
 	<?php namespace App\Controllers;
 
-        use CodeIgniter\Resource\ResourceController;
+        use CodeIgniter\RESTful\ResourceController;
 
 	class Photos extends ResourceController
         {
@@ -133,7 +147,7 @@ Its usage is similar to the resosurce routing::
     $routes->get('photos/remove/(:segment)',   'Photos::remove/$1');
     $routes->post('photos/delete/(:segment)',      'Photos::update/$1');
 
-You would not have routes for `photos` for both a resousrce and a presenter
+You would not have routes for `photos` for both a resource and a presenter
 controller. You need to distinguish them, for instance::
 
     $routes->resource('api/photo');
@@ -190,7 +204,7 @@ implement those methods that you want handled.::
 
 	<?php namespace App\Controllers;
 
-        use CodeIgniter\Resource\ResourcePresenter;
+        use CodeIgniter\RESTful\ResourcePresenter;
 
 	class Photos extends ResourcePresenter
         {
