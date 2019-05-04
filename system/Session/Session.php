@@ -31,7 +31,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -590,8 +590,8 @@ class Session implements SessionInterface
 	 * Magic method to set variables in the session by simply calling
 	 *  $session->foo = bar;
 	 *
-	 * @param string        $key    Identifier of the session property to set.
-	 * @param string|array  $value
+	 * @param string       $key   Identifier of the session property to set.
+	 * @param string|array $value
 	 */
 	public function __set(string $key, $value)
 	{
@@ -806,7 +806,7 @@ class Session implements SessionInterface
 	 * Returns either a single piece of tempdata, or all temp data currently
 	 * in the session.
 	 *
-	 * @param  string   $key   Session data key
+	 * @param  string $key Session data key
 	 * @return mixed  Session data value or null if not found.
 	 */
 	public function getTempdata(string $key = null)

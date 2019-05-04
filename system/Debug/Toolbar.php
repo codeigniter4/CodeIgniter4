@@ -31,7 +31,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -221,9 +221,9 @@ class Toolbar
 	protected function renderTimeline(array $collectors, $startTime, int $segmentCount, int $segmentDuration, array &$styles): string
 	{
 		$displayTime = $segmentCount * $segmentDuration;
-		$rows = $this->collectTimelineData($collectors);
-		$output = '';
-		$styleCount = 0;
+		$rows        = $this->collectTimelineData($collectors);
+		$output      = '';
+		$styleCount  = 0;
 
 		foreach ($rows as $row)
 		{
@@ -237,9 +237,9 @@ class Toolbar
 			$length = (($row['duration'] * 1000) / $displayTime) * 100;
 
 			$styles['debug-bar-timeline-' . $styleCount] = "left: {$offset}%; width: {$length}%;";
-			$output .= "<span class='timer debug-bar-timeline-{$styleCount}' title='" . number_format($length, 2) . "%'></span>";
-			$output .= '</td>';
-			$output .= '</tr>';
+			$output                                     .= "<span class='timer debug-bar-timeline-{$styleCount}' title='" . number_format($length, 2) . "%'></span>";
+			$output                                     .= '</td>';
+			$output                                     .= '</tr>';
 
 			$styleCount++;
 		}

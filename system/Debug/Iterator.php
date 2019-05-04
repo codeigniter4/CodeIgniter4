@@ -31,7 +31,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -65,8 +65,8 @@ class Iterator
 	 * Tests are simply closures that the user can define any sequence of
 	 * things to happen during the test.
 	 *
-	 * @param string    $name
-	 * @param \Closure  $closure
+	 * @param string   $name
+	 * @param \Closure $closure
 	 *
 	 * @return $this
 	 */

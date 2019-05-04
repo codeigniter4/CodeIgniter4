@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT  MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -945,13 +945,13 @@ if (! function_exists('is_really_writable'))
 	 * the file, based on the read-only attribute. is_writable() is also unreliable
 	 * on Unix servers if safe_mode is on.
 	 *
-	 * @link               https://bugs.php.net/bug.php?id=54709
+	 * @link https://bugs.php.net/bug.php?id=54709
 	 *
 	 * @param string $file
 	 *
 	 * @return boolean
 	 *
-	 * @throws \Exception
+	 * @throws             \Exception
 	 * @codeCoverageIgnore Not practical to test, as travis runs on linux
 	 */
 	function is_really_writable(string $file): bool

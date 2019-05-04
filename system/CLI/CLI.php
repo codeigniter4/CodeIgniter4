@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -517,7 +517,7 @@ class CLI
 	 * Get the number of characters in string having encoded characters
 	 * and ignores styles set by the color() function
 	 *
-	 * @param ?string $string
+	 * @param string $string
 	 *
 	 * @return integer
 	 */
@@ -594,8 +594,8 @@ class CLI
 	 * Displays a progress bar on the CLI. You must call it repeatedly
 	 * to update it. Set $thisStep = false to erase the progress bar.
 	 *
-	 * @param integer|boolean   $thisStep
-	 * @param integer           $totalSteps
+	 * @param integer|boolean $thisStep
+	 * @param integer         $totalSteps
 	 */
 	public static function showProgress($thisStep = 1, int $totalSteps = 10)
 	{
