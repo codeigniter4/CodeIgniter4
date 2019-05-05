@@ -90,6 +90,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	 * Constructor
 	 *
 	 * @param BaseConfig $config
+	 * @param string     $ipAddress
 	 */
 	public function __construct(BaseConfig $config, string $ipAddress)
 	{
@@ -352,6 +353,12 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Lock the session.
+	 *
+	 * @param  string $sessionID
+	 * @return boolean
+	 */
 	protected function lockSession(string $sessionID): bool
 	{
 		if ($this->platform === 'mysql')

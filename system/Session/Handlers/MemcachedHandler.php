@@ -80,6 +80,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 * Constructor
 	 *
 	 * @param  BaseConfig $config
+	 * @param  string     $ipAddress
 	 * @throws \CodeIgniter\Session\Exceptions\SessionException
 	 */
 	public function __construct(BaseConfig $config, string $ipAddress)
