@@ -41,10 +41,7 @@ namespace CodeIgniter\CLI;
 use CodeIgniter\CLI\Exceptions\CLIException;
 
 /**
- * Class CLI
- *
- * Tools to interact with that request since CLI requests are not
- * static like HTTP requests might be.
+ * Set of static methods useful for CLI request handling.
  *
  * Portions of this code were initially from the FuelPHP Framework,
  * version 1.7.x, and used here under the MIT license they were
@@ -61,7 +58,7 @@ use CodeIgniter\CLI\Exceptions\CLIException;
  * an argument of "0".
  * These have been flagged to ignore for code coverage purposes.
  *
- * @package CodeIgniter\HTTP
+ * @package CodeIgniter\CLI
  */
 class CLI
 {
@@ -517,7 +514,7 @@ class CLI
 	 * Get the number of characters in string having encoded characters
 	 * and ignores styles set by the color() function
 	 *
-	 * @param ?string $string
+	 * @param string $string
 	 *
 	 * @return integer
 	 */
@@ -594,8 +591,8 @@ class CLI
 	 * Displays a progress bar on the CLI. You must call it repeatedly
 	 * to update it. Set $thisStep = false to erase the progress bar.
 	 *
-	 * @param integer|boolean   $thisStep
-	 * @param integer           $totalSteps
+	 * @param integer|boolean $thisStep
+	 * @param integer         $totalSteps
 	 */
 	public static function showProgress($thisStep = 1, int $totalSteps = 10)
 	{

@@ -465,7 +465,7 @@ if (! function_exists('_media'))
 	 *
 	 * @param string $name
 	 * @param array  $types
-	 * @param string $unsupportedMessage    The message to display if the media tag is not supported by the browser.
+	 * @param string $unsupportedMessage The message to display if the media tag is not supported by the browser.
 	 * @param string $attributes
 	 * @param array  $tracks
 	 *
@@ -697,6 +697,8 @@ if (! function_exists('embed'))
 if (! function_exists('_has_protocol'))
 {
 	/**
+	 * Test the protocol of a URI.
+	 *
 	 * @param string $url
 	 *
 	 * @return false|integer
@@ -712,6 +714,8 @@ if (! function_exists('_has_protocol'))
 if (! function_exists('_space_indent'))
 {
 	/**
+	 * Provide space indenting.
+	 *
 	 * @param integer $depth
 	 *
 	 * @return string

@@ -101,8 +101,8 @@ interface PagerInterface
 	/**
 	 * Sets the path that an aliased group of links will use.
 	 *
-	 * @param string $group
 	 * @param string $path
+	 * @param string $group
 	 *
 	 * @return mixed
 	 */

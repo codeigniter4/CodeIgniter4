@@ -76,14 +76,11 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	protected $fileNew;
 
 	/**
+	 * Whether IP addresses should be matched.
+	 *
 	 * @var boolean
 	 */
 	protected $matchIP = false;
-
-	/**
-	 * @var string
-	 */
-	protected $sessionIDRegex;
 
 	//--------------------------------------------------------------------
 
@@ -91,6 +88,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 * Constructor
 	 *
 	 * @param BaseConfig $config
+	 * @param string     $ipAddress
 	 */
 	public function __construct($config, string $ipAddress)
 	{
