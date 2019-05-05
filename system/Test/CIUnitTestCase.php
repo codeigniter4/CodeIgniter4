@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * CodeIgniter
  *
@@ -76,7 +75,7 @@ class CIUnitTestCase extends TestCase
 	 * @param string $level
 	 * @param null   $expectedMessage
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws \Exception
 	 */
 	public function assertLogged(string $level, $expectedMessage = null)
@@ -202,7 +201,7 @@ class CIUnitTestCase extends TestCase
 	 * @param string  $message
 	 * @param integer $tolerance
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws \Exception
 	 */
 	public function assertCloseEnoughString($expected, $actual, string $message = '', int $tolerance = 1)

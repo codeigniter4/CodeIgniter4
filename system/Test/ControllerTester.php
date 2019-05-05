@@ -277,6 +277,8 @@ trait ControllerTester
 	}
 
 	/**
+	 * Set the controller's URI, with method chaining.
+	 *
 	 * @param string $uri
 	 *
 	 * @return mixed
@@ -289,6 +291,8 @@ trait ControllerTester
 	}
 
 	/**
+	 * Set the method's body, with method chaining.
+	 *
 	 * @param mixed $body
 	 *
 	 * @return mixed

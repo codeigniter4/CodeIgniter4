@@ -55,17 +55,46 @@ abstract class BaseHandler implements ImageHandlerInterface
 
 	/**
 	 * The image/file instance
-	 * d
 	 *
 	 * @var \CodeIgniter\Images\Image
 	 */
-	protected $image           = null;
-	protected $width           = 0;
-	protected $height          = 0;
+	protected $image = null;
+	/**
+	 * Image width.
+	 *
+	 * @var integer
+	 */
+	protected $width = 0;
+	/**
+	 * Image height.
+	 *
+	 * @var integer
+	 */
+	protected $height = 0;
+	/**
+	 * File permission mask.
+	 *
+	 * @var type
+	 */
 	protected $filePermissions = 0644;
-	protected $xAxis           = 0;
-	protected $yAxis           = 0;
-	protected $masterDim       = 'auto';
+	/**
+	 * X-axis.
+	 *
+	 * @var integer
+	 */
+	protected $xAxis = 0;
+	/**
+	 * Y-axis.
+	 *
+	 * @var integer
+	 */
+	protected $yAxis = 0;
+	/**
+	 * Master dimensioning.
+	 *
+	 * @var string
+	 */
+	protected $masterDim = 'auto';
 
 	/**
 	 * Default options for text watermarking.
@@ -96,6 +125,11 @@ abstract class BaseHandler implements ImageHandlerInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param type $config
+	 */
 	public function __construct($config = null)
 	{
 		$this->config = $config;
@@ -529,7 +563,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 *
+	 * Calculate image aspect ratio.
 	 *
 	 * @param $width
 	 * @param null       $height
@@ -748,13 +782,25 @@ abstract class BaseHandler implements ImageHandlerInterface
 	}
 
 	//--------------------------------------------------------------------
-	// accessor for testing; not part of interface
+	/**
+	 * Return image width.
+	 *
+	 * accessor for testing; not part of interface
+	 *
+	 * @return integer
+	 */
 	public function getWidth()
 	{
 		return ($this->resource !== null) ? $this->_getWidth() : $this->width;
 	}
 
-	// accessor for testing; not part of interface
+	/**
+	 * Return image height.
+	 *
+	 * accessor for testing; not part of interface
+	 *
+	 * @return type
+	 */
 	public function getHeight()
 	{
 		return ($this->resource !== null) ? $this->_getHeight() : $this->height;

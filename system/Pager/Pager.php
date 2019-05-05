@@ -92,6 +92,12 @@ class Pager implements PagerInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param type              $config
+	 * @param RendererInterface $view
+	 */
 	public function __construct($config, RendererInterface $view)
 	{
 		$this->config = $config;
@@ -212,8 +218,8 @@ class Pager implements PagerInterface
 	/**
 	 * Sets the path that an aliased group of links will use.
 	 *
-	 * @param string $group
 	 * @param string $path
+	 * @param string $group
 	 *
 	 * @return mixed
 	 */

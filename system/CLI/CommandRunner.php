@@ -56,6 +56,8 @@ class CommandRunner extends Controller
 	protected $commands = [];
 
 	/**
+	 * Message logger.
+	 *
 	 * @var \CodeIgniter\Log\Logger
 	 */
 	protected $logger;
@@ -85,6 +87,8 @@ class CommandRunner extends Controller
 	//--------------------------------------------------------------------
 
 	/**
+	 * Default command.
+	 *
 	 * @param array $params
 	 *
 	 * @return mixed
