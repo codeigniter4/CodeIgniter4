@@ -33,7 +33,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -150,7 +150,7 @@ class IncomingRequest extends Request
 	 *
 	 * @param object                      $config
 	 * @param \CodeIgniter\HTTP\URI       $uri
-	 * @param string|null                      $body
+	 * @param string|null                 $body
 	 * @param \CodeIgniter\HTTP\UserAgent $userAgent
 	 */
 	public function __construct($config, URI $uri = null, $body = 'php://input', UserAgent $userAgent)

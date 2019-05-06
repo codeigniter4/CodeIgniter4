@@ -31,7 +31,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -465,7 +465,7 @@ if (! function_exists('_media'))
 	 *
 	 * @param string $name
 	 * @param array  $types
-	 * @param string $unsupportedMessage    The message to display if the media tag is not supported by the browser.
+	 * @param string $unsupportedMessage The message to display if the media tag is not supported by the browser.
 	 * @param string $attributes
 	 * @param array  $tracks
 	 *
