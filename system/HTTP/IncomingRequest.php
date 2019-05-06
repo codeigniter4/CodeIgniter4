@@ -127,6 +127,8 @@ class IncomingRequest extends Request
 	protected $validLocales = [];
 
 	/**
+	 * Configuration settings.
+	 *
 	 * @var \Config\App
 	 */
 	public $config;
@@ -139,6 +141,8 @@ class IncomingRequest extends Request
 	protected $oldInput = [];
 
 	/**
+	 * The user agent this request is from.
+	 *
 	 * @var \CodeIgniter\HTTP\UserAgent
 	 */
 	protected $userAgent;

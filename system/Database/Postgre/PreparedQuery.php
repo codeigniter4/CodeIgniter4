@@ -41,6 +41,9 @@ namespace CodeIgniter\Database\Postgre;
 use CodeIgniter\Database\PreparedQueryInterface;
 use CodeIgniter\Database\BasePreparedQuery;
 
+/**
+ * Prepared query for Postgre
+ */
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {
 

@@ -93,6 +93,8 @@ class Cell
 	//--------------------------------------------------------------------
 
 	/**
+	 * Render a cell, returning its body as a string.
+	 *
 	 * @param string      $library
 	 * @param null        $params
 	 * @param integer     $ttl

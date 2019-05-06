@@ -49,15 +49,24 @@ class FeatureResponse extends TestCase
 {
 
 	/**
+	 * The response.
+	 *
 	 * @var \CodeIgniter\HTTP\Response
 	 */
 	public $response;
 
 	/**
+	 * DOM for the body.
+	 *
 	 * @var \CodeIgniter\Test\DOMParser
 	 */
 	protected $domParser;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param Response $response
+	 */
 	public function __construct(Response $response = null)
 	{
 		$this->response = $response;
@@ -351,7 +360,7 @@ class FeatureResponse extends TestCase
 	}
 
 	/**
-	 *
+	 * Test that the response contains a matching JSON fragment.
 	 *
 	 * @param array $fragment
 	 *

@@ -45,8 +45,12 @@ use CodeIgniter\Images\Exceptions\ImageException;
 class GDHandler extends BaseHandler
 {
 
-	public $version;
-
+	/**
+	 * Constructor.
+	 *
+	 * @param  type $config
+	 * @throws type
+	 */
 	public function __construct($config = null)
 	{
 		parent::__construct($config);
@@ -423,6 +427,8 @@ class GDHandler extends BaseHandler
 	//--------------------------------------------------------------------
 
 	/**
+	 * Add text overlay to an image.
+	 *
 	 * @param string $text
 	 * @param array  $options
 	 *
@@ -561,11 +567,21 @@ class GDHandler extends BaseHandler
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Return image width.
+	 *
+	 * @return integer
+	 */
 	public function _getWidth()
 	{
 		return imagesx($this->resource);
 	}
 
+	/**
+	 * Return image height.
+	 *
+	 * @return integer
+	 */
 	public function _getHeight()
 	{
 		return imagesy($this->resource);

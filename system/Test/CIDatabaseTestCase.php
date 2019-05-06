@@ -121,6 +121,9 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Load any database test dependencies.
+	 */
 	public function loadDependencies()
 	{
 		if ($this->db === null)

@@ -1808,6 +1808,8 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Accessor for properties if they exist.
+	 *
 	 * @param string $key
 	 *
 	 * @return mixed

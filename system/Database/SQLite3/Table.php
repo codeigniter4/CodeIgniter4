@@ -88,11 +88,15 @@ class Table
 	protected $prefixedTableName;
 
 	/**
+	 * Database connection.
+	 *
 	 * @var Connection
 	 */
 	protected $db;
 
 	/**
+	 * Handle to our forge.
+	 *
 	 * @var Forge
 	 */
 	protected $forge;
@@ -101,6 +105,7 @@ class Table
 	 * Table constructor.
 	 *
 	 * @param Connection $db
+	 * @param Forge      $forge
 	 */
 	public function __construct(Connection $db, Forge $forge)
 	{

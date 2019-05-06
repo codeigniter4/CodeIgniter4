@@ -74,6 +74,12 @@ class MemcachedHandler implements CacheInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param  type $config
+	 * @throws type
+	 */
 	public function __construct($config)
 	{
 		$config       = (array)$config;

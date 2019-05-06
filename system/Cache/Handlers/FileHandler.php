@@ -63,6 +63,12 @@ class FileHandler implements CacheInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param  type $config
+	 * @throws type
+	 */
 	public function __construct($config)
 	{
 		$path = ! empty($config->storePath) ? $config->storePath : WRITEPATH . 'cache';

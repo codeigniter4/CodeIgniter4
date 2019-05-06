@@ -161,6 +161,11 @@ class CodeIgniter
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param type $config
+	 */
 	public function __construct($config)
 	{
 		$this->startTime = microtime(true);

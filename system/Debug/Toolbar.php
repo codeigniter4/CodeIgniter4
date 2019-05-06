@@ -57,6 +57,8 @@ use Config\Services;
 class Toolbar
 {
 	/**
+	 * Toolbar configuration settings.
+	 *
 	 * @var BaseConfig
 	 */
 	protected $config;
@@ -320,6 +322,12 @@ class Toolbar
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Prepare for debugging..
+	 *
+	 * @global type $app
+	 * @return type
+	 */
 	public function prepare()
 	{
 		if (CI_DEBUG && ! is_cli())
@@ -388,7 +396,7 @@ class Toolbar
 	//--------------------------------------------------------------------
 
 	/**
-	 *
+	 * Inject debug toolbar into the response.
 	 */
 	public function respond()
 	{

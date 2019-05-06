@@ -96,6 +96,11 @@ class MigrateStatus extends BaseCommand
 		'-g' => 'Set database group',
 	];
 
+	/**
+	 * Namespaces to ignore when looking for migrations.
+	 *
+	 * @var type
+	 */
 	protected $ignoredNamespaces = [
 		'CodeIgniter',
 		'Config',
@@ -118,7 +123,7 @@ class MigrateStatus extends BaseCommand
 			$runner->setGroup($group);
 		}
 
-		// Get all namespaces form  PSR4 paths.
+		// Get all namespaces from  PSR4 paths.
 		$config     = new Autoload();
 		$namespaces = $config->psr4;
 

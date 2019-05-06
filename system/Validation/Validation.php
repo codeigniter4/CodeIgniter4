@@ -95,9 +95,16 @@ class Validation implements ValidationInterface
 	protected $customErrors = [];
 
 	/**
+	 * Our configuration.
+	 *
 	 * @var \Config\Validation
 	 */
 	protected $config;
+	/**
+	 * The view renderer used to render validation messages.
+	 *
+	 * @var RendererInterface
+	 */
 	protected $view;
 
 	//--------------------------------------------------------------------
@@ -123,8 +130,9 @@ class Validation implements ValidationInterface
 	 * Runs the validation process, returning true/false determining whether
 	 * validation was successful or not.
 	 *
-	 * @param array  $data  The array of data to validate.
-	 * @param string $group The pre-defined group of rules to apply.
+	 * @param array  $data     The array of data to validate.
+	 * @param string $group    The pre-defined group of rules to apply.
+	 * @param string $db_group The database group to use.
 	 *
 	 * @return boolean
 	 */

@@ -210,11 +210,15 @@ class RouteCollection implements RouteCollectionInterface
 	protected $didDiscover = false;
 
 	/**
+	 * Handle to the file locator to use.
+	 *
 	 * @var \CodeIgniter\Autoloader\FileLocator
 	 */
 	protected $fileLocator;
 
 	/**
+	 * Handle to the modules config.
+	 *
 	 * @var \Config\Modules
 	 */
 	protected $moduleConfig;

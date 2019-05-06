@@ -40,11 +40,7 @@
 /**
  * CodeIgniter File System Helpers
  *
- * @package    CodeIgniter
- * @subpackage Helpers
- * @category   Helpers
- * @author     CodeIgniter Dev Team
- * @link       https://codeigniter.com/user_guide/helpers/directory_helper.html
+ * @package CodeIgniter
  */
 // ------------------------------------------------------------------------
 
@@ -160,10 +156,10 @@ if (! function_exists('delete_files'))
 	 * If the second parameter is set to true, any directories contained
 	 * within the supplied base directory will be nuked as well.
 	 *
-	 * @param string  $path   File path
+	 * @param string  $path    File path
 	 * @param boolean $del_dir Whether to delete any directories found in the path
-	 * @param boolean $htdocs Whether to skip deleting .htaccess and index page files
-	 * @param integer $_level Current directory depth level (default: 0; internal use only)
+	 * @param boolean $htdocs  Whether to skip deleting .htaccess and index page files
+	 * @param integer $_level  Current directory depth level (default: 0; internal use only)
 	 *
 	 * @return boolean
 	 */

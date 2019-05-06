@@ -47,8 +47,7 @@ use CodeIgniter\Exceptions\CastException;
  */
 class Entity
 {
-	protected $_options = [
-		/*
+		/**
 		 * Maps names used in sets and gets against unique
 		 * names within the class, allowing independence from
 		 * database column names.
@@ -58,9 +57,10 @@ class Entity
 		 *      'db_name' => 'class_name'
 		 *  ];
 		 */
+	protected $_options = [
 		'datamap' => [],
 
-		/*
+		/**
 		 * Define properties that are automatically converted to Time instances.
 		 */
 		'dates'   => [
@@ -69,7 +69,7 @@ class Entity
 			'deleted_at',
 		],
 
-		/*
+		/**
 		 * Array of field names and the type of value to cast them as
 		 * when they are accessed.
 		 */

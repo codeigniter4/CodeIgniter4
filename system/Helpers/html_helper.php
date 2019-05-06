@@ -40,11 +40,7 @@
 /**
  * CodeIgniter HTML Helpers
  *
- * @package    CodeIgniter
- * @subpackage Helpers
- * @category   Helpers
- * @author     CodeIgniter Dev Team
- * @link       https://codeigniter.com/user_guide/helpers/html_helper.html
+ * @package CodeIgniter
  */
 if (! function_exists('ul'))
 {
@@ -697,6 +693,8 @@ if (! function_exists('embed'))
 if (! function_exists('_has_protocol'))
 {
 	/**
+	 * Test the protocol of a URI.
+	 *
 	 * @param string $url
 	 *
 	 * @return false|integer
@@ -712,6 +710,8 @@ if (! function_exists('_has_protocol'))
 if (! function_exists('_space_indent'))
 {
 	/**
+	 * Provide space indenting.
+	 *
 	 * @param integer $depth
 	 *
 	 * @return string

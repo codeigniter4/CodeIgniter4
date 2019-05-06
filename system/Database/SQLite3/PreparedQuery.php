@@ -41,6 +41,10 @@ namespace CodeIgniter\Database\SQLite3;
 use CodeIgniter\Database\PreparedQueryInterface;
 use CodeIgniter\Database\BasePreparedQuery;
 
+/**
+ * Prepared query for SQLite3
+ */
+
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {
 

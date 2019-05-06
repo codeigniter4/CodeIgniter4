@@ -41,16 +41,14 @@ use Config\Services;
 /**
  * CodeIgniter Security Helpers
  *
- * @package    CodeIgniter
- * @subpackage Helpers
- * @category   Helpers
- * @author     CodeIgniter Dev Team
- * @link       https://codeigniter.com/user_guide/helpers/security_helper.html
+ * @package CodeIgniter
  */
 
 if (! function_exists('sanitize_filename'))
 {
 	/**
+	 * Sanitize a filename to use in a URI.
+	 *
 	 * @param string $filename
 	 *
 	 * @return string
@@ -88,7 +86,7 @@ if (! function_exists('encode_php_tags'))
 	/**
 	 * Convert PHP tags to entities
 	 *
-	 * @param  string
+	 * @param  string $str
 	 * @return string
 	 */
 	function encode_php_tags(string $str): string

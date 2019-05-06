@@ -58,6 +58,12 @@ class WincacheHandler implements CacheInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param  type $config
+	 * @throws type
+	 */
 	public function __construct($config)
 	{
 		$this->prefix = $config->prefix ?: '';

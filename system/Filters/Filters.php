@@ -97,6 +97,13 @@ class Filters
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param type              $config
+	 * @param RequestInterface  $request
+	 * @param ResponseInterface $response
+	 */
 	public function __construct($config, RequestInterface $request, ResponseInterface $response)
 	{
 		$this->config  = $config;
@@ -104,6 +111,11 @@ class Filters
 		$this->setResponse($response);
 	}
 
+	/**
+	 * Set the response explicity.
+	 *
+	 * @param ResponseInterface $response
+	 */
 	public function setResponse(ResponseInterface $response)
 	{
 		$this->response = & $response;
@@ -324,6 +336,12 @@ class Filters
 	// Processors
 	//--------------------------------------------------------------------
 
+	/**
+	 * Add any applicable (not excluded) global filter settings to the mix.
+	 *
+	 * @param  string $uri
+	 * @return type
+	 */
 	protected function processGlobals(string $uri = null)
 	{
 		if (! isset($this->config->globals) || ! is_array($this->config->globals))
@@ -374,6 +392,11 @@ class Filters
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Add any method-specific flters to the mix.
+	 *
+	 * @return type
+	 */
 	protected function processMethods()
 	{
 		if (! isset($this->config->methods) || ! is_array($this->config->methods))
@@ -393,6 +416,12 @@ class Filters
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Add any applicable configured filters to the mix.
+	 *
+	 * @param  string $uri
+	 * @return type
+	 */
 	protected function processFilters(string $uri = null)
 	{
 		if (! isset($this->config->filters) || ! $this->config->filters)

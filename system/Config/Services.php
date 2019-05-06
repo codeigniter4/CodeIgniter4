@@ -384,6 +384,8 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
+	 * Return the appropriate igration runner.
+	 *
 	 * @param \CodeIgniter\Config\BaseConfig            $config
 	 * @param \CodeIgniter\Database\ConnectionInterface $db
 	 * @param boolean                                   $getShared
@@ -432,6 +434,8 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
+	 * Return the appropriate pagination handler.
+	 *
 	 * @param mixed                               $config
 	 * @param \CodeIgniter\View\RendererInterface $view
 	 * @param boolean                             $getShared
@@ -684,6 +688,8 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
+	 * Return the session manager.
+	 *
 	 * @param \Config\App $config
 	 * @param boolean     $getShared
 	 *
@@ -761,6 +767,8 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
+	 * Return the debug toolbar.
+	 *
 	 * @param \Config\Toolbar $config
 	 * @param boolean         $getShared
 	 *

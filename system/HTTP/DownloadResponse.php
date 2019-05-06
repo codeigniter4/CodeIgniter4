@@ -42,6 +42,9 @@ use CodeIgniter\Exceptions\DownloadException;
 use CodeIgniter\Files\File;
 use Config\Mimes;
 
+/**
+ * HTTP response when a download is requested.
+ */
 class DownloadResponse extends Message implements ResponseInterface
 {
 	/**
@@ -93,6 +96,12 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	private $pretend = false;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param string  $filename
+	 * @param boolean $setMime
+	 */
 	public function __construct(string $filename, bool $setMime)
 	{
 		$this->filename = $filename;
@@ -348,6 +357,12 @@ class DownloadResponse extends Message implements ResponseInterface
 	// Output Methods
 	//--------------------------------------------------------------------
 
+	/**
+	 * For unit testing, don't actually send headers.
+	 *
+	 * @param  boolean $pretend
+	 * @return $this
+	 */
 	public function pretend(bool $pretend = true)
 	{
 		$this->pretend = $pretend;

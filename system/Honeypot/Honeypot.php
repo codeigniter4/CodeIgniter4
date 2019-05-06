@@ -51,12 +51,20 @@ class Honeypot
 {
 
 	/**
+	 * Our configuration.
+	 *
 	 * @var BaseConfig
 	 */
 	protected $config;
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param  BaseConfig $config
+	 * @throws type
+	 */
 	function __construct(BaseConfig $config)
 	{
 		$this->config = $config;

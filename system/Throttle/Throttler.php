@@ -58,6 +58,8 @@ class Throttler implements ThrottlerInterface
 {
 
 	/**
+	 * Container for throttle counters.
+	 *
 	 * @var \CodeIgniter\Cache\CacheInterface
 	 */
 	protected $cache;
@@ -86,6 +88,12 @@ class Throttler implements ThrottlerInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param  type $cache
+	 * @throws type
+	 */
 	public function __construct(CacheInterface $cache)
 	{
 		$this->cache = $cache;
@@ -191,7 +199,7 @@ class Throttler implements ThrottlerInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 *
+	 * Return the test time, defaulting to current.
 	 *
 	 * @return integer
 	 */

@@ -57,8 +57,20 @@ class BaseConfig
 	 *
 	 * @var array
 	 */
-	public static $registrars      = [];
+	public static $registrars = [];
+
+	/**
+	 * Has module discovery happened yet?
+	 *
+	 * @var boolean
+	 */
 	protected static $didDiscovery = false;
+
+	/**
+	 * The modules configuration.
+	 *
+	 * @var type
+	 */
 	protected static $moduleConfig;
 
 	/**

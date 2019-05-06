@@ -49,6 +49,8 @@ namespace CodeIgniter\Autoloader;
 class FileLocator
 {
 	/**
+	 * The Autoloader to use.
+	 *
 	 * @var \CodeIgniter\Autoloader\Autoloader
 	 */
 	protected $autoloader;
@@ -261,6 +263,8 @@ class FileLocator
 	//--------------------------------------------------------------------
 
 	/**
+	 * Return the namespace mappings we know about.
+	 *
 	 * @param string|null $prefix
 	 *
 	 * @return array|string

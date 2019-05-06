@@ -63,35 +63,51 @@ class TimeDifference
 	protected $testTime;
 
 	/**
+	 * Eras.
+	 *
 	 * @var float
 	 */
 	protected $eras = 0;
 
 	/**
+	 * Years.
+	 *
 	 * @var float
 	 */
 	protected $years = 0;
 	/**
+	 * Months.
+	 *
 	 * @var float
 	 */
 	protected $months = 0;
 	/**
+	 * Weeks.
+	 *
 	 * @var integer
 	 */
 	protected $weeks = 0;
 	/**
+	 * Days.
+	 *
 	 * @var integer
 	 */
 	protected $days = 0;
 	/**
+	 * Hours.
+	 *
 	 * @var integer
 	 */
 	protected $hours = 0;
 	/**
+	 * Minutes.
+	 *
 	 * @var integer
 	 */
 	protected $minutes = 0;
 	/**
+	 * Seconds.
+	 *
 	 * @var integer
 	 */
 	protected $seconds = 0;

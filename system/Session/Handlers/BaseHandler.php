@@ -121,6 +121,8 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	protected $savePath;
 
 	/**
+	 * User's IP address.
+	 *
 	 * @var string
 	 */
 	protected $ipAddress;
@@ -131,6 +133,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 * Constructor
 	 *
 	 * @param BaseConfig $config
+	 * @param string     $ipAddress
 	 */
 	public function __construct($config, string $ipAddress)
 	{

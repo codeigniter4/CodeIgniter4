@@ -38,11 +38,7 @@
 /**
  * CodeIgniter URL Helpers
  *
- * @package    CodeIgniter
- * @subpackage Helpers
- * @category   Helpers
- * @author     CodeIgniter Dev Team
- * @link       https://codeigniter.com/user_guide/helpers/url_helper.html
+ * @package CodeIgniter
  */
 
 if (! function_exists('site_url'))
@@ -529,7 +525,7 @@ if (! function_exists('prep_url'))
 	 * Formerly used URI, but that does not play nicely with URIs missing
 	 * the scheme.
 	 *
-	 * @param  string    the URL
+	 * @param  string $str the URL
 	 * @return string
 	 */
 	function prep_url(string $str = ''): string

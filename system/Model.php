@@ -246,23 +246,57 @@ class Model
 	 */
 	protected $validation;
 
-	/**
+	/*
 	 * Callbacks. Each array should contain the method
 	 * names (within the model) that should be called
 	 * when those events are triggered. With the exception
 	 * of 'afterFind', all methods are passed the same
 	 * items that are given to the update/insert method.
 	 * 'afterFind' will also include the results that were found.
+	 */
+
+	/**
+	 * Callbacks for beforeInsert
 	 *
-	 * @var array
+	 * @var type
 	 */
 	protected $beforeInsert = [];
-	protected $afterInsert  = [];
+	/**
+	 * Callbacks for afterInsert
+	 *
+	 * @var type
+	 */
+	protected $afterInsert = [];
+	/**
+	 * Callbacks for beforeUpdate
+	 *
+	 * @var type
+	 */
 	protected $beforeUpdate = [];
-	protected $afterUpdate  = [];
-	protected $afterFind    = [];
+	/**
+	 * Callbacks for afterUpdate
+	 *
+	 * @var type
+	 */
+	protected $afterUpdate = [];
+	/**
+	 * Callbacks for afterFind
+	 *
+	 * @var type
+	 */
+	protected $afterFind = [];
+	/**
+	 * Callbacks for beforeDelete
+	 *
+	 * @var type
+	 */
 	protected $beforeDelete = [];
-	protected $afterDelete  = [];
+	/**
+	 * Callbacks for afterDelete
+	 *
+	 * @var type
+	 */
+	protected $afterDelete = [];
 
 	/**
 	 * Holds information passed in via 'set'

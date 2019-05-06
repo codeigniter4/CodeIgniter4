@@ -40,11 +40,7 @@
 /**
  * CodeIgniter Cookie Helpers
  *
- * @package    CodeIgniter
- * @subpackage Helpers
- * @category   Helpers
- * @author     CodeIgniter Dev Team
- * @link       https://codeigniter.com/user_guide/helpers/cookie_helper.html
+ * @package CodeIgniter
  */
 if (! function_exists('set_cookie'))
 {

@@ -44,10 +44,17 @@ namespace CodeIgniter\Test;
 class DOMParser
 {
 	/**
+	 * DOM for the body,
+	 *
 	 * @var \DOMDocument
 	 */
 	protected $dom;
 
+	/**
+	 * Constructor.
+	 *
+	 * @throws \BadMethodCallException
+	 */
 	public function __construct()
 	{
 		if (! extension_loaded('DOM'))
@@ -125,6 +132,7 @@ class DOMParser
 	 * Checks to see if the text is found within the result.
 	 *
 	 * @param string $search
+	 * @param string $element
 	 *
 	 * @return boolean
 	 */
@@ -227,6 +235,14 @@ class DOMParser
 	}
 
 	//--------------------------------------------------------------------
+	/**
+	 * Search the DOM using an XPath expression.
+	 *
+	 * @param  string $search
+	 * @param  string $element
+	 * @param  array  $paths
+	 * @return type
+	 */
 
 	protected function doXPath(string $search = null, string $element, array $paths = [])
 	{
@@ -286,6 +302,12 @@ class DOMParser
 		return $result;
 	}
 
+	/**
+	 * Look for the a selector  in the passed text.
+	 *
+	 * @param  string $selector
+	 * @return type
+	 */
 	public function parseSelector(string $selector)
 	{
 		$tag   = null;

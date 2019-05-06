@@ -84,6 +84,11 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param \CodeIgniter\Database\ConnectionInterface $db
+	 */
 	public function __construct(ConnectionInterface $db)
 	{
 		$this->db = &$db;
