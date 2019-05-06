@@ -57,6 +57,8 @@ use Config\Services;
 class Toolbar
 {
 	/**
+	 * Toolbar configuration settings.
+	 *
 	 * @var BaseConfig
 	 */
 	protected $config;
@@ -221,9 +223,9 @@ class Toolbar
 	protected function renderTimeline(array $collectors, $startTime, int $segmentCount, int $segmentDuration, array &$styles): string
 	{
 		$displayTime = $segmentCount * $segmentDuration;
-		$rows = $this->collectTimelineData($collectors);
-		$output = '';
-		$styleCount = 0;
+		$rows        = $this->collectTimelineData($collectors);
+		$output      = '';
+		$styleCount  = 0;
 
 		foreach ($rows as $row)
 		{
@@ -237,9 +239,9 @@ class Toolbar
 			$length = (($row['duration'] * 1000) / $displayTime) * 100;
 
 			$styles['debug-bar-timeline-' . $styleCount] = "left: {$offset}%; width: {$length}%;";
-			$output .= "<span class='timer debug-bar-timeline-{$styleCount}' title='" . number_format($length, 2) . "%'></span>";
-			$output .= '</td>';
-			$output .= '</tr>';
+			$output                                     .= "<span class='timer debug-bar-timeline-{$styleCount}' title='" . number_format($length, 2) . "%'></span>";
+			$output                                     .= '</td>';
+			$output                                     .= '</tr>';
 
 			$styleCount++;
 		}
@@ -320,6 +322,12 @@ class Toolbar
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Prepare for debugging..
+	 *
+	 * @global type $app
+	 * @return type
+	 */
 	public function prepare()
 	{
 		if (CI_DEBUG && ! is_cli())
@@ -388,7 +396,7 @@ class Toolbar
 	//--------------------------------------------------------------------
 
 	/**
-	 *
+	 * Inject debug toolbar into the response.
 	 */
 	public function respond()
 	{

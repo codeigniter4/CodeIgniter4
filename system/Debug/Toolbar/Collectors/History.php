@@ -83,6 +83,8 @@ class History extends BaseCollector
 	//--------------------------------------------------------------------
 
 	/**
+	 * Specify time limit & file count for debug history.
+	 *
 	 * @param integer $current Current history time
 	 * @param integer $limit   Max history files
 	 */
@@ -154,6 +156,11 @@ class History extends BaseCollector
 		return count($this->files);
 	}
 
+	/**
+	 * Return true if there are no history files.
+	 *
+	 * @return boolean
+	 */
 	public function isEmpty(): bool
 	{
 		return empty($this->files);

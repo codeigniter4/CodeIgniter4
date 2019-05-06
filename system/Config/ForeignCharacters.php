@@ -38,15 +38,13 @@
 
 namespace CodeIgniter\Config;
 
+/**
+ * Describes foreign characters for transliteration with the text helper.
+ */
 class ForeignCharacters
 {
-	/*
-	  | -------------------------------------------------------------------
-	  | Foreign Characters
-	  | -------------------------------------------------------------------
-	  | This file contains an array of foreign characters for transliteration
-	  | conversion used by the Text helper
-	  |
+	/**
+	 * Without further ado, the list of foreign characters.
 	 */
 
 	public $characterList = [

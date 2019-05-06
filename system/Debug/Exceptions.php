@@ -70,16 +70,22 @@ class Exceptions
 	protected $viewPath;
 
 	/**
+	 * Config for debug exceptions.
+	 *
 	 * @var \Config\Exceptions
 	 */
 	protected $config;
 
 	/**
+	 * The incoming request.
+	 *
 	 * @var \CodeIgniter\HTTP\IncomingRequest
 	 */
 	protected $request;
 
 	/**
+	 * The outgoing response.
+	 *
 	 * @var \CodeIgniter\HTTP\Response
 	 */
 	protected $response;
