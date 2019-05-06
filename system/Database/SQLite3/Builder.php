@@ -76,9 +76,9 @@ class Builder extends BaseBuilder
 	 *
 	 * Generates a platform-specific replace string from the supplied data
 	 *
-	 * @param string    the table name
-	 * @param array     the insert keys
-	 * @param array     the insert values
+	 * @param string $table  the table name
+	 * @param array  $keys   the insert keys
+	 * @param array  $values the insert values
 	 *
 	 * @return string
 	 */

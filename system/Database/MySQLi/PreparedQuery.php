@@ -41,6 +41,9 @@ namespace CodeIgniter\Database\MySQLi;
 use CodeIgniter\Database\PreparedQueryInterface;
 use CodeIgniter\Database\BasePreparedQuery;
 
+/**
+ * Prepared query for MySQLi
+ */
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {
 
@@ -80,7 +83,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @param array $data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function _execute(array $data): bool
 	{

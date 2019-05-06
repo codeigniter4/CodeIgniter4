@@ -56,6 +56,11 @@ class FileRules
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param RequestInterface $request
+	 */
 	public function __construct(RequestInterface $request = null)
 	{
 		if (is_null($request))

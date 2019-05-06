@@ -1071,10 +1071,10 @@ abstract class BaseConnection implements ConnectionInterface
 	 * insert the table prefix (if it exists) in the proper position, and escape only
 	 * the correct identifiers.
 	 *
-	 * @param string|array  $item
-	 * @param boolean       $prefixSingle
-	 * @param boolean       $protectIdentifiers
-	 * @param boolean       $fieldExists
+	 * @param string|array $item
+	 * @param boolean      $prefixSingle
+	 * @param boolean      $protectIdentifiers
+	 * @param boolean      $fieldExists
 	 *
 	 * @return string|array
 	 */
@@ -1641,8 +1641,8 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Determine if a particular field exists
 	 *
-	 * @param  string   $fieldName
-	 * @param  string   $tableName
+	 * @param  string $fieldName
+	 * @param  string $tableName
 	 * @return boolean
 	 */
 	public function fieldExists(string $fieldName, string $tableName): bool
@@ -1808,6 +1808,8 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Accessor for properties if they exist.
+	 *
 	 * @param string $key
 	 *
 	 * @return mixed

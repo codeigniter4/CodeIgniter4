@@ -49,7 +49,7 @@ class FormatRules
 	/**
 	 * Alpha
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -82,7 +82,7 @@ class FormatRules
 	/**
 	 * Alpha-numeric with underscores and dashes
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -96,7 +96,7 @@ class FormatRules
 	/**
 	 * Alpha-numeric
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -110,7 +110,7 @@ class FormatRules
 	/**
 	 * Alpha-numeric w/ spaces
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -141,7 +141,7 @@ class FormatRules
 	/**
 	 * Decimal number
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -155,7 +155,7 @@ class FormatRules
 	/**
 	 * Integer
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -169,7 +169,7 @@ class FormatRules
 	/**
 	 * Is a Natural number  (0,1,2,3, etc.)
 	 *
-	 * @param  string
+	 * @param  string $str
 	 * @return boolean
 	 */
 	public function is_natural(string $str = null): bool
@@ -182,7 +182,7 @@ class FormatRules
 	/**
 	 * Is a Natural number, but not a zero  (1,2,3, etc.)
 	 *
-	 * @param  string
+	 * @param  string $str
 	 * @return boolean
 	 */
 	public function is_natural_no_zero(string $str = null): bool
@@ -195,7 +195,7 @@ class FormatRules
 	/**
 	 * Numeric
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -250,7 +250,7 @@ class FormatRules
 	 * Tests a string for characters outside of the Base64 alphabet
 	 * as defined by RFC 2045 http://www.faqs.org/rfcs/rfc2045
 	 *
-	 * @param  string
+	 * @param  string $str
 	 * @return boolean
 	 */
 	public function valid_base64(string $str = null): bool
@@ -263,7 +263,7 @@ class FormatRules
 	/**
 	 * Valid JSON
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -278,7 +278,7 @@ class FormatRules
 	/**
 	 * Checks for a correctly formatted email address
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -300,7 +300,7 @@ class FormatRules
 	 * Example:
 	 *     valid_emails[one@example.com,two@example.com]
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */

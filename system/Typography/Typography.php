@@ -276,7 +276,7 @@ class Typography
 	 * to curly entities, but it also converts em-dashes,
 	 * double spaces, and ampersands
 	 *
-	 * @param  string
+	 * @param  string $str
 	 * @return string
 	 */
 	public function formatCharacters(string $str): string
@@ -333,7 +333,7 @@ class Typography
 	 *
 	 * Converts newline characters into either <p> tags or <br />
 	 *
-	 * @param  string
+	 * @param  string $str
 	 * @return string
 	 */
 	protected function formatNewLines(string $str): string
@@ -373,7 +373,7 @@ class Typography
 	 * and we don't want double dashes converted to emdash entities, so they are marked with {@DD}
 	 * likewise double spaces are converted to {@NBS} to prevent entity conversion
 	 *
-	 * @param  array
+	 * @param  array $match
 	 * @return string
 	 */
 	protected function protectCharacters(array $match): string

@@ -14,6 +14,7 @@
         <ignore>Kint/*</ignore>
         <ignore>*.tpl.php</ignore>
         <ignore>*.js.php</ignore>
+        <ignore>Validation/Views/*</ignore>
     </files>
 
     <logging>
