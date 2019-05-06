@@ -81,21 +81,19 @@ class ForgeTest extends CIDatabaseTestCase
 	{
 		$this->forge->dropTable('forge_test_table', true);
 
-		$this->forge->addField(
-			[
-				'id'     => [
-					'type'           => 'INTEGER',
-					'constraint'     => 11,
-					'unsigned'       => true,
-					'auto_increment' => true,
-				],
-				'mobile' => [
-					'type'       => 'INTEGER',
-					'constraint' => 10,
-					'unsigned'   => true,
-				],
-			]
-		);
+		$this->forge->addField([
+			'id'     => [
+				'type'           => 'INTEGER',
+				'constraint'     => 11,
+				'unsigned'       => true,
+				'auto_increment' => true,
+			],
+			'mobile' => [
+				'type'       => 'INTEGER',
+				'constraint' => 10,
+				'unsigned'   => true,
+			],
+		]);
 
 		$unsignedAttributes = [
 			'INTEGER',
@@ -141,15 +139,15 @@ class ForgeTest extends CIDatabaseTestCase
 		{
 			$this->forge->dropTable('forge_array_constraint', true);
 			$this->forge->addField([
-				                       'status' => [
-					                       'type'       => 'ENUM',
-					                       'constraint' => [
-						                       'sad',
-						                       'ok',
-						                       'happy',
-					                       ],
-				                       ],
-			                       ]);
+				'status' => [
+					'type'       => 'ENUM',
+					'constraint' => [
+						'sad',
+						'ok',
+						'happy',
+					],
+				],
+			]);
 			$this->forge->createTable('forge_array_constraint');
 
 			$fields = $this->db->getFieldData('forge_array_constraint');
@@ -288,37 +286,33 @@ class ForgeTest extends CIDatabaseTestCase
 			$attributes = ['ENGINE' => 'InnoDB'];
 		}
 
-		$this->forge->addField(
-			[
-				'id'   => [
-					'type'       => 'INTEGER',
-					'constraint' => 11,
-				],
-				'name' => [
-					'type'       => 'VARCHAR',
-					'constraint' => 255,
-				],
-			]
-		);
+		$this->forge->addField([
+			'id'   => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'name' => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
+		]);
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('forge_test_users', true, $attributes);
 
-		$this->forge->addField(
-			[
-				'id'       => [
-					'type'       => 'INTEGER',
-					'constraint' => 11,
-				],
-				'users_id' => [
-					'type'       => 'INTEGER',
-					'constraint' => 11,
-				],
-				'name'     => [
-					'type'       => 'VARCHAR',
-					'constraint' => 255,
-				],
-			]
-		);
+		$this->forge->addField([
+			'id'       => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'users_id' => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'name'     => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
+		]);
 		$this->forge->addKey('id', true);
 		$this->forge->addForeignKey('users_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE');
 
@@ -353,37 +347,33 @@ class ForgeTest extends CIDatabaseTestCase
 			$attributes = ['ENGINE' => 'InnoDB'];
 		}
 
-		$this->forge->addField(
-			[
-				'id'   => [
-					'type'       => 'INTEGER',
-					'constraint' => 11,
-				],
-				'name' => [
-					'type'       => 'VARCHAR',
-					'constraint' => 255,
-				],
-			]
-		);
+		$this->forge->addField([
+			'id'   => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'name' => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
+		]);
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('forge_test_users', true, $attributes);
 
-		$this->forge->addField(
-			[
-				'id'       => [
-					'type'       => 'INTEGER',
-					'constraint' => 11,
-				],
-				'users_id' => [
-					'type'       => 'INTEGER',
-					'constraint' => 11,
-				],
-				'name'     => [
-					'type'       => 'VARCHAR',
-					'constraint' => 255,
-				],
-			]
-		);
+		$this->forge->addField([
+			'id'       => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'users_id' => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'name'     => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
+		]);
 		$this->forge->addKey('id', true);
 		$this->forge->addForeignKey('user_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE');
 
@@ -404,32 +394,32 @@ class ForgeTest extends CIDatabaseTestCase
 		}
 
 		$this->forge->addField([
-			                       'id'   => [
-				                       'type'       => 'INTEGER',
-				                       'constraint' => 11,
-			                       ],
-			                       'name' => [
-				                       'type'       => 'VARCHAR',
-				                       'constraint' => 255,
-			                       ],
-		                       ]);
+			'id'   => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'name' => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
+		]);
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('forge_test_users', true, $attributes);
 
 		$this->forge->addField([
-			                       'id'       => [
-				                       'type'       => 'INTEGER',
-				                       'constraint' => 11,
-			                       ],
-			                       'users_id' => [
-				                       'type'       => 'INTEGER',
-				                       'constraint' => 11,
-			                       ],
-			                       'name'     => [
-				                       'type'       => 'VARCHAR',
-				                       'constraint' => 255,
-			                       ],
-		                       ]);
+			'id'       => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'users_id' => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'name'     => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
+		]);
 		$this->forge->addKey('id', true);
 		$this->forge->addForeignKey('users_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE');
 
@@ -449,16 +439,14 @@ class ForgeTest extends CIDatabaseTestCase
 	{
 		$this->forge->dropTable('forge_test_table', true);
 
-		$this->forge->addField(
-			[
-				'id' => [
-					'type'           => 'INTEGER',
-					'constraint'     => 11,
-					'unsigned'       => false,
-					'auto_increment' => true,
-				],
-			]
-		);
+		$this->forge->addField([
+			'id' => [
+				'type'           => 'INTEGER',
+				'constraint'     => 11,
+				'unsigned'       => false,
+				'auto_increment' => true,
+			],
+		]);
 
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('forge_test_table');
@@ -474,8 +462,8 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->addColumn('forge_test_table', $newField);
 
 		$fieldNames = $this->db->table('forge_test_table')
-		                       ->get()
-		                       ->getFieldNames();
+							   ->get()
+							   ->getFieldNames();
 
 		$this->forge->dropTable('forge_test_table', true);
 
@@ -714,5 +702,28 @@ class ForgeTest extends CIDatabaseTestCase
 		$forge = \Config\Database::forge($group);
 
 		$this->assertInstanceOf(Forge::class, $forge);
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1983
+	 */
+	public function testDropTableSuccess()
+	{
+		// Add an index to user table so we have
+		// something to work with
+		$this->forge->addField([
+			'id' => [
+				'type'       => 'INTEGER',
+				'constraint' => 3,
+			],
+		]);
+		$this->forge->addKey('id');
+		$this->forge->createTable('droptest');
+
+		$this->assertCount(1, $this->db->getIndexData('droptest'));
+
+		$this->forge->dropTable('droptest', true);
+
+		$this->assertCount(0, $this->db->getIndexData('droptest'));
 	}
 }
