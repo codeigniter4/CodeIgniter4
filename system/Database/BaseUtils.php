@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -201,7 +201,7 @@ abstract class BaseUtils
 
 			// Build the result array...
 
-			$res  = $res->getResultArray();
+			$res = $res->getResultArray();
 
 			// Postgre & SQLite3 returns empty array
 			if (empty($res))
@@ -211,7 +211,7 @@ abstract class BaseUtils
 			else
 			{
 				$res  = current($res);
-				$key = str_replace($this->db->database . '.', '', current($res));
+				$key  = str_replace($this->db->database . '.', '', current($res));
 				$keys = array_keys($res);
 				unset($res[$keys[0]]);
 			}
@@ -322,7 +322,7 @@ abstract class BaseUtils
 			$xml .= $tab . '<' . $element . '>' . $newline;
 			foreach ($row as $key => $val)
 			{
-				$val = (!empty($val)) ? xml_convert($val) : '';
+				$val  = (! empty($val)) ? xml_convert($val) : '';
 				$xml .= $tab . $tab . '<' . $key . '>' . $val . '</' . $key . '>' . $newline;
 			}
 			$xml .= $tab . '</' . $element . '>' . $newline;

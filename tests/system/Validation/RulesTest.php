@@ -3,9 +3,12 @@
 namespace CodeIgniter\Validation;
 
 use Config\Database;
+use CodeIgniter\Test\CIDatabaseTestCase;
 
-class RulesTest extends \CIUnitTestCase
+class RulesTest extends CIDatabaseTestCase
 {
+	protected $refresh = true;
+
 	/**
 	 * @var Validation
 	 */
@@ -379,7 +382,7 @@ class RulesTest extends \CIUnitTestCase
 
 		$this->assertFalse($this->validation->run($data));
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	public function testEqualsNull()
@@ -394,7 +397,7 @@ class RulesTest extends \CIUnitTestCase
 
 		$this->assertFalse($this->validation->run($data));
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	public function testEqualsEmptyIsEmpty()
@@ -454,7 +457,7 @@ class RulesTest extends \CIUnitTestCase
 
 		$this->assertFalse($this->validation->run($data));
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	public function testNotEqualsNull()
@@ -469,7 +472,7 @@ class RulesTest extends \CIUnitTestCase
 
 		$this->assertTrue($this->validation->run($data));
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	public function testNotEqualsEmptyIsEmpty()
@@ -529,7 +532,6 @@ class RulesTest extends \CIUnitTestCase
 
 		$this->assertTrue($this->validation->run($data));
 	}
-	
 
 	//--------------------------------------------------------------------
 

@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -295,9 +295,9 @@ class Time extends DateTime
 	 * Provides a replacement for DateTime's own createFromFormat function, that provides
 	 * more flexible timeZone handling
 	 *
-	 * @param string                $format
-	 * @param string                $datetime
-	 * @param DateTimeZone|string   $timeZone
+	 * @param string              $format
+	 * @param string              $datetime
+	 * @param DateTimeZone|string $timeZone
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 * @throws \Exception
@@ -546,6 +546,7 @@ class Time extends DateTime
 
 	/**
 	 * Returns the age in years from the "current" date and 'now'
+	 *
 	 * @throws \Exception
 	 */
 	public function getAge()
@@ -1126,7 +1127,7 @@ class Time extends DateTime
 	 * Determines if the current instance's time is after $testTime,
 	 * after converting in UTC.
 	 *
-	 * @param             $testTime
+	 * @param $testTime
 	 * @param string|null $timezone
 	 *
 	 * @return boolean
