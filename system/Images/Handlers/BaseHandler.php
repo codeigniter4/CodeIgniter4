@@ -49,6 +49,8 @@ abstract class BaseHandler implements ImageHandlerInterface
 {
 
 	/**
+	 * Configuration settings.
+	 *
 	 * @var \Config\Images
 	 */
 	protected $config;

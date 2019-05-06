@@ -41,11 +41,7 @@ use Config\Services;
 /**
  * CodeIgniter Security Helpers
  *
- * @package    CodeIgniter
- * @subpackage Helpers
- * @category   Helpers
- * @author     CodeIgniter Dev Team
- * @link       https://codeigniter.com/user_guide/helpers/security_helper.html
+ * @package CodeIgniter
  */
 
 if (! function_exists('sanitize_filename'))

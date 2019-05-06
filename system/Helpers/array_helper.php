@@ -38,11 +38,7 @@
 /**
  * CodeIgniter Array Helpers
  *
- * @package    CodeIgniter
- * @subpackage Helpers
- * @category   Helpers
- * @author     CodeIgniter Dev Team
- * @link       https://codeigniter.com/user_guide/helpers/cookie_helper.html
+ * @package CodeIgniter
  */
 
 if (! function_exists('dot_array_search'))

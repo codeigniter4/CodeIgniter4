@@ -40,11 +40,7 @@
 /**
  * CodeIgniter Text Helpers
  *
- * @package    CodeIgniter
- * @subpackage Helpers
- * @category   Helpers
- * @author     CodeIgniter Dev Team
- * @link       https://codeigniter.com/user_guide/helpers/text_helper.html
+ * @package CodeIgniter
  */
 //--------------------------------------------------------------------
 

@@ -41,11 +41,7 @@ use Config\Services;
 /**
  * CodeIgniter Form Helpers
  *
- * @package    CodeIgniter
- * @subpackage Helpers
- * @category   Helpers
- * @author     CodeIgniter Dev Team
- * @link       https://codeigniter.com/user_guide/helpers/form_helper.html
+ * @package CodeIgniter
  */
 
 //--------------------------------------------------------------------

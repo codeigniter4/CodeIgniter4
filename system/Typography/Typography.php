@@ -386,7 +386,7 @@ class Typography
 	/**
 	 * Convert newlines to HTML line breaks except within PRE tags
 	 *
-	 * @param  string
+	 * @param  string $str
 	 * @return string
 	 */
 	public function nl2brExceptPre(string $str): string

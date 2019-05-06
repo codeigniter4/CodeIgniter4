@@ -38,11 +38,7 @@
 /**
  * CodeIgniter Date Helpers
  *
- * @package    CodeIgniter
- * @subpackage Helpers
- * @category   Helpers
- * @author     CodeIgniter Dev Team
- * @link       https://codeigniter.com/user_guide/helpers/date_helper.html
+ * @package CodeIgniter
  */
 
 if (! function_exists('now'))
