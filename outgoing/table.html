@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>HTML Table Class &mdash; CodeIgniter4 4.0.0-beta.2 documentation</title>
+  <title>HTML Table Class &mdash; CodeIgniter4 4.0.0-beta.3 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-beta.2 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-beta.3 documentation" href="../index.html"/>
         <link rel="up" title="Building Responses" href="index.html"/>
         <link rel="next" title="HTTP Responses" href="response.html"/>
         <link rel="prev" title="View Parser" href="view_parser.html"/> 
@@ -302,6 +302,14 @@ specify the design of your layout. Here is the template prototype:</p>
         <span class="s1">&#39;heading_cell_start&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;&lt;th&gt;&#39;</span><span class="p">,</span>
         <span class="s1">&#39;heading_cell_end&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/th&gt;&#39;</span><span class="p">,</span>
 
+        <span class="s1">&#39;tfoot_open&#39;</span>             <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tfoot&gt;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;tfoot_close&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tfoot&gt;&#39;</span><span class="p">,</span>
+
+        <span class="s1">&#39;footing_row_start&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;footing_row_end&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;footing_cell_start&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;&lt;td&gt;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;footing_cell_end&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/td&gt;&#39;</span><span class="p">,</span>
+
         <span class="s1">&#39;tbody_open&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tbody&gt;&#39;</span><span class="p">,</span>
         <span class="s1">&#39;tbody_close&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tbody&gt;&#39;</span><span class="p">,</span>
 
@@ -442,9 +450,37 @@ to the Table constructor.:</p>
 </tbody>
 </table>
 <p>Permits you to set the table heading. You can submit an array or discrete params:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">);</span> <span class="c1">// or</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">));</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">([</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Table::setFooting">
+<code class="descname">setFooting</code><span class="sig-paren">(</span><span class="optional">[</span><em>$args = []</em><span class="optional">[</span>, <em>...</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Table::setFooting" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$args</strong> (<em>mixed</em>) &#8211; An array or multiple strings containing the table footing values</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Table instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Table</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Permits you to set the table footing. You can submit an array or discrete params:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setFooting</span><span class="p">(</span><span class="s1">&#39;Subtotal&#39;</span><span class="p">,</span> <span class="nv">$subtotal</span><span class="p">,</span> <span class="nv">$notes</span><span class="p">);</span> <span class="c1">// or</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setFooting</span><span class="p">([</span><span class="s1">&#39;Subtotal&#39;</span><span class="p">,</span> <span class="nv">$subtotal</span><span class="p">,</span> <span class="nv">$notes</span><span class="p">]);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -470,9 +506,9 @@ to the Table constructor.:</p>
 </tbody>
 </table>
 <p>Permits you to add a row to your table. You can submit an array or discrete params:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">);</span> <span class="c1">// or</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">));</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>If you would like to set an individual cell&#8217;s tag attributes, you can use an associative array for that cell.
@@ -552,9 +588,9 @@ This allows a single array with many elements to be displayed in a table that ha
 </tbody>
 </table>
 <p>Permits you to set your template. You can submit a full or partial template.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$template</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$template</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;table_open&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;1&quot; cellpadding=&quot;2&quot; cellspacing=&quot;1&quot; class=&quot;mytable&quot;&gt;&#39;</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
 <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setTemplate</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
 </pre></div>
@@ -658,7 +694,7 @@ generated to clear the previous table information.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on May 01, 2019.
+      Last updated on May 06, 2019.
 
     </p>
   </div>
@@ -680,7 +716,7 @@ generated to clear the previous table information.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-beta.2',
+            VERSION:'4.0.0-beta.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
