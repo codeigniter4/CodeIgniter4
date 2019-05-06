@@ -53,6 +53,11 @@ use ReflectionClass;
  */
 class ComposerScripts
 {
+	/**
+	 * Base path to use.
+	 *
+	 * @var type
+	 */
 	protected static $basePath = 'ThirdParty/';
 
 	/**

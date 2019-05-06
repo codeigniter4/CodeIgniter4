@@ -51,6 +51,8 @@ use Config\Services;
 if (! function_exists('sanitize_filename'))
 {
 	/**
+	 * Sanitize a filename to use in a URI.
+	 *
 	 * @param string $filename
 	 *
 	 * @return string
@@ -88,7 +90,7 @@ if (! function_exists('encode_php_tags'))
 	/**
 	 * Convert PHP tags to entities
 	 *
-	 * @param  string
+	 * @param  string $str
 	 * @return string
 	 */
 	function encode_php_tags(string $str): string

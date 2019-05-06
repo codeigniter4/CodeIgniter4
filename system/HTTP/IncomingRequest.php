@@ -127,6 +127,8 @@ class IncomingRequest extends Request
 	protected $validLocales = [];
 
 	/**
+	 * Configuration settings.
+	 *
 	 * @var \Config\App
 	 */
 	public $config;
@@ -139,6 +141,8 @@ class IncomingRequest extends Request
 	protected $oldInput = [];
 
 	/**
+	 * The user agent this request is from.
+	 *
 	 * @var \CodeIgniter\HTTP\UserAgent
 	 */
 	protected $userAgent;
@@ -150,7 +154,7 @@ class IncomingRequest extends Request
 	 *
 	 * @param object                      $config
 	 * @param \CodeIgniter\HTTP\URI       $uri
-	 * @param string|null                      $body
+	 * @param string|null                 $body
 	 * @param \CodeIgniter\HTTP\UserAgent $userAgent
 	 */
 	public function __construct($config, URI $uri = null, $body = 'php://input', UserAgent $userAgent)
