@@ -1477,8 +1477,6 @@ class ModelTest extends CIDatabaseTestCase
 		$entity->deleted    = 0;
 		$entity->created_at = new Time('now');
 		
-		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
-
 		$this->assertTrue($testModel->save($entity));
 	}
 
