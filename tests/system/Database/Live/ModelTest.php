@@ -1461,6 +1461,29 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testSaveNewEntityWithPartialData()
+	{
+		$entity = new class extends Entity
+		{
+			protected $id;
+			protected $name;
+			protected $email;
+			protected $country;
+			protected $deleted;
+		};
+		$testModel = new UserModel();
+
+		$entity->email      = 'jerome@example.com';
+		$entity->deleted    = 0;
+		$entity->created_at = new Time('now');
+		
+		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
+
+		$this->assertTrue($testModel->save($entity));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testSaveNewEntityWithDateTime()
 	{
 		$entity    = new class extends Entity{
