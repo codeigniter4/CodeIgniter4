@@ -1,5 +1,6 @@
 <?php namespace Builder;
 
+use CodeIgniter\Database\BaseBuilder;
 use Tests\Support\Database\MockConnection;
 
 class WhereTest extends \CIUnitTestCase
@@ -118,6 +119,20 @@ class WhereTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testWhereValueClosure()
+	{
+		$builder = $this->db->table('neworder');
+
+		$builder->where('advance_amount <', function (BaseBuilder $builder) {
+			return $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2);
+		});
+		$expectedSQL = 'SELECT * FROM "neworder" WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testOrWhere()
 	{
 		$builder = $this->db->table('jobs');
@@ -191,6 +206,21 @@ class WhereTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testWhereInClosure()
+	{
+		$builder = $this->db->table('jobs');
+
+		$builder->whereIn('id', function (BaseBuilder $builder) {
+			return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
+		});
+
+		$expectedSQL = 'SELECT * FROM "jobs" WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testWhereNotIn()
 	{
 		$builder = $this->db->table('jobs');
@@ -210,6 +240,21 @@ class WhereTest extends \CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testWhereNotInClosure()
+	{
+		$builder = $this->db->table('jobs');
+
+		$builder->whereNotIn('id', function (BaseBuilder $builder) {
+			return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
+		});
+
+		$expectedSQL = 'SELECT * FROM "jobs" WHERE "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -241,6 +286,21 @@ class WhereTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testOrWhereInClosure()
+	{
+		$builder = $this->db->table('jobs');
+
+		$builder->where('deleted_at', null)->orWhereIn('id', function (BaseBuilder $builder) {
+			return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
+		});
+
+		$expectedSQL = 'SELECT * FROM "jobs" WHERE "deleted_at" IS NULL OR "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testOrWhereNotIn()
 	{
 		$builder = $this->db->table('jobs');
@@ -264,6 +324,21 @@ class WhereTest extends \CIUnitTestCase
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testOrWhereNotInClosure()
+	{
+		$builder = $this->db->table('jobs');
+
+		$builder->where('deleted_at', null)->orWhereNotIn('id', function (BaseBuilder $builder) {
+			return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
+		});
+
+		$expectedSQL = 'SELECT * FROM "jobs" WHERE "deleted_at" IS NULL OR "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
