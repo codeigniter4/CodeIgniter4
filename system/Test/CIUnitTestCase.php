@@ -128,6 +128,11 @@ class CIUnitTestCase extends TestCase
 	{
 		$found = false;
 
+		if (! function_exists('xdebug_get_headers'))
+		{
+			$this->markTestSkipped('XDebug not found.');
+		}
+
 		foreach (xdebug_get_headers() as $emitted)
 		{
 			$found = $ignoreCase ?
@@ -154,6 +159,11 @@ class CIUnitTestCase extends TestCase
 	public function assertHeaderNotEmitted(string $header, bool $ignoreCase = false): void
 	{
 		$found = false;
+
+		if (! function_exists('xdebug_get_headers'))
+		{
+			$this->markTestSkipped('XDebug not found.');
+		}
 
 		foreach (xdebug_get_headers() as $emitted)
 		{
@@ -253,6 +263,11 @@ class CIUnitTestCase extends TestCase
 	protected function getHeaderEmitted(string $header, bool $ignoreCase = false): ?string
 	{
 		$found = false;
+
+		if (! function_exists('xdebug_get_headers'))
+		{
+			$this->markTestSkipped('XDebug not found.');
+		}
 
 		foreach (xdebug_get_headers() as $emitted)
 		{
