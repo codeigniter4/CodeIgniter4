@@ -373,3 +373,6 @@ attribute to check::
 
     $user->name = 'Fred';
     $user->hasChanged('name');      // true
+
+Or to check the whole entity for changed values omit the parameter:
+    $user->hasChanged();            // true
