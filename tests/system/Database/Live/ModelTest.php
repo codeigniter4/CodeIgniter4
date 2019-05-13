@@ -1539,16 +1539,11 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testUndefinedEntityPropertyException()
+	public function testUndefinedEntityPropertyReturnsNull()
 	{
-		$entity = new class extends Entity
-		{
-			protected $id;
-			protected $name;
-		};
+		$entity = new class extends Entity {};
 
-		$this->expectException(EntityException::class);
-		$entity->undefinedProperty;
+		$this->assertNull($entity->undefinedProperty);
 	}
 
 	//--------------------------------------------------------------------

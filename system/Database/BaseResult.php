@@ -191,6 +191,11 @@ abstract class BaseResult implements ResultInterface
 
 		while ($row = $this->fetchObject($className))
 		{
+			if (method_exists($row, 'syncOriginal'))
+			{
+				$row->syncOriginal();
+			}
+
 			$this->customResultObject[$className][] = $row;
 		}
 

@@ -165,7 +165,6 @@ class CIUnitTestCase extends TestCase
 			$this->markTestSkipped('XDebug not found.');
 		}
 
-
 		foreach (xdebug_get_headers() as $emitted)
 		{
 			$found = $ignoreCase ?

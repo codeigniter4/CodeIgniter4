@@ -288,12 +288,13 @@ class ParserTest extends \CIUnitTestCase
 	{
 		$power = new class extends \CodeIgniter\Entity
 		{
-
-			public $foo     = 'bar';
-			protected $bar  = 'baz';
-			protected $obj1 = null;
-			protected $obj2 = null;
-			public $bobbles = [];
+			protected $attributes = [
+				'foo'     => 'bar',
+				'bar'     => 'baz',
+				'obj1'    => null,
+				'obj2'    => null,
+				'bobbles' => [],
+			];
 
 			public function __construct()
 			{
