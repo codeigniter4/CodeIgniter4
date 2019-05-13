@@ -707,9 +707,8 @@ class BaseBuilder
 
 				if ($v instanceof Closure)
 				{
-					$builder = clone $this;
-					$builder->from([], true)->resetQuery();
-					$v = '(' . str_replace("\n", ' ', $v($builder)->getCompiledSelect()) . ')';
+					$builder = $this->cleanClone();
+					$v       = '(' . str_replace("\n", ' ', $v($builder)->getCompiledSelect()) . ')';
 				}
 				else
 				{
@@ -849,9 +848,8 @@ class BaseBuilder
 
 		if ($values instanceof Closure)
 		{
-			$builder = clone $this;
-			$builder->from([], true)->resetQuery();
-			$ok = str_replace("\n", ' ', $values($builder)->getCompiledSelect());
+			$builder = $this->cleanClone();
+			$ok      = str_replace("\n", ' ', $values($builder)->getCompiledSelect());
 		}
 		else
 		{
@@ -3027,6 +3025,18 @@ class BaseBuilder
 		];
 
 		return $key . $count;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a clone of a Base Builder with reset query builder values.
+	 *
+	 * @return BaseBuilder
+	 */
+	protected function cleanClone()
+	{
+		return (clone $this)->from([], true)->resetQuery();
 	}
 
 	//--------------------------------------------------------------------
