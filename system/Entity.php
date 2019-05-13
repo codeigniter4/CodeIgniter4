@@ -236,13 +236,20 @@ class Entity
 
 	/**
 	 * Checks a property to see if it has changed since the entity was created.
+	 * Or, without a parameter, checks if any properties have changed.
 	 *
-	 * @param string $key
+	 * @param ?string $key
 	 *
 	 * @return boolean
 	 */
-	public function hasChanged(string $key): bool
+	public function hasChanged(string $key = null): bool
 	{
+		// If no parameter was given then check all attributes
+		if ($key === null)
+		{
+			return 	$this->original !== $this->attributes;
+		}
+		
 		// Key doesn't exist in either
 		if (! array_key_exists($key, $this->original) && ! array_key_exists($key, $this->attributes))
 		{

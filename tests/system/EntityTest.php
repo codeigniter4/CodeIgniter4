@@ -664,6 +664,15 @@ class EntityTest extends \CIUnitTestCase
 		$this->assertFalse($entity->hasChanged('default'));
 	}
 
+	public function testHasChangedWholeEntity()
+	{
+		$entity = $this->getEntity();
+		
+		$entity->foo = 'bar';
+
+		$this->assertTrue($entity->hasChanged());
+	}
+
 	protected function getEntity()
 	{
 		return new class extends Entity
