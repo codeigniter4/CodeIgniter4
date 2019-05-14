@@ -947,14 +947,20 @@ class RouteCollectionTest extends \CIUnitTestCase
 	{
 		$routes = $this->getCollector();
 
-		$routes->add(
-				'login', function () {
-				}
-		);
+		$routes->add('login', function() { });
 
 		$match = $routes->reverseRoute('login');
 
 		$this->assertEquals('/login', $match);
+	}
+	
+	public function testReverseRoutingWithClosureNoMatch()
+	{
+		$routes = $this->getCollector();
+
+		$routes->add('login', function() { });
+
+		$this->assertFalse($routes->reverseRoute('foobar'));
 	}
 
 	//--------------------------------------------------------------------

@@ -1115,6 +1115,12 @@ class RouteCollection implements RouteCollectionInterface
 			{
 				$from = key($route['route']);
 				$to   = $route['route'][$from];
+				
+				// ignore closures
+				if (! is_string($to))
+				{
+					continue;
+				}
 
 				// Lose any namespace slash at beginning of strings
 				// to ensure more consistent match.
