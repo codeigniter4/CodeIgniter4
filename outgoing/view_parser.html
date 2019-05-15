@@ -800,7 +800,7 @@ callable:</p>
 </div>
 <div class="section" id="php-native-functions-as-filters">
 <h4>PHP Native functions as Filters<a class="headerlink" href="#php-native-functions-as-filters" title="Permalink to this headline">¶</a></h4>
-<p>You can easily use native php function as filters by editing <strong>app/Config/View.php</strong> and adding new entries to the
+<p>You can use native php function as filters by editing <strong>app/Config/View.php</strong> and adding new entries to the
 <code class="docutils literal"><span class="pre">$filters</span></code> array.Each key is the name of the native PHP function is called by in the view, and its value is any valid native PHP
 function prefixed with:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$filters</span> <span class="o">=</span> <span class="p">[</span>
@@ -905,6 +905,22 @@ used within the template file. The value is any valid PHP callable, including st
                 <span class="k">return</span> <span class="nv">$str</span><span class="p">;</span>
         <span class="p">},</span>
 <span class="p">];</span>
+</pre></div>
+</div>
+<p>Any closures that are being used must be defined in the config file&#8217;s constructor:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">View</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Config\View</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$plugins</span> <span class="o">=</span> <span class="p">[];</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">plugins</span><span class="p">[</span><span class="s1">&#39;bar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="o">=</span><span class="p">[])</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">??</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+        <span class="p">};</span>
+
+        <span class="k">parent</span><span class="o">::</span><span class="na">__construct</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>If the callable is on its own, it is treated as a single tag, not a open/close one. It will be replaced by
@@ -1230,7 +1246,7 @@ substitutions are performed for each data pair.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on May 14, 2019.
+      Last updated on May 15, 2019.
 
     </p>
   </div>
