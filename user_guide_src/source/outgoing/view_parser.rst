@@ -478,7 +478,7 @@ callable::
 PHP Native functions as Filters
 -------------------------------
 
-You can easily use native php function as filters by editing **app/Config/View.php** and adding new entries to the
+You can use native php function as filters by editing **app/Config/View.php** and adding new entries to the
 ``$filters`` array.Each key is the name of the native PHP function is called by in the view, and its value is any valid native PHP
 function prefixed with::
 
@@ -542,6 +542,22 @@ used within the template file. The value is any valid PHP callable, including st
 			return $str;
 		},
 	];
+
+Any closures that are being used must be defined in the config file's constructor::
+
+    class View extends \CodeIgniter\Config\View
+    {
+        public $plugins = [];
+
+        public function __construct()
+        {
+            $this->plugins['bar'] = function(array $params=[]) {
+                return $params[0] ?? '';
+            };
+
+            parent::__construct();
+        }
+    }
 
 If the callable is on its own, it is treated as a single tag, not a open/close one. It will be replaced by
 the return value from the plugin::
