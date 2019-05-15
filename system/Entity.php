@@ -357,7 +357,7 @@ class Entity
 			// Array casting requires that we serialize the value
 			// when setting it so that it can easily be stored
 			// back to the database.
-			if ($castTo === 'array')
+			if ($castTo === 'array' && is_array($value))
 			{
 				$value = serialize($value);
 			}
