@@ -750,6 +750,25 @@ class ParserTest extends \CIUnitTestCase
 	/**
 	 * @group parserplugins
 	 */
+	public function testParserPluginClosure()
+	{
+		$config                   = $this->config;
+		$config->plugins['hello'] = function (array $params = []) {
+			return 'Hello, ' . trim($params[0]);
+		};
+
+		$parser = new Parser($config, $this->viewsDir, $this->loader);
+
+		$template = '{+ hello world +}';
+
+		$this->assertEquals('Hello, world', $parser->renderString($template));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group parserplugins
+	 */
 	public function testParserPluginParams()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
