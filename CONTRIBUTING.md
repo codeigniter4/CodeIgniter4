@@ -9,13 +9,13 @@ There is a [Contributing to CodeIgniter](./contributing/README.rst) section in t
 
 ## Issues
 
-Issues are a quick way to point out a bug. If you find a bug or documentation error in CodeIgniter then please check a few things first:
+Issues are a quick way to point out a bug. If you find a bug or documentation error in CodeIgniter then please make sure that:
 
-1. There is not already an open Issue
-2. The issue has already been fixed (check the develop branch, or look for closed Issues)
-3. Is it something really obvious that you can fix yourself?
+1. There is not already an open [Issue](https://github.com/codeigniter4/CodeIgniter4/issues)
+2. The Issue has not already been fixed (check the develop branch or look for [closed Issues](https://github.com/codeigniter4/CodeIgniter4/issues?q=is%3Aissue+is%3Aclosed))
+3. It's not something really obvious that you can fix yourself
 
-Reporting issues is helpful but an even [better approach](./contributing/workflow.rst) is to send a Pull Request, which is done by "Forking" the main repository and committing to your own copy. This will require you to use the version control system called Git.
+Reporting Issues is helpful, but an even [better approach](./contributing/workflow.rst) is to send a Pull Request, which is done by ["Forking"](https://help.github.com/en/articles/fork-a-repo) the main repository and making a [commit](https://help.github.com/en/desktop/contributing-to-projects/committing-and-reviewing-changes-to-your-project) to your own copy of the project. This will require you to use the version control system called [Git](https://git-scm.com/).
 
 ## Guidelines
 
