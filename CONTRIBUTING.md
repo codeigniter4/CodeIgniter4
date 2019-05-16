@@ -3,8 +3,8 @@
 
 ## Contributions
 
-We expect all contributions to conform to our style guide, be commented (inside the PHP source files), 
-be documented (in the user guide), and unit tested (in the test folder). 
+We expect all contributions to conform to our [style guide](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/styleguide.rst), be commented (inside the PHP source files), 
+be documented (in the [user guide](https://codeigniter4.github.io/userguide/)), and unit tested (in the [test folder](https://github.com/codeigniter4/CodeIgniter4/tree/develop/tests)). 
 There is a [Contributing to CodeIgniter](./contributing/README.rst) section in the repository which describes the contribution process; this page is an overview.
 
 ## Issues
