@@ -39,6 +39,7 @@
 
 namespace CodeIgniter\Router;
 
+use Config\Services;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Router\Exceptions\RouterException;
 
@@ -233,8 +234,8 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function __construct(FileLocator $locator, $moduleConfig)
 	{
-		// Get HTTP verb
-		$this->HTTPVerb = strtolower($_SERVER['REQUEST_METHOD'] ?? 'cli');
+		// Get HTTP verb from current request (accounts for spoofing)
+		$this->HTTPVerb = Services::request()->getMethod();
 
 		$this->fileLocator = $locator;
 
@@ -1115,7 +1116,7 @@ class RouteCollection implements RouteCollectionInterface
 			{
 				$from = key($route['route']);
 				$to   = $route['route'][$from];
-				
+					
 				// ignore closures
 				if (! is_string($to))
 				{
