@@ -494,7 +494,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	public function testResourcesWithWebsafe()
 	{
-		Services::request()->setMethod('get');
+		Services::request()->setMethod('post');
 		$routes                    = $this->getCollector();
 
 		$routes->resource('photos', ['websafe' => true]);
