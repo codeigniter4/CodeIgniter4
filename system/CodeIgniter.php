@@ -986,12 +986,13 @@ class CodeIgniter
 	 * Modifies the Request Object to use a different method if a POST
 	 * variable called _method is found.
 	 *
-	 * Does not work on CLI commands.
 	 */
 	public function spoofRequestMethod()
 	{
+		// CLI commands always use 'cli' method
 		if (is_cli())
 		{
+			$this->request->setMethod('cli');
 			return;
 		}
 
