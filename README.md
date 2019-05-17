@@ -63,7 +63,7 @@ to optional packages, with their own repository.
 
 ## Contributing
 
-We **are** accepting contributions from the community, specifically those identified as part of phase 2.
+We **are** accepting contributions from the community!.
 
 We will try to manage the process somewhat, by adding a ["help wanted" label](https://github.com/codeigniter4/CodeIgniter4/labels/help%20wanted) to those that we are 
 specifically interested in at any point in time. Join the discussion for those issues and let us know 
