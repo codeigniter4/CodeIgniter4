@@ -441,6 +441,7 @@ Preference                     Default                                   Options
                                                                          CodeIgniter\Session\Handlers\DatabaseHandler
                                                                          CodeIgniter\Session\Handlers\MemcachedHandler
                                                                          CodeIgniter\Session\Handlers\RedisHandler
+                                                                         CodeIgniter\Session\Handlers\ArrayHandler
 **sessionCookieName**          ci_session                                [A-Za-z\_-] characters only                    The name used for the session cookie.
 **sessionExpiration**          7200 (2 hours)                            Time in seconds (integer)                      The number of seconds you would like the session to last.
                                                                                                                         If you would like a non-expiring session (until browser is closed) set the value to zero: 0
@@ -488,6 +489,7 @@ engines, that you can use:
   - CodeIgniter\Session\Handlers\DatabaseHandler
   - CodeIgniter\Session\Handlers\MemcachedHandler
   - CodeIgniter\Session\Handlers\RedisHandler
+  - CodeIgniter\Session\Handlers\ArrayHandler
 
 By default, the ``FileHandler`` Driver will be used when a session is initialized,
 because it is the safest choice and is expected to work everywhere
@@ -497,6 +499,9 @@ However, any other driver may be selected via the ``public $sessionDriver``
 line in your **app/Config/App.php** file, if you chose to do so.
 Have it in mind though, every driver has different caveats, so be sure to
 get yourself familiar with them (below) before you make that choice.
+
+.. note:: The ArrayHandler is used during testing and stores all data within
+    a PHP array, while preventing the data from being persisted.
 
 FileHandler Driver (the default)
 ==================================================================
