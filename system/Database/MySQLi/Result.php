@@ -163,8 +163,7 @@ class Result extends BaseResult implements ResultInterface
 	{
 		if (is_subclass_of($className, Entity::class))
 		{
-			$data = $this->fetchAssoc();
-			return empty($data) ? false : (new $className())->setRawArray($data);
+			return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
 		}
 		return $this->resultID->fetch_object($className);
 	}

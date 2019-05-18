@@ -186,7 +186,7 @@ class Result extends BaseResult implements ResultInterface
 
 		if (is_subclass_of($className, Entity::class))
 		{
-			return $classObj->setRawArray($row);
+			return $classObj->setAttributes($row);
 		}
 
 		$classSet = \Closure::bind(function ($key, $value) {

@@ -433,7 +433,7 @@ class Entity
 	 * @param  array $data
 	 * @return $this
 	 */
-	public function setRawArray(array $data)
+	public function setAttributes(array $data)
 	{
 		$this->attributes = $data;
 		$this->syncOriginal();
