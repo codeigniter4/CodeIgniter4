@@ -48,6 +48,8 @@ A sample such installation command, using the default project-root "appstarter":
 
     composer create-project codeigniter4/appstarter -s beta --no-dev
 
+After installation you should follow the steps in the "Upgrading" section.
+
 Upgrading
 -------------------------------------------------------
 
