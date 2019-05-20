@@ -19,6 +19,6 @@ class Migration_some_migration extends \CodeIgniter\Database\Migration
 
 	public function down()
 	{
-		$this->forge->dropTable('foo');
+		$this->forge->dropTable('foo', true);
 	}
 }
