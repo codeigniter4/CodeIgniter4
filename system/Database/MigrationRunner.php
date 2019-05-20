@@ -258,7 +258,7 @@ class MigrationRunner
 		$migrationStatus = false;
 		foreach ($migrations as $version => $migration)
 		{
-			// Only include migrations within the scoop
+			// Only include migrations within the scope
 			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion))
 			{
 				$migrationStatus = false;
