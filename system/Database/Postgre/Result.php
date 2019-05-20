@@ -40,6 +40,7 @@ namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ResultInterface;
+use CodeIgniter\Entity;
 
 /**
  * Result for Postgre
@@ -154,10 +155,14 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @param string $className
 	 *
-	 * @return object
+	 * @return object|boolean|Entity
 	 */
 	protected function fetchObject(string $className = 'stdClass')
 	{
+		if (is_subclass_of($className, Entity::class))
+		{
+			return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
+		}
 		return pg_fetch_object($this->resultID, null, $className);
 	}
 

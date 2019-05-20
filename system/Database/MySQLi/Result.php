@@ -40,6 +40,7 @@ namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ResultInterface;
+use CodeIgniter\Entity;
 
 /**
  * Result for MySQLi
@@ -156,10 +157,14 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @param string $className
 	 *
-	 * @return object
+	 * @return object|boolean|Entity
 	 */
 	protected function fetchObject(string $className = 'stdClass')
 	{
+		if (is_subclass_of($className, Entity::class))
+		{
+			return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
+		}
 		return $this->resultID->fetch_object($className);
 	}
 

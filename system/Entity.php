@@ -238,7 +238,7 @@ class Entity
 	 * Checks a property to see if it has changed since the entity was created.
 	 * Or, without a parameter, checks if any properties have changed.
 	 *
-	 * @param ?string $key
+	 * @param string $key
 	 *
 	 * @return boolean
 	 */
@@ -247,9 +247,9 @@ class Entity
 		// If no parameter was given then check all attributes
 		if ($key === null)
 		{
-			return 	$this->original !== $this->attributes;
+			return     $this->original !== $this->attributes;
 		}
-		
+
 		// Key doesn't exist in either
 		if (! array_key_exists($key, $this->original) && ! array_key_exists($key, $this->attributes))
 		{
@@ -425,6 +425,19 @@ class Entity
 	public function __isset(string $key): bool
 	{
 		return isset($this->attributes[$key]);
+	}
+
+	/**
+	 * Set raw data array without any mutations
+	 *
+	 * @param  array $data
+	 * @return $this
+	 */
+	public function setAttributes(array $data)
+	{
+		$this->attributes = $data;
+		$this->syncOriginal();
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
