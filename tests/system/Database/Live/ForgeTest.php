@@ -724,6 +724,11 @@ class ForgeTest extends CIDatabaseTestCase
 
 		$this->forge->dropTable('droptest', true);
 
-		$this->assertCount(0, $this->db->getIndexData('droptest'));
+		$this->assertFalse($this->db->tableExists('dropTest'));
+
+		if ($this->db->DBDriver === 'SQLite3')
+		{
+			$this->assertCount(0, $this->db->getIndexData('droptest'));
+		}
 	}
 }

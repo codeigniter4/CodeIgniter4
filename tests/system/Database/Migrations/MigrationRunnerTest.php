@@ -279,13 +279,17 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		vfsStream::newFile('001_some_migration.php')->at($this->root);
 
-		$version = $runner->version(0);
+		$version = $runner->version(1);
 
 		$this->assertFalse($version);
 	}
 
 	public function testVersionReturnsUpDownSuccess()
 	{
+		$forge = \Config\Database::forge();
+		$forge->dropTable('migrations', true);
+		$forge->dropTable('foo', true);
+
 		$config       = $this->config;
 		$config->type = 'sequential';
 		$runner       = new MigrationRunner($config);
@@ -298,7 +302,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 			$this->root
 		);
 
-		$version = $runner->version(1);
+		$version = $runner->version('001');
 
 		$this->assertEquals('001', $version);
 		$this->seeInDatabase('foo', ['key' => 'foobar']);
@@ -306,7 +310,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$version = $runner->version(0);
 
 		$this->assertEquals('000', $version);
-		$this->assertFalse(db_connect()->tableExists('foo'));
+		$this->assertFalse($this->db->tableExists('foo'));
 	}
 
 	public function testLatestSuccess()

@@ -254,7 +254,6 @@ class MigrationRunner
 		$this->checkMigrations($migrations, $method, $targetVersion);
 
 		// loop migration for each namespace (module)
-
 		$migrationStatus = false;
 		foreach ($migrations as $version => $migration)
 		{
@@ -263,6 +262,7 @@ class MigrationRunner
 			{
 				$migrationStatus = false;
 				include_once $migration->path;
+
 				// Get namespaced class name
 				$class = $this->namespace . '\Database\Migrations\Migration_' . ($migration->name);
 
