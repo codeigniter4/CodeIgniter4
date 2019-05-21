@@ -147,15 +147,12 @@ class Query implements QueryInterface
 				$binds = [$binds];
 			}
 
-			if ($setEscape)
-			{
-				array_walk($binds, function (&$item) {
-					$item = [
-						$item,
-						true,
-					];
-				});
-			}
+			array_walk($binds, function (&$item) use ($setEscape) {
+				$item = [
+					$item,
+					$setEscape,
+				];
+			});
 			$this->binds = $binds;
 		}
 
