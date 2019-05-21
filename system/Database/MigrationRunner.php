@@ -254,15 +254,15 @@ class MigrationRunner
 		$this->checkMigrations($migrations, $method, $targetVersion);
 
 		// loop migration for each namespace (module)
-
 		$migrationStatus = false;
 		foreach ($migrations as $version => $migration)
 		{
-			// Only include migrations within the scoop
+			// Only include migrations within the scope
 			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion))
 			{
 				$migrationStatus = false;
 				include_once $migration->path;
+
 				// Get namespaced class name
 				$class = $this->namespace . '\Database\Migrations\Migration_' . ($migration->name);
 

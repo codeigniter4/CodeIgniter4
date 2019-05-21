@@ -10,6 +10,8 @@ use CodeIgniter\Test\CIDatabaseTestCase;
  */
 class MigrationRunnerTest extends CIDatabaseTestCase
 {
+	protected $refresh = true;
+
 	protected $root;
 	protected $start;
 	protected $config;
@@ -217,15 +219,15 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 	}
 
 	/**
-	 * @expectedException           \CodeIgniter\Exceptions\ConfigException
-	 * @expectedExceptionMessage    Migrations have been loaded but are disabled or setup incorrectly.
+	 * @expectedException        \CodeIgniter\Exceptions\ConfigException
+	 * @expectedExceptionMessage Migrations have been loaded but are disabled or setup incorrectly.
 	 */
 	public function testMigrationThrowsDisabledException()
 	{
-		$config = $this->config;
-		$config->type = 'sequential';
+		$config          = $this->config;
+		$config->type    = 'sequential';
 		$config->enabled = false;
-		$runner = new MigrationRunner($config);
+		$runner          = new MigrationRunner($config);
 
 		$runner->setSilent(false);
 
@@ -262,21 +264,6 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$this->assertFalse($version);
 	}
 
-	public function testVersionReturnsFalseWhenNothingToDo()
-	{
-		$config       = $this->config;
-		$config->type = 'sequential';
-		$runner       = new MigrationRunner($config);
-
-		$runner = $runner->setPath($this->start);
-
-		vfsStream::newFile('001_some_migration.php')->at($this->root);
-
-		$version = $runner->version(0);
-
-		$this->assertFalse($version);
-	}
-
 	/**
 	 * @expectedException        \RuntimeException
 	 * @expectedExceptionMessage The migration class "App\Database\Migrations\Migration_some_migration" could not be found.
@@ -299,6 +286,10 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testVersionReturnsUpDownSuccess()
 	{
+		$forge = \Config\Database::forge();
+		$forge->dropTable('migrations', true);
+		$forge->dropTable('foo', true);
+
 		$config       = $this->config;
 		$config->type = 'sequential';
 		$runner       = new MigrationRunner($config);
@@ -311,7 +302,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 			$this->root
 		);
 
-		$version = $runner->version(1);
+		$version = $runner->version('001');
 
 		$this->assertEquals('001', $version);
 		$this->seeInDatabase('foo', ['key' => 'foobar']);
@@ -319,7 +310,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$version = $runner->version(0);
 
 		$this->assertEquals('000', $version);
-		$this->assertFalse(db_connect()->tableExists('foo'));
+		$this->assertFalse($this->db->tableExists('foo'));
 	}
 
 	public function testLatestSuccess()
