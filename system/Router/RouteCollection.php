@@ -234,8 +234,11 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function __construct(FileLocator $locator, $moduleConfig)
 	{
+		// Load the correct request service
+		$request = (is_cli() && ! (ENVIRONMENT === 'testing')) ? Services::clirequest() : Services::request();
+		
 		// Get HTTP verb from current request (accounts for spoofing)
-		$this->HTTPVerb = Services::request()->getMethod();
+		$this->HTTPVerb = $request->getMethod();
 
 		$this->fileLocator = $locator;
 
