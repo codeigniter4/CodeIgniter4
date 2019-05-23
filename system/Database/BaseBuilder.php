@@ -734,12 +734,12 @@ class BaseBuilder
 	 * joined with 'AND' if appropriate.
 	 *
 	 * @param string  $key    The field to search
-	 * @param array   $values The values searched on
+	 * @param array|string   $values The values searched on
 	 * @param boolean $escape
 	 *
 	 * @return BaseBuilder
 	 */
-	public function whereIn(string $key = null, array $values = null, bool $escape = null)
+	public function whereIn(string $key = null, $values = null, bool $escape = null)
 	{
 		return $this->_whereIn($key, $values, false, 'AND ', $escape);
 	}
@@ -753,12 +753,12 @@ class BaseBuilder
 	 * joined with 'OR' if appropriate.
 	 *
 	 * @param string  $key    The field to search
-	 * @param array   $values The values searched on
+	 * @param array|string   $values The values searched on
 	 * @param boolean $escape
 	 *
 	 * @return BaseBuilder
 	 */
-	public function orWhereIn(string $key = null, array $values = null, bool $escape = null)
+	public function orWhereIn(string $key = null, $values = null, bool $escape = null)
 	{
 		return $this->_whereIn($key, $values, false, 'OR ', $escape);
 	}
@@ -772,12 +772,12 @@ class BaseBuilder
 	 * joined with 'AND' if appropriate.
 	 *
 	 * @param string  $key    The field to search
-	 * @param array   $values The values searched on
+	 * @param array|string   $values The values searched on
 	 * @param boolean $escape
 	 *
 	 * @return BaseBuilder
 	 */
-	public function whereNotIn(string $key = null, array $values = null, bool $escape = null)
+	public function whereNotIn(string $key = null, $values = null, bool $escape = null)
 	{
 		return $this->_whereIn($key, $values, true, 'AND ', $escape);
 	}
@@ -791,12 +791,12 @@ class BaseBuilder
 	 * joined with 'OR' if appropriate.
 	 *
 	 * @param string  $key    The field to search
-	 * @param array   $values The values searched on
+	 * @param array|string   $values The values searched on
 	 * @param boolean $escape
 	 *
 	 * @return BaseBuilder
 	 */
-	public function orWhereNotIn(string $key = null, array $values = null, bool $escape = null)
+	public function orWhereNotIn(string $key = null, $values = null, bool $escape = null)
 	{
 		return $this->_whereIn($key, $values, true, 'OR ', $escape);
 	}
@@ -819,7 +819,7 @@ class BaseBuilder
 	 *
 	 * @return BaseBuilder
 	 */
-	protected function _whereIn(string $key = null, array $values = null, bool $not = false, string $type = 'AND ', bool $escape = null)
+	protected function _whereIn(string $key = null, $values = null, bool $not = false, string $type = 'AND ', bool $escape = null)
 	{
 		if ($key === null || $values === null)
 		{
@@ -837,7 +837,7 @@ class BaseBuilder
 
 		$not = ($not) ? ' NOT' : '';
 
-		$where_in = array_values($values);
+		$where_in = is_array($values) ? array_values($values) : $values;
 		$ok       = $this->setBind($ok, $where_in, $escape);
 
 		$prefix = empty($this->QBWhere) ? $this->groupGetType('') : $this->groupGetType($type);
