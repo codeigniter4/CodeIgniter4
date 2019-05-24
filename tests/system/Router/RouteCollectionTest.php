@@ -34,7 +34,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 			$moduleConfig->enabled = false;
 		}
 
-		return new RouteCollection($loader, $moduleConfig);
+		return (new RouteCollection($loader, $moduleConfig))->setHTTPVerb('get');
 	}
 
 	public function testBasicAdd()
@@ -328,8 +328,8 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	public function testResourcesScaffoldsCorrectly()
 	{
-		Services::request()->setMethod('get');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('get');
 
 		$routes->resource('photos');
 
@@ -342,8 +342,8 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$this->assertEquals($expected, $routes->getRoutes());
 
-		Services::request()->setMethod('post');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('post');
 		$routes->resource('photos');
 
 		$expected = [
@@ -352,8 +352,8 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$this->assertEquals($expected, $routes->getRoutes());
 
-		Services::request()->setMethod('put');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('put');
 		$routes->resource('photos');
 
 		$expected = [
@@ -362,8 +362,8 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$this->assertEquals($expected, $routes->getRoutes());
 
-		Services::request()->setMethod('patch');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('patch');
 		$routes->resource('photos');
 
 		$expected = [
@@ -372,8 +372,8 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$this->assertEquals($expected, $routes->getRoutes());
 
-		Services::request()->setMethod('delete');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('delete');
 		$routes->resource('photos');
 
 		$expected = [
@@ -388,7 +388,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testResourcesWithCustomController()
 	{
 		Services::request()->setMethod('get');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
 
 		$routes->resource('photos', ['controller' => '<script>gallery']);
 
@@ -407,7 +407,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testResourcesWithCustomPlaceholder()
 	{
 		Services::request()->setMethod('get');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
 
 		$routes->resource('photos', ['placeholder' => ':num']);
 
@@ -424,7 +424,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testResourcesWithDefaultPlaceholder()
 	{
 		Services::request()->setMethod('get');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
 
 		$routes->setDefaultConstraint('num');
 		$routes->resource('photos');
@@ -442,7 +442,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testResourcesWithBogusDefaultPlaceholder()
 	{
 		Services::request()->setMethod('get');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
 
 		$routes->setDefaultConstraint(':num');
 		$routes->resource('photos');
@@ -462,7 +462,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testResourcesWithOnly()
 	{
 		Services::request()->setMethod('get');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
 
 		$routes->resource('photos', ['only' => 'index']);
 
@@ -478,7 +478,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testResourcesWithExcept()
 	{
 		Services::request()->setMethod('get');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
 
 		$routes->resource('photos', ['except' => 'edit,new']);
 
@@ -494,8 +494,8 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	public function testResourcesWithWebsafe()
 	{
-		Services::request()->setMethod('post');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('post');
 
 		$routes->resource('photos', ['websafe' => true]);
 
@@ -513,7 +513,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testMatchSupportsMultipleMethods()
 	{
 		Services::request()->setMethod('get');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
 
 		$expected = ['here' => '\there'];
 
@@ -521,7 +521,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$this->assertEquals($expected, $routes->getRoutes());
 
 		Services::request()->setMethod('post');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
 		$routes->match(['get', 'post'], 'here', 'there');
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
@@ -531,7 +531,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testGet()
 	{
 		Services::request()->setMethod('get');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
 
 		$expected = ['here' => '\there'];
 
@@ -543,8 +543,8 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	public function testPost()
 	{
-		Services::request()->setMethod('post');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('post');
 
 		$expected = ['here' => '\there'];
 
@@ -556,8 +556,8 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	public function testGetDoesntAllowOtherMethods()
 	{
-		Services::request()->setMethod('get');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('get');
 
 		$expected = ['here' => '\there'];
 
@@ -570,8 +570,8 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	public function testPut()
 	{
-		Services::request()->setMethod('put');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('put');
 
 		$expected = ['here' => '\there'];
 
@@ -583,8 +583,8 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	public function testDelete()
 	{
-		Services::request()->setMethod('delete');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('delete');
 
 		$expected = ['here' => '\there'];
 
@@ -596,8 +596,8 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	public function testHead()
 	{
-		Services::request()->setMethod('head');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('head');
 
 		$expected = ['here' => '\there'];
 
@@ -609,8 +609,8 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	public function testPatch()
 	{
-		Services::request()->setMethod('patch');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('patch');
 
 		$expected = ['here' => '\there'];
 
@@ -622,8 +622,8 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	public function testOptions()
 	{
-		Services::request()->setMethod('options');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('options');
 
 		$expected = ['here' => '\there'];
 
@@ -650,7 +650,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		// ENVIRONMENT should be 'testing'
 
 		Services::request()->setMethod('get');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
 
 		$expected = ['here' => '\there'];
 
@@ -947,18 +947,20 @@ class RouteCollectionTest extends \CIUnitTestCase
 	{
 		$routes = $this->getCollector();
 
-		$routes->add('login', function() { });
+		$routes->add('login', function () {
+		});
 
 		$match = $routes->reverseRoute('login');
 
 		$this->assertEquals('/login', $match);
 	}
-	
+
 	public function testReverseRoutingWithClosureNoMatch()
 	{
 		$routes = $this->getCollector();
 
-		$routes->add('login', function() { });
+		$routes->add('login', function () {
+		});
 
 		$this->assertFalse($routes->reverseRoute('foobar'));
 	}
@@ -1027,7 +1029,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testRouteGroupWithFilterSimple()
 	{
 		Services::request()->setMethod('get');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
 
 		$routes->group(
 				'admin', ['filter' => 'role'], function ($routes) {
@@ -1044,7 +1046,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testRouteGroupWithFilterWithParams()
 	{
 		Services::request()->setMethod('get');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
 
 		$routes->group(
 				'admin', ['filter' => 'role:admin,manager'], function ($routes) {
@@ -1062,7 +1064,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function test404OverrideNot()
 	{
 		Services::request()->setMethod('get');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
 
 		$this->assertEquals(null, $routes->get404Override());
 	}
@@ -1070,7 +1072,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function test404OverrideString()
 	{
 		Services::request()->setMethod('get');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
 
 		$routes->set404Override('Explode');
 		$this->assertEquals('Explode', $routes->get404Override());
@@ -1079,7 +1081,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function test404OverrideCallable()
 	{
 		Services::request()->setMethod('get');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
 
 		$routes->set404Override(function () {
 			echo 'Explode now';
@@ -1093,7 +1095,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testOffsetParameters()
 	{
 		Services::request()->setMethod('get');
-		$routes                    = $this->getCollector();
+		$routes = $this->getCollector();
 
 		$routes->get('users/(:num)', 'users/show/$1', ['offset' => 1]);
 		$expected = ['users/([0-9]+)' => '\users/show/$2'];
@@ -1111,7 +1113,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 
 		Services::request()->setMethod('get');
-		$_SERVER['HTTP_HOST']      = 'doc.example.com';
+		$_SERVER['HTTP_HOST'] = 'doc.example.com';
 
 		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => 'doc', 'as' => 'doc_item']);
 
@@ -1123,7 +1125,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 
 		Services::request()->setMethod('get');
-		$_SERVER['HTTP_HOST']      = 'dev.example.com';
+		$_SERVER['HTTP_HOST'] = 'dev.example.com';
 
 		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => 'doc', 'as' => 'doc_item']);
 
@@ -1135,7 +1137,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 
 		Services::request()->setMethod('get');
-		$_SERVER['HTTP_HOST']      = 'example.com';
+		$_SERVER['HTTP_HOST'] = 'example.com';
 
 		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => 'doc', 'as' => 'doc_item']);
 
@@ -1147,7 +1149,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 
 		Services::request()->setMethod('get');
-		$_SERVER['HTTP_HOST']      = 'doc.example.com';
+		$_SERVER['HTTP_HOST'] = 'doc.example.com';
 
 		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
 
@@ -1159,7 +1161,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 
 		Services::request()->setMethod('get');
-		$_SERVER['HTTP_HOST']      = 'dev.example.com';
+		$_SERVER['HTTP_HOST'] = 'dev.example.com';
 
 		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
 
@@ -1171,7 +1173,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 
 		Services::request()->setMethod('get');
-		$_SERVER['HTTP_HOST']      = 'example.com';
+		$_SERVER['HTTP_HOST'] = 'example.com';
 
 		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
 
@@ -1183,7 +1185,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 
 		Services::request()->setMethod('get');
-		$_SERVER['HTTP_HOST']      = 'doc.example.com';
+		$_SERVER['HTTP_HOST'] = 'doc.example.com';
 
 		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['hostname' => 'example.com', 'as' => 'doc_item']);
 
@@ -1195,7 +1197,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 
 		Services::request()->setMethod('get');
-		$_SERVER['HTTP_HOST']      = 'dev.example.com';
+		$_SERVER['HTTP_HOST'] = 'dev.example.com';
 
 		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['hostname' => 'example.com', 'as' => 'doc_item']);
 
@@ -1207,7 +1209,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 
 		Services::request()->setMethod('get');
-		$_SERVER['HTTP_HOST']      = 'example.com';
+		$_SERVER['HTTP_HOST'] = 'example.com';
 
 		$routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['hostname' => 'example.com', 'as' => 'doc_item']);
 
@@ -1221,14 +1223,15 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testRouteOverwritingDifferentSubdomains()
 	{
 		Services::request()->setMethod('get');
-		$_SERVER['HTTP_HOST']      = 'doc.domain.com';
+		$_SERVER['HTTP_HOST'] = 'doc.domain.com';
 
 		$routes = $this->getCollector();
-		$router = new Router($routes);
+		$router = new Router($routes, Services::request());
 
 		$routes->setDefaultNamespace('App\Controllers');
 		$routes->setDefaultController('Home');
 		$routes->setDefaultMethod('index');
+		$routes->setHTTPVerb('get');
 
 		$routes->get('/', 'App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
 		$routes->get('/', 'Home::index', ['subdomain' => 'dev']);
@@ -1241,10 +1244,10 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testRouteOverwritingTwoRules()
 	{
 		Services::request()->setMethod('get');
-		$_SERVER['HTTP_HOST']      = 'doc.domain.com';
+		$_SERVER['HTTP_HOST'] = 'doc.domain.com';
 
 		$routes = $this->getCollector();
-		$router = new Router($routes);
+		$router = new Router($routes, Services::request());
 
 		$routes->setDefaultNamespace('App\Controllers');
 		$routes->setDefaultController('Home');
@@ -1262,10 +1265,10 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testRouteOverwritingTwoRulesLastApplies()
 	{
 		Services::request()->setMethod('get');
-		$_SERVER['HTTP_HOST']      = 'doc.domain.com';
+		$_SERVER['HTTP_HOST'] = 'doc.domain.com';
 
 		$routes = $this->getCollector();
-		$router = new Router($routes);
+		$router = new Router($routes, Services::request());
 
 		$routes->setDefaultNamespace('App\Controllers');
 		$routes->setDefaultController('Home');
@@ -1282,10 +1285,10 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testRouteOverwritingMatchingSubdomain()
 	{
 		Services::request()->setMethod('get');
-		$_SERVER['HTTP_HOST']      = 'doc.domain.com';
+		$_SERVER['HTTP_HOST'] = 'doc.domain.com';
 
 		$routes = $this->getCollector();
-		$router = new Router($routes);
+		$router = new Router($routes, Services::request());
 
 		$routes->setDefaultNamespace('App\Controllers');
 		$routes->setDefaultController('Home');
@@ -1302,10 +1305,10 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testRouteOverwritingMatchingHost()
 	{
 		Services::request()->setMethod('get');
-		$_SERVER['HTTP_HOST']      = 'doc.domain.com';
+		$_SERVER['HTTP_HOST'] = 'doc.domain.com';
 
 		$routes = $this->getCollector();
-		$router = new Router($routes);
+		$router = new Router($routes, Services::request());
 
 		$routes->setDefaultNamespace('App\Controllers');
 		$routes->setDefaultController('Home');
