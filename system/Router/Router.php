@@ -38,6 +38,7 @@
 
 namespace CodeIgniter\Router;
 
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\Exceptions\RouterException;
@@ -135,13 +136,16 @@ class Router implements RouterInterface
 	 * Stores a reference to the RouteCollection object.
 	 *
 	 * @param RouteCollectionInterface $routes
+	 * @param Request                  $request
 	 */
-	public function __construct(RouteCollectionInterface $routes)
+	public function __construct(RouteCollectionInterface $routes, Request $request = null)
 	{
 		$this->collection = $routes;
 
 		$this->controller = $this->collection->getDefaultController();
 		$this->method     = $this->collection->getDefaultMethod();
+
+		$this->collection->setHTTPVerb($request->getMethod() ?? 'get');
 	}
 
 	//--------------------------------------------------------------------

@@ -50,6 +50,7 @@ use CodeIgniter\HTTP\CURLRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Negotiate;
 use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -640,15 +641,16 @@ class Services extends BaseService
 	 * the correct Controller and Method to execute.
 	 *
 	 * @param \CodeIgniter\Router\RouteCollectionInterface $routes
+	 * @param \CodeIgniter\HTTP\Request                    $request
 	 * @param boolean                                      $getShared
 	 *
 	 * @return \CodeIgniter\Router\Router
 	 */
-	public static function router(RouteCollectionInterface $routes = null, bool $getShared = true)
+	public static function router(RouteCollectionInterface $routes = null, Request $request = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('router', $routes);
+			return static::getSharedInstance('router', $routes, $request);
 		}
 
 		if (empty($routes))
@@ -656,7 +658,7 @@ class Services extends BaseService
 			$routes = static::routes(true);
 		}
 
-		return new Router($routes);
+		return new Router($routes, $request);
 	}
 
 	//--------------------------------------------------------------------
