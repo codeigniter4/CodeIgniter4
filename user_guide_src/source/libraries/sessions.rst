@@ -80,7 +80,7 @@ However, non-blocking requests in the context of sessions also means
 unsafe, because, modifications to session data (or session ID regeneration)
 in one request can interfere with the execution of a second, concurrent
 request. This detail was at the root of many issues and the main reason why
-CodeIgniter 3.0 has a completely re-written Session library.
+CodeIgniter 4 has a completely re-written Session library.
 
 Why are we telling you this? Because it is likely that after trying to
 find the reason for your performance issues, you may conclude that locking
@@ -387,7 +387,7 @@ Destroying a Session
 
 To clear the current session (for example, during a logout), you may
 simply use either PHP's `session_destroy() <http://php.net/session_destroy>`_
-function, or the ``sess_destroy()`` method. Both will work in exactly the
+function, or the library's ``destroy()`` method. Both will work in exactly the
 same way::
 
 	session_destroy();
