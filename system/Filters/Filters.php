@@ -483,7 +483,7 @@ class Filters
 			// need to make pseudo wildcard real
 			$path = strtolower(str_replace('*', '.*', $path));
 			// Does this rule apply here?
-			if (preg_match('#' . $path . '#', $uri, $match) === 1)
+			if (preg_match('#^' . $path . '$#', $uri, $match) === 1)
 			{
 				return true;
 			}
