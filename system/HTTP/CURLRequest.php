@@ -538,7 +538,7 @@ class CURLRequest extends Request
 			// See http://tools.ietf.org/html/rfc7230#section-3.3.2
 			if (is_null($this->getHeader('content-length')))
 			{
-				$this->setHeader('Content-Length', 0);
+				$this->setHeader('Content-Length', '0');
 			}
 		}
 		else if ($method === 'HEAD')
