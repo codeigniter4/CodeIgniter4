@@ -615,11 +615,11 @@ class Forge
 			return true;
 		}
 
-		$this->db->query('PRAGMA foreign_keys = OFF');
+		$this->db->disableForeignKeyChecks();
 
 		$query = $this->db->query($query);
 
-		$this->db->query('PRAGMA foreign_keys = ON');
+		$this->db->enableForeignKeyChecks();
 
 		// Update table list cache
 		if ($query && ! empty($this->db->dataCache['table_names']))
