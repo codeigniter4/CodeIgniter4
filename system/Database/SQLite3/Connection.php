@@ -504,7 +504,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return boolean
 	 */
-	protected function supportsForeignKeys(): bool
+	public function supportsForeignKeys(): bool
 	{
 		$result = $this->simpleQuery('PRAGMA foreign_keys');
 
