@@ -456,7 +456,7 @@ It is possible to nest groups within groups for finer organization if you need i
 </pre></div>
 </div>
 <p>This would handle a resource route to the <code class="docutils literal"><span class="pre">App\API\v1\Users</span></code> controller with the <code class="docutils literal"><span class="pre">/api/users</span></code> URI.</p>
-<p>You can also use ensure that a specific <a class="reference external" href="/incoming/filters.html">filter</a> runs for a group of routes. This will always
+<p>You can also use a specific <a class="reference external" href="/incoming/filters.html">filter</a> for a group of routes. This will always
 run the filter before or after the controller. This is especially handy during authentication or api logging:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;api-auth&#39;</span><span class="p">],</span> <span class="k">function</span><span class="p">(</span><span class="nv">$routes</span><span class="p">)</span>
 <span class="p">{</span>
@@ -810,7 +810,7 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on May 18, 2019.
+      Last updated on Jun 07, 2019.
 
     </p>
   </div>
