@@ -490,4 +490,23 @@ class RouterTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2032
+	 */
+	public function testAutoRouteMatchesZeroParams()
+	{
+		$router = new Router($this->collection, $this->request);
+
+		$router->autoRoute('myController/someMethod/0/abc');
+
+		$this->assertEquals('MyController', $router->controllerName());
+		$this->assertEquals('someMethod', $router->methodName());
+
+		$expected = [
+			'0',
+			'abc',
+		];
+		$this->assertEquals($expected, $router->params());
+	}
 }

@@ -151,7 +151,8 @@ class FeatureTestCase extends CIDatabaseTestCase
 	public function call(string $method, string $path, array $params = null)
 	{
 		// Simulate having a blank session
-		$_SESSION = [];
+		$_SESSION                  = [];
+		$_SERVER['REQUEST_METHOD'] = $method;
 
 		$request = $this->setupRequest($method, $path, $params);
 		$request = $this->populateGlobals($method, $request, $params);
@@ -165,7 +166,6 @@ class FeatureTestCase extends CIDatabaseTestCase
 		// Make sure any other classes that might call the request
 		// instance get the right one.
 		Services::injectMock('request', $request);
-		$_SERVER['REQUEST_METHOD'] = $method;
 
 		$response = $this->app
 				->setRequest($request)
