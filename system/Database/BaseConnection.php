@@ -1698,6 +1698,30 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Disables foreign key checks temporarily.
+	 */
+	public function disableForeignKeyChecks()
+	{
+		$sql = $this->_disableForeignKeyChecks();
+
+		return $this->query($sql);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Enables foreign key checks temporarily.
+	 */
+	public function enableForeignKeyChecks()
+	{
+		$sql = $this->_enableForeignKeyChecks();
+
+		return $this->query($sql);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Allows the engine to be set into a mode where queries are not
 	 * actually executed, but they are still generated, timed, etc.
 	 *

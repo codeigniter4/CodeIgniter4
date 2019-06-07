@@ -569,6 +569,30 @@ class Connection extends BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns platform-specific SQL to disable foreign key checks.
+	 *
+	 * @return string
+	 */
+	protected function _disableForeignKeyChecks()
+	{
+		return 'SET FOREIGN_KEY_CHECKS=0';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns platform-specific SQL to enable foreign key checks.
+	 *
+	 * @return string
+	 */
+	protected function _enableForeignKeyChecks()
+	{
+		return 'SET FOREIGN_KEY_CHECKS=1';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the last error code and message.
 	 *
 	 * Must return an array with keys 'code' and 'message':

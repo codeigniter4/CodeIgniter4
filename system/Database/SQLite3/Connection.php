@@ -418,6 +418,30 @@ class Connection extends BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns platform-specific SQL to disable foreign key checks.
+	 *
+	 * @return string
+	 */
+	protected function _disableForeignKeyChecks()
+	{
+		return 'PRAGMA foreign_keys = OFF';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns platform-specific SQL to enable foreign key checks.
+	 *
+	 * @return string
+	 */
+	protected function _enableForeignKeyChecks()
+	{
+		return 'PRAGMA foreign_keys = ON';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the last error code and message.
 	 *
 	 * Must return an array with keys 'code' and 'message':
@@ -504,7 +528,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return boolean
 	 */
-	protected function supportsForeignKeys(): bool
+	public function supportsForeignKeys(): bool
 	{
 		$result = $this->simpleQuery('PRAGMA foreign_keys');
 

@@ -218,6 +218,40 @@ class Table
 	}
 
 	/**
+	 * Drops a foreign key from this table so that
+	 * it won't be recreated in the future.
+	 *
+	 * @param string $column
+	 *
+	 * @return \CodeIgniter\Database\SQLite3\Table
+	 */
+	public function dropForeignKey(string $column)
+	{
+		if (empty($this->foreignKeys))
+		{
+			return $this;
+		}
+
+		for ($i = 0; $i < count($this->foreignKeys); $i++)
+		{
+			if ($this->foreignKeys[$i]->table_name !== $this->tableName)
+			{
+				continue;
+			}
+
+			// The column name should be the first thing in the constraint name
+			if (strpos($this->foreignKeys[$i]->constraint_name, $column) !== 0)
+			{
+				continue;
+			}
+
+			unset($this->foreignKeys[$i]);
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Creates the new table based on our current fields.
 	 *
 	 * @return mixed
