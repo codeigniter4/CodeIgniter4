@@ -80,7 +80,7 @@ class Routes extends BaseCollector
 	public function display(): array
 	{
 		$rawRoutes = Services::routes(true);
-		$router    = Services::router(null, true);
+		$router    = Services::router(null, null, true);
 
 		/*
 		 * Matched Route

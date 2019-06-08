@@ -14,7 +14,7 @@ webapp,
 
 **Note**: if you are using a Git repository to store your code, or for
 collaboration with others, then the ``vendor`` folder would normally
-be "git ignored". In such a case, you will need to do a ``composer udpate``
+be "git ignored". In such a case, you will need to do a ``composer update``
 when you clone the repository to a new system.
 
 App Starter

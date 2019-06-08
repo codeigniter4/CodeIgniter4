@@ -126,7 +126,7 @@ on your entities without worrying much about stray fields getting saved incorrec
     $user->fill($data);
     $userModel->save($user);
 
-You can also pass the data in the constructor and the data will be passed through the fill() method durin instantiation.
+You can also pass the data in the constructor and the data will be passed through the `fill()` method during instantiation.
 
 ::
 

@@ -126,7 +126,7 @@ class MigrateRollback extends BaseCommand
 			}
 			else
 			{
-				// Get all namespaces form  PSR4 paths.
+				// Get all namespaces from PSR4 paths.
 				$config     = new Autoload();
 				$namespaces = $config->psr4;
 				foreach ($namespaces as $namespace => $path)

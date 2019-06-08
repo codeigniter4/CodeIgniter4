@@ -388,10 +388,6 @@ class ForgeTest extends CIDatabaseTestCase
 		{
 			$attributes = ['ENGINE' => 'InnoDB'];
 		}
-		if ($this->db->DBDriver === 'SQLite3')
-		{
-			$this->expectException(DatabaseException::class);
-		}
 
 		$this->forge->addField([
 			'id'   => [

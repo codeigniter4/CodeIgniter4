@@ -145,7 +145,7 @@ class Router implements RouterInterface
 		$this->controller = $this->collection->getDefaultController();
 		$this->method     = $this->collection->getDefaultMethod();
 
-		$this->collection->setHTTPVerb($request->getMethod() ?? 'get');
+		$this->collection->setHTTPVerb($request->getMethod() ?? strtolower($_SERVER['REQUEST_METHOD']));
 	}
 
 	//--------------------------------------------------------------------
@@ -568,7 +568,9 @@ class Router implements RouterInterface
 	 */
 	protected function validateRequest(array $segments): array
 	{
-		$segments = array_filter($segments);
+		$segments = array_filter($segments, function ($segment) {
+			return ! empty($segment) || ($segment !== '0' || $segment !== 0);
+		});
 		$segments = array_values($segments);
 
 		$c                  = count($segments);
