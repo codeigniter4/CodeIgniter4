@@ -527,7 +527,7 @@ class Model
 
 		if (is_object($data))
 		{
-			if (method_exists($data, 'exists') && $data->exists() && property_exists($data, $this->primaryKey))
+			if (method_exists($data, 'exists') && $data->exists() && isset($data->{$this->primaryKey}))
 			{
 				$response = $this->update($data->{$this->primaryKey}, $data);
 				return $response;
