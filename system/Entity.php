@@ -88,6 +88,14 @@ class Entity
 	protected $original = [];
 
 	/**
+	 * Keep track whether the entity
+	 * exists in the Database Table or not.
+	 *
+	 * @var boolean
+	 */
+	protected $exists = false;
+
+	/**
 	 * Holds info whenever properties have to be casted
 	 *
 	 * @var boolean
@@ -139,6 +147,28 @@ class Entity
 		}
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Set boolean value for entity state.
+	 *
+	 * @param boolean $exists
+	 */
+	public function setExists(bool $exists)
+	{
+		$this->exists = $exists;
+	}
+
+	/**
+	 * Checks if the entity exists in the database.
+	 *
+	 * @return boolean
+	 */
+	public function exists() : bool
+	{
+		return $this->exists;
 	}
 
 	//--------------------------------------------------------------------

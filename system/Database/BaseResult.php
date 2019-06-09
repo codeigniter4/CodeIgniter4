@@ -196,6 +196,11 @@ abstract class BaseResult implements ResultInterface
 				$row->syncOriginal();
 			}
 
+			if (method_exists($row, 'setExists'))
+			{
+				$row->setExists(true);
+			}
+
 			$this->customResultObject[$className][] = $row;
 		}
 

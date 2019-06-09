@@ -94,6 +94,16 @@ class EntityTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testExists()
+	{
+		$entity = $this->getMappedEntity();
+		$entity->setExists(true);
+
+		$this->assertTrue($entity->exists());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testDataMappingConvertsOriginalName()
 	{
 		$entity = $this->getMappedEntity();
@@ -667,7 +677,7 @@ class EntityTest extends \CIUnitTestCase
 	public function testHasChangedWholeEntity()
 	{
 		$entity = $this->getEntity();
-		
+
 		$entity->foo = 'bar';
 
 		$this->assertTrue($entity->hasChanged());
