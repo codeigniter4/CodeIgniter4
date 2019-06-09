@@ -100,6 +100,10 @@ class EntityTest extends \CIUnitTestCase
 		$entity->setExists(true);
 
 		$this->assertTrue($entity->exists());
+
+		$entity->setExists(false);
+
+		$this->assertFalse($entity->exists());
 	}
 
 	//--------------------------------------------------------------------

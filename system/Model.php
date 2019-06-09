@@ -525,22 +525,25 @@ class Model
 			return true;
 		}
 
-		if (is_object($data) && isset($data->{$this->primaryKey}))
+		if (is_object($data))
 		{
-			$response = $this->update($data->{$this->primaryKey}, $data);
+			if (method_exists($data, 'exists') && $data->exists() && property_exists($data, $this->primaryKey))
+			{
+				$response = $this->update($data->{$this->primaryKey}, $data);
+				return $response;
+			}
 		}
 		elseif (is_array($data) && ! empty($data[$this->primaryKey]))
 		{
 			$response = $this->update($data[$this->primaryKey], $data);
+			return $response;
 		}
-		else
+
+		$response = $this->insert($data, false);
+		// call insert directly if you want the ID or the record object
+		if ($response !== false)
 		{
-			$response = $this->insert($data, false);
-			// call insert directly if you want the ID or the record object
-			if ($response !== false)
-			{
-				$response = true;
-			}
+			$response = true;
 		}
 
 		return $response;
@@ -642,20 +645,24 @@ class Model
 	 * @return integer|string|boolean
 	 * @throws \ReflectionException
 	 */
-	public function insert($data = null, bool $returnID = true)
+	public function insert(&$data = null, bool $returnID = true)
 	{
 		$escape = null;
 
 		$this->insertID = 0;
 
-		if (empty($data))
+		// Copy data array, so we don't lose
+		// object reference to $data var in case of updating exist state.
+		$rawData = $data;
+
+		if (empty($rawData))
 		{
-			$data           = $this->tempData['data'] ?? null;
+			$rawData        = $this->tempData['data'] ?? null;
 			$escape         = $this->tempData['escape'] ?? null;
 			$this->tempData = [];
 		}
 
-		if (empty($data))
+		if (empty($rawData))
 		{
 			throw DataException::forEmptyDataset('insert');
 		}
@@ -663,23 +670,28 @@ class Model
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
-		if (is_object($data) && ! $data instanceof stdClass)
+		if (is_object($rawData) && ! $rawData instanceof stdClass)
 		{
-			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat, false);
+			$tryUpdate = method_exists($rawData, 'exists') && $rawData->exists() && property_exists($rawData, $this->primaryKey);
+
+			$rawData = static::classToArray($rawData, $this->primaryKey, $this->dateFormat, false);
+
+			if ($tryUpdate)
+			{
+				$result = $this->update($rawData->{$this->primaryKey}, $rawData);
+				return $returnID ? $rawData->{$this->primaryKey} : $result;
+			}
 		}
 
 		// If it's still a stdClass, go ahead and convert to
 		// an array so doProtectFields and other model methods
 		// don't have to do special checks.
-		if (is_object($data))
-		{
-			$data = (array) $data;
-		}
+		$rawData = is_object($rawData) ? (array) $rawData : $rawData;
 
 		// Validate data before saving.
 		if ($this->skipValidation === false)
 		{
-			if ($this->validate($data) === false)
+			if ($this->validate($rawData) === false)
 			{
 				return false;
 			}
@@ -688,30 +700,30 @@ class Model
 		// Save the original data so it can be passed to
 		// any Model Event callbacks and not stripped
 		// by doProtectFields
-		$originalData = $data;
+		$originalData = $rawData;
 
 		// Must be called first so we don't
 		// strip out created_at values.
-		$data = $this->doProtectFields($data);
+		$rawData = $this->doProtectFields($rawData);
 
 		// Set created_at and updated_at with same time
 		$date = $this->setDate();
 
-		if ($this->useTimestamps && ! empty($this->createdField) && ! array_key_exists($this->createdField, $data))
+		if ($this->useTimestamps && ! empty($this->createdField) && ! array_key_exists($this->createdField, $rawData))
 		{
-			$data[$this->createdField] = $date;
+			$rawData[$this->createdField] = $date;
 		}
 
-		if ($this->useTimestamps && ! empty($this->updatedField) && ! array_key_exists($this->updatedField, $data))
+		if ($this->useTimestamps && ! empty($this->updatedField) && ! array_key_exists($this->updatedField, $rawData))
 		{
-			$data[$this->updatedField] = $date;
+			$rawData[$this->updatedField] = $date;
 		}
 
-		$data = $this->trigger('beforeInsert', ['data' => $data]);
+		$rawData = $this->trigger('beforeInsert', ['data' => $rawData]);
 
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $this->builder()
-				->set($data['data'], '', $escape)
+				->set($rawData['data'], '', $escape)
 				->insert();
 
 		$this->trigger('afterInsert', ['data' => $originalData, 'result' => $result]);
@@ -723,6 +735,13 @@ class Model
 		}
 
 		$this->insertID = $this->db->insertID();
+
+		// Update exists state through reference
+		if (is_object($data) && property_exists($data, 'setExists'))
+		{
+			$data->setExists(true);
+			$data->{$this->primaryKey} = $this->insertID;
+		}
 
 		// otherwise return the insertID, if requested.
 		return $returnID ? $this->insertID : $result;
@@ -769,7 +788,7 @@ class Model
 	 * @return boolean
 	 * @throws \ReflectionException
 	 */
-	public function update($id = null, $data = null): bool
+	public function update($id = null, &$data = null): bool
 	{
 		$escape = null;
 
@@ -788,6 +807,15 @@ class Model
 		if (empty($data))
 		{
 			throw DataException::forEmptyDataset('update');
+		}
+
+		if (is_object($data))
+		{
+			$tryInsert = method_exists($data, 'exists') && ! $data->exists();
+			if ($tryInsert)
+			{
+				return $this->insert($data, false);
+			}
 		}
 
 		// If $data is using a custom class with public or protected
