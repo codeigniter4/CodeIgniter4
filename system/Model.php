@@ -676,12 +676,12 @@ class Model
 
 			$rawData = static::classToArray($rawData, $this->primaryKey, $this->dateFormat, false);
 
-			$tryUpdate = $tryUpdate && isset($rawData->{$this->primaryKey});
+			$tryUpdate = $tryUpdate && isset($rawData[$this->primaryKey]);
 
 			if ($tryUpdate)
 			{
-				$result = $this->update($rawData->{$this->primaryKey}, $rawData);
-				return $returnID ? $rawData->{$this->primaryKey} : $result;
+				$result = $this->update($rawData[$this->primaryKey], $rawData);
+				return $returnID ? $rawData[$this->primaryKey] : $result;
 			}
 		}
 
