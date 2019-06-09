@@ -672,9 +672,11 @@ class Model
 		// them as an array.
 		if (is_object($rawData) && ! $rawData instanceof stdClass)
 		{
-			$tryUpdate = method_exists($rawData, 'exists') && $rawData->exists() && property_exists($rawData, $this->primaryKey);
+			$tryUpdate = method_exists($rawData, 'exists') && $rawData->exists();
 
 			$rawData = static::classToArray($rawData, $this->primaryKey, $this->dateFormat, false);
+
+			$tryUpdate = $tryUpdate && isset($rawData->{$this->primaryKey});
 
 			if ($tryUpdate)
 			{
@@ -737,7 +739,7 @@ class Model
 		$this->insertID = $this->db->insertID();
 
 		// Update exists state through reference
-		if (is_object($data) && property_exists($data, 'setExists'))
+		if (is_object($data) && method_exists($data, 'setExists'))
 		{
 			$data->setExists(true);
 			$data->{$this->primaryKey} = $this->insertID;
