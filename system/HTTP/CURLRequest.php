@@ -674,8 +674,16 @@ class CURLRequest extends Request
 		// Debug
 		if (isset($config['debug']))
 		{
-			$curl_options[CURLOPT_VERBOSE] = $config['debug'] === true ? 1 : 0;
-			$curl_options[CURLOPT_STDERR]  = $config['debug'] === true ? fopen('php://output', 'w+') : $config['debug'];
+			if(is_bool($config['debug']) && $config['debug'] === true)
+			{
+				$curl_options[CURLOPT_VERBOSE] = 1;
+				$curl_options[CURLOPT_STDERR] = fopen('php://output', 'w+');
+			}
+			else if(is_resource($config['debug']))
+			{
+				$curl_options[CURLOPT_VERBOSE] = 1;
+				$curl_options[CURLOPT_STDERR] = $config['debug'];
+			}
 		}
 
 		// Decode Content
