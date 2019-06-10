@@ -188,7 +188,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 		$data = array_filter(preg_split('/(\r\n|\n|\r)/', $data));
 
-		$this->assertEquals('"1","Developer","Awesome job, but sometimes makes you bored","0","",""', $data[1]);
+		$this->assertEquals('"1","Developer","Awesome job, but sometimes makes you bored","","",""', $data[1]);
 	}
 
 	//--------------------------------------------------------------------
