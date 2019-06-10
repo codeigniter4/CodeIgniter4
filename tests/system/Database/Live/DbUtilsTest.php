@@ -203,7 +203,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 		$data = $util->getXMLFromResult($data);
 
-		$expected = '<root><element><id>4</id><name>Musician</name><description>Only Coldplay can actually called Musician</description><deleted_at></deleted_at><created_at></created_at><updated_at></updated_at></element></root>';
+		$expected = '<root><element><id>4</id><name>Musician</name><description>Only Coldplay can actually called Musician</description><created_at></created_at><updated_at></updated_at><deleted_at></deleted_at></element></root>';
 
 		$actual = preg_replace('#\R+#', '', $data);
 		$actual = preg_replace('/[ ]{2,}|[\t]/', '', $actual);
