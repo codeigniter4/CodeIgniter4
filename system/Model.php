@@ -713,16 +713,20 @@ class Model
 		$result = $this->builder()
 				->set($data['data'], '', $escape)
 				->insert();
-
+		
+		// If insertion succeeded then save the insert ID
+		if ($result)
+		{
+			$this->insertID = $this->db->insertID();
+		}
+		
 		$this->trigger('afterInsert', ['data' => $originalData, 'result' => $result]);
 
-		// If insertion failed, get our of here
+		// If insertion failed, get out of here
 		if (! $result)
 		{
 			return $result;
 		}
-
-		$this->insertID = $this->db->insertID();
 
 		// otherwise return the insertID, if requested.
 		return $returnID ? $this->insertID : $result;
