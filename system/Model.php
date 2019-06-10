@@ -103,6 +103,13 @@ class Model
 	protected $insertID = 0;
 
 	/**
+	 * Indicates if the IDs are auto-incrementing.
+	 *
+	 * @var boolean
+	 */
+	public $incrementing = true;
+
+	/**
 	 * The Database connection group that
 	 * should be instantiated.
 	 *
@@ -525,9 +532,12 @@ class Model
 			return true;
 		}
 
-		if (is_object($data))
+		if (is_object($data) && isset($data->{$this->primaryKey}))
 		{
-			if (method_exists($data, 'exists') && $data->exists() && isset($data->{$this->primaryKey}))
+			// If primary key is present and the primary gets auto incremented, than it
+			// is an update or the exists method exists, otherwise the primary key is set
+			// manual and than its an insert.
+			if ($this->incrementing || method_exists($data, 'exists') && $data->exists())
 			{
 				$response = $this->update($data->{$this->primaryKey}, $data);
 				return $response;
