@@ -461,7 +461,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->db->table('user')
 				 ->where('id', 1)
-				 ->update(['deleted' => 1]);
+				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$model->purgeDeleted();
 
@@ -479,7 +479,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->db->table('user')
 				 ->where('id', 1)
-				 ->update(['deleted' => 1]);
+				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$users = $model->onlyDeleted()
 					   ->findAll();
@@ -757,7 +757,6 @@ class ModelTest extends CIDatabaseTestCase
 			'name'    => $pass,
 			'email'   => 'foo@example.com',
 			'country' => 'US',
-			'deleted' => 0,
 		];
 
 		$model->insert($data);
