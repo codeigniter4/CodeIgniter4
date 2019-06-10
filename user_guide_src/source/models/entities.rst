@@ -376,3 +376,22 @@ attribute to check::
 
 Or to check the whole entity for changed values omit the parameter:
     $user->hasChanged();            // true
+Checking for Existence
+-------------------------------
+
+You can check if an Entity exists before and after its created::
+
+    // Find
+    $user = new User();
+    $user = $userModel->find($id);
+    $user-exists();                 // true
+    $userModel->save($user);
+    $user->exists();                // true
+
+    // Create
+    $user = new App\Entities\User();
+    $user->username = 'foo';
+    $user->email    = 'foo@example.com';
+    $user-exists();                 // false
+    $userModel->save($user);
+    $user->exists();                // true
