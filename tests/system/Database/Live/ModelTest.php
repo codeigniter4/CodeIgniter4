@@ -403,11 +403,11 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL']);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 
 		$model->delete(1);
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL']);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL' => null]);
 	}
 
 	//--------------------------------------------------------------------
@@ -416,7 +416,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL']);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 
 		$model->delete(1, true);
 
@@ -1402,7 +1402,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$model->delete(1);
 
-		$this->seeInDatabase('job', ['id' => 1, 'deleted_at IS NOT NULL']);
+		$this->seeInDatabase('job', ['id' => 1, 'deleted_at IS NOT NULL' => null]);
 	}
 
 	//--------------------------------------------------------------------
@@ -1628,7 +1628,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL']);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL' => null]);
 
 		$results = $model->join('job', 'job.id = user.id')
 			->findAll();
@@ -1644,7 +1644,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL']);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL' => null]);
 
 		$results = $model->join('job', 'job.id = user.id')
 						 ->find(1);
@@ -1660,7 +1660,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL']);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL' => null]);
 
 		$results = $model->join('job', 'job.id = user.id')
 						 ->first(1);
