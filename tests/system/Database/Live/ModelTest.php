@@ -1413,7 +1413,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->db->table('job')
 				 ->where('id', 1)
-				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
+				 ->update(['deleted_at' => time()]);
 
 		$model->purgeDeleted();
 
