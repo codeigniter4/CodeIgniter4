@@ -1628,7 +1628,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL' => null]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => null]);
 
 		$results = $model->join('job', 'job.id = user.id')
 			->findAll();
@@ -1644,7 +1644,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL' => null]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => null]);
 
 		$results = $model->join('job', 'job.id = user.id')
 						 ->find(1);
@@ -1660,7 +1660,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL' => null]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => null]);
 
 		$results = $model->join('job', 'job.id = user.id')
 						 ->first(1);
