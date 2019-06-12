@@ -174,9 +174,10 @@ Leave it empty to avoid update it (even useTimestamps is enabled)
 
 **$dateFormat**
 
-This value works with $useTimestamps to ensure that the correct type of date value gets
-inserted into the database. By default, this creates DATETIME values, but valid options
-are: datetime, date, or int (a PHP timestamp).
+This value works with $useTimestamps and $useSoftDeletes to ensure that the correct type of
+date value gets inserted into the database. By default, this creates DATETIME values, but
+valid options are: datetime, date, or int (a PHP timestamp). Using 'useSoftDeletes' or
+'useTimestamps' with an invalid or missing dateFormat will cause an exception.
 
 **$validationRules**
 

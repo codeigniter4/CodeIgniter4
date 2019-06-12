@@ -1223,6 +1223,20 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @expectedException        \CodeIgniter\Exceptions\ModelException
+	 * @expectedExceptionMessage `Tests\Support\Models\UserModel` model class does not have a valid dateFormat.
+	 */
+	public function testThrowsWithNoDateFormat()
+	{
+		$model = new UserModel();
+		$this->setPrivateProperty($model, 'dateFormat', '');
+
+		$model->delete(1);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testInsertID()
 	{
 		$model = new JobModel();
