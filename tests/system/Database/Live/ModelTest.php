@@ -1232,7 +1232,7 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new UserModel();
 		$this->setPrivateProperty($model, 'dateFormat', '');
 
-		$model->find(1);
+		$model->delete(1);
 	}
 
 	//--------------------------------------------------------------------
