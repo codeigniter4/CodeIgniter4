@@ -144,7 +144,7 @@ can maintain a "recycle bin" of objects that can be restored, or even simply pre
 part of a security trail. If true, the find* methods will only return non-deleted rows, unless
 the withDeleted() method is called prior to calling the find* method.
 
-This requires requires either a DATETIME or INTEGER field in the database as per the model's
+This requires either a DATETIME or INTEGER field in the database as per the model's
 $dateFormat setting. The default field name is ``deleted_at`` however this name can be
 configured to any name of your choice by using $deletedField property.
 
