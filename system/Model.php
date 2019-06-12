@@ -948,8 +948,8 @@ class Model
 		}
 
 		return $this->builder()
-						->where($this->deletedField . ' IS NOT NULL')
-						->delete();
+			    ->where($this->table . '.' . $this->deletedField . ' IS NOT NULL')
+			    ->delete();
 	}
 
 	//--------------------------------------------------------------------
@@ -982,7 +982,7 @@ class Model
 		$this->tempUseSoftDeletes = false;
 
 		$this->builder()
-				->where($this->deletedField . ' IS NOT NULL');
+		     ->where($this->table . '.' . $this->deletedField . ' IS NOT NULL');
 
 		return $this;
 	}
@@ -1548,7 +1548,7 @@ class Model
 	{
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$this->builder()->where($this->deletedField, null);
+			$this->builder()->where($this->table . '.' . $this->deletedField, null);
 		}
 
 		return $this->builder()->countAllResults($reset, $test);
