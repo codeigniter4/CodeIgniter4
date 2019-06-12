@@ -10,7 +10,7 @@ class UserModel extends Model
 		'name',
 		'email',
 		'country',
-		'deleted',
+		'deleted_at',
 	];
 
 	protected $returnType = 'object';

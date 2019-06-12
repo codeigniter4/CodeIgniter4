@@ -120,7 +120,7 @@ class Model
 
 	/**
 	 * If this model should use "softDeletes" and
-	 * simply set a flag when rows are deleted, or
+	 * simply set a date when rows are deleted, or
 	 * do hard deletes.
 	 *
 	 * @var boolean
@@ -182,7 +182,7 @@ class Model
 	 *
 	 * @var string
 	 */
-	protected $deletedField = 'deleted';
+	protected $deletedField = 'deleted_at';
 
 	/**
 	 * Used by asArray and asObject to provide
@@ -356,7 +356,7 @@ class Model
 
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$builder->where($this->table . '.' . $this->deletedField, 0);
+			$builder->where($this->table . '.' . $this->deletedField, null);
 		}
 
 		if (is_array($id))
@@ -427,7 +427,7 @@ class Model
 
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$builder->where($this->table . '.' . $this->deletedField, 0);
+			$builder->where($this->table . '.' . $this->deletedField, null);
 		}
 
 		$row = $builder->limit($limit, $offset)
@@ -457,7 +457,7 @@ class Model
 
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$builder->where($this->table . '.' . $this->deletedField, 0);
+			$builder->where($this->table . '.' . $this->deletedField, null);
 		}
 
 		// Some databases, like PostgreSQL, need order
@@ -713,16 +713,20 @@ class Model
 		$result = $this->builder()
 				->set($data['data'], '', $escape)
 				->insert();
-
+		
+		// If insertion succeeded then save the insert ID
+		if ($result)
+		{
+			$this->insertID = $this->db->insertID();
+		}
+		
 		$this->trigger('afterInsert', ['data' => $originalData, 'result' => $result]);
 
-		// If insertion failed, get our of here
+		// If insertion failed, get out of here
 		if (! $result)
 		{
 			return $result;
 		}
-
-		$this->insertID = $this->db->insertID();
 
 		// otherwise return the insertID, if requested.
 		return $returnID ? $this->insertID : $result;
@@ -908,7 +912,7 @@ class Model
 
 		if ($this->useSoftDeletes && ! $purge)
 		{
-			$set[$this->deletedField] = 1;
+			$set[$this->deletedField] = $this->setDate();
 
 			if ($this->useTimestamps && ! empty($this->updatedField))
 			{
@@ -943,8 +947,8 @@ class Model
 		}
 
 		return $this->builder()
-						->where($this->deletedField, 1)
-						->delete();
+			    ->where($this->table . '.' . $this->deletedField . ' IS NOT NULL')
+			    ->delete();
 	}
 
 	//--------------------------------------------------------------------
@@ -977,7 +981,7 @@ class Model
 		$this->tempUseSoftDeletes = false;
 
 		$this->builder()
-				->where($this->deletedField, 1);
+		     ->where($this->table . '.' . $this->deletedField . ' IS NOT NULL');
 
 		return $this;
 	}
@@ -1539,7 +1543,7 @@ class Model
 	{
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$this->builder()->where($this->deletedField, 0);
+			$this->builder()->where($this->table . '.' . $this->deletedField, null);
 		}
 
 		return $this->builder()->countAllResults($reset, $test);
