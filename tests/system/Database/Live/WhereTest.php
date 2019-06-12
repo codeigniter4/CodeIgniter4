@@ -159,4 +159,60 @@ class WhereTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testWhereNullParam()
+	{
+		$this->db->table('job')
+				 ->insert([
+					'name'        => 'Brewmaster',
+					'description' => null,
+				 ]);
+				 
+		$jobs = $this->db->table('job')
+						 ->where('description', null)
+						 ->get()
+						 ->getResult();
+
+		$this->assertCount(1, $jobs);
+		$this->assertEquals('Brewmaster', $jobs[0]->name);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testWhereIsNull()
+	{
+		$this->db->table('job')
+				 ->insert([
+					'name'        => 'Brewmaster',
+					'description' => null,
+				 ]);
+				 
+		$jobs = $this->db->table('job')
+						 ->where('description IS NULL')
+						 ->get()
+						 ->getResult();
+
+		$this->assertCount(1, $jobs);
+		$this->assertEquals('Brewmaster', $jobs[0]->name);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testWhereIsNotNull()
+	{
+		$this->db->table('job')
+				 ->insert([
+					'name'        => 'Brewmaster',
+					'description' => null,
+				 ]);
+				 
+		$jobs = $this->db->table('job')
+						 ->where('description IS NOT NULL')
+						 ->get()
+						 ->getResult();
+
+		$this->assertCount(4, $jobs);
+	}
+
+	//--------------------------------------------------------------------
+
 }
