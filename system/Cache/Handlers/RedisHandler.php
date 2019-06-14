@@ -39,6 +39,7 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Exceptions\CriticalError;
 
 /**
  * Redis cache handler
@@ -116,6 +117,18 @@ class RedisHandler implements CacheInterface
 		$config = $this->config;
 
 		$this->redis = new \Redis();
+
+		try
+		{
+			// Check if the connection is valid by trying to get the time.
+			$this->redis->time();
+		}
+		catch(\RedisException $e)
+		{
+			// thrown if can't connect to redis server.
+			throw new CriticalError('Cache: RedisException occured with message (' . $e->getMessage() . ')');
+		}
+
 		if (! $this->redis->connect($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout']))
 		{
 			log_message('error', 'Cache: Redis connection failed. Check your configuration.');

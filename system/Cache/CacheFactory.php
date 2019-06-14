@@ -39,6 +39,7 @@
 namespace CodeIgniter\Cache;
 
 use CodeIgniter\Cache\Exceptions\CacheException;
+use CodeIgniter\Exceptions\CriticalError;
 
 /**
  * Class Cache
@@ -93,7 +94,19 @@ class CacheFactory
 			}
 		}
 
-		$adapter->initialize();
+		// if adapter throws an error, attempt to use backup and then dummy...
+		try
+		{
+			$adapter->initialize();
+		}
+		catch(CriticalError $e)
+		{
+			// log the fact that an exception occurred
+			log_message('critical', $e->getMessage());
+
+			// get the next best cache
+			$adapter = self::getHandler($config, $backup, "dummy");
+		}
 
 		return $adapter;
 	}
