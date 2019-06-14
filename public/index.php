@@ -35,12 +35,6 @@ $paths = new Config\Paths();
 // Location of the framework bootstrap file.
 $app = require rtrim($paths->systemDirectory, '/ ') . '/bootstrap.php';
 
-// allow ddd() to be used throughout application if not production
-if (ENVIRONMENT !== 'production')
-{
-	helper('enhanced_dump');
-}
-
 /*
  *---------------------------------------------------------------
  * LAUNCH THE APPLICATION
