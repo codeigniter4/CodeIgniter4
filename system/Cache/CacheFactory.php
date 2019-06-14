@@ -99,13 +99,13 @@ class CacheFactory
 		{
 			$adapter->initialize();
 		}
-		catch(CriticalError $e)
+		catch (CriticalError $e)
 		{
 			// log the fact that an exception occurred
 			log_message('critical', $e->getMessage());
 
 			// get the next best cache
-			$adapter = self::getHandler($config, $backup, "dummy");
+			$adapter = self::getHandler($config, $backup, 'dummy');
 		}
 
 		return $adapter;

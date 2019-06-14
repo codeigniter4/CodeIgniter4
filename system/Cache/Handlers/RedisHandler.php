@@ -123,7 +123,7 @@ class RedisHandler implements CacheInterface
 			// Check if the connection is valid by trying to get the time.
 			$this->redis->time();
 		}
-		catch(\RedisException $e)
+		catch (\RedisException $e)
 		{
 			// thrown if can't connect to redis server.
 			throw new CriticalError('Cache: RedisException occured with message (' . $e->getMessage() . ')');
