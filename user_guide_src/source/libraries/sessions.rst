@@ -382,6 +382,26 @@ intend to reuse that same key in the same request, you'd want to use
 
 	$session->removeTempdata('item');
 
+Users
+=====
+
+While CodeIgniter does not have an official authentication library, it does
+provide a centralized location to store basic identifying information for
+a logged-in user in the session library. The library's ``user()`` method
+can set, return, or destroy a unique user identifier::
+
+	// set logged-in user
+	$session->user($userId);
+	
+	// access current logged-in user
+	$userId = $session->user();
+	
+	// clear logged-in user data
+	$session->user(false);
+
+Third-party authentication libraries can use this method or the login/logout
+Events to notify the framework of their user status.
+
 Destroying a Session
 ====================
 
