@@ -109,3 +109,15 @@ The following is a list of available event points within the CodeIgniter core co
 * **post_controller_constructor** Called immediately after your controller is instantiated, but prior to any method calls happening.
 * **post_system** Called after the final rendered page is sent to the browser, at the end of system execution after the finalized data is sent to the browser.
 
+Additional Listeners
+====================
+
+In addition to the points described above, by default **app/Config/Events.php** also
+defines the following listeners to allow hooks from third-party modules to interact
+with framework settings:
+
+* **login** Receives a unique user identifier from an authentication library and stores it in the current session via the Session Library's ``user()`` method
+* **logout** Destroys the current Session user following a logout request from an authentication library
+
+.. note:: These events are never triggered by the framework itself and may be removed
+	if you don't plan to use a third-party library that would need them
