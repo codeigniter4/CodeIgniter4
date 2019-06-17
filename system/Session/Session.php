@@ -625,6 +625,36 @@ class Session implements SessionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Sets, clears, or returns a unique user ID to signify that a user
+	 * is logged in.
+	 * null       = return current value
+	 * false      = clear current value
+	 * string/int = set a new value
+	 *
+	 * @param mixed $userId	Unique user identifier, or false
+	 *
+	 * @return false|string
+	 */
+	public function user($userId = null)
+	{
+		if ($userId === null)
+		{
+			return $_SESSION['__ci_user'] ?? false;
+		}
+		
+		if (empty($userId))
+		{
+			unset($_SESSION['__ci_user']);
+			return;
+		}
+		
+		$_SESSION['__ci_user'] = $userId;
+		return $userId;
+	}
+
+	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
 	// Flash Data Methods
 	//--------------------------------------------------------------------
