@@ -144,7 +144,7 @@ class FileLocator
 				$path .= $folder;
 			}
 
-			$path .= '/' . $filename;
+			$path = rtrim($path, '/') . '/' . $filename;
 			if (is_file($path))
 			{
 				return $path;
