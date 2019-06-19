@@ -320,6 +320,7 @@ what table to use and how we can find the required records:</p>
         <span class="k">protected</span> <span class="nv">$useTimestamps</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
         <span class="k">protected</span> <span class="nv">$createdField</span>  <span class="o">=</span> <span class="s1">&#39;created_at&#39;</span><span class="p">;</span>
         <span class="k">protected</span> <span class="nv">$updatedField</span>  <span class="o">=</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">;</span>
+        <span class="k">protected</span> <span class="nv">$deletedField</span>  <span class="o">=</span> <span class="s1">&#39;deleted_at&#39;</span><span class="p">;</span>
 
         <span class="k">protected</span> <span class="nv">$validationRules</span>    <span class="o">=</span> <span class="p">[];</span>
         <span class="k">protected</span> <span class="nv">$validationMessages</span> <span class="o">=</span> <span class="p">[];</span>
@@ -347,12 +348,14 @@ the type of data that is returned. Valid values are &#8216;array&#8217;, &#8216;
 qualified name of a class that can be used with the Result object&#8217;s getCustomResultObject()
 method.</p>
 <p><strong>$useSoftDeletes</strong></p>
-<p>If true, then any delete* method calls will simply set a flag in the database, instead of
+<p>If true, then any delete* method calls will set <code class="docutils literal"><span class="pre">deleted_at</span></code> in the database, instead of
 actually deleting the row. This can preserve data when it might be referenced elsewhere, or
 can maintain a &#8220;recycle bin&#8221; of objects that can be restored, or even simply preserve it as
 part of a security trail. If true, the find* methods will only return non-deleted rows, unless
 the withDeleted() method is called prior to calling the find* method.</p>
-<p>This requires an INT or TINYINT field to be present in the table for storing state. The default field name is  <code class="docutils literal"><span class="pre">deleted</span></code> however this name can be configured to any name of your choice by using $deletedField property.</p>
+<p>This requires either a DATETIME or INTEGER field in the database as per the model&#8217;s
+$dateFormat setting. The default field name is <code class="docutils literal"><span class="pre">deleted_at</span></code> however this name can be
+configured to any name of your choice by using $deletedField property.</p>
 <p><strong>$allowedFields</strong></p>
 <p>This array should be updated with the field names that can be set during save, insert, or
 update methods. Any field names other than these will be discarded. This helps to protect
@@ -370,9 +373,10 @@ Leave it empty to avoid update it (even useTimestamps is enabled)</p>
 <p>Specifies which database field should use for keep data record update timestamp.
 Leave it empty to avoid update it (even useTimestamps is enabled)</p>
 <p><strong>$dateFormat</strong></p>
-<p>This value works with $useTimestamps to ensure that the correct type of date value gets
-inserted into the database. By default, this creates DATETIME values, but valid options
-are: datetime, date, or int (a PHP timestamp).</p>
+<p>This value works with $useTimestamps and $useSoftDeletes to ensure that the correct type of
+date value gets inserted into the database. By default, this creates DATETIME values, but
+valid options are: datetime, date, or int (a PHP timestamp). Using &#8216;useSoftDeletes&#8217; or
+&#8216;useTimestamps&#8217; with an invalid or missing dateFormat will cause an exception.</p>
 <p><strong>$validationRules</strong></p>
 <p>Contains either an array of validation rules as described in <a class="reference internal" href="../libraries/validation.html#validation-array"><span class="std std-ref">How to save your rules</span></a>
 or a string containing the name of a validation group, as described in the same section.
@@ -444,8 +448,8 @@ parameters, respectively:</p>
 </pre></div>
 </div>
 <p><strong>withDeleted()</strong></p>
-<p>If $useSoftDeletes is true, then the find* methods will not return any rows where &#8216;deleted = 1&#8217;. To
-temporarily override this, you can use the withDeleted() method prior to calling the find* method.</p>
+<p>If $useSoftDeletes is true, then the find* methods will not return any rows where &#8216;deleted_at IS NOT NULL&#8217;.
+To temporarily override this, you can use the withDeleted() method prior to calling the find* method.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Only gets non-deleted rows (deleted = 0)</span>
 <span class="nv">$activeUsers</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 
@@ -599,8 +603,8 @@ that provides several handy features that make developing Entities simpler.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>If the model&#8217;s $useSoftDeletes value is true, this will update the row to set &#8216;deleted = 1&#8217;. You can force
-a permanent delete by setting the second parameter as true.</p>
+<p>If the model&#8217;s $useSoftDeletes value is true, this will update the row to set <code class="docutils literal"><span class="pre">deleted_at</span></code> to the current
+date and time. You can force a permanent delete by setting the second parameter as true.</p>
 <p>An array of primary keys can be passed in as the first parameter to delete multiple records at once:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]);</span>
 </pre></div>
@@ -611,7 +615,7 @@ previously:</p>
 </pre></div>
 </div>
 <p><strong>purgeDeleted()</strong></p>
-<p>Cleans out the database table by permanently removing all rows that have &#8216;deleted = 1&#8217;.</p>
+<p>Cleans out the database table by permanently removing all rows that have &#8216;deleted_at IS NOT NULL&#8217;.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">purgeDeleted</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -956,7 +960,7 @@ insert method, it is first converted to an array.</td>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Jun 07, 2019.
+      Last updated on Jun 19, 2019.
 
     </p>
   </div>
