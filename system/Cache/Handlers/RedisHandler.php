@@ -147,7 +147,7 @@ class RedisHandler implements CacheInterface
 		catch (\RedisException $e)
 		{
 			// $this->redis->connect() can sometimes throw a RedisException.
-			// We need to these to a CriticalError exception and throw it.
+			// We need to convert the exception into a CriticalError exception and throw it.
 			throw new CriticalError('Cache: RedisException occurred with message (' . $e->getMessage() . ').');
 		}
 	}
