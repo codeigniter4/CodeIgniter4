@@ -136,6 +136,9 @@ class FileLocator
 		// Check each path in the namespace
 		foreach ($paths as $path)
 		{
+			// Ensure trailing slash
+			$path = rtrim($path, '/') . '/';
+			
 			// If we have a folder name, then the calling function
 			// expects this file to be within that folder, like 'Views',
 			// or 'libraries'.
@@ -144,7 +147,7 @@ class FileLocator
 				$path .= $folder;
 			}
 
-			$path = rtrim($path, '/') . '/' . $filename;
+			$path .= $filename;
 			if (is_file($path))
 			{
 				return $path;
