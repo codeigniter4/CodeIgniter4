@@ -595,6 +595,9 @@ class IncomingRequest extends Request
 			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
 			$this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
 			$this->uri->resolveRelativeURI(parse_url($baseURL, PHP_URL_PATH));
+
+			// Ensure we have any query vars
+			$this->uri->setQuery($_SERVER['QUERY_STRING'] ?? '');
 		}
 		else
 		{
