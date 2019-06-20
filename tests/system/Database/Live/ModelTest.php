@@ -1485,7 +1485,8 @@ class ModelTest extends CIDatabaseTestCase
 			];
 		};
 
-		$testModel = new UserModel();
+		$testModel       = new UserModel();
+		$testModel->name = 'Mark';
 
 		$entity->name = 'Mark';
 
