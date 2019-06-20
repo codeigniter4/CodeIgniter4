@@ -392,6 +392,6 @@ You can check if an Entity exists before and after its created::
     $user = new App\Entities\User();
     $user->username = 'foo';
     $user->email    = 'foo@example.com';
-    $user-exists();                 // false
+    $user->exists();                 // false
     $userModel->save($user);
     $user->exists();                // true
