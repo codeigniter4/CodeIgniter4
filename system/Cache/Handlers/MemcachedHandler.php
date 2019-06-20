@@ -115,36 +115,53 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function initialize()
 	{
-		if (class_exists('\Memcached'))
+
+		// Try to connect to Memcache or Memcached, if an issue occurs throw a CriticalError exception,
+		// so that the CacheFactory can attempt to initiate the next cache handler.
+		try
 		{
-			$this->memcached = new \Memcached();
-			if ($this->config['raw'])
+			if (class_exists('\Memcached'))
 			{
-				$this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, true);
+				$this->memcached = new \Memcached();
+				if ($this->config['raw'])
+				{
+					$this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, true);
+				}
+			}
+			elseif (class_exists('\Memcache'))
+			{
+				$this->memcached = new \Memcache();
+			}
+			else
+			{
+				throw new CriticalError('Cache: Not support Memcache(d) extension.');
+			}
+
+			if ($this->memcached instanceof \Memcached)
+			{
+				$this->memcached->addServer(
+						$this->config['host'], $this->config['port'], $this->config['weight']
+				);
+			}
+			elseif ($this->memcached instanceof \Memcache)
+			{
+				// Third parameter is persistence and defaults to TRUE.
+				$this->memcached->addServer(
+						$this->config['host'], $this->config['port'], true, $this->config['weight']
+				);
 			}
 		}
-		elseif (class_exists('\Memcache'))
+		catch (CriticalError $e)
 		{
-			$this->memcached = new \Memcache();
+			// If a CriticalError exception occurs, throw it up.
+			throw $e;
 		}
-		else
+		catch (\Exception $e)
 		{
-			throw new CriticalError('Cache: Not support Memcache(d) extension.');
+			// If an \Exception occurs, convert it into a CriticalError exception and throw it.
+			throw new CriticalError('Cache: Memcache(d) connection refused (' . $e->getMessage() . ')');
 		}
 
-		if ($this->memcached instanceof \Memcached)
-		{
-			$this->memcached->addServer(
-					$this->config['host'], $this->config['port'], $this->config['weight']
-			);
-		}
-		elseif ($this->memcached instanceof \Memcache)
-		{
-			// Third parameter is persistence and defaults to TRUE.
-			$this->memcached->addServer(
-					$this->config['host'], $this->config['port'], true, $this->config['weight']
-			);
-		}
 	}
 
 	//--------------------------------------------------------------------
