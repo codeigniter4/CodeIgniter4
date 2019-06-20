@@ -128,12 +128,20 @@ class MemcachedHandler implements CacheInterface
 					$this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, true);
 				}
 
-				// TODO: check if we can connect to the server
-
 				// Add server
 				$this->memcached->addServer(
 					$this->config['host'], $this->config['port'], $this->config['weight']
 				);
+
+				// attempt to get status of servers
+				$stats = $this->memcached->getStats();
+
+				// $stats should be an associate array with a key in the format of host:port.
+				// If it doesn't have the key, we know the server is not working as expected.
+				if( !isset($stats[$this->config['host']. ':' .$this->config['port']]) )
+				{
+					throw new CriticalError('Cache: Memcached connection failed.');
+				}
 			}
 			elseif (class_exists('\Memcache'))
 			{
