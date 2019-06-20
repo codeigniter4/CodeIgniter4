@@ -115,40 +115,49 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function initialize()
 	{
-
 		// Try to connect to Memcache or Memcached, if an issue occurs throw a CriticalError exception,
 		// so that the CacheFactory can attempt to initiate the next cache handler.
 		try
 		{
 			if (class_exists('\Memcached'))
 			{
+				// Create new instance of \Memcached
 				$this->memcached = new \Memcached();
 				if ($this->config['raw'])
 				{
 					$this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, true);
 				}
+
+				// TODO: check if we can connect to the server
+
+				// Add server
+				$this->memcached->addServer(
+					$this->config['host'], $this->config['port'], $this->config['weight']
+				);
 			}
 			elseif (class_exists('\Memcache'))
 			{
+				// Create new instance of \Memcache
 				$this->memcached = new \Memcache();
+
+				// Check if we can connect to the server
+				$can_connect = $this->memcached->connect(
+					$this->config['host'], $this->config['port']
+				);
+
+				// If we can't connect, throw a CriticalError exception
+				if($can_connect == false){
+					throw new CriticalError('Cache: Memcache connection failed.');
+				}
+
+				// Add server, third parameter is persistence and defaults to TRUE.
+				$this->memcached->addServer(
+					$this->config['host'], $this->config['port'], true, $this->config['weight']
+				);
 			}
 			else
 			{
 				throw new CriticalError('Cache: Not support Memcache(d) extension.');
-			}
-
-			if ($this->memcached instanceof \Memcached)
-			{
-				$this->memcached->addServer(
-						$this->config['host'], $this->config['port'], $this->config['weight']
-				);
-			}
-			elseif ($this->memcached instanceof \Memcache)
-			{
-				// Third parameter is persistence and defaults to TRUE.
-				$this->memcached->addServer(
-						$this->config['host'], $this->config['port'], true, $this->config['weight']
-				);
 			}
 		}
 		catch (CriticalError $e)
@@ -161,7 +170,6 @@ class MemcachedHandler implements CacheInterface
 			// If an \Exception occurs, convert it into a CriticalError exception and throw it.
 			throw new CriticalError('Cache: Memcache(d) connection refused (' . $e->getMessage() . ')');
 		}
-
 	}
 
 	//--------------------------------------------------------------------
