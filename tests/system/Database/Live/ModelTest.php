@@ -1477,6 +1477,7 @@ class ModelTest extends CIDatabaseTestCase
 	public function testSaveNewEntityWithReference()
 	{
 		$entity = new class extends Entity{
+			protected $name;
 			protected $dates = [
 				'created_at',
 				'updated_at',
@@ -1484,7 +1485,8 @@ class ModelTest extends CIDatabaseTestCase
 			];
 		};
 
-		$testModel = new UserModel();
+		$testModel       = new UserModel();
+		$testModel->name = 'Mark';
 
 		$this->setPrivateProperty($testModel, 'useTimestamps', true);
 
