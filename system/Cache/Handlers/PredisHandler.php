@@ -112,7 +112,7 @@ class PredisHandler implements CacheInterface
 		catch (\Exception $e)
 		{
 			// thrown if can't connect to redis server.
-			throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ')');
+			throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ').');
 		}
 	}
 

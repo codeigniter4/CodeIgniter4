@@ -168,7 +168,7 @@ class MemcachedHandler implements CacheInterface
 		catch (\Exception $e)
 		{
 			// If an \Exception occurs, convert it into a CriticalError exception and throw it.
-			throw new CriticalError('Cache: Memcache(d) connection refused (' . $e->getMessage() . ')');
+			throw new CriticalError('Cache: Memcache(d) connection refused (' . $e->getMessage() . ').');
 		}
 	}
 
