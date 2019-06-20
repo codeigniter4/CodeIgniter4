@@ -151,7 +151,8 @@ class CreateMigration extends BaseCommand
 		// migration Type
 		if ($config->type === 'timestamp')
 		{
-			$fileName = date('YmdHis_') . $name;
+			// Always use UTC/GMT so global teams can work together
+			$fileName = gmdate('YmdHis_') . $name;
 		}
 		else if ($config->type === 'sequential')
 		{
