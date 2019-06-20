@@ -157,7 +157,7 @@ Asserts that a number of matching rows are found in the database that match ``$c
 ::
 
     $criteria = [
-        'deleted' => 1
+        'active' => 1
     ];
     $this->seeNumRecords(2, 'users', $criteria);
 

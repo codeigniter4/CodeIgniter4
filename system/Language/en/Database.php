@@ -26,6 +26,7 @@ return [
    'featureUnavailable'               => 'This feature is not available for the database you are using.',
    'tableNotFound'                    => 'Table `{0}` was not found in the current database.',
    'noPrimaryKey'                     => '`{0}` model class does not specify a Primary Key.',
+   'noDateFormat'                     => '`{0}` model class does not have a valid dateFormat.',
    'fieldNotExists'                   => 'Field `{0}` not found.',
    'forEmptyInputGiven'               => 'Empty statement is given for the field `{0}`',
    'forFindColumnHaveMultipleColumns' => 'Only single column allowed in Column name.',

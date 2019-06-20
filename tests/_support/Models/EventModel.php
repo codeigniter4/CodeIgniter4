@@ -16,7 +16,7 @@ class EventModel extends Model
 		'name',
 		'email',
 		'country',
-		'deleted',
+		'deleted_at',
 	];
 
 	protected $beforeInsert = ['beforeInsertMethod'];

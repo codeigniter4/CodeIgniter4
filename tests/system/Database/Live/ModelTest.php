@@ -143,7 +143,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$this->db->table('user')
 				 ->where('id', 4)
-				 ->update(['deleted' => 1]);
+				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$model = new UserModel($this->db);
 
@@ -219,7 +219,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$this->db->table('user')
 				 ->where('id', 4)
-				 ->update(['deleted' => 1]);
+				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$model = new UserModel($this->db);
 
@@ -254,7 +254,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$this->db->table('user')
 				 ->where('id', 1)
-				 ->update(['deleted' => 1]);
+				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$model = new UserModel();
 
@@ -403,11 +403,11 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 0]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 
 		$model->delete(1);
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 1]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL' => null]);
 	}
 
 	//--------------------------------------------------------------------
@@ -416,7 +416,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 0]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 
 		$model->delete(1, true);
 
@@ -461,7 +461,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->db->table('user')
 				 ->where('id', 1)
-				 ->update(['deleted' => 1]);
+				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$model->purgeDeleted();
 
@@ -479,7 +479,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->db->table('user')
 				 ->where('id', 1)
-				 ->update(['deleted' => 1]);
+				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$users = $model->onlyDeleted()
 					   ->findAll();
@@ -757,7 +757,6 @@ class ModelTest extends CIDatabaseTestCase
 			'name'    => $pass,
 			'email'   => 'foo@example.com',
 			'country' => 'US',
-			'deleted' => 0,
 		];
 
 		$model->insert($data);
@@ -1224,6 +1223,20 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @expectedException        \CodeIgniter\Exceptions\ModelException
+	 * @expectedExceptionMessage `Tests\Support\Models\UserModel` model class does not have a valid dateFormat.
+	 */
+	public function testThrowsWithNoDateFormat()
+	{
+		$model = new UserModel();
+		$this->setPrivateProperty($model, 'dateFormat', '');
+
+		$model->delete(1);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testInsertID()
 	{
 		$model = new JobModel();
@@ -1403,7 +1416,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$model->delete(1);
 
-		$this->seeInDatabase('job', ['id' => 1, 'deleted' => 1]);
+		$this->seeInDatabase('job', ['id' => 1, 'deleted_at IS NOT NULL' => null]);
 	}
 
 	//--------------------------------------------------------------------
@@ -1414,7 +1427,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->db->table('job')
 				 ->where('id', 1)
-				 ->update(['deleted' => 1]);
+				 ->update(['deleted_at' => time()]);
 
 		$model->purgeDeleted();
 
@@ -1667,7 +1680,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 0]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => null]);
 
 		$results = $model->join('job', 'job.id = user.id')
 			->findAll();
@@ -1683,7 +1696,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 0]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => null]);
 
 		$results = $model->join('job', 'job.id = user.id')
 						 ->find(1);
@@ -1699,7 +1712,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 0]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => null]);
 
 		$results = $model->join('job', 'job.id = user.id')
 						 ->first(1);
