@@ -25,25 +25,15 @@ Migration file names
 ********************
 
 Each Migration is run in numeric order forward or backwards depending on the
-method taken. Two numbering styles are available:
+method taken. Each migration is numbered using the timestamp when the migration
+was created, in **YYYYMMDDHHIISS** format (e.g. **20121031100537**). This
+helps prevent numbering conflicts when working in a team environment.
 
-* **Sequential:** each migration is numbered in sequence, starting with **001**.
-  Each number must be three digits, and there must not be any gaps in the
-  sequence. (This was the numbering scheme prior to CodeIgniter 3.0.)
-* **Timestamp:** each migration is numbered using the timestamp when the migration
-  was created, in **YYYYMMDDHHIISS** format (e.g. **20121031100537**). This
-  helps prevent numbering conflicts when working in a team environment, and is
-  the preferred scheme in CodeIgniter 3.0 and later.
+Prefix your migration files with the migration number followed by an underscore
+and a descriptive name for the migration. For example:
 
-The desired style may be selected using the ``$type`` setting in your
-*app/Config/Migrations.php* file. The default setting is timestamp.
-
-Regardless of which numbering style you choose to use, prefix your migration
-files with the migration number followed by an underscore and a descriptive
-name for the migration. For example:
-
-* 001_add_blog.php (sequential numbering)
-* 20121031100537_add_blog.php (timestamp numbering)
+* 20121031100537_add_blog.php
+* 20121031100538_alter_blog_track_views.php
 
 ******************
 Create a Migration
@@ -289,7 +279,6 @@ Preference                 Default                Options                    Des
 **enabled**                TRUE                   TRUE / FALSE               Enable or disable migrations.
 **path**                   'Database/Migrations/' None                       The path to your migrations folder.
 **table**                  migrations             None                       The table name for storing the schema version number.
-**type**                   'timestamp'            'timestamp' / 'sequential' The type of numeric identifier used to name migration files.
 ========================== ====================== ========================== =============================================================
 
 ***************

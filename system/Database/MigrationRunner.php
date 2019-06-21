@@ -56,13 +56,6 @@ class MigrationRunner
 	protected $enabled = false;
 
 	/**
-	 * The type of migrations to use (sequential or timestamp)
-	 *
-	 * @var string
-	 */
-	protected $type;
-
-	/**
 	 * Name of table to store meta information
 	 *
 	 * @var string
@@ -95,7 +88,7 @@ class MigrationRunner
 	 *
 	 * @var string
 	 */
-	protected $regex;
+	protected $regex = '/^\d{14}_(\w+)$/';
 
 	/**
 	 * The main database connection. Used to store
@@ -153,7 +146,6 @@ class MigrationRunner
 	public function __construct(BaseConfig $config, $db = null)
 	{
 		$this->enabled = $config->enabled ?? false;
-		$this->type    = $config->type ?? 'timestamp';
 		$this->table   = $config->table ?? 'migrations';
 
 		// Default name space is the app namespace
@@ -163,14 +155,6 @@ class MigrationRunner
 		$config      = config('Database');
 		$this->group = $config->defaultGroup;
 		unset($config);
-
-		if (! in_array($this->type, ['sequential', 'timestamp']))
-		{
-			throw ConfigException::forInvalidMigrationType($this->type);
-		}
-
-		// Migration basename regex
-		$this->regex = ($this->type === 'timestamp') ? '/^\d{14}_(\w+)$/' : '/^\d{3}_(\w+)$/';
 
 		// If no db connection passed in, use
 		// default database group.
@@ -211,12 +195,6 @@ class MigrationRunner
 		if (! is_null($group))
 		{
 			$this->setGroup($group);
-		}
-
-		// Sequential versions need adjusting to 3 places so they can be found later.
-		if ($this->type === 'sequential')
-		{
-			$targetVersion = str_pad($targetVersion, 3, '0', STR_PAD_LEFT);
 		}
 
 		$migrations = $this->findMigrations();
@@ -478,10 +456,6 @@ class MigrationRunner
 		$loop = 0;
 		foreach ($migrations as $migration)
 		{
-			if ($this->type === 'sequential' && abs($migration->version - $loop) > 1)
-			{
-				throw new \RuntimeException(lang('Migrations.gap') . ' ' . $migration->version);
-			}
 			// Check if all old migration files are all available to do downgrading
 			if ($method === 'down')
 			{

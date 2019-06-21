@@ -26,17 +26,6 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$this->config->enabled = true;
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\Exceptions\ConfigException
-	 */
-	public function testThrowsOnInvalidMigrationType()
-	{
-		$config       = $this->config;
-		$config->type = 'narwhal';
-
-		$runner = new MigrationRunner($config);
-	}
-
 	public function testLoadsDefaultDatabaseWhenNoneSpecified()
 	{
 		$dbConfig = new \Config\Database();
@@ -190,26 +179,25 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	public function testFindMigrationsSuccessOrder()
 	{
-		$config       = $this->config;
-		$config->type = 'sequential';
-		$runner       = new MigrationRunner($config);
+		$config = $this->config;
+		$runner = new MigrationRunner($config);
 
 		$runner = $runner->setPath($this->start);
 
-		vfsStream::newFile('002_some_migration.php')->at($this->root);
-		vfsStream::newFile('001_another_migration.php')->at($this->root); // should be first
-		vfsStream::newFile('003_another_migration.py')->at($this->root); // shouldn't be included
-		vfsStream::newFile('004_another_migration.py')->at($this->root); // shouldn't be included
+		vfsStream::newFile('20180102031200_some_migration.php')->at($this->root);
+		vfsStream::newFile('20180102031100_another_migration.php')->at($this->root); // should be first
+		vfsStream::newFile('20180102031300_another_migration.py')->at($this->root); // shouldn't be included
+		vfsStream::newFile('20180102031400_another_migration.py')->at($this->root); // shouldn't be included
 
 		$mig1 = (object)[
 							'name'    => 'some_migration',
-							'path'    => 'vfs://root//002_some_migration.php',
-							'version' => '002',
+							'path'    => 'vfs://root//20180102031200_some_migration.php',
+							'version' => '20180102031200',
 						];
 		$mig2 = (object)[
 							'name'    => 'another_migration',
-							'path'    => 'vfs://root//001_another_migration.php',
-							'version' => '001',
+							'path'    => 'vfs://root//20180102031100_another_migration.php',
+							'version' => '20180102031100',
 						];
 
 		$migrations = $runner->findMigrations();
@@ -225,7 +213,6 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 	public function testMigrationThrowsDisabledException()
 	{
 		$config          = $this->config;
-		$config->type    = 'sequential';
 		$config->enabled = false;
 		$runner          = new MigrationRunner($config);
 
@@ -246,40 +233,19 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 	/**
 	 * @expectedException        \RuntimeException
-	 * @expectedExceptionMessage There is a gap in the migration sequence near version number:  002
-	 */
-
-	public function testVersionThrowsMigrationGapException()
-	{
-		$config       = $this->config;
-		$config->type = 'sequential';
-		$runner       = new MigrationRunner($config);
-
-		$runner = $runner->setPath($this->start);
-
-		vfsStream::newFile('002_some_migration.php')->at($this->root);
-
-		$version = $runner->version(0);
-
-		$this->assertFalse($version);
-	}
-
-	/**
-	 * @expectedException        \RuntimeException
 	 * @expectedExceptionMessage The migration class "App\Database\Migrations\Migration_some_migration" could not be found.
 	 */
 	public function testVersionWithNoClassInFile()
 	{
-		$config       = $this->config;
-		$config->type = 'sequential';
-		$runner       = new MigrationRunner($config);
+		$config = $this->config;
+		$runner = new MigrationRunner($config);
 		$runner->setSilent(false);
 
 		$runner = $runner->setPath($this->start);
 
-		vfsStream::newFile('001_some_migration.php')->at($this->root);
+		vfsStream::newFile('20180102031100_some_migration.php')->at($this->root);
 
-		$version = $runner->version(1);
+		$version = $runner->version(20180102031100);
 
 		$this->assertFalse($version);
 	}
@@ -290,9 +256,8 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$forge->dropTable('migrations', true);
 		$forge->dropTable('foo', true);
 
-		$config       = $this->config;
-		$config->type = 'sequential';
-		$runner       = new MigrationRunner($config);
+		$config = $this->config;
+		$runner = new MigrationRunner($config);
 		$runner->setSilent(false);
 
 		$runner = $runner->setPath($this->start);
@@ -302,22 +267,21 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 			$this->root
 		);
 
-		$version = $runner->version('001');
+		$version = $runner->version('20180112032100');
 
-		$this->assertEquals('001', $version);
+		$this->assertEquals('20180112032100', $version);
 		$this->seeInDatabase('foo', ['key' => 'foobar']);
 
 		$version = $runner->version(0);
 
-		$this->assertEquals('000', $version);
+		$this->assertEquals('0', $version);
 		$this->assertFalse($this->db->tableExists('foo'));
 	}
 
 	public function testLatestSuccess()
 	{
-		$config       = $this->config;
-		$config->type = 'sequential';
-		$runner       = new MigrationRunner($config);
+		$config = $this->config;
+		$runner = new MigrationRunner($config);
 		$runner->setSilent(false);
 
 		$runner = $runner->setPath($this->start);
@@ -329,15 +293,14 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$version = $runner->latest();
 
-		$this->assertEquals('001', $version);
+		$this->assertEquals('20180112032100', $version);
 		$this->assertTrue(db_connect()->tableExists('foo'));
 	}
 
 	public function testVersionReturnsDownSuccess()
 	{
-		$config       = $this->config;
-		$config->type = 'sequential';
-		$runner       = new MigrationRunner($config);
+		$config = $this->config;
+		$runner = new MigrationRunner($config);
 		$runner->setSilent(false);
 
 		$runner = $runner->setPath($this->start);
@@ -349,7 +312,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$version = $runner->version(0);
 
-		$this->assertEquals('000', $version);
+		$this->assertEquals(0, $version);
 		$this->assertFalse(db_connect()->tableExists('foo'));
 	}
 
