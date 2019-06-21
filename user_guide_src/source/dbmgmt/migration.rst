@@ -86,8 +86,6 @@ as *20121031100537_Add_blog.php*.
 		}
 	}
 
-Then in **app/Config/Migrations.php** set ``$currentVersion = 20121031100537;``.
-
 The database connection and the database Forge class are both available to you through
 ``$this->db`` and ``$this->forge``, respectively.
 
@@ -111,16 +109,6 @@ To temporarily bypass the foreign key checks while running migrations, use the `
 
         $this->db->enableForeignKeyConstraints();
     }
-
-Using $currentVersion
-=====================
-
-The $currentVersion setting allows you to mark a location that your main application namespace should be set at.
-This is especially helpful for use in a production setting. In your application, you can always
-update the migration to the current version, and not latest to ensure your production and staging
-servers are running the correct schema. On your development servers, you can add additional migrations
-for code that is not ready for production, yet. By using the ``latest()`` method, you can be assured
-that your development machines are always running the bleeding edge schema.
 
 Database Groups
 ===============
@@ -184,7 +172,7 @@ to update the schema::
 
 			try
 			{
-			  $migrate->current();
+			  $migrate->latest();
 			}
 			catch (\Exception $e)
 			{
@@ -216,17 +204,6 @@ You can use (latest) with the following options:
 This example will migrate Blog namespace to latest::
 
     > php spark migrate:latest -g test -n Blog
-
-**current**
-
-Migrates the (App) namespace to match the version set in ``$currentVersion``. This will migrate both
-up and down as needed to match the specified version::
-
-    > php spark migrate:current
-
-You can use (current) with the following options:
-
-- (-g) to chose database group, otherwise default database group will be used.
 
 **version**
 
@@ -311,7 +288,6 @@ Preference                 Default                Options                    Des
 ========================== ====================== ========================== =============================================================
 **enabled**                TRUE                   TRUE / FALSE               Enable or disable migrations.
 **path**                   'Database/Migrations/' None                       The path to your migrations folder.
-**currentVersion**         0                      None                       The current version your database should use.
 **table**                  migrations             None                       The table name for storing the schema version number.
 **type**                   'timestamp'            'timestamp' / 'sequential' The type of numeric identifier used to name migration files.
 ========================== ====================== ========================== =============================================================
@@ -321,15 +297,6 @@ Class Reference
 ***************
 
 .. php:class:: CodeIgniter\Database\MigrationRunner
-
-	.. php:method:: current($group)
-
-		:param	mixed	$group: database group name, if null (App) namespace will be used.
-		:returns:	TRUE if no migrations are found, current version string on success, FALSE on failure
-		:rtype:	mixed
-
-		Migrates up to the current version (whatever is set for
-		``$currentVersion`` in *app/Config/Migrations.php*).
 
 	.. php:method:: findMigrations()
 

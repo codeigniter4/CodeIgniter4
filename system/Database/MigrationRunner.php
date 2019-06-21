@@ -70,13 +70,6 @@ class MigrationRunner
 	protected $table;
 
 	/**
-	 * The version that current() will take us to.
-	 *
-	 * @var integer
-	 */
-	protected $currentVersion = 0;
-
-	/**
 	 * The Namespace  where migrations can be found.
 	 *
 	 * @var string
@@ -159,10 +152,9 @@ class MigrationRunner
 	 */
 	public function __construct(BaseConfig $config, $db = null)
 	{
-		$this->enabled        = $config->enabled ?? false;
-		$this->type           = $config->type ?? 'timestamp';
-		$this->table          = $config->table ?? 'migrations';
-		$this->currentVersion = $config->currentVersion ?? 0;
+		$this->enabled = $config->enabled ?? false;
+		$this->type    = $config->type ?? 'timestamp';
+		$this->table   = $config->table ?? 'migrations';
 
 		// Default name space is the app namespace
 		$this->namespace = APP_NAMESPACE;
@@ -378,28 +370,6 @@ class MigrationRunner
 		}
 
 		return true;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Sets the (APP_NAMESPACE) schema to $currentVersion in migration config file
-	 *
-	 * @param string|null $group
-	 *
-	 * @return mixed    Current version string on success, FALSE on failure or no migrations are found
-	 */
-	public function current(string $group = null)
-	{
-		$this->ensureTable();
-
-		// Set database group if not null
-		if (! is_null($group))
-		{
-			$this->setGroup($group);
-		}
-
-		return $this->version($this->currentVersion);
 	}
 
 	//--------------------------------------------------------------------

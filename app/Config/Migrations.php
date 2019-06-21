@@ -48,16 +48,4 @@ class Migrations extends BaseConfig
 	*/
 	public $table = 'migrations';
 
-	/*
-	|--------------------------------------------------------------------------
-	| Migrations version
-	|--------------------------------------------------------------------------
-	|
-	| This is used to set migration version that the file system should be on.
-	| If you run $this->migration->current() this is the version that schema will
-	| be upgraded / downgraded to.
-	|
-	*/
-	public $currentVersion = 0;
-
 }
