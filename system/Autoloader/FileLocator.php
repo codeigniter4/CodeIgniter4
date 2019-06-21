@@ -144,7 +144,7 @@ class FileLocator
 			// or 'libraries'.
 			if (! empty($folder) && strpos($path . $filename, '/' . $folder . '/') === false)
 			{
-				$path .= $folder;
+				$path .= trim($folder, '/') . '/';
 			}
 
 			$path .= $filename;
