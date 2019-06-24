@@ -122,6 +122,11 @@ class FileRules
 
 		$file = $this->request->getFile($name);
 
+		if($file->getError() === UPLOAD_ERR_NO_FILE)
+		{
+			return true;
+		}
+
 		if (is_null($file))
 		{
 			return false;
@@ -148,7 +153,14 @@ class FileRules
 		$params = explode(',', $params);
 		$name   = array_shift($params);
 
+
+
 		$file = $this->request->getFile($name);
+
+		if($file->getError() === UPLOAD_ERR_NO_FILE)
+		{
+			return true;
+		}
 
 		if (is_null($file))
 		{
@@ -182,6 +194,11 @@ class FileRules
 
 		$file = $this->request->getFile($name);
 
+		if($file->getError() === UPLOAD_ERR_NO_FILE)
+		{
+			return true;
+		}
+
 		if (is_null($file))
 		{
 			return false;
@@ -209,6 +226,11 @@ class FileRules
 		$name   = array_shift($params);
 
 		$file = $this->request->getFile($name);
+
+		if($file->getError() === UPLOAD_ERR_NO_FILE)
+		{
+			return true;
+		}
 
 		if (is_null($file))
 		{
@@ -238,6 +260,11 @@ class FileRules
 		$name   = array_shift($params);
 
 		$file = $this->request->getFile($name);
+
+		if($file->getError() === UPLOAD_ERR_NO_FILE)
+		{
+			return true;
+		}
 
 		if (is_null($file))
 		{
