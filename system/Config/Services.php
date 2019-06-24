@@ -814,6 +814,27 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
+	 * The User class provides a central location to store information on
+	 * a current user.
+	 *
+	 * @param mixed   $user
+	 * @param boolean $getShared
+	 *
+	 * @return \CodeIgniter\User
+	 */
+	public static function user($user = null, bool $getShared = true)
+	{
+		if ($getShared)
+		{
+			return static::getSharedInstance('user', $user);
+		}
+
+		return new User($user);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * The Validation class provides tools for validating input data.
 	 *
 	 * @param \Config\Validation $config
