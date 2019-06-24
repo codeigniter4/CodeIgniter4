@@ -167,17 +167,15 @@ class Throttler implements ThrottlerInterface
 
 		// If $tokens > 0, then we are safe to perform the action, but
 		// we need to decrement the number of available tokens.
-		$response = false;
-
 		if ($tokens > 0)
 		{
-			$response = true;
 			$this->cache->save($tokenName, $tokens - $cost, $seconds);
 			$this->cache->save($tokenName . 'Time', time(), $seconds);
 
+			return true;
 		}
 
-		return $response;
+		return false;
 	}
 
 	//--------------------------------------------------------------------
