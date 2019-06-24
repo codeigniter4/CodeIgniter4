@@ -680,7 +680,7 @@ class Model
 		// Validate data before saving.
 		if ($this->skipValidation === false)
 		{
-			if ($this->validate($data) === false)
+			if ($this->validate($data, false) === false)
 			{
 				return false;
 			}
@@ -752,7 +752,7 @@ class Model
 		{
 			foreach ($set as $row)
 			{
-				if ($this->validate($row) === false)
+				if ($this->validate($row, false) === false)
 				{
 					return false;
 				}
@@ -814,7 +814,7 @@ class Model
 		// Validate data before saving.
 		if ($this->skipValidation === false)
 		{
-			if ($this->validate($data) === false)
+			if ($this->validate($data, true) === false)
 			{
 				return false;
 			}
@@ -840,7 +840,14 @@ class Model
 
 		if ($id)
 		{
-			$builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
+			if (is_array($id))
+			{
+				$builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
+			}
+			else
+			{
+				$builder = $builder->where($this->table . '.' . $this->primaryKey, $id);
+			}
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays
@@ -874,7 +881,7 @@ class Model
 		{
 			foreach ($set as $row)
 			{
-				if ($this->validate($row) === false)
+				if ($this->validate($row, true) === false)
 				{
 					return false;
 				}
@@ -1004,7 +1011,7 @@ class Model
 		// Validate data before saving.
 		if (! empty($data) && $this->skipValidation === false)
 		{
-			if ($this->validate($data) === false)
+			if ($this->validate($data, true) === false)
 			{
 				return false;
 			}
@@ -1364,9 +1371,10 @@ class Model
 	 *
 	 * @param array|object $data
 	 *
+	 * @param bool $cleanRequired
 	 * @return boolean
 	 */
-	public function validate($data): bool
+	public function validate($data, bool $cleanRequired = true): bool
 	{
 		if ($this->skipValidation === true || empty($this->validationRules) || empty($data))
 		{
@@ -1389,12 +1397,13 @@ class Model
 			$rules = $this->validation->loadRuleGroup($rules);
 		}
 
-		$rules = $this->cleanValidationRules($rules, $data);
+		$rules = $this->cleanValidationRules($rules, $data, $cleanRequired);
 
 		// If no data existed that needs validation
 		// our job is done here.
 		if (empty($rules))
 		{
+
 			return true;
 		}
 
@@ -1415,13 +1424,14 @@ class Model
 	 * currently so that rules don't block updating when only updating
 	 * a partial row.
 	 *
-	 * @param array      $rules
+	 * @param array $rules
 	 *
 	 * @param array|null $data
 	 *
+	 * @param bool $cleanRequired whenever rules for required files should be cleaned or not.
 	 * @return array
 	 */
-	protected function cleanValidationRules(array $rules, array $data = null): array
+	protected function cleanValidationRules(array $rules, array $data = null, bool $cleanRequired = true): array
 	{
 		if (empty($data))
 		{
@@ -1432,7 +1442,12 @@ class Model
 		{
 			if (! array_key_exists($field, $data))
 			{
-				unset($rules[$field]);
+				$rulesTmp = explode('|', $rules[$field]);
+
+				if($cleanRequired && !in_array('required', $rulesTmp) && strpos($rules[$field], 'uploaded[') === false)
+				{
+					unset($rules[$field]);
+				}
 			}
 		}
 
