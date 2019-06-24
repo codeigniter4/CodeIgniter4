@@ -93,4 +93,4 @@ ROOTPATH.'vendor/autoload.php'. If you need to change the location of that file 
 the value defined in ``Config\Constants.php``.
 
 .. note:: If the same namespace is defined in both CodeIgniter and Composer, CodeIgniter's autoloader will be
-the first one to get a chance to locate the file.
+    the first one to get a chance to locate the file.
