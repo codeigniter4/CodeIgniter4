@@ -143,7 +143,7 @@ class Throttler implements ThrottlerInterface
 			// If it hasn't been created, then we'll set it to the maximum
 			// capacity - 1, and save it to the cache.
 			$this->cache->save($tokenName, $capacity - $cost, $seconds);
-			$this->cache->save($tokenName . 'Time', time());
+			$this->cache->save($tokenName . 'Time', time(), $seconds);
 
 			return true;
 		}
@@ -172,9 +172,9 @@ class Throttler implements ThrottlerInterface
 		if ($tokens > 0)
 		{
 			$response = true;
+			$this->cache->save($tokenName, $tokens - $cost, $seconds);
+			$this->cache->save($tokenName . 'Time', time(), $seconds);
 
-			$this->cache->save($tokenName, $tokens - $cost, $elapsed);
-			$this->cache->save($tokenName . 'Time', time());
 		}
 
 		return $response;
