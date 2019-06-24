@@ -138,7 +138,7 @@ class Throttler implements ThrottlerInterface
 		$tokenName = $this->prefix . $key;
 
 		// Check to see if the bucket has even been created yet.
-		if (($tokens = $this->cache->get($tokenName)) === false)
+		if (($tokens = $this->cache->get($tokenName)) === null)
 		{
 			// If it hasn't been created, then we'll set it to the maximum
 			// capacity - 1, and save it to the cache.
