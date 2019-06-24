@@ -113,9 +113,11 @@ class Entity
 	 *
 	 * @param array $data
 	 *
+	 * @param bool $casted
 	 * @return \CodeIgniter\Entity
+	 * @throws \Exception
 	 */
-	public function fill(array $data = null)
+	public function fill(array $data = null, bool $casted = false)
 	{
 		if (! is_array($data))
 		{
@@ -134,7 +136,7 @@ class Entity
 			}
 			else
 			{
-				$this->attributes[$key] = $value;
+				$casted ? $this->__set($key, $value) : $this->attributes[$key] = $value;
 			}
 		}
 
