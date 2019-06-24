@@ -155,7 +155,7 @@ class Throttler implements ThrottlerInterface
 		// Number of tokens to add back per second
 		$rate = $capacity / $seconds;
 
-		// We must have a minimum wait of 1 second for a new token
+		// We must have a minimum wait of 1 second for a new token.
 		// Primarily stored to allow devs to report back to users.
 		$this->tokenTime = max(1, $rate);
 
@@ -165,7 +165,7 @@ class Throttler implements ThrottlerInterface
 		$tokens += $rate * $elapsed;
 		$tokens  = $tokens > $capacity ? $capacity : $tokens;
 
-		// If $tokens > 0, then we are save to perform the action, but
+		// If $tokens > 0, then we are safe to perform the action, but
 		// we need to decrement the number of available tokens.
 		$response = false;
 
