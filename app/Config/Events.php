@@ -41,3 +41,20 @@ Events::on('pre_system', function () {
 		Services::toolbar()->respond();
 	}
 });
+
+/*
+ * --------------------------------------------------------------------
+ * User Authentication Listeners.
+ * --------------------------------------------------------------------
+ * Hooks provided for external authentication modules. These may be
+ * removed if your application does not authenticate.
+ */
+
+Events::on('login', function ($user) {
+	Services::user($user);
+});
+
+Events::on('logout', function () {
+	Services::user()->remove();
+});
+
