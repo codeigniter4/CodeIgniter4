@@ -1390,7 +1390,7 @@ class Model
 			$rules = $this->validation->loadRuleGroup($rules);
 		}
 
-		$rules = $this->cleanValidationRules($rules, $data, $cleanRequired);
+		$rules = $cleanRequired ? $this->cleanValidationRules($rules, $data) : $rules;
 
 		// If no data existed that needs validation
 		// our job is done here.
@@ -1421,10 +1421,9 @@ class Model
 	 *
 	 * @param array|null $data
 	 *
-	 * @param bool $cleanRequired whenever rules for required files should be cleaned or not.
 	 * @return array
 	 */
-	protected function cleanValidationRules(array $rules, array $data = null, bool $cleanRequired = true): array
+	protected function cleanValidationRules(array $rules, array $data = null): array
 	{
 		if (empty($data))
 		{
@@ -1435,12 +1434,7 @@ class Model
 		{
 			if (! array_key_exists($field, $data))
 			{
-				$rulesTmp = explode('|', $rules[$field]);
-
-				if($cleanRequired && !in_array('required', $rulesTmp) && strpos($rules[$field], 'uploaded[') === false)
-				{
-					unset($rules[$field]);
-				}
+				unset($rules[$field]);
 			}
 		}
 
