@@ -122,13 +122,28 @@ class Config
 		{
 			return new $name();
 		}
-
+		
 		$locator = Services::locator();
 		$file    = $locator->locateFile($name, 'Config');
-
+		
 		if (empty($file))
 		{
-			return null;
+			// No file found - check if the class was namespaced
+			if (strpos($name, '\\') !== false)
+			{
+				// Class was namespaced and locateFile couldn't find it
+				return null;
+			}
+			
+			// Check all namespaces
+			$files = $locator->search('Config/' . $name);
+			if (empty($files))
+			{
+				return null;
+			}
+			
+			// Get the first match (prioritizes user and framework)
+			$file = reset($files);
 		}
 
 		$name = $locator->getClassname($file);
