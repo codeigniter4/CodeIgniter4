@@ -590,7 +590,7 @@ class Entity
 		{
 			$strlen = is_string($value) ? strlen($value) : 0;
 			if (($strlen > 1 && ((strpos($value, '[') === 0 && strrpos($value, ']') === $strlen - 1) || (strpos($value, '{') === 0 && strrpos($value, '}') === $strlen - 1) || (strpos($value, '"') === 0 && strrpos($value, '"') === $strlen - 1))) || is_numeric($value))
-						{
+			{
 				$tmp = json_decode($value, $asArray);
 
 				if (json_last_error() !== JSON_ERROR_NONE)
