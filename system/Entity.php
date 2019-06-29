@@ -588,8 +588,7 @@ class Entity
 		$tmp = ! is_null($value) ? ($asArray ? [] : new \stdClass) : null;
 		if (function_exists('json_decode'))
 		{
-			$strlen = is_string($value) ? strlen($value) : 0;
-			if (($strlen > 1 && ((strpos($value, '[') === 0 && strrpos($value, ']') === $strlen - 1) || (strpos($value, '{') === 0 && strrpos($value, '}') === $strlen - 1) || (strpos($value, '"') === 0 && strrpos($value, '"') === $strlen - 1))) || is_numeric($value))
+			if ((is_string($value) && strlen($value) > 1 && in_array($value{0}, ['[','{','"'])) || is_numeric($value))
 			{
 				$tmp = json_decode($value, $asArray);
 
