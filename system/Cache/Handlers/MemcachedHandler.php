@@ -115,35 +115,68 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function initialize()
 	{
-		if (class_exists('\Memcached'))
+		// Try to connect to Memcache or Memcached, if an issue occurs throw a CriticalError exception,
+		// so that the CacheFactory can attempt to initiate the next cache handler.
+		try
 		{
-			$this->memcached = new \Memcached();
-			if ($this->config['raw'])
+			if (class_exists('\Memcached'))
 			{
-				$this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, true);
+				// Create new instance of \Memcached
+				$this->memcached = new \Memcached();
+				if ($this->config['raw'])
+				{
+					$this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, true);
+				}
+
+				// Add server
+				$this->memcached->addServer(
+					$this->config['host'], $this->config['port'], $this->config['weight']
+				);
+
+				// attempt to get status of servers
+				$stats = $this->memcached->getStats();
+
+				// $stats should be an associate array with a key in the format of host:port.
+				// If it doesn't have the key, we know the server is not working as expected.
+				if( !isset($stats[$this->config['host']. ':' .$this->config['port']]) )
+				{
+					throw new CriticalError('Cache: Memcached connection failed.');
+				}
+			}
+			elseif (class_exists('\Memcache'))
+			{
+				// Create new instance of \Memcache
+				$this->memcached = new \Memcache();
+
+				// Check if we can connect to the server
+				$can_connect = $this->memcached->connect(
+					$this->config['host'], $this->config['port']
+				);
+
+				// If we can't connect, throw a CriticalError exception
+				if($can_connect == false){
+					throw new CriticalError('Cache: Memcache connection failed.');
+				}
+
+				// Add server, third parameter is persistence and defaults to TRUE.
+				$this->memcached->addServer(
+					$this->config['host'], $this->config['port'], true, $this->config['weight']
+				);
+			}
+			else
+			{
+				throw new CriticalError('Cache: Not support Memcache(d) extension.');
 			}
 		}
-		elseif (class_exists('\Memcache'))
+		catch (CriticalError $e)
 		{
-			$this->memcached = new \Memcache();
+			// If a CriticalError exception occurs, throw it up.
+			throw $e;
 		}
-		else
+		catch (\Exception $e)
 		{
-			throw new CriticalError('Cache: Not support Memcache(d) extension.');
-		}
-
-		if ($this->memcached instanceof \Memcached)
-		{
-			$this->memcached->addServer(
-					$this->config['host'], $this->config['port'], $this->config['weight']
-			);
-		}
-		elseif ($this->memcached instanceof \Memcache)
-		{
-			// Third parameter is persistence and defaults to TRUE.
-			$this->memcached->addServer(
-					$this->config['host'], $this->config['port'], true, $this->config['weight']
-			);
+			// If an \Exception occurs, convert it into a CriticalError exception and throw it.
+			throw new CriticalError('Cache: Memcache(d) connection refused (' . $e->getMessage() . ').');
 		}
 	}
 

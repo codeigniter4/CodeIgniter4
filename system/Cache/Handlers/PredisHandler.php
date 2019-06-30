@@ -99,6 +99,8 @@ class PredisHandler implements CacheInterface
 	 */
 	public function initialize()
 	{
+		// Try to connect to Redis, if an issue occurs throw a CriticalError exception,
+		// so that the CacheFactory can attempt to initiate the next cache handler.
 		try
 		{
 			// Create a new instance of Predis\Client
@@ -110,7 +112,7 @@ class PredisHandler implements CacheInterface
 		catch (\Exception $e)
 		{
 			// thrown if can't connect to redis server.
-			throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ')');
+			throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ').');
 		}
 	}
 
