@@ -3,9 +3,12 @@
 namespace CodeIgniter\Validation;
 
 use Config\Database;
+use CodeIgniter\Test\CIDatabaseTestCase;
 
-class RulesTest extends \CIUnitTestCase
+class RulesTest extends CIDatabaseTestCase
 {
+	protected $refresh = true;
+
 	/**
 	 * @var Validation
 	 */

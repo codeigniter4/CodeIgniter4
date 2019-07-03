@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\CLI;
 
+use CodeIgniter\HTTP\CLIRequest;
 use Tests\Support\MockCodeIgniter;
 use Tests\Support\Config\MockCLIConfig;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
@@ -56,6 +57,9 @@ class ConsoleTest extends \CIUnitTestCase
 
 	public function testRun()
 	{
+		$request = new CLIRequest(config('App'));
+		$this->app->setRequest($request);
+
 		$console = new \CodeIgniter\CLI\Console($this->app);
 		$console->run(true);
 		$result = CITestStreamFilter::$buffer;

@@ -1,0 +1,185 @@
+Version 4.0.0-beta.3
+====================================================
+
+Release Date: Not released
+
+Highlights:
+
+- Type hinting added throughout & typos corrected (see API docs)
+- Fixed a number of model, database, validation & debug toolbar issues
+
+New messages:
+
+- Database.FieldNotExists
+- Validation.equals, not_equals
+
+App changes:
+
+- Removed $salt config item in app/Config/App
+- Enabled migrations by default in app/Config/Migrations
+- Simplified public/.htaccess
+
+The list of changed files follows, with PR numbers shown.
+
+- admin/
+	- framework/composer.json #1935
+	- starter/composer.json #1935
+
+- app/
+	- Config/
+		- App #1973
+		- Migrations #1973
+
+- public/
+	- .htaccess #1973
+
+- system/
+	- API/
+		- ResponseTrait #1962
+	- Commands/
+		- Server/rewrite #1925
+	- Config/
+		- AutoloadConfig #1974
+		- BaseConfig #1947
+	- Database/ #1938
+		- BaseBuilder #1923, #1933, #1950
+		- BaseConnection #1950
+		- BaseResult #1917
+		- BaseUtils #1917
+		- Forge #1917
+		- SQLite3/
+			- Connection #1917
+			- Result #1917
+	- Debug/
+		- Toolbar #1916
+		- Toolbar/Collectors/
+			- BaseCollector #1972
+			- Config #1973
+			- History #1945
+			- Routes #1949
+		- Toolbar/Views/
+			- _config.tpl.php #1973
+			- toolbar.tpl.php #1972
+			- toolbarloader.js #1931, #1961
+	- Exceptions/
+		- EntityException #1927
+	- Filters/
+		Filters #1970, #1985
+	- Format/
+		- FormatterInterface #1918
+		- JSONFormatter #1918
+		- XMLFormatter #1918
+	- HTTP/
+		- CLIRequest #1956
+		- CURLRequest #1915
+	- Images/Handlers/
+		- BaseHandler #1956
+	- Language/en/
+		- Database #1917
+		- Validation #1952
+	- Router/
+		- Router #1968
+		- RouteCollection #1977
+	- Session/Handlers/
+		- RedisHandler #1980
+	- Test/
+		- FeatureResponse #1977
+		- FeatureTestCase #1977
+	- Validation/
+		- FormatRules #1957
+		- Rules #1952
+	- View/
+		- Table #1984
+	- Entity #1911, #1927, #1943, #1950, #1955
+	- Model #1930, #1943, #1963, #1981
+
+- tests/system/
+	- Config/
+		- BaseConfigTest #1947
+	- Database/
+		- BaseQueryTest #1917
+		- Live/
+			- DbUtilsTest #1917, #1943
+			- ForgeTest #1917
+			- GetTest #1917, #1943
+			- ModelTest #1930, #1943, #1981
+		- Migrations/
+			- MigrationRunnerTest #1917
+			- MigrationTest #1943
+	- Filters/
+		- FilterTest #1985
+	- Test/
+		- FeatureTestCaseTest #1977
+	- Validation/
+		- FormatRulesTest #1957
+		- RulesTest #1952, #cbe4b1d
+	- View/
+		- TableTest #1978, #1984
+	- EntityTest #1911
+
+- user_guide_src/
+	- dbmgmt/
+		- migrations #1973
+	- installation/
+		- installing_composer #1926	
+		- running #1935
+	- libraries/
+		- validation #1952, #1954, #1957
+	- outgoing/
+		- index #1978
+		- table #1978, #1984
+	- testing/
+		- feature #1977
+		- overview #1936
+
+- .htaccess #1939
+- composer.json #1935
+- phpdoc.dist.xml #1987
+
+PRs merged:
+-----------
+
+- #1987 Correct API docblock problems for phpdocs
+- #1986 Update docblock version to 4.0.0
+- #1985 Fix filter processing. Fixes #1907
+- #cbe4b1d Fix SQLite tests
+- #1984 Add footing to HTML Table
+- #1981 Using soft deletes should not return an ambiguous field message when joining tables
+- #1980 Corrected return value for Session/RedisHandler::read
+- #1978 Implement HTML Table for CI4 (missed feature)
+- #1977 Test/featuretestcase
+- #1974 Remove framework classes from the autoloader classmap
+- #1973 Defaultfixes
+- #1972 Toolbar fix for custom collectors
+- #1970 Add back filter arguments
+- #1968 Fixed pathinfo mode 404 error
+- #1963 String type primary key should also wrap into an array during db update
+- #1962 Fix side issue
+- #1961 Fix Debugbar url tail slash issue
+- #1957 New generic string validation rule
+- #1956 Use Null Coalesce Operator
+- #1955 Travis-CI build failed fix
+- #1954 Fix validation table format
+- #1952 Add Validations for `equals()` and `not_equals()`
+- #1951 System typos changes & code cleanup
+- #1950 Fix some side issue
+- #1949 Toobar/Routes correction
+- #1947 Fix BaseConfig didn't load Registrar files properly
+- #1945 Fix datetime extraction from debugbar file
+- #1943 Model, Entity, Exception & Migration test cases
+- #1939 Remove section that prevents hotlinking
+- #1938 Database typos changes
+- #1936 Docs: improce app testing writeup
+- #1935 Update phpunit.xml scripts. Fixes #1932
+- #1933 having (Is NULL deletion)
+- #1931 Toolbar IE11 fix
+- #1930 Model Changes w.r.t. #1773
+- #1927 Entity exception for non existed props
+- #1926 Docs: update installation guide
+- #1925 removed $_SERVER['CI_ENVIRONMENT']
+- #1923 missing return
+- #1918 JSONFormatter
+- #1917 Database Test Cases
+- #1916 Check if the value is string
+- #1915 Fix for POST + JSON (Content-Length added)
+- #1911 JSON Cast exception test cases

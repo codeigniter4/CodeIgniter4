@@ -36,84 +36,116 @@
  * @filesource
  */
 
-namespace CodeIgniter\Log\Handlers;
+namespace CodeIgniter\Session\Handlers;
+
+use CodeIgniter\Session\Exceptions\SessionException;
+use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Database\BaseConnection;
+use Config\Database;
 
 /**
- * Base class for logging
+ * Session handler using static array for storage.
+ * Intended only for use during testing.
  */
-abstract class BaseHandler implements HandlerInterface
+class ArrayHandler extends BaseHandler implements \SessionHandlerInterface
 {
-
-	/**
-	 * Handles
-	 *
-	 * @var array
-	 */
-	protected $handles;
-
-	/**
-	 * Date format for logging
-	 *
-	 * @var string
-	 */
-	protected $dateFormat = 'Y-m-d H:i:s';
+	protected static $cache = [];
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Constructor
+	 * Open
 	 *
-	 * @param array $config
+	 * Ensures we have an initialized database connection.
+	 *
+	 * @param string $savePath Path to session files' directory
+	 * @param string $name     Session cookie name
+	 *
+	 * @return boolean
+	 * @throws \Exception
 	 */
-	public function __construct(array $config)
+	public function open($savePath, $name): bool
 	{
-		$this->handles = $config['handles'] ?? [];
+		return true;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Checks whether the Handler will handle logging items of this
-	 * log Level.
+	 * Read
 	 *
-	 * @param $level
+	 * Reads session data and acquires a lock
 	 *
-	 * @return boolean
+	 * @param string $sessionID Session ID
+	 *
+	 * @return string    Serialized session data
 	 */
-	public function canHandle(string $level): bool
+	public function read($sessionID): string
 	{
-		return in_array($level, $this->handles);
+		return '';
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Handles logging the message.
-	 * If the handler returns false, then execution of handlers
-	 * will stop. Any handlers that have not run, yet, will not
-	 * be run.
+	 * Write
 	 *
-	 * @param $level
-	 * @param $message
+	 * Writes (create / update) session data
+	 *
+	 * @param string $sessionID   Session ID
+	 * @param string $sessionData Serialized session data
 	 *
 	 * @return boolean
 	 */
-	abstract public function handle($level, $message): bool;
+	public function write($sessionID, $sessionData): bool
+	{
+		return true;
+	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Stores the date format to use while logging messages.
+	 * Close
 	 *
-	 * @param string $format
+	 * Releases locks and closes file descriptor.
 	 *
-	 * @return HandlerInterface
+	 * @return boolean
 	 */
-	public function setDateFormat(string $format): HandlerInterface
+	public function close(): bool
 	{
-		$this->dateFormat = $format;
+		return true;
+	}
 
-		return $this;
+	//--------------------------------------------------------------------
+
+	/**
+	 * Destroy
+	 *
+	 * Destroys the current session.
+	 *
+	 * @param string $sessionID
+	 *
+	 * @return boolean
+	 */
+	public function destroy($sessionID): bool
+	{
+		return true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Garbage Collector
+	 *
+	 * Deletes expired sessions
+	 *
+	 * @param integer $maxlifetime Maximum lifetime of sessions
+	 *
+	 * @return boolean
+	 */
+	public function gc($maxlifetime): bool
+	{
+		return true;
 	}
 
 	//--------------------------------------------------------------------

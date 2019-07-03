@@ -13,7 +13,6 @@ Library Reference
     pagination
     security
     sessions
-    table
     throttler
     time
     typography

@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -76,9 +76,9 @@ class Builder extends BaseBuilder
 	 *
 	 * Generates a platform-specific replace string from the supplied data
 	 *
-	 * @param string    the table name
-	 * @param array     the insert keys
-	 * @param array     the insert values
+	 * @param string $table  the table name
+	 * @param array  $keys   the insert keys
+	 * @param array  $values the insert values
 	 *
 	 * @return string
 	 */

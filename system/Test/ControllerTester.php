@@ -33,7 +33,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -65,12 +65,48 @@ use Throwable;
 trait ControllerTester
 {
 
+	/**
+	 * Controller configuration.
+	 *
+	 * @var BaseConfig
+	 */
 	protected $appConfig;
+
+	/**
+	 * Request.
+	 *
+	 * @var Request
+	 */
 	protected $request;
+	/**
+	 * Response.
+	 *
+	 * @var Response
+	 */
 	protected $response;
+	/**
+	 * Message logger.
+	 *
+	 * @var LoggerInterface
+	 */
 	protected $logger;
+	/**
+	 * Initialized controller.
+	 *
+	 * @var Controller
+	 */
 	protected $controller;
+	/**
+	 * URI of this request.
+	 *
+	 * @var string
+	 */
 	protected $uri = 'http://example.com';
+	/**
+	 * Request or response body.
+	 *
+	 * @var string
+	 */
 	protected $body;
 
 	/**
@@ -185,6 +221,8 @@ trait ControllerTester
 	}
 
 	/**
+	 * Set controller's config, with method chaining.
+	 *
 	 * @param mixed $appConfig
 	 *
 	 * @return mixed
@@ -197,6 +235,8 @@ trait ControllerTester
 	}
 
 	/**
+	 * Set controller's request, with method chaining.
+	 *
 	 * @param mixed $request
 	 *
 	 * @return mixed
@@ -209,6 +249,8 @@ trait ControllerTester
 	}
 
 	/**
+	 * Set controller's response, with method chaining.
+	 *
 	 * @param mixed $response
 	 *
 	 * @return mixed
@@ -221,6 +263,8 @@ trait ControllerTester
 	}
 
 	/**
+	 * Set controller's logger, with method chaining.
+	 *
 	 * @param mixed $logger
 	 *
 	 * @return mixed
@@ -233,6 +277,8 @@ trait ControllerTester
 	}
 
 	/**
+	 * Set the controller's URI, with method chaining.
+	 *
 	 * @param string $uri
 	 *
 	 * @return mixed
@@ -245,6 +291,8 @@ trait ControllerTester
 	}
 
 	/**
+	 * Set the method's body, with method chaining.
+	 *
 	 * @param mixed $body
 	 *
 	 * @return mixed

@@ -101,6 +101,14 @@ specify the design of your layout. Here is the template prototype::
 		'heading_cell_start'	=> '<th>',
 		'heading_cell_end'	=> '</th>',
 
+		'tfoot_open'		 => '<tfoot>',
+		'tfoot_close'		 => '</tfoot>',
+
+		'footing_row_start'	 => '<tr>',
+		'footing_row_end'	 => '</tr>',
+		'footing_cell_start'     => '<td>',
+		'footing_cell_end'	 => '</td>',
+
 		'tbody_open'		=> '<tbody>',
 		'tbody_close'		=> '</tbody>',
 
@@ -193,9 +201,21 @@ Class Reference
 
 		Permits you to set the table heading. You can submit an array or discrete params::
 
-			$table->setHeading('Name', 'Color', 'Size');
+			$table->setHeading('Name', 'Color', 'Size'); // or
 
-			$table->setHeading(array('Name', 'Color', 'Size'));
+			$table->setHeading(['Name', 'Color', 'Size']);
+
+	.. php:method:: setFooting([$args = [] [, ...]])
+
+		:param	mixed	$args: An array or multiple strings containing the table footing values
+		:returns:	Table instance (method chaining)
+		:rtype:	Table
+
+		Permits you to set the table footing. You can submit an array or discrete params::
+
+			$table->setFooting('Subtotal', $subtotal, $notes); // or
+
+			$table->setFooting(['Subtotal', $subtotal, $notes]);
 
 	.. php:method:: addRow([$args = array()[, ...]])
 
@@ -205,9 +225,9 @@ Class Reference
 
 		Permits you to add a row to your table. You can submit an array or discrete params::
 
-			$table->addRow('Blue', 'Red', 'Green');
+			$table->addRow('Blue', 'Red', 'Green'); // or
 
-			$table->addRow(array('Blue', 'Red', 'Green'));
+			$table->addRow(['Blue', 'Red', 'Green']);
 
 		If you would like to set an individual cell's tag attributes, you can use an associative array for that cell.
 		The associative key **data** defines the cell's data. Any other key => val pairs are added as key='val' attributes to the tag::
@@ -257,9 +277,9 @@ Class Reference
 		Permits you to set your template. You can submit a full or partial template.
 		::
 
-			$template = array(
+			$template = [
 				'table_open'  => '<table border="1" cellpadding="2" cellspacing="1" class="mytable">'
-			);
+			];
 		
 			$table->setTemplate($template);
 

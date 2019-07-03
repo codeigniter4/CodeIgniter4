@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -41,10 +41,7 @@ namespace CodeIgniter\CLI;
 use CodeIgniter\CLI\Exceptions\CLIException;
 
 /**
- * Class CLI
- *
- * Tools to interact with that request since CLI requests are not
- * static like HTTP requests might be.
+ * Set of static methods useful for CLI request handling.
  *
  * Portions of this code were initially from the FuelPHP Framework,
  * version 1.7.x, and used here under the MIT license they were
@@ -61,7 +58,7 @@ use CodeIgniter\CLI\Exceptions\CLIException;
  * an argument of "0".
  * These have been flagged to ignore for code coverage purposes.
  *
- * @package CodeIgniter\HTTP
+ * @package CodeIgniter\CLI
  */
 class CLI
 {

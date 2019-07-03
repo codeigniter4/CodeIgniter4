@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -1698,6 +1698,30 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Disables foreign key checks temporarily.
+	 */
+	public function disableForeignKeyChecks()
+	{
+		$sql = $this->_disableForeignKeyChecks();
+
+		return $this->query($sql);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Enables foreign key checks temporarily.
+	 */
+	public function enableForeignKeyChecks()
+	{
+		$sql = $this->_enableForeignKeyChecks();
+
+		return $this->query($sql);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Allows the engine to be set into a mode where queries are not
 	 * actually executed, but they are still generated, timed, etc.
 	 *
@@ -1808,6 +1832,8 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Accessor for properties if they exist.
+	 *
 	 * @param string $key
 	 *
 	 * @return mixed

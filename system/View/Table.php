@@ -68,6 +68,13 @@ class Table
 	public $heading = [];
 
 	/**
+	 * Data for table footing
+	 *
+	 * @var array
+	 */
+	public $footing = [];
+
+	/**
 	 * Whether or not to automatically create the table header
 	 *
 	 * @var boolean
@@ -151,11 +158,25 @@ class Table
 	 * Can be passed as an array or discreet params
 	 *
 	 * @param  mixed
-	 * @return CI_Table
+	 * @return Table
 	 */
 	public function setHeading($args = [])
 	{
 		$this->heading = $this->_prepArgs(func_get_args());
+		return $this;
+	}
+
+	/**
+	 * Set the table footing
+	 *
+	 * Can be passed as an array or discreet params
+	 *
+	 * @param  mixed
+	 * @return Table
+	 */
+	public function setFooting($args = [])
+	{
+		$this->footing = $this->_prepArgs(func_get_args());
 		return $this;
 	}
 
@@ -215,7 +236,7 @@ class Table
 	 * Can be passed as an array or discreet params
 	 *
 	 * @param  mixed $value
-	 * @return CI_Table
+	 * @return Table
 	 */
 	public function setEmpty($value)
 	{
@@ -231,7 +252,7 @@ class Table
 	 * Can be passed as an array or discreet params
 	 *
 	 * @param  mixed
-	 * @return CI_Table
+	 * @return Table
 	 */
 	public function addRow($args = [])
 	{
@@ -273,7 +294,7 @@ class Table
 	 * Add a table caption
 	 *
 	 * @param  string $caption
-	 * @return CI_Table
+	 * @return Table
 	 */
 	public function setCaption($caption)
 	{
@@ -399,10 +420,34 @@ class Table
 
 				$out .= $this->template['row_' . $name . 'end'] . $this->newline;
 			}
-
-			$out .= $this->template['tbody_close'] . $this->newline;
 		}
 
+		// Any table footing to display?
+		if (! empty($this->footing))
+		{
+			$out .= $this->template['tfoot_open'] . $this->newline . $this->template['footing_row_start'] . $this->newline;
+
+			foreach ($this->footing as $footing)
+			{
+				$temp = $this->template['footing_cell_start'];
+
+				foreach ($footing as $key => $val)
+				{
+					if ($key !== 'data')
+					{
+						$temp = str_replace('<th', '<th ' . $key . '="' . $val . '"', $temp);
+					}
+				}
+
+				$out .= $temp . (isset($footing['data']) ? $footing['data'] : '') . $this->template['footing_cell_end'];
+			}
+
+			$out .= $this->template['footing_row_end'] . $this->newline . $this->template['tfoot_close'] . $this->newline;
+		}
+
+		$out .= $this->template['tbody_close'] . $this->newline;
+
+		// And finally, close off the table
 		$out .= $this->template['table_close'];
 
 		// Clear table class properties before generating the table
@@ -422,6 +467,7 @@ class Table
 	{
 		$this->rows        = [];
 		$this->heading     = [];
+		$this->footing     = [];
 		$this->autoHeading = true;
 		$this->caption     = null;
 		return $this;
@@ -512,6 +558,12 @@ class Table
 			'heading_row_end'    => '</tr>',
 			'heading_cell_start' => '<th>',
 			'heading_cell_end'   => '</th>',
+			'tfoot_open'         => '<tfoot>',
+			'tfoot_close'        => '</tfoot>',
+			'footing_row_start'  => '<tr>',
+			'footing_row_end'    => '</tr>',
+			'footing_cell_start' => '<td>',
+			'footing_cell_end'   => '</td>',
 			'tbody_open'         => '<tbody>',
 			'tbody_close'        => '</tbody>',
 			'row_start'          => '<tr>',

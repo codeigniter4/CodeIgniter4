@@ -258,8 +258,6 @@ Execute a DROP FOREIGN KEY.
 	// Produces: ALTER TABLE 'tablename' DROP FOREIGN KEY 'users_foreign'
 	$forge->dropForeignKey('tablename','users_foreign');
 
-.. note:: SQLite database driver does not support dropping of foreign keys.
-
 Renaming a table
 ================
 

@@ -31,7 +31,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -88,11 +88,15 @@ class Table
 	protected $prefixedTableName;
 
 	/**
+	 * Database connection.
+	 *
 	 * @var Connection
 	 */
 	protected $db;
 
 	/**
+	 * Handle to our forge.
+	 *
 	 * @var Forge
 	 */
 	protected $forge;
@@ -101,6 +105,7 @@ class Table
 	 * Table constructor.
 	 *
 	 * @param Connection $db
+	 * @param Forge      $forge
 	 */
 	public function __construct(Connection $db, Forge $forge)
 	{
@@ -208,6 +213,40 @@ class Table
 		unset($field['name']);
 
 		$this->fields[$oldName] = $field;
+
+		return $this;
+	}
+
+	/**
+	 * Drops a foreign key from this table so that
+	 * it won't be recreated in the future.
+	 *
+	 * @param string $column
+	 *
+	 * @return \CodeIgniter\Database\SQLite3\Table
+	 */
+	public function dropForeignKey(string $column)
+	{
+		if (empty($this->foreignKeys))
+		{
+			return $this;
+		}
+
+		for ($i = 0; $i < count($this->foreignKeys); $i++)
+		{
+			if ($this->foreignKeys[$i]->table_name !== $this->tableName)
+			{
+				continue;
+			}
+
+			// The column name should be the first thing in the constraint name
+			if (strpos($this->foreignKeys[$i]->constraint_name, $column) !== 0)
+			{
+				continue;
+			}
+
+			unset($this->foreignKeys[$i]);
+		}
 
 		return $this;
 	}

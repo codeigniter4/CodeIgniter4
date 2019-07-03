@@ -39,11 +39,7 @@
 /**
  * CodeIgniter Number Helpers
  *
- * @package    CodeIgniter
- * @subpackage Helpers
- * @category   Helpers
- * @author     CodeIgniter Dev Team
- * @link       https://codeigniter.com/user_guide/helpers/number_helper.html
+ * @package CodeIgniter
  */
 
 if (! function_exists('number_to_size'))

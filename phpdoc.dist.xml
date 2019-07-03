@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpdoc>
-    <title>CodeIgniter v4.0 API</title>
+    <title>CodeIgniter v4.0.0 API</title>
     <parser>
         <target>api/data/</target>
     </parser>
@@ -12,6 +12,10 @@
         <ignore>vendor/*</ignore>
         <ignore>tests/*</ignore>
         <ignore>Kint/*</ignore>
+        <ignore>*.tpl.php</ignore>
+        <ignore>*.js.php</ignore>
+        <ignore>Validation/Views/*</ignore>
+        <ignore>Pager/Views/</ignore>
     </files>
 
     <logging>

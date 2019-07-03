@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -50,6 +50,7 @@ use CodeIgniter\HTTP\CURLRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Negotiate;
 use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -384,6 +385,8 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
+	 * Return the appropriate igration runner.
+	 *
 	 * @param \CodeIgniter\Config\BaseConfig            $config
 	 * @param \CodeIgniter\Database\ConnectionInterface $db
 	 * @param boolean                                   $getShared
@@ -432,6 +435,8 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
+	 * Return the appropriate pagination handler.
+	 *
 	 * @param mixed                               $config
 	 * @param \CodeIgniter\View\RendererInterface $view
 	 * @param boolean                             $getShared
@@ -636,15 +641,16 @@ class Services extends BaseService
 	 * the correct Controller and Method to execute.
 	 *
 	 * @param \CodeIgniter\Router\RouteCollectionInterface $routes
+	 * @param \CodeIgniter\HTTP\Request                    $request
 	 * @param boolean                                      $getShared
 	 *
 	 * @return \CodeIgniter\Router\Router
 	 */
-	public static function router(RouteCollectionInterface $routes = null, bool $getShared = true)
+	public static function router(RouteCollectionInterface $routes = null, Request $request = null, bool $getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('router', $routes);
+			return static::getSharedInstance('router', $routes, $request);
 		}
 
 		if (empty($routes))
@@ -652,7 +658,7 @@ class Services extends BaseService
 			$routes = static::routes(true);
 		}
 
-		return new Router($routes);
+		return new Router($routes, $request);
 	}
 
 	//--------------------------------------------------------------------
@@ -684,6 +690,8 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
+	 * Return the session manager.
+	 *
 	 * @param \Config\App $config
 	 * @param boolean     $getShared
 	 *
@@ -761,6 +769,8 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
+	 * Return the debug toolbar.
+	 *
 	 * @param \Config\Toolbar $config
 	 * @param boolean         $getShared
 	 *

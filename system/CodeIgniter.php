@@ -31,7 +31,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -65,7 +65,7 @@ class CodeIgniter
 	/**
 	 * The current version of CodeIgniter Framework
 	 */
-	const CI_VERSION = '4.0.0-beta.2';
+	const CI_VERSION = '4.0.0-beta.3';
 
 	/**
 	 * App startup time.
@@ -161,6 +161,11 @@ class CodeIgniter
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param type $config
+	 */
 	public function __construct($config)
 	{
 		$this->startTime = microtime(true);
@@ -637,7 +642,7 @@ class CodeIgniter
 	 */
 	protected function generateCacheName($config): string
 	{
-		if (is_cli() && ! (ENVIRONMENT === 'testing'))
+		if (get_class($this->request) === CLIRequest::class)
 		{
 			return md5($this->request->getPath());
 		}
@@ -699,7 +704,7 @@ class CodeIgniter
 		}
 
 		// $routes is defined in Config/Routes.php
-		$this->router = Services::router($routes);
+		$this->router = Services::router($routes, $this->request);
 
 		$path = $this->determinePath();
 
@@ -980,16 +985,9 @@ class CodeIgniter
 	/**
 	 * Modifies the Request Object to use a different method if a POST
 	 * variable called _method is found.
-	 *
-	 * Does not work on CLI commands.
 	 */
 	public function spoofRequestMethod()
 	{
-		if (is_cli())
-		{
-			return;
-		}
-
 		// Only works with POSTED forms
 		if ($this->request->getMethod() !== 'post')
 		{

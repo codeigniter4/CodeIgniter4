@@ -388,10 +388,6 @@ class ForgeTest extends CIDatabaseTestCase
 		{
 			$attributes = ['ENGINE' => 'InnoDB'];
 		}
-		if ($this->db->DBDriver === 'SQLite3')
-		{
-			$this->expectException(DatabaseException::class);
-		}
 
 		$this->forge->addField([
 			'id'   => [
@@ -702,5 +698,33 @@ class ForgeTest extends CIDatabaseTestCase
 		$forge = \Config\Database::forge($group);
 
 		$this->assertInstanceOf(Forge::class, $forge);
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1983
+	 */
+	public function testDropTableSuccess()
+	{
+		// Add an index to user table so we have
+		// something to work with
+		$this->forge->addField([
+			'id' => [
+				'type'       => 'INTEGER',
+				'constraint' => 3,
+			],
+		]);
+		$this->forge->addKey('id');
+		$this->forge->createTable('droptest');
+
+		$this->assertCount(1, $this->db->getIndexData('droptest'));
+
+		$this->forge->dropTable('droptest', true);
+
+		$this->assertFalse($this->db->tableExists('dropTest'));
+
+		if ($this->db->DBDriver === 'SQLite3')
+		{
+			$this->assertCount(0, $this->db->getIndexData('droptest'));
+		}
 	}
 }

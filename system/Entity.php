@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -47,34 +47,36 @@ use CodeIgniter\Exceptions\CastException;
  */
 class Entity
 {
-	protected $_options = [
-		/*
-		 * Maps names used in sets and gets against unique
-		 * names within the class, allowing independence from
-		 * database column names.
-		 *
-		 * Example:
-		 *  $datamap = [
-		 *      'db_name' => 'class_name'
-		 *  ];
-		 */
-		'datamap' => [],
+	/**
+	 * Maps names used in sets and gets against unique
+	 * names within the class, allowing independence from
+	 * database column names.
+	 *
+	 * Example:
+	 *  $datamap = [
+	 *      'db_name' => 'class_name'
+	 *  ];
+	 */
+	protected $datamap = [];
 
-		/*
-		 * Define properties that are automatically converted to Time instances.
-		 */
-		'dates'   => [
-			'created_at',
-			'updated_at',
-			'deleted_at',
-		],
-
-		/*
-		 * Array of field names and the type of value to cast them as
-		 * when they are accessed.
-		 */
-		'casts'   => [],
+	protected $dates = [
+		'created_at',
+		'updated_at',
+		'deleted_at',
 	];
+
+	/**
+	 * Array of field names and the type of value to cast them as
+	 * when they are accessed.
+	 */
+	protected $casts = [];
+
+	/**
+	 * Holds the current values of all class vars.
+	 *
+	 * @var array
+	 */
+	protected $attributes = [];
 
 	/**
 	 * Holds original copies of all class vars so
@@ -83,7 +85,7 @@ class Entity
 	 *
 	 * @var array
 	 */
-	protected $_original = [];
+	protected $original = [];
 
 	/**
 	 * Holds info whenever properties have to be casted
@@ -99,24 +101,9 @@ class Entity
 	 */
 	public function __construct(array $data = null)
 	{
-		// Collect any original values of things
-		// so we can compare later to see what's changed
-		$properties = get_object_vars($this);
+		$this->syncOriginal();
 
-		foreach ($properties as $key => $value)
-		{
-			if (substr($key, 0, 1) === '_')
-			{
-				unset($properties[$key]);
-			}
-		}
-
-		$this->_original = $properties;
-
-		if (is_array($data))
-		{
-			$this->fill($data);
-		}
+		$this->fill($data);
 	}
 
 	/**
@@ -128,8 +115,13 @@ class Entity
 	 *
 	 * @return \CodeIgniter\Entity
 	 */
-	public function fill(array $data)
+	public function fill(array $data = null)
 	{
+		if (! is_array($data))
+		{
+			return $this;
+		}
+
 		foreach ($data as $key => $value)
 		{
 			$key = $this->mapProperty($key);
@@ -140,9 +132,9 @@ class Entity
 			{
 				$this->$method($value);
 			}
-			elseif (property_exists($this, $key))
+			else
 			{
-				$this->$key = $value;
+				$this->attributes[$key] = $value;
 			}
 		}
 
@@ -170,16 +162,14 @@ class Entity
 
 		// we need to loop over our properties so that we
 		// allow our magic methods a chance to do their thing.
-		$properties = get_object_vars($this);
-
-		foreach ($properties as $key => $value)
+		foreach ($this->attributes as $key => $value)
 		{
 			if (substr($key, 0, 1) === '_')
 			{
 				continue;
 			}
 
-			if ($onlyChanged && ! $this->hasPropertyChanged($key, $value))
+			if ($onlyChanged && ! $this->hasChanged($key))
 			{
 				continue;
 			}
@@ -188,9 +178,9 @@ class Entity
 		}
 
 		// Loop over our mapped properties and add them to the list...
-		if (is_array($this->_options['datamap']))
+		if (is_array($this->datamap))
 		{
-			foreach ($this->_options['datamap'] as $from => $to)
+			foreach ($this->datamap as $from => $to)
 			{
 				$return[$from] = $this->__get($to);
 			}
@@ -202,9 +192,7 @@ class Entity
 	//--------------------------------------------------------------------
 
 	/**
-	 * Converts the properties of this class into an array. Unlike toArray()
-	 * this will not cast the data or use any magic accessors. It simply
-	 * returns the raw data for use when saving to the model, etc.
+	 * Returns the raw values of the current attributes.
 	 *
 	 * @param boolean $onlyChanged
 	 *
@@ -214,21 +202,19 @@ class Entity
 	{
 		$return = [];
 
-		$properties = get_object_vars($this);
-
-		foreach ($properties as $key => $value)
+		if (! $onlyChanged)
 		{
-			if (substr($key, 0, 1) === '_')
+			return $this->attributes;
+		}
+
+		foreach ($this->attributes as $key => $value)
+		{
+			if (! $this->hasChanged($key))
 			{
 				continue;
 			}
 
-			if ($onlyChanged && ! $this->hasPropertyChanged($key, $value))
-			{
-				continue;
-			}
-
-			$return[$key] = $this->$key;
+			$return[$key] = $this->attributes[$key];
 		}
 
 		return $return;
@@ -237,16 +223,46 @@ class Entity
 	//--------------------------------------------------------------------
 
 	/**
+	 * Ensures our "original" values match the current values.
+	 *
+	 * @return $this
+	 */
+	public function syncOriginal()
+	{
+		$this->original = $this->attributes;
+
+		return $this;
+	}
+
+	/**
 	 * Checks a property to see if it has changed since the entity was created.
+	 * Or, without a parameter, checks if any properties have changed.
 	 *
 	 * @param string $key
-	 * @param null   $value
 	 *
 	 * @return boolean
 	 */
-	protected function hasPropertyChanged(string $key, $value = null): bool
+	public function hasChanged(string $key = null): bool
 	{
-		return ! (($this->_original[$key] === null && $value === null) || $this->_original[$key] === $value);
+		// If no parameter was given then check all attributes
+		if ($key === null)
+		{
+			return     $this->original !== $this->attributes;
+		}
+
+		// Key doesn't exist in either
+		if (! array_key_exists($key, $this->original) && ! array_key_exists($key, $this->attributes))
+		{
+			return false;
+		}
+
+		// It's a new element
+		if (! array_key_exists($key, $this->original) && array_key_exists($key, $this->attributes))
+		{
+			return true;
+		}
+
+		return $this->original[$key] !== $this->attributes[$key];
 	}
 
 	/**
@@ -266,7 +282,8 @@ class Entity
 	 */
 	public function __get(string $key)
 	{
-		$key = $this->mapProperty($key);
+		$key    = $this->mapProperty($key);
+		$result = null;
 
 		// Convert to CamelCase for the method
 		$method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
@@ -280,25 +297,20 @@ class Entity
 
 		// Otherwise return the protected property
 		// if it exists.
-		else if (property_exists($this, $key))
+		else if (array_key_exists($key, $this->attributes))
 		{
-			$result = $this->$key;
+			$result = $this->attributes[$key];
 		}
 
 		// Do we need to mutate this into a date?
-		if (in_array($key, $this->_options['dates']))
+		if (in_array($key, $this->dates))
 		{
 			$result = $this->mutateDate($result);
 		}
 		// Or cast it as something?
-		else if ($this->_cast && isset($this->_options['casts'][$key]) && ! empty($this->_options['casts'][$key]))
+		else if ($this->_cast && isset($this->casts[$key]) && ! empty($this->casts[$key]))
 		{
-			$result = $this->castAs($result, $this->_options['casts'][$key]);
-		}
-
-		if (! isset($result) && ! property_exists($this, $key))
-		{
-			throw EntityException::forTryingToAccessNonExistentProperty($key, get_called_class());
+			$result = $this->castAs($result, $this->casts[$key]);
 		}
 
 		return $result;
@@ -326,7 +338,7 @@ class Entity
 		$key = $this->mapProperty($key);
 
 		// Check if the field should be mutated into a date
-		if (in_array($key, $this->_options['dates']))
+		if (in_array($key, $this->dates))
 		{
 			$value = $this->mutateDate($value);
 		}
@@ -334,10 +346,10 @@ class Entity
 		$isNullable = false;
 		$castTo     = false;
 
-		if (array_key_exists($key, $this->_options['casts']))
+		if (array_key_exists($key, $this->casts))
 		{
-			$isNullable = substr($this->_options['casts'][$key], 0, 1) === '?';
-			$castTo     = $isNullable ? substr($this->_options['casts'][$key], 1) : $this->_options['casts'][$key];
+			$isNullable = substr($this->casts[$key], 0, 1) === '?';
+			$castTo     = $isNullable ? substr($this->casts[$key], 1) : $this->casts[$key];
 		}
 
 		if (! $isNullable || ! is_null($value))
@@ -381,7 +393,7 @@ class Entity
 		// they cannot be saved. Useful for
 		// grabbing values through joins,
 		// assigning relationships, etc.
-		$this->$key = $value;
+		$this->attributes[$key] = $value;
 
 		return $this;
 	}
@@ -389,9 +401,7 @@ class Entity
 	//--------------------------------------------------------------------
 
 	/**
-	 * Unsets a protected/private class property. Sets the value to null.
-	 * However, if there was a default value for the parent class, this
-	 * attribute will be reset to that default value.
+	 * Unsets an attribute property.
 	 *
 	 * @param string $key
 	 *
@@ -399,24 +409,7 @@ class Entity
 	 */
 	public function __unset(string $key)
 	{
-		// If not actual property exists, get out
-		// before we confuse our data mapping.
-		if (! property_exists($this, $key))
-		{
-			return;
-		}
-
-		$this->$key = null;
-
-		// Get the class' original default value for this property
-		// so we can reset it to the original value.
-		$reflectionClass   = new \ReflectionClass($this);
-		$defaultProperties = $reflectionClass->getDefaultProperties();
-
-		if (isset($defaultProperties[$key]))
-		{
-			$this->$key = $defaultProperties[$key];
-		}
+		unset($this->attributes[$key]);
 	}
 
 	//--------------------------------------------------------------------
@@ -431,11 +424,20 @@ class Entity
 	 */
 	public function __isset(string $key): bool
 	{
-		// Ensure an actual property exists, otherwise
-		// we confuse the data mapping.
-		$value = property_exists($this, $key) ? $this->$key : null;
+		return isset($this->attributes[$key]);
+	}
 
-		return ! is_null($value);
+	/**
+	 * Set raw data array without any mutations
+	 *
+	 * @param  array $data
+	 * @return $this
+	 */
+	public function setAttributes(array $data)
+	{
+		$this->attributes = $data;
+		$this->syncOriginal();
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -450,14 +452,14 @@ class Entity
 	 */
 	protected function mapProperty(string $key)
 	{
-		if (empty($this->_options['datamap']))
+		if (empty($this->datamap))
 		{
 			return $key;
 		}
 
-		if (isset($this->_options['datamap'][$key]) && ! empty($this->_options['datamap'][$key]))
+		if (isset($this->datamap[$key]) && ! empty($this->datamap[$key]))
 		{
-			return $this->_options['datamap'][$key];
+			return $this->datamap[$key];
 		}
 
 		return $key;
@@ -586,7 +588,7 @@ class Entity
 		$tmp = ! is_null($value) ? ($asArray ? [] : new \stdClass) : null;
 		if (function_exists('json_decode'))
 		{
-			if ((is_string($value) && (strpos($value, '[') === 0 || strpos($value, '{') === 0 || (strpos($value, '"') === 0 && strrpos($value, '"') === 0 ))) || is_numeric($value))
+			if ((is_string($value) && strlen($value) > 1 && in_array($value{0}, ['[', '{', '"'])) || is_numeric($value))
 			{
 				$tmp = json_decode($value, $asArray);
 

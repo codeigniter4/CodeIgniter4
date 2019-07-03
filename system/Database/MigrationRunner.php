@@ -31,7 +31,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -254,15 +254,15 @@ class MigrationRunner
 		$this->checkMigrations($migrations, $method, $targetVersion);
 
 		// loop migration for each namespace (module)
-
 		$migrationStatus = false;
 		foreach ($migrations as $version => $migration)
 		{
-			// Only include migrations within the scoop
+			// Only include migrations within the scope
 			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion))
 			{
 				$migrationStatus = false;
 				include_once $migration->path;
+
 				// Get namespaced class name
 				$class = $this->namespace . '\Database\Migrations\Migration_' . ($migration->name);
 

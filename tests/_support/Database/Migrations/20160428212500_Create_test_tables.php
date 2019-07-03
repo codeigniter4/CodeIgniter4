@@ -26,16 +26,15 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 				'type'       => 'VARCHAR',
 				'constraint' => 40,
 			],
-			'deleted'    => [
-				'type'       => 'TINYINT',
-				'constraint' => 1,
-				'default'    => '0',
-			],
 			'created_at' => [
 				'type' => 'DATETIME',
 				'null' => true,
 			],
 			'updated_at' => [
+				'type' => 'DATETIME',
+				'null' => true,
+			],
+			'deleted_at' => [
 				'type' => 'DATETIME',
 				'null' => true,
 			],
@@ -58,17 +57,17 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 				'type' => 'TEXT',
 				'null' => true,
 			],
-			'deleted'     => [
-				'type'       => 'TINYINT',
-				'constraint' => 1,
-				'default'    => '0',
-			],
 			'created_at'  => [
 				'type'       => 'INTEGER',
 				'constraint' => 11,
 				'null'       => true,
 			],
 			'updated_at'  => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+				'null'       => true,
+			],
+			'deleted_at'  => [
 				'type'       => 'INTEGER',
 				'constraint' => 11,
 				'null'       => true,
@@ -137,11 +136,11 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 
 	public function down()
 	{
-		$this->forge->dropTable('user');
-		$this->forge->dropTable('job');
-		$this->forge->dropTable('misc');
-		$this->forge->dropTable('empty');
-		$this->forge->dropTable('secondary');
+		$this->forge->dropTable('user', true);
+		$this->forge->dropTable('job', true);
+		$this->forge->dropTable('misc', true);
+		$this->forge->dropTable('empty', true);
+		$this->forge->dropTable('secondary', true);
 	}
 
 	//--------------------------------------------------------------------

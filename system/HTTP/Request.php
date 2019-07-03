@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -84,7 +84,10 @@ class Request extends Message implements RequestInterface
 	{
 		$this->proxyIPs = $config->proxyIPs;
 
-		$this->method = $this->getServer('REQUEST_METHOD') ?? 'GET';
+		if (empty($this->method))
+		{
+			$this->method = $this->getServer('REQUEST_METHOD') ?? 'GET';
+		}
 	}
 
 	//--------------------------------------------------------------------

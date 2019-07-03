@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -126,7 +126,7 @@ class MigrateRollback extends BaseCommand
 			}
 			else
 			{
-				// Get all namespaces form  PSR4 paths.
+				// Get all namespaces from PSR4 paths.
 				$config     = new Autoload();
 				$namespaces = $config->psr4;
 				foreach ($namespaces as $namespace => $path)

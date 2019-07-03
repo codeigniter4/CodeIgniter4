@@ -33,7 +33,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -127,6 +127,8 @@ class IncomingRequest extends Request
 	protected $validLocales = [];
 
 	/**
+	 * Configuration settings.
+	 *
 	 * @var \Config\App
 	 */
 	public $config;
@@ -139,6 +141,8 @@ class IncomingRequest extends Request
 	protected $oldInput = [];
 
 	/**
+	 * The user agent this request is from.
+	 *
 	 * @var \CodeIgniter\HTTP\UserAgent
 	 */
 	protected $userAgent;
@@ -591,6 +595,9 @@ class IncomingRequest extends Request
 			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
 			$this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
 			$this->uri->resolveRelativeURI(parse_url($baseURL, PHP_URL_PATH));
+
+			// Ensure we have any query vars
+			$this->uri->setQuery($_SERVER['QUERY_STRING'] ?? '');
 		}
 		else
 		{

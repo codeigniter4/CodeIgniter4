@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -303,15 +303,27 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Foreign Key Drop
 	 *
-	 * @param string $table        Table name
-	 * @param string $foreign_name Foreign name
+	 * @param string $table       Table name
+	 * @param string $foreignName Foreign name
 	 *
 	 * @return boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function dropForeignKey(string $table, string $foreign_name): bool
+	public function dropForeignKey(string $table, string $foreignName): bool
 	{
-		throw new DatabaseException(lang('Database.dropForeignKeyUnsupported'));
+		// If this version of SQLite doesn't support it, we're done here
+		if ($this->db->supportsForeignKeys() !== true)
+		{
+			return true;
+		}
+
+		// Otherwise we have to copy the table and recreate
+		// without the foreign key being involved now
+		$sqlTable = new Table($this->db, $this);
+
+		return $sqlTable->fromTable($this->db->DBPrefix . $table)
+			->dropForeignKey($foreignName)
+			->run();
 	}
 
 	//--------------------------------------------------------------------

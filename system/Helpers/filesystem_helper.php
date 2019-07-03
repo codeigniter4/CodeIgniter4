@@ -40,11 +40,7 @@
 /**
  * CodeIgniter File System Helpers
  *
- * @package    CodeIgniter
- * @subpackage Helpers
- * @category   Helpers
- * @author     CodeIgniter Dev Team
- * @link       https://codeigniter.com/user_guide/helpers/directory_helper.html
+ * @package CodeIgniter
  */
 // ------------------------------------------------------------------------
 

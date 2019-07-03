@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -418,6 +418,30 @@ class Connection extends BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns platform-specific SQL to disable foreign key checks.
+	 *
+	 * @return string
+	 */
+	protected function _disableForeignKeyChecks()
+	{
+		return 'PRAGMA foreign_keys = OFF';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns platform-specific SQL to enable foreign key checks.
+	 *
+	 * @return string
+	 */
+	protected function _enableForeignKeyChecks()
+	{
+		return 'PRAGMA foreign_keys = ON';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the last error code and message.
 	 *
 	 * Must return an array with keys 'code' and 'message':
@@ -504,7 +528,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return boolean
 	 */
-	protected function supportsForeignKeys(): bool
+	public function supportsForeignKeys(): bool
 	{
 		$result = $this->simpleQuery('PRAGMA foreign_keys');
 

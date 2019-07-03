@@ -32,12 +32,13 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
 namespace CodeIgniter\Router;
 
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\Exceptions\RouterException;
@@ -135,13 +136,16 @@ class Router implements RouterInterface
 	 * Stores a reference to the RouteCollection object.
 	 *
 	 * @param RouteCollectionInterface $routes
+	 * @param Request                  $request
 	 */
-	public function __construct(RouteCollectionInterface $routes)
+	public function __construct(RouteCollectionInterface $routes, Request $request = null)
 	{
 		$this->collection = $routes;
 
 		$this->controller = $this->collection->getDefaultController();
 		$this->method     = $this->collection->getDefaultMethod();
+
+		$this->collection->setHTTPVerb($request->getMethod() ?? strtolower($_SERVER['REQUEST_METHOD']));
 	}
 
 	//--------------------------------------------------------------------
@@ -564,7 +568,9 @@ class Router implements RouterInterface
 	 */
 	protected function validateRequest(array $segments): array
 	{
-		$segments = array_filter($segments);
+		$segments = array_filter($segments, function ($segment) {
+			return ! empty($segment) || ($segment !== '0' || $segment !== 0);
+		});
 		$segments = array_values($segments);
 
 		$c                  = count($segments);

@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -70,16 +70,22 @@ class Exceptions
 	protected $viewPath;
 
 	/**
+	 * Config for debug exceptions.
+	 *
 	 * @var \Config\Exceptions
 	 */
 	protected $config;
 
 	/**
+	 * The incoming request.
+	 *
 	 * @var \CodeIgniter\HTTP\IncomingRequest
 	 */
 	protected $request;
 
 	/**
+	 * The outgoing response.
+	 *
 	 * @var \CodeIgniter\HTTP\Response
 	 */
 	protected $response;

@@ -7,11 +7,31 @@ Version |version|
 
 Release Date: Not Released
 
-**Next release of CodeIgniter4**
-
-
 
 :doc:`See all the changes. </changelogs/next>`
+
+Version 4.0.0-beta.3
+====================================================
+
+Release Date: May 06, 2019
+
+Highlights:
+
+- Fixed a number of model, database, validation & debug toolbar issues
+- Type hinting added throughout & typos corrected (see API docs)
+
+New messages:
+
+- Database.FieldNotExists
+- Validation.equals, not_equals
+
+App changes:
+
+- Removed $salt config item in app/Config/App
+- Enabled migrations by default in app/Config/Migrations
+- Simplified public/.htaccess
+
+:doc:`See all the changes. </changelogs/v4.0.0-beta.3>`
 
 Version 4.0.0-beta.2
 ====================================================
