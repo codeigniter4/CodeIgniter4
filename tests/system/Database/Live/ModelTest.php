@@ -441,6 +441,43 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @expectedException        \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @expectedExceptionMessage Deletes are not allowed unless they contain a "where" or "like" clause.
+	 * @dataProvider             emptyPkValues
+	 * @return                   void
+	 */
+	public function testThrowExceptionWhenSoftDeletePKisEmptyValue($emptyValue)
+	{
+		$model = new UserModel();
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+		$model->delete($emptyValue);
+	}
+	/**
+	 * @expectedException        \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @expectedExceptionMessage Deletes are not allowed unless they contain a "where" or "like" clause.
+	 * @dataProvider             emptyPkValues
+	 * @return                   void
+	 */
+	public function testDontDeleteRowsWhenSoftDeletePKisEmptyValue($emptyValue)
+	{
+		$model = new UserModel();
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+		$model->delete($emptyValue);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+		unset($model);
+	}
+
+	public function emptyPkValues()
+	{
+		return [
+			[0],
+			[null],
+			['0'],
+			[false],
+		];
+	}
+
 	public function testDeleteNoParams()
 	{
 		$model = new JobModel();
