@@ -21,11 +21,10 @@ use Tests\Support\Models\ValidModel;
 /**
  * @group DatabaseLive
  */
-class ModelTest extends CIDatabaseTestCase
-{
+class ModelTest extends CIDatabaseTestCase {
 	use ReflectionHelper;
 
-	protected $refresh = true;
+	protected $refresh = TRUE;
 
 	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
@@ -102,7 +101,7 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new JobModel($this->db);
 
 		$jobs = $model->asArray()
-					  ->find();
+			->find();
 
 		$this->assertCount(4, $jobs);
 
@@ -120,7 +119,7 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new JobModel($this->db);
 
 		$job = $model->asArray()
-					 ->find(4);
+			->find(4);
 
 		$this->assertInternalType('array', $job);
 	}
@@ -132,7 +131,7 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new JobModel($this->db);
 
 		$job = $model->asObject()
-					 ->find(4);
+			->find(4);
 
 		$this->assertInternalType('object', $job);
 	}
@@ -142,18 +141,18 @@ class ModelTest extends CIDatabaseTestCase
 	public function testFindRespectsSoftDeletes()
 	{
 		$this->db->table('user')
-				 ->where('id', 4)
-				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
+			->where('id', 4)
+			->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$model = new UserModel($this->db);
 
 		$user = $model->asObject()
-					  ->find(4);
+			->find(4);
 
 		$this->assertEmpty($user);
 
 		$user = $model->withDeleted()
-					  ->find(4);
+			->find(4);
 
 		// fix for PHP7.2
 		$count = is_array($user) ? count($user) : 1;
@@ -171,7 +170,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		// Binds should be reset to 0 after each one
 		$binds = $model->builder()
-					   ->getBinds();
+			->getBinds();
 		$this->assertCount(0, $binds);
 
 		$query = $model->getLastQuery();
@@ -218,8 +217,8 @@ class ModelTest extends CIDatabaseTestCase
 	public function testFindAllRespectsSoftDeletes()
 	{
 		$this->db->table('user')
-				 ->where('id', 4)
-				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
+			->where('id', 4)
+			->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$model = new UserModel($this->db);
 
@@ -228,7 +227,7 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertCount(3, $user);
 
 		$user = $model->withDeleted()
-					  ->findAll();
+			->findAll();
 
 		$this->assertCount(4, $user);
 	}
@@ -240,7 +239,7 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new UserModel();
 
 		$user = $model->where('id >', 2)
-					  ->first();
+			->first();
 
 		// fix for PHP7.2
 		$count = is_array($user) ? count($user) : 1;
@@ -253,8 +252,8 @@ class ModelTest extends CIDatabaseTestCase
 	public function testFirstRespectsSoftDeletes()
 	{
 		$this->db->table('user')
-				 ->where('id', 1)
-				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
+			->where('id', 1)
+			->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$model = new UserModel();
 
@@ -266,7 +265,7 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertEquals(2, $user->id);
 
 		$user = $model->withDeleted()
-					  ->first();
+			->first();
 
 		$this->assertEquals(1, $user->id);
 	}
@@ -278,17 +277,17 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new SecondaryModel();
 
 		$this->db->table('secondary')
-				 ->insert([
-					 'id'    => 1,
-					 'key'   => 'foo',
-					 'value' => 'bar',
-				 ]);
+			->insert([
+				'id' => 1,
+				'key' => 'foo',
+				'value' => 'bar',
+			]);
 		$this->db->table('secondary')
-				 ->insert([
-					 'id'    => 2,
-					 'key'   => 'bar',
-					 'value' => 'baz',
-				 ]);
+			->insert([
+				'id' => 2,
+				'key' => 'bar',
+				'value' => 'baz',
+			]);
 
 		$record = $model->first();
 
@@ -302,12 +301,12 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new JobModel();
 
-		$data              = new \stdClass();
-		$data->name        = 'Magician';
+		$data = new \stdClass();
+		$data->name = 'Magician';
 		$data->description = 'Makes peoples things dissappear.';
 
-		$model->protect(false)
-			  ->save($data);
+		$model->protect(FALSE)
+			->save($data);
 
 		$this->seeInDatabase('job', ['name' => 'Magician']);
 	}
@@ -319,12 +318,12 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new JobModel();
 
 		$data = [
-			'name'        => 'Apprentice',
+			'name' => 'Apprentice',
 			'description' => 'That thing you do.',
 		];
 
-		$model->protect(false)
-			  ->save($data);
+		$model->protect(FALSE)
+			->save($data);
 
 		$this->seeInDatabase('job', ['name' => 'Apprentice']);
 	}
@@ -336,13 +335,13 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new JobModel();
 
 		$data = [
-			'id'          => 1,
-			'name'        => 'Apprentice',
+			'id' => 1,
+			'name' => 'Apprentice',
 			'description' => 'That thing you do.',
 		];
 
-		$result = $model->protect(false)
-						->save($data);
+		$result = $model->protect(FALSE)
+			->save($data);
 
 		$this->seeInDatabase('job', ['name' => 'Apprentice']);
 		$this->assertTrue($result);
@@ -354,13 +353,13 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new JobModel();
 
-		$data              = new \stdClass();
-		$data->id          = 1;
-		$data->name        = 'Engineer';
+		$data = new \stdClass();
+		$data->id = 1;
+		$data->name = 'Engineer';
 		$data->description = 'A fancier term for Developer.';
 
-		$result = $model->protect(false)
-						->save($data);
+		$result = $model->protect(FALSE)
+			->save($data);
 
 		$this->seeInDatabase('job', ['name' => 'Engineer']);
 		$this->assertTrue($result);
@@ -372,14 +371,14 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new JobModel();
 
-		$data               = new \stdClass();
-		$data->id           = 1;
-		$data->name         = 'Engineer';
-		$data->description  = 'A fancier term for Developer.';
+		$data = new \stdClass();
+		$data->id = 1;
+		$data->name = 'Engineer';
+		$data->description = 'A fancier term for Developer.';
 		$data->random_thing = 'Something wicked'; // If not protected, this would kill the script.
 
-		$result = $model->protect(true)
-						->save($data);
+		$result = $model->protect(TRUE)
+			->save($data);
 
 		$this->assertTrue($result);
 	}
@@ -403,11 +402,11 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => NULL]);
 
 		$model->delete(1);
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL' => null]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL' => NULL]);
 	}
 
 	//--------------------------------------------------------------------
@@ -416,9 +415,9 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => NULL]);
 
-		$model->delete(1, true);
+		$model->delete(1, TRUE);
 
 		$this->dontSeeInDatabase('user', ['name' => 'Derek Jones']);
 	}
@@ -442,29 +441,48 @@ class ModelTest extends CIDatabaseTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @expectedException        \CodeIgniter\Database\Exceptions\DatabaseException
-	 * @expectedExceptionMessage Deletes are not allowed unless they contain a "where" or "like" clause.
-	 * @dataProvider             emptyPkValues
-	 * @return                   void
+	 * If where condition is set, beyond the value was empty (0,'', NULL, etc.),
+	 * Exception should not be thrown because condition was explicity set
+	 *
+	 * @dataProvider emptyPkValues
+	 * @return       void
 	 */
-	public function testThrowExceptionWhenSoftDeletePKisEmptyValue($emptyValue)
+	public function testDontThrowExceptionWhenSoftDeleteConditionIsSetWithEmptyValue($emptyValue)
 	{
 		$model = new UserModel();
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
-		$model->delete($emptyValue);
-	}
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => NULL]);
+		$model->where('id', $emptyValue)->delete();
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => NULL]);
+		unset($model);
+	}    //--------------------------------------------------------------------
+
 	/**
 	 * @expectedException        \CodeIgniter\Database\Exceptions\DatabaseException
 	 * @expectedExceptionMessage Deletes are not allowed unless they contain a "where" or "like" clause.
 	 * @dataProvider             emptyPkValues
 	 * @return                   void
 	 */
-	public function testDontDeleteRowsWhenSoftDeletePKisEmptyValue($emptyValue)
+	public function testThrowExceptionWhenSoftDeleteParamIsEmptyValue($emptyValue)
 	{
 		$model = new UserModel();
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => NULL]);
 		$model->delete($emptyValue);
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @expectedException        \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @expectedExceptionMessage Deletes are not allowed unless they contain a "where" or "like" clause.
+	 * @dataProvider             emptyPkValues
+	 * @return                   void
+	 */
+	public function testDontDeleteRowsWhenSoftDeleteParamIsEmpty($emptyValue)
+	{
+		$model = new UserModel();
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => NULL]);
+		$model->delete($emptyValue);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => NULL]);
 		unset($model);
 	}
 
@@ -472,9 +490,9 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		return [
 			[0],
-			[null],
+			[NULL],
 			['0'],
-			[false],
+			[FALSE],
 		];
 	}
 
@@ -485,7 +503,7 @@ class ModelTest extends CIDatabaseTestCase
 		$this->seeInDatabase('job', ['name' => 'Developer']);
 
 		$model->where('id', 1)
-			  ->delete();
+			->delete();
 
 		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
 	}
@@ -497,13 +515,13 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new UserModel();
 
 		$this->db->table('user')
-				 ->where('id', 1)
-				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
+			->where('id', 1)
+			->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$model->purgeDeleted();
 
 		$users = $model->withDeleted()
-					   ->findAll();
+			->findAll();
 
 		$this->assertCount(3, $users);
 	}
@@ -515,11 +533,11 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new UserModel($this->db);
 
 		$this->db->table('user')
-				 ->where('id', 1)
-				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
+			->where('id', 1)
+			->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$users = $model->onlyDeleted()
-					   ->findAll();
+			->findAll();
 
 		$this->assertCount(1, $users);
 	}
@@ -546,7 +564,7 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new ValidModel($this->db);
 
 		$data = [
-			'name'        => null,
+			'name' => NULL,
 			'description' => 'some great marketing stuff',
 		];
 
@@ -564,12 +582,12 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new ValidModel($this->db);
 
 		$data = [
-			'name'        => null,
+			'name' => NULL,
 			'description' => 'some great marketing stuff',
 		];
 
 		$model->setValidationMessage('name', [
-			'required'   => 'Your baby name is missing.',
+			'required' => 'Your baby name is missing.',
 			'min_length' => 'Too short, man!',
 		]);
 		$this->assertFalse($model->insert($data));
@@ -586,13 +604,13 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new ValidModel($this->db);
 
 		$data = [
-			'name'        => null,
+			'name' => NULL,
 			'description' => 'some great marketing stuff',
 		];
 
 		$model->setValidationMessages([
 			'name' => [
-				'required'   => 'Your baby name is missing.',
+				'required' => 'Your baby name is missing.',
 				'min_length' => 'Too short, man!',
 			],
 		]);
@@ -603,6 +621,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertEquals('Your baby name is missing.', $errors['name']);
 	}
+
 	//--------------------------------------------------------------------
 
 	public function testValidationPlaceholdersSuccess()
@@ -610,8 +629,8 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new ValidModel($this->db);
 
 		$data = [
-			'name'  => 'abc',
-			'id'    => 13,
+			'name' => 'abc',
+			'id' => 13,
 			'token' => 13,
 		];
 
@@ -625,8 +644,8 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new ValidModel($this->db);
 
 		$data = [
-			'name'  => 'abc',
-			'id'    => 13,
+			'name' => 'abc',
+			'id' => 13,
 			'token' => 12,
 		];
 
@@ -640,27 +659,27 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new ValidModel($this->db);
 
 		$data = [
-			'name'        => '2',
+			'name' => '2',
 			'description' => 'some great marketing stuff',
 		];
 
-		$this->assertInternalType('numeric', $model->skipValidation(true)
-												   ->insert($data));
+		$this->assertInternalType('numeric', $model->skipValidation(TRUE)
+			->insert($data));
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testCleanValidationRemovesAllWhenNoDataProvided()
 	{
-		$model   = new Model($this->db);
+		$model = new Model($this->db);
 		$cleaner = $this->getPrivateMethodInvoker($model, 'cleanValidationRules');
 
 		$rules = [
 			'name' => 'required',
-			'foo'  => 'bar',
+			'foo' => 'bar',
 		];
 
-		$rules = $cleaner($rules, null);
+		$rules = $cleaner($rules, NULL);
 
 		$this->assertEmpty($rules);
 	}
@@ -669,12 +688,12 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testCleanValidationRemovesOnlyForFieldsNotProvided()
 	{
-		$model   = new Model($this->db);
+		$model = new Model($this->db);
 		$cleaner = $this->getPrivateMethodInvoker($model, 'cleanValidationRules');
 
 		$rules = [
 			'name' => 'required',
-			'foo'  => 'required',
+			'foo' => 'required',
 		];
 
 		$data = [
@@ -691,17 +710,17 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testCleanValidationReturnsAllWhenAllExist()
 	{
-		$model   = new Model($this->db);
+		$model = new Model($this->db);
 		$cleaner = $this->getPrivateMethodInvoker($model, 'cleanValidationRules');
 
 		$rules = [
 			'name' => 'required',
-			'foo'  => 'required',
+			'foo' => 'required',
 		];
 
 		$data = [
-			'foo'  => 'bar',
-			'name' => null,
+			'foo' => 'bar',
+			'name' => NULL,
 		];
 
 		$rules = $cleaner($rules, $data);
@@ -729,9 +748,9 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testValidationWithGroupName()
 	{
-		$config            = new \Config\Validation();
+		$config = new \Config\Validation();
 		$config->grouptest = [
-			'name'  => [
+			'name' => [
 				'required',
 				'min_length[3]',
 			],
@@ -739,8 +758,8 @@ class ModelTest extends CIDatabaseTestCase
 		];
 
 		$data = [
-			'name'  => 'abc',
-			'id'    => 13,
+			'name' => 'abc',
+			'id' => 13,
 			'token' => 13,
 		];
 
@@ -759,7 +778,7 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new EntityModel($this->db);
 
 		$entity = $model->where('name', 'Developer')
-						->first();
+			->first();
 
 		$this->assertInstanceOf(SimpleEntity::class, $entity);
 		$this->assertEquals('Developer', $entity->name);
@@ -767,14 +786,14 @@ class ModelTest extends CIDatabaseTestCase
 
 		$time = time();
 
-		$entity->name       = 'Senior Developer';
+		$entity->name = 'Senior Developer';
 		$entity->created_at = $time;
 
 		$this->assertTrue($model->save($entity));
 
 		$result = $model->where('name', 'Senior Developer')
-						->get()
-						->getFirstRow();
+			->get()
+			->getFirstRow();
 
 		$this->assertEquals(date('Y-m-d', $time), date('Y-m-d', $result->created_at));
 	}
@@ -791,8 +810,8 @@ class ModelTest extends CIDatabaseTestCase
 		$pass = password_hash('secret123', PASSWORD_BCRYPT);
 
 		$data = [
-			'name'    => $pass,
-			'email'   => 'foo@example.com',
+			'name' => $pass,
+			'email' => 'foo@example.com',
 			'country' => 'US',
 		];
 
@@ -808,8 +827,8 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new EventModel();
 
 		$data = [
-			'name'    => 'Foo',
-			'email'   => 'foo@example.com',
+			'name' => 'Foo',
+			'email' => 'foo@example.com',
 			'country' => 'US',
 			'deleted' => 0,
 		];
@@ -827,8 +846,8 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new EventModel();
 
 		$data = [
-			'name'    => 'Foo',
-			'email'   => 'foo@example.com',
+			'name' => 'Foo',
+			'email' => 'foo@example.com',
 			'country' => 'US',
 			'deleted' => 0,
 		];
@@ -873,11 +892,11 @@ class ModelTest extends CIDatabaseTestCase
 		]);
 
 		$model->set([
-			'email'   => 'foo@example.com',
-			'name'    => 'Foo Bar',
+			'email' => 'foo@example.com',
+			'name' => 'Foo Bar',
 			'country' => 'US',
 		])
-			  ->insert();
+			->insert();
 
 		$this->seeInDatabase('user', [
 			'email' => 'foo@example.com',
@@ -895,20 +914,20 @@ class ModelTest extends CIDatabaseTestCase
 		]);
 
 		$userId = $model->insert([
-			'email'   => 'foo@example.com',
-			'name'    => 'Foo Bar',
+			'email' => 'foo@example.com',
+			'name' => 'Foo Bar',
 			'country' => 'US',
 		]);
 
 		$model->set([
 			'name' => 'Fred Flintstone',
 		])
-			  ->update($userId);
+			->update($userId);
 
 		$this->seeInDatabase('user', [
-			'id'    => $userId,
+			'id' => $userId,
 			'email' => 'foo@example.com',
-			'name'  => 'Fred Flintstone',
+			'name' => 'Fred Flintstone',
 		]);
 	}
 
@@ -923,8 +942,8 @@ class ModelTest extends CIDatabaseTestCase
 		]);
 
 		$userId = $model->insert([
-			'email'   => 'foo@example.com',
-			'name'    => 'Foo Bar',
+			'email' => 'foo@example.com',
+			'name' => 'Foo Bar',
 			'country' => 'US',
 		]);
 
@@ -936,9 +955,9 @@ class ModelTest extends CIDatabaseTestCase
 			->update();
 
 		$this->seeInDatabase('user', [
-			'id'    => $userId,
+			'id' => $userId,
 			'email' => 'foo@example.com',
-			'name'  => 'Fred Flintstone',
+			'name' => 'Fred Flintstone',
 		]);
 	}
 
@@ -949,8 +968,8 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new EventModel();
 
 		$data = [
-			'name'    => 'Foo',
-			'email'   => 'foo@example.com',
+			'name' => 'Foo',
+			'email' => 'foo@example.com',
 			'country' => 'US',
 			'deleted' => 0,
 		];
@@ -968,11 +987,11 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$job_data = [
 			[
-				'name'        => 'Comedian',
+				'name' => 'Comedian',
 				'description' => 'Theres something in your teeth',
 			],
 			[
-				'name'        => 'Cab Driver',
+				'name' => 'Cab Driver',
 				'description' => 'Iam yellow',
 			],
 		];
@@ -990,8 +1009,8 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$job_data = [
 			[
-				'name'        => 'Comedian',
-				'description' => null,
+				'name' => 'Comedian',
+				'description' => NULL,
 			],
 		];
 
@@ -1011,11 +1030,11 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$data = [
 			[
-				'name'    => 'Derek Jones',
+				'name' => 'Derek Jones',
 				'country' => 'Greece',
 			],
 			[
-				'name'    => 'Ahmadinejad',
+				'name' => 'Ahmadinejad',
 				'country' => 'Greece',
 			],
 		];
@@ -1025,11 +1044,11 @@ class ModelTest extends CIDatabaseTestCase
 		$model->updateBatch($data, 'name');
 
 		$this->seeInDatabase('user', [
-			'name'    => 'Derek Jones',
+			'name' => 'Derek Jones',
 			'country' => 'Greece',
 		]);
 		$this->seeInDatabase('user', [
-			'name'    => 'Ahmadinejad',
+			'name' => 'Ahmadinejad',
 			'country' => 'Greece',
 		]);
 	}
@@ -1040,8 +1059,8 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$data = [
 			[
-				'name'    => 'Derek Jones',
-				'country' => null,
+				'name' => 'Derek Jones',
+				'country' => NULL,
 			],
 		];
 
@@ -1060,17 +1079,17 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		// Insert value in job table
 		$this->hasInDatabase('job', [
-			'name'        => 'Rocket Scientist',
+			'name' => 'Rocket Scientist',
 			'description' => 'Plays guitar for Queen',
-			'created_at'  => time(),
+			'created_at' => time(),
 		]);
 
 		$model = new EntityModel();
 
 		// get only id, name column
 		$job = $model->select('id, name')
-					 ->where('name', 'Rocket Scientist')
-					 ->first();
+			->where('name', 'Rocket Scientist')
+			->first();
 
 		// Hence getting Null as description column not in select clause
 		$this->assertNull($job->description);
@@ -1085,14 +1104,14 @@ class ModelTest extends CIDatabaseTestCase
 
 		// check for the record to same entry exists or not
 		$this->seeInDatabase('job', [
-			'id'   => $job->id,
+			'id' => $job->id,
 			'name' => 'Rocket Scientist',
 		]);
 
 		// select all columns from job table
 		$job = $model->select('id, name, description')
-					 ->where('name', 'Rocket Scientist')
-					 ->first();
+			->where('name', 'Rocket Scientist')
+			->first();
 
 		// check whether the Null value successfully updated or not
 		$this->assertEquals('Some guitar description', $job->description);
@@ -1105,22 +1124,22 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new SecondaryModel();
 
 		$this->db->table('secondary')
-				 ->insert([
-					 'id'    => 1,
-					 'key'   => 'foo',
-					 'value' => 'bar',
-				 ]);
+			->insert([
+				'id' => 1,
+				'key' => 'foo',
+				'value' => 'bar',
+			]);
 
 		$this->dontSeeInDatabase('secondary', [
-			'key'   => 'bar',
+			'key' => 'bar',
 			'value' => 'baz',
 		]);
 
 		$model->where('key', 'foo')
-			  ->update(null, ['key' => 'bar', 'value' => 'baz']);
+			->update(NULL, ['key' => 'bar', 'value' => 'baz']);
 
 		$this->seeInDatabase('secondary', [
-			'key'   => 'bar',
+			'key' => 'bar',
 			'value' => 'baz',
 		]);
 	}
@@ -1138,7 +1157,7 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertEquals(4, $model->countAllResults());
 
 		$model->where('name', 'Derek Jones')
-			  ->delete();
+			->delete();
 
 		$this->assertEquals(3, $model->countAllResults());
 	}
@@ -1154,9 +1173,9 @@ class ModelTest extends CIDatabaseTestCase
 
 		$data = [
 			'description' => 'This is a first test!',
-			'name'        => 'valid',
-			'id'          => 42,
-			'token'       => 42,
+			'name' => 'valid',
+			'id' => 42,
+			'token' => 42,
 		];
 
 		$id = $model->insert($data);
@@ -1196,7 +1215,7 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new ValidModel($this->db);
 
 		$data = [
-			'name' => null,
+			'name' => NULL,
 		];
 
 		$this->assertFalse($model->insert($data));
@@ -1212,11 +1231,11 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new ValidModel($this->db);
 
 		$data = [
-			'name'        => 'foobar',
+			'name' => 'foobar',
 			'description' => 'just becaues we have to',
 		];
 
-		$this->assertTrue($model->insert($data) !== false);
+		$this->assertTrue($model->insert($data) !== FALSE);
 	}
 
 	//--------------------------------------------------------------------
@@ -1230,9 +1249,9 @@ class ModelTest extends CIDatabaseTestCase
 
 		$data = [
 			'description' => 'This is a first test!',
-			'name'        => 'valid',
-			'id'          => 42,
-			'token'       => 42,
+			'name' => 'valid',
+			'id' => 42,
+			'token' => 42,
 		];
 
 		$id = $model->insert($data);
@@ -1279,12 +1298,12 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new JobModel();
 
 		$data = [
-			'name'        => 'Apprentice',
+			'name' => 'Apprentice',
 			'description' => 'That thing you do.',
 		];
 
-		$model->protect(false)
-			  ->save($data);
+		$model->protect(FALSE)
+			->save($data);
 
 		$lastInsertId = $model->getInsertID();
 
@@ -1300,12 +1319,12 @@ class ModelTest extends CIDatabaseTestCase
 		$model->setTable('db_job');
 
 		$data = [
-			'name'        => 'Apprentice',
+			'name' => 'Apprentice',
 			'description' => 'That thing you do.',
 		];
 
-		$model->protect(false)
-			  ->save($data);
+		$model->protect(FALSE)
+			->save($data);
 
 		$lastInsertId = $model->getInsertID();
 
@@ -1329,15 +1348,14 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new ValidModel($this->db);
 
-		$data = new class
-		{
-			public $name  = '';
-			public $id    = '';
+		$data = new class {
+			public $name = '';
+			public $id = '';
 			public $token = '';
 		};
 
-		$data->name  = 'abc';
-		$data->id    = '13';
+		$data->name = 'abc';
+		$data->id = '13';
 		$data->token = '13';
 
 		$this->assertTrue($model->validate($data));
@@ -1362,8 +1380,8 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$job_data = [
 			[
-				'name'        => 'Comedian',
-				'description' => null,
+				'name' => 'Comedian',
+				'description' => NULL,
 			],
 		];
 
@@ -1398,10 +1416,10 @@ class ModelTest extends CIDatabaseTestCase
 
 		$testModel = new JobModel();
 
-		$testModel->name        = 'my name';
+		$testModel->name = 'my name';
 		$testModel->description = 'some description';
 
-		$this->setPrivateProperty($model, 'useTimestamps', true);
+		$this->setPrivateProperty($model, 'useTimestamps', TRUE);
 
 		$model->insert($testModel);
 
@@ -1418,8 +1436,8 @@ class ModelTest extends CIDatabaseTestCase
 
 		$data = [];
 
-		$data = $model->protect(false)
-					  ->save($data);
+		$data = $model->protect(FALSE)
+			->save($data);
 
 		$this->assertTrue($data);
 	}
@@ -1432,10 +1450,10 @@ class ModelTest extends CIDatabaseTestCase
 
 		$testModel = new JobModel();
 
-		$testModel->name        = 'my name';
+		$testModel->name = 'my name';
 		$testModel->description = 'some description';
 
-		$this->setPrivateProperty($model, 'useTimestamps', true);
+		$this->setPrivateProperty($model, 'useTimestamps', TRUE);
 
 		$model->update(1, $testModel);
 
@@ -1448,12 +1466,12 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new JobModel();
 
-		$this->setPrivateProperty($model, 'useTimestamps', true);
-		$this->setPrivateProperty($model, 'useSoftDeletes', true);
+		$this->setPrivateProperty($model, 'useTimestamps', TRUE);
+		$this->setPrivateProperty($model, 'useSoftDeletes', TRUE);
 
 		$model->delete(1);
 
-		$this->seeInDatabase('job', ['id' => 1, 'deleted_at IS NOT NULL' => null]);
+		$this->seeInDatabase('job', ['id' => 1, 'deleted_at IS NOT NULL' => NULL]);
 	}
 
 	//--------------------------------------------------------------------
@@ -1463,8 +1481,8 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new JobModel();
 
 		$this->db->table('job')
-				 ->where('id', 1)
-				 ->update(['deleted_at' => time()]);
+			->where('id', 1)
+			->update(['deleted_at' => time()]);
 
 		$model->purgeDeleted();
 
@@ -1480,8 +1498,8 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new ValidModel($this->db);
 
 		$data = [
-			'id'          => 1,
-			'name'        => 'my name',
+			'id' => 1,
+			'name' => 'my name',
 			'description' => 'some description',
 		];
 
@@ -1495,8 +1513,8 @@ class ModelTest extends CIDatabaseTestCase
 	public function testGetValidationMessagesForReplace()
 	{
 		$job_data = [
-			'name'        => 'Comedian',
-			'description' => null,
+			'name' => 'Comedian',
+			'description' => NULL,
 		];
 
 		$model = new JobModel($this->db);
@@ -1513,7 +1531,7 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testSaveNewEntityWithDateTime()
 	{
-		$entity    = new class extends Entity{
+		$entity = new class extends Entity {
 			protected $id;
 			protected $name;
 			protected $email;
@@ -1524,23 +1542,23 @@ class ModelTest extends CIDatabaseTestCase
 
 			protected $_options = [
 				'datamap' => [],
-				'dates'   => [
+				'dates' => [
 					'created_at',
 					'updated_at',
 					'deleted_at',
 				],
-				'casts'   => [],
+				'casts' => [],
 			];
 		};
 		$testModel = new UserModel();
 
-		$entity->name       = 'Mark';
-		$entity->email      = 'mark@example.com';
-		$entity->country    = 'India';
-		$entity->deleted    = 0;
+		$entity->name = 'Mark';
+		$entity->email = 'mark@example.com';
+		$entity->country = 'India';
+		$entity->deleted = 0;
 		$entity->created_at = new Time('now');
 
-		$this->setPrivateProperty($testModel, 'useTimestamps', true);
+		$this->setPrivateProperty($testModel, 'useTimestamps', TRUE);
 
 		$this->assertTrue($testModel->save($entity));
 	}
@@ -1549,38 +1567,36 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testSaveNewEntityWithDate()
 	{
-		$entity    = new class extends Entity
-		{
+		$entity = new class extends Entity {
 			protected $id;
 			protected $name;
 			protected $created_at;
 			protected $updated_at;
 			protected $_options = [
 				'datamap' => [],
-				'dates'   => [
+				'dates' => [
 					'created_at',
 					'updated_at',
 					'deleted_at',
 				],
-				'casts'   => [],
+				'casts' => [],
 			];
 		};
-		$testModel = new class extends Model
-		{
-			protected $table          = 'empty';
-			protected $allowedFields  = [
+		$testModel = new class extends Model {
+			protected $table = 'empty';
+			protected $allowedFields = [
 				'name',
 			];
-			protected $returnType     = 'object';
-			protected $useSoftDeletes = true;
-			protected $dateFormat     = 'date';
-			public $name              = '';
+			protected $returnType = 'object';
+			protected $useSoftDeletes = TRUE;
+			protected $dateFormat = 'date';
+			public $name = '';
 		};
 
-		$entity->name       = 'Mark';
+		$entity->name = 'Mark';
 		$entity->created_at = new Time('now');
 
-		$this->setPrivateProperty($testModel, 'useTimestamps', true);
+		$this->setPrivateProperty($testModel, 'useTimestamps', TRUE);
 
 		$this->assertTrue($testModel->save($entity));
 
@@ -1591,7 +1607,8 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testUndefinedEntityPropertyReturnsNull()
 	{
-		$entity = new class extends Entity {};
+		$entity = new class extends Entity {
+		};
 
 		$this->assertNull($entity->undefinedProperty);
 	}
@@ -1601,7 +1618,7 @@ class ModelTest extends CIDatabaseTestCase
 	public function testInsertWithNoDataException()
 	{
 		$model = new UserModel();
-		$data  = [];
+		$data = [];
 		$this->expectException(DataException::class);
 		$this->expectExceptionMessage('There is no data to insert.');
 		$model->insert($data);
@@ -1614,8 +1631,8 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new EventModel();
 
 		$data = [
-			'name'    => 'Foo',
-			'email'   => 'foo@example.com',
+			'name' => 'Foo',
+			'email' => 'foo@example.com',
 			'country' => 'US',
 			'deleted' => 0,
 		];
@@ -1637,7 +1654,7 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new JobModel();
 
 		$data = [
-			'name'        => 'Apprentice',
+			'name' => 'Apprentice',
 			'description' => 'That thing you do.',
 		];
 
@@ -1656,8 +1673,8 @@ class ModelTest extends CIDatabaseTestCase
 		$model = new EventModel();
 
 		$data = [
-			'name'    => 'Foo',
-			'email'   => 'foo@example.com',
+			'name' => 'Foo',
+			'email' => 'foo@example.com',
 			'country' => 'US',
 			'deleted' => 0,
 		];
@@ -1679,7 +1696,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => null]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => NULL]);
 
 		$results = $model->join('job', 'job.id = user.id')
 			->findAll();
@@ -1695,10 +1712,10 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => null]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => NULL]);
 
 		$results = $model->join('job', 'job.id = user.id')
-						 ->find(1);
+			->find(1);
 
 		// Just making sure it didn't throw ambiguous deleted error
 		$this->assertEquals(1, $results->id);
@@ -1711,10 +1728,10 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => null]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => NULL]);
 
 		$results = $model->join('job', 'job.id = user.id')
-						 ->first(1);
+			->first(1);
 
 		// Just making sure it didn't throw ambiguous deleted error
 		$this->assertEquals(1, $results->id);
