@@ -715,13 +715,13 @@ class Model
 		$result = $this->builder()
 				->set($data['data'], '', $escape)
 				->insert();
-		
+
 		// If insertion succeeded then save the insert ID
 		if ($result)
 		{
 			$this->insertID = $this->db->insertID();
 		}
-		
+
 		$this->trigger('afterInsert', ['data' => $originalData, 'result' => $result]);
 
 		// If insertion failed, get out of here
@@ -957,8 +957,8 @@ class Model
 		}
 
 		return $this->builder()
-			    ->where($this->table . '.' . $this->deletedField . ' IS NOT NULL')
-			    ->delete();
+				->where($this->table . '.' . $this->deletedField . ' IS NOT NULL')
+				->delete();
 	}
 
 	//--------------------------------------------------------------------
@@ -991,7 +991,7 @@ class Model
 		$this->tempUseSoftDeletes = false;
 
 		$this->builder()
-		     ->where($this->table . '.' . $this->deletedField . ' IS NOT NULL');
+			 ->where($this->table . '.' . $this->deletedField . ' IS NOT NULL');
 
 		return $this;
 	}
