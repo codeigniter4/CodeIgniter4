@@ -1588,6 +1588,18 @@ class BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
+	/**
+	 * Get compiled 'where' condition string
+	 *
+	 * Compiles the set conditions and returns the sql statement
+	 *
+	 * @return string
+	 */
+	public function getCompiledQBWhere()
+	{
+		return $this->QBWhere;
+	}
+	//--------------------------------------------------------------------
 
 	/**
 	 * Get_Where
