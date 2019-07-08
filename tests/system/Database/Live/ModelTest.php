@@ -538,7 +538,6 @@ class ModelTest extends CIDatabaseTestCase
 			[0],
 			[null],
 			['0'],
-			[false],
 		];
 	}
 	//--------------------------------------------------------------------
