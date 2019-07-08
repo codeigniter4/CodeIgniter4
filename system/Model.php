@@ -48,6 +48,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Validation\ValidationInterface;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use ReflectionClass;
 use ReflectionProperty;
 use stdClass;
@@ -913,6 +914,14 @@ class Model
 
 		if ($this->useSoftDeletes && ! $purge)
 		{
+			if (empty($builder->getCompiledQBWhere()))
+			{
+				if (CI_DEBUG)
+				{
+					throw new DatabaseException('Deletes are not allowed unless they contain a "where" or "like" clause.');
+				}
+				return false;
+			}
 			$set[$this->deletedField] = $this->setDate();
 
 			if ($this->useTimestamps && ! empty($this->updatedField))
