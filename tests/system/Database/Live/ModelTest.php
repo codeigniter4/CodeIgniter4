@@ -486,7 +486,61 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertCount(1, $users);
 	}
+	/**
+	 * If where condition is set, beyond the value was empty (0,'', NULL, etc.),
+	 * Exception should not be thrown because condition was explicity set
+	 *
+	 * @dataProvider emptyPkValues
+	 * @return       void
+	 */
+	public function testDontThrowExceptionWhenSoftDeleteConditionIsSetWithEmptyValue($emptyValue)
+	{
+		$model = new UserModel();
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+		$model->where('id', $emptyValue)->delete();
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+		unset($model);
+	}    //--------------------------------------------------------------------
 
+	/**
+	 * @expectedException        \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @expectedExceptionMessage Deletes are not allowed unless they contain a "where" or "like" clause.
+	 * @dataProvider             emptyPkValues
+	 * @return                   void
+	 */
+	public function testThrowExceptionWhenSoftDeleteParamIsEmptyValue($emptyValue)
+	{
+		$model = new UserModel();
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+		$model->delete($emptyValue);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @expectedException        \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @expectedExceptionMessage Deletes are not allowed unless they contain a "where" or "like" clause.
+	 * @dataProvider             emptyPkValues
+	 * @return                   void
+	 */
+	public function testDontDeleteRowsWhenSoftDeleteParamIsEmpty($emptyValue)
+	{
+		$model = new UserModel();
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+		$model->delete($emptyValue);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+		unset($model);
+	}
+
+	public function emptyPkValues()
+	{
+		return [
+			[0],
+			[null],
+			['0'],
+			[false],
+		];
+	}
 	//--------------------------------------------------------------------
 
 	public function testChunk()
