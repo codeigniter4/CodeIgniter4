@@ -1477,7 +1477,6 @@ class ModelTest extends CIDatabaseTestCase
 	public function testSaveNewEntityWithReference()
 	{
 		$entity = new class extends Entity{
-			protected $name;
 			protected $dates = [
 				'created_at',
 				'updated_at',
@@ -1485,12 +1484,12 @@ class ModelTest extends CIDatabaseTestCase
 			];
 		};
 
-		$testModel       = new UserModel();
-		$testModel->name = 'Mark';
+		$testModel = new UserModel();
 
-		$entity->name = 'Mark';
-
-		$this->setPrivateProperty($testModel, 'useTimestamps', true);
+		$entity->name    = 'Mark';
+		$entity->email   = 'mark@example.com';
+		$entity->country = 'India';
+		$entity->deleted = 0;
 
 		$this->assertTrue($testModel->save($entity));
 		$this->assertTrue($entity->exists());
