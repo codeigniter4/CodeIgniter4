@@ -147,19 +147,21 @@ class Pager implements PagerInterface
 	 * @param integer $page
 	 * @param integer $perPage
 	 * @param integer $total
-	 * @param string  $template The output template alias to render.
-	 * @param integer $segment  (if page number is provided by URI segment)
+	 * @param string $template The output template alias to render.
+	 * @param integer $segment (if page number is provided by URI segment)
 	 *
+	 * @param string|null $group optional group (i.e. if we'd like to define custom path)
 	 * @return string
 	 */
-	public function makeLinks(int $page, int $perPage, int $total, string $template = 'default_full', int $segment = 0): string
+	public function makeLinks(int $page, int $perPage, int $total, string $template = 'default_full', int $segment = 0, ?string $group = null): string
 	{
 		$name = time();
 
-		$this->store($name, $page, $perPage, $total, $segment);
+		$this->store($group ?? $name, $page, $perPage, $total, $segment);
 
-		return $this->displayLinks($name, $template);
+		return $this->displayLinks($group ?? $name, $template);
 	}
+
 
 	//--------------------------------------------------------------------
 

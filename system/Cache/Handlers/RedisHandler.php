@@ -39,6 +39,7 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Exceptions\CriticalError;
 
 /**
  * Redis cache handler
@@ -116,19 +117,38 @@ class RedisHandler implements CacheInterface
 		$config = $this->config;
 
 		$this->redis = new \Redis();
-		if (! $this->redis->connect($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout']))
-		{
-			log_message('error', 'Cache: Redis connection failed. Check your configuration.');
-		}
 
-		if (isset($config['password']) && ! $this->redis->auth($config['password']))
+		// Try to connect to Redis, if an issue occurs throw a CriticalError exception,
+		// so that the CacheFactory can attempt to initiate the next cache handler.
+		try
 		{
-			log_message('error', 'Cache: Redis authentication failed.');
-		}
+			// Note:: If Redis is your primary cache choice, and it is "offline", every page load will end up been delayed by the timeout duration.
+			// I feel like some sort of temporary flag should be set, to indicate that we think Redis is "offline", allowing us to bypass the timeout for a set period of time.
 
-		if (isset($config['database']) && ! $this->redis->select($config['database']))
+			if (! $this->redis->connect($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout']))
+			{
+				// Note:: I'm unsure if log_message() is necessary, however I'm not 100% comfortable removing it.
+				log_message('error', 'Cache: Redis connection failed. Check your configuration.');
+				throw new CriticalError('Cache: Redis connection failed. Check your configuration.');
+			}
+
+			if (isset($config['password']) && ! $this->redis->auth($config['password']))
+			{
+				log_message('error', 'Cache: Redis authentication failed.');
+				throw new CriticalError('Cache: Redis authentication failed.');
+			}
+
+			if (isset($config['database']) && ! $this->redis->select($config['database']))
+			{
+				log_message('error', 'Cache: Redis select database failed.');
+				throw new CriticalError('Cache: Redis select database failed.');
+			}
+		}
+		catch (\RedisException $e)
 		{
-			log_message('error', 'Cache: Redis select database failed.');
+			// $this->redis->connect() can sometimes throw a RedisException.
+			// We need to convert the exception into a CriticalError exception and throw it.
+			throw new CriticalError('Cache: RedisException occurred with message (' . $e->getMessage() . ').');
 		}
 	}
 

@@ -673,7 +673,7 @@ is_natural_no_zero      No          Fails if field contains anything other than 
 is_unique               Yes         Checks if this field value exists in the database. Optionally set a                             is_unique[table.field,ignore_field,ignore_value]
                                     column and value to ignore, useful when updating records to ignore itself.
 less_than               Yes         Fails if field is greater than or equal to the parameter value or not numeric.                  less_than[8]
-less_then_equal_to      Yes         Fails if field is greater than the parameter value or not numeric.                              less_than_equal_to[8]
+less_than_equal_to      Yes         Fails if field is greater than the parameter value or not numeric.                              less_than_equal_to[8]
 matches                 Yes         The value must match the value of the field in the parameter.                                   matches[field]
 max_length              Yes         Fails if field is longer than the parameter value.                                              max_length[8]
 min_length              Yes         Fails if field is shorter than the parameter value.                                             min_length[3]
