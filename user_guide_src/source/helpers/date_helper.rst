@@ -47,7 +47,7 @@ The following functions are available:
 
 	:param	string	$class: Optional class to apply to the select field
 	:param	string	$default: Default value for initial selection
-	:param	string	$what: DateTimeZone class constants (see `listIdentifiers <https://www.php.net/manual/en/datetimezone.listidentifiers.php>`_)
+	:param	int	$what: DateTimeZone class constants (see `listIdentifiers <https://www.php.net/manual/en/datetimezone.listidentifiers.php>`_)
 	:param	string	$country: A two-letter ISO 3166-1 compatible country code (see `listIdentifiers <https://www.php.net/manual/en/datetimezone.listidentifiers.php>`_)
 	:returns:	Preformatted HTML select field
 	:rtype:	string
