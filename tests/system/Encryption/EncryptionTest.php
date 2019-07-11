@@ -1,9 +1,9 @@
 <?php namespace CodeIgniter\Encryption;
 
-use CodeIgniter\Config\Services;
-use CodeIgniter\Test\CIUnitTestCase;
+use Config\Encryption as EncryptionConfig;
+use Config\Services;
 
-class EncryptionTest extends CIUnitTestCase
+class EncryptionTest extends \CIUnitTestCase
 {
 
 	public function setUp()
@@ -24,7 +24,7 @@ class EncryptionTest extends CIUnitTestCase
 		$this->assertEmpty($this->encryption->key);
 
 		// Try with an empty value
-		$config        = new \Config\Encryption();
+		$config        = new EncryptionConfig();
 		$this->encrypt = new \CodeIgniter\Encryption\Encryption($config);
 		$this->assertEmpty($this->encrypt->key);
 
@@ -44,7 +44,7 @@ class EncryptionTest extends CIUnitTestCase
 	public function testBadDriver()
 	{
 		// ask for a bad driver
-		$config         = new \Config\Encryption();
+		$config         = new EncryptionConfig();
 		$config->driver = 'Bogus';
 		$this->encrypt  = new \CodeIgniter\Encryption\Encryption($config);
 		$this->encrypt->initialize();
