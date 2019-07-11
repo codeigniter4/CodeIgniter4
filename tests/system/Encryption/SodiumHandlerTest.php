@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Encryption;
+<?php namespace CodeIgniter\Encrypt;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;

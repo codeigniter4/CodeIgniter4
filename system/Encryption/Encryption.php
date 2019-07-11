@@ -99,7 +99,7 @@ class Encryption
 	 */
 	public function __construct($params = null)
 	{
-		$this->config = array_merge($this->default, (array) new EncryptionConfig());
+		$this->config = array_merge($this->default, (array) new \Config\Encryption());
 
 		if (is_string($params))
 		{
