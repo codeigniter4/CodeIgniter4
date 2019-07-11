@@ -7,6 +7,7 @@ Library Reference
 
     caching
     curlrequest
+    email
     files
     honeypot
     images
