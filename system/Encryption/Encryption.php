@@ -40,7 +40,6 @@ namespace CodeIgniter\Encryption;
 use Config\Encryption as EncryptionConfig;
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Config\Services;
-use Psr\Log\LoggerAwareTrait;
 
 /**
  * CodeIgniter Encryption Manager
@@ -51,8 +50,6 @@ use Psr\Log\LoggerAwareTrait;
  */
 class Encryption
 {
-
-	use LoggerAwareTrait;
 
 	/**
 	 * The encrypter we create
@@ -65,13 +62,6 @@ class Encryption
 	 * Our remembered configuration
 	 */
 	protected $config = null;
-
-	/**
-	 * Logger instance to record error messages and warnings.
-	 *
-	 * @var \PSR\Log\LoggerInterface
-	 */
-	protected $logger;
 
 	/**
 	 * Our default configuration
@@ -109,7 +99,6 @@ class Encryption
 	 */
 	public function __construct($params = null)
 	{
-		$this->logger = Services::logger(true);
 		$this->config = array_merge($this->default, (array) new EncryptionConfig());
 
 		if (is_string($params))
@@ -122,7 +111,7 @@ class Encryption
 		// Check for an unknown driver
 		if (isset($this->drivers[$params['driver']]))
 		{
-			throw new EncryptionException("Unknown handler '" . $params['driver'] . "' cannot be configured.");
+			throw EncryptionException::forDriverNotAvailable($params['driver']);
 		}
 
 		// determine what is installed
@@ -133,10 +122,8 @@ class Encryption
 
 		if (! in_array(true, $this->handlers))
 		{
-			throw new EncryptionException('Unable to find an available encryption handler.');
+			throw EncryptionException::forNoHandlerAvailable();
 		}
-
-		$this->logger->info('Encryption class Initialized');
 	}
 
 	/**
@@ -154,19 +141,19 @@ class Encryption
 		// Insist on a driver
 		if (! isset($params['driver']))
 		{
-			throw new EncryptionException('No driver requested; Miss Daisy will be so upset!');
+			throw EncryptionException::forNoDriverRequested();
 		}
 
 		// Check for an unknown driver
 		if (! in_array($params['driver'], $this->drivers))
 		{
-			throw new EncryptionException("Unknown handler '" . $params['driver'] . "' cannot be configured.");
+			throw EncryptionException::forUnKnownHandler($params['driver']);
 		}
 
 		// Check for an unavailable driver
 		if (! $this->handlers[$params['driver']])
 		{
-			throw new EncryptionException("Driver '" . $params['driver'] . "' is not available.");
+			throw EncryptionException::forDriverNotAvailable($params['driver']);
 		}
 
 		// Derive a secret key for the encrypter

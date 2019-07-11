@@ -1,0 +1,21 @@
+<?php
+/**
+ * Encryption language strings.
+ *
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
+ * @filesource
+ *
+ * @codeCoverageIgnore
+ */
+
+return [
+   'driverNotAvailable' => "'{0}' is not available.",
+   'noDriverRequested'  => 'No driver requested; Miss Daisy will be so upset!',
+   'noHandlerAvailable' => 'Unable to find an available encryption handler.',
+   'unKnownHandler'     => "'{0}' cannot be configured.",
+];

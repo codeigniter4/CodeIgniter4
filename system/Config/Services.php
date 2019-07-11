@@ -75,7 +75,7 @@ use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\View\RendererInterface;
 use Config\Cache;
 use Config\Images;
-use Config\Logger;
+use Config\Logger as LoggerConfig;
 use Config\Migrations;
 
 /**
@@ -407,7 +407,7 @@ class Services extends BaseService
 			return static::getSharedInstance('logger');
 		}
 
-		return new \CodeIgniter\Log\Logger(new Logger());
+		return new \CodeIgniter\Log\Logger(new LoggerConfig());
 	}
 
 	//--------------------------------------------------------------------
