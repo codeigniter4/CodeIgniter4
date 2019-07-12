@@ -69,3 +69,34 @@ if (! function_exists('now'))
 		return mktime($hour, $minute, $second, $month, $day, $year);
 	}
 }
+
+if (! function_exists('timezone_select'))
+{
+	/**
+	 * Generates a select field of all available timezones
+	 *
+	 * Returns a string with the formatted HTML
+	 *
+	 * @param string $class    Optional class to apply to the select field
+	 * @param string $default  Default value for initial selection
+	 * @param int    $what     One of the DateTimeZone class constants (for listIdentifiers)
+	 * @param string $country  A two-letter ISO 3166-1 compatible country code (for listIdentifiers)
+	 *
+	 * @return string
+	 * @throws \Exception
+	 */
+	function timezone_select(string $class = '', string $default = '', int $what = \DateTimeZone::ALL, string $country = null): string
+	{
+		$timezones = \DateTimeZone::listIdentifiers($what, $country);
+		
+		$buffer = "<select name='timezone' class='{$class}'>" . PHP_EOL;
+		foreach ($timezones as $timezone)
+		{
+			$selected = ($timezone == $default) ? 'selected' : '';
+			$buffer .= "<option value='{$timezone}' {$selected}>{$timezone}</option>" . PHP_EOL;
+		}
+		$buffer .= "</select>" . PHP_EOL;
+		
+		return $buffer;
+	}
+}
