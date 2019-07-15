@@ -15,7 +15,7 @@ while still keeping as many of the things intact that has made people love the f
 
 **This is pre-release code and should not be used in production sites.**
 
-More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
+More information about the plans for version 4 can be found in [the announcement](https://forum.codeigniter.com/showthread.php?tid=62615) on the forums.
 
 ### Documentation
 
