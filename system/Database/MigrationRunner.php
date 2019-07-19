@@ -207,28 +207,21 @@ class MigrationRunner
 		// Get Namespace current version
 		// Note: We use strings, so that timestamp versions work on 32-bit systems
 		$currentVersion = $this->getVersion();
-		if ($targetVersion > $currentVersion)
-		{
-			// Moving Up
-			$method = 'up';
-			ksort($migrations);
-		}
-		else
-		{
-			// Moving Down, apply in reverse order
-			$method = 'down';
-			krsort($migrations);
-		}
+
+		list($method, $migrations) = $this->determineDirection($targetVersion, $currentVersion, $migrations);
 
 		// Check Migration consistency
 		$this->checkMigrations($migrations, $method, $targetVersion);
 
+		$batch = $this->getLastBatch() + 1;
+
 		// loop migration for each namespace (module)
 		$migrationStatus = false;
+		$history         = [];
 		foreach ($migrations as $version => $migration)
 		{
 			// Only include migrations within the scope
-			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion))
+			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ($method === 'down' && $version <= $currentVersion && $version > $targetVersion))
 			{
 				$migrationStatus = false;
 				include_once $migration->path;
@@ -253,18 +246,14 @@ class MigrationRunner
 				}
 
 				$instance->{$method}();
-				if ($method === 'up')
-				{
-					$this->addHistory($migration->version);
-				}
-				elseif ($method === 'down')
-				{
-					$this->removeHistory($migration->version);
-				}
+
+				$history[] = $migration;
 
 				$migrationStatus = true;
 			}
 		}
+
+		$this->updateHistory($history, $method, $batch);
 
 		return ($migrationStatus) ? $targetVersion : false;
 	}
@@ -323,7 +312,8 @@ class MigrationRunner
 		}
 
 		// Get all namespaces from the autoloader
-		$namespaces = Services::autoloader()->getNamespace();
+		$namespaces = Services::autoloader()
+							  ->getNamespace();
 
 		foreach ($namespaces as $namespace => $paths)
 		{
@@ -360,6 +350,7 @@ class MigrationRunner
 	public function findMigrations(): array
 	{
 		$migrations = [];
+		$locator    = Services::locator(true);
 
 		// If $this->path contains a valid directory use it.
 		if (! empty($this->path))
@@ -371,8 +362,7 @@ class MigrationRunner
 		// Otherwise use FileLocator to search files in the subdirectory of the namespace
 		else
 		{
-			$locator = Services::locator(true);
-			$files   = $locator->listNamespaceFiles($this->namespace, '/Database/Migrations/');
+			$files = $locator->listNamespaceFiles($this->namespace, '/Database/Migrations/');
 		}
 
 		// Load all *_*.php files in the migrations path
@@ -399,6 +389,7 @@ class MigrationRunner
 				$migration->path    = ! empty($this->path) && strpos($file, $this->path) !== 0
 					? $this->path . $file
 					: $file;
+				$migration->class   = $locator->getClassname($file);
 
 				// Add to migrations[version]
 				$migrations[$migration->version] = $migration;
@@ -454,6 +445,7 @@ class MigrationRunner
 		}
 		// Check for sequence gaps
 		$loop = 0;
+
 		foreach ($migrations as $migration)
 		{
 			// Check if all old migration files are all available to do downgrading
@@ -464,7 +456,7 @@ class MigrationRunner
 					throw new \RuntimeException(lang('Migrations.gap') . ' ' . $migration->version);
 				}
 			}
-			$loop ++;
+			$loop++;
 		}
 
 		return true;
@@ -550,10 +542,10 @@ class MigrationRunner
 		$this->ensureTable();
 
 		$query = $this->db->table($this->table)
-				->where('group', $group)
-				->where('namespace', $this->namespace)
-				->orderBy('version', 'ASC')
-				->get();
+						  ->where('group', $group)
+						  ->where('namespace', $this->namespace)
+						  ->orderBy('version', 'ASC')
+						  ->get();
 
 		if (! $query)
 		{
@@ -623,11 +615,11 @@ class MigrationRunner
 		$this->ensureTable();
 
 		$row = $this->db->table($this->table)
-				->select('version')
-				->where('group', $this->group)
-				->where('namespace', $this->namespace)
-				->orderBy('version', 'DESC')
-				->get();
+						->select('version')
+						->where('group', $this->group)
+						->where('namespace', $this->namespace)
+						->orderBy('version', 'DESC')
+						->get();
 
 		return $row && ! is_null($row->getRow()) ? $row->getRow()->version : '0';
 	}
@@ -649,25 +641,32 @@ class MigrationRunner
 	/**
 	 * Stores the current schema version.
 	 *
-	 * @param string $version
+	 * @param string  $version
+	 * @param integer $batch
 	 *
+	 * @return   void
 	 * @internal param string $migration Migration reached
-	 *
-	 * @return void
 	 */
-	protected function addHistory(string $version)
+	protected function addHistory(string $version, int $batch = null)
 	{
+		if (empty($batch))
+		{
+			$batch = $this->getLastBatch() + 1;
+		}
+
 		$this->db->table($this->table)
-				->insert([
-					'version'   => $version,
-					'name'      => $this->name,
-					'group'     => $this->group,
-					'namespace' => $this->namespace,
-					'time'      => time(),
-				]);
+				 ->insert([
+					 'version'   => $version,
+					 'name'      => $this->name,
+					 'group'     => $this->group,
+					 'namespace' => $this->namespace,
+					 'time'      => time(),
+					 'batch'     => $batch,
+				 ]);
 		if (is_cli())
 		{
-			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.added'), 'yellow') . "($this->namespace) " . $version . '_' . $this->name;
+			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.added'),
+					'yellow') . "($this->namespace) " . $version . '_' . $this->name;
 		}
 	}
 
@@ -676,20 +675,60 @@ class MigrationRunner
 	/**
 	 * Removes a single history
 	 *
-	 * @param  string $version
+	 * @param string $version
+	 *
 	 * @return void
 	 */
 	protected function removeHistory(string $version)
 	{
 		$this->db->table($this->table)
-				->where('version', $version)
-				->where('group', $this->group)
-				->where('namespace', $this->namespace)
-				->delete();
+				 ->where('version', $version)
+				 ->where('group', $this->group)
+				 ->where('namespace', $this->namespace)
+				 ->delete();
+
 		if (is_cli())
 		{
-			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.removed'), 'yellow') . "($this->namespace) " . $version . '_' . $this->name;
+			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.removed'),
+					'yellow') . "($this->namespace) " . $version . '_' . $this->name;
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Truncates the history table.
+	 *
+	 * @return boolean
+	 */
+	public function clearHistory()
+	{
+		if ($this->db->tableExists($this->table))
+		{
+			$this->db->table($this->table)
+					 ->truncate();
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the value of the last batch in the database.
+	 *
+	 * @return integer
+	 */
+	protected function getLastBatch(): int
+	{
+		$batch = $this->db->table($this->table)
+						  ->selectMax('batch')
+						  ->get()
+						  ->getResultObject();
+
+		$batch = is_array($batch) && count($batch)
+			? end($batch)->batch
+			: 0;
+
+		return (int)$batch;
 	}
 
 	//--------------------------------------------------------------------
@@ -708,15 +747,20 @@ class MigrationRunner
 		$forge = \Config\Database::forge($this->db);
 
 		$forge->addField([
+			'id'        => [
+				'type'           => 'INTEGER',
+				'constraint'     => 255,
+				'unsigned'       => true,
+				'auto_increment' => true,
+			],
 			'version'   => [
 				'type'       => 'VARCHAR',
 				'constraint' => 255,
 				'null'       => false,
 			],
-			'name'      => [
-				'type'       => 'VARCHAR',
-				'constraint' => 255,
-				'null'       => false,
+			'class'     => [
+				'type' => 'TEXT',
+				'null' => false,
 			],
 			'group'     => [
 				'type'       => 'VARCHAR',
@@ -733,6 +777,11 @@ class MigrationRunner
 				'constraint' => 11,
 				'null'       => false,
 			],
+			'batch'     => [
+				'type'       => 'INT',
+				'constraint' => 11,
+				'null'       => false,
+			],
 		]);
 
 		$forge->createTable($this->table, true);
@@ -740,5 +789,73 @@ class MigrationRunner
 		$this->tableChecked = true;
 	}
 
+	/**
+	 * @param string $targetVersion
+	 * @param string $currentVersion
+	 * @param array  $migrations
+	 *
+	 * @return array
+	 */
+	protected function determineDirection(string $targetVersion, string $currentVersion, array &$migrations): array
+	{
+		if ($targetVersion > $currentVersion)
+		{
+			// Moving Up
+			$method = 'up';
+			ksort($migrations);
+		}
+		else
+		{
+			// Moving Down, apply in reverse order
+			$method = 'down';
+			krsort($migrations);
+		}
+
+		return [
+			$method,
+			$migrations,
+		];
+	}
+
 	//--------------------------------------------------------------------
+
+	/**
+	 * Given an array of history items will either remove them
+	 * of add them to the table.
+	 *
+	 * @param array   $histories
+	 * @param string  $method
+	 * @param integer $batch
+	 */
+	protected function updateHistory(array $histories, string $method, int $batch)
+	{
+		if ($method === 'up')
+		{
+			$time = time();
+
+			foreach ($histories as $history)
+			{
+				$this->db->table($this->table)
+						 ->insert([
+							 'version'   => $history->version,
+							 'class'     => $history->class,
+							 'group'     => $this->group,
+							 'namespace' => $this->namespace,
+							 'time'      => $time,
+							 'batch'     => $batch,
+						 ]);
+			}
+		}
+		elseif ($method === 'down')
+		{
+			$classes = [];
+
+			foreach ($histories as $history)
+			{
+				$classes[] = $history->class;
+			}
+
+			$this->db->table($this->table)->whereIn('class', $classes)->delete();
+		}
+	}
 }

@@ -4,6 +4,7 @@ use CodeIgniter\Exceptions\ConfigException;
 use Config\Migrations;
 use org\bovigo\vfs\vfsStream;
 use CodeIgniter\Test\CIDatabaseTestCase;
+use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
 
 /**
  * @group DatabaseLive
@@ -60,11 +61,13 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$tableMaker();
 
 		$history = [
+			'id'        => 4,
 			'version'   => 'abc123',
-			'name'      => 'changesomething',
+			'class'     => 'changesomething',
 			'group'     => 'default',
 			'namespace' => 'App',
 			'time'      => time(),
+			'batch'     => 1,
 		];
 
 		$this->hasInDatabase('migrations', $history);
@@ -152,58 +155,26 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$config->type = 'timestamp';
 		$runner       = new MigrationRunner($config);
 
-		$runner = $runner->setPath($this->start);
-
-		vfsStream::newFile('20180124102301_some_migration.php')->at($this->root);
-		vfsStream::newFile('20180124082302_another_migration.php')->at($this->root); // should be first
-		vfsStream::newFile('20180124082303_another_migration.py')->at($this->root); // shouldn't be included
-		vfsStream::newFile('201801240823_another_migration.py')->at($this->root); // shouldn't be included
+		$runner = $runner->setPath(TESTPATH . '_support/Database/SupportMigrations');
 
 		$mig1 = (object)[
-							'name'    => 'some_migration',
-							'path'    => 'vfs://root//20180124102301_some_migration.php',
+							'name'    => 'Some_migration',
+							'path'    => TESTPATH . '_support/Database/SupportMigrations/20180124102301_Some_migration.php',
 							'version' => '20180124102301',
+							'class'   => 'App\Database\Migrations\Migration_some_migration',
 						];
 		$mig2 = (object)[
-							'name'    => 'another_migration',
-							'path'    => 'vfs://root//20180124082302_another_migration.php',
-							'version' => '20180124082302',
+							'name'    => 'Another_migration',
+							'path'    => TESTPATH . '_support/Database/SupportMigrations/20180124102302_Another_migration.php',
+							'version' => '20180124102302',
+							'class'   => 'App\Database\Migrations\Migration_another_migration',
 						];
 
 		$migrations = $runner->findMigrations();
 
 		$this->assertCount(2, $migrations);
-		$this->assertEquals($mig2, array_shift($migrations));
 		$this->assertEquals($mig1, array_shift($migrations));
-	}
-
-	public function testFindMigrationsSuccessOrder()
-	{
-		$config = $this->config;
-		$runner = new MigrationRunner($config);
-
-		$runner = $runner->setPath($this->start);
-
-		vfsStream::newFile('20180102031200_some_migration.php')->at($this->root);
-		vfsStream::newFile('20180102031100_another_migration.php')->at($this->root); // should be first
-		vfsStream::newFile('20180102031300_another_migration.py')->at($this->root); // shouldn't be included
-		vfsStream::newFile('20180102031400_another_migration.py')->at($this->root); // shouldn't be included
-
-		$mig1 = (object)[
-							'name'    => 'some_migration',
-							'path'    => 'vfs://root//20180102031200_some_migration.php',
-							'version' => '20180102031200',
-						];
-		$mig2 = (object)[
-							'name'    => 'another_migration',
-							'path'    => 'vfs://root//20180102031100_another_migration.php',
-							'version' => '20180102031100',
-						];
-
-		$migrations = $runner->findMigrations();
-
 		$this->assertEquals($mig2, array_shift($migrations));
-		$this->assertEquals($mig1, array_shift($migrations));
 	}
 
 	/**
@@ -231,45 +202,21 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$runner->version(1);
 	}
 
-	/**
-	 * @expectedException        \RuntimeException
-	 * @expectedExceptionMessage The migration class "App\Database\Migrations\Migration_some_migration" could not be found.
-	 */
-	public function testVersionWithNoClassInFile()
-	{
-		$config = $this->config;
-		$runner = new MigrationRunner($config);
-		$runner->setSilent(false);
-
-		$runner = $runner->setPath($this->start);
-
-		vfsStream::newFile('20180102031100_some_migration.php')->at($this->root);
-
-		$version = $runner->version(20180102031100);
-
-		$this->assertFalse($version);
-	}
-
 	public function testVersionReturnsUpDownSuccess()
 	{
 		$forge = \Config\Database::forge();
-		$forge->dropTable('migrations', true);
 		$forge->dropTable('foo', true);
 
 		$config = $this->config;
 		$runner = new MigrationRunner($config);
 		$runner->setSilent(false);
+		$runner->clearHistory();
 
-		$runner = $runner->setPath($this->start);
+		$runner = $runner->setPath(TESTPATH . '_support/Database/SupportMigrations');
 
-		vfsStream::copyFromFileSystem(
-			TESTPATH . '_support/Database/SupportMigrations',
-			$this->root
-		);
+		$version = $runner->version('20180124102301');
 
-		$version = $runner->version('20180112032100');
-
-		$this->assertEquals('20180112032100', $version);
+		$this->assertEquals('20180124102301', $version);
 		$this->seeInDatabase('foo', ['key' => 'foobar']);
 
 		$version = $runner->version(0);
@@ -283,18 +230,18 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$config = $this->config;
 		$runner = new MigrationRunner($config);
 		$runner->setSilent(false);
+		$runner->clearHistory();
 
-		$runner = $runner->setPath($this->start);
-
-		vfsStream::copyFromFileSystem(
-			TESTPATH . '_support/Database/SupportMigrations',
-			$this->root
-		);
+		$runner = $runner->setPath(TESTPATH . '_support/Database/SupportMigrations');
 
 		$version = $runner->latest();
 
-		$this->assertEquals('20180112032100', $version);
+		$this->assertEquals('20180124102302', $version);
 		$this->assertTrue(db_connect()->tableExists('foo'));
+
+		$this->seeInDatabase('migrations', [
+			'batch' => 1,
+		]);
 	}
 
 	public function testVersionReturnsDownSuccess()
@@ -303,17 +250,46 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$runner = new MigrationRunner($config);
 		$runner->setSilent(false);
 
-		$runner = $runner->setPath($this->start);
-
-		vfsStream::copyFromFileSystem(
-			TESTPATH . '_support/Database/SupportMigrations',
-			$this->root
-		);
+		$runner = $runner->setPath(TESTPATH . '_support/Database/SupportMigrations');
+		$runner->latest();
 
 		$version = $runner->version(0);
 
 		$this->assertEquals(0, $version);
 		$this->assertFalse(db_connect()->tableExists('foo'));
+
+		$history = $runner->getHistory();
+		$this->assertEmpty($history);
+	}
+
+	public function testHistoryRecordsBatches()
+	{
+		$config = $this->config;
+		$runner = new MigrationRunner($config);
+		$runner->setSilent(false);
+		$runner->clearHistory();
+
+		$runner = $runner->setPath(TESTPATH . '_support/Database/SupportMigrations');
+
+		$version = $runner->version('20180124102301');
+
+		$this->assertEquals('20180124102301', $version);
+
+		$history = $runner->getHistory('tests');
+		$this->assertEquals(1, $history[0]['batch']);
+
+		$version = $runner->version('20180124102302');
+
+		$this->assertEquals('20180124102302', $version);
+
+		$history = $runner->getHistory('tests');
+
+		$this->assertEquals(1, $history[0]['batch']);
+		$this->assertEquals(2, $history[1]['batch']);
+
+		$this->seeInDatabase('migrations', [
+			'batch' => 1,
+		]);
 	}
 
 }
