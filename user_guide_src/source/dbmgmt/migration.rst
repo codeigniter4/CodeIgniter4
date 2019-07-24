@@ -179,21 +179,21 @@ CodeIgniter ships with several :doc:`commands </cli/cli_commands>` that are avai
 you work with migrations. These tools are not required to use migrations but might make things easier for those of you
 that wish to use them. The tools primarily provide access to the same methods that are available within the MigrationRunner class.
 
-**latest**
+**migrate**
 
 Migrates all database groups to the latest available migrations::
 
-    > php spark migrate:latest
+    > php spark migrate
 
-You can use (latest) with the following options:
+You can use (migrate) with the following options:
 
 - (-g) to chose database group, otherwise default database group will be used.
 - (-n) to choose namespace, otherwise (App) namespace will be used.
 - (-all) to migrate all namespaces to the latest migration
 
-This example will migrate Blog namespace to latest::
+This example will migrate Blog namespace to latest version on the test database group::
 
-    > php spark migrate:latest -g test -n Blog
+    > php spark migrate -g test -n Blog
 
 **version**
 

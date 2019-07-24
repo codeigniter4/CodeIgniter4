@@ -292,4 +292,18 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		]);
 	}
 
+	public function testGetBatchVersions()
+	{
+		$config = $this->config;
+		$runner = new MigrationRunner($config);
+		$runner->setSilent(false);
+		$runner->clearHistory();
+
+		$runner = $runner->setPath(TESTPATH . '_support/Database/SupportMigrations');
+
+		$runner->latest();
+
+		$this->assertEquals('20180124102301', $runner->getBatchStart(1));
+		$this->assertEquals('20180124102302', $runner->getBatchEnd(1));
+	}
 }

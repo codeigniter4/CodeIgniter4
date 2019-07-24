@@ -211,49 +211,7 @@ class MigrationRunner
 		list($method, $migrations) = $this->determineDirection($targetVersion, $currentVersion, $migrations);
 
 		// Check Migration consistency
-		$this->checkMigrations($migrations, $method, $targetVersion);
-
-		$batch = $this->getLastBatch() + 1;
-
-		// loop migration for each namespace (module)
-		$migrationStatus = false;
-		$history         = [];
-		foreach ($migrations as $version => $migration)
-		{
-			// Only include migrations within the scope
-			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ($method === 'down' && $version <= $currentVersion && $version > $targetVersion))
-			{
-				$migrationStatus = false;
-				include_once $migration->path;
-
-				// Get namespaced class name
-				$class = $this->namespace . '\Database\Migrations\Migration_' . ($migration->name);
-
-				$this->setName($migration->name);
-
-				// Validate the migration file structure
-				if (! class_exists($class, false))
-				{
-					throw new \RuntimeException(sprintf(lang('Migrations.classNotFound'), $class));
-				}
-
-				// Forcing migration to selected database group
-				$instance = new $class(\Config\Database::forge($this->group));
-
-				if (! is_callable([$instance, $method]))
-				{
-					throw new \RuntimeException(sprintf(lang('Migrations.missingMethod'), $method));
-				}
-
-				$instance->{$method}();
-
-				$history[] = $migration;
-
-				$migrationStatus = true;
-			}
-		}
-
-		$this->updateHistory($history, $method, $batch);
+		$migrationStatus = $this->migrate($method, $migrations, $targetVersion);
 
 		return ($migrationStatus) ? $targetVersion : false;
 	}
@@ -315,29 +273,25 @@ class MigrationRunner
 		$namespaces = Services::autoloader()
 							  ->getNamespace();
 
+		// Collect the migrations to run
+		$migrations = [];
+
 		foreach ($namespaces as $namespace => $paths)
 		{
 			$this->setNamespace($namespace);
-			$migrations = $this->findMigrations();
+			$nsMigrations = $this->findMigrations();
 
-			if (empty($migrations))
+			if (empty($nsMigrations))
 			{
 				continue;
 			}
 
-			$lastMigration = end($migrations)->version;
-			// No New migrations to add
-			if ($lastMigration === $this->getVersion())
-			{
-				continue;
-			}
-
-			// Calculate the last migration step from existing migration
-			// filenames and proceed to the standard version migration
-			$this->version($lastMigration);
+			$migrations = array_merge($migrations, $nsMigrations);
 		}
 
-		return true;
+		$migrationStatus = $this->migrate('up', $migrations, end($migrations)->version);
+
+		return $migrationStatus;
 	}
 
 	//--------------------------------------------------------------------
@@ -405,7 +359,6 @@ class MigrationRunner
 
 	/**
 	 *  checks if the list of available migration scripts list are consistent
-	 *  if sequential check if no gaps and check if all consistent with migrations table if downgrading
 	 *  if timestamp check if consistent with migrations table if downgrading
 	 *
 	 * @param array  $migrations
@@ -717,8 +670,10 @@ class MigrationRunner
 	 *
 	 * @return integer
 	 */
-	protected function getLastBatch(): int
+	public function getLastBatch(): int
 	{
+		$this->ensureTable();
+
 		$batch = $this->db->table($this->table)
 						  ->selectMax('batch')
 						  ->get()
@@ -729,6 +684,48 @@ class MigrationRunner
 			: 0;
 
 		return (int)$batch;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the version number of the first migration for a batch.
+	 *
+	 * @param integer $batch
+	 *
+	 * @return integer
+	 */
+	public function getBatchStart(int $batch): int
+	{
+		$migration = $this->db->table($this->table)
+			->where('batch', $batch)
+			->orderBy('id', 'asc')
+			->limit(1)
+			->get()
+			->getResultObject();
+
+		return count($migration) ? $migration[0]->version : 0;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the version number of the last migration for a batch.
+	 *
+	 * @param integer $batch
+	 *
+	 * @return integer
+	 */
+	public function getBatchEnd(int $batch): int
+	{
+		$migration = $this->db->table($this->table)
+			  ->where('batch', $batch)
+			  ->orderBy('id', 'desc')
+			  ->limit(1)
+			  ->get()
+			  ->getResultObject();
+
+		return count($migration) ? $migration[0]->version : 0;
 	}
 
 	//--------------------------------------------------------------------
@@ -784,6 +781,7 @@ class MigrationRunner
 			],
 		]);
 
+		$forge->addPrimaryKey('id');
 		$forge->createTable($this->table, true);
 
 		$this->tableChecked = true;
@@ -857,5 +855,64 @@ class MigrationRunner
 
 			$this->db->table($this->table)->whereIn('class', $classes)->delete();
 		}
+	}
+
+	/**
+	 * Handles the actual running of migrations.
+	 *
+	 * @param $direction
+	 * @param $migrations
+	 * @param string     $targetVersion
+	 *
+	 * @return boolean
+	 */
+	protected function migrate($direction, $migrations, string $targetVersion): bool
+	{
+		$this->checkMigrations($migrations, $direction, $targetVersion);
+
+		$batch          = $this->getLastBatch() + 1;
+		$currentVersion = $this->getVersion();
+
+		// loop migration for each namespace (module)
+		$migrationStatus = false;
+		$history         = [];
+		foreach ($migrations as $version => $migration)
+		{
+			// Only include migrations within the scope
+			if (($direction === 'up' && $version > $currentVersion && $version <= $targetVersion) || ($direction === 'down' && $version <= $currentVersion && $version >= $targetVersion))
+			{
+				$migrationStatus = false;
+				include_once $migration->path;
+
+				// Get namespaced class name
+				$class = $this->namespace . '\Database\Migrations\Migration_' . ($migration->name);
+
+				$this->setName($migration->name);
+
+				// Validate the migration file structure
+				if (! class_exists($class, false))
+				{
+					throw new \RuntimeException(sprintf(lang('Migrations.classNotFound'), $class));
+				}
+
+				// Forcing migration to selected database group
+				$instance = new $class(\Config\Database::forge($this->group));
+
+				if (! is_callable([$instance, $direction]))
+				{
+					throw new \RuntimeException(sprintf(lang('Migrations.missingMethod'), $direction));
+				}
+
+				$instance->{$direction}();
+
+				$history[] = $migration;
+
+				$migrationStatus = true;
+			}
+		}
+
+		$this->updateHistory($history, $direction, $batch);
+
+		return $migrationStatus;
 	}
 }

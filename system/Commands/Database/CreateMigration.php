@@ -139,34 +139,8 @@ class CreateMigration extends BaseCommand
 			$ns = 'App';
 		}
 
-		// Migrations Config
-		$config = new Migrations();
-
-		if ($config->type !== 'timestamp' && $config->type !== 'sequential')
-		{
-			CLI::error(lang('Migrations.invalidType', [$config->type]));
-			return;
-		}
-
-		// migration Type
-		if ($config->type === 'timestamp')
-		{
-			// Always use UTC/GMT so global teams can work together
-			$fileName = gmdate('YmdHis_') . $name;
-		}
-		else if ($config->type === 'sequential')
-		{
-			// default with 001
-			$sequence = $params[0] ?? '001';
-			// number must be three digits
-			if (! is_numeric($sequence) || strlen($sequence) !== 3)
-			{
-				CLI::error(lang('Migrations.migNumberError'));
-				return;
-			}
-
-			$fileName = $sequence . '_' . $name;
-		}
+		// Always use UTC/GMT so global teams can work together
+		$fileName = gmdate('YmdHis_') . $name;
 
 		// full path
 		$path = $homepath . '/Database/Migrations/' . $fileName . '.php';
