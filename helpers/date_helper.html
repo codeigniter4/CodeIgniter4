@@ -214,19 +214,19 @@
 dates.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></li>
-<li><a class="reference internal" href="#available-functions" id="id2">Available Functions</a></li>
+<li><a class="reference internal" href="#loading-this-helper" id="id2">Loading this Helper</a></li>
+<li><a class="reference internal" href="#available-functions" id="id3">Available Functions</a></li>
 </ul>
 </div>
 <div class="custom-index container"></div><div class="section" id="loading-this-helper">
-<h2><a class="toc-backref" href="#id1">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id2">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline">¶</a></h2>
 <p>This helper is loaded using the following code:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="available-functions">
-<h2><a class="toc-backref" href="#id2">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id3">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this headline">¶</a></h2>
 <p>The following functions are available:</p>
 <dl class="function">
 <dt id="now">
@@ -261,6 +261,38 @@ this function over PHP&#8217;s <code class="docutils literal"><span class="pre">
 <strong>time_reference</strong> setting.</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="timezone_select">
+<code class="descname">timezone_select</code><span class="sig-paren">(</span><span class="optional">[</span><em>$class = ''</em>, <em>$default = ''</em>, <em>$what = DateTimeZone::ALL</em>, <em>$country = null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#timezone_select" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$class</strong> (<em>string</em>) &#8211; Optional class to apply to the select field</li>
+<li><strong>$default</strong> (<em>string</em>) &#8211; Default value for initial selection</li>
+<li><strong>$what</strong> (<em>int</em>) &#8211; DateTimeZone class constants (see <a class="reference external" href="https://www.php.net/manual/en/datetimezone.listidentifiers.php">listIdentifiers</a>)</li>
+<li><strong>$country</strong> (<em>string</em>) &#8211; <p>A two-letter ISO 3166-1 compatible country code (see <a class="reference external" href="https://www.php.net/manual/en/datetimezone.listidentifiers.php">listIdentifiers</a>)</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Preformatted HTML select field</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Generates a <cite>select</cite> form field of available timezones (optionally filtered by <cite>$what</cite> and <cite>$country</cite>).
+You can supply an option class to apply to the field to make formatting easier, as well as a default
+selected value.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">timezone_select</span><span class="p">(</span><span class="s1">&#39;custom-select&#39;</span><span class="p">,</span> <span class="s1">&#39;America/New_York&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <p>Many functions previously found in the CodeIgniter 3 <code class="docutils literal"><span class="pre">date_helper</span></code> have been moved to the <code class="docutils literal"><span class="pre">I18n</span></code>
 module in CodeIgniter 4.</p>
 </div>
@@ -289,7 +321,7 @@ module in CodeIgniter 4.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Jun 24, 2019.
+      Last updated on Jul 25, 2019.
 
     </p>
   </div>

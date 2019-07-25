@@ -312,6 +312,13 @@ sections.</p>
 </pre></div>
 </div>
 <p>Please note: <code class="docutils literal"><span class="pre">$segment</span></code> value cannot be greater than the number of URI segments plus 1.</p>
+<p>If you in need to show many pagers on one page then additional parameter which wil define a group could be helpful::
+&lt;?php</p>
+<blockquote>
+<div>$pager = service(&#8216;pager&#8217;);
+$pager-&gt;setPath(&#8216;path/for/my-group&#8217;, &#8216;my-group&#8217;); // Additionaly you could define path for every group.
+$pager-&gt;makeLinks($page, $perPage, $total, &#8216;template_name&#8217;, $segment, &#8216;my-group&#8217;);</div></blockquote>
+<p>?&gt;</p>
 </div>
 <div class="section" id="paginating-with-only-expected-queries">
 <h3>Paginating with Only Expected Queries<a class="headerlink" href="#paginating-with-only-expected-queries" title="Permalink to this headline">¶</a></h3>
@@ -472,7 +479,7 @@ title, which is just the number, and a boolean that tells whether the link is th
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Jun 24, 2019.
+      Last updated on Jul 25, 2019.
 
     </p>
   </div>
