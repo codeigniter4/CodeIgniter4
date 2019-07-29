@@ -334,7 +334,7 @@ class GDHandlerTest extends \CIUnitTestCase
 
 	public function testImageConvert()
 	{
-		$this->handler->withFile($this->origin . 'ci-logo.jpg');
+		$this->handler->withFile($this->origin . 'ci-logo.jpeg');
 		$this->handler->getResource(); // make sure resource is loaded
 		$this->handler->convert(IMAGETYPE_PNG);
 		$this->handler->save($this->start . 'work/ci-logo.png');
