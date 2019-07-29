@@ -424,6 +424,15 @@ class Entity
 	 */
 	public function __isset(string $key): bool
 	{
+		$key = $this->mapProperty($key);
+
+		$method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+
+		if (method_exists($this, $method))
+		{
+			return true;
+		}
+
 		return isset($this->attributes[$key]);
 	}
 
