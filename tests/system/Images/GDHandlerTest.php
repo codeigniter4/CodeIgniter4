@@ -338,7 +338,7 @@ class GDHandlerTest extends \CIUnitTestCase
 		$this->handler->getResource(); // make sure resource is loaded
 		$this->handler->convert(IMAGETYPE_PNG);
 		$this->handler->save($this->start . 'work/ci-logo.png');
-		$$this->assertEquals(exif_imagetype($this->start . 'work/ci-logo.png'), IMAGETYPE_PNG);
+		$this->assertEquals(exif_imagetype($this->start . 'work/ci-logo.png'), IMAGETYPE_PNG);
 	}
 
 }
