@@ -159,18 +159,19 @@ offset values::
 Converting Images
 -----------------
 
-The ``convert()`` method changes the library's internal indicator for the desired file format. This doesn't touch the actual image resource, but indicates to ``save()`` what format to use.
+The ``convert()`` method changes the library's internal indicator for the desired file format. This doesn't touch the actual image resource, but indicates to ``save()`` what format to use::
 
 	convert(int $imageType)
 
-- **$imageType** is one of PHP's image type constants (see for example https://www.php.net/manual/en/function.image-type-to-mime-type.php)
+- **$imageType** is one of PHP's image type constants (see for example https://www.php.net/manual/en/function.image-type-to-mime-type.php)::
 
 	Services::image()
 		->withFile('/path/to/image/mypic.jpg')
 		->convert(IMAGETYPE_PNG)
 		->save('path/to/new/image.png');
 
-.. note:: ImageMagick already saves files in the type indicated by their extension, ignoring **$imageType**
+.. note:: ImageMagick already saves files in the type
+	indicated by their extension, ignoring **$imageType**
 
 Fitting Images
 --------------
