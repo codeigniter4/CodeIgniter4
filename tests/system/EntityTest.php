@@ -548,6 +548,7 @@ class EntityTest extends \CIUnitTestCase
 			'bar'        => ':bar',
 			'default'    => 'sumfin',
 			'created_at' => null,
+			'createdAt'  => null,
 		]);
 	}
 
