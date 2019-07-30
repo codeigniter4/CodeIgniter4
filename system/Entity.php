@@ -182,9 +182,12 @@ class Entity
 		{
 			foreach ($this->datamap as $from => $to)
 			{
-				$return[$from] = $this->__get($to);
+				if (array_key_exists($to, $return)) {
+					$return[$from] = $this->__get($to);
+				}
 			}
 		}
+
 		$this->_cast = true;
 		return $return;
 	}
