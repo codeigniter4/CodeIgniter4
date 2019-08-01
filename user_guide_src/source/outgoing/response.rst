@@ -82,7 +82,8 @@ The first parameter is the **name you want the downloaded file to be named**, th
 file data.
 
 If you set the second parameter to NULL and ``$filename`` is an existing, readable
-file path, then its content will be read instead.
+file path, then its content will be read instead with an option to change the name
+of the downloaded file with the fourth parameter.
 
 If you set the third parameter to boolean TRUE, then the actual file MIME type
 (based on the filename extension) will be sent, so that if your browser has a
