@@ -71,7 +71,7 @@ class DebugToolbar implements FilterInterface
 	 */
 	public function after(RequestInterface $request, ResponseInterface $response)
 	{
-		Services::toolbar()->prepare();
+		Services::toolbar()->prepare($request, $response);
 	}
 
 	//--------------------------------------------------------------------
