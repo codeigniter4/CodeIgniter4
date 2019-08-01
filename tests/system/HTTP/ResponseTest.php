@@ -455,6 +455,25 @@ class ResponseTest extends \CIUnitTestCase
 		$this->assertSame(file_get_contents(__FILE__), $actual_output);
 	}
 
+	public function testGetDownloadResponseRename()
+	{
+		$response = new Response(new App());
+		$rename = 'myFile.' . pathinfo(__FILE__, PATHINFO_EXTENSION);
+
+		$actual = $response->download(__FILE__, null, false, $rename);
+
+		$this->assertInstanceOf(DownloadResponse::class, $actual);
+		$actual->buildHeaders();
+		$this->assertSame('attachment; filename="' . $rename . '"; filename*=UTF-8\'\'' . $rename, $actual->getHeaderLine('Content-Disposition'));
+
+		ob_start();
+		$actual->sendBody();
+		$actual_output = ob_get_contents();
+		ob_end_clean();
+
+		$this->assertSame(file_get_contents(__FILE__), $actual_output);
+	}
+
 	public function testVagueDownload()
 	{
 		$response = new Response(new App());
