@@ -41,6 +41,7 @@ use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Debug\Toolbar\Collectors\History;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
+use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
@@ -325,17 +326,25 @@ class Toolbar
 	/**
 	 * Prepare for debugging..
 	 *
+	 * @param  RequestInterface  $request
+	 * @param  ResponseInterface $response
 	 * @global type $app
 	 * @return type
 	 */
-	public function prepare()
+	public function prepare(RequestInterface $request = null, ResponseInterface $response = null)
 	{
 		if (CI_DEBUG && ! is_cli())
 		{
 			global $app;
 
-			$request  = Services::request();
-			$response = Services::response();
+			$request  = $request ?? Services::request();
+			$response = $response ?? Services::response();
+
+			// Disable the toolbar for downloads
+			if ($response instanceof DownloadResponse)
+			{
+				return;
+			}
 
 			$toolbar = Services::toolbar(config(Toolbar::class));
 			$stats   = $app->getPerformanceStats();
