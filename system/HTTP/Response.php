@@ -1038,10 +1038,11 @@ class Response extends Message implements ResponseInterface
 	 * @param string      $filename The path to the file to send
 	 * @param string|null $data     The data to be downloaded
 	 * @param boolean     $setMime  Whether to try and send the actual MIME type
+	 * @param string|null $rename   An optional new name for the file when using a path
 	 *
 	 * @return \CodeIgniter\HTTP\DownloadResponse|null
 	 */
-	public function download(string $filename = '', $data = '', bool $setMime = false)
+	public function download(string $filename = '', $data = '', bool $setMime = false, string $rename = null)
 	{
 		if ($filename === '' || $data === '')
 		{
@@ -1056,7 +1057,7 @@ class Response extends Message implements ResponseInterface
 			$filename = end($filename);
 		}
 
-		$response = new DownloadResponse($filename, $setMime);
+		$response = new DownloadResponse($rename ?? $filename, $setMime);
 
 		if ($filepath !== '')
 		{
@@ -1069,5 +1070,4 @@ class Response extends Message implements ResponseInterface
 
 		return $response;
 	}
-
 }
