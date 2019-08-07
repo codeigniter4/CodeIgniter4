@@ -268,6 +268,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$runner = new MigrationRunner($config);
 		$runner->setSilent(false);
 		$runner->clearHistory();
+		$this->resetTables();
 
 		$runner = $runner->setPath(TESTPATH . '_support/Database/SupportMigrations');
 
@@ -298,6 +299,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$runner = new MigrationRunner($config);
 		$runner->setSilent(false);
 		$runner->clearHistory();
+		$this->resetTables();
 
 		$runner = $runner->setPath(TESTPATH . '_support/Database/SupportMigrations');
 
@@ -305,5 +307,19 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$this->assertEquals('20180124102301', $runner->getBatchStart(1));
 		$this->assertEquals('20180124102302', $runner->getBatchEnd(1));
+	}
+
+	protected function resetTables()
+	{
+		$db    = db_connect();
+		$forge = Config::forge();
+
+		$tables = $db->listTables();
+		foreach ($tables as $table)
+		{
+			$table = str_replace('db_', '', $table);
+
+			$forge->dropTable($table, true);
+		}
 	}
 }
