@@ -30,10 +30,13 @@ was created, in **YYYYMMDDHHIISS** format (e.g. **20121031100537**). This
 helps prevent numbering conflicts when working in a team environment.
 
 Prefix your migration files with the migration number followed by an underscore
-and a descriptive name for the migration. For example:
+and a descriptive name for the migration. The year, month, and date can be separated
+from each other by dashes, underscores, or not at all. For example:
 
 * 20121031100537_add_blog.php
-* 20121031100538_alter_blog_track_views.php
+* 2012-10-31-100538_alter_blog_track_views.php
+* 2012_10_31_100539_alter_blog_add_translations.php
+
 
 ******************
 Create a Migration

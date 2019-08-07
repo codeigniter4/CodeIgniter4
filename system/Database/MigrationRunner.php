@@ -88,7 +88,7 @@ class MigrationRunner
 	 *
 	 * @var string
 	 */
-	protected $regex = '/^\d{14}_(\w+)$/';
+	protected $regex = '/^\d{4}[_-]?\d{2}[_-]?\d{2}[_-]?\d{6}_(\w+)$/';
 
 	/**
 	 * The main database connection. Used to store
@@ -536,7 +536,9 @@ class MigrationRunner
 	 */
 	protected function getMigrationNumber(string $migration): string
 	{
-		return sscanf($migration, '%[0-9]+', $number) ? $number : '0';
+		preg_match('/^\d{4}[_-]?\d{2}[_-]?\d{2}[_-]?\d{6}/', $migration, $matches);
+
+		return count($matches) ? $matches[0] : '0';
 	}
 
 	//--------------------------------------------------------------------
@@ -693,9 +695,9 @@ class MigrationRunner
 	 *
 	 * @param integer $batch
 	 *
-	 * @return integer
+	 * @return string
 	 */
-	public function getBatchStart(int $batch): int
+	public function getBatchStart(int $batch): string
 	{
 		$migration = $this->db->table($this->table)
 			->where('batch', $batch)
@@ -704,7 +706,7 @@ class MigrationRunner
 			->get()
 			->getResultObject();
 
-		return count($migration) ? $migration[0]->version : 0;
+		return count($migration) ? $migration[0]->version : '0';
 	}
 
 	//--------------------------------------------------------------------
@@ -714,9 +716,9 @@ class MigrationRunner
 	 *
 	 * @param integer $batch
 	 *
-	 * @return integer
+	 * @return string
 	 */
-	public function getBatchEnd(int $batch): int
+	public function getBatchEnd(int $batch): string
 	{
 		$migration = $this->db->table($this->table)
 			  ->where('batch', $batch)
