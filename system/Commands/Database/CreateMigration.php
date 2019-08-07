@@ -140,7 +140,8 @@ class CreateMigration extends BaseCommand
 		}
 
 		// Always use UTC/GMT so global teams can work together
-		$fileName = gmdate('YmdHis_') . $name;
+		$config   = config('Migrations');
+		$fileName = gmdate($config->timestampFormat) . $name;
 
 		// full path
 		$path = $homepath . '/Database/Migrations/' . $fileName . '.php';

@@ -30,4 +30,21 @@ class Migrations extends BaseConfig
 	*/
 	public $table = 'migrations';
 
+	/*
+	|--------------------------------------------------------------------------
+	| Timestamp Format
+	|--------------------------------------------------------------------------
+	|
+	| This is the format that will be used when creating new migrations
+	| using the cli command:
+	|   > php spark migrate:create
+	|
+	| Typical formats:
+	|   YmdHis_
+	|   Y-m-d-His_
+	|   Y_m_d_His_
+	|
+	*/
+	public $timestampFormat = 'Y-m-d-His_';
+
 }
