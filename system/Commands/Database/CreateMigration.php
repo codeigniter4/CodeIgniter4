@@ -104,6 +104,7 @@ class CreateMigration extends BaseCommand
 	 */
 	public function run(array $params = [])
 	{
+		helper('inflector');
 		$name = array_shift($params);
 
 		if (empty($name))
@@ -116,6 +117,7 @@ class CreateMigration extends BaseCommand
 			CLI::error(lang('Migrations.badCreateName'));
 			return;
 		}
+
 		$ns       = $params['-n'] ?? CLI::getOption('n');
 		$homepath = APPPATH;
 
@@ -146,12 +148,15 @@ class CreateMigration extends BaseCommand
 		// full path
 		$path = $homepath . '/Database/Migrations/' . $fileName . '.php';
 
+		// Class name should be pascal case now (camel case with upper first letter)
+		$name = pascalize($name);
+
 		$template = <<<EOD
 <?php namespace $ns\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Migration_{name} extends Migration
+class {name} extends Migration
 {
 	public function up()
 	{

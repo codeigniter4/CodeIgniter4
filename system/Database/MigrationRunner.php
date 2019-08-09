@@ -890,9 +890,7 @@ class MigrationRunner
 				$migrationStatus = false;
 				include_once $migration->path;
 
-				// Get namespaced class name
-				$class = $this->namespace . '\Database\Migrations\Migration_' . ($migration->name);
-
+				$class = $migration->class;
 				$this->setName($migration->name);
 
 				// Validate the migration file structure
