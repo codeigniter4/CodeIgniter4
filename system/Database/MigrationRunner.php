@@ -270,8 +270,7 @@ class MigrationRunner
 		}
 
 		// Get all namespaces from the autoloader
-		$namespaces = Services::autoloader()
-							  ->getNamespace();
+		$namespaces = Services::autoloader()->getNamespace();
 
 		// Collect the migrations to run
 		$migrations = [];
@@ -855,7 +854,12 @@ class MigrationRunner
 				$classes[] = $history->class;
 			}
 
-			$this->db->table($this->table)->whereIn('class', $classes)->delete();
+			if (count($classes))
+			{
+				$this->db->table($this->table)
+						 ->whereIn('class', $classes)
+						 ->delete();
+			}
 		}
 	}
 
