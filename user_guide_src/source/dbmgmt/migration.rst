@@ -44,12 +44,12 @@ Create a Migration
 
 This will be the first migration for a new site which has a blog. All
 migrations go in the **app/Database/Migrations/** directory and have names such
-as *20121031100537_Add_blog.php*.
+as *20121031100537_add_blog.php*.
 ::
 
 	<?php namespace App\Database\Migrations;
 
-	class Migration_Add_blog extends \CodeIgniter\Database\Migration {
+	class AddBlog extends \CodeIgniter\Database\Migration {
 
 		public function up()
 		{
@@ -116,7 +116,7 @@ match the name of the database group exactly::
 
     <?php namespace App\Database\Migrations;
 
-    class Migration_Add_blog extends \CodeIgniter\Database\Migration
+    class AddBlog extends \CodeIgniter\Database\Migration
     {
         protected $DBGroup = 'alternate_db_group';
 
@@ -154,7 +154,7 @@ Usage Example
 In this example some simple code is placed in **app/Controllers/Migrate.php**
 to update the schema::
 
-        <?php namespace App\Controllers;
+    <?php namespace App\Controllers;
 
 	class Migrate extends \CodeIgniter\Controller
 	{
@@ -257,14 +257,11 @@ You can use (refresh) with the following options:
 **create**
 
 Creates a skeleton migration file in **app/Database/Migrations**.
-
-- When migration type is timestamp, using the YYYYMMDDHHIISS format::
+It automatically prepends the current timestamp. The class name it
+creates is the Pascal case version of the filename.
 
   > php spark migrate:create [filename]
 
-- When migration type is sequential, using the numbered in sequence, default with 001::
-
-  > php spark migrate:create [filename] 001
 
 You can use (create) with the following options:
 
@@ -282,6 +279,7 @@ Preference                 Default                Options                    Des
 **enabled**                TRUE                   TRUE / FALSE               Enable or disable migrations.
 **path**                   'Database/Migrations/' None                       The path to your migrations folder.
 **table**                  migrations             None                       The table name for storing the schema version number.
+**timestampFormat**        'Y-m-d-His_'                                      The format to use for timestamps when creating a migration.
 ========================== ====================== ========================== =============================================================
 
 ***************
