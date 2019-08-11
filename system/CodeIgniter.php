@@ -40,6 +40,7 @@ namespace CodeIgniter;
 use Closure;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\DownloadResponse;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -968,6 +969,12 @@ class CodeIgniter
 	 */
 	public function storePreviousURL($uri)
 	{
+		// Only valid for some requests
+		if (! $this->request instanceof IncomingRequest || $this->request->isCLI() || $this->request->isAJAX())
+		{
+			return;
+		}
+
 		// This is mainly needed during testing...
 		if (is_string($uri))
 		{
