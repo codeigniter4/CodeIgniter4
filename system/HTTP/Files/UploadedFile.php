@@ -356,7 +356,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 *
 	 * @return string|null
 	 */
-	public function guessExtension(): ?string
+	public function guessExtension(): string
 	{
 		return Mimes::guessExtensionFromType($this->getClientMimeType(), $this->getClientExtension()) ?? $this->getClientExtension();
 	}
