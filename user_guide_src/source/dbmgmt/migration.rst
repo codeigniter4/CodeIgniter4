@@ -144,7 +144,7 @@ configuration file::
 	];
 
 This will look for any migrations located at both **APPPATH/Database/Migrations** and
-**ROOTPATH/Database/Migrations**. This makes it simple to include migrations in your
+**ROOTPATH/MyCompany/Database/Migrations**. This makes it simple to include migrations in your
 re-usable, modular code suites.
 
 *************
