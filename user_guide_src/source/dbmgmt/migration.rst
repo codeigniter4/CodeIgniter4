@@ -207,9 +207,6 @@ for the version. ::
   > php spark migrate:version
   Version:
 
-  // Sequential
-  > php spark migrate:version 007
-
   // Timestamp
   > php spark migrate:version 20161426211300
 
