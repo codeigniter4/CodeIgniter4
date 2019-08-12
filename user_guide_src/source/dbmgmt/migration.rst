@@ -9,9 +9,10 @@ need to go and run them. You would also have to keep track of which changes
 need to be run against the production machines next time you deploy.
 
 The database table **migration** tracks which migrations have already been
-run so all you have to do is update your application files and
-call ``$migration->current()`` to work out which migrations should be run.
-The current version is found in **app/Config/Migrations.php**.
+run so all you have to do is make sure your migrations are in place and
+call ``$migration->latest()`` to bring the database up to the most recent
+state. You can also use ``$migration->latestAll()`` to include migrations
+from all namespaces.
 
 .. contents::
   :local:
