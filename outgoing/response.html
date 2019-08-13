@@ -309,6 +309,10 @@ do the following:</p>
 <span class="k">return</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">download</span><span class="p">(</span><span class="s1">&#39;/path/to/photo.jpg&#39;</span><span class="p">,</span> <span class="k">NULL</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>Use the optional <code class="docutils literal"><span class="pre">setFileName()</span></code> method to change the filename as it is sent to the client&#8217;s browser:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">download</span><span class="p">(</span><span class="s1">&#39;awkwardEncryptedFileName.fakeExt&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setFileName</span><span class="p">(</span><span class="s1">&#39;expenses.csv&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The response object MUST be returned for the download to be sent to the client. This allows the response
@@ -903,7 +907,7 @@ that the cookie exists, and that it has the prescribed value.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Aug 09, 2019.
+      Last updated on Aug 13, 2019.
 
     </p>
   </div>

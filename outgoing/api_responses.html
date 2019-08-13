@@ -253,6 +253,8 @@ exist for the most common use cases:</p>
 <span class="nx">respondCreated</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="c1">// Item successfully deleted</span>
 <span class="nx">respondDeleted</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+<span class="c1">// Command executed by no response required</span>
+<span class="nx">respondNoContent</span><span class="p">(</span><span class="nv">$message</span><span class="p">);</span>
 <span class="c1">// Client isn&#39;t authorized</span>
 <span class="nx">failUnauthorized</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
 <span class="c1">// Forbidden action</span>
@@ -426,6 +428,31 @@ code of the error. The <code class="docutils literal"><span class="pre">messages
 <p>Sets the appropriate status code to use when a new resource was deleted as the result of this API call, typically 200.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondDeleted</span><span class="p">([</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="respondNoContent">
+<code class="descname">respondNoContent</code><span class="sig-paren">(</span><em>string $message = 'No Content'</em><span class="sig-paren">)</span><a class="headerlink" href="#respondNoContent" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$message</strong> (<em>string</em>) &#8211; A custom &#8220;reason&#8221; message to return.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object&#8217;s send() method.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the appropriate status code to use when a command was successfully executed by the server but there is no
+meaningful reply to send back to the client, typically 204.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondNoContent</span><span class="p">();</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -664,7 +691,7 @@ This might be due to some form of throttling or rate limiting. Status code is ty
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Aug 09, 2019.
+      Last updated on Aug 13, 2019.
 
     </p>
   </div>
