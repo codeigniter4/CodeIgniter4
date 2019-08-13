@@ -18,7 +18,6 @@ Such extensions may need to be explicitly enabled in your instance of PHP.
 The following extensions are currently supported:
 
 - `OpenSSL <http://php.net/openssl>`_
-- `Sodium <https://libsodium.org/>`_.
 
 .. note:: Support for the ``MCrypt`` extension has been dropped, as that has
     been deprecated as of PHP 7.2.
@@ -81,8 +80,8 @@ You can over-ride any of these settings by passing your own ``Config`` object,
 or an associative array of parameters, or even just the driver name, to the Services::
 
     $encrypter = \Config\Services::encrypter($params);
-    $encrypter2 = \Config\Services::encrypter('Sodium');
-    $encrypter3 = \Config\Services::encrypter(['key' => 'Sodium']);
+    $encrypter2 = \Config\Services::encrypter('OpenSSL');
+    $encrypter3 = \Config\Services::encrypter(['key' => 'OpenSSL']);
 
 These will replace any same-named settings in ``Config\Encryption``.
 
@@ -166,17 +165,6 @@ OpenSSL has been a standard part of PHP for some time.
 
 The OpenSSL handler uses the AES-256-CTR cipher.
 
-Sodium Notes
-------------
-
-Sodium is a modern, easy-to-use software library for encryption, decryption, signatures, password hashing and more.
-
-Sodium automatically uses AES-256 if it detects hardware acceleration/
-Otherwise, it will use the ChaCha20 cipher.
-
-You will need *libsodium* installed, as well as the PECL *Libsodium extenstion*, 
-in order to use this handler.
-
 Message Length
 ==============
 
@@ -203,36 +191,14 @@ of the current one::
     $encryption = new \Encryption\Encryption();
     $encrypter = $encryption->initialize($params);
 
-If you want to change the driver, for instance switching between
-Sodium and OpenSSL, you could go through the Services::
-
-	// Switch to the Sodium driver
-	$encrypter= \Config\Services::encrypter(['driver' => 'Sodium']);;
-        // encrypt data using Sodium
-
-	// Switch back to the OpenSSL driver
-	$encrypter= \Config\Services::encrypter(['driver' => 'OpenSSL']);;
-        // now encrypt data using OpenSSL
-
 Alternately, you could use the encryption manager directly::
 
     $encryption = new \Encryption\Encryption();
 
-    // Switch to the Sodium driver
-    $encrypter= $encryption->initialize(['driver' => 'Sodium']);;
-    // encrypt data using Sodium
-
-    // Switch back to the OpenSSL driver
-    $encrypter= $encryption->initialize(['driver' => 'OpenSSL']);;
+     $encrypter= $encryption->initialize(['driver' => 'OpenSSL']);;
     // now encrypt data using OpenSSL
 
 
-Note that it would be easier to save these separately, if both encrypters
-were to be needed as part of handling the same request::
-
-    $encryption = new \Encryption\Encryption();
-    $encrypter1 = $encryption->initialize(['driver' => 'Sodium']);;
-    $encrypter2 = $encryption->initialize(['driver' => 'OpenSSL']);;
 
 ***************
 Class Reference
