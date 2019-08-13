@@ -92,9 +92,10 @@ starting at the top left corner. The result would be saved as the thumbnail.
 Processing Methods
 ==================
 
-There are six available processing methods:
+There are seven available processing methods:
 
 -  $image->crop()
+-  $image->convert()
 -  $image->fit()
 -  $image->flatten()
 -  $image->flip()
@@ -154,6 +155,23 @@ offset values::
 		->withFile('/path/to/image/mypic.jpg')
 		->crop(50, 50, $xOffset, $yOffset)
 		->save('path/to/new/image.jpg');
+
+Converting Images
+-----------------
+
+The ``convert()`` method changes the library's internal indicator for the desired file format. This doesn't touch the actual image resource, but indicates to ``save()`` what format to use::
+
+	convert(int $imageType)
+
+- **$imageType** is one of PHP's image type constants (see for example https://www.php.net/manual/en/function.image-type-to-mime-type.php)::
+
+	Services::image()
+		->withFile('/path/to/image/mypic.jpg')
+		->convert(IMAGETYPE_PNG)
+		->save('path/to/new/image.png');
+
+.. note:: ImageMagick already saves files in the type
+	indicated by their extension, ignoring **$imageType**
 
 Fitting Images
 --------------

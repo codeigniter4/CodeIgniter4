@@ -75,6 +75,18 @@ interface ImageHandlerInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Changes the stored image type to indicate the new file format to use when saving.
+	 * Does not touch the actual resource.
+	 *
+	 * @param integer|null $imageType A PHP imagetype constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
+	 *
+	 * @return $this
+	 */
+	public function convert(int $imageType);
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Rotates the image on the current canvas.
 	 *
 	 * @param float $angle

@@ -278,6 +278,15 @@ EOH;
 		$this->assertEquals($this->formatter->format($expected), $this->response->getBody());
 	}
 
+	public function testNoContent()
+	{
+		$controller = $this->makeController();
+		$controller->respondNoContent('');
+
+		$this->assertEquals('No Content', $this->response->getReason());
+		$this->assertEquals(204, $this->response->getStatusCode());
+	}
+
 	public function testNotFound()
 	{
 		$controller = $this->makeController();
