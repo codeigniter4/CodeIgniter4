@@ -285,7 +285,7 @@ class MigrationRunner
 				continue;
 			}
 
-			$migrations = array_merge($migrations, $nsMigrations);
+			$migrations = $migrations + $nsMigrations;
 		}
 
 		$migrationStatus = $this->migrate('up', $migrations, end($migrations)->version);
