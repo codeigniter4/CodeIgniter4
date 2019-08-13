@@ -969,7 +969,7 @@ class CodeIgniter
 	public function storePreviousURL($uri)
 	{
 		// Ignore CLI requests
-		if (method_exists($this->request, 'isCLI') && $this->request->isCLI())
+		if (is_cli())
 		{
 			return;
 		}
