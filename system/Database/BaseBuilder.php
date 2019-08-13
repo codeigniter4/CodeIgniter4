@@ -1472,7 +1472,7 @@ class BaseBuilder
 		}
 
 		$result = $returnSQL
-			? $this->getCompiledSelect()
+			? $this->getCompiledSelect($reset)
 			: $this->db->query($this->compileSelect(), $this->binds, false);
 
 		if ($reset === true)
