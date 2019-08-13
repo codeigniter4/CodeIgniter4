@@ -288,6 +288,8 @@ class MigrationRunner
 			$migrations = $migrations + $nsMigrations;
 		}
 
+		ksort($migrations);
+
 		$migrationStatus = $this->migrate('up', $migrations, end($migrations)->version);
 
 		return $migrationStatus;
