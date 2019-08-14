@@ -39,6 +39,7 @@ namespace CodeIgniter\Encryption;
 
 use Config\Encryption as EncryptionConfig;
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
+use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Config\Services;
 
 /**
@@ -59,18 +60,19 @@ class Encryption
 	protected $encrypter;
 
 	/**
-	 * Our remembered configuration
+	 * The driver being used
 	 */
-	protected $config = null;
+	protected $driver;
 
 	/**
-	 * Our default configuration
+	 * The key/seed being used
 	 */
-	protected $default = [
-		'driver' => 'OpenSSL', // The PHP extension we plan to use
-		'key'    => '', // no starting key material
-	];
-	protected $driver, $key;
+	protected $key;
+
+	 /**
+	  * The derived hmac key
+	  */
+	protected $hmacKey;
 
 	/**
 	 * HMAC digest to use
@@ -91,27 +93,19 @@ class Encryption
 	/**
 	 * Class constructor
 	 *
-	 * @param  mixed $params Configuration parameters
+	 * @param  BaseConfig $config Configuration parameters
 	 * @return void
 	 *
 	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
-	public function __construct($params = null)
+	public function __construct(BaseConfig $config = null)
 	{
-		$this->config = array_merge($this->default, (array) new \Config\Encryption());
-
-		if (is_string($params))
+		if (empty($config))
 		{
-			$params = ['driver' => $params];
+			$config = new \Config\Encryption();
 		}
-
-		$params = $this->properParams($params);
-
-		// Check for an unknown driver
-		if (isset($this->drivers[$params['driver']]))
-		{
-			throw EncryptionException::forDriverNotAvailable($params['driver']);
-		}
+		$this->driver = $config->driver;
+		$this->key    = $config->key;
 
 		// determine what is installed
 		$this->handlers = [
@@ -127,14 +121,19 @@ class Encryption
 	/**
 	 * Initialize or re-initialize an encrypter
 	 *
-	 * @param  array $params Configuration parameters
+	 * @param  BaseConfig $config Configuration parameters
 	 * @return \CodeIgniter\Encryption\EncrypterInterface
 	 *
 	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
-	public function initialize(array $params = [])
+	public function initialize(BaseConfig $config = null)
 	{
-		$params = $this->properParams($params);
+		if (empty($config))
+		{
+			$config = new \Config\Encryption();
+		}
+		$this->driver = $config->driver;
+		$this->key    = $config->key;
 
 		// Insist on a driver
 		if (! isset($params['driver']))
@@ -155,53 +154,11 @@ class Encryption
 		}
 
 		// Derive a secret key for the encrypter
-		if (isset($params['key']))
-		{
-			$hmacKey          = strcmp(phpversion(), '7.1.2') >= 0 ? \hash_hkdf($this->digest, $params['key']) : self::hkdf($params['key'], $this->digest);
-			$params['secret'] = bin2hex($hmacKey);
-		}
+			$this->hmacKey = bin2hex(\hash_hkdf($this->digest, $this->key));
 
 		$handlerName     = 'CodeIgniter\\Encryption\\Handlers\\' . $this->driver . 'Handler';
-		$this->encrypter = new $handlerName($params);
+		$this->encrypter = new $handlerName($config);
 		return $this->encrypter;
-	}
-
-	/**
-	 * Determine proper parameters
-	 *
-	 * @param array|object $params
-	 *
-	 * @return array|null
-	 */
-	protected function properParams($params = null)
-	{
-		// use existing config if no parameters given
-		if (empty($params))
-		{
-			$params = $this->config;
-		}
-
-		// treat the paramater as a Config object?
-		if (is_object($params))
-		{
-			$params = (array) $params;
-		}
-
-		// override base config with passed parameters
-		$params = array_merge($this->config, $params);
-		// make sure we only have expected parameters
-		$params = array_intersect_key($params, $this->default);
-
-		// and remember what we are up to
-		$this->config = $params;
-
-		// make the parameters conveniently accessible
-		foreach ($params as $pkey => $value)
-		{
-			$this->$pkey = $value;
-		}
-
-		return $params;
 	}
 
 	// --------------------------------------------------------------------
@@ -246,38 +203,6 @@ class Encryption
 	protected static function strlen($str)
 	{
 		return mb_strlen($str, '8bit');
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * HKDF legacy implementation, from CodeIgniter3.
-	 *
-	 * Fallback if PHP version < 7.1.2
-	 *
-	 * @link https://tools.ietf.org/rfc/rfc5869.txt
-	 *
-	 * @param string  $key    Input key
-	 * @param string  $digest A SHA-2 hashing algorithm
-	 * @param string  $salt   Optional salt
-	 * @param integer $length Output length (defaults to the selected digest size)
-	 * @param string  $info   Optional context/application-specific info
-	 *
-	 * @return string    A pseudo-random key
-	 */
-	public static function hkdf($key, $digest = 'sha512', $salt = null, $length = 64, $info = '')
-	{
-		self::strlen($salt) || $salt = str_repeat("\0", $length);
-
-		$prk = hash_hmac($digest, $key, $salt, true);
-		$key = '';
-		for ($key_block = '', $block_index = 1; self::strlen($key) < $length; $block_index ++)
-		{
-			$key_block = hash_hmac($digest, $key_block . $info . chr($block_index), $prk, true);
-			$key      .= $key_block;
-		}
-
-		return self::substr($key, 0, $length);
 	}
 
 	// --------------------------------------------------------------------

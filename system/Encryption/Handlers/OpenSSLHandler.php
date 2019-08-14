@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CodeIgniter
  *
@@ -38,9 +37,11 @@
 
 namespace CodeIgniter\Encryption\Handlers;
 
- /**
-  * Encryption handling for OpenSSL library
-  */
+use CodeIgniter\Config\BaseConfig;
+
+/**
+ * Encryption handling for OpenSSL library
+ */
 class OpenSSLHandler extends BaseHandler
 {
 
@@ -59,13 +60,13 @@ class OpenSSLHandler extends BaseHandler
 	/**
 	 * Initialize OpenSSL, remembering parameters
 	 *
-	 * @param array $params Configuration parameters
+	 * @param BaseConfig $config
 	 *
 	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
-	public function __construct($params = [])
+	public function __construct(BaseConfig $config)
 	{
-		parent::__construct($params);
+		parent::__construct($config);
 
 		$this->logger->info('OpenSSL handler initialized with cipher ' . $this->cipher . '.');
 	}
@@ -94,13 +95,11 @@ class OpenSSLHandler extends BaseHandler
 		}
 		if (empty($this->key))
 		{
-			throw new EncryptionException('Encrypter needs a starter key.');
+			throw EncryptionException::forStarterKeyNeeded();
 		}
 
 		// derive a secret key
-		$secret = strcmp(phpversion(), '7.1.2') >= 0 ?
-				\hash_hkdf($this->digest, $this->key) :
-				\CodeIgniter\Encryption\Encryption::hkdf($this->key, $this->digest);
+		$secret = \hash_hkdf($this->digest, $this->key);
 
 		// basic encryption
 		$iv = ($iv_size = \openssl_cipher_iv_length($this->cipher)) ? \openssl_random_pseudo_bytes($iv_size) : null;
@@ -146,13 +145,11 @@ class OpenSSLHandler extends BaseHandler
 		}
 		if (empty($this->key))
 		{
-			throw new EncryptionException('Decrypter needs a starter key.');
+			throw EncryptionException::forStarterKeyNeeded();
 		}
 
 		// derive a secret key
-		$secret = strcmp(phpversion(), '7.1.2') >= 0 ?
-				\hash_hkdf($this->digest, $this->key) :
-				\CodeIgniter\Encryption\Encryption::hkdf($this->key, $this->digest);
+		$secret = \hash_hkdf($this->digest, $this->key);
 
 		$hmacLength = self::substr($this->digest, 3) / 8;
 		$hmacKey    = self::substr($data, 0, $hmacLength);
@@ -160,7 +157,7 @@ class OpenSSLHandler extends BaseHandler
 		$hmacCalc   = \hash_hmac($this->digest, $data, $this->secret, true);
 		if (! hash_equals($hmacKey, $hmacCalc))
 		{
-			throw new \CodeIgniter\Encryption\EncryptionException('Message authentication failed.');
+			throw EncryptionException::forAuthenticationFailed();
 		}
 
 		if ($iv_size = \openssl_cipher_iv_length($this->cipher))

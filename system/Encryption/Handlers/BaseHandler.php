@@ -38,6 +38,7 @@
 
 namespace CodeIgniter\Encryption\Handlers;
 
+use CodeIgniter\Config\BaseConfig;
 use Psr\Log\LoggerAwareTrait;
 
 /**
@@ -67,15 +68,13 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	/**
 	 * Constructor
 	 *
-	 * @param array $config
+	 * @param BaseConfig $config
 	 */
-	public function __construct($config = [])
+	public function __construct(BaseConfig $config)
 	{
-		$this->logger = \Config\Services::logger(true);
-
 		if (empty($config))
 		{
-			throw new EncryptionException('Encryption handler needs configuration parameters.');
+			throw EncryptionException::forConfigNeeded();
 		}
 		$this->config = $config;
 
@@ -122,7 +121,6 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	 */
 	public function __get($key)
 	{
-		//FIXME
 		if (in_array($key, ['cipher', 'key'], true))
 		{
 			return $this->{$key};

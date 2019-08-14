@@ -1,8 +1,8 @@
 <?php
 namespace CodeIgniter\Encryption;
 
-//use Config\Encryption;
 use Config\Services;
+use CodeIgniter\Config\BaseConfig;
 
 //use CodeIgniter\Encryption\Encryption;
 
@@ -54,47 +54,6 @@ class EncryptionTest extends \CIUnitTestCase
 		$this->assertNotNull($this->encrypt);
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\Encryption\Exceptions\EncryptionException
-	 */
-	public function testBadImpliedDriver()
-	{
-		// ask for a bad driver
-		$this->encrypt = new \CodeIgniter\Encryption\Encryption('Boguser');
-		$this->encrypt->initialize();
-		$this->assertNotNull($this->encrypt);
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Config parameters test
-	 */
-	public function testParameters()
-	{
-		// make sure we don't actually need parameters
-		$this->assertTrue(is_array($this->encryption->config));
-
-		// check that defaults are there
-		$defaults = $this->encryption->default;
-		foreach ($defaults as $key => $value)
-		{
-			$this->assertEquals($value, $this->encryption->$key);
-		}
-
-		// make sure we can over-ride any parameter
-		// change the driver once we have more than 1
-		$expected      = [
-			'driver' => 'OpenSSL', // The PHP extension we plan to use
-			'key'    => 'Top banana', // no starting key material
-		];
-		$this->encrypt = new \CodeIgniter\Encryption\Encryption($expected);
-		foreach ($expected as $key => $value)
-		{
-			$this->assertEquals($value, $this->encrypt->$key);
-		}
-	}
-
 	// --------------------------------------------------------------------
 
 	public function testKeyCreation()
@@ -102,26 +61,6 @@ class EncryptionTest extends \CIUnitTestCase
 		$this->assertNotEmpty($this->encryption->createKey());
 		$this->assertEquals(32, strlen($this->encryption->createKey()));
 		$this->assertEquals(16, strlen($this->encryption->createKey(16)));
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Initialization test
-	 */
-	public function testInitialization()
-	{
-		// make sure we can over-ride any parameter
-		// change the driver once we have more than 1
-		$expected      = [
-			'driver' => 'OpenSSL', // The PHP extension we plan to use
-			'key'    => 'Top banana', // no starting key material
-		];
-		$this->encrypt = $this->encryption->initialize($expected);
-		foreach ($expected as $key => $value)
-		{
-			$this->assertEquals($value, $this->encrypt->$key);
-		}
 	}
 
 }

@@ -202,13 +202,14 @@ class Services extends BaseService
 			return static::getSharedInstance('encrypter', $config);
 		}
 
-		if ($config !== null && is_object($config))
+		if (empty($config))
 		{
-			$config = (array) $config;
+			$config = new \Config\Encryption();
 		}
 
-		$encryption = new Encryption($config);
-		$encrypter  = $encryption->initialize($config);
+		$encryption        = new Encryption($config);
+		$encrypter         = $encryption->initialize($config);
+		$encrypter->logger = \Config\Services::logger(true);
 		return $encrypter;
 	}
 
@@ -407,7 +408,7 @@ class Services extends BaseService
 			return static::getSharedInstance('logger');
 		}
 
-		return new \CodeIgniter\Log\Logger(new LoggerConfig());
+		return new \CodeIgniter\Log\Logger(config('logger'));
 	}
 
 	//--------------------------------------------------------------------

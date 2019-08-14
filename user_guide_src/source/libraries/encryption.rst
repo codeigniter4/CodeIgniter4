@@ -76,14 +76,10 @@ driver   Preferred handler (OpenSSL)
 key      Encryption key starter
 ======== ===============================================
 
-You can over-ride any of these settings by passing your own ``Config`` object,
-or an associative array of parameters, or even just the driver name, to the Services::
+You can over-ride any of these settings by passing your own ``Config`` object
+to the Services::
 
-    $encrypter = \Config\Services::encrypter($params);
-    $encrypter2 = \Config\Services::encrypter('OpenSSL');
-    $encrypter3 = \Config\Services::encrypter(['key' => 'OpenSSL']);
-
-These will replace any same-named settings in ``Config\Encryption``.
+    $encrypter = \Config\Services::encrypter($config);
 
 Default behavior
 ================
@@ -189,15 +185,7 @@ directly, to create an ``Encrypter`` or to change the settings
 of the current one::
 
     $encryption = new \Encryption\Encryption();
-    $encrypter = $encryption->initialize($params);
-
-Alternately, you could use the encryption manager directly::
-
-    $encryption = new \Encryption\Encryption();
-
-     $encrypter= $encryption->initialize(['driver' => 'OpenSSL']);;
-    // now encrypt data using OpenSSL
-
+    $encrypter = $encryption->initialize($config);
 
 
 ***************
@@ -216,9 +204,9 @@ Class Reference
 		the operating system's sources (i.e. /dev/urandom).
 
 
-	.. php:method:: initialize($params)
+	.. php:method:: initialize($config)
 
-		:param	array	$params: Configuration parameters
+		:param	BaseConfig	$config: Configuration parameters
 		:returns:	CodeIgniter\\Encryption\\EncrypterInterface instance
 		:rtype:	CodeIgniter\\Encryption\\EncrypterInterface
 		:throws:	CodeIgniter\\Encryption\\EncryptionException

@@ -16,7 +16,7 @@ class Encryption extends BaseConfig
 	  | Encryption Key Starter
 	  |--------------------------------------------------------------------------
 	  |
-	  | If you use the Encryption class you must set an encryption key.
+	  | If you use the Encryption class you must set an encryption key (seed).
 	  | You need to ensure it is long enough for the cipher and mode you plan to use.
 	  | See the user guide for more info.
 	 */
