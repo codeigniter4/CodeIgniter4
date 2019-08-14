@@ -20,6 +20,10 @@ for fff in $releasable ; do
     cp -rf ${CI_DIR}/$fff .
 done
 
+rm -rf tests
+mkdir tests
+cp -rf ${CI_DIR}/tests/_support tests/
+
 echo -e "${BOLD}Override as needed...${NORMAL}"
 cp -rf ${CI_DIR}/admin/starter/* .
 

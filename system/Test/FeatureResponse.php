@@ -31,7 +31,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -49,15 +49,24 @@ class FeatureResponse extends TestCase
 {
 
 	/**
+	 * The response.
+	 *
 	 * @var \CodeIgniter\HTTP\Response
 	 */
 	public $response;
 
 	/**
+	 * DOM for the body.
+	 *
 	 * @var \CodeIgniter\Test\DOMParser
 	 */
 	protected $domParser;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param Response $response
+	 */
 	public function __construct(Response $response = null)
 	{
 		$this->response = $response;
@@ -351,7 +360,7 @@ class FeatureResponse extends TestCase
 	}
 
 	/**
-	 *
+	 * Test that the response contains a matching JSON fragment.
 	 *
 	 * @param array $fragment
 	 *

@@ -31,7 +31,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -198,7 +198,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Returns the total number of rows affected by this query.
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function affectedRows(): int
 	{
@@ -414,6 +414,30 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 
 		return $retVal;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns platform-specific SQL to disable foreign key checks.
+	 *
+	 * @return string
+	 */
+	protected function _disableForeignKeyChecks()
+	{
+		return 'SET CONSTRAINTS ALL DEFERRED';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns platform-specific SQL to enable foreign key checks.
+	 *
+	 * @return string
+	 */
+	protected function _enableForeignKeyChecks()
+	{
+		return 'SET CONSTRAINTS ALL IMMEDIATE;';
 	}
 
 	//--------------------------------------------------------------------

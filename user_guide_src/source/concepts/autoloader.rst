@@ -92,5 +92,5 @@ Composer support is automatically initialized by default. By default, it looks f
 ROOTPATH.'vendor/autoload.php'. If you need to change the location of that file for any reason, you can modify
 the value defined in ``Config\Constants.php``.
 
-.. note:: If the same namespace is defined in both CodeIgniter and Composer, CodeIgniter's autoloader will
+.. note:: If the same namespace is defined in both CodeIgniter and Composer, CodeIgniter's autoloader will be
     the first one to get a chance to locate the file.

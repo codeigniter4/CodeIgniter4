@@ -31,7 +31,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -76,6 +76,12 @@ class PredisHandler implements CacheInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param  type $config
+	 * @throws type
+	 */
 	public function __construct($config)
 	{
 		$this->prefix = $config->prefix ?: '';
@@ -93,6 +99,8 @@ class PredisHandler implements CacheInterface
 	 */
 	public function initialize()
 	{
+		// Try to connect to Redis, if an issue occurs throw a CriticalError exception,
+		// so that the CacheFactory can attempt to initiate the next cache handler.
 		try
 		{
 			// Create a new instance of Predis\Client
@@ -104,7 +112,7 @@ class PredisHandler implements CacheInterface
 		catch (\Exception $e)
 		{
 			// thrown if can't connect to redis server.
-			throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ')');
+			throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ').');
 		}
 	}
 

@@ -31,7 +31,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -41,6 +41,7 @@ use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Debug\Toolbar\Collectors\History;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
+use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
@@ -57,6 +58,8 @@ use Config\Services;
 class Toolbar
 {
 	/**
+	 * Toolbar configuration settings.
+	 *
 	 * @var BaseConfig
 	 */
 	protected $config;
@@ -221,9 +224,9 @@ class Toolbar
 	protected function renderTimeline(array $collectors, $startTime, int $segmentCount, int $segmentDuration, array &$styles): string
 	{
 		$displayTime = $segmentCount * $segmentDuration;
-		$rows = $this->collectTimelineData($collectors);
-		$output = '';
-		$styleCount = 0;
+		$rows        = $this->collectTimelineData($collectors);
+		$output      = '';
+		$styleCount  = 0;
 
 		foreach ($rows as $row)
 		{
@@ -237,9 +240,9 @@ class Toolbar
 			$length = (($row['duration'] * 1000) / $displayTime) * 100;
 
 			$styles['debug-bar-timeline-' . $styleCount] = "left: {$offset}%; width: {$length}%;";
-			$output .= "<span class='timer debug-bar-timeline-{$styleCount}' title='" . number_format($length, 2) . "%'></span>";
-			$output .= '</td>';
-			$output .= '</tr>';
+			$output                                     .= "<span class='timer debug-bar-timeline-{$styleCount}' title='" . number_format($length, 2) . "%'></span>";
+			$output                                     .= '</td>';
+			$output                                     .= '</tr>';
 
 			$styleCount++;
 		}
@@ -320,14 +323,28 @@ class Toolbar
 
 	//--------------------------------------------------------------------
 
-	public function prepare()
+	/**
+	 * Prepare for debugging..
+	 *
+	 * @param  RequestInterface  $request
+	 * @param  ResponseInterface $response
+	 * @global type $app
+	 * @return type
+	 */
+	public function prepare(RequestInterface $request = null, ResponseInterface $response = null)
 	{
 		if (CI_DEBUG && ! is_cli())
 		{
 			global $app;
 
-			$request  = Services::request();
-			$response = Services::response();
+			$request  = $request ?? Services::request();
+			$response = $response ?? Services::response();
+
+			// Disable the toolbar for downloads
+			if ($response instanceof DownloadResponse)
+			{
+				return;
+			}
 
 			$toolbar = Services::toolbar(config(Toolbar::class));
 			$stats   = $app->getPerformanceStats();
@@ -388,7 +405,7 @@ class Toolbar
 	//--------------------------------------------------------------------
 
 	/**
-	 *
+	 * Inject debug toolbar into the response.
 	 */
 	public function respond()
 	{

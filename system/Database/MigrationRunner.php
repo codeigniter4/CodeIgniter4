@@ -31,7 +31,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -56,25 +56,11 @@ class MigrationRunner
 	protected $enabled = false;
 
 	/**
-	 * The type of migrations to use (sequential or timestamp)
-	 *
-	 * @var string
-	 */
-	protected $type;
-
-	/**
 	 * Name of table to store meta information
 	 *
 	 * @var string
 	 */
 	protected $table;
-
-	/**
-	 * The version that current() will take us to.
-	 *
-	 * @var integer
-	 */
-	protected $currentVersion = 0;
 
 	/**
 	 * The Namespace  where migrations can be found.
@@ -102,7 +88,7 @@ class MigrationRunner
 	 *
 	 * @var string
 	 */
-	protected $regex;
+	protected $regex = '/^\d{4}[_-]?\d{2}[_-]?\d{2}[_-]?\d{6}_(\w+)$/';
 
 	/**
 	 * The main database connection. Used to store
@@ -159,10 +145,8 @@ class MigrationRunner
 	 */
 	public function __construct(BaseConfig $config, $db = null)
 	{
-		$this->enabled        = $config->enabled ?? false;
-		$this->type           = $config->type ?? 'timestamp';
-		$this->table          = $config->table ?? 'migrations';
-		$this->currentVersion = $config->currentVersion ?? 0;
+		$this->enabled = $config->enabled ?? false;
+		$this->table   = $config->table ?? 'migrations';
 
 		// Default name space is the app namespace
 		$this->namespace = APP_NAMESPACE;
@@ -171,14 +155,6 @@ class MigrationRunner
 		$config      = config('Database');
 		$this->group = $config->defaultGroup;
 		unset($config);
-
-		if (! in_array($this->type, ['sequential', 'timestamp']))
-		{
-			throw ConfigException::forInvalidMigrationType($this->type);
-		}
-
-		// Migration basename regex
-		$this->regex = ($this->type === 'timestamp') ? '/^\d{14}_(\w+)$/' : '/^\d{3}_(\w+)$/';
 
 		// If no db connection passed in, use
 		// default database group.
@@ -221,12 +197,6 @@ class MigrationRunner
 			$this->setGroup($group);
 		}
 
-		// Sequential versions need adjusting to 3 places so they can be found later.
-		if ($this->type === 'sequential')
-		{
-			$targetVersion = str_pad($targetVersion, 3, '0', STR_PAD_LEFT);
-		}
-
 		$migrations = $this->findMigrations();
 
 		if (empty($migrations))
@@ -237,64 +207,11 @@ class MigrationRunner
 		// Get Namespace current version
 		// Note: We use strings, so that timestamp versions work on 32-bit systems
 		$currentVersion = $this->getVersion();
-		if ($targetVersion > $currentVersion)
-		{
-			// Moving Up
-			$method = 'up';
-			ksort($migrations);
-		}
-		else
-		{
-			// Moving Down, apply in reverse order
-			$method = 'down';
-			krsort($migrations);
-		}
+
+		list($method, $migrations) = $this->determineDirection($targetVersion, $currentVersion, $migrations);
 
 		// Check Migration consistency
-		$this->checkMigrations($migrations, $method, $targetVersion);
-
-		// loop migration for each namespace (module)
-
-		$migrationStatus = false;
-		foreach ($migrations as $version => $migration)
-		{
-			// Only include migrations within the scoop
-			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion))
-			{
-				$migrationStatus = false;
-				include_once $migration->path;
-				// Get namespaced class name
-				$class = $this->namespace . '\Database\Migrations\Migration_' . ($migration->name);
-
-				$this->setName($migration->name);
-
-				// Validate the migration file structure
-				if (! class_exists($class, false))
-				{
-					throw new \RuntimeException(sprintf(lang('Migrations.classNotFound'), $class));
-				}
-
-				// Forcing migration to selected database group
-				$instance = new $class(\Config\Database::forge($this->group));
-
-				if (! is_callable([$instance, $method]))
-				{
-					throw new \RuntimeException(sprintf(lang('Migrations.missingMethod'), $method));
-				}
-
-				$instance->{$method}();
-				if ($method === 'up')
-				{
-					$this->addHistory($migration->version);
-				}
-				elseif ($method === 'down')
-				{
-					$this->removeHistory($migration->version);
-				}
-
-				$migrationStatus = true;
-			}
-		}
+		$migrationStatus = $this->migrate($method, $migrations, $targetVersion);
 
 		return ($migrationStatus) ? $targetVersion : false;
 	}
@@ -355,51 +272,25 @@ class MigrationRunner
 		// Get all namespaces from the autoloader
 		$namespaces = Services::autoloader()->getNamespace();
 
+		// Collect the migrations to run
+		$migrations = [];
+
 		foreach ($namespaces as $namespace => $paths)
 		{
 			$this->setNamespace($namespace);
-			$migrations = $this->findMigrations();
+			$nsMigrations = $this->findMigrations();
 
-			if (empty($migrations))
+			if (empty($nsMigrations))
 			{
 				continue;
 			}
 
-			$lastMigration = end($migrations)->version;
-			// No New migrations to add
-			if ($lastMigration === $this->getVersion())
-			{
-				continue;
-			}
-
-			// Calculate the last migration step from existing migration
-			// filenames and proceed to the standard version migration
-			$this->version($lastMigration);
+			$migrations = array_merge($migrations, $nsMigrations);
 		}
 
-		return true;
-	}
+		$migrationStatus = $this->migrate('up', $migrations, end($migrations)->version);
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * Sets the (APP_NAMESPACE) schema to $currentVersion in migration config file
-	 *
-	 * @param string|null $group
-	 *
-	 * @return mixed    Current version string on success, FALSE on failure or no migrations are found
-	 */
-	public function current(string $group = null)
-	{
-		$this->ensureTable();
-
-		// Set database group if not null
-		if (! is_null($group))
-		{
-			$this->setGroup($group);
-		}
-
-		return $this->version($this->currentVersion);
+		return $migrationStatus;
 	}
 
 	//--------------------------------------------------------------------
@@ -412,6 +303,7 @@ class MigrationRunner
 	public function findMigrations(): array
 	{
 		$migrations = [];
+		$locator    = Services::locator(true);
 
 		// If $this->path contains a valid directory use it.
 		if (! empty($this->path))
@@ -423,8 +315,7 @@ class MigrationRunner
 		// Otherwise use FileLocator to search files in the subdirectory of the namespace
 		else
 		{
-			$locator = Services::locator(true);
-			$files   = $locator->listNamespaceFiles($this->namespace, '/Database/Migrations/');
+			$files = $locator->listNamespaceFiles($this->namespace, '/Database/Migrations/');
 		}
 
 		// Load all *_*.php files in the migrations path
@@ -451,6 +342,7 @@ class MigrationRunner
 				$migration->path    = ! empty($this->path) && strpos($file, $this->path) !== 0
 					? $this->path . $file
 					: $file;
+				$migration->class   = $locator->getClassname($file);
 
 				// Add to migrations[version]
 				$migrations[$migration->version] = $migration;
@@ -466,7 +358,6 @@ class MigrationRunner
 
 	/**
 	 *  checks if the list of available migration scripts list are consistent
-	 *  if sequential check if no gaps and check if all consistent with migrations table if downgrading
 	 *  if timestamp check if consistent with migrations table if downgrading
 	 *
 	 * @param array  $migrations
@@ -506,12 +397,9 @@ class MigrationRunner
 		}
 		// Check for sequence gaps
 		$loop = 0;
+
 		foreach ($migrations as $migration)
 		{
-			if ($this->type === 'sequential' && abs($migration->version - $loop) > 1)
-			{
-				throw new \RuntimeException(lang('Migrations.gap') . ' ' . $migration->version);
-			}
 			// Check if all old migration files are all available to do downgrading
 			if ($method === 'down')
 			{
@@ -520,7 +408,7 @@ class MigrationRunner
 					throw new \RuntimeException(lang('Migrations.gap') . ' ' . $migration->version);
 				}
 			}
-			$loop ++;
+			$loop++;
 		}
 
 		return true;
@@ -606,10 +494,10 @@ class MigrationRunner
 		$this->ensureTable();
 
 		$query = $this->db->table($this->table)
-				->where('group', $group)
-				->where('namespace', $this->namespace)
-				->orderBy('version', 'ASC')
-				->get();
+						  ->where('group', $group)
+						  ->where('namespace', $this->namespace)
+						  ->orderBy('version', 'ASC')
+						  ->get();
 
 		if (! $query)
 		{
@@ -647,7 +535,9 @@ class MigrationRunner
 	 */
 	protected function getMigrationNumber(string $migration): string
 	{
-		return sscanf($migration, '%[0-9]+', $number) ? $number : '0';
+		preg_match('/^\d{4}[_-]?\d{2}[_-]?\d{2}[_-]?\d{6}/', $migration, $matches);
+
+		return count($matches) ? $matches[0] : '0';
 	}
 
 	//--------------------------------------------------------------------
@@ -679,11 +569,11 @@ class MigrationRunner
 		$this->ensureTable();
 
 		$row = $this->db->table($this->table)
-				->select('version')
-				->where('group', $this->group)
-				->where('namespace', $this->namespace)
-				->orderBy('version', 'DESC')
-				->get();
+						->select('version')
+						->where('group', $this->group)
+						->where('namespace', $this->namespace)
+						->orderBy('version', 'DESC')
+						->get();
 
 		return $row && ! is_null($row->getRow()) ? $row->getRow()->version : '0';
 	}
@@ -705,25 +595,32 @@ class MigrationRunner
 	/**
 	 * Stores the current schema version.
 	 *
-	 * @param string $version
+	 * @param string  $version
+	 * @param integer $batch
 	 *
+	 * @return   void
 	 * @internal param string $migration Migration reached
-	 *
-	 * @return void
 	 */
-	protected function addHistory(string $version)
+	protected function addHistory(string $version, int $batch = null)
 	{
+		if (empty($batch))
+		{
+			$batch = $this->getLastBatch() + 1;
+		}
+
 		$this->db->table($this->table)
-				->insert([
-					'version'   => $version,
-					'name'      => $this->name,
-					'group'     => $this->group,
-					'namespace' => $this->namespace,
-					'time'      => time(),
-				]);
+				 ->insert([
+					 'version'   => $version,
+					 'name'      => $this->name,
+					 'group'     => $this->group,
+					 'namespace' => $this->namespace,
+					 'time'      => time(),
+					 'batch'     => $batch,
+				 ]);
 		if (is_cli())
 		{
-			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.added'), 'yellow') . "($this->namespace) " . $version . '_' . $this->name;
+			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.added'),
+					'yellow') . "($this->namespace) " . $version . '_' . $this->name;
 		}
 	}
 
@@ -733,19 +630,103 @@ class MigrationRunner
 	 * Removes a single history
 	 *
 	 * @param string $version
+	 *
 	 * @return void
 	 */
 	protected function removeHistory(string $version)
 	{
 		$this->db->table($this->table)
-				->where('version', $version)
-				->where('group', $this->group)
-				->where('namespace', $this->namespace)
-				->delete();
+				 ->where('version', $version)
+				 ->where('group', $this->group)
+				 ->where('namespace', $this->namespace)
+				 ->delete();
+
 		if (is_cli())
 		{
-			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.removed'), 'yellow') . "($this->namespace) " . $version . '_' . $this->name;
+			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.removed'),
+					'yellow') . "($this->namespace) " . $version . '_' . $this->name;
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Truncates the history table.
+	 *
+	 * @return boolean
+	 */
+	public function clearHistory()
+	{
+		if ($this->db->tableExists($this->table))
+		{
+			$this->db->table($this->table)
+					 ->truncate();
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the value of the last batch in the database.
+	 *
+	 * @return integer
+	 */
+	public function getLastBatch(): int
+	{
+		$this->ensureTable();
+
+		$batch = $this->db->table($this->table)
+						  ->selectMax('batch')
+						  ->get()
+						  ->getResultObject();
+
+		$batch = is_array($batch) && count($batch)
+			? end($batch)->batch
+			: 0;
+
+		return (int)$batch;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the version number of the first migration for a batch.
+	 *
+	 * @param integer $batch
+	 *
+	 * @return string
+	 */
+	public function getBatchStart(int $batch): string
+	{
+		$migration = $this->db->table($this->table)
+			->where('batch', $batch)
+			->orderBy('id', 'asc')
+			->limit(1)
+			->get()
+			->getResultObject();
+
+		return count($migration) ? $migration[0]->version : '0';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the version number of the last migration for a batch.
+	 *
+	 * @param integer $batch
+	 *
+	 * @return string
+	 */
+	public function getBatchEnd(int $batch): string
+	{
+		$migration = $this->db->table($this->table)
+			  ->where('batch', $batch)
+			  ->orderBy('id', 'desc')
+			  ->limit(1)
+			  ->get()
+			  ->getResultObject();
+
+		return count($migration) ? $migration[0]->version : 0;
 	}
 
 	//--------------------------------------------------------------------
@@ -764,15 +745,20 @@ class MigrationRunner
 		$forge = \Config\Database::forge($this->db);
 
 		$forge->addField([
+			'id'        => [
+				'type'           => 'INTEGER',
+				'constraint'     => 255,
+				'unsigned'       => true,
+				'auto_increment' => true,
+			],
 			'version'   => [
 				'type'       => 'VARCHAR',
 				'constraint' => 255,
 				'null'       => false,
 			],
-			'name'      => [
-				'type'       => 'VARCHAR',
-				'constraint' => 255,
-				'null'       => false,
+			'class'     => [
+				'type' => 'TEXT',
+				'null' => false,
 			],
 			'group'     => [
 				'type'       => 'VARCHAR',
@@ -789,12 +775,148 @@ class MigrationRunner
 				'constraint' => 11,
 				'null'       => false,
 			],
+			'batch'     => [
+				'type'       => 'INT',
+				'constraint' => 11,
+				'null'       => false,
+			],
 		]);
 
+		$forge->addPrimaryKey('id');
 		$forge->createTable($this->table, true);
 
 		$this->tableChecked = true;
 	}
 
+	/**
+	 * @param string $targetVersion
+	 * @param string $currentVersion
+	 * @param array  $migrations
+	 *
+	 * @return array
+	 */
+	protected function determineDirection(string $targetVersion, string $currentVersion, array &$migrations): array
+	{
+		if ($targetVersion > $currentVersion)
+		{
+			// Moving Up
+			$method = 'up';
+			ksort($migrations);
+		}
+		else
+		{
+			// Moving Down, apply in reverse order
+			$method = 'down';
+			krsort($migrations);
+		}
+
+		return [
+			$method,
+			$migrations,
+		];
+	}
+
 	//--------------------------------------------------------------------
+
+	/**
+	 * Given an array of history items will either remove them
+	 * of add them to the table.
+	 *
+	 * @param array   $histories
+	 * @param string  $method
+	 * @param integer $batch
+	 */
+	protected function updateHistory(array $histories, string $method, int $batch)
+	{
+		if ($method === 'up')
+		{
+			$time = time();
+
+			foreach ($histories as $history)
+			{
+				$this->db->table($this->table)
+						 ->insert([
+							 'version'   => $history->version,
+							 'class'     => $history->class,
+							 'group'     => $this->group,
+							 'namespace' => $this->namespace,
+							 'time'      => $time,
+							 'batch'     => $batch,
+						 ]);
+			}
+		}
+		elseif ($method === 'down')
+		{
+			$classes = [];
+
+			foreach ($histories as $history)
+			{
+				$classes[] = $history->class;
+			}
+
+			if (count($classes))
+			{
+				$this->db->table($this->table)
+						 ->whereIn('class', $classes)
+						 ->delete();
+			}
+		}
+	}
+
+	/**
+	 * Handles the actual running of migrations.
+	 *
+	 * @param $direction
+	 * @param $migrations
+	 * @param string     $targetVersion
+	 *
+	 * @return boolean
+	 */
+	protected function migrate($direction, $migrations, string $targetVersion): bool
+	{
+		$this->checkMigrations($migrations, $direction, $targetVersion);
+
+		$batch          = $this->getLastBatch() + 1;
+		$currentVersion = $this->getVersion();
+
+		// loop migration for each namespace (module)
+		$migrationStatus = false;
+		$history         = [];
+		foreach ($migrations as $version => $migration)
+		{
+			// Only include migrations within the scope
+			if (($direction === 'up' && $version > $currentVersion && $version <= $targetVersion) || ($direction === 'down' && $version <= $currentVersion && $version >= $targetVersion))
+			{
+				$migrationStatus = false;
+				include_once $migration->path;
+
+				$class = $migration->class;
+				$this->setName($migration->name);
+
+				// Validate the migration file structure
+				if (! class_exists($class, false))
+				{
+					throw new \RuntimeException(sprintf(lang('Migrations.classNotFound'), $class));
+				}
+
+				// Forcing migration to selected database group
+				$instance = new $class(\Config\Database::forge($this->group));
+
+				if (! is_callable([$instance, $direction]))
+				{
+					throw new \RuntimeException(sprintf(lang('Migrations.missingMethod'), $direction));
+				}
+
+				$instance->{$direction}();
+
+				$history[] = $migration;
+
+				$migrationStatus = true;
+			}
+		}
+
+		$this->updateHistory($history, $direction, $batch);
+
+		return $migrationStatus;
+	}
 }

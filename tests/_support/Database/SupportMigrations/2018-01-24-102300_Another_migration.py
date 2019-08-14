@@ -1,6 +1,6 @@
 <?php namespace App\Database\Migrations;
 
-class Migration_some_migration extends \CodeIgniter\Database\Migration
+class Migration_another_migration extends \CodeIgniter\Database\Migration
 {
 	public function up()
 	{
@@ -19,6 +19,6 @@ class Migration_some_migration extends \CodeIgniter\Database\Migration
 
 	public function down()
 	{
-		$this->forge->dropTable('foo');
+		$this->forge->dropTable('foo', true);
 	}
 }

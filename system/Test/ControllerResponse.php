@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -48,25 +48,36 @@ use CodeIgniter\HTTP\ResponseInterface;
 class ControllerResponse {
 
 	/**
+	 * The request.
+	 *
 	 * @var \CodeIgniter\HTTP\IncomingRequest
 	 */
 	protected $request;
 
 	/**
+	 * The response.
+	 *
 	 * @var \CodeIgniter\HTTP\Response
 	 */
 	protected $response;
 
 	/**
+	 * The message payload.
+	 *
 	 * @var string
 	 */
 	protected $body;
 
 	/**
+	 * DOM for the body.
+	 *
 	 * @var DOMParser
 	 */
 	protected $dom;
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct()
 	{
 		$this->dom = new DOMParser();
@@ -77,6 +88,8 @@ class ControllerResponse {
 	//--------------------------------------------------------------------
 
 	/**
+	 * Set the body & DOM.
+	 *
 	 * @param string $body
 	 *
 	 * @return $this
@@ -94,6 +107,8 @@ class ControllerResponse {
 	}
 
 	/**
+	 * Retrieve the body.
+	 *
 	 * @return string
 	 */
 	public function getBody()
@@ -102,6 +117,8 @@ class ControllerResponse {
 	}
 
 	/**
+	 * Set the request.
+	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface $request
 	 *
 	 * @return $this
@@ -114,6 +131,8 @@ class ControllerResponse {
 	}
 
 	/**
+	 * Set the response.
+	 *
 	 * @param \CodeIgniter\HTTP\ResponseInterface $response
 	 *
 	 * @return $this
@@ -128,6 +147,8 @@ class ControllerResponse {
 	}
 
 	/**
+	 * Request accessor.
+	 *
 	 * @return \CodeIgniter\HTTP\IncomingRequest
 	 */
 	public function request()
@@ -136,6 +157,8 @@ class ControllerResponse {
 	}
 
 	/**
+	 * Response accessor.
+	 *
 	 * @return \CodeIgniter\HTTP\Response
 	 */
 	public function response()

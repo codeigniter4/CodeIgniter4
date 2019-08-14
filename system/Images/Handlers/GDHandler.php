@@ -31,7 +31,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -45,8 +45,12 @@ use CodeIgniter\Images\Exceptions\ImageException;
 class GDHandler extends BaseHandler
 {
 
-	public $version;
-
+	/**
+	 * Constructor.
+	 *
+	 * @param  type $config
+	 * @throws type
+	 */
 	public function __construct($config = null)
 	{
 		parent::__construct($config);
@@ -370,8 +374,8 @@ class GDHandler extends BaseHandler
 	 * This simply creates an image resource handle
 	 * based on the type of image being processed
 	 *
-	 * @param string    $path
-	 * @param string    $imageType
+	 * @param string $path
+	 * @param string $imageType
 	 *
 	 * @return resource|boolean
 	 */
@@ -423,6 +427,8 @@ class GDHandler extends BaseHandler
 	//--------------------------------------------------------------------
 
 	/**
+	 * Add text overlay to an image.
+	 *
 	 * @param string $text
 	 * @param array  $options
 	 *
@@ -561,11 +567,21 @@ class GDHandler extends BaseHandler
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Return image width.
+	 *
+	 * @return integer
+	 */
 	public function _getWidth()
 	{
 		return imagesx($this->resource);
 	}
 
+	/**
+	 * Return image height.
+	 *
+	 * @return integer
+	 */
 	public function _getHeight()
 	{
 		return imagesy($this->resource);

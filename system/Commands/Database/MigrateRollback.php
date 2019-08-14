@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -72,7 +72,7 @@ class MigrateRollback extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $description = 'Runs all of the migrations in reverse order, until they have all been un-applied.';
+	protected $description = 'Runs the down method for all migrations in the last batch.';
 
 	/**
 	 * the Command's usage
@@ -94,9 +94,8 @@ class MigrateRollback extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-n'   => 'Set migration namespace',
-		'-g'   => 'Set database group',
-		'-all' => 'Set latest for all namespace, will ignore (-n) option',
+		'-b' => 'Specify a batch to roll back to',
+		'-g' => 'Set database group',
 	];
 
 	/**
@@ -117,29 +116,13 @@ class MigrateRollback extends BaseCommand
 		{
 			$runner->setGroup($group);
 		}
+
 		try
 		{
-			if (! $this->isAllNamespace($params))
-			{
-				$namespace = $params['-n'] ?? CLI::getOption('n');
-				$runner->version(0, $namespace);
-			}
-			else
-			{
-				// Get all namespaces form  PSR4 paths.
-				$config     = new Autoload();
-				$namespaces = $config->psr4;
-				foreach ($namespaces as $namespace => $path)
-				{
-					$runner->setNamespace($namespace);
-					$migrations = $runner->findMigrations();
-					if (empty($migrations))
-					{
-						continue;
-					}
-					$runner->version(0, $namespace, $group);
-				}
-			}
+			$batch = $params['-b'] ?? $runner->getLastBatch();
+
+			$runner->version($runner->getBatchStart($batch));
+
 			$messages = $runner->getCliMessages();
 			foreach ($messages as $message)
 			{
@@ -153,25 +136,4 @@ class MigrateRollback extends BaseCommand
 			$this->showError($e);
 		}
 	}
-
-	/**
-	 * To migrate all namespaces to the latest migration
-	 *
-	 * Demo:
-	 *  1. command line: php spark migrate:latest -all
-	 *  2. command file: $this->call('migrate:latest', ['-g' => 'test','-all']);
-	 *
-	 * @param  array $params
-	 * @return boolean
-	 */
-	private function isAllNamespace(array $params): bool
-	{
-		if (array_search('-all', $params) !== false)
-		{
-			return true;
-		}
-
-		return ! is_null(CLI::getOption('all'));
-	}
-
 }

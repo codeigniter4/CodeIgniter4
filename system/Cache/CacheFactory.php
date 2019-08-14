@@ -32,13 +32,14 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
 namespace CodeIgniter\Cache;
 
 use CodeIgniter\Cache\Exceptions\CacheException;
+use CodeIgniter\Exceptions\CriticalError;
 
 /**
  * Class Cache
@@ -93,7 +94,20 @@ class CacheFactory
 			}
 		}
 
-		$adapter->initialize();
+		// If $adapter->initialization throws a CriticalError exception, we will attempt to
+		// use the $backup handler, if that also fails, we resort to the dummy handler.
+		try
+		{
+			$adapter->initialize();
+		}
+		catch (CriticalError $e)
+		{
+			// log the fact that an exception occurred as well what handler we are resorting to
+			log_message('critical', $e->getMessage() . ' Resorting to using ' . $backup . ' handler.');
+
+			// get the next best cache handler (or dummy if the $backup also fails)
+			$adapter = self::getHandler($config, $backup, 'dummy');
+		}
 
 		return $adapter;
 	}

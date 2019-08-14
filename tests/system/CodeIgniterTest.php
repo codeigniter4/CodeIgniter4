@@ -90,7 +90,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$routes->add('pages/(:segment)', function ($segment) {
 			echo 'You want to see "' . esc($segment) . '" page.';
 		});
-		$router = Services::router($routes);
+		$router = Services::router($routes, Services::request());
 		Services::injectMock('router', $router);
 
 		ob_start();
@@ -114,7 +114,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$routes = Services::routes();
 		$routes->setAutoRoute(false);
 		$routes->set404Override('Home::index');
-		$router = Services::router($routes);
+		$router = Services::router($routes, Services::request());
 		Services::injectMock('router', $router);
 
 		ob_start();
@@ -140,7 +140,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$routes->set404Override(function () {
 			echo '404 Override by Closure.';
 		});
-		$router = Services::router($routes);
+		$router = Services::router($routes, Services::request());
 		Services::injectMock('router', $router);
 
 		ob_start();
@@ -166,7 +166,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$routes->add('pages/(:segment)', function ($segment) {
 			return 'You want to see "' . esc($segment) . '" page.';
 		});
-		$router = Services::router($routes);
+		$router = Services::router($routes, Services::request());
 		Services::injectMock('router', $router);
 
 		ob_start();
@@ -194,7 +194,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 			$string   = "You want to see 'about' page.";
 			return $response->setBody($string);
 		});
-		$router = Services::router($routes);
+		$router = Services::router($routes, Services::request());
 		Services::injectMock('router', $router);
 
 		ob_start();
@@ -230,7 +230,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$_SERVER['argc'] = 2;
 
 		// Inject mock router.
-		$router = Services::router(null, false);
+		$router = Services::router(null, Services::request(), false);
 		Services::injectMock('router', $router);
 
 		ob_start();

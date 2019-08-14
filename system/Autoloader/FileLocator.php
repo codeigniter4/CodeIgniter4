@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -49,6 +49,8 @@ namespace CodeIgniter\Autoloader;
 class FileLocator
 {
 	/**
+	 * The Autoloader to use.
+	 *
 	 * @var \CodeIgniter\Autoloader\Autoloader
 	 */
 	protected $autoloader;
@@ -104,7 +106,7 @@ class FileLocator
 			unset($segments[0]);
 		}
 
-		$path     = '';
+		$paths    = [];
 		$prefix   = '';
 		$filename = '';
 
@@ -113,31 +115,46 @@ class FileLocator
 
 		while (! empty($segments))
 		{
-			$prefix .= empty($prefix)
-				? ucfirst(array_shift($segments))
-				: '\\' . ucfirst(array_shift($segments));
+			$prefix .= empty($prefix) ? array_shift($segments) : '\\' . array_shift($segments);
 
 			if (empty($namespaces[$prefix]))
 			{
 				continue;
 			}
-			$path = $this->getNamespaces($prefix);
+			$paths = $namespaces[$prefix];
 
 			$filename = implode('/', $segments);
 			break;
 		}
-
-		// IF we have a folder name, then the calling function
-		// expects this file to be within that folder, like 'Views',
-		// or 'libraries'.
-		if (! empty($folder) && strpos($path . $filename, '/' . $folder . '/') === false)
+		
+		// if no namespaces matched then quit
+		if (empty($paths))
 		{
-			$filename = $folder . '/' . $filename;
+			return false;
 		}
+		
+		// Check each path in the namespace
+		foreach ($paths as $path)
+		{
+			// Ensure trailing slash
+			$path = rtrim($path, '/') . '/';
+			
+			// If we have a folder name, then the calling function
+			// expects this file to be within that folder, like 'Views',
+			// or 'libraries'.
+			if (! empty($folder) && strpos($path . $filename, '/' . $folder . '/') === false)
+			{
+				$path .= trim($folder, '/') . '/';
+			}
 
-		$path .= $filename;
-
-		return is_file($path) ? $path : false;
+			$path .= $filename;
+			if (is_file($path))
+			{
+				return $path;
+			}
+		}
+		
+		return false;
 	}
 
 	//--------------------------------------------------------------------
@@ -261,21 +278,12 @@ class FileLocator
 	//--------------------------------------------------------------------
 
 	/**
-	 * @param string|null $prefix
+	 * Return the namespace mappings we know about.
 	 *
 	 * @return array|string
 	 */
-	protected function getNamespaces(string $prefix = null)
+	protected function getNamespaces()
 	{
-		if ($prefix)
-		{
-			$path = $this->autoloader->getNamespace($prefix);
-
-			return isset($path[0])
-				? rtrim($path[0], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR
-				: '';
-		}
-
 		$namespaces = [];
 
 		foreach ($this->autoloader->getNamespace() as $prefix => $paths)

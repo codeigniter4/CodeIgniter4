@@ -303,6 +303,11 @@ class BaseCollector
 		return '';
 	}
 
+	/**
+	 * Return settings as an array.
+	 *
+	 * @return array
+	 */
 	public function getAsArray(): array
 	{
 		return [

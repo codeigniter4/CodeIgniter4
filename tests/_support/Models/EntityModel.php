@@ -12,7 +12,7 @@ class EntityModel extends Model
 
 	protected $dateFormat = 'int';
 
-	protected $deletedField = 'deleted';
+	protected $deletedField = 'deleted_at';
 
 	protected $allowedFields = [
 		'name',

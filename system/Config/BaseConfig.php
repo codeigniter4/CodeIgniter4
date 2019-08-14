@@ -33,7 +33,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -57,8 +57,20 @@ class BaseConfig
 	 *
 	 * @var array
 	 */
-	public static $registrars      = [];
+	public static $registrars = [];
+
+	/**
+	 * Has module discovery happened yet?
+	 *
+	 * @var boolean
+	 */
 	protected static $didDiscovery = false;
+
+	/**
+	 * The modules configuration.
+	 *
+	 * @var type
+	 */
 	protected static $moduleConfig;
 
 	/**
@@ -186,7 +198,7 @@ class BaseConfig
 
 			foreach ($registrarsFiles as $file)
 			{
-				$className = $locator->getClassname($file);
+				$className            = $locator->getClassname($file);
 				static::$registrars[] = new $className();
 			}
 

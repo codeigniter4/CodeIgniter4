@@ -8,7 +8,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  *
  * @codeCoverageIgnore
@@ -17,7 +17,6 @@
 return [
 	// Migration Runner
    'missingTable'      => 'Migrations table must be set.',
-   'invalidType'       => 'An invalid migration numbering type was specified: {0}',
    'disabled'          => 'Migrations have been loaded but are disabled or setup incorrectly.',
    'notFound'          => 'Migration file not found: ',
    'empty'             => 'No Migration files found',

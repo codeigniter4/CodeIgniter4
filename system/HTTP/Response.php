@@ -33,7 +33,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -1035,9 +1035,9 @@ class Response extends Message implements ResponseInterface
 	 * Generates the headers that force a download to happen. And
 	 * sends the file to the browser.
 	 *
-	 * @param string        $filename The path to the file to send
-	 * @param string|null   $data     The data to be downloaded
-	 * @param boolean       $setMime  Whether to try and send the actual MIME type
+	 * @param string      $filename The path to the file to send
+	 * @param string|null $data     The data to be downloaded
+	 * @param boolean     $setMime  Whether to try and send the actual MIME type
 	 *
 	 * @return \CodeIgniter\HTTP\DownloadResponse|null
 	 */

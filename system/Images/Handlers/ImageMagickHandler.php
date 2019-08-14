@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -56,8 +56,6 @@ use CodeIgniter\Images\Exceptions\ImageException;
 class ImageMagickHandler extends BaseHandler
 {
 
-	public $version;
-
 	/**
 	 * Stores image resource in memory.
 	 *
@@ -67,6 +65,12 @@ class ImageMagickHandler extends BaseHandler
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param  type $config
+	 * @throws type
+	 */
 	public function __construct($config = null)
 	{
 		parent::__construct($config);
@@ -206,7 +210,7 @@ class ImageMagickHandler extends BaseHandler
 	//--------------------------------------------------------------------
 
 	/**
-	 * Get GD version
+	 * Get driver version
 	 *
 	 * @return string
 	 */
@@ -437,11 +441,21 @@ class ImageMagickHandler extends BaseHandler
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Return the width of an image.
+	 *
+	 * @return type
+	 */
 	public function _getWidth()
 	{
 		return imagesx($this->resource);
 	}
 
+	/**
+	 * Return the height of an image.
+	 *
+	 * @return type
+	 */
 	public function _getHeight()
 	{
 		return imagesy($this->resource);

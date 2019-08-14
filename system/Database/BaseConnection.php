@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -1071,10 +1071,10 @@ abstract class BaseConnection implements ConnectionInterface
 	 * insert the table prefix (if it exists) in the proper position, and escape only
 	 * the correct identifiers.
 	 *
-	 * @param string|array  $item
-	 * @param boolean       $prefixSingle
-	 * @param boolean       $protectIdentifiers
-	 * @param boolean       $fieldExists
+	 * @param string|array $item
+	 * @param boolean      $prefixSingle
+	 * @param boolean      $protectIdentifiers
+	 * @param boolean      $fieldExists
 	 *
 	 * @return string|array
 	 */
@@ -1641,8 +1641,8 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Determine if a particular field exists
 	 *
-	 * @param  string   $fieldName
-	 * @param  string   $tableName
+	 * @param  string $fieldName
+	 * @param  string $tableName
 	 * @return boolean
 	 */
 	public function fieldExists(string $fieldName, string $tableName): bool
@@ -1693,6 +1693,30 @@ abstract class BaseConnection implements ConnectionInterface
 		$fields = $this->_foreignKeyData($this->protectIdentifiers($table, true, false, false));
 
 		return $fields ?? false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Disables foreign key checks temporarily.
+	 */
+	public function disableForeignKeyChecks()
+	{
+		$sql = $this->_disableForeignKeyChecks();
+
+		return $this->query($sql);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Enables foreign key checks temporarily.
+	 */
+	public function enableForeignKeyChecks()
+	{
+		$sql = $this->_enableForeignKeyChecks();
+
+		return $this->query($sql);
 	}
 
 	//--------------------------------------------------------------------
@@ -1808,6 +1832,8 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Accessor for properties if they exist.
+	 *
 	 * @param string $key
 	 *
 	 * @return mixed

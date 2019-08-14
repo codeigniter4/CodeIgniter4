@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -65,6 +65,7 @@ trait ResponseTrait
 	protected $codes = [
 		'created'                   => 201,
 		'deleted'                   => 200,
+		'no_content'                => 204,
 		'invalid_request'           => 400,
 		'unsupported_response_type' => 400,
 		'invalid_scope'             => 400,
@@ -186,6 +187,21 @@ trait ResponseTrait
 	public function respondDeleted($data = null, string $message = '')
 	{
 		return $this->respond($data, $this->codes['deleted'], $message);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Used after a command has been successfully executed but there is no
+	 * meaningful reply to send back to the client.
+	 *
+	 * @param string $message Message.
+	 *
+	 * @return mixed
+	 */
+	public function respondNoContent(string $message = 'No Content')
+	{
+		return $this->respond(null, $this->codes['no_content'], $message);
 	}
 
 	//--------------------------------------------------------------------

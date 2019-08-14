@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -76,14 +76,11 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	protected $fileNew;
 
 	/**
+	 * Whether IP addresses should be matched.
+	 *
 	 * @var boolean
 	 */
 	protected $matchIP = false;
-
-	/**
-	 * @var string
-	 */
-	protected $sessionIDRegex;
 
 	//--------------------------------------------------------------------
 
@@ -91,6 +88,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 * Constructor
 	 *
 	 * @param BaseConfig $config
+	 * @param string     $ipAddress
 	 */
 	public function __construct($config, string $ipAddress)
 	{

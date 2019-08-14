@@ -106,6 +106,7 @@ what table to use and how we can find the required records::
 		protected $useTimestamps = false;
 		protected $createdField  = 'created_at';
 		protected $updatedField  = 'updated_at';
+		protected $deletedField  = 'deleted_at';
 
 		protected $validationRules    = [];
 		protected $validationMessages = [];
@@ -137,13 +138,15 @@ method.
 
 **$useSoftDeletes**
 
-If true, then any delete* method calls will simply set a flag in the database, instead of
+If true, then any delete* method calls will set ``deleted_at`` in the database, instead of
 actually deleting the row. This can preserve data when it might be referenced elsewhere, or
 can maintain a "recycle bin" of objects that can be restored, or even simply preserve it as
 part of a security trail. If true, the find* methods will only return non-deleted rows, unless
 the withDeleted() method is called prior to calling the find* method.
 
-This requires an INT or TINYINT field to be present in the table for storing state. The default field name is  ``deleted`` however this name can be configured to any name of your choice by using $deletedField property.
+This requires either a DATETIME or INTEGER field in the database as per the model's
+$dateFormat setting. The default field name is ``deleted_at`` however this name can be
+configured to any name of your choice by using $deletedField property.
 
 **$allowedFields**
 
@@ -171,9 +174,10 @@ Leave it empty to avoid update it (even useTimestamps is enabled)
 
 **$dateFormat**
 
-This value works with $useTimestamps to ensure that the correct type of date value gets
-inserted into the database. By default, this creates DATETIME values, but valid options
-are: datetime, date, or int (a PHP timestamp).
+This value works with $useTimestamps and $useSoftDeletes to ensure that the correct type of
+date value gets inserted into the database. By default, this creates DATETIME values, but
+valid options are: datetime, date, or int (a PHP timestamp). Using 'useSoftDeletes' or
+'useTimestamps' with an invalid or missing dateFormat will cause an exception.
 
 **$validationRules**
 
@@ -262,8 +266,8 @@ Returns the first row in the result set. This is best used in combination with t
 
 **withDeleted()**
 
-If $useSoftDeletes is true, then the find* methods will not return any rows where 'deleted = 1'. To
-temporarily override this, you can use the withDeleted() method prior to calling the find* method.
+If $useSoftDeletes is true, then the find* methods will not return any rows where 'deleted_at IS NOT NULL'.
+To temporarily override this, you can use the withDeleted() method prior to calling the find* method.
 ::
 
 	// Only gets non-deleted rows (deleted = 0)
@@ -421,8 +425,8 @@ Takes a primary key value as the first parameter and deletes the matching record
 
 	$userModel->delete(12);
 
-If the model's $useSoftDeletes value is true, this will update the row to set 'deleted = 1'. You can force
-a permanent delete by setting the second parameter as true.
+If the model's $useSoftDeletes value is true, this will update the row to set ``deleted_at`` to the current
+date and time. You can force a permanent delete by setting the second parameter as true.
 
 An array of primary keys can be passed in as the first parameter to delete multiple records at once::
 
@@ -435,7 +439,7 @@ previously::
 
 **purgeDeleted()**
 
-Cleans out the database table by permanently removing all rows that have 'deleted = 1'. ::
+Cleans out the database table by permanently removing all rows that have 'deleted_at IS NOT NULL'. ::
 
 	$userModel->purgeDeleted();
 

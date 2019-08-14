@@ -58,6 +58,24 @@ class TableTest extends \CIUnitTestCase
 		);
 	}
 
+	public function testSetFooting()
+	{
+		// uses _prep_args internally, so we'll just do a quick
+		// check to verify that func_get_args and prep_args are
+		// being called.
+
+		$subtotal = 12345;
+
+		$this->table->setFooting('Subtotal', $subtotal);
+
+		$this->assertEquals([
+			['data' => 'Subtotal'],
+			['data' => $subtotal],
+		],
+				$this->table->footing
+		);
+	}
+
 	/*
 	 * @depends	test_prep_args
 	 */
@@ -327,6 +345,10 @@ class TableTest extends \CIUnitTestCase
 
 		$this->table->setCaption('Awesome table');
 
+		$subtotal = 12345;
+
+		$this->table->setFooting('Subtotal', $subtotal);
+
 		$table = $this->table->generate($data);
 
 		// Test the table header
@@ -339,7 +361,12 @@ class TableTest extends \CIUnitTestCase
 		$this->assertContains('<td>Blue</td>', $table);
 		$this->assertContains('<td>Small</td>', $table);
 
+		// Check for the caption
 		$this->assertContains('<caption>Awesome table</caption>', $table);
+
+		// Test the table footing
+		$this->assertContains('<td>Subtotal</td>', $table);
+		$this->assertContains('<td>12345</td>', $table);
 	}
 
 	public function testGenerateEmptyCell()

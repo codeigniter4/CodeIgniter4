@@ -32,7 +32,7 @@ class EntityTest extends \CIUnitTestCase
 		$this->assertEquals('bar:thanks:bar', $entity->bar);
 	}
 
-	public function testUnsetResetsToDefaultValue()
+	public function testUnsetUnsetsAttribute()
 	{
 		$entity = $this->getEntity();
 
@@ -44,7 +44,7 @@ class EntityTest extends \CIUnitTestCase
 
 		unset($entity->default);
 
-		$this->assertEquals('sumfin', $entity->default);
+		$this->assertNull($entity->default);
 	}
 
 	public function testIssetWorksLikeTraditionalIsset()
@@ -52,7 +52,10 @@ class EntityTest extends \CIUnitTestCase
 		$entity = $this->getEntity();
 
 		$this->assertFalse(isset($entity->foo));
-		$this->assertObjectHasAttribute('default', $entity);
+
+		$attributes = $this->getPrivateProperty($entity, 'attributes');
+		$this->assertFalse(isset($attributes['foo']));
+		$this->assertTrue(isset($attributes['default']));
 	}
 
 	//--------------------------------------------------------------------
@@ -130,8 +133,10 @@ class EntityTest extends \CIUnitTestCase
 		// maps to 'foo'
 		$entity->bar = 'here';
 
-		$this->assertObjectHasAttribute('foo', $entity);
-		$this->assertObjectNotHasAttribute('bar', $entity);
+		$attributes = $this->getPrivateProperty($entity, 'attributes');
+
+		$this->assertTrue(array_key_exists('foo', $attributes));
+		$this->assertFalse(array_key_exists('bar', $attributes));
 	}
 
 	public function testUnsetWorksWithMapping()
@@ -156,8 +161,11 @@ class EntityTest extends \CIUnitTestCase
 
 	public function testDateMutationFromString()
 	{
-		$entity = $this->getEntity();
-		$this->setPrivateProperty($entity, 'created_at', '2017-07-15 13:23:34');
+		$entity     = $this->getEntity();
+		$attributes = [
+			'created_at' => '2017-07-15 13:23:34',
+		];
+		$this->setPrivateProperty($entity, 'attributes', $attributes);
 
 		$time = $entity->created_at;
 
@@ -169,8 +177,11 @@ class EntityTest extends \CIUnitTestCase
 	{
 		$stamp = time();
 
-		$entity = $this->getEntity();
-		$this->setPrivateProperty($entity, 'created_at', $stamp);
+		$entity     = $this->getEntity();
+		$attributes = [
+			'created_at' => $stamp,
+		];
+		$this->setPrivateProperty($entity, 'attributes', $attributes);
 
 		$time = $entity->created_at;
 
@@ -180,9 +191,12 @@ class EntityTest extends \CIUnitTestCase
 
 	public function testDateMutationFromDatetime()
 	{
-		$dt     = new \DateTime('now');
-		$entity = $this->getEntity();
-		$this->setPrivateProperty($entity, 'created_at', $dt);
+		$dt         = new \DateTime('now');
+		$entity     = $this->getEntity();
+		$attributes = [
+			'created_at' => $dt,
+		];
+		$this->setPrivateProperty($entity, 'attributes', $attributes);
 
 		$time = $entity->created_at;
 
@@ -192,9 +206,12 @@ class EntityTest extends \CIUnitTestCase
 
 	public function testDateMutationFromTime()
 	{
-		$dt     = Time::now();
-		$entity = $this->getEntity();
-		$this->setPrivateProperty($entity, 'created_at', $dt);
+		$dt         = Time::now();
+		$entity     = $this->getEntity();
+		$attributes = [
+			'created_at' => $dt,
+		];
+		$this->setPrivateProperty($entity, 'attributes', $attributes);
 
 		$time = $entity->created_at;
 
@@ -208,7 +225,7 @@ class EntityTest extends \CIUnitTestCase
 
 		$entity->created_at = '2017-07-15 13:23:34';
 
-		$time = $this->getPrivateProperty($entity, 'created_at');
+		$time = $this->getPrivateProperty($entity, 'attributes')['created_at'];
 
 		$this->assertInstanceOf(Time::class, $time);
 		$this->assertEquals('2017-07-15 13:23:34', $time->format('Y-m-d H:i:s'));
@@ -221,7 +238,7 @@ class EntityTest extends \CIUnitTestCase
 
 		$entity->created_at = $stamp;
 
-		$time = $this->getPrivateProperty($entity, 'created_at');
+		$time = $this->getPrivateProperty($entity, 'attributes')['created_at'];
 
 		$this->assertInstanceOf(Time::class, $time);
 		$this->assertCloseEnoughString(date('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
@@ -234,7 +251,7 @@ class EntityTest extends \CIUnitTestCase
 
 		$entity->created_at = $dt;
 
-		$time = $this->getPrivateProperty($entity, 'created_at');
+		$time = $this->getPrivateProperty($entity, 'attributes')['created_at'];
 
 		$this->assertInstanceOf(Time::class, $time);
 		$this->assertCloseEnoughString($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
@@ -247,7 +264,7 @@ class EntityTest extends \CIUnitTestCase
 
 		$entity->created_at = $dt;
 
-		$time = $this->getPrivateProperty($entity, 'created_at');
+		$time = $this->getPrivateProperty($entity, 'attributes')['created_at'];
 
 		$this->assertInstanceOf(Time::class, $time);
 		$this->assertCloseEnoughString($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
@@ -354,7 +371,7 @@ class EntityTest extends \CIUnitTestCase
 
 		$entity->setSeventh(['foo' => 'bar']);
 
-		$check = $this->getPrivateProperty($entity, 'seventh');
+		$check = $this->getPrivateProperty($entity, 'attributes')['seventh'];
 		$this->assertEquals(['foo' => 'bar'], $check);
 
 		$this->assertEquals(['foo' => 'bar'], $entity->seventh);
@@ -367,7 +384,7 @@ class EntityTest extends \CIUnitTestCase
 		$entity->seventh = 'foobar';
 
 		// Should be a serialized string now...
-		$check = $this->getPrivateProperty($entity, 'seventh');
+		$check = $this->getPrivateProperty($entity, 'attributes')['seventh'];
 		$this->assertEquals(serialize('foobar'), $check);
 
 		$this->assertEquals(['foobar'], $entity->seventh);
@@ -380,7 +397,7 @@ class EntityTest extends \CIUnitTestCase
 		$entity->seventh = ['foo' => 'bar'];
 
 		// Should be a serialized string now...
-		$check = $this->getPrivateProperty($entity, 'seventh');
+		$check = $this->getPrivateProperty($entity, 'attributes')['seventh'];
 		$this->assertEquals(serialize(['foo' => 'bar']), $check);
 
 		$this->assertEquals(['foo' => 'bar'], $entity->seventh);
@@ -407,7 +424,7 @@ class EntityTest extends \CIUnitTestCase
 		$entity->tenth = ['foo' => 'bar'];
 
 		// Should be a JSON-encoded string now...
-		$check = $this->getPrivateProperty($entity, 'tenth');
+		$check = $this->getPrivateProperty($entity, 'attributes')['tenth'];
 		$this->assertEquals('{"foo":"bar"}', $check);
 
 		$this->assertEquals((object) ['foo' => 'bar'], $entity->tenth);
@@ -425,7 +442,7 @@ class EntityTest extends \CIUnitTestCase
 		$entity->eleventh = $data;
 
 		// Should be a JSON-encoded string now...
-		$check = $this->getPrivateProperty($entity, 'eleventh');
+		$check = $this->getPrivateProperty($entity, 'attributes')['eleventh'];
 		$this->assertEquals('["Sun","Mon","Tue"]', $check);
 
 		$this->assertEquals($data, $entity->eleventh);
@@ -436,10 +453,10 @@ class EntityTest extends \CIUnitTestCase
 		$entity = $this->getCastEntity();
 
 		// Create array with depth 513 to get depth error
-		$array = [];
-		$value = "test value";
-		$keys = rtrim(str_repeat('test.', 513), '.');
-		$keys = explode(".", $keys);
+		$array   = [];
+		$value   = 'test value';
+		$keys    = rtrim(str_repeat('test.', 513), '.');
+		$keys    = explode('.', $keys);
 		$current = &$array;
 		foreach ($keys as $key)
 		{
@@ -469,53 +486,53 @@ class EntityTest extends \CIUnitTestCase
 	{
 		$entity = new Entity();
 
-		$method = $this->getPrivateMethodInvoker($entity,'castAsJson');
-		
+		$method = $this->getPrivateMethodInvoker($entity, 'castAsJson');
+
 		$this->expectException(CastException::class);
 		$this->expectExceptionMessage('Syntax error, malformed JSON');
 
-		$method("{ this is bad string", true);
+		$method('{ this is bad string', true);
 	}
-	
+
 	public function testCastAsJSONAnotherErrorDepth()
 	{
 		$entity = new Entity();
 
-		$method = $this->getPrivateMethodInvoker($entity,'castAsJson');
-		
+		$method = $this->getPrivateMethodInvoker($entity, 'castAsJson');
+
 		$this->expectException(CastException::class);
 		$this->expectExceptionMessage('Maximum stack depth exceeded');
 
-		$string = '{'.str_repeat('"test":{', 513).'"test":"value"'.str_repeat('}', 513).'}';
-		
+		$string = '{' . str_repeat('"test":{', 513) . '"test":"value"' . str_repeat('}', 513) . '}';
+
 		$method($string, true);
 	}
-	
+
 	public function testCastAsJSONControlCharCheck()
 	{
 		$entity = new Entity();
 
-		$method = $this->getPrivateMethodInvoker($entity,'castAsJson');
-		
+		$method = $this->getPrivateMethodInvoker($entity, 'castAsJson');
+
 		$this->expectException(CastException::class);
 		$this->expectExceptionMessage('Unexpected control character found');
 
 		$string = "{\n\t\"property1\": \"The quick brown fox\njumps over the lazy dog\",\n\t\"property2\":\"value2\"\n}";
-		
+
 		$method($string, true);
 	}
-	
+
 	public function testCastAsJSONStateMismatch()
 	{
 		$entity = new Entity();
 
-		$method = $this->getPrivateMethodInvoker($entity,'castAsJson');
-		
+		$method = $this->getPrivateMethodInvoker($entity, 'castAsJson');
+
 		$this->expectException(CastException::class);
 		$this->expectExceptionMessage('Underflow or the modes mismatch');
 
 		$string = '[{"name":"jack","product_id":"1234"]';
-		
+
 		$method($string, true);
 	}
 	//--------------------------------------------------------------------
@@ -624,58 +641,99 @@ class EntityTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testHasChangedNotExists()
+	{
+		$entity = new SomeEntity();
+
+		$this->assertFalse($entity->hasChanged('foo'));
+	}
+
+	public function testHasChangedNewElement()
+	{
+		$entity = new SomeEntity();
+
+		$entity->foo = 'bar';
+
+		$this->assertTrue($entity->hasChanged('foo'));
+	}
+
+	public function testHasChangedNoChange()
+	{
+		$entity = $this->getEntity();
+
+		$this->assertFalse($entity->hasChanged('default'));
+	}
+
+	public function testHasChangedWholeEntity()
+	{
+		$entity = $this->getEntity();
+		
+		$entity->foo = 'bar';
+
+		$this->assertTrue($entity->hasChanged());
+	}
+
 	protected function getEntity()
 	{
 		return new class extends Entity
 		{
+			protected $attributes = [
+				'foo'        => null,
+				'bar'        => null,
+				'default'    => 'sumfin',
+				'created_at' => null,
+			];
 
-			protected $foo;
-			protected $bar;
-			protected $default = 'sumfin';
-			protected $created_at;
+			protected $original = [
+				'foo'        => null,
+				'bar'        => null,
+				'default'    => 'sumfin',
+				'created_at' => null,
+			];
 
 			public function setBar($value)
 			{
-				$this->bar = "bar:{$value}";
+				$this->attributes['bar'] = "bar:{$value}";
 
 				return $this;
 			}
 
 			public function getBar()
 			{
-				return "{$this->bar}:bar";
+				return "{$this->attributes['bar']}:bar";
 			}
 
-		}
-
-		;
+		};
 	}
 
 	protected function getMappedEntity()
 	{
 		return new class extends Entity
 		{
+			protected $attributes = [
+				'foo'    => null,
+				'simple' => null,
+			];
 
-			protected $foo;
-			protected $simple;
+			protected $_original = [
+				'foo'    => null,
+				'simple' => null,
+			];
+
 			// 'bar' is db column, 'foo' is internal representation
-			protected $_options = [
-				'dates'   => [],
-				'casts'   => [],
-				'datamap' => [
-					'bar'  => 'foo',
-					'orig' => 'simple',
-				],
+			protected $datamap = [
+				'bar'  => 'foo',
+				'orig' => 'simple',
 			];
 
 			protected function setSimple(string $val)
 			{
-				$this->simple = 'oo:' . $val;
+				$this->attributes['simple'] = 'oo:' . $val;
 			}
 
 			protected function getSimple()
 			{
-				return $this->simple . ':oo';
+				return $this->attributes['simple'] . ':oo';
 			}
 		};
 	}
@@ -684,40 +742,52 @@ class EntityTest extends \CIUnitTestCase
 	{
 		return new class extends Entity
 		{
+			protected $attributes = [
+				'first'    => null,
+				'second'   => null,
+				'third'    => null,
+				'fourth'   => null,
+				'fifth'    => null,
+				'sixth'    => null,
+				'seventh'  => null,
+				'eighth'   => null,
+				'ninth'    => null,
+				'tenth'    => null,
+				'eleventh' => null,
+			];
 
-			protected $first;
-			protected $second;
-			protected $third;
-			protected $fourth;
-			protected $fifth;
-			protected $sixth;
-			protected $seventh;
-			protected $eighth;
-			protected $ninth;
-			protected $tenth;
-			protected $eleventh;
+			protected $_original = [
+				'first'    => null,
+				'second'   => null,
+				'third'    => null,
+				'fourth'   => null,
+				'fifth'    => null,
+				'sixth'    => null,
+				'seventh'  => null,
+				'eighth'   => null,
+				'ninth'    => null,
+				'tenth'    => null,
+				'eleventh' => null,
+			];
+
 			// 'bar' is db column, 'foo' is internal representation
-			protected $_options = [
-				'casts'   => [
-					'first'    => 'integer',
-					'second'   => 'float',
-					'third'    => 'double',
-					'fourth'   => 'string',
-					'fifth'    => 'boolean',
-					'sixth'    => 'object',
-					'seventh'  => 'array',
-					'eighth'   => 'datetime',
-					'ninth'    => 'timestamp',
-					'tenth'    => 'json',
-					'eleventh' => 'json-array',
-				],
-				'dates'   => [],
-				'datamap' => [],
+			protected $casts = [
+				'first'    => 'integer',
+				'second'   => 'float',
+				'third'    => 'double',
+				'fourth'   => 'string',
+				'fifth'    => 'boolean',
+				'sixth'    => 'object',
+				'seventh'  => 'array',
+				'eighth'   => 'datetime',
+				'ninth'    => 'timestamp',
+				'tenth'    => 'json',
+				'eleventh' => 'json-array',
 			];
 
 			public function setSeventh($seventh)
 			{
-				$this->seventh = $seventh;
+				$this->attributes['seventh'] = $seventh;
 			}
 		};
 	}
@@ -726,21 +796,25 @@ class EntityTest extends \CIUnitTestCase
 	{
 		return new class extends Entity
 		{
+			protected $attributes = [
+				'string_null'  => null,
+				'string_empty' => null,
+				'integer_null' => null,
+				'integer_0'    => null,
+			];
+			protected $_original  = [
+				'string_null'  => null,
+				'string_empty' => null,
+				'integer_null' => null,
+				'integer_0'    => null,
+			];
 
-			protected $string_null  = null;
-			protected $string_empty = null;
-			protected $integer_null = null;
-			protected $integer_0    = null;
 			// 'bar' is db column, 'foo' is internal representation
-			protected $_options = [
-				'casts'   => [
-					'string_null'   => '?string',
-					'string_empty'  => 'string',
-					'integer_null' => '?integer',
-					'integer_0'     => 'integer',
-				],
-				'dates'   => [],
-				'datamap' => [],
+			protected $casts = [
+				'string_null'  => '?string',
+				'string_empty' => 'string',
+				'integer_null' => '?integer',
+				'integer_0'    => 'integer',
 			];
 		};
 	}

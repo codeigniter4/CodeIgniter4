@@ -31,18 +31,14 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
 /**
  * CodeIgniter Date Helpers
  *
- * @package    CodeIgniter
- * @subpackage Helpers
- * @category   Helpers
- * @author     CodeIgniter Dev Team
- * @link       https://codeigniter.com/user_guide/helpers/date_helper.html
+ * @package CodeIgniter
  */
 
 if (! function_exists('now'))
@@ -71,5 +67,36 @@ if (! function_exists('now'))
 		sscanf($datetime->format('j-n-Y G:i:s'), '%d-%d-%d %d:%d:%d', $day, $month, $year, $hour, $minute, $second);
 
 		return mktime($hour, $minute, $second, $month, $day, $year);
+	}
+}
+
+if (! function_exists('timezone_select'))
+{
+	/**
+	 * Generates a select field of all available timezones
+	 *
+	 * Returns a string with the formatted HTML
+	 *
+	 * @param string $class    Optional class to apply to the select field
+	 * @param string $default  Default value for initial selection
+	 * @param int    $what     One of the DateTimeZone class constants (for listIdentifiers)
+	 * @param string $country  A two-letter ISO 3166-1 compatible country code (for listIdentifiers)
+	 *
+	 * @return string
+	 * @throws \Exception
+	 */
+	function timezone_select(string $class = '', string $default = '', int $what = \DateTimeZone::ALL, string $country = null): string
+	{
+		$timezones = \DateTimeZone::listIdentifiers($what, $country);
+		
+		$buffer = "<select name='timezone' class='{$class}'>" . PHP_EOL;
+		foreach ($timezones as $timezone)
+		{
+			$selected = ($timezone == $default) ? 'selected' : '';
+			$buffer .= "<option value='{$timezone}' {$selected}>{$timezone}</option>" . PHP_EOL;
+		}
+		$buffer .= "</select>" . PHP_EOL;
+		
+		return $buffer;
 	}
 }

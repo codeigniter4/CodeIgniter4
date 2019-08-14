@@ -112,6 +112,12 @@ It is also possible to use a URI segment for the page number, instead of the pag
 
 Please note: ``$segment`` value cannot be greater than the number of URI segments plus 1.
 
+If you in need to show many pagers on one page then additional parameter which wil define a group could be helpful::
+
+	$pager = service('pager');
+	$pager->setPath('path/for/my-group', 'my-group'); // Additionaly you could define path for every group.
+	$pager->makeLinks($page, $perPage, $total, 'template_name', $segment, 'my-group'); 
+
 Paginating with Only Expected Queries
 =====================================
 

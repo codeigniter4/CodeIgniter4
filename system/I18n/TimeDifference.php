@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -63,35 +63,51 @@ class TimeDifference
 	protected $testTime;
 
 	/**
+	 * Eras.
+	 *
 	 * @var float
 	 */
 	protected $eras = 0;
 
 	/**
+	 * Years.
+	 *
 	 * @var float
 	 */
 	protected $years = 0;
 	/**
+	 * Months.
+	 *
 	 * @var float
 	 */
 	protected $months = 0;
 	/**
+	 * Weeks.
+	 *
 	 * @var integer
 	 */
 	protected $weeks = 0;
 	/**
+	 * Days.
+	 *
 	 * @var integer
 	 */
 	protected $days = 0;
 	/**
+	 * Hours.
+	 *
 	 * @var integer
 	 */
 	protected $hours = 0;
 	/**
+	 * Minutes.
+	 *
 	 * @var integer
 	 */
 	protected $minutes = 0;
 	/**
+	 * Seconds.
+	 *
 	 * @var integer
 	 */
 	protected $seconds = 0;

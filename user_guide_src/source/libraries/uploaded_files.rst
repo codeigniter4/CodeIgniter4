@@ -200,12 +200,12 @@ trusted version, use ``getExtension()`` instead::
 
 	$ext = $file->getClientExtension();
 
-**getClientType()**
+**getClientMimeType()**
 
 Returns the mime type (mime type) of the file as provided by the client. This is NOT a trusted value. For a trusted
-version, use ``getType()`` instead::
+version, use ``getMimeType()`` instead::
 
-	$type = $file->getClientType();
+	$type = $file->getClientMimeType();
 
 	echo $type; // image/png
 

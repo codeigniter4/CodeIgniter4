@@ -43,7 +43,7 @@ class MockHandler implements CacheInterface
 
 		return array_key_exists($key, $this->cache)
 			? $this->cache[$key]
-			: false;
+			: null;
 	}
 
 	//--------------------------------------------------------------------

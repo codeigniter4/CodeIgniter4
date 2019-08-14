@@ -14,7 +14,7 @@ webapp,
 
 **Note**: if you are using a Git repository to store your code, or for
 collaboration with others, then the ``vendor`` folder would normally
-be "git ignored". In such a case, you will need to do a ``composer udpate``
+be "git ignored". In such a case, you will need to do a ``composer update``
 when you clone the repository to a new system.
 
 App Starter
@@ -47,6 +47,8 @@ trusted dependencies that we bundle, being composer-installed.
 A sample such installation command, using the default project-root "appstarter"::
 
     composer create-project codeigniter4/appstarter -s beta --no-dev
+
+After installation you should follow the steps in the "Upgrading" section.
 
 Upgrading
 -------------------------------------------------------

@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -92,6 +92,12 @@ class Pager implements PagerInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param type              $config
+	 * @param RendererInterface $view
+	 */
 	public function __construct($config, RendererInterface $view)
 	{
 		$this->config = $config;
@@ -141,19 +147,21 @@ class Pager implements PagerInterface
 	 * @param integer $page
 	 * @param integer $perPage
 	 * @param integer $total
-	 * @param string  $template The output template alias to render.
-	 * @param integer $segment  (if page number is provided by URI segment)
+	 * @param string $template The output template alias to render.
+	 * @param integer $segment (if page number is provided by URI segment)
 	 *
+	 * @param string|null $group optional group (i.e. if we'd like to define custom path)
 	 * @return string
 	 */
-	public function makeLinks(int $page, int $perPage, int $total, string $template = 'default_full', int $segment = 0): string
+	public function makeLinks(int $page, int $perPage, int $total, string $template = 'default_full', int $segment = 0, ?string $group = null): string
 	{
 		$name = time();
 
-		$this->store($name, $page, $perPage, $total, $segment);
+		$this->store($group ?? $name, $page, $perPage, $total, $segment);
 
-		return $this->displayLinks($name, $template);
+		return $this->displayLinks($group ?? $name, $template);
 	}
+
 
 	//--------------------------------------------------------------------
 
@@ -212,8 +220,8 @@ class Pager implements PagerInterface
 	/**
 	 * Sets the path that an aliased group of links will use.
 	 *
-	 * @param string $group
 	 * @param string $path
+	 * @param string $group
 	 *
 	 * @return mixed
 	 */
