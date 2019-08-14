@@ -246,7 +246,7 @@ class RedisHandler implements CacheInterface
 	{
 		$key = $this->prefix . $key;
 
-		return ($this->redis->delete($key) === 1);
+		return ($this->redis->del($key) === 1);
 	}
 
 	//--------------------------------------------------------------------
