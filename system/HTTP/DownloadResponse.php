@@ -139,6 +139,19 @@ class DownloadResponse extends Message implements ResponseInterface
 	}
 
 	/**
+	 * set name for the download.
+	 *
+	 * @param string $filename
+	 *
+	 * @return $this
+	 */
+	public function setFileName(string $filename)
+	{
+		$this->filename = $filename;
+		return $this;
+	}
+
+	/**
 	 * get content length.
 	 *
 	 * @return integer

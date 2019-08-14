@@ -100,6 +100,10 @@ do the following::
 	// Contents of photo.jpg will be automatically read
 	return $response->download('/path/to/photo.jpg', NULL);
 
+Use the optional ``setFileName()`` method to change the filename as it is sent to the client's browser::
+	
+	return $response->download('awkwardEncryptedFileName.fakeExt')->setFileName('expenses.csv');
+
 .. note:: The response object MUST be returned for the download to be sent to the client. This allows the response
     to be passed through all **after** filters before being sent to the client.
 

@@ -145,7 +145,7 @@ configuration file::
 	];
 
 This will look for any migrations located at both **APPPATH/Database/Migrations** and
-**ROOTPATH/Database/Migrations**. This makes it simple to include migrations in your
+**ROOTPATH/MyCompany/Database/Migrations**. This makes it simple to include migrations in your
 re-usable, modular code suites.
 
 *************
@@ -207,9 +207,6 @@ for the version. ::
   // Asks you for the version...
   > php spark migrate:version
   Version:
-
-  // Sequential
-  > php spark migrate:version 007
 
   // Timestamp
   > php spark migrate:version 20161426211300

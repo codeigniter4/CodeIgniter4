@@ -48,6 +48,8 @@ exist for the most common use cases::
     respondCreated($data);
     // Item successfully deleted
     respondDeleted($data);
+    // Command executed by no response required
+    respondNoContent($message);
     // Client isn't authorized
     failUnauthorized($description);
     // Forbidden action
@@ -178,6 +180,19 @@ Class Reference
 
 	    $user = $userModel->delete($id);
 	    return $this->respondDeleted(['id' => $id]);
+
+.. php:method:: respondNoContent(string $message = 'No Content')
+
+    :param string $message: A custom "reason" message to return.
+    :returns: The value of the Response object's send() method.
+
+    Sets the appropriate status code to use when a command was successfully executed by the server but there is no 
+    meaningful reply to send back to the client, typically 204.
+
+    ::
+
+	    sleep(1);
+	    return $this->respondNoContent();        
 
 .. php:method:: failUnauthorized(string $description = 'Unauthorized'[, string $code=null[, string $message = '']])
 
