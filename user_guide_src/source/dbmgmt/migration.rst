@@ -213,7 +213,7 @@ for the version. ::
 
 You can use (version) with the following options:
 
-- (-g) to chose database group, otherwise default database group will be used.
+- (-g) to choose database group, otherwise default database group will be used.
 - (-n) to choose namespace, otherwise (App) namespace will be used.
 
 **rollback**
@@ -224,9 +224,9 @@ Rolls back all migrations, taking all database groups to a blank slate, effectiv
 
 You can use (rollback) with the following options:
 
-- (-g) to chose database group, otherwise default database group will be used.
+- (-g) to choose database group, otherwise default database group will be used.
 - (-n) to choose namespace, otherwise (App) namespace will be used.
-- (-all) to migrate all namespaces to the latest migration
+- (-all) to rollback all namespaces to migration 0
 
 **refresh**
 
@@ -236,9 +236,9 @@ Refreshes the database state by first rolling back all migrations, and then migr
 
 You can use (refresh) with the following options:
 
-- (-g) to chose database group, otherwise default database group will be used.
+- (-g) to choose database group, otherwise default database group will be used.
 - (-n) to choose namespace, otherwise (App) namespace will be used.
-- (-all) to migrate all namespaces to the latest migration
+- (-all) to refresh all namespaces
 
 **status**
 
@@ -250,7 +250,7 @@ Displays a list of all migrations and the date and time they ran, or '--' if the
 
 You can use (refresh) with the following options:
 
-- (-g) to chose database group, otherwise default database group will be used.
+- (-g) to choose database group, otherwise default database group will be used.
 
 **create**
 
