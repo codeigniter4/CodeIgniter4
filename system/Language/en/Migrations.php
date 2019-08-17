@@ -39,10 +39,11 @@ return [
    'migNumberError'    => 'Migration number must be three digits, and there must not be any gaps in the sequence.',
 
    'progress'          => 'Running all new migrations...',
+   'generalFault'      => 'Migration failed!',
    'migInvalidVersion' => 'Invalid version number provided.',
    'toVersionPH'       => 'Migrating to version %s...',
    'toVersion'         => 'Migrating to current version...',
-   'rollingBack'       => 'Rolling back all migrations...',
+   'rollingBack'       => 'Rolling back migrations to batch: ',
    'noneFound'         => 'No migrations were found.',
    'on'                => 'Migrated On: ',
    'migSeeder'         => 'Seeder name',
