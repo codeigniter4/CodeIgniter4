@@ -906,7 +906,7 @@ class MigrationRunner
 			throw new \RuntimeException($message);
 		}
 
-		//$instance->{$direction}();
+		$instance->{$direction}();
 
 		return true;
 	}
