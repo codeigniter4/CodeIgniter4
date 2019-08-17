@@ -38,6 +38,7 @@
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Encryption\Exceptions\EncryptionException;
 
 /**
  * Encryption handling for OpenSSL library
@@ -64,11 +65,9 @@ class OpenSSLHandler extends BaseHandler
 	 *
 	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
-	public function __construct(BaseConfig $config)
+	public function __construct(BaseConfig $config = null)
 	{
 		parent::__construct($config);
-
-		$this->logger->info('OpenSSL handler initialized with cipher ' . $this->cipher . '.');
 	}
 
 	/**
@@ -95,7 +94,7 @@ class OpenSSLHandler extends BaseHandler
 		}
 		if (empty($this->key))
 		{
-			throw EncryptionException::forStarterKeyNeeded();
+			throw EncryptionException::forNeedsStarterKey();
 		}
 
 		// derive a secret key
@@ -104,16 +103,16 @@ class OpenSSLHandler extends BaseHandler
 		// basic encryption
 		$iv = ($iv_size = \openssl_cipher_iv_length($this->cipher)) ? \openssl_random_pseudo_bytes($iv_size) : null;
 
-		$data = \openssl_encrypt($data, $this->cipher, $this->secret, OPENSSL_RAW_DATA, $iv);
+		$data = \openssl_encrypt($data, $this->cipher, $secret, OPENSSL_RAW_DATA, $iv);
 
 		if ($data === false)
 		{
-			return false;
+			throw EncryptionException::forEncryptionFailed();
 		}
 
 		$result = $iv . $data;
 
-		$hmacKey = \hash_hmac($this->digest, $result, $this->secret, true);
+		$hmacKey = \hash_hmac($this->digest, $result, $secret, true);
 		$result  = $hmacKey . $result;
 
 		return $result;
@@ -154,7 +153,7 @@ class OpenSSLHandler extends BaseHandler
 		$hmacLength = self::substr($this->digest, 3) / 8;
 		$hmacKey    = self::substr($data, 0, $hmacLength);
 		$data       = self::substr($data, $hmacLength);
-		$hmacCalc   = \hash_hmac($this->digest, $data, $this->secret, true);
+		$hmacCalc   = \hash_hmac($this->digest, $data, $secret, true);
 		if (! hash_equals($hmacKey, $hmacCalc))
 		{
 			throw EncryptionException::forAuthenticationFailed();
@@ -170,7 +169,7 @@ class OpenSSLHandler extends BaseHandler
 			$iv = null;
 		}
 
-		return \openssl_decrypt($data, $this->cipher, $this->secret, OPENSSL_RAW_DATA, $iv);
+		return \openssl_decrypt($data, $this->cipher, $secret, OPENSSL_RAW_DATA, $iv);
 	}
 
 }

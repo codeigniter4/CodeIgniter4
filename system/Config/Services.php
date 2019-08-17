@@ -76,7 +76,7 @@ use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\View\RendererInterface;
 use Config\Cache;
 use Config\Images;
-use Config\Logger as LoggerConfig;
+use Config\Logger;
 use Config\Migrations;
 
 /**
@@ -208,9 +208,8 @@ class Services extends BaseService
 			$config = new \Config\Encryption();
 		}
 
-		$encryption        = new Encryption($config);
-		$encrypter         = $encryption->initialize($config);
-		$encrypter->logger = \Config\Services::logger(true);
+		$encryption = new Encryption($config);
+		$encrypter  = $encryption->initialize($config);
 		return $encrypter;
 	}
 
@@ -409,7 +408,7 @@ class Services extends BaseService
 			return static::getSharedInstance('logger');
 		}
 
-		return new \CodeIgniter\Log\Logger(config('logger'));
+		return new \CodeIgniter\Log\Logger(new Logger());
 	}
 
 	//--------------------------------------------------------------------

@@ -69,9 +69,9 @@ class Encryption
 	 */
 	protected $key;
 
-	 /**
-	  * The derived hmac key
-	  */
+	/**
+	 * The derived hmac key
+	 */
 	protected $hmacKey;
 
 	/**
@@ -112,9 +112,13 @@ class Encryption
 			'OpenSSL' => extension_loaded('openssl'),
 		];
 
-		if (! in_array(true, $this->handlers))
+		// if any aren't there, bomb
+		if (in_array(false, $this->handlers))
 		{
-			throw EncryptionException::forNoHandlerAvailable();
+			// this should never happen in travis-ci
+			// @codeCoverageIgnoreStart
+			throw EncryptionException::forNoHandlerAvailable($this->driver);
+			// @codeCoverageIgnoreEnd
 		}
 	}
 
@@ -128,33 +132,32 @@ class Encryption
 	 */
 	public function initialize(BaseConfig $config = null)
 	{
-		if (empty($config))
+		// override config?
+		if (! empty($config))
 		{
-			$config = new \Config\Encryption();
+			$this->driver = $config->driver;
+			$this->key    = $config->key;
 		}
-		$this->driver = $config->driver;
-		$this->key    = $config->key;
 
 		// Insist on a driver
-		if (! isset($params['driver']))
+		if (empty($this->driver))
 		{
 			throw EncryptionException::forNoDriverRequested();
 		}
 
 		// Check for an unknown driver
-		if (! in_array($params['driver'], $this->drivers))
+		if (! in_array($this->driver, $this->drivers))
 		{
-			throw EncryptionException::forUnKnownHandler($params['driver']);
+			throw EncryptionException::forUnKnownHandler($this->driver);
 		}
 
-		// Check for an unavailable driver
-		if (! $this->handlers[$params['driver']])
+		if (empty($this->key))
 		{
-			throw EncryptionException::forDriverNotAvailable($params['driver']);
+			throw EncryptionException::forNeedsStarterKey();
 		}
 
 		// Derive a secret key for the encrypter
-			$this->hmacKey = bin2hex(\hash_hkdf($this->digest, $this->key));
+		$this->hmacKey = bin2hex(\hash_hkdf($this->digest, $this->key));
 
 		$handlerName     = 'CodeIgniter\\Encryption\\Handlers\\' . $this->driver . 'Handler';
 		$this->encrypter = new $handlerName($config);
@@ -184,40 +187,12 @@ class Encryption
 	 */
 	public function __get($key)
 	{
-		if (in_array($key, ['config', 'key', 'driver', 'drivers', 'default'], true))
+		if (in_array($key, ['key', 'digest', 'driver', 'drivers'], true))
 		{
 			return $this->{$key};
 		}
 
 		return null;
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Byte-safe strlen()
-	 *
-	 * @param  string $str
-	 * @return integer
-	 */
-	protected static function strlen($str)
-	{
-		return mb_strlen($str, '8bit');
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Byte-safe substr()
-	 *
-	 * @param  string  $str
-	 * @param  integer $start
-	 * @param  integer $length
-	 * @return string
-	 */
-	protected static function substr($str, $start, $length = null)
-	{
-		return mb_substr($str, $start, $length, '8bit');
 	}
 
 }

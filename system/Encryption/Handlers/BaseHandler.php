@@ -39,15 +39,12 @@
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Config\BaseConfig;
-use Psr\Log\LoggerAwareTrait;
 
 /**
  * Base class for encryption handling
  */
 abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 {
-
-	use LoggerAwareTrait;
 
 	/**
 	 * Configuraiton passed from encryption manager
@@ -70,35 +67,19 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	 *
 	 * @param BaseConfig $config
 	 */
-	public function __construct(BaseConfig $config)
+	public function __construct(BaseConfig $config = null)
 	{
 		if (empty($config))
 		{
-			throw EncryptionException::forConfigNeeded();
+			$config = new \Config\Encryption();
 		}
-		$this->config = $config;
 
 		// make the parameters conveniently accessible
-		foreach ($this->config as $pkey => $value)
+		foreach ($config as $pkey => $value)
 		{
 			$this->$pkey = $value;
 		}
 	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Byte-safe strlen()
-	 *
-	 * @param  string $str
-	 * @return integer
-	 */
-	protected static function strlen($str)
-	{
-		return mb_strlen($str, '8bit');
-	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Byte-safe substr()

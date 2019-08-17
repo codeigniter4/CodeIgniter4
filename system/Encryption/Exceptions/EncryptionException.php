@@ -9,11 +9,6 @@ use CodeIgniter\Exceptions\ExceptionInterface;
 class EncryptionException extends \RuntimeException implements ExceptionInterface
 {
 
-	public static function forDriverNotAvailable(string $driver = null)
-	{
-		return new static(lang('Encryption.driverNotAvailable', [$driver]));
-	}
-
 	public static function forNoDriverRequested()
 	{
 		return new static(lang('Encryption.noDriverRequested'));
@@ -29,11 +24,6 @@ class EncryptionException extends \RuntimeException implements ExceptionInterfac
 		return new static(lang('Encryption.unKnownHandler', [$driver]));
 	}
 
-	public static function forConfigNeeded()
-	{
-		return new static(lang('Encryption.configNeeded'));
-	}
-
 	public static function forNeedsStarterKey()
 	{
 		return new static(lang('Encryption.starterKeyNeeded'));
@@ -42,6 +32,10 @@ class EncryptionException extends \RuntimeException implements ExceptionInterfac
 	public static function forAuthenticationFailed()
 	{
 		return new static(lang('Encryption.authenticationFailed'));
+	}
+	public static function forEncryptionFailed()
+	{
+		return new static(lang('Encryption.encryptionFailed'));
 	}
 
 }
