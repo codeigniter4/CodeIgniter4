@@ -43,11 +43,11 @@ use CodeIgniter\CLI\CLI;
 use Config\Services;
 
 /**
- * Creates a new migration file.
+ * Runs all new migrations.
  *
  * @package CodeIgniter\Commands
  */
-class MigrateLatest extends BaseCommand
+class Migrate extends BaseCommand
 {
 	/**
 	 * The group the command is lumped under
@@ -69,7 +69,7 @@ class MigrateLatest extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $description = 'Migrates the database to the latest schema.';
+	protected $description = 'Locates and runs all new migrations against the database.';
 
 	/**
 	 * the Command's usage
@@ -93,7 +93,7 @@ class MigrateLatest extends BaseCommand
 	protected $options = [
 		'-n'   => 'Set migration namespace',
 		'-g'   => 'Set database group',
-		'-all' => 'Set latest for all namespace, will ignore (-n) option',
+		'-all' => 'Set for all namespaces, will ignore (-n) option',
 	];
 
 	/**
@@ -105,7 +105,7 @@ class MigrateLatest extends BaseCommand
 	{
 		$runner = Services::migrations();
 
-		CLI::write(lang('Migrations.toLatest'), 'yellow');
+		CLI::write(lang('Migrations.progress'), 'yellow');
 
 		$namespace = $params['-n'] ?? CLI::getOption('n');
 		$group     = $params['-g'] ?? CLI::getOption('g');
@@ -114,11 +114,13 @@ class MigrateLatest extends BaseCommand
 		{
 			if ($this->isAllNamespace($params))
 			{
-				$runner->latestAll($group);
+				$runner->setNamespace(null);
+				$runner->progress($group);
 			}
 			else
 			{
-				$runner->latest($namespace, $group);
+				$runner->setNamespace($namespace);
+				$runner->progress($group);
 			}
 			$messages = $runner->getCliMessages();
 			foreach ($messages as $message)
