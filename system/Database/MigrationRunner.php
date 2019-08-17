@@ -212,7 +212,15 @@ class MigrationRunner
 			// If a migration failed then try to back out what was done
 			else {
 				$this->regress(-1);
-				return false;
+				
+				$message = lang('Migrations.generalFault');
+		
+				if ($this->silent)
+				{
+					$this->cliMessages[] = "\t" . CLI::color($message, 'red');
+					return false;
+				}
+				throw new \RuntimeException($message);
 			}
 		}
 		return true;
@@ -225,23 +233,30 @@ class MigrationRunner
 	 *
 	 * Calls each migration step required to get to the provided batch
 	 *
-	 * @param int    $targetBatch Target batch number, or negative for a relative batch, 0 for all
+	 * @param int         $targetBatch Target batch number, or negative for a relative batch, 0 for all
+	 * @param string|null $group
 	 *
 	 * @return mixed Current batch number on success, FALSE on failure or no migrations are found
 	 * @throws ConfigException
 	 */
-	public function regress(int $targetBatch)
+	public function regress(int $targetBatch, string $group = null)
 	{
 		if (! $this->enabled)
 		{
 			throw ConfigException::forDisabledMigrations();
+		}
+		
+		// Set database group if not null
+		if (! is_null($group))
+		{
+			$this->setGroup($group);
 		}
 
 		$this->ensureTable();
 		
 		// Get all the batches
 		$batches = $this->getBatches();
-		
+
 		// Convert a relative batch to its absolute
 		if ($targetBatch < 0)
 		{
@@ -253,15 +268,18 @@ class MigrationRunner
 		{
 			return true;
 		}
-		
+
 		// Make sure $targetBatch is found
 		if ($targetBatch !== 0 && ! in_array($targetBatch, $batches))
 		{
+			$message = lang('Migrations.batchNotFound') . $targetBatch;
+			
 			if ($this->silent)
 			{
+				$this->cliMessages[] = "\t" . CLI::color($message, 'red');
 				return false;
 			}
-			throw new \RuntimeException(lang('Migrations.batchNotFound') . $targetBatch);
+			throw new \RuntimeException($message);
 		}
 		
 		// Get all migrations
@@ -270,52 +288,46 @@ class MigrationRunner
 		
 		// Gather migrations down through each batch until reaching the target
 		$migrations = [];
-		while ($batch = array_pop($batches) && $batch >= $targetBatch)
+		while ($batch = array_pop($batches))
 		{
-			$histories = $this->getBatchHistory($batch);
-			
-			// Make sure the history loaded
-			if (empty($histories))
+			// Check if reached target
+			if ($batch <= $targetBatch)
 			{
-				if ($this->silent)
-				{
-					return false;
-				}
-				throw new \RuntimeException(lang('Migrations.empty'));
+				break;
 			}
-		
-			// Set database group to what it was for this batch
-			$this->setGroup($histories[0]->group);
 
-			// Get the migration from each history
-			foreach ($histories as $history)
+			// Get the migrations from each history
+			foreach ($this->getBatchHistory($batch) as $history)
 			{
 				// Create a UID from the history to match its migration
 				$uid = $this->getObjectUid($history);
 				
 				// Make sure the migration is still available
 				if (! isset($allMigrations[$uid]))
-				{				
+				{
+					$message = lang('Migrations.gap') . ' ' . $history->version;
+			
 					if ($this->silent)
 					{
+						$this->cliMessages[] = "\t" . CLI::color($message, 'red');
 						return false;
 					}
-					throw new \RuntimeException(lang('Migrations.gap') . ' ' . $history->version);
+					throw new \RuntimeException($message);
 				}
 				
-				// Add the ID fo the history and put it on the list
+				// Add the history and put it on the list
 				$migration = $allMigrations[$uid];
-				$migration->historyId = $history->id;
+				$migration->history = $history;
 				$migrations[] = $migration;
 			}
 		}
-		
+
 		// Run each migration
 		foreach ($migrations as $migration)
 		{
 			if ($this->migrate('down', $migration))
 			{
-				$this->removeHistory($migration->historyId);
+				$this->removeHistory($migration->history);
 			}
 			// If a migration failed then quit so as not to ruin the whole batch
 			else {
@@ -338,6 +350,7 @@ class MigrationRunner
 		$namespaces = $this->namespace ? [$this->namespace] : array_keys(Services::autoloader()->getNamespace());
 
 		// Collect the migrations to run by their sortable UID
+		$migrations = [];
 		foreach ($namespaces as $namespace)
 		{
 			foreach ($this->findNamespaceMigrations($namespace) as $migration)
@@ -541,7 +554,7 @@ class MigrationRunner
 	 *
 	 * @return string
 	 */
-	protected function getObjectUid($object): string
+	public function getObjectUid($object): string
 	{
 		return $object->version . $object->class;
 	}
@@ -556,6 +569,20 @@ class MigrationRunner
 	public function getCliMessages(): array
 	{
 		return $this->cliMessages;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Clears any CLI messages.
+	 *
+	 * @return MigrationRunner
+	 */
+	public function clearCliMessages()
+	{
+		$this->cliMessages = [];
+		
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -616,11 +643,11 @@ class MigrationRunner
 	{
 		
 		$this->db->table($this->table)->where('id', $history->id)->delete();
-
+		
 		if (is_cli())
 		{
 			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.removed'),
-					'yellow') . "($history->namespace) " . $version . '_' . $this->name;
+					'yellow') . "($history->namespace) " . $history->version . '_' . $this->getMigrationName($history->class);
 		}
 	}
 	
@@ -677,7 +704,7 @@ class MigrationRunner
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns all the batches in the database history.
+	 * Returns all the batches from the database history in order
 	 *
 	 * @return array
 	 */
@@ -687,6 +714,8 @@ class MigrationRunner
 
 		$batches = $this->db->table($this->table)
 						  ->select('batch')
+						  ->distinct()
+						  ->orderBy('batch' ,'asc')
 						  ->get()
 						  ->getResultArray();
 
@@ -728,6 +757,13 @@ class MigrationRunner
 	 */
 	public function getBatchStart(int $batch): string
 	{
+		// Convert a relative batch to its absolute
+		if ($targetBatch < 0)
+		{
+			$batches = $this->getBatches();
+			$batch = $batches[count($batches) + $targetBatch] ?? 0;
+		}
+		
 		$migration = $this->db->table($this->table)
 			->where('batch', $batch)
 			->orderBy('id', 'asc')
@@ -750,6 +786,13 @@ class MigrationRunner
 	 */
 	public function getBatchEnd(int $batch): string
 	{
+		// Convert a relative batch to its absolute
+		if ($targetBatch < 0)
+		{
+			$batches = $this->getBatches();
+			$batch = $batches[count($batches) + $targetBatch] ?? 0;
+		}
+		
 		$migration = $this->db->table($this->table)
 			  ->where('batch', $batch)
 			  ->orderBy('id', 'desc')
@@ -838,11 +881,14 @@ class MigrationRunner
 		// Validate the migration file structure
 		if (! class_exists($class, false))
 		{
+			$message = sprintf(lang('Migrations.classNotFound'), $class);
+	
 			if ($this->silent)
 			{
+				$this->cliMessages[] = "\t" . CLI::color($message, 'red');
 				return false;
 			}
-			throw new \RuntimeException(sprintf(lang('Migrations.classNotFound'), $class));
+			throw new \RuntimeException($message);
 		}
 
 		// Forcing migration to selected database group
@@ -850,11 +896,14 @@ class MigrationRunner
 
 		if (! is_callable([$instance, $direction]))
 		{
+			$message = sprintf(lang('Migrations.missingMethod'), $direction);
+	
 			if ($this->silent)
 			{
+				$this->cliMessages[] = "\t" . CLI::color($message, 'red');
 				return false;
 			}
-			throw new \RuntimeException(sprintf(lang('Migrations.missingMethod'), $direction));
+			throw new \RuntimeException($message);
 		}
 
 		//$instance->{$direction}();
