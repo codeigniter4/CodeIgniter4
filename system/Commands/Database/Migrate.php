@@ -104,7 +104,8 @@ class Migrate extends BaseCommand
 	public function run(array $params = [])
 	{
 		$runner = Services::migrations();
-
+		$runner->clearCliMessages();
+		
 		CLI::write(lang('Migrations.progress'), 'yellow');
 
 		$namespace = $params['-n'] ?? CLI::getOption('n');
@@ -112,16 +113,22 @@ class Migrate extends BaseCommand
 
 		try
 		{
+			// Check for 'all' namespaces
 			if ($this->isAllNamespace($params))
 			{
 				$runner->setNamespace(null);
-				$runner->progress($group);
 			}
-			else
+			// Check for a specified namespace
+			elseif ($namespace)
 			{
 				$runner->setNamespace($namespace);
-				$runner->progress($group);
 			}
+
+			if (! $runner->progress($group))
+			{
+				CLI::write(lang('Migrations.generalFault'), 'red');
+			}
+
 			$messages = $runner->getCliMessages();
 			foreach ($messages as $message)
 			{
