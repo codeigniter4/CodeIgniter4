@@ -188,8 +188,8 @@ class CIDatabaseTestCase extends CIUnitTestCase
 				}
 			}
 
-			$this->migrations->version(0, null, 'tests');
-			$this->migrations->latest(null, 'tests');
+			$this->migrations->regress(0, 'tests');
+			$this->migrations->progress('tests');
 		}
 
 		if (! empty($this->seed))
