@@ -331,10 +331,102 @@ class MigrationRunner
 			}
 			// If a migration failed then quit so as not to ruin the whole batch
 			else {
-				return false;
+				$message = lang('Migrations.generalFault');
+		
+				if ($this->silent)
+				{
+					$this->cliMessages[] = "\t" . CLI::color($message, 'red');
+					return false;
+				}
+				throw new \RuntimeException($message);
 			}
 		}
 		return true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Migrate a single file regardless of order or batches.
+	 * Method "up" or "down" determined by presence in history.
+	 * NOTE: This is not recommended and provided mostly for testing.
+	 *
+	 * @param string      $path Full path to a valid migration file
+	 * @param string      $path Namespace of the target migration
+	 * @param string|null $group
+	 *
+	 */
+	public function force(string $path, string $namespace, string $group = null)
+	{
+		if (! $this->enabled)
+		{
+			throw ConfigException::forDisabledMigrations();
+		}
+		
+		$this->ensureTable();
+		
+		// Set database group if not null
+		if (! is_null($group))
+		{
+			$this->setGroup($group);
+		}
+
+		// Create and validate the migration
+		$migration = $this->migrationFromFile($path, $namespace);
+		if (empty($migration))
+		{
+			$message = lang('Migrations.notFound');
+	
+			if ($this->silent)
+			{
+				$this->cliMessages[] = "\t" . CLI::color($message, 'red');
+				return false;
+			}
+			throw new \RuntimeException($message);
+		}
+		
+		// Check the history for a match
+		$method = 'up';
+		$this->setNamespace($migration->namespace);
+		foreach ($this->getHistory($this->group) as $history)
+		{
+			if ($this->getObjectUid($history) == $migration->uid)
+			{
+				$method = 'down';
+				$migration->history = $history;
+				break;
+			}
+		}
+		
+		// up
+		if ($method == 'up')
+		{
+			// Start a new batch
+			$batch = $this->getLastBatch() + 1;
+
+			if ($this->migrate('up', $migration))
+			{
+				$this->addHistory($migration, $batch);
+				return true;
+			}
+		}
+		
+		// down		
+		elseif ($this->migrate('down', $migration))
+		{
+			$this->removeHistory($migration->history);
+			return true;
+		}
+		
+		// If it came this far the migration failed
+		$message = lang('Migrations.generalFault');
+
+		if ($this->silent)
+		{
+			$this->cliMessages[] = "\t" . CLI::color($message, 'red');
+			return false;
+		}
+		throw new \RuntimeException($message);
 	}
 
 	//--------------------------------------------------------------------
@@ -396,36 +488,59 @@ class MigrationRunner
 		// We can't use glob if we want it to be testable....
 		foreach ($files as $file)
 		{
-			if (substr($file, -4) !== '.php')
+			// Clean up the file path
+			$file = empty($this->path) ? $file : $this->path . str_replace($this->path, '', $file);
+			
+			// Create the migration object from the file and save it
+			if ($migration = $this->migrationFromFile($file, $namespace))
 			{
-				continue;
-			}
-
-			// Remove the extension
-			$name = basename($file, '.php');
-
-			// Filter out non-migration files
-			if (preg_match($this->regex, $name))
-			{
-				// Create migration object using stdClass
-				$migration = new \stdClass();
-
-				// Get migration version number
-				$migration->version   = $this->getMigrationNumber($name);
-				$migration->name      = $this->getMigrationName($name);
-				$migration->path      = ! empty($this->path) && strpos($file, $this->path) !== 0
-					? $this->path . $file
-					: $file;
-				$migration->class     = $locator->getClassname($file);
-				$migration->namespace = $namespace;
-				$migration->uid       = $this->getObjectUid($migration);
-
-				// Add to migrations
 				$migrations[] = $migration;
 			}
 		}
 
 		return $migrations;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Create a migration object from a file path.
+	 *
+	 * @param string   $path The path to the file
+	 * @param string   $path The namespace of the target migration
+	 *
+	 * @return object|false    Returns the migration object, or false on failure
+	 */
+	protected function migrationFromFile(string $path, string $namespace)
+	{
+		if (substr($path, -4) !== '.php')
+		{
+			return false;
+		}
+
+		// Remove the extension
+		$name = basename($path, '.php');
+
+		// Filter out non-migration files
+		if (! preg_match($this->regex, $name))
+		{
+			return false;
+		}
+
+		$locator = Services::locator(true);
+		
+		// Create migration object using stdClass
+		$migration = new \stdClass();
+
+		// Get migration version number
+		$migration->version   = $this->getMigrationNumber($name);
+		$migration->name      = $this->getMigrationName($name);
+		$migration->path      = $path;
+		$migration->class     = $locator->getClassname($path);
+		$migration->namespace = $namespace;
+		$migration->uid       = $this->getObjectUid($migration);
+
+		return $migration;
 	}
 
 	//--------------------------------------------------------------------
