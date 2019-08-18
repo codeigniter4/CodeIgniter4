@@ -223,6 +223,7 @@ class MigrationRunner
 				throw new \RuntimeException($message);
 			}
 		}
+		
 		return true;
 	}
 
@@ -260,7 +261,7 @@ class MigrationRunner
 		// Convert a relative batch to its absolute
 		if ($targetBatch < 0)
 		{
-			$targetBatch = $batches[count($batches) + $targetBatch] ?? 0;
+			$targetBatch = $batches[count($batches) - 1 + $targetBatch] ?? 0;
 		}
 		
 		// If the goal was rollback then check if it is done
@@ -341,6 +342,7 @@ class MigrationRunner
 				throw new \RuntimeException($message);
 			}
 		}
+		
 		return true;
 	}
 
@@ -876,7 +878,7 @@ class MigrationRunner
 		if ($batch < 0)
 		{
 			$batches = $this->getBatches();
-			$batch = $batches[count($batches) + $targetBatch] ?? 0;
+			$batch = $batches[count($batches) - 1 + $targetBatch] ?? 0;
 		}
 		
 		$migration = $this->db->table($this->table)
@@ -905,7 +907,7 @@ class MigrationRunner
 		if ($batch < 0)
 		{
 			$batches = $this->getBatches();
-			$batch = $batches[count($batches) + $targetBatch] ?? 0;
+			$batch = $batches[count($batches) - 1 + $targetBatch] ?? 0;
 		}
 		
 		$migration = $this->db->table($this->table)
