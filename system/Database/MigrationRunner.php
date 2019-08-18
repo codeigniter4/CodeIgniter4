@@ -873,7 +873,7 @@ class MigrationRunner
 	public function getBatchStart(int $batch): string
 	{
 		// Convert a relative batch to its absolute
-		if ($targetBatch < 0)
+		if ($batch < 0)
 		{
 			$batches = $this->getBatches();
 			$batch = $batches[count($batches) + $targetBatch] ?? 0;
@@ -902,7 +902,7 @@ class MigrationRunner
 	public function getBatchEnd(int $batch): string
 	{
 		// Convert a relative batch to its absolute
-		if ($targetBatch < 0)
+		if ($batch < 0)
 		{
 			$batches = $this->getBatches();
 			$batch = $batches[count($batches) + $targetBatch] ?? 0;
