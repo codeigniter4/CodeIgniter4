@@ -10,9 +10,9 @@ need to be run against the production machines next time you deploy.
 
 The database table **migration** tracks which migrations have already been
 run so all you have to do is make sure your migrations are in place and
-call ``$migration->latest()`` to bring the database up to the most recent
-state. You can also use ``$migration->latestAll()`` to include migrations
-from all namespaces.
+call ``$migration->progress()`` to bring the database up to the most recent
+state. You can also use ``$migration->setNamespace(null)->progess()`` to
+include migrations from all namespaces.
 
 .. contents::
   :local:
@@ -185,7 +185,7 @@ that wish to use them. The tools primarily provide access to the same methods th
 
 **migrate**
 
-Migrates all database groups to the latest available migrations::
+Migrates a database group with all available migrations::
 
     > php spark migrate
 
@@ -195,42 +195,24 @@ You can use (migrate) with the following options:
 - (-n) to choose namespace, otherwise (App) namespace will be used.
 - (-all) to migrate all namespaces to the latest migration
 
-This example will migrate Blog namespace to latest version on the test database group::
+This example will migrate Blog namespace with any new migrations on the test database group::
 
     > php spark migrate -g test -n Blog
 
-**version**
-
-Migrates to the specified version. If no version is provided, you will be prompted
-for the version. ::
-
-  // Asks you for the version...
-  > php spark migrate:version
-  Version:
-
-  // Timestamp
-  > php spark migrate:version 20161426211300
-
-You can use (version) with the following options:
-
-- (-g) to choose database group, otherwise default database group will be used.
-- (-n) to choose namespace, otherwise (App) namespace will be used.
-
 **rollback**
 
-Rolls back all migrations, taking all database groups to a blank slate, effectively migration 0::
+Rolls back all migrations, taking the database group to a blank slate, effectively migration 0::
 
   > php spark migrate:rollback
 
 You can use (rollback) with the following options:
 
 - (-g) to choose database group, otherwise default database group will be used.
-- (-n) to choose namespace, otherwise (App) namespace will be used.
-- (-all) to rollback all namespaces to migration 0
+- (-b) to choose a batch: natural numbers specify the batch, negatives indicate a relative batch
 
 **refresh**
 
-Refreshes the database state by first rolling back all migrations, and then migrating to the latest version::
+Refreshes the database state by first rolling back all migrations, and then migrating all::
 
   > php spark migrate:refresh
 
@@ -248,7 +230,7 @@ Displays a list of all migrations and the date and time they ran, or '--' if the
   Filename               Migrated On
   First_migration.php    2016-04-25 04:44:22
 
-You can use (refresh) with the following options:
+You can use (status) with the following options:
 
 - (-g) to choose database group, otherwise default database group will be used.
 
@@ -293,38 +275,37 @@ Class Reference
 
 		An array of migration filenames are returned that are found in the **path** property.
 
-	.. php:method:: latest($namespace, $group)
-
-		:param	mixed	$namespace: application namespace, if null (App) namespace will be used.
-		:param	mixed	$group: database group name, if null default database group will be used.
-		:returns:	Current version string on success, FALSE on failure
-		:rtype:	mixed
-
-		This works much the same way as ``current()`` but instead of looking for
-		the ``$currentVersion`` the Migration class will use the very
-		newest migration found in the filesystem.
-	.. php:method:: latestAll($group)
+	.. php:method:: progress($group)
 
 		:param	mixed	$group: database group name, if null default database group will be used.
 		:returns:	TRUE on success, FALSE on failure
-		:rtype:	mixed
+		:rtype:	bool
 
-		This works much the same way as ``latest()`` but instead of looking for
-		one namespace, the Migration class will use the very
-		newest migration found for all namespaces.
-	.. php:method:: version($target_version, $namespace, $group)
+		This locates migrations for a namespace (or all namespaces), determines which migrations
+		have not yet been run, and runs them in order of their version (namespaces intermingled).
+		
+	.. php:method:: regress($batch, $group)
 
-		:param	mixed	$namespace: application namespace, if null (App) namespace will be used.
+		:param	mixed	$batch: previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g. -3 means "three batches back")
 		:param	mixed	$group: database group name, if null default database group will be used.
-		:param	mixed	$target_version: Migration version to process
-		:returns:	Current version string on success, FALSE on failure or no migrations are found
-		:rtype:	mixed
+		:returns:	TRUE on success, FALSE on failure or no migrations are found
+		:rtype:	bool
 
-		Version can be used to roll back changes or step forwards programmatically to
-		specific versions. It works just like ``current()`` but ignores ``$currentVersion``.
+		Regress can be used to roll back changes to a previous state, batch by batch.
 		::
 
-			$migration->version(5);
+			$migration->batch(5);
+			$migration->batch(-1);
+
+	.. php:method:: force($path, $namespace, $group)
+
+		:param	mixed	$path:  path to a valid migration file.
+		:param	mixed	$namespace: namespace of the provided migration.
+		:param	mixed	$group: database group name, if null default database group will be used.
+		:returns:	TRUE on success, FALSE on failure
+		:rtype:	bool
+
+		This forces a single file to migrate regardless of order or batches. Method "up" or "down" is detected based on whether it has already been migrated. **Note**: This method is recommended only for testing and could cause data consistency issues.
 
 	.. php:method:: setNamespace($namespace)
 
