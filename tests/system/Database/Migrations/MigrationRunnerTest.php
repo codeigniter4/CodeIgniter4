@@ -59,7 +59,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$tableMaker = $this->getPrivateMethodInvoker($runner, 'ensureTable');
 		$tableMaker();
-		
+
 		$history = [
 			'id'        => 4,
 			'version'   => 'abc123',
@@ -173,19 +173,19 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$config->type = 'timestamp';
 		$runner       = new MigrationRunner($config);
 
-		$runner = $runner->setPath(TESTPATH . '_support/Database/SupportMigrations');
+		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 
 		$mig1 = (object)[
 							'name'    => 'Some_migration',
-							'path'    => TESTPATH . '_support/Database/SupportMigrations/2018-01-24-102301_Some_migration.php',
+							'path'    => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php',
 							'version' => '2018-01-24-102301',
-							'class'   => 'App\Database\Migrations\Migration_some_migration',
+							'class'   => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_migration',
 						];
 		$mig2 = (object)[
 							'name'    => 'Another_migration',
-							'path'    => TESTPATH . '_support/Database/SupportMigrations/2018-01-24-102302_Another_migration.php',
+							'path'    => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php',
 							'version' => '2018-01-24-102302',
-							'class'   => 'App\Database\Migrations\Migration_another_migration',
+							'class'   => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
 						];
 
 		$migrations = $runner->findMigrations();
@@ -210,7 +210,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$runner = $runner->setPath($this->start);
 
 		vfsStream::copyFromFileSystem(
-			TESTPATH . '_support/Database/SupportMigrations',
+			TESTPATH . '_support/MigrationTestMigrations/Database/Migrations',
 			$this->root
 		);
 
@@ -230,7 +230,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$runner->setSilent(false);
 		$runner->clearHistory();
 
-		$runner = $runner->setPath(TESTPATH . '_support/Database/SupportMigrations');
+		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 
 		$runner->progress();
 		$version = $runner->getBatchEnd($runner->getLastBatch());
@@ -252,7 +252,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$runner->setSilent(false);
 		$runner->clearHistory();
 
-		$runner = $runner->setPath(TESTPATH . '_support/Database/SupportMigrations');
+		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 
 		$runner->progess();
 		$version = $runner->getBatchEnd($runner->getLastBatch());
@@ -271,7 +271,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$runner = new MigrationRunner($config);
 		$runner->setSilent(false);
 
-		$runner = $runner->setPath(TESTPATH . '_support/Database/SupportMigrations');
+		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 		$runner->progress();
 
 		$runner->regress();
@@ -292,7 +292,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$runner->clearHistory();
 		$this->resetTables();
 
-		$runner = $runner->setPath(TESTPATH . '_support/Database/SupportMigrations');
+		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 
 		$runner->progess();
 		$version = $runner->getBatchEnd($runner->getLastBatch());
@@ -318,7 +318,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$runner->clearHistory();
 		$this->resetTables();
 
-		$runner = $runner->setPath(TESTPATH . '_support/Database/SupportMigrations');
+		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 
 		$runner->progress();
 

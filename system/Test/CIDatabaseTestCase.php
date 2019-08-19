@@ -76,11 +76,11 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	protected $basePath = TESTPATH . '_support/Database';
 
 	/**
-	 * The namespace to help us fird the migration classes.
+	 * The namespace to help us find the migration classes.
 	 *
 	 * @var string
 	 */
-	protected $namespace = 'Tests\Support';
+	protected $namespace = 'Tests\Support\DatabaseTestMigrations';
 
 	/**
 	 * The name of the database group to connect to.
