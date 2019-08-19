@@ -176,17 +176,22 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 
 		$mig1 = (object)[
-							'name'    => 'Some_migration',
-							'path'    => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php',
-							'version' => '2018-01-24-102301',
-							'class'   => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_migration',
+							'name'      => 'Some_migration',
+							'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php',
+							'version'   => '2018-01-24-102301',
+							'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_migration',
+							'namespace' => 'Tests\Support\MigrationTestMigrations',
 						];
+		$mig1->uid = $runner->getObjectUid($mig1);
+
 		$mig2 = (object)[
-							'name'    => 'Another_migration',
-							'path'    => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php',
-							'version' => '2018-01-24-102302',
-							'class'   => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
+							'name'      => 'Another_migration',
+							'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php',
+							'version'   => '2018-01-24-102302',
+							'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
+							'namespace' => 'Tests\Support\MigrationTestMigrations',
 						];
+		$mig1->uid = $runner->getObjectUid($mig1);
 
 		$migrations = $runner->findMigrations();
 
@@ -217,7 +222,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$this->expectException(ConfigException::class);
 		$this->expectExceptionMessage('Migrations have been loaded but are disabled or setup incorrectly.');
 
-		$runner->version(1);
+		$runner->progress();
 	}
 
 	public function testVersionReturnsUpDownSuccess()
@@ -235,7 +240,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$runner->progress();
 		$version = $runner->getBatchEnd($runner->getLastBatch());
 
-		$this->assertEquals('2018-01-24-102301', $version);
+		$this->assertEquals('2018-01-24-102302', $version);
 		$this->seeInDatabase('foo', ['key' => 'foobar']);
 
 		$runner->version(0);

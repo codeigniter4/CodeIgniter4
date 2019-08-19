@@ -7,7 +7,9 @@ class MockServices extends BaseService
 {
 
 	public $psr4     = [
-		'Tests/Support' => TESTPATH . '_support/',
+		'Tests/Support'                         => TESTPATH . '_support/',
+		'Tests/Support/DatabaseTestMigrations'  => TESTPATH . '_support/DatabaseTestMigrations',
+		'Tests/Support/MigrationTestMigrations' => TESTPATH . '_support/MigrationTestMigrations',
 	];
 	public $classmap = [];
 

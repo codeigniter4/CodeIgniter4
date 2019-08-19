@@ -67,9 +67,8 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	protected $seed = '';
 
 	/**
-	 * The path to where we can find the migrations
-	 * and seeds directories. Allows overriding
-	 * the default application directories.
+	 * The path to where we can find the seeds directory.
+	 * Allows overriding the default application directories.
 	 *
 	 * @var string
 	 */
