@@ -422,7 +422,7 @@ class Autoloader
 			unset($paths['CodeIgniter\\']);
 		}
 
-		// Composer stores paths with trailng slash. We don't.
+		// Composer stores namespaces with trailing slash. We don't.
 		$newPaths = [];
 		foreach ($paths as $key => $value)
 		{
