@@ -219,6 +219,7 @@ class ResourceControllerTest extends \CIUnitTestCase
 		//      $routes->resource('work', ['controller' => '\Tests\Support\RESTful\Worker']);
 		//      $router = Services::router($routes);
 		//      Services::injectMock('router', $router);
+		$routes->resource('work/edit', ['controller' => '\Tests\Support\RESTful\Worker::edit']);
 
 		ob_start();
 		$this->codeigniter->useSafeOutput(true)->run();

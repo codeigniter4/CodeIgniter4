@@ -41,14 +41,12 @@ use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Controller;
 
 /**
- * An extendable controller to provide a RESTful API for a resource.
+ * An extendable controller to help provide a UI for a resource.
  *
  * @package CodeIgniter\RESTful
  */
-class ResourceController extends Controller
+class ResourcePresenter extends Controller
 {
-
-	use ResponseTrait;
 
 	/**
 	 *
@@ -62,11 +60,7 @@ class ResourceController extends Controller
 	 */
 	protected $model = null;
 
-	/**
-	 *
-	 * @var string the representation format to return resource data in (json/xml)
-	 */
-	protected $format = 'json';
+	const NOT_THERE = 'Action not implemented yet';
 
 	//--------------------------------------------------------------------
 
@@ -83,7 +77,7 @@ class ResourceController extends Controller
 			}
 			catch (\Exception $e)
 			{
-				// ignored. we just don't use a model for now
+				// ignored. we just own't use a model for now
 			}
 		}
 	}
@@ -91,98 +85,101 @@ class ResourceController extends Controller
 	//--------------------------------------------------------------------
 
 	/**
-	 * Return an array of resource objects, themselves in array format
+	 * Present a view of resource objects
 	 *
-	 * @return array	an array
+	 * @return string
 	 */
 	public function index()
 	{
-		return $this->fail('index: Action not implemented', 501);
+		return 'index: ' . NOT_THERE;
 	}
 
 	/**
-	 * Return the properties of a resource object
+	 * Present a view to present a specific resource object
 	 *
-	 * @return array	an array
+	 * @param  type $id
+	 * @return string
 	 */
 	public function show($id = null)
 	{
-		$this->fail('Action not implemented', 501);
+		return 'show: ' . NOT_THERE;
 	}
 
 	/**
-	 * Return a new resource object, with default properties
+	 * Present a view to present a new single resource object
 	 *
-	 * @return array	an array
+	 * @param  type $id
+	 * @return string
 	 */
 	public function new()
 	{
-		$this->fail('Action not implemented', 501);
+		return 'new: ' . NOT_THERE;
 	}
 
 	/**
-	 * Create a new resource object, from "posted" parameters
+	 * Process the creation/insertion of a new resource object
 	 *
-	 * @return array	an array
+	 * @return string
 	 */
 	public function create()
 	{
-		$this->fail('Action not implemented', 501);
+		return 'create: ' . NOT_THERE;
 	}
 
 	/**
-	 * Return the editable properties of a resource object
+	 * Present a view to confirm the deletion of a specific resource object
 	 *
-	 * @return array	an array
+	 * @param  type $id
+	 * @return string
 	 */
-	public function edit($id = null)
+	public function remove($id = null)
 	{
-		$this->fail('Action not implemented', 501);
+		return 'remove: ' . NOT_THERE;
 	}
 
 	/**
-	 * Add or update a model resource, from "posted" properties
+	 * Process the deletion of a specific resource object
 	 *
-	 * @return array	an array
-	 */
-	public function update($id = null)
-	{
-		$this->fail('Action not implemented', 501);
-	}
-
-	/**
-	 * Delete the designated resource object from the model
-	 *
-	 * @return array	an array
+	 * @param  type $id
+	 * @return string
 	 */
 	public function delete($id = null)
 	{
-		$this->fail('Action not implemented', 501);
+		return 'delete: ' . NOT_THERE;
+	}
+
+	/**
+	 * Present a view to edit the properties of a specific resource object
+	 *
+	 * @param  type $id
+	 * @return string
+	 */
+	public function edit($id = null)
+	{
+		return 'edit: ' . NOT_THERE;
+	}
+
+	/**
+	 * Process the updating, full or partial, of a specific resource object
+	 *
+	 * @param  type $id
+	 * @return string
+	 */
+	public function update($id = null)
+	{
+		return 'update: ' . NOT_THERE;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Set or change the model this controller is bound to
+	 * Set/change the model that this controller is bound to
 	 *
-	 * @param string|\CodeIgniter\Model $which
+	 * @param type $which
 	 */
 	public function setModel($which = null)
 	{
 		$this->model = $model;
-	}
-
-	/**
-	 * Set/change the expected response representation for returned objects
-	 *
-	 * @param string $format
-	 */
-	public function setFormat(string $format = 'json')
-	{
-		if (in_array($format, ['json', 'xml']))
-		{
-			$this->format = $format;
-		}
 	}
 
 }
