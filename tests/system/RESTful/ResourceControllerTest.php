@@ -61,10 +61,14 @@ class ResourceControllerTest extends \CIUnitTestCase
 		$this->response             = new \CodeIgniter\HTTP\Response($this->config);
 		$this->logger               = \Config\Services::logger();
 		$this->codeigniter          = new MockCodeIgniter($this->config);
-	}
+		//  }
+		//
+		//  protected function getCollector(array $config = [], array $files = [], $moduleConfig = null)
+		//  {
+		$config       = [];
+		$files        = [];
+		$moduleConfig = null;
 
-	protected function getCollector(array $config = [], array $files = [], $moduleConfig = null)
-	{
 		$defaults = [
 			'Config' => APPPATH . 'Config',
 			'App'    => APPPATH,
@@ -81,7 +85,13 @@ class ResourceControllerTest extends \CIUnitTestCase
 			$moduleConfig->enabled = false;
 		}
 
-		return new RouteCollection($loader, $moduleConfig);
+		//      return new RouteCollection($loader, $moduleConfig);
+		$routes = new RouteCollection($loader, $moduleConfig);
+
+		// Inject mock router.
+		$routes->resource('work', ['controller' => '\Tests\Support\RESTful\Worker']);
+		$router = Services::router($routes, $this->request);
+		Services::injectMock('router', $router);
 	}
 
 	//--------------------------------------------------------------------
@@ -106,11 +116,11 @@ class ResourceControllerTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI']    = '/work';
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		// Inject mock router.
-		$routes = $this->getCollector();
-		$routes->resource('work', ['controller' => '\Tests\Support\Resource\Worker']);
-		$router = Services::router($routes);
-		Services::injectMock('router', $router);
+		//      // Inject mock router.
+		//      $routes = $this->getCollector();
+		//      $routes->resource('work', ['controller' => '\Tests\Support\RESTful\Worker']);
+		//      $router = Services::router($routes,$this->request);
+		//      Services::injectMock('router', $router);
 
 		ob_start();
 		$this->codeigniter->useSafeOutput(true)->run();
@@ -131,11 +141,11 @@ class ResourceControllerTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI']    = '/work/show/1';
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		// Inject mock router.
-		$routes = $this->getCollector();
-		$routes->resource('work', ['controller' => '\Tests\Support\Resource\Worker']);
-		$router = Services::router($routes);
-		Services::injectMock('router', $router);
+		//      // Inject mock router.
+		//      $routes = $this->getCollector();
+		//      $routes->resource('work', ['controller' => '\Tests\Support\RESTful\Worker']);
+		//      $router = Services::router($routes);
+		//      Services::injectMock('router', $router);
 
 		ob_start();
 		$this->codeigniter->useSafeOutput(true)->run();
@@ -155,11 +165,11 @@ class ResourceControllerTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI']    = '/work/new';
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		// Inject mock router.
-		$routes = $this->getCollector();
-		$routes->resource('work', ['controller' => '\Tests\Support\Resource\Worker']);
-		$router = Services::router($routes);
-		Services::injectMock('router', $router);
+		//      // Inject mock router.
+		//      $routes = $this->getCollector();
+		//      $routes->resource('work', ['controller' => '\Tests\Support\RESTful\Worker']);
+		//      $router = Services::router($routes);
+		//      Services::injectMock('router', $router);
 
 		ob_start();
 		$this->codeigniter->useSafeOutput(true)->run();
@@ -179,11 +189,11 @@ class ResourceControllerTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI']    = '/work/create';
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 
-		// Inject mock router.
-		$routes = $this->getCollector();
-		$routes->resource('work', ['controller' => '\Tests\Support\Resource\Worker']);
-		$router = Services::router($routes);
-		Services::injectMock('router', $router);
+		//      // Inject mock router.
+		//      $routes = $this->getCollector();
+		//      $routes->resource('work', ['controller' => '\Tests\Support\RESTful\Worker']);
+		//      $router = Services::router($routes);
+		//      Services::injectMock('router', $router);
 
 		ob_start();
 		$this->codeigniter->useSafeOutput(true)->run();
@@ -204,11 +214,11 @@ class ResourceControllerTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI']    = '/work/edit/1';
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		// Inject mock router.
-		$routes = $this->getCollector();
-		$routes->resource('work', ['controller' => '\Tests\Support\Resource\Worker']);
-		$router = Services::router($routes);
-		Services::injectMock('router', $router);
+		//      // Inject mock router.
+		//      $routes = $this->getCollector();
+		//      $routes->resource('work', ['controller' => '\Tests\Support\RESTful\Worker']);
+		//      $router = Services::router($routes);
+		//      Services::injectMock('router', $router);
 
 		ob_start();
 		$this->codeigniter->useSafeOutput(true)->run();
@@ -229,11 +239,11 @@ class ResourceControllerTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI']    = '/work/update/1';
 		$_SERVER['REQUEST_METHOD'] = 'PUT';
 
-		// Inject mock router.
-		$routes = $this->getCollector();
-		$routes->resource('work', ['controller' => '\Tests\Support\Resource\Worker']);
-		$router = Services::router($routes);
-		Services::injectMock('router', $router);
+		//      // Inject mock router.
+		//      $routes = $this->getCollector();
+		//      $routes->resource('work', ['controller' => '\Tests\Support\RESTful\Worker']);
+		//      $router = Services::router($routes);
+		//      Services::injectMock('router', $router);
 
 		ob_start();
 		$this->codeigniter->useSafeOutput(true)->run();
@@ -254,11 +264,11 @@ class ResourceControllerTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI']    = '/work/delete/1';
 		$_SERVER['REQUEST_METHOD'] = 'DELETE';
 
-		// Inject mock router.
-		$routes = $this->getCollector();
-		$routes->resource('work', ['controller' => '\Tests\Support\Resource\Worker']);
-		$router = Services::router($routes);
-		Services::injectMock('router', $router);
+		//      // Inject mock router.
+		//      $routes = $this->getCollector();
+		//      $routes->resource('work', ['controller' => '\Tests\Support\RESTful\Worker']);
+		//      $router = Services::router($routes);
+		//      Services::injectMock('router', $router);
 
 		ob_start();
 		$this->codeigniter->useSafeOutput(true)->run();
