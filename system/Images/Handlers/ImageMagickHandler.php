@@ -232,9 +232,10 @@ class ImageMagickHandler extends BaseHandler
 	 * @param string  $action
 	 * @param integer $quality
 	 *
-	 * @return ImageMagickHandler|boolean
+	 * @return array  Lines of output from shell command
+	 * @throws \Exception
 	 */
-	protected function process(string $action, int $quality = 100)
+	protected function process(string $action, int $quality = 100): array
 	{
 		// Do we have a vaild library path?
 		if (empty($this->config->libraryPath))
@@ -303,8 +304,8 @@ class ImageMagickHandler extends BaseHandler
 		$result = $this->process($action, $quality);
 
 		unlink($this->resource);
-
-		return $result;
+		
+		return true;
 	}
 
 	//--------------------------------------------------------------------
