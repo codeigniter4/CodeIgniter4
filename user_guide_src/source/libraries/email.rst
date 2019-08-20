@@ -139,7 +139,9 @@ Class Reference
 ***************
 
 .. php:class:: CodeIgniter\\Email\\Email
+
 	.. php:method:: setFrom($from[, $name = ''[, $returnPath = null]])
+
 		:param	string	$from: "From" e-mail address
 		:param	string	$name: "From" display name
 		:param	string	$returnPath: Optional email address to redirect undelivered e-mail to
@@ -158,6 +160,7 @@ Class Reference
 			your protocol.
 
 	.. php:method:: setReplyTo($replyto[, $name = ''])
+
 		:param	string	$replyto: E-mail address for replies
 		:param	string	$name: Display name for the reply-to e-mail address
 		:returns:	CodeIgniter\\Email\\Email instance (method chaining)
@@ -169,6 +172,7 @@ Class Reference
 			$email->setReplyTo('you@example.com', 'Your Name');
 
 	.. php:method:: setTo($to)
+
 		:param	mixed	$to: Comma-delimited string or an array of e-mail addresses
 		:returns:	CodeIgniter\\Email\\Email instance (method chaining)
 		:rtype:	CodeIgniter\\Email\\Email
@@ -187,6 +191,7 @@ Class Reference
 			$email->setTo(['one@example.com', 'two@example.com', 'three@example.com']);
 
 	.. php:method:: setCC($cc)
+
 		:param	mixed	$cc: Comma-delimited string or an array of e-mail addresses
 		:returns:	CodeIgniter\\Email\\Email instance (method chaining)
 		:rtype:	CodeIgniter\\Email\\Email
@@ -195,6 +200,7 @@ Class Reference
 		a comma-delimited list or an array.
 
 	.. php:method:: setBCC($bcc[, $limit = ''])
+
 		:param	mixed	$bcc: Comma-delimited string or an array of e-mail addresses
 		:param	int	$limit: Maximum number of e-mails to send per batch
 		:returns:	CodeIgniter\\Email\\Email instance (method chaining)
@@ -208,6 +214,7 @@ Class Reference
 		``$limit``.
 
 	.. php:method:: setSubject($subject)
+
 		:param	string	$subject: E-mail subject line
 		:returns:	CodeIgniter\\Email\\Email instance (method chaining)
 		:rtype:	CodeIgniter\\Email\\Email
@@ -217,6 +224,7 @@ Class Reference
 			$email->setSubject('This is my subject');
 
 	.. php:method:: setMessage($body)
+
 		:param	string	$body: E-mail message body
 		:returns:	CodeIgniter\\Email\\Email instance (method chaining)
 		:rtype:	CodeIgniter\\Email\\Email
@@ -226,6 +234,7 @@ Class Reference
 			$email->setMessage('This is my message');
 
 	.. php:method:: setAltMessage($str)
+
 		:param	string	$str: Alternative e-mail message body
 		:returns:	CodeIgniter\\Email\\Email instance (method chaining)
 		:rtype:	CodeIgniter\\Email\\Email
@@ -242,6 +251,7 @@ Class Reference
 		and strip the tags.
 
 	.. php:method:: setHeader($header, $value)
+
 		:param	string	$header: Header name
 		:param	string	$value: Header value
 		:returns:	CodeIgniter\\Email\\Email instance (method chaining)
@@ -253,6 +263,7 @@ Class Reference
 			$email->setHeader('Header2', 'Value2');
 
 	.. php:method:: clear($clearAttachments = false)
+
 		:param	bool	$clearAttachments: Whether or not to clear attachments
 		:returns:	CodeIgniter\\Email\\Email instance (method chaining)
 		:rtype: CodeIgniter\\Email\\Email
@@ -280,6 +291,7 @@ Class Reference
 			$email->clear(true);
 
 	.. php:method:: send($autoClear = true)
+
 		:param	bool	$autoClear: Whether to clear message data automatically
 		:returns:	TRUE on success, FALSE on failure
 		:rtype:	bool
@@ -308,6 +320,7 @@ Class Reference
 			boolean ``TRUE``.
 
 	.. php:method:: attach($filename[, $disposition = ''[, $newname = null[, $mime = '']]])
+
 		:param	string	$filename: File name
 		:param	string	$disposition: 'disposition' of the attachment. Most
 			email clients make their own decision regardless of the MIME
@@ -345,6 +358,7 @@ Class Reference
 			$email->attach($buffer, 'attachment', 'report.pdf', 'application/pdf');
 
 	.. php:method:: setAttachmentCID($filename)
+
 		:param	string	$filename: Existing attachment filename
 		:returns:	Attachment Content-ID or FALSE if not found
 		:rtype:	string
@@ -366,6 +380,7 @@ Class Reference
 		.. note:: Content-ID for each e-mail must be re-created for it to be unique.
 
 	.. php:method:: printDebugger($include = ['headers', 'subject', 'body'])
+
 		:param	array	$include: Which parts of the message to print out
 		:returns:	Formatted debug data
 		:rtype:	string
