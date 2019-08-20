@@ -287,6 +287,22 @@ abstract class BaseHandler implements ImageHandlerInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Changes the stored image type to indicate the new file format to use when saving.
+	 * Does not touch the actual resource.
+	 *
+	 * @param integer|null $imageType A PHP imageType constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
+	 *
+	 * @return $this
+	 */
+	public function convert(int $imageType)
+	{
+		$this->image->imageType = $imageType;
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Rotates the image on the current canvas.
 	 *
 	 * @param float $angle
@@ -556,7 +572,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 			$height = ceil(($width / $cropWidth) * $cropHeight);
 		}
 
-		list($x, $y) = $this->calcCropCoords($width, $height, $origWidth, $origHeight, $position);
+		list($x, $y) = $this->calcCropCoords($cropWidth, $cropHeight, $origWidth, $origHeight, $position);
 
 		return $this->crop($cropWidth, $cropHeight, $x, $y)
 						->resize($width, $height);
@@ -594,14 +610,14 @@ abstract class BaseHandler implements ImageHandlerInterface
 		if ($xRatio > $yRatio)
 		{
 			return [
-				(int) ($origWidth * $yRatio),
-				(int) ($origHeight * $yRatio),
+				$origWidth,
+				(int) ($origWidth * $height / $width),
 			];
 		}
 
 		return [
-			(int) ($origWidth * $xRatio),
-			(int) ($origHeight * $xRatio),
+			(int) ($origHeight * $width / $height),
+			$origHeight,
 		];
 	}
 

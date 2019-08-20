@@ -229,7 +229,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 
 		if (isset($this->lockKey))
 		{
-			$this->redis->setTimeout($this->lockKey, 300);
+			$this->redis->expire($this->lockKey, 300);
 
 			if ($this->fingerprint !== ($fingerprint = md5($sessionData)) || $this->keyExists === false)
 			{
@@ -243,7 +243,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 				return false;
 			}
 
-			return $this->redis->setTimeout($this->keyPrefix . $sessionID, $this->sessionExpiration);
+			return $this->redis->expire($this->keyPrefix . $sessionID, $this->sessionExpiration);
 		}
 
 		return false;
@@ -264,9 +264,10 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			try
 			{
-				if ($this->redis->ping() === '+PONG')
+				$ping_reply = $this->redis->ping();
+				if (($ping_reply === true) || ($ping_reply === '+PONG'))
 				{
-					isset($this->lockKey) && $this->redis->delete($this->lockKey);
+					isset($this->lockKey) && $this->redis->del($this->lockKey);
 
 					if (! $this->redis->close())
 					{
@@ -302,9 +303,9 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		if (isset($this->redis, $this->lockKey))
 		{
-			if (($result = $this->redis->delete($this->keyPrefix . $sessionID)) !== 1)
+			if (($result = $this->redis->del($this->keyPrefix . $sessionID)) !== 1)
 			{
-				$this->logger->debug('Session: Redis::delete() expected to return 1, got ' . var_export($result, true) . ' instead.');
+				$this->logger->debug('Session: Redis::del() expected to return 1, got ' . var_export($result, true) . ' instead.');
 			}
 
 			return $this->destroyCookie();
@@ -347,7 +348,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		// correct session ID.
 		if ($this->lockKey === $this->keyPrefix . $sessionID . ':lock')
 		{
-			return $this->redis->setTimeout($this->lockKey, 300);
+			return $this->redis->expire($this->lockKey, 300);
 		}
 
 		// 30 attempts to obtain a lock, in case another request already has it
@@ -400,7 +401,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		if (isset($this->redis, $this->lockKey) && $this->lock)
 		{
-			if (! $this->redis->delete($this->lockKey))
+			if (! $this->redis->del($this->lockKey))
 			{
 				$this->logger->error('Session: Error while trying to free lock for ' . $this->lockKey);
 				return false;

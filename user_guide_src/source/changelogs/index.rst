@@ -7,6 +7,16 @@ Version |version|
 
 Release Date: Not Released
 
+**Next release of CodeIgniter4**
+
+
+:doc:`See all the changes. </changelogs/next>`
+
+Version 4.0.0-beta.4
+====================================================
+
+Release Date: July 25, 2019
+
 
 :doc:`See all the changes. </changelogs/next>`
 

@@ -42,6 +42,8 @@ use CodeIgniter\Debug\Exceptions;
 use CodeIgniter\Debug\Iterator;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Debug\Toolbar;
+use CodeIgniter\Encryption\EncrypterInterface;
+use CodeIgniter\Encryption\Encryption;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Honeypot\Honeypot;
 use CodeIgniter\HTTP\CLIRequest;
@@ -207,6 +209,31 @@ class Services extends BaseService
 		$email = new \CodeIgniter\Email\Email($config);
 		$email->setLogger(static::logger(true));
 		return $email;
+  }
+  
+   /**
+   * The Encryption class provides two-way encryption.
+	 *
+	 * @param mixed   $config
+	 * @param boolean $getShared
+	 *
+	 * @return EncrypterInterface Encryption handler
+	 */
+	public static function encrypter($config = null, $getShared = false)
+	{
+		if ($getShared === true)
+		{
+			return static::getSharedInstance('encrypter', $config);
+		}
+
+		if (empty($config))
+		{
+			$config = new \Config\Encryption();
+		}
+
+		$encryption = new Encryption($config);
+		$encrypter  = $encryption->initialize($config);
+		return $encrypter;
 	}
 
 	//--------------------------------------------------------------------

@@ -171,7 +171,7 @@ if (! function_exists('camelize'))
 	 * Camelize
 	 *
 	 * Takes multiple words separated by spaces or
-	 * underscores and camelizes them
+	 * underscores and converts them to camel case.
 	 *
 	 * @param  string $string Input string
 	 * @return string
@@ -181,6 +181,27 @@ if (! function_exists('camelize'))
 		return lcfirst(str_replace(' ', '', ucwords(preg_replace('/[\s_]+/', ' ', $string))));
 	}
 }
+
+//--------------------------------------------------------------------
+
+if (! function_exists('pascalize'))
+{
+	/**
+	 * Pascalize
+	 *
+	 * Takes multiple words separated by spaces or
+	 * underscores and converts them to Pascal case,
+	 * which is camel case with an uppercase first letter.
+	 *
+	 * @param  string $string Input string
+	 * @return string
+	 */
+	function pascalize(string $string): string
+	{
+		return ucfirst(camelize($string));
+	}
+}
+
 //--------------------------------------------------------------------
 
 if (! function_exists('underscore'))

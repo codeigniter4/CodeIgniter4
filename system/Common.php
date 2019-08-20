@@ -111,7 +111,7 @@ if (! function_exists('config'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('db_connnect'))
+if (! function_exists('db_connect'))
 {
 	/**
 	 * Grabs a database connection and returns it to the user.

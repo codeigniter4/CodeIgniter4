@@ -62,7 +62,7 @@ class MigrateLatest extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $name = 'migrate:latest';
+	protected $name = 'migrate';
 
 	/**
 	 * the Command's short description
@@ -76,7 +76,7 @@ class MigrateLatest extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $usage = 'migrate:latest [options]';
+	protected $usage = 'migrate [options]';
 
 	/**
 	 * the Command's Arguments
