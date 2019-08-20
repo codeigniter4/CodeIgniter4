@@ -7,6 +7,7 @@ Library Reference
 
     caching
     curlrequest
+    encryption
     files
     honeypot
     images
