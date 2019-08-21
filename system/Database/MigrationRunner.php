@@ -167,7 +167,6 @@ class MigrationRunner
 	 * Locate and run all new migrations
 	 *
 	 * @param string|null $group
-	 *
 	 */
 	public function progress(string $group = null)
 	{
@@ -210,7 +209,8 @@ class MigrationRunner
 				$this->addHistory($migration, $batch);
 			}
 			// If a migration failed then try to back out what was done
-			else {
+			else
+			{
 				$this->regress(-1);
 
 				$message = lang('Migrations.generalFault');
@@ -234,13 +234,13 @@ class MigrationRunner
 	 *
 	 * Calls each migration step required to get to the provided batch
 	 *
-	 * @param int         $targetBatch Target batch number, or negative for a relative batch, 0 for all
+	 * @param integer     $targetBatch Target batch number, or negative for a relative batch, 0 for all
 	 * @param string|null $group
 	 *
 	 * @return mixed Current batch number on success, FALSE on failure or no migrations are found
 	 * @throws ConfigException
 	 */
-	public function regress(int $targetBatch, string $group = null)
+	public function regress(int $targetBatch = 0, string $group = null)
 	{
 		if (! $this->enabled)
 		{
@@ -285,7 +285,7 @@ class MigrationRunner
 
 		// Get all migrations
 		$this->namespace = null;
-		$allMigrations = $this->findMigrations();
+		$allMigrations   = $this->findMigrations();
 
 		// Gather migrations down through each batch until reaching the target
 		$migrations = [];
@@ -317,9 +317,9 @@ class MigrationRunner
 				}
 
 				// Add the history and put it on the list
-				$migration = $allMigrations[$uid];
+				$migration          = $allMigrations[$uid];
 				$migration->history = $history;
-				$migrations[] = $migration;
+				$migrations[]       = $migration;
 			}
 		}
 
@@ -331,7 +331,8 @@ class MigrationRunner
 				$this->removeHistory($migration->history);
 			}
 			// If a migration failed then quit so as not to ruin the whole batch
-			else {
+			else
+			{
 				$message = lang('Migrations.generalFault');
 
 				if ($this->silent)
@@ -353,10 +354,9 @@ class MigrationRunner
 	 * Method "up" or "down" determined by presence in history.
 	 * NOTE: This is not recommended and provided mostly for testing.
 	 *
-	 * @param string      $path Full path to a valid migration file
-	 * @param string      $path Namespace of the target migration
+	 * @param string      $path  Full path to a valid migration file
+	 * @param string      $path  Namespace of the target migration
 	 * @param string|null $group
-	 *
 	 */
 	public function force(string $path, string $namespace, string $group = null)
 	{
@@ -392,16 +392,16 @@ class MigrationRunner
 		$this->setNamespace($migration->namespace);
 		foreach ($this->getHistory($this->group) as $history)
 		{
-			if ($this->getObjectUid($history) == $migration->uid)
+			if ($this->getObjectUid($history) === $migration->uid)
 			{
-				$method = 'down';
+				$method             = 'down';
 				$migration->history = $history;
 				break;
 			}
 		}
 
 		// up
-		if ($method == 'up')
+		if ($method === 'up')
 		{
 			// Start a new batch
 			$batch = $this->getLastBatch() + 1;
@@ -464,7 +464,7 @@ class MigrationRunner
 	/**
 	 * Retrieves a list of available migration scripts for one namespace
 	 *
-	 * @param string   $namespace The namespace to search for migrations
+	 * @param string $namespace The namespace to search for migrations
 	 *
 	 * @return array    List of unsorted migrations from the namespace
 	 */
@@ -508,8 +508,8 @@ class MigrationRunner
 	/**
 	 * Create a migration object from a file path.
 	 *
-	 * @param string   $path The path to the file
-	 * @param string   $path The namespace of the target migration
+	 * @param string $path The path to the file
+	 * @param string $path The namespace of the target migration
 	 *
 	 * @return object|false    Returns the migration object, or false on failure
 	 */
@@ -551,7 +551,7 @@ class MigrationRunner
 	 * Set namespace.
 	 * Allows other scripts to modify on the fly as needed.
 	 *
-	 * @param ?string $namespace or null for "all"
+	 * @param string $namespace or null for "all"
 	 *
 	 * @return MigrationRunner
 	 */
@@ -710,7 +710,7 @@ class MigrationRunner
 	 * @param object  $migration
 	 * @param integer $batch
 	 *
-	 * @return   void
+	 * @return void
 	 */
 	protected function addHistory($migration, int $batch)
 	{
@@ -742,7 +742,6 @@ class MigrationRunner
 	 */
 	protected function removeHistory($history)
 	{
-
 		$this->db->table($this->table)->where('id', $history->id)->delete();
 
 		if (is_cli())
@@ -795,9 +794,9 @@ class MigrationRunner
 		$this->ensureTable();
 
 		$query = $this->db->table($this->table)
-			              ->where('batch', $batch)
-			              ->orderBy('id', 'asc')
-			              ->get();
+						  ->where('batch', $batch)
+						  ->orderBy('id', 'asc')
+						  ->get();
 
 		return $query ? $query->getResultObject() : [];
 	}
@@ -816,7 +815,7 @@ class MigrationRunner
 		$batches = $this->db->table($this->table)
 						  ->select('batch')
 						  ->distinct()
-						  ->orderBy('batch' ,'asc')
+						  ->orderBy('batch', 'asc')
 						  ->get()
 						  ->getResultArray();
 
@@ -862,7 +861,7 @@ class MigrationRunner
 		if ($batch < 0)
 		{
 			$batches = $this->getBatches();
-			$batch = $batches[count($batches) - 1 + $targetBatch] ?? 0;
+			$batch   = $batches[count($batches) - 1 + $targetBatch] ?? 0;
 		}
 
 		$migration = $this->db->table($this->table)
@@ -891,7 +890,7 @@ class MigrationRunner
 		if ($batch < 0)
 		{
 			$batches = $this->getBatches();
-			$batch = $batches[count($batches) - 1 + $targetBatch] ?? 0;
+			$batch   = $batches[count($batches) - 1 + $targetBatch] ?? 0;
 		}
 
 		$migration = $this->db->table($this->table)

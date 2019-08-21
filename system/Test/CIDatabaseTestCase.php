@@ -37,6 +37,8 @@
 
 namespace CodeIgniter\Test;
 
+use CodeIgniter\Config\Config;
+use Config\Autoload;
 use Config\Database;
 use Config\Migrations;
 use Config\Services;
@@ -160,6 +162,9 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	{
 		parent::setUp();
 
+		// Add namespaces we need for testing
+		Services::autoloader()->addNamespace('Tests\Support\DatabaseTestMigrations', TESTPATH . '_support/DatabaseTestMigrations');
+
 		$this->loadDependencies();
 
 		if ($this->refresh === true)
@@ -172,20 +177,20 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			// Delete all of the tables to ensure we're at a clean start.
 			$tables = $this->db->listTables();
 
-			if (is_array($tables))
-			{
-				$forge = Database::forge('tests');
-
-				foreach ($tables as $table)
-				{
-					if ($table === $this->db->DBPrefix . 'migrations')
-					{
-						continue;
-					}
-
-					$forge->dropTable($table, true);
-				}
-			}
+			//          if (is_array($tables))
+			//          {
+			//              $forge = Database::forge('tests');
+			//d($tables);
+			//              foreach ($tables as $table)
+			//              {
+			//                  if ($table === $this->db->DBPrefix . 'migrations')
+			//                  {
+			//                      continue;
+			//                  }
+			//
+			//                  $forge->dropTable($table, true);
+			//              }
+			//          }
 
 			$this->migrations->regress(0, 'tests');
 			$this->migrations->progress('tests');

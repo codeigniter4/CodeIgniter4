@@ -5,6 +5,7 @@ use Config\Migrations;
 use org\bovigo\vfs\vfsStream;
 use CodeIgniter\Test\CIDatabaseTestCase;
 use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
+use Config\Services;
 
 /**
  * @group DatabaseLive
@@ -25,6 +26,8 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$this->start           = $this->root->url() . '/';
 		$this->config          = new Migrations();
 		$this->config->enabled = true;
+
+		Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', TESTPATH . '_support/MigrationTestMigrations');
 	}
 
 	public function testLoadsDefaultDatabaseWhenNoneSpecified()
@@ -162,7 +165,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$config->type = 'timestamp';
 		$runner       = new MigrationRunner($config);
 
-		$runner->setPath($this->start);
+		//      $runner->setPath($this->start);
 
 		$this->assertEquals([], $runner->findMigrations());
 	}
@@ -175,22 +178,22 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 
-		$mig1 = (object)[
-							'name'      => 'Some_migration',
-							'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php',
-							'version'   => '2018-01-24-102301',
-							'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_migration',
-							'namespace' => 'Tests\Support\MigrationTestMigrations',
-						];
+		$mig1      = (object)[
+								 'name'      => 'Some_migration',
+								 'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php',
+								 'version'   => '2018-01-24-102301',
+								 'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_migration',
+								 'namespace' => 'Tests\Support\MigrationTestMigrations',
+							 ];
 		$mig1->uid = $runner->getObjectUid($mig1);
 
-		$mig2 = (object)[
-							'name'      => 'Another_migration',
-							'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php',
-							'version'   => '2018-01-24-102302',
-							'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
-							'namespace' => 'Tests\Support\MigrationTestMigrations',
-						];
+		$mig2      = (object)[
+								 'name'      => 'Another_migration',
+								 'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php',
+								 'version'   => '2018-01-24-102302',
+								 'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
+								 'namespace' => 'Tests\Support\MigrationTestMigrations',
+							 ];
 		$mig1->uid = $runner->getObjectUid($mig1);
 
 		$migrations = $runner->findMigrations();
@@ -243,7 +246,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$this->assertEquals('2018-01-24-102302', $version);
 		$this->seeInDatabase('foo', ['key' => 'foobar']);
 
-		$runner->version(0);
+		$runner->regress(0);
 		$version = $runner->getBatchEnd($runner->getLastBatch());
 
 		$this->assertEquals('0', $version);
@@ -259,7 +262,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 
-		$runner->progess();
+		$runner->progress();
 		$version = $runner->getBatchEnd($runner->getLastBatch());
 
 		$this->assertEquals('2018-01-24-102302', $version);
@@ -299,7 +302,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 
 		$runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 
-		$runner->progess();
+		$runner->progress();
 		$version = $runner->getBatchEnd($runner->getLastBatch());
 
 		$this->assertEquals('2018-01-24-102301', $version);

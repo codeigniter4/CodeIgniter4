@@ -20,6 +20,9 @@ class Migration_another_migration extends \CodeIgniter\Database\Migration
 
 	public function down()
 	{
-		$this->forge->dropColumn('foo', 'value');
+		if ($this->db->tableExists('foo'))
+		{
+			$this->forge->dropColumn('foo', 'value');
+		}
 	}
 }
