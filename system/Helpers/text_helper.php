@@ -28,7 +28,7 @@
  * THE SOFTWARE.
  *
  * @package    CodeIgniter
- * @author     EllisLab Dev Team
+ * @author     CodeIgniter Dev Team
  * @copyright  2008-2014 EllisLab, Inc. (https://ellislab.com/)
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
@@ -40,11 +40,7 @@
 /**
  * CodeIgniter Text Helpers
  *
- * @package    CodeIgniter
- * @subpackage Helpers
- * @category   Helpers
- * @author     EllisLab Dev Team
- * @link       https://codeigniter.com/user_guide/helpers/text_helper.html
+ * @package CodeIgniter
  */
 //--------------------------------------------------------------------
 

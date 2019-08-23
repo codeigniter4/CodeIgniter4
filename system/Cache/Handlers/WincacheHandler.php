@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\Cache\Handlers;
+
 
 /**
  * CodeIgniter
@@ -33,9 +33,11 @@ namespace CodeIgniter\Cache\Handlers;
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheInterface;
 
@@ -56,6 +58,12 @@ class WincacheHandler implements CacheInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param  type $config
+	 * @throws type
+	 */
 	public function __construct($config)
 	{
 		$this->prefix = $config->prefix ?: '';
@@ -92,7 +100,7 @@ class WincacheHandler implements CacheInterface
 		$data    = wincache_ucache_get($key, $success);
 
 		// Success returned by reference from wincache_ucache_get()
-		return ($success) ? $data : false;
+		return ($success) ? $data : null;
 	}
 
 	//--------------------------------------------------------------------

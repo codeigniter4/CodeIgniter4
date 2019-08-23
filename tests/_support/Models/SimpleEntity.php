@@ -12,18 +12,5 @@ use CodeIgniter\Entity;
  */
 class SimpleEntity extends Entity
 {
-	protected $id;
-	protected $name;
-	protected $description;
-	protected $created_at;
 
-	protected $_options = [
-		'datamap' => [],
-		'dates'   => [
-			'created_at',
-			'updated_at',
-			'deleted_at',
-		],
-		'casts'   => [],
-	];
 }

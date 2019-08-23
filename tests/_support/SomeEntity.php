@@ -6,8 +6,9 @@ use CodeIgniter\Entity;
 
 class SomeEntity extends Entity
 {
-
-	protected $foo = null;
-	protected $bar;
+	protected $attributes = [
+		'foo' => null,
+		'bar' => null,
+	];
 
 }

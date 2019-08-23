@@ -31,8 +31,14 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
+ */
+
+/**
+ * CodeIgniter URL Helpers
+ *
+ * @package CodeIgniter
  */
 
 if (! function_exists('site_url'))
@@ -40,7 +46,7 @@ if (! function_exists('site_url'))
 	/**
 	 * Return a site URL to use in views
 	 *
-	 * @param mixed            $uri        URI string or array of URI segments
+	 * @param mixed            $uri       URI string or array of URI segments
 	 * @param string|null      $protocol
 	 * @param \Config\App|null $altConfig Alternate configuration to use
 	 *
@@ -88,8 +94,8 @@ if (! function_exists('base_url'))
 	/**
 	 * Return the base URL to use in views
 	 *
-	 * @param  mixed   $uri        URI string or array of URI segments
-	 * @param  string  $protocol
+	 * @param  mixed  $uri      URI string or array of URI segments
+	 * @param  string $protocol
 	 * @return string
 	 */
 	function base_url($uri = '', string $protocol = null): string
@@ -519,7 +525,7 @@ if (! function_exists('prep_url'))
 	 * Formerly used URI, but that does not play nicely with URIs missing
 	 * the scheme.
 	 *
-	 * @param  string    the URL
+	 * @param  string $str the URL
 	 * @return string
 	 */
 	function prep_url(string $str = ''): string

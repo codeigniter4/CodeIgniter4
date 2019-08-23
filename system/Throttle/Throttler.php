@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Throttle;
+<?php
 
 /**
  * CodeIgniter
@@ -32,9 +32,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Throttle;
 
 use CodeIgniter\Cache\CacheInterface;
 
@@ -56,6 +58,8 @@ class Throttler implements ThrottlerInterface
 {
 
 	/**
+	 * Container for throttle counters.
+	 *
 	 * @var \CodeIgniter\Cache\CacheInterface
 	 */
 	protected $cache;
@@ -84,6 +88,12 @@ class Throttler implements ThrottlerInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param  type $cache
+	 * @throws type
+	 */
 	public function __construct(CacheInterface $cache)
 	{
 		$this->cache = $cache;
@@ -189,7 +199,7 @@ class Throttler implements ThrottlerInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 *
+	 * Return the test time, defaulting to current.
 	 *
 	 * @return integer
 	 */

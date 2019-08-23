@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Database\MySQLi;
+<?php
 
 /**
  * CodeIgniter
@@ -32,12 +32,15 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
+namespace CodeIgniter\Database\MySQLi;
+
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ResultInterface;
+use CodeIgniter\Entity;
 
 /**
  * Result for MySQLi
@@ -83,26 +86,28 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function getFieldData(): array
 	{
-		$retval    = [];
+		$retVal    = [];
 		$fieldData = $this->resultID->fetch_fields();
 
 		foreach ($fieldData as $i => $data)
 		{
-			$retval[$i]              = new \stdClass();
-			$retval[$i]->name        = $data->name;
-			$retval[$i]->type        = $data->type;
-			$retval[$i]->max_length  = $data->max_length;
-			$retval[$i]->primary_key = (int) ($data->flags & 2);
-			$retval[$i]->default     = $data->def;
+			$retVal[$i]              = new \stdClass();
+			$retVal[$i]->name        = $data->name;
+			$retVal[$i]->type        = $data->type;
+			$retVal[$i]->max_length  = $data->max_length;
+			$retVal[$i]->primary_key = (int) ($data->flags & 2);
+			$retVal[$i]->default     = $data->def;
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
 	 * Frees the current result.
+	 *
+	 * @return void
 	 */
 	public function freeResult()
 	{
@@ -124,7 +129,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function dataSeek($n = 0)
+	public function dataSeek(int $n = 0)
 	{
 		return $this->resultID->data_seek($n);
 	}
@@ -136,7 +141,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * Overridden by driver classes.
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	protected function fetchAssoc()
 	{
@@ -152,10 +157,14 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @param string $className
 	 *
-	 * @return object
+	 * @return object|boolean|Entity
 	 */
-	protected function fetchObject($className = 'stdClass')
+	protected function fetchObject(string $className = 'stdClass')
 	{
+		if (is_subclass_of($className, Entity::class))
+		{
+			return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
+		}
 		return $this->resultID->fetch_object($className);
 	}
 

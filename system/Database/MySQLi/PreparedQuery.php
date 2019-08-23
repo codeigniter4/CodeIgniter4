@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Database\MySQLi;
+<?php
 
 /**
  * CodeIgniter
@@ -32,13 +32,18 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\PreparedQueryInterface;
 use CodeIgniter\Database\BasePreparedQuery;
 
+/**
+ * Prepared query for MySQLi
+ */
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {
 
@@ -78,9 +83,9 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @param array $data
 	 *
-	 * @return \CodeIgniter\Database\ResultInterface
+	 * @return boolean
 	 */
-	public function _execute($data)
+	public function _execute(array $data): bool
 	{
 		if (is_null($this->statement))
 		{

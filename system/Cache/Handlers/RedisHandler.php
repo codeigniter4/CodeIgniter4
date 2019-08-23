@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Cache\Handlers;
+<?php
 
 /**
  * CodeIgniter
@@ -32,12 +32,17 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
+namespace CodeIgniter\Cache\Handlers;
+
 use CodeIgniter\Cache\CacheInterface;
 
+/**
+ * Redis cache handler
+ */
 class RedisHandler implements CacheInterface
 {
 
@@ -71,6 +76,12 @@ class RedisHandler implements CacheInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param  type $config
+	 * @throws type
+	 */
 	public function __construct($config)
 	{
 		$config       = (array)$config;
@@ -105,17 +116,17 @@ class RedisHandler implements CacheInterface
 		$config = $this->config;
 
 		$this->redis = new \Redis();
-		if (!$this->redis->connect($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout']))
+		if (! $this->redis->connect($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout']))
 		{
 			log_message('error', 'Cache: Redis connection failed. Check your configuration.');
 		}
 
-		if (isset($config['password']) && !$this->redis->auth($config['password']))
+		if (isset($config['password']) && ! $this->redis->auth($config['password']))
 		{
 			log_message('error', 'Cache: Redis authentication failed.');
 		}
 
-		if (isset($config['database']) && !$this->redis->select($config['database']))
+		if (isset($config['database']) && ! $this->redis->select($config['database']))
 		{
 			log_message('error', 'Cache: Redis select database failed.');
 		}
@@ -138,7 +149,7 @@ class RedisHandler implements CacheInterface
 
 		if (! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false)
 		{
-			return false;
+			return null;
 		}
 
 		switch ($data['__ci_type'])
@@ -151,10 +162,10 @@ class RedisHandler implements CacheInterface
 			case 'double': // Yes, 'double' is returned and NOT 'float'
 			case 'string':
 			case 'NULL':
-				return settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : false;
+				return settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : null;
 			case 'resource':
 			default:
-				return false;
+				return null;
 		}
 	}
 
@@ -294,7 +305,7 @@ class RedisHandler implements CacheInterface
 
 		$value = $this->get($key);
 
-		if ($value !== false)
+		if ($value !== null)
 		{
 			$time = time();
 			return [
@@ -304,7 +315,7 @@ class RedisHandler implements CacheInterface
 			];
 		}
 
-		return false;
+		return null;
 	}
 
 	//--------------------------------------------------------------------

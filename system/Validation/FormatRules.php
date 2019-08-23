@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Validation;
+<?php
 
 /**
  * CodeIgniter
@@ -32,12 +32,14 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
+namespace CodeIgniter\Validation;
+
 /**
- * Rules.
+ * Format validation Rules.
  *
  * @package CodeIgniter\Validation
  */
@@ -47,7 +49,7 @@ class FormatRules
 	/**
 	 * Alpha
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -80,7 +82,7 @@ class FormatRules
 	/**
 	 * Alpha-numeric with underscores and dashes
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -94,7 +96,7 @@ class FormatRules
 	/**
 	 * Alpha-numeric
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -108,7 +110,7 @@ class FormatRules
 	/**
 	 * Alpha-numeric w/ spaces
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -120,9 +122,26 @@ class FormatRules
 	//--------------------------------------------------------------------
 
 	/**
+	 * Any type of string
+	 *
+	 * Note: we specifically do NOT type hint $str here so that
+	 * it doesn't convert numbers into strings.
+	 *
+	 * @param string|null $str
+	 *
+	 * @return boolean
+	 */
+	public function string($str = null): bool
+	{
+		return is_string($str);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Decimal number
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -136,7 +155,7 @@ class FormatRules
 	/**
 	 * Integer
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -150,7 +169,7 @@ class FormatRules
 	/**
 	 * Is a Natural number  (0,1,2,3, etc.)
 	 *
-	 * @param  string
+	 * @param  string $str
 	 * @return boolean
 	 */
 	public function is_natural(string $str = null): bool
@@ -163,7 +182,7 @@ class FormatRules
 	/**
 	 * Is a Natural number, but not a zero  (1,2,3, etc.)
 	 *
-	 * @param  string
+	 * @param  string $str
 	 * @return boolean
 	 */
 	public function is_natural_no_zero(string $str = null): bool
@@ -176,7 +195,7 @@ class FormatRules
 	/**
 	 * Numeric
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -231,7 +250,7 @@ class FormatRules
 	 * Tests a string for characters outside of the Base64 alphabet
 	 * as defined by RFC 2045 http://www.faqs.org/rfcs/rfc2045
 	 *
-	 * @param  string
+	 * @param  string $str
 	 * @return boolean
 	 */
 	public function valid_base64(string $str = null): bool
@@ -244,7 +263,7 @@ class FormatRules
 	/**
 	 * Valid JSON
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -259,7 +278,7 @@ class FormatRules
 	/**
 	 * Checks for a correctly formatted email address
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */
@@ -281,7 +300,7 @@ class FormatRules
 	 * Example:
 	 *     valid_emails[one@example.com,two@example.com]
 	 *
-	 * @param string
+	 * @param string $str
 	 *
 	 * @return boolean
 	 */

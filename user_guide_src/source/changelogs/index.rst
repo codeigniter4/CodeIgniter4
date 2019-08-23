@@ -7,10 +7,57 @@ Version |version|
 
 Release Date: Not Released
 
-**Next release of CodeIgniter4**
-
 
 :doc:`See all the changes. </changelogs/next>`
+
+Version 4.0.0-beta.3
+====================================================
+
+Release Date: May 06, 2019
+
+Highlights:
+
+- Fixed a number of model, database, validation & debug toolbar issues
+- Type hinting added throughout & typos corrected (see API docs)
+
+New messages:
+
+- Database.FieldNotExists
+- Validation.equals, not_equals
+
+App changes:
+
+- Removed $salt config item in app/Config/App
+- Enabled migrations by default in app/Config/Migrations
+- Simplified public/.htaccess
+
+:doc:`See all the changes. </changelogs/v4.0.0-beta.3>`
+
+Version 4.0.0-beta.2
+====================================================
+
+Release Date: April 04, 2019
+
+Highlights:
+
+- A number of fixes & improvements, importantly for the Model and testing classes
+- Models now require a primary key
+- Generated API docs accessible at https://codeigniter4.github.io/api/
+- Validation rules have been enhanced
+- .htaccess beefed up
+
+New messages:
+
+- Database.noPrimaryKey, forFindColumnHaveMultipleColumns, Database.forEmptyInputGiven
+
+App changes:
+
+- updated app/Config/Events 
+- added app/Controllers/BaseController 
+- added tests/ folder for unit testing
+- added phpunit.xml.dist for unit testing configuration
+
+:doc:`See all the changes. </changelogs/v4.0.0-beta.2>`
 
 Version 4.0.0-beta.1
 ====================================================

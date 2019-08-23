@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Database;
+<?php
 
 /**
  * CodeIgniter
@@ -32,9 +32,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Database;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
@@ -134,7 +136,7 @@ abstract class BaseUtils
 	 * @param  string $database_name
 	 * @return boolean
 	 */
-	public function databaseExists($database_name)
+	public function databaseExists(string $database_name): bool
 	{
 		return in_array($database_name, $this->listDatabases());
 	}
@@ -145,10 +147,10 @@ abstract class BaseUtils
 	 * Optimize Table
 	 *
 	 * @param  string $table_name
-	 * @return boolean|mixed
+	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function optimizeTable($table_name)
+	public function optimizeTable(string $table_name)
 	{
 		if ($this->optimizeTable === false)
 		{
@@ -198,11 +200,21 @@ abstract class BaseUtils
 			}
 
 			// Build the result array...
-			$res  = $res->getResultArray();
-			$res  = current($res);
-			$key  = str_replace($this->db->database . '.', '', current($res));
-			$keys = array_keys($res);
-			unset($res[$keys[0]]);
+
+			$res = $res->getResultArray();
+
+			// Postgre & SQLite3 returns empty array
+			if (empty($res))
+			{
+				$key = $table_name;
+			}
+			else
+			{
+				$res  = current($res);
+				$key  = str_replace($this->db->database . '.', '', current($res));
+				$keys = array_keys($res);
+				unset($res[$keys[0]]);
+			}
 
 			$result[$key] = $res;
 		}
@@ -219,7 +231,7 @@ abstract class BaseUtils
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function repairTable($table_name)
+	public function repairTable(string $table_name)
 	{
 		if ($this->repairTable === false)
 		{
@@ -252,7 +264,7 @@ abstract class BaseUtils
 	 *
 	 * @return string
 	 */
-	public function getCSVFromResult(ResultInterface $query, $delim = ',', $newline = "\n", $enclosure = '"')
+	public function getCSVFromResult(ResultInterface $query, string $delim = ',', string $newline = "\n", string $enclosure = '"')
 	{
 		$out = '';
 		// First generate the headings from the table column names
@@ -287,7 +299,7 @@ abstract class BaseUtils
 	 *
 	 * @return string
 	 */
-	public function getXMLFromResult(ResultInterface $query, $params = [])
+	public function getXMLFromResult(ResultInterface $query, array $params = []): string
 	{
 		// Set our default values
 		foreach (['root' => 'root', 'element' => 'element', 'newline' => "\n", 'tab' => "\t"] as $key => $val)
@@ -302,7 +314,7 @@ abstract class BaseUtils
 		extract($params);
 
 		// Load the xml helper
-			  helper('xml');
+		helper('xml');
 		// Generate the result
 		$xml = '<' . $root . '>' . $newline;
 		while ($row = $query->getUnbufferedRow())
@@ -310,7 +322,8 @@ abstract class BaseUtils
 			$xml .= $tab . '<' . $element . '>' . $newline;
 			foreach ($row as $key => $val)
 			{
-				$xml .= $tab . $tab . '<' . $key . '>' . xml_convert($val) . '</' . $key . '>' . $newline;
+				$val  = (! empty($val)) ? xml_convert($val) : '';
+				$xml .= $tab . $tab . '<' . $key . '>' . $val . '</' . $key . '>' . $newline;
 			}
 			$xml .= $tab . '</' . $element . '>' . $newline;
 		}
@@ -323,7 +336,7 @@ abstract class BaseUtils
 	/**
 	 * Database Backup
 	 *
-	 * @param  array $params
+	 * @param  array|string $params
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
@@ -377,7 +390,7 @@ abstract class BaseUtils
 		// Is the encoder supported? If not, we'll either issue an
 		// error or use plain text depending on the debug settings
 		if (($prefs['format'] === 'gzip' && ! function_exists('gzencode'))
-				|| ( $prefs['format'] === 'zip' && ! function_exists('gzcompress')))
+			|| ( $prefs['format'] === 'zip' && ! function_exists('gzcompress')))
 		{
 			if ($this->db->DBDebug)
 			{
@@ -394,7 +407,7 @@ abstract class BaseUtils
 			if ($prefs['filename'] === '')
 			{
 				$prefs['filename'] = (count($prefs['tables']) === 1 ? $prefs['tables'] : $this->db->database)
-						. date('Y-m-d_H-i', time()) . '.sql';
+					. date('Y-m-d_H-i', time()) . '.sql';
 			}
 			else
 			{

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Pager;
+<?php
 
 /**
  * CodeIgniter
@@ -32,9 +32,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Pager;
 
 /**
  * Class PagerRenderer
@@ -48,16 +50,56 @@
 class PagerRenderer
 {
 
+	/**
+	 * First page number.
+	 *
+	 * @var integer
+	 */
 	protected $first;
+	/**
+	 * Last page number.
+	 *
+	 * @var integer
+	 */
 	protected $last;
+	/**
+	 * Current page number.
+	 *
+	 * @var integer
+	 */
 	protected $current;
+	/**
+	 * Total number of pages? unused?
+	 *
+	 * @var integer
+	 */
 	protected $total;
+		/**
+		 * Page count?
+		 *
+		 * @var integer
+		 */
 	protected $pageCount;
+	/**
+	 * URI? unused?
+	 *
+	 * @var integer
+	 */
 	protected $uri;
+	/**
+	 * Segment number used for pagination.
+	 *
+	 * @var integer
+	 */
 	protected $segment;
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param array $details
+	 */
 	public function __construct(array $details)
 	{
 		$this->first     = 1;

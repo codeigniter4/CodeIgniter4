@@ -31,20 +31,16 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
 // --------------------------------------------------------------------
 
 /**
- * CodeIgniter HTML Helper
+ * CodeIgniter HTML Helpers
  *
- * @package    CodeIgniter
- * @subpackage Helpers
- * @category   Helpers
- * @author     CodeIgniter Dev Team
- * @link       https://codeigniter.com/user_guide/helpers/html_helper.html
+ * @package CodeIgniter
  */
 if (! function_exists('ul'))
 {
@@ -335,8 +331,7 @@ if (! function_exists('video'))
 	 * contain one or more video sources
 	 *
 	 * @param  mixed   $src                Either a source string or an array of sources
-	 * @param  string  $unsupportedMessage The message to display
-	 *       if the media tag is not supported by the browser
+	 * @param  string  $unsupportedMessage The message to display if the media tag is not supported by the browser
 	 * @param  string  $attributes         HTML attributes
 	 * @param  array   $tracks
 	 * @param  boolean $indexPage
@@ -462,12 +457,11 @@ if (! function_exists('audio'))
 if (! function_exists('_media'))
 {
 	/**
-	 *
 	 * Generate media based tag
 	 *
 	 * @param string $name
 	 * @param array  $types
-	 * @param string $unsupportedMessage
+	 * @param string $unsupportedMessage The message to display if the media tag is not supported by the browser.
 	 * @param string $attributes
 	 * @param array  $tracks
 	 *
@@ -523,8 +517,7 @@ if (! function_exists('source'))
 	 * for either audio or video element
 	 *
 	 * @param  string  $src        The path of the media resource
-	 * @param  string  $type       The MIME-type of the resource with
-	 *  optional codecs parameters
+	 * @param  string  $type       The MIME-type of the resource with optional codecs parameters
 	 * @param  string  $attributes HTML attributes
 	 * @param  boolean $indexPage
 	 * @return string
@@ -700,9 +693,11 @@ if (! function_exists('embed'))
 if (! function_exists('_has_protocol'))
 {
 	/**
+	 * Test the protocol of a URI.
+	 *
 	 * @param string $url
 	 *
-	 * @return false|int
+	 * @return false|integer
 	 */
 	function _has_protocol(string $url)
 	{
@@ -715,11 +710,13 @@ if (! function_exists('_has_protocol'))
 if (! function_exists('_space_indent'))
 {
 	/**
-	 * @param int $depth
+	 * Provide space indenting.
+	 *
+	 * @param integer $depth
 	 *
 	 * @return string
 	 */
-	function _space_indent($depth = 2): string
+	function _space_indent(int $depth = 2): string
 	{
 		return str_repeat(' ', $depth);
 	}

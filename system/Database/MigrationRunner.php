@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Database;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -32,9 +31,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Database;
 
 use Config\Services;
 use CodeIgniter\CLI\CLI;
@@ -253,15 +254,15 @@ class MigrationRunner
 		$this->checkMigrations($migrations, $method, $targetVersion);
 
 		// loop migration for each namespace (module)
-
 		$migrationStatus = false;
 		foreach ($migrations as $version => $migration)
 		{
-			// Only include migrations within the scoop
+			// Only include migrations within the scope
 			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion))
 			{
 				$migrationStatus = false;
 				include_once $migration->path;
+
 				// Get namespaced class name
 				$class = $this->namespace . '\Database\Migrations\Migration_' . ($migration->name);
 
@@ -341,7 +342,7 @@ class MigrationRunner
 	 *
 	 * @return boolean
 	 */
-	public function latestAll(string $group = null)
+	public function latestAll(string $group = null): bool
 	{
 		$this->ensureTable();
 
@@ -386,7 +387,7 @@ class MigrationRunner
 	 *
 	 * @param string|null $group
 	 *
-	 * @return mixed    TRUE if no migrations are found, current version string on success, FALSE on failure
+	 * @return mixed    Current version string on success, FALSE on failure or no migrations are found
 	 */
 	public function current(string $group = null)
 	{
@@ -408,7 +409,7 @@ class MigrationRunner
 	 *
 	 * @return array    list of migrations as $version for one namespace
 	 */
-	public function findMigrations()
+	public function findMigrations(): array
 	{
 		$migrations = [];
 
@@ -416,14 +417,14 @@ class MigrationRunner
 		if (! empty($this->path))
 		{
 			helper('filesystem');
-			$dir = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
+			$dir   = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
 			$files = get_filenames($dir, true);
 		}
 		// Otherwise use FileLocator to search files in the subdirectory of the namespace
 		else
 		{
 			$locator = Services::locator(true);
-			$files = $locator->listNamespaceFiles($this->namespace, '/Database/Migrations/');
+			$files   = $locator->listNamespaceFiles($this->namespace, '/Database/Migrations/');
 		}
 
 		// Load all *_*.php files in the migrations path
@@ -445,9 +446,9 @@ class MigrationRunner
 				$migration = new \stdClass();
 
 				// Get migration version number
-				$migration->version   = $this->getMigrationNumber($name);
-				$migration->name      = $this->getMigrationName($name);
-				$migration->path      = ! empty($this->path) && strpos($file, $this->path) !== 0
+				$migration->version = $this->getMigrationNumber($name);
+				$migration->name    = $this->getMigrationName($name);
+				$migration->path    = ! empty($this->path) && strpos($file, $this->path) !== 0
 					? $this->path . $file
 					: $file;
 
@@ -470,11 +471,11 @@ class MigrationRunner
 	 *
 	 * @param array  $migrations
 	 * @param string $method
-	 * @param string $targetversion
+	 * @param string $targetVersion
 	 *
 	 * @return boolean
 	 */
-	protected function checkMigrations(array $migrations, string $method, string $targetversion)
+	protected function checkMigrations(array $migrations, string $method, string $targetVersion): bool
 	{
 		// Check if no migrations found
 		if (empty($migrations))
@@ -486,14 +487,14 @@ class MigrationRunner
 			throw new \RuntimeException(lang('Migrations.empty'));
 		}
 
-		// Check if $targetversion file is found
-		if ((int)$targetversion !== 0 && ! array_key_exists($targetversion, $migrations))
+		// Check if $targetVersion file is found
+		if ((int)$targetVersion !== 0 && ! array_key_exists($targetVersion, $migrations))
 		{
 			if ($this->silent)
 			{
 				return false;
 			}
-			throw new \RuntimeException(lang('Migrations.notFound') . $targetversion);
+			throw new \RuntimeException(lang('Migrations.notFound') . $targetVersion);
 		}
 
 		ksort($migrations);
@@ -600,7 +601,7 @@ class MigrationRunner
 	 *
 	 * @return array
 	 */
-	public function getHistory(string $group = 'default')
+	public function getHistory(string $group = 'default'): array
 	{
 		$this->ensureTable();
 
@@ -644,7 +645,7 @@ class MigrationRunner
 	 *
 	 * @return string    Numeric portion of a migration filename
 	 */
-	protected function getMigrationNumber(string $migration)
+	protected function getMigrationNumber(string $migration): string
 	{
 		return sscanf($migration, '%[0-9]+', $number) ? $number : '0';
 	}
@@ -658,7 +659,7 @@ class MigrationRunner
 	 *
 	 * @return string    text portion of a migration filename
 	 */
-	protected function getMigrationName(string $migration)
+	protected function getMigrationName(string $migration): string
 	{
 		$parts = explode('_', $migration);
 		array_shift($parts);
@@ -673,7 +674,7 @@ class MigrationRunner
 	 *
 	 * @return string    Current migration version
 	 */
-	protected function getVersion()
+	protected function getVersion(): string
 	{
 		$this->ensureTable();
 
@@ -694,7 +695,7 @@ class MigrationRunner
 	 *
 	 * @return array    Current migration version
 	 */
-	public function getCliMessages()
+	public function getCliMessages(): array
 	{
 		return $this->cliMessages;
 	}
@@ -707,6 +708,8 @@ class MigrationRunner
 	 * @param string $version
 	 *
 	 * @internal param string $migration Migration reached
+	 *
+	 * @return void
 	 */
 	protected function addHistory(string $version)
 	{
@@ -729,7 +732,8 @@ class MigrationRunner
 	/**
 	 * Removes a single history
 	 *
-	 * @param string $version
+	 * @param  string $version
+	 * @return void
 	 */
 	protected function removeHistory(string $version)
 	{

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Session\Handlers;
+<?php
 
 /**
  * CodeIgniter
@@ -32,9 +32,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
@@ -86,6 +88,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 * Constructor
 	 *
 	 * @param BaseConfig $config
+	 * @param string     $ipAddress
 	 *
 	 * @throws \Exception
 	 */
@@ -135,7 +138,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 * @param  string $name      Session cookie name, unused
 	 * @return boolean
 	 */
-	public function open($save_path, $name)
+	public function open($save_path, $name): bool
 	{
 		if (empty($this->savePath))
 		{
@@ -174,9 +177,9 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @param string $sessionID Session ID
 	 *
-	 * @return string	Serialized session data
+	 * @return string|false	Serialized session data
 	 */
-	public function read($sessionID)
+	public function read($sessionID): string
 	{
 		if (isset($this->redis) && $this->lockSession($sessionID))
 		{
@@ -187,10 +190,11 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 			is_string($session_data) ? $this->keyExists = true : $session_data = '';
 
 			$this->fingerprint = md5($session_data);
+
 			return $session_data;
 		}
 
-		return false;
+		return '';
 	}
 
 	//--------------------------------------------------------------------
@@ -205,7 +209,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return boolean
 	 */
-	public function write($sessionID, $sessionData)
+	public function write($sessionID, $sessionData): bool
 	{
 		if (! isset($this->redis))
 		{
@@ -254,7 +258,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return boolean
 	 */
-	public function close()
+	public function close(): bool
 	{
 		if (isset($this->redis))
 		{
@@ -294,7 +298,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return boolean
 	 */
-	public function destroy($sessionID)
+	public function destroy($sessionID): bool
 	{
 		if (isset($this->redis, $this->lockKey))
 		{
@@ -319,7 +323,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 * @param  integer $maxlifetime Maximum lifetime of sessions
 	 * @return boolean
 	 */
-	public function gc($maxlifetime)
+	public function gc($maxlifetime): bool
 	{
 		// Not necessary, Redis takes care of that.
 		return true;

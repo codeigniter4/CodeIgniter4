@@ -1,6 +1,5 @@
 <?php
 
-namespace CodeIgniter\Honeypot;
 
 /**
  * CodeIgniter
@@ -34,25 +33,38 @@ namespace CodeIgniter\Honeypot;
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Honeypot;
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 
+/**
+ * class Honeypot
+ */
 class Honeypot
 {
 
 	/**
+	 * Our configuration.
+	 *
 	 * @var BaseConfig
 	 */
 	protected $config;
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param  BaseConfig $config
+	 * @throws type
+	 */
 	function __construct(BaseConfig $config)
 	{
 		$this->config = $config;
@@ -106,7 +118,7 @@ class Honeypot
 	 * @param  string $template
 	 * @return string
 	 */
-	protected function prepareTemplate($template): string
+	protected function prepareTemplate(string $template): string
 	{
 		$template = str_ireplace('{label}', $this->config->label, $template);
 		$template = str_ireplace('{name}', $this->config->name, $template);

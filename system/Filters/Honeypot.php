@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Filters;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -32,15 +31,20 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Filters;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 
+/**
+ * Honeypot filter
+ */
 class Honeypot implements FilterInterface
 {
 
@@ -50,7 +54,9 @@ class Honeypot implements FilterInterface
 	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface $request
 	 *
-	 * @return mixed
+	 * @return void
+	 *
+	 * @throws \CodeIgniter\Honeypot\Exceptions\HoneypotException
 	 */
 	public function before(RequestInterface $request)
 	{
@@ -62,11 +68,12 @@ class Honeypot implements FilterInterface
 	}
 
 	/**
-	 * Attach a honypot to the current response.
+	 * Attach a honeypot to the current response.
 	 *
-	 * @param  \CodeIgniter\HTTP\RequestInterface  $request
-	 * @param  \CodeIgniter\HTTP\ResponseInterface $response
-	 * @return mixed
+	 * @param \CodeIgniter\HTTP\RequestInterface  $request
+	 * @param \CodeIgniter\HTTP\ResponseInterface $response
+	 *
+	 * @return void
 	 */
 	public function after(RequestInterface $request, ResponseInterface $response)
 	{

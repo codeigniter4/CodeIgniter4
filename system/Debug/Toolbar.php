@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Debug;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -32,15 +31,19 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
+namespace CodeIgniter\Debug;
+
+use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Debug\Toolbar\Collectors\History;
 use CodeIgniter\Format\JSONFormatter;
-use Config\Services;
-use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Format\XMLFormatter;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Config\Services;
 
 /**
  * Debug Toolbar
@@ -54,6 +57,8 @@ use CodeIgniter\Format\XMLFormatter;
 class Toolbar
 {
 	/**
+	 * Toolbar configuration settings.
+	 *
 	 * @var BaseConfig
 	 */
 	protected $config;
@@ -101,7 +106,7 @@ class Toolbar
 	 *
 	 * @return string JSON encoded data
 	 */
-	public function run($startTime, $totalTime, $request, $response): string
+	public function run(float $startTime, float $totalTime, RequestInterface $request, ResponseInterface $response): string
 	{
 		// Data items used within the view.
 		$data['url']             = current_url();
@@ -122,23 +127,29 @@ class Toolbar
 
 		foreach ($this->collectVarData() as $heading => $items)
 		{
-			$vardata = [];
+			$varData = [];
 
 			if (is_array($items))
 			{
 				foreach ($items as $key => $value)
 				{
-					$vardata[esc($key)] = is_string($value) ? esc($value) : print_r($value, true);
+					$varData[esc($key)] = is_string($value) ? esc($value) : print_r($value, true);
 				}
 			}
 
-			$data['vars']['varData'][esc($heading)] = $vardata;
+			$data['vars']['varData'][esc($heading)] = $varData;
 		}
 
 		if (! empty($_SESSION))
 		{
 			foreach ($_SESSION as $key => $value)
 			{
+				// Replace the binary data with string to avoid json_encode failure.
+				if (is_string($value) && preg_match('~[^\x20-\x7E\t\r\n]~', $value))
+				{
+					$value = 'binary data';
+				}
+
 				$data['vars']['session'][esc($key)] = is_string($value) ? esc($value) : print_r($value, true);
 			}
 		}
@@ -205,10 +216,11 @@ class Toolbar
 	 * @param float   $startTime
 	 * @param integer $segmentCount
 	 * @param integer $segmentDuration
+	 * @param array   $styles
 	 *
 	 * @return string
 	 */
-	protected function renderTimeline(array $collectors, $startTime, int $segmentCount, int $segmentDuration, array& $styles): string
+	protected function renderTimeline(array $collectors, $startTime, int $segmentCount, int $segmentDuration, array &$styles): string
 	{
 		$displayTime = $segmentCount * $segmentDuration;
 		$rows        = $this->collectTimelineData($collectors);
@@ -227,8 +239,7 @@ class Toolbar
 			$length = (($row['duration'] * 1000) / $displayTime) * 100;
 
 			$styles['debug-bar-timeline-' . $styleCount] = "left: {$offset}%; width: {$length}%;";
-			$output                                     .= "<span class='timer debug-bar-timeline-{$styleCount}' title='" . number_format($length,
-					2) . "%'></span>";
+			$output                                     .= "<span class='timer debug-bar-timeline-{$styleCount}' title='" . number_format($length, 2) . "%'></span>";
 			$output                                     .= '</td>';
 			$output                                     .= '</tr>';
 
@@ -242,6 +253,8 @@ class Toolbar
 
 	/**
 	 * Returns a sorted array of timeline data arrays from the collectors.
+	 *
+	 * @param array $collectors
 	 *
 	 * @return array
 	 */
@@ -300,7 +313,7 @@ class Toolbar
 	 *
 	 * @return float
 	 */
-	protected function roundTo($number, $increments = 5): float
+	protected function roundTo(float $number, int $increments = 5): float
 	{
 		$increments = 1 / $increments;
 
@@ -309,6 +322,12 @@ class Toolbar
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Prepare for debugging..
+	 *
+	 * @global type $app
+	 * @return type
+	 */
 	public function prepare()
 	{
 		if (CI_DEBUG && ! is_cli())
@@ -377,7 +396,7 @@ class Toolbar
 	//--------------------------------------------------------------------
 
 	/**
-	 *
+	 * Inject debug toolbar into the response.
 	 */
 	public function respond()
 	{

@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\HTTP;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -32,9 +31,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\HTTP;
 
 use Config\App;
 
@@ -69,6 +70,13 @@ class CLIRequest extends Request
 	 * @var array
 	 */
 	protected $options = [];
+
+	/**
+	 * Set the expected HTTP verb
+	 *
+	 * @var string
+	 */
+	protected $method = 'cli';
 
 	//--------------------------------------------------------------------
 
@@ -147,12 +155,7 @@ class CLIRequest extends Request
 	 */
 	public function getOption(string $key)
 	{
-		if (array_key_exists($key, $this->options))
-		{
-			return $this->options[$key];
-		}
-
-		return null;
+		return $this->options[$key] ?? null;
 	}
 
 	//--------------------------------------------------------------------

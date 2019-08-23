@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Database;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -32,12 +31,18 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
+namespace CodeIgniter\Database;
+
+use CodeIgniter\Database\MySQLi\Connection;
 use CodeIgniter\Events\Events;
 
+/**
+ * Base prepared query
+ */
 abstract class BasePreparedQuery implements PreparedQueryInterface
 {
 
@@ -79,9 +84,14 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param \CodeIgniter\Database\ConnectionInterface $db
+	 */
 	public function __construct(ConnectionInterface $db)
 	{
-		$this->db = & $db;
+		$this->db = &$db;
 	}
 
 	//--------------------------------------------------------------------
@@ -99,7 +109,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @return mixed
 	 */
-	public function prepare(string $sql, array $options = [], $queryClass = 'CodeIgniter\\Database\\Query')
+	public function prepare(string $sql, array $options = [], string $queryClass = 'CodeIgniter\\Database\\Query')
 	{
 		// We only supports positional placeholders (?)
 		// in order to work with the execute method below, so we
@@ -176,9 +186,9 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @param array $data
 	 *
-	 * @return ResultInterface
+	 * @return boolean
 	 */
-	abstract public function _execute($data);
+	abstract public function _execute(array $data): bool;
 
 	//--------------------------------------------------------------------
 
@@ -192,7 +202,9 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Explicity closes the statement.
+	 * Explicitly closes the statement.
+	 *
+	 * @return null|void
 	 */
 	public function close()
 	{
@@ -228,7 +240,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @return boolean
 	 */
-	public function hasError()
+	public function hasError(): bool
 	{
 		return ! empty($this->errorString);
 	}

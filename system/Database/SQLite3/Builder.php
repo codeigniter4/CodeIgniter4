@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Database\SQLite3;
+<?php
 
 /**
  * CodeIgniter
@@ -32,9 +32,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\BaseBuilder;
 
@@ -67,12 +69,12 @@ class Builder extends BaseBuilder
 	 */
 	protected $canLimitWhereUpdates = false;
 
-    /**
-     * @var array
-     */
+	/**
+	 * @var array
+	 */
 	protected $supportedIgnoreStatements = [
-	    'insert' => 'OR IGNORE'
-    ];
+		'insert' => 'OR IGNORE',
+	];
 
 	//--------------------------------------------------------------------
 
@@ -81,13 +83,13 @@ class Builder extends BaseBuilder
 	 *
 	 * Generates a platform-specific replace string from the supplied data
 	 *
-	 * @param string    the table name
-	 * @param array     the insert keys
-	 * @param array     the insert values
+	 * @param string $table  the table name
+	 * @param array  $keys   the insert keys
+	 * @param array  $values the insert values
 	 *
 	 * @return string
 	 */
-	protected function _replace($table, $keys, $values)
+	protected function _replace(string $table, array $keys, array $values): string
 	{
 		return 'INSERT OR ' . parent::_replace($table, $keys, $values);
 	}
@@ -105,7 +107,7 @@ class Builder extends BaseBuilder
 	 * @param  string $table
 	 * @return string
 	 */
-	protected function _truncate($table)
+	protected function _truncate(string $table): string
 	{
 		return 'DELETE FROM ' . $table;
 	}

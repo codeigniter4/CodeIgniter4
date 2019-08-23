@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Commands\Utilities;
+<?php
 
 /**
  * CodeIgniter
@@ -32,9 +32,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
@@ -107,6 +109,7 @@ class Routes extends BaseCommand
 			'get',
 			'head',
 			'post',
+			'patch',
 			'put',
 			'delete',
 			'options',
@@ -123,7 +126,8 @@ class Routes extends BaseCommand
 			foreach ($routes as $from => $to)
 			{
 				// filter for strings, as callbacks aren't displayable
-				if (is_string($to)) {
+				if (is_string($to))
+				{
 					$tbody[] = [
 						$from,
 						$method,

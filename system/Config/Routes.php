@@ -31,9 +31,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 /**
  * System URI Routing
@@ -45,10 +47,9 @@
  * already loaded up and ready for us to use.
  */
 // Prevent access to BaseController
-$routes->add('basecontroller(:any)', function()
-{
-    throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-}); 
+$routes->add('basecontroller(:any)', function () {
+	throw PageNotFoundException::forPageNotFound();
+});
 
 // Migrations
 $routes->cli('migrations/(:segment)/(:segment)', '\CodeIgniter\Commands\MigrationsCommand::$1/$2');
@@ -59,7 +60,6 @@ $routes->cli('migrations', '\CodeIgniter\Commands\MigrationsCommand::index');
 $routes->cli('ci(:any)', '\CodeIgniter\CLI\CommandRunner::index/$1');
 
 // Prevent access to initController method
-$routes->add('(:any)/initController', function()
-{
-    throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-}); 
+$routes->add('(:any)/initController', function () {
+	throw PageNotFoundException::forPageNotFound();
+});

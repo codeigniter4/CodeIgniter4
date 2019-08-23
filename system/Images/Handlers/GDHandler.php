@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Images\Handlers;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -32,17 +31,26 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
+namespace CodeIgniter\Images\Handlers;
+
 use CodeIgniter\Images\Exceptions\ImageException;
 
+/**
+ * Image handler for GD package
+ */
 class GDHandler extends BaseHandler
 {
 
-	public $version;
-
+	/**
+	 * Constructor.
+	 *
+	 * @param  type $config
+	 * @throws type
+	 */
 	public function __construct($config = null)
 	{
 		parent::__construct($config);
@@ -66,7 +74,7 @@ class GDHandler extends BaseHandler
 	 *
 	 * @return boolean
 	 */
-	protected function _rotate(int $angle)
+	protected function _rotate(int $angle): bool
 	{
 		// Create the image handle
 		$srcImg = $this->createImage();
@@ -307,7 +315,7 @@ class GDHandler extends BaseHandler
 	 *
 	 * @return boolean
 	 */
-	public function save(string $target = null, int $quality = 90)
+	public function save(string $target = null, int $quality = 90): bool
 	{
 		$target = empty($target) ? $this->image->getPathname() : $target;
 
@@ -366,12 +374,12 @@ class GDHandler extends BaseHandler
 	 * This simply creates an image resource handle
 	 * based on the type of image being processed
 	 *
-	 * @param string
-	 * @param string
+	 * @param string $path
+	 * @param string $imageType
 	 *
 	 * @return resource|boolean
 	 */
-	protected function createImage($path = '', $imageType = '')
+	protected function createImage(string $path = '', string $imageType = '')
 	{
 		if ($this->resource !== null)
 		{
@@ -418,6 +426,14 @@ class GDHandler extends BaseHandler
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Add text overlay to an image.
+	 *
+	 * @param string $text
+	 * @param array  $options
+	 *
+	 * @return void
+	 */
 	protected function _text(string $text, array $options = [])
 	{
 		// Reverse the vertical offset
@@ -551,11 +567,21 @@ class GDHandler extends BaseHandler
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Return image width.
+	 *
+	 * @return integer
+	 */
 	public function _getWidth()
 	{
 		return imagesx($this->resource);
 	}
 
+	/**
+	 * Return image height.
+	 *
+	 * @return integer
+	 */
 	public function _getHeight()
 	{
 		return imagesy($this->resource);

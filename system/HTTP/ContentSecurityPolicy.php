@@ -1,5 +1,4 @@
 <?php
-namespace CodeIgniter\HTTP;
 
 /**
  * CodeIgniter
@@ -33,9 +32,11 @@ namespace CodeIgniter\HTTP;
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\HTTP;
 
 /**
  * Class ContentSecurityPolicy
@@ -132,7 +133,7 @@ class ContentSecurityPolicy
 	/**
 	 * Used for security enforcement
 	 *
-	 * @var string|string
+	 * @var string
 	 */
 	protected $reportURI = null;
 
@@ -534,9 +535,9 @@ class ContentSecurityPolicy
 	 *
 	 * @return $this
 	 */
-	public function setReportURI($uri)
+	public function setReportURI(string $uri)
 	{
-		$this->reportURI = (string) $uri;
+		$this->reportURI = $uri;
 
 		return $this;
 	}

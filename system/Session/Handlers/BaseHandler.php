@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Session\Handlers;
+<?php
 
 /**
  * CodeIgniter
@@ -32,9 +32,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Config\BaseConfig;
 use Psr\Log\LoggerAwareTrait;
@@ -114,11 +116,13 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 * The 'save path' for the session
 	 * varies between
 	 *
-	 * @var mixed
+	 * @var string
 	 */
 	protected $savePath;
 
 	/**
+	 * User's IP address.
+	 *
 	 * @var string
 	 */
 	protected $ipAddress;
@@ -129,6 +133,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 * Constructor
 	 *
 	 * @param BaseConfig $config
+	 * @param string     $ipAddress
 	 */
 	public function __construct($config, string $ipAddress)
 	{

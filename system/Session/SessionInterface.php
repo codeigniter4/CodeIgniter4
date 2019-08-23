@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Session;
+<?php
 
 /**
  * CodeIgniter
@@ -32,9 +32,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Session;
 
 /**
  * Expected behavior of a session container used with CodeIgniter.
@@ -98,7 +100,7 @@ interface SessionInterface
 	 *
 	 * @return boolean
 	 */
-	public function has(string $key);
+	public function has(string $key): bool;
 
 	//--------------------------------------------------------------------
 
@@ -125,7 +127,7 @@ interface SessionInterface
 	 * flashdata property, with $value containing the property value.
 	 *
 	 * @param string|array $data  Property identifier or associative array of properties
-	 * @param null         $value Property value if $data is a scalar
+	 * @param string|array $value Property value if $data is a scalar
 	 */
 	public function setFlashdata($data, $value = null);
 
@@ -147,9 +149,9 @@ interface SessionInterface
 	/**
 	 * Keeps a single piece of flash data alive for one more request.
 	 *
-	 * @param string $key Property identifier or array of them
+	 * @param array|string $key Property identifier or array of them
 	 */
-	public function keepFlashdata(string $key);
+	public function keepFlashdata($key);
 
 	//--------------------------------------------------------------------
 
@@ -178,7 +180,7 @@ interface SessionInterface
 	 *
 	 * @return array	The property names of all flashdata
 	 */
-	public function getFlashKeys();
+	public function getFlashKeys(): array;
 
 	//--------------------------------------------------------------------
 
@@ -190,7 +192,7 @@ interface SessionInterface
 	 * @param mixed        $value Value to store
 	 * @param integer      $ttl   Time-to-live in seconds
 	 */
-	public function setTempdata($data, $value = null, $ttl = 300);
+	public function setTempdata($data, $value = null, int $ttl = 300);
 
 	//--------------------------------------------------------------------
 
@@ -201,7 +203,7 @@ interface SessionInterface
 	 * @param  string $key Session data key
 	 * @return mixed        Session data value or null if not found.
 	 */
-	public function getTempdata($key = null);
+	public function getTempdata(string $key = null);
 
 	//--------------------------------------------------------------------
 
@@ -210,7 +212,7 @@ interface SessionInterface
 	 *
 	 * @param string $key Session data key
 	 */
-	public function removeTempdata($key);
+	public function removeTempdata(string $key);
 
 	//--------------------------------------------------------------------
 
@@ -223,7 +225,7 @@ interface SessionInterface
 	 *
 	 * @return boolean    False if any of the properties were not set
 	 */
-	public function markAsTempdata($key, $ttl = 300);
+	public function markAsTempdata($key, int $ttl = 300);
 
 	//--------------------------------------------------------------------
 
@@ -242,7 +244,7 @@ interface SessionInterface
 	 *
 	 * @return array
 	 */
-	public function getTempKeys();
+	public function getTempKeys(): array;
 
 	//--------------------------------------------------------------------
 }

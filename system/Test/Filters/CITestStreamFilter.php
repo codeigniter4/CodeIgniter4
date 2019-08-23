@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Test\Filters;
+<?php
 
 /**
  * CodeIgniter
@@ -32,21 +32,37 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Test\Filters;
 
 /**
  * Class to extract an output snapshot.
  * Used to capture output during unit testing, so that it can
  * be used in assertions.
  */
-// class to extract output snapshot
+
 class CITestStreamFilter extends \php_user_filter
 {
 
+	/**
+	 * Buffer to capture stream content.
+	 *
+	 * @var type
+	 */
 	public static $buffer = '';
 
+	/**
+	 * Output filtering - catch it all.
+	 *
+	 * @param  type $in
+	 * @param  type $out
+	 * @param  type $consumed
+	 * @param  type $closing
+	 * @return type
+	 */
 	public function filter($in, $out, &$consumed, $closing)
 	{
 		while ($bucket = stream_bucket_make_writeable($in))

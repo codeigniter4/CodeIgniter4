@@ -1,6 +1,4 @@
-<?php namespace CodeIgniter\Database\MySQLi;
-
-use CodeIgniter\Database\Exceptions\DatabaseException;
+<?php
 
 /**
  * CodeIgniter
@@ -34,14 +32,19 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Database\MySQLi;
+
+use CodeIgniter\Database\BaseUtils;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Utils for MySQLi
  */
-class Utils extends \CodeIgniter\Database\BaseUtils
+class Utils extends BaseUtils
 {
 
 	/**

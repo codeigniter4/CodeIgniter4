@@ -1,6 +1,4 @@
-<?php namespace CodeIgniter\Format;
-
-use CodeIgniter\Format\Exceptions\FormatException;
+<?php
 
 /**
  * CodeIgniter
@@ -34,8 +32,16 @@ use CodeIgniter\Format\Exceptions\FormatException;
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
+ */
+
+namespace CodeIgniter\Format;
+
+use CodeIgniter\Format\Exceptions\FormatException;
+
+/**
+ * XML data formatter
  */
 class XMLFormatter implements FormatterInterface
 {
@@ -45,9 +51,9 @@ class XMLFormatter implements FormatterInterface
 	 *
 	 * @param $data
 	 *
-	 * @return mixed
+	 * @return string|boolean (XML string | false)
 	 */
-	public function format(array $data)
+	public function format($data)
 	{
 		// SimpleXML is installed but default
 		// but best to check, and then provide a fallback.
@@ -61,7 +67,7 @@ class XMLFormatter implements FormatterInterface
 
 		$output = new \SimpleXMLElement('<?xml version="1.0"?><response></response>');
 
-		$this->arrayToXML($data, $output);
+		$this->arrayToXML((array)$data, $output);
 
 		return $output->asXML();
 	}

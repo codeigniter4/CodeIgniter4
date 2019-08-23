@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\HTTP;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -32,9 +31,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\HTTP;
 
 /**
  * Class Header
@@ -82,7 +83,7 @@ class Header
 	 *
 	 * @return string
 	 */
-	public function getName()
+	public function getName(): string
 	{
 		return $this->name;
 	}

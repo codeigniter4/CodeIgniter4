@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Filters;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -32,15 +31,20 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\Exceptions\FilterException;
 
+/**
+ * Filters
+ */
 class Filters
 {
 
@@ -93,6 +97,13 @@ class Filters
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param type              $config
+	 * @param RequestInterface  $request
+	 * @param ResponseInterface $response
+	 */
 	public function __construct($config, RequestInterface $request, ResponseInterface $response)
 	{
 		$this->config  = $config;
@@ -100,6 +111,11 @@ class Filters
 		$this->setResponse($response);
 	}
 
+	/**
+	 * Set the response explicity.
+	 *
+	 * @param ResponseInterface $response
+	 */
 	public function setResponse(ResponseInterface $response)
 	{
 		$this->response = & $response;
@@ -142,7 +158,7 @@ class Filters
 
 			if ($position === 'before')
 			{
-				$result = $class->before($this->request);
+				$result = $class->before($this->request, $this->arguments[$alias] ?? null);
 
 				if ($result instanceof RequestInterface)
 				{
@@ -223,7 +239,7 @@ class Filters
 	 *
 	 * @return array
 	 */
-	public function getFilters()
+	public function getFilters(): array
 	{
 		return $this->filters;
 	}
@@ -308,13 +324,11 @@ class Filters
 	/**
 	 * Returns the arguments for a specified key, or all.
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	public function getArguments(string $key = null)
 	{
-		return is_null($key)
-			? $this->arguments
-			: $this->arguments[$key];
+		return is_null($key) ? $this->arguments : $this->arguments[$key];
 	}
 
 	//--------------------------------------------------------------------
@@ -322,6 +336,12 @@ class Filters
 	// Processors
 	//--------------------------------------------------------------------
 
+	/**
+	 * Add any applicable (not excluded) global filter settings to the mix.
+	 *
+	 * @param  string $uri
+	 * @return type
+	 */
 	protected function processGlobals(string $uri = null)
 	{
 		if (! isset($this->config->globals) || ! is_array($this->config->globals))
@@ -329,85 +349,54 @@ class Filters
 			return;
 		}
 
-		// Before
-		if (isset($this->config->globals['before']))
+		$uri = strtolower(trim($uri, '/ '));
+
+		// Add any global filters, unless they are excluded for this URI
+		$sets = [
+			'before',
+			'after',
+		];
+		foreach ($sets as $set)
 		{
-			// Take any 'except' routes into consideration
-			foreach ($this->config->globals['before'] as $alias => $rules)
+			if (isset($this->config->globals[$set]))
 			{
-				if (! is_array($rules) || ! array_key_exists('except', $rules))
+				// look at each alias in the group
+				foreach ($this->config->globals[$set] as $alias => $rules)
 				{
-					continue;
-				}
-
-				$rules = $rules['except'];
-
-				if (is_string($rules))
-				{
-					$rules = [$rules];
-				}
-
-				foreach ($rules as $path)
-				{
-					// Prep it for regex
-					$path = strtolower(str_replace('/*', '*', $path));
-					$path = trim(str_replace('*', '.+', $path), '/ ');
-
-					// Path doesn't match the URI? continue on...
-					if (preg_match('#' . $path . '#', $uri, $match) !== 1)
+					$keep = true;
+					if (is_array($rules))
 					{
-						continue;
+						// see if it should be excluded
+						if (isset($rules['except']))
+						{
+							// grab the exclusion rules
+							$check = $rules['except'];
+							if ($this->pathApplies($uri, $check))
+							{
+								$keep = false;
+							}
+						}
 					}
-
-					unset($this->config->globals['before'][$alias]);
-					break;
+					else
+					{
+						$alias = $rules; // simple name of filter to apply
+					}
+					if ($keep)
+					{
+						$this->filters[$set][] = $alias;
+					}
 				}
 			}
-
-			$this->filters['before'] = array_merge($this->filters['before'], $this->config->globals['before']);
-		}
-
-		// After
-		if (isset($this->config->globals['after']))
-		{
-			// Take any 'except' routes into consideration
-			foreach ($this->config->globals['after'] as $alias => $rules)
-			{
-				if (! is_array($rules) || ! array_key_exists('except', $rules))
-				{
-					continue;
-				}
-
-				$rules = $rules['except'];
-
-				if (is_string($rules))
-				{
-					$rules = [$rules];
-				}
-
-				foreach ($rules as $path)
-				{
-					// Prep it for regex
-					$path = strtolower(str_replace('/*', '*', $path));
-					$path = trim(str_replace('*', '.+', $path), '/ ');
-
-					// Path doesn't match the URI? continue on...
-					if (preg_match('#' . $path . '#', $uri, $match) !== 1)
-					{
-						continue;
-					}
-
-					unset($this->config->globals['after'][$alias]);
-					break;
-				}
-			}
-
-			$this->filters['after'] = array_merge($this->filters['after'], $this->config->globals['after']);
 		}
 	}
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Add any method-specific flters to the mix.
+	 *
+	 * @return type
+	 */
 	protected function processMethods()
 	{
 		if (! isset($this->config->methods) || ! is_array($this->config->methods))
@@ -427,6 +416,12 @@ class Filters
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Add any applicable configured filters to the mix.
+	 *
+	 * @param  string $uri
+	 * @return type
+	 */
 	protected function processFilters(string $uri = null)
 	{
 		if (! isset($this->config->filters) || ! $this->config->filters)
@@ -436,53 +431,64 @@ class Filters
 
 		$uri = strtolower(trim($uri, '/ '));
 
-		$matches = [];
-
+		// Add any filters that apply to this URI
 		foreach ($this->config->filters as $alias => $settings)
 		{
-			// Before
+			// Look for inclusion rules
 			if (isset($settings['before']))
 			{
-				foreach ($settings['before'] as $path)
+				$path = $settings['before'];
+				if ($this->pathApplies($uri, $path))
 				{
-					// Prep it for regex
-					$path = strtolower(str_replace('/*', '*', $path));
-					$path = trim(str_replace('*', '.+', $path), '/ ');
-
-					if (preg_match('#' . $path . '#', $uri) !== 1)
-					{
-						continue;
-					}
-
-					$matches[] = $alias;
+					$this->filters['before'][] = $alias;
 				}
-
-				$this->filters['before'] = array_merge($this->filters['before'], $matches);
-				$matches                 = [];
 			}
-
-			// After
 			if (isset($settings['after']))
 			{
-				foreach ($settings['after'] as $path)
+				$path = $settings['after'];
+				if ($this->pathApplies($uri, $path))
 				{
-					// Prep it for regex
-					$path = strtolower(str_replace('/*', '*', $path));
-					$path = trim(str_replace('*', '.+', $path), '/ ');
-
-					if (preg_match('#' . $path . '#', $uri) !== 1)
-					{
-						continue;
-					}
-
-					$matches[] = $alias;
+					$this->filters['after'][] = $alias;
 				}
-
-				$this->filters['after'] = array_merge($this->filters['after'], $matches);
-				$matches                = [];
 			}
 		}
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * Check paths for match for URI
+	 *
+	 * @param  string $uri   URI to test against
+	 * @param  mixed  $paths The path patterns to test
+	 * @return boolean		True if any of the paths apply to the URI
+	 */
+	private function pathApplies(string $uri, $paths)
+	{
+		// empty path matches all
+		if (empty($paths))
+		{
+			return true;
+		}
+
+		// make sure the paths are iterable
+		if (is_string($paths))
+		{
+			$paths = [$paths];
+		}
+
+		// treat each paths as pseudo-regex
+		foreach ($paths as $path)
+		{
+			// need to escape path separators
+			$path = str_replace('/', '\/', trim($path, '/ '));
+			// need to make pseudo wildcard real
+			$path = strtolower(str_replace('*', '.*', $path));
+			// Does this rule apply here?
+			if (preg_match('#^' . $path . '$#', $uri, $match) === 1)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

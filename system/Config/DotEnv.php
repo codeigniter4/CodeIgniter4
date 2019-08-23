@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Config;
+<?php
 
 /**
  * CodeIgniter
@@ -32,9 +32,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Config;
 
 /**
  * Environment-specific configuration
@@ -71,7 +73,7 @@ class DotEnv
 	 *
 	 * @return boolean
 	 */
-	public function load()
+	public function load(): bool
 	{
 		// We don't want to enforce the presence of a .env file,
 		// they should be optional.

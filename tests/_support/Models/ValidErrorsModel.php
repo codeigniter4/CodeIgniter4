@@ -10,7 +10,7 @@ class ValidErrorsModel extends Model
 
 	protected $useSoftDeletes = false;
 
-	protected $dateFormat = 'integer';
+	protected $dateFormat = 'int';
 
 	protected $allowedFields = [
 		'name',

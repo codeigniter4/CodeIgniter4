@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Database\Postgre;
+<?php
 
 /**
  * CodeIgniter
@@ -32,12 +32,15 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
+namespace CodeIgniter\Database\Postgre;
+
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ResultInterface;
+use CodeIgniter\Entity;
 
 /**
  * Result for Postgre
@@ -82,19 +85,19 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function getFieldData(): array
 	{
-		$retval = [];
+		$retVal = [];
 
 		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
 		{
-			$retval[$i]             = new \stdClass();
-			$retval[$i]->name       = pg_field_name($this->resultID, $i);
-			$retval[$i]->type       = pg_field_type($this->resultID, $i);
-			$retval[$i]->max_length = pg_field_size($this->resultID, $i);
-			// $retval[$i]->primary_key = (int)($fieldData[$i]->flags & 2);
-			// $retval[$i]->default     = $fieldData[$i]->def;
+			$retVal[$i]             = new \stdClass();
+			$retVal[$i]->name       = pg_field_name($this->resultID, $i);
+			$retVal[$i]->type       = pg_field_type($this->resultID, $i);
+			$retVal[$i]->max_length = pg_field_size($this->resultID, $i);
+			// $retVal[$i]->primary_key = (int)($fieldData[$i]->flags & 2);
+			// $retVal[$i]->default     = $fieldData[$i]->def;
 		}
 
-		return $retval;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------
@@ -102,7 +105,7 @@ class Result extends BaseResult implements ResultInterface
 	/**
 	 * Frees the current result.
 	 *
-	 * @return mixed
+	 * @return void
 	 */
 	public function freeResult()
 	{
@@ -124,7 +127,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function dataSeek($n = 0)
+	public function dataSeek(int $n = 0)
 	{
 		return pg_result_seek($this->resultID, $n);
 	}
@@ -136,7 +139,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * Overridden by driver classes.
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	protected function fetchAssoc()
 	{
@@ -152,10 +155,14 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @param string $className
 	 *
-	 * @return object
+	 * @return object|boolean|Entity
 	 */
-	protected function fetchObject($className = 'stdClass')
+	protected function fetchObject(string $className = 'stdClass')
 	{
+		if (is_subclass_of($className, Entity::class))
+		{
+			return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
+		}
 		return pg_fetch_object($this->resultID, null, $className);
 	}
 

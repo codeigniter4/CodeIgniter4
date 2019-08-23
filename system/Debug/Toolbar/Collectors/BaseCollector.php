@@ -1,5 +1,4 @@
-<?php namespace CodeIgniter\Debug\Toolbar\Collectors;
-
+<?php
 /**
  * CodeIgniter
  *
@@ -35,6 +34,8 @@
  * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 /**
  * Base Toolbar collector
@@ -90,7 +91,7 @@ class BaseCollector
 	 * @param  boolean $safe
 	 * @return string
 	 */
-	public function getTitle($safe = false): string
+	public function getTitle(bool $safe = false): string
 	{
 		if ($safe)
 		{
@@ -231,9 +232,9 @@ class BaseCollector
 	/**
 	 * Returns the data of this collector to be formatted in the toolbar
 	 *
-	 * @return array
+	 * @return array|string
 	 */
-	public function display(): array
+	public function display()
 	{
 		return [];
 	}
@@ -302,6 +303,11 @@ class BaseCollector
 		return '';
 	}
 
+	/**
+	 * Return settings as an array.
+	 *
+	 * @return array
+	 */
 	public function getAsArray(): array
 	{
 		return [

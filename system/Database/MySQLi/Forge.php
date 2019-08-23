@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Database\MySQLi;
+<?php
 
 /**
  * CodeIgniter
@@ -32,9 +32,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Database\MySQLi;
 
 /**
  * Forge for MySQLi
@@ -116,7 +118,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param  array $attributes Associative array of table attributes
 	 * @return string
 	 */
-	protected function _createTableAttributes($attributes)
+	protected function _createTableAttributes(array $attributes): string
 	{
 		$sql = '';
 
@@ -160,7 +162,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param  mixed  $field      Column definition
 	 * @return string|string[]
 	 */
-	protected function _alterTable($alter_type, $table, $field)
+	protected function _alterTable(string $alter_type, string $table, $field)
 	{
 		if ($alter_type === 'DROP')
 		{
@@ -200,7 +202,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param  array $field
 	 * @return string
 	 */
-	protected function _processColumn($field)
+	protected function _processColumn(array $field): string
 	{
 		$extra_clause = isset($field['after']) ? ' AFTER ' . $this->db->escapeIdentifiers($field['after']) : '';
 
@@ -229,7 +231,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param  string $table (ignored)
 	 * @return string
 	 */
-	protected function _processIndexes($table)
+	protected function _processIndexes(string $table): string
 	{
 		$sql = '';
 
@@ -257,7 +259,7 @@ class Forge extends \CodeIgniter\Database\Forge
 			$unique = in_array($i, $this->uniqueKeys) ? 'UNIQUE ' : '';
 
 			$sql .= ",\n\t{$unique}KEY " . $this->db->escapeIdentifiers(implode('_', $this->keys[$i]))
-					. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
+				. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
 		}
 
 		$this->keys = [];

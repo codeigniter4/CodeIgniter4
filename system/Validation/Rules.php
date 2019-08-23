@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Validation;
+<?php
 
 /**
  * CodeIgniter
@@ -32,14 +32,16 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Validation;
 
 use Config\Database;
 
 /**
- * Rules.
+ * Validation Rules.
  *
  * @package CodeIgniter\Validation
  */
@@ -59,6 +61,21 @@ class Rules
 	public function differs(string $str = null, string $field, array $data): bool
 	{
 		return array_key_exists($field, $data) ? ($str !== $data[$field]) : false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Equals the static value provided.
+	 *
+	 * @param string $str
+	 * @param string $val
+	 *
+	 * @return boolean
+	 */
+	public function equals(string $str = null, string $val): bool
+	{
+		return $str === $val;
 	}
 
 	//--------------------------------------------------------------------
@@ -255,6 +272,21 @@ class Rules
 	public function min_length(string $str = null, string $val, array $data): bool
 	{
 		return ($val <= mb_strlen($str));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Does not equal the static value provided.
+	 *
+	 * @param string $str
+	 * @param string $val
+	 *
+	 * @return boolean
+	 */
+	public function not_equals(string $str = null, string $val): bool
+	{
+		return $str !== $val;
 	}
 
 	//--------------------------------------------------------------------

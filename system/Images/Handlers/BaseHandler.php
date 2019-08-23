@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Images\Handlers;
+<?php
 
 /**
  * CodeIgniter
@@ -32,35 +32,71 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Images\Handlers;
 
 use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Image;
 use CodeIgniter\Images\ImageHandlerInterface;
 
+/**
+ * Base image handling implementation
+ */
 abstract class BaseHandler implements ImageHandlerInterface
 {
 
 	/**
+	 * Configuration settings.
+	 *
 	 * @var \Config\Images
 	 */
 	protected $config;
 
 	/**
 	 * The image/file instance
-	 * d
 	 *
 	 * @var \CodeIgniter\Images\Image
 	 */
-	protected $image           = null;
-	protected $width           = 0;
-	protected $height          = 0;
+	protected $image = null;
+	/**
+	 * Image width.
+	 *
+	 * @var integer
+	 */
+	protected $width = 0;
+	/**
+	 * Image height.
+	 *
+	 * @var integer
+	 */
+	protected $height = 0;
+	/**
+	 * File permission mask.
+	 *
+	 * @var type
+	 */
 	protected $filePermissions = 0644;
-	protected $xAxis           = 0;
-	protected $yAxis           = 0;
-	protected $masterDim       = 'auto';
+	/**
+	 * X-axis.
+	 *
+	 * @var integer
+	 */
+	protected $xAxis = 0;
+	/**
+	 * Y-axis.
+	 *
+	 * @var integer
+	 */
+	protected $yAxis = 0;
+	/**
+	 * Master dimensioning.
+	 *
+	 * @var string
+	 */
+	protected $masterDim = 'auto';
 
 	/**
 	 * Default options for text watermarking.
@@ -91,6 +127,11 @@ abstract class BaseHandler implements ImageHandlerInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 *
+	 * @param type $config
+	 */
 	public function __construct($config = null)
 	{
 		$this->config = $config;
@@ -475,7 +516,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 		$exif = exif_read_data($this->image->getPathname());
 		if (! is_null($key) && is_array($exif))
 		{
-			$exif = array_key_exists($key, $exif) ? $exif[$key] : false;
+			$exif = $exif[$key] ?? false;
 		}
 
 		return $exif;
@@ -524,7 +565,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 *
+	 * Calculate image aspect ratio.
 	 *
 	 * @param $width
 	 * @param null       $height
@@ -673,6 +714,8 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @param string $name
 	 * @param array  $args
+	 *
+	 * @return mixed
 	 */
 	public function __call(string $name, array $args = [])
 	{
@@ -741,13 +784,25 @@ abstract class BaseHandler implements ImageHandlerInterface
 	}
 
 	//--------------------------------------------------------------------
-	// accessor for testing; not part of interface
+	/**
+	 * Return image width.
+	 *
+	 * accessor for testing; not part of interface
+	 *
+	 * @return integer
+	 */
 	public function getWidth()
 	{
 		return ($this->resource !== null) ? $this->_getWidth() : $this->width;
 	}
 
-	// accessor for testing; not part of interface
+	/**
+	 * Return image height.
+	 *
+	 * accessor for testing; not part of interface
+	 *
+	 * @return type
+	 */
 	public function getHeight()
 	{
 		return ($this->resource !== null) ? $this->_getHeight() : $this->height;

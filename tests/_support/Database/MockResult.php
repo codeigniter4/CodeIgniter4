@@ -68,9 +68,9 @@ class MockResult extends BaseResult
 	 *
 	 * Overridden by driver classes.
 	 *
-	 * @return array
+	 * @return mixed
 	 */
-	protected function fetchAssoc(): array
+	protected function fetchAssoc()
 	{
 	}
 

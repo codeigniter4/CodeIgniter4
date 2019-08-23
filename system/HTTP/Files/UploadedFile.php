@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\HTTP\Files;
+
 
 /**
  * CodeIgniter
@@ -33,12 +33,16 @@ namespace CodeIgniter\HTTP\Files;
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
+namespace CodeIgniter\HTTP\Files;
+
 use CodeIgniter\Files\File;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use Config\Mimes;
+use Exception;
 
 /**
  * Value object representing a single file uploaded through an
@@ -175,7 +179,7 @@ class UploadedFile extends File implements UploadedFileInterface
 		{
 			move_uploaded_file($this->path, $destination);
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$error = error_get_last();
 			throw HTTPException::forMoveFailed(basename($this->path), $targetPath, strip_tags($error['message']));
@@ -199,7 +203,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 *
 	 * @return string The path set or created.
 	 */
-	protected function setPath($path)
+	protected function setPath(string $path): string
 	{
 		if (! is_dir($path))
 		{
@@ -259,8 +263,6 @@ class UploadedFile extends File implements UploadedFileInterface
 	/**
 	 * Get error string
 	 *
-	 * @var array $errors
-	 *
 	 * @return string
 	 */
 	public function getErrorString(): string
@@ -288,8 +290,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 * This is NOT a trusted value.
 	 * For a trusted version, use getMimeType() instead.
 	 *
-	 * @return string|null The media type sent by the client or null if none
-	 *                     was provided.
+	 * @return string The media type sent by the client or null if none was provided.
 	 */
 	public function getClientMimeType(): string
 	{
@@ -303,8 +304,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 * by the client, and should not be trusted. If the file has been
 	 * moved, this will return the final name of the moved file.
 	 *
-	 * @return string|null The filename sent by the client or null if none
-	 *     was provided.
+	 * @return string The filename sent by the client or null if none was provided.
 	 */
 	public function getName(): string
 	{
@@ -351,9 +351,14 @@ class UploadedFile extends File implements UploadedFileInterface
 		return $this->guessExtension();
 	}
 
+	/**
+	 * Attempts to determine the best file extension.
+	 *
+	 * @return string|null
+	 */
 	public function guessExtension(): ?string
 	{
-		return \Config\Mimes::guessExtensionFromType($this->getClientMimeType(), $this->getClientExtension());
+		return Mimes::guessExtensionFromType($this->getClientMimeType(), $this->getClientExtension());
 	}
 
 	//--------------------------------------------------------------------
@@ -363,7 +368,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 * was uploaded. This is NOT a trusted source.
 	 * For a trusted version, use guessExtension() instead.
 	 *
-	 * @return string|null
+	 * @return string
 	 */
 	public function getClientExtension(): string
 	{

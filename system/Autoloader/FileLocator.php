@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -49,6 +49,8 @@ namespace CodeIgniter\Autoloader;
 class FileLocator
 {
 	/**
+	 * The Autoloader to use.
+	 *
 	 * @var \CodeIgniter\Autoloader\Autoloader
 	 */
 	protected $autoloader;
@@ -261,6 +263,8 @@ class FileLocator
 	//--------------------------------------------------------------------
 
 	/**
+	 * Return the namespace mappings we know about.
+	 *
 	 * @param string|null $prefix
 	 *
 	 * @return array|string

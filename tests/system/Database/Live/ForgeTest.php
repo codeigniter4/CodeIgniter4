@@ -23,18 +23,83 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge = \Config\Database::forge($this->DBGroup);
 	}
 
+	public function testCreateDatabase()
+	{
+		$database_created = $this->forge->createDatabase('test_forge_database');
+
+		$this->assertTrue($database_created);
+	}
+
+	public function testDropDatabase()
+	{
+		if ($this->db->DBDriver === 'SQLite3')
+		{
+			$this->markTestSkipped('SQLite3 requires file path to drop database');
+		}
+
+		$database_dropped = $this->forge->dropDatabase('test_forge_database');
+
+		$this->assertTrue($database_dropped);
+	}
+
+	public function testCreateDatabaseExceptionNoCreateStatement()
+	{
+		$this->setPrivateProperty($this->forge, 'createDatabaseStr', false);
+
+		if ($this->db->DBDriver === 'SQLite3')
+		{
+			$database_created = $this->forge->createDatabase('test_forge_database');
+			$this->assertTrue($database_created);
+		}
+		else
+		{
+			$this->expectException(DatabaseException::class);
+			$this->expectExceptionMessage('This feature is not available for the database you are using.');
+
+			$this->forge->createDatabase('test_forge_database');
+		}
+	}
+
+	public function testDropDatabaseExceptionNoDropStatement()
+	{
+		$this->setPrivateProperty($this->forge, 'dropDatabaseStr', false);
+
+		if ($this->db->DBDriver === 'SQLite3')
+		{
+			$this->markTestSkipped('SQLite3 requires file path to drop database');
+		}
+		else
+		{
+			$this->expectException(DatabaseException::class);
+			$this->expectExceptionMessage('This feature is not available for the database you are using.');
+
+			$this->forge->dropDatabase('test_forge_database');
+		}
+	}
+
 	public function testCreateTable()
 	{
 		$this->forge->dropTable('forge_test_table', true);
 
 		$this->forge->addField([
-			'id' => [
+			'id'     => [
 				'type'           => 'INTEGER',
 				'constraint'     => 11,
-				'unsigned'       => false,
+				'unsigned'       => true,
 				'auto_increment' => true,
 			],
+			'mobile' => [
+				'type'       => 'INTEGER',
+				'constraint' => 10,
+				'unsigned'   => true,
+			],
 		]);
+
+		$unsignedAttributes = [
+			'INTEGER',
+		];
+
+		$this->setPrivateProperty($this->forge, 'unsigned', $unsignedAttributes);
 
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('forge_test_table');
@@ -66,6 +131,339 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->dropTable('forge_test_attributes', true, true);
 
 		$this->assertTrue($exist);
+	}
+
+	public function testCreateTableWithArrayFieldConstraints()
+	{
+		if (in_array($this->db->DBDriver, ['MySQLi', 'SQLite3']))
+		{
+			$this->forge->dropTable('forge_array_constraint', true);
+			$this->forge->addField([
+				'status' => [
+					'type'       => 'ENUM',
+					'constraint' => [
+						'sad',
+						'ok',
+						'happy',
+					],
+				],
+			]);
+			$this->forge->createTable('forge_array_constraint');
+
+			$fields = $this->db->getFieldData('forge_array_constraint');
+
+			$this->assertEquals('status', $fields[0]->name);
+
+			if ($this->db->DBDriver === 'SQLite3')
+			{
+				// SQLite3 converts array constraints to TEXT CHECK(...)
+				$this->assertEquals('TEXT', $fields[0]->type);
+			}
+			else
+			{
+				$this->assertEquals('enum', $fields[0]->type);
+			}
+		}
+		else
+		{
+			$this->expectNotToPerformAssertions();
+		}
+	}
+
+	public function testCreateTableWithStringField()
+	{
+		$this->forge->dropTable('forge_test_table', true);
+
+		$this->forge->addField('id');
+		$this->forge->addField('name varchar(100) NULL');
+
+		$this->forge->createTable('forge_test_table');
+
+		$exist = $this->db->tableExists('forge_test_table');
+		$this->forge->dropTable('db_forge_test_table', true);
+
+		$this->assertTrue($exist);
+	}
+
+	public function testCreateTableWithEmptyName()
+	{
+		$this->forge->dropTable('forge_test_table', true);
+
+		$this->forge->addField('id');
+		$this->forge->addField('name varchar(100) NULL');
+
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage('A table name is required for that operation.');
+
+		$this->forge->createTable('');
+	}
+
+	public function testCreateTableWithNoFields()
+	{
+		$this->forge->dropTable('forge_test_table', true);
+
+		$this->expectException(\RuntimeException::class);
+		$this->expectExceptionMessage('Field information is required.');
+
+		$this->forge->createTable('forge_test_table');
+	}
+
+	public function testCreateTableWithStringFieldException()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage('Field information is required for that operation.');
+
+		$this->forge->dropTable('forge_test_table', true);
+
+		$this->forge->addField('id');
+		$this->forge->addField('name');
+
+		$this->forge->createTable('forge_test_table');
+	}
+
+	public function testRenameTable()
+	{
+		$this->forge->dropTable('forge_test_table_dummy', true);
+
+		$this->forge->addField('id');
+		$this->forge->addField('name varchar(100) NULL');
+
+		$this->forge->createTable('forge_test_table');
+
+		$this->forge->renameTable('forge_test_table', 'forge_test_table_dummy');
+
+		$exist = $this->db->tableExists('forge_test_table_dummy');
+
+		$this->assertTrue($exist);
+	}
+
+	public function testRenameTableEmptyNameException()
+	{
+		$this->forge->dropTable('forge_test_table_dummy', true);
+
+		$this->forge->addField('id');
+		$this->forge->addField('name varchar(100) NULL');
+
+		$this->forge->createTable('forge_test_table');
+
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage('A table name is required for that operation.');
+
+		$this->forge->renameTable('forge_test_table', '');
+	}
+
+	public function testRenameTableNoRenameStatementException()
+	{
+		$this->setPrivateProperty($this->forge, 'renameTableStr', false);
+
+		$this->forge->dropTable('forge_test_table', true);
+
+		$this->forge->addField('id');
+		$this->forge->addField('name varchar(100) NULL');
+
+		$this->forge->createTable('forge_test_table');
+
+		$this->expectException(DatabaseException::class);
+		$this->expectExceptionMessage('This feature is not available for the database you are using.');
+
+		$this->forge->renameTable('forge_test_table', 'forge_test_table_dummy');
+	}
+
+	public function testDropTableWithEmptyName()
+	{
+		$this->expectException(DatabaseException::class);
+		$this->expectExceptionMessage('A table name is required for that operation.');
+
+		$this->forge->dropTable('', true);
+	}
+
+	public function testForeignKey()
+	{
+		$attributes = [];
+
+		if ($this->db->DBDriver === 'MySQLi')
+		{
+			$attributes = ['ENGINE' => 'InnoDB'];
+		}
+
+		$this->forge->addField([
+			'id'   => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'name' => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
+		]);
+		$this->forge->addKey('id', true);
+		$this->forge->createTable('forge_test_users', true, $attributes);
+
+		$this->forge->addField([
+			'id'       => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'users_id' => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'name'     => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
+		]);
+		$this->forge->addKey('id', true);
+		$this->forge->addForeignKey('users_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE');
+
+		$this->forge->createTable('forge_test_invoices', true, $attributes);
+
+		$foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices');
+
+		if ($this->db->DBDriver === 'SQLite3')
+		{
+			$this->assertEquals($foreignKeyData[0]->constraint_name, 'users_id to db_forge_test_users.id');
+		}
+		else
+		{
+			$this->assertEquals($foreignKeyData[0]->constraint_name, $this->db->DBPrefix . 'forge_test_invoices_users_id_foreign');
+		}
+		$this->assertEquals($foreignKeyData[0]->table_name, $this->db->DBPrefix . 'forge_test_invoices');
+		$this->assertEquals($foreignKeyData[0]->foreign_table_name, $this->db->DBPrefix . 'forge_test_users');
+
+		$this->forge->dropTable('forge_test_invoices', true);
+		$this->forge->dropTable('forge_test_users', true);
+	}
+
+	public function testForeignKeyFieldNotExistException()
+	{
+		$this->expectException(DatabaseException::class);
+		$this->expectExceptionMessage('Field `user_id` not found.');
+
+		$attributes = [];
+
+		if ($this->db->DBDriver === 'MySQLi')
+		{
+			$attributes = ['ENGINE' => 'InnoDB'];
+		}
+
+		$this->forge->addField([
+			'id'   => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'name' => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
+		]);
+		$this->forge->addKey('id', true);
+		$this->forge->createTable('forge_test_users', true, $attributes);
+
+		$this->forge->addField([
+			'id'       => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'users_id' => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'name'     => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
+		]);
+		$this->forge->addKey('id', true);
+		$this->forge->addForeignKey('user_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE');
+
+		$this->forge->createTable('forge_test_invoices', true, $attributes);
+	}
+
+	public function testDropForeignKey()
+	{
+		$attributes = [];
+
+		if ($this->db->DBDriver === 'MySQLi')
+		{
+			$attributes = ['ENGINE' => 'InnoDB'];
+		}
+
+		$this->forge->addField([
+			'id'   => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'name' => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
+		]);
+		$this->forge->addKey('id', true);
+		$this->forge->createTable('forge_test_users', true, $attributes);
+
+		$this->forge->addField([
+			'id'       => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'users_id' => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'name'     => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
+		]);
+		$this->forge->addKey('id', true);
+		$this->forge->addForeignKey('users_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE');
+
+		$this->forge->createTable('forge_test_invoices', true, $attributes);
+
+		$this->forge->dropForeignKey('forge_test_invoices', 'forge_test_invoices_users_id_foreign');
+
+		$foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices');
+
+		$this->assertEmpty($foreignKeyData);
+
+		$this->forge->dropTable('forge_test_invoices', true);
+		$this->forge->dropTable('forge_test_users', true);
+	}
+
+	public function testAddColumn()
+	{
+		$this->forge->dropTable('forge_test_table', true);
+
+		$this->forge->addField([
+			'id' => [
+				'type'           => 'INTEGER',
+				'constraint'     => 11,
+				'unsigned'       => false,
+				'auto_increment' => true,
+			],
+		]);
+
+		$this->forge->addKey('id', true);
+		$this->forge->createTable('forge_test_table');
+
+		$newField = [
+			'username' => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+				'unique'     => false,
+			],
+		];
+
+		$this->forge->addColumn('forge_test_table', $newField);
+
+		$fieldNames = $this->db->table('forge_test_table')
+							   ->get()
+							   ->getFieldNames();
+
+		$this->forge->dropTable('forge_test_table', true);
+
+		$this->assertEquals('username', $fieldNames[1]);
 	}
 
 	public function testAddFields()
@@ -220,166 +618,6 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->forge->dropTable('forge_test_1', true);
 	}
 
-	public function testForeignKey()
-	{
-		$attributes = [];
-
-		if ($this->db->DBDriver === 'MySQLi')
-		{
-			$attributes = ['ENGINE' => 'InnoDB'];
-		}
-
-		$this->forge->addField([
-			'id'   => [
-				'type'       => 'INTEGER',
-				'constraint' => 11,
-			],
-			'name' => [
-				'type'       => 'VARCHAR',
-				'constraint' => 255,
-			],
-		]);
-		$this->forge->addKey('id', true);
-		$this->forge->createTable('forge_test_users', true, $attributes);
-
-		$this->forge->addField([
-			'id'       => [
-				'type'       => 'INTEGER',
-				'constraint' => 11,
-			],
-			'users_id' => [
-				'type'       => 'INTEGER',
-				'constraint' => 11,
-			],
-			'name'     => [
-				'type'       => 'VARCHAR',
-				'constraint' => 255,
-			],
-		]);
-		$this->forge->addKey('id', true);
-		$this->forge->addForeignKey('users_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE');
-
-		$this->forge->createTable('forge_test_invoices', true, $attributes);
-
-		$foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices');
-
-		if ($this->db->DBDriver === 'SQLite3')
-		{
-			$this->assertEquals($foreignKeyData[0]->constraint_name, 'users_id to db_forge_test_users.id');
-		}
-		else
-		{
-			$this->assertEquals($foreignKeyData[0]->constraint_name, $this->db->DBPrefix . 'forge_test_invoices_users_id_foreign');
-		}
-		$this->assertEquals($foreignKeyData[0]->table_name, $this->db->DBPrefix . 'forge_test_invoices');
-		$this->assertEquals($foreignKeyData[0]->foreign_table_name, $this->db->DBPrefix . 'forge_test_users');
-
-		$this->forge->dropTable('forge_test_invoices', true);
-		$this->forge->dropTable('forge_test_users', true);
-	}
-
-	public function testDropForeignKey()
-	{
-		$attributes = [];
-
-		if ($this->db->DBDriver === 'MySQLi')
-		{
-			$attributes = ['ENGINE' => 'InnoDB'];
-		}
-		if ($this->db->DBDriver === 'SQLite3')
-		{
-			$this->expectException(DatabaseException::class);
-		}
-
-		$this->forge->addField([
-			'id'   => [
-				'type'       => 'INTEGER',
-				'constraint' => 11,
-			],
-			'name' => [
-				'type'       => 'VARCHAR',
-				'constraint' => 255,
-			],
-		]);
-		$this->forge->addKey('id', true);
-		$this->forge->createTable('forge_test_users', true, $attributes);
-
-		$this->forge->addField([
-			'id'       => [
-				'type'       => 'INTEGER',
-				'constraint' => 11,
-			],
-			'users_id' => [
-				'type'       => 'INTEGER',
-				'constraint' => 11,
-			],
-			'name'     => [
-				'type'       => 'VARCHAR',
-				'constraint' => 255,
-			],
-		]);
-		$this->forge->addKey('id', true);
-		$this->forge->addForeignKey('users_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE');
-
-		$this->forge->createTable('forge_test_invoices', true, $attributes);
-
-		$this->forge->dropForeignKey('forge_test_invoices', 'forge_test_invoices_users_id_foreign');
-
-		$foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices');
-
-		$this->assertEmpty($foreignKeyData);
-
-		$this->forge->dropTable('forge_test_invoices', true);
-		$this->forge->dropTable('forge_test_users', true);
-	}
-
-	public function testCreateTableWithArrayFieldConstraints()
-	{
-		if (in_array($this->db->DBDriver, ['MySQLi', 'SQLite3']))
-		{
-			$this->forge->dropTable('forge_array_constraint', true);
-			$this->forge->addField([
-				'status' => [
-					'type'       => 'ENUM',
-					'constraint' => [
-						'sad',
-						'ok',
-						'happy',
-					],
-				],
-			]);
-			$this->forge->createTable('forge_array_constraint');
-
-			$fields = $this->db->getFieldData('forge_array_constraint');
-
-			$this->assertEquals('status', $fields[0]->name);
-
-			if ($this->db->DBDriver === 'SQLite3')
-			{
-				// SQLite3 converts array constraints to TEXT CHECK(...)
-				$this->assertEquals('TEXT', $fields[0]->type);
-			}
-			else
-			{
-				$this->assertEquals('enum', $fields[0]->type);
-			}
-		}
-		else
-		{
-			$this->expectNotToPerformAssertions();
-		}
-	}
-
-	public function testConnectWithArrayGroup()
-	{
-		$group = config('Database');
-		$group = $group->tests;
-
-		$forge = \Config\Database::forge($group);
-
-		$this->assertInstanceOf(Forge::class, $forge);
-	}
-
 	public function testDropColumn()
 	{
 		$this->forge->dropTable('forge_test_two', true);
@@ -450,5 +688,43 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->assertTrue($this->db->fieldExists('altered', 'forge_test_three'));
 
 		$this->forge->dropTable('forge_test_three', true);
+	}
+
+	public function testConnectWithArrayGroup()
+	{
+		$group = config('Database');
+		$group = $group->tests;
+
+		$forge = \Config\Database::forge($group);
+
+		$this->assertInstanceOf(Forge::class, $forge);
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1983
+	 */
+	public function testDropTableSuccess()
+	{
+		// Add an index to user table so we have
+		// something to work with
+		$this->forge->addField([
+			'id' => [
+				'type'       => 'INTEGER',
+				'constraint' => 3,
+			],
+		]);
+		$this->forge->addKey('id');
+		$this->forge->createTable('droptest');
+
+		$this->assertCount(1, $this->db->getIndexData('droptest'));
+
+		$this->forge->dropTable('droptest', true);
+
+		$this->assertFalse($this->db->tableExists('dropTest'));
+
+		if ($this->db->DBDriver === 'SQLite3')
+		{
+			$this->assertCount(0, $this->db->getIndexData('droptest'));
+		}
 	}
 }

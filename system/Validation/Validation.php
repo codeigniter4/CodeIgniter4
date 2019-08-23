@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Validation;
+<?php
 
 /**
  * CodeIgniter
@@ -32,14 +32,19 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Validation;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
 
+/**
+ * Validator
+ */
 class Validation implements ValidationInterface
 {
 
@@ -90,9 +95,16 @@ class Validation implements ValidationInterface
 	protected $customErrors = [];
 
 	/**
+	 * Our configuration.
+	 *
 	 * @var \Config\Validation
 	 */
 	protected $config;
+	/**
+	 * The view renderer used to render validation messages.
+	 *
+	 * @var RendererInterface
+	 */
 	protected $view;
 
 	//--------------------------------------------------------------------
@@ -118,8 +130,9 @@ class Validation implements ValidationInterface
 	 * Runs the validation process, returning true/false determining whether
 	 * validation was successful or not.
 	 *
-	 * @param array  $data  The array of data to validate.
-	 * @param string $group The pre-defined group of rules to apply.
+	 * @param array  $data     The array of data to validate.
+	 * @param string $group    The pre-defined group of rules to apply.
+	 * @param string $db_group The database group to use.
 	 *
 	 * @return boolean
 	 */
@@ -734,7 +747,7 @@ class Validation implements ValidationInterface
 	 * Resets the class to a blank slate. Should be called whenever
 	 * you need to process more than one array.
 	 *
-	 * @return mixed
+	 * @return \CodeIgniter\Validation\ValidationInterface
 	 */
 	public function reset(): ValidationInterface
 	{

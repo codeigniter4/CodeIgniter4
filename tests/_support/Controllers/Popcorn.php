@@ -55,4 +55,23 @@ class Popcorn extends Controller
 		return $response;
 	}
 
+	public function canyon()
+	{
+		echo 'Hello-o-o';
+	}
+
+	public function cat()
+	{
+	}
+
+	public function json()
+	{
+		$this->responsd(['answer' => 42]);
+	}
+
+	public function xml()
+	{
+		$this->respond('<my><pet>cat</pet></my>');
+	}
+
 }

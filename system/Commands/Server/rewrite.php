@@ -14,11 +14,6 @@ if (php_sapi_name() === 'cli')
 {
 	return;
 }
-
-// If we're serving the site locally, then we need
-// to let the application know that we're in development mode
-$_SERVER['CI_ENVIRONMENT'] = 'development';
-
 $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
 // Front Controller path - expected to be in the default folder

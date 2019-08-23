@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Pager;
+<?php
 
 /**
  * CodeIgniter
@@ -32,10 +32,15 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
+namespace CodeIgniter\Pager;
+
+/**
+ * Expected behavior for a Pager
+ */
 interface PagerInterface
 {
 
@@ -96,8 +101,8 @@ interface PagerInterface
 	/**
 	 * Sets the path that an aliased group of links will use.
 	 *
-	 * @param string $group
 	 * @param string $path
+	 * @param string $group
 	 *
 	 * @return mixed
 	 */
@@ -136,7 +141,7 @@ interface PagerInterface
 	 *
 	 * @return string|\CodeIgniter\HTTP\URI
 	 */
-	public function getPageURI(int $page = null, string $group = 'default', $returnObject = false);
+	public function getPageURI(int $page = null, string $group = 'default', bool $returnObject = false);
 
 	//--------------------------------------------------------------------
 

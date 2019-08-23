@@ -27,13 +27,19 @@
  * THE SOFTWARE.
  *
  * @package    CodeIgniter
- * @author     EllisLab Dev Team
+ * @author     CodeIgniter Dev Team
  * @copyright  2008-2014 EllisLab, Inc. (https://ellislab.com/)
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 1.0.0
  * @filesource
+ */
+
+/**
+ * CodeIgniter Number Helpers
+ *
+ * @package CodeIgniter
  */
 
 if (! function_exists('number_to_size'))
@@ -60,35 +66,35 @@ if (! function_exists('number_to_size'))
 		}
 
 		// ignore sub part
-		$genralLocale = $locale;
+		$generalLocale = $locale;
 		if (! empty($locale) && ( $underscorePos = strpos($locale, '_')))
 		{
-			$genralLocale = substr($locale, 0, $underscorePos);
+			$generalLocale = substr($locale, 0, $underscorePos);
 		}
 
 		if ($num >= 1000000000000)
 		{
 			$num  = round($num / 1099511627776, $precision);
-			$unit = lang('Number.terabyteAbbr', [], $genralLocale);
+			$unit = lang('Number.terabyteAbbr', [], $generalLocale);
 		}
 		elseif ($num >= 1000000000)
 		{
 			$num  = round($num / 1073741824, $precision);
-			$unit = lang('Number.gigabyteAbbr', [], $genralLocale);
+			$unit = lang('Number.gigabyteAbbr', [], $generalLocale);
 		}
 		elseif ($num >= 1000000)
 		{
 			$num  = round($num / 1048576, $precision);
-			$unit = lang('Number.megabyteAbbr', [], $genralLocale);
+			$unit = lang('Number.megabyteAbbr', [], $generalLocale);
 		}
 		elseif ($num >= 1000)
 		{
 			$num  = round($num / 1024, $precision);
-			$unit = lang('Number.kilobyteAbbr', [], $genralLocale);
+			$unit = lang('Number.kilobyteAbbr', [], $generalLocale);
 		}
 		else
 		{
-			$unit = lang('Number.bytes', [], $genralLocale);
+			$unit = lang('Number.bytes', [], $generalLocale);
 		}
 
 		return format_number($num, $precision, $locale, ['after' => ' ' . $unit]);
@@ -131,35 +137,35 @@ if (! function_exists('number_to_amount'))
 		$suffix = '';
 
 		// ignore sub part
-		$genralLocale = $locale;
+		$generalLocale = $locale;
 		if (! empty($locale) && ( $underscorePos = strpos($locale, '_')))
 		{
-			$genralLocale = substr($locale, 0, $underscorePos);
+			$generalLocale = substr($locale, 0, $underscorePos);
 		}
 
 		if ($num > 1000000000000000)
 		{
-			$suffix = lang('Number.quadrillion', [], $genralLocale);
+			$suffix = lang('Number.quadrillion', [], $generalLocale);
 			$num    = round(($num / 1000000000000000), $precision);
 		}
 		elseif ($num > 1000000000000)
 		{
-			$suffix = lang('Number.trillion', [], $genralLocale);
+			$suffix = lang('Number.trillion', [], $generalLocale);
 			$num    = round(($num / 1000000000000), $precision);
 		}
 		else if ($num > 1000000000)
 		{
-			$suffix = lang('Number.billion', [], $genralLocale);
+			$suffix = lang('Number.billion', [], $generalLocale);
 			$num    = round(($num / 1000000000), $precision);
 		}
 		else if ($num > 1000000)
 		{
-			$suffix = lang('Number.million', [], $genralLocale);
+			$suffix = lang('Number.million', [], $generalLocale);
 			$num    = round(($num / 1000000), $precision);
 		}
 		else if ($num > 1000)
 		{
-			$suffix = lang('Number.thousand', [], $genralLocale);
+			$suffix = lang('Number.thousand', [], $generalLocale);
 			$num    = round(($num / 1000), $precision);
 		}
 
@@ -178,7 +184,7 @@ if (! function_exists('number_to_currency'))
 	 *
 	 * @return string
 	 */
-	function number_to_currency($num, string $currency, string $locale = null): string
+	function number_to_currency(float $num, string $currency, string $locale = null): string
 	{
 		return format_number($num, 1, $locale, [
 			'type'     => NumberFormatter::CURRENCY,
@@ -202,7 +208,7 @@ if (! function_exists('format_number'))
 	 *
 	 * @return string
 	 */
-	function format_number($num, int $precision = 1, string $locale = null, array $options = []): string
+	function format_number(float $num, int $precision = 1, string $locale = null, array $options = []): string
 	{
 		// Locale is either passed in here, negotiated with client, or grabbed from our config file.
 		$locale = $locale ?? \CodeIgniter\Config\Services::request()->getLocale();

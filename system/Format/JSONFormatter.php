@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Format;
+<?php
 
 /**
  * CodeIgniter
@@ -32,12 +32,17 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
+namespace CodeIgniter\Format;
+
 use CodeIgniter\Format\Exceptions\FormatException;
 
+/**
+ * JSON data formatter
+ */
 class JSONFormatter implements FormatterInterface
 {
 
@@ -46,9 +51,9 @@ class JSONFormatter implements FormatterInterface
 	 *
 	 * @param $data
 	 *
-	 * @return mixed
+	 * @return string|boolean (JSON string | false)
 	 */
-	public function format(array $data)
+	public function format($data)
 	{
 		$options = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
 

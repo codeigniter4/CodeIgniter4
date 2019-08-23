@@ -1,7 +1,4 @@
 <?php
-namespace CodeIgniter\HTTP;
-
-use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 /**
  * CodeIgniter
@@ -35,8 +32,16 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
+ */
+
+namespace CodeIgniter\HTTP;
+
+use CodeIgniter\HTTP\Exceptions\HTTPException;
+
+/**
+ * An HTTP message
  */
 class Message
 {
@@ -192,7 +197,7 @@ class Message
 	 *
 	 * @return array|\CodeIgniter\HTTP\Header
 	 */
-	public function getHeader($name)
+	public function getHeader(string $name)
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -209,11 +214,11 @@ class Message
 	/**
 	 * Determines whether a header exists.
 	 *
-	 * @param $name
+	 * @param string $name
 	 *
 	 * @return boolean
 	 */
-	public function hasHeader($name): bool
+	public function hasHeader(string $name): bool
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -313,7 +318,7 @@ class Message
 	 *
 	 * @return Message
 	 */
-	public function appendHeader(string $name, $value)
+	public function appendHeader(string $name, string $value)
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -333,7 +338,7 @@ class Message
 	 *
 	 * @return Message
 	 */
-	public function prependHeader(string $name, $value)
+	public function prependHeader(string $name, string $value)
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -390,7 +395,7 @@ class Message
 	 *
 	 * @return string
 	 */
-	protected function getHeaderName($name): string
+	protected function getHeaderName(string $name): string
 	{
 		$lower_name = strtolower($name);
 

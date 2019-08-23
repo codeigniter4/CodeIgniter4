@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\CLI;
+<?php
 
 /**
  * CodeIgniter
@@ -32,17 +32,16 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\CLI;
 
 use CodeIgniter\CLI\Exceptions\CLIException;
 
 /**
- * Class CLI
- *
- * Tools to interact with that request since CLI requests are not
- * static like HTTP requests might be.
+ * Set of static methods useful for CLI request handling.
  *
  * Portions of this code were initially from the FuelPHP Framework,
  * version 1.7.x, and used here under the MIT license they were
@@ -59,7 +58,7 @@ use CodeIgniter\CLI\Exceptions\CLIException;
  * an argument of "0".
  * These have been flagged to ignore for code coverage purposes.
  *
- * @package CodeIgniter\HTTP
+ * @package CodeIgniter\CLI
  */
 class CLI
 {
@@ -137,6 +136,15 @@ class CLI
 	 * @var array
 	 */
 	protected static $options = [];
+
+	/**
+	 * Helps track internally whether the last
+	 * output was a "write" or a "print" to
+	 * keep the output clean and as expected.
+	 *
+	 * @var string
+	 */
+	protected static $lastWrite;
 
 	//--------------------------------------------------------------------
 
@@ -289,7 +297,27 @@ class CLI
 	//--------------------------------------------------------------------
 
 	/**
-	 * Outputs a string to the cli.
+	 * Outputs a string to the CLI without any surrounding newlines.
+	 * Useful for showing repeating elements on a single line.
+	 *
+	 * @param string      $text
+	 * @param string|null $foreground
+	 * @param string|null $background
+	 */
+	public static function print(string $text = '', string $foreground = null, string $background = null)
+	{
+		if ($foreground || $background)
+		{
+			$text = static::color($text, $foreground, $background);
+		}
+
+		static::$lastWrite = null;
+
+		fwrite(STDOUT, $text);
+	}
+
+	/**
+	 * Outputs a string to the cli on it's own line.
 	 *
 	 * @param string $text       The text to output
 	 * @param string $foreground
@@ -300,6 +328,12 @@ class CLI
 		if ($foreground || $background)
 		{
 			$text = static::color($text, $foreground, $background);
+		}
+
+		if (static::$lastWrite !== 'write')
+		{
+			$text              = PHP_EOL . $text;
+			static::$lastWrite = 'write';
 		}
 
 		fwrite(STDOUT, $text . PHP_EOL);
@@ -484,8 +518,12 @@ class CLI
 	 *
 	 * @return integer
 	 */
-	public static function strlen(string $string): int
+	public static function strlen(?string $string): int
 	{
+		if (is_null($string))
+		{
+			return 0;
+		}
 		foreach (static::$foreground_colors as $color)
 		{
 			$string = strtr($string, ["\033[" . $color . 'm' => '']);
@@ -553,8 +591,8 @@ class CLI
 	 * Displays a progress bar on the CLI. You must call it repeatedly
 	 * to update it. Set $thisStep = false to erase the progress bar.
 	 *
-	 * @param integer $thisStep
-	 * @param integer $totalSteps
+	 * @param integer|boolean $thisStep
+	 * @param integer         $totalSteps
 	 */
 	public static function showProgress($thisStep = 1, int $totalSteps = 10)
 	{

@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniter\Config;
+
 
 /**
  * CodeIgniter
@@ -33,9 +33,11 @@ namespace CodeIgniter\Config;
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Config;
 
 /**
  * Class BaseConfig
@@ -55,8 +57,20 @@ class BaseConfig
 	 *
 	 * @var array
 	 */
-	public static $registrars      = [];
+	public static $registrars = [];
+
+	/**
+	 * Has module discovery happened yet?
+	 *
+	 * @var boolean
+	 */
 	protected static $didDiscovery = false;
+
+	/**
+	 * The modules configuration.
+	 *
+	 * @var type
+	 */
 	protected static $moduleConfig;
 
 	/**
@@ -179,8 +193,15 @@ class BaseConfig
 
 		if (! static::$didDiscovery)
 		{
-			$locator              = \Config\Services::locator();
-			static::$registrars   = $locator->search('Config/Registrar.php');
+			$locator         = \Config\Services::locator();
+			$registrarsFiles = $locator->search('Config/Registrar.php');
+
+			foreach ($registrarsFiles as $file)
+			{
+				$className            = $locator->getClassname($file);
+				static::$registrars[] = new $className();
+			}
+
 			static::$didDiscovery = true;
 		}
 

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Typography;
+<?php
 
 /**
  * CodeIgniter
@@ -32,9 +32,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Typography;
 
 /**
  * Typography Class
@@ -274,7 +276,7 @@ class Typography
 	 * to curly entities, but it also converts em-dashes,
 	 * double spaces, and ampersands
 	 *
-	 * @param  string
+	 * @param  string $str
 	 * @return string
 	 */
 	public function formatCharacters(string $str): string
@@ -331,7 +333,7 @@ class Typography
 	 *
 	 * Converts newline characters into either <p> tags or <br />
 	 *
-	 * @param  string
+	 * @param  string $str
 	 * @return string
 	 */
 	protected function formatNewLines(string $str): string
@@ -371,7 +373,7 @@ class Typography
 	 * and we don't want double dashes converted to emdash entities, so they are marked with {@DD}
 	 * likewise double spaces are converted to {@NBS} to prevent entity conversion
 	 *
-	 * @param  array
+	 * @param  array $match
 	 * @return string
 	 */
 	protected function protectCharacters(array $match): string
@@ -384,7 +386,7 @@ class Typography
 	/**
 	 * Convert newlines to HTML line breaks except within PRE tags
 	 *
-	 * @param  string
+	 * @param  string $str
 	 * @return string
 	 */
 	public function nl2brExceptPre(string $str): string

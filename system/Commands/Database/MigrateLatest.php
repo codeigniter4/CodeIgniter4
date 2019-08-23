@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Commands\Database;
+<?php
 
 /**
  * CodeIgniter
@@ -32,9 +32,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
@@ -142,7 +144,7 @@ class MigrateLatest extends BaseCommand
 	 * @param  array $params
 	 * @return boolean
 	 */
-	private function isAllNamespace(array $params)
+	private function isAllNamespace(array $params): bool
 	{
 		if (array_search('-all', $params) !== false)
 		{

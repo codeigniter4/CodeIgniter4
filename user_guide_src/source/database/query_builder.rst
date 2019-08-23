@@ -106,7 +106,7 @@ function::
 
 	$query = $builder->getWhere(['id' => $id], $limit, $offset);
 
-Please read about the where function below for more information.
+Please read about the `where` function below for more information.
 
 **$builder->select()**
 

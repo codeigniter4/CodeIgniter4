@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Session\Handlers;
+<?php
 
 /**
  * CodeIgniter
@@ -32,9 +32,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Session\Exceptions\SessionException;
 use CodeIgniter\Config\BaseConfig;
@@ -88,6 +90,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	 * Constructor
 	 *
 	 * @param BaseConfig $config
+	 * @param string     $ipAddress
 	 */
 	public function __construct(BaseConfig $config, string $ipAddress)
 	{
@@ -350,6 +353,12 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Lock the session.
+	 *
+	 * @param  string $sessionID
+	 * @return boolean
+	 */
 	protected function lockSession(string $sessionID): bool
 	{
 		if ($this->platform === 'mysql')

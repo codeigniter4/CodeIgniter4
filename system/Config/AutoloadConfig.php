@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Config;
+<?php
 
 /**
  * CodeIgniter
@@ -32,9 +32,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Config;
 
 /**
  * AUTO-LOADER
@@ -113,78 +115,15 @@ class AutoloadConfig
 		 *   ];
 		 */
 		$this->classmap = [
-			'CodeIgniter\CodeIgniter'                       => SYSTEMPATH . 'CodeIgniter.php',
-			'CodeIgniter\CLI\CLI'                           => SYSTEMPATH . 'CLI/CLI.php',
-			'CodeIgniter\Cache\CacheFactory'                => SYSTEMPATH . 'Cache/CacheFactory.php',
-			'CodeIgniter\Cache\CacheInterface'              => SYSTEMPATH . 'Cache/CacheInterface.php',
-			'CodeIgniter\Cache\Handlers\DummyHandler'       => SYSTEMPATH . 'Cache/Handlers/DummyHandler.php',
-			'CodeIgniter\Cache\Handlers\FileHandler'        => SYSTEMPATH . 'Cache/Handlers/FileHandler.php',
-			'CodeIgniter\Cache\Handlers\MemcachedHandler'   => SYSTEMPATH . 'Cache/Handlers/MemcachedHandler.php',
-			'CodeIgniter\Cache\Handlers\PredisHandler'      => SYSTEMPATH . 'Cache/Handlers/PredisHandler.php',
-			'CodeIgniter\Cache\Handlers\RedisHandler'       => SYSTEMPATH . 'Cache/Handlers/RedisHandler.php',
-			'CodeIgniter\Cache\Handlers\WincacheHandler'    => SYSTEMPATH . 'Cache/Handlers/WincacheHandler.php',
-			'CodeIgniter\Controller'                        => SYSTEMPATH . 'Controller.php',
-			'CodeIgniter\Config\AutoloadConfig'             => SYSTEMPATH . 'Config/Autoload.php',
-			'CodeIgniter\Config\BaseConfig'                 => SYSTEMPATH . 'Config/BaseConfig.php',
-			'CodeIgniter\Config\Database'                   => SYSTEMPATH . 'Config/Database.php',
-			'CodeIgniter\Config\Database\Connection'        => SYSTEMPATH . 'Config/Database/Connection.php',
-			'CodeIgniter\Config\Database\Connection\MySQLi' => SYSTEMPATH . 'Config/Database/Connection/MySQLi.php',
-			'CodeIgniter\Config\DotEnv'                     => SYSTEMPATH . 'Config/DotEnv.php',
-			'CodeIgniter\Database\BaseBuilder'              => SYSTEMPATH . 'Database/BaseBuilder.php',
-			'CodeIgniter\Database\BaseConnection'           => SYSTEMPATH . 'Database/BaseConnection.php',
-			'CodeIgniter\Database\BaseResult'               => SYSTEMPATH . 'Database/BaseResult.php',
-			'CodeIgniter\Database\Config'                   => SYSTEMPATH . 'Database/Config.php',
-			'CodeIgniter\Database\ConnectionInterface'      => SYSTEMPATH . 'Database/ConnectionInterface.php',
-			'CodeIgniter\Database\Database'                 => SYSTEMPATH . 'Database/Database.php',
-			'CodeIgniter\Database\Query'                    => SYSTEMPATH . 'Database/Query.php',
-			'CodeIgniter\Database\QueryInterface'           => SYSTEMPATH . 'Database/QueryInterface.php',
-			'CodeIgniter\Database\ResultInterface'          => SYSTEMPATH . 'Database/ResultInterface.php',
-			'CodeIgniter\Database\Migration'                => SYSTEMPATH . 'Database/Migration.php',
-			'CodeIgniter\Database\MigrationRunner'          => SYSTEMPATH . 'Database/MigrationRunner.php',
-			'CodeIgniter\Debug\Exceptions'                  => SYSTEMPATH . 'Debug/Exceptions.php',
-			'CodeIgniter\Debug\Timer'                       => SYSTEMPATH . 'Debug/Timer.php',
-			'CodeIgniter\Debug\Iterator'                    => SYSTEMPATH . 'Debug/Iterator.php',
-			'CodeIgniter\Events\Events'                     => SYSTEMPATH . 'Events/Events.php',
-			'CodeIgniter\HTTP\CLIRequest'                   => SYSTEMPATH . 'HTTP/CLIRequest.php',
-			'CodeIgniter\HTTP\ContentSecurityPolicy'        => SYSTEMPATH . 'HTTP/ContentSecurityPolicy.php',
-			'CodeIgniter\HTTP\CURLRequest'                  => SYSTEMPATH . 'HTTP/CURLRequest.php',
-			'CodeIgniter\HTTP\IncomingRequest'              => SYSTEMPATH . 'HTTP/IncomingRequest.php',
-			'CodeIgniter\HTTP\Message'                      => SYSTEMPATH . 'HTTP/Message.php',
-			'CodeIgniter\HTTP\Negotiate'                    => SYSTEMPATH . 'HTTP/Negotiate.php',
-			'CodeIgniter\HTTP\Request'                      => SYSTEMPATH . 'HTTP/Request.php',
-			'CodeIgniter\HTTP\RequestInterface'             => SYSTEMPATH . 'HTTP/RequestInterface.php',
-			'CodeIgniter\HTTP\Response'                     => SYSTEMPATH . 'HTTP/Response.php',
-			'CodeIgniter\HTTP\ResponseInterface'            => SYSTEMPATH . 'HTTP/ResponseInterface.php',
-			'CodeIgniter\HTTP\URI'                          => SYSTEMPATH . 'HTTP/URI.php',
-			'CodeIgniter\Log\Logger'                        => SYSTEMPATH . 'Log/Logger.php',
-			'Psr\Log\AbstractLogger'                        => SYSTEMPATH . 'ThirdParty/PSR/Log/AbstractLogger.php',
-			'Psr\Log\InvalidArgumentException'              => SYSTEMPATH . 'ThirdParty/PSR/Log/InvalidArgumentException.php',
-			'Psr\Log\LoggerAwareInterface'                  => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerAwareInterface.php',
-			'Psr\Log\LoggerAwareTrait'                      => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerAwareTrait.php',
-			'Psr\Log\LoggerInterface'                       => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerInterface.php',
-			'Psr\Log\LoggerTrait'                           => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerTrait.php',
-			'Psr\Log\LogLevel'                              => SYSTEMPATH . 'ThirdParty/PSR/Log/LogLevel.php',
-			'Psr\Log\NullLogger'                            => SYSTEMPATH . 'ThirdParty/PSR/Log/NullLogger.php',
-			'CodeIgniter\Log\Handlers\BaseHandler'          => SYSTEMPATH . 'Log/Handlers/BaseHandler.php',
-			'CodeIgniter\Log\Handlers\ChromeLoggerHandler'  => SYSTEMPATH . 'Log/Handlers/ChromeLoggerHandler.php',
-			'CodeIgniter\Log\Handlers\FileHandler'          => SYSTEMPATH . 'Log/Handlers/FileHandler.php',
-			'CodeIgniter\Log\Handlers\HandlerInterface'     => SYSTEMPATH . 'Log/Handlers/HandlerInterface.php',
-			'CodeIgniter\Router\RouteCollection'            => SYSTEMPATH . 'Router/RouteCollection.php',
-			'CodeIgniter\Router\RouteCollectionInterface'   => SYSTEMPATH . 'Router/RouteCollectionInterface.php',
-			'CodeIgniter\Router\Router'                     => SYSTEMPATH . 'Router/Router.php',
-			'CodeIgniter\Router\RouterInterface'            => SYSTEMPATH . 'Router/RouterInterface.php',
-			'CodeIgniter\Security\Security'                 => SYSTEMPATH . 'Security/Security.php',
-			'CodeIgniter\Session\Session'                   => SYSTEMPATH . 'Session/Session.php',
-			'CodeIgniter\Session\SessionInterface'          => SYSTEMPATH . 'Session/SessionInterface.php',
-			'CodeIgniter\Session\Handlers\BaseHandler'      => SYSTEMPATH . 'Session/Handlers/BaseHandler.php',
-			'CodeIgniter\Session\Handlers\FileHandler'      => SYSTEMPATH . 'Session/Handlers/FileHandler.php',
-			'CodeIgniter\Session\Handlers\MemcachedHandler' => SYSTEMPATH . 'Session/Handlers/MemcachedHandler.php',
-			'CodeIgniter\Session\Handlers\RedisHandler'     => SYSTEMPATH . 'Session/Handlers/RedisHandler.php',
-			'CodeIgniter\View\RendererInterface'            => SYSTEMPATH . 'View/RendererInterface.php',
-			'CodeIgniter\View\View'                         => SYSTEMPATH . 'View/View.php',
-			'CodeIgniter\View\Parser'                       => SYSTEMPATH . 'View/Parser.php',
-			'CodeIgniter\View\Cell'                         => SYSTEMPATH . 'View/Cell.php',
-			'Zend\Escaper\Escaper'                          => SYSTEMPATH . 'ThirdParty/ZendEscaper/Escaper.php',
+			'Psr\Log\AbstractLogger'           => SYSTEMPATH . 'ThirdParty/PSR/Log/AbstractLogger.php',
+			'Psr\Log\InvalidArgumentException' => SYSTEMPATH . 'ThirdParty/PSR/Log/InvalidArgumentException.php',
+			'Psr\Log\LoggerAwareInterface'     => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerAwareInterface.php',
+			'Psr\Log\LoggerAwareTrait'         => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerAwareTrait.php',
+			'Psr\Log\LoggerInterface'          => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerInterface.php',
+			'Psr\Log\LoggerTrait'              => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerTrait.php',
+			'Psr\Log\LogLevel'                 => SYSTEMPATH . 'ThirdParty/PSR/Log/LogLevel.php',
+			'Psr\Log\NullLogger'               => SYSTEMPATH . 'ThirdParty/PSR/Log/NullLogger.php',
+			'Zend\Escaper\Escaper'             => SYSTEMPATH . 'ThirdParty/ZendEscaper/Escaper.php',
 		];
 
 		if (isset($_SERVER['CI_ENVIRONMENT']) && $_SERVER['CI_ENVIRONMENT'] === 'testing')

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Router;
+<?php
 
 /**
  * CodeIgniter
@@ -32,12 +32,16 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
+namespace CodeIgniter\Router;
+
+use CodeIgniter\HTTP\Request;
+
 /**
- * Expected behaviour of a Router.
+ * Expected behavior of a Router.
  */
 interface RouterInterface
 {
@@ -45,9 +49,10 @@ interface RouterInterface
 	/**
 	 * Stores a reference to the RouteCollection object.
 	 *
-	 * @param RouteCollectionInterface $routes
+	 * @param RouteCollectionInterface  $routes
+	 * @param \CodeIgniter\HTTP\Request $request
 	 */
-	public function __construct(RouteCollectionInterface $routes);
+	public function __construct(RouteCollectionInterface $routes, Request $request = null);
 
 	//--------------------------------------------------------------------
 

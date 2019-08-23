@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Debug\Toolbar\Collectors;
+<?php
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 /**
  * History collector
@@ -81,6 +83,8 @@ class History extends BaseCollector
 	//--------------------------------------------------------------------
 
 	/**
+	 * Specify time limit & file count for debug history.
+	 *
 	 * @param integer $current Current history time
 	 * @param integer $limit   Max history files
 	 */
@@ -106,10 +110,10 @@ class History extends BaseCollector
 			$contents = file_get_contents($filename);
 
 			$contents = @json_decode($contents);
-			if(json_last_error() === JSON_ERROR_NONE)
+			if (json_last_error() === JSON_ERROR_NONE)
 			{
 				preg_match_all('/\d+/', $filename, $time);
-				$time = (int)$time[0][0];
+				$time = (int)end($time[0]);
 
 				// Debugbar files shown in History Collector
 				$files[] = [
@@ -152,6 +156,11 @@ class History extends BaseCollector
 		return count($this->files);
 	}
 
+	/**
+	 * Return true if there are no history files.
+	 *
+	 * @return boolean
+	 */
 	public function isEmpty(): bool
 	{
 		return empty($this->files);

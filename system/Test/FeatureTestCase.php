@@ -1,4 +1,41 @@
-<?php namespace CodeIgniter\Test;
+<?php
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 4.0.0
+ * @filesource
+ */
+
+namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\Request;
@@ -18,6 +55,7 @@ use Config\Services;
  */
 class FeatureTestCase extends CIDatabaseTestCase
 {
+
 	/**
 	 * If present, will override application
 	 * routes when using call().
@@ -45,16 +83,22 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * Sets a RouteCollection that will override
 	 * the application's route collection.
 	 *
+	 * Example routes:
+	 * [
+	 *    ['get', 'home', 'Home::index']
+	 * ]
+	 *
 	 * @param array $routes
 	 *
 	 * @return $this
 	 */
 	protected function withRoutes(array $routes = null)
 	{
-		$collection = \Config\Services::routes();
+		$collection = Services::routes();
 
 		if ($routes)
 		{
+			$collection->resetRoutes();
 			foreach ($routes as $route)
 			{
 				$collection->{$route[0]}($route[1], $route[2]);
@@ -101,29 +145,42 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null $params
 	 *
 	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 * @throws \Exception
 	 */
 	public function call(string $method, string $path, array $params = null)
 	{
 		// Simulate having a blank session
-		$_SESSION = [];
+		$_SESSION                  = [];
+		$_SERVER['REQUEST_METHOD'] = $method;
 
 		$request = $this->setupRequest($method, $path, $params);
 		$request = $this->populateGlobals($method, $request, $params);
 
+		// Make sure the RouteCollection knows what method we're using...
+		if (! empty($this->routes))
+		{
+			$this->routes->setHTTPVerb($method);
+		}
+
 		// Make sure any other classes that might call the request
 		// instance get the right one.
 		Services::injectMock('request', $request);
-		$_SERVER['REQUEST_METHOD'] = $method;
 
 		$response = $this->app
-			->setRequest($request)
-			->run($this->routes, true);
+				->setRequest($request)
+				->run($this->routes, true);
+
+		$output = ob_get_contents();
+		if (empty($response->getBody()) && ! empty($output))
+		{
+			$response->setBody($output);
+		}
 
 		// Clean up any open output buffers
 		// not relevant to unit testing
 		// @codeCoverageIgnoreStart
+
 		if (ob_get_level() > 0 && $this->clean)
 		{
 			ob_end_clean();
@@ -142,7 +199,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null $params
 	 *
 	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 * @throws \Exception
 	 */
 	public function get(string $path, array $params = null)
@@ -157,7 +214,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null $params
 	 *
 	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 * @throws \Exception
 	 */
 	public function post(string $path, array $params = null)
@@ -172,7 +229,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null $params
 	 *
 	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 * @throws \Exception
 	 */
 	public function put(string $path, array $params = null)
@@ -187,7 +244,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null $params
 	 *
 	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 * @throws \Exception
 	 */
 	public function patch(string $path, array $params = null)
@@ -202,7 +259,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null $params
 	 *
 	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 * @throws \Exception
 	 */
 	public function delete(string $path, array $params = null)
@@ -217,7 +274,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null $params
 	 *
 	 * @return \CodeIgniter\Test\FeatureResponse
-	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 * @throws \Exception
 	 */
 	public function options(string $path, array $params = null)
@@ -260,6 +317,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 * @param array|null                $params
 	 *
 	 * @return \CodeIgniter\HTTP\Request
+	 * @throws \ReflectionException
 	 */
 	protected function populateGlobals(string $method, Request $request, array $params = null)
 	{
@@ -273,4 +331,5 @@ class FeatureTestCase extends CIDatabaseTestCase
 
 		return $request;
 	}
+
 }

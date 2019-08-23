@@ -32,7 +32,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
 
@@ -95,10 +95,10 @@ class RedisHandlerTest extends \CIUnitTestCase
 		$this->redisHandler->save(self::$key1, 'value', 1);
 
 		$this->assertSame('value', $this->redisHandler->get(self::$key1));
-		$this->assertFalse($this->redisHandler->get(self::$dummy));
+		$this->assertNull($this->redisHandler->get(self::$dummy));
 
 		\CodeIgniter\CLI\CLI::wait(2);
-		$this->assertFalse($this->redisHandler->get(self::$key1));
+		$this->assertNull($this->redisHandler->get(self::$key1));
 	}
 
 	public function testSave()
@@ -143,7 +143,7 @@ class RedisHandlerTest extends \CIUnitTestCase
 		$time = time();
 		$this->redisHandler->save(self::$key1, 'value');
 
-		$this->assertFalse($this->redisHandler->getMetaData(self::$dummy));
+		$this->assertNull($this->redisHandler->getMetaData(self::$dummy));
 
 		$actual = $this->redisHandler->getMetaData(self::$key1);
 		$this->assertLessThanOrEqual(60, $actual['expire'] - $time);

@@ -94,6 +94,24 @@ The database connection and the database Forge class are both available to you t
 Alternatively, you can use a command-line call to generate a skeleton migration file. See
 below for more details.
 
+Foreign Keys
+============
+
+When your tables include Foreign Keys, migrations can often cause problems as you attempt to drop tables and columns.
+To temporarily bypass the foreign key checks while running migrations, use the ``disableForeignKeyConstraints()`` and
+``enableForeignKeyConstraints()`` methods on the database connection.
+
+::
+
+    public function up()
+    {
+        $this->db->disableForeignKeyConstraints();
+
+        // Migration rules would go here...
+
+        $this->db->enableForeignKeyConstraints();
+    }
+
 Using $currentVersion
 =====================
 
@@ -291,7 +309,7 @@ The following is a table of all the config options for migrations, available in 
 ========================== ====================== ========================== =============================================================
 Preference                 Default                Options                    Description
 ========================== ====================== ========================== =============================================================
-**enabled**                FALSE                  TRUE / FALSE               Enable or disable migrations.
+**enabled**                TRUE                   TRUE / FALSE               Enable or disable migrations.
 **path**                   'Database/Migrations/' None                       The path to your migrations folder.
 **currentVersion**         0                      None                       The current version your database should use.
 **table**                  migrations             None                       The table name for storing the schema version number.

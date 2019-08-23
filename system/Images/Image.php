@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Images;
+<?php
 
 /**
  * CodeIgniter
@@ -32,13 +32,18 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Images;
 
 use CodeIgniter\Files\File;
 use CodeIgniter\Images\Exceptions\ImageException;
 
+/**
+ * Encapsulation of an Image file
+ */
 class Image extends File
 {
 
@@ -90,7 +95,7 @@ class Image extends File
 	 *
 	 * @return boolean
 	 */
-	public function copy(string $targetPath, string $targetName = null, int $perms = 0644)
+	public function copy(string $targetPath, string $targetName = null, int $perms = 0644): bool
 	{
 		$targetPath = rtrim($targetPath, '/ ') . '/';
 
@@ -127,7 +132,7 @@ class Image extends File
 	 *
 	 * @return mixed
 	 */
-	public function getProperties($return = false)
+	public function getProperties(bool $return = false)
 	{
 		$path = $this->getPathname();
 

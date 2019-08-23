@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Log;
+<?php
 
 /**
  * CodeIgniter
@@ -32,9 +32,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Log;
 
 use Psr\Log\LoggerInterface;
 use CodeIgniter\Log\Exceptions\LogException;
@@ -196,7 +198,7 @@ class Logger implements LoggerInterface
 	 *
 	 * @return boolean
 	 */
-	public function emergency($message, array $context = [])
+	public function emergency($message, array $context = []): bool
 	{
 		return $this->log('emergency', $message, $context);
 	}
@@ -214,7 +216,7 @@ class Logger implements LoggerInterface
 	 *
 	 * @return boolean
 	 */
-	public function alert($message, array $context = [])
+	public function alert($message, array $context = []): bool
 	{
 		return $this->log('alert', $message, $context);
 	}
@@ -231,7 +233,7 @@ class Logger implements LoggerInterface
 	 *
 	 * @return boolean
 	 */
-	public function critical($message, array $context = [])
+	public function critical($message, array $context = []): bool
 	{
 		return $this->log('critical', $message, $context);
 	}
@@ -247,7 +249,7 @@ class Logger implements LoggerInterface
 	 *
 	 * @return boolean
 	 */
-	public function error($message, array $context = [])
+	public function error($message, array $context = []): bool
 	{
 		return $this->log('error', $message, $context);
 	}
@@ -265,7 +267,7 @@ class Logger implements LoggerInterface
 	 *
 	 * @return boolean
 	 */
-	public function warning($message, array $context = [])
+	public function warning($message, array $context = []): bool
 	{
 		return $this->log('warning', $message, $context);
 	}
@@ -280,7 +282,7 @@ class Logger implements LoggerInterface
 	 *
 	 * @return boolean
 	 */
-	public function notice($message, array $context = [])
+	public function notice($message, array $context = []): bool
 	{
 		return $this->log('notice', $message, $context);
 	}
@@ -297,7 +299,7 @@ class Logger implements LoggerInterface
 	 *
 	 * @return boolean
 	 */
-	public function info($message, array $context = [])
+	public function info($message, array $context = []): bool
 	{
 		return $this->log('info', $message, $context);
 	}
@@ -312,7 +314,7 @@ class Logger implements LoggerInterface
 	 *
 	 * @return boolean
 	 */
-	public function debug($message, array $context = [])
+	public function debug($message, array $context = []): bool
 	{
 		return $this->log('debug', $message, $context);
 	}
@@ -405,10 +407,10 @@ class Logger implements LoggerInterface
 	 * {file}
 	 * {line}
 	 *
-	 * @param $message
-	 * @param array   $context
+	 * @param mixed $message
+	 * @param array $context
 	 *
-	 * @return string
+	 * @return mixed
 	 */
 	protected function interpolate($message, array $context = [])
 	{
@@ -479,7 +481,7 @@ class Logger implements LoggerInterface
 	 *
 	 * @return array
 	 */
-	public function determineFile()
+	public function determineFile(): array
 	{
 		// Determine the file and line by finding the first
 		// backtrace that is not part of our logging system.
@@ -517,9 +519,9 @@ class Logger implements LoggerInterface
 	 *
 	 * @param $file
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	protected function cleanFileNames($file)
+	protected function cleanFileNames(string $file): string
 	{
 		$file = str_replace(APPPATH, 'APPPATH/', $file);
 		$file = str_replace(SYSTEMPATH, 'SYSTEMPATH/', $file);

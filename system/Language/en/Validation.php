@@ -8,7 +8,7 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  *
  * @codeCoverageIgnore
@@ -30,6 +30,7 @@ return [
    'alpha_space'           => 'The {field} field may only contain alphabetical characters and spaces.',
    'decimal'               => 'The {field} field must contain a decimal number.',
    'differs'               => 'The {field} field must differ from the {param} field.',
+   'equals'                => 'The {field} field must be exactly: {param}.',
    'exact_length'          => 'The {field} field must be exactly {param} characters in length.',
    'greater_than'          => 'The {field} field must contain a number greater than {param}.',
    'greater_than_equal_to' => 'The {field} field must contain a number greater than or equal to {param}.',
@@ -43,6 +44,7 @@ return [
    'matches'               => 'The {field} field does not match the {param} field.',
    'max_length'            => 'The {field} field cannot exceed {param} characters in length.',
    'min_length'            => 'The {field} field must be at least {param} characters in length.',
+   'not_equals'            => 'The {field} field cannot be: {param}.',
    'numeric'               => 'The {field} field must contain only numbers.',
    'regex_match'           => 'The {field} field is not in the correct format.',
    'required'              => 'The {field} field is required.',

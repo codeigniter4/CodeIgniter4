@@ -1,6 +1,5 @@
 <?php
 
-namespace CodeIgniter\HTTP;
 
 /**
  * CodeIgniter
@@ -34,9 +33,11 @@ namespace CodeIgniter\HTTP;
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\FileCollection;
@@ -126,6 +127,8 @@ class IncomingRequest extends Request
 	protected $validLocales = [];
 
 	/**
+	 * Configuration settings.
+	 *
 	 * @var \Config\App
 	 */
 	public $config;
@@ -138,6 +141,8 @@ class IncomingRequest extends Request
 	protected $oldInput = [];
 
 	/**
+	 * The user agent this request is from.
+	 *
 	 * @var \CodeIgniter\HTTP\UserAgent
 	 */
 	protected $userAgent;
@@ -148,11 +153,11 @@ class IncomingRequest extends Request
 	 * Constructor
 	 *
 	 * @param object                      $config
-	 * @param URI                         $uri
-	 * @param string                      $body
+	 * @param \CodeIgniter\HTTP\URI       $uri
+	 * @param string|null                 $body
 	 * @param \CodeIgniter\HTTP\UserAgent $userAgent
 	 */
-	public function __construct($config, $uri = null, $body = 'php://input', UserAgent $userAgent)
+	public function __construct($config, URI $uri = null, $body = 'php://input', UserAgent $userAgent)
 	{
 		// Get our body from php://input
 		if ($body === 'php://input')
@@ -320,9 +325,9 @@ class IncomingRequest extends Request
 	 * to grab data from the request object and can be used in lieu of the
 	 * other get* methods in most cases.
 	 *
-	 * @param null $index
-	 * @param null $filter
-	 * @param null $flags
+	 * @param string|array|null $index
+	 * @param integer|null      $filter Filter constant
+	 * @param mixed             $flags
 	 *
 	 * @return mixed
 	 */
@@ -530,7 +535,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return array
 	 */
-	public function getFiles()
+	public function getFiles(): array
 	{
 		if (is_null($this->files))
 		{

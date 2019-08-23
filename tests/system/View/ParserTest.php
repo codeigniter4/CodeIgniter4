@@ -288,12 +288,13 @@ class ParserTest extends \CIUnitTestCase
 	{
 		$power = new class extends \CodeIgniter\Entity
 		{
-
-			public $foo     = 'bar';
-			protected $bar  = 'baz';
-			protected $obj1 = null;
-			protected $obj2 = null;
-			public $bobbles = [];
+			protected $attributes = [
+				'foo'     => 'bar',
+				'bar'     => 'baz',
+				'obj1'    => null,
+				'obj2'    => null,
+				'bobbles' => [],
+			];
 
 			public function __construct()
 			{
@@ -742,6 +743,25 @@ class ParserTest extends \CIUnitTestCase
 		$template = '{+ hit:it +} stuff here {+ /hit:it +}';
 
 		$this->assertEquals(' stuff Hip to the Hop ', $parser->renderString($template));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group parserplugins
+	 */
+	public function testParserPluginClosure()
+	{
+		$config                   = $this->config;
+		$config->plugins['hello'] = function (array $params = []) {
+			return 'Hello, ' . trim($params[0]);
+		};
+
+		$parser = new Parser($config, $this->viewsDir, $this->loader);
+
+		$template = '{+ hello world +}';
+
+		$this->assertEquals('Hello, world', $parser->renderString($template));
 	}
 
 	//--------------------------------------------------------------------

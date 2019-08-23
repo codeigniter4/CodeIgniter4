@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Database\Postgre;
+<?php
 
 /**
  * CodeIgniter
@@ -32,9 +32,11 @@
  * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
- * @since      Version 3.0.0
+ * @since      Version 4.0.0
  * @filesource
  */
+
+namespace CodeIgniter\Database\Postgre;
 
 /**
  * Forge for Postgre
@@ -81,7 +83,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param  array $attributes Associative array of table attributes
 	 * @return string
 	 */
-	protected function _createTableAttributes($attributes)
+	protected function _createTableAttributes(array $attributes): string
 	{
 		return '';
 	}
@@ -97,7 +99,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @return string|array
 	 */
-	protected function _alterTable($alter_type, $table, $field)
+	protected function _alterTable(string $alter_type, string $table, $field)
 	{
 		if (in_array($alter_type, ['DROP', 'ADD'], true))
 		{
@@ -156,7 +158,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param  array $field
 	 * @return string
 	 */
-	protected function _processColumn($field)
+	protected function _processColumn(array $field): string
 	{
 		return $this->db->escapeIdentifiers($field['name'])
 				. ' ' . $field['type'] . $field['length']
@@ -177,7 +179,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @return void
 	 */
-	protected function _attributeType(&$attributes)
+	protected function _attributeType(array &$attributes)
 	{
 		// Reset field lengths for data types that don't support it
 		if (isset($attributes['CONSTRAINT']) && stripos($attributes['TYPE'], 'int') !== false)
@@ -190,15 +192,16 @@ class Forge extends \CodeIgniter\Database\Forge
 			case 'TINYINT':
 				$attributes['TYPE']     = 'SMALLINT';
 				$attributes['UNSIGNED'] = false;
-				return;
+				break;
 			case 'MEDIUMINT':
 				$attributes['TYPE']     = 'INTEGER';
 				$attributes['UNSIGNED'] = false;
-				return;
+				break;
 			case 'DATETIME':
 				$attributes['TYPE'] = 'TIMESTAMP';
+				break;
 			default:
-				return;
+				break;
 		}
 	}
 
@@ -212,7 +215,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @return void
 	 */
-	protected function _attributeAutoIncrement(&$attributes, &$field)
+	protected function _attributeAutoIncrement(array &$attributes, array &$field)
 	{
 		if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true)
 		{
@@ -233,7 +236,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @return string
 	 */
-	protected function _dropTable($table, $if_exists, $cascade)
+	protected function _dropTable(string $table, bool $if_exists, bool $cascade): string
 	{
 		$sql = parent::_dropTable($table, $if_exists, $cascade);
 
