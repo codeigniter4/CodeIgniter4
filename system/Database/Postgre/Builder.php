@@ -39,6 +39,7 @@ namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use http\Encoding\Stream\Inflate;
 
 /**
  * Builder for Postgre
@@ -178,7 +179,7 @@ class Builder extends BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _insertBatch($table, $keys, $values)
+	protected function _insertBatch(string $table, array $keys, array $values) : string
 	{
 		return 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values) . $this->compileIgnore('insert');
 	}
@@ -196,7 +197,7 @@ class Builder extends BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _insert($table, array $keys, array $unescapedKeys)
+	protected function _insert(string $table, array $keys, array $unescapedKeys) : string
 	{
 		return 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $unescapedKeys) . ')' . $this->compileIgnore('insert');
 	}
