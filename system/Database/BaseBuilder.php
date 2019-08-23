@@ -384,7 +384,29 @@ class BaseBuilder
 	//--------------------------------------------------------------------
 
 	/**
-	 * SELECT [MAX|MIN|AVG|SUM]()
+	 * Select Count
+	 *
+	 * Generates a SELECT COUNT(field) portion of a query
+	 *
+	 * @param string $select The field, or * for all
+	 * @param string $alias  An alias
+	 *
+	 * @return BaseBuilder
+	 */
+	public function selectCount(string $select = '*', string $alias = '')
+	{
+		// Force an alias on "all" queries
+		if ($select == '*' && $alias == '')
+		{
+			$alias = 'count';
+		}
+		return $this->maxMinAvgSum($select, $alias, 'COUNT');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * SELECT [MAX|MIN|AVG|SUM|COUNT]()
 	 *
 	 * @used-by selectMax()
 	 * @used-by selectMin()
@@ -413,7 +435,7 @@ class BaseBuilder
 
 		$type = strtoupper($type);
 
-		if (! in_array($type, ['MAX', 'MIN', 'AVG', 'SUM']))
+		if (! in_array($type, ['MAX', 'MIN', 'AVG', 'SUM', 'COUNT']))
 		{
 			throw new DatabaseException('Invalid function type: ' . $type);
 		}
