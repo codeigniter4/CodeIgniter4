@@ -388,18 +388,13 @@ class BaseBuilder
 	 *
 	 * Generates a SELECT COUNT(field) portion of a query
 	 *
-	 * @param string $select The field, or * for all
+	 * @param string $select The field
 	 * @param string $alias  An alias
 	 *
 	 * @return BaseBuilder
 	 */
-	public function selectCount(string $select = '*', string $alias = '')
+	public function selectCount(string $select = '', string $alias = '')
 	{
-		// Force an alias on "all" queries
-		if ($select == '*' && $alias == '')
-		{
-			$alias = 'count';
-		}
 		return $this->maxMinAvgSum($select, $alias, 'COUNT');
 	}
 
