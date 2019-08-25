@@ -131,6 +131,6 @@ class GroupTest extends CIDatabaseTestCase
 				->get()
 				->getResult();
 
-		$this->assertEquals(3, $result->count);
+		$this->assertEquals(3, $result[0]->count);
 	}
 }
