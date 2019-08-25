@@ -1,6 +1,6 @@
-************************
-Replace Common Functions
-************************
+**************************
+Replacing Common Functions
+**************************
 
 There a quite a few functions necessary to CodeIgniter that need to be loaded early for use in the core classes and
 thus cannot be placed into a helper. While most users will never have any need to do this, but the option to replace
