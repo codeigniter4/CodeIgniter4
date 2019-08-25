@@ -199,19 +199,6 @@ class SelectTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testSelectCountWithNoParameter()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
-
-		$builder->selectCount();
-
-		$expected = 'SELECT COUNT("*") AS "count" FROM "invoices"';
-
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
-
-	//--------------------------------------------------------------------
-
 	public function testSelectCountWithNoAlias()
 	{
 		$builder = new BaseBuilder('invoices', $this->db);
