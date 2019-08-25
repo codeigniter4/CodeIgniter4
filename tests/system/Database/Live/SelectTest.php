@@ -118,15 +118,6 @@ class SelectTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testSelectCountNoColumn()
-	{
-		$result = $this->db->table('job')->selectCount()->get()->getRow();
-
-		$this->assertEquals(4, $result->count);
-	}
-
-	//--------------------------------------------------------------------
-
 	public function testSelectCount()
 	{
 		$result = $this->db->table('job')->selectCount('id')->get()->getRow();
@@ -138,7 +129,7 @@ class SelectTest extends CIDatabaseTestCase
 
 	public function testSelectCountWithAlias()
 	{
-		$result = $this->db->table('job')->selectSum('id', 'xam')->get()->getRow();
+		$result = $this->db->table('job')->selectCount('id', 'xam')->get()->getRow();
 
 		$this->assertEquals(4, $result->xam);
 	}
