@@ -126,7 +126,7 @@ class GroupTest extends CIDatabaseTestCase
 	public function testGroupByCount()
 	{
 		$result = $this->db->table('user')
-				->selectCount('id')
+				->selectCount('id', 'count')
 				->groupBy('country')
 				->get()
 				->getResult();
