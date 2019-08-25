@@ -181,8 +181,7 @@ the resulting field.
 
 Writes a "SELECT COUNT(field)" portion for your query. As with
 selectMax(), You can optionally include a second parameter to rename
-the resulting field. If no field is provided '*' will be used and the result
-will be aliased to 'count'.
+the resulting field.
 
 .. note:: This method is particularly helpful when used with ``groupBy()``. For
 counting results generally see ``countAll()`` or ``countAllResults()``.
