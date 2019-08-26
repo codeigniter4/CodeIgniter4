@@ -160,17 +160,18 @@ class MigrateStatus extends BaseCommand
 
 			CLI::write('  ' . str_pad(lang('Migrations.filename'), $max + 4) . lang('Migrations.on'), 'yellow');
 
-			foreach ($migrations as $version => $migration)
+			foreach ($migrations as $uid => $migration)
 			{
 				$date = '';
 				foreach ($history as $row)
 				{
-					if ($row['version'] !== $version)
+
+					if ($runner->getObjectUid($row) !== $uid)
 					{
 						continue;
 					}
 
-					$date = date('Y-m-d H:i:s', $row['time']);
+					$date = date('Y-m-d H:i:s', $row->time);
 				}
 				CLI::write(str_pad('  ' . $migration->name, $max + 6) . ($date ? $date : '---'));
 			}

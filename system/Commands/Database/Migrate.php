@@ -43,11 +43,11 @@ use CodeIgniter\CLI\CLI;
 use Config\Services;
 
 /**
- * Creates a new migration file.
+ * Runs all new migrations.
  *
  * @package CodeIgniter\Commands
  */
-class MigrateLatest extends BaseCommand
+class Migrate extends BaseCommand
 {
 	/**
 	 * The group the command is lumped under
@@ -69,7 +69,7 @@ class MigrateLatest extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $description = 'Migrates the database to the latest schema.';
+	protected $description = 'Locates and runs all new migrations against the database.';
 
 	/**
 	 * the Command's usage
@@ -93,7 +93,7 @@ class MigrateLatest extends BaseCommand
 	protected $options = [
 		'-n'   => 'Set migration namespace',
 		'-g'   => 'Set database group',
-		'-all' => 'Set latest for all namespace, will ignore (-n) option',
+		'-all' => 'Set for all namespaces, will ignore (-n) option',
 	];
 
 	/**
@@ -104,22 +104,31 @@ class MigrateLatest extends BaseCommand
 	public function run(array $params = [])
 	{
 		$runner = Services::migrations();
+		$runner->clearCliMessages();
 
-		CLI::write(lang('Migrations.toLatest'), 'yellow');
+		CLI::write(lang('Migrations.latest'), 'yellow');
 
 		$namespace = $params['-n'] ?? CLI::getOption('n');
 		$group     = $params['-g'] ?? CLI::getOption('g');
 
 		try
 		{
+			// Check for 'all' namespaces
 			if ($this->isAllNamespace($params))
 			{
-				$runner->latestAll($group);
+				$runner->setNamespace(null);
 			}
-			else
+			// Check for a specified namespace
+			elseif ($namespace)
 			{
-				$runner->latest($namespace, $group);
+				$runner->setNamespace($namespace);
 			}
+
+			if (! $runner->latest($group))
+			{
+				CLI::write(lang('Migrations.generalFault'), 'red');
+			}
+
 			$messages = $runner->getCliMessages();
 			foreach ($messages as $message)
 			{

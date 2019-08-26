@@ -1,4 +1,4 @@
-<?php namespace App\Database\Migrations;
+<?php namespace Tests\Support\MigrationTestMigrations\Database\Migrations;
 
 class Migration_another_migration extends \CodeIgniter\Database\Migration
 {
