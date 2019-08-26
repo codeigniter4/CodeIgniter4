@@ -128,9 +128,10 @@ class GroupTest extends CIDatabaseTestCase
 		$result = $this->db->table('user')
 				->selectCount('id', 'count')
 				->groupBy('country')
+				->orderBy('country', 'desc')
 				->get()
 				->getResult();
 
-		$this->assertEquals(3, $result[0]->count);
+		$this->assertEquals(2, $result[0]->count);
 	}
 }
