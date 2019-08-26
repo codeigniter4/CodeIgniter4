@@ -177,6 +177,20 @@ the resulting field.
 	$builder->selectSum('age');
 	$query = $builder->get(); // Produces: SELECT SUM(age) as age FROM mytable
 
+**$builder->selectCount()**
+
+Writes a "SELECT COUNT(field)" portion for your query. As with
+selectMax(), You can optionally include a second parameter to rename
+the resulting field.
+
+.. note:: This method is particularly helpful when used with ``groupBy()``. For
+counting results generally see ``countAll()`` or ``countAllResults()``.
+
+::
+
+	$builder->selectSum('age');
+	$query = $builder->get(); // Produces: SELECT SUM(age) as age FROM mytable
+
 **$builder->from()**
 
 Permits you to write the FROM portion of your query::

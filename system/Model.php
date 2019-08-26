@@ -48,6 +48,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Validation\ValidationInterface;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use ReflectionClass;
 use ReflectionProperty;
 use stdClass;
@@ -714,13 +715,13 @@ class Model
 		$result = $this->builder()
 				->set($data['data'], '', $escape)
 				->insert();
-		
+
 		// If insertion succeeded then save the insert ID
 		if ($result)
 		{
 			$this->insertID = $this->db->insertID();
 		}
-		
+
 		$this->trigger('afterInsert', ['data' => $originalData, 'result' => $result]);
 
 		// If insertion failed, get out of here
@@ -913,6 +914,14 @@ class Model
 
 		if ($this->useSoftDeletes && ! $purge)
 		{
+			if (empty($builder->getCompiledQBWhere()))
+			{
+				if (CI_DEBUG)
+				{
+					throw new DatabaseException('Deletes are not allowed unless they contain a "where" or "like" clause.');
+				}
+				return false;
+			}
 			$set[$this->deletedField] = $this->setDate();
 
 			if ($this->useTimestamps && ! empty($this->updatedField))
@@ -948,8 +957,8 @@ class Model
 		}
 
 		return $this->builder()
-			    ->where($this->table . '.' . $this->deletedField . ' IS NOT NULL')
-			    ->delete();
+				->where($this->table . '.' . $this->deletedField . ' IS NOT NULL')
+				->delete();
 	}
 
 	//--------------------------------------------------------------------
@@ -982,7 +991,7 @@ class Model
 		$this->tempUseSoftDeletes = false;
 
 		$this->builder()
-		     ->where($this->table . '.' . $this->deletedField . ' IS NOT NULL');
+			 ->where($this->table . '.' . $this->deletedField . ' IS NOT NULL');
 
 		return $this;
 	}

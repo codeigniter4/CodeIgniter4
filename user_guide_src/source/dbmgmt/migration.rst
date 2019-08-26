@@ -259,7 +259,7 @@ Preference                 Default                Options                    Des
 **enabled**                TRUE                   TRUE / FALSE               Enable or disable migrations.
 **path**                   'Database/Migrations/' None                       The path to your migrations folder.
 **table**                  migrations             None                       The table name for storing the schema version number.
-**timestampFormat**        'Y-m-d-His_'                                      The format to use for timestamps when creating a migration.
+**timestampFormat**        Y-m-d-His\_                                        The format to use for timestamps when creating a migration.
 ========================== ====================== ========================== =============================================================
 
 ***************

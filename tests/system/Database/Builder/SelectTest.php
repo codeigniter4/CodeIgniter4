@@ -199,6 +199,32 @@ class SelectTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testSelectCountWithNoAlias()
+	{
+		$builder = new BaseBuilder('invoices', $this->db);
+
+		$builder->selectCount('payments');
+
+		$expected = 'SELECT COUNT("payments") AS "payments" FROM "invoices"';
+
+		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSelectCountWithAlias()
+	{
+		$builder = new BaseBuilder('invoices', $this->db);
+
+		$builder->selectCount('payments', 'myAlias');
+
+		$expected = 'SELECT COUNT("payments") AS "myAlias" FROM "invoices"';
+
+		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testSelectMinThrowsExceptionOnEmptyValue()
 	{
 		$builder = new BaseBuilder('invoices', $this->db);
