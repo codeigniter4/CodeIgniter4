@@ -168,7 +168,7 @@ class MigrationRunner
 	 *
 	 * @param string|null $group
 	 */
-	public function progress(string $group = null)
+	public function latest(string $group = null)
 	{
 		if (! $this->enabled)
 		{

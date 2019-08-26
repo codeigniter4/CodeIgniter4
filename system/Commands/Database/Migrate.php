@@ -105,8 +105,8 @@ class Migrate extends BaseCommand
 	{
 		$runner = Services::migrations();
 		$runner->clearCliMessages();
-		
-		CLI::write(lang('Migrations.progress'), 'yellow');
+
+		CLI::write(lang('Migrations.latest'), 'yellow');
 
 		$namespace = $params['-n'] ?? CLI::getOption('n');
 		$group     = $params['-g'] ?? CLI::getOption('g');
@@ -124,7 +124,7 @@ class Migrate extends BaseCommand
 				$runner->setNamespace($namespace);
 			}
 
-			if (! $runner->progress($group))
+			if (! $runner->latest($group))
 			{
 				CLI::write(lang('Migrations.generalFault'), 'red');
 			}

@@ -38,7 +38,7 @@ return [
    'writeError'        => 'Error trying to create file.',
    'migNumberError'    => 'Migration number must be three digits, and there must not be any gaps in the sequence.',
 
-   'progress'          => 'Running all new migrations...',
+   'latest'            => 'Running all new migrations...',
    'generalFault'      => 'Migration failed!',
    'migInvalidVersion' => 'Invalid version number provided.',
    'toVersionPH'       => 'Migrating to version %s...',

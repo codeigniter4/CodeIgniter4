@@ -10,7 +10,7 @@ need to be run against the production machines next time you deploy.
 
 The database table **migration** tracks which migrations have already been
 run so all you have to do is make sure your migrations are in place and
-call ``$migration->progress()`` to bring the database up to the most recent
+call ``$migration->latest()`` to bring the database up to the most recent
 state. You can also use ``$migration->setNamespace(null)->progess()`` to
 include migrations from all namespaces.
 
@@ -199,6 +199,10 @@ This example will migrate Blog namespace with any new migrations on the test dat
 
     > php spark migrate -g test -n Blog
 
+When using the `-all` option, it will scan through all namespaces attempting to find any migrations that have
+not been ran. These will all be collected and then sorted as a group by date created. This should help
+to minimize any potential conflicts between the main application and any modules.
+
 **rollback**
 
 Rolls back all migrations, taking the database group to a blank slate, effectively migration 0::
@@ -275,7 +279,7 @@ Class Reference
 
 		An array of migration filenames are returned that are found in the **path** property.
 
-	.. php:method:: progress($group)
+	.. php:method:: latest($group)
 
 		:param	mixed	$group: database group name, if null default database group will be used.
 		:returns:	TRUE on success, FALSE on failure
@@ -283,7 +287,7 @@ Class Reference
 
 		This locates migrations for a namespace (or all namespaces), determines which migrations
 		have not yet been run, and runs them in order of their version (namespaces intermingled).
-		
+
 	.. php:method:: regress($batch, $group)
 
 		:param	mixed	$batch: previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g. -3 means "three batches back")
