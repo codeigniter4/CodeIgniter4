@@ -1569,6 +1569,10 @@ class BaseBuilder
 			$this->QBOrderBy = null;
 		}
 
+		// We cannot use a LIMIT when getting the single row COUNT(*) result
+		$limit         = $this->QBLimit;
+		$this->QBLimit = false;
+
 		$sql = ($this->QBDistinct === true)
 			?
 			$this->countString . $this->db->protectIdentifiers('numrows') . "\nFROM (\n" . $this->compileSelect() . "\n) CI_count_all_results"
@@ -1591,6 +1595,9 @@ class BaseBuilder
 		{
 			$this->QBOrderBy = $orderBy ?? [];
 		}
+
+		// Restore the LIMIT setting
+		$this->QBLimit = $limit;
 
 		$row = (! $result instanceof ResultInterface)
 			? null
