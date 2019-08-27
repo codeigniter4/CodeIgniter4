@@ -54,11 +54,11 @@ class ResourcePresenterFeatureTest extends NakedFeatureTestCase
 	{
 		parent::setUp();
 
-		//      $this->config = new App();
-		//      $this->request = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
-		//      $this->response = new \CodeIgniter\HTTP\Response($this->config);
-		//      $this->logger = \Config\Services::logger();
-		//      $this->codeigniter = new MockCodeIgniter($this->config);
+			  $this->config      = new App();
+			  $this->request     = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
+			  $this->response    = new \CodeIgniter\HTTP\Response($this->config);
+			  $this->logger      = \Config\Services::logger();
+			  $this->codeigniter = new MockCodeIgniter($this->config);
 	}
 	//
 	//  public function tearDown()
@@ -101,14 +101,22 @@ class ResourcePresenterFeatureTest extends NakedFeatureTestCase
 
 	public function testIndex()
 	{
-		$routes   = Services::routes()
-				->resource('work', ['controller' => '\Tests\Support\Resource\Worker2'])
-				->getRoutes();
-		$result   = $this->withRoutes($routes)
-				->call('get', site_url('work'));
-		$response = $result->response;
+		  $_SERVER['argv']           = [
+			  'index.php',
+			  'work',
+		  ];
+		  $_SERVER['argc']           = 2;
+		  $_SERVER['REQUEST_URI']    = '/work/';
+		  $_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$this->assertContains('index: Action not implemented', $response);
+		  $routes = Services::routes();
+				$routes->resource('work', ['controller' => '\Tests\Support\Resource\Worker2'])
+				->getRoutes();
+		  $result   = $this->withRoutes($routes)
+				->call('get', site_url('work'));
+		  $response = $result->response;
+
+		  $this->assertContains('index: Action not implemented', $response);
 	}
 
 	//  public function testShow()

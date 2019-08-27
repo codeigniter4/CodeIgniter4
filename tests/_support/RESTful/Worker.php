@@ -8,5 +8,4 @@ use CodeIgniter\RESTful\ResourceController;
  */
 class Worker extends ResourceController
 {
-
 }

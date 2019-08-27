@@ -75,11 +75,11 @@ class ResourceController extends Controller
 		parent::initController($request, $response, $logger);
 
 		// instantiate our model, if needed
-		if (! empty($this->modelName))
+		if (empty($this->model) && ! empty($this->modelName))
 		{
 			try
 			{
-				$this->model = $this->modelName();
+				$this->model = new $this->modelName;
 			}
 			catch (\Exception $e)
 			{
@@ -97,7 +97,7 @@ class ResourceController extends Controller
 	 */
 	public function index()
 	{
-		return $this->fail('index: Action not implemented', 501);
+		return $this->fail('Action not implemented', 501);
 	}
 
 	/**
@@ -107,7 +107,7 @@ class ResourceController extends Controller
 	 */
 	public function show($id = null)
 	{
-		$this->fail('Action not implemented', 501);
+		return $this->fail('Action not implemented', 501);
 	}
 
 	/**
@@ -117,7 +117,7 @@ class ResourceController extends Controller
 	 */
 	public function new()
 	{
-		$this->fail('Action not implemented', 501);
+		return $this->fail('Action not implemented', 501);
 	}
 
 	/**
@@ -127,7 +127,7 @@ class ResourceController extends Controller
 	 */
 	public function create()
 	{
-		$this->fail('Action not implemented', 501);
+		return $this->fail('Action not implemented', 501);
 	}
 
 	/**
@@ -137,7 +137,7 @@ class ResourceController extends Controller
 	 */
 	public function edit($id = null)
 	{
-		$this->fail('Action not implemented', 501);
+		return $this->fail('Action not implemented', 501);
 	}
 
 	/**
@@ -147,7 +147,7 @@ class ResourceController extends Controller
 	 */
 	public function update($id = null)
 	{
-		$this->fail('Action not implemented', 501);
+		return $this->fail('Action not implemented', 501);
 	}
 
 	/**
@@ -157,7 +157,7 @@ class ResourceController extends Controller
 	 */
 	public function delete($id = null)
 	{
-		$this->fail('Action not implemented', 501);
+		return $this->fail('Action not implemented', 501);
 	}
 
 	//--------------------------------------------------------------------
@@ -169,7 +169,17 @@ class ResourceController extends Controller
 	 */
 	public function setModel($which = null)
 	{
-		$this->model = $model;
+		if (! empty($which))
+		{
+			if ($which instanceof \CodeIgniter\Model)
+			{
+				$this->model = $which;
+			}
+			else
+			{
+				$this->modelName = $which;
+			}
+		}
 	}
 
 	/**
