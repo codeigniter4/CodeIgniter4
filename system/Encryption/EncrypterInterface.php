@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,83 +29,38 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
  */
 
-namespace CodeIgniter\Commands\Database;
-
-use CodeIgniter\CLI\BaseCommand;
+namespace CodeIgniter\Encryption;
 
 /**
- * Does a rollback followed by a latest to refresh the current state
- * of the database.
+ * CodeIgniter Encryption Handler
  *
- * @package CodeIgniter\Commands
+ * Provides two-way keyed encryption
  */
-class MigrateRefresh extends BaseCommand
+interface EncrypterInterface
 {
 
 	/**
-	 * The group the command is lumped under
-	 * when listing commands.
+	 * Encrypt - convert plaintext into ciphertext
 	 *
-	 * @var string
+	 * @param  string $data   Input data
+	 * @param  array  $params Over-ridden parameters, specifically the key
+	 * @return string
 	 */
-	protected $group = 'Database';
+	public function encrypt($data, $params = null);
 
 	/**
-	 * The Command's name
+	 * Decrypt - convert ciphertext into plaintext
 	 *
-	 * @var string
+	 * @param  string $data   Encrypted data
+	 * @param  array  $params Over-ridden parameters, specifically the key
+	 * @return string
 	 */
-	protected $name = 'migrate:refresh';
-
-	/**
-	 * the Command's short description
-	 *
-	 * @var string
-	 */
-	protected $description = 'Does a rollback followed by a latest to refresh the current state of the database.';
-
-	/**
-	 * the Command's usage
-	 *
-	 * @var string
-	 */
-	protected $usage = 'migrate:refresh [Options]';
-
-	/**
-	 * the Command's Arguments
-	 *
-	 * @var array
-	 */
-	protected $arguments = [];
-
-	/**
-	 * the Command's Options
-	 *
-	 * @var array
-	 */
-	protected $options = [
-		'-n'   => 'Set migration namespace',
-		'-g'   => 'Set database group',
-		'-all' => 'Set latest for all namespace, will ignore (-n) option',
-	];
-
-	/**
-	 * Does a rollback followed by a latest to refresh the current state
-	 * of the database.
-	 *
-	 * @param array $params
-	 */
-	public function run(array $params = [])
-	{
-		$this->call('migrate:rollback', ['-b' => 0]);
-		$this->call('migrate');
-	}
-
+	public function decrypt($data, $params = null);
 }

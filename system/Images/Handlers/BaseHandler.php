@@ -572,7 +572,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 			$height = ceil(($width / $cropWidth) * $cropHeight);
 		}
 
-		list($x, $y) = $this->calcCropCoords($width, $height, $origWidth, $origHeight, $position);
+		list($x, $y) = $this->calcCropCoords($cropWidth, $cropHeight, $origWidth, $origHeight, $position);
 
 		return $this->crop($cropWidth, $cropHeight, $x, $y)
 						->resize($width, $height);
@@ -610,14 +610,14 @@ abstract class BaseHandler implements ImageHandlerInterface
 		if ($xRatio > $yRatio)
 		{
 			return [
-				(int) ($origWidth * $yRatio),
-				(int) ($origHeight * $yRatio),
+				$origWidth,
+				(int) ($origWidth * $height / $width),
 			];
 		}
 
 		return [
-			(int) ($origWidth * $xRatio),
-			(int) ($origHeight * $xRatio),
+			(int) ($origHeight * $width / $height),
+			$origHeight,
 		];
 	}
 

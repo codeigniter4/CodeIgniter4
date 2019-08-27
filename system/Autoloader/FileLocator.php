@@ -408,7 +408,7 @@ class FileLocator
 		// autoloader->getNamespace($prefix) returns an array of paths for that namespace
 		foreach ($this->autoloader->getNamespace($prefix) as $namespacePath)
 		{
-			$fullPath = realpath($namespacePath . $path);
+			$fullPath = realpath(rtrim($namespacePath, '/') . '/' . $path);
 
 			if (! is_dir($fullPath))
 			{

@@ -968,6 +968,17 @@ class CodeIgniter
 	 */
 	public function storePreviousURL($uri)
 	{
+		// Ignore CLI requests
+		if (is_cli())
+		{
+			return;
+		}
+		// Ignore AJAX requests
+		if (method_exists($this->request, 'isAJAX') && $this->request->isAJAX())
+		{
+			return;
+		}
+
 		// This is mainly needed during testing...
 		if (is_string($uri))
 		{

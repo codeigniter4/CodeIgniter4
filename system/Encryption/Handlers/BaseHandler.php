@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,83 +29,85 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
  * @filesource
  */
 
-namespace CodeIgniter\Commands\Database;
+namespace CodeIgniter\Encryption\Handlers;
 
-use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\Config\BaseConfig;
 
 /**
- * Does a rollback followed by a latest to refresh the current state
- * of the database.
- *
- * @package CodeIgniter\Commands
+ * Base class for encryption handling
  */
-class MigrateRefresh extends BaseCommand
+abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 {
 
 	/**
-	 * The group the command is lumped under
-	 * when listing commands.
+	 * Configuraiton passed from encryption manager
 	 *
 	 * @var string
 	 */
-	protected $group = 'Database';
+	protected $config;
 
 	/**
-	 * The Command's name
+	 * Logger instance to record error messages and warnings.
 	 *
-	 * @var string
+	 * @var \PSR\Log\LoggerInterface
 	 */
-	protected $name = 'migrate:refresh';
+	protected $logger;
+
+	//--------------------------------------------------------------------
 
 	/**
-	 * the Command's short description
+	 * Constructor
 	 *
-	 * @var string
+	 * @param BaseConfig $config
 	 */
-	protected $description = 'Does a rollback followed by a latest to refresh the current state of the database.';
-
-	/**
-	 * the Command's usage
-	 *
-	 * @var string
-	 */
-	protected $usage = 'migrate:refresh [Options]';
-
-	/**
-	 * the Command's Arguments
-	 *
-	 * @var array
-	 */
-	protected $arguments = [];
-
-	/**
-	 * the Command's Options
-	 *
-	 * @var array
-	 */
-	protected $options = [
-		'-n'   => 'Set migration namespace',
-		'-g'   => 'Set database group',
-		'-all' => 'Set latest for all namespace, will ignore (-n) option',
-	];
-
-	/**
-	 * Does a rollback followed by a latest to refresh the current state
-	 * of the database.
-	 *
-	 * @param array $params
-	 */
-	public function run(array $params = [])
+	public function __construct(BaseConfig $config = null)
 	{
-		$this->call('migrate:rollback', ['-b' => 0]);
-		$this->call('migrate');
+		if (empty($config))
+		{
+			$config = new \Config\Encryption();
+		}
+
+		// make the parameters conveniently accessible
+		foreach ($config as $pkey => $value)
+		{
+			$this->$pkey = $value;
+		}
+	}
+
+	/**
+	 * Byte-safe substr()
+	 *
+	 * @param  string  $str
+	 * @param  integer $start
+	 * @param  integer $length
+	 * @return string
+	 */
+	protected static function substr($str, $start, $length = null)
+	{
+		return mb_substr($str, $start, $length, '8bit');
+	}
+
+	/**
+	 * __get() magic, providing readonly access to some of our properties
+	 *
+	 * @param  string $key Property name
+	 * @return mixed
+	 */
+	public function __get($key)
+	{
+		if (in_array($key, ['cipher', 'key'], true))
+		{
+			return $this->{$key};
+		}
+
+		return null;
 	}
 
 }

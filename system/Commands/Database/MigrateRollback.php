@@ -72,7 +72,7 @@ class MigrateRollback extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $description = 'Runs the down method for all migrations in the last batch.';
+	protected $description = 'Runs the "down" method for all migrations in the last batch.';
 
 	/**
 	 * the Command's usage
@@ -94,7 +94,7 @@ class MigrateRollback extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-b' => 'Specify a batch to roll back to',
+		'-b' => 'Specify a batch to roll back to; e.g. "3" to return to batch #3 or "-2" to roll back twice',
 		'-g' => 'Set database group',
 	];
 
@@ -108,8 +108,6 @@ class MigrateRollback extends BaseCommand
 	{
 		$runner = Services::migrations();
 
-		CLI::write(lang('Migrations.rollingBack'), 'yellow');
-
 		$group = $params['-g'] ?? CLI::getOption('g');
 
 		if (! is_null($group))
@@ -119,10 +117,14 @@ class MigrateRollback extends BaseCommand
 
 		try
 		{
-			$batch = $params['-b'] ?? $runner->getLastBatch();
-
-			$runner->version($runner->getBatchStart($batch));
-
+			$batch = $params['-b'] ?? CLI::getOption('b') ?? $runner->getLastBatch() - 1;
+			CLI::write(lang('Migrations.rollingBack') . ' ' . $batch, 'yellow');
+			
+			if (! $runner->regress($batch))
+			{
+				CLI::write(lang('Migrations.generalFault'), 'red');
+			}
+			
 			$messages = $runner->getCliMessages();
 			foreach ($messages as $message)
 			{

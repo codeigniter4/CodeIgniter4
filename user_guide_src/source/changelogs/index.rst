@@ -17,8 +17,23 @@ Version 4.0.0-beta.4
 
 Release Date: July 25, 2019
 
+Highlights:
 
-:doc:`See all the changes. </changelogs/next>`
+There are some breaking changes...
+
+- The Entity class has been refactored;
+- The Model class changing has been updated to better handle soft deletes 
+- The routing has been beefed up
+
+New messages:
+
+- new translation key: Database/noDateFormat
+
+Testing changes:
+
+- enhanced database & migration testing in tests/_support
+
+:doc:`See all the changes. </changelogs/v4.0.0-beta.4>`
 
 Version 4.0.0-beta.3
 ====================================================
