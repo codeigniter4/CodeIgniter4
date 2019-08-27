@@ -371,6 +371,19 @@ the resulting field.</p>
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span> <span class="c1">// Produces: SELECT SUM(age) as age FROM mytable</span>
 </pre></div>
 </div>
+<p><strong>$builder-&gt;selectCount()</strong></p>
+<p>Writes a &#8220;SELECT COUNT(field)&#8221; portion for your query. As with
+selectMax(), You can optionally include a second parameter to rename
+the resulting field.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method is particularly helpful when used with <code class="docutils literal"><span class="pre">groupBy()</span></code>. For</p>
+</div>
+<p>counting results generally see <code class="docutils literal"><span class="pre">countAll()</span></code> or <code class="docutils literal"><span class="pre">countAllResults()</span></code>.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectSum</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span> <span class="c1">// Produces: SELECT SUM(age) as age FROM mytable</span>
+</pre></div>
+</div>
 <p><strong>$builder-&gt;from()</strong></p>
 <p>Permits you to write the FROM portion of your query:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title, content, date&#39;</span><span class="p">);</span>
@@ -2323,7 +2336,7 @@ a DELETE statement will be used instead.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Aug 20, 2019.
+      Last updated on Aug 27, 2019.
 
     </p>
   </div>

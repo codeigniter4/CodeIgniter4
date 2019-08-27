@@ -293,10 +293,13 @@ all migrations are rolled back to version 0, then the database is migrated to th
 <p>If present and not empty, this specifies the name of a Seed file that is used to populate the database with
 test data prior to every test running.</p>
 <p><strong>$basePath</strong></p>
-<p>By default, CodeIgniter will look in <strong>tests/_support/database/migrations</strong> and <strong>tests/_support_database/seeds</strong>
-to locate the migrations and seeds that it should run during testing. You can change this directory by specifying
-the path in the <code class="docutils literal"><span class="pre">$basePath</span></code> property. This should not include the <strong>migrations</strong> or <strong>seeds</strong> directories, but
-the path to the single directory that holds both of those sub-directories.</p>
+<p>By default, CodeIgniter will look in <strong>tests/_support/Database/Seeds</strong> to locate the seeds that it should run during testing.
+You can change this directores by specifying the <code class="docutils literal"><span class="pre">$basePath</span></code> property. This should not include the <strong>seeds</strong> directory,
+but the path to the single directory that holds the sub-directory.</p>
+<p><strong>$namespace</strong></p>
+<p>By default, CodeIgniter will look in <strong>tests/_support/DatabaseTestMigrations/Database/Migrations</strong> to locate the migrations
+that it should run during testing. You can change this location by specifying a new namespace in the <code class="docutils literal"><span class="pre">$namespace</span></code> properties.
+This should not include the <strong>Database/Migrations</strong> path, just the base namespace.</p>
 </div>
 </div>
 <div class="section" id="helper-methods">
@@ -373,7 +376,7 @@ array with the data to insert into the table.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Aug 20, 2019.
+      Last updated on Aug 27, 2019.
 
     </p>
   </div>

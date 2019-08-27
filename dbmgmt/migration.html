@@ -209,8 +209,8 @@ need to be run against the production machines next time you deploy.</p>
 <p>The database table <strong>migration</strong> tracks which migrations have already been
 run so all you have to do is make sure your migrations are in place and
 call <code class="docutils literal"><span class="pre">$migration-&gt;latest()</span></code> to bring the database up to the most recent
-state. You can also use <code class="docutils literal"><span class="pre">$migration-&gt;latestAll()</span></code> to include migrations
-from all namespaces.</p>
+state. You can also use <code class="docutils literal"><span class="pre">$migration-&gt;setNamespace(null)-&gt;progess()</span></code> to
+include migrations from all namespaces.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#migration-file-names" id="id1">Migration file names</a></li>
@@ -374,7 +374,7 @@ to update the schema:</p>
 you work with migrations. These tools are not required to use migrations but might make things easier for those of you
 that wish to use them. The tools primarily provide access to the same methods that are available within the MigrationRunner class.</p>
 <p><strong>migrate</strong></p>
-<p>Migrates all database groups to the latest available migrations:</p>
+<p>Migrates a database group with all available migrations:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span>
 </pre></div>
 </div>
@@ -384,47 +384,33 @@ that wish to use them. The tools primarily provide access to the same methods th
 <li>(-n) to choose namespace, otherwise (App) namespace will be used.</li>
 <li>(-all) to migrate all namespaces to the latest migration</li>
 </ul>
-<p>This example will migrate Blog namespace to latest version on the test database group:</p>
+<p>This example will migrate Blog namespace with any new migrations on the test database group:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span> <span class="o">-</span><span class="nx">g</span> <span class="nx">test</span> <span class="o">-</span><span class="nx">n</span> <span class="nx">Blog</span>
 </pre></div>
 </div>
-<p><strong>version</strong></p>
-<p>Migrates to the specified version. If no version is provided, you will be prompted
-for the version.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Asks you for the version...</span>
-<span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span><span class="o">:</span><span class="nx">version</span>
-<span class="nx">Version</span><span class="o">:</span>
-
-<span class="c1">// Timestamp</span>
-<span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span><span class="o">:</span><span class="nx">version</span> <span class="mi">20161426211300</span>
-</pre></div>
-</div>
-<p>You can use (version) with the following options:</p>
-<ul class="simple">
-<li>(-g) to chose database group, otherwise default database group will be used.</li>
-<li>(-n) to choose namespace, otherwise (App) namespace will be used.</li>
-</ul>
+<p>When using the <cite>-all</cite> option, it will scan through all namespaces attempting to find any migrations that have
+not been ran. These will all be collected and then sorted as a group by date created. This should help
+to minimize any potential conflicts between the main application and any modules.</p>
 <p><strong>rollback</strong></p>
-<p>Rolls back all migrations, taking all database groups to a blank slate, effectively migration 0:</p>
+<p>Rolls back all migrations, taking the database group to a blank slate, effectively migration 0:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span><span class="o">:</span><span class="nx">rollback</span>
 </pre></div>
 </div>
 <p>You can use (rollback) with the following options:</p>
 <ul class="simple">
-<li>(-g) to chose database group, otherwise default database group will be used.</li>
-<li>(-n) to choose namespace, otherwise (App) namespace will be used.</li>
-<li>(-all) to migrate all namespaces to the latest migration</li>
+<li>(-g) to choose database group, otherwise default database group will be used.</li>
+<li>(-b) to choose a batch: natural numbers specify the batch, negatives indicate a relative batch</li>
 </ul>
 <p><strong>refresh</strong></p>
-<p>Refreshes the database state by first rolling back all migrations, and then migrating to the latest version:</p>
+<p>Refreshes the database state by first rolling back all migrations, and then migrating all:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span><span class="o">:</span><span class="nx">refresh</span>
 </pre></div>
 </div>
 <p>You can use (refresh) with the following options:</p>
 <ul class="simple">
-<li>(-g) to chose database group, otherwise default database group will be used.</li>
+<li>(-g) to choose database group, otherwise default database group will be used.</li>
 <li>(-n) to choose namespace, otherwise (App) namespace will be used.</li>
-<li>(-all) to migrate all namespaces to the latest migration</li>
+<li>(-all) to refresh all namespaces</li>
 </ul>
 <p><strong>status</strong></p>
 <p>Displays a list of all migrations and the date and time they ran, or &#8216;&#8211;&#8217; if they have not been run:</p>
@@ -433,9 +419,9 @@ for the version.</p>
 <span class="nx">First_migration</span><span class="o">.</span><span class="nx">php</span>    <span class="mi">2016</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">25</span> <span class="mo">04</span><span class="o">:</span><span class="mi">44</span><span class="o">:</span><span class="mi">22</span>
 </pre></div>
 </div>
-<p>You can use (refresh) with the following options:</p>
+<p>You can use (status) with the following options:</p>
 <ul class="simple">
-<li>(-g) to chose database group, otherwise default database group will be used.</li>
+<li>(-g) to choose database group, otherwise default database group will be used.</li>
 </ul>
 <p><strong>create</strong></p>
 <p>Creates a skeleton migration file in <strong>app/Database/Migrations</strong>.
@@ -512,33 +498,7 @@ creates is the Pascal case version of the filename.</p>
 
 <dl class="method">
 <dt id="CodeIgniterDatabaseMigrationRunner::latest">
-<code class="descname">latest</code><span class="sig-paren">(</span><em>$namespace</em>, <em>$group</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseMigrationRunner::latest" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$namespace</strong> (<em>mixed</em>) &#8211; application namespace, if null (App) namespace will be used.</li>
-<li><strong>$group</strong> (<em>mixed</em>) &#8211; database group name, if null default database group will be used.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Current version string on success, FALSE on failure</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>This works much the same way as <code class="docutils literal"><span class="pre">current()</span></code> but instead of looking for
-the <code class="docutils literal"><span class="pre">$currentVersion</span></code> the Migration class will use the very
-newest migration found in the filesystem.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="CodeIgniterDatabaseMigrationRunner::latestAll">
-<code class="descname">latestAll</code><span class="sig-paren">(</span><em>$group</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseMigrationRunner::latestAll" title="Permalink to this definition">¶</a></dt>
+<code class="descname">latest</code><span class="sig-paren">(</span><em>$group</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseMigrationRunner::latest" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -551,43 +511,66 @@ newest migration found in the filesystem.</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>This works much the same way as <code class="docutils literal"><span class="pre">latest()</span></code> but instead of looking for
-one namespace, the Migration class will use the very
-newest migration found for all namespaces.</p>
+<p>This locates migrations for a namespace (or all namespaces), determines which migrations
+have not yet been run, and runs them in order of their version (namespaces intermingled).</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="CodeIgniterDatabaseMigrationRunner::version">
-<code class="descname">version</code><span class="sig-paren">(</span><em>$target_version</em>, <em>$namespace</em>, <em>$group</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseMigrationRunner::version" title="Permalink to this definition">¶</a></dt>
+<dt id="CodeIgniterDatabaseMigrationRunner::regress">
+<code class="descname">regress</code><span class="sig-paren">(</span><em>$batch</em>, <em>$group</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseMigrationRunner::regress" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$namespace</strong> (<em>mixed</em>) &#8211; application namespace, if null (App) namespace will be used.</li>
+<li><strong>$batch</strong> (<em>mixed</em>) &#8211; previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g. -3 means &#8220;three batches back&#8221;)</li>
 <li><strong>$group</strong> (<em>mixed</em>) &#8211; database group name, if null default database group will be used.</li>
-<li><strong>$target_version</strong> (<em>mixed</em>) &#8211; Migration version to process</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Current version string on success, FALSE on failure or no migrations are found</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure or no migrations are found</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Version can be used to roll back changes or step forwards programmatically to
-specific versions. It works just like <code class="docutils literal"><span class="pre">current()</span></code> but ignores <code class="docutils literal"><span class="pre">$currentVersion</span></code>.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">version</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<p>Regress can be used to roll back changes to a previous state, batch by batch.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">batch</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">batch</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseMigrationRunner::force">
+<code class="descname">force</code><span class="sig-paren">(</span><em>$path</em>, <em>$namespace</em>, <em>$group</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseMigrationRunner::force" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$path</strong> (<em>mixed</em>) &#8211; path to a valid migration file.</li>
+<li><strong>$namespace</strong> (<em>mixed</em>) &#8211; namespace of the provided migration.</li>
+<li><strong>$group</strong> (<em>mixed</em>) &#8211; database group name, if null default database group will be used.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This forces a single file to migrate regardless of order or batches. Method &#8220;up&#8221; or &#8220;down&#8221; is detected based on whether it has already been migrated. <strong>Note</strong>: This method is recommended only for testing and could cause data consistency issues.</p>
 </dd></dl>
 
 <dl class="method">
@@ -672,7 +655,7 @@ specific versions. It works just like <code class="docutils literal"><span class
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Aug 20, 2019.
+      Last updated on Aug 27, 2019.
 
     </p>
   </div>
