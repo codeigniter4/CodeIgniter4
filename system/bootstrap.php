@@ -96,6 +96,13 @@ if (! defined('APP_NAMESPACE'))
 	require_once APPPATH . 'Config/Constants.php';
 }
 
+// Let's see if an app/Common.php file exists
+if (file_exists(APPPATH . 'Common.php'))
+{
+	require_once APPPATH . 'Common.php';
+}
+
+// Require system/Common.php
 require_once SYSTEMPATH . 'Common.php';
 
 /*
