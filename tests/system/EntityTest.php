@@ -548,6 +548,7 @@ class EntityTest extends \CIUnitTestCase
 			'bar'        => ':bar',
 			'default'    => 'sumfin',
 			'created_at' => null,
+			'createdAt'  => null,
 		]);
 	}
 
@@ -673,6 +674,17 @@ class EntityTest extends \CIUnitTestCase
 		$this->assertTrue($entity->hasChanged());
 	}
 
+	public function testIssetKeyMap()
+	{
+		$entity = $this->getEntity();
+
+		$entity->created_at = '12345678';
+		$this->assertTrue(isset($entity->createdAt));
+
+		$entity->bar = 'foo';
+		$this->assertTrue(isset($entity->FakeBar));
+	}
+
 	protected function getEntity()
 	{
 		return new class extends Entity
@@ -691,6 +703,10 @@ class EntityTest extends \CIUnitTestCase
 				'created_at' => null,
 			];
 
+			protected $datamap = [
+				'createdAt' => 'created_at',
+			];
+
 			public function setBar($value)
 			{
 				$this->attributes['bar'] = "bar:{$value}";
@@ -703,6 +719,10 @@ class EntityTest extends \CIUnitTestCase
 				return "{$this->attributes['bar']}:bar";
 			}
 
+			public function getFakeBar()
+			{
+				return "{$this->attributes['bar']}:bar";
+			}
 		};
 	}
 
