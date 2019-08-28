@@ -471,7 +471,7 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertArrayNotHasKey($options[CURLOPT_STDERR]);
+		$this->assertArrayNotHasKey(CURLOPT_STDERR, $options);
 	}
 
 	public function testDebugOptionFile()
