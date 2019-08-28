@@ -266,23 +266,16 @@ class Message
 	 */
 	public function setHeader(string $name, $value)
 	{
-		if (! isset($this->headers[$name]))
+		$origName = $this->getHeaderName($name);
+		
+		if (isset($this->headers[$origName]) && is_array($this->headers[$origName]))
 		{
-			$this->headers[$name] = new Header($name, $value);
-
-			$this->headerMap[strtolower($name)] = $name;
-
-			return $this;
+			$this->appendHeader($origName, $value);
 		}
-
-		if (! is_array($this->headers[$name]))
+		else
 		{
-			$this->headers[$name] = [$this->headers[$name]];
-		}
-
-		if (isset($this->headers[$name]))
-		{
-			$this->headers[$name] = new Header($name, $value);
+			$this->headers[$origName] = new Header($origName, $value);
+			$this->headerMap[strtolower($origName)] = $origName;
 		}
 
 		return $this;
