@@ -97,8 +97,8 @@ if (! defined('APP_NAMESPACE'))
 }
 
 // Let's see if an app/Common.php file exists
-if ( file_exists(APPPATH . 'Common.php')) {
-	// If it does, let's require it
+if (file_exists(APPPATH . 'Common.php'))
+{
 	require_once APPPATH . 'Common.php';
 }
 
