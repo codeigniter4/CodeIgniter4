@@ -89,6 +89,19 @@ starting at the top left corner. The result would be saved as the thumbnail.
 	while processing images you may need to limit their maximum size, and/or
 	adjust PHP memory limits.
 
+Image Quality
+=============
+
+``save()`` can take an additional parameter ``$quality`` to alter the resulting image
+quality. Values range from 0 to 100 with 90 being the framework default. This parameter
+only applies to JPEG images and will be ignored otherwise::
+
+	$image = Config\Services::image()
+		->withFile('/path/to/image/mypic.jpg')
+		->save('/path/to/image/my_low_quality_pic.jpg', 10);
+
+.. note:: Higher quality will result in larger file sizes. See also https://www.php.net/manual/en/function.imagejpeg.php
+
 Processing Methods
 ==================
 
