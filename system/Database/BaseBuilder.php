@@ -384,7 +384,24 @@ class BaseBuilder
 	//--------------------------------------------------------------------
 
 	/**
-	 * SELECT [MAX|MIN|AVG|SUM]()
+	 * Select Count
+	 *
+	 * Generates a SELECT COUNT(field) portion of a query
+	 *
+	 * @param string $select The field
+	 * @param string $alias  An alias
+	 *
+	 * @return BaseBuilder
+	 */
+	public function selectCount(string $select = '', string $alias = '')
+	{
+		return $this->maxMinAvgSum($select, $alias, 'COUNT');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * SELECT [MAX|MIN|AVG|SUM|COUNT]()
 	 *
 	 * @used-by selectMax()
 	 * @used-by selectMin()
@@ -413,7 +430,7 @@ class BaseBuilder
 
 		$type = strtoupper($type);
 
-		if (! in_array($type, ['MAX', 'MIN', 'AVG', 'SUM']))
+		if (! in_array($type, ['MAX', 'MIN', 'AVG', 'SUM', 'COUNT']))
 		{
 			throw new DatabaseException('Invalid function type: ' . $type);
 		}
@@ -1552,6 +1569,10 @@ class BaseBuilder
 			$this->QBOrderBy = null;
 		}
 
+		// We cannot use a LIMIT when getting the single row COUNT(*) result
+		$limit         = $this->QBLimit;
+		$this->QBLimit = false;
+
 		$sql = ($this->QBDistinct === true)
 			?
 			$this->countString . $this->db->protectIdentifiers('numrows') . "\nFROM (\n" . $this->compileSelect() . "\n) CI_count_all_results"
@@ -1574,6 +1595,9 @@ class BaseBuilder
 		{
 			$this->QBOrderBy = $orderBy ?? [];
 		}
+
+		// Restore the LIMIT setting
+		$this->QBLimit = $limit;
 
 		$row = (! $result instanceof ResultInterface)
 			? null

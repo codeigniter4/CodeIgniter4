@@ -104,7 +104,7 @@ class MigrateRefresh extends BaseCommand
 	 */
 	public function run(array $params = [])
 	{
-		$this->call('migrate:rollback', ['-b' => 1]);
+		$this->call('migrate:rollback', ['-b' => 0]);
 		$this->call('migrate');
 	}
 

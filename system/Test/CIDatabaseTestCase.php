@@ -37,6 +37,8 @@
 
 namespace CodeIgniter\Test;
 
+use CodeIgniter\Config\Config;
+use Config\Autoload;
 use Config\Database;
 use Config\Migrations;
 use Config\Services;
@@ -67,20 +69,19 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	protected $seed = '';
 
 	/**
-	 * The path to where we can find the migrations
-	 * and seeds directories. Allows overriding
-	 * the default application directories.
+	 * The path to where we can find the seeds directory.
+	 * Allows overriding the default application directories.
 	 *
 	 * @var string
 	 */
 	protected $basePath = TESTPATH . '_support/Database';
 
 	/**
-	 * The namespace to help us fird the migration classes.
+	 * The namespace to help us find the migration classes.
 	 *
 	 * @var string
 	 */
-	protected $namespace = 'Tests\Support';
+	protected $namespace = 'Tests\Support\DatabaseTestMigrations';
 
 	/**
 	 * The name of the database group to connect to.
@@ -161,6 +162,9 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	{
 		parent::setUp();
 
+		// Add namespaces we need for testing
+		Services::autoloader()->addNamespace('Tests\Support\DatabaseTestMigrations', TESTPATH . '_support/DatabaseTestMigrations');
+
 		$this->loadDependencies();
 
 		if ($this->refresh === true)
@@ -188,8 +192,8 @@ class CIDatabaseTestCase extends CIUnitTestCase
 				}
 			}
 
-			$this->migrations->version(0, null, 'tests');
-			$this->migrations->latest(null, 'tests');
+			$this->migrations->regress(0, 'tests');
+			$this->migrations->latest('tests');
 		}
 
 		if (! empty($this->seed))

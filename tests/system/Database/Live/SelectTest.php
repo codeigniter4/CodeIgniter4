@@ -91,7 +91,7 @@ class SelectTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testSelectAvgWitAlias()
+	public function testSelectAvgWithAlias()
 	{
 		$result = $this->db->table('job')->selectAvg('id', 'xam')->get()->getRow();
 
@@ -109,11 +109,29 @@ class SelectTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testSelectSumWitAlias()
+	public function testSelectSumWithAlias()
 	{
 		$result = $this->db->table('job')->selectSum('id', 'xam')->get()->getRow();
 
 		$this->assertEquals(10, $result->xam);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSelectCount()
+	{
+		$result = $this->db->table('job')->selectCount('id')->get()->getRow();
+
+		$this->assertEquals(4, $result->id);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSelectCountWithAlias()
+	{
+		$result = $this->db->table('job')->selectCount('id', 'xam')->get()->getRow();
+
+		$this->assertEquals(4, $result->xam);
 	}
 
 	//--------------------------------------------------------------------
