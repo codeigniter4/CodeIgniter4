@@ -182,9 +182,12 @@ class Entity
 		{
 			foreach ($this->datamap as $from => $to)
 			{
-				$return[$from] = $this->__get($to);
+				if (array_key_exists($to, $return)) {
+					$return[$from] = $this->__get($to);
+				}
 			}
 		}
+
 		$this->_cast = true;
 		return $return;
 	}
@@ -424,6 +427,15 @@ class Entity
 	 */
 	public function __isset(string $key): bool
 	{
+		$key = $this->mapProperty($key);
+
+		$method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+
+		if (method_exists($this, $method))
+		{
+			return true;
+		}
+
 		return isset($this->attributes[$key]);
 	}
 

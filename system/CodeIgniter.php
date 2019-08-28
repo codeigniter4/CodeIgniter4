@@ -355,6 +355,12 @@ class CodeIgniter
 		else
 		{
 			$response = $this->response;
+			
+			// Set response code for CLI command failures
+			if (is_numeric($returned) || $returned === false)
+			{
+				$response->setStatusCode(400);
+			}
 		}
 
 		if ($response instanceof Response)
