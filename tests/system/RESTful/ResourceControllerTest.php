@@ -2,7 +2,10 @@
 namespace CodeIgniter\RESTful;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\HTTP\URI;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Router\RouteCollection;
 use Config\App;
@@ -55,9 +58,9 @@ class ResourceControllerTest extends \CIUnitTestCase
 		parent::setUp();
 
 		$this->config      = new App();
-		$this->request     = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
-		$this->response    = new \CodeIgniter\HTTP\Response($this->config);
-		$this->logger      = \Config\Services::logger();
+		$this->request     = new IncomingRequest($this->config, new URI('https://somwhere.com'), null, new UserAgent());
+		$this->response    = new Response($this->config);
+		$this->logger      = Services::logger();
 		$this->codeigniter = new MockCodeIgniter($this->config);
 	}
 
@@ -142,7 +145,7 @@ class ResourceControllerTest extends \CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertContains('Action not implemented', $output);
+		$this->assertContains("'index' action not implemented", $output);
 	}
 
 	//  public function testShow()

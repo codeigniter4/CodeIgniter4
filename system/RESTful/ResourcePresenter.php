@@ -39,6 +39,9 @@ namespace CodeIgniter\RESTful;
 
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Controller;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * An extendable controller to help provide a UI for a resource.
@@ -60,11 +63,9 @@ class ResourcePresenter extends Controller
 	 */
 	protected $model = null;
 
-	const NOT_THERE = 'Action not implemented yet';
-
 	//--------------------------------------------------------------------
 
-	public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+	public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
 	{
 		parent::initController($request, $response, $logger);
 
@@ -91,7 +92,7 @@ class ResourcePresenter extends Controller
 	 */
 	public function index()
 	{
-		return 'index: ' . NOT_THERE;
+		return lang('RESTful.notImplemented', ['index']);
 	}
 
 	/**
@@ -102,7 +103,7 @@ class ResourcePresenter extends Controller
 	 */
 	public function show($id = null)
 	{
-		return 'show: ' . NOT_THERE;
+		return lang('RESTful.notImplemented', ['show']);
 	}
 
 	/**
@@ -113,7 +114,7 @@ class ResourcePresenter extends Controller
 	 */
 	public function new()
 	{
-		return 'new: ' . NOT_THERE;
+		return lang('RESTful.notImplemented', ['new']);
 	}
 
 	/**
@@ -123,7 +124,7 @@ class ResourcePresenter extends Controller
 	 */
 	public function create()
 	{
-		return 'create: ' . NOT_THERE;
+		return lang('RESTful.notImplemented', ['create']);
 	}
 
 	/**
@@ -134,7 +135,7 @@ class ResourcePresenter extends Controller
 	 */
 	public function remove($id = null)
 	{
-		return 'remove: ' . NOT_THERE;
+		return lang('RESTful.notImplemented', ['remove']);
 	}
 
 	/**
@@ -145,7 +146,7 @@ class ResourcePresenter extends Controller
 	 */
 	public function delete($id = null)
 	{
-		return 'delete: ' . NOT_THERE;
+		return lang('RESTful.notImplemented', ['delete']);
 	}
 
 	/**
@@ -156,7 +157,7 @@ class ResourcePresenter extends Controller
 	 */
 	public function edit($id = null)
 	{
-		return 'edit: ' . NOT_THERE;
+		return lang('RESTful.notImplemented', ['edit']);
 	}
 
 	/**
@@ -167,7 +168,7 @@ class ResourcePresenter extends Controller
 	 */
 	public function update($id = null)
 	{
-		return 'update: ' . NOT_THERE;
+		return lang('RESTful.notImplemented', ['update']);
 	}
 
 	//--------------------------------------------------------------------

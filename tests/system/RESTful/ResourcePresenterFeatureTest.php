@@ -5,7 +5,7 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Router\RouteCollection;
-use CodeIgniter\Test\NakedFeatureTestCase;
+use CodeIgniter\Test\FeatureTestCase;
 use Config\App;
 use Tests\Support\MockCodeIgniter;
 
@@ -16,7 +16,7 @@ use Tests\Support\MockCodeIgniter;
  *
  * @backupGlobals enabled
  */
-class ResourcePresenterFeatureTest extends NakedFeatureTestCase
+class ResourcePresenterFeatureTest extends FeatureTestCase
 {
 
 	/**

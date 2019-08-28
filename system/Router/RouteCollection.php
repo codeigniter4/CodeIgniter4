@@ -893,7 +893,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * Example:
 	 *
-	 *      $route->resource('photos');
+	 *      $route->presenter('photos');
 	 *
 	 *      // Generates the following routes:
 	 *      HTTP Verb | Path        | Action        | Used for...
@@ -917,13 +917,13 @@ class RouteCollection implements RouteCollectionInterface
 		// In order to allow customization of the route the
 		// resources are sent to, we need to have a new name
 		// to store the values in.
-		$new_name = ucfirst($name);
+		$newName = ucfirst($name);
 
 		// If a new controller is specified, then we replace the
 		// $name value with the name of the new controller.
 		if (isset($options['controller']))
 		{
-			$new_name = ucfirst(filter_var($options['controller'], FILTER_SANITIZE_STRING));
+			$newName = ucfirst(filter_var($options['controller'], FILTER_SANITIZE_STRING));
 		}
 
 		// In order to allow customization of allowed id values
@@ -955,35 +955,35 @@ class RouteCollection implements RouteCollectionInterface
 
 		if (in_array('index', $methods))
 		{
-			$this->get($name, $new_name . '::index', $options);
+			$this->get($name, $newName . '::index', $options);
 		}
 		if (in_array('show', $methods))
 		{
-			$this->get($name . '/' . $id, $new_name . '::show/$1', $options);
+			$this->get($name . '/' . $id, $newName . '::show/$1', $options);
 		}
 		if (in_array('new', $methods))
 		{
-			$this->get($name . '/new', $new_name . '::new', $options);
+			$this->get($name . '/new', $newName . '::new', $options);
 		}
 		if (in_array('create', $methods))
 		{
-			$this->post($name, $new_name . '::create', $options);
+			$this->post($name, $newName . '::create', $options);
 		}
 		if (in_array('edit', $methods))
 		{
-			$this->get($name . '/' . $id . '/edit', $new_name . '::edit/$1', $options);
+			$this->get($name . '/' . $id . '/edit', $newName . '::edit/$1', $options);
 		}
 		if (in_array('update', $methods))
 		{
-			$this->post($name . '/' . $id, $new_name . '::update/$1', $options);
+			$this->post($name . '/' . $id, $newName . '::update/$1', $options);
 		}
 		if (in_array('remove', $methods))
 		{
-			$this->get($name . '/' . $id, $new_name . '::remove/$1', $options);
+			$this->get($name . '/' . $id, $newName . '::remove/$1', $options);
 		}
 		if (in_array('delete', $methods))
 		{
-			$this->post($name . '/' . $id, $new_name . '::delete/$1', $options);
+			$this->post($name . '/' . $id, $newName . '::delete/$1', $options);
 		}
 
 		return $this;

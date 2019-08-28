@@ -39,6 +39,9 @@ namespace CodeIgniter\RESTful;
 
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Controller;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * An extendable controller to provide a RESTful API for a resource.
@@ -70,7 +73,7 @@ class ResourceController extends Controller
 
 	//--------------------------------------------------------------------
 
-	public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+	public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
 	{
 		parent::initController($request, $response, $logger);
 
@@ -97,7 +100,7 @@ class ResourceController extends Controller
 	 */
 	public function index()
 	{
-		return $this->fail('Action not implemented', 501);
+		return $this->fail(lang('RESTful.notImplemented', ['index']), 501);
 	}
 
 	/**
@@ -107,7 +110,7 @@ class ResourceController extends Controller
 	 */
 	public function show($id = null)
 	{
-		return $this->fail('Action not implemented', 501);
+		return $this->fail(lang('RESTful.notImplemented', ['show']), 501);
 	}
 
 	/**
@@ -117,7 +120,7 @@ class ResourceController extends Controller
 	 */
 	public function new()
 	{
-		return $this->fail('Action not implemented', 501);
+		return $this->fail(lang('RESTful.notImplemented', ['new']), 501);
 	}
 
 	/**
@@ -127,7 +130,7 @@ class ResourceController extends Controller
 	 */
 	public function create()
 	{
-		return $this->fail('Action not implemented', 501);
+		return $this->fail(lang('RESTful.notImplemented', ['create']), 501);
 	}
 
 	/**
@@ -137,7 +140,7 @@ class ResourceController extends Controller
 	 */
 	public function edit($id = null)
 	{
-		return $this->fail('Action not implemented', 501);
+		return $this->fail(lang('RESTful.notImplemented', ['edit']), 501);
 	}
 
 	/**
@@ -147,7 +150,7 @@ class ResourceController extends Controller
 	 */
 	public function update($id = null)
 	{
-		return $this->fail('Action not implemented', 501);
+		return $this->fail(lang('RESTful.notImplemented', ['update']), 501);
 	}
 
 	/**
@@ -157,7 +160,7 @@ class ResourceController extends Controller
 	 */
 	public function delete($id = null)
 	{
-		return $this->fail('Action not implemented', 501);
+		return $this->fail(lang('RESTful.notImplemented', ['delete']), 501);
 	}
 
 	//--------------------------------------------------------------------
