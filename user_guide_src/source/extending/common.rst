@@ -2,7 +2,7 @@
 Replacing Common Functions
 **************************
 
-There a quite a few functions necessary to CodeIgniter that need to be loaded early for use in the core classes and
+There are quite a few functions necessary to CodeIgniter that need to be loaded early for use in the core classes and
 thus cannot be placed into a helper. While most users will never have any need to do this, but the option to replace
 these functions does exist for those who would like to significantly alter the CodeIgniter core. In the ``App\``
 directory there is a file ``Common.php``, and any functions defined in there will take precedence over the versions
