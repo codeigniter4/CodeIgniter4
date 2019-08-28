@@ -689,8 +689,8 @@ class Response extends Message implements ResponseInterface
 		}
 
 		$this->sendHeaders();
-		$this->sendBody();
 		$this->sendCookies();
+		$this->sendBody();
 
 		return $this;
 	}
