@@ -53,7 +53,7 @@ use Config\Services;
  *
  * @package CodeIgniter\Test
  */
-class FeatureTestCase extends CIUnitTestCase
+class FeatureTestCase extends CIDatabaseTestCase
 {
 
 	/**
