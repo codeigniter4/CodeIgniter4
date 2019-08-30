@@ -78,17 +78,7 @@ class ResourceController extends Controller
 		parent::initController($request, $response, $logger);
 
 		// instantiate our model, if needed
-		if (empty($this->model) && ! empty($this->modelName))
-		{
-			try
-			{
-				$this->model = new $this->modelName;
-			}
-			catch (\Exception $e)
-			{
-				// ignored. we just don't use a model for now
-			}
-		}
+		$this->setModel($this->modelName);
 	}
 
 	//--------------------------------------------------------------------
@@ -166,15 +156,17 @@ class ResourceController extends Controller
 	//--------------------------------------------------------------------
 
 	/**
-	 * Set or change the model this controller is bound to
+	 * Set or change the model this controller is bound to.
+	 * Given either the name or the object, determine the other.
 	 *
-	 * @param string|\CodeIgniter\Model $which
+	 * @param string|object $which
 	 */
 	public function setModel($which = null)
 	{
+		// save what we have been given
 		if (! empty($which))
 		{
-			if ($which instanceof \CodeIgniter\Model)
+			if (is_object($which))
 			{
 				$this->model = $which;
 			}
@@ -182,6 +174,21 @@ class ResourceController extends Controller
 			{
 				$this->modelName = $which;
 			}
+		}
+
+		// make a model object if needed
+		if (empty($this->model) && ! empty($this->modelName))
+		{
+			if (class_exists($this->modelName))
+			{
+				$this->model = new $this->modelName;
+			}
+		}
+
+		// determine model name if needed
+		if (empty($this->modelName) && ! empty($this->model))
+		{
+			$this->modelName = get_class($this->model);
 		}
 	}
 

@@ -37,7 +37,6 @@
 
 namespace CodeIgniter\RESTful;
 
-use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -70,17 +69,7 @@ class ResourcePresenter extends Controller
 		parent::initController($request, $response, $logger);
 
 		// instantiate our model, if needed
-		if (! empty($this->modelName))
-		{
-			try
-			{
-				$this->model = $this->modelName();
-			}
-			catch (\Exception $e)
-			{
-				// ignored. we just own't use a model for now
-			}
-		}
+		$this->setModel($this->modelName);
 	}
 
 	//--------------------------------------------------------------------
@@ -118,7 +107,8 @@ class ResourcePresenter extends Controller
 	}
 
 	/**
-	 * Process the creation/insertion of a new resource object
+	 * Process the creation/insertion of a new resource object.
+	 * This should be a POST.
 	 *
 	 * @return string
 	 */
@@ -161,7 +151,8 @@ class ResourcePresenter extends Controller
 	}
 
 	/**
-	 * Process the updating, full or partial, of a specific resource object
+	 * Process the updating, full or partial, of a specific resource object.
+	 * This should be a POST.
 	 *
 	 * @param  type $id
 	 * @return string
@@ -174,13 +165,40 @@ class ResourcePresenter extends Controller
 	//--------------------------------------------------------------------
 
 	/**
-	 * Set/change the model that this controller is bound to
+	 * Set or change the model this controller is bound to.
+	 * Given either the name or the object, determine the other.
 	 *
-	 * @param type $which
+	 * @param string|object $which
 	 */
 	public function setModel($which = null)
 	{
-		$this->model = $model;
+		// save what we have been given
+		if (! empty($which))
+		{
+			if (is_object($which))
+			{
+				$this->model = $which;
+			}
+			else
+			{
+				$this->modelName = $which;
+			}
+		}
+
+		// make a model object if needed
+		if (empty($this->model) && ! empty($this->modelName))
+		{
+			if (class_exists($this->modelName))
+			{
+				$this->model = new $this->modelName;
+			}
+		}
+
+		// determine model name if needed
+		if (empty($this->modelName) && ! empty($this->model))
+		{
+			$this->modelName = get_class($this->model);
+		}
 	}
 
 }

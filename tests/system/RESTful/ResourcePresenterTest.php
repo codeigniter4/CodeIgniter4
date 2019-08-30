@@ -2,18 +2,17 @@
 namespace CodeIgniter\RESTful;
 
 use CodeIgniter\Config\Services;
-use CodeIgniter\HTTP\UserAgent;
-use CodeIgniter\Log\Logger;
-use CodeIgniter\Router\RouteCollection;
 use Config\App;
 use Tests\Support\MockCodeIgniter;
 
 /**
- * Exercise our core Controller class.
- * Not a lot of business logic, so concentrate on making sure
- * we can exercise everything without blowing up :-/
+ * Exercise our core ResourcePresenter class.
+ * We know the resource routing works, from RouterTest,
+ * so we need to make sure that the methods routed to
+ * return correct responses.
  *
- * @backupGlobals enabled
+ * @runInSeparateProcess
+ * @preserveGlobalState  disabled
  */
 class ResourcePresenterTest extends \CIUnitTestCase
 {
@@ -24,28 +23,10 @@ class ResourcePresenterTest extends \CIUnitTestCase
 	protected $codeigniter;
 
 	/**
-	 * @var \CodeIgniter\Controller
-	 */
-	protected $controller;
-
-	/**
-	 * Current request.
 	 *
-	 * @var \CodeIgniter\HTTP\Request
+	 * @var \CodeIgniter\Router\RoutesCollection
 	 */
-	protected $request;
-
-	/**
-	 * Current response.
-	 *
-	 * @var \CodeIgniter\HTTP\Response
-	 */
-	protected $response;
-
-	/**
-	 * @var \Psr\Log\LoggerInterface
-	 */
-	protected $logger;
+	protected $routes;
 
 	//--------------------------------------------------------------------
 
@@ -53,47 +34,32 @@ class ResourcePresenterTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->config      = new App();
-		$this->request     = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
-		$this->response    = new \CodeIgniter\HTTP\Response($this->config);
-		$this->logger      = \Config\Services::logger();
-		$this->codeigniter = new MockCodeIgniter($this->config);
+		Services::reset();
+
+		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+
+		// Inject mock router.
+		$this->routes = Services::routes();
+		$this->routes->presenter('work', ['controller' => 'Tests\Support\RESTful\Worker2']);
+		Services::injectMock('routes', $this->routes);
+
+		$config            = new App();
+		$this->codeigniter = new MockCodeIgniter($config);
 	}
 
-	protected function getCollector(array $config = [], array $files = [], $moduleConfig = null)
+	public function tearDown()
 	{
-		$defaults = [
-			'Config' => APPPATH . 'Config',
-			'App'    => APPPATH,
-		];
-		$config   = array_merge($config, $defaults);
+		parent::tearDown();
 
-		Services::autoloader()->addNamespace($config);
-
-		$loader = Services::locator();
-
-		if ($moduleConfig === null)
+		if (count(ob_list_handlers()) > 1)
 		{
-			$moduleConfig          = new \Config\Modules();
-			$moduleConfig->enabled = false;
+			ob_end_clean();
 		}
-
-		return new RouteCollection($loader, $moduleConfig);
 	}
 
 	//--------------------------------------------------------------------
 
-	public function testConstructor()
-	{
-		// make sure we can instantiate one
-		$this->controller = new ResourcePresenter();
-		$this->controller->initController($this->request, $this->response, $this->logger);
-		$this->assertInstanceOf(ResourcePresenter::class, $this->controller);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testIndex()
+	public function testResourceGet()
 	{
 		$_SERVER['argv']           = [
 			'index.php',
@@ -103,190 +69,178 @@ class ResourcePresenterTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI']    = '/work';
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		// Inject mock router.
-		$routes = $this->getCollector();
-		$routes->resource('work', ['controller' => '\Tests\Support\Resource\Worker2']);
-		$router = Services::router($routes);
-		Services::injectMock('router', $router);
-
 		ob_start();
-		$this->codeigniter->useSafeOutput(true)->run();
+		$this->codeigniter->useSafeOutput(true)->run($this->routes);
 		$output = ob_get_clean();
 
-		$this->assertContains('Action not implemented', $output);
+		$this->assertEquals(lang('RESTful.notImplemented', ['index']), $output);
 	}
 
-	//  public function testShow()
-	//  {
-	//      $_SERVER['argv']           = [
-	//          'index.php',
-	//          'work',
-	//          'show',
-	//          '1',
-	//      ];
-	//      $_SERVER['argc']           = 4;
-	//      $_SERVER['REQUEST_URI']    = '/work/show/1';
-	//      $_SERVER['REQUEST_METHOD'] = 'GET';
-	//
-	//      // Inject mock router.
-	//      $routes = $this->getCollector();
-	//      $routes->resource('work', ['controller' => '\Tests\Support\Resource\Worker2']);
-	//      $router = Services::router($routes);
-	//      Services::injectMock('router', $router);
-	//
-	//      ob_start();
-	//      $this->codeigniter->useSafeOutput(true)->run();
-	//      $output = ob_get_clean();
-	//
-	//      $this->assertContains('show: Action not implemented', $output);
-	//  }
-	//
-	//  public function testNew()
-	//  {
-	//      $_SERVER['argv']           = [
-	//          'index.php',
-	//          'work',
-	//          'new',
-	//      ];
-	//      $_SERVER['argc']           = 3;
-	//      $_SERVER['REQUEST_URI']    = '/work/new';
-	//      $_SERVER['REQUEST_METHOD'] = 'GET';
-	//
-	//      // Inject mock router.
-	//      $routes = $this->getCollector();
-	//      $routes->resource('work', ['controller' => '\Tests\Support\Resource\Worker2']);
-	//      $router = Services::router($routes);
-	//      Services::injectMock('router', $router);
-	//
-	//      ob_start();
-	//      $this->codeigniter->useSafeOutput(true)->run();
-	//      $output = ob_get_clean();
-	//
-	//      $this->assertContains('new: Action not implemented', $output);
-	//  }
-	//
-	//  public function testCreate()
-	//  {
-	//      $_SERVER['argv']           = [
-	//          'index.php',
-	//          'work',
-	//          'create',
-	//      ];
-	//      $_SERVER['argc']           = 3;
-	//      $_SERVER['REQUEST_URI']    = '/work/create';
-	//      $_SERVER['REQUEST_METHOD'] = 'POST';
-	//
-	//      // Inject mock router.
-	//      $routes = $this->getCollector();
-	//      $routes->resource('work', ['controller' => '\Tests\Support\Resource\Worker2']);
-	//      $router = Services::router($routes);
-	//      Services::injectMock('router', $router);
-	//
-	//      ob_start();
-	//      $this->codeigniter->useSafeOutput(true)->run();
-	//      $output = ob_get_clean();
-	//
-	//      $this->assertContains('create: Action not implemented', $output);
-	//  }
-	//
-	//  public function testRemove()
-	//  {
-	//      $_SERVER['argv']           = [
-	//          'index.php',
-	//          'work',
-	//          'remove',
-	//          '1',
-	//      ];
-	//      $_SERVER['argc']           = 4;
-	//      $_SERVER['REQUEST_URI']    = '/work/remove/1';
-	//      $_SERVER['REQUEST_METHOD'] = 'GET';
-	//
-	//      // Inject mock router.
-	//      $routes = $this->getCollector();
-	//      $routes->resource('work', ['controller' => '\Tests\Support\Resource\Worker2']);
-	//      $router = Services::router($routes);
-	//      Services::injectMock('router', $router);
-	//
-	//      ob_start();
-	//      $this->codeigniter->useSafeOutput(true)->run();
-	//      $output = ob_get_clean();
-	//
-	//      $this->assertContains('remove: Action not implemented', $output);
-	//  }
-	//
-	//  public function testDelete()
-	//  {
-	//      $_SERVER['argv']           = [
-	//          'index.php',
-	//          'work',
-	//          'delete',
-	//          '1',
-	//      ];
-	//      $_SERVER['argc']           = 4;
-	//      $_SERVER['REQUEST_URI']    = '/work/delete/1';
-	//      $_SERVER['REQUEST_METHOD'] = 'POST';
-	//
-	//      // Inject mock router.
-	//      $routes = $this->getCollector();
-	//      $routes->resource('work', ['controller' => '\Tests\Support\Resource\Worker2']);
-	//      $router = Services::router($routes);
-	//      Services::injectMock('router', $router);
-	//
-	//      ob_start();
-	//      $this->codeigniter->useSafeOutput(true)->run();
-	//      $output = ob_get_clean();
-	//
-	//      $this->assertContains('delete: Action not implemented', $output);
-	//  }
-	//
-	//  public function testEdit()
-	//  {
-	//      $_SERVER['argv']           = [
-	//          'index.php',
-	//          'work',
-	//          'edit',
-	//          '1',
-	//      ];
-	//      $_SERVER['argc']           = 4;
-	//      $_SERVER['REQUEST_URI']    = '/work/edit/1';
-	//      $_SERVER['REQUEST_METHOD'] = 'GET';
-	//
-	//      // Inject mock router.
-	//      $routes = $this->getCollector();
-	//      $routes->resource('work', ['controller' => '\Tests\Support\Resource\Worker2']);
-	//      $router = Services::router($routes);
-	//      Services::injectMock('router', $router);
-	//
-	//      ob_start();
-	//      $this->codeigniter->useSafeOutput(true)->run();
-	//      $output = ob_get_clean();
-	//
-	//      $this->assertContains('edit: Action not implemented', $output);
-	//  }
-	//
-	//  public function testUpdate()
-	//  {
-	//      $_SERVER['argv']           = [
-	//          'index.php',
-	//          'work',
-	//          'update',
-	//          '1',
-	//      ];
-	//      $_SERVER['argc']           = 4;
-	//      $_SERVER['REQUEST_URI']    = '/work/update/1';
-	//      $_SERVER['REQUEST_METHOD'] = 'POST';
-	//
-	//      // Inject mock router.
-	//      $routes = $this->getCollector();
-	//      $routes->resource('work', ['controller' => '\Tests\Support\Resource\Worker2']);
-	//      $router = Services::router($routes);
-	//      Services::injectMock('router', $router);
-	//
-	//      ob_start();
-	//      $this->codeigniter->useSafeOutput(true)->run();
-	//      $output = ob_get_clean();
-	//
-	//      $this->assertContains('update: Action not implemented', $output);
-	//  }
+	public function testResourceShow()
+	{
+		$_SERVER['argv']           = [
+			'index.php',
+			'work',
+			'show',
+			'1',
+		];
+		$_SERVER['argc']           = 4;
+		$_SERVER['REQUEST_URI']    = '/work/show/1';
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		ob_start();
+		$this->codeigniter->useSafeOutput(true)->run($this->routes);
+		$output = ob_get_clean();
+
+		$this->assertContains(lang('RESTful.notImplemented', ['show']), $output);
+	}
+
+	public function testResourceNew()
+	{
+		$_SERVER['argv']           = [
+			'index.php',
+			'work',
+			'new',
+		];
+		$_SERVER['argc']           = 3;
+		$_SERVER['REQUEST_URI']    = '/work/new';
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		ob_start();
+		$this->codeigniter->useSafeOutput(true)->run($this->routes);
+		$output = ob_get_clean();
+
+		$this->assertContains(lang('RESTful.notImplemented', ['new']), $output);
+	}
+
+	public function testResourceCreate()
+	{
+		$_SERVER['argv']           = [
+			'index.php',
+			'work',
+			'create',
+		];
+		$_SERVER['argc']           = 3;
+		$_SERVER['REQUEST_URI']    = '/work/create';
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+
+		ob_start();
+		$this->codeigniter->useSafeOutput(true)->run($this->routes);
+		$output = ob_get_clean();
+
+		$this->assertContains(lang('RESTful.notImplemented', ['create']), $output);
+	}
+
+	public function testResourceRemove()
+	{
+		$_SERVER['argv']           = [
+			'index.php',
+			'work',
+			'remove',
+			'123',
+		];
+		$_SERVER['argc']           = 3;
+		$_SERVER['REQUEST_URI']    = '/work/remove/123';
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		ob_start();
+		$this->codeigniter->useSafeOutput(true)->run($this->routes);
+		$output = ob_get_clean();
+
+		$this->assertContains(lang('RESTful.notImplemented', ['remove']), $output);
+	}
+
+	public function testResourceDelete()
+	{
+		$_SERVER['argv']           = [
+			'index.php',
+			'work',
+			'delete',
+			'123',
+		];
+		$_SERVER['argc']           = 3;
+		$_SERVER['REQUEST_URI']    = '/work/delete/123';
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		ob_start();
+		$this->codeigniter->useSafeOutput(true)->run($this->routes);
+		$output = ob_get_clean();
+
+		$this->assertContains(lang('RESTful.notImplemented', ['delete']), $output);
+	}
+
+	public function testResourceEdit()
+	{
+		$_SERVER['argv']           = [
+			'index.php',
+			'work',
+			'edit',
+			'1',
+		];
+		$_SERVER['argc']           = 4;
+		$_SERVER['REQUEST_URI']    = '/work/edit/1';
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		ob_start();
+		$this->codeigniter->useSafeOutput(true)->run($this->routes);
+		$output = ob_get_clean();
+
+		$this->assertContains(lang('RESTful.notImplemented', ['edit']), $output);
+	}
+
+	public function testResourceUpdate()
+	{
+		$_SERVER['argv']           = [
+			'index.php',
+			'work',
+			'update',
+			'123',
+		];
+		$_SERVER['argc']           = 4;
+		$_SERVER['REQUEST_URI']    = '/work/update/123';
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+
+		ob_start();
+		$this->codeigniter->useSafeOutput(true)->run($this->routes);
+		$output = ob_get_clean();
+
+		$this->assertContains(lang('RESTful.notImplemented', ['update']), $output);
+	}
+
+	//--------------------------------------------------------------------
+	public function testModel()
+	{
+		$resource = new \Tests\Support\RESTful\MockResourceController();
+		$this->assertEmpty($resource->getModel());
+		$this->assertEmpty($resource->getModelName());
+	}
+
+	public function testModelBogus()
+	{
+		$resource = new \Tests\Support\RESTful\MockResourceController();
+
+		$resource->setModel('Something');
+		$this->assertEmpty($resource->getModel());
+		$this->assertEquals('Something', $resource->getModelName());
+	}
+
+	public function testModelByName()
+	{
+		$resource = new \Tests\Support\RESTful\MockResourceController();
+		$resource->setModel('\Tests\Support\Models\UserModel');
+		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
+		$this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());
+	}
+
+	public function testModelByObject()
+	{
+		$resource = new \Tests\Support\RESTful\MockResourceController();
+		$model    = new \Tests\Support\Models\UserModel();
+		$resource->setModel($model);
+		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
+
+		// Note that the leading backslash is missing if we build it this way
+		$this->assertEquals('Tests\Support\Models\UserModel', $resource->getModelName());
+	}
 
 }
