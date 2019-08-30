@@ -176,6 +176,7 @@ class ResourcePresenterTest extends \CIUnitTestCase
 			'work',
 			'edit',
 			'1',
+			'edit',
 		];
 		$_SERVER['argc']           = 4;
 		$_SERVER['REQUEST_URI']    = '/work/edit/1';
