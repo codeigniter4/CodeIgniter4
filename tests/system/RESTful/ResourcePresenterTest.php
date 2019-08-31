@@ -209,16 +209,17 @@ class ResourcePresenterTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
 	public function testModel()
 	{
-		$resource = new \Tests\Support\RESTful\MockResourceController();
+		$resource = new \Tests\Support\RESTful\MockResourcePresenter();
 		$this->assertEmpty($resource->getModel());
 		$this->assertEmpty($resource->getModelName());
 	}
 
 	public function testModelBogus()
 	{
-		$resource = new \Tests\Support\RESTful\MockResourceController();
+		$resource = new \Tests\Support\RESTful\MockResourcePresenter();
 
 		$resource->setModel('Something');
 		$this->assertEmpty($resource->getModel());
@@ -227,7 +228,7 @@ class ResourcePresenterTest extends \CIUnitTestCase
 
 	public function testModelByName()
 	{
-		$resource = new \Tests\Support\RESTful\MockResourceController();
+		$resource = new \Tests\Support\RESTful\MockResourcePresenter();
 		$resource->setModel('\Tests\Support\Models\UserModel');
 		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
 		$this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());
@@ -235,7 +236,7 @@ class ResourcePresenterTest extends \CIUnitTestCase
 
 	public function testModelByObject()
 	{
-		$resource = new \Tests\Support\RESTful\MockResourceController();
+		$resource = new \Tests\Support\RESTful\MockResourcePresenter();
 		$model    = new \Tests\Support\Models\UserModel();
 		$resource->setModel($model);
 		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
