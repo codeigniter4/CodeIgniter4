@@ -11,8 +11,8 @@ use Tests\Support\MockCodeIgniter;
  * so we need to make sure that the methods routed to
  * return correct responses.
  *
- * @runInSeparateProcess
- * @preserveGlobalState  disabled
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState         disabled
  */
 class ResourceControllerTest extends \CIUnitTestCase
 {
