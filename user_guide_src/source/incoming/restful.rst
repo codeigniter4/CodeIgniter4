@@ -139,6 +139,7 @@ Its usage is similar to the resosurce routing::
 
     // Equivalent to the following:
     $routes->get('photos',                 'Photos::index');
+    $routes->post('photos',                'Photos::create');   // alias
     $routes->get('photos/show/(:segment)',      'Photos::show/$1');
     $routes->get('photos/new',             'Photos::new');
     $routes->post('photos/create',                'Photos::create');
@@ -146,7 +147,8 @@ Its usage is similar to the resosurce routing::
     $routes->post('photos/update/(:segment)',    'Photos::update/$1');
     $routes->get('photos/remove/(:segment)',   'Photos::remove/$1');
     $routes->post('photos/delete/(:segment)',      'Photos::update/$1');
-
+    $routes->get('photos/(:segment)',      'Photos::show/$1');  // alias
+ 
 You would not have routes for `photos` for both a resource and a presenter
 controller. You need to distinguish them, for instance::
 

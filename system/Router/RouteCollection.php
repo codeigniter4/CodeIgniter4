@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * CodeIgniter
  *
@@ -899,7 +897,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *      HTTP Verb | Path        | Action        | Used for...
 	 *      ----------+-------------+---------------+-----------------
 	 *      GET         /photos             index           showing all array of photo objects
-	 *      GET         /photos/{id}        show            showing a specific photo object, all properties
+	 *      GET         /photos/show/{id}   show            showing a specific photo object, all properties
 	 *      GET         /photos/new         new             showing a form for an empty photo object, with default properties
 	 *      POST        /photos/create      create          processing the form for a new photo
 	 *      GET         /photos/edit/{id}   edit            show an editing form for a specific photo object, editable properties
@@ -959,7 +957,7 @@ class RouteCollection implements RouteCollectionInterface
 		}
 		if (in_array('show', $methods))
 		{
-			$this->get($name . '/' . $id, $newName . '::show/$1', $options);
+			$this->get($name . '/show/' . $id, $newName . '::show/$1', $options);
 		}
 		if (in_array('new', $methods))
 		{
@@ -967,23 +965,31 @@ class RouteCollection implements RouteCollectionInterface
 		}
 		if (in_array('create', $methods))
 		{
-			$this->post($name, $newName . '::create', $options);
+			$this->post($name . '/create', $newName . '::create', $options);
 		}
 		if (in_array('edit', $methods))
 		{
-			$this->get($name . '/' . $id . '/edit', $newName . '::edit/$1', $options);
+			$this->get($name . '/edit/' . $id, $newName . '::edit/$1', $options);
 		}
 		if (in_array('update', $methods))
 		{
-			$this->post($name . '/' . $id, $newName . '::update/$1', $options);
+			$this->post($name . '/update/' . $id, $newName . '::update/$1', $options);
 		}
 		if (in_array('remove', $methods))
 		{
-			$this->get($name . '/' . $id, $newName . '::remove/$1', $options);
+			$this->get($name . '/remove/' . $id, $newName . '::remove/$1', $options);
 		}
 		if (in_array('delete', $methods))
 		{
-			$this->post($name . '/' . $id, $newName . '::delete/$1', $options);
+			$this->post($name . '/delete/' . $id, $newName . '::delete/$1', $options);
+		}
+		if (in_array('show', $methods))
+		{
+			$this->get($name . '/' . $id, $newName . '::show/$1', $options);
+		}
+		if (in_array('create', $methods))
+		{
+			$this->post($name, $newName . '::create', $options);
 		}
 
 		return $this;

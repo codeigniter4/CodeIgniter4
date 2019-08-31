@@ -160,7 +160,7 @@ class ResourcePresenterTest extends \CIUnitTestCase
 		];
 		$_SERVER['argc']           = 3;
 		$_SERVER['REQUEST_URI']    = '/work/delete/123';
-		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['REQUEST_METHOD'] = 'POST';
 
 		ob_start();
 		$this->codeigniter->useSafeOutput(true)->run($this->routes);
