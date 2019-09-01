@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Library Reference &mdash; CodeIgniter4 4.0.0-beta.4 documentation</title>
+  <title>Replacing Common Functions &mdash; CodeIgniter4 4.0.0-beta.4 documentation</title>
   
 
   
@@ -35,8 +35,9 @@
 
   
     <link rel="top" title="CodeIgniter4 4.0.0-beta.4 documentation" href="../index.html"/>
-        <link rel="next" title="Caching Driver" href="caching.html"/>
-        <link rel="prev" title="Database Seeding" href="../dbmgmt/seeds.html"/> 
+        <link rel="up" title="Extending CodeIgniter" href="index.html"/>
+        <link rel="next" title="Events" href="events.html"/>
+        <link rel="prev" title="Creating Core System Classes" href="core_classes.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -112,27 +113,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Library Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="caching.html">Caching Driver</a></li>
-<li class="toctree-l2"><a class="reference internal" href="curlrequest.html">CURLRequest Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="email.html">Email Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="encryption.html">Encryption Service</a></li>
-<li class="toctree-l2"><a class="reference internal" href="files.html">Working with Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="honeypot.html">Honeypot Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="images.html">Image Manipulation Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pagination.html">Pagination</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html">Security Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sessions.html">Session Library</a></li>
-<li class="toctree-l2"><a class="reference internal" href="throttler.html">Throttler</a></li>
-<li class="toctree-l2"><a class="reference internal" href="time.html">Dates and Times</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typography.html">Typography</a></li>
-<li class="toctree-l2"><a class="reference internal" href="uploaded_files.html">Working with Uploaded Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="uri.html">Working with URIs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_agent.html">User Agent Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="validation.html">Validation</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
@@ -143,8 +125,15 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Extending CodeIgniter</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core_classes.html">Creating Core System Classes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Replacing Common Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basecontroller.html">Extending the Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing to CodeIgniter</a></li>
+</ul>
+</li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
@@ -193,7 +182,9 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Library Reference</li>
+          <li><a href="index.html">Extending CodeIgniter</a> &raquo;</li>
+        
+      <li>Replacing Common Functions</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -210,28 +201,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="library-reference">
-<h1>Library Reference<a class="headerlink" href="#library-reference" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="caching.html">Caching Driver</a></li>
-<li class="toctree-l1"><a class="reference internal" href="curlrequest.html">CURLRequest Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="email.html">Email Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="encryption.html">Encryption Service</a></li>
-<li class="toctree-l1"><a class="reference internal" href="files.html">Working with Files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="honeypot.html">Honeypot Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="images.html">Image Manipulation Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pagination.html">Pagination</a></li>
-<li class="toctree-l1"><a class="reference internal" href="security.html">Security Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sessions.html">Session Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="throttler.html">Throttler</a></li>
-<li class="toctree-l1"><a class="reference internal" href="time.html">Dates and Times</a></li>
-<li class="toctree-l1"><a class="reference internal" href="typography.html">Typography</a></li>
-<li class="toctree-l1"><a class="reference internal" href="uploaded_files.html">Working with Uploaded Files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="uri.html">Working with URIs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user_agent.html">User Agent Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="validation.html">Validation</a></li>
-</ul>
+  <div class="section" id="replacing-common-functions">
+<h1>Replacing Common Functions<a class="headerlink" href="#replacing-common-functions" title="Permalink to this headline">¶</a></h1>
+<p>There are quite a few functions necessary to CodeIgniter that need to be loaded early for use in the core classes and
+thus cannot be placed into a helper. While most users will never have any need to do this, but the option to replace
+these functions does exist for those who would like to significantly alter the CodeIgniter core. In the <code class="docutils literal"><span class="pre">App\</span></code>
+directory there is a file <code class="docutils literal"><span class="pre">Common.php</span></code>, and any functions defined in there will take precedence over the versions
+found in <code class="docutils literal"><span class="pre">system/Common.php</span></code>. This is also an opportunity to create globally-available functions you intend to
+use throughout the framework.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Messing with a core system class has a lot of implications, so make sure you know what you are doing before
+attempting it.</p>
 </div>
 </div>
 
@@ -245,10 +226,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="caching.html" class="btn btn-neutral float-right" title="Caching Driver" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="events.html" class="btn btn-neutral float-right" title="Events" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../dbmgmt/seeds.html" class="btn btn-neutral" title="Database Seeding" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="core_classes.html" class="btn btn-neutral" title="Creating Core System Classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

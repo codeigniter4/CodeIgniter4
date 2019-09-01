@@ -229,7 +229,8 @@ actions:</p>
 <ul class="simple">
 <li><a class="reference internal" href="#initializing-the-class" id="id1">Initializing the Class</a><ul>
 <li><a class="reference internal" href="#processing-an-image" id="id2">Processing an Image</a></li>
-<li><a class="reference internal" href="#processing-methods" id="id3">Processing Methods</a></li>
+<li><a class="reference internal" href="#image-quality" id="id3">Image Quality</a></li>
+<li><a class="reference internal" href="#processing-methods" id="id4">Processing Methods</a></li>
 </ul>
 </li>
 </ul>
@@ -307,8 +308,23 @@ while processing images you may need to limit their maximum size, and/or
 adjust PHP memory limits.</p>
 </div>
 </div>
+<div class="section" id="image-quality">
+<h3><a class="toc-backref" href="#id3">Image Quality</a><a class="headerlink" href="#image-quality" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">save()</span></code> can take an additional parameter <code class="docutils literal"><span class="pre">$quality</span></code> to alter the resulting image
+quality. Values range from 0 to 100 with 90 being the framework default. This parameter
+only applies to JPEG images and will be ignored otherwise:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/image/my_low_quality_pic.jpg&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Higher quality will result in larger file sizes. See also <a class="reference external" href="https://www.php.net/manual/en/function.imagejpeg.php">https://www.php.net/manual/en/function.imagejpeg.php</a></p>
+</div>
+</div>
 <div class="section" id="processing-methods">
-<h3><a class="toc-backref" href="#id3">Processing Methods</a><a class="headerlink" href="#processing-methods" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id4">Processing Methods</a><a class="headerlink" href="#processing-methods" title="Permalink to this headline">¶</a></h3>
 <p>There are seven available processing methods:</p>
 <ul class="simple">
 <li>$image-&gt;crop()</li>
@@ -572,7 +588,7 @@ name of one of the installed system fonts that you wish to use, i.e. Calibri.</p
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Aug 27, 2019.
+      Last updated on Sep 01, 2019.
 
     </p>
   </div>
