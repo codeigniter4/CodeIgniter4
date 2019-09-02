@@ -870,18 +870,18 @@ class BaseBuilder
 		}
 		else
 		{
-			$where_in = is_array($values) ? array_values($values) : $values;
-			$ok       = $this->setBind($ok, $where_in, $escape);
+			$whereIn = is_array($values) ? array_values($values) : $values;
+			$ok      = $this->setBind($ok, $whereIn, $escape);
 		}
 
 		$prefix = empty($this->QBWhere) ? $this->groupGetType('') : $this->groupGetType($type);
 
-		$where_in = [
+		$whereIn = [
 			'condition' => $prefix . $key . $not . ($values instanceof Closure ? " IN ($ok)" : " IN :{$ok}:"),
 			'escape'    => false,
 		];
 
-		$this->QBWhere[] = $where_in;
+		$this->QBWhere[] = $whereIn;
 
 		return $this;
 	}
