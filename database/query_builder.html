@@ -471,20 +471,39 @@ control the comparison:</p>
 </li>
 <li><dl class="first docutils">
 <dt><strong>Custom string:</strong></dt>
-<dd><p class="first">You can write your own clauses manually:</p>
-<div class="last highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$where</span> <span class="o">=</span> <span class="s2">&quot;name=&#39;Joe&#39; AND status=&#39;boss&#39; OR status=&#39;active&#39;&quot;</span><span class="p">;</span>
+<dd><blockquote class="first">
+<div><p>You can write your own clauses manually:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$where</span> <span class="o">=</span> <span class="s2">&quot;name=&#39;Joe&#39; AND status=&#39;boss&#39; OR status=&#39;active&#39;&quot;</span><span class="p">;</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="nv">$where</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">$builder-&gt;where()</span></code> accepts an optional third parameter. If you set it to
+FALSE, CodeIgniter will not try to protect your field or table names.</p>
+<div class="last highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;MATCH (field) AGAINST (&quot;value&quot;)&#39;</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd>
 </dl>
 </li>
-</ol>
-<p><code class="docutils literal"><span class="pre">$builder-&gt;where()</span></code> accepts an optional third parameter. If you set it to
-FALSE, CodeIgniter will not try to protect your field or table names.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;MATCH (field) AGAINST (&quot;value&quot;)&#39;</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">);</span>
+<li><dl class="first docutils">
+<dt><strong>Subqueries:</strong></dt>
+<dd><dl class="first last docutils">
+<dt>You can use an anonymous function to create a subquery.</dt>
+<dd><div class="first highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;advance_amount &lt;&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
 </pre></div>
 </div>
+<blockquote>
+<div><p>return $builder-&gt;select(&#8216;MAX(advance_amount)&#8217;, false)-&gt;from(&#8216;orders&#8217;)-&gt;where(&#8216;id &gt;&#8217;, 2);</p>
+</div></blockquote>
+<p class="last">});
+// Produces: WHERE &#8220;advance_amount&#8221; &lt; (SELECT MAX(advance_amount) FROM &#8220;orders&#8221; WHERE &#8220;id&#8221; &gt; 2)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+</ol>
 <p><strong>$builder-&gt;orWhere()</strong></p>
 <p>This function is identical to the one above, except that multiple
 instances are joined by OR:</p>
@@ -495,35 +514,83 @@ instances are joined by OR:</p>
 <p><strong>$builder-&gt;whereIn()</strong></p>
 <p>Generates a WHERE field IN (&#8216;item&#8217;, &#8216;item&#8217;) SQL query joined with AND if
 appropriate</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
 <span class="c1">// Produces: WHERE username IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
 </pre></div>
 </div>
+</div></blockquote>
+<p>You can use subqueries instead of an array of values.</p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;job_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Produces: WHERE &quot;id&quot; IN (SELECT &quot;job_id&quot; FROM &quot;users_jobs&quot; WHERE &quot;user_id&quot; = 3)</span>
+</pre></div>
+</div>
+</div></blockquote>
 <p><strong>$builder-&gt;orWhereIn()</strong></p>
 <p>Generates a WHERE field IN (&#8216;item&#8217;, &#8216;item&#8217;) SQL query joined with OR if
 appropriate</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
 <span class="c1">// Produces: OR username IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
 </pre></div>
 </div>
+</div></blockquote>
+<p>You can use subqueries instead of an array of values.</p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;job_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Produces: OR &quot;id&quot; IN (SELECT &quot;job_id&quot; FROM &quot;users_jobs&quot; WHERE &quot;user_id&quot; = 3)</span>
+</pre></div>
+</div>
+</div></blockquote>
 <p><strong>$builder-&gt;whereNotIn()</strong></p>
 <p>Generates a WHERE field NOT IN (&#8216;item&#8217;, &#8216;item&#8217;) SQL query joined with
 AND if appropriate</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereNotIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
 <span class="c1">// Produces: WHERE username NOT IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
 </pre></div>
 </div>
+</div></blockquote>
+<p>You can use subqueries instead of an array of values.</p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereNotIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;job_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Produces: WHERE &quot;id&quot; NOT IN (SELECT &quot;job_id&quot; FROM &quot;users_jobs&quot; WHERE &quot;user_id&quot; = 3)</span>
+</pre></div>
+</div>
+</div></blockquote>
 <p><strong>$builder-&gt;orWhereNotIn()</strong></p>
 <p>Generates a WHERE field NOT IN (&#8216;item&#8217;, &#8216;item&#8217;) SQL query joined with OR
 if appropriate</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereNotIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
 <span class="c1">// Produces: OR username NOT IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
 </pre></div>
 </div>
+</div></blockquote>
+<p>You can use subqueries instead of an array of values.</p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereNotIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;job_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Produces: OR &quot;id&quot; NOT IN (SELECT &quot;job_id&quot; FROM &quot;users_jobs&quot; WHERE &quot;user_id&quot; = 3)</span>
+</pre></div>
+</div>
+</div></blockquote>
 </div>
 <div class="section" id="looking-for-similar-data">
 <h2><a class="toc-backref" href="#id4">Looking for Similar Data</a><a class="headerlink" href="#looking-for-similar-data" title="Permalink to this headline">¶</a></h2>
@@ -1479,7 +1546,7 @@ Separates multiple calls with &#8216;OR&#8217;.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$key</strong> (<em>string</em>) &#8211; The field to search</li>
-<li><strong>$values</strong> (<em>array</em>) &#8211; The values searched on</li>
+<li><strong>$values</strong> (<em>array|Closure</em>) &#8211; Array of target values, or anonymous function for subquery</li>
 <li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
 </ul>
 </td>
@@ -1505,7 +1572,7 @@ joined with &#8216;OR&#8217; if appropriate.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$key</strong> (<em>string</em>) &#8211; The field to search</li>
-<li><strong>$values</strong> (<em>array</em>) &#8211; The values searched on</li>
+<li><strong>$values</strong> (<em>array|Closure</em>) &#8211; Array of target values, or anonymous function for subquery</li>
 <li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
 </ul>
 </td>
@@ -1531,7 +1598,7 @@ joined with &#8216;OR&#8217; if appropriate.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$key</strong> (<em>string</em>) &#8211; Name of field to examine</li>
-<li><strong>$values</strong> (<em>array</em>) &#8211; Array of target values</li>
+<li><strong>$values</strong> (<em>array|Closure</em>) &#8211; Array of target values, or anonymous function for subquery</li>
 <li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
 </ul>
 </td>
@@ -1557,7 +1624,7 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$key</strong> (<em>string</em>) &#8211; Name of field to examine</li>
-<li><strong>$values</strong> (<em>array</em>) &#8211; Array of target values</li>
+<li><strong>$values</strong> (<em>array|Closure</em>) &#8211; Array of target values, or anonymous function for subquery</li>
 <li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
 </ul>
 </td>
