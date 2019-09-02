@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * CodeIgniter
  *
@@ -107,7 +105,7 @@ class Honeypot
 		$prep_field = $this->prepareTemplate($this->config->template);
 
 		$body = $response->getBody();
-		$body = str_ireplace('</form>', $prep_field, $body);
+		$body = str_ireplace('</form>', $prep_field . '</form>', $body);
 		$response->setBody($body);
 	}
 
