@@ -63,15 +63,15 @@ to optional packages, with their own repository.
 
 ## Contributing
 
-We **are** accepting contributions from the community, specifically those identified as part of phase 2.
+We **are** accepting contributions from the community!
 
-We will try to manage the process somewhat, by adding a "Help wanted" label to those that we are 
-specifically interested in at any point in time. Join the discussion for those issues, and let us know 
-if you want to take the lead for one of them.
+We will try to manage the process somewhat, by adding a ["help wanted" label](https://github.com/codeigniter4/CodeIgniter4/labels/help%20wanted) to those that we are 
+specifically interested in at any point in time. Join the discussion for those issues and let us know 
+if you want to take the lead on one of them.
 
-We are not looking for out-of-scope contributions, only those that would be considered part of our controlled evolution!
+At this time, we are not looking for out-of-scope contributions, only those that would be considered part of our controlled evolution!
 
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing.md) section in the user guide
+Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing.md) section in the user guide.
 
 ## Server Requirements
 
@@ -84,10 +84,10 @@ PHP version 7.2 or higher is required, with the following extensions installed:
 Additionally, make sure that the following extensions are enabled in your PHP:
 
 - json (enabled by default - don't turn it off)
+- xml (enabled by default - don't turn it off)
 - [mbstring](http://php.net/manual/en/mbstring.installation.php)
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php)
-- xml (enabled by default - don't turn it off)
 
 ## Running CodeIgniter Tests
 
-Information on running CodeIgniter test suite can be found in the [README.md](tests/README.md) file in the tests directory.
+Information on running the CodeIgniter test suite can be found in the [README.md](tests/README.md) file in the tests directory.
