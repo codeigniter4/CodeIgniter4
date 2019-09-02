@@ -759,9 +759,9 @@ class BaseBuilder
 	 * Generates a WHERE field IN('item', 'item') SQL query,
 	 * joined with 'AND' if appropriate.
 	 *
-	 * @param string        $key    The field to search
-	 * @param array|Closure $values The values searched on, or anonymous function with subquery
-	 * @param boolean       $escape
+	 * @param string               $key    The field to search
+	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+	 * @param boolean              $escape
 	 *
 	 * @return BaseBuilder
 	 */
@@ -778,9 +778,9 @@ class BaseBuilder
 	 * Generates a WHERE field IN('item', 'item') SQL query,
 	 * joined with 'OR' if appropriate.
 	 *
-	 * @param string        $key    The field to search
-	 * @param array|Closure $values The values searched on, or anonymous function with subquery
-	 * @param boolean       $escape
+	 * @param string               $key    The field to search
+	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+	 * @param boolean              $escape
 	 *
 	 * @return BaseBuilder
 	 */
@@ -797,9 +797,9 @@ class BaseBuilder
 	 * Generates a WHERE field NOT IN('item', 'item') SQL query,
 	 * joined with 'AND' if appropriate.
 	 *
-	 * @param string        $key    The field to search
-	 * @param array|Closure $values The values searched on, or anonymous function with subquery
-	 * @param boolean       $escape
+	 * @param string               $key    The field to search
+	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+	 * @param boolean              $escape
 	 *
 	 * @return BaseBuilder
 	 */
@@ -816,9 +816,9 @@ class BaseBuilder
 	 * Generates a WHERE field NOT IN('item', 'item') SQL query,
 	 * joined with 'OR' if appropriate.
 	 *
-	 * @param string        $key    The field to search
-	 * @param array|Closure $values The values searched on, or anonymous function with subquery
-	 * @param boolean       $escape
+	 * @param string               $key    The field to search
+	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+	 * @param boolean              $escape
 	 *
 	 * @return BaseBuilder
 	 */
@@ -870,17 +870,18 @@ class BaseBuilder
 		}
 		else
 		{
-			$ok = $this->setBind($ok, array_values($values), $escape);
+			$whereIn = is_array($values) ? array_values($values) : $values;
+			$ok      = $this->setBind($ok, $whereIn, $escape);
 		}
 
 		$prefix = empty($this->QBWhere) ? $this->groupGetType('') : $this->groupGetType($type);
 
-		$where_in = [
+		$whereIn = [
 			'condition' => $prefix . $key . $not . ($values instanceof Closure ? " IN ($ok)" : " IN :{$ok}:"),
 			'escape'    => false,
 		];
 
-		$this->QBWhere[] = $where_in;
+		$this->QBWhere[] = $whereIn;
 
 		return $this;
 	}
