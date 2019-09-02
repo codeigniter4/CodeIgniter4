@@ -13,8 +13,12 @@ class MigrationTest extends CIDatabaseTestCase
 	{
 		$migration = new class extends Migration {
 			protected $DBGroup = 'tests';
-			function up(){}
-			function down(){}
+			function up()
+			{
+			}
+			function down()
+			{
+			}
 		};
 
 		$dbGroup = $migration->getDBGroup();

@@ -815,7 +815,7 @@ if (! function_exists('force_https'))
 		$response->setHeader('Strict-Transport-Security', 'max-age=' . $duration);
 		$response->redirect($uri);
 		$response->sendHeaders();
-		
+
 		exit();
 	}
 }

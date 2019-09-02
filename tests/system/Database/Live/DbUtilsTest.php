@@ -123,7 +123,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 	{
 		$util = (new Database())->loadUtils($this->db);
 
-		$this->setPrivateProperty($util,'optimizeTable', false);
+		$this->setPrivateProperty($util, 'optimizeTable', false);
 
 		$this->expectException(DatabaseException::class);
 		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
@@ -155,7 +155,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 	{
 		$util = (new Database())->loadUtils($this->db);
 
-		$this->setPrivateProperty($util,'optimizeTable', false);
+		$this->setPrivateProperty($util, 'optimizeTable', false);
 
 		$this->expectException(DatabaseException::class);
 		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
@@ -180,7 +180,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 	public function testUtilsCSVFromResult()
 	{
 		$data = $this->db->table('job')
-		                 ->get();
+						 ->get();
 
 		$util = (new Database())->loadUtils($this->db);
 
@@ -196,8 +196,8 @@ class DbUtilsTest extends CIDatabaseTestCase
 	public function testUtilsXMLFromResult()
 	{
 		$data = $this->db->table('job')
-		                 ->where('id', 4)
-		                 ->get();
+						 ->where('id', 4)
+						 ->get();
 
 		$util = (new Database())->loadUtils($this->db);
 

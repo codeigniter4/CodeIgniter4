@@ -95,7 +95,7 @@ class DownloadResponseTest extends \CIUnitTestCase
 
 		$this->assertEquals('application/octet-stream', $response->getHeaderLine('Content-Type'));
 	}
-	
+
 	public function testSetFileName()
 	{
 		$response = new DownloadResponse('unit-test.txt', true);

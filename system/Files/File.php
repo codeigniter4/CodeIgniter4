@@ -151,7 +151,7 @@ class File extends SplFileInfo
 	public function getRandomName(): string
 	{
 		$extension = $this->getExtension();
-		$extension = empty($extension) ? '' : '.' . $extension;	
+		$extension = empty($extension) ? '' : '.' . $extension;
 		return time() . '_' . bin2hex(random_bytes(10)) . $extension;
 	}
 
@@ -204,7 +204,7 @@ class File extends SplFileInfo
 	{
 		while (is_file($destination))
 		{
-			$info = pathinfo($destination);
+			$info      = pathinfo($destination);
 			$extension = isset($info['extension']) ? '.' . $info['extension'] : '';
 			if (strpos($info['filename'], $delimiter) !== false)
 			{
