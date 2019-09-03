@@ -184,7 +184,7 @@ selectMax(), You can optionally include a second parameter to rename
 the resulting field.
 
 .. note:: This method is particularly helpful when used with ``groupBy()``. For
-counting results generally see ``countAll()`` or ``countAllResults()``.
+        counting results generally see ``countAll()`` or ``countAllResults()``.
 
 ::
 
@@ -297,7 +297,8 @@ methods:
 
 #. **Subqueries:**
     You can use an anonymous function to create a subquery.
-	::
+
+    ::
 
         $builder->where('advance_amount <', function(BaseBuilder $builder) {
             return $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2);
@@ -307,7 +308,9 @@ methods:
 **$builder->orWhere()**
 
 This function is identical to the one above, except that multiple
-instances are joined by OR::
+instances are joined by OR
+
+    ::
 
 	$builder->where('name !=', $name);
 	$builder->orWhere('id >', $id);  // Produces: WHERE name != 'Joe' OR id > 50
@@ -330,7 +333,6 @@ You can use subqueries instead of an array of values.
         $builder->whereIn('id', function(BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
-
         // Produces: WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
 
 **$builder->orWhereIn()**
