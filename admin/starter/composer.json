@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": ">=7.2",
-        "codeigniter4/framework": "^4@beta"
+        "codeigniter4/framework": "^4@rc"
     },
     "require-dev": {
         "mikey179/vfsstream": "1.6.*",

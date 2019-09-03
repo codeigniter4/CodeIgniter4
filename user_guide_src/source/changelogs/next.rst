@@ -9,19 +9,30 @@ Enhancements:
 
 - CI3 Email ported to CI4
 - Encryption (basic) added
-- Migrations refactored for more wholistic functionality (BC)
+- Migrations refactored and streamlined for more wholistic functionality (BC)
 - added convert() to ImageHandlerInterface
 - disabled debug toolbar for downloads
+- CLI commands returns an error code now ("spark" changed)
+- RESTful controllers added to shorten dev time for RESTful APIs
+- added RouteCollection::presenter() as part of the RESTful support
 
 App changes:
 
+- added app/Common to make it easier to override common functions 
 - Config/Email and Encryption added
 - Config/Migration modified, and has different settings
 - Controllers/Home fixed, removing unnecessary model reference
 
+Message changes:
+
+- Migration has new & modified messages
+- Messages now has RESTful set 
+
 The list of changed files follows, with PR numbers shown.
 
 - admin/
+	- release-appstarter #2155
+	- release-framework #2155
 
 - app/
 	- Config/
@@ -31,6 +42,8 @@ The list of changed files follows, with PR numbers shown.
 	- Controllers/
 		- BaseController #2046
 		- Home #2145
+
+	- Common #2110
 
 - public/
 
@@ -42,18 +55,21 @@ The list of changed files follows, with PR numbers shown.
 		- FileLocator #2149
 	- Cache/Handlders/
 		- RedisHandler #2144
+	- CLI/
+		- CommandRunner #2164
 	- Commands/Database/
 		- CreateMigration #2065
-		- MigrationCurrent #2065
-		- MigrationLatest #2065
-		- MigrationRefresh #2065
-		- MigrationRollback #2065
+		- Migrate #2065, 2137
+		- MigrateRefresh #2065, 2137
+		- MigrateRollback #2065, 2137
+		- MigrateStatus #2137
+		- MigrateVersion #2137
 	- Config/
 		- BaseConfig #2082
 		- Services #2135, 2092
 	- Database/
-		- BaseBuilder #2127, 2090, 2142
-		- MigrationRunner #2065
+		- BaseBuilder #2127, 2090, 2142, 2153, 2160, 2023, 2001
+		- MigrationRunner #2065, 2137
 	- Debug/
 		- Toolbar #2118
 	- Email/
@@ -66,67 +82,134 @@ The list of changed files follows, with PR numbers shown.
 			- BaseHandler #2135
 			- OpenSSLHandler #2135
 	- Exceptions/
-		- ConfigException #2065		
+		- ConfigException #2065	
+	- Files/
+		- File #2178	
 	- Filters/
 		- DebugToolbar #2118
 	- Helpers/
 		- inflector_helper #2065
+	- Honeypot/
+		- Honeypot #2177
 	- HTTP/
 		- DownloadResponse #2129
 		- Files/UploadedFile #2128
+		- Message @2171
+		- Response #2166
 	- Images/
-		- Handlers/BaseHandler #2113, 2150
+		- Handlers/
+			-BaseHandler #2113, 2150
+			- ImageMagickHandler #2151
 		- BImageHandlerInterface #2113
 	- Language/en/
 		- Email #2092
 		- Encryption #2135
-		- Migrations #2065
+		- Migrations #2065, 2137
+		- RESTful #2165
+	- RESTful/
+		- ResourceController #2165
+		- ResourcePresenter #2165
+	- Router/
+		- RouteCollection #2165
+	- Security/
+		- Security #2027
 	- Session/Handlers/
 		- RedisHandler #2125
-	- CodeIgniter #2126
+	- Test/
+		- CIDatabaseTestCase #2137
+
+	- bootstrap #2110
+	- CodeIgniter #2126, 2164
 	- Common #2109
+	- Entity #2112
 	- Model #2090
 
+- tests/_support/
+	- RESTful/... #2165
 
 - tests/system/
 	- API/
 		- ResponseTraitTest #2131
 	- Database/
-		- Builder/GetTest #2142
-		- Live/ModelTest #2090
-		- Migrations/MigrationRunnerTest #2065
+		- Builder/
+			- GetTest #2142
+			- SelectTest #2160
+			- WhereTest #2001
+		- Live/
+			- GroupTest #2160
+			- ModelTest #2090
+			- SelectTest #2160
+		- Migrations/MigrationRunnerTest #2065, 2137
 	- Encryption/
 		- EncryptionTest #2135
 		- OpenSSLHandlerTest #2135
 	- Helpers/
 		- InflectorHelperTest #2065
 	- HTTP/
-		DownloadResponseTest #2129
+		- DownloadResponseTest #2129
+		- MessageTest #2171
 	- Images/
 		- GDHandlerTest #2113
+	- RESTful/
+		- ResourceControllerTest #2165
+		- ResourcePresenterTest #2165
+	- Router/
+		- RouteCollectionTest #2165
+
+	- ControllerTest #2165
+	- EntityTest #2112
 
 - user_guide_src/
+	- changelogs/
+		- next #2154
+	- database/
+		- query_builder #2160, 2001
 	- dbmgmt/
-		- migrations #2065, 2132, 2136
+		- migrations #2065, 2132, 2136, 2154, 2137
+	- extending/
+		- common #2162
 	- helpers/
 		- inflector_helper #2065
+	- incoming/
+		- restful #2165
+		- routing #2165
 	- libraries/
-		- email #2092
+		- email #2092, 2154
 		- encryption #2135
-		- images #2113
+		- images #2113, 2169
 	- outgoing/
 		- api_responses #2131
 		- localization #2134
 		- response #2129
+	- testing/
+		- database #2137
+
+- CONTRIBUTING.md #2010
+- README.md #2010
+- spark
 
 PRs merged:
 -----------
 
+- #2178 Add fallback for missing finfo_open
+- #2177 Fix missing form close tag
+- #2171 Setheader dupes
+- #2169 Add $quality usage for Image Library
+- #2166 Cookie error
+- #2165 RESTful help
+- #2164 Exit error code on CLI Command failure
+- #2162 User Guide updates for Common.php
+- #2160 Add BaseBuilder SelectCount
+- #2155 Include .gitignore in starters
+- #2153 Bug fix countAllResults with LIMIT
+- #2154 Fix email & migrations docs; update changelog
+- #2151 ImageMagick->save() return value
 - #2150 New logic for Image->fit()
 - #2149 listNamespaceFiles: Ensure trailing slash
 - #2145 Remove UserModel reference from Home controller
 - #2144 Update Redis legacy function
 - #2142 Fixing BuilderBase resetting when getting the SQL
+- #2137 New Migration Logic
 - #2136 Migrations user guide fixes
 - #2135 Encryption
 - #2134 Fix localization writeup
@@ -139,9 +222,15 @@ PRs merged:
 - #2125 Updated redis session handler to support redis 5.0.x
 - #2118 Disabled Toolbar on downloads
 - #2113 Add Image->convert()
+- #2112 Update `Entity.php` `__isset` method
+- #2110 Added app/Common.php
 - #2109 Fix typo in checking if exists db_connect()
 - #2092 Original email port
 - #2090 Fix prevent soft delete all without conditions set
 - #2082 Update BaseConfig.php
 - #2065 Migration updates for more wholistic functionality
 - #2046 clean base controller code
+- #2027 Fix CSRF hash regeneration
+- #2023 whereIn $value do not have to be an array
+- #2010 Fix CSRF hash regenerationerbiage revisions
+- #2001 Subqueries in BaseBuilder
