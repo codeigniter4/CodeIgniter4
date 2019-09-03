@@ -200,7 +200,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 		{
 			if (! empty($this->basePath))
 			{
-				$this->seeder->setPath(rtrim($this->basePath, '/') . '/seeds');
+				$this->seeder->setPath(rtrim($this->basePath, '/') . '/Seeds');
 			}
 
 			$this->seed($this->seed);
