@@ -56,10 +56,6 @@ class Paths
 	 * ---------------------------------------------------------------
 	 *
 	 * This variable must contain the name of your "tests" directory.
-	 * The writable directory allows you to group all directories that
-	 * need write permission to a single place that can be tucked away
-	 * for maximum security, keeping it out of the app and/or
-	 * system directories.
 	 */
 	public $testsDirectory = __DIR__ . '/../../tests';
 
