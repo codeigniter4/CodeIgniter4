@@ -90,18 +90,18 @@ Foreign Keys
 ============
 
 When your tables include Foreign Keys, migrations can often cause problems as you attempt to drop tables and columns.
-To temporarily bypass the foreign key checks while running migrations, use the ``disableForeignKeyConstraints()`` and
-``enableForeignKeyConstraints()`` methods on the database connection.
+To temporarily bypass the foreign key checks while running migrations, use the ``disableForeignKeyChecks()`` and
+``enableForeignKeyChecks()`` methods on the database connection.
 
 ::
 
     public function up()
     {
-        $this->db->disableForeignKeyConstraints();
+        $this->db->disableForeignKeyChecks();
 
         // Migration rules would go here...
 
-        $this->db->enableForeignKeyConstraints();
+        $this->db->enableForeignKeyChecks();
     }
 
 Database Groups
