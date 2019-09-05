@@ -113,7 +113,7 @@ implement those methods that you want handled.::
 
 		public function index()
 		{
-			$this->respond($this->model->findAll());
+			return $this->respond($this->model->findAll());
 		}
 
                 // ...
