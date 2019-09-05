@@ -108,7 +108,7 @@ implement those methods that you want handled.::
 
                 public function __construct()
                 {
-                    $this->modelName = new \App\Models\Photos;
+                    $this->modelName = 'App\Models\Photos';
                 }
 
 		public function index()
