@@ -108,12 +108,12 @@ implement those methods that you want handled.::
 
                 public function __construct()
                 {
-                    $this->modelName = 'App\Models\Photos';
+                    $this->modelName = new \App\Models\Photos;
                 }
 
 		public function index()
 		{
-			$this->respond($this->model->findAll());
+			return $this->respond($this->model->findAll());
 		}
 
                 // ...
