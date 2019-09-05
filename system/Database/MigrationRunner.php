@@ -298,7 +298,7 @@ class MigrationRunner
 			}
 
 			// Get the migrations from each history
-			foreach ($this->getBatchHistory($batch) as $history)
+			foreach ($this->getBatchHistory($batch, 'desc') as $history)
 			{
 				// Create a UID from the history to match its migration
 				$uid = $this->getObjectUid($history);
@@ -789,13 +789,13 @@ class MigrationRunner
 	 *
 	 * @return array
 	 */
-	public function getBatchHistory(int $batch): array
+	public function getBatchHistory(int $batch, $order = 'asc'): array
 	{
 		$this->ensureTable();
 
 		$query = $this->db->table($this->table)
 						  ->where('batch', $batch)
-						  ->orderBy('id', 'asc')
+						  ->orderBy('id', $order)
 						  ->get();
 
 		return $query ? $query->getResultObject() : [];
