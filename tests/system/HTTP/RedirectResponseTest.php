@@ -3,6 +3,7 @@
 namespace CodeIgniter\HTTP;
 
 use Config\App;
+use CodeIgniter\Config\Config;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Validation\Validation;
 use CodeIgniter\Router\RouteCollection;
@@ -24,8 +25,10 @@ class RedirectResponseTest extends \CIUnitTestCase
 
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$this->config          = new App();
-		$this->config->baseURL = 'http://example.com';
+		$this->config            = new App();
+		$this->config->baseURL   = 'http://example.com';
+		$this->config->indexPage = '';
+		Config::injectMock('App', $this->config);
 
 		$this->routes = new RouteCollection(Services::locator(), new \Config\Modules());
 		Services::injectMock('routes', $this->routes);
@@ -65,6 +68,25 @@ class RedirectResponseTest extends \CIUnitTestCase
 
 		$this->assertTrue($response->hasHeader('Location'));
 		$this->assertEquals('http://example.com/exampleRoute', $response->getHeaderLine('Location'));
+	}
+
+	public function testRedirectRouteBaseUrl()
+	{
+		$config          = new App();
+		$config->baseURL = 'http://example.com/test/';
+		Config::injectMock('App', $config);
+
+		$request = new MockIncomingRequest($config, new URI('http://example.com/test/'), null, new UserAgent());
+		Services::injectMock('request', $request);
+
+		$response = new RedirectResponse(new App());
+
+		$this->routes->add('exampleRoute', 'Home::index');
+
+		$response->route('exampleRoute');
+
+		$this->assertTrue($response->hasHeader('Location'));
+		$this->assertEquals('http://example.com/test/index.php/exampleRoute', $response->getHeaderLine('Location'));
 	}
 
 	public function testRedirectRouteBad()
