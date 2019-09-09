@@ -163,6 +163,11 @@ Usage example::
 	{
 		echo $key->constraint_name;
 		echo $key->table_name;
+		echo $key->column_name;
 		echo $key->foreign_table_name;
+		echo $key->foreign_column_name;
 	}
 
+The object fields may be unique to the database you are using. For instance, SQLite3 does
+not return data on column names, but has the additional *sequence* field for compound
+foreign key definitions.
