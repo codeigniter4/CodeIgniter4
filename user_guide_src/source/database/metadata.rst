@@ -150,3 +150,19 @@ Usage example::
 The key types may be unique to the database you are using.
 For instance, MySQL will return one of primary, fulltext, spatial, index or unique
 for each key associated with a table.
+
+**$db->getForeignKeyData()**
+
+Returns an array of objects containing foreign key information.
+
+Usage example::
+
+	$keys = $db->getForeignKeyData('table_name');
+
+	foreach ($keys as $key)
+	{
+		echo $key->constraint_name;
+		echo $key->table_name;
+		echo $key->foreign_table_name;
+	}
+
