@@ -407,6 +407,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 				$obj->constraint_name    = $row->from . ' to ' . $row->table . '.' . $row->to;
 				$obj->table_name         = $table;
 				$obj->foreign_table_name = $row->table;
+				$obj->sequence           = $row->seq;
 
 				$retVal[] = $obj;
 			}
