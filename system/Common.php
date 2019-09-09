@@ -1079,6 +1079,7 @@ if (! function_exists('dd'))
 	 */
 	function dd(...$vars)
 	{
+		Kint::$aliases[] = 'dd';
 		Kint::dump(...$vars);
 		exit;
 	}
