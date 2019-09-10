@@ -468,7 +468,7 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertEquals(0, $options[CURLOPT_VERBOSE]);
+		$this->assertFalse($options[CURLOPT_STDERR]);
 	}
 
 	//--------------------------------------------------------------------
