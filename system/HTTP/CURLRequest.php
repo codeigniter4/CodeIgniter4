@@ -672,10 +672,9 @@ class CURLRequest extends Request
 		}
 
 		// Debug
-		if (isset($config['debug']))
+		if ($config['debug'])
 		{
-			$curl_options[CURLOPT_VERBOSE] = $config['debug'] === true ? 1 : 0;
-			$curl_options[CURLOPT_STDERR]  = $config['debug'] === true ? fopen('php://output', 'w+') : $config['debug'];
+			$curl_options[CURLOPT_VERBOSE] = true;
 		}
 
 		// Decode Content
