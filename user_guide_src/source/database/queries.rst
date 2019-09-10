@@ -72,6 +72,10 @@ without needing to create a new connection you can use this method::
 	$db->setPrefix('newprefix');
 	$db->prefixTable('tablename'); // outputs newprefix_tablename
 
+You can get the current prefix any time with this method::
+	
+	$DBPrefix = $db->getPrefix();
+
 **********************
 Protecting identifiers
 **********************
