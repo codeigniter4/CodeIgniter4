@@ -72,6 +72,13 @@ class Connection extends BaseConnection implements ConnectionInterface
 	public $escapeChar = '`';
 	// --------------------------------------------------------------------
 	/**
+	 * Like wildcard escape character
+	 *
+	 * @var string
+	 */
+	public $likeEscapeChar = '\\';
+	// --------------------------------------------------------------------
+	/**
 	 * MySQLi object
 	 *
 	 * Has to be preserved without being assigned to $conn_id.
