@@ -72,7 +72,7 @@ class MetadataTest extends CIDatabaseTestCase
 		$this->db->setPrefix($DBPrefix);
 		$result = $this->db->listTables(true);
 
-		$this->assertEquals($expected, array_values($result));
+		$this->assertEquals($this->expectedTables, array_values($result));
 
 		// Clean up temporary table
 		$this->db->setPrefix('tmp_');
