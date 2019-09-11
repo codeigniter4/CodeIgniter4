@@ -13,20 +13,38 @@ class MetadataTest extends CIDatabaseTestCase
 
 	public function testCanListTables()
 	{
+		$prefix = $this->db->getPRefix();
+		$expected = [
+			$prefix . 'migrations',
+			$prefix . 'user',
+			$prefix . 'job',
+			$prefix . 'misc',
+			$prefix . 'empty',
+			$prefix . 'secondary'
+		];
+		
 		$result = $this->db->listTables();
-
-		// user, job, misc, migrations
-		$this->assertCount(4, $result);
+		
+		$this->assertEquals($expected, $result);
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testCanListTablesConstrainPrefix()
 	{
+		$prefix = $this->db->getPRefix();
+		$expected = [
+			$prefix . 'migrations',
+			$prefix . 'user',
+			$prefix . 'job',
+			$prefix . 'misc',
+			$prefix . 'empty',
+			$prefix . 'secondary'
+		];
+		
 		$result = $this->db->listTables(true);
-
-		// user, job, misc, migrations
-		$this->assertCount(4, $result);
+		
+		$this->assertEquals($expected, $result);
 	}
   
 	//--------------------------------------------------------------------
