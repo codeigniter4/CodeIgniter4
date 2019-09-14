@@ -256,7 +256,7 @@ Asserts the exact opposite of the **assertSee()** method::
 
     // Checks that "Hello World" does NOT exist on the page
     $results->dontSee('Hello World');
-    // Checks that "Hellow World" does NOT exist within any h1 tag
+    // Checks that "Hello World" does NOT exist within any h1 tag
     $results->dontSee('Hello World', 'h1');
 
 **assertSeeElement(string $search)**
