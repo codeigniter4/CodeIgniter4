@@ -336,7 +336,7 @@ The value for the filter must match one of the aliases defined within ``app/Conf
 
     $routes->add('users/delete/(:segment)', 'AdminController::index', ['filter' => 'admin-auth:dual,noreturn']);
 
-See `Controller filters </incoming/filters.html>`_ for more information on setting up filters.
+See `Controller filters <filters.html>`_ for more information on setting up filters.
 
 Assigning Namespace
 -------------------
