@@ -309,7 +309,7 @@ available from the command line::
 Global Options
 ==============
 
-All of the methods for creating a route (add, get, post, `resource </incoming/resources.html>`_ etc) can take an array of options that
+All of the methods for creating a route (add, get, post, `resource <restful.html>`_ etc) can take an array of options that
 can modify the generated routes, or further restrict them. The ``$options`` array is always the last parameter::
 
 	$routes->add('from', 'to', $options);
