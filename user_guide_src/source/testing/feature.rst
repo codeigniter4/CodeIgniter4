@@ -243,11 +243,11 @@ a tag, as specified by type, class, or id::
     // Check that "Hello World" is on the page
     $this->assertSee('Hello World');
     // Check that "Hello World" is within an h1 tag
-    $this->assertS('Hello World', 'h1');
+    $this->assertSee('Hello World', 'h1');
     // Check that "Hello World" is within an element with the "notice" class
-    $this->assertS('Hello World', '.notice');
+    $this->assertSee('Hello World', '.notice');
     // Check that "Hello World" is within an element with id of "title"
-    $this->assertS('Hellow World', '#title');
+    $this->assertSee('Hellow World', '#title');
 
 
 **assertDontSee(string $search = null, string $element = null)**
