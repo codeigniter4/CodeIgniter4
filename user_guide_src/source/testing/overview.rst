@@ -95,7 +95,7 @@ have the correct namespace relative to ``App``.
 
 .. note:: Namespaces are not strictly required for test classes, but they are helpful to ensure no class names collide.
 
-When testing database results, you must use the `CIDatabaseTestClass </testing/database>`_ class.
+When testing database results, you must use the `CIDatabaseTestClass <database.html>`_ class.
 
 Additional Assertions
 ---------------------
