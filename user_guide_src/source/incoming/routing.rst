@@ -221,7 +221,7 @@ If you need to assign options to a group, like a `namespace <#assigning-namespac
 
 This would handle a resource route to the ``App\API\v1\Users`` controller with the ``/api/users`` URI.
 
-You can also use a specific `filter </incoming/filters.html>`_ for a group of routes. This will always
+You can also use a specific `filter <filters.html>`_ for a group of routes. This will always
 run the filter before or after the controller. This is especially handy during authentication or api logging::
 
     $routes->group('api', ['filter' => 'api-auth'], function($routes)
@@ -309,7 +309,7 @@ available from the command line::
 Global Options
 ==============
 
-All of the methods for creating a route (add, get, post, `resource </incoming/resources.html>`_ etc) can take an array of options that
+All of the methods for creating a route (add, get, post, `resource <restful.html>`_ etc) can take an array of options that
 can modify the generated routes, or further restrict them. The ``$options`` array is always the last parameter::
 
 	$routes->add('from', 'to', $options);
@@ -336,7 +336,7 @@ The value for the filter must match one of the aliases defined within ``app/Conf
 
     $routes->add('users/delete/(:segment)', 'AdminController::index', ['filter' => 'admin-auth:dual,noreturn']);
 
-See `Controller filters </incoming/filters.html>`_ for more information on setting up filters.
+See `Controller filters <filters.html>`_ for more information on setting up filters.
 
 Assigning Namespace
 -------------------

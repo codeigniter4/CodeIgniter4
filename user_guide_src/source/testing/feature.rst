@@ -15,7 +15,7 @@ The Test Class
 ==============
 
 Feature testing requires that all of your test classes extend the ``CodeIgniter\Test\FeatureTestCase`` class. Since this
-extends `CIDatabaseTestCase </testing/database>`_ you must always ensure that ``parent::setUp()`` and ``parent::tearDown()``
+extends `CIDatabaseTestCase <database.html>`_ you must always ensure that ``parent::setUp()`` and ``parent::tearDown()``
 are called before you take your actions.
 ::
 
@@ -243,11 +243,11 @@ a tag, as specified by type, class, or id::
     // Check that "Hello World" is on the page
     $this->assertSee('Hello World');
     // Check that "Hello World" is within an h1 tag
-    $this->assertS('Hello World', 'h1');
+    $this->assertSee('Hello World', 'h1');
     // Check that "Hello World" is within an element with the "notice" class
-    $this->assertS('Hello World', '.notice');
+    $this->assertSee('Hello World', '.notice');
     // Check that "Hello World" is within an element with id of "title"
-    $this->assertS('Hellow World', '#title');
+    $this->assertSee('Hellow World', '#title');
 
 
 **assertDontSee(string $search = null, string $element = null)**
