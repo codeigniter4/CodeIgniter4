@@ -143,7 +143,7 @@ in PHPunit <https://phpunit.readthedocs.io/en/7.4/annotations.html#runinseparate
 
 **assertHeaderNotEmitted($header, $ignoreCase=false)**
 
-Ensure that a header or cookie was actually emitted::
+Ensure that a header or cookie was not emitted::
 
     $response->setCookie('foo', 'bar');
 
