@@ -41,9 +41,9 @@ code.
             return view('welcome_message');
         }
 
-		public function showme($page = 'home')
-		{
-		}
+        public function showme($page = 'home')
+        {
+        }
 	}
 
 You have created a class named ``Pages``, with a ``showme`` method that accepts
