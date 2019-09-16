@@ -138,19 +138,6 @@ of encryption::
 	// Encrypt some text & make the results text
 	$encoded = base64_encode($encrypter->encrypt($plaintext));
 
-Message Length
---------------
-
-An encrypted string is usually
-longer than the original plain-text string.
-
-This is influenced by the cipher algorithm itself, the initialization vector (IV) 
-prepended to the
-cipher-text and the HMAC authentication message that is also prepended.
-
-Keep this information in mind when selecting your data storage mechanism.
-Cookies, for example, can only hold 4K of information.
-
 Encryption Handler Notes
 ========================
 

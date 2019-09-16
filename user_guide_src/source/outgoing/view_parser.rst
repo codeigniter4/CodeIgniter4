@@ -425,7 +425,7 @@ The following filters are available when using the parser:
 +---------------+---------------------+--------------------------------------------------------------+-------------------------------------+
 + highlight_code+                     + Highlights code samples with HTML/CSS.                       + { v|highlight_code }                +
 +---------------+---------------------+--------------------------------------------------------------+-------------------------------------+
-+ limit_chars   + limit               + Limits the number of chracters to $limit.                    + { v|limit_chars(100) }              +
++ limit_chars   + limit               + Limits the number of characters to $limit.                    + { v|limit_chars(100) }              +
 +---------------+---------------------+--------------------------------------------------------------+-------------------------------------+
 + limit_words   + limit               + Limits the number of words to $limit.                        + { v|limit_words(20) }               +
 +---------------+---------------------+--------------------------------------------------------------+-------------------------------------+

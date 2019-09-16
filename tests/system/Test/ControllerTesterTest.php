@@ -6,6 +6,12 @@ use Config\App;
 use Config\Services;
 use Tests\Support\Config\MockLogger as LoggerConfig;
 
+/**
+ * Exercise our Controller class.
+ *
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState         disabled
+ */
 class ControllerTesterTest extends \CIUnitTestCase
 {
 

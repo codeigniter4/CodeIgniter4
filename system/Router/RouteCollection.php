@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * CodeIgniter
  *
@@ -762,7 +760,6 @@ class RouteCollection implements RouteCollectionInterface
 	// The options array is typically used to pass in an 'as' or var, but may
 	// be expanded in the future. See the docblock for 'add' method above for
 	// current list of globally available options.
-
 	//
 
 	/**
@@ -771,27 +768,29 @@ class RouteCollection implements RouteCollectionInterface
 	 * Possible Options:
 	 *      'controller'    - Customize the name of the controller used in the 'to' route
 	 *      'placeholder'   - The regex used by the Router. Defaults to '(:any)'
+	 *      'websafe'   -	- '1' if only GET and POST HTTP verbs are supported
 	 *
 	 * Example:
+	 *
 	 *      $route->resource('photos');
 	 *
 	 *      // Generates the following routes:
 	 *      HTTP Verb | Path        | Action        | Used for...
 	 *      ----------+-------------+---------------+-----------------
-	 *      GET         /photos             index           display a list of photos
-	 *      GET         /photos/new         new             new a specific photo
-	 *      GET         /photos/{id}/edit   edit            edit a specific photo
-	 *      GET         /photos/{id}        show            display a specific photo
-	 *      POST        /photos             create          create a new photo
-	 *      PUT/PATCH   /photos/{id}        update          update an existing photo
-	 *      DELETE      /photos/{id}        delete          delete an existing photo
+	 *      GET         /photos             index           an array of photo objects
+	 *      GET         /photos/new         new             an empty photo object, with default properties
+	 *      GET         /photos/{id}/edit   edit            a specific photo object, editable properties
+	 *      GET         /photos/{id}        show            a specific photo object, all properties
+	 *      POST        /photos             create          a new photo object, to add to the resource
+	 *      DELETE      /photos/{id}        delete          deletes the specified photo object
+	 *      PUT/PATCH   /photos/{id}        update          replacement properties for existing photo
 	 *
 	 *  If 'websafe' option is present, the following paths are also available:
 	 *
+	 *      POST		/photos/{id}/delete delete
 	 *      POST        /photos/{id}        update
-	 *      DELETE      /photos/{id}/delete delete
 	 *
-	 * @param string $name    The name of the controller to route to.
+	 * @param string $name    The name of the resource/controller to route to.
 	 * @param array  $options An list of possible ways to customize the routing.
 	 *
 	 * @return RouteCollectionInterface
@@ -878,6 +877,119 @@ class RouteCollection implements RouteCollectionInterface
 			{
 				$this->post($name . '/' . $id, $new_name . '::update/$1', $options);
 			}
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Creates a collections of HTTP-verb based routes for a presenter controller.
+	 *
+	 * Possible Options:
+	 *      'controller'    - Customize the name of the controller used in the 'to' route
+	 *      'placeholder'   - The regex used by the Router. Defaults to '(:any)'
+	 *
+	 * Example:
+	 *
+	 *      $route->presenter('photos');
+	 *
+	 *      // Generates the following routes:
+	 *      HTTP Verb | Path        | Action        | Used for...
+	 *      ----------+-------------+---------------+-----------------
+	 *      GET         /photos             index           showing all array of photo objects
+	 *      GET         /photos/show/{id}   show            showing a specific photo object, all properties
+	 *      GET         /photos/new         new             showing a form for an empty photo object, with default properties
+	 *      POST        /photos/create      create          processing the form for a new photo
+	 *      GET         /photos/edit/{id}   edit            show an editing form for a specific photo object, editable properties
+	 *      POST        /photos/update/{id} update          process the editing form data
+	 *      GET         /photos/remove/{id} remove          show a form to confirm deletion of a specific photo object
+	 *      POST        /photos/delete/{id} delete          deleting the specified photo object
+	 *
+	 * @param string $name    The name of the controller to route to.
+	 * @param array  $options An list of possible ways to customize the routing.
+	 *
+	 * @return RouteCollectionInterface
+	 */
+	public function presenter(string $name, array $options = null): RouteCollectionInterface
+	{
+		// In order to allow customization of the route the
+		// resources are sent to, we need to have a new name
+		// to store the values in.
+		$newName = ucfirst($name);
+
+		// If a new controller is specified, then we replace the
+		// $name value with the name of the new controller.
+		if (isset($options['controller']))
+		{
+			$newName = ucfirst(filter_var($options['controller'], FILTER_SANITIZE_STRING));
+		}
+
+		// In order to allow customization of allowed id values
+		// we need someplace to store them.
+		$id = $this->placeholders[$this->defaultPlaceholder] ?? '(:segment)';
+
+		if (isset($options['placeholder']))
+		{
+			$id = $options['placeholder'];
+		}
+
+		// Make sure we capture back-references
+		$id = '(' . trim($id, '()') . ')';
+
+		$methods = isset($options['only']) ? is_string($options['only']) ? explode(',', $options['only']) : $options['only'] : ['index', 'show', 'new', 'create', 'edit', 'update', 'remove', 'delete'];
+
+		if (isset($options['except']))
+		{
+			$options['except'] = is_array($options['except']) ? $options['except'] : explode(',', $options['except']);
+			$c                 = count($methods);
+			for ($i = 0; $i < $c; $i ++)
+			{
+				if (in_array($methods[$i], $options['except']))
+				{
+					unset($methods[$i]);
+				}
+			}
+		}
+
+		if (in_array('index', $methods))
+		{
+			$this->get($name, $newName . '::index', $options);
+		}
+		if (in_array('show', $methods))
+		{
+			$this->get($name . '/show/' . $id, $newName . '::show/$1', $options);
+		}
+		if (in_array('new', $methods))
+		{
+			$this->get($name . '/new', $newName . '::new', $options);
+		}
+		if (in_array('create', $methods))
+		{
+			$this->post($name . '/create', $newName . '::create', $options);
+		}
+		if (in_array('edit', $methods))
+		{
+			$this->get($name . '/edit/' . $id, $newName . '::edit/$1', $options);
+		}
+		if (in_array('update', $methods))
+		{
+			$this->post($name . '/update/' . $id, $newName . '::update/$1', $options);
+		}
+		if (in_array('remove', $methods))
+		{
+			$this->get($name . '/remove/' . $id, $newName . '::remove/$1', $options);
+		}
+		if (in_array('delete', $methods))
+		{
+			$this->post($name . '/delete/' . $id, $newName . '::delete/$1', $options);
+		}
+		if (in_array('show', $methods))
+		{
+			$this->get($name . '/' . $id, $newName . '::show/$1', $options);
+		}
+		if (in_array('create', $methods))
+		{
+			$this->post($name, $newName . '::create', $options);
 		}
 
 		return $this;

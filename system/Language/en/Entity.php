@@ -15,5 +15,5 @@
 
 return
 [
-	'tryingToAccessNonExistentProperty' => 'Trying to access non existent property {0} of {1}'
+   'tryingToAccessNonExistentProperty' => 'Trying to access non existent property {0} of {1}',
 ];

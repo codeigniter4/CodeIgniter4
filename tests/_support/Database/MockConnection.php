@@ -141,7 +141,7 @@ class MockConnection extends BaseConnection
 	/**
 	 * Executes the query against the database.
 	 *
-	 * @param string    $sql
+	 * @param string $sql
 	 *
 	 * @return mixed
 	 */
@@ -155,7 +155,7 @@ class MockConnection extends BaseConnection
 	/**
 	 * Returns the total number of rows affected by this query.
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function affectedRows(): int
 	{

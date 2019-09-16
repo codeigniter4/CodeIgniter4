@@ -138,7 +138,7 @@ class MemcachedHandler implements CacheInterface
 
 				// $stats should be an associate array with a key in the format of host:port.
 				// If it doesn't have the key, we know the server is not working as expected.
-				if( !isset($stats[$this->config['host']. ':' .$this->config['port']]) )
+				if (! isset($stats[$this->config['host'] . ':' . $this->config['port']]))
 				{
 					throw new CriticalError('Cache: Memcached connection failed.');
 				}
@@ -154,7 +154,8 @@ class MemcachedHandler implements CacheInterface
 				);
 
 				// If we can't connect, throw a CriticalError exception
-				if($can_connect == false){
+				if ($can_connect === false)
+				{
 					throw new CriticalError('Cache: Memcache connection failed.');
 				}
 

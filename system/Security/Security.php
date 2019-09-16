@@ -221,6 +221,7 @@ class Security
 		if ($this->CSRFRegenerate)
 		{
 			// Nothing should last forever
+			$this->CSRFHash = null;
 			unset($_COOKIE[$this->CSRFCookieName]);
 		}
 

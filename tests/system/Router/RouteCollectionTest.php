@@ -326,7 +326,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testResourcesScaffoldsCorrectly()
+	public function testResourceScaffoldsCorrectly()
 	{
 		$routes = $this->getCollector();
 		$routes->setHTTPVerb('get');
@@ -378,6 +378,97 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$expected = [
 			'photos/(.*)' => '\Photos::delete/$1',
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	// Similar to the above, but with a more typical endpoint
+
+	public function testResourceAPIScaffoldsCorrectly()
+	{
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('get');
+
+		$routes->resource('api/photos', ['controller' => 'Photos']);
+
+		$expected = [
+			'api/photos'           => '\Photos::index',
+			'api/photos/new'       => '\Photos::new',
+			'api/photos/(.*)/edit' => '\Photos::edit/$1',
+			'api/photos/(.*)'      => '\Photos::show/$1',
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('post');
+		$routes->resource('api/photos', ['controller' => 'Photos']);
+
+		$expected = [
+			'api/photos' => '\Photos::create',
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('put');
+		$routes->resource('api/photos', ['controller' => 'Photos']);
+
+		$expected = [
+			'api/photos/(.*)' => '\Photos::update/$1',
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('patch');
+		$routes->resource('api/photos', ['controller' => 'Photos']);
+
+		$expected = [
+			'api/photos/(.*)' => '\Photos::update/$1',
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('delete');
+		$routes->resource('api/photos', ['controller' => 'Photos']);
+
+		$expected = [
+			'api/photos/(.*)' => '\Photos::delete/$1',
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	public function testPresenterScaffoldsCorrectly()
+	{
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('get');
+
+		$routes->presenter('photos');
+
+		$expected = [
+			'photos'             => '\Photos::index',
+			'photos/show/(.*)'   => '\Photos::show/$1',
+			'photos/new'         => '\Photos::new',
+			'photos/edit/(.*)'   => '\Photos::edit/$1',
+			'photos/remove/(.*)' => '\Photos::remove/$1',
+			'photos/(.*)'        => '\Photos::show/$1',
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+
+		$routes = $this->getCollector();
+		$routes->setHTTPVerb('post');
+		$routes->presenter('photos');
+
+		$expected = [
+			'photos/create'      => '\Photos::create',
+			'photos/update/(.*)' => '\Photos::update/$1',
+			'photos/delete/(.*)' => '\Photos::delete/$1',
+			'photos'             => '\Photos::create',
 		];
 
 		$this->assertEquals($expected, $routes->getRoutes());

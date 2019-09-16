@@ -4,7 +4,7 @@ Testing Controllers
 
 Testing your controllers is made convenient with a couple of new helper classes and traits. When testing controllers,
 you can execute the code within a controller, without first running through the entire application bootstrap process.
-Often times, using the `Feature Testing tools </testing/feature>`_ will be simpler, but this functionality is here in
+Often times, using the `Feature Testing tools <feature.html>`_ will be simpler, but this functionality is here in
 case you need it.
 
 .. note:: Because the entire framework has not been bootstrapped, there will be times when you cannot test a controller

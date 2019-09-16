@@ -323,10 +323,13 @@ class ForgeTest extends CIDatabaseTestCase
 		if ($this->db->DBDriver === 'SQLite3')
 		{
 			$this->assertEquals($foreignKeyData[0]->constraint_name, 'users_id to db_forge_test_users.id');
+			$this->assertEquals($foreignKeyData[0]->sequence, 0);
 		}
 		else
 		{
 			$this->assertEquals($foreignKeyData[0]->constraint_name, $this->db->DBPrefix . 'forge_test_invoices_users_id_foreign');
+			$this->assertEquals($foreignKeyData[0]->column_name, 'users_id');
+			$this->assertEquals($foreignKeyData[0]->foreign_column_name, 'id');
 		}
 		$this->assertEquals($foreignKeyData[0]->table_name, $this->db->DBPrefix . 'forge_test_invoices');
 		$this->assertEquals($foreignKeyData[0]->foreign_table_name, $this->db->DBPrefix . 'forge_test_users');

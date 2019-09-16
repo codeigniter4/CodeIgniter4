@@ -40,6 +40,7 @@ namespace CodeIgniter\Database;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use Closure;
 
 /**
  * Class BaseBuilder
@@ -718,10 +719,18 @@ class BaseBuilder
 				}
 				else
 				{
-					$k .= $op;
+					$k .= " $op";
 				}
 
-				$v = " :$bind:";
+				if ($v instanceof Closure)
+				{
+					$builder = $this->cleanClone();
+					$v       = '(' . str_replace("\n", ' ', $v($builder)->getCompiledSelect()) . ')';
+				}
+				else
+				{
+					$v = " :$bind:";
+				}
 			}
 			elseif (! $this->hasOperator($k) && $qb_key !== 'QBHaving')
 			{
@@ -750,13 +759,13 @@ class BaseBuilder
 	 * Generates a WHERE field IN('item', 'item') SQL query,
 	 * joined with 'AND' if appropriate.
 	 *
-	 * @param string  $key    The field to search
-	 * @param array   $values The values searched on
-	 * @param boolean $escape
+	 * @param string               $key    The field to search
+	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+	 * @param boolean              $escape
 	 *
 	 * @return BaseBuilder
 	 */
-	public function whereIn(string $key = null, array $values = null, bool $escape = null)
+	public function whereIn(string $key = null, $values = null, bool $escape = null)
 	{
 		return $this->_whereIn($key, $values, false, 'AND ', $escape);
 	}
@@ -769,13 +778,13 @@ class BaseBuilder
 	 * Generates a WHERE field IN('item', 'item') SQL query,
 	 * joined with 'OR' if appropriate.
 	 *
-	 * @param string  $key    The field to search
-	 * @param array   $values The values searched on
-	 * @param boolean $escape
+	 * @param string               $key    The field to search
+	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+	 * @param boolean              $escape
 	 *
 	 * @return BaseBuilder
 	 */
-	public function orWhereIn(string $key = null, array $values = null, bool $escape = null)
+	public function orWhereIn(string $key = null, $values = null, bool $escape = null)
 	{
 		return $this->_whereIn($key, $values, false, 'OR ', $escape);
 	}
@@ -788,13 +797,13 @@ class BaseBuilder
 	 * Generates a WHERE field NOT IN('item', 'item') SQL query,
 	 * joined with 'AND' if appropriate.
 	 *
-	 * @param string  $key    The field to search
-	 * @param array   $values The values searched on
-	 * @param boolean $escape
+	 * @param string               $key    The field to search
+	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+	 * @param boolean              $escape
 	 *
 	 * @return BaseBuilder
 	 */
-	public function whereNotIn(string $key = null, array $values = null, bool $escape = null)
+	public function whereNotIn(string $key = null, $values = null, bool $escape = null)
 	{
 		return $this->_whereIn($key, $values, true, 'AND ', $escape);
 	}
@@ -807,13 +816,13 @@ class BaseBuilder
 	 * Generates a WHERE field NOT IN('item', 'item') SQL query,
 	 * joined with 'OR' if appropriate.
 	 *
-	 * @param string  $key    The field to search
-	 * @param array   $values The values searched on
-	 * @param boolean $escape
+	 * @param string               $key    The field to search
+	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+	 * @param boolean              $escape
 	 *
 	 * @return BaseBuilder
 	 */
-	public function orWhereNotIn(string $key = null, array $values = null, bool $escape = null)
+	public function orWhereNotIn(string $key = null, $values = null, bool $escape = null)
 	{
 		return $this->_whereIn($key, $values, true, 'OR ', $escape);
 	}
@@ -828,17 +837,17 @@ class BaseBuilder
 	 * @used-by whereNotIn()
 	 * @used-by orWhereNotIn()
 	 *
-	 * @param string  $key    The field to search
-	 * @param array   $values The values searched on
-	 * @param boolean $not    If the statement would be IN or NOT IN
-	 * @param string  $type
-	 * @param boolean $escape
+	 * @param string        $key    The field to search
+	 * @param array|Closure $values The values searched on, or anonymous function with subquery
+	 * @param boolean       $not    If the statement would be IN or NOT IN
+	 * @param string        $type
+	 * @param boolean       $escape
 	 *
 	 * @return BaseBuilder
 	 */
-	protected function _whereIn(string $key = null, array $values = null, bool $not = false, string $type = 'AND ', bool $escape = null)
+	protected function _whereIn(string $key = null, $values = null, bool $not = false, string $type = 'AND ', bool $escape = null)
 	{
-		if ($key === null || $values === null)
+		if ($key === null || $values === null || (! is_array($values) && ! ($values instanceof Closure)))
 		{
 			return $this;
 		}
@@ -854,17 +863,25 @@ class BaseBuilder
 
 		$not = ($not) ? ' NOT' : '';
 
-		$where_in = array_values($values);
-		$ok       = $this->setBind($ok, $where_in, $escape);
+		if ($values instanceof Closure)
+		{
+			$builder = $this->cleanClone();
+			$ok      = str_replace("\n", ' ', $values($builder)->getCompiledSelect());
+		}
+		else
+		{
+			$whereIn = is_array($values) ? array_values($values) : $values;
+			$ok      = $this->setBind($ok, $whereIn, $escape);
+		}
 
 		$prefix = empty($this->QBWhere) ? $this->groupGetType('') : $this->groupGetType($type);
 
-		$where_in = [
-			'condition' => $prefix . $key . $not . " IN :{$ok}:",
+		$whereIn = [
+			'condition' => $prefix . $key . $not . ($values instanceof Closure ? " IN ($ok)" : " IN :{$ok}:"),
 			'escape'    => false,
 		];
 
-		$this->QBWhere[] = $where_in;
+		$this->QBWhere[] = $whereIn;
 
 		return $this;
 	}
@@ -2676,7 +2693,6 @@ class BaseBuilder
 					{
 						continue;
 					}
-
 					// $matches = array(
 					//	0 => '(test <= foo)',	/* the whole thing */
 					//	1 => '(',		/* optional */
@@ -3004,7 +3020,7 @@ class BaseBuilder
 			];
 		}
 
-		return preg_match_all('/' . implode('|', $_operators) . '/i', $str, $match) ? ($list ? $match[0] : $match[0][count($match[0]) - 1]) : false;
+		return preg_match_all('/' . implode('|', $_operators) . '/i', $str, $match) ? ($list ? $match[0] : $match[0][0]) : false;
 	}
 
 	// --------------------------------------------------------------------
@@ -3046,6 +3062,18 @@ class BaseBuilder
 		];
 
 		return $key . $count;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a clone of a Base Builder with reset query builder values.
+	 *
+	 * @return BaseBuilder
+	 */
+	protected function cleanClone()
+	{
+		return (clone $this)->from([], true)->resetQuery();
 	}
 
 	//--------------------------------------------------------------------

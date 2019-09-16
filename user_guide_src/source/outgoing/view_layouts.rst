@@ -38,7 +38,7 @@ what to name the content section.
 Using Layouts in Views
 **********************
 
-Whenveer a view wants to be inserted into a layout, it must use the ``extend()`` method at the top of the file::
+Whenever a view wants to be inserted into a layout, it must use the ``extend()`` method at the top of the file::
 
     <?= $this->extend('default') ?>
 

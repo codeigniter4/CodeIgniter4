@@ -65,7 +65,7 @@ class CodeIgniter
 	/**
 	 * The current version of CodeIgniter Framework
 	 */
-	const CI_VERSION = '4.0.0-beta.4';
+	const CI_VERSION = '4.0.0-rc.1';
 
 	/**
 	 * App startup time.
@@ -355,7 +355,7 @@ class CodeIgniter
 		else
 		{
 			$response = $this->response;
-			
+
 			// Set response code for CLI command failures
 			if (is_numeric($returned) || $returned === false)
 			{

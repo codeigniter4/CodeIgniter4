@@ -12,6 +12,42 @@ Release Date: Not Released
 
 :doc:`See all the changes. </changelogs/next>`
 
+Version 4.0.0-rc.1
+====================================================
+
+Release Date: September 02, 2019
+
+Highlights:
+
+One breaking change:
+
+- Migrations refactored and streamlined for more wholistic functionality (BC)
+
+Enhancements:
+
+- CI3 Email ported to CI4
+- Encryption (basic) added
+- added convert() to ImageHandlerInterface
+- disabled debug toolbar for downloads
+- CLI commands returns an error code now ("spark" changed)
+- RESTful controllers added to shorten dev time for RESTful APIs
+- added RouteCollection::presenter() as part of the RESTful support
+
+App changes:
+
+- added app/Common to make it easier to override common functions 
+- Config/Email and Encryption added
+- Config/Migration modified, and has different settings
+- Controllers/Home fixed, removing unnecessary model reference
+
+Message changes:
+
+- Migration has new & modified messages
+- Messages now has RESTful set 
+
+
+:doc:`See all the changes. </changelogs/v4.0.0-rc.1>`
+
 Version 4.0.0-beta.4
 ====================================================
 

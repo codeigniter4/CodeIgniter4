@@ -184,7 +184,7 @@ selectMax(), You can optionally include a second parameter to rename
 the resulting field.
 
 .. note:: This method is particularly helpful when used with ``groupBy()``. For
-counting results generally see ``countAll()`` or ``countAllResults()``.
+        counting results generally see ``countAll()`` or ``countAllResults()``.
 
 ::
 
@@ -288,17 +288,29 @@ methods:
 		$where = "name='Joe' AND status='boss' OR status='active'";
 		$builder->where($where);
 
-``$builder->where()`` accepts an optional third parameter. If you set it to
-FALSE, CodeIgniter will not try to protect your field or table names.
+    ``$builder->where()`` accepts an optional third parameter. If you set it to
+    FALSE, CodeIgniter will not try to protect your field or table names.
 
-::
+    ::
 
-	$builder->where('MATCH (field) AGAINST ("value")', NULL, FALSE);
+        $builder->where('MATCH (field) AGAINST ("value")', NULL, FALSE);
+
+#. **Subqueries:**
+    You can use an anonymous function to create a subquery.
+
+    ::
+
+        $builder->where('advance_amount <', function(BaseBuilder $builder) {
+            return $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2);
+        });
+        // Produces: WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)
 
 **$builder->orWhere()**
 
 This function is identical to the one above, except that multiple
-instances are joined by OR::
+instances are joined by OR
+
+    ::
 
 	$builder->where('name !=', $name);
 	$builder->orWhere('id >', $id);  // Produces: WHERE name != 'Joe' OR id > 50
@@ -308,44 +320,84 @@ instances are joined by OR::
 Generates a WHERE field IN ('item', 'item') SQL query joined with AND if
 appropriate
 
-::
+    ::
 
-	$names = ['Frank', 'Todd', 'James'];
-	$builder->whereIn('username', $names);
-	// Produces: WHERE username IN ('Frank', 'Todd', 'James')
+        $names = ['Frank', 'Todd', 'James'];
+        $builder->whereIn('username', $names);
+        // Produces: WHERE username IN ('Frank', 'Todd', 'James')
+
+You can use subqueries instead of an array of values.
+
+    ::
+
+        $builder->whereIn('id', function(BaseBuilder $builder) {
+            return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
+        });
+        // Produces: WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
 
 **$builder->orWhereIn()**
 
 Generates a WHERE field IN ('item', 'item') SQL query joined with OR if
 appropriate
 
-::
+    ::
 
-	$names = ['Frank', 'Todd', 'James'];
-	$builder->orWhereIn('username', $names);
-	// Produces: OR username IN ('Frank', 'Todd', 'James')
+        $names = ['Frank', 'Todd', 'James'];
+        $builder->orWhereIn('username', $names);
+        // Produces: OR username IN ('Frank', 'Todd', 'James')
+
+You can use subqueries instead of an array of values.
+
+    ::
+
+        $builder->orWhereIn('id', function(BaseBuilder $builder) {
+            return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
+        });
+
+        // Produces: OR "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
 
 **$builder->whereNotIn()**
 
 Generates a WHERE field NOT IN ('item', 'item') SQL query joined with
 AND if appropriate
 
-::
+    ::
 
-	$names = ['Frank', 'Todd', 'James'];
-	$builder->whereNotIn('username', $names);
-	// Produces: WHERE username NOT IN ('Frank', 'Todd', 'James')
+        $names = ['Frank', 'Todd', 'James'];
+        $builder->whereNotIn('username', $names);
+        // Produces: WHERE username NOT IN ('Frank', 'Todd', 'James')
+
+You can use subqueries instead of an array of values.
+
+    ::
+
+        $builder->whereNotIn('id', function(BaseBuilder $builder) {
+            return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
+        });
+
+        // Produces: WHERE "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
+
 
 **$builder->orWhereNotIn()**
 
 Generates a WHERE field NOT IN ('item', 'item') SQL query joined with OR
 if appropriate
 
-::
+    ::
 
-	$names = ['Frank', 'Todd', 'James'];
-	$builder->orWhereNotIn('username', $names);
-	// Produces: OR username NOT IN ('Frank', 'Todd', 'James')
+        $names = ['Frank', 'Todd', 'James'];
+        $builder->orWhereNotIn('username', $names);
+        // Produces: OR username NOT IN ('Frank', 'Todd', 'James')
+
+You can use subqueries instead of an array of values.
+
+    ::
+
+        $builder->orWhereNotIn('id', function(BaseBuilder $builder) {
+            return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
+        });
+
+        // Produces: OR "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
 
 ************************
 Looking for Similar Data
@@ -1139,9 +1191,9 @@ Class Reference
 
 	.. php:method:: orWhereIn([$key = NULL[, $values = NULL[, $escape = NULL]]])
 
-		:param	string	$key: The field to search
-		:param	array	$values: The values searched on
-		:param	bool	$escape: Whether to escape values and identifiers
+		:param	string	        $key: The field to search
+		:param	array|Closure   $values: Array of target values, or anonymous function for subquery
+		:param	bool	        $escape: Whether to escape values and identifiers
 		:returns:	BaseBuilder instance
 		:rtype:	object
 
@@ -1150,9 +1202,9 @@ Class Reference
 
 	.. php:method:: orWhereNotIn([$key = NULL[, $values = NULL[, $escape = NULL]]])
 
-		:param	string	$key: The field to search
-		:param	array	$values: The values searched on
-		:param	bool	$escape: Whether to escape values and identifiers
+		:param	string	        $key: The field to search
+		:param	array|Closure   $values: Array of target values, or anonymous function for subquery
+		:param	bool	        $escape: Whether to escape values and identifiers
 		:returns:	BaseBuilder instance
 		:rtype:	object
 
@@ -1161,9 +1213,9 @@ Class Reference
 
 	.. php:method:: whereIn([$key = NULL[, $values = NULL[, $escape = NULL]]])
 
-		:param	string	$key: Name of field to examine
-		:param	array	$values: Array of target values
-		:param	bool	$escape: Whether to escape values and identifiers
+		:param	string	        $key: Name of field to examine
+		:param	array|Closure   $values: Array of target values, or anonymous function for subquery
+		:param	bool            $escape: Whether to escape values and identifiers
 		:returns:	BaseBuilder instance
 		:rtype:	object
 
@@ -1172,9 +1224,9 @@ Class Reference
 
 	.. php:method:: whereNotIn([$key = NULL[, $values = NULL[, $escape = NULL]]])
 
-		:param	string	$key: Name of field to examine
-		:param	array	$values: Array of target values
-		:param	bool	$escape: Whether to escape values and identifiers
+		:param	string	        $key: Name of field to examine
+		:param	array|Closure   $values: Array of target values, or anonymous function for subquery
+		:param	bool	        $escape: Whether to escape values and identifiers
 		:returns:	BaseBuilder instance
 		:rtype:	object
 
