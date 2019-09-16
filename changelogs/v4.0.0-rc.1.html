@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Version 4.0.0-beta.1 &mdash; CodeIgniter4 4.0.0-rc.1 documentation</title>
+  <title>Version 4.0.0-rc.1 &mdash; CodeIgniter4 4.0.0-rc.1 documentation</title>
   
 
   
@@ -172,7 +172,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Version 4.0.0-beta.1</li>
+      <li>Version 4.0.0-rc.1</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -189,61 +189,117 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="version-4-0-0-beta-1">
-<h1>Version 4.0.0-beta.1<a class="headerlink" href="#version-4-0-0-beta-1" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="version-4-0-0-rc-1">
+<h1>Version 4.0.0-rc.1<a class="headerlink" href="#version-4-0-0-rc-1" title="Permalink to this headline">¶</a></h1>
 <p>Release Date: Not released</p>
-<p>Highlights:</p>
+<p><strong>RC.1 release of CodeIgniter4</strong></p>
+<p>Enhancements:</p>
 <ul class="simple">
-<li>New View Layouts provide simple way to create site site view templates.</li>
-<li>Fixed user guide CSS for proper wide table display</li>
-<li>Converted UploadedFile to use system messages</li>
-<li>Numerous database, migration &amp; model bugs fixed</li>
-<li>Refactored unit testing for appstarter &amp; framework distributions</li>
-</ul>
-<p>New messages:</p>
-<ul class="simple">
-<li>Database.tableNotFound</li>
-<li>HTTP.uploadErr...</li>
+<li>CI3 Email ported to CI4</li>
+<li>Encryption (basic) added</li>
+<li>Migrations refactored and streamlined for more wholistic functionality (BC)</li>
+<li>added convert() to ImageHandlerInterface</li>
+<li>disabled debug toolbar for downloads</li>
+<li>CLI commands returns an error code now (&#8220;spark&#8221; changed)</li>
+<li>RESTful controllers added to shorten dev time for RESTful APIs</li>
+<li>added RouteCollection::presenter() as part of the RESTful support</li>
 </ul>
 <p>App changes:</p>
 <ul class="simple">
-<li>app/Config/Cache has new setting: database</li>
-<li>app/Views/welcome_message has logo tinted</li>
-<li>composer.json has a case correction</li>
-<li>env adds CI_ENVIRONMENT suggestion</li>
+<li>added app/Common to make it easier to override common functions</li>
+<li>Config/Email and Encryption added</li>
+<li>Config/Migration modified, and has different settings</li>
+<li>Controllers/Home fixed, removing unnecessary model reference</li>
+</ul>
+<p>Message changes:</p>
+<ul class="simple">
+<li>Migration has new &amp; modified messages</li>
+<li>Messages now has RESTful set</li>
 </ul>
 <p>The list of changed files follows, with PR numbers shown.</p>
 <ul class="simple">
+<li><dl class="first docutils">
+<dt>admin/</dt>
+<dd><ul class="first last">
+<li>release-appstarter #2155</li>
+<li>release-framework #2155</li>
+</ul>
+</dd>
+</dl>
+</li>
 <li><dl class="first docutils">
 <dt>app/</dt>
 <dd><ul class="first last">
 <li><dl class="first docutils">
 <dt>Config/</dt>
 <dd><ul class="first last">
-<li>Cache #1719</li>
+<li>Email #2092</li>
+<li>Encryption #2135</li>
+<li>Migrations #2065</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Views/</dt>
+<dt>Controllers/</dt>
 <dd><ul class="first last">
-<li>welome_message #1774</li>
+<li>BaseController #2046</li>
+<li>Home #2145</li>
 </ul>
 </dd>
 </dl>
 </li>
+<li>Common #2110</li>
 </ul>
 </dd>
 </dl>
 </li>
+<li>public/</li>
 <li><dl class="first docutils">
 <dt>system/</dt>
 <dd><ul class="first last">
 <li><dl class="first docutils">
-<dt>Cache/Handlers/</dt>
+<dt>API/</dt>
 <dd><ul class="first last">
-<li>RedisHandler #1719, #1723</li>
+<li>ResponseTrait #2131</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Autoloader/</dt>
+<dd><ul class="first last">
+<li>Autoloader #2149</li>
+<li>FileLocator #2149</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Cache/Handlders/</dt>
+<dd><ul class="first last">
+<li>RedisHandler #2144</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>CLI/</dt>
+<dd><ul class="first last">
+<li>CommandRunner #2164</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Commands/Database/</dt>
+<dd><ul class="first last">
+<li>CreateMigration #2065</li>
+<li>Migrate #2065, 2137</li>
+<li>MigrateRefresh #2065, 2137</li>
+<li>MigrateRollback #2065, 2137</li>
+<li>MigrateStatus #2137</li>
+<li>MigrateVersion #2137</li>
 </ul>
 </dd>
 </dl>
@@ -251,8 +307,8 @@
 <li><dl class="first docutils">
 <dt>Config/</dt>
 <dd><ul class="first last">
-<li>Config #37dbc1</li>
-<li>Services #1704, #37dbc1</li>
+<li>BaseConfig #2082</li>
+<li>Services #2135, 2092</li>
 </ul>
 </dd>
 </dl>
@@ -260,31 +316,8 @@
 <li><dl class="first docutils">
 <dt>Database/</dt>
 <dd><ul class="first last">
-<li>Exceptions/DatabaseException #1739</li>
-<li><dl class="first docutils">
-<dt>Postgre/</dt>
-<dd><ul class="first last">
-<li>Builder #1733</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>SQLite3/</dt>
-<dd><ul class="first last">
-<li>Connection #1739</li>
-<li>Forge #1739</li>
-<li>Table #1739</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li>BaseBuilder #36fbb8, #549d7d</li>
-<li>BaseConnection #549d7d, #1739</li>
-<li>Forge #1739</li>
-<li>MigrationRunner #1743</li>
-<li>Query #36fbb8</li>
-<li>Seeder #1722</li>
+<li>BaseBuilder #2127, 2090, 2142, 2153, 2160, 2023, 2001</li>
+<li>MigrationRunner #2065, 2137</li>
 </ul>
 </dd>
 </dl>
@@ -292,7 +325,42 @@
 <li><dl class="first docutils">
 <dt>Debug/</dt>
 <dd><ul class="first last">
-<li>Exceptions #1704</li>
+<li>Toolbar #2118</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Email/</dt>
+<dd><ul class="first last">
+<li>Email #2092</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Encryption/</dt>
+<dd><ul class="first last">
+<li>EncrypterInterface #2135</li>
+<li>Encryption #2135</li>
+<li>Exceptions/EncryptionException #2135</li>
+<li><dl class="first docutils">
+<dt>Handlers/</dt>
+<dd><ul class="first last">
+<li>BaseHandler #2135</li>
+<li>OpenSSLHandler #2135</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Exceptions/</dt>
+<dd><ul class="first last">
+<li>ConfigException #2065</li>
 </ul>
 </dd>
 </dl>
@@ -300,7 +368,15 @@
 <li><dl class="first docutils">
 <dt>Files/</dt>
 <dd><ul class="first last">
-<li>UploadedFile #1708</li>
+<li>File #2178</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Filters/</dt>
+<dd><ul class="first last">
+<li>DebugToolbar #2118</li>
 </ul>
 </dd>
 </dl>
@@ -308,11 +384,15 @@
 <li><dl class="first docutils">
 <dt>Helpers/</dt>
 <dd><ul class="first last">
-<li>date_helper #1768</li>
-<li>number_helper #1768</li>
-<li>security_helper #1768</li>
-<li>text_helper #1768</li>
-<li>url_helper #1768</li>
+<li>inflector_helper #2065</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Honeypot/</dt>
+<dd><ul class="first last">
+<li>Honeypot #2177</li>
 </ul>
 </dd>
 </dl>
@@ -320,7 +400,24 @@
 <li><dl class="first docutils">
 <dt>HTTP/</dt>
 <dd><ul class="first last">
-<li>Request #1725</li>
+<li>DownloadResponse #2129</li>
+<li>Files/UploadedFile #2128</li>
+<li>Message &#64;2171</li>
+<li>Response #2166</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Images/</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Handlers/</dt>
+<dd>-BaseHandler #2113, 2150
+- ImageMagickHandler #2151</dd>
+</dl>
+</li>
+<li>BImageHandlerInterface #2113</li>
 </ul>
 </dd>
 </dl>
@@ -328,9 +425,19 @@
 <li><dl class="first docutils">
 <dt>Language/en/</dt>
 <dd><ul class="first last">
-<li>Database #1739</li>
-<li>HTTP #1708</li>
-<li>View #1757</li>
+<li>Email #2092</li>
+<li>Encryption #2135</li>
+<li>Migrations #2065, 2137</li>
+<li>RESTful #2165</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>RESTful/</dt>
+<dd><ul class="first last">
+<li>ResourceController #2165</li>
+<li>ResourcePresenter #2165</li>
 </ul>
 </dd>
 </dl>
@@ -338,8 +445,23 @@
 <li><dl class="first docutils">
 <dt>Router/</dt>
 <dd><ul class="first last">
-<li>RouteCollection #1709, #1732</li>
-<li>Router #1764</li>
+<li>RouteCollection #2165</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Security/</dt>
+<dd><ul class="first last">
+<li>Security #2027</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Session/Handlers/</dt>
+<dd><ul class="first last">
+<li>RedisHandler #2125</li>
 </ul>
 </dd>
 </dl>
@@ -347,34 +469,24 @@
 <li><dl class="first docutils">
 <dt>Test/</dt>
 <dd><ul class="first last">
-<li>ControllerResponse #1740</li>
-<li>ControllerTester #1740</li>
-<li>DOMParser #1740</li>
-<li>FeatureResponse #1740</li>
+<li>CIDatabaseTestCase #2137</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>bootstrap #2110</li>
+<li>CodeIgniter #2126, 2164</li>
+<li>Common #2109</li>
+<li>Entity #2112</li>
+<li>Model #2090</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Validation/</dt>
+<dt>tests/_support/</dt>
 <dd><ul class="first last">
-<li>Rules #1738, #1743</li>
-<li>Validation #37dbc1, #1763</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>View/</dt>
-<dd><ul class="first last">
-<li>View #1729</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li>Common #1741</li>
-<li>Entity #6e549a, #1739</li>
-<li>Model #4f4a37, #6e549a, #37dbc1, #1712, #1763</li>
+<li>RESTful/... #2165</li>
 </ul>
 </dd>
 </dl>
@@ -383,20 +495,46 @@
 <dt>tests/system/</dt>
 <dd><ul class="first last">
 <li><dl class="first docutils">
-<dt>Database/</dt>
+<dt>API/</dt>
 <dd><ul class="first last">
-<li>BaseQueryTest #36fbb8</li>
-<li><dl class="first docutils">
-<dt>Live/</dt>
-<dd><ul class="first last">
-<li>SQLite3/AlterTableTest #1739, #1740</li>
-<li>ForgeTest #1739, #1745</li>
-<li>ModelTest #37dbc1, #4ff1f5, #1763</li>
+<li>ResponseTraitTest #2131</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>Migrations/MigrationRunnerTest #1743</li>
+<li><dl class="first docutils">
+<dt>Database/</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Builder/</dt>
+<dd><ul class="first last">
+<li>GetTest #2142</li>
+<li>SelectTest #2160</li>
+<li>WhereTest #2001</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Live/</dt>
+<dd><ul class="first last">
+<li>GroupTest #2160</li>
+<li>ModelTest #2090</li>
+<li>SelectTest #2160</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Migrations/MigrationRunnerTest #2065, 2137</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Encryption/</dt>
+<dd><ul class="first last">
+<li>EncryptionTest #2135</li>
+<li>OpenSSLHandlerTest #2135</li>
 </ul>
 </dd>
 </dl>
@@ -404,44 +542,47 @@
 <li><dl class="first docutils">
 <dt>Helpers/</dt>
 <dd><ul class="first last">
-<li>FilesystemHelperTest #1740</li>
+<li>InflectorHelperTest #2065</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>I18n/</dt>
+<dt>HTTP/</dt>
 <dd><ul class="first last">
-<li>TimeTest # 1736</li>
+<li>DownloadResponseTest #2129</li>
+<li>MessageTest #2171</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Test/</dt>
+<dt>Images/</dt>
 <dd><ul class="first last">
-<li>DOMParserTest #1740</li>
+<li>GDHandlerTest #2113</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Validation/</dt>
+<dt>RESTful/</dt>
 <dd><ul class="first last">
-<li>ValidationTest #1763</li>
+<li>ResourceControllerTest #2165</li>
+<li>ResourcePresenterTest #2165</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>View/</dt>
+<dt>Router/</dt>
 <dd><ul class="first last">
-<li>ViewTest #1729</li>
+<li>RouteCollectionTest #2165</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>EntityTest #6e549a, #1736</li>
+<li>ControllerTest #2165</li>
+<li>EntityTest #2112</li>
 </ul>
 </dd>
 </dl>
@@ -450,17 +591,9 @@
 <dt>user_guide_src/</dt>
 <dd><ul class="first last">
 <li><dl class="first docutils">
-<dt>_themes/.../</dt>
-<dd><ul class="first last">
-<li>citheme.css #1696</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
 <dt>changelogs/</dt>
 <dd><ul class="first last">
-<li>v4.0.0-alpha.5 #1699</li>
+<li>next #2154</li>
 </ul>
 </dd>
 </dl>
@@ -468,7 +601,7 @@
 <li><dl class="first docutils">
 <dt>database/</dt>
 <dd><ul class="first last">
-<li>migrate #1696</li>
+<li>query_builder #2160, 2001</li>
 </ul>
 </dd>
 </dl>
@@ -476,24 +609,32 @@
 <li><dl class="first docutils">
 <dt>dbmgmt/</dt>
 <dd><ul class="first last">
-<li>forge #1751</li>
+<li>migrations #2065, 2132, 2136, 2154, 2137</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>installation/</dt>
+<dt>extending/</dt>
 <dd><ul class="first last">
-<li>install_manual #1699</li>
-<li>running #1750</li>
+<li>common #2162</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>intro/</dt>
+<dt>helpers/</dt>
 <dd><ul class="first last">
-<li>psr #1752</li>
+<li>inflector_helper #2065</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>incoming/</dt>
+<dd><ul class="first last">
+<li>restful #2165</li>
+<li>routing #2165</li>
 </ul>
 </dd>
 </dl>
@@ -501,16 +642,9 @@
 <li><dl class="first docutils">
 <dt>libraries/</dt>
 <dd><ul class="first last">
-<li>caching #1719</li>
-<li>validation #1742</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>models/</dt>
-<dd><ul class="first last">
-<li>entities #1744</li>
+<li>email #2092, 2154</li>
+<li>encryption #2135</li>
+<li>images #2113, 2169</li>
 </ul>
 </dd>
 </dl>
@@ -518,8 +652,9 @@
 <li><dl class="first docutils">
 <dt>outgoing/</dt>
 <dd><ul class="first last">
-<li>index #1729</li>
-<li>view_layouts #1729</li>
+<li>api_responses #2131</li>
+<li>localization #2134</li>
+<li>response #2129</li>
 </ul>
 </dd>
 </dl>
@@ -527,15 +662,7 @@
 <li><dl class="first docutils">
 <dt>testing/</dt>
 <dd><ul class="first last">
-<li>controllers #1740</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>tutorial/</dt>
-<dd><ul class="first last">
-<li>static_pages #1763</li>
+<li>database #2137</li>
 </ul>
 </dd>
 </dl>
@@ -544,52 +671,56 @@
 </dd>
 </dl>
 </li>
-<li>composer.json #1755</li>
-<li>.env #1749</li>
+<li>CONTRIBUTING.md #2010</li>
+<li>README.md #2010</li>
+<li>spark</li>
 </ul>
 <div class="section" id="prs-merged">
 <h2>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>#1774 Housekeeping for beta.1</li>
-<li>#1768 Helper changes - signatures &amp; typos</li>
-<li>#1764 Fix routing when no default route has been specified. Fixes #1758</li>
-<li>#1763 Ensure validation works in Model with errors as part of rules. Fixes #1574</li>
-<li>#1757 Correct the unneeded double-quote (typo)</li>
-<li>#1755 lowercase &#8216;vfsStream&#8217; in composer files</li>
-<li>#1752 Fixed typo preventing link format</li>
-<li>#1751 Guide: Moving misplaced text under correct heading</li>
-<li>#1750 Remove reference to Encryption Key in User Guide</li>
-<li>#1749 Adding environment to .env</li>
-<li>#1745 Updated composite key tests for SQLite3 support. Fixes #1478</li>
-<li>#1744 Update entity docs for current framework state. Fixes #1727</li>
-<li>#1743 Manually sort migrations found instead of relying on the OS. Fixes #1666</li>
-<li>#1742 Fix required_without rule bug.</li>
-<li>#1741 Helpers with a specific namespace can be loaded now. Fixes #1726</li>
-<li>#1740 Refactor test support for app starter</li>
-<li>#1739 Fix typo</li>
-<li>#1738 Fix required_with rule bug. Fixes #1728</li>
-<li>#1737 Added support for dropTable and modifyTable with SQLite driver</li>
-<li>#1736 Accommodate long travis execution times</li>
-<li>#1733 Fix increment and decrement errors with Postgres</li>
-<li>#1732 Don&#8217;t check from CLI in Routes. Fixes #1724</li>
-<li>#1729 New View Layout functionality for simple template</li>
-<li>#1725 Update Request.php</li>
-<li>#1723 Log an error if redis authentication is failed</li>
-<li>#1722 Seeder adds default namespace to seeds</li>
-<li>#1719 Update Cache RedisHandler to support select database</li>
-<li>#4ff1f5 Additional tests for inserts and required validation failing (#1717)</li>
-<li>#549d7d Another try at getting escaping working correctly both when in and out of models</li>
-<li>#1712 Minor readability changes</li>
-<li>#37dbc1 Ensure Model validation rules can be a group name</li>
-<li>#1709 Fix resource routing websafe method order checking</li>
-<li>#1708 Language for UploadedFile</li>
-<li>#36fbb8 BaseBuilder should only turn off Connection&#8217;s setEscapeFlags when running a query...</li>
-<li>#6e549a Provide default baseURL that works with the development server for easier first time setup (Fixes #1646)</li>
-<li>#1704 Fix viewsDirectory bug (#1701)</li>
-<li>#4f4a37 remove debugging from Model.</li>
-<li>#1699 Fix install link in user guide</li>
-<li>#1696 Fix page structure etc</li>
-<li>#1695 Tidy up code blocks in the user guide</li>
+<li>#2178 Add fallback for missing finfo_open</li>
+<li>#2177 Fix missing form close tag</li>
+<li>#2171 Setheader dupes</li>
+<li>#2169 Add $quality usage for Image Library</li>
+<li>#2166 Cookie error</li>
+<li>#2165 RESTful help</li>
+<li>#2164 Exit error code on CLI Command failure</li>
+<li>#2162 User Guide updates for Common.php</li>
+<li>#2160 Add BaseBuilder SelectCount</li>
+<li>#2155 Include .gitignore in starters</li>
+<li>#2153 Bug fix countAllResults with LIMIT</li>
+<li>#2154 Fix email &amp; migrations docs; update changelog</li>
+<li>#2151 ImageMagick-&gt;save() return value</li>
+<li>#2150 New logic for Image-&gt;fit()</li>
+<li>#2149 listNamespaceFiles: Ensure trailing slash</li>
+<li>#2145 Remove UserModel reference from Home controller</li>
+<li>#2144 Update Redis legacy function</li>
+<li>#2142 Fixing BuilderBase resetting when getting the SQL</li>
+<li>#2137 New Migration Logic</li>
+<li>#2136 Migrations user guide fixes</li>
+<li>#2135 Encryption</li>
+<li>#2134 Fix localization writeup</li>
+<li>#2132 Update migration User Guide</li>
+<li>#2131 Added No Content response to APIResponseTrait</li>
+<li>#2129 Add setFileName() to DownloadResponse</li>
+<li>#2128 guessExtension fallback to clientExtension</li>
+<li>#2127 Update limit function since $offset is nullable</li>
+<li>#2126 Limit storePreviousURL to certain requests</li>
+<li>#2125 Updated redis session handler to support redis 5.0.x</li>
+<li>#2118 Disabled Toolbar on downloads</li>
+<li>#2113 Add Image-&gt;convert()</li>
+<li>#2112 Update <cite>Entity.php</cite> <cite>__isset</cite> method</li>
+<li>#2110 Added app/Common.php</li>
+<li>#2109 Fix typo in checking if exists db_connect()</li>
+<li>#2092 Original email port</li>
+<li>#2090 Fix prevent soft delete all without conditions set</li>
+<li>#2082 Update BaseConfig.php</li>
+<li>#2065 Migration updates for more wholistic functionality</li>
+<li>#2046 clean base controller code</li>
+<li>#2027 Fix CSRF hash regeneration</li>
+<li>#2023 whereIn $value do not have to be an array</li>
+<li>#2010 Fix CSRF hash regenerationerbiage revisions</li>
+<li>#2001 Subqueries in BaseBuilder</li>
 </ul>
 </div>
 </div>

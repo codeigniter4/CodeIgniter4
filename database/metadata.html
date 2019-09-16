@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Database Metadata &mdash; CodeIgniter4 4.0.0-beta.4 documentation</title>
+  <title>Database Metadata &mdash; CodeIgniter4 4.0.0-rc.1 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-beta.4 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.1 documentation" href="../index.html"/>
         <link rel="up" title="Working With Databases" href="index.html"/>
         <link rel="next" title="Custom Function Calls" href="call_function.html"/>
         <link rel="prev" title="Transactions" href="transactions.html"/> 
@@ -361,6 +361,24 @@ database:</p>
 <p>The key types may be unique to the database you are using.
 For instance, MySQL will return one of primary, fulltext, spatial, index or unique
 for each key associated with a table.</p>
+<p><strong>$db-&gt;getForeignKeyData()</strong></p>
+<p>Returns an array of objects containing foreign key information.</p>
+<p>Usage example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$keys</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getForeignKeyData</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$keys</span> <span class="k">as</span> <span class="nv">$key</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">constraint_name</span><span class="p">;</span>
+        <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">table_name</span><span class="p">;</span>
+        <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">column_name</span><span class="p">;</span>
+        <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">foreign_table_name</span><span class="p">;</span>
+        <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">foreign_column_name</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The object fields may be unique to the database you are using. For instance, SQLite3 does
+not return data on column names, but has the additional <em>sequence</em> field for compound
+foreign key definitions.</p>
 </div>
 </div>
 </div>
@@ -388,7 +406,7 @@ for each key associated with a table.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Sep 01, 2019.
+      Last updated on Sep 16, 2019.
 
     </p>
   </div>
@@ -410,7 +428,7 @@ for each key associated with a table.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-beta.4',
+            VERSION:'4.0.0-rc.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,

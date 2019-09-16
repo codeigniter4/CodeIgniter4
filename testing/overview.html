@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Testing &mdash; CodeIgniter4 4.0.0-beta.4 documentation</title>
+  <title>Testing &mdash; CodeIgniter4 4.0.0-rc.1 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-beta.4 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.1 documentation" href="../index.html"/>
         <link rel="up" title="Testing" href="index.html"/>
         <link rel="next" title="Testing Your Database" href="database.html"/>
         <link rel="prev" title="Testing" href="index.html"/> 
@@ -296,7 +296,7 @@ have the correct namespace relative to <code class="docutils literal"><span clas
 <p class="first admonition-title">Note</p>
 <p class="last">Namespaces are not strictly required for test classes, but they are helpful to ensure no class names collide.</p>
 </div>
-<p>When testing database results, you must use the <a class="reference external" href="/testing/database">CIDatabaseTestClass</a> class.</p>
+<p>When testing database results, you must use the <a class="reference external" href="database.html">CIDatabaseTestClass</a> class.</p>
 <div class="section" id="additional-assertions">
 <h4>Additional Assertions<a class="headerlink" href="#additional-assertions" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal"><span class="pre">CIUnitTestCase</span></code> provides additional unit testing assertions that you might find useful.</p>
@@ -336,7 +336,7 @@ have the correct namespace relative to <code class="docutils literal"><span clas
 <p>Note: the test case with this should be <a class="reference external" href="https://phpunit.readthedocs.io/en/7.4/annotations.html#runinseparateprocess">run as a separate process
 in PHPunit</a>.</p>
 <p><strong>assertHeaderNotEmitted($header, $ignoreCase=false)</strong></p>
-<p>Ensure that a header or cookie was actually emitted:</p>
+<p>Ensure that a header or cookie was not emitted:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
 
 <span class="nb">ob_start</span><span class="p">();</span>
@@ -485,7 +485,7 @@ might be helpful. The <code class="docutils literal"><span class="pre">CITestStr
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Sep 01, 2019.
+      Last updated on Sep 16, 2019.
 
     </p>
   </div>
@@ -507,7 +507,7 @@ might be helpful. The <code class="docutils literal"><span class="pre">CITestStr
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-beta.4',
+            VERSION:'4.0.0-rc.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Dates and Times &mdash; CodeIgniter4 4.0.0-beta.4 documentation</title>
+  <title>Dates and Times &mdash; CodeIgniter4 4.0.0-rc.1 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-beta.4 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.1 documentation" href="../index.html"/>
         <link rel="up" title="Library Reference" href="index.html"/>
         <link rel="next" title="Typography" href="typography.html"/>
         <link rel="prev" title="Throttler" href="throttler.html"/> 
@@ -722,10 +722,12 @@ the original time:</p>
 <p>Much like Time&#8217;s humanize() method, this returns a string that displays the difference between the times in a
 human readable format that is geared towards being easily understood. It can create strings like &#8216;3 hours ago&#8217;,
 &#8216;in 1 month&#8217;, etc. The biggest differences are in how very recent dates are handled:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Assume current time is: March 10, 2017 (America/Chicago)</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$current</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 10, 2017&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">)</span>
+<span class="nv">$test</span>    <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
 
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">humanize</span><span class="p">();</span>     <span class="c1">// 1 year ago</span>
+<span class="nv">$diff</span> <span class="o">=</span> <span class="nv">$current</span><span class="o">-&gt;</span><span class="na">difference</span><span class="p">(</span><span class="nv">$test</span><span class="p">)</span>
+
+<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">humanize</span><span class="p">();</span>     <span class="c1">// 1 year ago</span>
 </pre></div>
 </div>
 <p>The exact time displayed is determined in the following manner:</p>
@@ -791,7 +793,7 @@ human readable format that is geared towards being easily understood. It can cre
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Sep 01, 2019.
+      Last updated on Sep 16, 2019.
 
     </p>
   </div>
@@ -813,7 +815,7 @@ human readable format that is geared towards being easily understood. It can cre
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-beta.4',
+            VERSION:'4.0.0-rc.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,

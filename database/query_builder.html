@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Query Builder Class &mdash; CodeIgniter4 4.0.0-beta.4 documentation</title>
+  <title>Query Builder Class &mdash; CodeIgniter4 4.0.0-rc.1 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-beta.4 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.1 documentation" href="../index.html"/>
         <link rel="up" title="Working With Databases" href="index.html"/>
         <link rel="next" title="Transactions" href="transactions.html"/>
         <link rel="prev" title="Query Helper Methods" href="helpers.html"/> 
@@ -377,9 +377,9 @@ selectMax(), You can optionally include a second parameter to rename
 the resulting field.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This method is particularly helpful when used with <code class="docutils literal"><span class="pre">groupBy()</span></code>. For</p>
+<p class="last">This method is particularly helpful when used with <code class="docutils literal"><span class="pre">groupBy()</span></code>. For
+counting results generally see <code class="docutils literal"><span class="pre">countAll()</span></code> or <code class="docutils literal"><span class="pre">countAllResults()</span></code>.</p>
 </div>
-<p>counting results generally see <code class="docutils literal"><span class="pre">countAll()</span></code> or <code class="docutils literal"><span class="pre">countAllResults()</span></code>.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectSum</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span> <span class="c1">// Produces: SELECT SUM(age) as age FROM mytable</span>
 </pre></div>
@@ -488,29 +488,26 @@ FALSE, CodeIgniter will not try to protect your field or table names.</p>
 </li>
 <li><dl class="first docutils">
 <dt><strong>Subqueries:</strong></dt>
-<dd><dl class="first last docutils">
-<dt>You can use an anonymous function to create a subquery.</dt>
-<dd><div class="first highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;advance_amount &lt;&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
+<dd><p class="first">You can use an anonymous function to create a subquery.</p>
+<div class="last highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;advance_amount &lt;&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;MAX(advance_amount)&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id &gt;&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="c1">// Produces: WHERE &quot;advance_amount&quot; &lt; (SELECT MAX(advance_amount) FROM &quot;orders&quot; WHERE &quot;id&quot; &gt; 2)</span>
 </pre></div>
 </div>
-<blockquote>
-<div><p>return $builder-&gt;select(&#8216;MAX(advance_amount)&#8217;, false)-&gt;from(&#8216;orders&#8217;)-&gt;where(&#8216;id &gt;&#8217;, 2);</p>
-</div></blockquote>
-<p class="last">});
-// Produces: WHERE &#8220;advance_amount&#8221; &lt; (SELECT MAX(advance_amount) FROM &#8220;orders&#8221; WHERE &#8220;id&#8221; &gt; 2)</p>
-</dd>
-</dl>
 </dd>
 </dl>
 </li>
 </ol>
 <p><strong>$builder-&gt;orWhere()</strong></p>
 <p>This function is identical to the one above, except that multiple
-instances are joined by OR:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name !=&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+instances are joined by OR</p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name !=&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhere</span><span class="p">(</span><span class="s1">&#39;id &gt;&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>  <span class="c1">// Produces: WHERE name != &#39;Joe&#39; OR id &gt; 50</span>
 </pre></div>
 </div>
+</div></blockquote>
 <p><strong>$builder-&gt;whereIn()</strong></p>
 <p>Generates a WHERE field IN (&#8216;item&#8217;, &#8216;item&#8217;) SQL query joined with AND if
 appropriate</p>
@@ -526,7 +523,6 @@ appropriate</p>
 <div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;job_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
 <span class="p">});</span>
-
 <span class="c1">// Produces: WHERE &quot;id&quot; IN (SELECT &quot;job_id&quot; FROM &quot;users_jobs&quot; WHERE &quot;user_id&quot; = 3)</span>
 </pre></div>
 </div>
@@ -2403,7 +2399,7 @@ a DELETE statement will be used instead.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Sep 01, 2019.
+      Last updated on Sep 16, 2019.
 
     </p>
   </div>
@@ -2425,7 +2421,7 @@ a DELETE statement will be used instead.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-beta.4',
+            VERSION:'4.0.0-rc.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
