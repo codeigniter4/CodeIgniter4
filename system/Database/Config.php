@@ -87,7 +87,7 @@ class Config extends BaseConfig
 			$group  = 'custom-' . md5(json_encode($config));
 		}
 
-		$config = $config ?? new \Config\Database();
+		$config = $config ?? config('Database');
 
 		if (empty($group))
 		{
