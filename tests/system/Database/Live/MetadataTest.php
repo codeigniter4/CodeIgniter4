@@ -76,7 +76,7 @@ class MetadataTest extends CIDatabaseTestCase
 
 		// Clean up temporary table
 		$this->db->setPrefix('tmp_');
-		$forge->dropTable('widgets');
+		$this->forge->dropTable('widgets');
 		$this->db->setPrefix($DBPrefix);
 	}
 
