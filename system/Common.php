@@ -1084,3 +1084,18 @@ if (! function_exists('dd'))
 		exit;
 	}
 }
+
+
+//--------------------------------------------------------------------
+
+if (! function_exists('trace'))
+{
+	/**
+	 * Provides a backtrace to the current execution point, from Kint.
+	 */
+	function trace()
+	{
+		Kint::$aliases[] = 'trace';
+		Kint::trace();
+	}
+}

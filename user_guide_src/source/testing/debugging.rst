@@ -42,7 +42,7 @@ This method is identical to ``d()``, except that it also ``dies()`` and no furth
 
 This provides a backtrace to the current execution point, with Kint's own unique spin::
 
-    Kint::trace();
+    trace();
 
 For more information, see `Kint's page <https://kint-php.github.io/kint//>`_.
 
