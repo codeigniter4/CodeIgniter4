@@ -26,6 +26,8 @@ you are currently connected to. Example::
 	{
 		echo $table;
 	}
+	
+.. note:: Some drivers have additional system tables that are excluded from this return.
 
 Determine If a Table Exists
 ===========================
