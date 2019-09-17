@@ -2,7 +2,7 @@
 Working with URIs
 *****************
 
-CodeIngiter provides an object oriented solution for working with URI's in your application. Using this makes it
+CodeIgniter provides an object oriented solution for working with URI's in your application. Using this makes it
 simple to ensure that the structure is always correct, no matter how complex the URI might be, as well as adding
 relative URI to an existing one and have it resolved safely and correctly.
 

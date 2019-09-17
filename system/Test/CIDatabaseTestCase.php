@@ -173,6 +173,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			{
 				$this->migrations->setNamespace($this->namespace);
 			}
+			$this->migrations->regress(0, 'tests');
 
 			// Delete all of the tables to ensure we're at a clean start.
 			$tables = $this->db->listTables();
@@ -192,7 +193,6 @@ class CIDatabaseTestCase extends CIUnitTestCase
 				}
 			}
 
-			$this->migrations->regress(0, 'tests');
 			$this->migrations->latest('tests');
 		}
 

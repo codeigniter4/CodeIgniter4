@@ -236,7 +236,7 @@ add some code to the controller and create a new view. Go back to the
 
 		if (empty($data['news']))
 		{
-			throw new \CodeIgniter\PageNotFoundException('Cannot find the news item: '. $slug);
+			throw new \CodeIgniter\Exceptions\PageNotFoundException('Cannot find the news item: '. $slug);
 		}
 
 		$data['title'] = $data['news']['title'];
