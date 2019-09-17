@@ -1634,6 +1634,31 @@ class Model
 		return null;
 	}
 
+	/**
+	 * Checks for the existence of properties across this model, builder, and db connection.
+	 *
+	 * @param string $name
+	 *
+	 * @return bool
+	 */
+	public function __isset(string $name): bool
+	{
+		if (in_array($name, ['primaryKey', 'table', 'returnType', 'DBGroup']))
+		{
+			return true;
+		}
+		elseif (isset($this->db->$name))
+		{
+			return true;
+		}
+		elseif (isset($this->builder()->$name))
+		{
+			return true;
+		}
+
+		return false;
+	}
+
 	//--------------------------------------------------------------------
 
 	/**

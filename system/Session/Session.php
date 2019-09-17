@@ -625,6 +625,22 @@ class Session implements SessionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Magic method to check for session variables
+	 *
+	 * @param string $key Identifier of the session property to remove.
+	 *
+	 * @return bool
+	 */
+	public function __isset(string $key): bool
+	{
+		// Note: Keep this order the same, just in case somebody wants to
+		//       use 'session_id' as a session data key, for whatever reason
+		return isset($_SESSION[$key]) || ($key === 'session_id');
+	}
+
+	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
 	// Flash Data Methods
 	//--------------------------------------------------------------------
