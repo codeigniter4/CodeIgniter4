@@ -1528,7 +1528,9 @@ abstract class BaseConnection implements ConnectionInterface
 		// Is there a cached result?
 		if (isset($this->dataCache['table_names']) && $this->dataCache['table_names'])
 		{
-			return $this->dataCache['table_names'];
+			return $constrainByPrefix ?
+				preg_grep("/^{$this->DBPrefix}/", $this->dataCache['table_names'])
+				: $this->dataCache['table_names'];
 		}
 
 		if (false === ($sql = $this->_listTables($constrainByPrefix)))
