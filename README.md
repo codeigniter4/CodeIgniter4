@@ -71,7 +71,7 @@ if you want to take the lead on one of them.
 
 At this time, we are not looking for out-of-scope contributions, only those that would be considered part of our controlled evolution!
 
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing.md) section in the user guide.
+Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/CONTRIBUTING.md) section in the user guide.
 
 ## Server Requirements
 
