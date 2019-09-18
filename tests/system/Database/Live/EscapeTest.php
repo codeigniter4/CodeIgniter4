@@ -15,7 +15,7 @@ class EscapeTest extends CIDatabaseTestCase
 	{
 		parent::setUp();
 
-		$this->char = $db->escapeChar;
+		$this->char = $this->db->escapeChar;
 	}
 
 	//--------------------------------------------------------------------
