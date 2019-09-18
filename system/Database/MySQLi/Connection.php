@@ -390,7 +390,48 @@ class Connection extends BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Escape Like String Direct
+	 * There are a few instances where MySQLi queries cannot take the
+	 * additional "ESCAPE x" parameter for specifying the escape character
+	 * in "LIKE" strings, and this handles those directly with a backslash.
+	 *
+	 * @param  string|string[] $str  Input string
+	 * @return string|string[]
+	 */
+	public function escapeLikeStringDirect($str)
+	{
+		if (is_array($str))
+		{
+			foreach ($str as $key => $val)
+			{
+				$str[$key] = $this->escapeLikeStringDirect($val);
+			}
+
+			return $str;
+		}
+
+		$str = $this->_escapeString($str);
+
+		// Escape LIKE condition wildcards
+		return str_replace([
+			$this->likeEscapeChar,
+			'%',
+			'_',
+		], [
+			'\\' . $this->likeEscapeChar,
+			'\\' . '%',
+			'\\' . '_',
+		], $str
+		);
+
+		return $str;
+	}
+
+	//--------------------------------------------------------------------
+	
+	/**
 	 * Generates the SQL for listing tables in a platform-dependent manner.
+	 * Uses escapeLikeStringDirect().
 	 *
 	 * @param boolean $prefixLimit
 	 *
@@ -402,7 +443,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if ($prefixLimit !== false && $this->DBPrefix !== '')
 		{
-			return $sql . " LIKE '" . $this->escapeLikeString($this->DBPrefix) . "%'";
+			return $sql . " LIKE '" . $this->escapeLikeStringDirect($this->DBPrefix) . "%'";
 		}
 
 		return $sql;
