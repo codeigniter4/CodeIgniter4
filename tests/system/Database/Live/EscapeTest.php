@@ -9,6 +9,15 @@ class EscapeTest extends CIDatabaseTestCase
 {
 	protected $refresh = false;
 
+	protected $char;
+
+	protected function setUp()
+	{
+		parent::setUp();
+
+		$this->char = $db->escapeChar;
+	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -25,7 +34,7 @@ class EscapeTest extends CIDatabaseTestCase
 
 	public function testEscape()
 	{
-		$expected = "SELECT * FROM brands WHERE name = 'O\'Doules'";
+		$expected = "SELECT * FROM brands WHERE name = 'O" . $this->char . "'Doules'";
 		$sql      = "SELECT * FROM brands WHERE name = " . $this->db->escape("O'Doules");
 
 		$this->assertEquals($expected, $sql);
@@ -35,7 +44,7 @@ class EscapeTest extends CIDatabaseTestCase
 
 	public function testEscapeString()
 	{
-		$expected = "SELECT * FROM brands WHERE name = 'O\'Doules'";
+		$expected = "SELECT * FROM brands WHERE name = 'O" . $this->char . "'Doules'";
 		$sql      = "SELECT * FROM brands WHERE name = '" . $this->db->escapeString("O'Doules") . "'";
 
 		$this->assertEquals($expected, $sql);
