@@ -207,7 +207,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	protected function _listTables(bool $prefixLimit = false): string
 	{
 		return 'SELECT "NAME" FROM "SQLITE_MASTER" WHERE "TYPE" = \'table\''
-			   . ' AND "NAME" NOT LIKE \'sqlite_%\''
+			   . ' AND "NAME" NOT LIKE \'sqlite!_%\' ESCAPE \'!\''
 			   . (($prefixLimit !== false && $this->DBPrefix !== '')
 				? ' AND "NAME" LIKE \'' . $this->escapeLikeString($this->DBPrefix) . '%\' ' . sprintf($this->likeEscapeStr,
 					$this->likeEscapeChar)
