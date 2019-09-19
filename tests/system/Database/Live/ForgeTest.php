@@ -163,6 +163,8 @@ class ForgeTest extends CIDatabaseTestCase
 			{
 				$this->assertEquals('enum', $fields[0]->type);
 			}
+
+			$this->forge->dropTable('forge_array_constraint', true);
 		}
 		else
 		{
