@@ -78,11 +78,6 @@ class EncryptionTest extends \CIUnitTestCase
 		$this->assertEquals(16, strlen($this->encryption->createKey(16)));
 	}
 
-	public function testBogusProperty()
-	{
-		$this->assertNull($this->encryption->bogus);
-	}
-
 	// --------------------------------------------------------------------
 
 	public function testServiceSuccess()
@@ -127,6 +122,28 @@ class EncryptionTest extends \CIUnitTestCase
 		$config->key = 'Abracadabra';
 		$encrypter   = Services::encrypter($config, true);
 		$this->assertEquals('anything', $encrypter->key);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMagicIssetTrue()
+	{
+		$this->assertTrue(isset($this->encryption->digest));
+	}
+
+	public function testMagicIssetFalse()
+	{
+		$this->assertFalse(isset($this->encryption->bogus));
+	}
+
+	public function testMagicGet()
+	{
+		$this->assertEquals('SHA512', $this->encryption->digest);
+	}
+
+	public function testMagicGetMissing()
+	{
+		$this->assertNull($this->encryption->bogus);
 	}
 
 }

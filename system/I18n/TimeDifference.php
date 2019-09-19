@@ -345,4 +345,19 @@ class TimeDifference
 
 		return null;
 	}
+
+	/**
+	 * Allow property-like checking for our calculated values.
+	 *
+	 * @param $name
+	 *
+	 * @return bool
+	 */
+	public function __isset($name)
+	{
+		$name   = ucfirst(strtolower($name));
+		$method = "get{$name}";
+
+		return method_exists($this, $method);
+	}
 }

@@ -1735,4 +1735,71 @@ class ModelTest extends CIDatabaseTestCase
 		// Just making sure it didn't throw ambiguous deleted error
 		$this->assertEquals(1, $results->id);
 	}
+
+	//--------------------------------------------------------------------
+
+	public function testMagicIssetTrue()
+	{
+		$model = new UserModel();
+
+		$this->assertTrue(isset($model->table));
+	}
+
+	public function testMagicIssetFalse()
+	{
+		$model = new UserModel();
+
+		$this->assertFalse(isset($model->foobar));
+	}
+
+	public function testMagicIssetWithNewProperty()
+	{
+		$model = new UserModel();
+
+		$model->flavor = 'chocolate';
+
+		$this->assertTrue(isset($model->flavor));
+	}
+
+	public function testMagicIssetFromDb()
+	{
+		$model = new UserModel();
+
+		$this->assertTrue(isset($model->DBPrefix));
+	}
+
+	public function testMagicIssetFromBuilder()
+	{
+		$model = new UserModel();
+
+		$this->assertTrue(isset($model->QBNoEscape));
+	}
+
+	public function testMagicGet()
+	{
+		$model = new UserModel();
+
+		$this->assertEquals('user', $model->table);
+	}
+
+	public function testMagicGetMissing()
+	{
+		$model = new UserModel();
+
+		$this->assertNull($model->foobar);
+	}
+
+	public function testMagicGetFromDB()
+	{
+		$model = new UserModel();
+
+		$this->assertEquals('utf8', $model->charset);
+	}
+
+	public function testMagicGetFromBuilder()
+	{
+		$model = new UserModel();
+
+		$this->assertIsArray($model->QBNoEscape);
+	}
 }

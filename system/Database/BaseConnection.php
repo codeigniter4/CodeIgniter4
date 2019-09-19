@@ -1864,4 +1864,18 @@ abstract class BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Checker for properties existence.
+	 *
+	 * @param string $key
+	 *
+	 * @return bool
+	 */
+	public function __isset(string $key): bool
+	{
+		return property_exists($this, $key);
+	}
+
+	//--------------------------------------------------------------------
+
 }

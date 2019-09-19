@@ -221,6 +221,22 @@ class TimeTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testMagicIssetTrue()
+	{
+		$time = Time::parse('January 1, 2016');
+
+		$this->assertTrue(isset($time->year));
+	}
+
+	public function testMagicIssetFalse()
+	{
+		$time = Time::parse('January 1, 2016');
+
+		$this->assertFalse(isset($time->foobar));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testGetYear()
 	{
 		$time = Time::parse('January 1, 2016');

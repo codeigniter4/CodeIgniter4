@@ -110,4 +110,14 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 		return null;
 	}
 
+	/**
+	 * __isset() magic, providing checking for some of our properties
+	 *
+	 * @param  string $key Property name
+	 * @return bool
+	 */
+	public function __isset($key): bool
+	{
+		return in_array($key, ['cipher', 'key'], true);
+	}
 }

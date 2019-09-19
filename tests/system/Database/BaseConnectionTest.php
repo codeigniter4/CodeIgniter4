@@ -128,4 +128,40 @@ class BaseConnectionTest extends \CIUnitTestCase
 		$this->assertGreaterThan($start, $db->getConnectStart());
 		$this->assertGreaterThan(0.0, $db->getConnectDuration());
 	}
+
+	//--------------------------------------------------------------------
+
+	public function testMagicIssetTrue()
+	{
+		$db = new MockConnection($this->options);
+
+		$this->assertTrue(isset($db->charset));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMagicIssetFalse()
+	{
+		$db = new MockConnection($this->options);
+
+		$this->assertFalse(isset($db->foobar));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMagicGet()
+	{
+		$db = new MockConnection($this->options);
+
+		$this->assertEquals('utf8', $db->charset);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMagicGetMissing()
+	{
+		$db = new MockConnection($this->options);
+
+		$this->assertNull($db->foobar);
+	}
 }
