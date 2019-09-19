@@ -1643,7 +1643,7 @@ class Model
 	 */
 	public function __isset(string $name): bool
 	{
-		if (in_array($name, ['primaryKey', 'table', 'returnType', 'DBGroup']))
+		if (property_exists($this, $name))
 		{
 			return true;
 		}
