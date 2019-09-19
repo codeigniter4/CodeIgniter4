@@ -44,4 +44,60 @@ class GetTest extends \CIUnitTestCase
 		$this->assertEquals($expectedSQLafterreset, str_replace("\n", ' ', $builder->get(0, 50, true, true)));
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2143
+	 */
+	public function testGetWhereWithLimit()
+	{
+		$builder = $this->db->table('users');
+
+		$expectedSQL             = 'SELECT * FROM "users" WHERE "username" = \'bogus\'  LIMIT 5';
+		$expectedSQLWithoutReset = 'SELECT * FROM "users" WHERE "username" = \'bogus\' AND "username" = \'bogus\'  LIMIT 5';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, null, true, false)));
+		$this->assertEquals($expectedSQLWithoutReset, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 0, true, true)));
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, null, true, true)));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetWhereWithLimitAndOffset()
+	{
+		$builder = $this->db->table('users');
+
+		$expectedSQL             = 'SELECT * FROM "users" WHERE "username" = \'bogus\'  LIMIT 10, 5';
+		$expectedSQLWithoutReset = 'SELECT * FROM "users" WHERE "username" = \'bogus\' AND "username" = \'bogus\'  LIMIT 10, 5';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, true, false)));
+		$this->assertEquals($expectedSQLWithoutReset, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, true, true)));
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, true, true)));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetWhereWithWhereConditionOnly()
+	{
+		$builder = $this->db->table('users');
+
+		$expectedSQL             = 'SELECT * FROM "users" WHERE "username" = \'bogus\'';
+		$expectedSQLWithoutReset = 'SELECT * FROM "users" WHERE "username" = \'bogus\' AND "username" = \'bogus\'';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, true, false)));
+		$this->assertEquals($expectedSQLWithoutReset, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, true, true)));
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, true, true)));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetWhereWithoutArgs()
+	{
+		$builder = $this->db->table('users');
+
+		$expectedSQL = 'SELECT * FROM "users"';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(null, null, null, true, true)));
+	}
+
 }
