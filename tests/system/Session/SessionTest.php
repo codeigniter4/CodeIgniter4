@@ -185,6 +185,26 @@ class SessionTest extends \CIUnitTestCase
 		$this->assertFalse($session->has('bar'));
 	}
 
+	public function testIssetReturnsTrueOnSuccess()
+	{
+		$session = $this->getInstance();
+		$session->start();
+
+		$_SESSION['foo'] = 'bar';
+
+		$this->assertTrue(isset($session->foo));
+	}
+
+	public function testIssetReturnsFalseOnNotFound()
+	{
+		$session = $this->getInstance();
+		$session->start();
+
+		$_SESSION['foo'] = 'bar';
+
+		$this->assertFalse(isset($session->bar));
+	}
+
 	public function testPushNewValueIntoArraySessionValue()
 	{
 		$session = $this->getInstance();

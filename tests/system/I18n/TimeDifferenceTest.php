@@ -200,4 +200,21 @@ class TimeDifferenceTest extends \CIUnitTestCase
 		$this->assertNull($diff->nonsense);
 	}
 
+	public function testMagicIssetTrue()
+	{
+		$current = Time::parse('March 10, 2017', 'America/Chicago');
+		$diff    = $current->difference('March 18, 2017', 'America/Chicago');
+
+		$this->assertTrue(isset($diff->days));
+		$this->assertFalse(isset($diff->nonsense));
+	}
+
+	public function testMagicIssetFalse()
+	{
+		$current = Time::parse('March 10, 2017', 'America/Chicago');
+		$diff    = $current->difference('March 18, 2017', 'America/Chicago');
+
+		$this->assertFalse(isset($diff->nonsense));
+	}
+
 }
