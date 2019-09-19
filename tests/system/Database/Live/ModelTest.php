@@ -1772,7 +1772,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->assertTrue(isset($model->canLimitDeletes));
+		$this->assertTrue(isset($model->QBNoEscape));
 	}
 
 	public function testMagicGet()
@@ -1800,6 +1800,6 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->assertIsBool($model->canLimitDeletes);
+		$this->assertIsArray($model->QBNoEscape);
 	}
 }
