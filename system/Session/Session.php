@@ -628,7 +628,9 @@ class Session implements SessionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Magic method to check for session variables
+	 * Magic method to check for session variables.
+	 * Different from has() in that it will validate 'session_id' as well.
+	 * Mostly used by internal PHP functions, users should stick to has()
 	 *
 	 * @param string $key Identifier of the session property to remove.
 	 *
@@ -636,8 +638,6 @@ class Session implements SessionInterface
 	 */
 	public function __isset(string $key): bool
 	{
-		// Note: Keep this order the same, just in case somebody wants to
-		//       use 'session_id' as a session data key, for whatever reason
 		return isset($_SESSION[$key]) || ($key === 'session_id');
 	}
 
