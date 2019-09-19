@@ -304,7 +304,8 @@ class Session implements SessionInterface
 				$this->sessionExpiration, $this->cookiePath, $this->cookieDomain, $this->cookieSecure, true // HTTP only; Yes, this is intentional and not configurable for security reasons.
 		);
 
-		if (empty($this->sessionExpiration))
+		//if (empty($this->sessionExpiration))
+		if (!isset($this->sessionExpiration))
 		{
 			$this->sessionExpiration = (int) ini_get('session.gc_maxlifetime');
 		}
