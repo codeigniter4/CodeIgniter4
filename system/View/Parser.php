@@ -128,12 +128,13 @@ class Parser extends View
 			$saveData = $this->config->saveData;
 		}
 
-		$view = str_replace('.php', '', $view);
+		$fileExt = pathinfo($view, PATHINFO_EXTENSION);
+		$view = empty($fileExt) ? $view . '.php' : $view;
 
 		// Was it cached?
 		if (isset($options['cache']))
 		{
-			$cacheName = $options['cache_name'] ?: $view;
+			$cacheName = $options['cache_name'] ?? str_replace('.php', '', $view);
 
 			if ($output = cache($cacheName))
 			{
@@ -141,8 +142,7 @@ class Parser extends View
 				return $output;
 			}
 		}
-
-		$view = $view . '.php';
+		
 		$file = $this->viewPath . $view;
 
 		if (! is_file($file))
