@@ -196,7 +196,7 @@ Class Reference
 
 .. php:method:: failUnauthorized(string $description = 'Unauthorized'[, string $code=null[, string $message = '']])
 
-    :param mixed  $description: The error message to show the user.
+    :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
@@ -210,7 +210,7 @@ Class Reference
 
 .. php:method:: failForbidden(string $description = 'Forbidden'[, string $code=null[, string $message = '']])
 
-    :param mixed  $description: The error message to show the user.
+    :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
@@ -225,7 +225,7 @@ Class Reference
 
 .. php:method:: failNotFound(string $description = 'Not Found'[, string $code=null[, string $message = '']])
 
-    :param mixed  $description: The error message to show the user.
+    :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
@@ -238,7 +238,7 @@ Class Reference
 
 .. php:method:: failValidationError(string $description = 'Bad Request'[, string $code=null[, string $message = '']])
 
-    :param mixed  $description: The error message to show the user.
+    :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
@@ -252,7 +252,7 @@ Class Reference
 
 .. php:method:: failResourceExists(string $description = 'Conflict'[, string $code=null[, string $message = '']])
 
-    :param mixed  $description: The error message to show the user.
+    :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
@@ -266,7 +266,7 @@ Class Reference
 
 .. php:method:: failResourceGone(string $description = 'Gone'[, string $code=null[, string $message = '']])
 
-    :param mixed  $description: The error message to show the user.
+    :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
@@ -280,7 +280,7 @@ Class Reference
 
 .. php:method:: failTooManyRequests(string $description = 'Too Many Requests'[, string $code=null[, string $message = '']])
 
-    :param mixed  $description: The error message to show the user.
+    :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
