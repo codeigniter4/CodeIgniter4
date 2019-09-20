@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CodeIgniter
  *
@@ -61,36 +60,42 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @var \CodeIgniter\Images\Image
 	 */
 	protected $image = null;
+
 	/**
 	 * Image width.
 	 *
 	 * @var integer
 	 */
 	protected $width = 0;
+
 	/**
 	 * Image height.
 	 *
 	 * @var integer
 	 */
 	protected $height = 0;
+
 	/**
 	 * File permission mask.
 	 *
 	 * @var type
 	 */
 	protected $filePermissions = 0644;
+
 	/**
 	 * X-axis.
 	 *
 	 * @var integer
 	 */
 	protected $xAxis = 0;
+
 	/**
 	 * Y-axis.
 	 *
 	 * @var integer
 	 */
 	protected $yAxis = 0;
+
 	/**
 	 * Master dimensioning.
 	 *
@@ -513,6 +518,8 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * Retrieve the EXIF information from the image, if possible. Returns
 	 * an array of the information, or null if nothing can be found.
 	 *
+	 * EXIF data is only supported fr JPEG & TIFF formats.
+	 *
 	 * @param string|null $key    If specified, will only return this piece of EXIF data.
 	 *
 	 * @param boolean     $silent If true, will not throw our own exceptions.
@@ -529,10 +536,16 @@ abstract class BaseHandler implements ImageHandlerInterface
 			}
 		}
 
-		$exif = exif_read_data($this->image->getPathname());
-		if (! is_null($key) && is_array($exif))
+		$exif = null; // default
+		switch ($this->image->imageType)
 		{
-			$exif = $exif[$key] ?? false;
+			case IMAGETYPE_JPEG:
+			case IMAGETYPE_TIFF_II:
+				$exif = exif_read_data($this->image->getPathname());
+				if (! is_null($key) && is_array($exif))
+				{
+					$exif = $exif[$key] ?? false;
+				}
 		}
 
 		return $exif;
@@ -800,6 +813,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Return image width.
 	 *
