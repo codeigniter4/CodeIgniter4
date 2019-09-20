@@ -207,8 +207,14 @@ class Security
 			return $this->CSRFSetCookie($request);
 		}
 
-		// Do the tokens exist in both the _POST and _COOKIE arrays?
-		if (! isset($_POST[$this->CSRFTokenName], $_COOKIE[$this->CSRFCookieName]) || $_POST[$this->CSRFTokenName] !== $_COOKIE[$this->CSRFCookieName]
+		// Do the token exist in _POST or php://input (json) data?
+		$CSRFTokenValue = $_POST[$this->CSRFTokenName] ??
+            (!empty($input = file_get_contents('php://input')) && !empty($json = json_decode($input)) && json_last_error() === JSON_ERROR_NONE ?
+                ($json->{$this->CSRFTokenName} ?? null) :
+                null);
+		
+		// Do the tokens exist in both the _POST/POSTed JSON and _COOKIE arrays?
+		if (! isset($CSRFTokenValue, $_COOKIE[$this->CSRFCookieName]) || $CSRFTokenValue !== $_COOKIE[$this->CSRFCookieName]
 		) // Do the tokens match?
 		{
 			throw SecurityException::forDisallowedAction();
