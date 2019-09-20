@@ -489,6 +489,9 @@ class CURLRequest extends Request
 	{
 		$headers = $this->getHeaders();
 
+		// Unset host header since this should be passed only in response
+		unset($headers['Host']);
+
 		if (empty($headers))
 		{
 			return $curl_options;
@@ -672,10 +675,10 @@ class CURLRequest extends Request
 		}
 
 		// Debug
-		if ($config['debug'])
+		if (is_string($config['debug']))
 		{
 			$curl_options[CURLOPT_VERBOSE] = 1;
-			$curl_options[CURLOPT_STDERR]  = is_string($config['debug']) ? fopen($config['debug'], 'a+') : fopen('php://output', 'w+');
+			$curl_options[CURLOPT_STDERR]  = fopen($config['debug'], 'a+');
 		}
 
 		// Decode Content
@@ -812,7 +815,13 @@ class CURLRequest extends Request
 
 		if ($output === false)
 		{
-			throw HTTPException::forCurlError(curl_errno($ch), curl_error($ch));
+			// Check if debug is set to true (not file handler) and print error to output
+			if ($this->config['debug'] === true)
+			{
+				echo 'CURL Error: ' .  curl_errno($ch) . ', ' . curl_error($ch);
+			} else {
+				throw HTTPException::forCurlError(curl_errno($ch), curl_error($ch));
+			}
 		}
 
 		curl_close($ch);
