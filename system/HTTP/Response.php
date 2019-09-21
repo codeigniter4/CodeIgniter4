@@ -43,6 +43,7 @@ use Config\App;
 use Config\Format;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
+use function GuzzleHttp\Psr7\str;
 
 /**
  * Representation of an outgoing, getServer-side response.
@@ -714,7 +715,7 @@ class Response extends Message implements ResponseInterface
 		// http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
 		if (! isset($this->headers['Date']))
 		{
-			$this->setDate(\DateTime::createFromFormat('U', time()));
+			$this->setDate(\DateTime::createFromFormat('U', (string) time()));
 		}
 
 		// HTTP Status
