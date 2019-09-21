@@ -456,11 +456,8 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$options = $this->request->curl_options;
 
-		$this->assertArrayHasKey(CURLOPT_VERBOSE, $options);
-		$this->assertEquals(1, $options[CURLOPT_VERBOSE]);
-
-		$this->assertArrayHasKey(CURLOPT_STDERR, $options);
-		$this->assertTrue(is_resource($options[CURLOPT_STDERR]));
+		$this->assertArrayNotHasKey(CURLOPT_VERBOSE, $options);
+		$this->assertArrayNotHasKey(CURLOPT_STDERR, $options);
 	}
 
 	public function testDebugOptionFalse()
@@ -478,7 +475,7 @@ class CURLRequestTest extends \CIUnitTestCase
 	public function testDebugOptionFile()
 	{
 		$file = SUPPORTPATH . 'Files/baker/banana.php';
-		
+
 		$this->request->request('get', 'http://example.com', [
 			'debug' => $file,
 		]);

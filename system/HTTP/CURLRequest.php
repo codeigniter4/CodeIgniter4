@@ -672,10 +672,10 @@ class CURLRequest extends Request
 		}
 
 		// Debug
-		if ($config['debug'])
+		if (is_String($config['debug']))
 		{
 			$curl_options[CURLOPT_VERBOSE] = 1;
-			$curl_options[CURLOPT_STDERR]  = is_string($config['debug']) ? fopen($config['debug'], 'a+') : fopen('php://output', 'w+');
+			$curl_options[CURLOPT_STDERR]  = fopen($config['debug'], 'a+');
 		}
 
 		// Decode Content
@@ -812,7 +812,12 @@ class CURLRequest extends Request
 
 		if ($output === false)
 		{
-			throw HTTPException::forCurlError(curl_errno($ch), curl_error($ch));
+			if ($this->config['debug'] === true)
+			{
+				echo 'cURL Error (' . curl_errno($ch) . '): ' . curl_error($ch);
+			} else {
+				throw HTTPException::forCurlError(curl_errno($ch), curl_error($ch));
+			}
 		}
 
 		curl_close($ch);
