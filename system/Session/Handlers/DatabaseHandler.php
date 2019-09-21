@@ -239,7 +239,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 			$insertData = [
 				'id'         => $sessionID,
 				'ip_address' => $this->ipAddress,
-				'timestamp'  => time(),
+				'timestamp'  => 'now()',
 				'data'       => $this->platform === 'postgre' ? '\x' . bin2hex($sessionData) : $sessionData,
 			];
 
@@ -262,7 +262,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 
 		$updateData = [
-			'timestamp' => time(),
+			'timestamp' => 'now()',
 		];
 
 		if ($this->fingerprint !== md5($sessionData))
@@ -345,7 +345,8 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	public function gc($maxlifetime): bool
 	{
-		return ($this->db->table($this->table)->delete('timestamp < ' . (time() - $maxlifetime))) ? true : $this->fail();
+		$interval = implode(" '"[(int)($this->platform === 'postgre')], ['', "{$maxlifetime} second", '']);
+		return ($this->db->table($this->table)->delete("timestamp < now() - INTERVAL {$interval}")) ? true : $this->fail();
 	}
 
 	//--------------------------------------------------------------------
