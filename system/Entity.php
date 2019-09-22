@@ -101,9 +101,9 @@ class Entity
 	 */
 	public function __construct(array $data = null)
 	{
-		$this->syncOriginal();
-
 		$this->fill($data);
+
+		$this->syncOriginal();
 	}
 
 	/**
