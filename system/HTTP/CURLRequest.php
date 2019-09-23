@@ -489,6 +489,9 @@ class CURLRequest extends Request
 	{
 		$headers = $this->getHeaders();
 
+		// Unset 'Host' header, CURL will determinate it automatically from URL.
+		unset($headers['Host']);
+
 		if (empty($headers))
 		{
 			return $curl_options;
