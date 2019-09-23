@@ -1,5 +1,4 @@
 <?php
-
 namespace CodeIgniter\Helpers;
 
 use Config\App;
@@ -1083,6 +1082,77 @@ class URLHelperTest extends \CIUnitTestCase
 		{
 			$this->assertEquals($out, url_title($in, '_'));
 		}
+	}
+
+	//--------------------------------------------------------------------
+	// Exploratory testing, investigating https://github.com/codeigniter4/CodeIgniter4/issues/2016
+
+	public function testBasedNoIndex()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/ci/v4/x/y';
+
+		$config            = new App();
+		$config->baseURL   = 'http://example.com/ci/v4/';
+		$config->indexPage = 'index.php';
+		$request           = Services::request($config);
+		$request->uri      = new URI('http://example.com/somewhere');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $config));
+		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
+	}
+
+	public function testBasedWithIndex()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/ci/v4/index.php/x/y';
+
+		$config            = new App();
+		$config->baseURL   = 'http://example.com/ci/v4/';
+		$config->indexPage = 'index.php';
+		$request           = Services::request($config);
+		$request->uri      = new URI('http://example.com/somewhere');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $config));
+		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
+	}
+
+	public function testBasedWithoutIndex()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/ci/v4/x/y';
+
+		$config            = new App();
+		$config->baseURL   = 'http://example.com/ci/v4/';
+		$config->indexPage = '';
+		$request           = Services::request($config);
+		$request->uri      = new URI('http://example.com/somewhere');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/ci/v4/controller/method', site_url('controller/method', null, $config));
+		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
+	}
+
+	public function testBasedWithOtherIndex()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/ci/v4/x/y';
+
+		$config            = new App();
+		$config->baseURL   = 'http://example.com/ci/v4/';
+		$config->indexPage = 'fc.php';
+		$request           = Services::request($config);
+		$request->uri      = new URI('http://example.com/somewhere');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/ci/v4/fc.php/controller/method', site_url('controller/method', null, $config));
+		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
 	}
 
 }
