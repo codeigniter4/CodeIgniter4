@@ -450,7 +450,7 @@ class CURLRequestTest extends \CIUnitTestCase
 
 	public function testDebugOptionTrue()
 	{
-		$this->request->request('get', 'http://example.com', [
+		$this->request->request('get', 'http://google.com/CodeIgniter4', [
 			'debug' => true,
 		]);
 
@@ -465,7 +465,7 @@ class CURLRequestTest extends \CIUnitTestCase
 
 	public function testDebugOptionFalse()
 	{
-		$this->request->request('get', 'http://example.com', [
+		$this->request->request('get', 'http://google.com/CodeIgniter4', [
 			'debug' => false,
 		]);
 
@@ -478,8 +478,8 @@ class CURLRequestTest extends \CIUnitTestCase
 	public function testDebugOptionFile()
 	{
 		$file = SUPPORTPATH . 'Files/baker/banana.php';
-		
-		$this->request->request('get', 'http://example.com', [
+
+		$this->request->request('get', 'http://google.com/CodeIgniter4', [
 			'debug' => $file,
 		]);
 
