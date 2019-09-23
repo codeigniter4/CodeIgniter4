@@ -695,6 +695,154 @@ setting it to FALSE.</p>
 </div>
 <p><strong>$builder-&gt;orHaving()</strong></p>
 <p>Identical to having(), only separates multiple clauses with &#8220;OR&#8221;.</p>
+<p><strong>$builder-&gt;havingIn()</strong></p>
+<p>Generates a HAVING field IN (&#8216;item&#8217;, &#8216;item&#8217;) SQL query joined with AND if
+appropriate</p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$groups</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingIn</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">,</span> <span class="nv">$groups</span><span class="p">);</span>
+<span class="c1">// Produces: HAVING group_id IN (1, 2, 3)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>You can use subqueries instead of an array of values.</p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="c1">// Produces: HAVING &quot;id&quot; IN (SELECT &quot;user_id&quot; FROM &quot;users_jobs&quot; WHERE &quot;group_id&quot; = 3)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>$builder-&gt;orHavingIn()</strong></p>
+<p>Generates a HAVING field IN (&#8216;item&#8217;, &#8216;item&#8217;) SQL query joined with OR if
+appropriate</p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$groups</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orHavingIn</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">,</span> <span class="nv">$groups</span><span class="p">);</span>
+<span class="c1">// Produces: OR group_id IN (1, 2, 3)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>You can use subqueries instead of an array of values.</p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orHavingIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Produces: OR &quot;id&quot; IN (SELECT &quot;user_id&quot; FROM &quot;users_jobs&quot; WHERE &quot;group_id&quot; = 3)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>$builder-&gt;havingNotIn()</strong></p>
+<p>Generates a HAVING field NOT IN (&#8216;item&#8217;, &#8216;item&#8217;) SQL query joined with
+AND if appropriate</p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$groups</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingNotIn</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">,</span> <span class="nv">$groups</span><span class="p">);</span>
+<span class="c1">// Produces: HAVING group_id NOT IN (1, 2, 3)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>You can use subqueries instead of an array of values.</p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingNotIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Produces: HAVING &quot;id&quot; NOT IN (SELECT &quot;user_id&quot; FROM &quot;users_jobs&quot; WHERE &quot;group_id&quot; = 3)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>$builder-&gt;orHavingNotIn()</strong></p>
+<p>Generates a HAVING field NOT IN (&#8216;item&#8217;, &#8216;item&#8217;) SQL query joined with OR
+if appropriate</p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$groups</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingNotIn</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">,</span> <span class="nv">$groups</span><span class="p">);</span>
+<span class="c1">// Produces: OR group_id NOT IN (1, 2, 3)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>You can use subqueries instead of an array of values.</p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orHavingNotIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Produces: OR &quot;id&quot; NOT IN (SELECT &quot;user_id&quot; FROM &quot;users_jobs&quot; WHERE &quot;group_id&quot; = 3)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>$builder-&gt;havingLike()</strong></p>
+<p>This method enables you to generate <strong>LIKE</strong> clauses for HAVING part or the query, useful for doing
+searches.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All values passed to this method are escaped automatically.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All <code class="docutils literal"><span class="pre">havingLike*</span></code> method variations can be forced to perform case-insensitive searches by passing
+a fifth parameter of <code class="docutils literal"><span class="pre">true</span></code> to the method. This will use platform-specific features where available
+otherwise, will force the values to be lowercase, i.e. <code class="docutils literal"><span class="pre">HAVING</span> <span class="pre">LOWER(column)</span> <span class="pre">LIKE</span> <span class="pre">'%search%'</span></code>. This
+may require indexes to be made for <code class="docutils literal"><span class="pre">LOWER(column)</span></code> instead of <code class="docutils literal"><span class="pre">column</span></code> to be effective.</p>
+</div>
+<ol class="arabic">
+<li><p class="first"><strong>Simple key/value method:</strong></p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="c1">// Produces: HAVING `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+<p>If you use multiple method calls they will be chained together with
+AND between them:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="c1">// HAVING `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; AND  `body` LIKE &#39;%match% ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+<p>If you want to control where the wildcard (%) is placed, you can use
+an optional third argument. Your options are &#8216;before&#8217;, &#8216;after&#8217; and
+&#8216;both&#8217; (which is the default).</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span>       <span class="c1">// Produces: HAVING `title` LIKE &#39;%match&#39; ESCAPE &#39;!&#39;</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">);</span>        <span class="c1">// Produces: HAVING `title` LIKE &#39;match%&#39; ESCAPE &#39;!&#39;</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">);</span> <span class="c1">// Produces: HAVING `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Associative array method:</strong></p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page1&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page2&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">];</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+<span class="c1">// HAVING `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; AND  `page1` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; AND  `page2` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+<p><strong>$builder-&gt;orHavingLike()</strong></p>
+<p>This method is identical to the one above, except that multiple
+instances are joined by OR:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orHavingLike</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="nv">$match</span><span class="p">);</span>
+<span class="c1">// HAVING `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; OR  `body` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;notHavingLike()</strong></p>
+<p>This method is identical to <code class="docutils literal"><span class="pre">havingLike()</span></code>, except that it generates
+NOT LIKE statements:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">notHavingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>      <span class="c1">// HAVING `title` NOT LIKE &#39;%match% ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;orNotHavingLike()</strong></p>
+<p>This method is identical to <code class="docutils literal"><span class="pre">notHavingLike()</span></code>, except that multiple
+instances are joined by OR:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orNotHavingLike</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="c1">// HAVING `title` LIKE &#39;%match% OR  `body` NOT LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="ordering-results">
 <h2><a class="toc-backref" href="#id5">Ordering results</a><a class="headerlink" href="#ordering-results" title="Permalink to this headline">¶</a></h2>
@@ -802,6 +950,16 @@ you to create queries with complex WHERE clauses. Nested groups are supported. E
 <p>Starts a new group by adding an opening parenthesis to the WHERE clause of the query, prefixing it with &#8216;OR NOT&#8217;.</p>
 <p><strong>$builder-&gt;groupEnd()</strong></p>
 <p>Ends the current group by adding a closing parenthesis to the WHERE clause of the query.</p>
+<p><strong>$builder-&gt;groupHavingStart()</strong></p>
+<p>Starts a new group by adding an opening parenthesis to the HAVING clause of the query.</p>
+<p><strong>$builder-&gt;orGroupHavingStart()</strong></p>
+<p>Starts a new group by adding an opening parenthesis to the HAVING clause of the query, prefixing it with &#8216;OR&#8217;.</p>
+<p><strong>$builder-&gt;notGroupHavingStart()</strong></p>
+<p>Starts a new group by adding an opening parenthesis to the HAVING clause of the query, prefixing it with &#8216;NOT&#8217;.</p>
+<p><strong>$builder-&gt;orNotGroupHavingStart()</strong></p>
+<p>Starts a new group by adding an opening parenthesis to the HAVING clause of the query, prefixing it with &#8216;OR NOT&#8217;.</p>
+<p><strong>$builder-&gt;groupHavingEnd()</strong></p>
+<p>Ends the current group by adding a closing parenthesis to the HAVING clause of the query.</p>
 </div>
 <div class="section" id="inserting-data">
 <h2><a class="toc-backref" href="#id8">Inserting Data</a><a class="headerlink" href="#inserting-data" title="Permalink to this headline">¶</a></h2>
@@ -1872,6 +2030,294 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::orHavingIn">
+<code class="descname">orHavingIn</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">[</span>, <em>$values = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orHavingIn" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; The field to search</li>
+<li><strong>$values</strong> (<em>array|Closure</em>) &#8211; Array of target values, or anonymous function for subquery</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Generates a HAVING field IN(&#8216;item&#8217;, &#8216;item&#8217;) SQL query,
+joined with &#8216;OR&#8217; if appropriate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::orHavingNotIn">
+<code class="descname">orHavingNotIn</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">[</span>, <em>$values = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orHavingNotIn" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; The field to search</li>
+<li><strong>$values</strong> (<em>array|Closure</em>) &#8211; Array of target values, or anonymous function for subquery</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Generates a HAVING field NOT IN(&#8216;item&#8217;, &#8216;item&#8217;) SQL query,
+joined with &#8216;OR&#8217; if appropriate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::havingIn">
+<code class="descname">havingIn</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">[</span>, <em>$values = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::havingIn" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; Name of field to examine</li>
+<li><strong>$values</strong> (<em>array|Closure</em>) &#8211; Array of target values, or anonymous function for subquery</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Generates a HAVING field IN(&#8216;item&#8217;, &#8216;item&#8217;) SQL query,
+joined with &#8216;AND&#8217; if appropriate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::havingNotIn">
+<code class="descname">havingNotIn</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">[</span>, <em>$values = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::havingNotIn" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; Name of field to examine</li>
+<li><strong>$values</strong> (<em>array|Closure</em>) &#8211; Array of target values, or anonymous function for subquery</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Generates a HAVING field NOT IN(&#8216;item&#8217;, &#8216;item&#8217;) SQL query,
+joined with &#8216;AND&#8217; if appropriate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::havingLike">
+<code class="descname">havingLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::havingLike" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$field</strong> (<em>string</em>) &#8211; Field name</li>
+<li><strong>$match</strong> (<em>string</em>) &#8211; Text portion to match</li>
+<li><strong>$side</strong> (<em>string</em>) &#8211; Which side of the expression to put the &#8216;%&#8217; wildcard on</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a LIKE clause to a HAVING part of the query, separating multiple calls with AND.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::orHavingLike">
+<code class="descname">orHavingLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orHavingLike" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$field</strong> (<em>string</em>) &#8211; Field name</li>
+<li><strong>$match</strong> (<em>string</em>) &#8211; Text portion to match</li>
+<li><strong>$side</strong> (<em>string</em>) &#8211; Which side of the expression to put the &#8216;%&#8217; wildcard on</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a LIKE clause to a HAVING part of the query, separating multiple class with OR.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::notHavingLike">
+<code class="descname">notHavingLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::notHavingLike" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$field</strong> (<em>string</em>) &#8211; Field name</li>
+<li><strong>$match</strong> (<em>string</em>) &#8211; Text portion to match</li>
+<li><strong>$side</strong> (<em>string</em>) &#8211; Which side of the expression to put the &#8216;%&#8217; wildcard on</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a NOT LIKE clause to a HAVING part of the query, separating multiple calls with AND.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::orNotHavingLike">
+<code class="descname">orNotHavingLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orNotHavingLike" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$field</strong> (<em>string</em>) &#8211; Field name</li>
+<li><strong>$match</strong> (<em>string</em>) &#8211; Text portion to match</li>
+<li><strong>$side</strong> (<em>string</em>) &#8211; Which side of the expression to put the &#8216;%&#8217; wildcard on</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a NOT LIKE clause to a HAVING part of the query, separating multiple calls with OR.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::havingGroupStart">
+<code class="descname">havingGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::havingGroupStart" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
+</tr>
+</tbody>
+</table>
+<p>Starts a group expression for HAVING clause, using ANDs for the conditions inside it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::orHavingGroupStart">
+<code class="descname">orHavingGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orHavingGroupStart" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
+</tr>
+</tbody>
+</table>
+<p>Starts a group expression for HAVING clause, using ORs for the conditions inside it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::notHavingGroupStart">
+<code class="descname">notHavingGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::notHavingGroupStart" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
+</tr>
+</tbody>
+</table>
+<p>Starts a group expression for HAVING clause, using AND NOTs for the conditions inside it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::orNotHavingGroupStart">
+<code class="descname">orNotHavingGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orNotHavingGroupStart" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
+</tr>
+</tbody>
+</table>
+<p>Starts a group expression for HAVING clause, using OR NOTs for the conditions inside it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::havingGroupEnd">
+<code class="descname">havingGroupEnd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::havingGroupEnd" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">object</td>
+</tr>
+</tbody>
+</table>
+<p>Ends a group expression for HAVING clause.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="CodeIgniterDatabaseBaseBuilder::groupBy">
 <code class="descname">groupBy</code><span class="sig-paren">(</span><em>$by</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::groupBy" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
@@ -2399,7 +2845,7 @@ a DELETE statement will be used instead.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Sep 20, 2019.
+      Last updated on Sep 22, 2019.
 
     </p>
   </div>
