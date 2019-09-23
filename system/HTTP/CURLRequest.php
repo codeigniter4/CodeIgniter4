@@ -675,7 +675,13 @@ class CURLRequest extends Request
 		if ($config['debug'])
 		{
 			$curl_options[CURLOPT_VERBOSE] = 1;
-			$curl_options[CURLOPT_STDERR]  = is_string($config['debug']) ? fopen($config['debug'], 'a+') : fopen('php://output', 'w+');
+
+			if ($config['debug'] === true)
+			{
+				$curl_options[CURLOPT_STDERR] = fopen('php://temp', 'w+');
+			} else {
+				$curl_options[CURLOPT_STDERR] = fopen($config['debug'], 'a+');
+			}
 		}
 
 		// Decode Content
@@ -812,7 +818,19 @@ class CURLRequest extends Request
 
 		if ($output === false)
 		{
-			throw HTTPException::forCurlError(curl_errno($ch), curl_error($ch));
+			// Check if debug is set to 'true'. If yes send verbose to output. If not throw exceptions.
+			if ($this->config['debug'] === true)
+			{
+				// Rewind written stream to the begging
+				rewind($curl_options[CURLOPT_STDERR]);
+
+				// Print formatted verbose output
+				echo '<pre>';
+				print_r(stream_get_contents($curl_options[CURLOPT_STDERR]));
+				echo '</pre>';
+			} else {
+				throw HTTPException::forCurlError(curl_errno($ch), curl_error($ch));
+			}
 		}
 
 		curl_close($ch);
