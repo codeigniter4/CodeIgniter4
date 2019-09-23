@@ -1096,12 +1096,13 @@ class URLHelperTest extends \CIUnitTestCase
 		$config->baseURL   = 'http://example.com/ci/v4/';
 		$config->indexPage = 'index.php';
 		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/somewhere');
+		$request->uri      = new URI('http://example.com/ci/v4/x/y');
 
 		Services::injectMock('request', $request);
 
 		$this->assertEquals('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $config));
 		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
+		$this->assertEquals(base_url(uri_string()), current_url());
 	}
 
 	public function testBasedWithIndex()
@@ -1113,12 +1114,13 @@ class URLHelperTest extends \CIUnitTestCase
 		$config->baseURL   = 'http://example.com/ci/v4/';
 		$config->indexPage = 'index.php';
 		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/somewhere');
+		$request->uri      = new URI('http://example.com/ci/v4/index.php/x/y');
 
 		Services::injectMock('request', $request);
 
 		$this->assertEquals('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $config));
 		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
+		$this->assertEquals(base_url(uri_string()), current_url());
 	}
 
 	public function testBasedWithoutIndex()
@@ -1130,12 +1132,13 @@ class URLHelperTest extends \CIUnitTestCase
 		$config->baseURL   = 'http://example.com/ci/v4/';
 		$config->indexPage = '';
 		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/somewhere');
+		$request->uri      = new URI('http://example.com/ci/v4/x/y');
 
 		Services::injectMock('request', $request);
 
 		$this->assertEquals('http://example.com/ci/v4/controller/method', site_url('controller/method', null, $config));
 		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
+		$this->assertEquals(base_url(uri_string()), current_url());
 	}
 
 	public function testBasedWithOtherIndex()
@@ -1147,12 +1150,13 @@ class URLHelperTest extends \CIUnitTestCase
 		$config->baseURL   = 'http://example.com/ci/v4/';
 		$config->indexPage = 'fc.php';
 		$request           = Services::request($config);
-		$request->uri      = new URI('http://example.com/somewhere');
+		$request->uri      = new URI('http://example.com/ci/v4/x/y');
 
 		Services::injectMock('request', $request);
 
 		$this->assertEquals('http://example.com/ci/v4/fc.php/controller/method', site_url('controller/method', null, $config));
 		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
+		$this->assertEquals(base_url(uri_string()), current_url());
 	}
 
 }
