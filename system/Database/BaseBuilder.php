@@ -830,6 +830,82 @@ class BaseBuilder
 	//--------------------------------------------------------------------
 
 	/**
+	 * HAVING IN
+	 *
+	 * Generates a HAVING field IN('item', 'item') SQL query,
+	 * joined with 'AND' if appropriate.
+	 *
+	 * @param string               $key    The field to search
+	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+	 * @param boolean              $escape
+	 *
+	 * @return BaseBuilder
+	 */
+	public function havingIn(string $key = null, $values = null, bool $escape = null)
+	{
+		return $this->_whereIn($key, $values, false, 'AND ', $escape, 'QBHaving');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * OR HAVING IN
+	 *
+	 * Generates a HAVING field IN('item', 'item') SQL query,
+	 * joined with 'OR' if appropriate.
+	 *
+	 * @param string               $key    The field to search
+	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+	 * @param boolean              $escape
+	 *
+	 * @return BaseBuilder
+	 */
+	public function orHavingIn(string $key = null, $values = null, bool $escape = null)
+	{
+		return $this->_whereIn($key, $values, false, 'OR ', $escape, 'QBHaving');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * HAVING NOT IN
+	 *
+	 * Generates a HAVING field NOT IN('item', 'item') SQL query,
+	 * joined with 'AND' if appropriate.
+	 *
+	 * @param string               $key    The field to search
+	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+	 * @param boolean              $escape
+	 *
+	 * @return BaseBuilder
+	 */
+	public function havingNotIn(string $key = null, $values = null, bool $escape = null)
+	{
+		return $this->_whereIn($key, $values, true, 'AND ', $escape, 'QBHaving');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * OR HAVING NOT IN
+	 *
+	 * Generates a HAVING field NOT IN('item', 'item') SQL query,
+	 * joined with 'OR' if appropriate.
+	 *
+	 * @param string               $key    The field to search
+	 * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+	 * @param boolean              $escape
+	 *
+	 * @return BaseBuilder
+	 */
+	public function orHavingNotIn(string $key = null, $values = null, bool $escape = null)
+	{
+		return $this->_whereIn($key, $values, true, 'OR ', $escape, 'QBHaving');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Internal WHERE IN
 	 *
 	 * @used-by WhereIn()
@@ -842,10 +918,11 @@ class BaseBuilder
 	 * @param boolean       $not    If the statement would be IN or NOT IN
 	 * @param string        $type
 	 * @param boolean       $escape
+	 * @param string        $clause (Internal use only)
 	 *
 	 * @return BaseBuilder
 	 */
-	protected function _whereIn(string $key = null, $values = null, bool $not = false, string $type = 'AND ', bool $escape = null)
+	protected function _whereIn(string $key = null, $values = null, bool $not = false, string $type = 'AND ', bool $escape = null, string $clause = 'QBWhere')
 	{
 		if ($key === null || $values === null || (! is_array($values) && ! ($values instanceof Closure)))
 		{
@@ -874,14 +951,14 @@ class BaseBuilder
 			$ok      = $this->setBind($ok, $whereIn, $escape);
 		}
 
-		$prefix = empty($this->QBWhere) ? $this->groupGetType('') : $this->groupGetType($type);
+		$prefix = empty($this->$clause) ? $this->groupGetType('') : $this->groupGetType($type);
 
 		$whereIn = [
 			'condition' => $prefix . $key . $not . ($values instanceof Closure ? " IN ($ok)" : " IN :{$ok}:"),
 			'escape'    => false,
 		];
 
-		$this->QBWhere[] = $whereIn;
+		$this->{$clause}[] = $whereIn;
 
 		return $this;
 	}
@@ -970,6 +1047,86 @@ class BaseBuilder
 		return $this->_like($field, $match, 'OR ', $side, 'NOT', $escape, $insensitiveSearch);
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * LIKE with HAVING clause
+	 *
+	 * Generates a %LIKE% portion of the query.
+	 * Separates multiple calls with 'AND'.
+	 *
+	 * @param mixed   $field
+	 * @param string  $match
+	 * @param string  $side
+	 * @param boolean $escape
+	 *
+	 * @return BaseBuilder
+	 */
+	public function havingLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
+	{
+		return $this->_like($field, $match, 'AND ', $side, '', $escape, $insensitiveSearch, 'QBHaving');
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * NOT LIKE with HAVING clause
+	 *
+	 * Generates a NOT LIKE portion of the query.
+	 * Separates multiple calls with 'AND'.
+	 *
+	 * @param mixed   $field
+	 * @param string  $match
+	 * @param string  $side
+	 * @param boolean $escape
+	 *
+	 * @return BaseBuilder
+	 */
+	public function notHavingLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
+	{
+		return $this->_like($field, $match, 'AND ', $side, 'NOT', $escape, $insensitiveSearch, 'QBHaving');
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * OR LIKE with HAVING clause
+	 *
+	 * Generates a %LIKE% portion of the query.
+	 * Separates multiple calls with 'OR'.
+	 *
+	 * @param mixed   $field
+	 * @param string  $match
+	 * @param string  $side
+	 * @param boolean $escape
+	 *
+	 * @return BaseBuilder
+	 */
+	public function orHavingLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
+	{
+		return $this->_like($field, $match, 'OR ', $side, '', $escape, $insensitiveSearch, 'QBHaving');
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * OR NOT LIKE with HAVING clause
+	 *
+	 * Generates a NOT LIKE portion of the query.
+	 * Separates multiple calls with 'OR'.
+	 *
+	 * @param mixed   $field
+	 * @param string  $match
+	 * @param string  $side
+	 * @param boolean $escape
+	 *
+	 * @return BaseBuilder
+	 */
+	public function orNotHavingLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
+	{
+		return $this->_like($field, $match, 'OR ', $side, 'NOT', $escape, $insensitiveSearch, 'QBHaving');
+	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -979,6 +1136,10 @@ class BaseBuilder
 	 * @used-by orLike()
 	 * @used-by notLike()
 	 * @used-by orNotLike()
+	 * @used-by havingLike()
+	 * @used-by orHavingLike()
+	 * @used-by notHavingLike()
+	 * @used-by orNotHavingLike()
 	 *
 	 * @param mixed   $field
 	 * @param string  $match
@@ -987,10 +1148,11 @@ class BaseBuilder
 	 * @param string  $not
 	 * @param boolean $escape
 	 * @param boolean $insensitiveSearch IF true, will force a case-insensitive search
+	 * @param string  $clause            (Internal use only)
 	 *
 	 * @return BaseBuilder
 	 */
-	protected function _like($field, string $match = '', string $type = 'AND ', string $side = 'both', string $not = '', bool $escape = null, bool $insensitiveSearch = false)
+	protected function _like($field, string $match = '', string $type = 'AND ', string $side = 'both', string $not = '', bool $escape = null, bool $insensitiveSearch = false, string $clause = 'QBWhere')
 	{
 		if (! is_array($field))
 		{
@@ -1004,12 +1166,12 @@ class BaseBuilder
 
 		foreach ($field as $k => $v)
 		{
-			$prefix = empty($this->QBWhere) ? $this->groupGetType('') : $this->groupGetType($type);
-
 			if ($insensitiveSearch === true)
 			{
 				$v = strtolower($v);
 			}
+
+			$prefix = empty($this->$clause) ? $this->groupGetType('') : $this->groupGetType($type);
 
 			if ($side === 'none')
 			{
@@ -1036,7 +1198,7 @@ class BaseBuilder
 				$like_statement .= sprintf($this->db->likeEscapeStr, $this->db->likeEscapeChar);
 			}
 
-			$this->QBWhere[] = [
+			$this->{$clause}[] = [
 				'condition' => $like_statement,
 				'escape'    => $escape,
 			];
@@ -1152,6 +1314,90 @@ class BaseBuilder
 		return $this;
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Starts a query group for HAVING clause.
+	 *
+	 * @param string $not  (Internal use only)
+	 * @param string $type (Internal use only)
+	 *
+	 * @return BaseBuilder
+	 */
+	public function havingGroupStart(string $not = '', string $type = 'AND ')
+	{
+		$type = $this->groupGetType($type);
+
+		$this->QBWhereGroupStarted = true;
+		$prefix                    = empty($this->QBHaving) ? '' : $type;
+		$having                    = [
+			'condition' => $prefix . $not . str_repeat(' ', ++$this->QBWhereGroupCount) . ' (',
+			'value'     => null,
+			'escape'    => false,
+		];
+
+		$this->QBHaving[] = $having;
+
+		return $this;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Starts a query group for HAVING clause, but ORs the group.
+	 *
+	 * @return BaseBuilder
+	 */
+	public function orHavingGroupStart()
+	{
+		return $this->havingGroupStart('', 'OR ');
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Starts a query group for HAVING clause, but NOTs the group.
+	 *
+	 * @return BaseBuilder
+	 */
+	public function notHavingGroupStart()
+	{
+		return $this->havingGroupStart('NOT ', 'AND ');
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Starts a query group for HAVING clause, but OR NOTs the group.
+	 *
+	 * @return BaseBuilder
+	 */
+	public function orNotHavingGroupStart()
+	{
+		return $this->havingGroupStart('NOT ', 'OR ');
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Ends a query group for HAVING clause.
+	 *
+	 * @return BaseBuilder
+	 */
+	public function havingGroupEnd()
+	{
+		$this->QBWhereGroupStarted = false;
+		$having                    = [
+			'condition' => str_repeat(' ', $this->QBWhereGroupCount -- ) . ')',
+			'value'     => null,
+			'escape'    => false,
+		];
+
+		$this->QBHaving[] = $having;
+
+		return $this;
+	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1161,6 +1407,7 @@ class BaseBuilder
 	 * @used-by _like()
 	 * @used-by whereHaving()
 	 * @used-by _whereIn()
+	 * @used-by havingGroupStart()
 	 *
 	 * @param string $type
 	 *
