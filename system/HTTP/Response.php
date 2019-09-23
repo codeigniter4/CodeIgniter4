@@ -714,7 +714,7 @@ class Response extends Message implements ResponseInterface
 		// http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
 		if (! isset($this->headers['Date']))
 		{
-			$this->setDate(\DateTime::createFromFormat('U', time()));
+			$this->setDate(\DateTime::createFromFormat('U', (string) time()));
 		}
 
 		// HTTP Status
