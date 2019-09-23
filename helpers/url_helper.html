@@ -247,9 +247,9 @@
 </tbody>
 </table>
 <p>Returns your site URL, as specified in your config file. The index.php
-file (or whatever you have set as your site <strong>index_page</strong> in your config
+file (or whatever you have set as your site <strong>indexPage</strong> in your config
 file) will be added to the URL, as will any URI segments you pass to the
-function, plus the <strong>url_suffix</strong> as set in your config file.</p>
+function.</p>
 <p>You are encouraged to use this function any time you need to generate a
 local URL so that your pages become more portable in the event your URL
 changes.</p>
@@ -296,7 +296,7 @@ We use this for unit testing the framework itself.</p>
 </pre></div>
 </div>
 <p>This function returns the same thing as <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal"><span class="pre">site_url()</span></code></a>, without
-the <em>index_page</em> or <em>url_suffix</em> being appended.</p>
+the <em>indexPage</em> being appended.</p>
 <p>Also like <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal"><span class="pre">site_url()</span></code></a>, you can supply segments as a string or
 an array. Here is a string example:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s2">&quot;blog/post/123&quot;</span><span class="p">);</span>
@@ -413,7 +413,7 @@ For example, if your URL was this:</p>
 </tr>
 </tbody>
 </table>
-<p>Returns your site <strong>index_page</strong>, as specified in your config file.
+<p>Returns your site <strong>indexPage</strong>, as specified in your config file.
 Example:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">index_page</span><span class="p">();</span>
 </pre></div>
@@ -775,7 +775,7 @@ is missing from a URL.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Sep 22, 2019.
+      Last updated on Sep 23, 2019.
 
     </p>
   </div>
