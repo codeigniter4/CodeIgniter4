@@ -23,10 +23,20 @@ class PagerTest extends \CIUnitTestCase
 		parent::setUp();
 		helper('url');
 
-		$_SERVER['HTTP_HOST'] = 'example.com';
-		$_GET                 = [];
-		$this->config         = new Pager();
-		$this->pager          = new \CodeIgniter\Pager\Pager($this->config, Services::renderer());
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/';
+		$_GET                   = [];
+
+		$config          = new App();
+		$config->baseURL = 'http://example.com/';
+		$request         = Services::request($config);
+		$request->uri    = new URI('http://example.com');
+
+		Services::injectMock('request', $request);
+
+		$_GET         = [];
+		$this->config = new Pager();
+		$this->pager  = new \CodeIgniter\Pager\Pager($this->config, Services::renderer());
 	}
 
 	public function testSetPathRemembersPath()
