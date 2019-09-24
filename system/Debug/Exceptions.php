@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CodeIgniter
  *
@@ -52,6 +51,7 @@ use Throwable;
  */
 class Exceptions
 {
+
 	use ResponseTrait;
 
 	/**
@@ -278,9 +278,7 @@ class Exceptions
 			$path  = $paths->viewDirectory . '/errors/';
 		}
 
-		$path = is_cli()
-			? $path . 'cli/'
-			: $path . 'html/';
+		$path = is_cli() ? $path . 'cli/' : $path . 'html/';
 
 		// Determine the vew
 		$view = $this->determineView($exception, $path);
@@ -463,7 +461,7 @@ class Exceptions
 		$source = array_splice($source, $start, $lines, true);
 
 		// Used to format the line number in the source
-		$format = '% ' . strlen($start + $lines) . 'd';
+		$format = '% ' . strlen(sprintf('%sd', $start + $lines));
 
 		$out = '';
 		// Because the highlighting may have an uneven number

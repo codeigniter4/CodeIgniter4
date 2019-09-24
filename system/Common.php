@@ -433,16 +433,16 @@ if (! function_exists('single_service'))
 if (! function_exists('lang'))
 {
 	/**
-	 * A convenience method to translate a string and format it
-	 * with the intl extension's MessageFormatter object.
+	 * A convenience method to translate a string or array of them and format
+	 * the result with the intl extension's MessageFormatter.
 	 *
-	 * @param string $line
-	 * @param array  $args
-	 * @param string $locale
+	 * @param string|[] $line
+	 * @param array     $args
+	 * @param string    $locale
 	 *
 	 * @return string
 	 */
-	function lang(string $line, array $args = [], string $locale = null): string
+	function lang(string $line, array $args = [], string $locale = null)
 	{
 		return Services::language($locale)
 						->getLine($line, $args);
@@ -1084,7 +1084,6 @@ if (! function_exists('dd'))
 		exit;
 	}
 }
-
 
 //--------------------------------------------------------------------
 
