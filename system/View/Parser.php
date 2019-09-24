@@ -128,8 +128,8 @@ class Parser extends View
 			$saveData = $this->config->saveData;
 		}
 
-		$fileExt  = pathinfo($view, PATHINFO_EXTENSION);
-		$view = empty($fileExt) ? $view . '.php' : $view; // allow Views as .html, .tpl, etc (from CI3)
+		$fileExt = pathinfo($view, PATHINFO_EXTENSION);
+		$view    = empty($fileExt) ? $view . '.php' : $view; // allow Views as .html, .tpl, etc (from CI3)
 
 		// Was it cached?
 		if (isset($options['cache']))
