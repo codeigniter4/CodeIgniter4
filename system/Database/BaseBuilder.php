@@ -1894,13 +1894,15 @@ class BaseBuilder
 	 *
 	 * Allows the where clause, limit and offset to be added directly
 	 *
-	 * @param string|array $where
-	 * @param integer      $limit
-	 * @param integer      $offset
+	 * @param string|array $where     Where condition
+	 * @param integer      $limit     Limit value
+	 * @param integer      $offset    Offset value
+	 * @param boolean      $returnSQL If true, returns the generate SQL, otherwise executes the query.
+	 * @param boolean      $reset     Are we want to clear query builder values?
 	 *
 	 * @return ResultInterface
 	 */
-	public function getWhere($where = null, int $limit = null, int $offset = null)
+	public function getWhere($where = null, int $limit = null, ?int $offset = 0, bool $returnSQL = false, bool $reset = true)
 	{
 		if ($where !== null)
 		{
@@ -1912,8 +1914,17 @@ class BaseBuilder
 			$this->limit($limit, $offset);
 		}
 
-		$result = $this->db->query($this->compileSelect(), $this->binds, false);
-		$this->resetSelect();
+		$result = $returnSQL
+			? $this->getCompiledSelect($reset)
+			: $this->db->query($this->compileSelect(), $this->binds, false);
+
+		if ($reset === true)
+		{
+			$this->resetSelect();
+
+			// Clear our binds so we don't eat up memory
+			$this->binds = [];
+		}
 
 		return $result;
 	}

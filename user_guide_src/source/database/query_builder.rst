@@ -1256,11 +1256,13 @@ Class Reference
 		Compiles and runs SELECT statement based on the already
 		called Query Builder methods.
 
-	.. php:method:: getWhere([$where = NULL[, $limit = NULL[, $offset = NULL]]])
+	.. php:method:: getWhere([$where = NULL[, $limit = NULL[, $offset = NULL[, $returnSQL = FALSE[, $reset = TRUE]]]]])
 
 		:param	string	$where: The WHERE clause
 		:param	int	$limit: The LIMIT clause
 		:param	int	$offset: The OFFSET clause
+		:param 	bool $returnSQL: If true, returns the generate SQL, otherwise executes the query.
+		:param 	bool $reset: Do we want to clear query builder values?
 		:returns:	\CodeIgniter\Database\ResultInterface instance (method chaining)
 		:rtype:	\CodeIgniter\Database\ResultInterface
 
