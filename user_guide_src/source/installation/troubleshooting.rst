@@ -68,3 +68,13 @@ You can see the error in the debug toolbar display by setting your environment t
 "development" (in `.env`), and reloading the page.
 
 Don't forget to reset the environment to "production" once you fix the problem!
+
+CodeIgniter Error Logs
+-------------------------------------------------------
+
+CodeIgniter logs error messages, according to the settings in `app/Config/Logger.php`.
+
+You can adjust the error threshold to see more or fewer messages.
+
+The default configuration has daily log files stored in `writable/logs`.
+It would be a good idea to check them if things aren't working the way you expect!
