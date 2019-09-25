@@ -21,8 +21,8 @@ class FiltersTest extends \CIUnitTestCase
 	protected $request;
 	protected $response;
 
-	protected function setUp()
-	{
+	protected function setUp():void
+{
 		parent::setUp();
 
 		$this->request  = Services::request();

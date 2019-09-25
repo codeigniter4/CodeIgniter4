@@ -33,8 +33,8 @@ class RulesTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp()
-	{
+	protected function setUp():void
+{
 		parent::setUp();
 
 		$this->validation = new Validation((object)$this->config, \Config\Services::renderer());

@@ -11,8 +11,8 @@ class ParserPluginTest extends \CIUnitTestCase
 	 */
 	protected $validator;
 
-	protected function setUp()
-	{
+	protected function setUp():void
+{
 		parent::setUp();
 
 		\Config\Services::reset(true);

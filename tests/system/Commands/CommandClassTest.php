@@ -9,8 +9,8 @@ class BaseCommandTest extends \CIUnitTestCase
 	protected $logger;
 	protected $runner;
 
-	protected function setUp()
-	{
+	protected function setUp():void
+{
 		parent::setUp();
 		$this->logger   = Services::logger();
 		$this->runner   = new CommandRunner();

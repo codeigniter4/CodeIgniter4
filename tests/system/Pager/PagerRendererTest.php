@@ -11,8 +11,8 @@ class PagerRendererTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp()
-	{
+	protected function setUp():void
+{
 		parent::setUp();
 
 		$this->uri    = new URI('http://example.com/foo');

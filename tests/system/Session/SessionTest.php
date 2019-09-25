@@ -11,16 +11,16 @@ use CodeIgniter\Session\Handlers\FileHandler;
  */
 class SessionTest extends \CIUnitTestCase
 {
-	protected function setUp()
-	{
+	protected function setUp():void
+{
 		parent::setUp();
 
 		$_COOKIE  = [];
 		$_SESSION = [];
 	}
 
-	public function tearDown()
-	{
+	public function tearDown():void
+{
 	}
 
 	protected function getInstance($options = [])

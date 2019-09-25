@@ -19,7 +19,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp()
+	protected function setUp():void
 	{
 		parent::setUp();
 
@@ -31,8 +31,8 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->codeigniter = new MockCodeIgniter($config);
 	}
 
-	public function tearDown()
-	{
+	public function tearDown():void
+{
 		parent::tearDown();
 
 		if (count( ob_list_handlers() ) > 1)

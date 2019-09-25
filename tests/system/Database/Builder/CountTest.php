@@ -9,8 +9,8 @@ class CountTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp()
-	{
+	protected function setUp():void
+{
 		parent::setUp();
 
 		$this->db = new MockConnection([]);

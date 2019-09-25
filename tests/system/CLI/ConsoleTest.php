@@ -10,7 +10,7 @@ class ConsoleTest extends \CIUnitTestCase
 
 	private $stream_filter;
 
-	protected function setUp()
+	protected function setUp():void
 	{
 		parent::setUp();
 
@@ -36,8 +36,8 @@ class ConsoleTest extends \CIUnitTestCase
 		$this->app = new MockCodeIgniter(new MockCLIConfig());
 	}
 
-	public function tearDown()
-	{
+	public function tearDown():void
+{
 		stream_filter_remove($this->stream_filter);
 	}
 

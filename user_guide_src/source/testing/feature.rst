@@ -25,13 +25,13 @@ are called before you take your actions.
 
     class TestFoo extends FeatureTestCase
     {
-        public function setUp()
-        {
+        public function setUp():void
+{
             parent::setUp();
         }
 
-        public function tearDown()
-        {
+        public function tearDown():void
+{
             parent::tearDown();
         }
     }

@@ -4,8 +4,8 @@ namespace CodeIgniter\I18n;
 class TimeDifferenceTest extends \CIUnitTestCase
 {
 
-	protected function setUp()
-	{
+	protected function setUp():void
+{
 		parent::setUp();
 
 		helper('date');

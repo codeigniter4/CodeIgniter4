@@ -8,8 +8,8 @@ class ParserFilterTest extends \CIUnitTestCase
 	protected $viewsDir;
 	protected $config;
 
-	protected function setUp()
-	{
+	protected function setUp():void
+{
 		parent::setUp();
 
 		$this->loader = \CodeIgniter\Config\Services::locator();

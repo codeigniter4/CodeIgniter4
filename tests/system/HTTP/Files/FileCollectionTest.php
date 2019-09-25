@@ -4,7 +4,7 @@ namespace CodeIgniter\HTTP\Files;
 class FileCollectionTest extends \CIUnitTestCase
 {
 
-	protected function setUp()
+	protected function setUp():void
 	{
 		parent::setUp();
 		$_FILES = [];

@@ -4,14 +4,14 @@ namespace CodeIgniter\Debug;
 class TimerTest extends \CIUnitTestCase
 {
 
-	protected function setUp()
-	{
+	protected function setUp():void
+{
 	}
 
 	//--------------------------------------------------------------------
 
-	public function tearDown()
-	{
+	public function tearDown():void
+{
 	}
 
 	//--------------------------------------------------------------------
