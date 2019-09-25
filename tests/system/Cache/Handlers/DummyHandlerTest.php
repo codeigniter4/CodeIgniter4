@@ -4,7 +4,7 @@ class DummyHandlerTest extends \CIUnitTestCase
 {
 	private $dummyHandler;
 
-	protected function setUp():void
+	protected function setUp()
 	{
 		$this->dummyHandler = new DummyHandler();
 		$this->dummyHandler->initialize();

@@ -39,8 +39,8 @@ class ValidationTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		Services::reset(true);

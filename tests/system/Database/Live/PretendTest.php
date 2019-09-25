@@ -8,8 +8,8 @@ use CodeIgniter\Test\CIDatabaseTestCase;
  */
 class PretendTest extends CIDatabaseTestCase
 {
-	public function tearDown():void
-{
+	public function tearDown()
+	{
 		// We share `$this->db` in testing, so we need to restore the state.
 		$this->db->pretend(false);
 	}

@@ -270,14 +270,14 @@ might be helpful. The ``CITestStreamFilter`` helps you capture the output from t
 
 An example demonstrating this inside one of your test cases::
 
-    public function setUp():void
-{
+    public function setUp()
+    {
         CITestStreamFilter::$buffer = '';
         $this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
     }
 
-    public function tearDown():void
-{
+    public function tearDown()
+    {
         stream_filter_remove($this->stream_filter);
     }
 

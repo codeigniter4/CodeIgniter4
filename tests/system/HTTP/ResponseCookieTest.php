@@ -6,14 +6,14 @@ use Config\App;
 class ResponseCookieTest extends \CIUnitTestCase
 {
 
-	protected function setUp():void
+	protected function setUp()
 	{
 		parent::setUp();
 		$this->server = $_SERVER;
 	}
 
-	public function tearDown():void
-{
+	public function tearDown()
+	{
 		$_SERVER = $this->server;
 	}
 

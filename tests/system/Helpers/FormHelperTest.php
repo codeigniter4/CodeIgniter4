@@ -10,7 +10,7 @@ use Config\Filters;
 class FormHelperTest extends \CIUnitTestCase
 {
 
-	protected function setUp():void
+	protected function setUp()
 	{
 		parent::setUp();
 

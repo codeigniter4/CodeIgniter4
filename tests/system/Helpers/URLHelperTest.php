@@ -11,8 +11,8 @@ use CodeIgniter\Config\Services;
 class URLHelperTest extends \CIUnitTestCase
 {
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		helper('url');

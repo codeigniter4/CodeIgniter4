@@ -12,7 +12,7 @@ class MessageTest extends \CIUnitTestCase
 	 */
 	protected $message;
 
-	protected function setUp():void
+	protected function setUp()
 	{
 		parent::setUp();
 
@@ -21,8 +21,8 @@ class MessageTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function tearDown():void
-{
+	public function tearDown()
+	{
 		$this->message = null;
 		unset($this->message);
 	}

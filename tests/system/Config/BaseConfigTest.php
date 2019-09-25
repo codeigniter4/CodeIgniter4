@@ -10,8 +10,8 @@ class BaseConfigTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$this->fixturesFolder = __DIR__ . '/fixtures';

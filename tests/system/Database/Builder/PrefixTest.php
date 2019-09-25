@@ -8,7 +8,7 @@ class PrefixTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp():void
+	protected function setUp()
 	{
 		parent::setUp();
 

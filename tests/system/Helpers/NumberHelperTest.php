@@ -4,8 +4,8 @@ namespace CodeIgniter\Helpers;
 final class NumberHelperTest extends \CIUnitTestCase
 {
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		helper('number');

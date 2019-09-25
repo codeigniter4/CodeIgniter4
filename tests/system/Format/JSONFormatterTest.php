@@ -4,7 +4,7 @@ class JSONFormatterTest extends \CIUnitTestCase
 {
 	protected $jsonFormatter;
 
-	protected function setUp():void
+	protected function setUp()
 	{
 		parent::setUp();
 		$this->jsonFormatter = new JSONFormatter();

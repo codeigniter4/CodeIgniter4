@@ -15,8 +15,8 @@ class FileWithVfsTest extends \CIUnitTestCase
 	 */
 	protected $file;
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$this->root = vfsStream::setup();
@@ -26,8 +26,8 @@ class FileWithVfsTest extends \CIUnitTestCase
 		$this->file  = new File($this->start . 'able/apple.php');
 	}
 
-	public function tearDown():void
-{
+	public function tearDown()
+	{
 		parent::tearDown();
 
 		$this->root = null;

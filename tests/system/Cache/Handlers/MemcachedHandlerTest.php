@@ -18,8 +18,8 @@ class MemcachedHandlerTest extends \CIUnitTestCase
 	private static $dummy = 'dymmy';
 	private $config;
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$this->config = new \Config\Cache();
@@ -33,8 +33,8 @@ class MemcachedHandlerTest extends \CIUnitTestCase
 		$this->memcachedHandler->initialize();
 	}
 
-	public function tearDown():void
-{
+	public function tearDown()
+	{
 		foreach (self::getKeyArray() as $key)
 		{
 			$this->memcachedHandler->delete($key);

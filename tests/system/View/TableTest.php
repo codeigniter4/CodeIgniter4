@@ -7,8 +7,8 @@ use Tests\Support\View\MockTable;
 class TableTest extends \CIUnitTestCase
 {
 
-	public function setUp():void
-{
+	public function setUp()
+	{
 		$this->table = new MockTable();
 	}
 

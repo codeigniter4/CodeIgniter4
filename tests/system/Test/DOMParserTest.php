@@ -4,8 +4,8 @@ namespace CodeIgniter\Test;
 class DOMParserTest extends CIUnitTestCase
 {
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		if (! extension_loaded('DOM'))

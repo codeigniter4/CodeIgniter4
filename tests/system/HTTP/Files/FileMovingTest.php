@@ -7,8 +7,8 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 class FileMovingTest extends \CIUnitTestCase
 {
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$this->root = vfsStream::setup();
@@ -25,8 +25,8 @@ class FileMovingTest extends \CIUnitTestCase
 		$_FILES = [];
 	}
 
-	public function tearDown():void
-{
+	public function tearDown()
+	{
 		parent::tearDown();
 		$this->root = null;
 

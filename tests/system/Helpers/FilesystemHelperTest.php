@@ -7,8 +7,8 @@ use org\bovigo\vfs\vfsStream;
 class FilesystemHelperTest extends \CIUnitTestCase
 {
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$this->structure = [

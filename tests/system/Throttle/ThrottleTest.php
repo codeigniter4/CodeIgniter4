@@ -5,8 +5,8 @@ use Tests\Support\Cache\Handlers\MockHandler;
 class ThrottleTest extends \CIUnitTestCase
 {
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$this->cache = new MockHandler();

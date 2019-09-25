@@ -31,15 +31,15 @@ of the functionality described here::
 
     class MyTests extends CIDatabaseTestCase
     {
-        public function setUp():void
-{
+        public function setUp()
+        {
             parent::setUp();
 
             // Do something here....
         }
 
-        public function tearDown():void
-{
+        public function tearDown()
+        {
             parent::tearDown();
 
             // Do something here....

@@ -26,7 +26,7 @@ class FileHandlerTest extends \CIUnitTestCase
 	private $fileHandler;
 	private $config;
 
-	protected function setUp():void
+	protected function setUp()
 	{
 		parent::setUp();
 
@@ -43,8 +43,8 @@ class FileHandlerTest extends \CIUnitTestCase
 		$this->fileHandler->initialize();
 	}
 
-	public function tearDown():void
-{
+	public function tearDown()
+	{
 		if (is_dir($this->config->storePath))
 		{
 			chmod($this->config->storePath, 0777);

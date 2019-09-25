@@ -15,7 +15,7 @@ use Tests\Support\Security\MockSecurity;
  */
 class SecurityTest extends \CIUnitTestCase {
 
-	protected function setUp():void
+	protected function setUp()
 	{
 		parent::setUp();
 

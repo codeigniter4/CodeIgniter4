@@ -14,8 +14,8 @@ class RequestTest extends \CIUnitTestCase
 	 */
 	protected $request;
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$this->request = new Request(new App());

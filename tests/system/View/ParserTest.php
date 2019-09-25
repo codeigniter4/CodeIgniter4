@@ -6,8 +6,8 @@ use CodeIgniter\View\Exceptions\ViewException;
 class ParserTest extends \CIUnitTestCase
 {
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$this->loader   = \CodeIgniter\Config\Services::locator();

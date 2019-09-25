@@ -17,8 +17,8 @@ class CLIRequestTest extends \CIUnitTestCase
 	 */
 	protected $request;
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$this->request = new CLIRequest(new App());

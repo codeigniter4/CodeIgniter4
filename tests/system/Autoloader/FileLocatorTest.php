@@ -11,8 +11,8 @@ class FileLocatorTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$autoloader = new Autoloader();

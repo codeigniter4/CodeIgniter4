@@ -56,7 +56,7 @@ class CIUnitTestCase extends TestCase
 	 */
 	protected $app;
 
-	protected function setUp():void
+	protected function setUp()
 	{
 		parent::setUp();
 

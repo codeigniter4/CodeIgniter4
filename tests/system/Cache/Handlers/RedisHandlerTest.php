@@ -54,7 +54,7 @@ class RedisHandlerTest extends \CIUnitTestCase
 	private static $dummy = 'dymmy';
 	private $config;
 
-	protected function setUp():void
+	protected function setUp()
 	{
 		parent::setUp();
 
@@ -69,8 +69,8 @@ class RedisHandlerTest extends \CIUnitTestCase
 		$this->redisHandler->initialize();
 	}
 
-	public function tearDown():void
-{
+	public function tearDown()
+	{
 		foreach (self::getKeyArray() as $key)
 		{
 			$this->redisHandler->delete($key);

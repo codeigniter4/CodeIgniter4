@@ -5,8 +5,8 @@ namespace CodeIgniter\Helpers;
 class XMLHelperTest extends \CIUnitTestCase
 {
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		helper('xml');

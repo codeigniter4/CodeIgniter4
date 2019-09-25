@@ -18,8 +18,8 @@ class HoneypotTest extends \CIUnitTestCase
 	protected $request;
 	protected $response;
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 		$this->config = new \Config\Filters();
 		$this->honey  = new \Config\Honeypot();

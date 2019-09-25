@@ -4,8 +4,8 @@ class TypographyTest extends \CIUnitTestCase
 {
 	protected $typography;
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 		$this->typography = new Typography();
 	}

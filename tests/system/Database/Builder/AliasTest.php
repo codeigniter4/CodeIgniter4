@@ -8,7 +8,7 @@ class AliasTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp():void
+	protected function setUp()
 	{
 		parent::setUp();
 

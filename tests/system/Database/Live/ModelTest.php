@@ -29,8 +29,8 @@ class ModelTest extends CIDatabaseTestCase
 
 	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$this->model = new Model($this->db);
@@ -38,8 +38,8 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function tearDown():void
-{
+	public function tearDown()
+	{
 		parent::tearDown();
 
 		Services::reset();

@@ -7,8 +7,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 class OpenSSLHandlerTest extends CIUnitTestCase
 {
 
-	public function setUp():void
-{
+	public function setUp()
+	{
 		$this->encryption = new \CodeIgniter\Encryption\Encryption();
 	}
 

@@ -15,8 +15,8 @@ class DebugToolbarTest extends \CIUnitTestCase
 	protected $request;
 	protected $response;
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$this->request  = Services::request();

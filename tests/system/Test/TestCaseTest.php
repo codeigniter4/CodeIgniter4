@@ -9,8 +9,8 @@ use Config\App;
 class TestCaseTest extends \CIUnitTestCase
 {
 
-	//  protected function tearDown():void
-//  {
+	//  protected function tearDown()
+	//  {
 	//      $buffer = ob_clean();
 	//      if (ob_get_level() > 0)
 	//      {

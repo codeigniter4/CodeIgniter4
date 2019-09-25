@@ -15,7 +15,7 @@ class DotEnvTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp():void
+	protected function setUp()
 	{
 		parent::setUp();
 
@@ -29,8 +29,8 @@ class DotEnvTest extends \CIUnitTestCase
 		chmod($path, 0644);
 	}
 
-	public function tearDown():void
-{
+	public function tearDown()
+	{
 		parent::tearDown();
 
 		$this->root = null;

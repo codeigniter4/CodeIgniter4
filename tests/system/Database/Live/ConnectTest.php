@@ -13,8 +13,8 @@ class ConnectTest extends CIDatabaseTestCase
 
 	protected $group2;
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$config = config('Database');

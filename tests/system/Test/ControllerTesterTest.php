@@ -17,13 +17,13 @@ class ControllerTesterTest extends \CIUnitTestCase
 
 	use ControllerTester;
 
-	public function setUp():void
+	public function setUp()
 	{
 		parent::setUp();
 	}
 
-	public function tearDown():void
-{
+	public function tearDown()
+	{
 		parent::tearDown();
 	}
 

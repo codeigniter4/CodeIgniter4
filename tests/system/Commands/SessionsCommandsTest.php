@@ -18,8 +18,8 @@ class SessionsCommandsTest extends \CIUnitTestCase
 	protected $runner;
 	private $result;
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		CITestStreamFilter::$buffer = '';
@@ -49,8 +49,8 @@ class SessionsCommandsTest extends \CIUnitTestCase
 		$this->runner->initController($this->request, $this->response, $this->logger);
 	}
 
-	public function tearDown():void
-{
+	public function tearDown()
+	{
 		stream_filter_remove($this->stream_filter);
 
 		$result = remove_invisible_characters($this->result);

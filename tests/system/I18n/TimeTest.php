@@ -8,8 +8,8 @@ use IntlDateFormatter;
 class TimeTest extends \CIUnitTestCase
 {
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		helper('date');

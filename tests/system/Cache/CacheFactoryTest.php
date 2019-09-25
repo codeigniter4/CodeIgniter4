@@ -8,8 +8,8 @@ class CacheFactoryTest extends \CIUnitTestCase
 	private $cacheFactory;
 	private $config;
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$this->cacheFactory = new CacheFactory();
@@ -19,8 +19,8 @@ class CacheFactoryTest extends \CIUnitTestCase
 		$this->config->storePath .= self::$directory;
 	}
 
-	public function tearDown():void
-{
+	public function tearDown()
+	{
 		if (is_dir($this->config->storePath))
 		{
 			chmod($this->config->storePath, 0777);

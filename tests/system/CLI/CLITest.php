@@ -7,7 +7,7 @@ class CLITest extends \CIUnitTestCase
 
 	private $stream_filter;
 
-	protected function setUp():void
+	protected function setUp()
 	{
 		parent::setUp();
 
@@ -15,8 +15,8 @@ class CLITest extends \CIUnitTestCase
 		$this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
 	}
 
-	public function tearDown():void
-{
+	public function tearDown()
+	{
 		stream_filter_remove($this->stream_filter);
 	}
 

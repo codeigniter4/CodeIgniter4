@@ -9,8 +9,8 @@ use CodeIgniter\Exceptions\DownloadException;
 class DownloadResponseTest extends \CIUnitTestCase
 {
 
-	public function tearDown():void
-{
+	public function tearDown()
+	{
 		if (isset($_SERVER['HTTP_USER_AGENT']))
 		{
 			unset($_SERVER['HTTP_USER_AGENT']);

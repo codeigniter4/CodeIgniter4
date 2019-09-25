@@ -11,8 +11,8 @@ use CodeIgniter\Test\FeatureResponse;
 class FeatureTestCaseTest extends FeatureTestCase
 {
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$this->skipEvents();

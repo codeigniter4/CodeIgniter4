@@ -19,7 +19,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 	 */
 	protected $formatter;
 
-	protected function setUp():void
+	protected function setUp()
 	{
 		parent::setUp();
 

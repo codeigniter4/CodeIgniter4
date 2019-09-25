@@ -18,8 +18,8 @@ class MetadataTest extends CIDatabaseTestCase
 	 */
 	protected $expectedTables;
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		// Prepare the array of expected tables once

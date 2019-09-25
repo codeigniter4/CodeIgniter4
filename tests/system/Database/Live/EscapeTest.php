@@ -11,8 +11,8 @@ class EscapeTest extends CIDatabaseTestCase
 
 	protected $char;
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$this->char = $this->db->DBDriver === 'MySQLi' ? '\\' : "'";

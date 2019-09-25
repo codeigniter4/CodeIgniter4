@@ -9,8 +9,8 @@ class ServicesTest extends \CIUnitTestCase
 	protected $config;
 	protected $original;
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$this->original = $_SERVER;
@@ -20,8 +20,8 @@ class ServicesTest extends \CIUnitTestCase
 		//      $this->config->supportedLocales = ['en', 'es'];
 	}
 
-	public function tearDown():void
-{
+	public function tearDown()
+	{
 		$_SERVER = $this->original;
 	}
 

@@ -23,8 +23,8 @@ class RouterTest extends \CIUnitTestCase
 	 */
 	protected $request;
 
-	protected function setUp():void
-{
+	protected function setUp()
+	{
 		parent::setUp();
 
 		$moduleConfig          = new \Config\Modules;
@@ -56,8 +56,8 @@ class RouterTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function tearDown():void
-{
+	public function tearDown()
+	{
 	}
 
 	//--------------------------------------------------------------------
