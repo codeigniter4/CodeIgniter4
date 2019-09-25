@@ -487,10 +487,15 @@ class CURLRequest extends Request
 	 */
 	protected function applyRequestHeaders(array $curl_options = []): array
 	{
-		$headers = $this->getHeaders();
-
-		// Unset 'Host' header, CURL will determinate it automatically from URL.
-		unset($headers['Host']);
+		if (empty($this->headers))
+		{
+			$headers = $this->getHeaders();
+			unset($headers['Host']);
+		}
+		else
+		{
+			$headers = $this->getHeaders();
+		}
 
 		if (empty($headers))
 		{
