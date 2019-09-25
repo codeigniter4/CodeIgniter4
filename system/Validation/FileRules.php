@@ -167,8 +167,6 @@ class FileRules
 
 		foreach ($files as $file)
 		{
-			$file = $this->request->getFile($name);
-
 			if (is_null($file))
 			{
 				return false;
@@ -212,8 +210,6 @@ class FileRules
 
 		foreach ($files as $file)
 		{
-			$file = $this->request->getFile($name);
-
 			if (is_null($file))
 			{
 				return false;
@@ -253,8 +249,6 @@ class FileRules
 
 		foreach ($files as $file)
 		{
-			$file = $this->request->getFile($name);
-
 			if (is_null($file))
 			{
 				return false;
@@ -295,8 +289,6 @@ class FileRules
 
 		foreach ($files as $file)
 		{
-			$file = $this->request->getFile($name);
-
 			if (is_null($file))
 			{
 				return false;
