@@ -10,7 +10,7 @@ use Config\Encryption as EncryptionConfig;
 class EncryptionTest extends \CIUnitTestCase
 {
 
-	public function setUp()
+	public function setUp(): void
 	{
 		$this->encryption = new \CodeIgniter\Encryption\Encryption();
 	}

@@ -18,7 +18,7 @@ class SessionsCommandsTest extends \CIUnitTestCase
 	protected $runner;
 	private $result;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -49,7 +49,7 @@ class SessionsCommandsTest extends \CIUnitTestCase
 		$this->runner->initController($this->request, $this->response, $this->logger);
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		stream_filter_remove($this->stream_filter);
 

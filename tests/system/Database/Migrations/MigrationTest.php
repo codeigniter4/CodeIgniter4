@@ -4,7 +4,7 @@ use CodeIgniter\Test\CIDatabaseTestCase;
 
 class MigrationTest extends CIDatabaseTestCase
 {
-	public function setUp()
+	public function setUp(): void
 	{
 		parent::setUp();
 	}

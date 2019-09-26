@@ -10,7 +10,7 @@ use CodeIgniter\Router\Exceptions\RouterException;
 class RouteCollectionTest extends \CIUnitTestCase
 {
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 	}
 

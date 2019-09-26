@@ -4,7 +4,7 @@ class XMLFormatterTest extends \CIUnitTestCase
 {
 	protected $xmlFormatter;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 		$this->xmlFormatter = new XMLFormatter();

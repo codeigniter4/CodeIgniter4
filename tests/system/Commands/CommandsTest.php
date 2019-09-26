@@ -19,7 +19,7 @@ class CommandsTest extends \CIUnitTestCase
 	protected $logger;
 	protected $runner;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -50,7 +50,7 @@ class CommandsTest extends \CIUnitTestCase
 		$this->runner->initController($this->request, $this->response, $this->logger);
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		stream_filter_remove($this->stream_filter);
 	}

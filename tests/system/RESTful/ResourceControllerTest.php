@@ -30,7 +30,7 @@ class ResourceControllerTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -47,7 +47,7 @@ class ResourceControllerTest extends \CIUnitTestCase
 		$this->codeigniter = new MockCodeIgniter($config);
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		parent::tearDown();
 

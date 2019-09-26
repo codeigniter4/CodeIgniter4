@@ -6,7 +6,7 @@ final class HTMLHelperTest extends \CIUnitTestCase
 
 	private $tracks;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
