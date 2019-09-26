@@ -24,7 +24,7 @@ class TruncateTest extends \CIUnitTestCase
 
 		$expectedSQL = 'TRUNCATE "user"';
 
-		$this->assertEquals($expectedSQL, $builder->truncate(true));
+		$this->assertEquals($expectedSQL, $builder->testMode()->truncate());
 	}
 
 	//--------------------------------------------------------------------

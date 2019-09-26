@@ -34,14 +34,14 @@ class GetTest extends \CIUnitTestCase
 	public function testGetWithReset()
 	{
 		$builder = $this->db->table('users');
-		$builder->where('username', 'bogus');
+		$builder->testMode()->where('username', 'bogus');
 
 		$expectedSQL           = 'SELECT * FROM "users" WHERE "username" = \'bogus\'';
 		$expectedSQLafterreset = 'SELECT * FROM "users"';
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->get(0, 50, true, false)));
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->get(0, 50, true, true)));
-		$this->assertEquals($expectedSQLafterreset, str_replace("\n", ' ', $builder->get(0, 50, true, true)));
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->get(0, 50, false)));
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->get(0, 50, true)));
+		$this->assertEquals($expectedSQLafterreset, str_replace("\n", ' ', $builder->get(0, 50, true)));
 	}
 
 	//--------------------------------------------------------------------
@@ -52,13 +52,14 @@ class GetTest extends \CIUnitTestCase
 	public function testGetWhereWithLimit()
 	{
 		$builder = $this->db->table('users');
+		$builder->testMode();
 
 		$expectedSQL             = 'SELECT * FROM "users" WHERE "username" = \'bogus\'  LIMIT 5';
 		$expectedSQLWithoutReset = 'SELECT * FROM "users" WHERE "username" = \'bogus\' AND "username" = \'bogus\'  LIMIT 5';
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, null, true, false)));
-		$this->assertEquals($expectedSQLWithoutReset, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 0, true, true)));
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, null, true, true)));
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, null, false)));
+		$this->assertEquals($expectedSQLWithoutReset, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 0, true)));
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, null, true)));
 	}
 
 	//--------------------------------------------------------------------
@@ -66,13 +67,14 @@ class GetTest extends \CIUnitTestCase
 	public function testGetWhereWithLimitAndOffset()
 	{
 		$builder = $this->db->table('users');
+		$builder->testMode();
 
 		$expectedSQL             = 'SELECT * FROM "users" WHERE "username" = \'bogus\'  LIMIT 10, 5';
 		$expectedSQLWithoutReset = 'SELECT * FROM "users" WHERE "username" = \'bogus\' AND "username" = \'bogus\'  LIMIT 10, 5';
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, true, false)));
-		$this->assertEquals($expectedSQLWithoutReset, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, true, true)));
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, true, true)));
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, false)));
+		$this->assertEquals($expectedSQLWithoutReset, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, true)));
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, true)));
 	}
 
 	//--------------------------------------------------------------------
@@ -80,13 +82,14 @@ class GetTest extends \CIUnitTestCase
 	public function testGetWhereWithWhereConditionOnly()
 	{
 		$builder = $this->db->table('users');
+		$builder->testMode();
 
 		$expectedSQL             = 'SELECT * FROM "users" WHERE "username" = \'bogus\'';
 		$expectedSQLWithoutReset = 'SELECT * FROM "users" WHERE "username" = \'bogus\' AND "username" = \'bogus\'';
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, true, false)));
-		$this->assertEquals($expectedSQLWithoutReset, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, true, true)));
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, true, true)));
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, false)));
+		$this->assertEquals($expectedSQLWithoutReset, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, true)));
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, true)));
 	}
 
 	//--------------------------------------------------------------------
@@ -94,10 +97,11 @@ class GetTest extends \CIUnitTestCase
 	public function testGetWhereWithoutArgs()
 	{
 		$builder = $this->db->table('users');
+		$builder->testMode();
 
 		$expectedSQL = 'SELECT * FROM "users"';
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(null, null, null, true, true)));
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(null, null, null, true)));
 	}
 
 }

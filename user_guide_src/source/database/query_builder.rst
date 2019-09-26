@@ -1246,22 +1246,22 @@ Class Reference
 		Generates a platform-specific query string that counts
 		all records returned by an Query Builder query.
 
-	.. php:method:: get([$limit = NULL[, $offset = NULL]])
+	.. php:method:: get([$limit = NULL[, $offset = NULL[, $reset = TRUE]]]])
 
 		:param	int	$limit: The LIMIT clause
 		:param	int	$offset: The OFFSET clause
+		:param 	bool $reset: Do we want to clear query builder values?
 		:returns:	\CodeIgniter\Database\ResultInterface instance (method chaining)
 		:rtype:	\CodeIgniter\Database\ResultInterface
 
 		Compiles and runs SELECT statement based on the already
 		called Query Builder methods.
 
-	.. php:method:: getWhere([$where = NULL[, $limit = NULL[, $offset = NULL[, $returnSQL = FALSE[, $reset = TRUE]]]]])
+	.. php:method:: getWhere([$where = NULL[, $limit = NULL[, $offset = NULL[, $reset = TRUE]]]]])
 
 		:param	string	$where: The WHERE clause
 		:param	int	$limit: The LIMIT clause
 		:param	int	$offset: The OFFSET clause
-		:param 	bool $returnSQL: If true, returns the generate SQL, otherwise executes the query.
 		:param 	bool $reset: Do we want to clear query builder values?
 		:returns:	\CodeIgniter\Database\ResultInterface instance (method chaining)
 		:rtype:	\CodeIgniter\Database\ResultInterface
@@ -1313,6 +1313,15 @@ Class Reference
 
 		Adds a SELECT SUM(field) clause to a query.
 
+	.. php:method:: selectCount([$select = ''[, $alias = '']])
+
+		:param	string	$select: Field to compute the average of
+		:param	string	$alias: Alias for the resulting value name
+		:returns:	BaseBuilder instance (method chaining)
+		:rtype:	BaseBuilder
+
+		Adds a SELECT COUNT(field) clause to a query.
+
 	.. php:method:: distinct([$val = TRUE])
 
 		:param	bool	$val: Desired value of the "distinct" flag
@@ -1322,9 +1331,10 @@ Class Reference
 		Sets a flag which tells the query builder to add
 		a DISTINCT clause to the SELECT portion of the query.
 
-	.. php:method:: from($from)
+	.. php:method:: from($from[, $overwrite = FALSE])
 
 		:param	mixed	$from: Table name(s); string or array
+		:param	bool	$overwrite Should we remove the first table existing?
 		:returns:	BaseBuilder instance (method chaining)
 		:rtype:	BaseBuilder
 
@@ -1442,45 +1452,49 @@ Class Reference
 
 		Ends a group expression.
 
-	.. php:method:: like($field[, $match = ''[, $side = 'both'[, $escape = NULL]]])
+	.. php:method:: like($field[, $match = ''[, $side = 'both'[, $escape = NULL[, $insensitiveSearch = FALSE]]]])
 
 		:param	string	$field: Field name
 		:param	string	$match: Text portion to match
 		:param	string	$side: Which side of the expression to put the '%' wildcard on
 		:param	bool	$escape: Whether to escape values and identifiers
+		:param	bool    $insensitiveSearch: Whether to force a case-insensitive search
 		:returns:	BaseBuilder instance (method chaining)
 		:rtype:	BaseBuilder
 
 		Adds a LIKE clause to a query, separating multiple calls with AND.
 
-	.. php:method:: orLike($field[, $match = ''[, $side = 'both'[, $escape = NULL]]])
+	.. php:method:: orLike($field[, $match = ''[, $side = 'both'[, $escape = NULL[, $insensitiveSearch = FALSE]]]])
 
 		:param	string	$field: Field name
 		:param	string	$match: Text portion to match
 		:param	string	$side: Which side of the expression to put the '%' wildcard on
 		:param	bool	$escape: Whether to escape values and identifiers
+		:param	bool    $insensitiveSearch: Whether to force a case-insensitive search
 		:returns:	BaseBuilder instance (method chaining)
 		:rtype:	BaseBuilder
 
 		Adds a LIKE clause to a query, separating multiple class with OR.
 
-	.. php:method:: notLike($field[, $match = ''[, $side = 'both'[, $escape = NULL]]])
+	.. php:method:: notLike($field[, $match = ''[, $side = 'both'[, $escape = NULL[, $insensitiveSearch = FALSE]]]])
 
 		:param	string	$field: Field name
 		:param	string	$match: Text portion to match
 		:param	string	$side: Which side of the expression to put the '%' wildcard on
 		:param	bool	$escape: Whether to escape values and identifiers
+		:param	bool    $insensitiveSearch: Whether to force a case-insensitive search
 		:returns:	BaseBuilder instance (method chaining)
 		:rtype:	BaseBuilder
 
 		Adds a NOT LIKE clause to a query, separating multiple calls with AND.
 
-	.. php:method:: orNotLike($field[, $match = ''[, $side = 'both'[, $escape = NULL]]])
+	.. php:method:: orNotLike($field[, $match = ''[, $side = 'both'[, $escape = NULL[, $insensitiveSearch = FALSE]]]])
 
 		:param	string	$field: Field name
 		:param	string	$match: Text portion to match
 		:param	string	$side: Which side of the expression to put the '%' wildcard on
 		:param	bool	$escape: Whether to escape values and identifiers
+		:param	bool    $insensitiveSearch: Whether to force a case-insensitive search
 		:returns:	BaseBuilder instance (method chaining)
 		:rtype:	BaseBuilder
 
@@ -1544,46 +1558,50 @@ Class Reference
 		:param	string	        $key: Name of field to examine
 		:param	array|Closure   $values: Array of target values, or anonymous function for subquery
 		:param	bool	        $escape: Whether to escape values and identifiers
+		:param	bool            $insensitiveSearch: Whether to force a case-insensitive search
 		:returns:	BaseBuilder instance
 		:rtype:	object
 
 		Generates a HAVING field NOT IN('item', 'item') SQL query,
                 joined with 'AND' if appropriate.
 
-	.. php:method:: havingLike($field[, $match = ''[, $side = 'both'[, $escape = NULL]]])
+	.. php:method:: havingLike($field[, $match = ''[, $side = 'both'[, $escape = NULL[, $insensitiveSearch = FALSE]]]])
 
 		:param	string	$field: Field name
 		:param	string	$match: Text portion to match
 		:param	string	$side: Which side of the expression to put the '%' wildcard on
 		:param	bool	$escape: Whether to escape values and identifiers
+		:param	bool    $insensitiveSearch: Whether to force a case-insensitive search
 		:returns:	BaseBuilder instance (method chaining)
 		:rtype:	BaseBuilder
 
 		Adds a LIKE clause to a HAVING part of the query, separating multiple calls with AND.
 
-	.. php:method:: orHavingLike($field[, $match = ''[, $side = 'both'[, $escape = NULL]]])
+	.. php:method:: orHavingLike($field[, $match = ''[, $side = 'both'[, $escape = NULL[, $insensitiveSearch = FALSE]]]])
 
 		:param	string	$field: Field name
 		:param	string	$match: Text portion to match
 		:param	string	$side: Which side of the expression to put the '%' wildcard on
 		:param	bool	$escape: Whether to escape values and identifiers
+		:param	bool    $insensitiveSearch: Whether to force a case-insensitive search
 		:returns:	BaseBuilder instance (method chaining)
 		:rtype:	BaseBuilder
 
 		Adds a LIKE clause to a HAVING part of the query, separating multiple class with OR.
 
-	.. php:method:: notHavingLike($field[, $match = ''[, $side = 'both'[, $escape = NULL]]])
+	.. php:method:: notHavingLike($field[, $match = ''[, $side = 'both'[, $escape = NULL[, $insensitiveSearch = FALSE]]]])
 
 		:param	string	$field: Field name
 		:param	string	$match: Text portion to match
 		:param	string	$side: Which side of the expression to put the '%' wildcard on
 		:param	bool	$escape: Whether to escape values and identifiers
+		:param	bool    $insensitiveSearch: Whether to force a case-insensitive search
 		:returns:	BaseBuilder instance (method chaining)
 		:rtype:	BaseBuilder
 
 		Adds a NOT LIKE clause to a HAVING part of the query, separating multiple calls with AND.
 
-	.. php:method:: orNotHavingLike($field[, $match = ''[, $side = 'both'[, $escape = NULL]]])
+	.. php:method:: orNotHavingLike($field[, $match = ''[, $side = 'both'[, $escape = NULL[, $insensitiveSearch = FALSE]]]])
 
 		:param	string	$field: Field name
 		:param	string	$match: Text portion to match
