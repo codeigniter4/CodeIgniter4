@@ -178,9 +178,11 @@ class ResourcePresenter extends Controller
 			if (is_object($which))
 			{
 				$this->model = $which;
+				$this->modelName = null;
 			}
 			else
 			{
+				$this->model = null;
 				$this->modelName = $which;
 			}
 		}
