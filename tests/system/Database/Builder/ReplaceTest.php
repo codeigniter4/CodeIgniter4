@@ -29,7 +29,7 @@ class ReplaceTest extends \CIUnitTestCase
 			'date'  => 'My date',
 		];
 
-		$this->assertSame($expected, $builder->replace($data, true));
+		$this->assertSame($expected, $builder->testMode()->replace($data));
 	}
 
 	//--------------------------------------------------------------------

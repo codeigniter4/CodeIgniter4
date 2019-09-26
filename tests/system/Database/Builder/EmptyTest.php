@@ -22,7 +22,7 @@ class EmptyTest extends \CIUnitTestCase
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
 
-		$answer = $builder->emptyTable(true);
+		$answer = $builder->testMode()->emptyTable();
 
 		$expectedSQL = 'DELETE FROM "jobs"';
 
