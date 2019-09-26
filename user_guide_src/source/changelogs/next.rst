@@ -7,6 +7,8 @@ Release Date: Not released
 
 Enhancements:
 
+- query builder testability simplified with new property, but dropped
+method parameters (breaking change)
 - database, migrations and sessions beefed up
 - numerous smaller bugs corrected
 
@@ -34,9 +36,11 @@ The list of changed files follows, with PR numbers shown.
 		- BaseCommand #2231
 	- Database/
 		- MySQLi/Connection #2201, 2229
-		- Postgre/Connection #2201
+		- Postgre/
+                        - BaseBuilder #2269
+                    - Connection #2201
 		- SQLite3/Connection #2201, 2228, 2230
-		- BaseBuilder #2257, 2232
+		- BaseBuilder #2257, 2232, 2269
 		- BaseConnection #2208, 2213, 2231
 		- Config #2224
 		- Forge #2205
@@ -58,6 +62,8 @@ The list of changed files follows, with PR numbers shown.
 		- TimeDifference #2231
 	- Images/
 		- Handlers/BaseHandler #2246
+	- RESTful/
+		- ResourcePresenter #2271
 	- Security/
 		- Security #2240
 	- Session/
@@ -67,6 +73,7 @@ The list of changed files follows, with PR numbers shown.
 		- CIDatabaseUnitTestCase #2184
 	- Validation/
 		- FileRules #2265
+		- Validation #2268
 	- View/
 		- Parser #2264
 
@@ -81,7 +88,15 @@ The list of changed files follows, with PR numbers shown.
 	- Database/
 		- Builder/
 			- GetTest #2232
+                        - CountTest #2269
+                        - DeleteTest #2269
+                        - EmptyTest #2269
+                        - GetTest #2269
 			- GroupTest #2257
+                        - InsertTest #2269
+                        - ReplaceTest #2269
+                        - TruncateTest #2269
+                        - UpdateTest #2269
 		- Live/
 			- EscapeTest #2229
 			- ForgeTest #2201, 2211
@@ -102,6 +117,8 @@ The list of changed files follows, with PR numbers shown.
 		- TimeTest #2231
 	- Pager/
 		- pagerTest #2259
+	- RESTful/
+		- ResourcePresenterTest #2271
 	- Session/
 		- SessionTest #2231
 	- View/
@@ -113,7 +130,7 @@ The list of changed files follows, with PR numbers shown.
 	- database/
 		- metadata #2199, 2201, 2208
 		- queries #2208
-		- query_builder #2257, 2232
+		- query_builder #2257, 2232, 2269
 	- dbmgmt/
 		- migration #2190, 2191
 	- extending/
@@ -149,6 +166,10 @@ The list of changed files follows, with PR numbers shown.
 PRs merged:
 ----------
 
+- #2271 fix ResourcePresenter::setModel()
+- #2269 testMode() method for BaseBuilder
+- #2268 Validation session use only if exists
+- #2267 Tests setUp and tearDown: void
 - #2265 Fix a validation issue on multiple file upload
 - #2264 fix. Parser allow other extension
 - #2262 Fix parameter type in Debug/Exceptions
