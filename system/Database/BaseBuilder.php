@@ -262,8 +262,7 @@ class BaseBuilder
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns an array of bind values and their
-	 * named parameters for binding in the Query object later.
+	 * Sets a test mode status.
 	 *
 	 * @param boolean $mode Mode to set
 	 *
