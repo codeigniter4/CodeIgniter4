@@ -158,7 +158,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 *
 	 * @throws ConfigException
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -213,7 +213,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * Takes care of any required cleanup after the test, like
 	 * removing any rows inserted via $this->hasInDatabase()
 	 */
-	public function tearDown()
+	public function tearDown(): void
 	{
 		if (! empty($this->insertCache))
 		{

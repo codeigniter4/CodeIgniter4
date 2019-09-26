@@ -6,7 +6,7 @@ use CodeIgniter\View\Exceptions\ViewException;
 class ParserTest extends \CIUnitTestCase
 {
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 

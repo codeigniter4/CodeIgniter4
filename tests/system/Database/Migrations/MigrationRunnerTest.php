@@ -18,7 +18,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 	protected $start;
 	protected $config;
 
-	public function setUp()
+	public function setUp(): void
 	{
 		parent::setUp();
 

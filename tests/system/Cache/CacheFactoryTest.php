@@ -8,7 +8,7 @@ class CacheFactoryTest extends \CIUnitTestCase
 	private $cacheFactory;
 	private $config;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -19,7 +19,7 @@ class CacheFactoryTest extends \CIUnitTestCase
 		$this->config->storePath .= self::$directory;
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		if (is_dir($this->config->storePath))
 		{

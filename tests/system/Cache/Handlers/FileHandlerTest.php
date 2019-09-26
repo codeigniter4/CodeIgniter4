@@ -26,7 +26,7 @@ class FileHandlerTest extends \CIUnitTestCase
 	private $fileHandler;
 	private $config;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -43,7 +43,7 @@ class FileHandlerTest extends \CIUnitTestCase
 		$this->fileHandler->initialize();
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		if (is_dir($this->config->storePath))
 		{

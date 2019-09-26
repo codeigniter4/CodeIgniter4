@@ -8,14 +8,14 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 class URITest extends \CIUnitTestCase
 {
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 	}
 
 	//--------------------------------------------------------------------
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 	}
 

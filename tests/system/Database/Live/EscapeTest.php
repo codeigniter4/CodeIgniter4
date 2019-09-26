@@ -11,7 +11,7 @@ class EscapeTest extends CIDatabaseTestCase
 
 	protected $char;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
