@@ -112,6 +112,41 @@ class FileCollection
 	//--------------------------------------------------------------------
 
 	/**
+	 * Verify if a file exist in the collection of uploaded files and is have been uploaded with multiple option.
+	 *
+	 * @param string $name
+	 *
+	 * @return array|null
+	 */
+	public function getFileMultiple(string $name)
+	{
+		$this->populateFiles();
+
+		if ($this->hasFile($name))
+		{
+			if (strpos($name, '.') !== false)
+			{
+				$name         = explode('.', $name);
+				$uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
+
+				return (is_array($uploadedFile) && ($uploadedFile[0] instanceof UploadedFile)) ?
+					$uploadedFile : null;
+			}
+
+			if (array_key_exists($name, $this->files))
+			{
+				$uploadedFile = $this->files[$name];
+				return (is_array($uploadedFile) && ($uploadedFile[0] instanceof UploadedFile)) ?
+					$uploadedFile : null;
+			}
+		}
+
+		return null;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Checks whether an uploaded file with name $fileID exists in
 	 * this request.
 	 *

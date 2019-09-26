@@ -548,6 +548,26 @@ class IncomingRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
+	 * Verify if a file exist, by the name of the input field used to upload it, in the collection
+	 * of uploaded files and if is have been uploaded with multiple option.
+	 *
+	 * @param string $fileID
+	 *
+	 * @return array|null
+	 */
+	public function getFileMultiple(string $fileID)
+	{
+		if (is_null($this->files))
+		{
+			$this->files = new FileCollection();
+		}
+
+		return $this->files->getFileMultiple($fileID);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Retrieves a single file by the name of the input field used
 	 * to upload it.
 	 *
