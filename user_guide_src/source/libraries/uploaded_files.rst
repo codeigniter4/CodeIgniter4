@@ -126,6 +126,13 @@ In controller::
 	$file1 = $this->request->getFile('images.0');
 	$file2 = $this->request->getFile('images.1');
 
+You can access individual files uploaded at the same time, but with different names,
+using ``getFileMultiple()``::
+
+	$file1 = $this->request->getFileMultiple('somefile');
+	$file2 = $this->request->getFileMultiple('adifferentfile');
+
+
 Another example::
 
 	Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
