@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CodeIgniter
  *
@@ -100,6 +99,7 @@ class Validation implements ValidationInterface
 	 * @var \Config\Validation
 	 */
 	protected $config;
+
 	/**
 	 * The view renderer used to render validation messages.
 	 *
@@ -275,8 +275,7 @@ class Validation implements ValidationInterface
 
 					$found = true;
 
-					$passed = $param === false ? $set->$rule($value, $error)
-						: $set->$rule($value, $param, $data, $error);
+					$passed = $param === false ? $set->$rule($value, $error) : $set->$rule($value, $param, $data, $error);
 					break;
 				}
 
@@ -291,8 +290,7 @@ class Validation implements ValidationInterface
 			// Set the error message if we didn't survive.
 			if ($passed === false)
 			{
-				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $field, $label, $param)
-					: $error;
+				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $field, $label, $param) : $error;
 
 				return false;
 			}
@@ -493,7 +491,7 @@ class Validation implements ValidationInterface
 		}
 
 		return $this->view->setVar('errors', $this->getErrors())
-						  ->render($this->config->templates[$template]);
+						->render($this->config->templates[$template]);
 	}
 
 	//--------------------------------------------------------------------
@@ -519,7 +517,7 @@ class Validation implements ValidationInterface
 		}
 
 		return $this->view->setVar('error', $this->getError($field))
-						  ->render($this->config->templates[$template]);
+						->render($this->config->templates[$template]);
 	}
 
 	//--------------------------------------------------------------------
@@ -648,13 +646,7 @@ class Validation implements ValidationInterface
 		// passed along from a redirect_with_input request.
 		if (empty($this->errors) && ! is_cli())
 		{
-			// Start up the session if it's not already
-			if (! isset($_SESSION))
-			{
-				session();
-			}
-
-			if ($errors = session('_ci_validation_errors'))
+			if (isset($_SESSION) && session('_ci_validation_errors'))
 			{
 				$this->errors = unserialize($errors);
 			}
@@ -724,15 +716,15 @@ class Validation implements ValidationInterface
 	{
 		$non_escape_bracket  = '((?<!\\\\)(?:\\\\\\\\)*[\[\]])';
 		$pipe_not_in_bracket = sprintf(
-			'/\|(?=(?:[^\[\]]*%s[^\[\]]*%s)*(?![^\[\]]*%s))/',
-			$non_escape_bracket,
-			$non_escape_bracket,
-			$non_escape_bracket
+				'/\|(?=(?:[^\[\]]*%s[^\[\]]*%s)*(?![^\[\]]*%s))/',
+				$non_escape_bracket,
+				$non_escape_bracket,
+				$non_escape_bracket
 		);
 
 		$_rules = preg_split(
-			$pipe_not_in_bracket,
-			$rules
+				$pipe_not_in_bracket,
+				$rules
 		);
 
 		return array_unique($_rules);
