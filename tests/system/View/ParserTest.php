@@ -941,4 +941,12 @@ class ParserTest extends \CIUnitTestCase
 		$this->assertArrayNotHasKey('testString', $parser->getData());
 	}
 
+	public function testRenderFindsOtherView()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$parser->setData(['testString' => 'Hello World']);
+		$expected = '<h1>Hello World</h1>';
+		$this->assertEquals($expected, $parser->render('Simpler.html'));
+	}
+
 }
