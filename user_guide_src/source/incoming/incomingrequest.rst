@@ -257,9 +257,10 @@ You can retrieve a single file uploaded on its own, based on the filename given 
 
 	$file = $request->getFile('uploadedfile');
 
-You can retrieve a single file uploaded as part of multiple ones, based on the filename given in the HTML file input::
+You can retrieve an array of same-named files uploaded as part of a 
+multi-file upload, based on the filename given in the HTML file input::
 
-	$file = $request->getFileMultiple('uploadedfile');
+	$files = $request->getFileMultiple('uploadedfile');
 
 Content Negotiation
 ----------------------------------------------------------------------------

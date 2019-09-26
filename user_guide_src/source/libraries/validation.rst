@@ -131,7 +131,7 @@ this code and save it to your **app/Controllers/** folder::
 			if (! $this->validate([]))
 			{
 				echo view('Signup', [
-					'validation' => $this->validation
+					'validation' => $this->validator
 				]);
 			}
 			else
