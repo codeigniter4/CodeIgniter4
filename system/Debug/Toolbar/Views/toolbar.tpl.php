@@ -136,7 +136,7 @@
 				<div id="ci-<?= $c['titleSafe'] ?>" class="tab">
 					<h2><?= $c['title'] ?> <span><?= $c['titleDetails'] ?></span></h2>
 
-					<?= is_string($c['display']) ? $c['display'] : $parser->setData($c['display'])->render("_{$c['titleSafe']}.tpl") ?>
+					<?= is_string($c['display']) ? $c['display'] : $parser->setData($c['display'])->render("_{$c['titleSafe']}.tpl.php") ?>
 				</div>
 			<?php endif ?>
 		<?php endif ?>
@@ -293,7 +293,7 @@
 	<div id="ci-config" class="tab">
 		<h2>System Configuration</h2>
 
-		<?= $parser->setData($config)->render('_config.tpl') ?>
+		<?= $parser->setData($config)->render('_config.tpl.php') ?>
 	</div>
 </div>
 <style type="text/css">
