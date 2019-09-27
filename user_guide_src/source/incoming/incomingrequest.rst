@@ -253,9 +253,14 @@ and uses best practices to minimize any security risks.
 		echo $file->getType();          // image/jpg
 	}
 
-You can also retrieve a single file based on the filename given in the HTML file input::
+You can retrieve a single file uploaded on its own, based on the filename given in the HTML file input::
 
 	$file = $request->getFile('uploadedfile');
+
+You can retrieve an array of same-named files uploaded as part of a 
+multi-file upload, based on the filename given in the HTML file input::
+
+	$files = $request->getFileMultiple('uploadedfile');
 
 Content Negotiation
 ----------------------------------------------------------------------------

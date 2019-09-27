@@ -131,7 +131,7 @@ this code and save it to your **app/Controllers/** folder::
 			if (! $this->validate([]))
 			{
 				echo view('Signup', [
-					'validation' => $this->validation
+					'validation' => $this->validator
 				]);
 			}
 			else
@@ -733,6 +733,8 @@ mime_in                 Yes         Fails if the file's mime type is not one lis
 ext_in                  Yes         Fails if the file's extension is not one listed in the parameters.                              ext_in[field_name,png,jpg,gif]
 is_image                Yes         Fails if the file cannot be determined to be an image based on the mime type.                   is_image[field_name]
 ======================= =========== =============================================================================================== ========================================
+
+The file validation rules apply for both single and multiple file uploads.
 
 .. note:: You can also use any native PHP functions that permit up
 	to two parameters, where at least one is required (to pass

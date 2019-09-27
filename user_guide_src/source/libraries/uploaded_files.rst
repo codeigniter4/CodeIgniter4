@@ -126,6 +126,11 @@ In controller::
 	$file1 = $this->request->getFile('images.0');
 	$file2 = $this->request->getFile('images.1');
 
+You might find it easier to use ``getFileMultiple()``, to get an array of uploaded files with the same name::
+
+	$files = $this->request->getFileMultiple('images');
+
+
 Another example::
 
 	Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
