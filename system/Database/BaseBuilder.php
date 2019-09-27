@@ -2488,6 +2488,7 @@ class BaseBuilder
 		// Batch this baby
 		$affected_rows = 0;
 		$savedSQL      = [];
+		$savedQBWhere = $this->QBWhere;
 		for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batchSize)
 		{
 			$sql = $this->_updateBatch($table, array_slice($this->QBSet, $i, $batchSize), $this->db->protectIdentifiers($index)
@@ -2503,7 +2504,7 @@ class BaseBuilder
 				$affected_rows += $this->db->affectedRows();
 			}
 
-			$this->QBWhere = [];
+			$this->QBWhere = $savedQBWhere;
 		}
 
 		$this->resetWrite();
