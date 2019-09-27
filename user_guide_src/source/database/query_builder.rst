@@ -1333,10 +1333,10 @@ Class Reference
 
 	.. php:method:: from($from[, $overwrite = FALSE])
 
-		:param	mixed	$from: Table name(s); string or array
-		:param	bool	$overwrite Should we remove the first table existing?
-		:returns:	BaseBuilder instance (method chaining)
-		:rtype:	BaseBuilder
+                :param	mixed	$from: Table name(s); string or array
+                :param	bool	$overwrite: Should we remove the first table existing?
+                :returns:	BaseBuilder instance (method chaining)
+                :rtype:	BaseBuilder
 
 		Specifies the FROM clause of a query.
 

@@ -8,7 +8,7 @@ Release Date: Not released
 Enhancements:
 
 - query builder testability simplified with new property, but dropped
-method parameters (breaking change)
+    method parameters (breaking change)
 - database, migrations and sessions beefed up
 - numerous smaller bugs corrected
 
@@ -37,10 +37,10 @@ The list of changed files follows, with PR numbers shown.
 	- Database/
 		- MySQLi/Connection #2201, 2229
 		- Postgre/
-                        - BaseBuilder #2269
+                    - BaseBuilder #2269
                     - Connection #2201
 		- SQLite3/Connection #2201, 2228, 2230
-		- BaseBuilder #2257, 2232, 2269
+		- BaseBuilder #2257, 2232, 2269, 2270
 		- BaseConnection #2208, 2213, 2231
 		- Config #2224
 		- Forge #2205
@@ -164,9 +164,10 @@ The list of changed files follows, with PR numbers shown.
 
 
 PRs merged:
-----------
+--------------------------
 
 - #2271 fix ResourcePresenter::setModel()
+- #2270 groupStart() refactorization
 - #2269 testMode() method for BaseBuilder
 - #2268 Validation session use only if exists
 - #2267 Tests setUp and tearDown: void
