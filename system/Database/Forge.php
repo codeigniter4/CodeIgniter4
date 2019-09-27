@@ -356,6 +356,7 @@ class Forge
 					'id' => [
 						'type'           => 'INT',
 						'constraint'     => 9,
+						'unsigned'       => true,
 						'auto_increment' => true,
 					],
 				]);
