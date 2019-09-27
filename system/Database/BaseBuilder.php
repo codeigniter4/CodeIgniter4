@@ -1260,25 +1260,11 @@ class BaseBuilder
 	/**
 	 * Starts a query group.
 	 *
-	 * @param string $not  (Internal use only)
-	 * @param string $type (Internal use only)
-	 *
 	 * @return BaseBuilder
 	 */
-	public function groupStart(string $not = '', string $type = 'AND ')
+	public function groupStart()
 	{
-		$type = $this->groupGetType($type);
-
-		$this->QBWhereGroupStarted = true;
-		$prefix                    = empty($this->QBWhere) ? '' : $type;
-		$where                     = [
-			'condition' => $prefix . $not . str_repeat(' ', ++ $this->QBWhereGroupCount) . ' (',
-			'escape'    => false,
-		];
-
-		$this->QBWhere[] = $where;
-
-		return $this;
+		return $this->groupStartPrepare('', 'AND ', 'QBWhere');
 	}
 
 	//--------------------------------------------------------------------
@@ -1290,7 +1276,7 @@ class BaseBuilder
 	 */
 	public function orGroupStart()
 	{
-		return $this->groupStart('', 'OR ');
+		return $this->groupStartPrepare('', 'OR ', 'QBWhere');
 	}
 
 	//--------------------------------------------------------------------
@@ -1302,7 +1288,7 @@ class BaseBuilder
 	 */
 	public function notGroupStart()
 	{
-		return $this->groupStart('NOT ', 'AND ');
+		return $this->groupStartPrepare('NOT ', 'AND ', 'QBWhere');
 	}
 
 	//--------------------------------------------------------------------
@@ -1314,7 +1300,7 @@ class BaseBuilder
 	 */
 	public function orNotGroupStart()
 	{
-		return $this->groupStart('NOT ', 'OR ');
+		return $this->groupStartPrepare('NOT ', 'OR ', 'QBWhere');
 	}
 
 	//--------------------------------------------------------------------
@@ -1326,15 +1312,7 @@ class BaseBuilder
 	 */
 	public function groupEnd()
 	{
-		$this->QBWhereGroupStarted = false;
-		$where                     = [
-			'condition' => str_repeat(' ', $this->QBWhereGroupCount -- ) . ')',
-			'escape'    => false,
-		];
-
-		$this->QBWhere[] = $where;
-
-		return $this;
+		return $this->groupEndPrepare('QBWhere');
 	}
 
 	// --------------------------------------------------------------------
@@ -1342,26 +1320,11 @@ class BaseBuilder
 	/**
 	 * Starts a query group for HAVING clause.
 	 *
-	 * @param string $not  (Internal use only)
-	 * @param string $type (Internal use only)
-	 *
 	 * @return BaseBuilder
 	 */
-	public function havingGroupStart(string $not = '', string $type = 'AND ')
+	public function havingGroupStart()
 	{
-		$type = $this->groupGetType($type);
-
-		$this->QBWhereGroupStarted = true;
-		$prefix                    = empty($this->QBHaving) ? '' : $type;
-		$having                    = [
-			'condition' => $prefix . $not . str_repeat(' ', ++$this->QBWhereGroupCount) . ' (',
-			'value'     => null,
-			'escape'    => false,
-		];
-
-		$this->QBHaving[] = $having;
-
-		return $this;
+		return $this->groupStartPrepare('', 'AND ', 'QBHaving');
 	}
 
 	// --------------------------------------------------------------------
@@ -1373,7 +1336,7 @@ class BaseBuilder
 	 */
 	public function orHavingGroupStart()
 	{
-		return $this->havingGroupStart('', 'OR ');
+		return $this->groupStartPrepare('', 'OR ', 'QBHaving');
 	}
 
 	// --------------------------------------------------------------------
@@ -1385,7 +1348,7 @@ class BaseBuilder
 	 */
 	public function notHavingGroupStart()
 	{
-		return $this->havingGroupStart('NOT ', 'AND ');
+		return $this->groupStartPrepare('NOT ', 'AND ', 'QBHaving');
 	}
 
 	// --------------------------------------------------------------------
@@ -1397,7 +1360,7 @@ class BaseBuilder
 	 */
 	public function orNotHavingGroupStart()
 	{
-		return $this->havingGroupStart('NOT ', 'OR ');
+		return $this->groupStartPrepare('NOT ', 'OR ', 'QBHaving');
 	}
 
 	// --------------------------------------------------------------------
@@ -1409,14 +1372,54 @@ class BaseBuilder
 	 */
 	public function havingGroupEnd()
 	{
-		$this->QBWhereGroupStarted = false;
-		$having                    = [
-			'condition' => str_repeat(' ', $this->QBWhereGroupCount -- ) . ')',
-			'value'     => null,
+		return $this->groupEndPrepare('QBHaving');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Prepate a query group start.
+	 *
+	 * @param string $not
+	 * @param string $type
+	 * @param string $clause
+	 *
+	 * @return BaseBuilder
+	 */
+	protected function groupStartPrepare(string $not = '', string $type = 'AND ', string $clause = 'QBWhere')
+	{
+		$type = $this->groupGetType($type);
+
+		$this->QBWhereGroupStarted = true;
+		$prefix                    = empty($this->$clause) ? '' : $type;
+		$where                     = [
+			'condition' => $prefix . $not . str_repeat(' ', ++ $this->QBWhereGroupCount) . ' (',
 			'escape'    => false,
 		];
 
-		$this->QBHaving[] = $having;
+		$this->{$clause}[] = $where;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Prepate a query group end.
+	 *
+	 * @param string $clause
+	 *
+	 * @return BaseBuilder
+	 */
+	protected function groupEndPrepare(string $clause = 'QBWhere')
+	{
+		$this->QBWhereGroupStarted = false;
+		$where                     = [
+			'condition' => str_repeat(' ', $this->QBWhereGroupCount -- ) . ')',
+			'escape'    => false,
+		];
+
+		$this->{$clause}[] = $where;
 
 		return $this;
 	}
