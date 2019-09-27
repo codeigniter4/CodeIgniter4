@@ -143,14 +143,14 @@ string into the field definitions with addField()
 Creating an id field
 --------------------
 
-There is a special exception for creating id fields. A field with type
-id will automatically be assigned as an unsigned INT(9) auto_incrementing
+There is a special exception for creating id fields. A field with the name
+'id' will automatically be created as an unsigned INT(9) auto_incrementing
 Primary Key.
 
 ::
 
 	$forge->addField('id');
-	// gives id INT(9) NOT NULL AUTO_INCREMENT
+	// gives id INT(9) UNSIGNED NOT NULL AUTO_INCREMENT
 
 Adding Keys
 ===========
