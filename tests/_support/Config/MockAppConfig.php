@@ -16,6 +16,7 @@ class MockAppConfig
 
 	public $CSRFProtection  = false;
 	public $CSRFTokenName   = 'csrf_test_name';
+	public $CSRFHeaderName  = 'X-CSRF-TOKEN';
 	public $CSRFCookieName  = 'csrf_cookie_name';
 	public $CSRFExpire      = 7200;
 	public $CSRFRegenerate  = true;
