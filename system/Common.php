@@ -723,6 +723,25 @@ if (! function_exists('csrf_token'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('csrf_header'))
+{
+	/**
+	 * Returns the CSRF header name.
+	 * Can be used in Views by adding it to the meta tag
+	 * or used in javascript to define a header name when using APIs.
+	 *
+	 * @return string
+	 */
+	function csrf_header(): string
+	{
+		$config = config(App::class);
+
+		return $config->CSRFHeaderName;
+	}
+}
+
+//--------------------------------------------------------------------
+
 if (! function_exists('csrf_hash'))
 {
 	/**
@@ -754,6 +773,23 @@ if (! function_exists('csrf_field'))
 	function csrf_field(string $id = null): string
 	{
 		return '<input type="hidden"' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '" />';
+	}
+}
+
+//--------------------------------------------------------------------
+
+if (! function_exists('csrf_meta'))
+{
+	/**
+	 * Generates a meta tag for use within javascript calls.
+	 *
+	 * @param string|null $id
+	 *
+	 * @return string
+	 */
+	function csrf_meta(string $id = null): string
+	{
+		return '<meta' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_header() . '" content="' . csrf_hash() . '" />';
 	}
 }
 
