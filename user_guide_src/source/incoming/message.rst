@@ -66,14 +66,14 @@ Class Reference
 		The preceding ``HTTP_`` is removed from the string. So ``HTTP_ACCEPT_LANGUAGE`` becomes
 		``Accept-Language``.
 
-	.. php:method:: headers()
+	.. php:method:: getHeaders()
 
 		:returns: An array of all of the headers found.
 		:rtype: array
 
 		Returns an array of all headers found or previously set.
 
-	.. php:method:: header([$name[, $filter = null]])
+	.. php:method:: getHeader([$name[, $filter = null]])
 
 		:param  string  $name: The name of the header you want to retrieve the value of.
 		:param  int  $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
@@ -84,14 +84,14 @@ Class Reference
 		While the header is converted internally as described above, you can access the header with any type of case::
 
 			// These are all the same:
-			$message->header('HOST');
-			$message->header('Host');
-			$message->header('host');
+			$message->getHeader('HOST');
+			$message->getHeader('Host');
+			$message->getHeader('host');
 
 		If the header has multiple values, the values will return as an array of values. You can use the ``headerLine()``
 		method to retrieve the values as a string::
 
-			echo $message->header('Accept-Language');
+			echo $message->getHeader('Accept-Language');
 
 			// Outputs something like:
 			[
@@ -101,7 +101,7 @@ Class Reference
 
 		You can filter the header by passing a filter value in as the second parameter::
 
-			$message->header('Document-URI', FILTER_SANITIZE_URL);
+			$message->getHeader('Document-URI', FILTER_SANITIZE_URL);
 
 	.. php:method:: headerLine($name)
 
