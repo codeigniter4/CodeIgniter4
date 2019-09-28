@@ -648,7 +648,7 @@ class Validation implements ValidationInterface
 		{
 			if (isset($_SESSION) && session('_ci_validation_errors'))
 			{
-				$this->errors = unserialize($errors);
+				$this->errors = unserialize(session('_ci_validation_errors'));
 			}
 		}
 
