@@ -77,9 +77,9 @@ meta tag for you::
 
 The order of checking the avability of the CSRF token is as follows:
 
-- ``$_POST`` array
-- Http header
-- ``php://input`` (JSON request) - bare in mind that this approach is the slowest one since we have to decode JSON and then encode it again
+1. ``$_POST`` array
+2. Http header
+3. ``php://input`` (JSON request) - bare in mind that this approach is the slowest one since we have to decode JSON and then encode it again
 
 Tokens may be either regenerated on every submission (default) or
 kept the same throughout the life of the CSRF cookie. The default
