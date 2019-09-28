@@ -221,7 +221,7 @@ class Security
         $CSRFTokenValue = $_POST[$this->CSRFTokenName] ??
             (!is_null($request->getHeader($this->CSRFHeaderName)) && !empty($request->getHeader($this->CSRFHeaderName)->getValue()) ?
                 $request->getHeader($this->CSRFHeaderName)->getValue() :
-                (!empty(file_get_contents('php://input')) && !empty($json = json_decode(file_get_contents('php://input'))) && json_last_error() === JSON_ERROR_NONE ?
+                (!empty($request->getBody()) && !empty($json = json_decode($request->getBody())) && json_last_error() === JSON_ERROR_NONE ?
                     ($json->{$this->CSRFTokenName} ?? null) :
                     null));
 		
