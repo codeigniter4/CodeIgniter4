@@ -461,7 +461,7 @@ class Exceptions
 		$source = array_splice($source, $start, $lines, true);
 
 		// Used to format the line number in the source
-		$format = '% ' . strlen(sprintf('%sd', $start + $lines));
+		$format = '% ' . strlen(sprintf('%s', $start + $lines)) . 'd';
 
 		$out = '';
 		// Because the highlighting may have an uneven number
