@@ -487,6 +487,13 @@ class CURLRequest extends Request
 	 */
 	protected function applyRequestHeaders(array $curl_options = []): array
 	{
+		if (empty($this->headers))
+		{
+			$this->populateHeaders();
+			// Otherwise, it will corrupt the request
+			$this->removeHeader('Host');
+		}
+
 		$headers = $this->getHeaders();
 
 		if (empty($headers))
