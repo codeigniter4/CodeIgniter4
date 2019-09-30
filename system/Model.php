@@ -1618,7 +1618,7 @@ class Model
 	 */
 	public function __get(string $name)
 	{
-		if (in_array($name, ['primaryKey', 'table', 'returnType', 'DBGroup']))
+		if (property_exists($this, $name))
 		{
 			return $this->{$name};
 		}
@@ -1639,7 +1639,7 @@ class Model
 	 *
 	 * @param string $name
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function __isset(string $name): bool
 	{
