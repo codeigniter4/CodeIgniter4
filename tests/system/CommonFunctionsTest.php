@@ -251,6 +251,11 @@ class CommonFunctionsTest extends \CIUnitTestCase
 		$this->assertEquals('csrf_test_name', csrf_token());
 	}
 
+	public function testCSRFHeader()
+	{
+		$this->assertEquals('X-CSRF-TOKEN', csrf_header());
+	}
+
 	public function testHash()
 	{
 		$this->assertEquals(32, strlen(csrf_hash()));
@@ -259,6 +264,11 @@ class CommonFunctionsTest extends \CIUnitTestCase
 	public function testCSRFField()
 	{
 		$this->assertContains('<input type="hidden" ', csrf_field());
+	}
+
+	public function testCSRFMeta()
+	{
+		$this->assertContains('<meta name="X-CSRF-TOKEN" ', csrf_meta());
 	}
 
 	// ------------------------------------------------------------------------

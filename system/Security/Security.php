@@ -233,7 +233,17 @@ class Security
 		}
 
 		// We kill this since we're done and we don't want to pollute the _POST array
-		unset($_POST[$this->CSRFTokenName]);
+		if (isset($_POST[$this->CSRFTokenName]))
+		{
+			unset($_POST[$this->CSRFTokenName]);
+			$request->setGlobal('post', $_POST);
+		}
+		// We kill this since we're done and we don't want to pollute the JSON data
+		elseif (isset($json->{$this->CSRFTokenName}))
+		{
+			unset($json->{$this->CSRFTokenName});
+			$request->setBody(json_encode($json));
+		}
 
 		// Regenerate on every submission?
 		if ($this->CSRFRegenerate)
