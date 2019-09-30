@@ -32,8 +32,11 @@ directory in the main project root::
 
 Open **app/Config/Autoload.php** and add the **Acme** namespace to the ``psr4`` array property::
 
-    public $psr4 = [
-        'Acme' => ROOTPATH.'acme'
+    $psr4 = [
+        'Config'        => APPPATH . 'Config',
+        APP_NAMESPACE   => APPPATH,                // For custom namespace
+        'App'           => APPPATH,                // To ensure filters, etc still found,
+        'Acme'          => ROOTPATH.'acme'
     ];
 
 Now that this is setup we can access any file within the **acme** folder through the ``Acme`` namespace. This alone
