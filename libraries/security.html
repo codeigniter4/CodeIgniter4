@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Security Class &mdash; CodeIgniter4 4.0.0-rc.1 documentation</title>
+  <title>Security Class &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.1 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
         <link rel="up" title="Library Reference" href="index.html"/>
         <link rel="next" title="Session Library" href="sessions.html"/>
         <link rel="prev" title="Pagination" href="pagination.html"/> 
@@ -275,6 +275,21 @@ hidden input field for you:</p>
 <span class="o">&lt;?=</span> <span class="nx">csrf_field</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
+<p>When sending a JSON request the CSRF token can also be passed as one of the parameters.
+The next way to pass the CSRF token is a special Http header that&#8217;s name is available by
+<code class="docutils literal"><span class="pre">csrf_header()</span></code> function.</p>
+<p>Additionally, you can use the <code class="docutils literal"><span class="pre">csrf_meta()</span></code> method to generate this handy
+meta tag for you:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Generates: &lt;meta name=&quot;{csrf_header}&quot; content=&quot;{csrf_hash}&quot; /&gt;</span>
+<span class="o">&lt;?=</span> <span class="nx">csrf_meta</span><span class="p">()</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+<p>The order of checking the avability of the CSRF token is as follows:</p>
+<ol class="arabic simple">
+<li><code class="docutils literal"><span class="pre">$_POST</span></code> array</li>
+<li>Http header</li>
+<li><code class="docutils literal"><span class="pre">php://input</span></code> (JSON request) - bare in mind that this approach is the slowest one since we have to decode JSON and then encode it again</li>
+</ol>
 <p>Tokens may be either regenerated on every submission (default) or
 kept the same throughout the life of the CSRF cookie. The default
 regeneration of tokens provides stricter security, but may result
@@ -331,7 +346,7 @@ the second optional parameter, $relative_path to true.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Sep 23, 2019.
+      Last updated on Sep 30, 2019.
 
     </p>
   </div>
@@ -353,7 +368,7 @@ the second optional parameter, $relative_path to true.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.1',
+            VERSION:'4.0.0-rc.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,

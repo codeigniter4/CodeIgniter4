@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>IncomingRequest Class &mdash; CodeIgniter4 4.0.0-rc.1 documentation</title>
+  <title>IncomingRequest Class &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.1 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
         <link rel="up" title="Controllers and Routing" href="index.html"/>
         <link rel="next" title="Content Negotiation" href="content_negotiation.html"/>
         <link rel="prev" title="Request Class" href="request.html"/> 
@@ -459,8 +459,13 @@ and uses best practices to minimize any security risks.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>You can also retrieve a single file based on the filename given in the HTML file input:</p>
+<p>You can retrieve a single file uploaded on its own, based on the filename given in the HTML file input:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$file</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;uploadedfile&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You can retrieve an array of same-named files uploaded as part of a
+multi-file upload, based on the filename given in the HTML file input:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$files</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getFileMultiple</span><span class="p">(</span><span class="s1">&#39;uploadedfile&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -845,7 +850,7 @@ as an array.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Sep 23, 2019.
+      Last updated on Sep 30, 2019.
 
     </p>
   </div>
@@ -867,7 +872,7 @@ as an array.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.1',
+            VERSION:'4.0.0-rc.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,

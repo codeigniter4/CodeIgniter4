@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Query Builder Class &mdash; CodeIgniter4 4.0.0-rc.1 documentation</title>
+  <title>Query Builder Class &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.1 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
         <link rel="up" title="Working With Databases" href="index.html"/>
         <link rel="next" title="Transactions" href="transactions.html"/>
         <link rel="prev" title="Query Helper Methods" href="helpers.html"/> 
@@ -1398,7 +1398,7 @@ all records returned by an Query Builder query.</p>
 
 <dl class="method">
 <dt id="CodeIgniterDatabaseBaseBuilder::get">
-<code class="descname">get</code><span class="sig-paren">(</span><span class="optional">[</span><em>$limit = NULL</em><span class="optional">[</span>, <em>$offset = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::get" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get</code><span class="sig-paren">(</span><em>[$limit = NULL[, $offset = NULL[, $reset = TRUE]]]]</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::get" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1406,6 +1406,7 @@ all records returned by an Query Builder query.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$limit</strong> (<em>int</em>) &#8211; The LIMIT clause</li>
 <li><strong>$offset</strong> (<em>int</em>) &#8211; The OFFSET clause</li>
+<li><strong>$reset</strong> (<em>bool</em>) &#8211; Do we want to clear query builder values?</li>
 </ul>
 </td>
 </tr>
@@ -1423,7 +1424,7 @@ called Query Builder methods.</p>
 
 <dl class="method">
 <dt id="CodeIgniterDatabaseBaseBuilder::getWhere">
-<code class="descname">getWhere</code><span class="sig-paren">(</span><span class="optional">[</span><em>$where = NULL</em><span class="optional">[</span>, <em>$limit = NULL</em><span class="optional">[</span>, <em>$offset = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::getWhere" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getWhere</code><span class="sig-paren">(</span><em>[$where = NULL[, $limit = NULL[, $offset = NULL[, $reset = TRUE]]]]]</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::getWhere" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1432,6 +1433,7 @@ called Query Builder methods.</p>
 <li><strong>$where</strong> (<em>string</em>) &#8211; The WHERE clause</li>
 <li><strong>$limit</strong> (<em>int</em>) &#8211; The LIMIT clause</li>
 <li><strong>$offset</strong> (<em>int</em>) &#8211; The OFFSET clause</li>
+<li><strong>$reset</strong> (<em>bool</em>) &#8211; Do we want to clear query builder values?</li>
 </ul>
 </td>
 </tr>
@@ -1567,6 +1569,30 @@ called Query Builder methods.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::selectCount">
+<code class="descname">selectCount</code><span class="sig-paren">(</span><span class="optional">[</span><em>$select = ''</em><span class="optional">[</span>, <em>$alias = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::selectCount" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$select</strong> (<em>string</em>) &#8211; Field to compute the average of</li>
+<li><strong>$alias</strong> (<em>string</em>) &#8211; Alias for the resulting value name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a SELECT COUNT(field) clause to a query.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="CodeIgniterDatabaseBaseBuilder::distinct">
 <code class="descname">distinct</code><span class="sig-paren">(</span><span class="optional">[</span><em>$val = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::distinct" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
@@ -1592,13 +1618,14 @@ a DISTINCT clause to the SELECT portion of the query.</p>
 
 <dl class="method">
 <dt id="CodeIgniterDatabaseBaseBuilder::from">
-<code class="descname">from</code><span class="sig-paren">(</span><em>$from</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::from" title="Permalink to this definition">¶</a></dt>
+<code class="descname">from</code><span class="sig-paren">(</span><em>$from</em><span class="optional">[</span>, <em>$overwrite = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::from" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$from</strong> (<em>mixed</em>) &#8211; Table name(s); string or array</li>
+<li><strong>$overwrite</strong> (<em>bool</em>) &#8211; Should we remove the first table existing?</li>
 </ul>
 </td>
 </tr>
@@ -1877,7 +1904,7 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 
 <dl class="method">
 <dt id="CodeIgniterDatabaseBaseBuilder::like">
-<code class="descname">like</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::like" title="Permalink to this definition">¶</a></dt>
+<code class="descname">like</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::like" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1887,6 +1914,7 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 <li><strong>$match</strong> (<em>string</em>) &#8211; Text portion to match</li>
 <li><strong>$side</strong> (<em>string</em>) &#8211; Which side of the expression to put the &#8216;%&#8217; wildcard on</li>
 <li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+<li><strong>$insensitiveSearch</strong> (<em>bool</em>) &#8211; Whether to force a case-insensitive search</li>
 </ul>
 </td>
 </tr>
@@ -1903,7 +1931,7 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 
 <dl class="method">
 <dt id="CodeIgniterDatabaseBaseBuilder::orLike">
-<code class="descname">orLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orLike" title="Permalink to this definition">¶</a></dt>
+<code class="descname">orLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orLike" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1913,6 +1941,7 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 <li><strong>$match</strong> (<em>string</em>) &#8211; Text portion to match</li>
 <li><strong>$side</strong> (<em>string</em>) &#8211; Which side of the expression to put the &#8216;%&#8217; wildcard on</li>
 <li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+<li><strong>$insensitiveSearch</strong> (<em>bool</em>) &#8211; Whether to force a case-insensitive search</li>
 </ul>
 </td>
 </tr>
@@ -1929,7 +1958,7 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 
 <dl class="method">
 <dt id="CodeIgniterDatabaseBaseBuilder::notLike">
-<code class="descname">notLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::notLike" title="Permalink to this definition">¶</a></dt>
+<code class="descname">notLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::notLike" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1939,6 +1968,7 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 <li><strong>$match</strong> (<em>string</em>) &#8211; Text portion to match</li>
 <li><strong>$side</strong> (<em>string</em>) &#8211; Which side of the expression to put the &#8216;%&#8217; wildcard on</li>
 <li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+<li><strong>$insensitiveSearch</strong> (<em>bool</em>) &#8211; Whether to force a case-insensitive search</li>
 </ul>
 </td>
 </tr>
@@ -1955,7 +1985,7 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 
 <dl class="method">
 <dt id="CodeIgniterDatabaseBaseBuilder::orNotLike">
-<code class="descname">orNotLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orNotLike" title="Permalink to this definition">¶</a></dt>
+<code class="descname">orNotLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orNotLike" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1965,6 +1995,7 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 <li><strong>$match</strong> (<em>string</em>) &#8211; Text portion to match</li>
 <li><strong>$side</strong> (<em>string</em>) &#8211; Which side of the expression to put the &#8216;%&#8217; wildcard on</li>
 <li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+<li><strong>$insensitiveSearch</strong> (<em>bool</em>) &#8211; Whether to force a case-insensitive search</li>
 </ul>
 </td>
 </tr>
@@ -2118,6 +2149,7 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 <li><strong>$key</strong> (<em>string</em>) &#8211; Name of field to examine</li>
 <li><strong>$values</strong> (<em>array|Closure</em>) &#8211; Array of target values, or anonymous function for subquery</li>
 <li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+<li><strong>$insensitiveSearch</strong> (<em>bool</em>) &#8211; Whether to force a case-insensitive search</li>
 </ul>
 </td>
 </tr>
@@ -2135,7 +2167,7 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 
 <dl class="method">
 <dt id="CodeIgniterDatabaseBaseBuilder::havingLike">
-<code class="descname">havingLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::havingLike" title="Permalink to this definition">¶</a></dt>
+<code class="descname">havingLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::havingLike" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2145,6 +2177,7 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 <li><strong>$match</strong> (<em>string</em>) &#8211; Text portion to match</li>
 <li><strong>$side</strong> (<em>string</em>) &#8211; Which side of the expression to put the &#8216;%&#8217; wildcard on</li>
 <li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+<li><strong>$insensitiveSearch</strong> (<em>bool</em>) &#8211; Whether to force a case-insensitive search</li>
 </ul>
 </td>
 </tr>
@@ -2161,7 +2194,7 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 
 <dl class="method">
 <dt id="CodeIgniterDatabaseBaseBuilder::orHavingLike">
-<code class="descname">orHavingLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orHavingLike" title="Permalink to this definition">¶</a></dt>
+<code class="descname">orHavingLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orHavingLike" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2171,6 +2204,7 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 <li><strong>$match</strong> (<em>string</em>) &#8211; Text portion to match</li>
 <li><strong>$side</strong> (<em>string</em>) &#8211; Which side of the expression to put the &#8216;%&#8217; wildcard on</li>
 <li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+<li><strong>$insensitiveSearch</strong> (<em>bool</em>) &#8211; Whether to force a case-insensitive search</li>
 </ul>
 </td>
 </tr>
@@ -2187,7 +2221,7 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 
 <dl class="method">
 <dt id="CodeIgniterDatabaseBaseBuilder::notHavingLike">
-<code class="descname">notHavingLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::notHavingLike" title="Permalink to this definition">¶</a></dt>
+<code class="descname">notHavingLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::notHavingLike" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2197,6 +2231,7 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 <li><strong>$match</strong> (<em>string</em>) &#8211; Text portion to match</li>
 <li><strong>$side</strong> (<em>string</em>) &#8211; Which side of the expression to put the &#8216;%&#8217; wildcard on</li>
 <li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+<li><strong>$insensitiveSearch</strong> (<em>bool</em>) &#8211; Whether to force a case-insensitive search</li>
 </ul>
 </td>
 </tr>
@@ -2213,7 +2248,7 @@ joined with &#8216;AND&#8217; if appropriate.</p>
 
 <dl class="method">
 <dt id="CodeIgniterDatabaseBaseBuilder::orNotHavingLike">
-<code class="descname">orNotHavingLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orNotHavingLike" title="Permalink to this definition">¶</a></dt>
+<code class="descname">orNotHavingLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$insensitiveSearch = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orNotHavingLike" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2845,7 +2880,7 @@ a DELETE statement will be used instead.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Sep 23, 2019.
+      Last updated on Sep 30, 2019.
 
     </p>
   </div>
@@ -2867,7 +2902,7 @@ a DELETE statement will be used instead.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.1',
+            VERSION:'4.0.0-rc.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,

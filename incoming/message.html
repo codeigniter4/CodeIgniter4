@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>HTTP Messages &mdash; CodeIgniter4 4.0.0-rc.1 documentation</title>
+  <title>HTTP Messages &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.1 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
         <link rel="up" title="Controllers and Routing" href="index.html"/>
         <link rel="next" title="Request Class" href="request.html"/>
         <link rel="prev" title="Controller Filters" href="filters.html"/> 
@@ -299,8 +299,8 @@ The preceding <code class="docutils literal"><span class="pre">HTTP_</span></cod
 </dd></dl>
 
 <dl class="method">
-<dt id="headers">
-<code class="descname">headers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#headers" title="Permalink to this definition">¶</a></dt>
+<dt id="getHeaders">
+<code class="descname">getHeaders</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getHeaders" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -315,8 +315,8 @@ The preceding <code class="docutils literal"><span class="pre">HTTP_</span></cod
 </dd></dl>
 
 <dl class="method">
-<dt id="header">
-<code class="descname">header</code><span class="sig-paren">(</span><span class="optional">[</span><em>$name</em><span class="optional">[</span>, <em>$filter = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#header" title="Permalink to this definition">¶</a></dt>
+<dt id="getHeader">
+<code class="descname">getHeader</code><span class="sig-paren">(</span><span class="optional">[</span><em>$name</em><span class="optional">[</span>, <em>$filter = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getHeader" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -338,14 +338,14 @@ The preceding <code class="docutils literal"><span class="pre">HTTP_</span></cod
 <p>Allows you to retrieve the current value of a single message header. <code class="docutils literal"><span class="pre">$name</span></code> is the case-insensitive header name.
 While the header is converted internally as described above, you can access the header with any type of case:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// These are all the same:</span>
-<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;HOST&#39;</span><span class="p">);</span>
-<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
-<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">);</span>
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;HOST&#39;</span><span class="p">);</span>
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If the header has multiple values, the values will return as an array of values. You can use the <code class="docutils literal"><span class="pre">headerLine()</span></code>
 method to retrieve the values as a string:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
 
 <span class="c1">// Outputs something like:</span>
 <span class="p">[</span>
@@ -355,7 +355,7 @@ method to retrieve the values as a string:</p>
 </pre></div>
 </div>
 <p>You can filter the header by passing a filter value in as the second parameter:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Document-URI&#39;</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_URL</span><span class="p">);</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Document-URI&#39;</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_URL</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -688,7 +688,7 @@ If no match is found, will return the first element of the <code class="docutils
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Sep 23, 2019.
+      Last updated on Sep 30, 2019.
 
     </p>
   </div>
@@ -710,7 +710,7 @@ If no match is found, will return the first element of the <code class="docutils
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.1',
+            VERSION:'4.0.0-rc.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,

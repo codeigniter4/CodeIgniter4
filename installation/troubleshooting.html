@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Troubleshooting &mdash; CodeIgniter4 4.0.0-rc.1 documentation</title>
+  <title>Troubleshooting &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.1 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
         <link rel="up" title="Installation" href="index.html"/>
         <link rel="next" title="CodeIgniter Repositories" href="repositories.html"/>
         <link rel="prev" title="Upgrading from 3.x to 4.x" href="upgrade_4xx.html"/> 
@@ -249,6 +249,24 @@ requests properly.</p>
 <p>The solution: use Apache to serve your site, or else the built-in
 CodeIgniter equivalent, <code class="docutils literal"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">serve</span></code> from your project root.</p>
 </div>
+<div class="section" id="what-s-with-an-unhelpful-whoops-page">
+<h2>What&#8217;s with an unhelpful &#8220;Whoops!&#8221; page?<a class="headerlink" href="#what-s-with-an-unhelpful-whoops-page" title="Permalink to this headline">¶</a></h2>
+<p>You find that your app is displaying a page with &#8220;Whoops!&#8221; and
+then the text line &#8220;We seem to have hit a snag. Please try again later...&#8221;.</p>
+<p>That is a sign that you are in production mode and have hit an
+unrecoverable error, which we don&#8217;t want to show to the viewer of
+the webapp, for better security.</p>
+<p>You can see the error in the debug toolbar display by setting your environment to
+&#8220;development&#8221; (in <cite>.env</cite>), and reloading the page.</p>
+<p>Don&#8217;t forget to reset the environment to &#8220;production&#8221; once you fix the problem!</p>
+</div>
+<div class="section" id="codeigniter-error-logs">
+<h2>CodeIgniter Error Logs<a class="headerlink" href="#codeigniter-error-logs" title="Permalink to this headline">¶</a></h2>
+<p>CodeIgniter logs error messages, according to the settings in <cite>app/Config/Logger.php</cite>.</p>
+<p>You can adjust the error threshold to see more or fewer messages.</p>
+<p>The default configuration has daily log files stored in <cite>writable/logs</cite>.
+It would be a good idea to check them if things aren&#8217;t working the way you expect!</p>
+</div>
 </div>
 
 
@@ -274,7 +292,7 @@ CodeIgniter equivalent, <code class="docutils literal"><span class="pre">php</sp
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Sep 23, 2019.
+      Last updated on Sep 30, 2019.
 
     </p>
   </div>
@@ -296,7 +314,7 @@ CodeIgniter equivalent, <code class="docutils literal"><span class="pre">php</sp
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.1',
+            VERSION:'4.0.0-rc.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
