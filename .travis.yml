@@ -5,50 +5,62 @@ matrix:
     - php: 7.2
       env:
         - IGNORE_PLATFORMS=false
+        - COVERALLS=true
         - DB=mysqli
     - php: 7.2
       env:
         - IGNORE_PLATFORMS=false
+        - COVERALLS=true
         - DB=postgres
     - php: 7.2
       env:
         - IGNORE_PLATFORMS=false
+        - COVERALLS=true
         - DB=sqlite
     - php: 7.3
       env:
         - IGNORE_PLATFORMS=false
+        - COVERALLS=true
         - DB=mysqli
     - php: 7.3
       env:
         - IGNORE_PLATFORMS=false
+        - COVERALLS=true
         - DB=postgres
     - php: 7.3
       env:
         - IGNORE_PLATFORMS=false
+        - COVERALLS=true
         - DB=sqlite
     - php: 7.4snapshot
       env:
         - IGNORE_PLATFORMS=true
+        - COVERALLS=false
         - DB=mysqli
     - php: 7.4snapshot
       env:
         - IGNORE_PLATFORMS=true
+        - COVERALLS=false
         - DB=postgres
     - php: 7.4snapshot
       env:
         - IGNORE_PLATFORMS=true
+        - COVERALLS=false
         - DB=sqlite
     - php: nightly
       env:
         - IGNORE_PLATFORMS=true
+        - COVERALLS=false
         - DB=postgres
     - php: nightly
       env:
         - IGNORE_PLATFORMS=true
+        - COVERALLS=false
         - DB=mysqli
     - php: nightly
       env:
         - IGNORE_PLATFORMS=true
+        - COVERALLS=false
         - DB=sqlite
   fast_finish: true
   allow_failures:
@@ -85,4 +97,4 @@ before_script:
   - if [ "$IGNORE_PLATFORMS" == "false" ]; then composer install --prefer-source; fi
 
 after_success:
-  - travis_retry php tests/bin/php-coveralls.phar -v
+  - if [ "$COVERALLS" == "true" ]; then travis_retry php tests/bin/php-coveralls.phar -v; fi
