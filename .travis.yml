@@ -1,13 +1,58 @@
 language: php
 
-php:
-  - 7.2
-  - 7.3
-  - nightly
-
 matrix:
+  include:
+    - php: 7.2
+      env:
+        - IGNORE_PLATFORMS=false
+        - DB=mysqli
+    - php: 7.2
+      env:
+        - IGNORE_PLATFORMS=false
+        - DB=postgres
+    - php: 7.2
+      env:
+        - IGNORE_PLATFORMS=false
+        - DB=sqlite
+    - php: 7.3
+      env:
+        - IGNORE_PLATFORMS=false
+        - DB=mysqli
+    - php: 7.3
+      env:
+        - IGNORE_PLATFORMS=false
+        - DB=postgres
+    - php: 7.3
+      env:
+        - IGNORE_PLATFORMS=false
+        - DB=sqlite
+    - php: 7.4snapshot
+      env:
+        - IGNORE_PLATFORMS=true
+        - DB=mysqli
+    - php: 7.4snapshot
+      env:
+        - IGNORE_PLATFORMS=true
+        - DB=postgres
+    - php: 7.4snapshot
+      env:
+        - IGNORE_PLATFORMS=true
+        - DB=sqlite
+    - php: nightly
+      env:
+        - IGNORE_PLATFORMS=true
+        - DB=postgres
+    - php: nightly
+      env:
+        - IGNORE_PLATFORMS=true
+        - DB=mysqli
+    - php: nightly
+      env:
+        - IGNORE_PLATFORMS=true
+        - DB=sqlite
   fast_finish: true
   allow_failures:
+    - php: 7.4snapshot
     - php: nightly
 
 global:
@@ -18,11 +63,6 @@ global:
 sudo: required
 dist: trusty
 group: edge
-
-env:
-  - DB=mysqli
-  - DB=postgres
-  - DB=sqlite
 
 services:
   - memcached
@@ -41,7 +81,8 @@ before_install:
 before_script:
   - echo 'extension = memcached.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo 'extension = redis.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - composer install --prefer-source
+  - if [ "$IGNORE_PLATFORMS" == "true" ]; then composer install --prefer-source --ignore-platform-reqs; fi
+  - if [ "$IGNORE_PLATFORMS" == "false" ]; then composer install --prefer-source; fi
 
 after_success:
   - travis_retry php tests/bin/php-coveralls.phar -v
