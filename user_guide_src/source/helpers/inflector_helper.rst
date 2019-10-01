@@ -44,6 +44,17 @@ The following functions are available:
 
 		echo plural('dog'); // Prints 'dogs'
 
+.. php:function:: counted($count, $string)
+
+	:param	int 	$count:  Number of items
+	:param	string	$string: Input string
+	:returns:	A singular or plural phrase
+	:rtype:	string
+
+	Changes a word and its count to a phrase. Example::
+
+		echo counted(3, 'dog'); // Prints '3 dogs'
+
 .. php:function:: camelize($string)
 
 	:param	string	$string: Input string

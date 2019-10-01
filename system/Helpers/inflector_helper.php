@@ -165,6 +165,29 @@ if (! function_exists('plural'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('counted'))
+{
+	/**
+	 * Counted
+	 *
+	 * Takes a number and a word to return the plural or not
+	 * E.g. 0 cats, 1 cat, 2 cats, ...
+	 *
+	 * @param  int    $count  Number of items
+	 * @param  string $string Input string
+	 * @return string
+	 */
+	function counted(int $count, string $string): string
+	{
+		$result  = "{$count} ";
+		$result .= $count === 1 ? singular($string) : plural($string);
+
+		return $result;
+	}
+}
+
+//--------------------------------------------------------------------
+
 if (! function_exists('camelize'))
 {
 	/**
