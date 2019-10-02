@@ -92,6 +92,29 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testCounted()
+	{
+		$triplets = [
+			[3, 'cat', '3 cats'],
+			[1, 'cat', '1 cat'],
+			[0, 'cat', '0 cats'],
+			[3, 'cats', '3 cats'],
+			[1, 'cats', '1 cat'],
+			[0, 'cats', '0 cats'],
+			[3, 'fish', '3 fish'],
+			[1, 'fish', '1 fish'],
+			[0, 'fish', '0 fish'],
+		];
+
+		foreach ($triplets as $triplet)
+		{
+			$result = counted($triplet[0], $triplet[1]);
+			$this->assertEquals($triplet[2], $result);
+		}
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testCamelize()
 	{
 		$strings = [
