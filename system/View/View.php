@@ -215,7 +215,9 @@ class View implements RendererInterface
 		if (! is_file($this->renderVars['file']))
 		{
 			$this->renderVars['file'] = $this->loader->locateFile($this->renderVars['view'], 'Views', empty($fileExt) ? 'php' : $fileExt);
-		}
+		} else {
+            $this->renderVars['file'] = $this->loader->locateFile($this->renderVars['view'], null, empty($fileExt) ? 'php' : $fileExt);
+        }
 
 		// locateFile will return an empty string if the file cannot be found.
 		if (empty($this->renderVars['file']))
