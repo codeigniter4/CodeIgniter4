@@ -88,7 +88,25 @@ class Routes extends BaseCollector
 		$route = $router->getMatchedRoute();
 
 		// Get our parameters
-		$method    = is_callable($router->controllerName()) ? new \ReflectionFunction($router->controllerName()) : new \ReflectionMethod($router->controllerName(), $router->methodName());
+		// Closure routes
+		if (is_callable($router->controllerName()))
+		{
+			$method = new \ReflectionFunction($router->controllerName());
+		}
+		else
+		{
+			try
+			{
+				$method = new \ReflectionMethod($router->controllerName(), $router->methodName());
+			}
+			catch (\ReflectionException $e)
+			{
+				// If we're here, the method doesn't exist
+				// and is likely calculated in _remap.
+				$method = new \ReflectionMethod($router->controllerName(), '_remap');
+			}
+		}
+
 		$rawParams = $method->getParameters();
 
 		$params = [];
