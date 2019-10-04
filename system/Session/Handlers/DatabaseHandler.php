@@ -164,7 +164,10 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 
 		// Needed by write() to detect session_regenerate_id() calls
-		$this->sessionID = $sessionID;
+		if(is_null($this->sessionID))
+		{
+			$this->sessionID = $sessionID;
+		}
 
 		$builder = $this->db->table($this->table)
 				->select('data')
@@ -228,11 +231,6 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 		// Was the ID regenerated?
 		elseif ($sessionID !== $this->sessionID)
 		{
-			if (! $this->releaseLock() || ! $this->lockSession($sessionID))
-			{
-				return $this->fail();
-			}
-
 			$this->rowExists = false;
 			$this->sessionID = $sessionID;
 		}
