@@ -187,7 +187,10 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 			}
 
 			// Needed by write() to detect session_regenerate_id() calls
-			$this->sessionID = $sessionID;
+			if(is_null($this->sessionID))
+			{
+				$this->sessionID = $sessionID;
+			}
 
 			if ($this->fileNew)
 			{
@@ -233,10 +236,9 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	public function write($sessionID, $sessionData): bool
 	{
 		// If the two IDs don't match, we have a session_regenerate_id() call
-		// and we need to close the old handle and open a new one
-		if ($sessionID !== $this->sessionID && (! $this->close() || $this->read($sessionID) === false))
+		if ($sessionID !== $this->sessionID)
 		{
-			return false;
+			$this->sessionID = $sessionID;
 		}
 
 		if (! is_resource($this->fileHandle))
@@ -294,7 +296,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 			flock($this->fileHandle, LOCK_UN);
 			fclose($this->fileHandle);
 
-			$this->fileHandle = $this->fileNew = $this->sessionID = null;
+			$this->fileHandle = $this->fileNew = null;
 
 			return true;
 		}

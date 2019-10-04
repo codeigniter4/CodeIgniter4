@@ -183,7 +183,10 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		if (isset($this->memcached) && $this->lockSession($sessionID))
 		{
 			// Needed by write() to detect session_regenerate_id() calls
-			$this->sessionID = $sessionID;
+			if(is_null($this->sessionID))
+			{
+				$this->sessionID = $sessionID;
+			}
 
 			$session_data      = (string) $this->memcached->get($this->keyPrefix . $sessionID);
 			$this->fingerprint = md5($session_data);

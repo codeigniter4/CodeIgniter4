@@ -184,7 +184,10 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		if (isset($this->redis) && $this->lockSession($sessionID))
 		{
 			// Needed by write() to detect session_regenerate_id() calls
-			$this->sessionID = $sessionID;
+			if(is_null($this->sessionID))
+			{
+				$this->sessionID = $sessionID;
+			}
 
 			$session_data                               = $this->redis->get($this->keyPrefix . $sessionID);
 			is_string($session_data) ? $this->keyExists = true : $session_data = '';
