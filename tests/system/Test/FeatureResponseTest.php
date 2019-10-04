@@ -251,7 +251,7 @@ class FeatureResponseTest extends CIUnitTestCase
 		$this->response->setBody($tmp);
 
 		// this should be FALSE - invalid JSON - will see if this is working that way ;-)
-		$this->assertFalse(json_encode(' test " case ') == $this->feature->getJSON());
+		$this->assertFalse($this->response->getBody() == $this->feature->getJSON());
 	}
 
 	public function testGetXML()
