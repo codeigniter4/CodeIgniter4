@@ -219,18 +219,18 @@ class FeatureResponseTest extends CIUnitTestCase
 		$formatter = $config->getFormatter('application/json');
 
 		// this should be "" - json_encode('');
-		$this->assertEquals("", $this->feature->getJSON());
+		$this->assertEquals('""', $this->feature->getJSON());
 	}
 	
 	public function testFalseJSON()
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
-		$this->response->setJSON('');
+		$this->response->setJSON(false);
 		$config    = new \Config\Format();
 		$formatter = $config->getFormatter('application/json');
 
 		// this should be FALSE - json_encode(false)
-		$this->assertFalse($this->feature->getJSON());
+		$this->assertEquals('false', $this->feature->getJSON());
 	}
 	
 	public function testTrueJSON()
@@ -241,7 +241,7 @@ class FeatureResponseTest extends CIUnitTestCase
 		$formatter = $config->getFormatter('application/json');
 
 		// this should be TRUE - json_encode(true)
-		$this->assertTrue($this->feature->getJSON());
+		$this->assertEquals('true', $this->feature->getJSON());
 	}
 	
 	public function testInvalidJSON()
