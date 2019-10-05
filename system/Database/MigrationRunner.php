@@ -128,6 +128,20 @@ class MigrationRunner
 	 */
 	protected $path;
 
+	/**
+	 * The database Group filter.
+	 *
+	 * @var string
+	 */
+	protected $groupFilter;
+
+	/**
+	 * Used to skip current migration.
+	 *
+	 * @var boolean
+	 */
+	protected $groupSkip = false;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -180,6 +194,7 @@ class MigrationRunner
 		// Set database group if not null
 		if (! is_null($group))
 		{
+			$this->groupFilter = $group;
 			$this->setGroup($group);
 		}
 
@@ -206,6 +221,12 @@ class MigrationRunner
 		{
 			if ($this->migrate('up', $migration))
 			{
+				if ($this->groupSkip === true)
+				{
+					$this->groupSkip = false;
+					continue;
+				}
+
 				$this->addHistory($migration, $batch);
 			}
 			// If a migration failed then try to back out what was done
@@ -370,6 +391,7 @@ class MigrationRunner
 		// Set database group if not null
 		if (! is_null($group))
 		{
+			$this->groupFilter = $group;
 			$this->setGroup($group);
 		}
 
@@ -406,11 +428,13 @@ class MigrationRunner
 			// Start a new batch
 			$batch = $this->getLastBatch() + 1;
 
-			if ($this->migrate('up', $migration))
+			if ($this->migrate('up', $migration) && $this->groupSkip === false)
 			{
 				$this->addHistory($migration, $batch);
 				return true;
 			}
+
+			$this->groupSkip = false;
 		}
 
 		// down
@@ -991,8 +1015,19 @@ class MigrationRunner
 			throw new \RuntimeException($message);
 		}
 
-		// Forcing migration to selected database group
-		$instance = new $class(\Config\Database::forge($this->group));
+		// Initialize migration
+		$instance = new $class();
+		// Determine DBGroup to use
+		$group = $instance->getDBGroup() ?? config('Database')->defaultGroup;
+
+		// Skip if migration if group filteing was set
+		if ($direction === 'up' && ! is_null($this->groupFilter) && $this->groupFilter !== $group)
+		{
+			$this->groupSkip = true;
+			return true;
+		}
+
+		$this->setGroup($group);
 
 		if (! is_callable([$instance, $direction]))
 		{
