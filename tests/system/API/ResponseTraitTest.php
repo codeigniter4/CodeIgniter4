@@ -19,7 +19,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 	 */
 	protected $formatter;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -276,6 +276,15 @@ EOH;
 		$this->assertEquals('A Custom Reason', $this->response->getReason());
 		$this->assertEquals(403, $this->response->getStatusCode());
 		$this->assertEquals($this->formatter->format($expected), $this->response->getBody());
+	}
+
+	public function testNoContent()
+	{
+		$controller = $this->makeController();
+		$controller->respondNoContent('');
+
+		$this->assertEquals('No Content', $this->response->getReason());
+		$this->assertEquals(204, $this->response->getStatusCode());
 	}
 
 	public function testNotFound()

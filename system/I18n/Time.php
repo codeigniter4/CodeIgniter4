@@ -1342,4 +1342,20 @@ class Time extends DateTime
 		return null;
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * Allow for property-type checking to any getX method...
+	 *
+	 * @param $name
+	 *
+	 * @return bool
+	 */
+	public function __isset($name): bool
+	{
+		$method = 'get' . ucfirst($name);
+
+		return method_exists($this, $method);
+	}
+
 }

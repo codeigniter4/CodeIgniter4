@@ -10,7 +10,7 @@ class UpdateTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -23,7 +23,7 @@ class UpdateTest extends \CIUnitTestCase
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
 
-		$builder->where('id', 1)->update(['name' => 'Programmer'], null, null, true);
+		$builder->testMode()->where('id', 1)->update(['name' => 'Programmer'], null, null);
 
 		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1';
 		$expectedBinds = [
@@ -47,7 +47,7 @@ class UpdateTest extends \CIUnitTestCase
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
 
-		$builder->update(['name' => 'Programmer'], ['id' => 1], 5, true);
+		$builder->testMode()->update(['name' => 'Programmer'], ['id' => 1], 5);
 
 		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1  LIMIT 5';
 		$expectedBinds = [
@@ -71,7 +71,7 @@ class UpdateTest extends \CIUnitTestCase
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
 
-		$builder->set('name', 'Programmer')->where('id', 1)->update(null, null, null, true);
+		$builder->testMode()->set('name', 'Programmer')->where('id', 1)->update(null, null, null);
 
 		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1';
 		$expectedBinds = [
@@ -193,7 +193,7 @@ WHERE "id" IN(2,3)';
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
 
-		$builder->update(['name' => 'foobar'], ['name' => 'Programmer'], null, true);
+		$builder->testMode()->update(['name' => 'foobar'], ['name' => 'Programmer'], null);
 
 		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'foobar\' WHERE "name" = \'Programmer\'';
 		$expectedBinds = [
@@ -218,9 +218,10 @@ WHERE "id" IN(2,3)';
 		// calling order: set() -> where()
 		$builder = new BaseBuilder('jobs', $this->db);
 
-		$builder->set('name', 'foobar')
+		$builder->testMode()
+			->set('name', 'foobar')
 			->where('name', 'Programmer')
-			->update(null, null, null, true);
+			->update(null, null, null);
 
 		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'foobar\' WHERE "name" = \'Programmer\'';
 		$expectedBinds = [
@@ -245,8 +246,9 @@ WHERE "id" IN(2,3)';
 		// calling order: where() -> set() in update()
 		$builder = new BaseBuilder('jobs', $this->db);
 
-		$builder->where('name', 'Programmer')
-			->update(['name' => 'foobar'], null, null, true);
+		$builder->testMode()
+			->where('name', 'Programmer')
+			->update(['name' => 'foobar'], null, null);
 
 		$expectedSQL   = 'UPDATE "jobs" SET "name" = \'foobar\' WHERE "name" = \'Programmer\'';
 		$expectedBinds = [
@@ -271,13 +273,42 @@ WHERE "id" IN(2,3)';
 	{
 		$builder = new BaseBuilder('mytable', $this->db);
 
-		$builder->set('field', 'field+1', false)
+		$builder->testMode()
+			->set('field', 'field+1', false)
 			->where('id', 2)
-			->update(null, null, null, true);
+			->update(null, null, null);
 
 		$expectedSQL   = 'UPDATE "mytable" SET field = field+1 WHERE "id" = 2';
 		$expectedBinds = [
 			'id' => [
+				2,
+				true,
+			],
+		];
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertEquals($expectedBinds, $builder->getBinds());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetWithAndWithoutEscape()
+	{
+		$builder = new BaseBuilder('mytable', $this->db);
+
+		$builder->testMode()
+			->set('foo', 'bar')
+			->set('field', 'field+1', false)
+			->where('id', 2)
+			->update(null, null, null);
+
+		$expectedSQL   = 'UPDATE "mytable" SET "foo" = \'bar\', field = field+1 WHERE "id" = 2';
+		$expectedBinds = [
+			'foo' => [
+				'bar',
+				true,
+			],
+			'id'  => [
 				2,
 				true,
 			],

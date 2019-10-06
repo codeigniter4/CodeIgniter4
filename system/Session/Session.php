@@ -304,7 +304,8 @@ class Session implements SessionInterface
 				$this->sessionExpiration, $this->cookiePath, $this->cookieDomain, $this->cookieSecure, true // HTTP only; Yes, this is intentional and not configurable for security reasons.
 		);
 
-		if (empty($this->sessionExpiration))
+		//if (empty($this->sessionExpiration))
+		if (!isset($this->sessionExpiration))
 		{
 			$this->sessionExpiration = (int) ini_get('session.gc_maxlifetime');
 		}
@@ -622,6 +623,22 @@ class Session implements SessionInterface
 		}
 
 		return null;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Magic method to check for session variables.
+	 * Different from has() in that it will validate 'session_id' as well.
+	 * Mostly used by internal PHP functions, users should stick to has()
+	 *
+	 * @param string $key Identifier of the session property to remove.
+	 *
+	 * @return bool
+	 */
+	public function __isset(string $key): bool
+	{
+		return isset($_SESSION[$key]) || ($key === 'session_id');
 	}
 
 	//--------------------------------------------------------------------

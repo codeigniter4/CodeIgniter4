@@ -12,7 +12,7 @@ git checkout $branch
 echo -e "${BOLD}Build the framework distributable${NORMAL}"
 
 echo -e "${BOLD}Copy the main files/folders...${NORMAL}"
-releasable='app docs public system writable contributing.md env license.txt spark tests/_support'
+releasable='app docs public system writable contributing.md env license.txt spark .gitignore'
 for fff in $releasable ; do
     if [ -d "$fff" ] ; then
         rm -rf $fff
@@ -21,7 +21,11 @@ for fff in $releasable ; do
 done
 
 echo -e "${BOLD}Override as needed...${NORMAL}"
-cp -rf ${CI_DIR}/admin/framework/* .
+cprm -rf tests
+mkdir tests
+cp -rf ${CI_DIR}/tests/_support tests/
+
+ -rf ${CI_DIR}/admin/framework/* .
 
 #---------------------------------------------------
 # And finally, get ready for merging

@@ -1,4 +1,4 @@
-<?php namespace Tests\Support\Database\Migrations;
+<?php namespace Tests\Support\DatabaseTestMigrations\Database\Migrations;
 
 class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 {
@@ -34,7 +34,7 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 				'type' => 'DATETIME',
 				'null' => true,
 			],
-			'deleted_at'    => [
+			'deleted_at' => [
 				'type' => 'DATETIME',
 				'null' => true,
 			],
@@ -67,7 +67,7 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 				'constraint' => 11,
 				'null'       => true,
 			],
-			'deleted_at'     => [
+			'deleted_at'  => [
 				'type'       => 'INTEGER',
 				'constraint' => 11,
 				'null'       => true,

@@ -182,9 +182,12 @@ class Entity
 		{
 			foreach ($this->datamap as $from => $to)
 			{
-				$return[$from] = $this->__get($to);
+				if (array_key_exists($to, $return)) {
+					$return[$from] = $this->__get($to);
+				}
 			}
 		}
+
 		$this->_cast = true;
 		return $return;
 	}
@@ -424,6 +427,15 @@ class Entity
 	 */
 	public function __isset(string $key): bool
 	{
+		$key = $this->mapProperty($key);
+
+		$method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+
+		if (method_exists($this, $method))
+		{
+			return true;
+		}
+
 		return isset($this->attributes[$key]);
 	}
 
@@ -588,7 +600,7 @@ class Entity
 		$tmp = ! is_null($value) ? ($asArray ? [] : new \stdClass) : null;
 		if (function_exists('json_decode'))
 		{
-			if ((is_string($value) && strlen($value) > 1 && in_array($value{0}, ['[','{','"'])) || is_numeric($value))
+			if ((is_string($value) && strlen($value) > 1 && in_array($value{0}, ['[', '{', '"'])) || is_numeric($value))
 			{
 				$tmp = json_decode($value, $asArray);
 

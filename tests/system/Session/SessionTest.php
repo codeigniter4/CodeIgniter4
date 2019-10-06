@@ -11,7 +11,7 @@ use CodeIgniter\Session\Handlers\FileHandler;
  */
 class SessionTest extends \CIUnitTestCase
 {
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -19,7 +19,7 @@ class SessionTest extends \CIUnitTestCase
 		$_SESSION = [];
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 	}
 
@@ -183,6 +183,26 @@ class SessionTest extends \CIUnitTestCase
 		$_SESSION['foo'] = 'bar';
 
 		$this->assertFalse($session->has('bar'));
+	}
+
+	public function testIssetReturnsTrueOnSuccess()
+	{
+		$session = $this->getInstance();
+		$session->start();
+
+		$_SESSION['foo'] = 'bar';
+
+		$this->assertTrue(isset($session->foo));
+	}
+
+	public function testIssetReturnsFalseOnNotFound()
+	{
+		$session = $this->getInstance();
+		$session->start();
+
+		$_SESSION['foo'] = 'bar';
+
+		$this->assertFalse(isset($session->bar));
 	}
 
 	public function testPushNewValueIntoArraySessionValue()

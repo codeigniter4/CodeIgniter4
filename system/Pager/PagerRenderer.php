@@ -81,7 +81,7 @@ class PagerRenderer
 		 */
 	protected $pageCount;
 	/**
-	 * URI? unused?
+	 * URI base for pagination links
 	 *
 	 * @var integer
 	 */

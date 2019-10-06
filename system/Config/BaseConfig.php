@@ -90,47 +90,7 @@ class BaseConfig
 
 		foreach ($properties as $property)
 		{
-			if (is_array($this->$property))
-			{
-				foreach ($this->$property as $key => $val)
-				{
-					if ($value = $this->getEnvValue("{$property}.{$key}", $prefix, $shortPrefix))
-					{
-						if (! is_null($value))
-						{
-							if ($value === 'false')
-							{
-								$value = false;
-							}
-							elseif ($value === 'true')
-							{
-								$value = true;
-							}
-
-							$this->$property[$key] = $value;
-						}
-					}
-				}
-			}
-			else
-			{
-				if (($value = $this->getEnvValue($property, $prefix, $shortPrefix)) !== false)
-				{
-					if (! is_null($value))
-					{
-						if ($value === 'false')
-						{
-							$value = false;
-						}
-						elseif ($value === 'true')
-						{
-							$value = true;
-						}
-
-						$this->$property = is_bool($value) ? $value : trim($value, '\'"');
-					}
-				}
-			}
+			$this->initEnvValue($this->$property, $property, $prefix, $shortPrefix);
 		}
 
 		if (defined('ENVIRONMENT') && ENVIRONMENT !== 'testing')
@@ -140,6 +100,49 @@ class BaseConfig
 			$this->registerProperties();
 			// @codeCoverageIgnoreEnd
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Initialization an environment-specific configuration setting
+	 *
+	 * @param mixed &$property
+	 * @param string $name
+	 * @param string $prefix
+	 * @param string $shortPrefix
+	 *
+	 * @return mixed
+	 */
+	protected function initEnvValue(&$property, string $name, string $prefix, string $shortPrefix)
+	{
+		if (is_array($property))
+		{
+			foreach ($property as $key => $val)
+			{
+				$this->initEnvValue($property[$key], "{$name}.{$key}", $prefix, $shortPrefix);
+			}
+		}
+		else
+		{
+			if (($value = $this->getEnvValue($name, $prefix, $shortPrefix)) !== false)
+			{
+				if (! is_null($value))
+				{
+					if ($value === 'false')
+					{
+						$value = false;
+					}
+					elseif ($value === 'true')
+					{
+						$value = true;
+					}
+
+					$property = is_bool($value) ? $value : trim($value, '\'"');
+				}
+			}
+		}
+		return $property;
 	}
 
 	//--------------------------------------------------------------------

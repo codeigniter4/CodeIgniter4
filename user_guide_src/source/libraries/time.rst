@@ -498,10 +498,12 @@ Much like Time's humanize() method, this returns a string that displays the diff
 human readable format that is geared towards being easily understood. It can create strings like '3 hours ago',
 'in 1 month', etc. The biggest differences are in how very recent dates are handled::
 
-    // Assume current time is: March 10, 2017 (America/Chicago)
-    $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
+    $current = Time::parse('March 10, 2017', 'America/Chicago')
+    $test    = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
 
-    echo $time->humanize();     // 1 year ago
+    $diff = $current->difference($test)
+
+    echo $diff->humanize();     // 1 year ago
 
 The exact time displayed is determined in the following manner:
 

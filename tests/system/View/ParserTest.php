@@ -6,7 +6,7 @@ use CodeIgniter\View\Exceptions\ViewException;
 class ParserTest extends \CIUnitTestCase
 {
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -47,7 +47,7 @@ class ParserTest extends \CIUnitTestCase
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 		$parser->setVar('teststring', 'Hello World');
 
-		$expected = '<h1>Hello World</h1>';
+		$expected = "<h1>Hello World</h1>\n";
 		$this->assertEquals($expected, $parser->render('template1'));
 	}
 
@@ -887,7 +887,7 @@ class ParserTest extends \CIUnitTestCase
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 		$parser->setVar('teststring', 'Hello World');
 
-		$expected = '<h1>Hello World</h1>';
+		$expected = "<h1>Hello World</h1>\n";
 		$this->assertEquals($expected, $parser->render('template1', ['cache' => 10, 'cache_name' => 'HelloWorld']));
 		// this second renderings should go thru the cache
 		$this->assertEquals($expected, $parser->render('template1', ['cache' => 10, 'cache_name' => 'HelloWorld']));
@@ -900,7 +900,7 @@ class ParserTest extends \CIUnitTestCase
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 		$parser->setData(['testString' => 'Hello World']);
 
-		$expected = '<h1>Hello World</h1>';
+		$expected = "<h1>Hello World</h1>\n";
 		$this->assertEquals($expected, $parser->render('Simpler'));
 	}
 
@@ -921,7 +921,7 @@ class ParserTest extends \CIUnitTestCase
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 		$parser->setData(['testString' => 'Hello World']);
 
-		$expected = '<h1>Hello World</h1>';
+		$expected = "<h1>Hello World</h1>\n";
 		$this->assertEquals($expected, $parser->render('Simpler', [], true));
 		$this->assertArrayHasKey('testString', $parser->getData());
 		$this->assertEquals($expected, $parser->render('Simpler', [], false));
@@ -939,6 +939,14 @@ class ParserTest extends \CIUnitTestCase
 		$this->assertArrayHasKey('testString', $parser->getData());
 		$this->assertEquals($expected, $parser->renderString($pattern, [], false));
 		$this->assertArrayNotHasKey('testString', $parser->getData());
+	}
+
+	public function testRenderFindsOtherView()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$parser->setData(['testString' => 'Hello World']);
+		$expected = '<h1>Hello World</h1>';
+		$this->assertEquals($expected, $parser->render('Simpler.html'));
 	}
 
 }

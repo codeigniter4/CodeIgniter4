@@ -134,6 +134,11 @@ class File extends SplFileInfo
 	 */
 	public function getMimeType(): string
 	{
+		if (! function_exists('finfo_open'))
+		{
+			return $this->originalMimeType ?? 'application/octet-stream';
+		}
+
 		$finfo    = finfo_open(FILEINFO_MIME_TYPE);
 		$mimeType = finfo_file($finfo, $this->getRealPath());
 		finfo_close($finfo);
@@ -150,7 +155,9 @@ class File extends SplFileInfo
 	 */
 	public function getRandomName(): string
 	{
-		return time() . '_' . bin2hex(random_bytes(10)) . '.' . $this->getExtension();
+		$extension = $this->getExtension();
+		$extension = empty($extension) ? '' : '.' . $extension;
+		return time() . '_' . bin2hex(random_bytes(10)) . $extension;
 	}
 
 	//--------------------------------------------------------------------
@@ -202,7 +209,8 @@ class File extends SplFileInfo
 	{
 		while (is_file($destination))
 		{
-			$info = pathinfo($destination);
+			$info      = pathinfo($destination);
+			$extension = isset($info['extension']) ? '.' . $info['extension'] : '';
 			if (strpos($info['filename'], $delimiter) !== false)
 			{
 				$parts = explode($delimiter, $info['filename']);
@@ -211,16 +219,16 @@ class File extends SplFileInfo
 					$i = end($parts);
 					array_pop($parts);
 					array_push($parts, ++ $i);
-					$destination = $info['dirname'] . '/' . implode($delimiter, $parts) . '.' . $info['extension'];
+					$destination = $info['dirname'] . '/' . implode($delimiter, $parts) . $extension;
 				}
 				else
 				{
-					$destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++ $i . '.' . $info['extension'];
+					$destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++ $i . $extension;
 				}
 			}
 			else
 			{
-				$destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++ $i . '.' . $info['extension'];
+				$destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++ $i . $extension;
 			}
 		}
 		return $destination;

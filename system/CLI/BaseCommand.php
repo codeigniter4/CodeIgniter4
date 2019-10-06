@@ -191,6 +191,20 @@ abstract class BaseCommand
 	//--------------------------------------------------------------------
 
 	/**
+	 * Makes it simple to check our protected properties.
+	 *
+	 * @param string $key
+	 *
+	 * @return bool
+	 */
+	public function __isset(string $key): bool
+	{
+		return isset($this->$key);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * show Help include (usage,arguments,description,options)
 	 */
 	public function showHelp()

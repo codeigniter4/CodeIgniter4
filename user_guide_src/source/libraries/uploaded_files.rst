@@ -126,6 +126,11 @@ In controller::
 	$file1 = $this->request->getFile('images.0');
 	$file2 = $this->request->getFile('images.1');
 
+You might find it easier to use ``getFileMultiple()``, to get an array of uploaded files with the same name::
+
+	$files = $this->request->getFileMultiple('images');
+
+
 Another example::
 
 	Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
@@ -200,12 +205,12 @@ trusted version, use ``getExtension()`` instead::
 
 	$ext = $file->getClientExtension();
 
-**getClientType()**
+**getClientMimeType()**
 
 Returns the mime type (mime type) of the file as provided by the client. This is NOT a trusted value. For a trusted
-version, use ``getType()`` instead::
+version, use ``getMimeType()`` instead::
 
-	$type = $file->getClientType();
+	$type = $file->getClientMimeType();
 
 	echo $type; // image/png
 

@@ -515,6 +515,34 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Set DB Prefix
+	 *
+	 * Set's the DB Prefix to something new without needing to reconnect
+	 *
+	 * @param string $prefix The prefix
+	 *
+	 * @return string
+	 */
+	public function setPrefix(string $prefix = ''): string
+	{
+		return $this->DBPrefix = $prefix;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the database prefix.
+	 *
+	 * @return string
+	 */
+	public function getPrefix(): string
+	{
+		return $this->DBPrefix;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the last error encountered by this connection.
 	 *
 	 * @return mixed
@@ -1330,22 +1358,6 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Set DB Prefix
-	 *
-	 * Set's the DB Prefix to something new without needing to reconnect
-	 *
-	 * @param string $prefix The prefix
-	 *
-	 * @return string
-	 */
-	public function setPrefix(string $prefix = ''): string
-	{
-		return $this->DBPrefix = $prefix;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Returns the total number of rows affected by this query.
 	 *
 	 * @return mixed
@@ -1516,7 +1528,9 @@ abstract class BaseConnection implements ConnectionInterface
 		// Is there a cached result?
 		if (isset($this->dataCache['table_names']) && $this->dataCache['table_names'])
 		{
-			return $this->dataCache['table_names'];
+			return $constrainByPrefix ?
+				preg_grep("/^{$this->DBPrefix}/", $this->dataCache['table_names'])
+				: $this->dataCache['table_names'];
 		}
 
 		if (false === ($sql = $this->_listTables($constrainByPrefix)))
@@ -1846,6 +1860,20 @@ abstract class BaseConnection implements ConnectionInterface
 		}
 
 		return null;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Checker for properties existence.
+	 *
+	 * @param string $key
+	 *
+	 * @return bool
+	 */
+	public function __isset(string $key): bool
+	{
+		return property_exists($this, $key);
 	}
 
 	//--------------------------------------------------------------------

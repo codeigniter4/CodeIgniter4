@@ -487,6 +487,13 @@ class CURLRequest extends Request
 	 */
 	protected function applyRequestHeaders(array $curl_options = []): array
 	{
+		if (empty($this->headers))
+		{
+			$this->populateHeaders();
+			// Otherwise, it will corrupt the request
+			$this->removeHeader('Host');
+		}
+
 		$headers = $this->getHeaders();
 
 		if (empty($headers))
@@ -672,10 +679,10 @@ class CURLRequest extends Request
 		}
 
 		// Debug
-		if (isset($config['debug']))
+		if ($config['debug'])
 		{
-			$curl_options[CURLOPT_VERBOSE] = $config['debug'] === true ? 1 : 0;
-			$curl_options[CURLOPT_STDERR]  = $config['debug'] === true ? fopen('php://output', 'w+') : $config['debug'];
+			$curl_options[CURLOPT_VERBOSE] = 1;
+			$curl_options[CURLOPT_STDERR]  = is_string($config['debug']) ? fopen($config['debug'], 'a+') : fopen('php://output', 'w+');
 		}
 
 		// Decode Content

@@ -32,7 +32,7 @@ Installation & Setup
 
 In the folder above your project root::
 
-    composer create-project codeigniter4/appstarter project-root -s beta
+    composer create-project codeigniter4/appstarter project-root -s rc
 
 The command above will create a "project-root" folder.
 
@@ -46,7 +46,7 @@ trusted dependencies that we bundle, being composer-installed.
 
 A sample such installation command, using the default project-root "appstarter"::
 
-    composer create-project codeigniter4/appstarter -s beta --no-dev
+    composer create-project codeigniter4/appstarter -s rc --no-dev
 
 After installation you should follow the steps in the "Upgrading" section.
 
@@ -158,7 +158,7 @@ will be your document root.
 
 In your project root::
 
-    composer require codeigniter4/framework @beta
+    composer require codeigniter4/framework @rc
 
 As with the earlier two composer install methods, you can omit installing
 phpunit and its dependencies by adding the "--no-dev" argument to the "composer require" command.

@@ -26,7 +26,7 @@ class AlterTableTest extends CIDatabaseTestCase
 	 */
 	protected $forge;
 
-	public function setUp()
+	public function setUp(): void
 	{
 		parent::setUp();
 
@@ -40,7 +40,7 @@ class AlterTableTest extends CIDatabaseTestCase
 		$this->table = new Table($this->db, $this->forge);
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		parent::tearDown();
 

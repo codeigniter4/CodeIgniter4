@@ -5,7 +5,7 @@ use Tests\Support\Cache\Handlers\MockHandler;
 class ThrottleTest extends \CIUnitTestCase
 {
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 

@@ -11,7 +11,7 @@ use CodeIgniter\Test\FeatureResponse;
 class FeatureTestCaseTest extends FeatureTestCase
 {
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 

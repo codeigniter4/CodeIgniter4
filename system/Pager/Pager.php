@@ -144,13 +144,13 @@ class Pager implements PagerInterface
 	 * Allows for a simple, manual, form of pagination where all of the data
 	 * is provided by the user. The URL is the current URI.
 	 *
-	 * @param integer $page
-	 * @param integer $perPage
-	 * @param integer $total
-	 * @param string $template The output template alias to render.
-	 * @param integer $segment (if page number is provided by URI segment)
+	 * @param integer     $page
+	 * @param integer     $perPage
+	 * @param integer     $total
+	 * @param string      $template The output template alias to render.
+	 * @param integer     $segment  (if page number is provided by URI segment)
 	 *
-	 * @param string|null $group optional group (i.e. if we'd like to define custom path)
+	 * @param  string|null $group    optional group (i.e. if we'd like to define custom path)
 	 * @return string
 	 */
 	public function makeLinks(int $page, int $perPage, int $total, string $template = 'default_full', int $segment = 0, ?string $group = null): string
@@ -161,7 +161,6 @@ class Pager implements PagerInterface
 
 		return $this->displayLinks($group ?? $name, $template);
 	}
-
 
 	//--------------------------------------------------------------------
 

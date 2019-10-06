@@ -207,6 +207,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	protected function _listTables(bool $prefixLimit = false): string
 	{
 		return 'SELECT "NAME" FROM "SQLITE_MASTER" WHERE "TYPE" = \'table\''
+			   . ' AND "NAME" NOT LIKE \'sqlite!_%\' ESCAPE \'!\''
 			   . (($prefixLimit !== false && $this->DBPrefix !== '')
 				? ' AND "NAME" LIKE \'' . $this->escapeLikeString($this->DBPrefix) . '%\' ' . sprintf($this->likeEscapeStr,
 					$this->likeEscapeChar)
@@ -407,6 +408,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 				$obj->constraint_name    = $row->from . ' to ' . $row->table . '.' . $row->to;
 				$obj->table_name         = $table;
 				$obj->foreign_table_name = $row->table;
+				$obj->sequence           = $row->seq;
 
 				$retVal[] = $obj;
 			}

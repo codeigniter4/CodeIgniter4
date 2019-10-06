@@ -111,7 +111,7 @@ if (! function_exists('config'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('db_connnect'))
+if (! function_exists('db_connect'))
 {
 	/**
 	 * Grabs a database connection and returns it to the user.
@@ -433,16 +433,16 @@ if (! function_exists('single_service'))
 if (! function_exists('lang'))
 {
 	/**
-	 * A convenience method to translate a string and format it
-	 * with the intl extension's MessageFormatter object.
+	 * A convenience method to translate a string or array of them and format
+	 * the result with the intl extension's MessageFormatter.
 	 *
-	 * @param string $line
-	 * @param array  $args
-	 * @param string $locale
+	 * @param string|[] $line
+	 * @param array     $args
+	 * @param string    $locale
 	 *
 	 * @return string
 	 */
-	function lang(string $line, array $args = [], string $locale = null): string
+	function lang(string $line, array $args = [], string $locale = null)
 	{
 		return Services::language($locale)
 						->getLine($line, $args);
@@ -723,6 +723,25 @@ if (! function_exists('csrf_token'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('csrf_header'))
+{
+	/**
+	 * Returns the CSRF header name.
+	 * Can be used in Views by adding it to the meta tag
+	 * or used in javascript to define a header name when using APIs.
+	 *
+	 * @return string
+	 */
+	function csrf_header(): string
+	{
+		$config = config(App::class);
+
+		return $config->CSRFHeaderName;
+	}
+}
+
+//--------------------------------------------------------------------
+
 if (! function_exists('csrf_hash'))
 {
 	/**
@@ -754,6 +773,23 @@ if (! function_exists('csrf_field'))
 	function csrf_field(string $id = null): string
 	{
 		return '<input type="hidden"' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '" />';
+	}
+}
+
+//--------------------------------------------------------------------
+
+if (! function_exists('csrf_meta'))
+{
+	/**
+	 * Generates a meta tag for use within javascript calls.
+	 *
+	 * @param string|null $id
+	 *
+	 * @return string
+	 */
+	function csrf_meta(string $id = null): string
+	{
+		return '<meta' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_header() . '" content="' . csrf_hash() . '" />';
 	}
 }
 
@@ -815,7 +851,7 @@ if (! function_exists('force_https'))
 		$response->setHeader('Strict-Transport-Security', 'max-age=' . $duration);
 		$response->redirect($uri);
 		$response->sendHeaders();
-		
+
 		exit();
 	}
 }
@@ -1079,7 +1115,22 @@ if (! function_exists('dd'))
 	 */
 	function dd(...$vars)
 	{
+		Kint::$aliases[] = 'dd';
 		Kint::dump(...$vars);
 		exit;
+	}
+}
+
+//--------------------------------------------------------------------
+
+if (! function_exists('trace'))
+{
+	/**
+	 * Provides a backtrace to the current execution point, from Kint.
+	 */
+	function trace()
+	{
+		Kint::$aliases[] = 'trace';
+		Kint::trace();
 	}
 }

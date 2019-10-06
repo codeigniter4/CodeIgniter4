@@ -289,10 +289,10 @@ Message Translations
 We have an "official" set of translations in their
 `own repository <https://github.com/codeigniter4/translations>`_.
 
-You can download that repository, and copy its ``Language`` folder
+You could download that repository, and copy its ``Language`` folder
 into your ``app``. The incorporated translations will be automatically
 picked up because the ``App`` namespace is mapped to your ``app`` folder.
 
-Alternately, you could use ``composer install codeigniter4/translations``
+Alternately, a better practice would be to ``composer install codeigniter4/translations``
 inside your project, and the translated messages will be automatically picked
-up because the ``Translations`` namespace gets mapped appropriately.
+up because the translations folders get mapped appropriately.

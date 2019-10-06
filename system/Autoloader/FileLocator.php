@@ -126,19 +126,19 @@ class FileLocator
 			$filename = implode('/', $segments);
 			break;
 		}
-		
+
 		// if no namespaces matched then quit
 		if (empty($paths))
 		{
 			return false;
 		}
-		
+
 		// Check each path in the namespace
 		foreach ($paths as $path)
 		{
 			// Ensure trailing slash
 			$path = rtrim($path, '/') . '/';
-			
+
 			// If we have a folder name, then the calling function
 			// expects this file to be within that folder, like 'Views',
 			// or 'libraries'.
@@ -153,7 +153,7 @@ class FileLocator
 				return $path;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -408,7 +408,7 @@ class FileLocator
 		// autoloader->getNamespace($prefix) returns an array of paths for that namespace
 		foreach ($this->autoloader->getNamespace($prefix) as $namespacePath)
 		{
-			$fullPath = realpath($namespacePath . $path);
+			$fullPath = realpath(rtrim($namespacePath, '/') . '/' . $path);
 
 			if (! is_dir($fullPath))
 			{

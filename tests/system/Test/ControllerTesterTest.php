@@ -6,17 +6,23 @@ use Config\App;
 use Config\Services;
 use Tests\Support\Config\MockLogger as LoggerConfig;
 
+/**
+ * Exercise our Controller class.
+ *
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState         disabled
+ */
 class ControllerTesterTest extends \CIUnitTestCase
 {
 
 	use ControllerTester;
 
-	public function setUp()
+	public function setUp(): void
 	{
 		parent::setUp();
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		parent::tearDown();
 	}
