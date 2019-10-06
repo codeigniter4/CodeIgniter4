@@ -1372,7 +1372,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$lastInsertId = $model->getInsertID();
 
-		$this->assertEquals('', implode('', $model->errors());
+		$this->assertEquals('', implode('', $model->errors()));
 		$this->notSeeInDatabase('job', ['id' => $lastInsertId]);
 	}
 
