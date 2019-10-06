@@ -1170,7 +1170,7 @@ class ModelTest extends CIDatabaseTestCase
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1717
 	 */
-	public function testRequiredWithValidationTrue()
+	public function testRequiredWithValidationFalse()
 	{
 		$model = new ValidModel($this->db);
 
@@ -1179,7 +1179,9 @@ class ModelTest extends CIDatabaseTestCase
 			'description' => 'just becaues we have to',
 		];
 
-		$this->assertTrue($model->insert($data) !== false);
+		//Validation should fail, because we are not cleaning validation rules for insert
+		$this->assertTrue($model->insert($data) === false);
+		$this->assertEquals('', implode('',$mode->errors())); //test
 	}
 
 	//--------------------------------------------------------------------
@@ -1370,7 +1372,8 @@ class ModelTest extends CIDatabaseTestCase
 
 		$lastInsertId = $model->getInsertID();
 
-		$this->seeInDatabase('job', ['id' => $lastInsertId]);
+		$this->assertEquals('', implode('', $model->errors());
+		$this->notSeeInDatabase('job', ['id' => $lastInsertId]);
 	}
 
 	//--------------------------------------------------------------------
