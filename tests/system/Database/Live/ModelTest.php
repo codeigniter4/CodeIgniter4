@@ -1181,7 +1181,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		//Validation should fail, because we are not cleaning validation rules for insert
 		$this->assertTrue($model->insert($data) === false);
-		$this->assertEquals('', implode('',$model->errors())); //test
+		$this->assertEquals('The token field must be one of: {id}.', implode('',$model->errors()??[])); //test
 	}
 
 	//--------------------------------------------------------------------
@@ -1373,7 +1373,7 @@ class ModelTest extends CIDatabaseTestCase
 		$lastInsertId = $model->getInsertID();
 
 		$this->assertEquals('The token field must be one of: {id}.', implode('', $model->errors()));
-		$this->notSeeInDatabase('job', ['id' => $lastInsertId]);
+		$this->dontSeeInDatabase('job', ['id' => $lastInsertId]);
 	}
 
 	//--------------------------------------------------------------------
@@ -1394,7 +1394,6 @@ class ModelTest extends CIDatabaseTestCase
 
 		$lastInsertId = $model->getInsertID();
 
-		$this->assertEquals('', implode('', $model->errors()));
 		$this->seeInDatabase('job', ['id' => $lastInsertId]);
 	}
 
