@@ -1181,7 +1181,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		//Validation should fail, because we are not cleaning validation rules for insert
 		$this->assertTrue($model->insert($data) === false);
-		$this->assertEquals('', implode('',$mode->errors())); //test
+		$this->assertEquals('', implode('',$model->errors())); //test
 	}
 
 	//--------------------------------------------------------------------
@@ -1357,7 +1357,7 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testSaveObject()
+	public function testSaveObject1()
 	{
 		$model = new ValidModel($this->db);
 
@@ -1372,8 +1372,30 @@ class ModelTest extends CIDatabaseTestCase
 
 		$lastInsertId = $model->getInsertID();
 
-		$this->assertEquals('', implode('', $model->errors()));
+		$this->assertEquals('The token field must be one of: {id}.', implode('', $model->errors()));
 		$this->notSeeInDatabase('job', ['id' => $lastInsertId]);
+	}
+
+	//--------------------------------------------------------------------
+	
+	public function testSaveObject2()
+	{
+		$model = new ValidModel($this->db);
+
+		$testModel = new JobModel();
+
+		$testModel->name        = 'my name';
+		$testModel->description = 'some description';
+
+		$this->setPrivateProperty($model, 'useTimestamps', true);
+
+		$model->updateValidationRule('token', ['permit_empty','in_list[{id}]']);
+		$model->insert($testModel);
+
+		$lastInsertId = $model->getInsertID();
+
+		$this->assertEquals('', implode('', $model->errors()));
+		$this->seeInDatabase('job', ['id' => $lastInsertId]);
 	}
 
 	//--------------------------------------------------------------------
