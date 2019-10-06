@@ -49,7 +49,7 @@ class Forge extends \CodeIgniter\Database\Forge
      *
      * @var string
      */
-	private $checkDatabaseExist = 'SELECT 1 FROM pg_database WHERE datname = %s';
+	protected $checkDatabaseExistStr = 'SELECT 1 FROM pg_database WHERE datname = %s';
 	
 	/**
 	 * DROP CONSTRAINT statement
@@ -81,26 +81,6 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @var string
 	 */
 	protected $_null = 'NULL';
-
-	//--------------------------------------------------------------------
-
-	/**
-     * Create database
-     *
-     * @param string $db_name
-     *
-     * @return boolean
-     * @throws \CodeIgniter\Database\Exceptions\DatabaseException
-     */
-    public function createDatabase(string $db_name): bool
-    {
-        if ($this->db->query(sprintf($this->checkDatabaseExist, $this->db->escape($db_name)))->getRow() !== null)
-        {
-            return true;
-        }
-
-        return parent::createDatabase($db_name);
-	}
 	
 	//--------------------------------------------------------------------
 

@@ -49,7 +49,14 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @var string
 	 */
-	protected $createDatabaseStr = 'CREATE DATABASE IF NOT EXISTS %s CHARACTER SET %s COLLATE %s';
+	protected $createDatabaseStr = 'CREATE DATABASE %s CHARACTER SET %s COLLATE %s';
+
+	/**
+	 * CREATE DATABASE IF statement
+	 *
+	 * @var string
+	 */
+	protected $createDatabaseIfStr = 'CREATE DATABASE IF NOT EXISTS %s CHARACTER SET %s COLLATE %s';
 
 	/**
 	 * DROP CONSTRAINT statement
