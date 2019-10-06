@@ -31,4 +31,9 @@ class ValidModel extends Model
 			'min_length' => 'Too short, man!',
 		],
 	];
+	
+	public function updateValidationRule($key, $val)
+	{
+		$this->validationRules[$key] = $val;
+	}
 }
