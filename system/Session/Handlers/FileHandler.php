@@ -187,7 +187,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 			}
 
 			// Needed by write() to detect session_regenerate_id() calls
-			if(is_null($this->sessionID))
+			if (is_null($this->sessionID))
 			{
 				$this->sessionID = $sessionID;
 			}
@@ -206,6 +206,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 
 		$session_data = '';
+		clearstatcache();    // Address https://github.com/codeigniter4/CodeIgniter4/issues/2056
 		for ($read = 0, $length = filesize($this->filePath . $sessionID); $read < $length; $read += strlen($buffer))
 		{
 			if (($buffer = fread($this->fileHandle, $length - $read)) === false)
