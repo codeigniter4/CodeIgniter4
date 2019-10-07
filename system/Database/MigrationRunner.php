@@ -1020,7 +1020,7 @@ class MigrationRunner
 		// Determine DBGroup to use
 		$group = $instance->getDBGroup() ?? config('Database')->defaultGroup;
 
-		// Skip if migration if group filteing was set
+		// Skip migration if group filtering was set
 		if ($direction === 'up' && ! is_null($this->groupFilter) && $this->groupFilter !== $group)
 		{
 			$this->groupSkip = true;
