@@ -32,6 +32,11 @@ class ForgeTest extends CIDatabaseTestCase
 
 	public function testCreateDatabaseIfNotExists()
 	{
+		if ($this->db->DBDriver === 'SQLite3')
+		{
+			$this->markTestSkipped('SQLite3 skips create database and requires file path to drop database');
+		}
+
 		$dbName = 'test_forge_database_exist';
 
 		$databaseCreateIfNotExists = $this->forge->createDatabase($dbName, true);
@@ -42,6 +47,11 @@ class ForgeTest extends CIDatabaseTestCase
 
 	public function testCreateDatabaseIfNotExistsWithDb()
 	{
+		if ($this->db->DBDriver === 'SQLite3')
+		{
+			$this->markTestSkipped('SQLite3 skips create database and requires file path to drop database');
+		}
+
 		$dbName = 'test_forge_database_exist';
 
 		$this->forge->createDatabase($dbName);
