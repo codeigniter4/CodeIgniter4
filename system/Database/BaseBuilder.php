@@ -2691,7 +2691,7 @@ class BaseBuilder
 	{
 		$table = $this->QBFrom[0];
 
-		$sql = $this->delete($table, '', $reset, true);
+		$sql = $this->delete($table, null, $reset, true);
 
 		return $this->compileFinalQuery($sql);
 	}
