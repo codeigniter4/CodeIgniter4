@@ -101,15 +101,13 @@ implement those methods that you want handled.::
 
 	<?php namespace App\Controllers;
 
-        use CodeIgniter\RESTful\ResourceController;
+	use CodeIgniter\RESTful\ResourceController;
 
 	class Photos extends ResourceController
-        {
+	{
 
-                public function __construct()
-                {
-                    $this->modelName = 'App\Models\Photos';
-                }
+		protected $modelName = 'App\Models\Photos';
+		protected $format    = 'json';
 
 		public function index()
 		{
@@ -133,7 +131,7 @@ for your resource, or process forms submitted from those views.
 
 It is not needed, since the presentation can be handled with
 a conventional controller - it is a convenience.
-Its usage is similar to the resosurce routing::
+Its usage is similar to the resource routing::
 
     $routes->presenter('photos');
 
@@ -206,15 +204,12 @@ implement those methods that you want handled.::
 
 	<?php namespace App\Controllers;
 
-        use CodeIgniter\RESTful\ResourcePresenter;
+	use CodeIgniter\RESTful\ResourcePresenter;
 
 	class Photos extends ResourcePresenter
-        {
+	{
 
-                public function __construct()
-                {
-                    $this->modelName = 'App\Models\Photos';
-                }
+		protected $modelName = 'App\Models\Photos';
 
 		public function index()
 		{
