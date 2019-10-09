@@ -57,6 +57,7 @@ use Config\Services;
  */
 class Toolbar
 {
+
 	/**
 	 * Toolbar configuration settings.
 	 *
@@ -87,7 +88,7 @@ class Toolbar
 			if (! class_exists($collector))
 			{
 				log_message('critical', 'Toolbar collector does not exists(' . $collector . ').' .
-					'please check $collectors in the Config\Toolbar.php file.');
+						'please check $collectors in the Config\Toolbar.php file.');
 				continue;
 			}
 
@@ -117,7 +118,7 @@ class Toolbar
 		$data['totalTime']       = $totalTime * 1000;
 		$data['totalMemory']     = number_format((memory_get_peak_usage()) / 1024 / 1024, 3);
 		$data['segmentDuration'] = $this->roundTo($data['totalTime'] / 7, 5);
-		$data['segmentCount']    = (int)ceil($data['totalTime'] / $data['segmentDuration']);
+		$data['segmentCount']    = (int) ceil($data['totalTime'] / $data['segmentDuration']);
 		$data['CI_VERSION']      = \CodeIgniter\CodeIgniter::CI_VERSION;
 		$data['collectors']      = [];
 
@@ -200,14 +201,13 @@ class Toolbar
 
 		if ($response->CSP !== null)
 		{
-			$response->CSP->addImageSrc( 'data:' );
+			$response->CSP->addImageSrc('data:');
 		}
 
 		return json_encode($data);
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 
 	/**
@@ -221,7 +221,7 @@ class Toolbar
 	 *
 	 * @return string
 	 */
-	protected function renderTimeline(array $collectors, $startTime, int $segmentCount, int $segmentDuration, array &$styles): string
+	protected function renderTimeline(array $collectors, float $startTime, int $segmentCount, int $segmentDuration, array &$styles): string
 	{
 		$displayTime = $segmentCount * $segmentDuration;
 		$rows        = $this->collectTimelineData($collectors);
@@ -236,15 +236,15 @@ class Toolbar
 			$output .= "<td class='debug-bar-alignRight'>" . number_format($row['duration'] * 1000, 2) . ' ms</td>';
 			$output .= "<td class='debug-bar-noverflow' colspan='{$segmentCount}'>";
 
-			$offset = ((($row['start'] - $startTime) * 1000) / $displayTime) * 100;
-			$length = (($row['duration'] * 1000) / $displayTime) * 100;
+			$offset = ((((float) $row['start'] - $startTime) * 1000) / $displayTime) * 100;
+			$length = (((float) $row['duration'] * 1000) / $displayTime) * 100;
 
 			$styles['debug-bar-timeline-' . $styleCount] = "left: {$offset}%; width: {$length}%;";
 			$output                                     .= "<span class='timer debug-bar-timeline-{$styleCount}' title='" . number_format($length, 2) . "%'></span>";
 			$output                                     .= '</td>';
 			$output                                     .= '</tr>';
 
-			$styleCount++;
+			$styleCount ++;
 		}
 
 		return $output;
@@ -349,10 +349,10 @@ class Toolbar
 			$toolbar = Services::toolbar(config(Toolbar::class));
 			$stats   = $app->getPerformanceStats();
 			$data    = $toolbar->run(
-				$stats['startTime'],
-				$stats['totalTime'],
-				$request,
-				$response
+					$stats['startTime'],
+					$stats['totalTime'],
+					$request,
+					$response
 			);
 
 			helper('filesystem');
@@ -375,24 +375,24 @@ class Toolbar
 			if ($request->isAJAX() || strpos($format, 'html') === false)
 			{
 				$response->setHeader('Debugbar-Time', $time)
-						 ->setHeader('Debugbar-Link', site_url("?debugbar_time={$time}"))
-						 ->getBody();
+						->setHeader('Debugbar-Link', site_url("?debugbar_time={$time}"))
+						->getBody();
 
 				return;
 			}
 
 			$script = PHP_EOL
-				. '<script type="text/javascript" {csp-script-nonce} id="debugbar_loader" '
-				. 'data-time="' . $time . '" '
-				. 'src="' . site_url() . '?debugbar"></script>'
-				. '<script type="text/javascript" {csp-script-nonce} id="debugbar_dynamic_script"></script>'
-				. '<style type="text/css" {csp-style-nonce} id="debugbar_dynamic_style"></style>'
-				. PHP_EOL;
+					. '<script type="text/javascript" {csp-script-nonce} id="debugbar_loader" '
+					. 'data-time="' . $time . '" '
+					. 'src="' . site_url() . '?debugbar"></script>'
+					. '<script type="text/javascript" {csp-script-nonce} id="debugbar_dynamic_script"></script>'
+					. '<style type="text/css" {csp-style-nonce} id="debugbar_dynamic_style"></style>'
+					. PHP_EOL;
 
 			if (strpos($response->getBody(), '</body>') !== false)
 			{
 				$response->setBody(
-					str_replace('</body>', $script . '</body>', $response->getBody())
+						str_replace('</body>', $script . '</body>', $response->getBody())
 				);
 
 				return;
@@ -476,8 +476,8 @@ class Toolbar
 		{
 			$history = new History();
 			$history->setFiles(
-				Services::request()->getGet('debugbar_time'),
-				$this->config->maxHistory
+					Services::request()->getGet('debugbar_time'),
+					$this->config->maxHistory
 			);
 
 			$data['collectors'][] = $history->getAsArray();
@@ -507,4 +507,5 @@ class Toolbar
 
 		return $output;
 	}
+
 }
