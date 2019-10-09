@@ -281,6 +281,33 @@
 </dd></dl>
 
 <dl class="function">
+<dt id="counted">
+<code class="descname">counted</code><span class="sig-paren">(</span><em>$count</em>, <em>$string</em><span class="sig-paren">)</span><a class="headerlink" href="#counted" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$count</strong> (<em>int</em>) &#8211; Number of items</li>
+<li><strong>$string</strong> (<em>string</em>) &#8211; Input string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A singular or plural phrase</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Changes a word and its count to a phrase. Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">counted</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;3 dogs&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
 <dt id="camelize">
 <code class="descname">camelize</code><span class="sig-paren">(</span><em>$string</em><span class="sig-paren">)</span><a class="headerlink" href="#camelize" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
@@ -528,7 +555,7 @@ Example:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Sep 30, 2019.
+      Last updated on Oct 09, 2019.
 
     </p>
   </div>

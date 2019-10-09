@@ -253,8 +253,11 @@ directory in the main project root:</p>
 </pre></div>
 </div>
 <p>Open <strong>app/Config/Autoload.php</strong> and add the <strong>Acme</strong> namespace to the <code class="docutils literal"><span class="pre">psr4</span></code> array property:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$psr4</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;Acme&#39;</span> <span class="o">=&gt;</span> <span class="nx">ROOTPATH</span><span class="o">.</span><span class="s1">&#39;acme&#39;</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$psr4</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Config&#39;</span>        <span class="o">=&gt;</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config&#39;</span><span class="p">,</span>
+    <span class="nx">APP_NAMESPACE</span>   <span class="o">=&gt;</span> <span class="nx">APPPATH</span><span class="p">,</span>                <span class="c1">// For custom namespace</span>
+    <span class="s1">&#39;App&#39;</span>           <span class="o">=&gt;</span> <span class="nx">APPPATH</span><span class="p">,</span>                <span class="c1">// To ensure filters, etc still found,</span>
+    <span class="s1">&#39;Acme&#39;</span>          <span class="o">=&gt;</span> <span class="nx">ROOTPATH</span><span class="o">.</span><span class="s1">&#39;acme&#39;</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -434,7 +437,7 @@ file follows the same directory structures as the main application directory.</p
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Sep 30, 2019.
+      Last updated on Oct 09, 2019.
 
     </p>
   </div>

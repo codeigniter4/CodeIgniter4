@@ -320,10 +320,8 @@ implement those methods that you want handled.:</p>
 <span class="k">class</span> <span class="nc">Photos</span> <span class="k">extends</span> <span class="nx">ResourceController</span>
 <span class="p">{</span>
 
-        <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">modelName</span> <span class="o">=</span> <span class="s1">&#39;App\Models\Photos&#39;</span><span class="p">;</span>
-        <span class="p">}</span>
+        <span class="k">protected</span> <span class="nv">$modelName</span> <span class="o">=</span> <span class="s1">&#39;App\Models\Photos&#39;</span><span class="p">;</span>
+        <span class="k">protected</span> <span class="nv">$format</span>    <span class="o">=</span> <span class="s1">&#39;json&#39;</span><span class="p">;</span>
 
         <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
         <span class="p">{</span>
@@ -347,7 +345,7 @@ creates routes for the controller methods that would return views
 for your resource, or process forms submitted from those views.</p>
 <p>It is not needed, since the presentation can be handled with
 a conventional controller - it is a convenience.
-Its usage is similar to the resosurce routing:</p>
+Its usage is similar to the resource routing:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">);</span>
 
 <span class="c1">// Equivalent to the following:</span>
@@ -420,10 +418,7 @@ implement those methods that you want handled.:</p>
 <span class="k">class</span> <span class="nc">Photos</span> <span class="k">extends</span> <span class="nx">ResourcePresenter</span>
 <span class="p">{</span>
 
-        <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">modelName</span> <span class="o">=</span> <span class="s1">&#39;App\Models\Photos&#39;</span><span class="p">;</span>
-        <span class="p">}</span>
+        <span class="k">protected</span> <span class="nv">$modelName</span> <span class="o">=</span> <span class="s1">&#39;App\Models\Photos&#39;</span><span class="p">;</span>
 
         <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
         <span class="p">{</span>
@@ -464,7 +459,7 @@ implement those methods that you want handled.:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Sep 30, 2019.
+      Last updated on Oct 09, 2019.
 
     </p>
   </div>

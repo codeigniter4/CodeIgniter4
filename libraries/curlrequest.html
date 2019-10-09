@@ -505,11 +505,12 @@ An example:</p>
 </div>
 <div class="section" id="debug">
 <h3><a class="toc-backref" href="#id12">debug</a><a class="headerlink" href="#debug" title="Permalink to this headline">¶</a></h3>
-<p>When <code class="docutils literal"><span class="pre">debug</span></code> is passed and set to <code class="docutils literal"><span class="pre">true</span></code>, this will enable additional debugging to echo to STDOUT during the
-script execution. This is done by passing CURLOPT_VERBOSE and echoing the output:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;debug&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
-</pre></div>
-</div>
+<p>When <code class="docutils literal"><span class="pre">debug</span></code> is passed and set to <code class="docutils literal"><span class="pre">true</span></code>, this will enable additional debugging to echo to STDERR during the
+script execution. This is done by passing CURLOPT_VERBOSE and echoing the output. So, when you&#8217;re running a built-in
+server via <code class="docutils literal"><span class="pre">spark</span> <span class="pre">serve</span></code> you will see the output in the console. Otherwise, the output will be written to
+the server&#8217;s error log.</p>
+<blockquote>
+<div>$response-&gt;request(&#8216;GET&#8217;, &#8216;<a class="reference external" href="http://example.com">http://example.com</a>&#8216;, [&#8216;debug&#8217; =&gt; true]);</div></blockquote>
 <p>You can pass a filename as the value for debug to have the output written to a file:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;debug&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/usr/local/curl_log.txt&#39;</span><span class="p">]);</span>
 </pre></div>
@@ -676,7 +677,7 @@ or 1.1, 2.0 is currently unsupported.):</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Sep 30, 2019.
+      Last updated on Oct 09, 2019.
 
     </p>
   </div>
