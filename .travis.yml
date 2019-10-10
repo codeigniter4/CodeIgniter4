@@ -4,63 +4,51 @@ matrix:
   include:
     - php: 7.2
       env:
-        - IGNORE_PLATFORMS=false
-        - COVERALLS=true
+        - EXTENDED=true
         - DB=mysqli
     - php: 7.2
       env:
-        - IGNORE_PLATFORMS=false
-        - COVERALLS=true
+        - EXTENDED=true
         - DB=postgres
     - php: 7.2
       env:
-        - IGNORE_PLATFORMS=false
-        - COVERALLS=true
+        - EXTENDED=true
         - DB=sqlite
     - php: 7.3
       env:
-        - IGNORE_PLATFORMS=false
-        - COVERALLS=true
+        - EXTENDED=true
         - DB=mysqli
     - php: 7.3
       env:
-        - IGNORE_PLATFORMS=false
-        - COVERALLS=true
+        - EXTENDED=true
         - DB=postgres
     - php: 7.3
       env:
-        - IGNORE_PLATFORMS=false
-        - COVERALLS=true
+        - EXTENDED=true
         - DB=sqlite
     - php: 7.4snapshot
       env:
-        - IGNORE_PLATFORMS=true
-        - COVERALLS=false
+        - EXTENDED=false
         - DB=mysqli
     - php: 7.4snapshot
       env:
-        - IGNORE_PLATFORMS=true
-        - COVERALLS=false
+        - EXTENDED=false
         - DB=postgres
     - php: 7.4snapshot
       env:
-        - IGNORE_PLATFORMS=true
-        - COVERALLS=false
+        - EXTENDED=false
         - DB=sqlite
     - php: nightly
       env:
-        - IGNORE_PLATFORMS=true
-        - COVERALLS=false
+        - EXTENDED=false
         - DB=postgres
     - php: nightly
       env:
-        - IGNORE_PLATFORMS=true
-        - COVERALLS=false
+        - EXTENDED=false
         - DB=mysqli
     - php: nightly
       env:
-        - IGNORE_PLATFORMS=true
-        - COVERALLS=false
+        - EXTENDED=false
         - DB=sqlite
   fast_finish: true
   allow_failures:
@@ -93,8 +81,8 @@ before_install:
 before_script:
   - echo 'extension = memcached.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo 'extension = redis.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - if [ "$IGNORE_PLATFORMS" == "true" ]; then composer install --prefer-source --ignore-platform-reqs; fi
-  - if [ "$IGNORE_PLATFORMS" == "false" ]; then composer install --prefer-source; fi
+  - if [ "$EXTENDED" == "false" ]; then composer install --prefer-source --ignore-platform-reqs; fi
+  - if [ "$EXTENDED" == "true" ]; then composer install --prefer-source; fi
 
 after_success:
-  - if [ "$COVERALLS" == "true" ]; then travis_retry php tests/bin/php-coveralls.phar -v; fi
+  - if [ "$EXTENDED" == "true" ]; then travis_retry php tests/bin/php-coveralls.phar -v; fi
