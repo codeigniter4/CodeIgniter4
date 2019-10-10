@@ -227,3 +227,26 @@ implement those methods that you want handled.::
 The routing for this would be::
 
     $routes->presenter('photos');
+
+Presenter/Controller Comparison
+=============================================================
+
+This table presents a comparison of the default routes created by `resource()`
+and `presenter()` with their corresponding Controller functions.
+
+=========== ========= ====================== ======================== ==================== ====================
+Operation   Method    Controller Route       Presenter Route          Controller Function  Presenter Function
+=========== ========= ====================== ======================== ==================== ====================
+**New**     GET       photos/new             photos/new               `new()`              `new()`
+**Create**  POST      photos                 photos                   `create()`           `create()`
+  (alias)   POST                             photos/create                                 `create()`
+**List**    GET       photos                 photos                   `index()`            `index()`
+**Show**    GET       photos/(:segment)      photos/(:segment)        `show($id = null)`   `show($id = null)`
+  (alias)   GET                              photos/show/(:segment)                        `show($id = null)`
+**Edit**    GET       photos/(:segment)/edit photos/edit/(:segment)   `edit($id = null)`   `edit($id = null)`
+**Update**  PUT/PATCH photos/(:segment)                               `update($id = null)` 
+  (websafe) POST      photos/(:segment)      photos/update/(:segment) `update($id = null)` `update($id = null)`
+**Remove**  GET                              photos/remove/(:segment)                      `remove($id = null)`
+**Delete**  DELETE    photos/(:segment)                               `delete($id = null)` 
+  (websafe) POST                             photos/delete/(:segment) `delete($id = null)` `delete($id = null)`
+=========== ========= ====================== ======================== ==================== ====================
