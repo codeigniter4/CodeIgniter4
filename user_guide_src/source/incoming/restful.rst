@@ -42,6 +42,8 @@ name::
     $routes->patch('photos/(:segment)',    'Photos::update/$1');
     $routes->delete('photos/(:segment)',   'Photos::delete/$1');
 
+.. note:: The ordering above is for clarity, whereas the actual order the routes are created in, in RouteCollection, ensures proper route resolution
+
 .. important:: The routes are matched in the order they are specified, so if you have a resource photos above a get 'photos/poll' the show action's route for the resource line will be matched before the get line. To fix this, move the get line above the resource line so that it is matched first.
 
 The second parameter accepts an array of options that can be used to modify the routes that are generated. While these
@@ -148,6 +150,8 @@ Its usage is similar to the resosurce routing::
     $routes->post('photos/update/(:segment)', 'Photos::update/$1');
     $routes->get('photos/remove/(:segment)',  'Photos::remove/$1');
     $routes->post('photos/delete/(:segment)', 'Photos::update/$1');
+
+.. note:: The ordering above is for clarity, whereas the actual order the routes are created in, in RouteCollection, ensures proper route resolution
 
 You would not have routes for `photos` for both a resource and a presenter
 controller. You need to distinguish them, for instance::
