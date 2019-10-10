@@ -529,6 +529,28 @@ and simply set ``$validationRules`` to the name of the validation rule group you
 		protected $validationRules = 'users';
 	}
 
+Retrieving Validation Rules
+---------------------------
+
+You can retrieve a model's validation rules by accessing its ``validationRules``
+property::
+
+    $rules = $model->validationRules;
+
+You can also retrieve just a subset of those rules by calling the accessor
+method directly, with options::
+
+    $rules = $model->getValidationRules($options);
+
+The ``$options`` parameter is an associative array with one element,
+whose key is either "except" or "only", and which has as its
+value an array of fieldnames of interest.::
+
+    // get the rules for all but the "username" field
+    $rules = $model->getValidationRules(['except' => ['username']]);
+    // get the rules for only the "city" and "state" fields
+    $rules = $model->getValidationRules(['only' => ['city', 'state']]);
+
 Validation Placeholders
 -----------------------
 
