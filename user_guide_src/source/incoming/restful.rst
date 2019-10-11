@@ -33,14 +33,16 @@ name::
     $routes->resource('photos');
 
     // Equivalent to the following:
-    $routes->get('photos',                 'Photos::index');
     $routes->get('photos/new',             'Photos::new');
-    $routes->get('photos/(:segment)/edit', 'Photos::edit/$1');
-    $routes->get('photos/(:segment)',      'Photos::show/$1');
     $routes->post('photos',                'Photos::create');
-    $routes->delete('photos/(:segment)',   'Photos::delete/$1');
-    $routes->patch('photos/(:segment)',    'Photos::update/$1');
+    $routes->get('photos',                 'Photos::index');
+    $routes->get('photos/(:segment)',      'Photos::show/$1');
+    $routes->get('photos/(:segment)/edit', 'Photos::edit/$1');
     $routes->put('photos/(:segment)',      'Photos::update/$1');
+    $routes->patch('photos/(:segment)',    'Photos::update/$1');
+    $routes->delete('photos/(:segment)',   'Photos::delete/$1');
+
+.. note:: The ordering above is for clarity, whereas the actual order the routes are created in, in RouteCollection, ensures proper route resolution
 
 .. important:: The routes are matched in the order they are specified, so if you have a resource photos above a get 'photos/poll' the show action's route for the resource line will be matched before the get line. To fix this, move the get line above the resource line so that it is matched first.
 
@@ -136,17 +138,19 @@ Its usage is similar to the resource routing::
     $routes->presenter('photos');
 
     // Equivalent to the following:
-    $routes->get('photos',                 'Photos::index');
-    $routes->post('photos',                'Photos::create');   // alias
-    $routes->get('photos/show/(:segment)',      'Photos::show/$1');
-    $routes->get('photos/new',             'Photos::new');
-    $routes->post('photos/create',                'Photos::create');
-    $routes->get('photos/edit/(:segment)', 'Photos::edit/$1');
-    $routes->post('photos/update/(:segment)',    'Photos::update/$1');
-    $routes->get('photos/remove/(:segment)',   'Photos::remove/$1');
-    $routes->post('photos/delete/(:segment)',      'Photos::update/$1');
-    $routes->get('photos/(:segment)',      'Photos::show/$1');  // alias
- 
+    $routes->get('photos/new',                'Photos::new');
+    $routes->post('photos/create',            'Photos::create');
+    $routes->post('photos',                   'Photos::create');   // alias
+    $routes->get('photos',                    'Photos::index');
+    $routes->get('photos/show/(:segment)',    'Photos::show/$1');
+    $routes->get('photos/(:segment)',         'Photos::show/$1');  // alias
+    $routes->get('photos/edit/(:segment)',    'Photos::edit/$1');
+    $routes->post('photos/update/(:segment)', 'Photos::update/$1');
+    $routes->get('photos/remove/(:segment)',  'Photos::remove/$1');
+    $routes->post('photos/delete/(:segment)', 'Photos::update/$1');
+
+.. note:: The ordering above is for clarity, whereas the actual order the routes are created in, in RouteCollection, ensures proper route resolution
+
 You would not have routes for `photos` for both a resource and a presenter
 controller. You need to distinguish them, for instance::
 
@@ -222,3 +226,26 @@ implement those methods that you want handled.::
 The routing for this would be::
 
     $routes->presenter('photos');
+
+Presenter/Controller Comparison
+=============================================================
+
+This table presents a comparison of the default routes created by `resource()`
+and `presenter()` with their corresponding Controller functions.
+
+=========== ========= ====================== ======================== ==================== ====================
+Operation   Method    Controller Route       Presenter Route          Controller Function  Presenter Function
+=========== ========= ====================== ======================== ==================== ====================
+**New**     GET       photos/new             photos/new               `new()`              `new()`
+**Create**  POST      photos                 photos                   `create()`           `create()`
+  (alias)   POST                             photos/create                                 `create()`
+**List**    GET       photos                 photos                   `index()`            `index()`
+**Show**    GET       photos/(:segment)      photos/(:segment)        `show($id = null)`   `show($id = null)`
+  (alias)   GET                              photos/show/(:segment)                        `show($id = null)`
+**Edit**    GET       photos/(:segment)/edit photos/edit/(:segment)   `edit($id = null)`   `edit($id = null)`
+**Update**  PUT/PATCH photos/(:segment)                               `update($id = null)` 
+  (websafe) POST      photos/(:segment)      photos/update/(:segment) `update($id = null)` `update($id = null)`
+**Remove**  GET                              photos/remove/(:segment)                      `remove($id = null)`
+**Delete**  DELETE    photos/(:segment)                               `delete($id = null)` 
+  (websafe) POST                             photos/delete/(:segment) `delete($id = null)` `delete($id = null)`
+=========== ========= ====================== ======================== ==================== ====================
