@@ -582,7 +582,7 @@ if (! function_exists('url_title'))
 
 		if ($lowercase === true)
 		{
-			$str = strtolower($str);
+			$str = mb_strtolower($str);
 		}
 
 		return trim(trim($str, $separator));
