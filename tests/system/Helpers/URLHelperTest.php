@@ -1061,8 +1061,9 @@ class URLHelperTest extends \CIUnitTestCase
 	public function testUrlTitle()
 	{
 		$words = [
-			'foo bar /'     => 'foo-bar',
-			'\  testing 12' => 'testing-12',
+			'foo bar /'       => 'foo-bar',
+			'\  testing 12'   => 'testing-12',
+			'Éléphant de PHP' => 'éléphant-de-php',
 		];
 
 		foreach ($words as $in => $out)
@@ -1076,6 +1077,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$words = [
 			'_foo bar_'                 => 'foo_bar',
 			'_What\'s wrong with CSS?_' => 'Whats_wrong_with_CSS',
+			'Éléphant de PHP'           => 'Éléphant_de_PHP',
 		];
 
 		foreach ($words as $in => $out)
