@@ -248,7 +248,7 @@ class View implements RendererInterface
 
 		$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 
-		if (CI_DEBUG && (! isset($options['debug']) || $options['debug'] === true))
+		if ($this->debug && (! isset($options['debug']) || $options['debug'] === true))
 		{
 			$toolbarCollectors = config(\Config\Toolbar::class)->collectors;
 
