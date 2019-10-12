@@ -223,6 +223,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#resourcepresenter" id="id13">ResourcePresenter</a></li>
+<li><a class="reference internal" href="#presenter-controller-comparison" id="id14">Presenter/Controller Comparison</a></li>
 </ul>
 </div>
 <p>Representational State Transfer (REST) is an architectural style for
@@ -247,15 +248,19 @@ name:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">);</span>
 
 <span class="c1">// Equivalent to the following:</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span>                 <span class="s1">&#39;Photos::index&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/new&#39;</span><span class="p">,</span>             <span class="s1">&#39;Photos::new&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)/edit&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::edit/$1&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span>      <span class="s1">&#39;Photos::show/$1&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span>                <span class="s1">&#39;Photos::create&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span>   <span class="s1">&#39;Photos::delete/$1&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">patch</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span>    <span class="s1">&#39;Photos::update/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span>                 <span class="s1">&#39;Photos::index&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span>      <span class="s1">&#39;Photos::show/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)/edit&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::edit/$1&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">put</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span>      <span class="s1">&#39;Photos::update/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">patch</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span>    <span class="s1">&#39;Photos::update/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span>   <span class="s1">&#39;Photos::delete/$1&#39;</span><span class="p">);</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The ordering above is for clarity, whereas the actual order the routes are created in, in RouteCollection, ensures proper route resolution</p>
 </div>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
@@ -349,17 +354,21 @@ Its usage is similar to the resource routing:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">);</span>
 
 <span class="c1">// Equivalent to the following:</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span>                 <span class="s1">&#39;Photos::index&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span>                <span class="s1">&#39;Photos::create&#39;</span><span class="p">);</span>   <span class="c1">// alias</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/show/(:segment)&#39;</span><span class="p">,</span>      <span class="s1">&#39;Photos::show/$1&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/new&#39;</span><span class="p">,</span>             <span class="s1">&#39;Photos::new&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos/create&#39;</span><span class="p">,</span>                <span class="s1">&#39;Photos::create&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/edit/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::edit/$1&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos/update/(:segment)&#39;</span><span class="p">,</span>    <span class="s1">&#39;Photos::update/$1&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/remove/(:segment)&#39;</span><span class="p">,</span>   <span class="s1">&#39;Photos::remove/$1&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos/delete/(:segment)&#39;</span><span class="p">,</span>      <span class="s1">&#39;Photos::update/$1&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span>      <span class="s1">&#39;Photos::show/$1&#39;</span><span class="p">);</span>  <span class="c1">// alias</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/new&#39;</span><span class="p">,</span>                <span class="s1">&#39;Photos::new&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos/create&#39;</span><span class="p">,</span>            <span class="s1">&#39;Photos::create&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span>                   <span class="s1">&#39;Photos::create&#39;</span><span class="p">);</span>   <span class="c1">// alias</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span>                    <span class="s1">&#39;Photos::index&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/show/(:segment)&#39;</span><span class="p">,</span>    <span class="s1">&#39;Photos::show/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span>         <span class="s1">&#39;Photos::show/$1&#39;</span><span class="p">);</span>  <span class="c1">// alias</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/edit/(:segment)&#39;</span><span class="p">,</span>    <span class="s1">&#39;Photos::edit/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos/update/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::update/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/remove/(:segment)&#39;</span><span class="p">,</span>  <span class="s1">&#39;Photos::remove/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos/delete/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::update/$1&#39;</span><span class="p">);</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The ordering above is for clarity, whereas the actual order the routes are created in, in RouteCollection, ensures proper route resolution</p>
 </div>
 <p>You would not have routes for <cite>photos</cite> for both a resource and a presenter
 controller. You need to distinguish them, for instance:</p>
@@ -434,6 +443,116 @@ implement those methods that you want handled.:</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="presenter-controller-comparison">
+<h2><a class="toc-backref" href="#id14">Presenter/Controller Comparison</a><a class="headerlink" href="#presenter-controller-comparison" title="Permalink to this headline">¶</a></h2>
+<p>This table presents a comparison of the default routes created by <cite>resource()</cite>
+and <cite>presenter()</cite> with their corresponding Controller functions.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="8%" />
+<col width="21%" />
+<col width="23%" />
+<col width="19%" />
+<col width="19%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operation</th>
+<th class="head">Method</th>
+<th class="head">Controller Route</th>
+<th class="head">Presenter Route</th>
+<th class="head">Controller Function</th>
+<th class="head">Presenter Function</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>New</strong></td>
+<td>GET</td>
+<td>photos/new</td>
+<td>photos/new</td>
+<td><cite>new()</cite></td>
+<td><cite>new()</cite></td>
+</tr>
+<tr class="row-odd"><td><strong>Create</strong></td>
+<td>POST</td>
+<td>photos</td>
+<td>photos</td>
+<td><cite>create()</cite></td>
+<td><cite>create()</cite></td>
+</tr>
+<tr class="row-even"><td>(alias)</td>
+<td>POST</td>
+<td>&nbsp;</td>
+<td>photos/create</td>
+<td>&nbsp;</td>
+<td><cite>create()</cite></td>
+</tr>
+<tr class="row-odd"><td><strong>List</strong></td>
+<td>GET</td>
+<td>photos</td>
+<td>photos</td>
+<td><cite>index()</cite></td>
+<td><cite>index()</cite></td>
+</tr>
+<tr class="row-even"><td><strong>Show</strong></td>
+<td>GET</td>
+<td>photos/(:segment)</td>
+<td>photos/(:segment)</td>
+<td><cite>show($id = null)</cite></td>
+<td><cite>show($id = null)</cite></td>
+</tr>
+<tr class="row-odd"><td>(alias)</td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>photos/show/(:segment)</td>
+<td>&nbsp;</td>
+<td><cite>show($id = null)</cite></td>
+</tr>
+<tr class="row-even"><td><strong>Edit</strong></td>
+<td>GET</td>
+<td>photos/(:segment)/edit</td>
+<td>photos/edit/(:segment)</td>
+<td><cite>edit($id = null)</cite></td>
+<td><cite>edit($id = null)</cite></td>
+</tr>
+<tr class="row-odd"><td><strong>Update</strong></td>
+<td>PUT/PATCH</td>
+<td>photos/(:segment)</td>
+<td>&nbsp;</td>
+<td><cite>update($id = null)</cite></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>(websafe)</td>
+<td>POST</td>
+<td>photos/(:segment)</td>
+<td>photos/update/(:segment)</td>
+<td><cite>update($id = null)</cite></td>
+<td><cite>update($id = null)</cite></td>
+</tr>
+<tr class="row-odd"><td><strong>Remove</strong></td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>photos/remove/(:segment)</td>
+<td>&nbsp;</td>
+<td><cite>remove($id = null)</cite></td>
+</tr>
+<tr class="row-even"><td><strong>Delete</strong></td>
+<td>DELETE</td>
+<td>photos/(:segment)</td>
+<td>&nbsp;</td>
+<td><cite>delete($id = null)</cite></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>(websafe)</td>
+<td>POST</td>
+<td>&nbsp;</td>
+<td>photos/delete/(:segment)</td>
+<td><cite>delete($id = null)</cite></td>
+<td><cite>delete($id = null)</cite></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 
 
@@ -459,7 +578,7 @@ implement those methods that you want handled.:</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 09, 2019.
+      Last updated on Oct 12, 2019.
 
     </p>
   </div>

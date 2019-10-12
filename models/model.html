@@ -214,17 +214,18 @@
 <li><a class="reference internal" href="#saving-data" id="id8">Saving Data</a></li>
 <li><a class="reference internal" href="#deleting-data" id="id9">Deleting Data</a></li>
 <li><a class="reference internal" href="#validating-data" id="id10">Validating Data</a></li>
-<li><a class="reference internal" href="#validation-placeholders" id="id11">Validation Placeholders</a></li>
-<li><a class="reference internal" href="#protecting-fields" id="id12">Protecting Fields</a></li>
-<li><a class="reference internal" href="#working-with-query-builder" id="id13">Working With Query Builder</a></li>
-<li><a class="reference internal" href="#runtime-return-type-changes" id="id14">Runtime Return Type Changes</a></li>
-<li><a class="reference internal" href="#processing-large-amounts-of-data" id="id15">Processing Large Amounts of Data</a></li>
+<li><a class="reference internal" href="#retrieving-validation-rules" id="id11">Retrieving Validation Rules</a></li>
+<li><a class="reference internal" href="#validation-placeholders" id="id12">Validation Placeholders</a></li>
+<li><a class="reference internal" href="#protecting-fields" id="id13">Protecting Fields</a></li>
+<li><a class="reference internal" href="#working-with-query-builder" id="id14">Working With Query Builder</a></li>
+<li><a class="reference internal" href="#runtime-return-type-changes" id="id15">Runtime Return Type Changes</a></li>
+<li><a class="reference internal" href="#processing-large-amounts-of-data" id="id16">Processing Large Amounts of Data</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#model-events" id="id16">Model Events</a><ul>
-<li><a class="reference internal" href="#defining-callbacks" id="id17">Defining Callbacks</a></li>
-<li><a class="reference internal" href="#specifying-callbacks-to-run" id="id18">Specifying Callbacks To Run</a></li>
-<li><a class="reference internal" href="#event-parameters" id="id19">Event Parameters</a></li>
+<li><a class="reference internal" href="#model-events" id="id17">Model Events</a><ul>
+<li><a class="reference internal" href="#defining-callbacks" id="id18">Defining Callbacks</a></li>
+<li><a class="reference internal" href="#specifying-callbacks-to-run" id="id19">Specifying Callbacks To Run</a></li>
+<li><a class="reference internal" href="#event-parameters" id="id20">Event Parameters</a></li>
 </ul>
 </li>
 </ul>
@@ -706,8 +707,30 @@ and simply set <code class="docutils literal"><span class="pre">$validationRules
 </pre></div>
 </div>
 </div>
+<div class="section" id="retrieving-validation-rules">
+<h3><a class="toc-backref" href="#id11">Retrieving Validation Rules</a><a class="headerlink" href="#retrieving-validation-rules" title="Permalink to this headline">¶</a></h3>
+<p>You can retrieve a model&#8217;s validation rules by accessing its <code class="docutils literal"><span class="pre">validationRules</span></code>
+property:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">validationRules</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>You can also retrieve just a subset of those rules by calling the accessor
+method directly, with options:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getValidationRules</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">$options</span></code> parameter is an associative array with one element,
+whose key is either &#8220;except&#8221; or &#8220;only&#8221;, and which has as its
+value an array of fieldnames of interest.:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// get the rules for all but the &quot;username&quot; field</span>
+<span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getValidationRules</span><span class="p">([</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]]);</span>
+<span class="c1">// get the rules for only the &quot;city&quot; and &quot;state&quot; fields</span>
+<span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getValidationRules</span><span class="p">([</span><span class="s1">&#39;only&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;city&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">]]);</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="validation-placeholders">
-<h3><a class="toc-backref" href="#id11">Validation Placeholders</a><a class="headerlink" href="#validation-placeholders" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12">Validation Placeholders</a><a class="headerlink" href="#validation-placeholders" title="Permalink to this headline">¶</a></h3>
 <p>The model provides a simple method to replace parts of your rules based on data that&#8217;s being passed into it. This
 sounds fairly obscure but can be especially handy with the <code class="docutils literal"><span class="pre">is_unique</span></code> validation rule. Placeholders are simply
 the name of the field (or array key) that was passed in as $data surrounded by curly brackets. It will be
@@ -736,7 +759,7 @@ that has an id matching the placeholder&#8217;s value. Assuming that the form PO
 keys passed in don&#8217;t conflict with your form data.</p>
 </div>
 <div class="section" id="protecting-fields">
-<h3><a class="toc-backref" href="#id12">Protecting Fields</a><a class="headerlink" href="#protecting-fields" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id13">Protecting Fields</a><a class="headerlink" href="#protecting-fields" title="Permalink to this headline">¶</a></h3>
 <p>To help protect against Mass Assignment Attacks, the Model class <strong>requires</strong> that you list all of the field names
 that can be changed during inserts and updates in the <code class="docutils literal"><span class="pre">$allowedFields</span></code> class property. Any data provided
 in addition to these will be removed prior to hitting the database. This is great for ensuring that timestamps,
@@ -753,7 +776,7 @@ testing, migrations, or seeds. In these cases, you can turn the protection on or
 </div>
 </div>
 <div class="section" id="working-with-query-builder">
-<h3><a class="toc-backref" href="#id13">Working With Query Builder</a><a class="headerlink" href="#working-with-query-builder" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14">Working With Query Builder</a><a class="headerlink" href="#working-with-query-builder" title="Permalink to this headline">¶</a></h3>
 <p>You can get access to a shared instance of the Query Builder for that model&#8217;s database connection any time you
 need it:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">();</span>
@@ -776,7 +799,7 @@ very elegant use:</p>
 </div>
 </div>
 <div class="section" id="runtime-return-type-changes">
-<h3><a class="toc-backref" href="#id14">Runtime Return Type Changes</a><a class="headerlink" href="#runtime-return-type-changes" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id15">Runtime Return Type Changes</a><a class="headerlink" href="#runtime-return-type-changes" title="Permalink to this headline">¶</a></h3>
 <p>You can specify the format that data should be returned as when using the find*() methods as the class property,
 $returnType. There may be times that you would like the data back in a different format, though. The Model
 provides methods that allow you to do just that.</p>
@@ -801,7 +824,7 @@ it is reset to its default value.</p>
 </div>
 </div>
 <div class="section" id="processing-large-amounts-of-data">
-<h3><a class="toc-backref" href="#id15">Processing Large Amounts of Data</a><a class="headerlink" href="#processing-large-amounts-of-data" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16">Processing Large Amounts of Data</a><a class="headerlink" href="#processing-large-amounts-of-data" title="Permalink to this headline">¶</a></h3>
 <p>Sometimes, you need to process large amounts of data and would run the risk of running out of memory.
 To make this simpler, you may use the chunk() method to get smaller chunks of data that you can then
 do your work on. The first parameter is the number of rows to retrieve in a single chunk. The second
@@ -817,13 +840,13 @@ parameter is a Closure that will be called for each row of data.</p>
 </div>
 </div>
 <div class="section" id="model-events">
-<h2><a class="toc-backref" href="#id16">Model Events</a><a class="headerlink" href="#model-events" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17">Model Events</a><a class="headerlink" href="#model-events" title="Permalink to this headline">¶</a></h2>
 <p>There are several points within the model&#8217;s execution that you can specify multiple callback methods to run.
 These methods can be used to normalize data, hash passwords, save related entities, and much more. The following
 points in the model&#8217;s execution can be affected, each through a class property: <strong>$beforeInsert</strong>, <strong>$afterInsert</strong>,
 <strong>$beforeUpdate</strong>, <strong>afterUpdate</strong>, <strong>afterFind</strong>, and <strong>afterDelete</strong>.</p>
 <div class="section" id="defining-callbacks">
-<h3><a class="toc-backref" href="#id17">Defining Callbacks</a><a class="headerlink" href="#defining-callbacks" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id18">Defining Callbacks</a><a class="headerlink" href="#defining-callbacks" title="Permalink to this headline">¶</a></h3>
 <p>You specify the callbacks by first creating a new class method in your model to use. This class will always
 receive a $data array as its only parameter. The exact contents of the $data array will vary between events, but
 will always contain a key named <strong>data</strong> that contains the primary data passed to the original method. In the case
@@ -843,7 +866,7 @@ must return the original $data array so other callbacks have the full informatio
 </div>
 </div>
 <div class="section" id="specifying-callbacks-to-run">
-<h3><a class="toc-backref" href="#id18">Specifying Callbacks To Run</a><a class="headerlink" href="#specifying-callbacks-to-run" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id19">Specifying Callbacks To Run</a><a class="headerlink" href="#specifying-callbacks-to-run" title="Permalink to this headline">¶</a></h3>
 <p>You specify when to run the callbacks by adding the method name to the appropriate class property (beforeInsert, afterUpdate,
 etc). Multiple callbacks can be added to a single event and they will be processed one after the other. You can
 use the same callback in multiple events:</p>
@@ -853,7 +876,7 @@ use the same callback in multiple events:</p>
 </div>
 </div>
 <div class="section" id="event-parameters">
-<h3><a class="toc-backref" href="#id19">Event Parameters</a><a class="headerlink" href="#event-parameters" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id20">Event Parameters</a><a class="headerlink" href="#event-parameters" title="Permalink to this headline">¶</a></h3>
 <p>Since the exact data passed to each callback varies a bit, here are the details on what is in the $data parameter
 passed to each event:</p>
 <table border="1" class="docutils">
@@ -960,7 +983,7 @@ insert method, it is first converted to an array.</td>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 09, 2019.
+      Last updated on Oct 12, 2019.
 
     </p>
   </div>

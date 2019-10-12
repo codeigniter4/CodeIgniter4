@@ -354,12 +354,12 @@ is allowed, as are back-references.</p>
 <p class="first admonition-title">Important</p>
 <p>Note: If you use back-references you must use the dollar syntax rather than the double backslash syntax.
 A typical RegEx route might look something like this:</p>
-<div class="last highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;products/([a-z]+)/(\d+)&#39;</span><span class="p">,</span> <span class="s1">&#39;$1::id_$2&#39;</span><span class="p">);</span>
+<div class="last highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;products/([a-z]+)/(\d+)&#39;</span><span class="p">,</span> <span class="s1">&#39;Products::show/$1/id_$2&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
-<p>In the above example, a URI similar to products/shirts/123 would instead call the “Shirts” controller class
-and the “id_123” method.</p>
+<p>In the above example, a URI similar to products/shirts/123 would instead call the <code class="docutils literal"><span class="pre">show</span></code> method
+of the <code class="docutils literal"><span class="pre">Products</span></code> controller class, with the original first and second segment passwed as arguments to it.</p>
 <p>With regular expressions, you can also catch a segment containing a forward slash (‘/’), which would usually
 represent the delimiter between multiple segments.</p>
 <p>For example, if a user accesses a password protected area of your web application and you wish to be able to
@@ -736,7 +736,7 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 09, 2019.
+      Last updated on Oct 12, 2019.
 
     </p>
   </div>
