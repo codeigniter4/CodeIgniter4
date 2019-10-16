@@ -8,8 +8,5 @@ namespace CodeIgniter\Router\Exceptions;
 
 class RedirectException extends \Exception
 {
-	public static function forRedirectIntercept(string $route)
-	{
-		return new static($route);
-	}
+
 }
