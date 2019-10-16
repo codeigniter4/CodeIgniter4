@@ -687,11 +687,6 @@ class Model
 			}
 		}
 
-		// Save the original data so it can be passed to
-		// any Model Event callbacks and not stripped
-		// by doProtectFields
-		$originalData = $data;
-
 		// Must be called first so we don't
 		// strip out created_at values.
 		$data = $this->doProtectFields($data);
@@ -722,7 +717,8 @@ class Model
 			$this->insertID = $this->db->insertID();
 		}
 
-		$this->trigger('afterInsert', ['data' => $originalData, 'result' => $result]);
+		// Trigger afterInsert events with the inserted data and new ID
+		$this->trigger('afterInsert', ['id' => $this->insertID, 'data' => $data, 'result' => $result]);
 
 		// If insertion failed, get out of here
 		if (! $result)
@@ -821,11 +817,6 @@ class Model
 			}
 		}
 
-		// Save the original data so it can be passed to
-		// any Model Event callbacks and not stripped
-		// by doProtectFields
-		$originalData = $data;
-
 		// Must be called first so we don't
 		// strip out updated_at values.
 		$data = $this->doProtectFields($data);
@@ -849,7 +840,7 @@ class Model
 				->set($data['data'], '', $escape)
 				->update();
 
-		$this->trigger('afterUpdate', ['id' => $id, 'data' => $originalData, 'result' => $result]);
+		$this->trigger('afterUpdate', ['id' => $id, 'data' => $data, 'result' => $result]);
 
 		return $result;
 	}
