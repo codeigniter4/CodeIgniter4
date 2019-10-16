@@ -8,5 +8,5 @@ namespace CodeIgniter\Router\Exceptions;
 
 class RedirectException extends \Exception
 {
-
+	protected $code = 302;
 }
