@@ -252,6 +252,8 @@ class CodeIgniter
 			// If the route is a 'redirect' route, it throws
 			// the exception with the $to as the message
 			$this->response->redirect($e->getMessage(), 'auto', $e->getCode());
+			$this->sendResponse();
+
 			$this->callExit(EXIT_SUCCESS);
 		}
 		catch (PageNotFoundException $e)
