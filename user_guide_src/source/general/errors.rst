@@ -123,3 +123,16 @@ or when it is temporarily lost::
 	throw new \CodeIgniter\Database\Exceptions\DatabaseException();
 
 This provides an HTTP status code of 500 and an exit code of 8.
+
+RedirectException
+-----------------
+
+This exception is a special case allowing for overriding of all other response routing and
+forcing a redirect to a specific route or URL.
+
+	throw new \CodeIgniter\Router\Exceptions\RedirectException($route);
+
+``$route`` may be a named route, relative URI, or a complete URL. You can also supply a
+redirect code to use instead of the default (``302``, "temporary redirect"):
+
+	throw new \CodeIgniter\Router\Exceptions\RedirectException($route, 301);

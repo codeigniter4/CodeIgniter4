@@ -38,7 +38,6 @@
 namespace CodeIgniter;
 
 use Closure;
-use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
@@ -50,6 +49,7 @@ use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Exception;
@@ -209,7 +209,7 @@ class CodeIgniter
 	 * @param boolean                                      $returnResponse
 	 *
 	 * @return boolean|\CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
-	 * @throws \CodeIgniter\Filters\Exceptions\FilterException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 * @throws \Exception
 	 */
 	public function run(RouteCollectionInterface $routes = null, bool $returnResponse = false)
@@ -244,7 +244,7 @@ class CodeIgniter
 		{
 			return $this->handleRequest($routes, $cacheConfig, $returnResponse);
 		}
-		catch (FilterException $e)
+		catch (RedirectException $e)
 		{
 			$logger = Services::logger();
 			$logger->info('REDIRECTED ROUTE at ' . $e->getMessage());
@@ -252,6 +252,8 @@ class CodeIgniter
 			// If the route is a 'redirect' route, it throws
 			// the exception with the $to as the message
 			$this->response->redirect($e->getMessage(), 'auto', $e->getCode());
+			$this->sendResponse();
+
 			$this->callExit(EXIT_SUCCESS);
 		}
 		catch (PageNotFoundException $e)

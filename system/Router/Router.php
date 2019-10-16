@@ -484,7 +484,7 @@ class Router implements RouterInterface
 				// Is this route supposed to redirect to another?
 				if ($this->collection->isRedirect($key))
 				{
-					throw RedirectException::forUnableToRedirect($val, $this->collection->getRedirectCode($key));
+					throw new RedirectException($val, $this->collection->getRedirectCode($key));
 				}
 
 				$this->setRequest(explode('/', $val));
