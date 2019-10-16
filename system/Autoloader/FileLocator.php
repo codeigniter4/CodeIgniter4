@@ -292,7 +292,7 @@ class FileLocator
 			{
 				$namespaces[] = [
 					'prefix' => $prefix,
-					'path'   => rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
+					'path'   => rtrim($path, '\\/') . DIRECTORY_SEPARATOR,
 				];
 			}
 		}
