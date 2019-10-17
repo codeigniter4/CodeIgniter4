@@ -305,7 +305,7 @@ class Session implements SessionInterface
 		);
 
 		//if (empty($this->sessionExpiration))
-		if (!isset($this->sessionExpiration))
+		if (! isset($this->sessionExpiration))
 		{
 			$this->sessionExpiration = (int) ini_get('session.gc_maxlifetime');
 		}
@@ -496,7 +496,7 @@ class Session implements SessionInterface
 	 */
 	public function get(string $key = null)
 	{
-		if (! empty($key) && $value = dot_array_search($key, $_SESSION))
+		if (! empty($key) && ! is_null($value = dot_array_search($key, $_SESSION)))
 		{
 			return $value;
 		}
@@ -634,7 +634,7 @@ class Session implements SessionInterface
 	 *
 	 * @param string $key Identifier of the session property to remove.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function __isset(string $key): bool
 	{
