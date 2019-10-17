@@ -348,7 +348,7 @@ change the name, you can add a "name" key into the field defining array.
 Class Reference
 ***************
 
-.. php:class:: \CodeIgniter\Database\Forge
+.. php:class:: CodeIgniter\\Database\\Forge
 
 	.. php:method:: addColumn($table[, $field = []])
 

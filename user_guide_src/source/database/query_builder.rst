@@ -1218,7 +1218,7 @@ run the query::
 Class Reference
 ***************
 
-.. php:class:: \CodeIgniter\Database\BaseBuilder
+.. php:class:: CodeIgniter\\Database\\BaseBuilder
 
 	.. php:method:: resetQuery()
 

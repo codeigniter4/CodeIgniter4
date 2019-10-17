@@ -270,7 +270,7 @@ Preference                 Default                Options                    Des
 Class Reference
 ***************
 
-.. php:class:: CodeIgniter\Database\MigrationRunner
+.. php:class:: CodeIgniter\\Database\\MigrationRunner
 
 	.. php:method:: findMigrations()
 
