@@ -30,6 +30,33 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->assertTrue($database_created);
 	}
 
+	public function testCreateDatabaseIfNotExists()
+	{
+		$dbName = 'test_forge_database_exist';
+
+		$databaseCreateIfNotExists = $this->forge->createDatabase($dbName, true);
+		if ($this->db->DBDriver !== 'SQLite3')
+		{
+			$this->forge->dropDatabase($dbName);
+		}
+
+		$this->assertTrue($databaseCreateIfNotExists);
+	}
+
+	public function testCreateDatabaseIfNotExistsWithDb()
+	{
+		$dbName = 'test_forge_database_exist';
+
+		$this->forge->createDatabase($dbName);
+		$databaseExists = $this->forge->createDatabase($dbName, true);
+		if ($this->db->DBDriver !== 'SQLite3')
+		{
+			$this->forge->dropDatabase($dbName);
+		}
+
+		$this->assertTrue($databaseExists);
+	}
+
 	public function testDropDatabase()
 	{
 		if ($this->db->DBDriver === 'SQLite3')

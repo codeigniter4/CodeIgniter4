@@ -84,11 +84,12 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Create database
 	 *
-	 * @param string $db_name
+	 * @param string $dbName
+	 * @param boolean $ifNotExists Whether to add IF NOT EXISTS condition
 	 *
 	 * @return boolean
 	 */
-	public function createDatabase(string $db_name): bool
+	public function createDatabase(string $dbName, bool $ifNotExists = false): bool
 	{
 		// In SQLite, a database is created when you connect to the database.
 		// We'll return TRUE so that an error isn't generated.
@@ -100,15 +101,15 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Drop database
 	 *
-	 * @param string $db_name
+	 * @param string $dbName
 	 *
 	 * @return boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function dropDatabase(string $db_name): bool
+	public function dropDatabase(string $dbName): bool
 	{
 		// In SQLite, a database is dropped when we delete a file
-		if (! is_file($db_name))
+		if (! is_file($dbName))
 		{
 			if ($this->db->DBDebug)
 			{
@@ -120,7 +121,7 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		// We need to close the pseudo-connection first
 		$this->db->close();
-		if (! @unlink($db_name))
+		if (! @unlink($dbName))
 		{
 			if ($this->db->DBDebug)
 			{
@@ -132,7 +133,7 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		if (! empty($this->db->dataCache['db_names']))
 		{
-			$key = array_search(strtolower($db_name), array_map('strtolower', $this->db->dataCache['db_names']), true);
+			$key = array_search(strtolower($dbName), array_map('strtolower', $this->db->dataCache['db_names']), true);
 			if ($key !== false)
 			{
 				unset($this->db->dataCache['db_names'][$key]);
