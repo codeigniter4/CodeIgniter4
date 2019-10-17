@@ -400,7 +400,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function store(string $folderName = null, string $fileName = null): string
 	{
-		$folderName = $folderName ?? date('Ymd') . DIRECTORY_SEPARATOR;
+		$folderName = rtrim($folderName ?? date('Ymd'), '/') . '/' ;
 		$fileName   = $fileName ?? $this->getRandomName();
 
 		// Move the uploaded file to a new location.
