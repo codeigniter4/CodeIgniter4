@@ -1,7 +1,7 @@
 # Running System Tests
 
 This is the quick-start to CodeIgniter testing. Its intent is to describe what 
-it takes to get your system setup and ready to run the system tests. 
+it takes to set up your system and get it ready to run unit tests. 
 It is not intended to be a full description of the test features that you can 
 use to test your application. Those details can be found in the documentation. 
 
@@ -21,7 +21,7 @@ If running under OS X or Linux, you can create a symbolic link to make running t
 You also need to install [XDebug](https://xdebug.org/index.php) in order
 for unit tests to successfully complete.
 
-## Setup
+## Setting Up
 
 A number of the tests use a running database. 
 In order to set up the database edit the details for the `tests` group in 
@@ -31,7 +31,7 @@ that is currently running on your machine. More details on a test database setup
 
 If you want to run the tests without using live database you can 
 exclude @DatabaseLive group. Or make a copy of **phpunit.dist.xml** - 
-call it **phpunit.xml** - and uncomment the line within the testsuite that excludes 
+call it **phpunit.xml** - and uncomment the line within the <testsuite> that excludes 
 the **tests/system/Database/Live** directory. This will make the tests run quite a bit faster.
 
 ## Running the tests
