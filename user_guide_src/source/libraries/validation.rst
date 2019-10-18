@@ -226,7 +226,7 @@ Like, ``setRule()``, but accepts an array of field names and their rules::
         'password' => 'required|min_length[10]'
     ]);
 
-To give a labeled error message you can setup as::
+To give a labeled error message you can set up as::
 
     $validation->setRules([
         'username' => ['label' => 'Username', 'rules' => 'required'],

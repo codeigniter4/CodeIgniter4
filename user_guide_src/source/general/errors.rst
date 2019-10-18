@@ -4,7 +4,7 @@ Error Handling
 
 CodeIgniter builds error reporting into your system through Exceptions, both the `SPL collection <http://php.net/manual/en/spl.exceptions.php>`_, as
 well as a few custom exceptions that are provided by the framework. Depending on your environment's setup, the
-default action when an error or exception is thrown is to display a detailed error report, unless the application
+the default action when an error or exception is thrown is to display a detailed error report unless the application
 is running under the ``production`` environment. In this case, a more generic message is displayed to
 keep the best user experience for your users.
 
@@ -82,7 +82,7 @@ To ignore logging on other status codes, you can set the status code to ignore i
     }
 
 .. note:: It is possible that logging still will not happen for exceptions if your current Log settings
-    are not setup to log **critical** errors, which all exceptions are logged as.
+    are not set up to log **critical** errors, which all exceptions are logged as.
 
 Custom Exceptions
 =================

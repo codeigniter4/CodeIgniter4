@@ -608,7 +608,7 @@ need it::
 
 	$builder = $userModel->builder();
 
-This builder is already setup with the model's $table.
+This builder is already set up with the model's $table.
 
 You can also use Query Builder methods and the Model's CRUD methods in the same chained call, allowing for
 very elegant use::

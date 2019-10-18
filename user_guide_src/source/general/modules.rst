@@ -39,10 +39,9 @@ Open **app/Config/Autoload.php** and add the **Acme** namespace to the ``psr4`` 
         'Acme'          => ROOTPATH.'acme'
     ];
 
-Now that this is setup we can access any file within the **acme** folder through the ``Acme`` namespace. This alone
-takes care of 80% of what is needed for modules to work, so you should be sure to familiarize yourself within namespaces
-and become comfortable with their use. A number of the file types will be scanned for automatically through all defined
-namespaces here, making this crucial to working with modules at all.
+Now that this is set up, we can access any file within the **acme** folder through the ``Acme`` namespace. This alone
+takes care of 80% of what is needed for modules to work, so you should be sure to familiarize yourself with namespaces
+and become comfortable with their use. Several file types will be scanned for automatically through all defined namespaces - a crucial ingredient for working with modules.
 
 A common directory structure within a module will mimic the main application folder::
 

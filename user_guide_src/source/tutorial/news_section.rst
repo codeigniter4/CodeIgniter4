@@ -9,7 +9,7 @@ and start using a database.
 Create a database to work with
 -------------------------------------------------------
 
-The CodeIgniter installation assumes that you have setup an appropriate
+The CodeIgniter installation assumes that you have set up an appropriate
 database, as outlined in the :doc:`requirements </intro/requirements>`.
 In this tutorial, we provide SQL code for a MySQL database, and 
 we also assume that you have a suitable client for issuing database

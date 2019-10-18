@@ -12,7 +12,7 @@ This section addresses how to use each technique, and explains some of the pros 
 If you’re new to CodeIgniter, please read the :doc:`Getting Started </intro/index>`
 section of the User Guide to begin learning how to build dynamic PHP applications. Enjoy!
 
-Initial Configuration & Setup
+Initial Configuration & Set Up
 =================================================
 
 #. Open the **app/Config/App.php** file with a text editor and
@@ -102,7 +102,7 @@ Virtual Hosting
 -------------------------------------------------------
 
 We recommend using “virtual hosting” to run your apps. 
-You can setup different aliases for each of the apps you work on,
+You can set up different aliases for each of the apps you work on,
 
 Make sure that the virtual hosting module is enabled (uncommented) in the main 
 configuration file, eg. ``apache2/conf/httpd.conf``::
@@ -147,22 +147,22 @@ isolated environment for testing.
 The codebase comes with a ``VagrantFile.dist``, that can be copied to ``VagrantFile``
 and tailored for your system, for instance enabling access to specific database or caching engines.
 
-Setup
+Setting Up
 -------------------------------------------------------
 
 It assumes that you have installed `VirtualBox <https://www.virtualbox.org/wiki/Downloads>`_ and 
 `Vagrant <https://www.vagrantup.com/downloads.html>`_ 
 for your platform.
 
-The Vagrant configuration file assumes you have the `ubuntu/bionic64 Vagrant box 
-<https://app.vagrantup.com/ubuntu/boxes/bionic64>`_ setup on your system::
+The Vagrant configuration file assumes you have set up a `ubuntu/bionic64 Vagrant box 
+<https://app.vagrantup.com/ubuntu/boxes/bionic64>`_ on your system::
 
     vagrant box add ubuntu/bionic64
 
 Testing
 -------------------------------------------------------
 
-Once setup, you can then launch your webapp inside a VM, with the command::
+Once set up, you can then launch your webapp inside a VM, with the command::
 
     vagrant up
 

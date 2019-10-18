@@ -11,7 +11,7 @@ helper methods to make testing every aspect of your application as painless as p
     :depth: 2
 
 ************
-System Setup
+System Set Up
 ************
 
 Installing phpUnit
