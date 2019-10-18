@@ -20,7 +20,7 @@ Paginating Database Results
 
 In most cases, you will be using the Pager library in order to paginate results that you retrieve from the database.
 When using the :doc:`Model </models/model>` class, you can use its built-in ``paginate()`` method to automatically
-retrieve the current batch of results, as well as setup the Pager library so it's ready to use in your controllers.
+retrieve the current batch of results, as well as set up the Pager library so it's ready to use in your controllers.
 It even reads the current page it should display from the current URL via a ``page=X`` query variable.
 
 To provide a paginated list of users in your application, your controller's method would look something like::

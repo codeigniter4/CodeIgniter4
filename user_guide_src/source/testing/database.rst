@@ -46,16 +46,16 @@ of the functionality described here::
         }
     }
 
-Test Database Setup
-===================
+Setting Up a Test Database
+==========================
 
 When running database tests, you need to provide a database that can be used during testing. Instead of
 using the PHPUnit built-in database features, the framework provides tools specific to CodeIgniter. The first
-step is to ensure that you have a ``tests`` database group setup in **app/Config/Database.php**.
+step is to ensure that you have set up a ``tests`` database group in **app/Config/Database.php**.
 This specifies a database connection that is only used while running tests, to keep your other data safe.
 
-If you have multiple developers on your team, you will likely want to keep your credentials store in
-the **.env** file. To do so, edit the file to ensure the following lines are present, and have the
+If you have multiple developers on your team, you will likely want to keep your credentials stored in
+the **.env** file. To do so, edit the file to ensure the following lines are present and have the
 correct information::
 
     database.tests.dbdriver = 'MySQLi';
@@ -66,8 +66,8 @@ correct information::
 Migrations and Seeds
 --------------------
 
-When running tests you need to ensure that your database has the correct schema setup, and that
-it is in a known state for every test. You can use migrations and seeds to setup your database,
+When running tests, you need to ensure that your database has the correct schema set up and that
+it is in a known state for every test. You can use migrations and seeds to set up your database,
 by adding a couple of class properties to your test.
 ::
 

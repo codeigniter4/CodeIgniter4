@@ -40,7 +40,7 @@ language codes like en-US for American English, or fr-FR, for French/France. A m
 to this can be found on the `W3C's site <https://www.w3.org/International/articles/language-tags/>`_.
 
 The system is smart enough to fall back to more generic language codes if an exact match
-cannot be found. If the locale code was set to **en-US** and we only have language files setup for **en**
+cannot be found. If the locale code was set to **en-US** and we only have language files set up for **en**
 then those will be used since nothing exists for the more specific **en-US**. If, however, a language
 directory existed at **app/Language/en-US** then that would be used first.
 
@@ -55,7 +55,7 @@ will be used to set the locale.
 Content Negotiation
 -------------------
 
-You can setup content negotiation to happen automatically by setting two additional settings in Config/App.
+You can set up content negotiation to happen automatically by setting two additional settings in Config/App.
 The first value tells the Request class that we do want to negotiate a locale, so simply set it to true::
 
     public $negotiateLocale = true;
