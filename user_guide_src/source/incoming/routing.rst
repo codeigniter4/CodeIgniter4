@@ -125,7 +125,7 @@ is allowed, as are back-references.
 	$routes->add('products/([a-z]+)/(\d+)', 'Products::show/$1/id_$2');
 
 In the above example, a URI similar to products/shirts/123 would instead call the ``show`` method
-of the ``Products`` controller class, with the original first and second segment passwed as arguments to it.
+of the ``Products`` controller class, with the original first and second segment passed as arguments to it.
 
 With regular expressions, you can also catch a segment containing a forward slash (‘/’), which would usually
 represent the delimiter between multiple segments.
