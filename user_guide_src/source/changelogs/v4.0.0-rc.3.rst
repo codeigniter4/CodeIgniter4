@@ -1,7 +1,7 @@
 Version 4.0.0-rc.3
 ====================================================
 
-Release Date: Not released
+Release Date: Oct 19, 2019
 
 **RC.3 release of CodeIgniter4**
 
@@ -43,7 +43,7 @@ The list of changed files follows, with PR numbers shown.
 		- Toolbar/Collectors/
 			- Route #2300
 		- Toolbar #2315
-		- Views/*.tpl #2283
+		- Views/ #2283
 	- Helpers/
 		- inflector_helper #2296
 		- url_helper #2325
@@ -123,7 +123,7 @@ The list of changed files follows, with PR numbers shown.
 
 
 PRs merged:
-----------
+-----------
 
 - #2348 CodeIgniter Foundation gets copyright
 - #2346 Fix FilerHandlerTest.php wierdness
