@@ -10,6 +10,7 @@ class FileHandlerTest extends \CIUnitTestCase
 
 	protected function setUp(): void
 	{
+		parent::setUp();
 		$this->root  = vfsStream::setup('root');
 		$this->start = $this->root->url() . '/';
 	}
