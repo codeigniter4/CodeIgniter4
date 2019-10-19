@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'CodeIgniter4'
-copyright = u'2014-2019 British Columbia Institute of Technology'
+copyright = u'2019 CodeIgniter Foundation'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -186,7 +186,7 @@ html_copy_source = False
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
   ('index', 'CodeIgniter.tex', u'CodeIgniter4 Documentation',
-   u'British Columbia Institute of Technology', 'manual'),
+   u'CodeIgniter Foundation', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -219,7 +219,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'codeigniter', u'CodeIgniter4 Documentation',
-     [u'British Columbia Institute of Technology'], 1)
+     [u'CodeIgniter Foundation'], 1)
 ]
 
 
@@ -227,9 +227,9 @@ man_pages = [
 
 # Bibliographic Dublin Core info.
 epub_title = u'CodeIgniter4'
-epub_author = u'British Columbia Institute of Technology'
-epub_publisher = u'British Columbia Institute of Technology'
-epub_copyright = u'2014-2018 British Columbia Institute of Technology'
+epub_author = u'CodeIgniter Foundation'
+epub_publisher = u'CodeIgniter Foundation'
+epub_copyright = u'2019 CodeIgniter Foundation'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.
