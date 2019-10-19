@@ -29,7 +29,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -65,9 +65,9 @@ class Builder extends BaseBuilder
 	 */
 	protected function _fromTables(): string
 	{
-		if ( ! empty($this->QBJoin) && count($this->QBFrom) > 1)
+		if (! empty($this->QBJoin) && count($this->QBFrom) > 1)
 		{
-			return '('.implode(', ', $this->QBFrom).')';
+			return '(' . implode(', ', $this->QBFrom) . ')';
 		}
 
 		return implode(', ', $this->QBFrom);

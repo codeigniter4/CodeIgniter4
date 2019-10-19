@@ -29,7 +29,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -1869,7 +1869,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @param string $key
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function __isset(string $key): bool
 	{
