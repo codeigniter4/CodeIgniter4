@@ -436,7 +436,7 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
-	 * Return the appropriate igration runner.
+	 * Return the appropriate Migration runner.
 	 *
 	 * @param \CodeIgniter\Config\BaseConfig            $config
 	 * @param \CodeIgniter\Database\ConnectionInterface $db
