@@ -323,6 +323,12 @@ class Language
 			$strings = $strings[0];
 		}
 
+		# Replace with files in  APPPATH.'Language' directory
+		if( $file = Services::locator()->locateFile($path) )
+		{
+			$strings = array_replace($strings, require $file);
+		}
+
 		return $strings;
 	}
 
