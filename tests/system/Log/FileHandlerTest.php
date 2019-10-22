@@ -52,8 +52,8 @@ class FileHandlerTest extends \CIUnitTestCase
 		fclose($fp);
 
 		// did the log file get created?
-		$expectedResult = "<?php defined('SYSTEMPATH') || exit('No direct script access allowed'); ?>\n";
-		$this->assertEquals($expectedResult, $line);
+		$expectedResult = 'This is a test log';
+		$this->assertContains($expectedResult, $line);
 	}
 
 	public function testHandleDateTimeCorrectly()
@@ -73,8 +73,8 @@ class FileHandlerTest extends \CIUnitTestCase
 		$line = fgets($fp); // and get the second line
 		fclose($fp);
 
-		$expectedResult = 'DEBUG - ' . date('Y-m-d') . ' --> Test message';
-		$this->assertEquals($expectedResult, substr($line, 0, strlen($expectedResult)));
+		$expectedResult = 'Test message';
+		$this->assertContains($expectedResult, $line);
 	}
 
 }
