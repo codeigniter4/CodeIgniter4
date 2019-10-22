@@ -46,7 +46,7 @@ class FileHandlerTest extends \CIUnitTestCase
 		$logger->setDateFormat('Y-m-d H:i:s:u');
 		$logger->handle('warning', 'This is a test log');
 
-		$expected = 'log-' . date('Y-m-d') . '.php';
+		$expected = 'log-' . date('Y-m-d') . '.log';
 		$fp       = fopen($config->path . $expected, 'r');
 		$line     = fgets($fp);
 		fclose($fp);
@@ -63,7 +63,7 @@ class FileHandlerTest extends \CIUnitTestCase
 		$logger       = new MockFileHandler((array) $config);
 
 		$logger->setDateFormat('Y-m-d');
-		$expected = 'log-' . date('Y-m-d') . '.php';
+		$expected = 'log-' . date('Y-m-d') . '.log';
 
 		$logger->handle('debug', 'Test message');
 
