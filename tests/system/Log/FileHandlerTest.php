@@ -66,10 +66,7 @@ class FileHandlerTest extends \CIUnitTestCase
 		$expected = 'log-' . date('Y-m-d') . '.log';
 
 		$logger->handle('debug', 'Test message');
-
 		$fp   = fopen($config->path . $expected, 'r');
-		$line = fgets($fp); // skip opening PHP tag
-		$line = fgets($fp); // skip blank line
 		$line = fgets($fp); // and get the second line
 		fclose($fp);
 
