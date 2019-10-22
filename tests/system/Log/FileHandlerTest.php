@@ -46,14 +46,14 @@ class FileHandlerTest extends \CIUnitTestCase
 		$logger->setDateFormat('Y-m-d H:i:s:u');
 		$logger->handle('warning', 'This is a test log');
 
-		$expected = 'log-' . date('Y-m-d') . '.php';
+		$expected = 'log-' . date('Y-m-d') . '.log';
 		$fp       = fopen($config->path . $expected, 'r');
 		$line     = fgets($fp);
 		fclose($fp);
 
 		// did the log file get created?
-		$expectedResult = "<?php defined('SYSTEMPATH') || exit('No direct script access allowed'); ?>\n";
-		$this->assertEquals($expectedResult, $line);
+		$expectedResult = 'This is a test log';
+		$this->assertContains($expectedResult, $line);
 	}
 
 	public function testHandleDateTimeCorrectly()
@@ -63,18 +63,15 @@ class FileHandlerTest extends \CIUnitTestCase
 		$logger       = new MockFileHandler((array) $config);
 
 		$logger->setDateFormat('Y-m-d');
-		$expected = 'log-' . date('Y-m-d') . '.php';
+		$expected = 'log-' . date('Y-m-d') . '.log';
 
 		$logger->handle('debug', 'Test message');
-
 		$fp   = fopen($config->path . $expected, 'r');
-		$line = fgets($fp); // skip opening PHP tag
-		$line = fgets($fp); // skip blank line
 		$line = fgets($fp); // and get the second line
 		fclose($fp);
 
-		$expectedResult = 'DEBUG - ' . date('Y-m-d') . ' --> Test message';
-		$this->assertEquals($expectedResult, substr($line, 0, strlen($expectedResult)));
+		$expectedResult = 'Test message';
+		$this->assertContains($expectedResult, $line);
 	}
 
 }
