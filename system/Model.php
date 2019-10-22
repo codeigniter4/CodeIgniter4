@@ -719,7 +719,7 @@ class Model
 		}
 
 		// Trigger afterInsert events with the inserted data and new ID
-		$this->trigger('afterInsert', ['id' => $this->insertID, 'data' => $data, 'result' => $result]);
+		$this->trigger('afterInsert', ['id' => $this->insertID, 'data' => $data['data'], 'result' => $result]);
 
 		// If insertion failed, get out of here
 		if (! $result)
@@ -841,7 +841,7 @@ class Model
 				->set($data['data'], '', $escape)
 				->update();
 
-		$this->trigger('afterUpdate', ['id' => $id, 'data' => $data, 'result' => $result]);
+		$this->trigger('afterUpdate', ['id' => $id, 'data' => $data['data'], 'result' => $result]);
 
 		return $result;
 	}
