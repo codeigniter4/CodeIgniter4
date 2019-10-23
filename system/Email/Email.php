@@ -1801,7 +1801,7 @@ class Email
 		}
 		// perform dot transformation on any lines that begin with a dot
 		$this->sendData($this->headerStr . preg_replace('/^\./m', '..$1', $this->finalBody));
-		$this->sendData('.');
+		$this->sendData($this->newline . '.');
 		$reply = $this->getSMTPData();
 		$this->setErrorMessage($reply);
 		$this->SMTPEnd();
