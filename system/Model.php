@@ -381,12 +381,12 @@ class Model
 			$row = $row->getResult($this->tempReturnType);
 		}
 
-		$row = $this->trigger('afterFind', ['id' => $id, 'data' => $row]);
+		$eventData = $this->trigger('afterFind', ['id' => $id, 'data' => $row]);
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
-		return $row['data'];
+		return $eventData['data'];
 	}
 
 	//--------------------------------------------------------------------
@@ -438,12 +438,12 @@ class Model
 
 		$row = $row->getResult($this->tempReturnType);
 
-		$row = $this->trigger('afterFind', ['data' => $row, 'limit' => $limit, 'offset' => $offset]);
+		$eventData = $this->trigger('afterFind', ['data' => $row, 'limit' => $limit, 'offset' => $offset]);
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
-		return $row['data'];
+		return $eventData['data'];
 	}
 
 	//--------------------------------------------------------------------
@@ -475,11 +475,11 @@ class Model
 
 		$row = $row->getFirstRow($this->tempReturnType);
 
-		$row = $this->trigger('afterFind', ['data' => $row]);
+		$eventData = $this->trigger('afterFind', ['data' => $row]);
 
 		$this->tempReturnType = $this->returnType;
 
-		return $row['data'];
+		return $eventData['data'];
 	}
 
 	//--------------------------------------------------------------------
@@ -705,11 +705,11 @@ class Model
 			$data[$this->updatedField] = $date;
 		}
 
-		$data = $this->trigger('beforeInsert', ['data' => $data]);
+		$eventData = $this->trigger('beforeInsert', ['data' => $data]);
 
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $this->builder()
-				->set($data['data'], '', $escape)
+				->set($eventData['data'], '', $escape)
 				->insert();
 
 		// If insertion succeeded then save the insert ID
@@ -719,7 +719,7 @@ class Model
 		}
 
 		// Trigger afterInsert events with the inserted data and new ID
-		$this->trigger('afterInsert', ['id' => $this->insertID, 'data' => $data, 'result' => $result]);
+		$this->trigger('afterInsert', ['id' => $this->insertID, 'data' => $eventData['data'], 'result' => $result]);
 
 		// If insertion failed, get out of here
 		if (! $result)
@@ -827,7 +827,7 @@ class Model
 			$data[$this->updatedField] = $this->setDate();
 		}
 
-		$data = $this->trigger('beforeUpdate', ['id' => $id, 'data' => $data]);
+		$eventData = $this->trigger('beforeUpdate', ['id' => $id, 'data' => $data]);
 
 		$builder = $this->builder();
 
@@ -838,10 +838,10 @@ class Model
 
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $builder
-				->set($data['data'], '', $escape)
+				->set($eventData['data'], '', $escape)
 				->update();
 
-		$this->trigger('afterUpdate', ['id' => $id, 'data' => $data, 'result' => $result]);
+		$this->trigger('afterUpdate', ['id' => $id, 'data' => $eventData['data'], 'result' => $result]);
 
 		return $result;
 	}
@@ -1564,22 +1564,22 @@ class Model
 	 * It is the responsibility of the callback methods to return
 	 * the data itself.
 	 *
-	 * Each $data array MUST have a 'data' key with the relevant
+	 * Each $eventData array MUST have a 'data' key with the relevant
 	 * data for callback methods (like an array of key/value pairs to insert
 	 * or update, an array of results, etc)
 	 *
 	 * @param string $event
-	 * @param array  $data
+	 * @param array  $eventData
 	 *
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DataException
 	 */
-	protected function trigger(string $event, array $data)
+	protected function trigger(string $event, array $eventData)
 	{
 		// Ensure it's a valid event
 		if (! isset($this->{$event}) || empty($this->{$event}))
 		{
-			return $data;
+			return $eventData;
 		}
 
 		foreach ($this->{$event} as $callback)
@@ -1589,10 +1589,10 @@ class Model
 				throw DataException::forInvalidMethodTriggered($callback);
 			}
 
-			$data = $this->{$callback}($data);
+			$eventData = $this->{$callback}($eventData);
 		}
 
-		return $data;
+		return $eventData;
 	}
 
 	//--------------------------------------------------------------------
