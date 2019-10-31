@@ -79,7 +79,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 
 		$this->path = $config['path'] ?? WRITEPATH . 'logs/';
 
-		$this->fileExtension = $config['fileExtension'] ?? 'log';
+		$this->fileExtension = empty($config['fileExtension']) ? 'log' : $config['fileExtension'];
 		$this->fileExtension = ltrim($this->fileExtension, '.');
 
 		$this->filePermissions = $config['filePermissions'] ?? 0644;
