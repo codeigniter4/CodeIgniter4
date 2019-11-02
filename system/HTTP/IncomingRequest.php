@@ -43,7 +43,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
-use CodeIgniter\Config\Services;
+use Config\Services;
 
 /**
  * Class IncomingRequest
