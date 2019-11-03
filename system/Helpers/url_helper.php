@@ -111,7 +111,14 @@ if (! function_exists('base_url'))
 		// otherwise get rid of the path, because we have
 		// no way of knowing the intent...
 		$config = \CodeIgniter\Config\Services::request()->config;
-		$url    = new \CodeIgniter\HTTP\URI($config->baseURL);
+
+		// If baseUrl does not have a trailing slash it won't resolve
+		// correctly for users hosting in a subfolder.
+		$baseUrl = ! empty($config->baseURL) && $config->baseURL !== '/'
+			? rtrim($config->baseURL, '/ ') . '/'
+			: $config->baseURL;
+
+		$url = new \CodeIgniter\HTTP\URI($baseUrl);
 		unset($config);
 
 		// Merge in the path set by the user, if any

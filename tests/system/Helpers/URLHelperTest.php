@@ -316,6 +316,23 @@ class URLHelperTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com/profile', base_url('profile'));
 	}
 
+	public function testBaseURLHasSubfolder()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/test';
+
+		// Since we're on a CLI, we must provide our own URI
+		$config          = new App();
+		$config->baseURL = 'http://example.com/subfolder';
+		$request         = Services::request($config, false);
+		$request->uri    = new URI('http://example.com/subfolder/test');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/subfolder/foo', base_url('foo'));
+		$this->assertEquals('http://example.com/subfolder/', base_url());
+	}
+
 	//--------------------------------------------------------------------
 	// Test current_url
 
