@@ -682,7 +682,7 @@ class MigrationRunner
 	 */
 	public function getObjectUid($object): string
 	{
-		return $object->version . $object->class;
+		return preg_replace('/[^0-9]/', '', $object->version) . $object->class;
 	}
 
 	//--------------------------------------------------------------------
