@@ -168,6 +168,7 @@ class Seeder
 			$seeder = new $class($this->config);
 		}
 
+		$seeder->setSilent($this->silent);
 		$seeder->run();
 
 		unset($seeder);
