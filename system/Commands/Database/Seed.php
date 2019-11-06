@@ -98,8 +98,7 @@ class Seed extends BaseCommand
 	protected $options = [];
 
 	/**
-	 * Runs all of the migrations in reverse order, until they have
-	 * all been un-applied.
+	 * Passes to Seeder to populate the database.
 	 *
 	 * @param array $params
 	 */
