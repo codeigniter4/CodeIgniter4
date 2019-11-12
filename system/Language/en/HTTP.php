@@ -38,7 +38,7 @@ return [
    'cannotSetFilepath'          => 'When setting binary can not set filepath: {0}',
    'notFoundDownloadSource'     => 'Not found download body source.',
    'cannotSetCache'             => 'It does not supported caching for downloading.',
-   'cannotSetStatusCode'        => 'It does not supported chnage status code for downloading. code: {0}, reason: {1}',
+   'cannotSetStatusCode'        => 'It does not supported change status code for downloading. code: {0}, reason: {1}',
 
 	// Response
    'missingResponseStatus'      => 'HTTP Response is missing a status code',
