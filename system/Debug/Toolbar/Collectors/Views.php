@@ -39,7 +39,7 @@
 
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
-use CodeIgniter\Config\Services;
+use Config\Services;
 use CodeIgniter\View\RendererInterface;
 
 /**

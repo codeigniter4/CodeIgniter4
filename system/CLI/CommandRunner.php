@@ -40,7 +40,7 @@
 
 namespace CodeIgniter\CLI;
 
-use CodeIgniter\Config\Services;
+use Config\Services;
 use CodeIgniter\Controller;
 
 /**

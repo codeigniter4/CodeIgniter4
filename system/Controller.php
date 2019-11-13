@@ -39,7 +39,7 @@
 
 namespace CodeIgniter;
 
-use CodeIgniter\Config\Services;
+use Config\Services;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Validation\Validation;
