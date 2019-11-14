@@ -41,7 +41,7 @@ namespace CodeIgniter\Log\Handlers;
 
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Config\Services;
+use Config\Services;
 
 /**
  * Class ChromeLoggerHandler

@@ -670,6 +670,8 @@ in_list                 Yes         Fails if field is not within a predetermined
 integer                 No          Fails if field contains anything other than an integer.
 is_natural              No          Fails if field contains anything other than a natural number: 0, 1, 2, 3, etc.
 is_natural_no_zero      No          Fails if field contains anything other than a natural number, except zero: 1, 2, 3, etc.
+is_not_unique           Yes         Checks the database to see if the given value exist. Can ignore records by field/value to            is_not_unique[table.field,where_field,where_value]
+                                    filter (currently accept only one filter).
 is_unique               Yes         Checks if this field value exists in the database. Optionally set a                             is_unique[table.field,ignore_field,ignore_value]
                                     column and value to ignore, useful when updating records to ignore itself.
 less_than               Yes         Fails if field is greater than or equal to the parameter value or not numeric.                  less_than[8]
