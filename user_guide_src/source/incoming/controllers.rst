@@ -234,7 +234,7 @@ Private methods
 In some cases, you may want certain methods hidden from public access.
 To achieve this, simply declare the method as private or protected. 
 That will prevent it from being served by a URL request. For example,
-if you were to define a method like this::
+if you were to define a method like this for the `Helloworld` controller::
 
 	protected function utility()
 	{
@@ -243,7 +243,7 @@ if you were to define a method like this::
 
 then trying to access it using the following URL will not work::
 
-	example.com/index.php/blog/utility/
+	example.com/index.php/helloworld/utility/
 
 Organizing Your Controllers into Sub-directories
 ================================================
