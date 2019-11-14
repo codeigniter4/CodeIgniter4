@@ -145,8 +145,8 @@ class Rules
 	 * accept only one filter).
 	 *
 	 * Example:
-	 *    in_db[table.field,where_field,where_value]
-	 *    in_db[menu.id,active,1]
+	 *    is_not_unique[table.field,where_field,where_value]
+	 *    is_not_unique[menu.id,active,1]
 	 *
 	 * @param string $str
 	 * @param string $field
@@ -154,7 +154,7 @@ class Rules
 	 *
 	 * @return boolean
 	 */
-	public function in_db(string $str = null, string $field, array $data): bool
+	public function is_not_unique(string $str = null, string $field, array $data): bool
 	{
 		// Grab any data for exclusion of a single row.
 		list($field, $where_field, $where_value) = array_pad(explode(',', $field), 3, null);
