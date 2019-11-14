@@ -811,7 +811,7 @@ class ContentSecurityPolicy
 
 		foreach ($values as $value => $reportOnly)
 		{
-			if (is_numeric($value) && is_string($reportOnly) && ! empty($reportOnly))
+			if (is_numeric($value) && ! empty($reportOnly) && is_string($reportOnly))
 			{
 				$value      = $reportOnly;
 				$reportOnly = 0;
