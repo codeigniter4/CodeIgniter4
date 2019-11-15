@@ -310,7 +310,7 @@ class FileCollection
 	 */
 	protected function getValueDotNotationSyntax(array $index, array $value)
 	{
-		if (is_array($index) && ! empty($index))
+		if (! empty($index))
 		{
 			$current_index = array_shift($index);
 		}
