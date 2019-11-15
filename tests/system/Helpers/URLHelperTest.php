@@ -167,6 +167,22 @@ class URLHelperTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com/index.php/news/local/123', site_url(['news', 'local', '123'], null, $config));
 	}
 
+	public function testSiteURLInSubfolder()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/foo/public/bar?baz=quip';
+
+		// Since we're on a CLI, we must provide our own URI
+		$config          = new App();
+		$config->baseURL = 'http://example.com/foo/public';
+		$request         = Services::request($config);
+		$request->uri    = new URI('http://example.com/foo/public/bar');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/foo/public/bar', current_url());
+	}
+
 	/**
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/240
 	 */
@@ -281,7 +297,7 @@ class URLHelperTest extends \CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com/', base_url());
+		$this->assertEquals('http://example.com', base_url());
 	}
 
 	/**
@@ -330,7 +346,7 @@ class URLHelperTest extends \CIUnitTestCase
 		Services::injectMock('request', $request);
 
 		$this->assertEquals('http://example.com/subfolder/foo', base_url('foo'));
-		$this->assertEquals('http://example.com/subfolder/', base_url());
+		$this->assertEquals('http://example.com/subfolder', base_url());
 	}
 
 	//--------------------------------------------------------------------
@@ -385,6 +401,22 @@ class URLHelperTest extends \CIUnitTestCase
 		Services::injectMock('request', $request);
 
 		$this->assertEquals(base_url(uri_string()), current_url());
+	}
+
+	public function testCurrentURLInSubfolder()
+	{
+		$_SERVER['HTTP_HOST']   = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/foo/public/bar?baz=quip';
+
+		// Since we're on a CLI, we must provide our own URI
+		$config          = new App();
+		$config->baseURL = 'http://example.com/foo/public';
+		$request         = Services::request($config);
+		$request->uri    = new URI('http://example.com/foo/public/bar');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/foo/public/bar', current_url());
 	}
 
 	//--------------------------------------------------------------------
