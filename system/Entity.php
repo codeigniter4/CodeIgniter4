@@ -313,7 +313,7 @@ class Entity
 			$result = $this->mutateDate($result);
 		}
 		// Or cast it as something?
-		else if ($this->_cast && isset($this->casts[$key]) && ! empty($this->casts[$key]))
+		else if ($this->_cast && ! empty($this->casts[$key]))
 		{
 			$result = $this->castAs($result, $this->casts[$key]);
 		}
@@ -471,7 +471,7 @@ class Entity
 			return $key;
 		}
 
-		if (isset($this->datamap[$key]) && ! empty($this->datamap[$key]))
+		if (! empty($this->datamap[$key]))
 		{
 			return $this->datamap[$key];
 		}
