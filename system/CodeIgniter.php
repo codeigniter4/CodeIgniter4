@@ -883,7 +883,8 @@ class CodeIgniter
 				$this->runController($controller);
 			}
 
-			$this->gatherOutput();
+			$cacheConfig = new Cache();
+			$this->gatherOutput($cacheConfig);
 			$this->sendResponse();
 
 			return;
