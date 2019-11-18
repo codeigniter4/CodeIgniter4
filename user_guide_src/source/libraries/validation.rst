@@ -480,7 +480,7 @@ Check If Error Exists
 
 You can check to see if an error exists with the ``hasError()`` method. The only parameter is the field name::
 
-    if ($validation->hasError('username')
+    if ($validation->hasError('username'))
     {
         echo $validation->getError('username');
     }
