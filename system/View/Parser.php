@@ -762,7 +762,7 @@ class Parser extends View
 			{
 				$params = [];
 
-				preg_match_all('/([\w-]+=\"[^"]+\")|([\w-]+=[^\"\s=]+)/', trim($match[1]), $matchesParams);
+				preg_match_all('/([\w-]+=\"[^"]+\")|([\w-]+=[^\"\s=]+)|(\S+)/', trim($match[1]), $matchesParams);
 				foreach ($matchesParams[0] as $item) {
 					$keyVal = explode('=', $item);
 					if (count($keyVal) == 2) {
