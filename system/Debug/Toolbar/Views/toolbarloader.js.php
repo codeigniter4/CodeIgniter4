@@ -56,7 +56,7 @@ function loadDoc(time) {
 		}
 	};
 
-	xhttp.open("GET", url + "/?debugbar_time=" + time, true);
+	xhttp.open("GET", url + "?debugbar_time=" + time, true);
 	xhttp.send();
 }
 
