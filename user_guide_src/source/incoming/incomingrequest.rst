@@ -17,7 +17,7 @@ An instance of the request class already populated for you if the current class 
 
         <?php namespace App\Controllers;
 
-        user CodeIgniter\Controller;
+        use CodeIgniter\Controller;
 
 	class UserController extends Controller
 	{
