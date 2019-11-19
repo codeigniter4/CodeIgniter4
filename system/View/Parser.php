@@ -768,7 +768,7 @@ class Parser extends View
 					if (count($keyVal) == 2) {
 						$params[$keyVal[0]] = str_replace('"', '', $keyVal[1]);
 					} else {
-						$params[] = $item;
+						$params[] = str_replace('"', '', $item);
 					}
 				}
 
