@@ -491,6 +491,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 			sscanf($query[$i]->Type, '%[a-z](%d)', $retVal[$i]->type, $retVal[$i]->max_length);
 
+			$retVal[$i]->nullable    = $query[$i]->Null === 'YES';
 			$retVal[$i]->default     = $query[$i]->Default;
 			$retVal[$i]->primary_key = (int)($query[$i]->Key === 'PRI');
 		}
