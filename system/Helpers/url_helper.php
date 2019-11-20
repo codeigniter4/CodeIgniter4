@@ -159,7 +159,7 @@ if (! function_exists('current_url'))
 	 */
 	function current_url(bool $returnObject = false)
 	{
-		$uri = service('request')->uri;
+		$uri = clone service('request')->uri;
 
 		// If hosted in a sub-folder, we will have additional
 		// segments that show up prior to the URI path we just
