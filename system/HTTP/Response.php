@@ -713,7 +713,7 @@ class Response extends Message implements ResponseInterface
 
 		// Per spec, MUST be sent with each request, if possible.
 		// http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
-		if (! isset($this->headers['Date']))
+		if (! isset($this->headers['Date']) && php_sapi_name() !== 'cli-server')
 		{
 			$this->setDate(\DateTime::createFromFormat('U', (string) time()));
 		}
@@ -724,7 +724,7 @@ class Response extends Message implements ResponseInterface
 		// Send all of our headers
 		foreach ($this->getHeaders() as $name => $values)
 		{
-			header($name . ': ' . $this->getHeaderLine($name), false, $this->statusCode);
+			header($name . ': ' . $this->getHeaderLine($name), true, $this->statusCode);
 		}
 
 		return $this;
