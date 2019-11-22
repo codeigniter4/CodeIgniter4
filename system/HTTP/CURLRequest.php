@@ -78,6 +78,8 @@ class CURLRequest extends Request
 		'connect_timeout' => 150,
 		'debug'           => false,
 		'verify'          => true,
+        	'proxy'           => null,
+        	'secure'          => null
 	];
 
 	/**
@@ -332,7 +334,7 @@ class CURLRequest extends Request
 	/**
 	* Set PROXY address.
 	*
-	* @param string $data: Proxy URI (proxy.tld:8080)
+	* @param ?string $data: Proxy URI (proxy.tld:8080)
 	*
 	* @return $this
 	*/
@@ -342,6 +344,34 @@ class CURLRequest extends Request
 
         	return $this;
    	}
+	//--------------------------------------------------------------------
+	/**
+	* Will be SSL peer cert verified.
+	*
+	* @param ?bool $data
+	*
+	* @return $this
+	*/
+	public function setSecurePeer(?bool $data)
+	{
+		$this->config['secure-peer'] = $data;
+
+		return $this;
+	}
+
+	/**
+	* Will be SSL host cert verified.
+	*
+	* @param ?bool $data
+	*
+	* @return $this
+	*/
+	public function setSecureHost(?bool $data)
+	{
+		$this->config['secure-host'] = $data;
+
+		return $this;
+	}
 
 	//--------------------------------------------------------------------
 
@@ -448,6 +478,16 @@ class CURLRequest extends Request
 		if(!empty($this->config['proxy']) && is_string($this->config['proxy']))
         	{
            		$curl_options[CURLOPT_PROXY] = $this->config['proxy'];
+        	}
+		
+	        if(!empty($this->config['secure-host']) && is_bool($this->config['secure-host']))
+        	{
+            		$curl_options[CURLOPT_SSL_VERIFYHOST] = $this->config['secure-host'];
+        	}
+		
+        	if(!empty($this->config['secure-peer']) && is_bool($this->config['secure-peer']))
+        	{
+            		$curl_options[CURLOPT_SSL_VERIFYPEER] = $this->config['secure-peer'];
         	}
 		
 		$curl_options[CURLOPT_URL]            = $url;
