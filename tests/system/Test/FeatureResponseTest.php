@@ -214,7 +214,7 @@ class FeatureResponseTest extends CIUnitTestCase
 	public function testEmptyJSON()
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
-		$this->response->setJSON('');
+		$this->response->setJSON('', true);
 		$config    = new \Config\Format();
 		$formatter = $config->getFormatter('application/json');
 
@@ -225,7 +225,7 @@ class FeatureResponseTest extends CIUnitTestCase
 	public function testFalseJSON()
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
-		$this->response->setJSON(false);
+		$this->response->setJSON(false, true);
 		$config    = new \Config\Format();
 		$formatter = $config->getFormatter('application/json');
 
@@ -236,7 +236,7 @@ class FeatureResponseTest extends CIUnitTestCase
 	public function testTrueJSON()
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
-		$this->response->setJSON(true);
+		$this->response->setJSON(true, true);
 		$config    = new \Config\Format();
 		$formatter = $config->getFormatter('application/json');
 
