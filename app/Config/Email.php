@@ -17,6 +17,11 @@ class Email extends BaseConfig
 	public $fromName;
 
 	/**
+	 * @var string
+	 */
+	public $recipients;
+
+	/**
 	 * The "user agent"
 	 *
 	 * @var string
