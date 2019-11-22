@@ -154,6 +154,20 @@ class FormatRules
 	//--------------------------------------------------------------------
 
 	/**
+	 * String of hexidecimal characters
+	 *
+	 * @param string $str
+	 *
+	 * @return boolean
+	 */
+	public function hex(string $str = null): bool
+	{
+		return ctype_xdigit($str);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Integer
 	 *
 	 * @param string $str
