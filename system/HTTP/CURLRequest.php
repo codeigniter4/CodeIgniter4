@@ -326,6 +326,22 @@ class CURLRequest extends Request
 
 		return $this;
 	}
+	
+	//--------------------------------------------------------------------
+
+	/**
+	* Set PROXY address.
+	*
+	* @param string $data: Proxy URI (proxy.tld:8080)
+	*
+	* @return $this
+	*/
+    	public function setProxy(?string $data)
+    	{
+        	$this->config['proxy'] = $data;
+
+        	return $this;
+   	}
 
 	//--------------------------------------------------------------------
 
@@ -429,6 +445,11 @@ class CURLRequest extends Request
 			unset($this->config['query']);
 		}
 
+		if(!empty($this->config['proxy']) && is_string($this->config['proxy']))
+        	{
+           		$curl_options[CURLOPT_PROXY] = $this->config['proxy'];
+        	}
+		
 		$curl_options[CURLOPT_URL]            = $url;
 		$curl_options[CURLOPT_RETURNTRANSFER] = true;
 		$curl_options[CURLOPT_HEADER]         = true;
