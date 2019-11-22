@@ -447,7 +447,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return $this
 	 */
-	public function setJSON($body, bool $unencoded = true)
+	public function setJSON($body, bool $unencoded = false)
 	{
 		$this->body = $this->formatBody($body, 'json' . ($unencoded ? '-unencoded' : ''));
 
