@@ -763,11 +763,15 @@ class Parser extends View
 				$params = [];
 
 				preg_match_all('/([\w-]+=\"[^"]+\")|([\w-]+=[^\"\s=]+)|(\"[^"]+\")|(\S+)/', trim($match[1]), $matchesParams);
-				foreach ($matchesParams[0] as $item) {
+				foreach ($matchesParams[0] as $item)
+				{
 					$keyVal = explode('=', $item);
-					if (count($keyVal) == 2) {
+					if (count($keyVal) == 2)
+					{
 						$params[$keyVal[0]] = str_replace('"', '', $keyVal[1]);
-					} else {
+					}
+					else
+					{
 						$params[] = str_replace('"', '', $item);
 					}
 				}
