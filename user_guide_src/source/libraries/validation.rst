@@ -664,6 +664,7 @@ differs                 Yes         Fails if field does not differ from the one 
 exact_length            Yes         Fails if field is not exactly the parameter value. One or more comma-separated values.          exact_length[5] or exact_length[5,8,12]
 greater_than            Yes         Fails if field is less than or equal to the parameter value or not numeric.                     greater_than[8]
 greater_than_equal_to   Yes         Fails if field is less than the parameter value, or not numeric.                                greater_than_equal_to[5]
+hex                     No          Fails if field contains anything other than hexadecimal characters.
 if_exist                No          If this rule is present, validation will only return possible errors if the field key exists,
                                     regardless of its value.
 in_list                 Yes         Fails if field is not within a predetermined list.                                              in_list[red,blue,green]
