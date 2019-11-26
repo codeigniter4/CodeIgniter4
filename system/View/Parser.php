@@ -762,28 +762,19 @@ class Parser extends View
 			{
 				$params = [];
 
-				// Split on "words", but keep quoted groups together, accounting for escaped quotes.
-				// Note: requires double quotes, not single quotes.
-				$parts = str_getcsv($match[1], ' ');
-
-				foreach ($parts as $part)
+				preg_match_all('/([\w-]+=\"[^"]+\")|([\w-]+=[^\"\s=]+)|(\"[^"]+\")|(\S+)/', trim($match[1]), $matchesParams);
+				foreach ($matchesParams[0] as $item)
 				{
-					if (empty($part))
+					$keyVal = explode('=', $item);
+					if (count($keyVal) == 2)
 					{
-						continue;
-					}
-
-					if (strpos($part, '=') !== false)
-					{
-						list($a, $b) = explode('=', $part);
-						$params[$a]  = $b;
+						$params[$keyVal[0]] = str_replace('"', '', $keyVal[1]);
 					}
 					else
 					{
-						$params[] = $part;
+						$params[] = str_replace('"', '', $item);
 					}
 				}
-				unset($parts);
 
 				$template = $isPair ? str_replace($match[0], $callable($match[2], $params), $template) : str_replace($match[0], $callable($params), $template);
 			}
