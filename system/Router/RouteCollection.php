@@ -1420,7 +1420,7 @@ class RouteCollection implements RouteCollectionInterface
 		}
 
 		// If no namespace found, add the default namespace
-		if (is_string($to) && strpos($to, '\\') === false)
+		if (is_string($to) && (strpos($to, '\\') === false || strpos($to, '\\') > 0))
 		{
 			$namespace = $options['namespace'] ?? $this->defaultNamespace;
 			$to        = trim($namespace, '\\') . '\\' . $to;

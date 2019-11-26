@@ -1324,7 +1324,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes->setDefaultMethod('index');
 		$routes->setHTTPVerb('get');
 
-		$routes->get('/', 'App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
+		$routes->get('/', '\App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
 		$routes->get('/', 'Home::index', ['subdomain' => 'dev']);
 
 		$expects = '\App\Controllers\Site\CDoc';
@@ -1344,7 +1344,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes->setDefaultController('Home');
 		$routes->setDefaultMethod('index');
 
-		$routes->get('/', 'App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
+		$routes->get('/', '\App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
 		$routes->get('/', 'Home::index');
 
 		// the second rule applies, so overwrites the first
@@ -1366,7 +1366,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes->setDefaultMethod('index');
 
 		$routes->get('/', 'Home::index');
-		$routes->get('/', 'App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
+		$routes->get('/', '\App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
 
 		$expects = '\App\Controllers\Site\CDoc';
 
@@ -1386,7 +1386,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes->setDefaultMethod('index');
 
 		$routes->get('/', 'Home::index', ['as' => 'ddd']);
-		$routes->get('/', 'App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
+		$routes->get('/', '\App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
 
 		$expects = '\App\Controllers\Site\CDoc';
 
@@ -1406,9 +1406,27 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes->setDefaultMethod('index');
 
 		$routes->get('/', 'Home::index', ['as' => 'ddd']);
-		$routes->get('/', 'App\Controllers\Site\CDoc::index', ['hostname' => 'doc.domain.com', 'as' => 'doc_index']);
+		$routes->get('/', '\App\Controllers\Site\CDoc::index', ['hostname' => 'doc.domain.com', 'as' => 'doc_index']);
 
 		$expects = '\App\Controllers\Site\CDoc';
+
+		$this->assertEquals($expects, $router->handle('/'));
+	}
+
+	//--------------------------------------------------------------------
+	// Tests for router DefaultNameSpace issue
+	// @see https://github.com/codeigniter4/CodeIgniter4/issues/2423
+
+	public function testRouteDefaultNameSpace()
+	{
+		Services::request()->setMethod('get');
+		$routes = $this->getCollector();
+		$router = new Router($routes, Services::request());
+
+		$routes->setDefaultNamespace('App\Controllers');
+		$routes->get('/', 'Core\Home::index');
+
+		$expects = '\App\Controllers\Core\Home';
 
 		$this->assertEquals($expects, $router->handle('/'));
 	}
