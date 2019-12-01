@@ -602,7 +602,7 @@ class Entity
 		$tmp = ! is_null($value) ? ($asArray ? [] : new \stdClass) : null;
 		if (function_exists('json_decode'))
 		{
-			if ((is_string($value) && strlen($value) > 1 && in_array($value{0}, ['[', '{', '"'])) || is_numeric($value))
+			if ((is_string($value) && strlen($value) > 1 && in_array($value[0], ['[', '{', '"'])) || is_numeric($value))
 			{
 				$tmp = json_decode($value, $asArray);
 
