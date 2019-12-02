@@ -422,9 +422,9 @@ if (! function_exists('safe_mailto'))
 			}
 			else
 			{
-				for ($i = 0, $l = strlen($attributes); $i < $l; $i ++)
+				for ($i = 0, $l = mb_strlen($attributes); $i < $l; $i ++)
 				{
-					$x[] = $attributes[$i];
+					$x[] = mb_substr($attributes, $i, 1);
 				}
 			}
 		}
