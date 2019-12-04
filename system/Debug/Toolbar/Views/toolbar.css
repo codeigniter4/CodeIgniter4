@@ -37,6 +37,10 @@
 	z-index: 10000;
 }
 
+#debug-bar pre {
+    line-height: normal;
+}
+
 #debug-bar h1,
 #debug-bar h2,
 #debug-bar h3 {
