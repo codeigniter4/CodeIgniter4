@@ -242,6 +242,14 @@ class Model
 	protected $skipValidation = false;
 
 	/**
+	 * Whether rules should be removed that do not exist
+	 * in the passed in data. Used between inserts/updates.
+	 *
+	 * @var boolean
+	 */
+	protected $cleanValidationRules = true;
+
+	/**
 	 * Our validator instance.
 	 *
 	 * @var \CodeIgniter\Validation\Validation
@@ -682,7 +690,7 @@ class Model
 		// Validate data before saving.
 		if ($this->skipValidation === false)
 		{
-			if ($this->validate($data) === false)
+			if ($this->cleanRules(false)->validate($data) === false)
 			{
 				return false;
 			}
@@ -750,7 +758,7 @@ class Model
 		{
 			foreach ($set as $row)
 			{
-				if ($this->validate($row) === false)
+				if ($this->cleanRules(false)->validate($row) === false)
 				{
 					return false;
 				}
@@ -812,7 +820,7 @@ class Model
 		// Validate data before saving.
 		if ($this->skipValidation === false)
 		{
-			if ($this->validate($data) === false)
+			if ($this->cleanRules(true)->validate($data) === false)
 			{
 				return false;
 			}
@@ -867,7 +875,7 @@ class Model
 		{
 			foreach ($set as $row)
 			{
-				if ($this->validate($row) === false)
+				if ($this->cleanRules(true)->validate($row) === false)
 				{
 					return false;
 				}
@@ -1005,7 +1013,7 @@ class Model
 		// Validate data before saving.
 		if (! empty($data) && $this->skipValidation === false)
 		{
-			if ($this->validate($data) === false)
+			if ($this->cleanRules(true)->validate($data) === false)
 			{
 				return false;
 			}
@@ -1360,6 +1368,23 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Should validation rules be removed before saving?
+	 * Most handy when doing updates.
+	 *
+	 * @param boolean $choice
+	 *
+	 * @return $this
+	 */
+	public function cleanRules(bool $choice = false)
+	{
+		$this->cleanValidationRules = $choice;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Validate the data against the validation rules (or the validation group)
 	 * specified in the class property, $validationRules.
 	 *
@@ -1390,7 +1415,9 @@ class Model
 			$rules = $this->validation->loadRuleGroup($rules);
 		}
 
-		$rules = $this->cleanValidationRules($rules, $data);
+		$rules = $this->cleanValidationRules
+			? $this->cleanValidationRules($rules, $data)
+			: $rules;
 
 		// If no data existed that needs validation
 		// our job is done here.
