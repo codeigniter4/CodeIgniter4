@@ -136,7 +136,7 @@ class Toolbar
 			{
 				foreach ($items as $key => $value)
 				{
-					$varData[esc($key)] = is_string($value) ? esc($value) : print_r($value, true);
+					$varData[esc($key)] = is_string($value) ? esc($value) : esc(print_r($value, true));
 				}
 			}
 
@@ -153,7 +153,7 @@ class Toolbar
 					$value = 'binary data';
 				}
 
-				$data['vars']['session'][esc($key)] = is_string($value) ? esc($value) : print_r($value, true);
+				$data['vars']['session'][esc($key)] = is_string($value) ? esc($value) : esc(print_r($value, true));
 			}
 		}
 
