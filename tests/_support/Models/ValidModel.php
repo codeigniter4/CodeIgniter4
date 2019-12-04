@@ -22,7 +22,7 @@ class ValidModel extends Model
 			'required',
 			'min_length[3]',
 		],
-		'token' => 'in_list[{id}]',
+		'token' => 'permit_empty|in_list[{id}]',
 	];
 
 	protected $validationMessages = [

@@ -1229,7 +1229,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$data = [
 			'name'        => 'foobar',
-			'description' => 'just becaues we have to',
+			'description' => 'just because we have to',
 		];
 
 		$this->assertTrue($model->insert($data) !== false);
