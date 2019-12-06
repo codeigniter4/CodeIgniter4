@@ -136,7 +136,7 @@ class Toolbar
 			{
 				foreach ($items as $key => $value)
 				{
-					$varData[esc($key)] = is_string($value) ? esc($value) : print_r($value, true);
+					$varData[esc($key)] = is_string($value) ? esc($value) : '<pre>' . esc(print_r($value, true)) . '</pre>';
 				}
 			}
 
@@ -153,18 +153,18 @@ class Toolbar
 					$value = 'binary data';
 				}
 
-				$data['vars']['session'][esc($key)] = is_string($value) ? esc($value) : print_r($value, true);
+				$data['vars']['session'][esc($key)] = is_string($value) ? esc($value) : '<pre>' . esc(print_r($value, true)) . '</pre>';
 			}
 		}
 
 		foreach ($request->getGet() as $name => $value)
 		{
-			$data['vars']['get'][esc($name)] = is_array($value) ? esc(print_r($value, true)) : esc($value);
+			$data['vars']['get'][esc($name)] = is_array($value) ? '<pre>' . esc(print_r($value, true)) . '</pre>' : esc($value);
 		}
 
 		foreach ($request->getPost() as $name => $value)
 		{
-			$data['vars']['post'][esc($name)] = is_array($value) ? esc(print_r($value, true)) : esc($value);
+			$data['vars']['post'][esc($name)] = is_array($value) ? '<pre>' . esc(print_r($value, true)) . '</pre>' : esc($value);
 		}
 
 		foreach ($request->getHeaders() as $header => $value)
