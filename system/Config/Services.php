@@ -208,7 +208,6 @@ class Services extends BaseService
 			$config = new \Config\Email();
 		}
 		$email = new \CodeIgniter\Email\Email($config);
-		$email->setLogger(static::logger(true));
 		return $email;
 	}
 
