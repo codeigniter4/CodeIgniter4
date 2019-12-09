@@ -170,42 +170,6 @@ class Builder extends BaseBuilder
 	//--------------------------------------------------------------------
 
 	/**
-	 * Insert batch statement
-	 *
-	 * Generates a platform-specific insert string from the supplied data.
-	 *
-	 * @param string $table  Table name
-	 * @param array  $keys   INSERT keys
-	 * @param array  $values INSERT values
-	 *
-	 * @return string
-	 */
-	protected function _insertBatch(string $table, array $keys, array $values) : string
-	{
-		return 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values) . $this->compileIgnore('insert');
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Insert statement
-	 *
-	 * Generates a platform-specific insert string from the supplied data
-	 *
-	 * @param string $table         The table name
-	 * @param array  $keys          The insert keys
-	 * @param array  $unescapedKeys The insert values
-	 *
-	 * @return string
-	 */
-	protected function _insert(string $table, array $keys, array $unescapedKeys) : string
-	{
-		return 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $unescapedKeys) . ')' . $this->compileIgnore('insert');
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Replace
 	 *
 	 * Compiles an replace into string and runs the query.
