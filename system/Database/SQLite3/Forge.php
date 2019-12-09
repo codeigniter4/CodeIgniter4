@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -84,11 +85,12 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Create database
 	 *
-	 * @param string $db_name
+	 * @param string $dbName
+	 * @param boolean $ifNotExists Whether to add IF NOT EXISTS condition
 	 *
 	 * @return boolean
 	 */
-	public function createDatabase(string $db_name): bool
+	public function createDatabase(string $dbName, bool $ifNotExists = false): bool
 	{
 		// In SQLite, a database is created when you connect to the database.
 		// We'll return TRUE so that an error isn't generated.
@@ -100,15 +102,15 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Drop database
 	 *
-	 * @param string $db_name
+	 * @param string $dbName
 	 *
 	 * @return boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function dropDatabase(string $db_name): bool
+	public function dropDatabase(string $dbName): bool
 	{
 		// In SQLite, a database is dropped when we delete a file
-		if (! is_file($db_name))
+		if (! is_file($dbName))
 		{
 			if ($this->db->DBDebug)
 			{
@@ -120,7 +122,7 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		// We need to close the pseudo-connection first
 		$this->db->close();
-		if (! @unlink($db_name))
+		if (! @unlink($dbName))
 		{
 			if ($this->db->DBDebug)
 			{
@@ -132,7 +134,7 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		if (! empty($this->db->dataCache['db_names']))
 		{
-			$key = array_search(strtolower($db_name), array_map('strtolower', $this->db->dataCache['db_names']), true);
+			$key = array_search(strtolower($dbName), array_map('strtolower', $this->db->dataCache['db_names']), true);
 			if ($key !== false)
 			{
 				unset($this->db->dataCache['db_names'][$key]);

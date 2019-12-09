@@ -13,7 +13,7 @@ class CURLRequestTest extends \CIUnitTestCase
 	 */
 	protected $request;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -165,6 +165,47 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$request = $this->getRequest($options);
 		$this->assertEquals('apple', $request->getHeader('fruit')->getValue());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @backupGlobals enabled
+	 */
+	public function testOptionHeadersUsingPopulate()
+	{
+		$_SERVER['HTTP_HOST']            = 'site1.com';
+		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
+
+		$options = [
+			'base_uri' => 'http://www.foo.com/api/v1/',
+		];
+
+		$request = $this->getRequest($options);
+		$request->get('example');
+		// we fill the Accept-Language header from _SERVER when no headers are defined for the request
+		$this->assertEquals('en-US', $request->getHeader('Accept-Language')->getValue());
+		// but we skip Host header - since it would corrupt the request
+		$this->assertNull($request->getHeader('Host'));
+	}
+
+	/**
+	 * @backupGlobals enabled
+	 */
+	public function testOptionHeadersNotUsingPopulate()
+	{
+		$_SERVER['HTTP_HOST']            = 'site1.com';
+		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
+
+		$options = [
+			'base_uri' => 'http://www.foo.com/api/v1/',
+			'headers'  => ['Host' => 'www.foo.com'],
+		];
+		$request = $this->getRequest($options);
+		$request->get('example');
+		// if headers for the request are defined we use them
+		$this->assertNull($request->getHeader('Accept-Language'));
+		$this->assertEquals('www.foo.com', $request->getHeader('Host')->getValue());
 	}
 
 	//--------------------------------------------------------------------
@@ -448,7 +489,7 @@ class CURLRequestTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testDebugOption()
+	public function testDebugOptionTrue()
 	{
 		$this->request->request('get', 'http://example.com', [
 			'debug' => true,
@@ -461,14 +502,35 @@ class CURLRequestTest extends \CIUnitTestCase
 
 		$this->assertArrayHasKey(CURLOPT_STDERR, $options);
 		$this->assertTrue(is_resource($options[CURLOPT_STDERR]));
+	}
 
+	public function testDebugOptionFalse()
+	{
 		$this->request->request('get', 'http://example.com', [
 			'debug' => false,
 		]);
 
 		$options = $this->request->curl_options;
 
-		$this->assertFalse($options[CURLOPT_STDERR]);
+		$this->assertArrayNotHasKey(CURLOPT_VERBOSE, $options);
+		$this->assertArrayNotHasKey(CURLOPT_STDERR, $options);
+	}
+
+	public function testDebugOptionFile()
+	{
+		$file = SUPPORTPATH . 'Files/baker/banana.php';
+
+		$this->request->request('get', 'http://example.com', [
+			'debug' => $file,
+		]);
+
+		$options = $this->request->curl_options;
+
+		$this->assertArrayHasKey(CURLOPT_VERBOSE, $options);
+		$this->assertEquals(1, $options[CURLOPT_VERBOSE]);
+
+		$this->assertArrayHasKey(CURLOPT_STDERR, $options);
+		$this->assertTrue(is_resource($options[CURLOPT_STDERR]));
 	}
 
 	//--------------------------------------------------------------------

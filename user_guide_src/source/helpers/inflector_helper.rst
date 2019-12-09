@@ -44,16 +44,38 @@ The following functions are available:
 
 		echo plural('dog'); // Prints 'dogs'
 
+.. php:function:: counted($count, $string)
+
+	:param	int 	$count:  Number of items
+	:param	string	$string: Input string
+	:returns:	A singular or plural phrase
+	:rtype:	string
+
+	Changes a word and its count to a phrase. Example::
+
+		echo counted(3, 'dog'); // Prints '3 dogs'
+
 .. php:function:: camelize($string)
 
 	:param	string	$string: Input string
-	:returns:	Camelized string
+	:returns:	Camel case string
 	:rtype:	string
 
 	Changes a string of words separated by spaces or underscores to camel
 	case. Example::
 
 		echo camelize('my_dog_spot'); // Prints 'myDogSpot'
+
+.. php:function:: pascalize($string)
+
+	:param	string	$string: Input string
+	:returns:	Pascal case string
+	:rtype:	string
+
+	Changes a string of words separated by spaces or underscores to Pascal
+	case, which is camel case with the first letter capitalized. Example::
+
+		echo pascalize('my_dog_spot'); // Prints 'MyDogSpot'
 
 .. php:function:: underscore($string)
 

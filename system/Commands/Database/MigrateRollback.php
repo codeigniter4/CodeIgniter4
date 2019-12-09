@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -72,7 +73,7 @@ class MigrateRollback extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $description = 'Runs all of the migrations in reverse order, until they have all been un-applied.';
+	protected $description = 'Runs the "down" method for all migrations in the last batch.';
 
 	/**
 	 * the Command's usage
@@ -94,9 +95,8 @@ class MigrateRollback extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-n'   => 'Set migration namespace',
-		'-g'   => 'Set database group',
-		'-all' => 'Set latest for all namespace, will ignore (-n) option',
+		'-b' => 'Specify a batch to roll back to; e.g. "3" to return to batch #3 or "-2" to roll back twice',
+		'-g' => 'Set database group',
 	];
 
 	/**
@@ -109,37 +109,23 @@ class MigrateRollback extends BaseCommand
 	{
 		$runner = Services::migrations();
 
-		CLI::write(lang('Migrations.rollingBack'), 'yellow');
-
 		$group = $params['-g'] ?? CLI::getOption('g');
 
 		if (! is_null($group))
 		{
 			$runner->setGroup($group);
 		}
+
 		try
 		{
-			if (! $this->isAllNamespace($params))
+			$batch = $params['-b'] ?? CLI::getOption('b') ?? $runner->getLastBatch() - 1;
+			CLI::write(lang('Migrations.rollingBack') . ' ' . $batch, 'yellow');
+
+			if (! $runner->regress($batch))
 			{
-				$namespace = $params['-n'] ?? CLI::getOption('n');
-				$runner->version(0, $namespace);
+				CLI::write(lang('Migrations.generalFault'), 'red');
 			}
-			else
-			{
-				// Get all namespaces from PSR4 paths.
-				$config     = new Autoload();
-				$namespaces = $config->psr4;
-				foreach ($namespaces as $namespace => $path)
-				{
-					$runner->setNamespace($namespace);
-					$migrations = $runner->findMigrations();
-					if (empty($migrations))
-					{
-						continue;
-					}
-					$runner->version(0, $namespace, $group);
-				}
-			}
+
 			$messages = $runner->getCliMessages();
 			foreach ($messages as $message)
 			{
@@ -153,25 +139,4 @@ class MigrateRollback extends BaseCommand
 			$this->showError($e);
 		}
 	}
-
-	/**
-	 * To migrate all namespaces to the latest migration
-	 *
-	 * Demo:
-	 *  1. command line: php spark migrate:latest -all
-	 *  2. command file: $this->call('migrate:latest', ['-g' => 'test','-all']);
-	 *
-	 * @param  array $params
-	 * @return boolean
-	 */
-	private function isAllNamespace(array $params): bool
-	{
-		if (array_search('-all', $params) !== false)
-		{
-			return true;
-		}
-
-		return ! is_null(CLI::getOption('all'));
-	}
-
 }

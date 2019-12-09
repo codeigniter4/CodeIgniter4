@@ -20,12 +20,12 @@ Paginating Database Results
 
 In most cases, you will be using the Pager library in order to paginate results that you retrieve from the database.
 When using the :doc:`Model </models/model>` class, you can use its built-in ``paginate()`` method to automatically
-retrieve the current batch of results, as well as setup the Pager library so it's ready to use in your controllers.
+retrieve the current batch of results, as well as set up the Pager library so it's ready to use in your controllers.
 It even reads the current page it should display from the current URL via a ``page=X`` query variable.
 
 To provide a paginated list of users in your application, your controller's method would look something like::
 
-    <?php namespace App\Constrollers;
+    <?php namespace App\Controllers;
 
     use CodeIgniter\Controller;
 
@@ -111,6 +111,12 @@ It is also possible to use a URI segment for the page number, instead of the pag
 <?= $pager->makeLinks($page, $perPage, $total, 'template_name', $segment) ?>
 
 Please note: ``$segment`` value cannot be greater than the number of URI segments plus 1.
+
+If you in need to show many pagers on one page then additional parameter which will define a group could be helpful::
+
+	$pager = service('pager');
+	$pager->setPath('path/for/my-group', 'my-group'); // Additionally you could define path for every group.
+	$pager->makeLinks($page, $perPage, $total, 'template_name', $segment, 'my-group'); 
 
 Paginating with Only Expected Queries
 =====================================

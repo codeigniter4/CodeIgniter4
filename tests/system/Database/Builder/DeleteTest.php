@@ -8,7 +8,7 @@ class DeleteTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -21,7 +21,7 @@ class DeleteTest extends \CIUnitTestCase
 	{
 		$builder = $this->db->table('jobs');
 
-		$answer = $builder->delete(['id' => 1], null, true, true);
+		$answer = $builder->testMode()->delete(['id' => 1], null, true);
 
 		$expectedSQL   = 'DELETE FROM "jobs" WHERE "id" = :id:';
 		$expectedBinds = [

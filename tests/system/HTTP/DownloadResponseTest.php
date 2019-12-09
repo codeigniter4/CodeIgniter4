@@ -9,7 +9,7 @@ use CodeIgniter\Exceptions\DownloadException;
 class DownloadResponseTest extends \CIUnitTestCase
 {
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		if (isset($_SERVER['HTTP_USER_AGENT']))
 		{
@@ -94,6 +94,15 @@ class DownloadResponseTest extends \CIUnitTestCase
 		$response->setContentType('application/octet-stream', '');
 
 		$this->assertEquals('application/octet-stream', $response->getHeaderLine('Content-Type'));
+	}
+
+	public function testSetFileName()
+	{
+		$response = new DownloadResponse('unit-test.txt', true);
+		$response->setFileName('myFile.txt');
+		$response->buildHeaders();
+
+		$this->assertSame('attachment; filename="myFile.txt"; filename*=UTF-8\'\'myFile.txt', $response->getHeaderLine('Content-Disposition'));
 	}
 
 	public function testNoCache()

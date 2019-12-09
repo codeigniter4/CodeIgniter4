@@ -17,7 +17,7 @@ class ForgeTest extends CIDatabaseTestCase
 	 */
 	protected $forge;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 		$this->forge = \Config\Database::forge($this->DBGroup);
@@ -28,6 +28,33 @@ class ForgeTest extends CIDatabaseTestCase
 		$database_created = $this->forge->createDatabase('test_forge_database');
 
 		$this->assertTrue($database_created);
+	}
+
+	public function testCreateDatabaseIfNotExists()
+	{
+		$dbName = 'test_forge_database_exist';
+
+		$databaseCreateIfNotExists = $this->forge->createDatabase($dbName, true);
+		if ($this->db->DBDriver !== 'SQLite3')
+		{
+			$this->forge->dropDatabase($dbName);
+		}
+
+		$this->assertTrue($databaseCreateIfNotExists);
+	}
+
+	public function testCreateDatabaseIfNotExistsWithDb()
+	{
+		$dbName = 'test_forge_database_exist';
+
+		$this->forge->createDatabase($dbName);
+		$databaseExists = $this->forge->createDatabase($dbName, true);
+		if ($this->db->DBDriver !== 'SQLite3')
+		{
+			$this->forge->dropDatabase($dbName);
+		}
+
+		$this->assertTrue($databaseExists);
 	}
 
 	public function testDropDatabase()
@@ -163,6 +190,8 @@ class ForgeTest extends CIDatabaseTestCase
 			{
 				$this->assertEquals('enum', $fields[0]->type);
 			}
+
+			$this->forge->dropTable('forge_array_constraint', true);
 		}
 		else
 		{
@@ -323,10 +352,13 @@ class ForgeTest extends CIDatabaseTestCase
 		if ($this->db->DBDriver === 'SQLite3')
 		{
 			$this->assertEquals($foreignKeyData[0]->constraint_name, 'users_id to db_forge_test_users.id');
+			$this->assertEquals($foreignKeyData[0]->sequence, 0);
 		}
 		else
 		{
 			$this->assertEquals($foreignKeyData[0]->constraint_name, $this->db->DBPrefix . 'forge_test_invoices_users_id_foreign');
+			$this->assertEquals($foreignKeyData[0]->column_name, 'users_id');
+			$this->assertEquals($foreignKeyData[0]->foreign_column_name, 'id');
 		}
 		$this->assertEquals($foreignKeyData[0]->table_name, $this->db->DBPrefix . 'forge_test_invoices');
 		$this->assertEquals($foreignKeyData[0]->foreign_table_name, $this->db->DBPrefix . 'forge_test_users');

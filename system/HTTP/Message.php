@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -266,23 +267,16 @@ class Message
 	 */
 	public function setHeader(string $name, $value)
 	{
-		if (! isset($this->headers[$name]))
+		$origName = $this->getHeaderName($name);
+
+		if (isset($this->headers[$origName]) && is_array($this->headers[$origName]))
 		{
-			$this->headers[$name] = new Header($name, $value);
-
-			$this->headerMap[strtolower($name)] = $name;
-
-			return $this;
+			$this->appendHeader($origName, $value);
 		}
-
-		if (! is_array($this->headers[$name]))
+		else
 		{
-			$this->headers[$name] = [$this->headers[$name]];
-		}
-
-		if (isset($this->headers[$name]))
-		{
-			$this->headers[$name] = new Header($name, $value);
+			$this->headers[$origName]               = new Header($origName, $value);
+			$this->headerMap[strtolower($origName)] = $origName;
 		}
 
 		return $this;

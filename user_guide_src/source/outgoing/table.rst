@@ -170,7 +170,7 @@ Class Reference
 			$table->function = 'htmlspecialchars';
 			echo $table->generate();
 
-		In the above example, all cell data would be ran through PHP's :php:func:`htmlspecialchars()` function, resulting in::
+		In the above example, all cell data would be run through PHP's :php:func:`htmlspecialchars()` function, resulting in::
 
 			<td>Fred</td><td>&lt;strong&gt;Blue&lt;/strong&gt;</td><td>Small</td>
 

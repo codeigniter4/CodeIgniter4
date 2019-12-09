@@ -103,7 +103,7 @@ You can store views under a **View** directory that is namespaced, and load that
 PHP does not support loading non-class files from a namespace, CodeIgniter provides this feature to make it possible
 to package your views together in a module-like fashion for easy re-use or distribution.
 
-If you have ``Blog`` directory that has a PSR-4 mapping setup in the :doc:`Autoloader </concepts/autoloader>` living
+If you have ``Blog`` directory that has a PSR-4 mapping set up in the :doc:`Autoloader </concepts/autoloader>` living
 under the namespace ``Example\Blog``, you could retrieve view files as if they were namespaced also. Following this
 example, you could load the **BlogView** file from **/blog/views** by prepending the namespace to the view name::
 

@@ -29,7 +29,7 @@ class ModelTest extends CIDatabaseTestCase
 
 	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -38,7 +38,7 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		parent::tearDown();
 
@@ -143,7 +143,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$this->db->table('user')
 				 ->where('id', 4)
-				 ->update(['deleted' => 1]);
+				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$model = new UserModel($this->db);
 
@@ -219,7 +219,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$this->db->table('user')
 				 ->where('id', 4)
-				 ->update(['deleted' => 1]);
+				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$model = new UserModel($this->db);
 
@@ -254,7 +254,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$this->db->table('user')
 				 ->where('id', 1)
-				 ->update(['deleted' => 1]);
+				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$model = new UserModel();
 
@@ -403,11 +403,11 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 0]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 
 		$model->delete(1);
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 1]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL' => null]);
 	}
 
 	//--------------------------------------------------------------------
@@ -416,7 +416,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 0]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 
 		$model->delete(1, true);
 
@@ -461,7 +461,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->db->table('user')
 				 ->where('id', 1)
-				 ->update(['deleted' => 1]);
+				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$model->purgeDeleted();
 
@@ -479,14 +479,67 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->db->table('user')
 				 ->where('id', 1)
-				 ->update(['deleted' => 1]);
+				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$users = $model->onlyDeleted()
 					   ->findAll();
 
 		$this->assertCount(1, $users);
 	}
+	/**
+	 * If where condition is set, beyond the value was empty (0,'', NULL, etc.),
+	 * Exception should not be thrown because condition was explicity set
+	 *
+	 * @dataProvider emptyPkValues
+	 * @return       void
+	 */
+	public function testDontThrowExceptionWhenSoftDeleteConditionIsSetWithEmptyValue($emptyValue)
+	{
+		$model = new UserModel();
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+		$model->where('id', $emptyValue)->delete();
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+		unset($model);
+	}    //--------------------------------------------------------------------
 
+	/**
+	 * @expectedException        \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @expectedExceptionMessage Deletes are not allowed unless they contain a "where" or "like" clause.
+	 * @dataProvider             emptyPkValues
+	 * @return                   void
+	 */
+	public function testThrowExceptionWhenSoftDeleteParamIsEmptyValue($emptyValue)
+	{
+		$model = new UserModel();
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+		$model->delete($emptyValue);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @expectedException        \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @expectedExceptionMessage Deletes are not allowed unless they contain a "where" or "like" clause.
+	 * @dataProvider             emptyPkValues
+	 * @return                   void
+	 */
+	public function testDontDeleteRowsWhenSoftDeleteParamIsEmpty($emptyValue)
+	{
+		$model = new UserModel();
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+		$model->delete($emptyValue);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+		unset($model);
+	}
+
+	public function emptyPkValues()
+	{
+		return [
+			[0],
+			[null],
+			['0'],
+		];
+	}
 	//--------------------------------------------------------------------
 
 	public function testChunk()
@@ -757,7 +810,6 @@ class ModelTest extends CIDatabaseTestCase
 			'name'    => $pass,
 			'email'   => 'foo@example.com',
 			'country' => 'US',
-			'deleted' => 0,
 		];
 
 		$model->insert($data);
@@ -1177,7 +1229,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$data = [
 			'name'        => 'foobar',
-			'description' => 'just becaues we have to',
+			'description' => 'just because we have to',
 		];
 
 		$this->assertTrue($model->insert($data) !== false);
@@ -1220,6 +1272,20 @@ class ModelTest extends CIDatabaseTestCase
 		$this->setPrivateProperty($model, 'primaryKey', '');
 
 		$model->find(1);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @expectedException        \CodeIgniter\Exceptions\ModelException
+	 * @expectedExceptionMessage `Tests\Support\Models\UserModel` model class does not have a valid dateFormat.
+	 */
+	public function testThrowsWithNoDateFormat()
+	{
+		$model = new UserModel();
+		$this->setPrivateProperty($model, 'dateFormat', '');
+
+		$model->delete(1);
 	}
 
 	//--------------------------------------------------------------------
@@ -1403,7 +1469,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$model->delete(1);
 
-		$this->seeInDatabase('job', ['id' => 1, 'deleted' => 1]);
+		$this->seeInDatabase('job', ['id' => 1, 'deleted_at IS NOT NULL' => null]);
 	}
 
 	//--------------------------------------------------------------------
@@ -1414,7 +1480,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->db->table('job')
 				 ->where('id', 1)
-				 ->update(['deleted' => 1]);
+				 ->update(['deleted_at' => time()]);
 
 		$model->purgeDeleted();
 
@@ -1629,7 +1695,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 0]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => null]);
 
 		$results = $model->join('job', 'job.id = user.id')
 			->findAll();
@@ -1645,7 +1711,7 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 0]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => null]);
 
 		$results = $model->join('job', 'job.id = user.id')
 						 ->find(1);
@@ -1661,12 +1727,79 @@ class ModelTest extends CIDatabaseTestCase
 	{
 		$model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 0]);
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => null]);
 
 		$results = $model->join('job', 'job.id = user.id')
 						 ->first(1);
 
 		// Just making sure it didn't throw ambiguous deleted error
 		$this->assertEquals(1, $results->id);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMagicIssetTrue()
+	{
+		$model = new UserModel();
+
+		$this->assertTrue(isset($model->table));
+	}
+
+	public function testMagicIssetFalse()
+	{
+		$model = new UserModel();
+
+		$this->assertFalse(isset($model->foobar));
+	}
+
+	public function testMagicIssetWithNewProperty()
+	{
+		$model = new UserModel();
+
+		$model->flavor = 'chocolate';
+
+		$this->assertTrue(isset($model->flavor));
+	}
+
+	public function testMagicIssetFromDb()
+	{
+		$model = new UserModel();
+
+		$this->assertTrue(isset($model->DBPrefix));
+	}
+
+	public function testMagicIssetFromBuilder()
+	{
+		$model = new UserModel();
+
+		$this->assertTrue(isset($model->QBNoEscape));
+	}
+
+	public function testMagicGet()
+	{
+		$model = new UserModel();
+
+		$this->assertEquals('user', $model->table);
+	}
+
+	public function testMagicGetMissing()
+	{
+		$model = new UserModel();
+
+		$this->assertNull($model->foobar);
+	}
+
+	public function testMagicGetFromDB()
+	{
+		$model = new UserModel();
+
+		$this->assertEquals('utf8', $model->charset);
+	}
+
+	public function testMagicGetFromBuilder()
+	{
+		$model = new UserModel();
+
+		$this->assertIsArray($model->QBNoEscape);
 	}
 }

@@ -5,7 +5,7 @@ use Tests\Support\Cache\Handlers\MockHandler;
 class ThrottleTest extends \CIUnitTestCase
 {
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -16,20 +16,19 @@ class ThrottleTest extends \CIUnitTestCase
 	{
 		$throttler = new Throttler($this->cache);
 
-		// token time should be zero to start
+		// tokenTime should be 0 to start
 		$this->assertEquals(0, $throttler->getTokenTime());
 
-		// as soon as we try a rate check, token time affected
-		$rate = 1; // allow 1 per minute
-		$cost = 1;
+		// set $rate
+		$rate = 1;    // allow 1 request per minute
 
-		// after using one slot, still good
-		$throttler->check('127.0.0.1', $rate, MINUTE, $cost);
+		// first check just creates a bucket, so tokenTime should be 0
+		$throttler->check('127.0.0.1', $rate, MINUTE);
 		$this->assertEquals(0, $throttler->getTokenTime());
 
-		// after consuming a second, we have to wait
-		$throttler->check('127.0.0.1', $rate, MINUTE, $cost);
-		$this->assertEquals(1, $throttler->getTokenTime());
+		// additional check affects tokenTime, so tokenTime should be 1 or greater
+		$throttler->check('127.0.0.1', $rate, MINUTE);
+		$this->assertGreaterThanOrEqual(1, $throttler->getTokenTime());
 	}
 
 	public function testIPSavesBucket()

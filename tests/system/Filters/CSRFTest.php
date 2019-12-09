@@ -17,7 +17,7 @@ class CSRFTest extends \CIUnitTestCase
 	protected $request;
 	protected $response;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 		$this->config = new \Config\Filters();

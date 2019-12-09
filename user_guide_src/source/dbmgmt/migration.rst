@@ -9,9 +9,10 @@ need to go and run them. You would also have to keep track of which changes
 need to be run against the production machines next time you deploy.
 
 The database table **migration** tracks which migrations have already been
-run so all you have to do is update your application files and
-call ``$migration->current()`` to work out which migrations should be run.
-The current version is found in **app/Config/Migrations.php**.
+run so all you have to do is make sure your migrations are in place and
+call ``$migration->latest()`` to bring the database up to the most recent
+state. You can also use ``$migration->setNamespace(null)->progess()`` to
+include migrations from all namespaces.
 
 .. contents::
   :local:
@@ -25,25 +26,18 @@ Migration file names
 ********************
 
 Each Migration is run in numeric order forward or backwards depending on the
-method taken. Two numbering styles are available:
+method taken. Each migration is numbered using the timestamp when the migration
+was created, in **YYYYMMDDHHIISS** format (e.g. **20121031100537**). This
+helps prevent numbering conflicts when working in a team environment.
 
-* **Sequential:** each migration is numbered in sequence, starting with **001**.
-  Each number must be three digits, and there must not be any gaps in the
-  sequence. (This was the numbering scheme prior to CodeIgniter 3.0.)
-* **Timestamp:** each migration is numbered using the timestamp when the migration
-  was created, in **YYYYMMDDHHIISS** format (e.g. **20121031100537**). This
-  helps prevent numbering conflicts when working in a team environment, and is
-  the preferred scheme in CodeIgniter 3.0 and later.
+Prefix your migration files with the migration number followed by an underscore
+and a descriptive name for the migration. The year, month, and date can be separated
+from each other by dashes, underscores, or not at all. For example:
 
-The desired style may be selected using the ``$type`` setting in your
-*app/Config/Migrations.php* file. The default setting is timestamp.
+* 20121031100537_add_blog.php
+* 2012-10-31-100538_alter_blog_track_views.php
+* 2012_10_31_100539_alter_blog_add_translations.php
 
-Regardless of which numbering style you choose to use, prefix your migration
-files with the migration number followed by an underscore and a descriptive
-name for the migration. For example:
-
-* 001_add_blog.php (sequential numbering)
-* 20121031100537_add_blog.php (timestamp numbering)
 
 ******************
 Create a Migration
@@ -51,12 +45,12 @@ Create a Migration
 
 This will be the first migration for a new site which has a blog. All
 migrations go in the **app/Database/Migrations/** directory and have names such
-as *20121031100537_Add_blog.php*.
+as *20121031100537_add_blog.php*.
 ::
 
 	<?php namespace App\Database\Migrations;
 
-	class Migration_Add_blog extends \CodeIgniter\Database\Migration {
+	class AddBlog extends \CodeIgniter\Database\Migration {
 
 		public function up()
 		{
@@ -86,8 +80,6 @@ as *20121031100537_Add_blog.php*.
 		}
 	}
 
-Then in **app/Config/Migrations.php** set ``$currentVersion = 20121031100537;``.
-
 The database connection and the database Forge class are both available to you through
 ``$this->db`` and ``$this->forge``, respectively.
 
@@ -98,29 +90,19 @@ Foreign Keys
 ============
 
 When your tables include Foreign Keys, migrations can often cause problems as you attempt to drop tables and columns.
-To temporarily bypass the foreign key checks while running migrations, use the ``disableForeignKeyConstraints()`` and
-``enableForeignKeyConstraints()`` methods on the database connection.
+To temporarily bypass the foreign key checks while running migrations, use the ``disableForeignKeyChecks()`` and
+``enableForeignKeyChecks()`` methods on the database connection.
 
 ::
 
     public function up()
     {
-        $this->db->disableForeignKeyConstraints();
+        $this->db->disableForeignKeyChecks();
 
         // Migration rules would go here...
 
-        $this->db->enableForeignKeyConstraints();
+        $this->db->enableForeignKeyChecks();
     }
-
-Using $currentVersion
-=====================
-
-The $currentVersion setting allows you to mark a location that your main application namespace should be set at.
-This is especially helpful for use in a production setting. In your application, you can always
-update the migration to the current version, and not latest to ensure your production and staging
-servers are running the correct schema. On your development servers, you can add additional migrations
-for code that is not ready for production, yet. By using the ``latest()`` method, you can be assured
-that your development machines are always running the bleeding edge schema.
 
 Database Groups
 ===============
@@ -135,7 +117,7 @@ match the name of the database group exactly::
 
     <?php namespace App\Database\Migrations;
 
-    class Migration_Add_blog extends \CodeIgniter\Database\Migration
+    class AddBlog extends \CodeIgniter\Database\Migration
     {
         protected $DBGroup = 'alternate_db_group';
 
@@ -163,7 +145,7 @@ configuration file::
 	];
 
 This will look for any migrations located at both **APPPATH/Database/Migrations** and
-**ROOTPATH/Database/Migrations**. This makes it simple to include migrations in your
+**ROOTPATH/MyCompany/Database/Migrations**. This makes it simple to include migrations in your
 re-usable, modular code suites.
 
 *************
@@ -173,7 +155,7 @@ Usage Example
 In this example some simple code is placed in **app/Controllers/Migrate.php**
 to update the schema::
 
-        <?php namespace App\Controllers;
+    <?php namespace App\Controllers;
 
 	class Migrate extends \CodeIgniter\Controller
 	{
@@ -184,7 +166,7 @@ to update the schema::
 
 			try
 			{
-			  $migrate->current();
+			  $migrate->latest();
 			}
 			catch (\Exception $e)
 			{
@@ -201,76 +183,48 @@ CodeIgniter ships with several :doc:`commands </cli/cli_commands>` that are avai
 you work with migrations. These tools are not required to use migrations but might make things easier for those of you
 that wish to use them. The tools primarily provide access to the same methods that are available within the MigrationRunner class.
 
-**latest**
+**migrate**
 
-Migrates all database groups to the latest available migrations::
+Migrates a database group with all available migrations::
 
-    > php spark migrate:latest
+    > php spark migrate
 
-You can use (latest) with the following options:
+You can use (migrate) with the following options:
 
 - (-g) to chose database group, otherwise default database group will be used.
 - (-n) to choose namespace, otherwise (App) namespace will be used.
 - (-all) to migrate all namespaces to the latest migration
 
-This example will migrate Blog namespace to latest::
+This example will migrate Blog namespace with any new migrations on the test database group::
 
-    > php spark migrate:latest -g test -n Blog
+    > php spark migrate -g test -n Blog
 
-**current**
-
-Migrates the (App) namespace to match the version set in ``$currentVersion``. This will migrate both
-up and down as needed to match the specified version::
-
-    > php spark migrate:current
-
-You can use (current) with the following options:
-
-- (-g) to chose database group, otherwise default database group will be used.
-
-**version**
-
-Migrates to the specified version. If no version is provided, you will be prompted
-for the version. ::
-
-  // Asks you for the version...
-  > php spark migrate:version
-  Version:
-
-  // Sequential
-  > php spark migrate:version 007
-
-  // Timestamp
-  > php spark migrate:version 20161426211300
-
-You can use (version) with the following options:
-
-- (-g) to chose database group, otherwise default database group will be used.
-- (-n) to choose namespace, otherwise (App) namespace will be used.
+When using the `-all` option, it will scan through all namespaces attempting to find any migrations that have
+not been run. These will all be collected and then sorted as a group by date created. This should help
+to minimize any potential conflicts between the main application and any modules.
 
 **rollback**
 
-Rolls back all migrations, taking all database groups to a blank slate, effectively migration 0::
+Rolls back all migrations, taking the database group to a blank slate, effectively migration 0::
 
   > php spark migrate:rollback
 
 You can use (rollback) with the following options:
 
-- (-g) to chose database group, otherwise default database group will be used.
-- (-n) to choose namespace, otherwise (App) namespace will be used.
-- (-all) to migrate all namespaces to the latest migration
+- (-g) to choose database group, otherwise default database group will be used.
+- (-b) to choose a batch: natural numbers specify the batch, negatives indicate a relative batch
 
 **refresh**
 
-Refreshes the database state by first rolling back all migrations, and then migrating to the latest version::
+Refreshes the database state by first rolling back all migrations, and then migrating all::
 
   > php spark migrate:refresh
 
 You can use (refresh) with the following options:
 
-- (-g) to chose database group, otherwise default database group will be used.
+- (-g) to choose database group, otherwise default database group will be used.
 - (-n) to choose namespace, otherwise (App) namespace will be used.
-- (-all) to migrate all namespaces to the latest migration
+- (-all) to refresh all namespaces
 
 **status**
 
@@ -280,21 +234,18 @@ Displays a list of all migrations and the date and time they ran, or '--' if the
   Filename               Migrated On
   First_migration.php    2016-04-25 04:44:22
 
-You can use (refresh) with the following options:
+You can use (status) with the following options:
 
-- (-g) to chose database group, otherwise default database group will be used.
+- (-g) to choose database group, otherwise default database group will be used.
 
 **create**
 
 Creates a skeleton migration file in **app/Database/Migrations**.
-
-- When migration type is timestamp, using the YYYYMMDDHHIISS format::
+It automatically prepends the current timestamp. The class name it
+creates is the Pascal case version of the filename.
 
   > php spark migrate:create [filename]
 
-- When migration type is sequential, using the numbered in sequence, default with 001::
-
-  > php spark migrate:create [filename] 001
 
 You can use (create) with the following options:
 
@@ -311,25 +262,15 @@ Preference                 Default                Options                    Des
 ========================== ====================== ========================== =============================================================
 **enabled**                TRUE                   TRUE / FALSE               Enable or disable migrations.
 **path**                   'Database/Migrations/' None                       The path to your migrations folder.
-**currentVersion**         0                      None                       The current version your database should use.
 **table**                  migrations             None                       The table name for storing the schema version number.
-**type**                   'timestamp'            'timestamp' / 'sequential' The type of numeric identifier used to name migration files.
+**timestampFormat**        Y-m-d-His\_                                        The format to use for timestamps when creating a migration.
 ========================== ====================== ========================== =============================================================
 
 ***************
 Class Reference
 ***************
 
-.. php:class:: CodeIgniter\Database\MigrationRunner
-
-	.. php:method:: current($group)
-
-		:param	mixed	$group: database group name, if null (App) namespace will be used.
-		:returns:	TRUE if no migrations are found, current version string on success, FALSE on failure
-		:rtype:	mixed
-
-		Migrates up to the current version (whatever is set for
-		``$currentVersion`` in *app/Config/Migrations.php*).
+.. php:class:: CodeIgniter\\Database\\MigrationRunner
 
 	.. php:method:: findMigrations()
 
@@ -338,38 +279,37 @@ Class Reference
 
 		An array of migration filenames are returned that are found in the **path** property.
 
-	.. php:method:: latest($namespace, $group)
-
-		:param	mixed	$namespace: application namespace, if null (App) namespace will be used.
-		:param	mixed	$group: database group name, if null default database group will be used.
-		:returns:	Current version string on success, FALSE on failure
-		:rtype:	mixed
-
-		This works much the same way as ``current()`` but instead of looking for
-		the ``$currentVersion`` the Migration class will use the very
-		newest migration found in the filesystem.
-	.. php:method:: latestAll($group)
+	.. php:method:: latest($group)
 
 		:param	mixed	$group: database group name, if null default database group will be used.
 		:returns:	TRUE on success, FALSE on failure
-		:rtype:	mixed
+		:rtype:	bool
 
-		This works much the same way as ``latest()`` but instead of looking for
-		one namespace, the Migration class will use the very
-		newest migration found for all namespaces.
-	.. php:method:: version($target_version, $namespace, $group)
+		This locates migrations for a namespace (or all namespaces), determines which migrations
+		have not yet been run, and runs them in order of their version (namespaces intermingled).
 
-		:param	mixed	$namespace: application namespace, if null (App) namespace will be used.
+	.. php:method:: regress($batch, $group)
+
+		:param	mixed	$batch: previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g. -3 means "three batches back")
 		:param	mixed	$group: database group name, if null default database group will be used.
-		:param	mixed	$target_version: Migration version to process
-		:returns:	Current version string on success, FALSE on failure or no migrations are found
-		:rtype:	mixed
+		:returns:	TRUE on success, FALSE on failure or no migrations are found
+		:rtype:	bool
 
-		Version can be used to roll back changes or step forwards programmatically to
-		specific versions. It works just like ``current()`` but ignores ``$currentVersion``.
+		Regress can be used to roll back changes to a previous state, batch by batch.
 		::
 
-			$migration->version(5);
+			$migration->batch(5);
+			$migration->batch(-1);
+
+	.. php:method:: force($path, $namespace, $group)
+
+		:param	mixed	$path:  path to a valid migration file.
+		:param	mixed	$namespace: namespace of the provided migration.
+		:param	mixed	$group: database group name, if null default database group will be used.
+		:returns:	TRUE on success, FALSE on failure
+		:rtype:	bool
+
+		This forces a single file to migrate regardless of order or batches. Method "up" or "down" is detected based on whether it has already been migrated. **Note**: This method is recommended only for testing and could cause data consistency issues.
 
 	.. php:method:: setNamespace($namespace)
 

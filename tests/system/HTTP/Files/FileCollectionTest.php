@@ -4,7 +4,7 @@ namespace CodeIgniter\HTTP\Files;
 class FileCollectionTest extends \CIUnitTestCase
 {
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 		$_FILES = [];
@@ -627,6 +627,225 @@ class FileCollectionTest extends \CIUnitTestCase
 
 		$this->assertFalse($collection->hasFile('my-form.detailz.avatars.0'));
 		$this->assertNull($collection->getFile('my-form.detailz.avatars.0'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetFileMultipleHasNoFile()
+	{
+		$_FILES = [
+			'userfile' => [
+				'name'     => [
+					'fileA.txt',
+					'fileB.txt',
+				],
+				'type'     => [
+					'text/plain',
+					'text/csv',
+				],
+				'size'     => [
+					'124',
+					'248',
+				],
+				'tmp_name' => [
+					'/tmp/fileA.txt',
+					'/tmp/fileB.txt',
+				],
+				'error'    => 0,
+			],
+		];
+
+		$collection = new FileCollection();
+
+		$files = $collection->getFileMultiple('userfiletest');
+
+		$this->assertNull( $files);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetFileMultipleReturnValidDotNotationSyntax()
+	{
+		$_FILES = [
+			'my-form' => [
+				'name'     => [
+					'details' => [
+						'avatars' => [
+							'fileA.txt',
+							'fileB.txt',
+						],
+					],
+				],
+				'type'     => [
+					'details' => [
+						'avatars' => [
+							'text/plain',
+							'text/plain',
+						],
+					],
+				],
+				'size'     => [
+					'details' => [
+						'avatars' => [
+							125,
+							243,
+						],
+					],
+				],
+				'tmp_name' => [
+					'details' => [
+						'avatars' => [
+							'/tmp/fileA.txt',
+							'/tmp/fileB.txt',
+						],
+					],
+				],
+				'error'    => [
+					'details' => [
+						'avatars' => [
+							0,
+							0,
+						],
+					],
+				],
+			],
+		];
+
+		$collection = new FileCollection();
+
+		$files = $collection->getFileMultiple('my-form.details.avatars');
+		$this->assertIsArray( $files);
+		$this->assertCount(2, $files);
+
+		$this->assertInstanceOf(UploadedFile::class, $files[0]);
+		$this->assertEquals('fileA.txt', $files[0]->getName());
+		$this->assertEquals('/tmp/fileA.txt', $files[0]->getTempName());
+		$this->assertEquals('txt', $files[0]->getClientExtension());
+		$this->assertEquals('text/plain', $files[0]->getClientMimeType());
+		$this->assertEquals(125, $files[0]->getSize());
+
+		$this->assertInstanceOf(UploadedFile::class, $files[1]);
+		$this->assertEquals('fileB.txt', $files[1]->getName());
+		$this->assertEquals('/tmp/fileB.txt', $files[1]->getTempName());
+		$this->assertEquals('txt', $files[1]->getClientExtension());
+		$this->assertEquals('text/plain', $files[1]->getClientMimeType());
+		$this->assertEquals(243, $files[1]->getSize());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetFileMultipleReturnInvalidDotNotationSyntax()
+	{
+		$_FILES = [
+			'my-form' => [
+				'name'     => [
+					'details' => [
+						'avatars' =>
+							'fileA.txt',
+					],
+				],
+				'type'     => [
+					'details' => [
+						'avatars' =>
+							'text/plain',
+					],
+				],
+				'size'     => [
+					'details' => [
+						'avatars' =>
+							243,
+					],
+				],
+				'tmp_name' => [
+					'details' => [
+						'avatars' =>
+							'/tmp/fileA.txt',
+					],
+				],
+				'error'    => [
+					'details' => [
+						'avatars' =>
+							0,
+					],
+				],
+			],
+		];
+
+		$collection = new FileCollection();
+
+		$files = $collection->getFileMultiple('my-form.details.avatars');
+		$this->assertNull( $files);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetFileMultipleReturnValidMultipleFiles()
+	{
+		$_FILES = [
+			'userfile' => [
+				'name'     => [
+					'fileA.txt',
+					'fileB.txt',
+				],
+				'type'     => [
+					'text/plain',
+					'text/csv',
+				],
+				'size'     => [
+					'124',
+					'248',
+				],
+				'tmp_name' => [
+					'/tmp/fileA.txt',
+					'/tmp/fileB.txt',
+				],
+				'error'    => 0,
+			],
+		];
+
+		$collection = new FileCollection();
+
+		$files = $collection->getFileMultiple('userfile');
+		$this->assertCount(2, $files);
+		$this->assertIsArray( $files);
+
+		$this->assertInstanceOf(UploadedFile::class, $files[0]);
+		$this->assertEquals(124, $files[0]->getSize());
+		$this->assertEquals('fileA.txt', $files[0]->getName());
+		$this->assertEquals('/tmp/fileA.txt', $files[0]->getTempName());
+		$this->assertEquals('txt', $files[0]->getClientExtension());
+		$this->assertEquals('text/plain', $files[0]->getClientMimeType());
+
+		$this->assertInstanceOf(UploadedFile::class, $files[1]);
+		$this->assertEquals(248, $files[1]->getSize());
+		$this->assertEquals('fileB.txt', $files[1]->getName());
+		$this->assertEquals('/tmp/fileB.txt', $files[1]->getTempName());
+		$this->assertEquals('txt', $files[1]->getClientExtension());
+		$this->assertEquals('text/csv', $files[1]->getClientMimeType());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetFileMultipleReturnInvalidSingleFile()
+	{
+		$_FILES = [
+			'userfile' => [
+				'name'     =>
+					'fileA.txt',
+				'type'     =>
+					'text/csv',
+				'size'     =>
+					'248',
+				'tmp_name' =>
+					'/tmp/fileA.txt',
+				'error'    => 0,
+			],
+		];
+
+		$collection = new FileCollection();
+
+		$files = $collection->getFileMultiple('userfile');
+		$this->assertNull( $files);
 	}
 
 	//--------------------------------------------------------------------
