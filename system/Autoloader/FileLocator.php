@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -126,19 +127,19 @@ class FileLocator
 			$filename = implode('/', $segments);
 			break;
 		}
-		
+
 		// if no namespaces matched then quit
 		if (empty($paths))
 		{
 			return false;
 		}
-		
+
 		// Check each path in the namespace
 		foreach ($paths as $path)
 		{
 			// Ensure trailing slash
 			$path = rtrim($path, '/') . '/';
-			
+
 			// If we have a folder name, then the calling function
 			// expects this file to be within that folder, like 'Views',
 			// or 'libraries'.
@@ -153,7 +154,7 @@ class FileLocator
 				return $path;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -292,7 +293,7 @@ class FileLocator
 			{
 				$namespaces[] = [
 					'prefix' => $prefix,
-					'path'   => rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
+					'path'   => rtrim($path, '\\/') . DIRECTORY_SEPARATOR,
 				];
 			}
 		}
@@ -408,7 +409,7 @@ class FileLocator
 		// autoloader->getNamespace($prefix) returns an array of paths for that namespace
 		foreach ($this->autoloader->getNamespace($prefix) as $namespacePath)
 		{
-			$fullPath = realpath($namespacePath . $path);
+			$fullPath = realpath(rtrim($namespacePath, '/') . '/' . $path);
 
 			if (! is_dir($fullPath))
 			{

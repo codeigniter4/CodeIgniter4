@@ -53,5 +53,9 @@ ini_set('display_errors', 1);
 // Show basic information before we do anything else.
 $console->showHeader();
 
-// fire off the command the main framework.
-$console->run();
+// fire off the command in the main framework.
+$response = $console->run();
+if ($response->getStatusCode() >= 300)
+{
+	exit($response->getStatusCode());
+}

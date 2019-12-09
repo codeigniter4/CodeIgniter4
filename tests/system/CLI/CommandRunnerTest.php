@@ -17,7 +17,7 @@ class CommandRunnerTest extends \CIUnitTestCase
 	protected $logger;
 	protected $runner;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -48,7 +48,7 @@ class CommandRunnerTest extends \CIUnitTestCase
 		$this->runner->initController($this->request, $this->response, $this->logger);
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		stream_filter_remove($this->stream_filter);
 	}

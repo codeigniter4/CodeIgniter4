@@ -18,7 +18,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 	protected $request;
 	protected $config;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 

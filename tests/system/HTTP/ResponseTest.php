@@ -11,13 +11,13 @@ use Tests\Support\HTTP\MockResponse;
 class ResponseTest extends \CIUnitTestCase
 {
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 		$this->server = $_SERVER;
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		$_SERVER = $this->server;
 	}

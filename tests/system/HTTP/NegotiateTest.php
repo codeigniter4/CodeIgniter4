@@ -17,7 +17,7 @@ class NegotiateTest extends \CIUnitTestCase
 	 */
 	protected $negotiate;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -28,7 +28,7 @@ class NegotiateTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		$this->request = $this->negotiate = null;
 		unset($this->request, $this->negotiate);

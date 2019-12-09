@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -48,6 +49,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Validation\ValidationInterface;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use ReflectionClass;
 use ReflectionProperty;
 use stdClass;
@@ -240,6 +242,14 @@ class Model
 	protected $skipValidation = false;
 
 	/**
+	 * Whether rules should be removed that do not exist
+	 * in the passed in data. Used between inserts/updates.
+	 *
+	 * @var boolean
+	 */
+	protected $cleanValidationRules = true;
+
+	/**
 	 * Our validator instance.
 	 *
 	 * @var \CodeIgniter\Validation\Validation
@@ -379,12 +389,12 @@ class Model
 			$row = $row->getResult($this->tempReturnType);
 		}
 
-		$row = $this->trigger('afterFind', ['id' => $id, 'data' => $row]);
+		$eventData = $this->trigger('afterFind', ['id' => $id, 'data' => $row]);
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
-		return $row['data'];
+		return $eventData['data'];
 	}
 
 	//--------------------------------------------------------------------
@@ -436,12 +446,12 @@ class Model
 
 		$row = $row->getResult($this->tempReturnType);
 
-		$row = $this->trigger('afterFind', ['data' => $row, 'limit' => $limit, 'offset' => $offset]);
+		$eventData = $this->trigger('afterFind', ['data' => $row, 'limit' => $limit, 'offset' => $offset]);
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
-		return $row['data'];
+		return $eventData['data'];
 	}
 
 	//--------------------------------------------------------------------
@@ -473,11 +483,11 @@ class Model
 
 		$row = $row->getFirstRow($this->tempReturnType);
 
-		$row = $this->trigger('afterFind', ['data' => $row]);
+		$eventData = $this->trigger('afterFind', ['data' => $row]);
 
 		$this->tempReturnType = $this->returnType;
 
-		return $row['data'];
+		return $eventData['data'];
 	}
 
 	//--------------------------------------------------------------------
@@ -680,16 +690,11 @@ class Model
 		// Validate data before saving.
 		if ($this->skipValidation === false)
 		{
-			if ($this->validate($data) === false)
+			if ($this->cleanRules(false)->validate($data) === false)
 			{
 				return false;
 			}
 		}
-
-		// Save the original data so it can be passed to
-		// any Model Event callbacks and not stripped
-		// by doProtectFields
-		$originalData = $data;
 
 		// Must be called first so we don't
 		// strip out created_at values.
@@ -708,20 +713,21 @@ class Model
 			$data[$this->updatedField] = $date;
 		}
 
-		$data = $this->trigger('beforeInsert', ['data' => $data]);
+		$eventData = $this->trigger('beforeInsert', ['data' => $data]);
 
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $this->builder()
-				->set($data['data'], '', $escape)
+				->set($eventData['data'], '', $escape)
 				->insert();
-		
+
 		// If insertion succeeded then save the insert ID
 		if ($result)
 		{
 			$this->insertID = $this->db->insertID();
 		}
-		
-		$this->trigger('afterInsert', ['data' => $originalData, 'result' => $result]);
+
+		// Trigger afterInsert events with the inserted data and new ID
+		$this->trigger('afterInsert', ['id' => $this->insertID, 'data' => $eventData['data'], 'result' => $result]);
 
 		// If insertion failed, get out of here
 		if (! $result)
@@ -752,7 +758,7 @@ class Model
 		{
 			foreach ($set as $row)
 			{
-				if ($this->validate($row) === false)
+				if ($this->cleanRules(false)->validate($row) === false)
 				{
 					return false;
 				}
@@ -814,16 +820,11 @@ class Model
 		// Validate data before saving.
 		if ($this->skipValidation === false)
 		{
-			if ($this->validate($data) === false)
+			if ($this->cleanRules(true)->validate($data) === false)
 			{
 				return false;
 			}
 		}
-
-		// Save the original data so it can be passed to
-		// any Model Event callbacks and not stripped
-		// by doProtectFields
-		$originalData = $data;
 
 		// Must be called first so we don't
 		// strip out updated_at values.
@@ -834,7 +835,7 @@ class Model
 			$data[$this->updatedField] = $this->setDate();
 		}
 
-		$data = $this->trigger('beforeUpdate', ['id' => $id, 'data' => $data]);
+		$eventData = $this->trigger('beforeUpdate', ['id' => $id, 'data' => $data]);
 
 		$builder = $this->builder();
 
@@ -845,10 +846,10 @@ class Model
 
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $builder
-				->set($data['data'], '', $escape)
+				->set($eventData['data'], '', $escape)
 				->update();
 
-		$this->trigger('afterUpdate', ['id' => $id, 'data' => $originalData, 'result' => $result]);
+		$this->trigger('afterUpdate', ['id' => $id, 'data' => $eventData['data'], 'result' => $result]);
 
 		return $result;
 	}
@@ -874,7 +875,7 @@ class Model
 		{
 			foreach ($set as $row)
 			{
-				if ($this->validate($row) === false)
+				if ($this->cleanRules(true)->validate($row) === false)
 				{
 					return false;
 				}
@@ -913,6 +914,14 @@ class Model
 
 		if ($this->useSoftDeletes && ! $purge)
 		{
+			if (empty($builder->getCompiledQBWhere()))
+			{
+				if (CI_DEBUG)
+				{
+					throw new DatabaseException('Deletes are not allowed unless they contain a "where" or "like" clause.');
+				}
+				return false;
+			}
 			$set[$this->deletedField] = $this->setDate();
 
 			if ($this->useTimestamps && ! empty($this->updatedField))
@@ -948,8 +957,8 @@ class Model
 		}
 
 		return $this->builder()
-			    ->where($this->table . '.' . $this->deletedField . ' IS NOT NULL')
-			    ->delete();
+				->where($this->table . '.' . $this->deletedField . ' IS NOT NULL')
+				->delete();
 	}
 
 	//--------------------------------------------------------------------
@@ -982,7 +991,7 @@ class Model
 		$this->tempUseSoftDeletes = false;
 
 		$this->builder()
-		     ->where($this->table . '.' . $this->deletedField . ' IS NOT NULL');
+			 ->where($this->table . '.' . $this->deletedField . ' IS NOT NULL');
 
 		return $this;
 	}
@@ -1004,7 +1013,7 @@ class Model
 		// Validate data before saving.
 		if (! empty($data) && $this->skipValidation === false)
 		{
-			if ($this->validate($data) === false)
+			if ($this->cleanRules(true)->validate($data) === false)
 			{
 				return false;
 			}
@@ -1359,6 +1368,23 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Should validation rules be removed before saving?
+	 * Most handy when doing updates.
+	 *
+	 * @param boolean $choice
+	 *
+	 * @return $this
+	 */
+	public function cleanRules(bool $choice = false)
+	{
+		$this->cleanValidationRules = $choice;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Validate the data against the validation rules (or the validation group)
 	 * specified in the class property, $validationRules.
 	 *
@@ -1389,7 +1415,9 @@ class Model
 			$rules = $this->validation->loadRuleGroup($rules);
 		}
 
-		$rules = $this->cleanValidationRules($rules, $data);
+		$rules = $this->cleanValidationRules
+			? $this->cleanValidationRules($rules, $data)
+			: $rules;
 
 		// If no data existed that needs validation
 		// our job is done here.
@@ -1563,22 +1591,22 @@ class Model
 	 * It is the responsibility of the callback methods to return
 	 * the data itself.
 	 *
-	 * Each $data array MUST have a 'data' key with the relevant
+	 * Each $eventData array MUST have a 'data' key with the relevant
 	 * data for callback methods (like an array of key/value pairs to insert
 	 * or update, an array of results, etc)
 	 *
 	 * @param string $event
-	 * @param array  $data
+	 * @param array  $eventData
 	 *
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DataException
 	 */
-	protected function trigger(string $event, array $data)
+	protected function trigger(string $event, array $eventData)
 	{
 		// Ensure it's a valid event
 		if (! isset($this->{$event}) || empty($this->{$event}))
 		{
-			return $data;
+			return $eventData;
 		}
 
 		foreach ($this->{$event} as $callback)
@@ -1588,10 +1616,10 @@ class Model
 				throw DataException::forInvalidMethodTriggered($callback);
 			}
 
-			$data = $this->{$callback}($data);
+			$eventData = $this->{$callback}($eventData);
 		}
 
-		return $data;
+		return $eventData;
 	}
 
 	//--------------------------------------------------------------------
@@ -1609,7 +1637,7 @@ class Model
 	 */
 	public function __get(string $name)
 	{
-		if (in_array($name, ['primaryKey', 'table', 'returnType', 'DBGroup']))
+		if (property_exists($this, $name))
 		{
 			return $this->{$name};
 		}
@@ -1623,6 +1651,31 @@ class Model
 		}
 
 		return null;
+	}
+
+	/**
+	 * Checks for the existence of properties across this model, builder, and db connection.
+	 *
+	 * @param string $name
+	 *
+	 * @return boolean
+	 */
+	public function __isset(string $name): bool
+	{
+		if (property_exists($this, $name))
+		{
+			return true;
+		}
+		elseif (isset($this->db->$name))
+		{
+			return true;
+		}
+		elseif (isset($this->builder()->$name))
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 	//--------------------------------------------------------------------

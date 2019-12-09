@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -43,13 +44,12 @@ use CodeIgniter\CLI\CLI;
 use Config\Services;
 
 /**
- * Migrates the DB to version set in config file, $currentVersion.
+ * Runs all new migrations.
  *
  * @package CodeIgniter\Commands
  */
-class MigrateCurrent extends BaseCommand
+class Migrate extends BaseCommand
 {
-
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.
@@ -63,21 +63,21 @@ class MigrateCurrent extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $name = 'migrate:current';
+	protected $name = 'migrate';
 
 	/**
 	 * the Command's short description
 	 *
 	 * @var string
 	 */
-	protected $description = 'Migrates us up or down to the version specified as $currentVersion in the migrations config file.';
+	protected $description = 'Locates and runs all new migrations against the database.';
 
 	/**
 	 * the Command's usage
 	 *
 	 * @var string
 	 */
-	protected $usage = 'migrate:current [options]';
+	protected $usage = 'migrate [options]';
 
 	/**
 	 * the Command's Arguments
@@ -92,25 +92,44 @@ class MigrateCurrent extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-g' => 'Set database group',
+		'-n'   => 'Set migration namespace',
+		'-g'   => 'Set database group',
+		'-all' => 'Set for all namespaces, will ignore (-n) option',
 	];
 
 	/**
-	 * Migrates us up or down to the version specified as $currentVersion
-	 * in the migrations config file.
+	 * Ensures that all migrations have been run.
 	 *
 	 * @param array $params
 	 */
 	public function run(array $params = [])
 	{
 		$runner = Services::migrations();
+		$runner->clearCliMessages();
 
-		CLI::write(lang('Migrations.toVersion'), 'yellow');
+		CLI::write(lang('Migrations.latest'), 'yellow');
 
-		$group = $params['-g'] ?? CLI::getOption('g');
+		$namespace = $params['-n'] ?? CLI::getOption('n');
+		$group     = $params['-g'] ?? CLI::getOption('g');
+
 		try
 		{
-			$runner->current($group);
+			// Check for 'all' namespaces
+			if ($this->isAllNamespace($params))
+			{
+				$runner->setNamespace(null);
+			}
+			// Check for a specified namespace
+			elseif ($namespace)
+			{
+				$runner->setNamespace($namespace);
+			}
+
+			if (! $runner->latest($group))
+			{
+				CLI::write(lang('Migrations.generalFault'), 'red');
+			}
+
 			$messages = $runner->getCliMessages();
 			foreach ($messages as $message)
 			{
@@ -123,6 +142,26 @@ class MigrateCurrent extends BaseCommand
 		{
 			$this->showError($e);
 		}
+	}
+
+	/**
+	 * To migrate all namespaces to the latest migration
+	 *
+	 * Demo:
+	 *  1. command line: php spark migrate:latest -all
+	 *  2. command file: $this->call('migrate:latest', ['-g' => 'test','-all']);
+	 *
+	 * @param  array $params
+	 * @return boolean
+	 */
+	private function isAllNamespace(array $params): bool
+	{
+		if (array_search('-all', $params) !== false)
+		{
+			return true;
+		}
+
+		return ! is_null(CLI::getOption('all'));
 	}
 
 }

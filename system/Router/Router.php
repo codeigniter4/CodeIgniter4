@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -484,7 +485,7 @@ class Router implements RouterInterface
 				// Is this route supposed to redirect to another?
 				if ($this->collection->isRedirect($key))
 				{
-					throw RedirectException::forUnableToRedirect($val, $this->collection->getRedirectCode($key));
+					throw new RedirectException($val, $this->collection->getRedirectCode($key));
 				}
 
 				$this->setRequest(explode('/', $val));
@@ -578,10 +579,9 @@ class Router implements RouterInterface
 
 		// Loop through our segments and return as soon as a controller
 		// is found or when such a directory doesn't exist
-		while ($c -- > 0)
+		while ($c-- > 0)
 		{
-			$test = $this->directory . ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]
-			);
+			$test = $this->directory . ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]);
 
 			if (! is_file(APPPATH . 'Controllers/' . $test . '.php') && $directory_override === false && is_dir(APPPATH . 'Controllers/' . $this->directory . ucfirst($segments[0])))
 			{
@@ -606,6 +606,11 @@ class Router implements RouterInterface
 	 */
 	protected function setDirectory(string $dir = null, bool $append = false)
 	{
+		if (empty($dir))
+		{
+			return;
+		}
+
 		$dir = ucfirst($dir);
 
 		if ($append !== true || empty($this->directory))

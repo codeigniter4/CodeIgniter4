@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -65,6 +66,7 @@ trait ResponseTrait
 	protected $codes = [
 		'created'                   => 201,
 		'deleted'                   => 200,
+		'no_content'                => 204,
 		'invalid_request'           => 400,
 		'unsupported_response_type' => 400,
 		'invalid_scope'             => 400,
@@ -186,6 +188,21 @@ trait ResponseTrait
 	public function respondDeleted($data = null, string $message = '')
 	{
 		return $this->respond($data, $this->codes['deleted'], $message);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Used after a command has been successfully executed but there is no
+	 * meaningful reply to send back to the client.
+	 *
+	 * @param string $message Message.
+	 *
+	 * @return mixed
+	 */
+	public function respondNoContent(string $message = 'No Content')
+	{
+		return $this->respond(null, $this->codes['no_content'], $message);
 	}
 
 	//--------------------------------------------------------------------

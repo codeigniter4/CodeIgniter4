@@ -10,7 +10,7 @@ class SelectTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -193,6 +193,32 @@ class SelectTest extends \CIUnitTestCase
 		$builder->selectSum('payments', 'myAlias');
 
 		$expected = 'SELECT SUM("payments") AS "myAlias" FROM "invoices"';
+
+		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSelectCountWithNoAlias()
+	{
+		$builder = new BaseBuilder('invoices', $this->db);
+
+		$builder->selectCount('payments');
+
+		$expected = 'SELECT COUNT("payments") AS "payments" FROM "invoices"';
+
+		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSelectCountWithAlias()
+	{
+		$builder = new BaseBuilder('invoices', $this->db);
+
+		$builder->selectCount('payments', 'myAlias');
+
+		$expected = 'SELECT COUNT("payments") AS "myAlias" FROM "invoices"';
 
 		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}

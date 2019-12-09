@@ -4,7 +4,7 @@ namespace CodeIgniter\I18n;
 class TimeDifferenceTest extends \CIUnitTestCase
 {
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -198,6 +198,23 @@ class TimeDifferenceTest extends \CIUnitTestCase
 
 		$this->assertEquals(-8, (int) round($diff->days));
 		$this->assertNull($diff->nonsense);
+	}
+
+	public function testMagicIssetTrue()
+	{
+		$current = Time::parse('March 10, 2017', 'America/Chicago');
+		$diff    = $current->difference('March 18, 2017', 'America/Chicago');
+
+		$this->assertTrue(isset($diff->days));
+		$this->assertFalse(isset($diff->nonsense));
+	}
+
+	public function testMagicIssetFalse()
+	{
+		$current = Time::parse('March 10, 2017', 'America/Chicago');
+		$diff    = $current->difference('March 18, 2017', 'America/Chicago');
+
+		$this->assertFalse(isset($diff->nonsense));
 	}
 
 }

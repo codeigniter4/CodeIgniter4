@@ -1,6 +1,6 @@
-<?php namespace App\Database\Migrations;
+<?php namespace Tests\Support\MigrationTestMigrations\Database\Migrations;
 
-class Migration_some_migration extends \CodeIgniter\Database\Migration
+class Migration_another_migration extends \CodeIgniter\Database\Migration
 {
 	public function up()
 	{

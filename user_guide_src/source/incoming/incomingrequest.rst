@@ -17,7 +17,7 @@ An instance of the request class already populated for you if the current class 
 
         <?php namespace App\Controllers;
 
-        user CodeIgniter\Controller;
+        use CodeIgniter\Controller;
 
 	class UserController extends Controller
 	{
@@ -253,9 +253,14 @@ and uses best practices to minimize any security risks.
 		echo $file->getType();          // image/jpg
 	}
 
-You can also retrieve a single file based on the filename given in the HTML file input::
+You can retrieve a single file uploaded on its own, based on the filename given in the HTML file input::
 
 	$file = $request->getFile('uploadedfile');
+
+You can retrieve an array of same-named files uploaded as part of a 
+multi-file upload, based on the filename given in the HTML file input::
+
+	$files = $request->getFileMultiple('uploadedfile');
 
 Content Negotiation
 ----------------------------------------------------------------------------
@@ -282,7 +287,7 @@ The methods provided by the parent classes that are available are:
 * :meth:`CodeIgniter\\HTTP\\Request::validIP`
 * :meth:`CodeIgniter\\HTTP\\Request::getMethod`
 * :meth:`CodeIgniter\\HTTP\\Request::getServer`
-* :meth:`CodeIgniter\\HTTP\\Message::body`
+* :meth:`CodeIgniter\\HTTP\\Message::getBody`
 * :meth:`CodeIgniter\\HTTP\\Message::setBody`
 * :meth:`CodeIgniter\\HTTP\\Message::populateHeaders`
 * :meth:`CodeIgniter\\HTTP\\Message::headers`

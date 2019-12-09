@@ -27,7 +27,7 @@ class FormatRulesTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 		$this->validation = new Validation((object) $this->config, \Config\Services::renderer());
@@ -582,6 +582,47 @@ class FormatRulesTest extends \CIUnitTestCase
 			],
 			[
 				'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789-\ ',
+				false,
+			],
+			[
+				null,
+				false,
+			],
+		];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @dataProvider hexProvider
+	 *
+	 * @param $str
+	 * @param $expected
+	 */
+	public function testHex($str, $expected)
+	{
+		$data = [
+			'foo' => $str,
+		];
+
+		$this->validation->setRules([
+			'foo' => 'hex',
+		]);
+
+		$this->assertEquals($expected, $this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function hexProvider()
+	{
+		return [
+			[
+				'abcdefABCDEF0123456789',
+				true,
+			],
+			[
+				'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789',
 				false,
 			],
 			[

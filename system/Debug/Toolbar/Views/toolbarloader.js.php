@@ -56,15 +56,15 @@ function loadDoc(time) {
 		}
 	};
 
-	xhttp.open("GET", url + "/?debugbar_time=" + time, true);
+	xhttp.open("GET", url + "?debugbar_time=" + time, true);
 	xhttp.send();
 }
 
 // Track all AJAX requests
 if (window.ActiveXObject) {
-    var oldXHR = new ActiveXObject('Microsoft.XMLHTTP');
+	var oldXHR = new ActiveXObject('Microsoft.XMLHTTP');
 } else {
-    var oldXHR = window.XMLHttpRequest;
+	var oldXHR = window.XMLHttpRequest;
 }
 
 function newXHR() {

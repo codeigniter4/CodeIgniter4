@@ -529,6 +529,28 @@ and simply set ``$validationRules`` to the name of the validation rule group you
 		protected $validationRules = 'users';
 	}
 
+Retrieving Validation Rules
+---------------------------
+
+You can retrieve a model's validation rules by accessing its ``validationRules``
+property::
+
+    $rules = $model->validationRules;
+
+You can also retrieve just a subset of those rules by calling the accessor
+method directly, with options::
+
+    $rules = $model->getValidationRules($options);
+
+The ``$options`` parameter is an associative array with one element,
+whose key is either "except" or "only", and which has as its
+value an array of fieldnames of interest.::
+
+    // get the rules for all but the "username" field
+    $rules = $model->getValidationRules(['except' => ['username']]);
+    // get the rules for only the "city" and "state" fields
+    $rules = $model->getValidationRules(['only' => ['city', 'state']]);
+
 Validation Placeholders
 -----------------------
 
@@ -586,7 +608,7 @@ need it::
 
 	$builder = $userModel->builder();
 
-This builder is already setup with the model's $table.
+This builder is already set up with the model's $table.
 
 You can also use Query Builder methods and the Model's CRUD methods in the same chained call, allowing for
 very elegant use::
@@ -693,13 +715,14 @@ Event            $data contents
 ================ =========================================================================================================
 beforeInsert      **data** = the key/value pairs that are being inserted. If an object or Entity class is passed to the
                   insert method, it is first converted to an array.
-afterInsert       **data** = the original key/value pairs being inserted.
+afterInsert       **id** = the primary key of the new row, or 0 on failure.
+                  **data** = the key/value pairs being inserted.
                   **result** = the results of the insert() method used through the Query Builder.
 beforeUpdate      **id** = the primary key of the row being updated.
                   **data** = the key/value pairs that are being inserted. If an object or Entity class is passed to the
                   insert method, it is first converted to an array.
 afterUpdate       **id** = the primary key of the row being updated.
-                  **data** = the original key/value pairs being updated.
+                  **data** = the key/value pairs being updated.
                   **result** = the results of the update() method used through the Query Builder.
 afterFind         Varies by find* method. See the following:
 - find()          **id** = the primary key of the row being searched for.

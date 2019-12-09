@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -390,7 +391,48 @@ class Connection extends BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Escape Like String Direct
+	 * There are a few instances where MySQLi queries cannot take the
+	 * additional "ESCAPE x" parameter for specifying the escape character
+	 * in "LIKE" strings, and this handles those directly with a backslash.
+	 *
+	 * @param  string|string[] $str Input string
+	 * @return string|string[]
+	 */
+	public function escapeLikeStringDirect($str)
+	{
+		if (is_array($str))
+		{
+			foreach ($str as $key => $val)
+			{
+				$str[$key] = $this->escapeLikeStringDirect($val);
+			}
+
+			return $str;
+		}
+
+		$str = $this->_escapeString($str);
+
+		// Escape LIKE condition wildcards
+		return str_replace([
+			$this->likeEscapeChar,
+			'%',
+			'_',
+		], [
+			'\\' . $this->likeEscapeChar,
+			'\\' . '%',
+			'\\' . '_',
+		], $str
+		);
+
+		return $str;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Generates the SQL for listing tables in a platform-dependent manner.
+	 * Uses escapeLikeStringDirect().
 	 *
 	 * @param boolean $prefixLimit
 	 *
@@ -402,7 +444,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if ($prefixLimit !== false && $this->DBPrefix !== '')
 		{
-			return $sql . " LIKE '" . $this->escapeLikeString($this->DBPrefix) . "%'";
+			return $sql . " LIKE '" . $this->escapeLikeStringDirect($this->DBPrefix) . "%'";
 		}
 
 		return $sql;
@@ -449,6 +491,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 			sscanf($query[$i]->Type, '%[a-z](%d)', $retVal[$i]->type, $retVal[$i]->max_length);
 
+			$retVal[$i]->nullable    = $query[$i]->Null === 'YES';
 			$retVal[$i]->default     = $query[$i]->Default;
 			$retVal[$i]->primary_key = (int)($query[$i]->Key === 'PRI');
 		}
@@ -537,10 +580,14 @@ class Connection extends BaseConnection implements ConnectionInterface
                     SELECT
                         tc.CONSTRAINT_NAME,
                         tc.TABLE_NAME,
-                        rc.REFERENCED_TABLE_NAME
+                        kcu.COLUMN_NAME,
+                        rc.REFERENCED_TABLE_NAME,
+                        kcu.REFERENCED_COLUMN_NAME
                     FROM information_schema.TABLE_CONSTRAINTS AS tc
                     INNER JOIN information_schema.REFERENTIAL_CONSTRAINTS AS rc
                         ON tc.CONSTRAINT_NAME = rc.CONSTRAINT_NAME
+                    INNER JOIN information_schema.KEY_COLUMN_USAGE AS kcu
+                        ON tc.CONSTRAINT_NAME = kcu.CONSTRAINT_NAME
                     WHERE
                         tc.CONSTRAINT_TYPE = ' . $this->escape('FOREIGN KEY') . ' AND
                         tc.TABLE_SCHEMA = ' . $this->escape($this->database) . ' AND
@@ -555,10 +602,12 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$retVal = [];
 		foreach ($query as $row)
 		{
-			$obj                     = new \stdClass();
-			$obj->constraint_name    = $row->CONSTRAINT_NAME;
-			$obj->table_name         = $row->TABLE_NAME;
-			$obj->foreign_table_name = $row->REFERENCED_TABLE_NAME;
+			$obj                      = new \stdClass();
+			$obj->constraint_name     = $row->CONSTRAINT_NAME;
+			$obj->table_name          = $row->TABLE_NAME;
+			$obj->column_name         = $row->COLUMN_NAME;
+			$obj->foreign_table_name  = $row->REFERENCED_TABLE_NAME;
+			$obj->foreign_column_name = $row->REFERENCED_COLUMN_NAME;
 
 			$retVal[] = $obj;
 		}

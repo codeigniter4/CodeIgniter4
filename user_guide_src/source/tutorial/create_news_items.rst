@@ -99,7 +99,7 @@ This could be as simple as:::
 Model Updating
 -------------------------------------------------------
 
-The only thing that remains is ensuring that your model is setup
+The only thing that remains is ensuring that your model is set up
 to allow data to be saved properly. The ``save()`` method that was
 used will determine whether the information should be inserted
 or if the row already exists and should be updated, based on the presence

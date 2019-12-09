@@ -66,7 +66,7 @@ Loading from Non-standard Locations
 
 Helpers can be loaded from directories outside of **app/Helpers** and
 **system/Helpers**, as long as that path can be found through a namespace that
-has been setup within the PSR-4 section of the :doc:`Autoloader config file <../concepts/autoloader>`.
+has been set up within the PSR-4 section of the :doc:`Autoloader config file <../concepts/autoloader>`.
 You would prefix the name of the Helper with the namespace that it can be located
 in. Within that namespaced directory, the loader expects it to live within a
 sub-directory named ``Helpers``. An example will help understand this.

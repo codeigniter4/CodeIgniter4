@@ -16,23 +16,23 @@ A Controller is simply a class file that is named in a way that it can be associ
 
 Consider this URI::
 
-	example.com/index.php/blog/
+	example.com/index.php/helloworld/
 
-In the above example, CodeIgniter would attempt to find a controller named Blog.php and load it.
+In the above example, CodeIgniter would attempt to find a controller named Helloworld.php and load it.
 
 **When a controller's name matches the first segment of a URI, it will be loaded.**
 
 Let's try it: Hello World!
 ==========================
 
-Let's create a simple controller so you can see it in action. Using your text editor, create a file called Blog.php,
+Let's create a simple controller so you can see it in action. Using your text editor, create a file called Helloworld.php,
 and put the following code in it::
 
 	<?php namespace App\Controllers;
 
         use CodeIgniter\Controller;
 
-	class Blog extends Controller
+	class Helloworld extends Controller
         {
 		public function index()
 		{
@@ -42,17 +42,17 @@ and put the following code in it::
 
 Then save the file to your **/app/Controllers/** directory.
 
-.. important:: The file must be called 'Blog.php', with a capital 'B'.
+.. important:: The file must be called 'Helloworld.php', with a capital 'H'.
 
 Now visit your site using a URL similar to this::
 
-	example.com/index.php/blog
+	example.com/index.php/helloworld
 
-If you did it right, you should see::
+If you did it right you should see::
 
 	Hello World!
 
-.. important:: Class names must start with an uppercase letter.
+.. important:: Controller class names MUST start with an uppercase letter and ONLY the first character can be uppercase.
 
 This is valid::
 
@@ -60,7 +60,7 @@ This is valid::
 
         use CodeIgniter\Controller;
 
-	class Blog extends Controller {
+	class Helloworld extends Controller {
 
 	}
 
@@ -70,7 +70,17 @@ This is **not** valid::
 
         use CodeIgniter\Controller;
 
-	class blog extends Controller {
+	class helloworld extends Controller {
+
+	}
+
+This is **not** valid::
+
+	<?php namespace App\Controllers;
+
+        use CodeIgniter\Controller;
+
+	class HelloWorld extends Controller {
 
 	}
 
@@ -84,7 +94,7 @@ In the above example, the method name is ``index()``. The "index" method
 is always loaded by default if the **second segment** of the URI is
 empty. Another way to show your "Hello World" message would be this::
 
-	example.com/index.php/blog/index/
+	example.com/index.php/helloworld/index/
 
 **The second segment of the URI determines which method in the
 controller gets called.**
@@ -95,7 +105,7 @@ Let's try it. Add a new method to your controller::
 
         use CodeIgniter\Controller;
 
-	class Blog extends Controller
+	class Helloworld extends Controller
         {
 
 		public function index()
@@ -103,15 +113,15 @@ Let's try it. Add a new method to your controller::
 			echo 'Hello World!';
 		}
 
-		public function comments()
+		public function comment()
 		{
-			echo 'Look at this!';
+			echo 'I am not flat!';
 		}
 	}
 
 Now load the following URL to see the comment method::
 
-	example.com/index.php/blog/comments/
+	example.com/index.php/helloworld/comment/
 
 You should see your new message.
 
@@ -149,15 +159,24 @@ Defining a Default Controller
 =============================
 
 CodeIgniter can be told to load a default controller when a URI is not
-present, as will be the case when only your site root URL is requested.
-To specify a default controller, open your **app/Config/Routes.php**
+present, as will be the case when only your site root URL is requested. Let's try it
+with the Helloworld controller. 
+
+To specify a default controller open your **app/Config/Routes.php**
 file and set this variable::
 
-	$routes->setDefaultController('Blog');
+	$routes->setDefaultController('Helloworld');
 
-Where 'Blog' is the name of the controller class you want to be used. If you now
-load your main index.php file without specifying any URI segments you'll
-see your "Hello World" message by default.
+Where 'Helloworld' is the name of the controller class you want to be used.
+
+A few lines further down **Routes.php** in the "Route Definitions" section comment out the line::
+
+$routes->get('/', 'Home::index');
+
+If you now browse to your site without specifying any URI segments you'll
+see the “Hello World” message.
+
+.. note:: The line ``$routes->get('/', 'Home::index');`` is an optimization that you will want to use in a "real-world" app. But for demonstration purposes we don't want to use that feature. ``$routes->get()`` is explained in :doc:`URI Routing <routing>`
 
 For more information, please refer to the "Routes Configuration Options" section of the
 :doc:`URI Routing <routing>` documentation.
@@ -213,18 +232,18 @@ Private methods
 ===============
 
 In some cases, you may want certain methods hidden from public access.
-In order to achieve this, simply declare the method as being private
-or protected and it will not be served via a URL request. For example,
-if you were to have a method like this::
+To achieve this, simply declare the method as private or protected. 
+That will prevent it from being served by a URL request. For example,
+if you were to define a method like this for the `Helloworld` controller::
 
 	protected function utility()
 	{
 		// some code
 	}
 
-Trying to access it via the URL, like this, will not work::
+then trying to access it using the following URL will not work::
 
-	example.com/index.php/blog/utility/
+	example.com/index.php/helloworld/utility/
 
 Organizing Your Controllers into Sub-directories
 ================================================
@@ -299,7 +318,7 @@ modify this by passing the duration (in seconds) as the first parameter::
 helpers
 -------
 
-You can define an array of helper files as a class property. Whenever the controller is loaded,
+You can define an array of helper files as a class property. Whenever the controller is loaded 
 these helper files will be automatically loaded into memory so that you can use their methods anywhere
 inside the controller::
 
@@ -314,11 +333,13 @@ inside the controller::
 Validating data
 ======================
 
-The controller also provides a convenience method to make validating data a little simpler, ``validate()`` that
-takes an array of rules to test against as the first parameter, and, optionally,
-an array of custom error messages to display if the items don't pass. Internally, this uses the controller's
-**$this->request** instance to get the data through. The :doc:`Validation Library docs </libraries/validation>`
-has details on the format of the rules and messages arrays, as well as available rules.::
+To simplify data checking, the controller also provides the convenience method ``validate()``. 
+The method accepts an array of rules in the first parameter, 
+and in the optional second parameter, an array of custom error messages to display 
+if the items are not valid. Internally, this uses the controller's
+**$this->request** instance to get the data to be validated. 
+The :doc:`Validation Library docs </libraries/validation>` have details on 
+rule and message array formats, as well as available rules.::
 
     public function updateUser(int $userID)
     {
@@ -335,8 +356,8 @@ has details on the format of the rules and messages arrays, as well as available
         // do something here if successful...
     }
 
-If you find it simpler to keep the rules in the configuration file, you can replace the $rules array with the
-name of the group, as defined in ``Config\Validation.php``::
+If you find it simpler to keep the rules in the configuration file, you can replace 
+the $rules array with the name of the group as defined in ``Config\Validation.php``::
 
     public function updateUser(int $userID)
     {
@@ -350,8 +371,7 @@ name of the group, as defined in ``Config\Validation.php``::
         // do something here if successful...
     }
 
-.. note:: Validation can also be handled automatically in the model. Where you handle validation is up to you,
-            and you will find that some situations are simpler in the controller than then model, and vice versa.
+.. note:: Validation can also be handled automatically in the model, but sometimes it's easier to do it in the controller. Where is up to you.
 
 That's it!
 ==========

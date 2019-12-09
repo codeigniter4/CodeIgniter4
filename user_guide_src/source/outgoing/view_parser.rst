@@ -67,7 +67,7 @@ What It Does
 ============
 
 The ``Parser`` class processes "PHP/HTML scripts" stored in the application's view path.
-These scripts have a ``.php`` extension, but can not contain any PHP.
+These scripts can not contain any PHP.
 
 Each view parameter (which we refer to as a pseudo-variable) triggers a substitution,
 based on the type of value you provided for it. Pseudo-variables are not
@@ -99,7 +99,9 @@ View parameters are passed to ``setData()`` as an associative
 array of data to be replaced in the template. In the above example, the
 template would contain two variables: {blog_title} and {blog_heading}
 The first parameter to ``render()`` contains the name of the :doc:`view
-file </outgoing/views>` (in this example the file would be called blog_template.php),
+file </outgoing/views>`, Where *blog_template* is the name of your view file.
+
+.. important:: If the file extension is omitted, then the views are expected to end with the .php extension.
 
 Parser Configuration Options
 ============================
@@ -425,7 +427,7 @@ The following filters are available when using the parser:
 +---------------+---------------------+--------------------------------------------------------------+-------------------------------------+
 + highlight_code+                     + Highlights code samples with HTML/CSS.                       + { v|highlight_code }                +
 +---------------+---------------------+--------------------------------------------------------------+-------------------------------------+
-+ limit_chars   + limit               + Limits the number of chracters to $limit.                    + { v|limit_chars(100) }              +
++ limit_chars   + limit               + Limits the number of characters to $limit.                   + { v|limit_chars(100) }              +
 +---------------+---------------------+--------------------------------------------------------------+-------------------------------------+
 + limit_words   + limit               + Limits the number of words to $limit.                        + { v|limit_words(20) }               +
 +---------------+---------------------+--------------------------------------------------------------+-------------------------------------+

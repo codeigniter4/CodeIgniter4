@@ -9,6 +9,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +31,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -102,6 +103,41 @@ class FileCollection
 			{
 				$uploadedFile = $this->files[$name];
 				return  ($uploadedFile instanceof UploadedFile) ?
+					$uploadedFile : null;
+			}
+		}
+
+		return null;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Verify if a file exist in the collection of uploaded files and is have been uploaded with multiple option.
+	 *
+	 * @param string $name
+	 *
+	 * @return array|null
+	 */
+	public function getFileMultiple(string $name)
+	{
+		$this->populateFiles();
+
+		if ($this->hasFile($name))
+		{
+			if (strpos($name, '.') !== false)
+			{
+				$name         = explode('.', $name);
+				$uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
+
+				return (is_array($uploadedFile) && ($uploadedFile[0] instanceof UploadedFile)) ?
+					$uploadedFile : null;
+			}
+
+			if (array_key_exists($name, $this->files))
+			{
+				$uploadedFile = $this->files[$name];
+				return (is_array($uploadedFile) && ($uploadedFile[0] instanceof UploadedFile)) ?
 					$uploadedFile : null;
 			}
 		}
@@ -274,7 +310,7 @@ class FileCollection
 	 */
 	protected function getValueDotNotationSyntax(array $index, array $value)
 	{
-		if (is_array($index) && ! empty($index))
+		if (! empty($index))
 		{
 			$current_index = array_shift($index);
 		}

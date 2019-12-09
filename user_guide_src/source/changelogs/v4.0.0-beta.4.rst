@@ -1,0 +1,197 @@
+Version 4.0.0-beta.4
+====================================================
+
+Release Date: Not released
+
+Highlights:
+
+There are some breaking changes...
+
+- The Entity class has been refactored;
+- The Model class changing has been updated to better handle soft deletes 
+- The routing has been beefed up
+
+New messages:
+
+- new translation key: Database/noDateFormat
+
+App changes:
+
+
+Testing changes:
+
+- enhanced database & migration testing in tests/_support
+
+The list of changed files follows, with PR numbers shown.
+
+- admin/
+
+- app/
+	- Controllers/
+		- Home #1999
+
+- public/
+
+- system/
+	- Autoloader/
+		- FileLocator #2059, #2064
+	- Cache/
+		- CacheFactory #2060
+		- Handlers/
+			- MemcachedHandler #2060
+			- PredisHandler #2060
+			- RedisHandler #2060
+	- Commands/
+		- Utilities/Routes #2008
+	- Config/
+		- Config #2079
+		- Services #2024
+	- Database/
+		- MySQLi/
+			- Connection #2042
+			- Result #2011
+		- Postgre/
+			- Connection #2042
+			- Result #2011
+		- SQLite3/
+			- Connection #2042
+			- Forge #2042
+			- Result #2011
+			- Table #2042
+		- BaseBuilder #1989
+		- BaseConnection #2042
+		- BaseResult #2002
+		- Forge #2042
+		- MigratiopnRollback #2035
+		- MigrationRunner #2019
+	- Debug/
+		- Toolbar/Collectors/Routes #2030
+	- Exceptions.
+		- ModelException #2054
+	- Files/
+		- File #2104
+	- Filters/
+		- Filters #2039	- helpers/
+		- date_helper #2091
+	- HTTP/
+		- CLIRequest #2024
+		- CURLRequest #1996, #2050
+		- IncomingRequest #2063
+		- Request #2024
+	- Language/en/
+		- Database #2054
+	- Pager/
+		- Pager #2026
+	- Router/
+		- RouteCollection #1959, #2012, #2024
+		- Router #2024, #2031, #2043
+		- RouterInterface #2024
+	- Session/
+		- Handlers/ArrayHandler #2014
+	- Test/
+		- CIUnitTestCase #2002
+		- FeatureTestCase #2043
+	- Throttle/
+		- Throttler #2074
+	- CodeIgniter #2012, #2024
+	- Common #2036
+	- Entity #2002, #2004, #2011, #2081
+	- Model #2050, #2051, #2053, #2054
+
+- tests/system/
+	- CLI/
+		- ConsoleTest #2024
+	- Database/
+		- Live/
+			- DbUtilsTest #2051, #2053
+			- ForgeTest #2019, #2042
+			- ModelTest #2002, #2051, #2053, #2054
+			- SQLite/AlterTablesTest #2042
+			- WhereTest #2052
+		- Migrations/MigrationRunnerTest #2019
+	- HTTP/
+		- CLIRequest #2024
+		- CURLRequestTest #1996
+	- Router/
+		- RouteCollectionTest #1959, #2012, #2024
+		- RouterTest #2024, #2043
+	- Test/
+		- FeatureTestCaseTest #2043
+	- Throttle/
+		- ThrottleTest #2074
+	- View/
+		- ParserTest #2005
+	- CodeIgniterTest #2024
+	- EntityTest #2002, #2004
+
+- user_guide_src/
+	- concepts/
+		- autoloader #2035, #2071
+	- database/
+		- query_builder #2035
+	- dbmgmt/
+		- forge #2042
+		- migration #2042
+	- helpers/
+		- date_helper #2091
+	- incoming/
+		- routing #2035
+	- installation/
+		- installing_composer #2015, #2035
+	- libraries/
+		- pagination #2026
+		- sessions #2014, #2035
+		- validaiton #2069
+		- uploaded_files #2104
+	- models/
+		- entitites #2002, #2004, #2035
+		- model #2051, #2053, #2054
+	- outgoing/
+		- view_parser #e21823, 32005
+	- testing/
+		- database #2051, #2053
+
+
+PRs merged:
+-----------
+
+- #2104 File & UploadFile Fixes
+- #2091 Timezone select
+- #2081 JSON format checking improved
+- #2079 Update config() to check all namespaces
+- #2074 Throttler can access bucket for bucket life time
+- #2071 Fix autoloader.rst formatting
+- #2069 validation rule: then -> than (spelling)
+- #2064 Bugfix file locator slash error
+- #2063 Ensure query vars are part of request->uri. Fixes #2062
+- #2060 Cache Drive Backups
+- #2059 Add multi-path support to `locateFile()`
+- #2054 Add model exceptions for missing/invalid dateFormat
+- #2053 Change Model's deleted flag to a deleted_at datetime/timestamp. Fixes #2041
+- #2052 Add various tests for (not) null
+- #2051 Soft deletes use deleted_at
+- #2050 Stash insert ID before event trigger
+- #2043 Zero params should be passed through when routing. Fixes #2032
+- #2042 SQLite3 now supports dropping foreign keys. Fixes #1982
+- #2040 Update CURLRequest.php
+- #2039 Restrict filter matching of uris so they require an exact match. Fixes #2038
+- #2036 Make `force_https()` send headers before exit
+- #2035 Various typos and Guide corrections
+- #2031 Fallback to server request for default method
+- #2030 Support the new `router` service in Debug Toolbar
+- #2026 Extension Pager::makeLinks (optional grup name)
+- #2024 Refactor the way the router and route collection determine the current HTTP verb
+- #2019 SQLite and Mysql driver additional tests and migration runner test fixes
+- #2015 Direct user to follow the upgrade steps after installation
+- #2014 Added a new Session/ArrayHandler that can be used during testing
+- #2012 Use request->method for HTTP verb
+- #2011 Set the raw data array without any mutations for the Entity
+- #2008 Add `patch` method to command "routes"
+- #2005 Plugin closures docs update and test
+- #2004 Allow hasChanged() without parameter
+- #2002 Entity Refactor
+- #1999 use CodeIgniter\Controller; not needed since Home Controller extends …
+- #1996 Attempting to fix CURLRequest debug issue. #1994
+- #e21823 Corrected docs for parser plugins. Closes #1995
+- #1989 argument set() must by type of string - cannot agree
+- #1959 Prevent reverseRoute from searching closures

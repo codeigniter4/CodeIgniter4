@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CodeIgniter
  *
@@ -8,6 +7,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -61,36 +61,42 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @var \CodeIgniter\Images\Image
 	 */
 	protected $image = null;
+
 	/**
 	 * Image width.
 	 *
 	 * @var integer
 	 */
 	protected $width = 0;
+
 	/**
 	 * Image height.
 	 *
 	 * @var integer
 	 */
 	protected $height = 0;
+
 	/**
 	 * File permission mask.
 	 *
 	 * @var type
 	 */
 	protected $filePermissions = 0644;
+
 	/**
 	 * X-axis.
 	 *
 	 * @var integer
 	 */
 	protected $xAxis = 0;
+
 	/**
 	 * Y-axis.
 	 *
 	 * @var integer
 	 */
 	protected $yAxis = 0;
+
 	/**
 	 * Master dimensioning.
 	 *
@@ -282,6 +288,22 @@ abstract class BaseHandler implements ImageHandlerInterface
 		$this->yAxis = null;
 
 		return $result;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Changes the stored image type to indicate the new file format to use when saving.
+	 * Does not touch the actual resource.
+	 *
+	 * @param integer|null $imageType A PHP imageType constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
+	 *
+	 * @return $this
+	 */
+	public function convert(int $imageType)
+	{
+		$this->image->imageType = $imageType;
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -497,6 +519,8 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * Retrieve the EXIF information from the image, if possible. Returns
 	 * an array of the information, or null if nothing can be found.
 	 *
+	 * EXIF data is only supported fr JPEG & TIFF formats.
+	 *
 	 * @param string|null $key    If specified, will only return this piece of EXIF data.
 	 *
 	 * @param boolean     $silent If true, will not throw our own exceptions.
@@ -513,10 +537,16 @@ abstract class BaseHandler implements ImageHandlerInterface
 			}
 		}
 
-		$exif = exif_read_data($this->image->getPathname());
-		if (! is_null($key) && is_array($exif))
+		$exif = null; // default
+		switch ($this->image->imageType)
 		{
-			$exif = $exif[$key] ?? false;
+			case IMAGETYPE_JPEG:
+			case IMAGETYPE_TIFF_II:
+				$exif = exif_read_data($this->image->getPathname());
+				if (! is_null($key) && is_array($exif))
+				{
+					$exif = $exif[$key] ?? false;
+				}
 		}
 
 		return $exif;
@@ -556,7 +586,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 			$height = ceil(($width / $cropWidth) * $cropHeight);
 		}
 
-		list($x, $y) = $this->calcCropCoords($width, $height, $origWidth, $origHeight, $position);
+		list($x, $y) = $this->calcCropCoords($cropWidth, $cropHeight, $origWidth, $origHeight, $position);
 
 		return $this->crop($cropWidth, $cropHeight, $x, $y)
 						->resize($width, $height);
@@ -594,14 +624,14 @@ abstract class BaseHandler implements ImageHandlerInterface
 		if ($xRatio > $yRatio)
 		{
 			return [
-				(int) ($origWidth * $yRatio),
-				(int) ($origHeight * $yRatio),
+				$origWidth,
+				(int) ($origWidth * $height / $width),
 			];
 		}
 
 		return [
-			(int) ($origWidth * $xRatio),
-			(int) ($origHeight * $xRatio),
+			(int) ($origHeight * $width / $height),
+			$origHeight,
 		];
 	}
 
@@ -784,6 +814,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Return image width.
 	 *

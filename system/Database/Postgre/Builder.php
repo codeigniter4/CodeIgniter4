@@ -7,6 +7,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +29,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -137,14 +138,13 @@ class Builder extends BaseBuilder
 	 * we simply do a DELETE and an INSERT on the first key/value
 	 * combo, assuming that it's either the primary key or a unique key.
 	 *
-	 * @param array   $set       An associative array of insert values
-	 * @param boolean $returnSQL
+	 * @param array $set An associative array of insert values
 	 *
 	 * @return   mixed
 	 * @throws   DatabaseException
 	 * @internal param true $bool returns the generated SQL, false executes the query.
 	 */
-	public function replace(array $set = null, bool $returnSQL = false)
+	public function replace(array $set = null)
 	{
 		if ($set !== null)
 		{
@@ -202,7 +202,6 @@ class Builder extends BaseBuilder
 	 * @param mixed   $where
 	 * @param integer $limit
 	 * @param boolean $reset_data
-	 * @param boolean $returnSQL
 	 *
 	 * @return   mixed
 	 * @throws   DatabaseException
@@ -210,14 +209,14 @@ class Builder extends BaseBuilder
 	 * @internal param the $mixed limit clause
 	 * @internal param $bool
 	 */
-	public function delete($where = '', int $limit = null, bool $reset_data = true, bool $returnSQL = false)
+	public function delete($where = '', int $limit = null, bool $reset_data = true)
 	{
 		if (! empty($limit) || ! empty($this->QBLimit))
 		{
 			throw new DatabaseException('PostgreSQL does not allow LIMITs on DELETE queries.');
 		}
 
-		return parent::delete($where, $limit, $reset_data, $returnSQL);
+		return parent::delete($where, $limit, $reset_data);
 	}
 
 	//--------------------------------------------------------------------

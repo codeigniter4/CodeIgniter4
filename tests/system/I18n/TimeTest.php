@@ -8,7 +8,7 @@ use IntlDateFormatter;
 class TimeTest extends \CIUnitTestCase
 {
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -217,6 +217,22 @@ class TimeTest extends \CIUnitTestCase
 
 		Time::setTestNow();
 		$this->assertCloseEnoughString(date('Y-m-d H:i:s', time()), Time::now()->toDateTimeString());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMagicIssetTrue()
+	{
+		$time = Time::parse('January 1, 2016');
+
+		$this->assertTrue(isset($time->year));
+	}
+
+	public function testMagicIssetFalse()
+	{
+		$time = Time::parse('January 1, 2016');
+
+		$this->assertFalse(isset($time->foobar));
 	}
 
 	//--------------------------------------------------------------------

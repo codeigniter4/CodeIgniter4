@@ -44,7 +44,7 @@ Please *don't* disclose it publicly, but e-mail us at security@codeigniter.com,
 or report it via our page on `HackerOne <https://hackerone.com/codeigniter>`_.
 
 If you've found a critical vulnerability, we'd be happy to credit you in our
-`ChangeLog <https://codeigniter4.github.io/userguide/changelog.html>`_.
+`ChangeLog <../changelogs/index.html>`_.
 
 ****************************
 Tips for a Good Issue Report

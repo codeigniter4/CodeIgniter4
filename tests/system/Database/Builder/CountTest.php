@@ -9,7 +9,7 @@ class CountTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -21,10 +21,11 @@ class CountTest extends \CIUnitTestCase
 	public function testCountAll()
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
+		$builder->testMode();
 
 		$expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "jobs"';
 
-		$this->assertEquals($expectedSQL, $builder->countAll(true, true));
+		$this->assertEquals($expectedSQL, $builder->countAll(true));
 	}
 
 	//--------------------------------------------------------------------
@@ -32,8 +33,9 @@ class CountTest extends \CIUnitTestCase
 	public function testCountAllResults()
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
+		$builder->testMode();
 
-		$answer = $builder->where('id >', 3)->countAllResults(false, true);
+		$answer = $builder->where('id >', 3)->countAllResults(false);
 
 		$expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "jobs" WHERE "id" > :id:';
 

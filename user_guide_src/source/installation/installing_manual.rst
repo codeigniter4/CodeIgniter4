@@ -18,7 +18,7 @@ Installation
 Download the `latest version <https://github.com/CodeIgniter4/framework/releases/latest>`_,
 and extract it to become your project root.
 
-Setup
+Setting Up
 -------------------------------------------------------
 
 None
@@ -45,7 +45,7 @@ You are responsible for merge conflicts when updating
 Structure
 -------------------------------------------------------
 
-Folders in your project after setup:
+Folders in your project after set up:
 app, public, system, writable 
 
 

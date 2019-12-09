@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -510,6 +511,34 @@ abstract class BaseConnection implements ConnectionInterface
 	public function getDatabase(): string
 	{
 		return empty($this->database) ? '' : $this->database;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Set DB Prefix
+	 *
+	 * Set's the DB Prefix to something new without needing to reconnect
+	 *
+	 * @param string $prefix The prefix
+	 *
+	 * @return string
+	 */
+	public function setPrefix(string $prefix = ''): string
+	{
+		return $this->DBPrefix = $prefix;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the database prefix.
+	 *
+	 * @return string
+	 */
+	public function getPrefix(): string
+	{
+		return $this->DBPrefix;
 	}
 
 	//--------------------------------------------------------------------
@@ -1330,22 +1359,6 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Set DB Prefix
-	 *
-	 * Set's the DB Prefix to something new without needing to reconnect
-	 *
-	 * @param string $prefix The prefix
-	 *
-	 * @return string
-	 */
-	public function setPrefix(string $prefix = ''): string
-	{
-		return $this->DBPrefix = $prefix;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Returns the total number of rows affected by this query.
 	 *
 	 * @return mixed
@@ -1516,7 +1529,9 @@ abstract class BaseConnection implements ConnectionInterface
 		// Is there a cached result?
 		if (isset($this->dataCache['table_names']) && $this->dataCache['table_names'])
 		{
-			return $this->dataCache['table_names'];
+			return $constrainByPrefix ?
+				preg_grep("/^{$this->DBPrefix}/", $this->dataCache['table_names'])
+				: $this->dataCache['table_names'];
 		}
 
 		if (false === ($sql = $this->_listTables($constrainByPrefix)))
@@ -1846,6 +1861,20 @@ abstract class BaseConnection implements ConnectionInterface
 		}
 
 		return null;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Checker for properties existence.
+	 *
+	 * @param string $key
+	 *
+	 * @return boolean
+	 */
+	public function __isset(string $key): bool
+	{
+		return property_exists($this, $key);
 	}
 
 	//--------------------------------------------------------------------

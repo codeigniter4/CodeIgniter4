@@ -48,6 +48,8 @@ exist for the most common use cases::
     respondCreated($data);
     // Item successfully deleted
     respondDeleted($data);
+    // Command executed by no response required
+    respondNoContent($message);
     // Client isn't authorized
     failUnauthorized($description);
     // Forbidden action
@@ -179,9 +181,22 @@ Class Reference
 	    $user = $userModel->delete($id);
 	    return $this->respondDeleted(['id' => $id]);
 
+.. php:method:: respondNoContent(string $message = 'No Content')
+
+    :param string $message: A custom "reason" message to return.
+    :returns: The value of the Response object's send() method.
+
+    Sets the appropriate status code to use when a command was successfully executed by the server but there is no 
+    meaningful reply to send back to the client, typically 204.
+
+    ::
+
+	    sleep(1);
+	    return $this->respondNoContent();        
+
 .. php:method:: failUnauthorized(string $description = 'Unauthorized'[, string $code=null[, string $message = '']])
 
-    :param mixed  $description: The error message to show the user.
+    :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
@@ -195,7 +210,7 @@ Class Reference
 
 .. php:method:: failForbidden(string $description = 'Forbidden'[, string $code=null[, string $message = '']])
 
-    :param mixed  $description: The error message to show the user.
+    :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
@@ -210,7 +225,7 @@ Class Reference
 
 .. php:method:: failNotFound(string $description = 'Not Found'[, string $code=null[, string $message = '']])
 
-    :param mixed  $description: The error message to show the user.
+    :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
@@ -223,7 +238,7 @@ Class Reference
 
 .. php:method:: failValidationError(string $description = 'Bad Request'[, string $code=null[, string $message = '']])
 
-    :param mixed  $description: The error message to show the user.
+    :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
@@ -237,7 +252,7 @@ Class Reference
 
 .. php:method:: failResourceExists(string $description = 'Conflict'[, string $code=null[, string $message = '']])
 
-    :param mixed  $description: The error message to show the user.
+    :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
@@ -251,7 +266,7 @@ Class Reference
 
 .. php:method:: failResourceGone(string $description = 'Gone'[, string $code=null[, string $message = '']])
 
-    :param mixed  $description: The error message to show the user.
+    :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
@@ -265,7 +280,7 @@ Class Reference
 
 .. php:method:: failTooManyRequests(string $description = 'Too Many Requests'[, string $code=null[, string $message = '']])
 
-    :param mixed  $description: The error message to show the user.
+    :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.

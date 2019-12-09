@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CodeIgniter
  *
@@ -8,6 +7,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -43,6 +43,8 @@ use CodeIgniter\Debug\Exceptions;
 use CodeIgniter\Debug\Iterator;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Debug\Toolbar;
+use CodeIgniter\Encryption\EncrypterInterface;
+use CodeIgniter\Encryption\Encryption;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Honeypot\Honeypot;
 use CodeIgniter\HTTP\CLIRequest;
@@ -96,6 +98,7 @@ use Config\Migrations;
  */
 class Services extends BaseService
 {
+
 	/**
 	 * The cache class provides a simple way to store and retrieve
 	 * complex data for later.
@@ -177,11 +180,60 @@ class Services extends BaseService
 		}
 
 		return new CURLRequest(
-			$config,
-			new URI($options['base_uri'] ?? null),
-			$response,
-			$options
+				$config,
+				new URI($options['base_uri'] ?? null),
+				$response,
+				$options
 		);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * The Email class allows you to send email via mail, sendmail, SMTP.
+	 *
+	 * @param null    $config
+	 * @param boolean $getShared
+	 *
+	 * @return \CodeIgniter\Email\Email|mixed
+	 */
+	public static function email($config = null, bool $getShared = true)
+	{
+		if ($getShared)
+		{
+			return static::getSharedInstance('email', $config);
+		}
+		if (empty($config))
+		{
+			$config = new \Config\Email();
+		}
+		$email = new \CodeIgniter\Email\Email($config);
+		return $email;
+	}
+
+	/**
+	 * The Encryption class provides two-way encryption.
+	 *
+	 * @param mixed   $config
+	 * @param boolean $getShared
+	 *
+	 * @return EncrypterInterface Encryption handler
+	 */
+	public static function encrypter($config = null, $getShared = false)
+	{
+		if ($getShared === true)
+		{
+			return static::getSharedInstance('encrypter', $config);
+		}
+
+		if (empty($config))
+		{
+			$config = new \Config\Encryption();
+		}
+
+		$encryption = new Encryption($config);
+		$encrypter  = $encryption->initialize($config);
+		return $encrypter;
 	}
 
 	//--------------------------------------------------------------------
@@ -351,13 +403,11 @@ class Services extends BaseService
 		if ($getShared)
 		{
 			return static::getSharedInstance('language', $locale)
-					   ->setLocale($locale);
+							->setLocale($locale);
 		}
 
-		$locale = ! empty($locale)
-			? $locale
-			: static::request()
-				  ->getLocale();
+		$locale = ! empty($locale) ? $locale : static::request()
+						->getLocale();
 
 		return new Language($locale);
 	}
@@ -385,7 +435,7 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
-	 * Return the appropriate igration runner.
+	 * Return the appropriate Migration runner.
 	 *
 	 * @param \CodeIgniter\Config\BaseConfig            $config
 	 * @param \CodeIgniter\Database\ConnectionInterface $db
@@ -553,10 +603,10 @@ class Services extends BaseService
 		}
 
 		return new IncomingRequest(
-			$config,
-			new URI(),
-			'php://input',
-			new UserAgent()
+				$config,
+				new URI(),
+				'php://input',
+				new UserAgent()
 		);
 	}
 
@@ -609,7 +659,7 @@ class Services extends BaseService
 
 		$response = new RedirectResponse($config);
 		$response->setProtocolVersion(static::request()
-										  ->getProtocolVersion());
+						->getProtocolVersion());
 
 		return $response;
 	}
@@ -876,5 +926,4 @@ class Services extends BaseService
 	}
 
 	//--------------------------------------------------------------------
-
 }

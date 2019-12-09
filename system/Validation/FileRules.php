@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -120,18 +121,30 @@ class FileRules
 		$params = explode(',', $params);
 		$name   = array_shift($params);
 
-		$file = $this->request->getFile($name);
-
-		if($file->getError() === UPLOAD_ERR_NO_FILE)
+		if (! ($files = $this->request->getFileMultiple($name)))
 		{
-			return true;
+			$files = [$this->request->getFile($name)];
 		}
 
-		if (is_null($file))
+		foreach ($files as $file)
 		{
-			return false;
+			if (is_null($file))
+			{
+				return false;
+			}
+
+			if ($file->getError() === UPLOAD_ERR_NO_FILE)
+			{
+				return true;
+			}
+
+			if ($file->getSize() / 1024 > $params[0])
+			{
+				return false;
+			}
 		}
-		return $params[0] >= $file->getSize() / 1024;
+
+		return true;
 	}
 
 	//--------------------------------------------------------------------
@@ -153,25 +166,34 @@ class FileRules
 		$params = explode(',', $params);
 		$name   = array_shift($params);
 
-
-
-		$file = $this->request->getFile($name);
-
-		if($file->getError() === UPLOAD_ERR_NO_FILE)
+		if (! ($files = $this->request->getFileMultiple($name)))
 		{
-			return true;
+			$files = [$this->request->getFile($name)];
 		}
 
-		if (is_null($file))
+		foreach ($files as $file)
 		{
-			return false;
+			if (is_null($file))
+			{
+				return false;
+			}
+
+			if ($file->getError() === UPLOAD_ERR_NO_FILE)
+			{
+				return true;
+			}
+
+			// We know that our mimes list always has the first mime
+			// start with `image` even when then are multiple accepted types.
+			$type = \Config\Mimes::guessTypeFromExtension($file->getExtension());
+
+			if (mb_strpos($type, 'image') !== 0)
+			{
+				return false;
+			}
 		}
 
-		// We know that our mimes list always has the first mime
-		// start with `image` even when then are multiple accepted types.
-		$type = \Config\Mimes::guessTypeFromExtension($file->getExtension());
-
-		return mb_strpos($type, 'image') === 0;
+		return true;
 	}
 
 	//--------------------------------------------------------------------
@@ -192,19 +214,30 @@ class FileRules
 		$params = explode(',', $params);
 		$name   = array_shift($params);
 
-		$file = $this->request->getFile($name);
-
-		if($file->getError() === UPLOAD_ERR_NO_FILE)
+		if (! ($files = $this->request->getFileMultiple($name)))
 		{
-			return true;
+			$files = [$this->request->getFile($name)];
 		}
 
-		if (is_null($file))
+		foreach ($files as $file)
 		{
-			return false;
+			if (is_null($file))
+			{
+				return false;
+			}
+
+			if ($file->getError() === UPLOAD_ERR_NO_FILE)
+			{
+				return true;
+			}
+
+			if (! in_array($file->getMimeType(), $params))
+			{
+				return false;
+			}
 		}
 
-		return in_array($file->getMimeType(), $params);
+		return true;
 	}
 
 	//--------------------------------------------------------------------
@@ -225,19 +258,30 @@ class FileRules
 		$params = explode(',', $params);
 		$name   = array_shift($params);
 
-		$file = $this->request->getFile($name);
-
-		if($file->getError() === UPLOAD_ERR_NO_FILE)
+		if (! ($files = $this->request->getFileMultiple($name)))
 		{
-			return true;
+			$files = [$this->request->getFile($name)];
 		}
 
-		if (is_null($file))
+		foreach ($files as $file)
 		{
-			return false;
+			if (is_null($file))
+			{
+				return false;
+			}
+
+			if ($file->getError() === UPLOAD_ERR_NO_FILE)
+			{
+				return true;
+			}
+
+			if (! in_array($file->getExtension(), $params))
+			{
+				return false;
+			}
 		}
 
-		return in_array($file->getExtension(), $params);
+		return true;
 	}
 
 	//--------------------------------------------------------------------
@@ -259,28 +303,39 @@ class FileRules
 		$params = explode(',', $params);
 		$name   = array_shift($params);
 
-		$file = $this->request->getFile($name);
-
-		if($file->getError() === UPLOAD_ERR_NO_FILE)
+		if (! ($files = $this->request->getFileMultiple($name)))
 		{
-			return true;
+			$files = [$this->request->getFile($name)];
 		}
 
-		if (is_null($file))
+		foreach ($files as $file)
 		{
-			return false;
+			if (is_null($file))
+			{
+				return false;
+			}
+
+			if ($file->getError() === UPLOAD_ERR_NO_FILE)
+			{
+				return true;
+			}
+
+			// Get Parameter sizes
+			$allowedWidth  = $params[0] ?? 0;
+			$allowedHeight = $params[1] ?? 0;
+
+			// Get uploaded image size
+			$info       = getimagesize($file->getTempName());
+			$fileWidth  = $info[0];
+			$fileHeight = $info[1];
+
+			if ($fileWidth > $allowedWidth || $fileHeight > $allowedHeight)
+			{
+				return false;
+			}
 		}
 
-		// Get Parameter sizes
-		$allowedWidth  = $params[0] ?? 0;
-		$allowedHeight = $params[1] ?? 0;
-
-		// Get uploaded image size
-		$info       = getimagesize($file->getTempName());
-		$fileWidth  = $info[0];
-		$fileHeight = $info[1];
-
-		return $fileWidth <= $allowedWidth && $fileHeight <= $allowedHeight;
+		return true;
 	}
 
 	//--------------------------------------------------------------------
