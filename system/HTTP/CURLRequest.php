@@ -78,8 +78,8 @@ class CURLRequest extends Request
 		'connect_timeout' => 150,
 		'debug'           => false,
 		'verify'          => true,
-        	'proxy'           => null,
-        	'secure'          => null
+		'proxy'           => null,
+		'secure'          => null
 	];
 
 	/**
@@ -328,7 +328,7 @@ class CURLRequest extends Request
 
 		return $this;
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -338,12 +338,13 @@ class CURLRequest extends Request
 	*
 	* @return $this
 	*/
-    	public function setProxy(?string $data)
-    	{
-        	$this->config['proxy'] = $data;
+	public function setProxy(?string $data)
+	{
+		$this->config['proxy'] = $data;
 
-        	return $this;
-   	}
+		return $this;
+	}
+
 	//--------------------------------------------------------------------
 	/**
 	* Will be SSL peer cert verified.
@@ -475,21 +476,21 @@ class CURLRequest extends Request
 			unset($this->config['query']);
 		}
 
-		if(!empty($this->config['proxy']) && is_string($this->config['proxy']))
-        	{
-           		$curl_options[CURLOPT_PROXY] = $this->config['proxy'];
-        	}
-		
-	        if(!empty($this->config['secure-host']) && is_bool($this->config['secure-host']))
-        	{
-            		$curl_options[CURLOPT_SSL_VERIFYHOST] = $this->config['secure-host'];
-        	}
-		
-        	if(!empty($this->config['secure-peer']) && is_bool($this->config['secure-peer']))
-        	{
-            		$curl_options[CURLOPT_SSL_VERIFYPEER] = $this->config['secure-peer'];
-        	}
-		
+		if (! empty($this->config['proxy']) && is_string($this->config['proxy']))
+		{
+			$curl_options[CURLOPT_PROXY] = $this->config['proxy'];
+		}
+
+		if (! empty($this->config['secure-host']) && is_bool($this->config['secure-host']))
+		{
+				$curl_options[CURLOPT_SSL_VERIFYHOST] = $this->config['secure-host'];
+		}
+
+		if (! empty($this->config['secure-peer']) && is_bool($this->config['secure-peer']))
+		{
+				$curl_options[CURLOPT_SSL_VERIFYPEER] = $this->config['secure-peer'];
+		}
+
 		$curl_options[CURLOPT_URL]            = $url;
 		$curl_options[CURLOPT_RETURNTRANSFER] = true;
 		$curl_options[CURLOPT_HEADER]         = true;
