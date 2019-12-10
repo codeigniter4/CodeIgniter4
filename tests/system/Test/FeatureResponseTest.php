@@ -211,15 +211,47 @@ class FeatureResponseTest extends CIUnitTestCase
 		$this->assertEquals($formatter->format(['foo' => 'bar']), $this->feature->getJSON());
 	}
 
-	public function testInvalidJSON()
+	public function testEmptyJSON()
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
-		$this->response->setJSON('');
+		$this->response->setJSON('', true);
 		$config    = new \Config\Format();
 		$formatter = $config->getFormatter('application/json');
 
-		// this should fail because of empty JSON
-		$this->assertFalse($this->feature->getJSON());
+		// this should be "" - json_encode('');
+		$this->assertEquals('""', $this->feature->getJSON());
+	}
+	
+	public function testFalseJSON()
+	{
+		$this->getFeatureResponse('<h1>Hello World</h1>');
+		$this->response->setJSON(false, true);
+		$config    = new \Config\Format();
+		$formatter = $config->getFormatter('application/json');
+
+		// this should be FALSE - json_encode(false)
+		$this->assertEquals('false', $this->feature->getJSON());
+	}
+	
+	public function testTrueJSON()
+	{
+		$this->getFeatureResponse('<h1>Hello World</h1>');
+		$this->response->setJSON(true, true);
+		$config    = new \Config\Format();
+		$formatter = $config->getFormatter('application/json');
+
+		// this should be TRUE - json_encode(true)
+		$this->assertEquals('true', $this->feature->getJSON());
+	}
+	
+	public function testInvalidJSON()
+	{
+		$tmp = ' test " case ';
+		$this->getFeatureResponse('<h1>Hello World</h1>');
+		$this->response->setBody($tmp);
+
+		// this should be FALSE - invalid JSON - will see if this is working that way ;-)
+		$this->assertFalse($this->response->getBody() == $this->feature->getJSON());
 	}
 
 	public function testGetXML()

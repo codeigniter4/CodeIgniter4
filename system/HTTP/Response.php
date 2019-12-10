@@ -448,9 +448,9 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return $this
 	 */
-	public function setJSON($body)
+	public function setJSON($body, bool $unencoded = false)
 	{
-		$this->body = $this->formatBody($body, 'json');
+		$this->body = $this->formatBody($body, 'json' . ($unencoded ? '-unencoded' : ''));
 
 		return $this;
 	}
@@ -537,13 +537,13 @@ class Response extends Message implements ResponseInterface
 	 * @throws \InvalidArgumentException If the body property is not string or array.
 	 */
 	protected function formatBody($body, string $format)
-	{
-		$mime = "application/{$format}";
+	{    
+		$this->bodyFormat = ($format === 'json-unencoded' ? 'json' : $format);
+		$mime = "application/{$this->bodyFormat}";
 		$this->setContentType($mime);
-		$this->bodyFormat = $format;
 
 		// Nothing much to do for a string...
-		if (! is_string($body))
+		if (! is_string($body) || $format === 'json-unencoded')
 		{
 			/**
 			 * @var Format $config
