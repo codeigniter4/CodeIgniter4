@@ -458,21 +458,6 @@ class CURLRequestTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testSetProxy()
-	{
-		$request = $this->getRequest([
-			'base_uri' => 'http://www.foo.com/api/v1/',
-		]);
-
-		$request->setProxy('http://example.com:8080');
-
-		$options = $request->curl_options;
-
-		$this->assertEquals('http://example.com:8080', $options[CURLOPT_PROXY]);
-	}
-
-	//--------------------------------------------------------------------
-
 	public function testSSLVerification()
 	{
 		$file = __FILE__;
