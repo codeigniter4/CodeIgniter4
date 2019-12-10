@@ -473,7 +473,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	{
 		$v = pg_version($this->connID);
 		// 'server' key is only available since PostgreSQL 7.4
-		$v = $v['server'] ?? 0;
+		$v = explode(' ', $v['server'])[0] ?? 0;
 
 		$table  = func_num_args() > 0 ? func_get_arg(0) : null;
 		$column = func_num_args() > 1 ? func_get_arg(1) : null;
