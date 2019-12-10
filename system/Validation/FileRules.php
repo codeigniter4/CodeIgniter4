@@ -133,6 +133,11 @@ class FileRules
 				return false;
 			}
 
+			if ($file->getError() === UPLOAD_ERR_NO_FILE)
+			{
+				return true;
+			}
+
 			if ($file->getSize() / 1024 > $params[0])
 			{
 				return false;
@@ -171,6 +176,11 @@ class FileRules
 			if (is_null($file))
 			{
 				return false;
+			}
+
+			if ($file->getError() === UPLOAD_ERR_NO_FILE)
+			{
+				return true;
 			}
 
 			// We know that our mimes list always has the first mime
@@ -216,6 +226,11 @@ class FileRules
 				return false;
 			}
 
+			if ($file->getError() === UPLOAD_ERR_NO_FILE)
+			{
+				return true;
+			}
+
 			if (! in_array($file->getMimeType(), $params))
 			{
 				return false;
@@ -253,6 +268,11 @@ class FileRules
 			if (is_null($file))
 			{
 				return false;
+			}
+
+			if ($file->getError() === UPLOAD_ERR_NO_FILE)
+			{
+				return true;
 			}
 
 			if (! in_array($file->getExtension(), $params))
@@ -293,6 +313,11 @@ class FileRules
 			if (is_null($file))
 			{
 				return false;
+			}
+
+			if ($file->getError() === UPLOAD_ERR_NO_FILE)
+			{
+				return true;
 			}
 
 			// Get Parameter sizes
