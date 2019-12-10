@@ -85,6 +85,8 @@ class RedirectResponseTest extends \CIUnitTestCase
 
 		$this->assertTrue($response->hasHeader('Location'));
 		$this->assertEquals('http://example.com/test/index.php/exampleRoute', $response->getHeaderLine('Location'));
+
+		Config::reset();
 	}
 
 	public function testRedirectRouteBad()
