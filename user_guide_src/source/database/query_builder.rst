@@ -188,8 +188,8 @@ the resulting field.
 
 ::
 
-	$builder->selectSum('age');
-	$query = $builder->get(); // Produces: SELECT SUM(age) as age FROM mytable
+	$builder->selectCount('age');
+	$query = $builder->get(); // Produces: SELECT COUNT(age) as age FROM mytable
 
 **$builder->from()**
 
