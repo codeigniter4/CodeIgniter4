@@ -35,5 +35,4 @@ class DeleteTest extends \CIUnitTestCase
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
 
-	//--------------------------------------------------------------------
 }

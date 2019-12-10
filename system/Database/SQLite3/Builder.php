@@ -70,6 +70,13 @@ class Builder extends BaseBuilder
 	 */
 	protected $canLimitWhereUpdates = false;
 
+	/**
+	 * @var array
+	 */
+	protected $supportedIgnoreStatements = [
+		'insert' => 'OR IGNORE',
+	];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -105,7 +112,5 @@ class Builder extends BaseBuilder
 	{
 		return 'DELETE FROM ' . $table;
 	}
-
-	//--------------------------------------------------------------------
 
 }
