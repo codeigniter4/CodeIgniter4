@@ -1189,7 +1189,38 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-	/**
+    /** Calculate current protocol from $_SERVER or route options array
+     * @param $options
+     * @return string
+     */
+    private function getProto($options)
+    {
+        if($options['proto'] ?? false)
+            return $options['proto'] . '://';
+        else
+            return (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] === 1)) || isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https' ?
+                'https://' :
+                'http://';
+    }
+		
+    //--------------------------------------------------------------------
+
+    /**
+     * Calculate required port from $_SERVER or route options array
+     * @param $options
+     * @return string
+     */
+    private function getPort($options)
+    {
+        if($options['port'] ?? false)
+            return ':' . $options['port'];
+        else
+            return (isset($_SERVER['SERVER_PORT']) && ! in_array($_SERVER['SERVER_PORT'], [80, 443]) ? ':' . $_SERVER['SERVER_PORT'] : '');
+    }
+	
+    //--------------------------------------------------------------------
+
+    /**
 	 * Attempts to look up a route based on it's destination.
 	 *
 	 * If a route exists:
@@ -1214,7 +1245,25 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			if (array_key_exists($search, $collection))
 			{
-				return $this->fillRouteParams(key($collection[$search]['route']), $params);
+				$prefix = '';
+				if(!empty($collection[$search]['options']['subdomain']))
+				{
+				    $old = $this->determineCurrentSubdomain();
+				    $prefix = $this->getProto($collection[$search]['options']) .
+					$collection[$search]['options']['subdomain'] .
+					str_replace($old, '', $_SERVER['HTTP_HOST']) .
+					$this->getPort($collection[$search]['options']);
+				}
+				else if(!empty($collection[$search]['options']['hostname']))
+				{
+				    $prefix = $this->getProto($collection[$search]['options']) .
+					$collection[$search]['options']['hostname'] .
+					$this->getPort($collection[$search]['options']);
+				}
+
+				return
+					$prefix .
+					$this->fillRouteParams(key($collection[$search]['route']), $params);
 			}
 		}
 
@@ -1370,7 +1419,7 @@ class RouteCollection implements RouteCollectionInterface
 		$options = array_merge((array) $this->currentOptions, (array) $options);
 
 		// Hostname limiting?
-		if (! empty($options['hostname']))
+		if (($options['enabled']??false) === false && ! empty($options['hostname']))
 		{
 			// @todo determine if there's a way to whitelist hosts?
 			if (isset($_SERVER['HTTP_HOST']) && strtolower($_SERVER['HTTP_HOST']) !== strtolower($options['hostname']))
@@ -1382,7 +1431,7 @@ class RouteCollection implements RouteCollectionInterface
 		}
 
 		// Limiting to subdomains?
-		else if (! empty($options['subdomain']))
+		else if (($options['enabled']??false) === false && ! empty($options['subdomain']))
 		{
 			// If we don't match the current subdomain, then
 			// we don't need to add the route.
