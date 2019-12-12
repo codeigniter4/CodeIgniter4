@@ -1246,13 +1246,12 @@ class RouteCollection implements RouteCollectionInterface
 			if (array_key_exists($search, $collection))
 			{
 				$prefix = '';
-				if(!empty($collection[$search]['options']['subdomain']))
+				if(!empty($collection[$search]['options']['subdomain']) && $collection[$search]['options']['subdomain'] !== ($old = $this->determineCurrentSubdomain()))
 				{
-				    $old = $this->determineCurrentSubdomain();
 				    $prefix = $this->getProto($collection[$search]['options']) .
 					$collection[$search]['options']['subdomain'] .
 					str_replace($old, '', $_SERVER['HTTP_HOST']) .
-					$this->getPort($collection[$search]['options']);
+					$this->getPort($collection[$search]['options']) . '/';
 				}
 				else if(!empty($collection[$search]['options']['hostname']))
 				{
@@ -1260,7 +1259,7 @@ class RouteCollection implements RouteCollectionInterface
 					$collection[$search]['options']['hostname'] .
 					$this->getPort($collection[$search]['options']);
 				}
-
+				
 				return
 					$prefix .
 					$this->fillRouteParams(key($collection[$search]['route']), $params);
