@@ -1251,7 +1251,7 @@ class RouteCollection implements RouteCollectionInterface
 				    $prefix = $this->getProto($collection[$search]['options']) .
 					$collection[$search]['options']['subdomain'] .
 					str_replace($old, '', $_SERVER['HTTP_HOST']) .
-					$this->getPort($collection[$search]['options']) . '/';
+					$this->getPort($collection[$search]['options']);
 				}
 				else if(!empty($collection[$search]['options']['hostname']))
 				{
