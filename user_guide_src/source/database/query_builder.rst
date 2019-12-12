@@ -1142,7 +1142,7 @@ the data to the first parameter of the function::
 	// WHERE id = $id
 
 If you want to delete all data from a table, you can use the truncate()
-function, or empty_table().
+function, or emptyTable().
 
 **$builder->emptyTable()**
 
