@@ -541,8 +541,15 @@ class RouteCollection implements RouteCollectionInterface
 			}
 			foreach ($collection as $r)
 			{
-				$key          = key($r['route']);
-				$routes[$key] = $r['route'][$key];
+				if(
+					(empty($r['options']['subdomain']) && empty($r['options']['hostname'])) ||
+					(!empty($r['options']['subdomain']) && $r['options']['subdomain'] === $this->determineCurrentSubdomain()) ||
+					(!empty($r['options']['hostname']) && !empty($_SERVER['HTTP_HOST']) && $r['options']['hostname'] === $_SERVER['HTTP_HOST'])
+				)
+				{
+					$key          = key($r['route']);
+					$routes[$key] = $r['route'][$key];
+				}
 			}
 		}
 
