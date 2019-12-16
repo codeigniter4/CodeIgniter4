@@ -329,7 +329,7 @@ TRUE on success or FALSE on failure.
 Class Reference
 ***************
 
-.. php:class:: \CodeIgniter\Database\BaseResult
+.. php:class:: CodeIgniter\\Database\\BaseResult
 
 	.. php:method:: getResult([$type = 'object'])
 

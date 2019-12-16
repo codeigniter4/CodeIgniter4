@@ -38,9 +38,8 @@ class Logger extends BaseConfig
 	|--------------------------------------------------------------------------
 	| Error Logging Directory Path
 	|--------------------------------------------------------------------------
-	|
-	|
-	|
+	| By default, logs are written to WRITEPATH . 'logs/'
+	| Specify a different destination here, if desired.
 	*/
 	public $path = '';
 
@@ -102,19 +101,13 @@ class Logger extends BaseConfig
 			],
 
 			/*
-			 * Leave this BLANK unless you would like to set something other than the default
-			 * writeable/logs/ directory. Use a full getServer path with trailing slash.
-			 */
-			'path'            => WRITEPATH . 'logs/',
-
-			/*
-			 * The default filename extension for log files. The default 'php' allows for
-			 * protecting the log files via basic scripting, when they are to be stored
-			 * under a publicly accessible directory.
+			 * The default filename extension for log files.
+			 * An extension of 'php' allows for protecting the log files via basic
+			 * scripting, when they are to be stored under a publicly accessible directory.
 			 *
-			 * Note: Leaving it blank will default to 'php'.
+			 * Note: Leaving it blank will default to 'log'.
 			 */
-			'fileExtension'   => 'php',
+			'fileExtension'   => '',
 
 			/*
 			 * The file system permissions to be applied on newly created log files.

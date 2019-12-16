@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -182,7 +183,8 @@ class Entity
 		{
 			foreach ($this->datamap as $from => $to)
 			{
-				if (array_key_exists($to, $return)) {
+				if (array_key_exists($to, $return))
+				{
 					$return[$from] = $this->__get($to);
 				}
 			}
@@ -311,7 +313,7 @@ class Entity
 			$result = $this->mutateDate($result);
 		}
 		// Or cast it as something?
-		else if ($this->_cast && isset($this->casts[$key]) && ! empty($this->casts[$key]))
+		else if ($this->_cast && ! empty($this->casts[$key]))
 		{
 			$result = $this->castAs($result, $this->casts[$key]);
 		}
@@ -469,7 +471,7 @@ class Entity
 			return $key;
 		}
 
-		if (isset($this->datamap[$key]) && ! empty($this->datamap[$key]))
+		if (! empty($this->datamap[$key]))
 		{
 			return $this->datamap[$key];
 		}
@@ -600,7 +602,7 @@ class Entity
 		$tmp = ! is_null($value) ? ($asArray ? [] : new \stdClass) : null;
 		if (function_exists('json_decode'))
 		{
-			if ((is_string($value) && strlen($value) > 1 && in_array($value{0}, ['[', '{', '"'])) || is_numeric($value))
+			if ((is_string($value) && strlen($value) > 1 && in_array($value[0], ['[', '{', '"'])) || is_numeric($value))
 			{
 				$tmp = json_decode($value, $asArray);
 

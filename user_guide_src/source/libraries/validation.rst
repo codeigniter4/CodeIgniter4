@@ -226,7 +226,7 @@ Like, ``setRule()``, but accepts an array of field names and their rules::
         'password' => 'required|min_length[10]'
     ]);
 
-To give a labeled error message you can setup as::
+To give a labeled error message you can set up as::
 
     $validation->setRules([
         'username' => ['label' => 'Username', 'rules' => 'required'],
@@ -480,7 +480,7 @@ Check If Error Exists
 
 You can check to see if an error exists with the ``hasError()`` method. The only parameter is the field name::
 
-    if ($validation->hasError('username')
+    if ($validation->hasError('username'))
     {
         echo $validation->getError('username');
     }
@@ -664,12 +664,15 @@ differs                 Yes         Fails if field does not differ from the one 
 exact_length            Yes         Fails if field is not exactly the parameter value. One or more comma-separated values.          exact_length[5] or exact_length[5,8,12]
 greater_than            Yes         Fails if field is less than or equal to the parameter value or not numeric.                     greater_than[8]
 greater_than_equal_to   Yes         Fails if field is less than the parameter value, or not numeric.                                greater_than_equal_to[5]
+hex                     No          Fails if field contains anything other than hexadecimal characters.
 if_exist                No          If this rule is present, validation will only return possible errors if the field key exists,
                                     regardless of its value.
 in_list                 Yes         Fails if field is not within a predetermined list.                                              in_list[red,blue,green]
 integer                 No          Fails if field contains anything other than an integer.
 is_natural              No          Fails if field contains anything other than a natural number: 0, 1, 2, 3, etc.
 is_natural_no_zero      No          Fails if field contains anything other than a natural number, except zero: 1, 2, 3, etc.
+is_not_unique           Yes         Checks the database to see if the given value exist. Can ignore records by field/value to            is_not_unique[table.field,where_field,where_value]
+                                    filter (currently accept only one filter).
 is_unique               Yes         Checks if this field value exists in the database. Optionally set a                             is_unique[table.field,ignore_field,ignore_value]
                                     column and value to ignore, useful when updating records to ignore itself.
 less_than               Yes         Fails if field is greater than or equal to the parameter value or not numeric.                  less_than[8]

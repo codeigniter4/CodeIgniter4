@@ -129,6 +129,18 @@ class SessionTest extends \CIUnitTestCase
 		$this->assertNull($session->get('foo'));
 	}
 
+	public function testGetReturnsItemValueisZero()
+	{
+		$_SESSION = [];
+
+		$session = $this->getInstance();
+		$session->start();
+
+		$session->set('foo', (int) 0);
+
+		$this->assertSame((int) 0, $session->get('foo'));
+	}
+
 	public function testGetReturnsAllWithNoKeys()
 	{
 		$_SESSION = [

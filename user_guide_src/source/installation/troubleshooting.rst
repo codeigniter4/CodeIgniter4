@@ -21,7 +21,7 @@ I have to include index.php in my URL
 
 If a URL like ``/mypage/find/apple`` doesn't work, but the similar
 URL ``/index.php/mypage/find/apple`` does, that sounds like your ``.htaccess`` rules
-(for Apache) are not setup properly, or the ``mod_rewrite`` extension
+(for Apache) are not set up properly, or the ``mod_rewrite`` extension
 in Apache's ``httpd.conf`` is commented out.
 
 Only the default page loads

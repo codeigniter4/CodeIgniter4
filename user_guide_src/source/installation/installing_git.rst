@@ -12,13 +12,13 @@ Install the latest version of the codebase by
 - forking the `codebase  <https://github.com/codeigniter4/CodeIgniter4>`_ to your github account
 - cloning **your** forked repository locally
 
-Setup
+Setting Up
 -------------------------------------------------------
 
 The command above will create a "CodeIgniter4" folder.
 Feel free to rename that as you see fit.
 
-You will want to setup a remote repository alias, so you can synchronize
+You will want to set up a remote repository alias, so you can synchronize
 your repository with the main one::
 
     git remote add upstream https://github.com/codeigniter4/CodeIgniter4.git
@@ -59,7 +59,7 @@ You would not use this technique for app development.
 Structure
 -------------------------------------------------------
 
-Folders in your project after setup:
+Folders in your project after set up:
 
 - app, public, system, tests, user_guide_src, writable
 

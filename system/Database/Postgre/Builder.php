@@ -7,6 +7,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +29,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -39,6 +40,7 @@ namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use http\Encoding\Stream\Inflate;
 
 /**
  * Builder for Postgre
@@ -54,6 +56,40 @@ class Builder extends BaseBuilder
 	protected $randomKeyword = [
 		'RANDOM()',
 	];
+
+	/**
+	 * Specifies which sql statements
+	 * support the ignore option.
+	 *
+	 * @var array
+	 */
+	protected $supportedIgnoreStatements = [
+		'insert' => 'ON CONFLICT DO NOTHING',
+	];
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Compile Ignore Statement
+	 *
+	 * Checks if the ignore option is supported by
+	 * the Database Driver for the specific statement.
+	 *
+	 * @param string $statement
+	 *
+	 * @return string
+	 */
+	protected function compileIgnore(string $statement)
+	{
+		$sql = parent::compileIgnore($statement);
+
+		if (! empty($sql))
+		{
+			$sql = ' ' . trim($sql);
+		}
+
+		return $sql;
+	}
 
 	//--------------------------------------------------------------------
 
@@ -97,6 +133,8 @@ class Builder extends BaseBuilder
 	 * @param string  $column
 	 * @param integer $value
 	 *
+	 * @throws DatabaseException
+	 *
 	 * @return mixed
 	 */
 	public function increment(string $column, int $value = 1)
@@ -115,6 +153,8 @@ class Builder extends BaseBuilder
 	 *
 	 * @param string  $column
 	 * @param integer $value
+	 *
+	 * @throws DatabaseException
 	 *
 	 * @return mixed
 	 */

@@ -169,6 +169,47 @@ class CURLRequestTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @backupGlobals enabled
+	 */
+	public function testOptionHeadersUsingPopulate()
+	{
+		$_SERVER['HTTP_HOST']            = 'site1.com';
+		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
+
+		$options = [
+			'base_uri' => 'http://www.foo.com/api/v1/',
+		];
+
+		$request = $this->getRequest($options);
+		$request->get('example');
+		// we fill the Accept-Language header from _SERVER when no headers are defined for the request
+		$this->assertEquals('en-US', $request->getHeader('Accept-Language')->getValue());
+		// but we skip Host header - since it would corrupt the request
+		$this->assertNull($request->getHeader('Host'));
+	}
+
+	/**
+	 * @backupGlobals enabled
+	 */
+	public function testOptionHeadersNotUsingPopulate()
+	{
+		$_SERVER['HTTP_HOST']            = 'site1.com';
+		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
+
+		$options = [
+			'base_uri' => 'http://www.foo.com/api/v1/',
+			'headers'  => ['Host' => 'www.foo.com'],
+		];
+		$request = $this->getRequest($options);
+		$request->get('example');
+		// if headers for the request are defined we use them
+		$this->assertNull($request->getHeader('Accept-Language'));
+		$this->assertEquals('www.foo.com', $request->getHeader('Host')->getValue());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testOptionsDelay()
 	{
 		$options = [
@@ -478,7 +519,7 @@ class CURLRequestTest extends \CIUnitTestCase
 	public function testDebugOptionFile()
 	{
 		$file = SUPPORTPATH . 'Files/baker/banana.php';
-		
+
 		$this->request->request('get', 'http://example.com', [
 			'debug' => $file,
 		]);

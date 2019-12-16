@@ -7,6 +7,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +29,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -158,6 +159,29 @@ if (! function_exists('plural'))
 				break;
 			}
 		}
+
+		return $result;
+	}
+}
+
+//--------------------------------------------------------------------
+
+if (! function_exists('counted'))
+{
+	/**
+	 * Counted
+	 *
+	 * Takes a number and a word to return the plural or not
+	 * E.g. 0 cats, 1 cat, 2 cats, ...
+	 *
+	 * @param  integer $count  Number of items
+	 * @param  string  $string Input string
+	 * @return string
+	 */
+	function counted(int $count, string $string): string
+	{
+		$result  = "{$count} ";
+		$result .= $count === 1 ? singular($string) : plural($string);
 
 		return $result;
 	}

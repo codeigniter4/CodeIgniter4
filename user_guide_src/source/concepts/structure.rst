@@ -71,7 +71,7 @@ non-writable as an added security measure.
 
 tests
 -----
-This directory is setup to hold your test files. The ``_support`` directory holds various mock classes and other
+This directory is set up to hold your test files. The ``_support`` directory holds various mock classes and other
 utilities that you can use while writing your tests. This directory does not need to be transferred to your
 production servers.
 

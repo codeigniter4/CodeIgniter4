@@ -7,6 +7,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +29,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -38,7 +39,6 @@
 namespace CodeIgniter;
 
 use Closure;
-use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
@@ -50,6 +50,7 @@ use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Exception;
@@ -65,7 +66,7 @@ class CodeIgniter
 	/**
 	 * The current version of CodeIgniter Framework
 	 */
-	const CI_VERSION = '4.0.0-rc.2';
+	const CI_VERSION = '4.0.0-rc.3';
 
 	/**
 	 * App startup time.
@@ -209,7 +210,7 @@ class CodeIgniter
 	 * @param boolean                                      $returnResponse
 	 *
 	 * @return boolean|\CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
-	 * @throws \CodeIgniter\Filters\Exceptions\FilterException
+	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 * @throws \Exception
 	 */
 	public function run(RouteCollectionInterface $routes = null, bool $returnResponse = false)
@@ -244,7 +245,7 @@ class CodeIgniter
 		{
 			return $this->handleRequest($routes, $cacheConfig, $returnResponse);
 		}
-		catch (FilterException $e)
+		catch (RedirectException $e)
 		{
 			$logger = Services::logger();
 			$logger->info('REDIRECTED ROUTE at ' . $e->getMessage());
@@ -252,6 +253,8 @@ class CodeIgniter
 			// If the route is a 'redirect' route, it throws
 			// the exception with the $to as the message
 			$this->response->redirect($e->getMessage(), 'auto', $e->getCode());
+			$this->sendResponse();
+
 			$this->callExit(EXIT_SUCCESS);
 		}
 		catch (PageNotFoundException $e)
@@ -370,7 +373,7 @@ class CodeIgniter
 
 		// Save our current URI as the previous URI in the session
 		// for safer, more accurate use with `previous_url()` helper function.
-		$this->storePreviousURL($this->request->uri ?? $uri);
+		$this->storePreviousURL((string)current_url(true));
 
 		unset($uri);
 
@@ -880,7 +883,8 @@ class CodeIgniter
 				$this->runController($controller);
 			}
 
-			$this->gatherOutput();
+			$cacheConfig = new Cache();
+			$this->gatherOutput($cacheConfig);
 			$this->sendResponse();
 
 			return;

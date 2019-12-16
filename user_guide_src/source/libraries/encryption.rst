@@ -3,32 +3,31 @@ Encryption Service
 ##################
 
 .. important:: DO NOT use this or any other *encryption* library for
-	user password storage! Passwords must be *hashed* instead, and you
-	should do that via PHP's own `Password Hashing extension
+	password storage! Passwords must be *hashed* instead, and you
+	should do that through PHP's `Password Hashing extension
 	<http://php.net/password>`_.
 
 The Encryption Service provides two-way symmetric (secret key) data encryption. 
-The encryption manager will instantiate and/or initialize an
-encryption handler to suit your parameters, explained below.
+The service will instantiate and/or initialize an
+encryption **handler** to suit your parameters as explained below.
 
-The handlers adapt our simple ``EncrypterInterface`` to use an
-appropriate PHP cryptographic extension or third party library.
-Such extensions may need to be explicitly enabled in your instance of PHP.
+Encryption Service handlers must implement CodeIgniter's simple ``EncrypterInterface``. 
+Using an appropriate PHP cryptographic extension or third-party library may require 
+additional software is installed on your server and/or might need to be explicitly 
+enabled in your instance of PHP.
 
-The following extensions are currently supported:
+The following PHP extensions are currently supported:
 
 - `OpenSSL <http://php.net/openssl>`_
 
+This is not a full cryptographic solution. If you need more capabilities, for example, 
+public-key encryption, we suggest you consider direct use of OpenSSL or 
+one of the other `Cryptography Extensions <https://www.php.net/manual/en/refs.crypto.php>`_. 
+A more comprehensive package like `Halite <https://github.com/paragonie/halite>`_ 
+(an O-O package built on libsodium) is another possibility.
+
 .. note:: Support for the ``MCrypt`` extension has been dropped, as that has
     been deprecated as of PHP 7.2.
-
-This is not a full cryptographic solution. If you need more capabilities,
-for instance public key encryption, we suggest you consider using the
-above extensions directly, or look into some of the more comprehensive
-packages, like:
-
-- `Halite <https://github.com/paragonie/halite>`_, an O-O package built on libsodium, or
-- `Sodium_compat <https://github.com/paragonie/sodium_compat>`_, a pure PHP implementation that adds libsodium support to earlier versions of PHP (5.2.4+)
 
 .. contents::
   :local:
@@ -36,6 +35,8 @@ packages, like:
 .. raw:: html
 
   <div class="custom-index container"></div>
+
+.. _usage:
 
 ****************************
 Using the Encryption Library
@@ -45,12 +46,12 @@ Like all services in CodeIgniter, it can be loaded via ``Config\Services``::
 
     $encrypter = \Config\Services::encrypter();
 
-Assuming you have set your starting key (see below), 
-encrypting and decrypting data is simple - pass the appropriate string to the
-``encrypt()`` and/or ``decrypt()`` methods::
+Assuming you have set your starting key (see :ref:`configuration`), 
+encrypting and decrypting data is simple - pass the appropriate string to ``encrypt()`` 
+and/or ``decrypt()`` methods::
 
-	$plain_text = 'This is a plain-text message!';
-	$ciphertext = $encrypter->encrypt($plaintext);
+	$plainText = 'This is a plain-text message!';
+	$ciphertext = $encrypter->encrypt($plainText);
 
 	// Outputs: This is a plain-text message!
 	echo $encrypter->decrypt($ciphertext);
@@ -61,61 +62,60 @@ You don't need to worry about it.
 
 .. _configuration:
 
-Configuring the library
+Configuring the Library
 =======================
 
-The example above uses the default configuration settings,
-found in ``application/config/Encryption.php``.
+The example above uses the configuration settings found in ``app/Config/Encryption.php``.
 
 There are only two settings:
 
 ======== ===============================================
 Option   Possible values (default in parentheses)
 ======== ===============================================
-driver   Preferred handler (OpenSSL)
 key      Encryption key starter
+driver   Preferred handler (OpenSSL)
 ======== ===============================================
 
-You can over-ride any of these settings by passing your own ``Config`` object
-to the Services::
+You can replace the config file's settings by passing a configuration 
+object of your own to the ``Services`` call. The ``$config`` variable must be 
+an instance of either the `Config\\Encryption` class or an object 
+that extends `CodeIgniter\\Config\\BaseConfig`.
+::
+
+    $config         = new Config\Encryption();
+    $config->key    = 'aBigsecret_ofAtleast32Characters';
+    $config->driver = 'OpenSSL';
 
     $encrypter = \Config\Services::encrypter($config);
 
-Default behavior
+
+Default Behavior
 ================
 
-By default, the Encryption Library will use the OpenSSL handler, with
-the AES-256-CTR cipher, 
-using your configured *key* and SHA512 HMAC authentication.
+By default, the Encryption Library uses the OpenSSL handler. That handler encrypts using 
+the AES-256-CTR algorithm, your configured *key*, and SHA512 HMAC authentication.
 
-The *key* you provide is used to derive
-two separate keys from your configured one: 
-one for encryption and one for authentication. This is
-done via a technique called `HMAC-based Key Derivation Function
-<http://en.wikipedia.org/wiki/HKDF>`_ (HKDF).
-
-Setting your encryption key
+Setting Your Encryption Key
 ===========================
 
-Your encryption key **must** be as long as the encryption algorithm in use
-allows. For AES-256, that's 256 bits or 32 bytes (characters) long.
+Your encryption key **must** be as long as the encryption algorithm in use allows. 
+For AES-256, that's 256 bits or 32 bytes (characters) long.
 
-The key should be as random as possible and it **must not** be a regular
-text string, nor the output of a hashing function, etc. In order to create
-a proper key, you can use the Encryption library's ``createKey()`` method
+The key should be as random as possible, and it **must not** be a regular text string, 
+nor the output of a hashing function, etc. To create a proper key, 
+you can use the Encryption library's ``createKey()`` method.
 ::
 
 	// $key will be assigned a 32-byte (256-bit) random key
 	$key = Encryption::createKey(32);
 
-The key can be either stored in your *application/Config/Encryption.php*, or
-you can design your own storage mechanism and pass the key dynamically
-when encrypting/decrypting.
+The key can be stored in *app/Config/Encryption.php*, or you can design 
+a storage mechanism of your own and pass the key dynamically when encrypting/decrypting.
 
-To save your key to your *application/Config/Encryption.php*, open the file
+To save your key to your *app/Config/Encryption.php*, open the file
 and set::
 
-	$key = 'YOUR KEY';
+	public $key = 'YOUR KEY';
 
 Encoding Keys or Results
 ------------------------
@@ -126,7 +126,7 @@ is hard to deal with (i.e. a copy-paste may damage it), so you may use
 a more friendly manner. For example::
 
 	// Get a hex-encoded representation of the key:
-	$encoded = bin2hex($encrypter->createKey(32));
+	$encoded = bin2hex(Encryption::createKey(32));
 
 	// Put the same value in your config with hex2bin(),
 	// so that it is still passed as binary to the library:
@@ -144,35 +144,42 @@ Encryption Handler Notes
 OpenSSL Notes
 -------------
 
-OpenSSL has been a standard part of PHP for some time.
+The `OpenSSL <http://php.net/openssl>`_ extension has been a standard part of PHP for a long time.
 
-The OpenSSL handler uses the AES-256-CTR cipher.
+CodeIgniter's OpenSSL handler uses the AES-256-CTR cipher.
+
+The *key* your configuration provides is used to derive two other keys, one for 
+encryption and one for authentication. This is achieved by way of a technique known 
+as an `HMAC-based Key Derivation Function <http://en.wikipedia.org/wiki/HKDF>`_ (HKDF).
 
 Message Length
 ==============
 
-An encrypted string is usually
-longer than the original, plain-text string (depending on the cipher).
+An encrypted string is usually longer than the original, plain-text string (depending on the cipher).
 
 This is influenced by the cipher algorithm itself, the initialization vector (IV) 
-prepended to the
-cipher-text and the HMAC authentication message that is also prepended.
+prepended to the cipher-text, and the HMAC authentication message that is also prepended.
 Furthermore, the encrypted message is also Base64-encoded so that it is safe
-for storage and transmission, regardless of a possible character set in use.
+for storage and transmission regardless of the character-set in use.
 
 Keep this information in mind when selecting your data storage mechanism.
 Cookies, for example, can only hold 4K of information.
 
-Using the Encryption manager directly
+Using the Encryption Service Directly
 =====================================
 
-Instead of, or in addition to, using the `Services` described
-at the beginning of this page, you can use the encryption manager
-directly, to create an ``Encrypter`` or to change the settings
-of the current one::
+Instead of (or in addition to) using ``Services`` as described in :ref:`usage`, 
+you can create an "Encrypter" directly, or change the settings of an existing instance.
+::
 
+    // create an Encrypter instance
     $encryption = new \Encryption\Encryption();
+
+    // reconfigure an instance with different settings
     $encrypter = $encryption->initialize($config);
+
+Remember, that ``$config`` must me an instance of either a `Config\Encryption` class 
+or an object that extends `CodeIgniter\Config\BaseConfig`.
 
 
 ***************

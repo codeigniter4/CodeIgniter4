@@ -17,7 +17,7 @@ An instance of the request class already populated for you if the current class 
 
         <?php namespace App\Controllers;
 
-        user CodeIgniter\Controller;
+        use CodeIgniter\Controller;
 
 	class UserController extends Controller
 	{
@@ -287,7 +287,7 @@ The methods provided by the parent classes that are available are:
 * :meth:`CodeIgniter\\HTTP\\Request::validIP`
 * :meth:`CodeIgniter\\HTTP\\Request::getMethod`
 * :meth:`CodeIgniter\\HTTP\\Request::getServer`
-* :meth:`CodeIgniter\\HTTP\\Message::body`
+* :meth:`CodeIgniter\\HTTP\\Message::getBody`
 * :meth:`CodeIgniter\\HTTP\\Message::setBody`
 * :meth:`CodeIgniter\\HTTP\\Message::populateHeaders`
 * :meth:`CodeIgniter\\HTTP\\Message::headers`

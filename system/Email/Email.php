@@ -7,6 +7,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +40,6 @@
 namespace CodeIgniter\Email;
 
 use Config\Mimes;
-use Psr\Log\LoggerAwareTrait;
 
 /**
  * CodeIgniter Email Class
@@ -54,7 +54,6 @@ use Psr\Log\LoggerAwareTrait;
  */
 class Email
 {
-	use LoggerAwareTrait;
 	/**
 	 * @var string
 	 */
@@ -354,12 +353,6 @@ class Email
 	 * @var boolean
 	 */
 	protected static $func_overload;
-	/**
-	 * Logger instance to record error messages and awarnings.
-	 *
-	 * @var \PSR\Log\LoggerInterface
-	 */
-	protected $logger;
 	//--------------------------------------------------------------------
 	/**
 	 * Constructor - Sets Email Preferences
@@ -372,7 +365,6 @@ class Email
 	{
 		$this->initialize($config);
 		isset(static::$func_overload) || static::$func_overload = (extension_loaded('mbstring') && ini_get('mbstring.func_overload'));
-		log_message('info', 'Email Class Initialized');
 	}
 	//--------------------------------------------------------------------
 	/**
@@ -1651,7 +1643,7 @@ class Email
 		catch (\ErrorException $e)
 		{
 			$success = false;
-			$this->logger->error('Email: ' . $method . ' throwed ' . $e->getMessage());
+			log_message('error', 'Email: ' . $method . ' throwed ' . $e->getMessage());
 		}
 		if (! $success)
 		{
@@ -1800,7 +1792,7 @@ class Email
 		}
 		// perform dot transformation on any lines that begin with a dot
 		$this->sendData($this->headerStr . preg_replace('/^\./m', '..$1', $this->finalBody));
-		$this->sendData('.');
+		$this->sendData($this->newline . '.');
 		$reply = $this->getSMTPData();
 		$this->setErrorMessage($reply);
 		$this->SMTPEnd();

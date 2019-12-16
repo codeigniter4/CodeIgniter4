@@ -289,4 +289,32 @@ WHERE "id" IN(2,3)';
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetWithAndWithoutEscape()
+	{
+		$builder = new BaseBuilder('mytable', $this->db);
+
+		$builder->testMode()
+			->set('foo', 'bar')
+			->set('field', 'field+1', false)
+			->where('id', 2)
+			->update(null, null, null);
+
+		$expectedSQL   = 'UPDATE "mytable" SET "foo" = \'bar\', field = field+1 WHERE "id" = 2';
+		$expectedBinds = [
+			'foo' => [
+				'bar',
+				true,
+			],
+			'id'  => [
+				2,
+				true,
+			],
+		];
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertEquals($expectedBinds, $builder->getBinds());
+	}
 }

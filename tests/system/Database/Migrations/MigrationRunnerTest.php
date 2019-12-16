@@ -193,7 +193,7 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 								 'version'   => '2018-01-24-102302',
 								 'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
 								 'namespace' => 'Tests\Support\MigrationTestMigrations',
-								 'uid'       => '2018-01-24-102302Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
+								 'uid'       => '20180124102302Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
 							 ];
 		$mig1->uid = $runner->getObjectUid($mig1);
 

@@ -188,8 +188,8 @@ the resulting field.
 
 ::
 
-	$builder->selectSum('age');
-	$query = $builder->get(); // Produces: SELECT SUM(age) as age FROM mytable
+	$builder->selectCount('age');
+	$query = $builder->get(); // Produces: SELECT COUNT(age) as age FROM mytable
 
 **$builder->from()**
 
@@ -860,6 +860,22 @@ The first parameter is an object.
 
 .. note:: All values are escaped automatically producing safer queries.
 
+**$builder->ignore()**
+
+Generates an insert ignore string based on the data you supply, and runs the
+query. So if an entry with the same primary key already exists, the query won't be inserted.
+You can optionally pass an **boolean** to the function. Here is an example using the array of the above example::
+
+	$data = [
+		'title' => 'My title',
+		'name'  => 'My Name',
+		'date'  => 'My date'
+	];
+
+	$builder->ignore(true)->insert($data);
+	// Produces: INSERT OR IGNORE INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date')
+
+
 **$builder->getCompiledInsert()**
 
 Compiles the insertion query just like $builder->insert() but does not
@@ -1218,7 +1234,7 @@ run the query::
 Class Reference
 ***************
 
-.. php:class:: \CodeIgniter\Database\BaseBuilder
+.. php:class:: CodeIgniter\\Database\\BaseBuilder
 
 	.. php:method:: resetQuery()
 

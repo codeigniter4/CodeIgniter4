@@ -176,6 +176,13 @@ Miscellaneous Functions
 
 	Returns the name of the current CSRF token.
 
+.. php:function:: csrf_header ()
+
+	:returns: The name of the header for current CSRF token.
+	:rtype: string
+
+	The name of the header for current CSRF token.
+
 .. php:function:: csrf_hash ()
 
 	:returns: The current value of the CSRF hash.
@@ -191,6 +198,15 @@ Miscellaneous Functions
 	Returns a hidden input with the CSRF information already inserted:
 
 		<input type="hidden" name="{csrf_token}" value="{csrf_hash}">
+
+.. php:function:: csrf_meta ()
+
+	:returns: A string with the HTML for meta tag with all required CSRF information.
+	:rtype: string
+
+	Returns a meta tag with the CSRF information already inserted:
+
+		<meta name="{csrf_header}" content="{csrf_hash}">
 
 .. php:function:: force_https ( $duration = 31536000 [, $request = null [, $response = null]] )
 

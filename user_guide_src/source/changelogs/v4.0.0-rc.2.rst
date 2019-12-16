@@ -1,7 +1,7 @@
 Version 4.0.0-rc.2
 ====================================================
 
-Release Date: Not released
+Release Date: Sept 27, 2019
 
 **RC.2 release of CodeIgniter4**
 

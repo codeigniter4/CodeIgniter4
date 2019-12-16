@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -103,6 +104,20 @@ class Forge
 	 * @var string
 	 */
 	protected $createDatabaseStr = 'CREATE DATABASE %s';
+
+	/**
+	 * CREATE DATABASE IF statement
+	 *
+	 * @var string
+	 */
+	protected $createDatabaseIfStr = null;
+
+	/**
+     * CHECK DATABASE EXIST statement
+     *
+     * @var string
+     */
+	protected $checkDatabaseExistStr = null;
 
 	/**
 	 * DROP DATABASE statement
@@ -199,13 +214,23 @@ class Forge
 	/**
 	 * Create database
 	 *
-	 * @param string $db_name
+	 * @param string $dbName
+	 * @param boolean $ifNotExists Whether to add IF NOT EXISTS condition
 	 *
 	 * @return boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function createDatabase(string $db_name): bool
+	public function createDatabase(string $dbName, bool $ifNotExists = false): bool
 	{
+		if ($ifNotExists && $this->createDatabaseIfStr === null)
+		{
+			if ($this->databaseExists($dbName))
+			{
+				return true;
+			}
+			$ifNotExists = false;
+		}
+		
 		if ($this->createDatabaseStr === false)
 		{
 			if ($this->db->DBDebug)
@@ -215,7 +240,7 @@ class Forge
 
 			return false;
 		}
-		elseif (! $this->db->query(sprintf($this->createDatabaseStr, $db_name, $this->db->charset, $this->db->DBCollat))
+		elseif (! $this->db->query(sprintf($ifNotExists ? $this->createDatabaseIfStr : $this->createDatabaseStr, $dbName, $this->db->charset, $this->db->DBCollat))
 		)
 		{
 			if ($this->db->DBDebug)
@@ -228,7 +253,7 @@ class Forge
 
 		if (! empty($this->db->dataCache['db_names']))
 		{
-			$this->db->dataCache['db_names'][] = $db_name;
+			$this->db->dataCache['db_names'][] = $dbName;
 		}
 
 		return true;
@@ -237,14 +262,39 @@ class Forge
 	//--------------------------------------------------------------------
 
 	/**
-	 * Drop database
+	 * Determine if a database exists
 	 *
-	 * @param string $db_name
+	 * @param string $dbName
 	 *
 	 * @return boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function dropDatabase(string $db_name): bool
+	private function databaseExists(string $dbName): bool
+	{
+		if ($this->checkDatabaseExistStr === null)
+		{
+			if ($this->db->DBDebug)
+			{
+				throw new DatabaseException('This feature is not available for the database you are using.');
+			}
+
+			return false;
+		}
+
+		return $this->db->query($this->checkDatabaseExistStr, $dbName)->getRow() !== null;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Drop database
+	 *
+	 * @param string $dbName
+	 *
+	 * @return boolean
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 */
+	public function dropDatabase(string $dbName): bool
 	{
 		if ($this->dropDatabaseStr === false)
 		{
@@ -255,7 +305,7 @@ class Forge
 
 			return false;
 		}
-		elseif (! $this->db->query(sprintf($this->dropDatabaseStr, $db_name)))
+		elseif (! $this->db->query(sprintf($this->dropDatabaseStr, $dbName)))
 		{
 			if ($this->db->DBDebug)
 			{
@@ -267,7 +317,7 @@ class Forge
 
 		if (! empty($this->db->dataCache['db_names']))
 		{
-			$key = array_search(strtolower($db_name), array_map('strtolower', $this->db->dataCache['db_names']), true);
+			$key = array_search(strtolower($dbName), array_map('strtolower', $this->db->dataCache['db_names']), true);
 			if ($key !== false)
 			{
 				unset($this->db->dataCache['db_names'][$key]);

@@ -200,7 +200,7 @@ This example will migrate Blog namespace with any new migrations on the test dat
     > php spark migrate -g test -n Blog
 
 When using the `-all` option, it will scan through all namespaces attempting to find any migrations that have
-not been ran. These will all be collected and then sorted as a group by date created. This should help
+not been run. These will all be collected and then sorted as a group by date created. This should help
 to minimize any potential conflicts between the main application and any modules.
 
 **rollback**
@@ -270,7 +270,7 @@ Preference                 Default                Options                    Des
 Class Reference
 ***************
 
-.. php:class:: CodeIgniter\Database\MigrationRunner
+.. php:class:: CodeIgniter\\Database\\MigrationRunner
 
 	.. php:method:: findMigrations()
 

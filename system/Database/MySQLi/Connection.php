@@ -8,6 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2019 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -395,7 +396,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * additional "ESCAPE x" parameter for specifying the escape character
 	 * in "LIKE" strings, and this handles those directly with a backslash.
 	 *
-	 * @param  string|string[] $str  Input string
+	 * @param  string|string[] $str Input string
 	 * @return string|string[]
 	 */
 	public function escapeLikeStringDirect($str)
@@ -428,7 +429,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	/**
 	 * Generates the SQL for listing tables in a platform-dependent manner.
 	 * Uses escapeLikeStringDirect().
@@ -490,6 +491,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 			sscanf($query[$i]->Type, '%[a-z](%d)', $retVal[$i]->type, $retVal[$i]->max_length);
 
+			$retVal[$i]->nullable    = $query[$i]->Null === 'YES';
 			$retVal[$i]->default     = $query[$i]->Default;
 			$retVal[$i]->primary_key = (int)($query[$i]->Key === 'PRI');
 		}
