@@ -293,6 +293,6 @@ You could download that repository, and copy its ``Language`` folder
 into your ``app``. The incorporated translations will be automatically
 picked up because the ``App`` namespace is mapped to your ``app`` folder.
 
-Alternately, a better practice would be to ``composer install codeigniter4/translations``
+Alternately, a better practice would be to ``composer require codeigniter4/translations``
 inside your project, and the translated messages will be automatically picked
 up because the translations folders get mapped appropriately.
