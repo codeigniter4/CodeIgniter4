@@ -497,7 +497,7 @@ class Session implements SessionInterface
 	 */
 	public function get(string $key = null)
 	{
-		if (! empty($key) && ! is_null($value = dot_array_search($key, $_SESSION)))
+		if (! empty($key) && ! is_null($value = dot_array_search($key, $_SESSION??[])))
 		{
 			return $value;
 		}
