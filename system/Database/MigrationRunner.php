@@ -945,8 +945,8 @@ class MigrationRunner
 
 		$forge->addField([
 			'id'        => [
-				'type'           => 'INTEGER',
-				'constraint'     => 255,
+				'type'           => 'BIGINT',
+				'constraint'     => 20,
 				'unsigned'       => true,
 				'auto_increment' => true,
 			],
