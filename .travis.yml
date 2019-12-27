@@ -31,6 +31,10 @@ services:
   - postgresql
   - redis-server
 
+cache:
+  directories:
+    - vendor
+
 script:
   - php vendor/bin/phpunit -v
 
