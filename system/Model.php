@@ -1122,14 +1122,13 @@ class Model
 	 */
 	public function paginate(int $perPage = 20, string $group = 'default', int $page = 0)
 	{
-		// Get the necessary parts.
-		$page = $page >= 1 ? $page : (ctype_digit($_GET['page'] ?? '') && $_GET['page'] > 1 ? $_GET['page'] : 1);
+		$pager = \Config\Services::pager();
+		$page = $page >= 1 ? $page : $pager->getCurrentPage($group);
 
 		$total = $this->countAllResults(false);
 
 		// Store it in the Pager library so it can be
 		// paginated in the views.
-		$pager       = \Config\Services::pager();
 		$this->pager = $pager->store($group, $page, $perPage, $total);
 
 		$offset = ($page - 1) * $perPage;

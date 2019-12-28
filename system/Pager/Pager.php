@@ -523,7 +523,10 @@ class Pager implements PagerInterface
 		}
 		else
 		{
-			$this->groups[$group]['currentPage'] = $_GET['page_' . $group] ?? $_GET['page'] ?? 1;
+			$page = $_GET['page_' . $group] ?? $_GET['page'] ?? 1;
+			$page = intval($page);
+
+			$this->groups[$group]['currentPage'] = $page < 1 ? 1 : $page;
 		}
 
 		if ($_GET)
