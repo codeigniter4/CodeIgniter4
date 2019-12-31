@@ -311,27 +311,50 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function _fieldData(string $table): array
 	{
-		$table = $this->protectIdentifiers($table, true, null, false);
+		if (strpos($table, '.') !== false)
+		{
+			sscanf($table, '%[^.].%s', $owner, $table);
+		}
+		else
+		{
+			$owner = $this->username;
+		}
 
-		if (($query = $this->query('SHOW COLUMNS FROM ' . $table)) === false)
+		$sql = 'SELECT COLUMN_NAME, DATA_TYPE, CHAR_LENGTH, DATA_PRECISION, DATA_LENGTH, DATA_DEFAULT, NULLABLE
+			FROM ALL_TAB_COLUMNS
+			WHERE UPPER(OWNER) = ' . $this->escape(strtoupper($owner)) . '
+				AND UPPER(TABLE_NAME) = ' . $this->escape(strtoupper($table));
+
+		if (($query = $this->query($sql)) === false)
 		{
 			throw new DatabaseException(lang('Database.failGetFieldData'));
 		}
 		$query = $query->getResultObject();
 
-		$retVal = [];
+		$retval = [];
 		for ($i = 0, $c = count($query); $i < $c; $i++)
 		{
-			$retVal[$i]       = new \stdClass();
-			$retVal[$i]->name = $query[$i]->Field;
+			$retval[$i]       = new stdClass();
+			$retval[$i]->name = $query[$i]->COLUMN_NAME;
+			$retval[$i]->type = $query[$i]->DATA_TYPE;
 
-			sscanf($query[$i]->Type, '%[a-z](%d)', $retVal[$i]->type, $retVal[$i]->max_length);
+			$length = ($query[$i]->CHAR_LENGTH > 0)
+				? $query[$i]->CHAR_LENGTH : $query[$i]->DATA_PRECISION;
+			if ($length === null)
+			{
+				$length = $query[$i]->DATA_LENGTH;
+			}
+			$retval[$i]->max_length = $length;
 
-			$retVal[$i]->default     = $query[$i]->Default;
-			$retVal[$i]->primary_key = (int)($query[$i]->Key === 'PRI');
+			$default = $query[$i]->DATA_DEFAULT;
+			if ($default === null && $query[$i]->NULLABLE === 'N')
+			{
+				$default = '';
+			}
+			$retval[$i]->default = $default;
 		}
 
-		return $retVal;
+		return $retval;
 	}
 
 	//--------------------------------------------------------------------
