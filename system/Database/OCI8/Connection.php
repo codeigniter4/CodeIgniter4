@@ -160,8 +160,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function reconnect()
 	{
-		$this->close();
-		$this->initialize();
 	}
 
 	//--------------------------------------------------------------------
