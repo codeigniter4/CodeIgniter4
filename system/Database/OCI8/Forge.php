@@ -117,30 +117,48 @@ class Forge extends \CodeIgniter\Database\Forge
 		{
 			return parent::_alterTable($alter_type, $table, $field);
 		}
-
-		$sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
-		foreach ($field as $i => $data)
+		elseif ($alter_type === 'CHANGE')
 		{
-			if ($data['_literal'] !== false)
+			$alter_type = 'MODIFY';
+		}
+
+		$sql  = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
+		$sqls = [];
+		for ($i = 0, $c = count($field); $i < $c; $i++)
+		{
+			if ($field[$i]['_literal'] !== false)
 			{
-				$field[$i] = ($alter_type === 'ADD') ? "\n\tADD " . $data['_literal'] : "\n\tMODIFY " . $data['_literal'];
+				$field[$i] = "\n\t" . $field[$i]['_literal'];
 			}
 			else
 			{
-				if ($alter_type === 'ADD')
+				$field[$i]['_literal'] = "\n\t" . $this->_processColumn($field[$i]);
+
+				if (! empty($field[$i]['comment']))
 				{
-					$field[$i]['_literal'] = "\n\tADD ";
-				}
-				else
-				{
-					$field[$i]['_literal'] = empty($data['new_name']) ? "\n\tMODIFY " : "\n\tCHANGE ";
+					$sqls[] = 'COMMENT ON COLUMN '
+						. $this->db->escapeIdentifiers($table) . '.' . $this->db->escapeIdentifiers($field[$i]['name'])
+						. ' IS ' . $field[$i]['comment'];
 				}
 
-				$field[$i] = $field[$i]['_literal'] . $this->_processColumn($field[$i]);
+				if ($alter_type === 'MODIFY' && ! empty($field[$i]['new_name']))
+				{
+					$sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($field[$i]['name'])
+						. ' TO ' . $this->db->escapeIdentifiers($field[$i]['new_name']);
+				}
+
+				$field[$i] = "\n\t" . $field[$i]['_literal'];
 			}
 		}
 
-		return [$sql . implode(',', $field)];
+		$sql .= ' ' . $alter_type . ' ';
+		$sql .= (count($field) === 1)
+				? $field[0]
+				: '(' . implode(',', $field) . ')';
+
+		// RENAME COLUMN must be executed after MODIFY
+		array_unshift($sqls, $sql);
+		return $sqls;
 	}
 
 	//--------------------------------------------------------------------
