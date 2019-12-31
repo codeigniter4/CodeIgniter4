@@ -49,108 +49,34 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @var string
 	 */
-	protected $createDatabaseStr = 'CREATE DATABASE %s CHARACTER SET %s COLLATE %s';
 
 	/**
-	 * DROP CONSTRAINT statement
 	 *
 	 * @var string
 	 */
-	protected $dropConstraintStr = 'ALTER TABLE %s DROP FOREIGN KEY %s';
 
 	/**
-	 * CREATE TABLE keys flag
 	 *
-	 * Whether table keys are created from within the
-	 * CREATE TABLE statement.
-	 *
-	 * @var boolean
 	 */
-	protected $createTableKeys = true;
 
 	/**
-	 * UNSIGNED support
 	 *
-	 * @var array
 	 */
-	protected $_unsigned = [
-		'TINYINT',
-		'SMALLINT',
-		'MEDIUMINT',
-		'INT',
-		'INTEGER',
-		'BIGINT',
-		'REAL',
-		'DOUBLE',
-		'DOUBLE PRECISION',
-		'FLOAT',
-		'DECIMAL',
-		'NUMERIC',
-	];
 
 	/**
-	 * Table Options list which required to be quoted
 	 *
-	 * @var array
 	 */
-	protected $_quoted_table_options = [
-		'COMMENT',
-		'COMPRESSION',
-		'CONNECTION',
-		'DATA DIRECTORY',
-		'INDEX DIRECTORY',
-		'ENCRYPTION',
-		'PASSWORD',
-	];
 
 	/**
 	 * NULL value representation in CREATE/ALTER TABLE statements
 	 *
 	 * @var string
 	 */
-	protected $_null = 'NULL';
-
-	//--------------------------------------------------------------------
 
 	/**
-	 * CREATE TABLE attributes
 	 *
-	 * @param  array $attributes Associative array of table attributes
-	 * @return string
 	 */
-	protected function _createTableAttributes(array $attributes): string
-	{
-		$sql = '';
 
-		foreach (array_keys($attributes) as $key)
-		{
-			if (is_string($key))
-			{
-				$sql .= ' ' . strtoupper($key) . ' = ';
-
-				if (in_array(strtoupper($key), $this->_quoted_table_options))
-				{
-					$sql .= $this->db->escape($attributes[$key]);
-				}
-				else
-				{
-					$sql .= $this->db->escapeString($attributes[$key]);
-				}
-			}
-		}
-
-		if (! empty($this->db->charset) && ! strpos($sql, 'CHARACTER SET') && ! strpos($sql, 'CHARSET'))
-		{
-			$sql .= ' DEFAULT CHARACTER SET = ' . $this->db->escapeString($this->db->charset);
-		}
-
-		if (! empty($this->db->DBCollat) && ! strpos($sql, 'COLLATE'))
-		{
-			$sql .= ' COLLATE = ' . $this->db->escapeString($this->db->DBCollat);
-		}
-
-		return $sql;
-	}
 
 	//--------------------------------------------------------------------
 
