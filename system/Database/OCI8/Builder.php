@@ -45,13 +45,41 @@ use CodeIgniter\Database\BaseBuilder;
  */
 class Builder extends BaseBuilder
 {
-
 	/**
 	 * Identifier escape character
 	 *
 	 * @var string
 	 */
-	protected $escapeChar = '`';
+	protected $escapeChar = '"';
+
+	/**
+	 * ORDER BY random keyword
+	 *
+	 * @var array
+	 */
+	protected $randomKeyword = [
+		'DBMS_RANDOM.RANDOM' // @todo: 未検証
+	];
+
+	/**
+	 * COUNT string
+	 *
+	 * @used-by CI_DB_driver::count_all()
+	 * @used-by BaseBuilder::count_all_results()
+	 *
+	 * @var string
+	 */
+	protected $countString = 'SELECT COUNT(1) AS ';
+
+	/**
+	 * Limit used flag
+	 *
+	 * If we use LIMIT, we'll add a field that will
+	 * throw off num_fields later.
+	 *
+	 * @var boolean
+	 */
+	protected $limitUsed = false;
 
 	/**
 	 * FROM tables
