@@ -55,7 +55,7 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function getFieldCount(): int
 	{
-		return $this->resultID->field_count;
+		return oci_num_fields($this->resultID);
 	}
 
 	//--------------------------------------------------------------------
