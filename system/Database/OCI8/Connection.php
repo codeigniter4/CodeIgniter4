@@ -763,14 +763,10 @@ SQL;
 	 */
 	protected function _transRollback(): bool
 	{
-		if ($this->connID->rollback())
-		{
-			$this->connID->autocommit(true);
+		$this->commitMode = OCI_COMMIT_ON_SUCCESS;
 
-			return true;
-		}
-
-		return false;
+		return oci_rollback($this->connID);
 	}
-	//--------------------------------------------------------------------
+
+	// --------------------------------------------------------------------
 }
