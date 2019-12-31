@@ -530,6 +530,55 @@ SQL;
 	//--------------------------------------------------------------------
 
 	/**
+	 * Stored Procedure.  Executes a stored procedure
+	 *
+	 * @param  string	package name in which the stored procedure is in
+	 * @param  string	stored procedure name to execute
+	 * @param  array	parameters
+	 * @return mixed
+	 *
+	 * params array keys
+	 *
+	 * KEY      OPTIONAL  NOTES
+	 * name     no        the name of the parameter should be in :<param_name> format
+	 * value    no        the value of the parameter.  If this is an OUT or IN OUT parameter,
+	 *                    this should be a reference to a variable
+	 * type     yes       the type of the parameter
+	 * length   yes       the max size of the parameter
+	 */
+	public function storedProcedure(string $package, string $procedure, array $params)
+	{
+		if ($package === '' || $procedure === '')
+		{
+			throw new DatabaseException(lang('Database.invalidArgument', [$package . $procedure]));
+		}
+
+		// Build the query string
+		$sql = 'BEGIN ' . $package . '.' . $procedure . '(';
+
+		$have_cursor = false;
+		foreach ($params as $param)
+		{
+			$sql .= $param['name'] . ',';
+
+			if (isset($param['type']) && $param['type'] === OCI_B_CURSOR)
+			{
+				$have_cursor = true;
+			}
+		}
+		$sql = trim($sql, ',') . '); END;';
+
+		$this->resetStmtId = false;
+		$this->stmtId      = oci_parse($this->connID, $sql);
+		$this->bindParams($params);
+		$result            = $this->query($sql, false, $have_cursor);
+		$this->resetStmtId = true;
+		return $result;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
 	 * Returns the last error code and message.
 	 *
 	 * Must return an array with keys 'code' and 'message':
