@@ -365,62 +365,51 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @param  string $table
 	 * @return \stdClass[]
 	 * @throws DatabaseException
-	 * @throws \LogicException
 	 */
 	public function _indexData(string $table): array
 	{
-		$table = $this->protectIdentifiers($table, true, null, false);
+		if (strpos($table, '.') !== false)
+		{
+			sscanf($table, '%[^.].%s', $owner, $table);
+		}
+		else
+		{
+			$owner = $this->username;
+		}
 
-		if (($query = $this->query('SHOW INDEX FROM ' . $table)) === false)
+		$sql = 'SELECT AIC.INDEX_NAME, UC.CONSTRAINT_TYPE, AIC.COLUMN_NAME '
+			. ' FROM ALL_IND_COLUMNS uic '
+			. ' LEFT JOIN USER_CONSTRAINTS UC ON AIC.INDEX_NAME = UC.CONSTRAINT_NAME AND AIC.TABLE_NAME = UC.TABLE_NAME '
+			. 'WHERE TABLE_NAME = ' . $this->escape(strtolower($this->DBPrefix . $table)) . ' '
+			. 'AND TABLE_OWNER = ' . $this->escape(strtoupper($owner)) . ' '
+			. ' ORDER BY UC.CONSTRAINT_TYPE, AIC.COLUMN_POSITION';
+
+		if (($query = $this->query($sql)) === false)
 		{
 			throw new DatabaseException(lang('Database.failGetIndexData'));
 		}
+		$query = $query->getResultObject();
 
-		if (! $indexes = $query->getResultArray())
+		$retVal          = [];
+		$constraintTypes = [
+			'P' => 'PRIMARY',
+			'U' => 'UNIQUE',
+		];
+		foreach ($query as $row)
 		{
-			return [];
-		}
-
-		$keys = [];
-
-		foreach ($indexes as $index)
-		{
-			if (empty($keys[$index['Key_name']]))
+			if (isset($retVal[$row->INDEX_NAME]))
 			{
-				$keys[$index['Key_name']]       = new \stdClass();
-				$keys[$index['Key_name']]->name = $index['Key_name'];
-
-				if ($index['Key_name'] === 'PRIMARY')
-				{
-					$type = 'PRIMARY';
-				}
-				elseif ($index['Index_type'] === 'FULLTEXT')
-				{
-					$type = 'FULLTEXT';
-				}
-				elseif ($index['Non_unique'])
-				{
-					if ($index['Index_type'] === 'SPATIAL')
-					{
-						$type = 'SPATIAL';
-					}
-					else
-					{
-						$type = 'INDEX';
-					}
-				}
-				else
-				{
-					$type = 'UNIQUE';
-				}
-
-				$keys[$index['Key_name']]->type = $type;
+				$retVal[$row->INDEX_NAME]->fields[] = $row->COLUMN_NAME;
+				continue;
 			}
 
-			$keys[$index['Key_name']]->fields[] = $index['Column_name'];
+			$retVal[$row->INDEX_NAME]         = new \stdClass();
+			$retVal[$row->INDEX_NAME]->name   = $row->INDEX_NAME;
+			$retVal[$row->INDEX_NAME]->fields = [$row->COLUMN_NAME];
+			$retVal[$row->INDEX_NAME]->type   = $constraintTypes[$row->CONSTRAINT_TYPE] ?? 'INDEX';
 		}
 
-		return $keys;
+		return $retVal;
 	}
 
 	//--------------------------------------------------------------------
