@@ -82,23 +82,29 @@ class Builder extends BaseBuilder
 	protected $limitUsed = false;
 
 	/**
-	 * FROM tables
+	 * Insert batch statement
 	 *
-	 * Groups tables in FROM clauses if needed, so there is no confusion
-	 * about operator precedence.
+	 * Generates a platform-specific insert string from the supplied data.
 	 *
-	 * Note: This is only used (and overridden) by MySQL.
+	 * @param string $table  Table name
+	 * @param array  $keys   INSERT keys
+	 * @param array  $values INSERT values
 	 *
 	 * @return string
 	 */
-	protected function _fromTables(): string
+	protected function _insertBatch(string $table, array $keys, array $values): string
 	{
-		if ( ! empty($this->QBJoin) && count($this->QBFrom) > 1)
+		$keys = implode(', ', $keys);
+		$sql  = "INSERT ALL\n";
+
+		for ($i = 0, $c = count($values); $i < $c; $i++)
 		{
-			return '('.implode(', ', $this->QBFrom).')';
+			$sql .= '	INTO ' . $table . ' (' . $keys . ') VALUES ' . $values[$i] . "\n";
 		}
 
-		return implode(', ', $this->QBFrom);
+		return $sql . 'SELECT * FROM dual';
+	}
+
 	}
 
 }
