@@ -735,12 +735,12 @@ SQL;
 	 */
 	protected function _transBegin(): bool
 	{
-		$this->connID->autocommit(false);
+		$this->commitMode = OCI_NO_AUTO_COMMIT;
 
-		return $this->connID->begin_transaction();
+		return true;
 	}
 
-	//--------------------------------------------------------------------
+	// --------------------------------------------------------------------
 
 	/**
 	 * Commit Transaction
