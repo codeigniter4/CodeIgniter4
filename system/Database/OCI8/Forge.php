@@ -187,12 +187,20 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Process column
 	 *
-	 * @param  array $field
+	 * @param array $field
+	 *
 	 * @return string
 	 */
 	protected function _processColumn(array $field): string
 	{
-		$extra_clause = isset($field['after']) ? ' AFTER ' . $this->db->escapeIdentifiers($field['after']) : '';
+		return $this->db->escapeIdentifiers($field['name'])
+			   . ' ' . $field['type'] . $field['length']
+			   . $field['unsigned']
+			   . $field['default']
+			   . $field['auto_increment']
+			   . $field['null']
+			   . $field['unique'];
+	}
 
 
 	}
