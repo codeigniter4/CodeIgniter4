@@ -116,4 +116,25 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Replaces the ? placeholders with :1, :2, etc parameters for use
+	 * within the prepared query.
+	 *
+	 * @param string $sql
+	 *
+	 * @return string
+	 */
+	public function parameterize(string $sql): string
+	{
+		// Track our current value
+		$count = 0;
+
+		$sql = preg_replace_callback('/\?/', function ($matches) use (&$count) {
+			$count ++;
+			return ":{$count}";
+		}, $sql);
+
+		return $sql;
+	}
 }
