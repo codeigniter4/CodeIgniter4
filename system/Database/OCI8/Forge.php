@@ -164,6 +164,27 @@ class Forge extends \CodeIgniter\Database\Forge
 	//--------------------------------------------------------------------
 
 	/**
+	 * Field attribute AUTO_INCREMENT
+	 *
+	 * @param array &$attributes
+	 * @param array &$field
+	 *
+	 * @return void
+	 */
+	protected function _attributeAutoIncrement(array &$attributes, array &$field)
+	{
+		if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true
+			&& stripos($field['type'], 'NUMBER') !== false
+			&& version_compare($this->db->getVersion(), '12.1', '>=')
+		)
+		{
+			$field['auto_increment'] = ' GENERATED ALWAYS AS IDENTITY';
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Process column
 	 *
 	 * @param  array $field
@@ -173,21 +194,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	{
 		$extra_clause = isset($field['after']) ? ' AFTER ' . $this->db->escapeIdentifiers($field['after']) : '';
 
-		if (empty($extra_clause) && isset($field['first']) && $field['first'] === true)
-		{
-			$extra_clause = ' FIRST';
-		}
 
-		return $this->db->escapeIdentifiers($field['name'])
-				. (empty($field['new_name']) ? '' : ' ' . $this->db->escapeIdentifiers($field['new_name']))
-				. ' ' . $field['type'] . $field['length']
-				. $field['unsigned']
-				. $field['null']
-				. $field['default']
-				. $field['auto_increment']
-				. $field['unique']
-				. (empty($field['comment']) ? '' : ' COMMENT ' . $field['comment'])
-				. $extra_clause;
 	}
 
 	//--------------------------------------------------------------------
