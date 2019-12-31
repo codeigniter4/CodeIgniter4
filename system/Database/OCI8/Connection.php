@@ -202,12 +202,16 @@ class Connection extends BaseConnection implements ConnectionInterface
 			return $this->dataCache['version'];
 		}
 
-		if (empty($this->mysqli))
+		if (! $this->connID || ($version_string = oci_server_version($this->connID)) === false)
 		{
-			$this->initialize();
+			return false;
+		}
+		elseif (preg_match('#Release\s(\d+(?:\.\d+)+)#', $version_string, $match))
+		{
+			return $this->dataCache['version'] = $match[1];
 		}
 
-		return $this->dataCache['version'] = $this->mysqli->server_info;
+		return false;
 	}
 
 	//--------------------------------------------------------------------
