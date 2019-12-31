@@ -69,13 +69,16 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @var array
 	 */
-	protected $reservedIdentifiers = ['*', 'rownum'];
+	protected $reservedIdentifiers = [
+		'*',
+		'rownum',
+	];
 
 	protected $validDSNs = [
-			'tns'	=> '/^\(DESCRIPTION=(\(.+\)){2,}\)$/', // TNS
+		'tns' => '/^\(DESCRIPTION=(\(.+\)){2,}\)$/', // TNS
 			// Easy Connect string (Oracle 10g+)
-			'ec'	=> '/^(\/\/)?[a-z0-9.:_-]+(:[1-9][0-9]{0,4})?(\/[a-z0-9$_]+)?(:[^\/])?(\/[a-z0-9$_]+)?$/i',
-			'in'	=> '/^[a-z0-9$_]+$/i' // Instance name (defined in tnsnames.ora)
+		'ec'  => '/^(\/\/)?[a-z0-9.:_-]+(:[1-9][0-9]{0,4})?(\/[a-z0-9$_]+)?(:[^\/])?(\/[a-z0-9$_]+)?$/i',
+		'in'  => '/^[a-z0-9$_]+$/i',// Instance name (defined in tnsnames.ora)
 	];
 
 	//--------------------------------------------------------------------
@@ -91,28 +94,28 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Statement ID
 	 *
-	 * @var	resource
+	 * @var resource
 	 */
 	public $stmtId;
 
 	/**
 	 * Commit mode flag
 	 *
-	 * @var	int
+	 * @var integer
 	 */
 	public $commitMode = OCI_COMMIT_ON_SUCCESS;
 
 	/**
 	 * Cursor ID
 	 *
-	 * @var	resource
+	 * @var resource
 	 */
 	public $cursorId;
 
 	/**
 	 * confirm DNS format.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	private function isValidDSN() : bool
 	{
@@ -135,7 +138,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function connect(bool $persistent = false)
 	{
-		if (empty($this->DSN) && !$this->isValidDSN())
+		if (empty($this->DSN) && ! $this->isValidDSN())
 		{
 			$this->buildDSN();
 		}
@@ -616,9 +619,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 			return;
 		}
 
-		$isEasyConnectableHostName = $this->hostname !== '' && strpos($this->hostname, '/') === FALSE && strpos($this->hostname, ':') === FALSE;
-		$easyConnectablePort = (( ! empty($this->port) && ctype_digit($this->port)) ? ':'.$this->port : '');
-		$easyConnectableDatabase = ($this->database !== '' ? '/'.ltrim($this->database, '/') : '');
+		$isEasyConnectableHostName = $this->hostname !== '' && strpos($this->hostname, '/') === false && strpos($this->hostname, ':') === false;
+		$easyConnectablePort       = (( ! empty($this->port) && ctype_digit($this->port)) ? ':' . $this->port : '');
+		$easyConnectableDatabase   = ($this->database !== '' ? '/' . ltrim($this->database, '/') : '');
 
 		if ($isEasyConnectableHostName && ($easyConnectablePort !== '' || $easyConnectableDatabase !== ''))
 		{
@@ -630,8 +633,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 			 * that the database field is a service name.
 			 */
 			$this->DSN = $this->hostname
-				.$easyConnectablePort
-				.$easyConnectableDatabase;
+				. $easyConnectablePort
+				. $easyConnectableDatabase;
 
 			if (preg_match($this->validDSNs['ec'], $this->DSN))
 			{
@@ -642,7 +645,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		/* At this point, we can only try and validate the hostname and
 		 * database fields separately as DSNs.
 		 */
-		if (preg_match($this->validDSNs['ec'], $this->hostname) OR preg_match($this->validDSNs['in'], $this->hostname))
+		if (preg_match($this->validDSNs['ec'], $this->hostname) || preg_match($this->validDSNs['in'], $this->hostname))
 		{
 			$this->DSN = $this->hostname;
 			return;
