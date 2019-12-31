@@ -618,18 +618,32 @@ SQL;
 	 */
 	public function error(): array
 	{
-		if (! empty($this->mysqli->connect_errno))
+		// oci_error() returns an array that already contains
+		// 'code' and 'message' keys, but it can return false
+		// if there was no error ....
+		if (is_resource($this->cursorId))
 		{
-			return [
-				'code'    => $this->mysqli->connect_errno,
-				'message' => $this->mysqli->connect_error,
-			];
+			$error = oci_error($this->cursorId);
+		}
+		elseif (is_resource($this->stmtId))
+		{
+			$error = oci_error($this->stmtId);
+		}
+		elseif (is_resource($this->connID))
+		{
+			$error = oci_error($this->connID);
+		}
+		else
+		{
+			$error = oci_error();
 		}
 
-		return [
-			'code'    => $this->connID->errno,
-			'message' => $this->connID->error,
-		];
+		return is_array($error)
+			? $error
+			: [
+				  'code'    => '',
+				  'message' => '',
+			  ];
 	}
 
 	//--------------------------------------------------------------------
