@@ -655,7 +655,7 @@ SQL;
 	 */
 	public function insertID(): int
 	{
-		return $this->connID->insert_id;
+		throw new DatabaseException(lang('Database.featureUnavailable'));
 	}
 
 	//--------------------------------------------------------------------
