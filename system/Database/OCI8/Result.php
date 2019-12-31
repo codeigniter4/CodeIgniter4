@@ -121,7 +121,8 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function dataSeek(int $n = 0)
 	{
-		return $this->resultID->data_seek($n);
+		// We can't support data seek by oci
+		return false;
 	}
 
 	//--------------------------------------------------------------------
