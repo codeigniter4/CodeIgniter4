@@ -173,7 +173,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function _close()
 	{
-		$this->connID->close();
+		oci_close($this->connID);
 	}
 
 	//--------------------------------------------------------------------
