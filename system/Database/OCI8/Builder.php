@@ -195,4 +195,13 @@ class Builder extends BaseBuilder
 		return 'SELECT * FROM (SELECT inner_query.*, rownum rnum FROM (' . $sql . ') inner_query WHERE rownum < ' . ($this->QBOffset + $this->QBLimit + 1) . ')'
 			. ($this->QBOffset ? ' WHERE rnum >= ' . ($this->QBOffset + 1) : '');
 	}
+
+	/**
+	 * Resets the query builder values.  Called by the get() function
+	 */
+	protected function resetSelect()
+	{
+		$this->limitUsed = false;
+		parent::resetSelect();
+	}
 }
