@@ -579,6 +579,35 @@ SQL;
 	// --------------------------------------------------------------------
 
 	/**
+	 * Bind parameters
+	 *
+	 * @param  array $params
+	 * @return void
+	 */
+	protected function bindParams($params)
+	{
+		if (! is_array($params) || ! is_resource($this->stmtId))
+		{
+			return;
+		}
+
+		foreach ($params as $param)
+		{
+			foreach (['name', 'value', 'type', 'length'] as $val)
+			{
+				if (! isset($param[$val]))
+				{
+					$param[$val] = '';
+				}
+			}
+
+			oci_bind_by_name($this->stmtId, $param['name'], $param['value'], $param['length'], $param['type']);
+		}
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
 	 * Returns the last error code and message.
 	 *
 	 * Must return an array with keys 'code' and 'message':
