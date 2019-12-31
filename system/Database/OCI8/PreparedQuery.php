@@ -62,14 +62,17 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function _prepare(string $sql, array $options = [])
 	{
-		// Mysqli driver doesn't like statements
-		// with terminating semicolons.
 		$sql = rtrim($sql, ';');
-
-		if (! $this->statement = $this->db->mysqli->prepare($sql))
+		if (strpos('BEGIN', ltrim($sql)) === 0)
 		{
-			$this->errorCode   = $this->db->mysqli->errno;
-			$this->errorString = $this->db->mysqli->error;
+			$sql .= ';';
+		}
+
+		if (! $this->statement = oci_parse($this->db->connID, $this->parameterize($sql)))
+		{
+			$error             = oci_error($this->db->connID);
+			$this->errorCode   = $error['code'] ?? 0;
+			$this->errorString = $error['message'] ?? '';
 		}
 
 		return $this;
