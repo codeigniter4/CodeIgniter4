@@ -253,72 +253,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Platform-dependant string escape
-	 *
-	 * @param  string $str
-	 * @return string
-	 */
-	protected function _escapeString(string $str): string
-	{
-		if (is_bool($str))
-		{
-			return $str;
-		}
-
-		if (! $this->connID)
-		{
-			$this->initialize();
-		}
-
-		return $this->connID->real_escape_string($str);
-	}
-
 	//--------------------------------------------------------------------
 
-	/**
-	 * Escape Like String Direct
-	 * There are a few instances where MySQLi queries cannot take the
-	 * additional "ESCAPE x" parameter for specifying the escape character
-	 * in "LIKE" strings, and this handles those directly with a backslash.
-	 *
-	 * @param  string|string[] $str  Input string
-	 * @return string|string[]
-	 */
-	public function escapeLikeStringDirect($str)
-	{
-		if (is_array($str))
-		{
-			foreach ($str as $key => $val)
-			{
-				$str[$key] = $this->escapeLikeStringDirect($val);
-			}
-
-			return $str;
-		}
-
-		$str = $this->_escapeString($str);
-
-		// Escape LIKE condition wildcards
-		return str_replace([
-			$this->likeEscapeChar,
-			'%',
-			'_',
-		], [
-			'\\' . $this->likeEscapeChar,
-			'\\' . '%',
-			'\\' . '_',
-		], $str
-		);
-
-		return $str;
-	}
-
-	//--------------------------------------------------------------------
-	
 	/**
 	 * Generates the SQL for listing tables in a platform-dependent manner.
-	 * Uses escapeLikeStringDirect().
 	 *
 	 * @param boolean $prefixLimit
 	 *
