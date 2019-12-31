@@ -136,7 +136,7 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	protected function fetchAssoc()
 	{
-		return $this->resultID->fetch_assoc();
+		return oci_fetch_assoc($this->resultID);
 	}
 
 	//--------------------------------------------------------------------
