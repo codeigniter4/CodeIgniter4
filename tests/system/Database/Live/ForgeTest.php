@@ -44,6 +44,9 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testCreateDatabase()
     {
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->markTestSkipped('OCI8 does not support create database.');
+        }
         $databaseCreated = $this->forge->createDatabase('test_forge_database');
 
         $this->assertTrue($databaseCreated);
@@ -76,7 +79,11 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testDropDatabase()
     {
-        if ($this->db->DBDriver === 'SQLite3') {
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->markTestSkipped('OCI8 does not support drop database.');
+        }
+        if ($this->db->DBDriver === 'SQLite3')
+        {
             $this->markTestSkipped('SQLite3 requires file path to drop database');
         }
 
@@ -169,6 +176,8 @@ final class ForgeTest extends CIUnitTestCase
             $this->assertSame(strtolower($fieldsData[0]->type), 'bigint');
         } elseif ($this->db->DBDriver === 'SQLite3') {
             $this->assertSame(strtolower($fieldsData[0]->type), 'integer');
+        } elseif ($this->db->DBDriver === 'OCI8') {
+            $this->assertSame(strtolower($fieldsData[0]->type), 'number');
         } elseif ($this->db->DBDriver === 'SQLSRV') {
             $this->assertSame(strtolower($fieldsData[0]->type), 'bigint');
         }
@@ -178,7 +187,11 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testCreateTableWithAttributes()
     {
-        if ($this->db->DBDriver === 'SQLite3') {
+        if ($this->db->DBDriver === 'OCI8')
+        {
+            $this->markTestSkipped('OCI8 does not support comments on tables or columns.');
+        }
+        if ($this->db->DBDriver === 'SQLite3')
             $this->markTestSkipped('SQLite3 does not support comments on tables or columns.');
         }
 
