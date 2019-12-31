@@ -169,4 +169,30 @@ class Builder extends BaseBuilder
 
 		return parent::_delete($table);
 	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * LIMIT string
+	 *
+	 * Generates a platform-specific LIMIT clause.
+	 *
+	 * @param string $sql SQL Query
+	 *
+	 * @return string
+	 */
+	protected function _limit(string $sql): string
+	{
+		if (version_compare($this->db->getVersion(), '12.1', '>='))
+		{
+			// OFFSET-FETCH can be used only with the ORDER BY clause
+			empty($this->QBOrderBy) && $sql .= ' ORDER BY 1';
+
+			return $sql . ' OFFSET ' . (int) $this->QBOffset . ' ROWS FETCH NEXT ' . $this->QBLimit . ' ROWS ONLY';
+		}
+
+		$this->limitUsed = true;
+		return 'SELECT * FROM (SELECT inner_query.*, rownum rnum FROM (' . $sql . ') inner_query WHERE rownum < ' . ($this->QBOffset + $this->QBLimit + 1) . ')'
+			. ($this->QBOffset ? ' WHERE rnum >= ' . ($this->QBOffset + 1) : '');
+	}
 }
