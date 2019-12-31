@@ -248,7 +248,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function affectedRows(): int
 	{
-		return $this->connID->affected_rows ?? 0;
+		return oci_num_rows($this->stmtId);
 	}
 
 	//--------------------------------------------------------------------
