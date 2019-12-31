@@ -221,43 +221,22 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @param string $sql
 	 *
-	 * @return mixed
+	 * @return resource
 	 */
 	public function execute(string $sql)
 	{
-		while ($this->connID->more_results())
+		if ($this->resetStmtId === true)
 		{
-			$this->connID->next_result();
-			if ($res = $this->connID->store_result())
+			$sql = rtrim($sql, ';');
+			if (strpos('BEGIN', ltrim($sql)) === 0)
 			{
-				$res->free();
+				$sql .= ';';
 			}
+			$this->stmtId = oci_parse($this->connID, $sql);
 		}
 
-		return $this->connID->query($this->prepQuery($sql));
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Prep the query
-	 *
-	 * If needed, each database adapter can prep the query string
-	 *
-	 * @param string $sql an SQL query
-	 *
-	 * @return string
-	 */
-	protected function prepQuery(string $sql): string
-	{
-		// mysqli_affected_rows() returns 0 for "DELETE FROM TABLE" queries. This hack
-		// modifies the query so that it a proper number of affected rows is returned.
-		if ($this->deleteHack === true && preg_match('/^\s*DELETE\s+FROM\s+(\S+)\s*$/i', $sql))
-		{
-			return trim($sql) . ' WHERE 1=1';
-		}
-
-		return $sql;
+		oci_set_prefetch($this->stmtId, 1000);
+		return (oci_execute($this->stmtId, $this->commitMode)) ? $this->stmtId : false;
 	}
 
 	//--------------------------------------------------------------------
