@@ -286,7 +286,18 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function _listColumns(string $table = ''): string
 	{
-		return 'SHOW COLUMNS FROM ' . $this->protectIdentifiers($table, true, null, false);
+		if (strpos($table, '.') !== false)
+		{
+			sscanf($table, '%[^.].%s', $owner, $table);
+		}
+		else
+		{
+			$owner = $this->username;
+		}
+
+		return 'SELECT COLUMN_NAME FROM ALL_TAB_COLUMNS
+			WHERE UPPER(OWNER) = ' . $this->escape(strtoupper($owner)) . '
+				AND UPPER(TABLE_NAME) = ' . $this->escape(strtoupper($this->DBPrefix . $table));
 	}
 
 	//--------------------------------------------------------------------
