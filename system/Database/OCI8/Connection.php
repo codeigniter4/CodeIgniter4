@@ -185,23 +185,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function setDatabase(string $databaseName): bool
 	{
-		if ($databaseName === '')
-		{
-			$databaseName = $this->database;
-		}
-
-		if (empty($this->connID))
-		{
-			$this->initialize();
-		}
-
-		if ($this->connID->select_db($databaseName))
-		{
-			$this->database = $databaseName;
-
-			return true;
-		}
-
 		return false;
 	}
 
