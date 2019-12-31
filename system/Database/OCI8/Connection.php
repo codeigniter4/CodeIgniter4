@@ -518,6 +518,18 @@ SQL;
 	//--------------------------------------------------------------------
 
 	/**
+	 * Get cursor. Returns a cursor from the database
+	 *
+	 * @return resource
+	 */
+	public function getCursor()
+	{
+		return $this->cursorId = oci_new_cursor($this->connID);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the last error code and message.
 	 *
 	 * Must return an array with keys 'code' and 'message':
