@@ -202,7 +202,41 @@ class Forge extends \CodeIgniter\Database\Forge
 			   . $field['unique'];
 	}
 
+	//--------------------------------------------------------------------
 
+	/**
+	 * Field attribute TYPE
+	 *
+	 * Performs a data type mapping between different databases.
+	 *
+	 * @param array &$attributes
+	 *
+	 * @return void
+	 */
+	protected function _attributeType(array &$attributes)
+	{
+		// Reset field lengths for data types that don't support it
+		// Usually overridden by drivers
+		switch (strtoupper($attributes['TYPE']))
+		{
+			case 'TINYINT':
+			case 'SMALLINT':
+			case 'MEDIUMINT':
+			case 'INT':
+			case 'INTEGER':
+			case 'BIGINT':
+			case 'NUMERIC':
+				$attributes['TYPE'] = 'NUMBER';
+				return;
+			case 'DATETIME':
+				$attributes['TYPE'] = 'DATE';
+				return;
+			case 'TEXT':
+			case 'VARCHAR':
+				$attributes['TYPE'] = 'VARCHAR2';
+				return;
+			default: return;
+		}
 	}
 
 	//--------------------------------------------------------------------
