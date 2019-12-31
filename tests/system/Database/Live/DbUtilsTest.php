@@ -76,7 +76,7 @@ final class DbUtilsTest extends CIUnitTestCase
     {
         $util = (new Database())->loadUtils($this->db);
 
-        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV'], true)) {
+        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV', 'OCI8'], true)) {
             $databases = $util->listDatabases();
 
             $this->assertContains($this->db->getDatabase(), $databases);
