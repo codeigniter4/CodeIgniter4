@@ -103,8 +103,8 @@ class Result extends BaseResult implements ResultInterface
 	{
 		if (is_object($this->resultID))
 		{
-			$this->resultID->free();
-			$this->resultID = false;
+			oci_free_statement($this->resultID);
+			$this->resultID = null;
 		}
 	}
 
