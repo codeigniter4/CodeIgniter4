@@ -52,14 +52,7 @@ class Utils extends BaseUtils
 	 *
 	 * @var string
 	 */
-	protected $listDatabases = 'SHOW DATABASES';
-
-	/**
-	 * OPTIMIZE TABLE statement
-	 *
-	 * @var string
-	 */
-	protected $optimizeTable = 'OPTIMIZE TABLE %s';
+	protected $listDatabases = 'SELECT TABLESPACE_NAME FROM USER_TABLESPACES';
 
 	//--------------------------------------------------------------------
 
