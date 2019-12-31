@@ -95,32 +95,12 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 			throw new \BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
 		}
 
-		// First off -bind the parameters
-		$bindTypes = '';
-
-		// Determine the type string
-		foreach ($data as $item)
+		foreach ($data as $key => $val)
 		{
-			if (is_integer($item))
-			{
-				$bindTypes .= 'i';
-			}
-			elseif (is_numeric($item))
-			{
-				$bindTypes .= 'd';
-			}
-			else
-			{
-				$bindTypes .= 's';
-			}
+			oci_bind_by_name($this->statement, ':' . $key, $val);
 		}
 
-		// Bind it
-		$this->statement->bind_param($bindTypes, ...$data);
-
-		$success = $this->statement->execute();
-
-		return $success;
+		return oci_execute($this->statement, $this->db->commitMode);
 	}
 
 	//--------------------------------------------------------------------
