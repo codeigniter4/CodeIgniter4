@@ -49,34 +49,56 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @var string
 	 */
+	protected $createDatabaseStr = false;
 
 	/**
+	 * CREATE TABLE IF statement
 	 *
 	 * @var string
 	 */
+	protected $createTableIfStr = false;
 
 	/**
+	 * DROP TABLE IF EXISTS statement
 	 *
+	 * @var string
 	 */
+	protected $dropTableIfStr = false;
 
 	/**
+	 * DROP DATABASE statement
 	 *
+	 * @var string
 	 */
+	protected $dropDatabaseStr = false;
 
 	/**
+	 * UNSIGNED support
 	 *
+	 * @var boolean|array
 	 */
+	protected $unsigned = false;
 
 	/**
 	 * NULL value representation in CREATE/ALTER TABLE statements
 	 *
 	 * @var string
 	 */
+	protected $null = 'NULL';
 
 	/**
+	 * RENAME TABLE statement
 	 *
+	 * @var string
 	 */
+	protected $renameTableStr = 'ALTER TABLE %s RENAME TO %s';
 
+	/**
+	 * DROP CONSTRAINT statement
+	 *
+	 * @var string
+	 */
+	protected $dropConstraintStr = 'ALTER TABLE %s DROP CONSTRAINT %s';
 
 	//--------------------------------------------------------------------
 
