@@ -147,4 +147,26 @@ class Builder extends BaseBuilder
 
 		return parent::delete($where, null, $reset_data);
 	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Delete statement
+	 *
+	 * Generates a platform-specific delete string from the supplied data
+	 *
+	 * @param string $table The table name
+	 *
+	 * @return string
+	 */
+	protected function _delete(string $table): string
+	{
+		if ($this->QBLimit)
+		{
+			$this->where('rownum <= ', $this->QBLimit, false);
+			$this->QBLimit = false;
+		}
+
+		return parent::_delete($table);
+	}
 }
