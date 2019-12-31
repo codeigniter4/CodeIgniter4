@@ -105,6 +105,23 @@ class Builder extends BaseBuilder
 		return $sql . 'SELECT * FROM dual';
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * Truncate statement
+	 *
+	 * Generates a platform-specific truncate string from the supplied data
+	 *
+	 * If the database does not support the truncate() command,
+	 * then this method maps to 'DELETE FROM table'
+	 *
+	 * @param string $table The table name
+	 *
+	 * @return string
+	 */
+	protected function _truncate(string $table): string
+	{
+		return 'TRUNCATE TABLE ' . $table;
 	}
 
 }
