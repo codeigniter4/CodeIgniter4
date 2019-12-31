@@ -36,7 +36,7 @@
  * @filesource
  */
 
-namespace CodeIgniter\Database\MySQLi;
+namespace CodeIgniter\Database\OCI8;
 
 /**
  * Forge for MySQLi

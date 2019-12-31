@@ -36,14 +36,14 @@
  * @filesource
  */
 
-namespace CodeIgniter\Database\MySQLi;
+namespace CodeIgniter\Database\OCI8;
 
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ResultInterface;
 use CodeIgniter\Entity;
 
 /**
- * Result for MySQLi
+ * Result for OCI
  */
 class Result extends BaseResult implements ResultInterface
 {
