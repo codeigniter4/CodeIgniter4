@@ -497,22 +497,24 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function _foreignKeyData(string $table): array
 	{
-		$sql = '
-                    SELECT
-                        tc.CONSTRAINT_NAME,
-                        tc.TABLE_NAME,
-                        kcu.COLUMN_NAME,
-                        rc.REFERENCED_TABLE_NAME,
-                        kcu.REFERENCED_COLUMN_NAME
-                    FROM information_schema.TABLE_CONSTRAINTS AS tc
-                    INNER JOIN information_schema.REFERENTIAL_CONSTRAINTS AS rc
-                        ON tc.CONSTRAINT_NAME = rc.CONSTRAINT_NAME
-                    INNER JOIN information_schema.KEY_COLUMN_USAGE AS kcu
-                        ON tc.CONSTRAINT_NAME = kcu.CONSTRAINT_NAME
-                    WHERE
-                        tc.CONSTRAINT_TYPE = ' . $this->escape('FOREIGN KEY') . ' AND
-                        tc.TABLE_SCHEMA = ' . $this->escape($this->database) . ' AND
-                        tc.TABLE_NAME = ' . $this->escape($table);
+		$sql = 'SELECT
+                 acc.constraint_name,
+                 acc.table_name,
+                 acc.column_name,
+                 ccu.table_name foreign_table_name,
+                 accu.column_name foreign_column_name
+  FROM all_cons_columns acc
+  JOIN all_constraints ac
+      ON acc.owner = ac.owner
+      AND acc.constraint_name = ac.constraint_name
+  JOIN all_constraints ccu
+      ON ac.r_owner = ccu.owner
+      AND ac.r_constraint_name = ccu.constraint_name
+  JOIN all_cons_columns accu
+      ON accu.constraint_name = ccu.constraint_name
+      AND accu.table_name = ccu.table_name
+  WHERE ac.constraint_type = ' . $this->escape('R') . '
+      AND acc.table_name = ' . $this->escape($table);
 
 		if (($query = $this->query($sql)) === false)
 		{
@@ -527,10 +529,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$obj->constraint_name     = $row->CONSTRAINT_NAME;
 			$obj->table_name          = $row->TABLE_NAME;
 			$obj->column_name         = $row->COLUMN_NAME;
-			$obj->foreign_table_name  = $row->REFERENCED_TABLE_NAME;
-			$obj->foreign_column_name = $row->REFERENCED_COLUMN_NAME;
-
-			$retVal[] = $obj;
+			$obj->foreign_table_name  = $row->FOREIGN_TABLE_NAME;
+			$obj->foreign_column_name = $row->FOREIGN_COLUMN_NAME;
+			$retVal[]                 = $obj;
 		}
 
 		return $retVal;
