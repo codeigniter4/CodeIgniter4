@@ -150,13 +150,26 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return object|boolean|Entity
 	 */
-	protected function fetchObject(string $className = 'stdClass')
+	protected function fetchObject(string $className = \stdClass::class)
 	{
-		if (is_subclass_of($className, Entity::class))
+		$row = oci_fetch_object($this->resultID);
+
+		if ($className === 'stdClass' || ! $row)
 		{
-			return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
+			return $row;
 		}
-		return $this->resultID->fetch_object($className);
+		elseif (is_subclass_of($className, Entity::class))
+		{
+			return (new $className())->setAttributes((array) $row);
+		}
+
+		$instance = new $className();
+		foreach ($row as $key => $value)
+		{
+			$instance->$key = $value;
+		}
+
+		return $instance;
 	}
 
 	//--------------------------------------------------------------------
