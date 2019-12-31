@@ -112,7 +112,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function _getResult()
 	{
-		return $this->statement->get_result();
+		return $this->statement;
 	}
 
 	//--------------------------------------------------------------------
