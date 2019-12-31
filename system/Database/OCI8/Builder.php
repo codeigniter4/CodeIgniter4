@@ -124,4 +124,27 @@ class Builder extends BaseBuilder
 		return 'TRUNCATE TABLE ' . $table;
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * Delete
+	 *
+	 * Compiles a delete string and runs the query
+	 *
+	 * @param mixed   $where      The where clause
+	 * @param integer $limit      The limit clause
+	 * @param boolean $reset_data
+	 *
+	 * @return mixed
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 */
+	public function delete($where = '', int $limit = null, bool $reset_data = true)
+	{
+		if (! empty($limit))
+		{
+			$this->QBLimit = $limit;
+		}
+
+		return parent::delete($where, null, $reset_data);
+	}
 }
