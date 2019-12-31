@@ -264,11 +264,12 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function _listTables(bool $prefixLimit = false): string
 	{
-		$sql = 'SHOW TABLES FROM ' . $this->escapeIdentifiers($this->database);
+		$sql = 'SELECT "TABLE_NAME" FROM "USER_TABLES"';
 
 		if ($prefixLimit !== false && $this->DBPrefix !== '')
 		{
-			return $sql . " LIKE '" . $this->escapeLikeStringDirect($this->DBPrefix) . "%'";
+			return $sql . ' WHERE "TABLE_NAME" LIKE \'' . $this->escapeLikeString($this->DBPrefix) . "%' "
+					. sprintf($this->likeEscapeStr, $this->likeEscapeChar);
 		}
 
 		return $sql;
