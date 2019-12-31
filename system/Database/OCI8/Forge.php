@@ -271,46 +271,38 @@ class Forge extends \CodeIgniter\Database\Forge
 	//--------------------------------------------------------------------
 
 	/**
-	 * Process indexes
+	 * Process foreign keys
 	 *
-	 * @param  string $table (ignored)
+	 * @param string $table Table name
+	 *
 	 * @return string
 	 */
-	protected function _processIndexes(string $table): string
+	protected function _processForeignKeys(string $table): string
 	{
 		$sql = '';
 
-		for ($i = 0, $c = count($this->keys); $i < $c; $i ++)
+		$allowActions = [
+			'CASCADE',
+			'SET NULL',
+			'NO ACTION',
+		];
+
+		if (count($this->foreignKeys) > 0)
 		{
-			if (is_array($this->keys[$i]))
+			foreach ($this->foreignKeys as $field => $fkey)
 			{
-				for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2 ++)
+				$name_index = $table . '_' . $field . '_fk';
+
+				$sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($name_index)
+					. ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
+
+				if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions))
 				{
-					if (! isset($this->fields[$this->keys[$i][$i2]]))
-					{
-						unset($this->keys[$i][$i2]);
-						continue;
-					}
+					$sql .= ' ON DELETE ' . $fkey['onDelete'];
 				}
 			}
-			elseif (! isset($this->fields[$this->keys[$i]]))
-			{
-				unset($this->keys[$i]);
-				continue;
-			}
-
-			is_array($this->keys[$i]) || $this->keys[$i] = [$this->keys[$i]];
-
-			$unique = in_array($i, $this->uniqueKeys) ? 'UNIQUE ' : '';
-
-			$sql .= ",\n\t{$unique}KEY " . $this->db->escapeIdentifiers(implode('_', $this->keys[$i]))
-				. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
 		}
-
-		$this->keys = [];
 
 		return $sql;
 	}
-
-	//--------------------------------------------------------------------
 }
