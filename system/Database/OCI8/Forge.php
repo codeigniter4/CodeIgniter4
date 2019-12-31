@@ -105,9 +105,10 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * ALTER TABLE
 	 *
-	 * @param  string $alter_type ALTER type
-	 * @param  string $table      Table name
-	 * @param  mixed  $field      Column definition
+	 * @param string $alter_type ALTER type
+	 * @param string $table      Table name
+	 * @param mixed  $field      Column definition
+	 *
 	 * @return string|string[]
 	 */
 	protected function _alterTable(string $alter_type, string $table, $field)
