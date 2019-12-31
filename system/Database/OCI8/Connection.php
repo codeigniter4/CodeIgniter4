@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CodeIgniter
  *
@@ -36,195 +35,116 @@
  * @filesource
  */
 
-namespace CodeIgniter\Database\MySQLi;
+namespace CodeIgniter\Database\OCI8;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use stdClass;
 
 /**
- * Connection for MySQLi
+ * Connection for Postgre
  */
 class Connection extends BaseConnection implements ConnectionInterface
 {
+
 	/**
 	 * Database driver
 	 *
 	 * @var string
 	 */
-	public $DBDriver = 'MySQLi';
-	/**
-	 * DELETE hack flag
-	 *
-	 * Whether to use the MySQL "delete hack" which allows the number
-	 * of affected rows to be shown. Uses a preg_replace when enabled,
-	 * adding a bit more processing to all queries.
-	 *
-	 * @var boolean
-	 */
-	public $deleteHack = true;
-	// --------------------------------------------------------------------
+	public $DBDriver = 'OCI8';
+
 	/**
 	 * Identifier escape character
 	 *
 	 * @var string
 	 */
-	public $escapeChar = '`';
-	// --------------------------------------------------------------------
+	public $escapeChar = '"';
+
 	/**
-	 * MySQLi object
+	 * List of reserved identifiers
 	 *
-	 * Has to be preserved without being assigned to $conn_id.
+	 * Identifiers that must NOT be escaped.
 	 *
-	 * @var \MySQLi
+	 * @var array
 	 */
-	public $mysqli;
+	protected $reservedIdentifiers = ['*', 'rownum'];
+
+	protected $validDSNs = [
+			'tns'	=> '/^\(DESCRIPTION=(\(.+\)){2,}\)$/', // TNS
+			// Easy Connect string (Oracle 10g+)
+			'ec'	=> '/^(\/\/)?[a-z0-9.:_-]+(:[1-9][0-9]{0,4})?(\/[a-z0-9$_]+)?(:[^\/])?(\/[a-z0-9$_]+)?$/i',
+			'in'	=> '/^[a-z0-9$_]+$/i' // Instance name (defined in tnsnames.ora)
+	];
+
 	//--------------------------------------------------------------------
+
+	/**
+	 * Reset $stmtId flag
+	 *
+	 * Used by storedProcedure() to prevent execute() from
+	 * re-setting the statement ID.
+	 */
+	protected $resetStmtId = true;
+
+	/**
+	 * Statement ID
+	 *
+	 * @var	resource
+	 */
+	public $stmtId;
+
+	/**
+	 * Commit mode flag
+	 *
+	 * @var	int
+	 */
+	public $commitMode = OCI_COMMIT_ON_SUCCESS;
+
+	/**
+	 * Cursor ID
+	 *
+	 * @var	resource
+	 */
+	public $cursorId;
+
+	/**
+	 * confirm DNS format.
+	 *
+	 * @return bool
+	 */
+	private function isValidDSN() : bool
+	{
+		foreach ($this->validDSNs as $regexp)
+		{
+			if (preg_match($regexp, $this->DSN))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 	/**
 	 * Connect to the database.
 	 *
-	 * @param boolean $persistent
-	 *
+	 * @param  boolean $persistent
 	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function connect(bool $persistent = false)
 	{
-		// Do we have a socket path?
-		if ($this->hostname[0] === '/')
+		if (empty($this->DSN) && !$this->isValidDSN())
 		{
-			$hostname = null;
-			$port     = null;
-			$socket   = $this->hostname;
-		}
-		else
-		{
-			$hostname = ($persistent === true) ? 'p:' . $this->hostname : $this->hostname;
-			$port     = empty($this->port) ? null : $this->port;
-			$socket   = null;
+			$this->buildDSN();
 		}
 
-		$client_flags = ($this->compress === true) ? MYSQLI_CLIENT_COMPRESS : 0;
-		$this->mysqli = mysqli_init();
+		$func = ($persistent === true) ? 'oci_pconnect' : 'oci_connect';
 
-		mysqli_report(MYSQLI_REPORT_ALL & ~MYSQLI_REPORT_INDEX);
-
-		$this->mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
-
-		if (isset($this->strictOn))
-		{
-			if ($this->strictOn)
-			{
-				$this->mysqli->options(MYSQLI_INIT_COMMAND,
-					'SET SESSION sql_mode = CONCAT(@@sql_mode, ",", "STRICT_ALL_TABLES")');
-			}
-			else
-			{
-				$this->mysqli->options(MYSQLI_INIT_COMMAND, 'SET SESSION sql_mode =
-						REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
-												@@sql_mode,
-												"STRICT_ALL_TABLES,", ""),
-											",STRICT_ALL_TABLES", ""),
-										"STRICT_ALL_TABLES", ""),
-									"STRICT_TRANS_TABLES,", ""),
-								",STRICT_TRANS_TABLES", ""),
-							"STRICT_TRANS_TABLES", "")'
-				);
-			}
-		}
-
-		if (is_array($this->encrypt))
-		{
-			$ssl                                                  = [];
-			empty($this->encrypt['ssl_key']) || $ssl['key']       = $this->encrypt['ssl_key'];
-			empty($this->encrypt['ssl_cert']) || $ssl['cert']     = $this->encrypt['ssl_cert'];
-			empty($this->encrypt['ssl_ca']) || $ssl['ca']         = $this->encrypt['ssl_ca'];
-			empty($this->encrypt['ssl_capath']) || $ssl['capath'] = $this->encrypt['ssl_capath'];
-			empty($this->encrypt['ssl_cipher']) || $ssl['cipher'] = $this->encrypt['ssl_cipher'];
-
-			if (! empty($ssl))
-			{
-				if (isset($this->encrypt['ssl_verify']))
-				{
-					if ($this->encrypt['ssl_verify'])
-					{
-						defined('MYSQLI_OPT_SSL_VERIFY_SERVER_CERT') &&
-						$this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
-					}
-					// Apparently (when it exists), setting MYSQLI_OPT_SSL_VERIFY_SERVER_CERT
-					// to FALSE didn't do anything, so PHP 5.6.16 introduced yet another
-					// constant ...
-					//
-					// https://secure.php.net/ChangeLog-5.php#5.6.16
-					// https://bugs.php.net/bug.php?id=68344
-					elseif (defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT') && version_compare($this->mysqli->client_info, '5.6', '>='))
-					{
-						$client_flags += MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT;
-					}
-				}
-
-				$client_flags += MYSQLI_CLIENT_SSL;
-				$this->mysqli->ssl_set(
-					$ssl['key'] ?? null, $ssl['cert'] ?? null, $ssl['ca'] ?? null,
-					$ssl['capath'] ?? null, $ssl['cipher'] ?? null
-				);
-			}
-		}
-
-		try
-		{
-			if ($this->mysqli->real_connect($hostname, $this->username, $this->password,
-				$this->database, $port, $socket, $client_flags)
-			)
-			{
-				// Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
-				if (($client_flags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, '5.7.3', '<=')
-					&& empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")
-										  ->fetch_object()->Value)
-				)
-				{
-					$this->mysqli->close();
-					$message = 'MySQLi was configured for an SSL connection, but got an unencrypted connection instead!';
-					log_message('error', $message);
-
-					if ($this->DBDebug)
-					{
-						throw new DatabaseException($message);
-					}
-
-					return false;
-				}
-
-				if (! $this->mysqli->set_charset($this->charset))
-				{
-					log_message('error',
-						"Database: Unable to set the configured connection charset ('{$this->charset}').");
-					$this->mysqli->close();
-
-					if ($this->db->debug)
-					{
-						throw new DatabaseException('Unable to set client connection character set: ' . $this->charset);
-					}
-
-					return false;
-				}
-
-				return $this->mysqli;
-			}
-		}
-		catch (\Throwable $e)
-		{
-			// Clean sensitive information from errors.
-			$msg = $e->getMessage();
-
-			$msg = str_replace($this->username, '****', $msg);
-			$msg = str_replace($this->password, '****', $msg);
-
-			throw new \mysqli_sql_exception($msg, $e->getCode(), $e);
-		}
-
-		return false;
+		return empty($this->charset)
+			? $func($this->username, $this->password, $this->DSN)
+			: $func($this->username, $this->password, $this->DSN, $this->charset);
 	}
 
 	//--------------------------------------------------------------------
@@ -674,6 +594,74 @@ class Connection extends BaseConnection implements ConnectionInterface
 	public function insertID(): int
 	{
 		return $this->connID->insert_id;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Build a DSN from the provided parameters
+	 *
+	 * @return void
+	 */
+	protected function buildDSN()
+	{
+		$this->DSN === '' || $this->DSN = '';
+
+		// Legacy support for TNS in the hostname configuration field
+		$this->hostname = str_replace(["\n", "\r", "\t", ' '], '', $this->hostname);
+
+		if (preg_match($this->validDSNs['tns'], $this->hostname))
+		{
+			$this->DSN = $this->hostname;
+			return;
+		}
+
+		$isEasyConnectableHostName = $this->hostname !== '' && strpos($this->hostname, '/') === FALSE && strpos($this->hostname, ':') === FALSE;
+		$easyConnectablePort = (( ! empty($this->port) && ctype_digit($this->port)) ? ':'.$this->port : '');
+		$easyConnectableDatabase = ($this->database !== '' ? '/'.ltrim($this->database, '/') : '');
+
+		if ($isEasyConnectableHostName && ($easyConnectablePort !== '' || $easyConnectableDatabase !== ''))
+		{
+			/* If the hostname field isn't empty, doesn't contain
+			 * ':' and/or '/' and if port and/or database aren't
+			 * empty, then the hostname field is most likely indeed
+			 * just a hostname. Therefore we'll try and build an
+			 * Easy Connect string from these 3 settings, assuming
+			 * that the database field is a service name.
+			 */
+			$this->DSN = $this->hostname
+				.$easyConnectablePort
+				.$easyConnectableDatabase;
+
+			if (preg_match($this->validDSNs['ec'], $this->DSN))
+			{
+				return;
+			}
+		}
+
+		/* At this point, we can only try and validate the hostname and
+		 * database fields separately as DSNs.
+		 */
+		if (preg_match($this->validDSNs['ec'], $this->hostname) OR preg_match($this->validDSNs['in'], $this->hostname))
+		{
+			$this->DSN = $this->hostname;
+			return;
+		}
+
+		$this->database = str_replace(["\n", "\r", "\t", ' '], '', $this->database);
+		foreach ($valid_dsns as $regexp)
+		{
+			if (preg_match($regexp, $this->database))
+			{
+				return;
+			}
+		}
+
+		/* Well - OK, an empty string should work as well.
+		 * PHP will try to use environment variables to
+		 * determine which Oracle instance to connect to.
+		 */
+		$this->DSN = '';
 	}
 
 	//--------------------------------------------------------------------
