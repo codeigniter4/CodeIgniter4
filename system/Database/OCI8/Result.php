@@ -67,14 +67,9 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function getFieldNames(): array
 	{
-		$fieldNames = [];
-		$this->resultID->field_seek(0);
-		while ($field = $this->resultID->fetch_field())
-		{
-			$fieldNames[] = $field->name;
-		}
-
-		return $fieldNames;
+		return array_map(function ($field_index) {
+			return oci_field_name($this->resultID, $field_index);
+		}, range(1, $this->getFieldCount()));
 	}
 
 	//--------------------------------------------------------------------
