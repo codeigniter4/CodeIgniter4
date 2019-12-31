@@ -81,20 +81,15 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function getFieldData(): array
 	{
-		$retVal    = [];
-		$fieldData = $this->resultID->fetch_fields();
-
-		foreach ($fieldData as $i => $data)
-		{
-			$retVal[$i]              = new \stdClass();
-			$retVal[$i]->name        = $data->name;
-			$retVal[$i]->type        = $data->type;
-			$retVal[$i]->max_length  = $data->max_length;
-			$retVal[$i]->primary_key = (int) ($data->flags & 2);
-			$retVal[$i]->default     = $data->def;
-		}
-
-		return $retVal;
+		return array_map(function ($field_index) {
+			return (object) [
+								'name'       => oci_field_name($this->resultID, $field_index),
+								'type'       => oci_field_type($this->resultID, $field_index),
+								'max_length' => oci_field_size($this->resultID, $field_index),
+				// 'primary_key' = (int) ($data->flags & 2),
+				// 'default'     = $data->def,
+							];
+		}, range(1, $this->getFieldCount()));
 	}
 
 	//--------------------------------------------------------------------
