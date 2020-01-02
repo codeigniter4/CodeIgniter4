@@ -231,6 +231,6 @@ class AutoloaderTest extends \CIUnitTestCase
 		$this->loader->initialize($config, $moduleConfig);
 
 		$namespaces = $this->loader->getNamespace();
-		$this->assertArrayHasKey('Zend\\Escaper', $namespaces);
+		$this->assertArrayHasKey('Laminas\\Escaper', $namespaces);
 	}
 }

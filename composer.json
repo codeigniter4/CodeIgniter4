@@ -11,7 +11,7 @@
         "ext-json": "*",
         "kint-php/kint": "^2.1",
         "psr/log": "^1.1",
-        "zendframework/zend-escaper": "^2.5"
+        "laminas/laminas-escaper": "^2.6"
     },
     "require-dev": {
         "codeigniter4/codeigniter4-standard": "^1.0",

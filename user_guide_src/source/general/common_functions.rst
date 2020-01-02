@@ -56,7 +56,7 @@ Service Accessors
 	:rtype: mixed
 
 	Escapes data for inclusion in web pages, to help prevent XSS attacks.
-	This uses the Zend Escaper library to handle the actual filtering of the data.
+	This uses the Laminas Escaper library to handle the actual filtering of the data.
 
 	If $data is a string, then it simply escapes and returns it.
 	If $data is an array, then it loops over it, escaping each 'value' of the key/value pairs.
