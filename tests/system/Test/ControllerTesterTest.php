@@ -216,4 +216,16 @@ class ControllerTesterTest extends \CIUnitTestCase
 		$this->assertEquals('en', $response->lang);
 	}
 
+	// @see https://github.com/codeigniter4/CodeIgniter4/issues/2470
+	public function testControllerNoURI()
+	{
+		$logger = new Logger(new LoggerConfig());
+		$result = $this->withLogger($logger)
+					   ->controller(\App\Controllers\Home::class)
+					   ->execute('index');
+
+		$body = $result->getBody();
+		$this->assertTrue($result->isOK());
+	}
+
 }

@@ -129,6 +129,11 @@ trait ControllerTester
 			$this->appConfig = new App();
 		}
 
+		if (! $this->uri instanceof URI)
+		{
+			$this->uri = new URI($this->appConfig->baseURL ?? 'http://example.com');
+		}
+
 		if (empty($this->request))
 		{
 			$this->request = new IncomingRequest($this->appConfig, $this->uri, $this->body, new UserAgent());
