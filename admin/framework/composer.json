@@ -1,5 +1,5 @@
 {
-    "name": "codeigniter4/framework",
+    "name": "codeigniter4/codeigniter4",
     "type": "project",
     "description": "The CodeIgniter framework v4",
     "homepage": "https://codeigniter.com",
@@ -8,9 +8,10 @@
         "php": ">=7.2",
         "ext-curl": "*",
         "ext-intl": "*",
+        "ext-json": "*",
         "kint-php/kint": "^2.1",
         "psr/log": "^1.1",
-        "zendframework/zend-escaper": "^2.5"
+        "laminas/laminas-escaper": "^2.6"
     },
     "require-dev": {
         "codeigniter4/codeigniter4-standard": "^1.0",
@@ -26,7 +27,8 @@
     "scripts": {
         "post-update-cmd": [
             "@composer dump-autoload",
-            "CodeIgniter\\ComposerScripts::postUpdate"
+            "CodeIgniter\\ComposerScripts::postUpdate",
+            "bash admin/setup.sh"
         ]
     },
     "support": {

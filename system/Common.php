@@ -48,7 +48,7 @@ use Config\Database;
 use Config\Logger;
 use Config\Services;
 use Tests\Support\Log\TestLogger;
-use Zend\Escaper\Escaper;
+use Laminas\Escaper\Escaper;
 
 /**
  * Common Functions

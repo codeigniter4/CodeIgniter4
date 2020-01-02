@@ -443,7 +443,7 @@ class View implements RendererInterface
 	/**
 	 *
 	 *
-	 * @throws \Zend\Escaper\Exception\RuntimeException
+	 * @throws \Laminas\Escaper\Exception\RuntimeException
 	 */
 	public function endSection()
 	{

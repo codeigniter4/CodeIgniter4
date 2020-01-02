@@ -150,16 +150,16 @@ class ComposerScripts
 	}
 
 	/**
-	 * Moves the Zend Escaper files into our base repo so that it's
+	 * Moves the Laminas Escaper files into our base repo so that it's
 	 * available for packaged releases where the users don't user Composer.
 	 *
 	 * @throws \ReflectionException
 	 */
 	public static function moveEscaper()
 	{
-		if (class_exists('\\Zend\\Escaper\\Escaper') && is_file(static::getClassFilePath('\\Zend\\Escaper\\Escaper')))
+		if (class_exists('\\Laminas\\Escaper\\Escaper') && is_file(static::getClassFilePath('\\Laminas\\Escaper\\Escaper')))
 		{
-			$base = basename(__DIR__) . '/' . static::$basePath . 'ZendEscaper';
+			$base = basename(__DIR__) . '/' . static::$basePath . 'Escaper';
 
 			foreach ([$base, $base . '/Exception'] as $path)
 			{
@@ -170,10 +170,10 @@ class ComposerScripts
 			}
 
 			$files = [
-				static::getClassFilePath('\\Zend\\Escaper\\Exception\\ExceptionInterface')       => $base . '/Exception/ExceptionInterface.php',
-				static::getClassFilePath('\\Zend\\Escaper\\Exception\\InvalidArgumentException') => $base . '/Exception/InvalidArgumentException.php',
-				static::getClassFilePath('\\Zend\\Escaper\\Exception\\RuntimeException')         => $base . '/Exception/RuntimeException.php',
-				static::getClassFilePath('\\Zend\\Escaper\\Escaper')                             => $base . '/Escaper.php',
+				static::getClassFilePath('\\Laminas\\Escaper\\Exception\\ExceptionInterface')       => $base . '/Exception/ExceptionInterface.php',
+				static::getClassFilePath('\\Laminas\\Escaper\\Exception\\InvalidArgumentException') => $base . '/Exception/InvalidArgumentException.php',
+				static::getClassFilePath('\\Laminas\\Escaper\\Exception\\RuntimeException')         => $base . '/Exception/RuntimeException.php',
+				static::getClassFilePath('\\Laminas\\Escaper\\Escaper')                             => $base . '/Escaper.php',
 			];
 
 			foreach ($files as $source => $dest)
