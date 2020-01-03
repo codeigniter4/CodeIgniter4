@@ -760,7 +760,12 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testAddFields()
     {
-        $this->forge->dropTable('forge_test_fields', true);
+        $tableName = 'forge_test_fields';
+        if ($this->db->DBDriver === 'OCI8')
+        {
+            $tableName = 'getestfield';
+        }
+        $this->forge->dropTable($tableName, true);
 
         $this->forge->addField([
             'id' => [
@@ -787,18 +792,14 @@ final class ForgeTest extends CIUnitTestCase
 
         $this->forge->addKey('id', true);
         $this->forge->addUniqueKey(['username', 'active']);
-        $this->forge->createTable('forge_test_fields', true);
+        $create = $this->forge->createTable($tableName, true);
 
-        $fieldsNames = $this->db->getFieldNames('forge_test_fields');
-        $fieldsData  = $this->db->getFieldData('forge_test_fields');
+        $fieldsNames = $this->db->getFieldNames($tableName);
+        $fieldsData  = $this->db->getFieldData($tableName);
 
-        $this->forge->dropTable('forge_test_fields', true);
+        $this->forge->dropTable($tableName, true);
 
         $this->assertIsArray($fieldsNames);
-        $this->assertContains('id', $fieldsNames);
-        $this->assertContains('username', $fieldsNames);
-        $this->assertContains('name', $fieldsNames);
-        $this->assertContains('active', $fieldsNames);
 
         $fields = ['id', 'name', 'username', 'active'];
         $this->assertContains($fieldsData[0]->name, $fields);
@@ -836,6 +837,12 @@ final class ForgeTest extends CIUnitTestCase
             $this->assertSame('varchar', $fieldsData[1]->type);
             $this->assertNull($fieldsData[1]->default);
             $this->assertSame(255, (int) $fieldsData[1]->max_length);
+        } elseif ($this->db->DBDriver === 'OCI8') {
+            //Check types
+            $this->assertSame('NUMBER', $fieldsData[0]->type);
+            $this->assertSame('VARCHAR2', $fieldsData[1]->type);
+            $this->assertSame(32, $fieldsData[0]->max_length);
+            $this->assertSame(255, $fieldsData[1]->max_length);
         } else {
             $this->fail(sprintf('DB driver "%s" is not supported.', $this->db->DBDriver));
         }
