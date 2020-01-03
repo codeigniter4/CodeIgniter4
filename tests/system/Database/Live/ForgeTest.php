@@ -424,13 +424,23 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->addKey('id', true);
         $this->forge->addForeignKey('users_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE');
 
-        $this->forge->createTable('forge_test_invoices', true, $attributes);
+        $tableName = 'forge_test_invoices';
+        if ($this->db->DBDriver === 'OCI8')
+        {
+            $tableName = 'forge_test_inv';
+        }
 
-        $foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices');
+        $this->forge->createTable($tableName, true, $attributes);
+
+        $foreignKeyData = $this->db->getForeignKeyData($tableName);
 
         if ($this->db->DBDriver === 'SQLite3') {
             $this->assertSame($foreignKeyData[0]->constraint_name, 'users_id to db_forge_test_users.id');
             $this->assertSame($foreignKeyData[0]->sequence, 0);
+        } elseif ($this->db->DBDriver === 'OCI8') {
+            $this->assertEquals($foreignKeyData[0]->constraint_name, $this->db->DBPrefix . 'forge_test_inv_users_id_fk');
+            $this->assertEquals($foreignKeyData[0]->column_name, 'users_id');
+            $this->assertEquals($foreignKeyData[0]->foreign_column_name, 'id');
         } else {
             $this->assertSame($foreignKeyData[0]->constraint_name, $this->db->DBPrefix . 'forge_test_invoices_users_id_foreign');
             $this->assertSame($foreignKeyData[0]->column_name, 'users_id');
@@ -439,7 +449,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertSame($foreignKeyData[0]->table_name, $this->db->DBPrefix . 'forge_test_invoices');
         $this->assertSame($foreignKeyData[0]->foreign_table_name, $this->db->DBPrefix . 'forge_test_users');
 
-        $this->forge->dropTable('forge_test_invoices', true);
+        $this->forge->dropTable($tableName, true);
         $this->forge->dropTable('forge_test_users', true);
     }
 
@@ -693,15 +703,23 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->addKey('id', true);
         $this->forge->addForeignKey('users_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE');
 
-        $this->forge->createTable('forge_test_invoices', true, $attributes);
+        $tableName      = 'forge_test_invoices';
+        $foreignKeyName = 'forge_test_invoices_users_id_foreign';
+        if ($this->db->DBDriver === 'OCI8')
+        {
+            $tableName      = 'forge_test_inv';
+            $foreignKeyName = 'forge_test_inv_users_id_fk';
+        }
 
-        $this->forge->dropForeignKey('forge_test_invoices', 'forge_test_invoices_users_id_foreign');
+        $this->forge->createTable($tableName, true, $attributes);
 
-        $foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices');
+        $this->forge->dropForeignKey($tableName, $foreignKeyName);
+
+        $foreignKeyData = $this->db->getForeignKeyData($tableName);
 
         $this->assertEmpty($foreignKeyData);
 
-        $this->forge->dropTable('forge_test_invoices', true);
+        $this->forge->dropTable($tableName, true);
         $this->forge->dropTable('forge_test_users', true);
     }
 
