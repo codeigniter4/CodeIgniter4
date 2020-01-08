@@ -507,29 +507,48 @@ var ciDebugBar = {
 
 	setToolbarTheme: function () {
 		var btnTheme = document.getElementById('toolbar-theme');
+		var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+	  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches;
 
+		// If a cookie is set with a value, we force the color scheme
 		if (ciDebugBar.readCookie('debug-bar-theme') === 'dark')
 		{
-			ciDebugBar.addClass(ciDebugBar.icon, 'dark');
+			ciDebugBar.removeClass(ciDebugBar.toolbar, 'light');
 			ciDebugBar.addClass(ciDebugBar.toolbar, 'dark');
+		}
+		else if (ciDebugBar.readCookie('debug-bar-theme') === 'light')
+		{
+			ciDebugBar.removeClass(ciDebugBar.toolbar, 'dark');
+			ciDebugBar.addClass(ciDebugBar.toolbar, 'light');
 		}
 
 		btnTheme.addEventListener('click', function () {
 			var theme = ciDebugBar.readCookie('debug-bar-theme');
 
-			ciDebugBar.createCookie('debug-bar-theme', '', -1);
-
-			if (!theme || theme === 'light')
+			if (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
 			{
-				ciDebugBar.createCookie('debug-bar-theme', 'dark', 365);
-				ciDebugBar.addClass(ciDebugBar.icon, 'dark');
-				ciDebugBar.addClass(ciDebugBar.toolbar, 'dark');
+				// If there is no cookie, and "prefers-color-scheme" is set to "dark"
+				// It means that the user wants to switch to light mode
+				ciDebugBar.createCookie('debug-bar-theme', 'light', 365);
+				ciDebugBar.removeClass(ciDebugBar.toolbar, 'dark');
+				ciDebugBar.addClass(ciDebugBar.toolbar, 'light');
 			}
 			else
 			{
-				ciDebugBar.createCookie('debug-bar-theme', 'light', 365);
-				ciDebugBar.removeClass(ciDebugBar.icon, 'dark');
-				ciDebugBar.removeClass(ciDebugBar.toolbar, 'dark');
+				if (theme === 'dark')
+				{
+					ciDebugBar.createCookie('debug-bar-theme', 'light', 365);
+					ciDebugBar.removeClass(ciDebugBar.toolbar, 'dark');
+					ciDebugBar.addClass(ciDebugBar.toolbar, 'light');
+				}
+				else
+				{
+ 					// In any other cases: if there is no cookie, or the cookie is set to
+					// "light", or the "prefers-color-scheme" is "light"...
+					ciDebugBar.createCookie('debug-bar-theme', 'dark', 365);
+					ciDebugBar.removeClass(ciDebugBar.toolbar, 'light');
+					ciDebugBar.addClass(ciDebugBar.toolbar, 'dark');
+				}
 			}
 		}, true);
 	},
