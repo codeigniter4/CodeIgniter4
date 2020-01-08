@@ -1122,6 +1122,25 @@ if (! function_exists('dd'))
 	}
 }
 
+
+//--------------------------------------------------------------------
+
+if (! function_exists('dump'))
+{
+	/**
+	 * Prints a Kint debug report.
+	 *
+	 * @param array ...$vars
+	 *
+	 * @codeCoverageIgnore Can't be tested ... exits
+	 */
+	function dump(...$vars)
+	{
+		Kint::$aliases[] = 'dd';
+		Kint::dump(...$vars);
+	}
+}
+
 //--------------------------------------------------------------------
 
 if (! function_exists('trace'))
