@@ -83,6 +83,7 @@
 #debug-bar #toolbar-position > a,
 #debug-bar #toolbar-theme > a {
 	padding: 0 6px;
+	text-decoration: none;
 }
 
 #debug-icon.fixed-top,
