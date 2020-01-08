@@ -413,6 +413,25 @@ simple styles to replace inline styles
 }
 
 /**
+light mode (matches default css)
+ */
+.light .tab,
+.light .toolbar {
+	-webkit-filter: invert(0%);
+	filter: invert(0%);
+}
+
+.light .badge,
+.light #toolbar-position a,
+.light #toolbar-theme a,
+.light .toolbar h1,
+.light .current,
+.light tr[data-active="1"] {
+	-webkit-filter: invert(0%);
+	filter: invert(0%);
+}
+
+/**
 dark mode
  */
 .dark .tab,
