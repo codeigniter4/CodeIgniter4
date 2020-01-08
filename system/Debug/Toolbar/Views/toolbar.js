@@ -16,6 +16,7 @@ var ciDebugBar = {
 		ciDebugBar.createListeners();
 		ciDebugBar.setToolbarState();
 		ciDebugBar.setToolbarPosition();
+		ciDebugBar.setToolbarTheme();
 		ciDebugBar.toggleViewsHints();
 
 		document.getElementById('debug-bar-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
@@ -498,6 +499,37 @@ var ciDebugBar = {
 				ciDebugBar.createCookie('debug-bar-position', 'bottom', 365);
 				ciDebugBar.removeClass(ciDebugBar.icon, 'fixed-top');
 				ciDebugBar.removeClass(ciDebugBar.toolbar, 'fixed-top');
+			}
+		}, true);
+	},
+
+	//--------------------------------------------------------------------
+
+	setToolbarTheme: function () {
+		var btnTheme = document.getElementById('toolbar-theme');
+
+		if (ciDebugBar.readCookie('debug-bar-theme') === 'dark')
+		{
+			ciDebugBar.addClass(ciDebugBar.icon, 'dark');
+			ciDebugBar.addClass(ciDebugBar.toolbar, 'dark');
+		}
+
+		btnTheme.addEventListener('click', function () {
+			var theme = ciDebugBar.readCookie('debug-bar-theme');
+
+			ciDebugBar.createCookie('debug-bar-theme', '', -1);
+
+			if (!theme || theme === 'light')
+			{
+				ciDebugBar.createCookie('debug-bar-theme', 'dark', 365);
+				ciDebugBar.addClass(ciDebugBar.icon, 'dark');
+				ciDebugBar.addClass(ciDebugBar.toolbar, 'dark');
+			}
+			else
+			{
+				ciDebugBar.createCookie('debug-bar-theme', 'light', 365);
+				ciDebugBar.removeClass(ciDebugBar.icon, 'dark');
+				ciDebugBar.removeClass(ciDebugBar.toolbar, 'dark');
 			}
 		}, true);
 	},
