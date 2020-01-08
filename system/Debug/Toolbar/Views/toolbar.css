@@ -413,12 +413,12 @@ simple styles to replace inline styles
 }
 
 /**
-dark theme
+dark mode
  */
 .dark .tab,
 .dark .toolbar {	/* Invert colors */
-  -webkit-filter: invert(88%);
-  filter: invert(88%);
+	-webkit-filter: invert(88%);
+	filter: invert(88%);
 }
 
 .dark .badge,
@@ -426,7 +426,25 @@ dark theme
 .dark #toolbar-theme a,
 .dark .toolbar h1,
 .dark .current,
-.dark tr[data-active="1"] {	/* Cancel color invertion for some elements */
+.dark tr[data-active="1"] {	/* Cancel colors inversion for some elements */
 	-webkit-filter: invert(88%);
-  filter: invert(88%);
+	filter: invert(88%);
+}
+
+@media (prefers-color-scheme: dark) {
+	.tab,
+	.toolbar {
+		-webkit-filter: invert(88%);
+		filter: invert(88%);
+	}
+
+	.badge,
+	#toolbar-position a,
+	#toolbar-theme a,
+	.toolbar h1,
+	.current,
+	tr[data-active="1"] {
+		-webkit-filter: invert(88%);
+		filter: invert(88%);
+	}
 }
