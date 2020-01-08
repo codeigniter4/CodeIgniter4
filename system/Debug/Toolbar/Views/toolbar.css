@@ -80,7 +80,8 @@
 	z-index: 10000;
 }
 
-#debug-bar #toolbar-position > a {
+#debug-bar #toolbar-position > a,
+#debug-bar #toolbar-theme > a {
 	padding: 0 6px;
 }
 
@@ -394,6 +395,10 @@ simple styles to replace inline styles
 	display: none;
 }
 
+.debug-bar-ntheme {
+	display: none;
+}
+
 .debug-bar-alignRight {
 	text-align: right;
 }
@@ -404,4 +409,23 @@ simple styles to replace inline styles
 
 .debug-bar-noverflow {
 	overflow: hidden;
+}
+
+/**
+dark theme
+ */
+.dark .tab,
+.dark .toolbar {	/* Invert colors */
+  -webkit-filter: invert(88%);
+  filter: invert(88%);
+}
+
+.dark .badge,
+.dark #toolbar-position a,
+.dark #toolbar-theme a,
+.dark .toolbar h1,
+.dark .current,
+.dark tr[data-active="1"] {	/* Cancel color invertion for some elements */
+	-webkit-filter: invert(88%);
+  filter: invert(88%);
 }
