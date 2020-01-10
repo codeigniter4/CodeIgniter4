@@ -653,6 +653,10 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			$to = $this->routes['*'][$to]['route'];
 		}
+		else if(array_key_exists($to, $this->routes['get']))
+		{
+			$to = $this->routes['get'][$to]['route'];
+		}
 
 		$this->create('*', $from, $to, ['redirect' => $status]);
 
