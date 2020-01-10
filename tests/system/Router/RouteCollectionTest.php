@@ -907,6 +907,24 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$this->assertEquals(307, $routes->getRedirectCode('users'));
 	}
 
+	public function testAddRedirectGetMethod(){
+		$routes = $this->getCollector();
+
+		$routes->get('zombies', 'Zombies::index', ['as' => 'namedRoute']);
+		$routes->addRedirect('users', 'namedRoute', 307);
+
+		$expected = [
+			'users'   => [
+				'zombies' => '\Zombies::index',
+			],
+			'zombies' => '\Zombies::index',
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+		$this->assertTrue($routes->isRedirect('users'));
+		$this->assertEquals(307, $routes->getRedirectCode('users'));
+	}
+
 	//--------------------------------------------------------------------
 
 	/**
