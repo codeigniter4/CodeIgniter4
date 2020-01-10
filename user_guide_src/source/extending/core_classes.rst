@@ -29,6 +29,7 @@ The following is a list of the core system files that are invoked every time Cod
 * CodeIgniter\\HTTP\\Request
 * CodeIgniter\\HTTP\\Response
 * CodeIgniter\\HTTP\\Message
+* CodeIgniter\\HTTP\\URI
 * CodeIgniter\\Log\\Logger
 * CodeIgniter\\Log\\Handlers\\BaseHandler
 * CodeIgniter\\Log\\Handlers\\FileHandler
