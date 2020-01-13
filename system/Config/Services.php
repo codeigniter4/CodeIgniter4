@@ -604,7 +604,7 @@ class Services extends BaseService
 
 		return new IncomingRequest(
 				$config,
-				new URI(),
+				static::uri(),
 				'php://input',
 				new UserAgent()
 		);
