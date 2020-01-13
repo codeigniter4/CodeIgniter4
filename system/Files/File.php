@@ -200,7 +200,7 @@ class File extends SplFileInfo
 	 *
 	 * @return self
 	 */
-	public function move(string $targetPath, ?string $name = null, bool $overwrite = false): self
+	public function move(string $targetPath, string $name = null, bool $overwrite = false): self
 	{
 		$targetPath = realpath($targetPath);
 		@chmod($targetPath, 0777 & ~umask());
