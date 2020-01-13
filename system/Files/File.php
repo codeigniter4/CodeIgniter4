@@ -56,11 +56,7 @@ class File extends SplFileInfo
 	 * 
 	 * @var array
 	 */
-	protected const SIZE_UNITS = [
-		'b' => 1,
-		'kb' => 1024,
-		'mb' => ‭1048576‬,
-	];
+	protected const SIZE_UNITS = ['b' => 1, 'kb' => 1024, 'mb' => 1048576‬];
 
 	/**
 	 * The files size in bytes.
