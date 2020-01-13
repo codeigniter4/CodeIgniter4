@@ -424,6 +424,12 @@ class Router implements RouterInterface
 			// Does the RegEx match?
 			if (preg_match('#^' . $key . '$#', $uri, $matches))
 			{
+				
+				// Is this route supposed to redirect to another?
+				if ($this->collection->isRedirect($key))
+				{
+					throw new RedirectException(key($val), $this->collection->getRedirectCode($key));
+				}
 				// Store our locale so CodeIgniter object can
 				// assign it to the Request.
 				if (isset($localeSegment))
@@ -480,12 +486,6 @@ class Router implements RouterInterface
 					$controller = str_replace('/', '\\', $controller);
 
 					$val = $controller . '::' . $method;
-				}
-
-				// Is this route supposed to redirect to another?
-				if ($this->collection->isRedirect($key))
-				{
-					throw new RedirectException($val, $this->collection->getRedirectCode($key));
 				}
 
 				$this->setRequest(explode('/', $val));
