@@ -1,8 +1,9 @@
-<?php namespace CodeIgniter\Files;
+<?php
+
+namespace CodeIgniter\Files;
 
 class FileTest extends \CIUnitTestCase
 {
-
 	public function testNewGoodChecked()
 	{
 		$path = SYSTEMPATH . 'Common.php';
@@ -47,18 +48,25 @@ class FileTest extends \CIUnitTestCase
 		$this->assertEquals('file', $file->getType());
 	}
 
-	public function testGetSizeReturnsKB()
+	public function testGetSize()
 	{
 		$file = new File(SYSTEMPATH . 'Common.php');
-		$size = number_format(filesize(SYSTEMPATH . 'Common.php') / 1024, 3);
-		$this->assertEquals($size, $file->getSize('kb'));
+		$size = filesize(SYSTEMPATH . 'Common.php');
+		$this->assertEquals($size, $file->getSize());
 	}
 
-	public function testGetSizeReturnsMB()
+	public function testGetSizeByUnitKB()
 	{
 		$file = new File(SYSTEMPATH . 'Common.php');
-		$size = number_format(filesize(SYSTEMPATH . 'Common.php') / 1024 / 1024, 3);
-		$this->assertEquals($size, $file->getSize('mb'));
+		$size = round(filesize(SYSTEMPATH . 'Common.php') / 1024, 3);
+		$this->assertEquals($size, $file->getGetSizeByUnit('kb', 3));
+	}
+
+	public function testGetSizeByUnitMB()
+	{
+		$file = new File(SYSTEMPATH . 'Common.php');
+		$size = round(filesize(SYSTEMPATH . 'Common.php') / 1024 / 1024, 4);
+		$this->assertEquals($size, $file->getGetSizeByUnit('mb', 4));
 	}
 
 	/**
