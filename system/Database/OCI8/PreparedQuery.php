@@ -46,6 +46,31 @@ use CodeIgniter\Database\BasePreparedQuery;
  */
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {
+	private $isCollectRowId;
+
+	/**
+	 * Prepares the query against the database, and saves the connection
+	 * info necessary to execute the query later.
+	 *
+	 * NOTE: This version is based on SQL code. Child classes should
+	 * override this method.
+	 *
+	 * @param string $sql
+	 * @param array  $options    Passed to the connection's prepare statement.
+	 * @param string $queryClass
+	 *
+	 * @return mixed
+	 */
+	public function prepare(string $sql, array $options = [], string $queryClass = 'CodeIgniter\\Database\\Query')
+	{
+		$this->isCollectRowId = false;
+
+		if (substr($sql, strpos($sql, 'RETURNING ROWID INTO :CI_OCI8_ROWID')) === 'RETURNING ROWID INTO :CI_OCI8_ROWID') {
+			$this->isCollectRowId = true;
+		}
+
+		return parent::prepare($sql, $options, $queryClass);
+	}
 
 	/**
 	 * Prepares the query against the database, and saves the connection
@@ -95,9 +120,15 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 			throw new \BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
 		}
 
-		foreach ($data as $key => $val)
+		$last_key = 0;
+		foreach (array_keys($data) as $key)
 		{
-			oci_bind_by_name($this->statement, ':' . $key, $val);
+			oci_bind_by_name($this->statement, ':' . $key, $data[$key]);
+			$last_key = $key;
+		}
+
+		if ($this->isCollectRowId) {
+			oci_bind_by_name($this->statement, ':' . (++$last_key), $this->db->rowId, 255);
 		}
 
 		return oci_execute($this->statement, $this->db->commitMode);
@@ -131,8 +162,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		$count = 0;
 
 		$sql = preg_replace_callback('/\?/', function ($matches) use (&$count) {
-			$count ++;
-			return ":{$count}";
+			return ":".($count++);
 		}, $sql);
 
 		return $sql;

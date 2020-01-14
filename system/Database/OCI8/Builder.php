@@ -319,4 +319,26 @@ class Builder extends BaseBuilder
 		$this->limitUsed = false;
 		parent::resetSelect();
 	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Insert statement
+	 *
+	 * Generates a platform-specific insert string from the supplied data
+	 *
+	 * @param string $table         The table name
+	 * @param array  $keys          The insert keys
+	 * @param array  $unescapedKeys The insert values
+	 *
+	 * @return string
+	 */
+	protected function _insert(string $table, array $keys, array $unescapedKeys): string
+	{
+		// Has a strange design.
+		// Processing to get the table where the last insert was performed for insertId method.
+		$this->db->latestInsertedTableName = $table;
+
+		return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $unescapedKeys) . ') RETURNING ROWID INTO :CI_OCI8_ROWID';
+	}
 }

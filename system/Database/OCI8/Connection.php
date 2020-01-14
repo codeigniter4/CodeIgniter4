@@ -113,6 +113,20 @@ class Connection extends BaseConnection implements ConnectionInterface
 	public $cursorId;
 
 	/**
+	 * RowID
+	 *
+	 * @var integer|null
+	 */
+	public $rowId;
+
+	/**
+	 * Latest inserted table name.
+	 *
+	 * @var string|null
+	 */
+	public $latestInsertedTableName;
+
+	/**
 	 * confirm DNS format.
 	 *
 	 * @return boolean
@@ -228,11 +242,16 @@ class Connection extends BaseConnection implements ConnectionInterface
 		if ($this->resetStmtId === true)
 		{
 			$sql = rtrim($sql, ';');
-			if (strpos('BEGIN', ltrim($sql)) === 0)
+			if (strpos(ltrim($sql), 'BEGIN') === 0)
 			{
 				$sql .= ';';
 			}
 			$this->stmtId = oci_parse($this->connID, $sql);
+		}
+
+		if (strpos($sql, 'RETURNING ROWID INTO :CI_OCI8_ROWID') !== false)
+		{
+			oci_bind_by_name($this->stmtId, ':CI_OCI8_ROWID', $this->rowId, 255);
 		}
 
 		oci_set_prefetch($this->stmtId, 1000);
@@ -655,7 +674,40 @@ SQL;
 	 */
 	public function insertID(): int
 	{
-		throw new DatabaseException(lang('Database.featureUnavailable'));
+		if (empty($this->rowId) || empty($this->latestInsertedTableName)) {
+			return 0;
+		}
+
+		$indexs = $this->getIndexData($this->latestInsertedTableName);
+		$field_datas = $this->getFieldData($this->latestInsertedTableName);
+
+		if (!$indexs || !$field_datas) {
+			return 0;
+		}
+
+		$column_type_list = array_column($field_datas, 'type', 'name');
+		$primary_column_name = '';
+		foreach ((is_array($indexs) ? $indexs : [] ) as $index ) {
+			if ($index->type !== 'PRIMARY' || count($index->fields) !== 1) {
+				continue;
+			}
+
+			$primary_column_name = $this->protectIdentifiers($index->fields[0], false, false);
+			$primary_column_type = $column_type_list[$primary_column_name];
+
+			if ($primary_column_type !== 'NUMBER') {
+				continue;
+			}
+		}
+
+		if (!$primary_column_name) {
+			return 0;
+		}
+
+		$table = $this->protectIdentifiers($this->latestInsertedTableName, true);
+		$query = $this->query('SELECT '.$this->protectIdentifiers($primary_column_name, false).' SEQ FROM '.$table . ' WHERE ROWID = ?', $this->rowId)->getRow();
+
+		return (int)($query->SEQ ?? 0);
 	}
 
 	//--------------------------------------------------------------------
