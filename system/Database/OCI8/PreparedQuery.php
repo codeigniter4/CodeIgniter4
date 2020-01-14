@@ -65,7 +65,8 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	{
 		$this->isCollectRowId = false;
 
-		if (substr($sql, strpos($sql, 'RETURNING ROWID INTO :CI_OCI8_ROWID')) === 'RETURNING ROWID INTO :CI_OCI8_ROWID') {
+		if (substr($sql, strpos($sql, 'RETURNING ROWID INTO :CI_OCI8_ROWID')) === 'RETURNING ROWID INTO :CI_OCI8_ROWID')
+		{
 			$this->isCollectRowId = true;
 		}
 
@@ -127,7 +128,8 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 			$last_key = $key;
 		}
 
-		if ($this->isCollectRowId) {
+		if ($this->isCollectRowId)
+		{
 			oci_bind_by_name($this->statement, ':' . (++$last_key), $this->db->rowId, 255);
 		}
 
@@ -162,7 +164,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		$count = 0;
 
 		$sql = preg_replace_callback('/\?/', function ($matches) use (&$count) {
-			return ":".($count++);
+			return ':' . ($count++);
 		}, $sql);
 
 		return $sql;
