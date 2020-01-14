@@ -116,7 +116,7 @@ class PagerRenderer
 		$this->uri          = $details['uri'];
 		$this->pageCount    = $details['pageCount'];
 		$this->segment      = $details['segment'] ?? 0;
-		$this->pageSelector = $details['pageSelector'];
+		$this->pageSelector = $details['pageSelector'] ?? 'page';
 	}
 
 	//--------------------------------------------------------------------

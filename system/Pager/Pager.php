@@ -235,27 +235,6 @@ class Pager implements PagerInterface
 	}
 
 	//--------------------------------------------------------------------
-	
-	/**
-	 * Sets the $_GET parameter from which we take the page number
-	 *
-	 * @param string $pageSelector
-	 * @param string $group
-	 *
-	 * @return mixed
-	 */
-	public function setPageSelector(string $pageSelector, string $group = 'default')
-	{
-		$this->ensureGroup($group);
-
-		$this->groups[$group]['pageSelector'] = $pageSelector;
-		
-		$this->calculateCurrentPage($group);
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the total number of pages.
