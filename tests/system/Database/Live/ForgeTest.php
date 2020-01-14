@@ -55,6 +55,10 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testCreateDatabaseIfNotExists()
     {
+		if ($this->db->DBDriver === 'OCI8')
+		{
+			$this->markTestSkipped('OCI8 does not support create database.');
+		}
         $dbName = 'test_forge_database_exist';
 
         $databaseCreateIfNotExists = $this->forge->createDatabase($dbName, true);
@@ -67,6 +71,10 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testCreateDatabaseIfNotExistsWithDb()
     {
+		if ($this->db->DBDriver === 'OCI8')
+		{
+			$this->markTestSkipped('OCI8 does not support create database.');
+		}
         $dbName = 'test_forge_database_exist';
 
         $this->forge->createDatabase($dbName);
