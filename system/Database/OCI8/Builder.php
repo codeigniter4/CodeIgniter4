@@ -124,6 +124,74 @@ class Builder extends BaseBuilder
 	//--------------------------------------------------------------------
 
 	/**
+	 * Replace statement
+	 *
+	 * Generates a platform-specific replace string from the supplied data
+	 *
+	 * @param string $table  The table name
+	 * @param array  $keys   The insert keys
+	 * @param array  $values The insert values
+	 *
+	 * @return string
+	 */
+	protected function _replace(string $table, array $keys, array $values): string
+	{
+		$field_names = array_map(function ($column_name) {
+			return trim($column_name, '"');
+		}, $keys);
+
+		$unique_indexes     = array_filter($this->db->getIndexData($table), function ($index) use ($field_names) {
+			$has_all_fields = count(array_intersect($index->fields, $field_names)) === count($index->fields);
+
+			return (($index->type === 'PRIMARY') && $has_all_fields);
+		});
+		$replaceable_fields = array_filter($keys, function ($column_name) use ($unique_indexes) {
+			foreach ($unique_indexes as $index)
+			{
+				if (in_array(trim($column_name, '"'), $index->fields, true))
+				{
+					return false;
+				}
+			}
+
+			return true;
+		});
+
+		$sql = 'MERGE INTO ' . $table . "\n USING (SELECT ";
+
+		$sql .= implode(', ', array_map(function ($column_name, $value) {
+			return $value . ' ' . $column_name;
+		}, $keys, $values));
+
+		$sql .= ' FROM DUAL) "_replace" ON ( ';
+
+		$on_list   = [];
+		$on_list[] = '1 != 1';
+
+		foreach ($unique_indexes as $index)
+		{
+			$on_list[] = '(' . implode(' AND ', array_map(function ($column_name) use ($table) {
+				return $table . '."' . $column_name . '" = "_replace"."' . $column_name . '"';
+			}, $index->fields)) . ')';
+		}
+
+		$sql .= implode(' OR ', $on_list) . ') WHEN MATCHED THEN UPDATE SET ';
+
+		$sql .= implode(', ', array_map(function ($column_name) {
+			return $column_name . ' = "_replace".' . $column_name;
+		}, $replaceable_fields));
+
+		$sql .= ' WHEN NOT MATCHED THEN INSERT (' . implode(', ', $replaceable_fields) . ') VALUES ';
+		$sql .= ' (' . implode(', ', array_map(function ($column_name) {
+			return '"_replace".' . $column_name;
+		}, $replaceable_fields)) . ')';
+
+		return $sql;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Truncate statement
 	 *
 	 * Generates a platform-specific truncate string from the supplied data
