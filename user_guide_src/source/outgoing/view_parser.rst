@@ -521,8 +521,8 @@ The following plugins are available when using the parser:
 ==================== ========================== ================================================================================== ================================================================
 Plugin               Arguments                  Description                                                           			   Example
 ==================== ========================== ================================================================================== ================================================================
-currentURL                                      Alias for the current_url helper function.                                         {+ currentURL +}
-previousURL                                     Alias for the previous_url helper function.                           		       {+ previousURL +}
+current_url                                     Alias for the current_url helper function.                                         {+ current_url +}
+previous_url                                    Alias for the previous_url helper function.                           		       {+ previous_url +}
 siteURL                                         Alias for the site_url helper function.                                            {+ siteURL "login" +}
 mailto               email, title, attributes   Alias for the mailto helper function.                                 		       {+ mailto email=foo@example.com title="Stranger Things" +}
 safe_mailto          email, title, attributes   Alias for the safe_mailto helper function.                            		       {+ safe_mailto email=foo@example.com title="Stranger Things" +}
