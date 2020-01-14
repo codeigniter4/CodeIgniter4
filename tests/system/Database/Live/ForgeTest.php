@@ -928,6 +928,18 @@ final class ForgeTest extends CIUnitTestCase
             $this->assertSame($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
             $this->assertSame($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
         }
+		elseif ($this->db->DBDriver === 'OCI8')
+		{
+			$this->assertEquals($keys['pk_db_forge_test_1']->name, 'pk_db_forge_test_1');
+			$this->assertEquals($keys['pk_db_forge_test_1']->fields, ['id']);
+			$this->assertEquals($keys['pk_db_forge_test_1']->type, 'PRIMARY');
+			$this->assertEquals($keys['db_forge_test_1_code_company']->name, 'db_forge_test_1_code_company');
+			$this->assertEquals($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
+			$this->assertEquals($keys['db_forge_test_1_code_company']->type, 'INDEX');
+			$this->assertEquals($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
+			$this->assertEquals($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+			$this->assertEquals($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
+		}
 
         $this->forge->dropTable('forge_test_1', true);
     }
