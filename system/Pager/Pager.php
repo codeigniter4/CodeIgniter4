@@ -564,7 +564,7 @@ class Pager implements PagerInterface
 		{
 			$pageSelector = $this->groups[$group]['pageSelector'];
 
-			$page = (int) $_GET[$pageSelector] ?? 1;
+			$page = (int) ($_GET[$pageSelector] ?? 1);
 
 			$this->groups[$group]['currentPage']  = $page < 1 ? 1 : $page;
 		}
