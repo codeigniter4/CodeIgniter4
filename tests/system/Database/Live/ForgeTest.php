@@ -850,6 +850,7 @@ final class ForgeTest extends CIUnitTestCase
             $this->assertSame('NUMBER', $fieldsData[0]->type);
             $this->assertSame('VARCHAR2', $fieldsData[1]->type);
             $this->assertSame(32, $fieldsData[0]->max_length);
+            $this->assertSame('', $fieldsData[1]->default);
             $this->assertSame(255, $fieldsData[1]->max_length);
         } else {
             $this->fail(sprintf('DB driver "%s" is not supported.', $this->db->DBDriver));
