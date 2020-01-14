@@ -94,8 +94,24 @@ class Builder extends BaseBuilder
 	 */
 	protected function _insertBatch(string $table, array $keys, array $values): string
 	{
-		$keys = implode(', ', $keys);
-		$sql  = "INSERT ALL\n";
+		$keys            = implode(', ', $keys);
+		$has_primary_key = in_array('PRIMARY', array_column($this->db->getIndexData($table), 'type'), true);
+
+		// ORA-00001 measures
+		if ($has_primary_key)
+		{
+			$sql                 = 'INSERT INTO ' . $table . ' (' . $keys . ") \n SELECT * FROM (\n";
+			$select_query_values = [];
+
+			for ($i = 0, $c = count($values); $i < $c; $i++)
+			{
+				$select_query_values[] = 'SELECT ' . substr(substr($values[$i], 1), 0, -1) . ' FROM DUAL';
+			}
+
+			return $sql . implode("\n UNION ALL \n", $select_query_values) . "\n)";
+		}
+
+		$sql = "INSERT ALL\n";
 
 		for ($i = 0, $c = count($values); $i < $c; $i++)
 		{
