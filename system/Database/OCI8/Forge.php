@@ -235,11 +235,16 @@ class Forge extends \CodeIgniter\Database\Forge
 		switch (strtoupper($attributes['TYPE']))
 		{
 			case 'TINYINT':
+				$attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 3;
 			case 'SMALLINT':
+				$attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 5;
 			case 'MEDIUMINT':
+				$attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 7;
 			case 'INT':
 			case 'INTEGER':
+				$attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 11;
 			case 'BIGINT':
+				$attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 19;
 			case 'NUMERIC':
 				$attributes['TYPE'] = 'NUMBER';
 				return;
@@ -248,7 +253,8 @@ class Forge extends \CodeIgniter\Database\Forge
 				return;
 			case 'TEXT':
 			case 'VARCHAR':
-				$attributes['TYPE'] = 'VARCHAR2';
+				$attributes['TYPE']       = 'VARCHAR2';
+				$attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 255;
 				return;
 			default: return;
 		}
