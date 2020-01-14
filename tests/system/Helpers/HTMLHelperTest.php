@@ -44,7 +44,7 @@ EOH;
 	public function testULWithClass()
 	{
 		$expected = <<<EOH
-<ul class="test">
+<ul id="testID" class="test">
   <li>foo</li>
   <li>bar</li>
 </ul>
@@ -57,7 +57,7 @@ EOH;
 			'bar',
 		];
 
-		$this->assertEquals($expected, ul($list, 'class="test"'));
+		$this->assertEquals($expected, ul($list, ['id' => 'testID', 'class' => 'test']));
 	}
 
 	public function testMultiLevelUL()
@@ -113,7 +113,7 @@ EOH;
 	public function testOLWithClass()
 	{
 		$expected = <<<EOH
-<ol class="test">
+<ol id="testId" class="test">
   <li>foo</li>
   <li>bar</li>
 </ol>
@@ -126,7 +126,7 @@ EOH;
 			'bar',
 		];
 
-		$this->assertEquals($expected, ol($list, 'class="test"'));
+		$this->assertEquals($expected, ol($list, ['id' => 'testID', 'class' => 'test']));
 	}
 
 	public function testMultiLevelOL()
