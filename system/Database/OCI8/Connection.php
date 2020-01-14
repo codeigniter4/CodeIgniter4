@@ -675,38 +675,44 @@ SQL;
 	 */
 	public function insertID(): int
 	{
-		if (empty($this->rowId) || empty($this->latestInsertedTableName)) {
+		if (empty($this->rowId) || empty($this->latestInsertedTableName))
+		{
 			return 0;
 		}
 
-		$indexs = $this->getIndexData($this->latestInsertedTableName);
+		$indexs      = $this->getIndexData($this->latestInsertedTableName);
 		$field_datas = $this->getFieldData($this->latestInsertedTableName);
 
-		if (!$indexs || !$field_datas) {
+		if (! $indexs || ! $field_datas)
+		{
 			return 0;
 		}
 
-		$column_type_list = array_column($field_datas, 'type', 'name');
+		$column_type_list    = array_column($field_datas, 'type', 'name');
 		$primary_column_name = '';
-		foreach ((is_array($indexs) ? $indexs : [] ) as $index ) {
-			if ($index->type !== 'PRIMARY' || count($index->fields) !== 1) {
+		foreach ((is_array($indexs) ? $indexs : [] ) as $index)
+		{
+			if ($index->type !== 'PRIMARY' || count($index->fields) !== 1)
+			{
 				continue;
 			}
 
 			$primary_column_name = $this->protectIdentifiers($index->fields[0], false, false);
 			$primary_column_type = $column_type_list[$primary_column_name];
 
-			if ($primary_column_type !== 'NUMBER') {
+			if ($primary_column_type !== 'NUMBER')
+			{
 				continue;
 			}
 		}
 
-		if (!$primary_column_name) {
+		if (! $primary_column_name)
+		{
 			return 0;
 		}
 
 		$table = $this->protectIdentifiers($this->latestInsertedTableName, true);
-		$query = $this->query('SELECT '.$this->protectIdentifiers($primary_column_name, false).' SEQ FROM '.$table . ' WHERE ROWID = ?', $this->rowId)->getRow();
+		$query = $this->query('SELECT ' . $this->protectIdentifiers($primary_column_name, false) . ' SEQ FROM ' . $table . ' WHERE ROWID = ?', $this->rowId)->getRow();
 
 		return (int)($query->SEQ ?? 0);
 	}
