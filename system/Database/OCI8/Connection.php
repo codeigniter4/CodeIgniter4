@@ -370,7 +370,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 			{
 				$default = '';
 			}
-			$retval[$i]->default = $default;
+			$retval[$i]->default  = $default;
+			$retval[$i]->nullable = $query[$i]->NULLABLE === 'Y';
 		}
 
 		return $retval;
