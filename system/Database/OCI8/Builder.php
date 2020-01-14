@@ -58,7 +58,7 @@ class Builder extends BaseBuilder
 	 * @var array
 	 */
 	protected $randomKeyword = [
-		'DBMS_RANDOM.RANDOM' // @todo: 未検証
+		'DBMS_RANDOM.RANDOM'
 	];
 
 	/**
