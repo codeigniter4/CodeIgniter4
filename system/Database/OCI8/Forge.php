@@ -122,10 +122,25 @@ class Forge extends \CodeIgniter\Database\Forge
 			$alter_type = 'MODIFY';
 		}
 
-		$sql  = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
-		$sqls = [];
+		$sql          = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
+		$nullable_map = array_column($this->db->getFieldData($table), 'nullable', 'name');
+		$sqls         = [];
 		for ($i = 0, $c = count($field); $i < $c; $i++)
 		{
+			if ($alter_type === 'MODIFY')
+			{
+				// If a null constraint is added to a column with a null constraint,
+				// ORA-01451 will occur,
+				// so add null constraint is used only when it is different from the current null constraint.
+				$is_want_to_add_null  = (strpos($field[$i]['null'], ' NOT') === false);
+				$current_null_addable = $nullable_map[$field[$i]['name']];
+
+				if ($is_want_to_add_null === $current_null_addable)
+				{
+					$field[$i]['null'] = '';
+				}
+			}
+
 			if ($field[$i]['_literal'] !== false)
 			{
 				$field[$i] = "\n\t" . $field[$i]['_literal'];
