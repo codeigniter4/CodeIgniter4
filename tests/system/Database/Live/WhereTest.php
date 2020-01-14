@@ -127,10 +127,21 @@ final class WhereTest extends CIUnitTestCase
             ->where('name', 'Developer')
             ->getCompiledSelect();
 
+		if ($this->db->DBDriver === 'OCI8')
+		{
+			$jobs = $this->db->table('job')
+							 ->where('"id" not in (' . $subQuery . ')', null, false)
+							 ->orderBy('id')
+							 ->get()
+							 ->getResult();
+		}
+		else
+		{
         $jobs = $this->db->table('job')
             ->where('id not in (' . $subQuery . ')', null, false)
             ->get()
             ->getResult();
+		}
 
         $this->assertCount(3, $jobs);
         $this->assertSame('Politician', $jobs[0]->name);
@@ -145,10 +156,20 @@ final class WhereTest extends CIUnitTestCase
             ->where('name', 'Developer')
             ->getCompiledSelect();
 
+		if ($this->db->DBDriver === 'OCI8')
+		{
+			$jobs = $this->db->table('job')
+							 ->where('"id" = (' . $subQuery . ')', null, false)
+							 ->get()
+							 ->getResult();
+		}
+		else
+		{
         $jobs = $this->db->table('job')
             ->where('id = (' . $subQuery . ')', null, false)
             ->get()
             ->getResult();
+		}
 
         $this->assertCount(1, $jobs);
         $this->assertSame('Developer', $jobs[0]->name);
