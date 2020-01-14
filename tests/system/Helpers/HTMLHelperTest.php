@@ -113,7 +113,7 @@ EOH;
 	public function testOLWithClass()
 	{
 		$expected = <<<EOH
-<ol id="testId" class="test">
+<ol id="testID" class="test">
   <li>foo</li>
   <li>bar</li>
 </ol>
