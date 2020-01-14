@@ -398,10 +398,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 
 		$sql = 'SELECT AIC.INDEX_NAME, UC.CONSTRAINT_TYPE, AIC.COLUMN_NAME '
-			. ' FROM ALL_IND_COLUMNS uic '
+			. ' FROM ALL_IND_COLUMNS AIC '
 			. ' LEFT JOIN USER_CONSTRAINTS UC ON AIC.INDEX_NAME = UC.CONSTRAINT_NAME AND AIC.TABLE_NAME = UC.TABLE_NAME '
-			. 'WHERE TABLE_NAME = ' . $this->escape(strtolower($this->DBPrefix . $table)) . ' '
-			. 'AND TABLE_OWNER = ' . $this->escape(strtoupper($owner)) . ' '
+			. 'WHERE AIC.TABLE_NAME = ' . $this->escape(strtolower($table)) . ' '
+			. 'AND AIC.TABLE_OWNER = ' . $this->escape(strtoupper($owner)) . ' '
 			. ' ORDER BY UC.CONSTRAINT_TYPE, AIC.COLUMN_POSITION';
 
 		if (($query = $this->query($sql)) === false)
