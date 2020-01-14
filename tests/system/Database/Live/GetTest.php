@@ -176,6 +176,10 @@ final class GetTest extends CIUnitTestCase
             $this->expectException(DatabaseException::class);
             $this->expectExceptionMessage('SQLite3 doesn\'t support seeking to other offset.');
         }
+		elseif ($this->db->DBDriver === 'OCI8')
+		{
+			$this->markTestSkipped('OCI8 does not support data seek.');
+		}
 
         $data->dataSeek(3);
 
