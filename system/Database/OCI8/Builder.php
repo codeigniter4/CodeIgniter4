@@ -69,7 +69,7 @@ class Builder extends BaseBuilder
 	 *
 	 * @var string
 	 */
-	protected $countString = 'SELECT COUNT(1) AS ';
+	protected $countString = 'SELECT COUNT(1) ';
 
 	/**
 	 * Limit used flag
