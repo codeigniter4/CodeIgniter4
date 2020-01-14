@@ -101,10 +101,10 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function freeResult()
 	{
-		if (is_object($this->resultID))
+		if (is_resource($this->resultID))
 		{
 			oci_free_statement($this->resultID);
-			$this->resultID = null;
+			$this->resultID = false;
 		}
 	}
 
