@@ -257,6 +257,37 @@ class Builder extends BaseBuilder
 	//--------------------------------------------------------------------
 
 	/**
+	 * Update statement
+	 *
+	 * Generates a platform-specific update string from the supplied data
+	 *
+	 * @param string $table  the Table name
+	 * @param array  $values the Update data
+	 *
+	 * @return string
+	 */
+	protected function _update(string $table, array $values): string
+	{
+		$valStr = [];
+
+		foreach ($values as $key => $val)
+		{
+			$valStr[] = $key . ' = ' . $val;
+		}
+
+		if ($this->QBLimit)
+		{
+			$this->where('rownum <= ', $this->QBLimit, false);
+		}
+
+		return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . implode(', ', $valStr)
+				. $this->compileWhereHaving('QBWhere')
+				. $this->compileOrderBy();
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * LIMIT string
 	 *
 	 * Generates a platform-specific LIMIT clause.
