@@ -72,16 +72,17 @@ Choosing What to Show
 
 CodeIgniter ships with several Collectors that, as the name implies, collect data to display on the toolbar. You
 can easily make your own to customize the toolbar. To determine which collectors are shown, again head over to
-the App configuration file::
+the **app/Config/Toolbar.php** configuration file::
 
-	public $toolbarCollectors = [
-		'CodeIgniter\Debug\Toolbar\Collectors\Timers',
-		'CodeIgniter\Debug\Toolbar\Collectors\Database',
-		'CodeIgniter\Debug\Toolbar\Collectors\Logs',
-		'CodeIgniter\Debug\Toolbar\Collectors\Views',
- 		'CodeIgniter\Debug\Toolbar\Collectors\Cache',
-		'CodeIgniter\Debug\Toolbar\Collectors\Files',
-		'CodeIgniter\Debug\Toolbar\Collectors\Routes',
+	public $collectors = [
+		'\CodeIgniter\Debug\Toolbar\Collectors\Timers::class',
+		'\CodeIgniter\Debug\Toolbar\Collectors\Database::class',
+		'\CodeIgniter\Debug\Toolbar\Collectors\Logs::class',
+		'\CodeIgniter\Debug\Toolbar\Collectors\Views::class',
+ 		'\CodeIgniter\Debug\Toolbar\Collectors\Cache::class',
+		'\CodeIgniter\Debug\Toolbar\Collectors\Files::class',
+		'\CodeIgniter\Debug\Toolbar\Collectors\Routes::class',
+		'\CodeIgniter\Debug\Toolbar\Collectors\Events::class',
 	];
 
 Comment out any collectors that you do not want to show. Add custom Collectors here by providing the fully-qualified
@@ -100,6 +101,7 @@ The Collectors that ship with CodeIgniter are:
 * **Cache** Will display information about cache hits and misses, and execution times.
 * **Files** displays a list of all files that have been loaded during this request.
 * **Routes** displays information about the current route and all routes defined in the system.
+* **Events** displays a list of all events that have been loaded during this request.
 
 Setting Benchmark Points
 ========================

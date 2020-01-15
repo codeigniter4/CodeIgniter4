@@ -94,7 +94,7 @@ class Events extends BaseCollector
 	 */
 	public function __construct()
 	{
-		$this->viewer = Services::renderer(null, true);
+		$this->viewer = Services::renderer();
 	}
 
 	//--------------------------------------------------------------------
