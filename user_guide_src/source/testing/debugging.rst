@@ -72,16 +72,16 @@ Choosing What to Show
 
 CodeIgniter ships with several Collectors that, as the name implies, collect data to display on the toolbar. You
 can easily make your own to customize the toolbar. To determine which collectors are shown, again head over to
-the App configuration file::
+the **app/Config/Toolbar.php** configuration file::
 
-	public $toolbarCollectors = [
-		'CodeIgniter\Debug\Toolbar\Collectors\Timers',
-		'CodeIgniter\Debug\Toolbar\Collectors\Database',
-		'CodeIgniter\Debug\Toolbar\Collectors\Logs',
-		'CodeIgniter\Debug\Toolbar\Collectors\Views',
- 		'CodeIgniter\Debug\Toolbar\Collectors\Cache',
-		'CodeIgniter\Debug\Toolbar\Collectors\Files',
-		'CodeIgniter\Debug\Toolbar\Collectors\Routes',
+	public $collectors = [
+		'CodeIgniter\Debug\Toolbar\Collectors\Timers::class',
+		'CodeIgniter\Debug\Toolbar\Collectors\Database::class',
+		'CodeIgniter\Debug\Toolbar\Collectors\Logs::class',
+		'CodeIgniter\Debug\Toolbar\Collectors\Views::class',
+ 		'CodeIgniter\Debug\Toolbar\Collectors\Cache::class',
+		'CodeIgniter\Debug\Toolbar\Collectors\Files::class',
+		'CodeIgniter\Debug\Toolbar\Collectors\Routes::class',
 	];
 
 Comment out any collectors that you do not want to show. Add custom Collectors here by providing the fully-qualified
