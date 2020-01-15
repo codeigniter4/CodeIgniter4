@@ -101,6 +101,7 @@ The Collectors that ship with CodeIgniter are:
 * **Cache** Will display information about cache hits and misses, and execution times.
 * **Files** displays a list of all files that have been loaded during this request.
 * **Routes** displays information about the current route and all routes defined in the system.
+* **Events** displays a list of all events that have been loaded during this request.
 
 Setting Benchmark Points
 ========================
