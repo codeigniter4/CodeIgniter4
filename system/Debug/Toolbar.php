@@ -375,7 +375,7 @@ class Toolbar
 			// for this response
 			if ($request->isAJAX() || strpos($format, 'html') === false)
 			{
-				$response->setHeader('Debugbar-Time', $time)
+				$response->setHeader('Debugbar-Time', "$time")
 						->setHeader('Debugbar-Link', site_url("?debugbar_time={$time}"))
 						->getBody();
 
@@ -390,10 +390,10 @@ class Toolbar
 					. '<style type="text/css" {csp-style-nonce} id="debugbar_dynamic_style"></style>'
 					. PHP_EOL;
 
-			if (strpos($response->getBody(), '</body>') !== false)
+			if (strpos($response->getBody(), '<head>') !== false)
 			{
 				$response->setBody(
-						str_replace('</body>', $script . '</body>', $response->getBody())
+						str_replace('<head>', $script . '<head>', $response->getBody())
 				);
 
 				return;
