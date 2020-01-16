@@ -17,6 +17,8 @@ The insert ID number when performing database inserts.
     driver, this function requires a $name parameter, which specifies the
     appropriate sequence to check for the insert id.
 
+.. note:: If using the OCI8 driver, the insert ID can be get when using insert() of :doc:`QueryBuilder<./querybuilder>`.
+
 **$db->affectedRows()**
 
 Displays the number of affected rows, when doing "write" type queries
