@@ -811,11 +811,9 @@ class URI
 	{
 		$parts = explode('=', $part, 2);
 
-		// If there's only a single element, no pair,
-		// then we return null
 		if (count($parts) === 1)
 		{
-			$parts = null;
+			$parts[1] = '';
 		}
 
 		return $parts;
