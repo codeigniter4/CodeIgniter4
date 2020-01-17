@@ -754,14 +754,10 @@ class URI
 
 		foreach ($temp as $index => $part)
 		{
-			list($key, $value) = $this->splitQueryPart($part);
-
-			// Only 1 part?
-			if (is_null($value))
-			{
-				$parts[$key] = null;
+			if ($part === '')
 				continue;
-			}
+			
+			list($key, $value) = $this->splitQueryPart($part);
 
 			// URL Decode the value to protect
 			// from double-encoding a URL.
