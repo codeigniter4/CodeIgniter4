@@ -515,13 +515,13 @@ var ciDebugBar = {
 		// If a cookie is set with a value, we force the color scheme
 		if (ciDebugBar.readCookie('debug-bar-theme') === 'dark')
 		{
-			ciDebugBar.removeClass(ciDebugBar.toolbar, 'light');
-			ciDebugBar.addClass(ciDebugBar.toolbar, 'dark');
+			ciDebugBar.removeClass(ciDebugBar.toolbarContainer, 'light');
+			ciDebugBar.addClass(ciDebugBar.toolbarContainer, 'dark');
 		}
 		else if (ciDebugBar.readCookie('debug-bar-theme') === 'light')
 		{
-			ciDebugBar.removeClass(ciDebugBar.toolbar, 'dark');
-			ciDebugBar.addClass(ciDebugBar.toolbar, 'light');
+			ciDebugBar.removeClass(ciDebugBar.toolbarContainer, 'dark');
+			ciDebugBar.addClass(ciDebugBar.toolbarContainer, 'light');
 		}
 
 		btnTheme.addEventListener('click', function () {
@@ -532,24 +532,24 @@ var ciDebugBar = {
 				// If there is no cookie, and "prefers-color-scheme" is set to "dark"
 				// It means that the user wants to switch to light mode
 				ciDebugBar.createCookie('debug-bar-theme', 'light', 365);
-				ciDebugBar.removeClass(ciDebugBar.toolbar, 'dark');
-				ciDebugBar.addClass(ciDebugBar.toolbar, 'light');
+				ciDebugBar.removeClass(ciDebugBar.toolbarContainer, 'dark');
+				ciDebugBar.addClass(ciDebugBar.toolbarContainer, 'light');
 			}
 			else
 			{
 				if (theme === 'dark')
 				{
 					ciDebugBar.createCookie('debug-bar-theme', 'light', 365);
-					ciDebugBar.removeClass(ciDebugBar.toolbar, 'dark');
-					ciDebugBar.addClass(ciDebugBar.toolbar, 'light');
+					ciDebugBar.removeClass(ciDebugBar.toolbarContainer, 'dark');
+					ciDebugBar.addClass(ciDebugBar.toolbarContainer, 'light');
 				}
 				else
 				{
  					// In any other cases: if there is no cookie, or the cookie is set to
 					// "light", or the "prefers-color-scheme" is "light"...
 					ciDebugBar.createCookie('debug-bar-theme', 'dark', 365);
-					ciDebugBar.removeClass(ciDebugBar.toolbar, 'light');
-					ciDebugBar.addClass(ciDebugBar.toolbar, 'dark');
+					ciDebugBar.removeClass(ciDebugBar.toolbarContainer, 'light');
+					ciDebugBar.addClass(ciDebugBar.toolbarContainer, 'dark');
 				}
 			}
 		}, true);
