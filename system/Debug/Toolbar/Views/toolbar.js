@@ -4,12 +4,14 @@
 
 var ciDebugBar = {
 
+	toolbarContainer : null,
 	toolbar : null,
 	icon : null,
 
 	//--------------------------------------------------------------------
 
 	init : function () {
+		this.toolbarContainer = document.getElementById('toolbarContainer');
 		this.toolbar = document.getElementById('debug-bar');
 		this.icon    = document.getElementById('debug-icon');
 
