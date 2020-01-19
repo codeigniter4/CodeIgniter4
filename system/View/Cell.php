@@ -119,7 +119,11 @@ class Cell
 
 		// Not cached - so grab it...
 		$instance = new $class();
-		$instance->initController(Services::request(), Services::response(), Services::logger());
+
+		if (method_exists($instance, 'initController'))
+		{
+			$instance->initController(Services::request(), Services::response(), Services::logger());
+		}
 
 		if (! method_exists($instance, $method))
 		{
