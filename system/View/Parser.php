@@ -414,7 +414,10 @@ class Parser extends View
 				$str .= $out;
 			}
 
-			$replace['#' . $match[0] . '#s'] = $str;
+			//Escape | character from filters as it's handled as OR in regex
+			$escaped_match = preg_replace('/(?<!\\\\)\\|/', '\\|', $match[0]);
+
+			$replace['#' . $escaped_match . '#s'] = $str;
 		}
 
 		return $replace;
@@ -766,7 +769,7 @@ class Parser extends View
 				foreach ($matchesParams[0] as $item)
 				{
 					$keyVal = explode('=', $item);
-					if (count($keyVal) == 2)
+					if (count($keyVal) === 2)
 					{
 						$params[$keyVal[0]] = str_replace('"', '', $keyVal[1]);
 					}
