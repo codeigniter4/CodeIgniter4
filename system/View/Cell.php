@@ -41,6 +41,7 @@ namespace CodeIgniter\View;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\View\Exceptions\ViewException;
 use ReflectionMethod;
+use Config\Services;
 
 /**
  * Class Cell
@@ -118,6 +119,11 @@ class Cell
 
 		// Not cached - so grab it...
 		$instance = new $class();
+
+		if (method_exists($instance, 'initController'))
+		{
+			$instance->initController(Services::request(), Services::response(), Services::logger());
+		}
 
 		if (! method_exists($instance, $method))
 		{
