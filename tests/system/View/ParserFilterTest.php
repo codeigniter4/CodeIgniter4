@@ -409,4 +409,59 @@ EOF;
 		$this->assertEquals('1.234.567,89 €', $parser->renderString($template));
 	}
 
+	public function testParsePairWithAbs()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$data = [
+			'value1' => -1,
+			'value2' => 1,
+			'single' => [
+				[
+					'svalue1' => -2,
+					'svalue2' => 2,
+				],
+			],
+			'loop'   => [
+				[
+					'lvalue' => -3,
+				],
+				[
+					'lvalue' => 3,
+				],
+			],
+			'nested' => [
+				[
+					'nvalue1' => -4,
+					'nvalue2' => 4,
+					'nsingle' => [
+						[
+							'nsvalue1' => -5,
+							'nsvalue2' => 5,
+						],
+					],
+					'nsloop'  => [
+						[
+							'nlvalue' => -6,
+						],
+						[
+							'nlvalue' => 6,
+						],
+					],
+				],
+			],
+		];
+
+		$template = '{ value1|abs }{ value2|abs }'
+			. '{single}{ svalue1|abs }{ svalue2|abs }{/single}'
+			. '{loop}{ lvalue|abs }{/loop}'
+			. '{nested}'
+			. '{ nvalue1|abs }{ nvalue2|abs }'
+			. '{nsingle}{ nsvalue1|abs }{ nsvalue2|abs }{/nsingle}'
+			. '{nsloop}{ nlvalue|abs }{/nsloop}'
+			. '{/nested}';
+
+		$parser->setData($data);
+		$this->assertEquals('112233445566', $parser->renderString($template));
+	}
 }
