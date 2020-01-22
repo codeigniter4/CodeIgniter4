@@ -537,9 +537,9 @@ class Response extends Message implements ResponseInterface
 	 * @throws \InvalidArgumentException If the body property is not string or array.
 	 */
 	protected function formatBody($body, string $format)
-	{    
+	{
 		$this->bodyFormat = ($format === 'json-unencoded' ? 'json' : $format);
-		$mime = "application/{$this->bodyFormat}";
+		$mime             = "application/{$this->bodyFormat}";
 		$this->setContentType($mime);
 
 		// Nothing much to do for a string...

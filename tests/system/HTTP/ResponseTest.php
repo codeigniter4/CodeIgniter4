@@ -6,6 +6,7 @@ use Config\App;
 use Config\Format;
 use DateTime;
 use DateTimeZone;
+use CodeIgniter\Config\Config;
 use Tests\Support\HTTP\MockResponse;
 
 class ResponseTest extends \CIUnitTestCase
@@ -20,6 +21,7 @@ class ResponseTest extends \CIUnitTestCase
 	public function tearDown(): void
 	{
 		$_SERVER = $this->server;
+		Config::reset();
 	}
 
 	public function testCanSetStatusCode()
@@ -158,28 +160,33 @@ class ResponseTest extends \CIUnitTestCase
 
 	public function testSetLink()
 	{
-		$response = new Response(new App());
+		// Ensure our URL is not getting overridden
+		$config          = new App();
+		$config->baseURL = 'http://example.com/test';
+		Config::injectMock('App', $config);
+
+		$response = new Response($config);
 		$pager    = \Config\Services::pager();
 
 		$pager->store('default', 3, 10, 200);
 		$response->setLink($pager);
 
 		$this->assertEquals(
-				'<http://example.com?page=1>; rel="first",<http://example.com?page=2>; rel="prev",<http://example.com?page=4>; rel="next",<http://example.com?page=20>; rel="last"', $response->getHeader('Link')->getValue()
+				'<http://example.com/test/?page=1>; rel="first",<http://example.com/test/?page=2>; rel="prev",<http://example.com/test/?page=4>; rel="next",<http://example.com/test/?page=20>; rel="last"', $response->getHeader('Link')->getValue()
 		);
 
 		$pager->store('default', 1, 10, 200);
 		$response->setLink($pager);
 
 		$this->assertEquals(
-				'<http://example.com?page=2>; rel="next",<http://example.com?page=20>; rel="last"', $response->getHeader('Link')->getValue()
+				'<http://example.com/test/?page=2>; rel="next",<http://example.com/test/?page=20>; rel="last"', $response->getHeader('Link')->getValue()
 		);
 
 		$pager->store('default', 20, 10, 200);
 		$response->setLink($pager);
 
 		$this->assertEquals(
-				'<http://example.com?page=1>; rel="first",<http://example.com?page=19>; rel="prev"', $response->getHeader('Link')->getValue()
+				'<http://example.com/test/?page=1>; rel="first",<http://example.com/test/?page=19>; rel="prev"', $response->getHeader('Link')->getValue()
 		);
 	}
 
