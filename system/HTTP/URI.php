@@ -749,74 +749,9 @@ class URI
 			$query = substr($query, 1);
 		}
 
-		$temp  = explode('&', $query);
-		$parts = [];
-
-		foreach ($temp as $index => $part)
-		{
-			list($key, $value) = $this->splitQueryPart($part);
-
-			// Only 1 part?
-			if (is_null($value))
-			{
-				$parts[$key] = null;
-				continue;
-			}
-
-			// URL Decode the value to protect
-			// from double-encoding a URL.
-			// Especially useful with the Pager.
-			$parts[$this->decode($key)] = $this->decode($value);
-		}
-
-		$this->query = $parts;
+		parse_str($query, $this->query);
 
 		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Checks the value to see if it has been urlencoded and decodes it if so.
-	 * The urlencode check is not perfect but should catch most cases.
-	 *
-	 * @param string $value
-	 *
-	 * @return string
-	 */
-	protected function decode(string $value): string
-	{
-		if (empty($value))
-		{
-			return $value;
-		}
-
-		$decoded = urldecode($value);
-
-		// This won't catch all cases, specifically
-		// changing ' ' to '+' has the same length
-		// but doesn't really matter for our cases here.
-		return strlen($decoded) < strlen($value) ? $decoded : $value;
-	}
-
-	/**
-	 * Split a query value into it's key/value elements, if both
-	 * are present.
-	 *
-	 * @param $part
-	 *
-	 * @return array|null
-	 */
-	protected function splitQueryPart(string $part)
-	{
-		$parts = explode('=', $part, 2);
-
-		if (count($parts) === 1)
-		{
-			$parts[1] = '';
-		}
-
-		return $parts;
 	}
 
 	//--------------------------------------------------------------------
