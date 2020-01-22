@@ -13,10 +13,10 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 {
 
 	// Having this method as setUp() doesn't work - can't find Config\App !?
-	protected function prepare()
+	protected function prepare(bool $CSPEnabled = true)
 	{
 		$config             = new App();
-		$config->CSPEnabled = true;
+		$config->CSPEnabled = $CSPEnabled;
 		$this->response     = new Response($config);
 		$this->response->pretend(false);
 		$this->csp = $this->response->CSP;
@@ -488,6 +488,19 @@ class ContentSecurityPolicyTest extends \CIUnitTestCase
 
 		$result = $this->getHeaderEmitted('content-security-policy', true);
 		$this->assertContains("base-uri 'self';", $result);
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testCSPDisabled()
+	{
+		$this->prepare(false);
+		$result = $this->work();
+		$this->response->CSP->addStyleSrc('https://example.com');
+
+		$this->assertHeaderNotEmitted('content-security-policy', true);
 	}
 
 }
