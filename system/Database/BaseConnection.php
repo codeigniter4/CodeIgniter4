@@ -1054,9 +1054,9 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * Used by the Debug Toolbar's timeline.
 	 *
-	 * @return float
+	 * @return float|null
 	 */
-	public function getConnectStart(): float
+	public function getConnectStart(): ?float
 	{
 		return $this->connectTime;
 	}
