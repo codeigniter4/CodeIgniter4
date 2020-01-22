@@ -19,6 +19,13 @@ class URLHelperTest extends \CIUnitTestCase
 		Services::reset();
 	}
 
+	public function tearDown()
+	{
+		parent::tearDown();
+
+		$_SERVER = [];
+	}
+
 	//--------------------------------------------------------------------
 	// Test site_url
 

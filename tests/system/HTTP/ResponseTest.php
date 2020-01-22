@@ -21,6 +21,7 @@ class ResponseTest extends \CIUnitTestCase
 	public function tearDown(): void
 	{
 		$_SERVER = $this->server;
+		Config::reset();
 	}
 
 	public function testCanSetStatusCode()
