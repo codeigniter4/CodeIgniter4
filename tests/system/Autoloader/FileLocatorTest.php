@@ -22,8 +22,8 @@ class FileLocatorTest extends \CIUnitTestCase
 			'Tests/Support' => TESTPATH . '_support/',
 			'App'           => APPPATH,
 			'CodeIgniter'   => [
-				SYSTEMPATH,
 				TESTPATH,
+				SYSTEMPATH,
 			],
 			'Errors'        => APPPATH . 'Views/errors',
 			'System'        => SUPPORTPATH . 'Autoloader/system',
@@ -170,7 +170,6 @@ class FileLocatorTest extends \CIUnitTestCase
 		$this->assertContains($expected, $foundFiles);
 
 		$expected = SYSTEMPATH . 'index.html';
-
 		$this->assertContains($expected, $foundFiles);
 	}
 
