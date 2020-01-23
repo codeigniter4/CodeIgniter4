@@ -228,21 +228,35 @@ class PagerRenderer
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns the URI of the first page.
-	 *
-	 * @return string
-	 */
-	public function getFirst(): string
+	* Returns the URI of the first page.
+	*
+	* @param bool $is_optional
+	* @return string
+	*/
+	public function getFirst(bool $is_optional = false): string
 	{
 		$uri = clone $this->uri;
 
-		if ($this->segment === 0)
+		if(false === $is_optional)
 		{
-			$uri->addQuery($this->pageSelector, 1);
-		}
-		else
-		{
+		    if ($this->segment === 0)
+		    {
+			$uri->addQuery('page', 1);
+		    }
+		    else
+		    {
 			$uri->setSegment($this->segment, 1);
+		    }
+		}
+		else {
+		    if ($this->segment === 0)
+		    {
+			$uri->removeQuery('page');
+		    }
+		    else
+		    {
+			$uri->setSegment($this->segment, null);
+		    }
 		}
 
 		return (string) $uri;
@@ -302,9 +316,10 @@ class PagerRenderer
 	 * should go to, the title (number) of the link, and a boolean
 	 * value representing whether this link is active or not.
 	 *
-	 * @return array
-	 */
-	public function links(): array
+	* @param bool $first_is_optional
+	* @return array
+	*/
+	public function links(bool $first_is_optional = false): array
 	{
 		$links = [];
 
@@ -313,7 +328,9 @@ class PagerRenderer
 		for ($i = $this->first; $i <= $this->last; $i ++)
 		{
 			$links[] = [
-				'uri'    => (string) ($this->segment === 0 ? $uri->addQuery($this->pageSelector, $i) : $uri->setSegment($this->segment, $i)),
+				'uri'    => (string) ((1 === $i && true === $first_is_optional) ?
+                    ($this->segment === 0 ? $uri->removeQuery('page', '') : $uri->setSegment($this->segment, null)) :
+                    ($this->segment === 0 ? $uri->addQuery('page', $i) : $uri->setSegment($this->segment, $i))),
 				'title'  => (int) $i,
 				'active' => ($i === $this->current),
 			];
