@@ -239,13 +239,10 @@ class Response extends Message implements ResponseInterface
 		// Also ensures that a Cache-control header exists.
 		$this->noCache();
 
-		// Are we enforcing a Content Security Policy?
-		if ($config->CSPEnabled === true)
-		{
-			$this->CSP        = new ContentSecurityPolicy(new \Config\ContentSecurityPolicy());
-			$this->CSPEnabled = true;
-		}
+		// We need CSP object even if not enabled to avoid calls to non existing methods
+		$this->CSP = new ContentSecurityPolicy(new \Config\ContentSecurityPolicy());
 
+		$this->CSPEnabled     = $config->CSPEnabled;
 		$this->cookiePrefix   = $config->cookiePrefix;
 		$this->cookieDomain   = $config->cookieDomain;
 		$this->cookiePath     = $config->cookiePath;
