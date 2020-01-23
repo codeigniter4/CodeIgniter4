@@ -247,9 +247,6 @@ class View implements RendererInterface
 			$output       = $this->render($layoutView, $options, $saveData);
 		}
 
-		// Reset sections
-		$this->sections = [];
-
 		$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 
 		if ($this->debug && (! isset($options['debug']) || $options['debug'] === true))
