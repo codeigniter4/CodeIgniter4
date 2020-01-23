@@ -508,7 +508,15 @@ class URI
 			throw HTTPException::forURISegmentOutOfRange($number);
 		}
 
-		$this->segments[$number] = $value;
+		if($number + 1 === count($this->segments) && empty($value))
+		{
+		    unset($this->segments[$number]);
+		}
+		else
+		{
+		    $this->segments[$number] = $value;
+		}
+
 		$this->refreshPath();
 
 		return $this;
