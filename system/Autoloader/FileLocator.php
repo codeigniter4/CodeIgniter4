@@ -287,16 +287,31 @@ class FileLocator
 	{
 		$namespaces = [];
 
+		// Save system for last
+		$system = null;
+
 		foreach ($this->autoloader->getNamespace() as $prefix => $paths)
 		{
 			foreach ($paths as $path)
 			{
+				if ($prefix === 'CodeIgniter')
+				{
+					$system = [
+						'prefix' => $prefix,
+						'path'   => rtrim($path, '\\/') . DIRECTORY_SEPARATOR,
+					];
+
+					continue;
+				}
+
 				$namespaces[] = [
 					'prefix' => $prefix,
 					'path'   => rtrim($path, '\\/') . DIRECTORY_SEPARATOR,
 				];
 			}
 		}
+
+		$namespaces[] = $system;
 
 		return $namespaces;
 	}
