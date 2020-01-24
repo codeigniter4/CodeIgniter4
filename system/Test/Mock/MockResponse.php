@@ -1,5 +1,4 @@
-<?php
-namespace Tests\Support\HTTP;
+<?php namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\HTTP\Response;
 

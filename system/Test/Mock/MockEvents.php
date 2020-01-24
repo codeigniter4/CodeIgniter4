@@ -1,4 +1,4 @@
-<?php namespace Tests\Support\Events;
+<?php namespace CodeIgniter\Test\Mock;
 
 /**
  * CodeIgniter

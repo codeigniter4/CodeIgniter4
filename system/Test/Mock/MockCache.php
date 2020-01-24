@@ -1,4 +1,4 @@
-<?php namespace Tests\Support\Cache\Handlers;
+<?php namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\Cache\CacheInterface;
 

@@ -1,5 +1,4 @@
-<?php
-namespace Tests\Support\RESTful;
+<?php namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\RESTful\ResourceController;
 

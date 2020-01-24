@@ -1,6 +1,6 @@
-<?php namespace Tests\Support\Config;
+<?php namespace CodeIgniter\Test\Mock;
 
-class MockCLIConfig extends \Config\App
+class MockAppConfig
 {
 	public $baseURL = 'http://example.com';
 
@@ -16,10 +16,12 @@ class MockCLIConfig extends \Config\App
 
 	public $CSRFProtection  = false;
 	public $CSRFTokenName   = 'csrf_test_name';
+	public $CSRFHeaderName  = 'X-CSRF-TOKEN';
 	public $CSRFCookieName  = 'csrf_cookie_name';
 	public $CSRFExpire      = 7200;
 	public $CSRFRegenerate  = true;
 	public $CSRFExcludeURIs = ['http://example.com'];
+	public $CSRFRedirect    = false;
 
 	public $CSPEnabled = false;
 

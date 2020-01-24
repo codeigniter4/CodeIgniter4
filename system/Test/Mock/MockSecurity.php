@@ -1,4 +1,4 @@
-<?php namespace Tests\Support\Security;
+<?php namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\Security\Security;
 use CodeIgniter\HTTP\RequestInterface;

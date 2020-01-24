@@ -1,4 +1,4 @@
-<?php namespace Tests\Support\Language;
+<?php namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\Language\Language;
 

@@ -1,4 +1,4 @@
-<?php namespace Tests\Support;
+<?php namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\CodeIgniter;
 

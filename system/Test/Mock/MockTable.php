@@ -1,5 +1,4 @@
-<?php
-namespace Tests\Support\View;
+<?php namespace CodeIgniter\Test\Mock;
 
 class MockTable extends \CodeIgniter\View\Table {
 

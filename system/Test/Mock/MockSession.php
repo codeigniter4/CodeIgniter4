@@ -1,4 +1,4 @@
-<?php namespace Tests\Support\Session;
+<?php namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\Session\Session;
 

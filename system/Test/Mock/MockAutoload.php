@@ -1,4 +1,4 @@
-<?php namespace Tests\Support\Config;
+<?php namespace CodeIgniter\Test\Mock;
 
 use Config\Autoload;
 
