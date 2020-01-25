@@ -175,6 +175,8 @@ class Database extends BaseCollector
 			'WHERE',
 			'AND',
 			'LEFT&nbsp;JOIN',
+			'RIGHT&nbsp;JOIN',
+			'JOIN',
 			'ORDER&nbsp;BY',
 			'GROUP&nbsp;BY',
 			'LIMIT',
