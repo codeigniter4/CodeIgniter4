@@ -97,7 +97,7 @@
 										foreach ($row['args'] as $key => $value) : ?>
 											<tr>
 												<td><code><?= htmlspecialchars(isset($params[$key]) ? '$' . $params[$key]->name : "#$key", ENT_SUBSTITUTE, 'UTF-8') ?></code></td>
-												<td><pre><?= print_r($value, true) ?></pre></td>
+												<td><pre><?= print_r($params[$key], true) ?></pre></td>
 											</tr>
 										<?php endforeach ?>
 
