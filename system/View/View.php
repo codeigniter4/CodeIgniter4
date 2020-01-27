@@ -480,9 +480,10 @@ class View implements RendererInterface
 			return;
 		}
 
-		foreach ($this->sections[$sectionName] as $contents)
+		foreach ($this->sections[$sectionName] as $key => $contents)
 		{
 			echo $contents;
+			unset($this->sections[$sectionName][$key]);
 		}
 	}
 
