@@ -51,11 +51,11 @@ if (! function_exists('ul'))
 	 * Generates an HTML unordered list from an single or
 	 * multi-dimensional array.
 	 *
-	 * @param  array  $list
-	 * @param  string $attributes HTML attributes
+	 * @param  array $list
+	 * @param  mixed $attributes HTML attributes string, array, object
 	 * @return string
 	 */
-	function ul(array $list, string $attributes = ''): string
+	function ul(array $list, $attributes = ''): string
 	{
 		return _list('ul', $list, $attributes);
 	}
@@ -70,11 +70,11 @@ if (! function_exists('ol'))
 	 *
 	 * Generates an HTML ordered list from an single or multi-dimensional array.
 	 *
-	 * @param  array  $list
-	 * @param  string $attributes HTML attributes
+	 * @param  array $list
+	 * @param  mixed $attributes HTML attributes string, array, object
 	 * @return string
 	 */
-	function ol(array $list, string $attributes = ''): string
+	function ol(array $list, $attributes = ''): string
 	{
 		return _list('ol', $list, $attributes);
 	}
@@ -91,11 +91,11 @@ if (! function_exists('_list'))
 	 *
 	 * @param  string  $type
 	 * @param  mixed   $list
-	 * @param  string  $attributes
+	 * @param  mixed   $attributes string, array, object
 	 * @param  integer $depth
 	 * @return string
 	 */
-	function _list(string $type = 'ul', $list = [], string $attributes = '', int $depth = 0): string
+	function _list(string $type = 'ul', $list = [], $attributes = '', int $depth = 0): string
 	{
 		// Set the indentation based on the depth
 		$out = str_repeat(' ', $depth)
