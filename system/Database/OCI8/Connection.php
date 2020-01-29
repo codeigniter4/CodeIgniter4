@@ -185,6 +185,14 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function _close()
 	{
+		if (is_resource($this->cursorId))
+		{
+			oci_free_statement($this->cursorId);
+		}
+		if (is_resource($this->stmtId))
+		{
+			oci_free_statement($this->stmtId);
+		}
 		oci_close($this->connID);
 	}
 
