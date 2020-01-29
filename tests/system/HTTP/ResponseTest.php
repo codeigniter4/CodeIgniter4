@@ -12,6 +12,8 @@ use Tests\Support\HTTP\MockResponse;
 class ResponseTest extends \CIUnitTestCase
 {
 
+	protected $server;
+
 	protected function setUp(): void
 	{
 		parent::setUp();

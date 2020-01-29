@@ -188,6 +188,9 @@ class RedirectResponseTest extends \CIUnitTestCase
 	}
 
 	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 *
 	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2119
 	 */
 	public function testRedirectRouteBaseUrl()

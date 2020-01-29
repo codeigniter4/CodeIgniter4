@@ -503,7 +503,7 @@ class Pager implements PagerInterface
 		}
 
 		$this->groups[$group] = [
-			'uri'          => clone Services::request()->uri,
+			'uri'          => clone current_url(true),
 			'hasMore'      => false,
 			'total'        => null,
 			'perPage'      => $this->config->perPage,
@@ -520,7 +520,7 @@ class Pager implements PagerInterface
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	/**
 	 * Calculating the current page
 	 *
@@ -545,7 +545,7 @@ class Pager implements PagerInterface
 
 			$page = (int) ($_GET[$pageSelector] ?? 1);
 
-			$this->groups[$group]['currentPage']  = $page < 1 ? 1 : $page;
+			$this->groups[$group]['currentPage'] = $page < 1 ? 1 : $page;
 		}
 	}
 
