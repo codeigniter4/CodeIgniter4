@@ -276,6 +276,18 @@ class ViewTest extends \CIUnitTestCase
 		$this->assertContains($expected, $view->render('extend'));
 	}
 
+	public function testRenderLayoutExtendsMultipleCalls()
+	{
+		$view = new View($this->config, $this->viewsDir, $this->loader);
+
+		$view->setVar('testString', 'Hello World');
+		$expected = "<p>Open</p>\n<h1>Hello World</h1>\n<p>Hello World</p>";
+
+		$view->render('extend');
+
+		$this->assertContains($expected, $view->render('extend'));
+	}
+
 	public function testRenderLayoutMakesDataAvailableToBoth()
 	{
 		$view = new View($this->config, $this->viewsDir, $this->loader);
