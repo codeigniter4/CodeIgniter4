@@ -102,6 +102,14 @@ subforum for an up-to-date list!
 
 - Helpers are pretty much the same as before, though some have been simplified
 
+**Events**
+
+- Hooks have been replaced by Events
+- Instead of CI3's ``$hook['post_controller_constructor']`` you now use
+ ``Events::on('post_controller_constructor', ['MyClass', 'MyFunction']);``,
+ with the namespace ``CodeIgniter\Events\Events;``
+- Events are always enabled, and are available globally
+
 **Extending the framework**
 
 - You don't need a ``core`` folder to hold ``MY_...`` framework
