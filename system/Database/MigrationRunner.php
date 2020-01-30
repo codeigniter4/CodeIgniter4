@@ -305,6 +305,9 @@ class MigrationRunner
 			throw new \RuntimeException($message);
 		}
 
+		// Save the namespace to restore it after loading migrations
+		$tmpNamespace = $this->namespace;
+
 		// Get all migrations
 		$this->namespace = null;
 		$allMigrations   = $this->findMigrations();
@@ -365,6 +368,9 @@ class MigrationRunner
 				throw new \RuntimeException($message);
 			}
 		}
+
+		// Restore the namespace
+		$this->namespace = $tmpNamespace;
 
 		return true;
 	}
