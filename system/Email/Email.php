@@ -1489,7 +1489,7 @@ class Email
 		$output                 = '=?' . $this->charset . '?Q?';
 		for ($i = 0, $length = static::strlen($output); $i < $chars; $i ++)
 		{
-			$chr = ($this->charset === 'UTF-8' && ICONV_ENABLED === true) ? '=' . implode('=', str_split(strtoupper(bin2hex(iconv_substr($str, $i, 1, $this->charset))), 2)) : '=' . strtoupper(bin2hex($str[$i]));
+			$chr = ($this->charset === 'UTF-8' && extension_loaded('iconv')) ? '=' . implode('=', str_split(strtoupper(bin2hex(iconv_substr($str, $i, 1, $this->charset))), 2)) : '=' . strtoupper(bin2hex($str[$i]));
 			// RFC 2045 sets a limit of 76 characters per line.
 			// We'll append ?= to the end of each line though.
 			if ($length + ($l = static::strlen($chr)) > 74)
