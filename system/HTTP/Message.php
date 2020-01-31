@@ -84,7 +84,7 @@ class Message
 	/**
 	 * Message body
 	 *
-	 * @var string
+	 * @var mixed
 	 */
 	protected $body;
 
@@ -108,7 +108,7 @@ class Message
 	/**
 	 * Sets the body of the current message.
 	 *
-	 * @param $data
+	 * @param mixed $data
 	 *
 	 * @return Message|Response
 	 */
