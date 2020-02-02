@@ -8,42 +8,41 @@
  */
 
 
-/* Guide to generate the CSS file
- ============================================================================ */
+// GUIDE TO GENERATE THE CSS FILE
+// ========================================================================== */
 
-/* 1. Open the Terminal
- * 2. Install SASS: https://sass-lang.com/install
- * 3. Go to the SASS folder: "cd system/Debug/Toolbar/Views/SASS"
- * 4. Generate the CSS file: "sass --no-cache --scss --sourcemap=none --style=compressed toolbar.scss ../toolbar.css"
- */
+// 1. Open the Terminal
+// 2. Install SASS: https://sass-lang.com/install
+// 3. Go to the SASS folder: "cd system/Debug/Toolbar/Views/SASS"
+// 4. Generate the CSS file: "sass --no-cache --scss --sourcemap=none --style=compressed toolbar.scss ../toolbar.css"
 
 
-/* Imports
- ============================================================================ */
+// IMPORTS
+// ========================================================================== */
 
 @import '_mixins';
 @import '_settings';
 
 
-/* Debug Icon
- ============================================================================ */
+// DEBUG ICON
+// ========================================================================== */
 
 #debug-icon {
-	/* Position */
+	// Position
 	bottom: 0;
 	position: fixed;
 	right: 0;
 	z-index: 10000;
 
-	/* Size */
+	// Size
 	height: 36px;
 	width: 36px;
 
-	/* Spacing */
+	// Spacing
 	margin: 0px;
 	padding: 0px;
 
-	/* Content */
+	// Content
 	clear: both;
 	text-align: center;
 	a svg {
@@ -61,29 +60,29 @@
 }
 
 
-/* Debug Bar
- ============================================================================ */
+// DEBUG BAR
+// ========================================================================== */
 
 #debug-bar {
-	/* Position */
+	// Position
 	bottom: 0;
 	left: 0;
 	position: fixed;
 	right: 0;
 	z-index: 10000;
 
-	/* Size */
+	// Size
 	height: 36px;
 
-	/* Spacing */
+	// Spacing
 	line-height: 36px;
 
-	/* Typography */
+	// Typography
 	font-family: $base-font;
 	font-size: $base-size;
 	font-weight: 400;
 
-	/* General elements*/
+	// General elements
 	h1 {
 		bottom: 0;
 		display: inline-block;
@@ -163,7 +162,7 @@
 		}
 	}
 
-	/* The toolbar  */
+	// The toolbar
 	.toolbar {
 		display: block;
 		overflow: hidden;
@@ -173,7 +172,7 @@
 		z-index: 10000;
 	}
 
-	/* Fixed top  */
+	// Fixed top
 	&.fixed-top {
 		bottom: auto;
 		top: 0;
@@ -183,7 +182,7 @@
 		}
 	}
 
-	/* The toolbar preferences  */
+	// The toolbar preferences
 	#toolbar-position,
 	#toolbar-theme {
 		a {
@@ -195,7 +194,7 @@
 		}
 	}
 
-	/* The "Open/Close" toggle */
+	// The "Open/Close" toggle
 	#debug-bar-link {
 		bottom: 0;
 		display: inline-block;
@@ -208,7 +207,7 @@
 		width: 24px;
 	}
 
-	/* The toolbar menus */
+	// The toolbar menus
 	.ci-label {
 		display: inline-block;
 		font-size: $base-size - 2;
@@ -224,7 +223,7 @@
 			text-decoration: none;
 		}
 
-		/* The toolbar icons */
+		// The toolbar icons
 		img {
 			clear: left;
 			display: inline-block;
@@ -232,7 +231,7 @@
 			margin: 6px 3px 6px 0;
 		}
 
-		/* The toolbar notification badges */
+		// The toolbar notification badges
 		.badge {
 			@include border-radius(12px);
 			display: inline-block;
@@ -247,7 +246,7 @@
 		}
 	}
 
-	/* The tabs container  */
+	// The tabs container
 	.tab {
 		bottom: 35px;
 		display: none;
@@ -261,7 +260,7 @@
 		z-index: 9999;
 	}
 
-	/* The "Timeline" tab  */
+	// The "Timeline" tab
 	.timeline {
 		margin-left: 0;
 		width: 100%;
@@ -293,7 +292,7 @@
 		}
 	}
 
-	/* The "Routes" tab  */
+	// The "Routes" tab
 	.route-params,
 	.route-params-item {
 		vertical-align: top;
@@ -307,8 +306,8 @@
 }
 
 
-/* Debug View
- ============================================================================ */
+// DEBUG VIEW
+// ========================================================================== */
 
 .debug-view.show-view {
 	border: 1px solid;
@@ -329,8 +328,8 @@
 }
 
 
-/* Responsive design
- ============================================================================ */
+// RESPONSIVE DESIGN
+// ========================================================================== */
 
 @media screen and (max-width: 1024px) {
 	.hide-sm {
@@ -339,30 +338,30 @@
 }
 
 
-/* Themes
- ============================================================================ */
+// THEMES
+// ========================================================================== */
 
-/* Default theme is "Light" */
+// Default theme is "Light"
 @import '_theme-light';
 
-/* If the browser supports "prefers-color-scheme" and the scheme is "Dark" */
+// If the browser supports "prefers-color-scheme" and the scheme is "Dark"
 @media (prefers-color-scheme: dark) {
 	@import '_theme-dark';
 }
 
-/* If we force the "Dark" theme */
+// If we force the "Dark" theme
 #toolbarContainer.dark {
 	@import '_theme-dark';
 }
 
-/* If we force the "Light" theme */
+// If we force the "Light" theme
 #toolbarContainer.light {
 	@import '_theme-light';
 }
 
 
-/* Layout helpers
- ============================================================================ */
+// LAYOUT HELPERS
+// ========================================================================== */
 
 .debug-bar-width30 {
 	width: 30%;

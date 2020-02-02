@@ -1,15 +1,15 @@
-/* Imports
- ============================================================================ */
+// IMPORTS
+// ========================================================================== */
 
-/* The "box-shadow" mixin uses colors */
+// The "box-shadow" mixin uses colors
 @import '_mixins';
 
-/* Graphic charter */
+// Graphic charter
 @import '_graphic-charter';
 
 
-/* Debug Icon
- ============================================================================ */
+// DEBUG ICON
+// ========================================================================== */
 
 #debug-icon {
 	background-color: $t-dark;
@@ -20,14 +20,14 @@
 }
 
 
-/* Debug Bar
- ============================================================================ */
+// DEBUG BAR
+// ========================================================================== */
 
 #debug-bar {
  	background-color: $t-dark;
  	color: $m-gray;
 
-	/* Reset to prevent conflict with other CSS files */
+	// Reset to prevent conflict with other CSS files
  	h1,
 	h2,
 	h3,
@@ -44,12 +44,12 @@
  		color: $m-gray;
  	}
 
-	/* Buttons */
+	// Buttons
 	button {
 		background-color: $t-dark;
 	}
 
-	/* Tables */
+	// Tables
  	table {
  		strong {
 			color: $m-orange;
@@ -71,7 +71,7 @@
  		}
  	}
 
-	/* The toolbar  */
+	// The toolbar
  	.toolbar {
  		background-color: $g-gray;
  		@include box-shadow(0, 0, 4px, $g-gray);
@@ -80,7 +80,7 @@
 		}
  	}
 
-	/* Fixed top  */
+	// Fixed top
 	&.fixed-top {
 		& .toolbar {
 			@include box-shadow(0, 0, 4px, $g-gray);
@@ -90,7 +90,7 @@
 		}
 	}
 
-	/* "Muted" elements  */
+	// "Muted" elements
 	.muted {
  		color: $m-gray;
  		td {
@@ -101,13 +101,13 @@
  		}
  	}
 
-	/* The toolbar preferences  */
+	// The toolbar preferences
 	#toolbar-position,
 	#toolbar-theme, {
 		filter: brightness(0) invert(0.6);
 	}
 
-	/* The toolbar menus */
+	// The toolbar menus
  	.ci-label {
  		&.active {
  			background-color: $t-dark;
@@ -121,13 +121,13 @@
  		}
  	}
 
-	/* The tabs container  */
+	// The tabs container
  	.tab {
  		background-color: $t-dark;
 		@include box-shadow(0, -1px, 4px, $g-gray);
  	}
 
-	/* The "Timeline" tab  */
+	// The "Timeline" tab
 	.timeline {
  		th,
 		td {
@@ -140,8 +140,8 @@
 }
 
 
-/* Debug View
- ============================================================================ */
+// DEBUG VIEW
+// ========================================================================== */
 
 .debug-view.show-view {
 	border-color: $g-orange;
