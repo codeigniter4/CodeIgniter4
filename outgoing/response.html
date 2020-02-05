@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>HTTP Responses &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>HTTP Responses &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Building Responses" href="index.html"/>
         <link rel="next" title="API Response Trait" href="api_responses.html"/>
         <link rel="prev" title="HTML Table Class" href="table.html"/> 
@@ -230,27 +233,27 @@ a server responding to the client that called it.</p>
 <div class="section" id="working-with-the-response">
 <h2><a class="toc-backref" href="#id1">Working with the Response</a><a class="headerlink" href="#working-with-the-response" title="Permalink to this headline">¶</a></h2>
 <p>A Response class is instantiated for you and passed into your controllers. It can be accessed through
-<code class="docutils literal"><span class="pre">$this-&gt;response</span></code>. Many times you will not need to touch the class directly, since CodeIgniter takes care of
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;response</span></code>. Many times you will not need to touch the class directly, since CodeIgniter takes care of
 sending the headers and the body for you. This is great if the page successfully created the content it was asked to.
 When things go wrong, or you need to send very specific status codes back, or even take advantage of the
-powerful HTTP caching, it&#8217;s there for you.</p>
+powerful HTTP caching, it’s there for you.</p>
 <div class="section" id="setting-the-output">
 <h3><a class="toc-backref" href="#id2">Setting the Output</a><a class="headerlink" href="#setting-the-output" title="Permalink to this headline">¶</a></h3>
 <p>When you need to set the output of the script directly, and not rely on CodeIgniter to automatically get it, you
-do it manually with the <code class="docutils literal"><span class="pre">setBody</span></code> method. This is usually used in conjunction with setting the status code of
+do it manually with the <code class="docutils literal notranslate"><span class="pre">setBody</span></code> method. This is usually used in conjunction with setting the status code of
 the response:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
                <span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="nv">$body</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The reason phrase (&#8216;OK&#8217;, &#8216;Created&#8217;, &#8216;Moved Permanently&#8217;) will be automatically added, but you can add custom reasons
-as the second parameter of the <code class="docutils literal"><span class="pre">setStatusCode()</span></code> method:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="s1">&#39;Nope. Not here.&#39;</span><span class="p">);</span>
+<p>The reason phrase (‘OK’, ‘Created’, ‘Moved Permanently’) will be automatically added, but you can add custom reasons
+as the second parameter of the <code class="docutils literal notranslate"><span class="pre">setStatusCode()</span></code> method:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="s1">&#39;Nope. Not here.&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can set format an array into either JSON or XML and set the content type header to the appropriate mime with the
-<code class="docutils literal"><span class="pre">setJSON</span></code> and <code class="docutils literal"><span class="pre">setXML</span></code> methods. Typically, you will send an array of data to be converted:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+<code class="docutils literal notranslate"><span class="pre">setJSON</span></code> and <code class="docutils literal notranslate"><span class="pre">setXML</span></code> methods. Typically, you will send an array of data to be converted:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;success&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
         <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="mi">123</span>
 <span class="p">];</span>
@@ -264,24 +267,24 @@ as the second parameter of the <code class="docutils literal"><span class="pre">
 <div class="section" id="setting-headers">
 <h3><a class="toc-backref" href="#id3">Setting Headers</a><a class="headerlink" href="#setting-headers" title="Permalink to this headline">¶</a></h3>
 <p>Often, you will need to set headers to be set for the response. The Response class makes this very simple to do,
-with the <code class="docutils literal"><span class="pre">setHeader()</span></code> method. The first parameter is the name of the header. The second parameter is the value,
+with the <code class="docutils literal notranslate"><span class="pre">setHeader()</span></code> method. The first parameter is the name of the header. The second parameter is the value,
 which can be either a string or an array of values that will be combined correctly when sent to the client.
 Using these functions instead of using the native PHP functions allows you to ensure that no headers are sent
 prematurely, causing errors, and makes testing possible.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Location&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Location&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">)</span>
          <span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;WWW-Authenticate&#39;</span><span class="p">,</span> <span class="s1">&#39;Negotiate&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>If the header exists and can have more than one value, you may use the <code class="docutils literal"><span class="pre">appendHeader()</span></code> and <code class="docutils literal"><span class="pre">prependHeader()</span></code>
+<p>If the header exists and can have more than one value, you may use the <code class="docutils literal notranslate"><span class="pre">appendHeader()</span></code> and <code class="docutils literal notranslate"><span class="pre">prependHeader()</span></code>
 methods to add the value to the end or beginning of the values list, respectively. The first parameter is the name
 of the header, while the second is the value to append or prepend.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Cache-Control&#39;</span><span class="p">,</span> <span class="s1">&#39;no-cache&#39;</span><span class="p">)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Cache-Control&#39;</span><span class="p">,</span> <span class="s1">&#39;no-cache&#39;</span><span class="p">)</span>
          <span class="o">-&gt;</span><span class="na">appendHeader</span><span class="p">(</span><span class="s1">&#39;Cache-Control&#39;</span><span class="p">,</span> <span class="s1">&#39;must-revalidate&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Headers can be removed from the response with the <code class="docutils literal"><span class="pre">removeHeader()</span></code> method, which takes the header name as the only
+<p>Headers can be removed from the response with the <code class="docutils literal notranslate"><span class="pre">removeHeader()</span></code> method, which takes the header name as the only
 parameter. This is not case-sensitive.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">removeHeader</span><span class="p">(</span><span class="s1">&#39;Location&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">removeHeader</span><span class="p">(</span><span class="s1">&#39;Location&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -292,25 +295,25 @@ parameter. This is not case-sensitive.</p>
 to your computer. This sets the appropriate headers to make it happen.</p>
 <p>The first parameter is the <strong>name you want the downloaded file to be named</strong>, the second parameter is the
 file data.</p>
-<p>If you set the second parameter to NULL and <code class="docutils literal"><span class="pre">$filename</span></code> is an existing, readable
+<p>If you set the second parameter to NULL and <code class="docutils literal notranslate"><span class="pre">$filename</span></code> is an existing, readable
 file path, then its content will be read instead.</p>
 <p>If you set the third parameter to boolean TRUE, then the actual file MIME type
 (based on the filename extension) will be sent, so that if your browser has a
 handler for that type - it can use it.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="s1">&#39;Here is some text!&#39;</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="s1">&#39;Here is some text!&#39;</span><span class="p">;</span>
 <span class="nv">$name</span> <span class="o">=</span> <span class="s1">&#39;mytext.txt&#39;</span><span class="p">;</span>
 <span class="k">return</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">download</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>If you want to download an existing file from your server you&#8217;ll need to
+<p>If you want to download an existing file from your server you’ll need to
 do the following:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Contents of photo.jpg will be automatically read</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// Contents of photo.jpg will be automatically read</span>
 <span class="k">return</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">download</span><span class="p">(</span><span class="s1">&#39;/path/to/photo.jpg&#39;</span><span class="p">,</span> <span class="k">NULL</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Use the optional <code class="docutils literal"><span class="pre">setFileName()</span></code> method to change the filename as it is sent to the client&#8217;s browser:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">download</span><span class="p">(</span><span class="s1">&#39;awkwardEncryptedFileName.fakeExt&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setFileName</span><span class="p">(</span><span class="s1">&#39;expenses.csv&#39;</span><span class="p">);</span>
+<p>Use the optional <code class="docutils literal notranslate"><span class="pre">setFileName()</span></code> method to change the filename as it is sent to the client’s browser:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">download</span><span class="p">(</span><span class="s1">&#39;awkwardEncryptedFileName.fakeExt&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setFileName</span><span class="p">(</span><span class="s1">&#39;expenses.csv&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -322,16 +325,16 @@ to be passed through all <strong>after</strong> filters before being sent to the
 <div class="section" id="http-caching">
 <h2><a class="toc-backref" href="#id5">HTTP Caching</a><a class="headerlink" href="#http-caching" title="Permalink to this headline">¶</a></h2>
 <p>Built into the HTTP specification are tools help the client (often the web browser) cache the results. Used correctly,
-this can lend a huge performance boost to your application because it will tell the client that they don&#8217;t need
-to contact the getServer at all since nothing has changed. And you can&#8217;t get faster than that.</p>
-<p>This are handled through the <code class="docutils literal"><span class="pre">Cache-Control</span></code> and <code class="docutils literal"><span class="pre">ETag</span></code> headers. This guide is not the proper place for a thorough
+this can lend a huge performance boost to your application because it will tell the client that they don’t need
+to contact the getServer at all since nothing has changed. And you can’t get faster than that.</p>
+<p>This are handled through the <code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> and <code class="docutils literal notranslate"><span class="pre">ETag</span></code> headers. This guide is not the proper place for a thorough
 introduction to all of the cache headers power, but you can get a good understanding over at
 <a class="reference external" href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching">Google Developers</a>
 and the <a class="reference external" href="https://www.mobify.com/blog/beginners-guide-to-http-cache-headers/">Mobify Blog</a>.</p>
 <p>By default, all response objects sent through CodeIgniter have HTTP caching turned off. The options and exact
-circumstances are too varied for us to be able to create a good default other than turning it off. It&#8217;s simple
-to set the Cache values to what you need, though, through the <code class="docutils literal"><span class="pre">setCache()</span></code> method:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$options</span> <span class="o">=</span> <span class="p">[</span>
+circumstances are too varied for us to be able to create a good default other than turning it off. It’s simple
+to set the Cache values to what you need, though, through the <code class="docutils literal notranslate"><span class="pre">setCache()</span></code> method:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$options</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;max-age&#39;</span>  <span class="o">=&gt;</span> <span class="mi">300</span><span class="p">,</span>
         <span class="s1">&#39;s-maxage&#39;</span> <span class="o">=&gt;</span> <span class="mi">900</span>
         <span class="s1">&#39;etag&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;abcde&#39;</span><span class="p">,</span>
@@ -339,17 +342,17 @@ to set the Cache values to what you need, though, through the <code class="docut
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setCache</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal"><span class="pre">$options</span></code> array simply takes an array of key/value pairs that are, with a couple of exceptions, assigned
-to the <code class="docutils literal"><span class="pre">Cache-Control</span></code> header. You are free to set all of the options exactly as you need for your specific
-situation. While most of the options are applied to the <code class="docutils literal"><span class="pre">Cache-Control</span></code> header, it intelligently handles
-the <code class="docutils literal"><span class="pre">etag</span></code> and <code class="docutils literal"><span class="pre">last-modified</span></code> options to their appropriate header.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$options</span></code> array simply takes an array of key/value pairs that are, with a couple of exceptions, assigned
+to the <code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> header. You are free to set all of the options exactly as you need for your specific
+situation. While most of the options are applied to the <code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> header, it intelligently handles
+the <code class="docutils literal notranslate"><span class="pre">etag</span></code> and <code class="docutils literal notranslate"><span class="pre">last-modified</span></code> options to their appropriate header.</p>
 </div>
 <div class="section" id="content-security-policy">
 <h2><a class="toc-backref" href="#id6">Content Security Policy</a><a class="headerlink" href="#content-security-policy" title="Permalink to this headline">¶</a></h2>
 <p>One of the best protections you have against XSS attacks is to implement a Content Security Policy on the site.
-This forces you to whitelist every single source of content that is pulled in from your site&#8217;s HTML,
-including images, stylesheets, javascript files, etc. The browser will refuse content from sources that don&#8217;t meet
-the whitelist. This whitelist is created within the response&#8217;s <code class="docutils literal"><span class="pre">Content-Security-Policy</span></code> header and has many
+This forces you to whitelist every single source of content that is pulled in from your site’s HTML,
+including images, stylesheets, javascript files, etc. The browser will refuse content from sources that don’t meet
+the whitelist. This whitelist is created within the response’s <code class="docutils literal notranslate"><span class="pre">Content-Security-Policy</span></code> header and has many
 different ways it can be configured.</p>
 <p>This sounds complex, and on some sites, can definitely be challenging. For many simple sites, though, where all content
 is served by the same domain (<a class="reference external" href="http://example.com">http://example.com</a>), it is very simple to integrate.</p>
@@ -363,31 +366,31 @@ visit the following sites:</p>
 </ul>
 <div class="section" id="turning-csp-on">
 <h3><a class="toc-backref" href="#id7">Turning CSP On</a><a class="headerlink" href="#turning-csp-on" title="Permalink to this headline">¶</a></h3>
-<p>By default, support for this is off. To enable support in your application, edit the <code class="docutils literal"><span class="pre">CSPEnabled</span></code> value in
+<p>By default, support for this is off. To enable support in your application, edit the <code class="docutils literal notranslate"><span class="pre">CSPEnabled</span></code> value in
 <strong>app/Config/App.php</strong>:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$CSPEnabled</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$CSPEnabled</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>When enabled, the response object will contain an instance of <code class="docutils literal"><span class="pre">CodeIgniter\HTTP\ContentSecurityPolicy</span></code>. The
+<p>When enabled, the response object will contain an instance of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\ContentSecurityPolicy</span></code>. The
 values set in <strong>app/Config/ContentSecurityPolicy.php</strong> are applied to that instance, and if no changes are
-needed during runtime, then the correctly formatted header is sent and you&#8217;re all done.</p>
+needed during runtime, then the correctly formatted header is sent and you’re all done.</p>
 <p>With CSP enabled, two header lines are added to the HTTP response: a Content-Security-Policy header, with
 policies identifying content types or origins that are explicitly allowed for different
 contexts, and a Content-Security-Policy-Report-Only header, which identifies content types
 or origins that will be allowed but which will also be reported to the destination
 of your choice.</p>
-<p>Our implementation provides for a default treatment, changeable through the <code class="docutils literal"><span class="pre">reportOnly()</span></code> method.
+<p>Our implementation provides for a default treatment, changeable through the <code class="docutils literal notranslate"><span class="pre">reportOnly()</span></code> method.
 When an additional entry is added to a CSP directive, as shown below, it will be added
 to the CSP header appropriate for blocking or preventing. That can be overridden on a per
 call basis, by providing an optional second parameter to the adding method call.</p>
 </div>
 <div class="section" id="runtime-configuration">
 <h3><a class="toc-backref" href="#id8">Runtime Configuration</a><a class="headerlink" href="#runtime-configuration" title="Permalink to this headline">¶</a></h3>
-<p>If your application needs to make changes at run-time, you can access the instance at <code class="docutils literal"><span class="pre">$response-&gt;CSP</span></code>. The
+<p>If your application needs to make changes at run-time, you can access the instance at <code class="docutils literal notranslate"><span class="pre">$response-&gt;CSP</span></code>. The
 class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
 Examples are shown below, with different combinations of parameters, though all accept either a directive
 name or anarray of them.:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// specify the default directive treatment</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// specify the default directive treatment</span>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">CSP</span><span class="o">-&gt;</span><span class="na">reportOnly</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 
 <span class="c1">// specify the origin to use if none provided for a directive</span>
@@ -415,12 +418,12 @@ name or anarray of them.:</p>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">CSP</span><span class="o">-&gt;</span><span class="na">addSandbox</span><span class="p">([</span><span class="s1">&#39;allow-forms&#39;</span><span class="p">,</span> <span class="s1">&#39;allow-scripts&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
-<p>The first parameter to each of the &#8220;add&#8221; methods is an appropriate string value,
+<p>The first parameter to each of the “add” methods is an appropriate string value,
 or an array of them.</p>
-<p>The <code class="docutils literal"><span class="pre">reportOnly</span></code> method allows you to specify the default reporting treatment
+<p>The <code class="docutils literal notranslate"><span class="pre">reportOnly</span></code> method allows you to specify the default reporting treatment
 for subsequent sources, unless over-ridden. For instance, you could specify
 that youtube.com was allowed, and then provide several allowed but reported sources:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">&#39;https://youtube.com&#39;</span><span class="p">);</span> <span class="c1">// allowed</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">&#39;https://youtube.com&#39;</span><span class="p">);</span> <span class="c1">// allowed</span>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">reportOnly</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">&#39;https://metube.com&#39;</span><span class="p">);</span> <span class="c1">// allowed but reported</span>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">&#39;https://ourtube.com&#39;</span><span class="p">,</span><span class="k">false</span><span class="p">);</span> <span class="c1">// allowed</span>
@@ -431,10 +434,10 @@ that youtube.com was allowed, and then provide several allowed but reported sour
 <h3><a class="toc-backref" href="#id9">Inline Content</a><a class="headerlink" href="#inline-content" title="Permalink to this headline">¶</a></h3>
 <p>It is possible to set a website to not protect even inline scripts and styles on its own pages, since this might have
 been the result of user-generated content. To protect against this, CSP allows you to specify a nonce within the
-<code class="docutils literal"><span class="pre">&lt;style&gt;</span></code> and <code class="docutils literal"><span class="pre">&lt;script&gt;</span></code> tags, and to add those values to the response&#8217;s header. This is a pain to handle in real
-life, and is most secure when generated on the fly. To make this simple, you can include a <code class="docutils literal"><span class="pre">{csp-style-nonce}</span></code> or
-<code class="docutils literal"><span class="pre">{csp-script-nonce}</span></code> placeholder in the tag and it will be handled for you automatically:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Original</span>
+<code class="docutils literal notranslate"><span class="pre">&lt;style&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;script&gt;</span></code> tags, and to add those values to the response’s header. This is a pain to handle in real
+life, and is most secure when generated on the fly. To make this simple, you can include a <code class="docutils literal notranslate"><span class="pre">{csp-style-nonce}</span></code> or
+<code class="docutils literal notranslate"><span class="pre">{csp-script-nonce}</span></code> placeholder in the tag and it will be handled for you automatically:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// Original</span>
 <span class="o">&lt;</span><span class="nx">script</span> <span class="p">{</span><span class="nx">csp</span><span class="o">-</span><span class="nx">script</span><span class="o">-</span><span class="nx">nonce</span><span class="p">}</span><span class="o">&gt;</span>
     <span class="nx">console</span><span class="o">.</span><span class="nb">log</span><span class="p">(</span><span class="s2">&quot;Script won&#39;t run as it doesn&#39;t contain a nonce attribute&quot;</span><span class="p">);</span>
 <span class="o">&lt;/</span><span class="nx">script</span><span class="o">&gt;</span>
@@ -459,22 +462,22 @@ life, and is most secure when generated on the fly. To make this simple, you can
 </div>
 <p>The methods provided by the parent class that are available are:</p>
 <ul class="simple">
-<li><code class="xref py py-meth docutils literal"><span class="pre">CodeIgniter\HTTP\Message::body()</span></code></li>
-<li><code class="xref py py-meth docutils literal"><span class="pre">CodeIgniter\HTTP\Message::setBody()</span></code></li>
-<li><code class="xref py py-meth docutils literal"><span class="pre">CodeIgniter\HTTP\Message::populateHeaders()</span></code></li>
-<li><code class="xref py py-meth docutils literal"><span class="pre">CodeIgniter\HTTP\Message::headers()</span></code></li>
-<li><code class="xref py py-meth docutils literal"><span class="pre">CodeIgniter\HTTP\Message::header()</span></code></li>
-<li><code class="xref py py-meth docutils literal"><span class="pre">CodeIgniter\HTTP\Message::headerLine()</span></code></li>
-<li><code class="xref py py-meth docutils literal"><span class="pre">CodeIgniter\HTTP\Message::setHeader()</span></code></li>
-<li><code class="xref py py-meth docutils literal"><span class="pre">CodeIgniter\HTTP\Message::removeHeader()</span></code></li>
-<li><code class="xref py py-meth docutils literal"><span class="pre">CodeIgniter\HTTP\Message::appendHeader()</span></code></li>
-<li><code class="xref py py-meth docutils literal"><span class="pre">CodeIgniter\HTTP\Message::protocolVersion()</span></code></li>
-<li><code class="xref py py-meth docutils literal"><span class="pre">CodeIgniter\HTTP\Message::setProtocolVersion()</span></code></li>
-<li><code class="xref py py-meth docutils literal"><span class="pre">CodeIgniter\HTTP\Message::negotiateMedia()</span></code></li>
-<li><code class="xref py py-meth docutils literal"><span class="pre">CodeIgniter\HTTP\Message::negotiateCharset()</span></code></li>
-<li><code class="xref py py-meth docutils literal"><span class="pre">CodeIgniter\HTTP\Message::negotiateEncoding()</span></code></li>
-<li><code class="xref py py-meth docutils literal"><span class="pre">CodeIgniter\HTTP\Message::negotiateLanguage()</span></code></li>
-<li><code class="xref py py-meth docutils literal"><span class="pre">CodeIgniter\HTTP\Message::negotiateLanguage()</span></code></li>
+<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::body()</span></code></li>
+<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::setBody()</span></code></li>
+<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::populateHeaders()</span></code></li>
+<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::headers()</span></code></li>
+<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::header()</span></code></li>
+<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::headerLine()</span></code></li>
+<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::setHeader()</span></code></li>
+<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::removeHeader()</span></code></li>
+<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::appendHeader()</span></code></li>
+<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::protocolVersion()</span></code></li>
+<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::setProtocolVersion()</span></code></li>
+<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::negotiateMedia()</span></code></li>
+<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::negotiateCharset()</span></code></li>
+<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::negotiateEncoding()</span></code></li>
+<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::negotiateLanguage()</span></code></li>
+<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::negotiateLanguage()</span></code></li>
 </ul>
 <dl class="class">
 <dt>
@@ -494,7 +497,7 @@ life, and is most secure when generated on the fly. To make this simple, you can
 </table>
 <p>Returns the currently status code for this response. If no status code has been set, a BadMethodCallException
 will be thrown:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getStatusCode</span><span class="p">();</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getStatusCode</span><span class="p">();</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -507,8 +510,8 @@ will be thrown:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$code</strong> (<em>int</em>) &#8211; The HTTP status code</li>
-<li><strong>$reason</strong> (<em>string</em>) &#8211; An optional reason phrase.</li>
+<li><strong>$code</strong> (<em>int</em>) – The HTTP status code</li>
+<li><strong>$reason</strong> (<em>string</em>) – An optional reason phrase.</li>
 </ul>
 </td>
 </tr>
@@ -521,12 +524,12 @@ will be thrown:</p>
 </tbody>
 </table>
 <p>Sets the HTTP status code that should be sent with this response:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">404</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">404</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The reason phrase will be automatically generated based upon the official lists. If you need to set your own
 for a custom status code, you can pass the reason phrase as the second parameter:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="s2">&quot;Tardis initiated&quot;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="s2">&quot;Tardis initiated&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -545,7 +548,7 @@ for a custom status code, you can pass the reason phrase as the second parameter
 </tbody>
 </table>
 <p>Returns the current status code for this response. If not status has been set, will return an empty string:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getReason</span><span class="p">();</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getReason</span><span class="p">();</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -558,7 +561,7 @@ for a custom status code, you can pass the reason phrase as the second parameter
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$date</strong> (<em>DateTime</em>) &#8211; A DateTime instance with the time to set for this response.</li>
+<li><strong>$date</strong> (<em>DateTime</em>) – A DateTime instance with the time to set for this response.</li>
 </ul>
 </td>
 </tr>
@@ -570,8 +573,8 @@ for a custom status code, you can pass the reason phrase as the second parameter
 </tr>
 </tbody>
 </table>
-<p>Sets the date used for this response. The <code class="docutils literal"><span class="pre">$date</span></code> argument must be an instance of <code class="docutils literal"><span class="pre">DateTime</span></code>:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$date</span> <span class="o">=</span> <span class="nx">DateTime</span><span class="o">::</span><span class="na">createFromFormat</span><span class="p">(</span><span class="s1">&#39;j-M-Y&#39;</span><span class="p">,</span> <span class="s1">&#39;15-Feb-2016&#39;</span><span class="p">);</span>
+<p>Sets the date used for this response. The <code class="docutils literal notranslate"><span class="pre">$date</span></code> argument must be an instance of <code class="docutils literal notranslate"><span class="pre">DateTime</span></code>:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$date</span> <span class="o">=</span> <span class="nx">DateTime</span><span class="o">::</span><span class="na">createFromFormat</span><span class="p">(</span><span class="s1">&#39;j-M-Y&#39;</span><span class="p">,</span> <span class="s1">&#39;15-Feb-2016&#39;</span><span class="p">);</span>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setDate</span><span class="p">(</span><span class="nv">$date</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -585,8 +588,8 @@ for a custom status code, you can pass the reason phrase as the second parameter
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$mime</strong> (<em>string</em>) &#8211; The content type this response represents.</li>
-<li><strong>$charset</strong> (<em>string</em>) &#8211; The character set this response uses.</li>
+<li><strong>$mime</strong> (<em>string</em>) – The content type this response represents.</li>
+<li><strong>$charset</strong> (<em>string</em>) – The character set this response uses.</li>
 </ul>
 </td>
 </tr>
@@ -599,14 +602,14 @@ for a custom status code, you can pass the reason phrase as the second parameter
 </tbody>
 </table>
 <p>Sets the content type this response represents:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setContentType</span><span class="p">(</span><span class="s1">&#39;text/plain&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setContentType</span><span class="p">(</span><span class="s1">&#39;text/plain&#39;</span><span class="p">);</span>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setContentType</span><span class="p">(</span><span class="s1">&#39;text/html&#39;</span><span class="p">);</span>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setContentType</span><span class="p">(</span><span class="s1">&#39;application/json&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>By default, the method sets the character set to <code class="docutils literal"><span class="pre">UTF-8</span></code>. If you need to change this, you can
+<p>By default, the method sets the character set to <code class="docutils literal notranslate"><span class="pre">UTF-8</span></code>. If you need to change this, you can
 pass the character set as the second parameter:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setContentType</span><span class="p">(</span><span class="s1">&#39;text/plain&#39;</span><span class="p">,</span> <span class="s1">&#39;x-pig-latin&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setContentType</span><span class="p">(</span><span class="s1">&#39;text/plain&#39;</span><span class="p">,</span> <span class="s1">&#39;x-pig-latin&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -624,9 +627,9 @@ pass the character set as the second parameter:</p>
 </tr>
 </tbody>
 </table>
-<p>Sets the <code class="docutils literal"><span class="pre">Cache-Control</span></code> header to turn off all HTTP caching. This is the default setting
+<p>Sets the <code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> header to turn off all HTTP caching. This is the default setting
 of all response messages:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">noCache</span><span class="p">();</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">noCache</span><span class="p">();</span>
 
 <span class="c1">// Sets the following header:</span>
 <span class="nx">Cache</span><span class="o">-</span><span class="nx">Control</span><span class="o">:</span> <span class="nx">no</span><span class="o">-</span><span class="nx">store</span><span class="p">,</span> <span class="nb">max</span><span class="o">-</span><span class="nx">age</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nx">no</span><span class="o">-</span><span class="nx">cache</span>
@@ -642,7 +645,7 @@ of all response messages:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$options</strong> (<em>array</em>) &#8211; An array of key/value cache control settings</li>
+<li><strong>$options</strong> (<em>array</em>) – An array of key/value cache control settings</li>
 </ul>
 </td>
 </tr>
@@ -654,7 +657,7 @@ of all response messages:</p>
 </tr>
 </tbody>
 </table>
-<p>Sets the <code class="docutils literal"><span class="pre">Cache-Control</span></code> headers, including <code class="docutils literal"><span class="pre">ETags</span></code> and <code class="docutils literal"><span class="pre">Last-Modified</span></code>. Typical keys are:</p>
+<p>Sets the <code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> headers, including <code class="docutils literal notranslate"><span class="pre">ETags</span></code> and <code class="docutils literal notranslate"><span class="pre">Last-Modified</span></code>. Typical keys are:</p>
 <ul class="simple">
 <li>etag</li>
 <li>last-modified</li>
@@ -677,7 +680,7 @@ of all response messages:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$date</strong> (<em>string|DateTime</em>) &#8211; The date to set the Last-Modified header to</li>
+<li><strong>$date</strong> (<em>string|DateTime</em>) – The date to set the Last-Modified header to</li>
 </ul>
 </td>
 </tr>
@@ -689,9 +692,9 @@ of all response messages:</p>
 </tr>
 </tbody>
 </table>
-<p>Sets the <code class="docutils literal"><span class="pre">Last-Modified</span></code> header. The <code class="docutils literal"><span class="pre">$date</span></code> object can be either a string or a <code class="docutils literal"><span class="pre">DateTime</span></code>
+<p>Sets the <code class="docutils literal notranslate"><span class="pre">Last-Modified</span></code> header. The <code class="docutils literal notranslate"><span class="pre">$date</span></code> object can be either a string or a <code class="docutils literal notranslate"><span class="pre">DateTime</span></code>
 instance:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setLastModified</span><span class="p">(</span><span class="nb">date</span><span class="p">(</span><span class="s1">&#39;D, d M Y H:i:s&#39;</span><span class="p">));</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setLastModified</span><span class="p">(</span><span class="nb">date</span><span class="p">(</span><span class="s1">&#39;D, d M Y H:i:s&#39;</span><span class="p">));</span>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setLastModified</span><span class="p">(</span><span class="nx">DateTime</span><span class="o">::</span><span class="na">createFromFormat</span><span class="p">(</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="nv">$time</span><span class="p">));</span>
 </pre></div>
 </div>
@@ -723,14 +726,14 @@ this as it is handled automatically by CodeIgniter.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>mixed</em>) &#8211; Cookie name or an array of parameters</li>
-<li><strong>$value</strong> (<em>string</em>) &#8211; Cookie value</li>
-<li><strong>$expire</strong> (<em>int</em>) &#8211; Cookie expiration time in seconds</li>
-<li><strong>$domain</strong> (<em>string</em>) &#8211; Cookie domain</li>
-<li><strong>$path</strong> (<em>string</em>) &#8211; Cookie path</li>
-<li><strong>$prefix</strong> (<em>string</em>) &#8211; Cookie name prefix</li>
-<li><strong>$secure</strong> (<em>bool</em>) &#8211; Whether to only transfer the cookie through HTTPS</li>
-<li><strong>$httponly</strong> (<em>bool</em>) &#8211; Whether to only make the cookie accessible for HTTP requests (no JavaScript)</li>
+<li><strong>$name</strong> (<em>mixed</em>) – Cookie name or an array of parameters</li>
+<li><strong>$value</strong> (<em>string</em>) – Cookie value</li>
+<li><strong>$expire</strong> (<em>int</em>) – Cookie expiration time in seconds</li>
+<li><strong>$domain</strong> (<em>string</em>) – Cookie domain</li>
+<li><strong>$path</strong> (<em>string</em>) – Cookie path</li>
+<li><strong>$prefix</strong> (<em>string</em>) – Cookie name prefix</li>
+<li><strong>$secure</strong> (<em>bool</em>) – Whether to only transfer the cookie through HTTPS</li>
+<li><strong>$httponly</strong> (<em>bool</em>) – Whether to only make the cookie accessible for HTTP requests (no JavaScript)</li>
 </ul>
 </td>
 </tr>
@@ -745,7 +748,7 @@ Method, and Discrete Parameters:</p>
 <p><strong>Array Method</strong></p>
 <p>Using this method, an associative array is passed as the first
 parameter:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$cookie</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$cookie</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;name&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;The Cookie Name&#39;</span><span class="p">,</span>
         <span class="s1">&#39;value&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;The Value&#39;</span><span class="p">,</span>
         <span class="s1">&#39;expire&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;86500&#39;</span><span class="p">,</span>
@@ -777,7 +780,7 @@ by setting it to TRUE.</p>
 <p><strong>Discrete Parameters</strong></p>
 <p>If you prefer, you can set the cookie by passing data using individual
 parameters:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$value</span><span class="p">,</span> <span class="nv">$expire</span><span class="p">,</span> <span class="nv">$domain</span><span class="p">,</span> <span class="nv">$path</span><span class="p">,</span> <span class="nv">$prefix</span><span class="p">,</span> <span class="nv">$secure</span><span class="p">,</span> <span class="nv">$httponly</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$value</span><span class="p">,</span> <span class="nv">$expire</span><span class="p">,</span> <span class="nv">$domain</span><span class="p">,</span> <span class="nv">$path</span><span class="p">,</span> <span class="nv">$prefix</span><span class="p">,</span> <span class="nv">$secure</span><span class="p">,</span> <span class="nv">$httponly</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -790,10 +793,10 @@ parameters:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>mixed</em>) &#8211; Cookie name or an array of parameters</li>
-<li><strong>$domain</strong> (<em>string</em>) &#8211; Cookie domain</li>
-<li><strong>$path</strong> (<em>string</em>) &#8211; Cookie path</li>
-<li><strong>$prefix</strong> (<em>string</em>) &#8211; Cookie name prefix</li>
+<li><strong>$name</strong> (<em>mixed</em>) – Cookie name or an array of parameters</li>
+<li><strong>$domain</strong> (<em>string</em>) – Cookie domain</li>
+<li><strong>$path</strong> (<em>string</em>) – Cookie path</li>
+<li><strong>$prefix</strong> (<em>string</em>) – Cookie name prefix</li>
 </ul>
 </td>
 </tr>
@@ -813,7 +816,7 @@ Provide a path name if cookies should only be deleted for that path.</p>
 <p>If any of the optional parameters are empty, then the same-named
 cookie will be deleted across all that apply.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">deleteCookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">deleteCookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -826,9 +829,9 @@ cookie will be deleted across all that apply.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>mixed</em>) &#8211; Cookie name or an array of parameters</li>
-<li><strong>$value</strong> (<em>string</em>) &#8211; cookie value</li>
-<li><strong>$prefix</strong> (<em>string</em>) &#8211; Cookie name prefix</li>
+<li><strong>$name</strong> (<em>mixed</em>) – Cookie name or an array of parameters</li>
+<li><strong>$value</strong> (<em>string</em>) – cookie value</li>
+<li><strong>$prefix</strong> (<em>string</em>) – Cookie name prefix</li>
 </ul>
 </td>
 </tr>
@@ -845,7 +848,7 @@ pre-pended to the cookie name.</p>
 of the named cookie. If a value is given, then the method checks
 that the cookie exists, and that it has the prescribed value.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">hasCookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">))</span> <span class="o">...</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">hasCookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">))</span> <span class="o">...</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -858,8 +861,8 @@ that the cookie exists, and that it has the prescribed value.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>mixed</em>) &#8211; Cookie name</li>
-<li><strong>$prefix</strong> (<em>string</em>) &#8211; Cookie name prefix</li>
+<li><strong>$name</strong> (<em>mixed</em>) – Cookie name</li>
+<li><strong>$prefix</strong> (<em>string</em>) – Cookie name prefix</li>
 </ul>
 </td>
 </tr>
@@ -872,7 +875,7 @@ that the cookie exists, and that it has the prescribed value.</p>
 <p>If no name is given, returns the array of cookies.</p>
 <p>Each cookie is returned as an associative array.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$cookie</span> <span class="o">=</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getCookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$cookie</span> <span class="o">=</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getCookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -906,8 +909,8 @@ that the cookie exists, and that it has the prescribed value.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -929,16 +932,17 @@ that the cookie exists, and that it has the prescribed value.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

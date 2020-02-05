@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Security Helper &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Security Helper &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Helpers" href="index.html"/>
         <link rel="next" title="Text Helper" href="text_helper.html"/>
         <link rel="prev" title="Number Helper" href="number_helper.html"/> 
@@ -220,7 +223,7 @@
 <div class="section" id="loading-this-helper">
 <h2><a class="toc-backref" href="#id1">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline">¶</a></h2>
 <p>This helper is loaded using the following code:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;security&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;security&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -235,7 +238,7 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$filename</strong> (<em>string</em>) &#8211; Filename</li>
+<li><strong>$filename</strong> (<em>string</em>) – Filename</li>
 </ul>
 </td>
 </tr>
@@ -248,7 +251,7 @@
 </tbody>
 </table>
 <p>Provides protection against directory traversal.</p>
-<p>This function is an alias for <code class="docutils literal"><span class="pre">\CodeIgniter\Security::sanitize_filename()</span></code>.
+<p>This function is an alias for <code class="docutils literal notranslate"><span class="pre">\CodeIgniter\Security::sanitize_filename()</span></code>.
 For more info, please see the <a class="reference internal" href="../libraries/security.html"><span class="doc">Security Library</span></a>
 documentation.</p>
 </dd></dl>
@@ -261,7 +264,7 @@ documentation.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
 </ul>
 </td>
 </tr>
@@ -276,7 +279,7 @@ documentation.</p>
 <p>This is a security function that will strip image tags from a string.
 It leaves the image URL as plain text.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">strip_image_tags</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">strip_image_tags</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -289,7 +292,7 @@ It leaves the image URL as plain text.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
 </ul>
 </td>
 </tr>
@@ -303,7 +306,7 @@ It leaves the image URL as plain text.</p>
 </table>
 <p>This is a security function that converts PHP tags to entities.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">encode_php_tags</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">encode_php_tags</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -333,8 +336,8 @@ It leaves the image URL as plain text.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -356,16 +359,17 @@ It leaves the image URL as plain text.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

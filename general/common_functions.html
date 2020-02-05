@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Global Functions and Constants &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Global Functions and Constants &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="General Topics" href="index.html"/>
         <link rel="next" title="Logging Information" href="logging.html"/>
         <link rel="prev" title="Helper Functions" href="helpers.html"/> 
@@ -236,7 +239,7 @@ These do not require loading any additional libraries or helpers.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) &#8211; The cache name of the item to retrieve from cache (Optional)</li>
+<li><strong>$key</strong> (<em>string</em>) – The cache name of the item to retrieve from cache (Optional)</li>
 </ul>
 </td>
 </tr>
@@ -252,7 +255,7 @@ These do not require loading any additional libraries or helpers.</p>
 is provided, will return the value of $key as stored in the cache currently,
 or null if no value is found.</p>
 <p>Examples:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$foo</span> <span class="o">=</span> <span class="nx">cache</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$foo</span> <span class="o">=</span> <span class="nx">cache</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
 <span class="nv">$cache</span> <span class="o">=</span> <span class="nx">cache</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -266,8 +269,8 @@ or null if no value is found.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) &#8211; The name of the environment variable to retrieve</li>
-<li><strong>$default</strong> (<em>mixed</em>) &#8211; The default value to return if no value is found.</li>
+<li><strong>$key</strong> (<em>string</em>) – The name of the environment variable to retrieve</li>
+<li><strong>$default</strong> (<em>mixed</em>) – The default value to return if no value is found.</li>
 </ul>
 </td>
 </tr>
@@ -295,9 +298,9 @@ settings, API keys, etc.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$data</strong> (<em>string|array</em>) &#8211; The information to be escaped.</li>
-<li><strong>$context</strong> (<em>string</em>) &#8211; The escaping context. Default is &#8216;html&#8217;.</li>
-<li><strong>$encoding</strong> (<em>string</em>) &#8211; The character encoding of the string.</li>
+<li><strong>$data</strong> (<em>string|array</em>) – The information to be escaped.</li>
+<li><strong>$context</strong> (<em>string</em>) – The escaping context. Default is ‘html’.</li>
+<li><strong>$encoding</strong> (<em>string</em>) – The character encoding of the string.</li>
 </ul>
 </td>
 </tr>
@@ -310,9 +313,9 @@ settings, API keys, etc.</p>
 </tbody>
 </table>
 <p>Escapes data for inclusion in web pages, to help prevent XSS attacks.
-This uses the Zend Escaper library to handle the actual filtering of the data.</p>
+This uses the Laminas Escaper library to handle the actual filtering of the data.</p>
 <p>If $data is a string, then it simply escapes and returns it.
-If $data is an array, then it loops over it, escaping each &#8216;value&#8217; of the key/value pairs.</p>
+If $data is an array, then it loops over it, escaping each ‘value’ of the key/value pairs.</p>
 <p>Valid context values: html, js, css, url, attr, raw, null</p>
 </dd></dl>
 
@@ -324,7 +327,7 @@ If $data is an array, then it loops over it, escaping each &#8216;value&#8217; o
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$filename</strong> (<em>string|array</em>) &#8211; The name of the helper file to load, or an array of names.</li>
+<li><strong>$filename</strong> (<em>string|array</em>) – The name of the helper file to load, or an array of names.</li>
 </ul>
 </td>
 </tr>
@@ -342,9 +345,9 @@ If $data is an array, then it loops over it, escaping each &#8216;value&#8217; o
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$line</strong> (<em>string</em>) &#8211; The line of text to retrieve</li>
-<li><strong>$args</strong> (<em>array</em>) &#8211; An array of data to substitute for placeholders.</li>
-<li><strong>$locale</strong> (<em>string</em>) &#8211; Specify a different locale to be used instead of default one.</li>
+<li><strong>$line</strong> (<em>string</em>) – The line of text to retrieve</li>
+<li><strong>$args</strong> (<em>array</em>) – An array of data to substitute for placeholders.</li>
+<li><strong>$locale</strong> (<em>string</em>) – Specify a different locale to be used instead of default one.</li>
 </ul>
 </td>
 </tr>
@@ -362,9 +365,9 @@ If $data is an array, then it loops over it, escaping each &#8216;value&#8217; o
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) &#8211; The name of the old form data to check for.</li>
-<li><strong>$default</strong> (<em>mixed</em>) &#8211; The default value to return if $key doesn&#8217;t exist.</li>
-<li><strong>$escape</strong> (<em>mixed</em>) &#8211; An <a class="reference external" href="#esc">escape</a> context or false to disable it.</li>
+<li><strong>$key</strong> (<em>string</em>) – The name of the old form data to check for.</li>
+<li><strong>$default</strong> (<em>mixed</em>) – The default value to return if $key doesn’t exist.</li>
+<li><strong>$escape</strong> (<em>mixed</em>) – An <a class="reference external" href="#esc">escape</a> context or false to disable it.</li>
 </ul>
 </td>
 </tr>
@@ -376,9 +379,9 @@ If $data is an array, then it loops over it, escaping each &#8216;value&#8217; o
 </tr>
 </tbody>
 </table>
-<p>Provides a simple way to access &#8220;old input data&#8221; from submitting a form.</p>
+<p>Provides a simple way to access “old input data” from submitting a form.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// in controller, checking form submittal</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// in controller, checking form submittal</span>
 <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$user</span><span class="p">))</span>
 <span class="p">{</span>
         <span class="c1">// &#39;withInput&#39; is what specifies &quot;old data&quot;</span>
@@ -407,7 +410,7 @@ need to use this function when not using the form helper.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) &#8211; The name of the session item to check for.</li>
+<li><strong>$key</strong> (<em>string</em>) – The name of the session item to check for.</li>
 </ul>
 </td>
 </tr>
@@ -431,7 +434,7 @@ stored value. For more information, see the <a class="reference internal" href="
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) &#8211; The name of the benchmark point.</li>
+<li><strong>$name</strong> (<em>string</em>) – The name of the benchmark point.</li>
 </ul>
 </td>
 </tr>
@@ -447,7 +450,7 @@ stored value. For more information, see the <a class="reference internal" href="
 of a benchmark point as the only parameter. This will start timing from this point, or stop
 timing if a timer with this name is already running.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Get an instance</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// Get an instance</span>
 <span class="nv">$timer</span> <span class="o">=</span> <span class="nx">timer</span><span class="p">();</span>
 
 <span class="c1">// Set timer start and stop points</span>
@@ -466,9 +469,9 @@ timing if a timer with this name is already running.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) &#8211; The name of the file to load</li>
-<li><strong>$data</strong> (<em>array</em>) &#8211; An array of key/value pairs to make available within the view.</li>
-<li><strong>$options</strong> (<em>array</em>) &#8211; An array of options that will be passed to the rendering class.</li>
+<li><strong>$name</strong> (<em>string</em>) – The name of the file to load</li>
+<li><strong>$data</strong> (<em>array</em>) – An array of key/value pairs to make available within the view.</li>
+<li><strong>$options</strong> (<em>array</em>) – An array of options that will be passed to the rendering class.</li>
 </ul>
 </td>
 </tr>
@@ -490,7 +493,7 @@ data for that view is forgotten after displaying that single view file.</p>
 <p>The $option array is provided primarily to facilitate third-party integrations with
 libraries like Twig.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;user&#39;</span> <span class="o">=&gt;</span> <span class="nv">$user</span><span class="p">];</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;user&#39;</span> <span class="o">=&gt;</span> <span class="nv">$user</span><span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;user_profile&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 </pre></div>
@@ -564,7 +567,7 @@ libraries like Twig.</p>
 </table>
 <p>Returns a hidden input with the CSRF information already inserted:</p>
 <blockquote>
-<div>&lt;input type=&#8221;hidden&#8221; name=&#8221;{csrf_token}&#8221; value=&#8221;{csrf_hash}&#8221;&gt;</div></blockquote>
+<div>&lt;input type=”hidden” name=”{csrf_token}” value=”{csrf_hash}”&gt;</div></blockquote>
 </dd></dl>
 
 <dl class="function">
@@ -582,7 +585,7 @@ libraries like Twig.</p>
 </table>
 <p>Returns a meta tag with the CSRF information already inserted:</p>
 <blockquote>
-<div>&lt;meta name=&#8221;{csrf_header}&#8221; content=&#8221;{csrf_hash}&#8221;&gt;</div></blockquote>
+<div>&lt;meta name=”{csrf_header}” content=”{csrf_hash}”&gt;</div></blockquote>
 </dd></dl>
 
 <dl class="function">
@@ -593,9 +596,9 @@ libraries like Twig.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$duration</strong> (<em>int</em>) &#8211; The number of seconds browsers should convert links to this resource to HTTPS.</li>
-<li><strong>$request</strong> (<em>RequestInterface</em>) &#8211; An instance of the current Request object.</li>
-<li><strong>$response</strong> (<em>ResponseInterface</em>) &#8211; An instance of the current Response object.</li>
+<li><strong>$duration</strong> (<em>int</em>) – The number of seconds browsers should convert links to this resource to HTTPS.</li>
+<li><strong>$request</strong> (<em>RequestInterface</em>) – An instance of the current Request object.</li>
+<li><strong>$response</strong> (<em>ResponseInterface</em>) – An instance of the current Response object.</li>
 </ul>
 </td>
 </tr>
@@ -630,9 +633,9 @@ modern browsers to automatically modify any HTTP requests to HTTPS requests for 
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$level</strong> (<em>string</em>) &#8211; The level of severity</li>
-<li><strong>$message</strong> (<em>string</em>) &#8211; The message that is to be logged.</li>
-<li><strong>$context</strong> (<em>array</em>) &#8211; An associative array of tags and their values that should be replaced in $message</li>
+<li><strong>$level</strong> (<em>string</em>) – The level of severity</li>
+<li><strong>$message</strong> (<em>string</em>) – The message that is to be logged.</li>
+<li><strong>$context</strong> (<em>array</em>) – An associative array of tags and their values that should be replaced in $message</li>
 </ul>
 </td>
 </tr>
@@ -659,14 +662,14 @@ modern browsers to automatically modify any HTTP requests to HTTPS requests for 
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$uri</strong> (<em>string</em>) &#8211; The URI to redirect the user to.</li>
+<li><strong>$uri</strong> (<em>string</em>) – The URI to redirect the user to.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 <p>Returns a RedirectResponse instance allowing you to easily create redirects:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Go back to the previous page</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go back to the previous page</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">();</span>
 
 <span class="c1">// Go to specific UI</span>
@@ -684,7 +687,7 @@ modern browsers to automatically modify any HTTP requests to HTTPS requests for 
 </div>
 <p>When passing a URI into the function, it is treated as a reverse-route request, not a relative/full URI, treating
 it the same as using redirect()-&gt;route():</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Go to a named/reverse-routed URI</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go to a named/reverse-routed URI</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;named_route&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -698,8 +701,8 @@ it the same as using redirect()-&gt;route():</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
-<li><strong>$urlEncoded</strong> (<em>bool</em>) &#8211; Whether to remove URL-encoded characters as well</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
+<li><strong>$urlEncoded</strong> (<em>bool</em>) – Whether to remove URL-encoded characters as well</li>
 </ul>
 </td>
 </tr>
@@ -714,7 +717,7 @@ it the same as using redirect()-&gt;route():</p>
 <p>This function prevents inserting NULL characters between ASCII
 characters, like Java\0script.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">remove_invisible_characters</span><span class="p">(</span><span class="s1">&#39;Java\\0script&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">remove_invisible_characters</span><span class="p">(</span><span class="s1">&#39;Java\\0script&#39;</span><span class="p">);</span>
 <span class="c1">// Returns: &#39;Javascript&#39;</span>
 </pre></div>
 </div>
@@ -728,8 +731,8 @@ characters, like Java\0script.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$method</strong> (<em>string</em>) &#8211; The named route alias, or name of the controller/method to match.</li>
-<li><strong>$params</strong> (<em>mixed</em>) &#8211; One or more parameters to be passed to be matched in the route.</li>
+<li><strong>$method</strong> (<em>string</em>) – The named route alias, or name of the controller/method to match.</li>
+<li><strong>$params</strong> (<em>mixed</em>) – One or more parameters to be passed to be matched in the route.</li>
 </ul>
 </td>
 </tr>
@@ -748,8 +751,8 @@ combination. Will take parameters into effect, if provided.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) &#8211; The name of the service to load</li>
-<li><strong>$params</strong> (<em>mixed</em>) &#8211; One or more parameters to pass to the service method.</li>
+<li><strong>$name</strong> (<em>string</em>) – The name of the service to load</li>
+<li><strong>$params</strong> (<em>mixed</em>) – One or more parameters to pass to the service method.</li>
 </ul>
 </td>
 </tr>
@@ -765,7 +768,7 @@ combination. Will take parameters into effect, if provided.</p>
 This will always return a shared instance of the class, so no matter how many times this is called
 during a single request, only one class instance will be created.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$logger</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$logger</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">);</span>
 <span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;renderer&#39;</span><span class="p">,</span> <span class="nx">APPPATH</span><span class="o">.</span><span class="s1">&#39;views/&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -779,8 +782,8 @@ during a single request, only one class instance will be created.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) &#8211; The name of the service to load</li>
-<li><strong>$params</strong> (<em>mixed</em>) &#8211; One or more parameters to pass to the service method.</li>
+<li><strong>$name</strong> (<em>string</em>) – The name of the service to load</li>
+<li><strong>$params</strong> (<em>mixed</em>) – One or more parameters to pass to the service method.</li>
 </ul>
 </td>
 </tr>
@@ -805,8 +808,8 @@ instance every time.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$attributes</strong> (<em>mixed</em>) &#8211; string, array of key value pairs, or object</li>
-<li><strong>$js</strong> (<em>boolean</em>) &#8211; TRUE if values do not need quotes (Javascript-style)</li>
+<li><strong>$attributes</strong> (<em>mixed</em>) – string, array of key value pairs, or object</li>
+<li><strong>$js</strong> (<em>boolean</em>) – TRUE if values do not need quotes (Javascript-style)</li>
 </ul>
 </td>
 </tr>
@@ -837,7 +840,7 @@ instance every time.</p>
 <dl class="const">
 <dt id="ROOTPATH">
 <em class="property">constant </em><code class="descname">ROOTPATH</code><a class="headerlink" href="#ROOTPATH" title="Permalink to this definition">¶</a></dt>
-<dd><p>The path to the project root directory. Just above <code class="docutils literal"><span class="pre">APPPATH</span></code>.</p>
+<dd><p>The path to the project root directory. Just above <code class="docutils literal notranslate"><span class="pre">APPPATH</span></code>.</p>
 </dd></dl>
 
 <dl class="const">
@@ -935,8 +938,8 @@ instance every time.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -958,16 +961,17 @@ instance every time.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>View Cells &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>View Cells &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Building Responses" href="index.html"/>
         <link rel="next" title="View Renderer" href="view_renderer.html"/>
         <link rel="prev" title="Views" href="views.html"/> 
@@ -212,16 +215,16 @@
 class and method, which must return a string of valid HTML. This method could be in any callable method, found in any class
 that the autoloader can locate. The only restriction is that the class can not have any constructor parameters.
 This is intended to be used within views, and is a great aid to modularizing your code.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;\App\Libraries\Blog::recentPosts&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;\App\Libraries\Blog::recentPosts&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>In this example, the class <code class="docutils literal"><span class="pre">App\Libraries\Blog</span></code> is loaded, and the method <code class="docutils literal"><span class="pre">recentPosts()</span></code> is run. The method
+<p>In this example, the class <code class="docutils literal notranslate"><span class="pre">App\Libraries\Blog</span></code> is loaded, and the method <code class="docutils literal notranslate"><span class="pre">recentPosts()</span></code> is run. The method
 must return the generated HTML as a string. The method can be either a static method or not. Either way works.</p>
 <div class="section" id="cell-parameters">
 <h2>Cell Parameters<a class="headerlink" href="#cell-parameters" title="Permalink to this headline">¶</a></h2>
 <p>You can further refine the call by passing a list of parameters in the second parameter to the method. The values passed
 can be an array of key/value pairs, or a comma-separated string of key/value pairs:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Passing Parameter Array</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// Passing Parameter Array</span>
 <span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;\App\Libraries\Blog::recentPosts&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;category&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;codeigniter&#39;</span><span class="p">,</span> <span class="s1">&#39;limit&#39;</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">])</span> <span class="cp">?&gt;</span>
 
 // Passing Parameter String
@@ -240,7 +243,7 @@ public function recentPosts(array $params=[])
 </div>
 <p>Additionally, you can use parameter names that match the parameter variables in the method for better readability.
 When you use it this way, all of the parameters must always be specified in the view cell call:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;\App\Libraries\Blog::recentPosts&#39;</span><span class="p">,</span> <span class="s1">&#39;category=codeigniter, limit=5&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;\App\Libraries\Blog::recentPosts&#39;</span><span class="p">,</span> <span class="s1">&#39;category=codeigniter, limit=5&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
 public function recentPosts(int $limit, string $category)
 {
@@ -258,13 +261,13 @@ public function recentPosts(int $limit, string $category)
 <h2>Cell Caching<a class="headerlink" href="#cell-caching" title="Permalink to this headline">¶</a></h2>
 <p>You can cache the results of the view cell call by passing the number of seconds to cache the data for as the
 third parameter. This will use the currently configured cache engine.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Cache the view for 5 minutes</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// Cache the view for 5 minutes</span>
 <span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;\App\Libraries\Blog::recentPosts&#39;</span><span class="p">,</span> <span class="s1">&#39;limit=5&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <p>You can provide a custom name to use instead of the auto-generated one if you like, by passing the new name
 as the fourth parameter:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Cache the view for 5 minutes</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// Cache the view for 5 minutes</span>
 <span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;\App\Libraries\Blog::recentPosts&#39;</span><span class="p">,</span> <span class="s1">&#39;limit=5&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="s1">&#39;newcacheid&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
@@ -293,8 +296,8 @@ as the fourth parameter:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -316,16 +319,17 @@ as the fourth parameter:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

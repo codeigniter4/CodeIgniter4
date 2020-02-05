@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>HTTP Method Spoofing &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>HTTP Method Spoofing &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Controllers and Routing" href="index.html"/>
         <link rel="next" title="RESTful Resource Handling" href="restful.html"/>
         <link rel="prev" title="Content Negotiation" href="content_negotiation.html"/> 
@@ -209,11 +212,11 @@
 <h1>HTTP Method Spoofing<a class="headerlink" href="#http-method-spoofing" title="Permalink to this headline">¶</a></h1>
 <p>When working with HTML forms you can only use GET or POST HTTP verbs. In most cases, this is just fine. However, to
 support REST-ful routing you need to support other, more correct, verbs, like DELETE or PUT. Since the browsers
-don&#8217;t support this, CodeIgniter provides you with a way to spoof the method that is being used. This allows you to
+don’t support this, CodeIgniter provides you with a way to spoof the method that is being used. This allows you to
 make a POST request, but tell the application that it should be treated as a different request type.</p>
-<p>To spoof the method, a hidden input is added to the form with the name of <code class="docutils literal"><span class="pre">_method</span></code>. It&#8217;s value is the HTTP verb
+<p>To spoof the method, a hidden input is added to the form with the name of <code class="docutils literal notranslate"><span class="pre">_method</span></code>. It’s value is the HTTP verb
 that you want the request to be:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span><span class="o">&gt;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;_method&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;PUT&quot;</span> <span class="o">/&gt;</span>
 
 <span class="o">&lt;/</span><span class="nx">form</span><span class="o">&gt;</span>
@@ -224,7 +227,7 @@ class are concerned.</p>
 <p>The form that you are using must be a POST request. GET requests cannot be spoofed.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Be sure to check your web server&#8217;s configuration as some servers do not support all HTTP verbs
+<p class="last">Be sure to check your web server’s configuration as some servers do not support all HTTP verbs
 with the default configuration, and must have additional packages enabled to work.</p>
 </div>
 </div>
@@ -251,8 +254,8 @@ with the default configuration, and must have additional packages enabled to wor
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -274,16 +277,17 @@ with the default configuration, and must have additional packages enabled to wor
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

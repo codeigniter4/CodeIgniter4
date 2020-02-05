@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>URL Helper &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>URL Helper &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Helpers" href="index.html"/>
         <link rel="next" title="XML Helper" href="xml_helper.html"/>
         <link rel="prev" title="Text Helper" href="text_helper.html"/> 
@@ -232,9 +235,9 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$uri</strong> (<em>mixed</em>) &#8211; URI string or array of URI segments</li>
-<li><strong>$protocol</strong> (<em>string</em>) &#8211; Protocol, e.g. &#8216;http&#8217; or &#8216;https&#8217;</li>
-<li><strong>$altConfig</strong> (<em>\Config\App</em>) &#8211; Alternate configuration to use</li>
+<li><strong>$uri</strong> (<em>mixed</em>) – URI string or array of URI segments</li>
+<li><strong>$protocol</strong> (<em>string</em>) – Protocol, e.g. ‘http’ or ‘https’</li>
+<li><strong>$altConfig</strong> (<em>\Config\App</em>) – Alternate configuration to use</li>
 </ul>
 </td>
 </tr>
@@ -255,13 +258,13 @@ local URL so that your pages become more portable in the event your URL
 changes.</p>
 <p>Segments can be optionally passed to the function as a string or an
 array. Here is a string example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">site_url</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">site_url</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above example would return something like:
 <em>http://example.com/index.php/news/local/123</em></p>
 <p>Here is an example of segments passed as an array:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$segments</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;123&#39;</span><span class="p">];</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$segments</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;123&#39;</span><span class="p">];</span>
 <span class="k">echo</span> <span class="nx">site_url</span><span class="p">(</span><span class="nv">$segments</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -278,8 +281,8 @@ We use this for unit testing the framework itself.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$uri</strong> (<em>mixed</em>) &#8211; URI string or array of URI segments</li>
-<li><strong>$protocol</strong> (<em>string</em>) &#8211; Protocol, e.g. &#8216;http&#8217; or &#8216;https&#8217;</li>
+<li><strong>$uri</strong> (<em>mixed</em>) – URI string or array of URI segments</li>
+<li><strong>$protocol</strong> (<em>string</em>) – Protocol, e.g. ‘http’ or ‘https’</li>
 </ul>
 </td>
 </tr>
@@ -292,21 +295,21 @@ We use this for unit testing the framework itself.</p>
 </tbody>
 </table>
 <p>Returns your site base URL, as specified in your config file. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">base_url</span><span class="p">();</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">base_url</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>This function returns the same thing as <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal"><span class="pre">site_url()</span></code></a>, without
+<p>This function returns the same thing as <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, without
 the <em>indexPage</em> being appended.</p>
-<p>Also like <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal"><span class="pre">site_url()</span></code></a>, you can supply segments as a string or
+<p>Also like <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, you can supply segments as a string or
 an array. Here is a string example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s2">&quot;blog/post/123&quot;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s2">&quot;blog/post/123&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above example would return something like:
 <em>http://example.com/blog/post/123</em></p>
-<p>This is useful because unlike <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal"><span class="pre">site_url()</span></code></a>, you can supply a
+<p>This is useful because unlike <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, you can supply a
 string to a file, such as an image or stylesheet. For example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s2">&quot;images/icons/edit.png&quot;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s2">&quot;images/icons/edit.png&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This would give you something like:
@@ -321,7 +324,7 @@ string to a file, such as an image or stylesheet. For example:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$returnObject</strong> (<em>boolean</em>) &#8211; True if you would like a URI instance returned, instead of a string.</li>
+<li><strong>$returnObject</strong> (<em>boolean</em>) – True if you would like a URI instance returned, instead of a string.</li>
 </ul>
 </td>
 </tr>
@@ -350,7 +353,7 @@ base_url(uri_string());</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$returnObject</strong> (<em>boolean</em>) &#8211; True if you would like a URI instance returned instead of a string.</li>
+<li><strong>$returnObject</strong> (<em>boolean</em>) – True if you would like a URI instance returned instead of a string.</li>
 </ul>
 </td>
 </tr>
@@ -364,8 +367,8 @@ base_url(uri_string());</p>
 </table>
 <p>Returns the full URL (including segments) of the page the user was previously on.</p>
 <p>Due to security issues of blindly trusting the HTTP_REFERER system variable, CodeIgniter will
-store previously visited pages in the session if it&#8217;s available. This ensures that we always
-use a known and trusted source. If the session hasn&#8217;t been loaded, or is otherwise unavailable,
+store previously visited pages in the session if it’s available. This ensures that we always
+use a known and trusted source. If the session hasn’t been loaded, or is otherwise unavailable,
 then a sanitized version of HTTP_REFERER will be used.</p>
 </dd></dl>
 
@@ -384,11 +387,11 @@ then a sanitized version of HTTP_REFERER will be used.</p>
 </table>
 <p>Returns the path part of your current URL.
 For example, if your URL was this:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">some</span><span class="o">-</span><span class="nx">site</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">blog</span><span class="o">/</span><span class="nx">comments</span><span class="o">/</span><span class="mi">123</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">some</span><span class="o">-</span><span class="nx">site</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">blog</span><span class="o">/</span><span class="nx">comments</span><span class="o">/</span><span class="mi">123</span>
 </pre></div>
 </div>
 <p>The function would return:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">blog</span><span class="o">/</span><span class="nx">comments</span><span class="o">/</span><span class="mi">123</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">blog</span><span class="o">/</span><span class="nx">comments</span><span class="o">/</span><span class="mi">123</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -401,11 +404,11 @@ For example, if your URL was this:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$altConfig</strong> (<em>ConfigApp</em>) &#8211; Alternate configuration to use</li>
+<li><strong>$altConfig</strong> (<em>ConfigApp</em>) – Alternate configuration to use</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">&#8216;index_page&#8217; value</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">‘index_page’ value</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
@@ -415,10 +418,10 @@ For example, if your URL was this:</p>
 </table>
 <p>Returns your site <strong>indexPage</strong>, as specified in your config file.
 Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">index_page</span><span class="p">();</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">index_page</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>As with <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal"><span class="pre">site_url()</span></code></a>, you may specify an alternate configuration.
+<p>As with <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, you may specify an alternate configuration.
 You may find the alternate configuration useful if generating URLs for a
 different site than yours, which contains different configuration preferences.
 We use this for unit testing the framework itself.</p>
@@ -432,10 +435,10 @@ We use this for unit testing the framework itself.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$uri</strong> (<em>mixed</em>) &#8211; URI string or array of URI segments</li>
-<li><strong>$title</strong> (<em>string</em>) &#8211; Anchor title</li>
-<li><strong>$attributes</strong> (<em>mixed</em>) &#8211; HTML attributes</li>
-<li><strong>$altConfig</strong> (<em>ConfigApp</em>) &#8211; Alternate configuration to use</li>
+<li><strong>$uri</strong> (<em>mixed</em>) – URI string or array of URI segments</li>
+<li><strong>$title</strong> (<em>string</em>) – Anchor title</li>
+<li><strong>$attributes</strong> (<em>mixed</em>) – HTML attributes</li>
+<li><strong>$altConfig</strong> (<em>ConfigApp</em>) – Alternate configuration to use</li>
 </ul>
 </td>
 </tr>
@@ -449,12 +452,12 @@ We use this for unit testing the framework itself.</p>
 </table>
 <p>Creates a standard HTML anchor link based on your local site URL.</p>
 <p>The first parameter can contain any segments you wish appended to the
-URL. As with the <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal"><span class="pre">site_url()</span></code></a> function above, segments can
+URL. As with the <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a> function above, segments can
 be a string or an array.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If you are building links that are internal to your application
-do not include the base URL (<a class="reference external" href="http://">http://</a>...). This will be added
+do not include the base URL (<a class="reference external" href="http://">http://</a>…). This will be added
 automatically from the information specified in your config file.
 Include only the URI segments you wish appended to the URL.</p>
 </div>
@@ -464,7 +467,7 @@ leave it blank, the URL will be used.</p>
 added to the link. The attributes can be a simple string or an
 associative array.</p>
 <p>Here are some examples:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;My News&#39;</span><span class="p">,</span> <span class="s1">&#39;title=&quot;News title&quot;&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;My News&#39;</span><span class="p">,</span> <span class="s1">&#39;title=&quot;News title&quot;&#39;</span><span class="p">);</span>
 <span class="c1">// Prints: &lt;a href=&quot;http://example.com/index.php/news/local/123&quot; title=&quot;News title&quot;&gt;My News&lt;/a&gt;</span>
 
 <span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;My News&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The best news!&#39;</span><span class="p">]);</span>
@@ -492,10 +495,10 @@ We use this for unit testing the framework itself.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$uri</strong> (<em>string</em>) &#8211; URI string</li>
-<li><strong>$title</strong> (<em>string</em>) &#8211; Anchor title</li>
-<li><strong>$attributes</strong> (<em>mixed</em>) &#8211; HTML attributes</li>
-<li><strong>$altConfig</strong> (<em>ConfigApp</em>) &#8211; Alternate configuration to use</li>
+<li><strong>$uri</strong> (<em>string</em>) – URI string</li>
+<li><strong>$title</strong> (<em>string</em>) – Anchor title</li>
+<li><strong>$attributes</strong> (<em>mixed</em>) – HTML attributes</li>
+<li><strong>$altConfig</strong> (<em>ConfigApp</em>) – Alternate configuration to use</li>
 </ul>
 </td>
 </tr>
@@ -507,13 +510,13 @@ We use this for unit testing the framework itself.</p>
 </tr>
 </tbody>
 </table>
-<p>Nearly identical to the <a class="reference internal" href="#anchor" title="anchor"><code class="xref php php-func docutils literal"><span class="pre">anchor()</span></code></a> function except that it
+<p>Nearly identical to the <a class="reference internal" href="#anchor" title="anchor"><code class="xref php php-func docutils literal notranslate"><span class="pre">anchor()</span></code></a> function except that it
 opens the URL in a new window. You can specify JavaScript window
 attributes in the third parameter to control how the window is opened.
 If the third parameter is not set it will simply open a new window with
 your own browser settings.</p>
 <p>Here is an example with attributes:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$atts</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$atts</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;width&#39;</span>       <span class="o">=&gt;</span> <span class="mi">800</span><span class="p">,</span>
         <span class="s1">&#39;height&#39;</span>      <span class="o">=&gt;</span> <span class="mi">600</span><span class="p">,</span>
         <span class="s1">&#39;scrollbars&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span>
@@ -533,7 +536,7 @@ your own browser settings.</p>
 set the ones that are different from what you need. If you want the
 function to use all of its defaults simply pass an empty array in the
 third parameter:</p>
-<div class="last highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">anchor_popup</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Me!&#39;</span><span class="p">,</span> <span class="p">[]);</span>
+<div class="last highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">anchor_popup</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Me!&#39;</span><span class="p">,</span> <span class="p">[]);</span>
 </pre></div>
 </div>
 </div>
@@ -566,13 +569,13 @@ We use this for unit testing the framework itself.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$email</strong> (<em>string</em>) &#8211; E-mail address</li>
-<li><strong>$title</strong> (<em>string</em>) &#8211; Anchor title</li>
-<li><strong>$attributes</strong> (<em>mixed</em>) &#8211; HTML attributes</li>
+<li><strong>$email</strong> (<em>string</em>) – E-mail address</li>
+<li><strong>$title</strong> (<em>string</em>) – Anchor title</li>
+<li><strong>$attributes</strong> (<em>mixed</em>) – HTML attributes</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A &#8220;mail to&#8221; hyperlink</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A “mail to” hyperlink</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
@@ -581,12 +584,12 @@ We use this for unit testing the framework itself.</p>
 </tbody>
 </table>
 <p>Creates a standard HTML e-mail link. Usage example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">mailto</span><span class="p">(</span><span class="s1">&#39;me@my-site.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Here to Contact Me&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">mailto</span><span class="p">(</span><span class="s1">&#39;me@my-site.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Here to Contact Me&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>As with the <a class="reference internal" href="#anchor" title="anchor"><code class="xref php php-func docutils literal"><span class="pre">anchor()</span></code></a> tab above, you can set attributes using the
+<p>As with the <a class="reference internal" href="#anchor" title="anchor"><code class="xref php php-func docutils literal notranslate"><span class="pre">anchor()</span></code></a> tab above, you can set attributes using the
 third parameter:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mail me&#39;</span><span class="p">];</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mail me&#39;</span><span class="p">];</span>
 <span class="k">echo</span> <span class="nx">mailto</span><span class="p">(</span><span class="s1">&#39;me@my-site.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Contact Me&#39;</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -604,13 +607,13 @@ third parameter:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$email</strong> (<em>string</em>) &#8211; E-mail address</li>
-<li><strong>$title</strong> (<em>string</em>) &#8211; Anchor title</li>
-<li><strong>$attributes</strong> (<em>mixed</em>) &#8211; HTML attributes</li>
+<li><strong>$email</strong> (<em>string</em>) – E-mail address</li>
+<li><strong>$title</strong> (<em>string</em>) – Anchor title</li>
+<li><strong>$attributes</strong> (<em>mixed</em>) – HTML attributes</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A spam-safe &#8220;mail to&#8221; hyperlink</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A spam-safe “mail to” hyperlink</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
@@ -618,7 +621,7 @@ third parameter:</p>
 </tr>
 </tbody>
 </table>
-<p>Identical to the <a class="reference internal" href="#mailto" title="mailto"><code class="xref php php-func docutils literal"><span class="pre">mailto()</span></code></a> function except it writes an obfuscated
+<p>Identical to the <a class="reference internal" href="#mailto" title="mailto"><code class="xref php php-func docutils literal notranslate"><span class="pre">mailto()</span></code></a> function except it writes an obfuscated
 version of the <em>mailto</em> tag using ordinal numbers written with JavaScript to
 help prevent the e-mail address from being harvested by spam bots.</p>
 </dd></dl>
@@ -631,9 +634,9 @@ help prevent the e-mail address from being harvested by spam bots.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
-<li><strong>$type</strong> (<em>string</em>) &#8211; Link type (&#8216;email&#8217;, &#8216;url&#8217; or &#8216;both&#8217;)</li>
-<li><strong>$popup</strong> (<em>bool</em>) &#8211; Whether to create popup links</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
+<li><strong>$type</strong> (<em>string</em>) – Link type (‘email’, ‘url’ or ‘both’)</li>
+<li><strong>$popup</strong> (<em>bool</em>) – Whether to create popup links</li>
 </ul>
 </td>
 </tr>
@@ -647,29 +650,29 @@ help prevent the e-mail address from being harvested by spam bots.</p>
 </table>
 <p>Automatically turns URLs and e-mail addresses contained in a string into
 links. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The second parameter determines whether URLs and e-mails are converted or
 just one or the other. The default behavior is both if the parameter is not
-specified. E-mail links are encoded as <a class="reference internal" href="#safe_mailto" title="safe_mailto"><code class="xref php php-func docutils literal"><span class="pre">safe_mailto()</span></code></a> as shown
+specified. E-mail links are encoded as <a class="reference internal" href="#safe_mailto" title="safe_mailto"><code class="xref php php-func docutils literal notranslate"><span class="pre">safe_mailto()</span></code></a> as shown
 above.</p>
 <p>Converts only URLs:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Converts only e-mail addresses:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The third parameter determines whether links are shown in a new window.
 The value can be TRUE or FALSE (boolean):</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The only URLs recognized are those that start with &#8220;www.&#8221; or with &#8221;://&#8221;.</p>
+<p class="last">The only URLs recognized are those that start with “www.” or with “://”.</p>
 </div>
 </dd></dl>
 
@@ -681,9 +684,9 @@ The value can be TRUE or FALSE (boolean):</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
-<li><strong>$separator</strong> (<em>string</em>) &#8211; Word separator</li>
-<li><strong>$lowercase</strong> (<em>bool</em>) &#8211; Whether to transform the output string to lower-case</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
+<li><strong>$separator</strong> (<em>string</em>) – Word separator</li>
+<li><strong>$lowercase</strong> (<em>bool</em>) – Whether to transform the output string to lower-case</li>
 </ul>
 </td>
 </tr>
@@ -696,9 +699,9 @@ The value can be TRUE or FALSE (boolean):</p>
 </tbody>
 </table>
 <p>Takes a string as input and creates a human-friendly URL string. This is
-useful if, for example, you have a blog in which you&#8217;d like to use the
+useful if, for example, you have a blog in which you’d like to use the
 title of your entries in the URL. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$title</span>     <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$title</span>     <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
 <span class="nv">$url_title</span> <span class="o">=</span> <span class="nx">url_title</span><span class="p">(</span><span class="nv">$title</span><span class="p">);</span>
 <span class="c1">// Produces: Whats-wrong-with-CSS</span>
 </pre></div>
@@ -706,7 +709,7 @@ title of your entries in the URL. Example:</p>
 <p>The second parameter determines the word delimiter. By default dashes
 are used. Preferred options are: <strong>-</strong> (dash) or <strong>_</strong> (underscore).</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$title</span>     <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$title</span>     <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
 <span class="nv">$url_title</span> <span class="o">=</span> <span class="nx">url_title</span><span class="p">(</span><span class="nv">$title</span><span class="p">,</span> <span class="s1">&#39;underscore&#39;</span><span class="p">);</span>
 <span class="c1">// Produces: Whats_wrong_with_CSS</span>
 </pre></div>
@@ -714,7 +717,7 @@ are used. Preferred options are: <strong>-</strong> (dash) or <strong>_</strong>
 <p>The third parameter determines whether or not lowercase characters are
 forced. By default they are not. Options are boolean TRUE/FALSE.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$title</span>     <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$title</span>     <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
 <span class="nv">$url_title</span> <span class="o">=</span> <span class="nx">url_title</span><span class="p">(</span><span class="nv">$title</span><span class="p">,</span> <span class="s1">&#39;underscore&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
 <span class="c1">// Produces: whats_wrong_with_css</span>
 </pre></div>
@@ -729,7 +732,7 @@ forced. By default they are not. Options are boolean TRUE/FALSE.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; URL string</li>
+<li><strong>$str</strong> (<em>string</em>) – URL string</li>
 </ul>
 </td>
 </tr>
@@ -744,7 +747,7 @@ forced. By default they are not. Options are boolean TRUE/FALSE.</p>
 <p>This function will add <em>http://</em> in the event that a protocol prefix
 is missing from a URL.</p>
 <p>Pass the URL string to the function like this:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$url</span> <span class="o">=</span> <span class="nx">prep_url</span><span class="p">(</span><span class="s1">&#39;example.com&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$url</span> <span class="o">=</span> <span class="nx">prep_url</span><span class="p">(</span><span class="s1">&#39;example.com&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -774,8 +777,8 @@ is missing from a URL.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -797,16 +800,17 @@ is missing from a URL.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

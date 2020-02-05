@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Working With Configuration Files &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Working With Configuration Files &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="General Topics" href="index.html"/>
         <link rel="next" title="CodeIgniter URLs" href="urls.html"/>
         <link rel="prev" title="General Topics" href="index.html"/> 
@@ -229,7 +232,7 @@ create an instance of the class and all your settings are there for you.</p>
 <h2><a class="toc-backref" href="#id2">Accessing Config Files</a><a class="headerlink" href="#accessing-config-files" title="Permalink to this headline">¶</a></h2>
 <p>You can access config files within your classes by creating a new instance or using the config function. All of the properties
 are public, so you access the settings like any other property:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Creating new class by hand</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// Creating new class by hand</span>
 <span class="nv">$config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Config\Pager</span><span class="p">();</span>
 
 <span class="c1">// Creating new class with config function</span>
@@ -247,9 +250,9 @@ are public, so you access the settings like any other property:</p>
 </div>
 <p>If no namespace is provided, it will look for the files in all available namespaces that have
 been defined, as well as <strong>/app/Config/</strong>. All of the configuration files
-that ship with CodeIgniter are namespaced with <code class="docutils literal"><span class="pre">Config</span></code>. Using this namespace in your
+that ship with CodeIgniter are namespaced with <code class="docutils literal notranslate"><span class="pre">Config</span></code>. Using this namespace in your
 application will provide the best performance since it knows exactly what directory to find the
-files in and doesn&#8217;t have to scan several locations in the filesystem to get there.</p>
+files in and doesn’t have to scan several locations in the filesystem to get there.</p>
 <p>You can locate the configuration files any place on your server by using a different namespace.
 This allows you to pull configuration files on the production server to a folder that is not in
 the web-accessible space at all, while keeping it under <strong>/app</strong> for ease of access during development.</p>
@@ -259,7 +262,7 @@ the web-accessible space at all, while keeping it under <strong>/app</strong> fo
 <p>If you need to create a new configuration file you would create a new file at your desired location,
 <strong>/app/Config</strong> by default. Then create the class and fill it with public properties that
 represent your settings:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
 
@@ -271,25 +274,25 @@ represent your settings:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The class should extend <code class="docutils literal"><span class="pre">\CodeIgniter\Config\BaseConfig</span></code> to ensure that it can receive environment-specific
+<p>The class should extend <code class="docutils literal notranslate"><span class="pre">\CodeIgniter\Config\BaseConfig</span></code> to ensure that it can receive environment-specific
 settings.</p>
 </div>
 <div class="section" id="handling-different-environments">
 <h2><a class="toc-backref" href="#id4">Handling Different Environments</a><a class="headerlink" href="#handling-different-environments" title="Permalink to this headline">¶</a></h2>
-<p>Because your site can operate within multiple environments, such as the developer&#8217;s local machine or
+<p>Because your site can operate within multiple environments, such as the developer’s local machine or
 the server used for the production site, you can modify your values based on the environment. Within these
-you will have settings that might change depending on the server it&#8217;s running on. This can include
+you will have settings that might change depending on the server it’s running on. This can include
 database settings, API credentials, and other settings that will vary between deploys.</p>
 <p>You can store values in a <strong>.env</strong> file in the root directory, alongside the system and application directories.
-It is simply a collection of name/value pairs separated by an equal sign, much like a &#8221;.ini&#8221; file:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">S3_BUCKET</span><span class="o">=</span><span class="s2">&quot;dotenv&quot;</span>
+It is simply a collection of name/value pairs separated by an equal sign, much like a “.ini” file:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">S3_BUCKET</span><span class="o">=</span><span class="s2">&quot;dotenv&quot;</span>
 <span class="nx">SECRET_KEY</span><span class="o">=</span><span class="s2">&quot;super_secret_key&quot;</span>
 </pre></div>
 </div>
 <p>If the variable exists in the environment already, it will NOT be overwritten.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p class="last">Make sure the <strong>.env</strong> file is added to <strong>.gitignore</strong> (or your version control system&#8217;s equivalent)
+<p class="last">Make sure the <strong>.env</strong> file is added to <strong>.gitignore</strong> (or your version control system’s equivalent)
 so it is not checked in the code. Failure to do so could result in sensitive credentials being stored in the
 repository for anyone to find.</p>
 </div>
@@ -297,9 +300,9 @@ repository for anyone to find.</p>
 needs with empty or dummy data. In each environment, you can then copy the file to <strong>.env</strong> and fill in the
 appropriate data.</p>
 <p>When your application runs, this file will be automatically loaded and the variables will be put into
-the environment. This will work in any environment. These variables are then available through <code class="docutils literal"><span class="pre">getenv()</span></code>,
-<code class="docutils literal"><span class="pre">$_SERVER</span></code>, and <code class="docutils literal"><span class="pre">$_ENV</span></code>. Of the three, <code class="docutils literal"><span class="pre">getenv()</span></code> function is recommended since it is not case-sensitive:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$s3_bucket</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">);</span>
+the environment. This will work in any environment. These variables are then available through <code class="docutils literal notranslate"><span class="pre">getenv()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code>, and <code class="docutils literal notranslate"><span class="pre">$_ENV</span></code>. Of the three, <code class="docutils literal notranslate"><span class="pre">getenv()</span></code> function is recommended since it is not case-sensitive:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$s3_bucket</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">);</span>
 <span class="nv">$s3_bucket</span> <span class="o">=</span> <span class="nv">$_ENV</span><span class="p">[</span><span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">];</span>
 <span class="nv">$s3_bucket</span> <span class="o">=</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">];</span>
 </pre></div>
@@ -307,15 +310,15 @@ the environment. This will work in any environment. These variables are then ava
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If you are using Apache, then the CI_ENVIRONMENT can be set at the top of
-<code class="docutils literal"><span class="pre">public/.htaccess</span></code>, which comes with a commented line to do that. Change the
+<code class="docutils literal notranslate"><span class="pre">public/.htaccess</span></code>, which comes with a commented line to do that. Change the
 environment setting to the one you want to use, and uncomment that line.</p>
 </div>
 </div>
 <div class="section" id="nesting-variables">
 <h2><a class="toc-backref" href="#id5">Nesting Variables</a><a class="headerlink" href="#nesting-variables" title="Permalink to this headline">¶</a></h2>
-<p>To save on typing, you can reuse variables that you&#8217;ve already specified in the file by wrapping the
-variable name within <code class="docutils literal"><span class="pre">${...}</span></code>:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">BASE_DIR</span><span class="o">=</span><span class="s2">&quot;/var/webroot/project-root&quot;</span>
+<p>To save on typing, you can reuse variables that you’ve already specified in the file by wrapping the
+variable name within <code class="docutils literal notranslate"><span class="pre">${...}</span></code>:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">BASE_DIR</span><span class="o">=</span><span class="s2">&quot;/var/webroot/project-root&quot;</span>
 <span class="nx">CACHE_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASE_DIR</span><span class="si">}</span><span class="s2">/cache&quot;</span>
 <span class="nx">TMP_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASE_DIR</span><span class="si">}</span><span class="s2">/tmp&quot;</span>
 </pre></div>
@@ -325,11 +328,11 @@ variable name within <code class="docutils literal"><span class="pre">${...}</sp
 <h2><a class="toc-backref" href="#id6">Namespaced Variables</a><a class="headerlink" href="#namespaced-variables" title="Permalink to this headline">¶</a></h2>
 <p>There will be times when you will have several variables with the same name. When this happens, the
 system has no way of knowing what the correct value should be. You can protect against this by
-&#8220;namespacing&#8221; the variables.</p>
+“namespacing” the variables.</p>
 <p>Namespaced variables use a dot notation to qualify variable names when those variables
 get incorporated into configuration files. This is done by including a distinguishing
 prefix, followed by a dot (.), and then the variable name itself:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// not namespaced variables</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// not namespaced variables</span>
 <span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;George&quot;</span>
 <span class="nx">db</span><span class="o">=</span><span class="nx">my_db</span>
 
@@ -345,13 +348,13 @@ prefix, followed by a dot (.), and then the variable name itself:</p>
 <div class="section" id="incorporating-environment-variables-into-a-configuration">
 <h2><a class="toc-backref" href="#id7">Incorporating Environment Variables Into a Configuration</a><a class="headerlink" href="#incorporating-environment-variables-into-a-configuration" title="Permalink to this headline">¶</a></h2>
 <p>When you instantiate a configuration file, any namespaced environment variables
-are considered for merging into the configuration objects&#8217; properties.</p>
+are considered for merging into the configuration objects’ properties.</p>
 <p>If the prefix of a namespaced variable matches the configuration class name exactly,
 case-sensitive, then the trailing part of the variable name (after the dot) is
 treated as a configuration property name. If it matches an existing configuration
-property, the environment variable&#8217;s value will override the corresponding one
+property, the environment variable’s value will override the corresponding one
 in the configuration file. If there is no match, the configuration properties are left unchanged.</p>
-<p>The same holds for a &#8220;short prefix&#8221;, which is the name given to the case when the
+<p>The same holds for a “short prefix”, which is the name given to the case when the
 environment variable prefix matches the configuration class name converted to lower case.</p>
 </div>
 <div class="section" id="treating-environment-variables-as-arrays">
@@ -360,7 +363,7 @@ environment variable prefix matches the configuration class name converted to lo
 If the prefix matches the configuration class, then the remainder of the
 environment variable name is treated as an array reference if it also
 contains a dot:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// regular namespaced variable</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// regular namespaced variable</span>
 <span class="nx">SimpleConfig</span><span class="o">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">George</span>
 
 <span class="c1">// array namespaced variables</span>
@@ -369,14 +372,14 @@ contains a dot:</p>
 </pre></div>
 </div>
 <p>If this was referring to a SimpleConfig configuration object, the above example would be treated as:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$address</span><span class="p">[</span><span class="s1">&#39;city&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="s2">&quot;Berlin&quot;</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$address</span><span class="p">[</span><span class="s1">&#39;city&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="s2">&quot;Berlin&quot;</span><span class="p">;</span>
 <span class="nv">$address</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Germany&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Any other elements of the <code class="docutils literal"><span class="pre">$address</span></code> property would be unchanged.</p>
+<p>Any other elements of the <code class="docutils literal notranslate"><span class="pre">$address</span></code> property would be unchanged.</p>
 <p>You can also use the array property name as a prefix. If the environment file
 held instead:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// array namespaced variables</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// array namespaced variables</span>
 <span class="nx">SimpleConfig</span><span class="o">.</span><span class="nx">address</span><span class="o">.</span><span class="nx">city</span> <span class="o">=</span> <span class="s2">&quot;Berlin&quot;</span>
 <span class="nx">address</span><span class="o">.</span><span class="nx">country</span> <span class="o">=</span> <span class="s2">&quot;Germany&quot;</span>
 </pre></div>
@@ -385,24 +388,24 @@ held instead:</p>
 </div>
 <div class="section" id="registrars">
 <span id="id1"></span><h2><a class="toc-backref" href="#id9">Registrars</a><a class="headerlink" href="#registrars" title="Permalink to this headline">¶</a></h2>
-<p>A configuration file can also specify any number of &#8220;registrars&#8221;, which are any
+<p>A configuration file can also specify any number of “registrars”, which are any
 other classes which might provide additional configuration properties.
-This is done by adding a <code class="docutils literal"><span class="pre">registrars</span></code> property to your configuration file,
+This is done by adding a <code class="docutils literal notranslate"><span class="pre">registrars</span></code> property to your configuration file,
 holding an array of the names of candidate registrars.:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="nv">$registrars</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="nv">$registrars</span> <span class="o">=</span> <span class="p">[</span>
     <span class="nx">SupportingPackageRegistrar</span><span class="o">::</span><span class="na">class</span>
 <span class="p">];</span>
 </pre></div>
 </div>
-<p>In order to act as a &#8220;registrar&#8221; the classes so identified must have a
+<p>In order to act as a “registrar” the classes so identified must have a
 static function named the same as the configuration class, and it should return an associative
 array of property settings.</p>
 <p>When your configuration object is instantiated, it will loop over the
-designated classes in <code class="docutils literal"><span class="pre">$registrars</span></code>. For each of these classes, which contains a method name matching
+designated classes in <code class="docutils literal notranslate"><span class="pre">$registrars</span></code>. For each of these classes, which contains a method name matching
 the configuration class, it will invoke that method, and incorporate any returned properties
 the same way as described for namespaced variables.</p>
 <p>A sample configuration class setup for this:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Config</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Config</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
 
@@ -416,8 +419,8 @@ the same way as described for namespaced variables.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>... and the associated regional sales model might look like:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+<p>… and the associated regional sales model might look like:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">RegionalSales</span>
 <span class="p">{</span>
@@ -430,8 +433,8 @@ the same way as described for namespaced variables.</p>
 </div>
 <p>With the above example, when <cite>MySalesConfig</cite> is instantiated, it will end up with
 the two properties declared, but the value of the <cite>$target</cite> property will be over-ridden
-by treating <cite>RegionalSalesModel</cite> as a &#8220;registrar&#8221;. The resulting configuration properties:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$target</span>   <span class="o">=</span> <span class="mi">45</span><span class="p">;</span>
+by treating <cite>RegionalSalesModel</cite> as a “registrar”. The resulting configuration properties:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$target</span>   <span class="o">=</span> <span class="mi">45</span><span class="p">;</span>
 <span class="nv">$campaign</span> <span class="o">=</span> <span class="s2">&quot;Winter Wonderland&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -460,8 +463,8 @@ by treating <cite>RegionalSalesModel</cite> as a &#8220;registrar&#8221;. The re
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -483,16 +486,17 @@ by treating <cite>RegionalSalesModel</cite> as a &#8220;registrar&#8221;. The re
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

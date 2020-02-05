@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Inflector Helper &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Inflector Helper &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Helpers" href="index.html"/>
         <link rel="next" title="Number Helper" href="number_helper.html"/>
         <link rel="prev" title="HTML Helper" href="html_helper.html"/> 
@@ -221,7 +224,7 @@
 <div class="custom-index container"></div><div class="section" id="loading-this-helper">
 <h2><a class="toc-backref" href="#id1">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline">¶</a></h2>
 <p>This helper is loaded using the following code:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;inflector&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;inflector&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -236,7 +239,7 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$string</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$string</strong> (<em>string</em>) – Input string</li>
 </ul>
 </td>
 </tr>
@@ -249,7 +252,7 @@
 </tbody>
 </table>
 <p>Changes a plural word to singular. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">singular</span><span class="p">(</span><span class="s1">&#39;dogs&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;dog&#39;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">singular</span><span class="p">(</span><span class="s1">&#39;dogs&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;dog&#39;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -262,7 +265,7 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$string</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$string</strong> (<em>string</em>) – Input string</li>
 </ul>
 </td>
 </tr>
@@ -275,7 +278,7 @@
 </tbody>
 </table>
 <p>Changes a singular word to plural. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">plural</span><span class="p">(</span><span class="s1">&#39;dog&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;dogs&#39;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">plural</span><span class="p">(</span><span class="s1">&#39;dog&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;dogs&#39;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -288,8 +291,8 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$count</strong> (<em>int</em>) &#8211; Number of items</li>
-<li><strong>$string</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$count</strong> (<em>int</em>) – Number of items</li>
+<li><strong>$string</strong> (<em>string</em>) – Input string</li>
 </ul>
 </td>
 </tr>
@@ -302,7 +305,7 @@
 </tbody>
 </table>
 <p>Changes a word and its count to a phrase. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">counted</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;3 dogs&#39;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">counted</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;3 dogs&#39;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -315,7 +318,7 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$string</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$string</strong> (<em>string</em>) – Input string</li>
 </ul>
 </td>
 </tr>
@@ -329,7 +332,7 @@
 </table>
 <p>Changes a string of words separated by spaces or underscores to camel
 case. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">camelize</span><span class="p">(</span><span class="s1">&#39;my_dog_spot&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;myDogSpot&#39;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">camelize</span><span class="p">(</span><span class="s1">&#39;my_dog_spot&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;myDogSpot&#39;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -342,7 +345,7 @@ case. Example:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$string</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$string</strong> (<em>string</em>) – Input string</li>
 </ul>
 </td>
 </tr>
@@ -356,7 +359,7 @@ case. Example:</p>
 </table>
 <p>Changes a string of words separated by spaces or underscores to Pascal
 case, which is camel case with the first letter capitalized. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">pascalize</span><span class="p">(</span><span class="s1">&#39;my_dog_spot&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;MyDogSpot&#39;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">pascalize</span><span class="p">(</span><span class="s1">&#39;my_dog_spot&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;MyDogSpot&#39;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -369,7 +372,7 @@ case, which is camel case with the first letter capitalized. Example:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$string</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$string</strong> (<em>string</em>) – Input string</li>
 </ul>
 </td>
 </tr>
@@ -383,7 +386,7 @@ case, which is camel case with the first letter capitalized. Example:</p>
 </table>
 <p>Takes multiple words separated by spaces and underscores them.
 Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">underscore</span><span class="p">(</span><span class="s1">&#39;my dog spot&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;my_dog_spot&#39;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">underscore</span><span class="p">(</span><span class="s1">&#39;my dog spot&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;my_dog_spot&#39;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -396,8 +399,8 @@ Example:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$string</strong> (<em>string</em>) &#8211; Input string</li>
-<li><strong>$separator</strong> (<em>string</em>) &#8211; Input separator</li>
+<li><strong>$string</strong> (<em>string</em>) – Input string</li>
+<li><strong>$separator</strong> (<em>string</em>) – Input separator</li>
 </ul>
 </td>
 </tr>
@@ -412,11 +415,11 @@ Example:</p>
 <p>Takes multiple words separated by underscores and adds spaces between
 them. Each word is capitalized.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">humanize</span><span class="p">(</span><span class="s1">&#39;my_dog_spot&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;My Dog Spot&#39;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">humanize</span><span class="p">(</span><span class="s1">&#39;my_dog_spot&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;My Dog Spot&#39;</span>
 </pre></div>
 </div>
 <p>To use dashes instead of underscores:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">humanize</span><span class="p">(</span><span class="s1">&#39;my-dog-spot&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;My Dog Spot&#39;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">humanize</span><span class="p">(</span><span class="s1">&#39;my-dog-spot&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;My Dog Spot&#39;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -429,7 +432,7 @@ them. Each word is capitalized.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$word</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$word</strong> (<em>string</em>) – Input string</li>
 </ul>
 </td>
 </tr>
@@ -442,7 +445,7 @@ them. Each word is capitalized.</p>
 </tbody>
 </table>
 <p>Checks if the given word has a plural version. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">is_pluralizable</span><span class="p">(</span><span class="s1">&#39;equipment&#39;</span><span class="p">);</span> <span class="c1">// Returns FALSE</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">is_pluralizable</span><span class="p">(</span><span class="s1">&#39;equipment&#39;</span><span class="p">);</span> <span class="c1">// Returns FALSE</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -455,7 +458,7 @@ them. Each word is capitalized.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$string</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$string</strong> (<em>string</em>) – Input string</li>
 </ul>
 </td>
 </tr>
@@ -468,7 +471,7 @@ them. Each word is capitalized.</p>
 </tbody>
 </table>
 <p>Replaces underscores with dashes in the string. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">dasherize</span><span class="p">(</span><span class="s1">&#39;hello_world&#39;</span><span class="p">);</span> <span class="c1">// Returns &#39;hello-world&#39;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">dasherize</span><span class="p">(</span><span class="s1">&#39;hello_world&#39;</span><span class="p">);</span> <span class="c1">// Returns &#39;hello-world&#39;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -481,7 +484,7 @@ them. Each word is capitalized.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$integer</strong> (<em>int</em>) &#8211; The integer to determine the suffix</li>
+<li><strong>$integer</strong> (<em>int</em>) – The integer to determine the suffix</li>
 </ul>
 </td>
 </tr>
@@ -496,7 +499,7 @@ them. Each word is capitalized.</p>
 <p>Returns the suffix that should be added to a
 number to denote the position such as
 1st, 2nd, 3rd, 4th. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">ordinal</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// Returns &#39;st&#39;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">ordinal</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// Returns &#39;st&#39;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -509,7 +512,7 @@ number to denote the position such as
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$integer</strong> (<em>int</em>) &#8211; The integer to ordinalize</li>
+<li><strong>$integer</strong> (<em>int</em>) – The integer to ordinalize</li>
 </ul>
 </td>
 </tr>
@@ -524,7 +527,7 @@ number to denote the position such as
 <p>Turns a number into an ordinal string used
 to denote the position such as 1st, 2nd, 3rd, 4th.
 Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">ordinalize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// Returns &#39;1st&#39;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">ordinalize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// Returns &#39;1st&#39;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -554,8 +557,8 @@ Example:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -577,16 +580,17 @@ Example:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

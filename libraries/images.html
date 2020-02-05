@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Image Manipulation Class &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Image Manipulation Class &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Library Reference" href="index.html"/>
         <link rel="next" title="Pagination" href="pagination.html"/>
         <link rel="prev" title="Honeypot Class" href="honeypot.html"/> 
@@ -215,7 +218,7 @@
             
   <div class="section" id="image-manipulation-class">
 <h1>Image Manipulation Class<a class="headerlink" href="#image-manipulation-class" title="Permalink to this headline">¶</a></h1>
-<p>CodeIgniter&#8217;s Image Manipulation class lets you perform the following
+<p>CodeIgniter’s Image Manipulation class lets you perform the following
 actions:</p>
 <ul class="simple">
 <li>Image Resizing</li>
@@ -239,12 +242,12 @@ actions:</p>
 <h2><a class="toc-backref" href="#id1">Initializing the Class</a><a class="headerlink" href="#initializing-the-class" title="Permalink to this headline">¶</a></h2>
 <p>Like most other classes in CodeIgniter, the image class is initialized
 in your controller by calling the Services class:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">();</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>You can pass the alias for the image library you wish to use into the
 Service function:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The available Handlers are as follows:</p>
@@ -258,7 +261,7 @@ server in <strong>app/Config/Images.php</strong>.</p>
 <p class="first admonition-title">Note</p>
 <p class="last">The ImageMagick handler does NOT require the imagick extension to be
 loaded on the server. As long as your script can access the library
-and can run <code class="docutils literal"><span class="pre">exec()</span></code> on the server, it should work.</p>
+and can run <code class="docutils literal notranslate"><span class="pre">exec()</span></code> on the server, it should work.</p>
 </div>
 <div class="section" id="processing-an-image">
 <h3><a class="toc-backref" href="#id2">Processing an Image</a><a class="headerlink" href="#processing-an-image" title="Permalink to this headline">¶</a></h3>
@@ -266,8 +269,8 @@ and can run <code class="docutils literal"><span class="pre">exec()</span></code
 (resizing, cropping, rotation, or watermarking), the general process is
 identical. You will set some preferences corresponding to the action you
 intend to perform, then call one of the available processing functions.
-For example, to create an image thumbnail you&#8217;ll do this:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
+For example, to create an image thumbnail you’ll do this:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic_thumb.jpg&#39;</span><span class="p">);</span>
@@ -283,7 +286,7 @@ desired aspect ratio, and then crop and resize the result.</p>
 needed before saving. The original image is left untouched, and a new image
 is used and passed through each method, applying the results on top of the
 previous results:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">reorient</span><span class="p">()</span>
         <span class="o">-&gt;</span><span class="na">rotate</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
@@ -310,10 +313,10 @@ adjust PHP memory limits.</p>
 </div>
 <div class="section" id="image-quality">
 <h3><a class="toc-backref" href="#id3">Image Quality</a><a class="headerlink" href="#image-quality" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">save()</span></code> can take an additional parameter <code class="docutils literal"><span class="pre">$quality</span></code> to alter the resulting image
+<p><code class="docutils literal notranslate"><span class="pre">save()</span></code> can take an additional parameter <code class="docutils literal notranslate"><span class="pre">$quality</span></code> to alter the resulting image
 quality. Values range from 0 to 100 with 90 being the framework default. This parameter
 only applies to JPEG images and will be ignored otherwise:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/image/my_low_quality_pic.jpg&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
 </pre></div>
@@ -337,11 +340,11 @@ only applies to JPEG images and will be ignored otherwise:</p>
 <li>$image-&gt;text()</li>
 </ul>
 <p>These methods return the class instance so they can be chained together, as shown above.
-If they fail they will throw a <code class="docutils literal"><span class="pre">CodeIgniter\Images\ImageException</span></code> that contains
+If they fail they will throw a <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Images\ImageException</span></code> that contains
 the error message. A good practice is to catch the exceptions, showing an
 error upon failure, like this:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">try</span> <span class="p">{</span>
-<span class="nv">$image</span> <span class="o">=</span> <span class="nx">Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">try</span> <span class="p">{</span>
+<span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic_thumb.jpg&#39;</span><span class="p">);</span>
@@ -357,15 +360,15 @@ error upon failure, like this:</p>
 <p>You can optionally specify the HTML formatting to be applied to
 the errors, by submitting the opening/closing tags in the function,
 like this:</p>
-<div class="last highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">display_errors</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/p&gt;&#39;</span><span class="p">);</span>
+<div class="last highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">display_errors</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/p&gt;&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="cropping-images">
 <h4>Cropping Images<a class="headerlink" href="#cropping-images" title="Permalink to this headline">¶</a></h4>
 <p>Images can be cropped so that only a portion of the original image remains. This is often used when creating
-thumbnail images that should match a certain size/aspect ratio. This is handled with the <code class="docutils literal"><span class="pre">crop()</span></code> method:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">crop</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$x</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$y</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">bool</span> <span class="nv">$maintainRatio</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$masterDim</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+thumbnail images that should match a certain size/aspect ratio. This is handled with the <code class="docutils literal notranslate"><span class="pre">crop()</span></code> method:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">crop</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$x</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$y</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">bool</span> <span class="nv">$maintainRatio</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$masterDim</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -373,12 +376,12 @@ thumbnail images that should match a certain size/aspect ratio. This is handled 
 <li><strong>$height</strong> is the desired height of the resulting image, in pixels.</li>
 <li><strong>$x</strong> is the number of pixels from the left side of the image to start cropping.</li>
 <li><strong>$y</strong> is the number of pixels from the top of the image to start cropping.</li>
-<li><strong>$maintainRatio</strong> will, if true, adjust the final dimensions as needed to maintain the image&#8217;s original aspect ratio.</li>
-<li><strong>$masterDim</strong> specifies which dimension should be left untouched when $maintainRatio is true. Values can be: &#8216;width&#8217;, &#8216;height&#8217;, or &#8216;auto&#8217;.</li>
+<li><strong>$maintainRatio</strong> will, if true, adjust the final dimensions as needed to maintain the image’s original aspect ratio.</li>
+<li><strong>$masterDim</strong> specifies which dimension should be left untouched when $maintainRatio is true. Values can be: ‘width’, ‘height’, or ‘auto’.</li>
 </ul>
 <p>To take a 50x50 pixel square out of the center of an image, you would need to first calculate the appropriate x and y
 offset values:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$info</span> <span class="o">=</span> <span class="nx">Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$info</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">getFile</span><span class="p">()</span>
             <span class="o">-&gt;</span><span class="na">getProperties</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
@@ -386,7 +389,7 @@ offset values:</p>
 <span class="nv">$xOffset</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$info</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">25</span><span class="p">;</span>
 <span class="nv">$yOffset</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$info</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">25</span><span class="p">;</span>
 
-<span class="nx">Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">crop</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="nv">$xOffset</span><span class="p">,</span> <span class="nv">$yOffset</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -395,13 +398,13 @@ offset values:</p>
 </div>
 <div class="section" id="converting-images">
 <h4>Converting Images<a class="headerlink" href="#converting-images" title="Permalink to this headline">¶</a></h4>
-<p>The <code class="docutils literal"><span class="pre">convert()</span></code> method changes the library&#8217;s internal indicator for the desired file format. This doesn&#8217;t touch the actual image resource, but indicates to <code class="docutils literal"><span class="pre">save()</span></code> what format to use:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">convert</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$imageType</span><span class="p">)</span>
+<p>The <code class="docutils literal notranslate"><span class="pre">convert()</span></code> method changes the library’s internal indicator for the desired file format. This doesn’t touch the actual image resource, but indicates to <code class="docutils literal notranslate"><span class="pre">save()</span></code> what format to use:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">convert</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$imageType</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul>
-<li><p class="first"><strong>$imageType</strong> is one of PHP&#8217;s image type constants (see for example <a class="reference external" href="https://www.php.net/manual/en/function.image-type-to-mime-type.php">https://www.php.net/manual/en/function.image-type-to-mime-type.php</a>):</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
+<li><p class="first"><strong>$imageType</strong> is one of PHP’s image type constants (see for example <a class="reference external" href="https://www.php.net/manual/en/function.image-type-to-mime-type.php">https://www.php.net/manual/en/function.image-type-to-mime-type.php</a>):</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">convert</span><span class="p">(</span><span class="nx">IMAGETYPE_PNG</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;path/to/new/image.png&#39;</span><span class="p">);</span>
@@ -417,22 +420,22 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 </div>
 <div class="section" id="fitting-images">
 <h4>Fitting Images<a class="headerlink" href="#fitting-images" title="Permalink to this headline">¶</a></h4>
-<p>The <code class="docutils literal"><span class="pre">fit()</span></code> method aims to help simplify cropping a portion of an image in a &#8220;smart&#8221; way, by doing the following steps:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">fit()</span></code> method aims to help simplify cropping a portion of an image in a “smart” way, by doing the following steps:</p>
 <ul class="simple">
 <li>Determine the correct portion of the original image to crop in order to maintain the desired aspect ratio.</li>
 <li>Crop the original image.</li>
 <li>Resize to the final dimensions.</li>
 </ul>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">fit</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$position</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">fit</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$position</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><strong>$width</strong> is the desired final width of the image.</li>
 <li><strong>$height</strong> is the desired final height of the image.</li>
-<li><strong>$position</strong> determines the portion of the image to crop out. Allowed positions: &#8216;top-left&#8217;, &#8216;top&#8217;, &#8216;top-right&#8217;, &#8216;left&#8217;, &#8216;center&#8217;, &#8216;right&#8217;, &#8216;bottom-left&#8217;, &#8216;bottom&#8217;, &#8216;bottom-right&#8217;.</li>
+<li><strong>$position</strong> determines the portion of the image to crop out. Allowed positions: ‘top-left’, ‘top’, ‘top-right’, ‘left’, ‘center’, ‘right’, ‘bottom-left’, ‘bottom’, ‘bottom-right’.</li>
 </ul>
 <p>This provides a much simpler way to crop that will always maintain the aspect ratio:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -441,11 +444,11 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 </div>
 <div class="section" id="flattening-images">
 <h4>Flattening Images<a class="headerlink" href="#flattening-images" title="Permalink to this headline">¶</a></h4>
-<p>The <code class="docutils literal"><span class="pre">flatten()</span></code> method aims to add a background color behind transparent images (PNG) and convert RGBA pixels to RGB pixels</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">flatten()</span></code> method aims to add a background color behind transparent images (PNG) and convert RGBA pixels to RGB pixels</p>
 <ul class="simple">
 <li>Specify a background color when converting from transparent images to jpgs.</li>
 </ul>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">flatten</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$red</span> <span class="o">=</span> <span class="mi">255</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$green</span> <span class="o">=</span> <span class="mi">255</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$blue</span> <span class="o">=</span> <span class="mi">255</span><span class="p">)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">flatten</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$red</span> <span class="o">=</span> <span class="mi">255</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$green</span> <span class="o">=</span> <span class="mi">255</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$blue</span> <span class="o">=</span> <span class="mi">255</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -453,12 +456,12 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 <li><strong>$green</strong> is the green value of the background.</li>
 <li><strong>$blue</strong> is the blue value of the background.</li>
 </ul>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.png&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">flatten</span><span class="p">()</span>
         <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;path/to/new/image.jpg&#39;</span><span class="p">);</span>
 
-<span class="nx">Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.png&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">flatten</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">112</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -468,13 +471,13 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 <div class="section" id="flipping-images">
 <h4>Flipping Images<a class="headerlink" href="#flipping-images" title="Permalink to this headline">¶</a></h4>
 <p>Images can be flipped along either their horizontal or vertical axis:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">flip</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$dir</span><span class="p">)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">flip</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$dir</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><strong>$dir</strong> specifies the axis to flip along. Can be either &#8216;vertical&#8217; or &#8216;horizontal&#8217;.</li>
+<li><strong>$dir</strong> specifies the axis to flip along. Can be either ‘vertical’ or ‘horizontal’.</li>
 </ul>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">flip</span><span class="p">(</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -484,19 +487,19 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 <div class="section" id="resizing-images">
 <h4>Resizing Images<a class="headerlink" href="#resizing-images" title="Permalink to this headline">¶</a></h4>
 <p>Images can be resized to fit any dimension you require with the resize() method:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">resize</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span><span class="p">,</span> <span class="nx">bool</span> <span class="nv">$maintainRatio</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$masterDim</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">resize</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span><span class="p">,</span> <span class="nx">bool</span> <span class="nv">$maintainRatio</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$masterDim</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><strong>$width</strong> is the desired width of the new image in pixels</li>
 <li><strong>$height</strong> is the desired height of the new image in pixels</li>
 <li><strong>$maintainRatio</strong> determines whether the image is stretched to fit the new dimensions, or the original aspect ratio is maintained.</li>
-<li><strong>$masterDim</strong> specifies which axis should have its dimension honored when maintaining ratio. Either &#8216;width&#8217;, &#8216;height&#8217;.</li>
+<li><strong>$masterDim</strong> specifies which axis should have its dimension honored when maintaining ratio. Either ‘width’, ‘height’.</li>
 </ul>
 <p>When resizing images you can choose whether to maintain the ratio of the original image, or stretch/squash the new
 image to fit the desired dimensions. If $maintainRatio is true, the dimension specified by $masterDim will stay the same,
-while the other dimension will be altered to match the original image&#8217;s aspect ratio.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+while the other dimension will be altered to match the original image’s aspect ratio.</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">resize</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -506,11 +509,11 @@ while the other dimension will be altered to match the original image&#8217;s as
 <div class="section" id="rotating-images">
 <h4>Rotating Images<a class="headerlink" href="#rotating-images" title="Permalink to this headline">¶</a></h4>
 <p>The rotate() method allows you to rotate an image in 90 degree increments:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">rotate</span><span class="p">(</span><span class="nx">float</span> <span class="nv">$angle</span><span class="p">)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">rotate</span><span class="p">(</span><span class="nx">float</span> <span class="nv">$angle</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><strong>$angle</strong> is the number of degrees to rotate. One of &#8216;90&#8217;, &#8216;180&#8217;, &#8216;270&#8217;.</li>
+<li><strong>$angle</strong> is the number of degrees to rotate. One of ‘90’, ‘180’, ‘270’.</li>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -521,14 +524,14 @@ If the value is any other than the three values listed above, it will throw a Co
 <div class="section" id="adding-a-text-watermark">
 <h4>Adding a Text Watermark<a class="headerlink" href="#adding-a-text-watermark" title="Permalink to this headline">¶</a></h4>
 <p>You can overlay a text watermark onto the image very simply with the text() method. This is useful for placing copyright
-notices, photographer names, or simply marking the images as a preview so they won&#8217;t be used in other people&#8217;s final
+notices, photographer names, or simply marking the images as a preview so they won’t be used in other people’s final
 products.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">text</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$text</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span> <span class="o">=</span> <span class="p">[])</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">text</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$text</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span> <span class="o">=</span> <span class="p">[])</span>
 </pre></div>
 </div>
 <p>The first parameter is the string of text that you wish to display. The second parameter is an array of options
 that allow you to specify how the text should be displayed:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">text</span><span class="p">(</span><span class="s1">&#39;Copyright 2017 My Photo Co&#39;</span><span class="p">,</span> <span class="p">[</span>
             <span class="s1">&#39;color&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;#fff&#39;</span><span class="p">,</span>
@@ -587,8 +590,8 @@ name of one of the installed system fonts that you wish to use, i.e. Calibri.</p
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -610,16 +613,17 @@ name of one of the installed system fonts that you wish to use, i.e. Calibri.</p
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Request Class &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Request Class &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Controllers and Routing" href="index.html"/>
         <link rel="next" title="IncomingRequest Class" href="incomingrequest.html"/>
         <link rel="prev" title="HTTP Messages" href="message.html"/> 
@@ -226,7 +229,7 @@ from the Request class to add specific functionality.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The user&#8217;s IP Address, if it can be detected, or null. If the IP address
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The user’s IP Address, if it can be detected, or null. If the IP address
 is not a valid IP address, then will return 0.0.0.0</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
@@ -234,13 +237,13 @@ is not a valid IP address, then will return 0.0.0.0</td>
 </tbody>
 </table>
 <p>Returns the IP address for the current user. If the IP address is not valid, the method
-will return &#8216;0.0.0.0&#8217;:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getIPAddress</span><span class="p">();</span>
+will return ‘0.0.0.0’:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getIPAddress</span><span class="p">();</span>
 </pre></div>
 </div>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p class="last">This method takes into account the <code class="docutils literal"><span class="pre">App-&gt;proxyIPs</span></code> setting and will
+<p class="last">This method takes into account the <code class="docutils literal notranslate"><span class="pre">App-&gt;proxyIPs</span></code> setting and will
 return the reported HTTP_X_FORWARDED_FOR, HTTP_CLIENT_IP, HTTP_X_CLIENT_IP, or
 HTTP_X_CLUSTER_CLIENT_IP address for the allowed IP address.</p>
 </div>
@@ -254,8 +257,8 @@ HTTP_X_CLUSTER_CLIENT_IP address for the allowed IP address.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$ip</strong> (<em>string</em>) &#8211; IP address</li>
-<li><strong>$which</strong> (<em>string</em>) &#8211; IP protocol (&#8216;ipv4&#8217; or &#8216;ipv6&#8217;)</li>
+<li><strong>$ip</strong> (<em>string</em>) – IP address</li>
+<li><strong>$which</strong> (<em>string</em>) – IP protocol (‘ipv4’ or ‘ipv6’)</li>
 </ul>
 </td>
 </tr>
@@ -273,7 +276,7 @@ on whether it is valid or not.</p>
 <p class="first admonition-title">Note</p>
 <p class="last">The $request-&gt;getIPAddress() method above automatically validates the IP address.</p>
 </div>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">isValidIP</span><span class="p">(</span><span class="nv">$ip</span><span class="p">))</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">isValidIP</span><span class="p">(</span><span class="nv">$ip</span><span class="p">))</span>
 <span class="p">{</span>
     <span class="k">echo</span> <span class="s1">&#39;Not Valid&#39;</span><span class="p">;</span>
 <span class="p">}</span>
@@ -283,7 +286,7 @@ on whether it is valid or not.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Accepts an optional second string parameter of &#8216;ipv4&#8217; or &#8216;ipv6&#8217; to specify
+<p>Accepts an optional second string parameter of ‘ipv4’ or ‘ipv6’ to specify
 an IP format. The default checks for both formats.</p>
 </dd></dl>
 
@@ -295,7 +298,7 @@ an IP format. The default checks for both formats.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$upper</strong> (<em>bool</em>) &#8211; Whether to return the request method name in upper or lower case</li>
+<li><strong>$upper</strong> (<em>bool</em>) – Whether to return the request method name in upper or lower case</li>
 </ul>
 </td>
 </tr>
@@ -307,9 +310,9 @@ an IP format. The default checks for both formats.</p>
 </tr>
 </tbody>
 </table>
-<p>Returns the <code class="docutils literal"><span class="pre">$_SERVER['REQUEST_METHOD']</span></code>, with the option to set it
+<p>Returns the <code class="docutils literal notranslate"><span class="pre">$_SERVER['REQUEST_METHOD']</span></code>, with the option to set it
 in uppercase or lowercase.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">(</span><span class="k">TRUE</span><span class="p">);</span> <span class="c1">// Outputs: POST</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">(</span><span class="k">TRUE</span><span class="p">);</span> <span class="c1">// Outputs: POST</span>
 <span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">(</span><span class="k">FALSE</span><span class="p">);</span> <span class="c1">// Outputs: post</span>
 <span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">();</span> <span class="c1">// Outputs: post</span>
 </pre></div>
@@ -324,9 +327,9 @@ in uppercase or lowercase.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$index</strong> (<em>mixed</em>) &#8211; Value name</li>
-<li><strong>$filter</strong> (<em>int</em>) &#8211; The type of filter to apply. A list of filters can be found <a class="reference external" href="http://php.net/manual/en/filter.filters.php">here</a>.</li>
-<li><strong>$flags</strong> (<em>int</em>) &#8211; Flags to apply. A list of flags can be found <a class="reference external" href="http://php.net/manual/en/filter.filters.flags.php">here</a>.</li>
+<li><strong>$index</strong> (<em>mixed</em>) – Value name</li>
+<li><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="http://php.net/manual/en/filter.filters.php">here</a>.</li>
+<li><strong>$flags</strong> (<em>int</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="http://php.net/manual/en/filter.filters.flags.php">here</a>.</li>
 </ul>
 </td>
 </tr>
@@ -338,14 +341,14 @@ in uppercase or lowercase.</p>
 </tr>
 </tbody>
 </table>
-<p>This method is identical to the <code class="docutils literal"><span class="pre">post()</span></code>, <code class="docutils literal"><span class="pre">get()</span></code> and <code class="docutils literal"><span class="pre">cookie()</span></code> methods from the
-<a class="reference internal" href="incomingrequest.html"><span class="doc">IncomingRequest Class</span></a>, only it fetches getServer data (<code class="docutils literal"><span class="pre">$_SERVER</span></code>):</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
+<p>This method is identical to the <code class="docutils literal notranslate"><span class="pre">post()</span></code>, <code class="docutils literal notranslate"><span class="pre">get()</span></code> and <code class="docutils literal notranslate"><span class="pre">cookie()</span></code> methods from the
+<a class="reference internal" href="incomingrequest.html"><span class="doc">IncomingRequest Class</span></a>, only it fetches getServer data (<code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code>):</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>To return an array of multiple <code class="docutils literal"><span class="pre">$_SERVER</span></code> values, pass all the required keys
+<p>To return an array of multiple <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code> values, pass all the required keys
 as an array.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$require</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">([</span><span class="s1">&#39;SERVER_PROTOCOL&#39;</span><span class="p">,</span> <span class="s1">&#39;REQUEST_URI&#39;</span><span class="p">]);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$require</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">([</span><span class="s1">&#39;SERVER_PROTOCOL&#39;</span><span class="p">,</span> <span class="s1">&#39;REQUEST_URI&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -377,8 +380,8 @@ as an array.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -400,16 +403,17 @@ as an array.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

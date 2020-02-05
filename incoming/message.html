@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>HTTP Messages &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>HTTP Messages &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Controllers and Routing" href="index.html"/>
         <link rel="next" title="Request Class" href="request.html"/>
         <link rel="prev" title="Controller Filters" href="filters.html"/> 
@@ -216,7 +219,7 @@ negotiation methods, may apply only to a request or response, and not the other 
 been included here to keep the header methods together.</p>
 <div class="section" id="what-is-content-negotiation">
 <h2>What is Content Negotiation?<a class="headerlink" href="#what-is-content-negotiation" title="Permalink to this headline">¶</a></h2>
-<p>At it&#8217;s heart Content Negotiation is simply a part of the HTTP specification that allows a single
+<p>At it’s heart Content Negotiation is simply a part of the HTTP specification that allows a single
 resource to serve more than one type of content, allowing the clients to request the type of
 data that works best for them.</p>
 <p>A classic example of this is a browser that cannot display PNG files can request only GIF or
@@ -249,7 +252,7 @@ likely choosing a JPEG image to return.</p>
 </tbody>
 </table>
 <p>Returns the current message body, if any has been set. If not body exists, returns null:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">body</span><span class="p">();</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">body</span><span class="p">();</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -262,7 +265,7 @@ likely choosing a JPEG image to return.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; The body of the message.</li>
+<li><strong>$str</strong> (<em>string</em>) – The body of the message.</li>
 </ul>
 </td>
 </tr>
@@ -291,11 +294,11 @@ likely choosing a JPEG image to return.</p>
 </table>
 <p>Scans and parses the headers found in the SERVER data and stores it for later access.
 This is used by the <a class="reference internal" href="incomingrequest.html"><span class="doc">IncomingRequest Class</span></a> to make
-the current request&#8217;s headers available.</p>
-<p>The headers are any SERVER data that starts with <code class="docutils literal"><span class="pre">HTTP_</span></code>, like <code class="docutils literal"><span class="pre">HTTP_HOST</span></code>. Each message
-is converted from it&#8217;s standard uppercase and underscore format to a ucwords and dash format.
-The preceding <code class="docutils literal"><span class="pre">HTTP_</span></code> is removed from the string. So <code class="docutils literal"><span class="pre">HTTP_ACCEPT_LANGUAGE</span></code> becomes
-<code class="docutils literal"><span class="pre">Accept-Language</span></code>.</p>
+the current request’s headers available.</p>
+<p>The headers are any SERVER data that starts with <code class="docutils literal notranslate"><span class="pre">HTTP_</span></code>, like <code class="docutils literal notranslate"><span class="pre">HTTP_HOST</span></code>. Each message
+is converted from it’s standard uppercase and underscore format to a ucwords and dash format.
+The preceding <code class="docutils literal notranslate"><span class="pre">HTTP_</span></code> is removed from the string. So <code class="docutils literal notranslate"><span class="pre">HTTP_ACCEPT_LANGUAGE</span></code> becomes
+<code class="docutils literal notranslate"><span class="pre">Accept-Language</span></code>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -322,8 +325,8 @@ The preceding <code class="docutils literal"><span class="pre">HTTP_</span></cod
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) &#8211; The name of the header you want to retrieve the value of.</li>
-<li><strong>$filter</strong> (<em>int</em>) &#8211; The type of filter to apply. A list of filters can be found <a class="reference external" href="http://php.net/manual/en/filter.filters.php">here</a>.</li>
+<li><strong>$name</strong> (<em>string</em>) – The name of the header you want to retrieve the value of.</li>
+<li><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="http://php.net/manual/en/filter.filters.php">here</a>.</li>
 </ul>
 </td>
 </tr>
@@ -335,17 +338,17 @@ The preceding <code class="docutils literal"><span class="pre">HTTP_</span></cod
 </tr>
 </tbody>
 </table>
-<p>Allows you to retrieve the current value of a single message header. <code class="docutils literal"><span class="pre">$name</span></code> is the case-insensitive header name.
+<p>Allows you to retrieve the current value of a single message header. <code class="docutils literal notranslate"><span class="pre">$name</span></code> is the case-insensitive header name.
 While the header is converted internally as described above, you can access the header with any type of case:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// These are all the same:</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// These are all the same:</span>
 <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;HOST&#39;</span><span class="p">);</span>
 <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
 <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>If the header has multiple values, the values will return as an array of values. You can use the <code class="docutils literal"><span class="pre">headerLine()</span></code>
+<p>If the header has multiple values, the values will return as an array of values. You can use the <code class="docutils literal notranslate"><span class="pre">headerLine()</span></code>
 method to retrieve the values as a string:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
 
 <span class="c1">// Outputs something like:</span>
 <span class="p">[</span>
@@ -355,7 +358,7 @@ method to retrieve the values as a string:</p>
 </pre></div>
 </div>
 <p>You can filter the header by passing a filter value in as the second parameter:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Document-URI&#39;</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_URL</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Document-URI&#39;</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_URL</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -368,7 +371,7 @@ method to retrieve the values as a string:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) &#8211; The name of the header to retrieve.</li>
+<li><strong>$name</strong> (<em>string</em>) – The name of the header to retrieve.</li>
 </ul>
 </td>
 </tr>
@@ -382,7 +385,7 @@ method to retrieve the values as a string:</p>
 </table>
 <p>Returns the value(s) of the header as a string. This method allows you to easily get a string representation
 of the header values when the header has multiple values. The values are appropriately joined:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">headerLine</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">headerLine</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
 
 <span class="c1">// Outputs:</span>
 <span class="nx">en</span><span class="p">,</span> <span class="nx">en</span><span class="o">-</span><span class="nx">US</span>
@@ -398,8 +401,8 @@ of the header values when the header has multiple values. The values are appropr
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) &#8211; The name of the header to set the value for.</li>
-<li><strong>$value</strong> (<em>mixed</em>) &#8211; The value to set the header to.</li>
+<li><strong>$name</strong> (<em>string</em>) – The name of the header to set the value for.</li>
+<li><strong>$value</strong> (<em>mixed</em>) – The value to set the header to.</li>
 </ul>
 </td>
 </tr>
@@ -411,10 +414,10 @@ of the header values when the header has multiple values. The values are appropr
 </tr>
 </tbody>
 </table>
-<p>Sets the value of a single header. <code class="docutils literal"><span class="pre">$name</span></code> is the case-insensitive name of the header. If the header
-doesn&#8217;t already exist in the collection, it will be created. The <code class="docutils literal"><span class="pre">$value</span></code> can be either a string
+<p>Sets the value of a single header. <code class="docutils literal notranslate"><span class="pre">$name</span></code> is the case-insensitive name of the header. If the header
+doesn’t already exist in the collection, it will be created. The <code class="docutils literal notranslate"><span class="pre">$value</span></code> can be either a string
 or an array of strings:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">,</span> <span class="s1">&#39;codeigniter.com&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">,</span> <span class="s1">&#39;codeigniter.com&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -427,7 +430,7 @@ or an array of strings:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) &#8211; The name of the header to remove.</li>
+<li><strong>$name</strong> (<em>string</em>) – The name of the header to remove.</li>
 </ul>
 </td>
 </tr>
@@ -439,8 +442,8 @@ or an array of strings:</p>
 </tr>
 </tbody>
 </table>
-<p>Removes the header from the Message. <code class="docutils literal"><span class="pre">$name</span></code> is the case-insensitive name of the header:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
+<p>Removes the header from the Message. <code class="docutils literal notranslate"><span class="pre">$name</span></code> is the case-insensitive name of the header:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -453,8 +456,8 @@ or an array of strings:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$name</strong> (<em>string</em>) &#8211; The name of the header to modify</li>
-<li><strong>$value</strong> (<em>mixed</em>) &#8211; The value to add to the header.</li>
+<li><strong>$name</strong> (<em>string</em>) – The name of the header to modify</li>
+<li><strong>$value</strong> (<em>mixed</em>) – The value to add to the header.</li>
 </ul>
 </td>
 </tr>
@@ -468,7 +471,7 @@ or an array of strings:</p>
 </table>
 <p>Adds a value to an existing header. The header must already be an array of values instead of a single string.
 If it is a string then a LogicException will be thrown.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">appendHeader</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">,</span> <span class="s1">&#39;en-US; q=0.8&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">appendHeader</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">,</span> <span class="s1">&#39;en-US; q=0.8&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -486,8 +489,8 @@ If it is a string then a LogicException will be thrown.</p>
 </tr>
 </tbody>
 </table>
-<p>Returns the message&#8217;s current HTTP protocol. If none has been set, will return <code class="docutils literal"><span class="pre">null</span></code>. Acceptable values
-are <code class="docutils literal"><span class="pre">1.0</span></code> and <code class="docutils literal"><span class="pre">1.1</span></code>.</p>
+<p>Returns the message’s current HTTP protocol. If none has been set, will return <code class="docutils literal notranslate"><span class="pre">null</span></code>. Acceptable values
+are <code class="docutils literal notranslate"><span class="pre">1.0</span></code> and <code class="docutils literal notranslate"><span class="pre">1.1</span></code>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -498,7 +501,7 @@ are <code class="docutils literal"><span class="pre">1.0</span></code> and <code
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$version</strong> (<em>string</em>) &#8211; The HTTP protocol version</li>
+<li><strong>$version</strong> (<em>string</em>) – The HTTP protocol version</li>
 </ul>
 </td>
 </tr>
@@ -510,8 +513,8 @@ are <code class="docutils literal"><span class="pre">1.0</span></code> and <code
 </tr>
 </tbody>
 </table>
-<p>Sets the HTTP protocol version this Message uses. Valid values are <code class="docutils literal"><span class="pre">1.0</span></code> or <code class="docutils literal"><span class="pre">1.1</span></code>:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">setProtocolVersion</span><span class="p">(</span><span class="s1">&#39;1.1&#39;</span><span class="p">);</span>
+<p>Sets the HTTP protocol version this Message uses. Valid values are <code class="docutils literal notranslate"><span class="pre">1.0</span></code> or <code class="docutils literal notranslate"><span class="pre">1.1</span></code>:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">setProtocolVersion</span><span class="p">(</span><span class="s1">&#39;1.1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -524,8 +527,8 @@ are <code class="docutils literal"><span class="pre">1.0</span></code> and <code
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$supported</strong> (<em>array</em>) &#8211; An array of media types the application supports</li>
-<li><strong>$strictMatch</strong> (<em>bool</em>) &#8211; Whether it should force an exact match to happen.</li>
+<li><strong>$supported</strong> (<em>array</em>) – An array of media types the application supports</li>
+<li><strong>$strictMatch</strong> (<em>bool</em>) – Whether it should force an exact match to happen.</li>
 </ul>
 </td>
 </tr>
@@ -537,10 +540,10 @@ are <code class="docutils literal"><span class="pre">1.0</span></code> and <code
 </tr>
 </tbody>
 </table>
-<p>Parses the <code class="docutils literal"><span class="pre">Accept</span></code> header and compares with the application&#8217;s supported media types to determine
+<p>Parses the <code class="docutils literal notranslate"><span class="pre">Accept</span></code> header and compares with the application’s supported media types to determine
 the best match. Returns the appropriate media type. The first parameter is an array of application supported
 media types that should be compared against header values:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;image/png&#39;</span><span class="p">,</span>
         <span class="s1">&#39;image/jpg&#39;</span><span class="p">,</span>
         <span class="s1">&#39;image/gif&#39;</span>
@@ -548,18 +551,18 @@ media types that should be compared against header values:</p>
 <span class="nv">$imageType</span> <span class="o">=</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">negotiateMedia</span><span class="p">(</span><span class="nv">$supported</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal"><span class="pre">$supported</span></code> array should be structured so that the application&#8217;s preferred format is the first in the
+<p>The <code class="docutils literal notranslate"><span class="pre">$supported</span></code> array should be structured so that the application’s preferred format is the first in the
 array, with the rest following in descending order of priority. If no match can be made between the header
 values and the supported values, the first element of the array will be returned.</p>
 <p>Per the <a class="reference external" href="http://tools.ietf.org/html/rfc7231#section-5.3">RFC</a> the match has the option of returning a
 default value, like this method does, or to return an empty string. If you need to have an exact match and
-would like an empty string returned instead, pass <code class="docutils literal"><span class="pre">true</span></code> as the second parameter:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Returns empty string if no match.</span>
+would like an empty string returned instead, pass <code class="docutils literal notranslate"><span class="pre">true</span></code> as the second parameter:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// Returns empty string if no match.</span>
 <span class="nv">$imageType</span> <span class="o">=</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">negotiateMedia</span><span class="p">(</span><span class="nv">$supported</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The matching process takes into account the priorities and specificity of the RFC. This means that the more
-specific header values will have a higher order of precedence, unless modified by a different <code class="docutils literal"><span class="pre">q</span></code> value.
+specific header values will have a higher order of precedence, unless modified by a different <code class="docutils literal notranslate"><span class="pre">q</span></code> value.
 For more details, please read the <a class="reference external" href="http://tools.ietf.org/html/rfc7231#section-5.3.2">appropriate section of the RFC</a>.</p>
 </dd></dl>
 
@@ -571,7 +574,7 @@ For more details, please read the <a class="reference external" href="http://too
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$supported</strong> (<em>array</em>) &#8211; An array of character sets the application supports.</li>
+<li><strong>$supported</strong> (<em>array</em>) – An array of character sets the application supports.</li>
 </ul>
 </td>
 </tr>
@@ -583,16 +586,16 @@ For more details, please read the <a class="reference external" href="http://too
 </tr>
 </tbody>
 </table>
-<p>This is used identically to the <code class="docutils literal"><span class="pre">negotiateMedia()</span></code> method, except that it matches against the <code class="docutils literal"><span class="pre">Accept-Charset</span></code>
+<p>This is used identically to the <code class="docutils literal notranslate"><span class="pre">negotiateMedia()</span></code> method, except that it matches against the <code class="docutils literal notranslate"><span class="pre">Accept-Charset</span></code>
 header string:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;utf-8&#39;</span><span class="p">,</span>
         <span class="s1">&#39;iso-8895-9&#39;</span>
 <span class="p">];</span>
 <span class="nv">$charset</span> <span class="o">=</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">negotiateCharset</span><span class="p">(</span><span class="nv">$supported</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>If no match is found, the system will default to <code class="docutils literal"><span class="pre">utf-8</span></code>.</p>
+<p>If no match is found, the system will default to <code class="docutils literal notranslate"><span class="pre">utf-8</span></code>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -603,7 +606,7 @@ header string:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$supported</strong> (<em>array</em>) &#8211; An array of character encodings the application supports.</li>
+<li><strong>$supported</strong> (<em>array</em>) – An array of character encodings the application supports.</li>
 </ul>
 </td>
 </tr>
@@ -615,9 +618,9 @@ header string:</p>
 </tr>
 </tbody>
 </table>
-<p>Determines the best match between the application-supported values and the <code class="docutils literal"><span class="pre">Accept-Encoding</span></code> header value.
-If no match is found, will return the first element of the <code class="docutils literal"><span class="pre">$supported</span></code> array:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
+<p>Determines the best match between the application-supported values and the <code class="docutils literal notranslate"><span class="pre">Accept-Encoding</span></code> header value.
+If no match is found, will return the first element of the <code class="docutils literal notranslate"><span class="pre">$supported</span></code> array:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;gzip&#39;</span><span class="p">,</span>
         <span class="s1">&#39;compress&#39;</span>
 <span class="p">];</span>
@@ -634,7 +637,7 @@ If no match is found, will return the first element of the <code class="docutils
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$supported</strong> (<em>array</em>) &#8211; An array of languages the application supports.</li>
+<li><strong>$supported</strong> (<em>array</em>) – An array of languages the application supports.</li>
 </ul>
 </td>
 </tr>
@@ -646,9 +649,9 @@ If no match is found, will return the first element of the <code class="docutils
 </tr>
 </tbody>
 </table>
-<p>Determines the best match between the application-supported languages and the <code class="docutils literal"><span class="pre">Accept-Language</span></code> header value.
-If no match is found, will return the first element of the <code class="docutils literal"><span class="pre">$supported</span></code> array:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
+<p>Determines the best match between the application-supported languages and the <code class="docutils literal notranslate"><span class="pre">Accept-Language</span></code> header value.
+If no match is found, will return the first element of the <code class="docutils literal notranslate"><span class="pre">$supported</span></code> array:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;en&#39;</span><span class="p">,</span>
         <span class="s1">&#39;fr&#39;</span><span class="p">,</span>
         <span class="s1">&#39;x-pig-latin&#39;</span>
@@ -687,8 +690,8 @@ If no match is found, will return the first element of the <code class="docutils
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -710,16 +713,17 @@ If no match is found, will return the first element of the <code class="docutils
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Upgrading from 3.x to 4.x &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Upgrading from 3.x to 4.x &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Upgrading From a Previous Version" href="upgrading.html"/>
         <link rel="next" title="Troubleshooting" href="troubleshooting.html"/>
         <link rel="prev" title="Upgrading From a Previous Version" href="upgrading.html"/> 
@@ -214,13 +217,13 @@
 It is more appropriate to think of converting your app, rather than upgrading it.
 Once you have done that, upgrading from one version of CodeIgniter 4 to the next
 will be straightforward.</p>
-<p>The &#8220;lean, mean and simple&#8221; philosophy has been retained, but the
+<p>The “lean, mean and simple” philosophy has been retained, but the
 implementation has a lot of differences, compared to CodeIgniter 3.</p>
 <p>There is no 12-step checklist for upgrading. Instead, start with a copy
 of CodeIgniter 4 in a new project folder,
 <a class="reference internal" href="index.html"><span class="doc">however you wish to install and use it</span></a>,
 and then convert and integrate your app components.
-We&#8217;ll try to point out the most important considerations here.</p>
+We’ll try to point out the most important considerations here.</p>
 <p>Not all of the CI3 libraries have been ported or rewritten for CI4!
 See the threads in the <a class="reference external" href="https://forum.codeigniter.com/forum-33.html">CodeIgniter 4 Roadmap</a>
 subforum for an up-to-date list!</p>
@@ -237,37 +240,38 @@ includes the user guide (though in the <cite>docs</cite> subfolder</li>
 </ul>
 <p><strong>Application Structure</strong></p>
 <ul class="simple">
-<li>The framework still has <code class="docutils literal"><span class="pre">app</span></code> and <code class="docutils literal"><span class="pre">system</span></code> folders, with the same
+<li>The <code class="docutils literal notranslate"><span class="pre">application</span></code> folder is renamed as <code class="docutils literal notranslate"><span class="pre">app</span></code> and
+the framework still has <code class="docutils literal notranslate"><span class="pre">system</span></code> folders, with the same
 interpretation as before</li>
-<li>The framework now provides for a <code class="docutils literal"><span class="pre">public</span></code> folder, intended as the document
+<li>The framework now provides for a <code class="docutils literal notranslate"><span class="pre">public</span></code> folder, intended as the document
 root for your app</li>
-<li>There is also a <code class="docutils literal"><span class="pre">writable</span></code> folder, to hold cache data, logs, and session data</li>
-<li>The <code class="docutils literal"><span class="pre">application</span></code> folder looks very similar to that for CI3, with some
+<li>There is also a <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder, to hold cache data, logs, and session data</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">app</span></code> folder looks very similar to <code class="docutils literal notranslate"><span class="pre">application</span></code> for CI3, with some
 name changes, and some subfolders
-moved to the <code class="docutils literal"><span class="pre">writable</span></code> folder</li>
-<li>There is no longer a nested <code class="docutils literal"><span class="pre">application/core</span></code> folder, as we have
+moved to the <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder</li>
+<li>There is no longer a nested <code class="docutils literal notranslate"><span class="pre">application/core</span></code> folder, as we have
 a different mechanism for extending framework components (see below)</li>
 </ul>
 <p><strong>Class loading</strong></p>
 <ul class="simple">
-<li>There is no longer a CodeIgniter &#8220;superobject&#8221;, with framework component
+<li>There is no longer a CodeIgniter “superobject”, with framework component
 references magically injected as properties of your controller</li>
 <li>Classes are instantiated where needed, and components are managed
-by <code class="docutils literal"><span class="pre">Services</span></code></li>
+by <code class="docutils literal notranslate"><span class="pre">Services</span></code></li>
 <li>The class loader automatically handles PSR4 style class locating,
-within the <code class="docutils literal"><span class="pre">App</span></code> (application) and <code class="docutils literal"><span class="pre">CodeIgniter</span></code> (i.e. system) top level
+within the <code class="docutils literal notranslate"><span class="pre">App</span></code> (application) and <code class="docutils literal notranslate"><span class="pre">CodeIgniter</span></code> (i.e. system) top level
 namespaces; with composer autoloading support, and even using educated
 guessing to find your models and libraries if they are in the right
 folder even though not namespaced</li>
 <li>You can configure the class loading to support whatever application structure
-you are most comfortable with, including the &#8220;HMVC&#8221; style</li>
+you are most comfortable with, including the “HMVC” style</li>
 </ul>
 <p><strong>Controllers</strong></p>
 <ul class="simple">
 <li>Controllers extend \CodeIgniter\Controller instead of CI_Controller</li>
-<li>They don&#8217;t use a constructor any more (to invoke CI &#8220;magic&#8221;) unless
+<li>They don’t use a constructor any more (to invoke CI “magic”) unless
 that is part of a base controller you make</li>
-<li>CI provides <code class="docutils literal"><span class="pre">Request</span></code> and <code class="docutils literal"><span class="pre">Response</span></code> objects for you to work with -
+<li>CI provides <code class="docutils literal notranslate"><span class="pre">Request</span></code> and <code class="docutils literal notranslate"><span class="pre">Response</span></code> objects for you to work with -
 more powerful than the CI3-way</li>
 <li>If you want a base controller (MY_Controller in CI3), make it
 where you like, e.g. BaseController extends Controller, and then
@@ -279,39 +283,50 @@ have your controllers extend it</li>
 <li>The CI4 model has much more functionality, including automatic
 database connection, basic CRUD, in-model validation, and
 automatic pagination</li>
-<li>CI4 also has the <code class="docutils literal"><span class="pre">Entity</span></code> class you can build on, for
+<li>CI4 also has the <code class="docutils literal notranslate"><span class="pre">Entity</span></code> class you can build on, for
 richer data mapping to your database tables</li>
-<li>Instead of CI3&#8217;s <code class="docutils literal"><span class="pre">$this-&gt;load-&gt;model(x);</span></code>, you would now use
-<code class="docutils literal"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your component</li>
+<li>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;model(x);</span></code>, you would now use
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your component</li>
 </ul>
 <p><strong>Views</strong></p>
 <ul class="simple">
-<li>Your views look much like before, but they are invoked differently ...
-instead of CI3&#8217;s <code class="docutils literal"><span class="pre">$this-&gt;load-&gt;view(x);</span></code> you can use <code class="docutils literal"><span class="pre">echo</span> <span class="pre">view(x);</span></code></li>
-<li>CI4 supports view &#8220;cells&#8221;, to build your response in pieces</li>
+<li>Your views look much like before, but they are invoked differently …
+instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;view(x);</span></code> you can use <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">view(x);</span></code></li>
+<li>CI4 supports view “cells”, to build your response in pieces</li>
 <li>The template parser is still there, but substantially
 enhanced</li>
 </ul>
 <p><strong>Libraries</strong></p>
 <ul class="simple">
-<li>Your app classes can still go inside <code class="docutils literal"><span class="pre">app/Libraries</span></code>, but they
-don&#8217;t have to</li>
-<li>Instead of CI3&#8217;s <code class="docutils literal"><span class="pre">$this-&gt;load-&gt;library(x);</span></code> you can now use
-<code class="docutils literal"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your
+<li>Your app classes can still go inside <code class="docutils literal notranslate"><span class="pre">app/Libraries</span></code>, but they
+don’t have to</li>
+<li>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library(x);</span></code> you can now use
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your
 component</li>
 </ul>
 <p><strong>Helpers</strong></p>
 <ul class="simple">
 <li>Helpers are pretty much the same as before, though some have been simplified</li>
 </ul>
+<p><strong>Events</strong></p>
+<ul class="simple">
+<li>Hooks have been replaced by Events</li>
+<li>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$hook['post_controller_constructor']</span></code> you now use</li>
+</ul>
+<blockquote>
+<div><code class="docutils literal notranslate"><span class="pre">Events::on('post_controller_constructor',</span> <span class="pre">['MyClass',</span> <span class="pre">'MyFunction']);</span></code>,
+with the namespace <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Events\Events;</span></code></div></blockquote>
+<ul class="simple">
+<li>Events are always enabled, and are available globally</li>
+</ul>
 <p><strong>Extending the framework</strong></p>
 <ul class="simple">
-<li>You don&#8217;t need a <code class="docutils literal"><span class="pre">core</span></code> folder to hold <code class="docutils literal"><span class="pre">MY_...</span></code> framework
+<li>You don’t need a <code class="docutils literal notranslate"><span class="pre">core</span></code> folder to hold <code class="docutils literal notranslate"><span class="pre">MY_...</span></code> framework
 component extensions or replacements</li>
-<li>You don&#8217;t need <code class="docutils literal"><span class="pre">MY_x</span></code> classes inside your libraries folder
+<li>You don’t need <code class="docutils literal notranslate"><span class="pre">MY_x</span></code> classes inside your libraries folder
 to extend or replace CI4 pieces</li>
 <li>Make any such classes where you like, and add appropriate
-service methods in <code class="docutils literal"><span class="pre">app/Config/Services.php</span></code> to load
+service methods in <code class="docutils literal notranslate"><span class="pre">app/Config/Services.php</span></code> to load
 your components instead of the default ones</li>
 </ul>
 </div>
@@ -338,8 +353,8 @@ your components instead of the default ones</li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -361,16 +376,17 @@ your components instead of the default ones</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

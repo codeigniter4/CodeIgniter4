@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Honeypot Class &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Honeypot Class &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Library Reference" href="index.html"/>
         <link rel="next" title="Image Manipulation Class" href="images.html"/>
         <link rel="prev" title="Working with Files" href="files.html"/> 
@@ -216,9 +219,9 @@
   <div class="section" id="honeypot-class">
 <h1>Honeypot Class<a class="headerlink" href="#honeypot-class" title="Permalink to this headline">¶</a></h1>
 <p>The Honeypot Class makes it possible to determine when a Bot makes a request to a CodeIgniter4 application,
-if it&#8217;s enabled in <code class="docutils literal"><span class="pre">Application\Config\Filters.php</span></code> file. This is done by attaching form fields to any form,
-and this form field is hidden from a human but accessible to a Bot. When data is entered into the field, it&#8217;s
-assumed the request is coming from a Bot, and you can throw a <code class="docutils literal"><span class="pre">HoneypotException</span></code>.</p>
+if it’s enabled in <code class="docutils literal notranslate"><span class="pre">Application\Config\Filters.php</span></code> file. This is done by attaching form fields to any form,
+and this form field is hidden from a human but accessible to a Bot. When data is entered into the field, it’s
+assumed the request is coming from a Bot, and you can throw a <code class="docutils literal notranslate"><span class="pre">HoneypotException</span></code>.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#enabling-honeypot" id="id1">Enabling Honeypot</a></li>
@@ -227,9 +230,9 @@ assumed the request is coming from a Bot, and you can throw a <code class="docut
 </div>
 <div class="section" id="enabling-honeypot">
 <h2><a class="toc-backref" href="#id1">Enabling Honeypot</a><a class="headerlink" href="#enabling-honeypot" title="Permalink to this headline">¶</a></h2>
-<p>To enable a Honeypot, changes have to be made to the <code class="docutils literal"><span class="pre">app/Config/Filters.php</span></code>. Just uncomment honeypot
-from the <code class="docutils literal"><span class="pre">$globals</span></code> array, like...:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
+<p>To enable a Honeypot, changes have to be made to the <code class="docutils literal notranslate"><span class="pre">app/Config/Filters.php</span></code>. Just uncomment honeypot
+from the <code class="docutils literal notranslate"><span class="pre">$globals</span></code> array, like…:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;honeypot&#39;</span>
             <span class="c1">// &#39;csrf&#39;,</span>
@@ -241,19 +244,19 @@ from the <code class="docutils literal"><span class="pre">$globals</span></code>
     <span class="p">];</span>
 </pre></div>
 </div>
-<p>A sample Honeypot filter is bundled, as <code class="docutils literal"><span class="pre">system/Filters/Honeypot.php</span></code>.
-If it is not suitable, make your own at <code class="docutils literal"><span class="pre">app/Filters/Honeypot.php</span></code>,
-and modify the <code class="docutils literal"><span class="pre">$aliases</span></code> in the configuration appropriately.</p>
+<p>A sample Honeypot filter is bundled, as <code class="docutils literal notranslate"><span class="pre">system/Filters/Honeypot.php</span></code>.
+If it is not suitable, make your own at <code class="docutils literal notranslate"><span class="pre">app/Filters/Honeypot.php</span></code>,
+and modify the <code class="docutils literal notranslate"><span class="pre">$aliases</span></code> in the configuration appropriately.</p>
 </div>
 <div class="section" id="customizing-honeypot">
 <h2><a class="toc-backref" href="#id2">Customizing Honeypot</a><a class="headerlink" href="#customizing-honeypot" title="Permalink to this headline">¶</a></h2>
 <p>Honeypot can be customized. The fields below can be set either in
-<code class="docutils literal"><span class="pre">app/Config/Honeypot.php</span></code> or in <code class="docutils literal"><span class="pre">.env</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">app/Config/Honeypot.php</span></code> or in <code class="docutils literal notranslate"><span class="pre">.env</span></code>.</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">hidden</span></code> - true|false to control visibility of the honeypot field; default is <code class="docutils literal"><span class="pre">true</span></code></li>
-<li><code class="docutils literal"><span class="pre">label</span></code> - HTML label for the honeypot field, default is &#8216;Fill This Field&#8217;</li>
-<li><code class="docutils literal"><span class="pre">name</span></code> - name of the HTML form field used for the template; default is &#8216;honeypot&#8217;</li>
-<li><code class="docutils literal"><span class="pre">template</span></code> - form field template used for the honeypot; default is &#8216;&lt;label&gt;{label}&lt;/label&gt;&lt;input type=&#8221;text&#8221; name=&#8221;{name}&#8221; value=&#8221;&#8220;/&gt;&#8217;</li>
+<li><code class="docutils literal notranslate"><span class="pre">hidden</span></code> - true|false to control visibility of the honeypot field; default is <code class="docutils literal notranslate"><span class="pre">true</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">label</span></code> - HTML label for the honeypot field, default is ‘Fill This Field’</li>
+<li><code class="docutils literal notranslate"><span class="pre">name</span></code> - name of the HTML form field used for the template; default is ‘honeypot’</li>
+<li><code class="docutils literal notranslate"><span class="pre">template</span></code> - form field template used for the honeypot; default is ‘&lt;label&gt;{label}&lt;/label&gt;&lt;input type=”text” name=”{name}” value=””/&gt;’</li>
 </ul>
 </div>
 </div>
@@ -280,8 +283,8 @@ and modify the <code class="docutils literal"><span class="pre">$aliases</span><
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -303,16 +306,17 @@ and modify the <code class="docutils literal"><span class="pre">$aliases</span><
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Database Seeding &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Database Seeding &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Managing Databases" href="index.html"/>
         <link rel="next" title="Library Reference" href="../libraries/index.html"/>
         <link rel="prev" title="Database Migrations" href="migration.html"/> 
@@ -203,13 +206,13 @@
 <h1>Database Seeding<a class="headerlink" href="#database-seeding" title="Permalink to this headline">¶</a></h1>
 <p>Database seeding is a simple way to add data into your database. It is especially useful during development where
 you need to populate the database with sample data that you can develop against, but it is not limited to that.
-Seeds can contain static data that you don&#8217;t want to include in a migration, like countries, or geo-coding tables,
+Seeds can contain static data that you don’t want to include in a migration, like countries, or geo-coding tables,
 event or setting information, and more.</p>
 <p>Database seeds are simple classes that must have a <strong>run()</strong> method, and extend <strong>CodeIgniterDatabaseSeeder</strong>.
 Within the <strong>run()</strong> the class can create any form of data that it needs to. It has access to the database
-connection and the forge through <code class="docutils literal"><span class="pre">$this-&gt;db</span></code> and <code class="docutils literal"><span class="pre">$this-&gt;forge</span></code>, respectively. Seed files must be
+connection and the forge through <code class="docutils literal notranslate"><span class="pre">$this-&gt;db</span></code> and <code class="docutils literal notranslate"><span class="pre">$this-&gt;forge</span></code>, respectively. Seed files must be
 stored within the <strong>app/Database/Seeds</strong> directory. The name of the file must match the name of the class.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Database\Seeds</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Database\Seeds</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">SimpleSeeder</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Database\Seeder</span>
 <span class="p">{</span>
@@ -235,7 +238,7 @@ stored within the <strong>app/Database/Seeds</strong> directory. The name of the
 <h2>Nesting Seeders<a class="headerlink" href="#nesting-seeders" title="Permalink to this headline">¶</a></h2>
 <p>Seeders can call other seeders, with the <strong>call()</strong> method. This allows you to easily organize a central seeder,
 but organize the tasks into separate seeder files:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Database\Seeds</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Database\Seeds</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">TestSeeder</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Database\Seeder</span>
 <span class="p">{</span>
@@ -250,7 +253,7 @@ but organize the tasks into separate seeder files:</p>
 </div>
 <p>You can also use a fully-qualified class name in the <strong>call()</strong> method, allowing you to keep your seeders
 anywhere the autoloader can find them. This is great for more modular code bases:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
 <span class="p">{</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;UserSeeder&#39;</span><span class="p">);</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;My\Database\Seeds\CountrySeeder&#39;</span><span class="p">);</span>
@@ -261,15 +264,15 @@ anywhere the autoloader can find them. This is great for more modular code bases
 <div class="section" id="using-seeders">
 <h2>Using Seeders<a class="headerlink" href="#using-seeders" title="Permalink to this headline">¶</a></h2>
 <p>You can grab a copy of the main seeder through the database config class:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$seeder</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">seeder</span><span class="p">();</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$seeder</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">seeder</span><span class="p">();</span>
 <span class="nv">$seeder</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;TestSeeder&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="section" id="command-line-seeding">
 <h3>Command Line Seeding<a class="headerlink" href="#command-line-seeding" title="Permalink to this headline">¶</a></h3>
-<p>You can also seed data from the command line, as part of the Migrations CLI tools, if you don&#8217;t want to create
+<p>You can also seed data from the command line, as part of the Migrations CLI tools, if you don’t want to create
 a dedicated controller:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">seed</span> <span class="nx">TestSeeder</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">seed</span> <span class="nx">TestSeeder</span>
 </pre></div>
 </div>
 </div>
@@ -298,8 +301,8 @@ a dedicated controller:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -321,16 +324,17 @@ a dedicated controller:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

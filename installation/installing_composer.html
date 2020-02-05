@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Composer Installation &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Composer Installation &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Installation" href="index.html"/>
         <link rel="next" title="Git Installation" href="installing_git.html"/>
         <link rel="prev" title="Manual Installation" href="installing_manual.html"/> 
@@ -219,8 +222,8 @@ using CodeIgniter4, that you would then use as the base for a new webapp.
 The third technique described below lets you add CodeIgniter4 to an existing
 webapp,</p>
 <p><strong>Note</strong>: if you are using a Git repository to store your code, or for
-collaboration with others, then the <code class="docutils literal"><span class="pre">vendor</span></code> folder would normally
-be &#8220;git ignored&#8221;. In such a case, you will need to do a <code class="docutils literal"><span class="pre">composer</span> <span class="pre">update</span></code>
+collaboration with others, then the <code class="docutils literal notranslate"><span class="pre">vendor</span></code> folder would normally
+be “git ignored”. In such a case, you will need to do a <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span></code>
 when you clone the repository to a new system.</p>
 <div class="section" id="app-starter">
 <h2><a class="toc-backref" href="#id10">App Starter</a><a class="headerlink" href="#app-starter" title="Permalink to this headline">¶</a></h2>
@@ -229,34 +232,34 @@ repository holds a skeleton application, with a composer dependency on
 the latest released version of the framework.</p>
 <p>This installation technique would suit a developer who wishes to start
 a new CodeIgniter4 based project.</p>
-<div class="section" id="installation-setup">
-<h3>Installation &amp; Setup<a class="headerlink" href="#installation-setup" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="installation-set-up">
+<h3>Installation &amp; Set Up<a class="headerlink" href="#installation-set-up" title="Permalink to this headline">¶</a></h3>
 <p>In the folder above your project root:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">appstarter</span> <span class="nx">project</span><span class="o">-</span><span class="nx">root</span> <span class="o">-</span><span class="nx">s</span> <span class="nx">rc</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">appstarter</span> <span class="nx">project</span><span class="o">-</span><span class="nx">root</span> <span class="o">-</span><span class="nx">s</span> <span class="nx">rc</span>
 </pre></div>
 </div>
-<p>The command above will create a &#8220;project-root&#8221; folder.</p>
-<p>If you omit the &#8220;project-root&#8221; argument, the command will create an
-&#8220;appstarter&#8221; folder, which can be renamed as appropriate.</p>
-<p>If you don&#8217;t need or want phpunit installed, and all of its composer
-dependencies, then add the &#8220;&#8211;no-dev&#8221; option to the end of the above
+<p>The command above will create a “project-root” folder.</p>
+<p>If you omit the “project-root” argument, the command will create an
+“appstarter” folder, which can be renamed as appropriate.</p>
+<p>If you don’t need or want phpunit installed, and all of its composer
+dependencies, then add the “–no-dev” option to the end of the above
 command line. That will result in only the framework, and the three
 trusted dependencies that we bundle, being composer-installed.</p>
-<p>A sample such installation command, using the default project-root &#8220;appstarter&#8221;:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">appstarter</span> <span class="o">-</span><span class="nx">s</span> <span class="nx">rc</span> <span class="o">--</span><span class="nx">no</span><span class="o">-</span><span class="nx">dev</span>
+<p>A sample such installation command, using the default project-root “appstarter”:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">appstarter</span> <span class="o">-</span><span class="nx">s</span> <span class="nx">rc</span> <span class="o">--</span><span class="nx">no</span><span class="o">-</span><span class="nx">dev</span>
 </pre></div>
 </div>
-<p>After installation you should follow the steps in the &#8220;Upgrading&#8221; section.</p>
+<p>After installation you should follow the steps in the “Upgrading” section.</p>
 </div>
 <div class="section" id="upgrading">
 <h3>Upgrading<a class="headerlink" href="#upgrading" title="Permalink to this headline">¶</a></h3>
 <p>Whenever there is a new release, then from the command line in your project root:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">update</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">update</span>
 </pre></div>
 </div>
-<p>If you used the &#8220;&#8211;no-dev&#8221; option when you created the project, it
-would be appropriate to do so here too, i.e. <code class="docutils literal"><span class="pre">composer</span> <span class="pre">update</span> <span class="pre">--no-dev</span></code>.</p>
-<p>Read the upgrade instructions, and check designated  <code class="docutils literal"><span class="pre">app/Config</span></code> folders for affected changes.</p>
+<p>If you used the “–no-dev” option when you created the project, it
+would be appropriate to do so here too, i.e. <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span> <span class="pre">--no-dev</span></code>.</p>
+<p>Read the upgrade instructions, and check designated  <code class="docutils literal notranslate"><span class="pre">app/Config</span></code> folders for affected changes.</p>
 </div>
 <div class="section" id="pros">
 <h3>Pros<a class="headerlink" href="#pros" title="Permalink to this headline">¶</a></h3>
@@ -264,11 +267,11 @@ would be appropriate to do so here too, i.e. <code class="docutils literal"><spa
 </div>
 <div class="section" id="cons">
 <h3>Cons<a class="headerlink" href="#cons" title="Permalink to this headline">¶</a></h3>
-<p>You still need to check for <code class="docutils literal"><span class="pre">app/Config</span></code> changes after updating</p>
+<p>You still need to check for <code class="docutils literal notranslate"><span class="pre">app/Config</span></code> changes after updating</p>
 </div>
 <div class="section" id="structure">
 <h3>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h3>
-<p>Folders in your project after setup:</p>
+<p>Folders in your project after set up:</p>
 <ul class="simple">
 <li>app, public, tests, writable</li>
 <li>vendor/codeigniter4/framework/system</li>
@@ -279,7 +282,7 @@ would be appropriate to do so here too, i.e. <code class="docutils literal"><spa
 <div class="section" id="dev-starter">
 <h2><a class="toc-backref" href="#id11">Dev Starter</a><a class="headerlink" href="#dev-starter" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id1">
-<h3>Installation &amp; Setup<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<h3>Installation &amp; Set Up<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>The <a class="reference external" href="https://github.com/codeigniter4/devstarter">CodeIgniter 4 dev starter</a>
 repository holds a skeleton application, just like the appstarter above,
 but with a composer dependency on
@@ -292,23 +295,23 @@ latest unreleased changes, which may be unstable.</p>
 Note that this differs from the released user guide, and will pertain to the
 develop branch explicitly.</p>
 <p>In the folder above your project root:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">devstarter</span> <span class="o">-</span><span class="nx">s</span> <span class="nx">dev</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">devstarter</span> <span class="o">-</span><span class="nx">s</span> <span class="nx">dev</span>
 </pre></div>
 </div>
-<p>The command above will create a &#8220;devstarter&#8221; folder.
+<p>The command above will create a “devstarter” folder.
 Feel free to rename that for your project.</p>
 <p>Just like the appstarter, you can provide your own project
 name as the third composer argument, and you can add
-the &#8220;&#8211;no-dev&#8221; argument if your don&#8217;t want phpunit and its dependencies included.
+the “–no-dev” argument if your don’t want phpunit and its dependencies included.
 An example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">devstarter</span> <span class="nx">my</span><span class="o">-</span><span class="nx">awesome</span><span class="o">-</span><span class="nx">project</span> <span class="o">-</span><span class="nx">s</span> <span class="nx">dev</span> <span class="o">--</span><span class="nx">no</span><span class="o">-</span><span class="nx">dev</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">devstarter</span> <span class="nx">my</span><span class="o">-</span><span class="nx">awesome</span><span class="o">-</span><span class="nx">project</span> <span class="o">-</span><span class="nx">s</span> <span class="nx">dev</span> <span class="o">--</span><span class="nx">no</span><span class="o">-</span><span class="nx">dev</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id2">
 <h3>Upgrading<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">composer</span> <span class="pre">update</span></code> whenever you are ready for the latest changes,
-or <code class="docutils literal"><span class="pre">composer</span> <span class="pre">update</span> <span class="pre">--no-dev</span></code> if you used that argument when creating your project.</p>
+<p><code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span></code> whenever you are ready for the latest changes,
+or <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span> <span class="pre">--no-dev</span></code> if you used that argument when creating your project.</p>
 <p>Check the changelog to see if any recent changes affect your app,
 bearing in mind that the most recent changes may not have made it
 into the changelog!</p>
@@ -320,11 +323,11 @@ into the changelog!</p>
 <div class="section" id="id4">
 <h3>Cons<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>This is not guaranteed to be stable; the onus is on you to upgrade.
-You still need to check for <code class="docutils literal"><span class="pre">app/Config</span></code> changes after updating.</p>
+You still need to check for <code class="docutils literal notranslate"><span class="pre">app/Config</span></code> changes after updating.</p>
 </div>
 <div class="section" id="id5">
 <h3>Structure<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<p>Folders in your project after setup:</p>
+<p>Folders in your project after set up:</p>
 <ul class="simple">
 <li>app, public, tests, writable</li>
 <li>vendor/codeigniter4/codeigniter4/system</li>
@@ -335,33 +338,33 @@ You still need to check for <code class="docutils literal"><span class="pre">app
 <div class="section" id="adding-codeigniter4-to-an-existing-project">
 <h2><a class="toc-backref" href="#id12">Adding CodeIgniter4 to an Existing Project</a><a class="headerlink" href="#adding-codeigniter4-to-an-existing-project" title="Permalink to this headline">¶</a></h2>
 <p>The same <a class="reference external" href="https://github.com/codeigniter4/framework">CodeIgniter 4 framework</a>
-repository described in &#8220;Manual Installation&#8221; can also be added to an
+repository described in “Manual Installation” can also be added to an
 existing project using Composer.</p>
-<p>Develop your app inside the <code class="docutils literal"><span class="pre">app</span></code> folder, and the <code class="docutils literal"><span class="pre">public</span></code> folder
+<p>Develop your app inside the <code class="docutils literal notranslate"><span class="pre">app</span></code> folder, and the <code class="docutils literal notranslate"><span class="pre">public</span></code> folder
 will be your document root.</p>
 <p>In your project root:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="k">require</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">framework</span> <span class="o">@</span><span class="nx">rc</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="k">require</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">framework</span> <span class="o">@</span><span class="nx">rc</span>
 </pre></div>
 </div>
 <p>As with the earlier two composer install methods, you can omit installing
-phpunit and its dependencies by adding the &#8220;&#8211;no-dev&#8221; argument to the &#8220;composer require&#8221; command.</p>
-<div class="section" id="setup">
-<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h3>
-<p>Copy the app, public, tests and writable folders from <code class="docutils literal"><span class="pre">vendor/codeigniter4/framework</span></code>
+phpunit and its dependencies by adding the “–no-dev” argument to the “composer require” command.</p>
+<div class="section" id="set-up">
+<h3>Set Up<a class="headerlink" href="#set-up" title="Permalink to this headline">¶</a></h3>
+<p>Copy the app, public, tests and writable folders from <code class="docutils literal notranslate"><span class="pre">vendor/codeigniter4/framework</span></code>
 to your project root</p>
-<p>Copy the <code class="docutils literal"><span class="pre">env</span></code>, <code class="docutils literal"><span class="pre">phpunit.xml.dist</span></code> and <code class="docutils literal"><span class="pre">spark</span></code> files, from
-<code class="docutils literal"><span class="pre">vendor/codeigniter4/framework</span></code> to your project root</p>
+<p>Copy the <code class="docutils literal notranslate"><span class="pre">env</span></code>, <code class="docutils literal notranslate"><span class="pre">phpunit.xml.dist</span></code> and <code class="docutils literal notranslate"><span class="pre">spark</span></code> files, from
+<code class="docutils literal notranslate"><span class="pre">vendor/codeigniter4/framework</span></code> to your project root</p>
 <p>You will have to adjust paths to refer to vendor/codeigniter/framework``,
-- the $systemDirectory variable in <code class="docutils literal"><span class="pre">app/Config/Paths.php</span></code></p>
+- the $systemDirectory variable in <code class="docutils literal notranslate"><span class="pre">app/Config/Paths.php</span></code></p>
 </div>
 <div class="section" id="id6">
 <h3>Upgrading<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>Whenever there is a new release, then from the command line in your project root:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">update</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">update</span>
 </pre></div>
 </div>
 <p>Read the upgrade instructions, and check designated
-<code class="docutils literal"><span class="pre">app/Config</span></code> folders for affected changes.</p>
+<code class="docutils literal notranslate"><span class="pre">app/Config</span></code> folders for affected changes.</p>
 </div>
 <div class="section" id="id7">
 <h3>Pros<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
@@ -369,11 +372,11 @@ to your project root</p>
 </div>
 <div class="section" id="id8">
 <h3>Cons<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
-<p>You still need to check for <code class="docutils literal"><span class="pre">app/Config</span></code> changes after updating</p>
+<p>You still need to check for <code class="docutils literal notranslate"><span class="pre">app/Config</span></code> changes after updating</p>
 </div>
 <div class="section" id="id9">
 <h3>Structure<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<p>Folders in your project after setup:</p>
+<p>Folders in your project after set up:</p>
 <ul class="simple">
 <li>app, public, tests, writable</li>
 <li>vendor/codeigniter4/framework/system</li>
@@ -385,10 +388,10 @@ to your project root</p>
 <p>If you want to take advantage of the system message translations,
 they can be added to your project in a similar fashion.</p>
 <p>From the command line inside your project root:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="k">require</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">translations</span> <span class="o">@</span><span class="nx">beta</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="k">require</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">translations</span> <span class="o">@</span><span class="nx">beta</span>
 </pre></div>
 </div>
-<p>These will be updated along with the framework whenever you do a <code class="docutils literal"><span class="pre">composer</span> <span class="pre">update</span></code>.</p>
+<p>These will be updated along with the framework whenever you do a <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span></code>.</p>
 </div>
 </div>
 
@@ -414,8 +417,8 @@ they can be added to your project in a similar fashion.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -437,16 +440,17 @@ they can be added to your project in a similar fashion.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

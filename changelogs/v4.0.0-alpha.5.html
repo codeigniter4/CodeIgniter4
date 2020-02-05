@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Version 4.0.0-alpha.5 &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Version 4.0.0-alpha.5 &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Change Logs" href="index.html"/>
         <link rel="next" title="Version 4.0.0-alpha.4" href="v4.0.0-alpha.4.html"/>
         <link rel="prev" title="Version 4.0.0-beta.1" href="v4.0.0-beta.1.html"/> 
@@ -131,21 +134,25 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Change Logs</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="next.html">Version 4.0-dev</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-rc.2.html">Version 4.0.0-rc.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-rc.1.html">Version 4.0.0-rc.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-beta.4.html">Version 4.0.0-beta.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-beta.3.html">Version 4.0.0-beta.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-beta.2.html">Version 4.0.0-beta.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-beta.1.html">Version 4.0.0-beta.1</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Version 4.0.0-alpha.5</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#prs-merged">PRs merged:</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#version-version">Version 4.0-dev</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="next.html">Version 4.0-dev</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-rc.3.html">Version 4.0.0-rc.3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-rc.2.html">Version 4.0.0-rc.2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-rc.1.html">Version 4.0.0-rc.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-beta.4.html">Version 4.0.0-beta.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-beta.3.html">Version 4.0.0-beta.3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-beta.2.html">Version 4.0.0-beta.2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-beta.1.html">Version 4.0.0-beta.1</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Version 4.0.0-alpha.5</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prs-merged">PRs merged:</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-alpha.4.html">Version 4.0.0-alpha.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-alpha.3.html">Version 4.0.0-alpha.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-alpha.2.html">Version 4.0.0-alpha.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-alpha.1.html">Version 4.0.0-alpha.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-alpha.4.html">Version 4.0.0-alpha.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-alpha.3.html">Version 4.0.0-alpha.3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-alpha.2.html">Version 4.0.0-alpha.2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-alpha.1.html">Version 4.0.0-alpha.1</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -219,14 +226,14 @@
 <ul class="simple">
 <li>added $maxQueries setting to app/Config/Toolbar.php</li>
 <li>updated PHP dependency to 7.2</li>
-<li>new feature branches have been created for the email and queue modules, so they don&#8217;t impact the release of 4.0.0</li>
+<li>new feature branches have been created for the email and queue modules, so they don’t impact the release of 4.0.0</li>
 <li>dropped several language messages that were unused (eg Migrations.missingTable) and added some new (eg Migrations.invalidType)</li>
 <li>lots of bug fixes, especially for the database support</li>
 <li>provided filters (CSRF, Honeypot, DebugToolbar) have been moved from app/Filters/ to system/Filters/</li>
 <li>revisited the installation and tutorial sections of the user guide</li>
-<li>code coverage is at 77% ... getting ever closer to our target of 80% :)</li>
+<li>code coverage is at 77% … getting ever closer to our target of 80% :)</li>
 </ul>
-<p>We hope this will be the last alpha, and that the next pre-release will be our first beta ... fingers crossed!</p>
+<p>We hope this will be the last alpha, and that the next pre-release will be our first beta … fingers crossed!</p>
 <p>The list of changed files follows, with PR numbers shown.</p>
 <ul>
 <li><dl class="first docutils">
@@ -717,7 +724,7 @@
 <li>#2e698a urldecode URI keys as well as values.</li>
 <li>#1679 save_path - for memcached</li>
 <li>#1678 fix route not replacing forward slashes</li>
-<li>#1677 Implement Don&#8217;t Escape feature for db engine</li>
+<li>#1677 Implement Don’t Escape feature for db engine</li>
 <li>#1675 Add missing test group directives</li>
 <li>#1674 Update changelog</li>
 <li>#1673 Updated download &amp; installation docs</li>
@@ -729,13 +736,13 @@
 <li>#6dab8f Filters match case-insensitively</li>
 <li>#1663 Fix bind issue that occurred when using whereIn</li>
 <li>#1660 Migrations Tests and database tweaks</li>
-<li>#1656 DBGroup in __get(), allows to validate &#8220;database&#8221; data outside the model</li>
+<li>#1656 DBGroup in __get(), allows to validate “database” data outside the model</li>
 <li>#1654 Toolbar - Return Logger::$logCache items</li>
-<li>#1649 remove php 7.3 from &#8220;allow_failures&#8221; in travis config</li>
-<li>#1648 Update &#8220;managing apps&#8221; docs</li>
+<li>#1649 remove php 7.3 from “allow_failures” in travis config</li>
+<li>#1648 Update “managing apps” docs</li>
 <li>#1645 Fix transaction enabling confusing (docu)</li>
 <li>#1643 Remove email module</li>
-<li>#1642 CSP nonce attribute value in &#8220;&#8221;</li>
+<li>#1642 CSP nonce attribute value in “”</li>
 <li>#81d371 Safety checks for config files during autoload and migrations</li>
 <li>#1641 More unit testing tweaks</li>
 <li>#1640 Update getCompiledX methods in BaseBuilder</li>
@@ -747,7 +754,7 @@
 <li>#1632 DBGroup should be passed to -&gt;run instead of -&gt;setRules</li>
 <li>#1631 move use statement after License doc at UploadedFile class</li>
 <li>#1630 Update copyright to 2019</li>
-<li>#1629 &#8220;application&#8221; to &#8220;app&#8221; directory doc and comments</li>
+<li>#1629 “application” to “app” directory doc and comments</li>
 <li>#3a4ade view() now properly reads the app config again</li>
 <li>#7993a7 Final piece to get translateURIDashes working appropriately</li>
 <li>#9e435c TranslateURIDashes fix</li>
@@ -787,8 +794,8 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -810,16 +817,17 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

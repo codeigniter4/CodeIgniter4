@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Text Helper &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Text Helper &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Helpers" href="index.html"/>
         <link rel="next" title="URL Helper" href="url_helper.html"/>
         <link rel="prev" title="Security Helper" href="security_helper.html"/> 
@@ -220,7 +223,7 @@
 <div class="custom-index container"></div><div class="section" id="loading-this-helper">
 <h2><a class="toc-backref" href="#id1">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline">¶</a></h2>
 <p>This helper is loaded using the following code:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -235,8 +238,8 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$type</strong> (<em>string</em>) &#8211; Randomization type</li>
-<li><strong>$len</strong> (<em>int</em>) &#8211; Output string length</li>
+<li><strong>$type</strong> (<em>string</em>) – Randomization type</li>
+<li><strong>$len</strong> (<em>int</em>) – Output string length</li>
 </ul>
 </td>
 </tr>
@@ -255,15 +258,15 @@ specifies the length. The following choices are available:</p>
 <ul class="simple">
 <li><strong>alpha</strong>: A string with lower and uppercase letters only.</li>
 <li><strong>alnum</strong>: Alpha-numeric string with lower and uppercase characters.</li>
-<li><strong>basic</strong>: A random number based on <code class="docutils literal"><span class="pre">mt_rand()</span></code> (length ignored).</li>
+<li><strong>basic</strong>: A random number based on <code class="docutils literal notranslate"><span class="pre">mt_rand()</span></code> (length ignored).</li>
 <li><strong>numeric</strong>: Numeric string.</li>
 <li><strong>nozero</strong>: Numeric string with no zeros.</li>
-<li><strong>md5</strong>: An encrypted random number based on <code class="docutils literal"><span class="pre">md5()</span></code> (fixed length of 32).</li>
-<li><strong>sha1</strong>: An encrypted random number based on <code class="docutils literal"><span class="pre">sha1()</span></code> (fixed length of 40).</li>
-<li><strong>crypto</strong>: A random string based on <code class="docutils literal"><span class="pre">random_bytes()</span></code>.</li>
+<li><strong>md5</strong>: An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">md5()</span></code> (fixed length of 32).</li>
+<li><strong>sha1</strong>: An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">sha1()</span></code> (fixed length of 40).</li>
+<li><strong>crypto</strong>: A random string based on <code class="docutils literal notranslate"><span class="pre">random_bytes()</span></code>.</li>
 </ul>
 <p>Usage example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">random_string</span><span class="p">(</span><span class="s1">&#39;alnum&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">random_string</span><span class="p">(</span><span class="s1">&#39;alnum&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -276,9 +279,9 @@ specifies the length. The following choices are available:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
-<li><strong>$separator</strong> (<em>string</em>) &#8211; Separator to append a duplicate number with</li>
-<li><strong>$first</strong> (<em>int</em>) &#8211; Starting number</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
+<li><strong>$separator</strong> (<em>string</em>) – Separator to append a duplicate number with</li>
+<li><strong>$first</strong> (<em>int</em>) – Starting number</li>
 </ul>
 </td>
 </tr>
@@ -291,10 +294,10 @@ specifies the length. The following choices are available:</p>
 </tbody>
 </table>
 <p>Increments a string by appending a number to it or increasing the
-number. Useful for creating &#8220;copies&#8221; or a file or duplicating database
+number. Useful for creating “copies” or a file or duplicating database
 content which has unique titles or slugs.</p>
 <p>Usage example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">increment_string</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">);</span> <span class="c1">// &quot;file_1&quot;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">increment_string</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">);</span> <span class="c1">// &quot;file_1&quot;</span>
 <span class="k">echo</span> <span class="nx">increment_string</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// &quot;file-2&quot;</span>
 <span class="k">echo</span> <span class="nx">increment_string</span><span class="p">(</span><span class="s1">&#39;file_4&#39;</span><span class="p">);</span> <span class="c1">// &quot;file_5&quot;</span>
 </pre></div>
@@ -309,7 +312,7 @@ content which has unique titles or slugs.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$args</strong> (<em>mixed</em>) &#8211; A variable number of arguments</li>
+<li><strong>$args</strong> (<em>mixed</em>) – A variable number of arguments</li>
 </ul>
 </td>
 </tr>
@@ -323,7 +326,7 @@ content which has unique titles or slugs.</p>
 </table>
 <p>Allows two or more items to be alternated between, when cycling through
 a loop. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="k">echo</span> <span class="nx">alternator</span><span class="p">(</span><span class="s1">&#39;string one&#39;</span><span class="p">,</span> <span class="s1">&#39;string two&#39;</span><span class="p">);</span>
 <span class="p">}</span>
@@ -331,7 +334,7 @@ a loop. Example:</p>
 </div>
 <p>You can add as many parameters as you want, and with each iteration of
 your loop the next item will be returned.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="k">echo</span> <span class="nx">alternator</span><span class="p">(</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="s1">&#39;five&#39;</span><span class="p">);</span>
 <span class="p">}</span>
@@ -352,7 +355,7 @@ function with no arguments to re-initialize.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
 </ul>
 </td>
 </tr>
@@ -367,7 +370,7 @@ function with no arguments to re-initialize.</p>
 <p>Converts double slashes in a string to a single slash, except those
 found in URL protocol prefixes (e.g. http&amp;#58;//).</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;http://example.com//index.php&quot;</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;http://example.com//index.php&quot;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">reduce_double_slashes</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span> <span class="c1">// results in &quot;http://example.com/index.php&quot;</span>
 </pre></div>
 </div>
@@ -381,7 +384,7 @@ found in URL protocol prefixes (e.g. http&amp;#58;//).</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$data</strong> (<em>mixed</em>) &#8211; Input string or an array of strings</li>
+<li><strong>$data</strong> (<em>mixed</em>) – Input string or an array of strings</li>
 </ul>
 </td>
 </tr>
@@ -395,7 +398,7 @@ found in URL protocol prefixes (e.g. http&amp;#58;//).</p>
 </table>
 <p>Removes any slashes from an array of strings.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;question&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Is your name O\&#39;reilly?&#39;</span><span class="p">,</span>
         <span class="s1">&#39;answer&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;No, my name is O\&#39;connor.&#39;</span>
 <span class="p">];</span>
@@ -404,7 +407,7 @@ found in URL protocol prefixes (e.g. http&amp;#58;//).</p>
 </pre></div>
 </div>
 <p>The above will return the following array:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="p">[</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
         <span class="s1">&#39;question&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Is your name O&#39;reilly?&quot;</span><span class="p">,</span>
         <span class="s1">&#39;answer&#39;</span>   <span class="o">=&gt;</span> <span class="s2">&quot;No, my name is O&#39;connor.&quot;</span>
 <span class="p">];</span>
@@ -414,7 +417,7 @@ found in URL protocol prefixes (e.g. http&amp;#58;//).</p>
 <p class="first admonition-title">Note</p>
 <p class="last">For historical reasons, this function will also accept
 and handle string inputs. This however makes it just an
-alias for <code class="docutils literal"><span class="pre">stripslashes()</span></code>.</p>
+alias for <code class="docutils literal notranslate"><span class="pre">stripslashes()</span></code>.</p>
 </div>
 </dd></dl>
 
@@ -426,9 +429,9 @@ alias for <code class="docutils literal"><span class="pre">stripslashes()</span>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Text to search in</li>
-<li><strong>$character</strong> (<em>string</em>) &#8211; Character to reduce</li>
-<li><strong>$trim</strong> (<em>bool</em>) &#8211; Whether to also trim the specified character</li>
+<li><strong>$str</strong> (<em>string</em>) – Text to search in</li>
+<li><strong>$character</strong> (<em>string</em>) – Character to reduce</li>
+<li><strong>$trim</strong> (<em>bool</em>) – Whether to also trim the specified character</li>
 </ul>
 </td>
 </tr>
@@ -442,13 +445,13 @@ alias for <code class="docutils literal"><span class="pre">stripslashes()</span>
 </table>
 <p>Reduces multiple instances of a particular character occurring directly
 after each other. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Fred, Bill,, Joe, Jimmy&quot;</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Fred, Bill,, Joe, Jimmy&quot;</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">reduce_multiples</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span><span class="s2">&quot;,&quot;</span><span class="p">);</span> <span class="c1">//results in &quot;Fred, Bill, Joe, Jimmy&quot;</span>
 </pre></div>
 </div>
 <p>If the third parameter is set to TRUE it will remove occurrences of the
 character at the beginning and the end of the string. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;,Fred, Bill,, Joe, Jimmy,&quot;</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;,Fred, Bill,, Joe, Jimmy,&quot;</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">reduce_multiples</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s2">&quot;, &quot;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span> <span class="c1">//results in &quot;Fred, Bill, Joe, Jimmy&quot;</span>
 </pre></div>
 </div>
@@ -462,7 +465,7 @@ character at the beginning and the end of the string. Example:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
 </ul>
 </td>
 </tr>
@@ -476,7 +479,7 @@ character at the beginning and the end of the string. Example:</p>
 </table>
 <p>Converts single and double quotes in a string to the corresponding HTML
 entities. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Joe&#39;s </span><span class="se">\&quot;</span><span class="s2">dinner</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Joe&#39;s </span><span class="se">\&quot;</span><span class="s2">dinner</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">quotes_to_entities</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span> <span class="c1">//results in &quot;Joe&amp;#39;s &amp;quot;dinner&amp;quot;&quot;</span>
 </pre></div>
 </div>
@@ -490,7 +493,7 @@ entities. Example:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
 </ul>
 </td>
 </tr>
@@ -503,7 +506,7 @@ entities. Example:</p>
 </tbody>
 </table>
 <p>Removes single and double quotes from a string. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Joe&#39;s </span><span class="se">\&quot;</span><span class="s2">dinner</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Joe&#39;s </span><span class="se">\&quot;</span><span class="s2">dinner</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">strip_quotes</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span> <span class="c1">//results in &quot;Joes dinner&quot;</span>
 </pre></div>
 </div>
@@ -517,9 +520,9 @@ entities. Example:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
-<li><strong>$limit</strong> (<em>int</em>) &#8211; Limit</li>
-<li><strong>$end_char</strong> (<em>string</em>) &#8211; End character (usually an ellipsis)</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
+<li><strong>$limit</strong> (<em>int</em>) – Limit</li>
+<li><strong>$end_char</strong> (<em>string</em>) – End character (usually an ellipsis)</li>
 </ul>
 </td>
 </tr>
@@ -532,7 +535,7 @@ entities. Example:</p>
 </tbody>
 </table>
 <p>Truncates a string to the number of <em>words</em> specified. Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a nice text string consisting of eleven words.&quot;</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a nice text string consisting of eleven words.&quot;</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">word_limiter</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
 <span class="c1">// Returns:  Here is a nice</span>
 </pre></div>
@@ -549,9 +552,9 @@ default it adds an ellipsis.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
-<li><strong>$n</strong> (<em>int</em>) &#8211; Number of characters</li>
-<li><strong>$end_char</strong> (<em>string</em>) &#8211; End character (usually an ellipsis)</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
+<li><strong>$n</strong> (<em>int</em>) – Number of characters</li>
+<li><strong>$end_char</strong> (<em>string</em>) – End character (usually an ellipsis)</li>
 </ul>
 </td>
 </tr>
@@ -567,7 +570,7 @@ default it adds an ellipsis.</p>
 maintains the integrity of words so the character count may be slightly
 more or less than what you specify.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a nice text string consisting of eleven words.&quot;</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a nice text string consisting of eleven words.&quot;</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">character_limiter</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
 <span class="c1">// Returns:  Here is a nice text string</span>
 </pre></div>
@@ -577,7 +580,7 @@ undeclared this helper uses an ellipsis.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If you need to truncate to an exact number of characters, please
-see the <a class="reference internal" href="#ellipsize" title="ellipsize"><code class="xref php php-func docutils literal"><span class="pre">ellipsize()</span></code></a> function below.</p>
+see the <a class="reference internal" href="#ellipsize" title="ellipsize"><code class="xref php php-func docutils literal notranslate"><span class="pre">ellipsize()</span></code></a> function below.</p>
 </div>
 </dd></dl>
 
@@ -589,7 +592,7 @@ see the <a class="reference internal" href="#ellipsize" title="ellipsize"><code 
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
 </ul>
 </td>
 </tr>
@@ -604,12 +607,12 @@ see the <a class="reference internal" href="#ellipsize" title="ellipsize"><code 
 <p>Converts ASCII values to character entities, including high ASCII and MS
 Word characters that can cause problems when used in a web page, so that
 they can be shown consistently regardless of browser settings or stored
-reliably in a database. There is some dependence on your server&#8217;s
+reliably in a database. There is some dependence on your server’s
 supported character sets, so it may not be 100% reliable in all cases,
 but for the most part, it should correctly identify characters outside
 the normal range (like accented characters).</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">ascii_to_entities</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">ascii_to_entities</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -622,8 +625,8 @@ the normal range (like accented characters).</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
-<li><strong>$all</strong> (<em>bool</em>) &#8211; Whether to convert unsafe entities as well</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
+<li><strong>$all</strong> (<em>bool</em>) – Whether to convert unsafe entities as well</li>
 </ul>
 </td>
 </tr>
@@ -635,7 +638,7 @@ the normal range (like accented characters).</p>
 </tr>
 </tbody>
 </table>
-<p>This function does the opposite of <a class="reference internal" href="#ascii_to_entities" title="ascii_to_entities"><code class="xref php php-func docutils literal"><span class="pre">ascii_to_entities()</span></code></a>.
+<p>This function does the opposite of <a class="reference internal" href="#ascii_to_entities" title="ascii_to_entities"><code class="xref php php-func docutils literal notranslate"><span class="pre">ascii_to_entities()</span></code></a>.
 It turns character entities back into ASCII.</p>
 </dd></dl>
 
@@ -647,7 +650,7 @@ It turns character entities back into ASCII.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
 </ul>
 </td>
 </tr>
@@ -663,7 +666,7 @@ It turns character entities back into ASCII.</p>
 when non-English characters need to be used where only standard ASCII
 characters are safely used, for instance, in URLs.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">convert_accented_characters</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">convert_accented_characters</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -682,9 +685,9 @@ from array for transliteration.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
-<li><strong>$censored</strong> (<em>array</em>) &#8211; List of bad words to censor</li>
-<li><strong>$replacement</strong> (<em>string</em>) &#8211; What to replace bad words with</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
+<li><strong>$censored</strong> (<em>array</em>) – List of bad words to censor</li>
+<li><strong>$replacement</strong> (<em>string</em>) – What to replace bad words with</li>
 </ul>
 </td>
 </tr>
@@ -702,7 +705,7 @@ words which you disallow. The third (optional) parameter can contain
 a replacement value for the words. If not specified they are replaced
 with pound signs: ####.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$disallowed</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;darn&#39;</span><span class="p">,</span> <span class="s1">&#39;shucks&#39;</span><span class="p">,</span> <span class="s1">&#39;golly&#39;</span><span class="p">,</span> <span class="s1">&#39;phooey&#39;</span><span class="p">];</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$disallowed</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;darn&#39;</span><span class="p">,</span> <span class="s1">&#39;shucks&#39;</span><span class="p">,</span> <span class="s1">&#39;golly&#39;</span><span class="p">,</span> <span class="s1">&#39;phooey&#39;</span><span class="p">];</span>
 <span class="nv">$string</span>     <span class="o">=</span> <span class="nx">word_censor</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="nv">$disallowed</span><span class="p">,</span> <span class="s1">&#39;Beep!&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -716,7 +719,7 @@ with pound signs: ####.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
 </ul>
 </td>
 </tr>
@@ -729,10 +732,10 @@ with pound signs: ####.</p>
 </tbody>
 </table>
 <p>Colorizes a string of code (PHP, HTML, etc.). Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">highlight_code</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">highlight_code</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The function uses PHP&#8217;s <code class="docutils literal"><span class="pre">highlight_string()</span></code> function, so the
+<p>The function uses PHP’s <code class="docutils literal notranslate"><span class="pre">highlight_string()</span></code> function, so the
 colors used are the ones specified in your php.ini file.</p>
 </dd></dl>
 
@@ -744,10 +747,10 @@ colors used are the ones specified in your php.ini file.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
-<li><strong>$phrase</strong> (<em>string</em>) &#8211; Phrase to highlight</li>
-<li><strong>$tag_open</strong> (<em>string</em>) &#8211; Opening tag used for the highlight</li>
-<li><strong>$tag_close</strong> (<em>string</em>) &#8211; Closing tag for the highlight</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
+<li><strong>$phrase</strong> (<em>string</em>) – Phrase to highlight</li>
+<li><strong>$tag_open</strong> (<em>string</em>) – Opening tag used for the highlight</li>
+<li><strong>$tag_close</strong> (<em>string</em>) – Closing tag for the highlight</li>
 </ul>
 </td>
 </tr>
@@ -764,21 +767,21 @@ contain the original string, the second will contain the phrase you wish
 to highlight. The third and fourth parameters will contain the
 opening/closing HTML tags you would like the phrase wrapped in.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a nice text string about nothing in particular.&quot;</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a nice text string about nothing in particular.&quot;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">highlight_phrase</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s2">&quot;nice text&quot;</span><span class="p">,</span> <span class="s1">&#39;&lt;span style=&quot;color:#990000;&quot;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above code prints:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">Here</span> <span class="nx">is</span> <span class="nx">a</span> <span class="o">&lt;</span><span class="nx">span</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;color:#990000;&quot;</span><span class="o">&gt;</span><span class="nx">nice</span> <span class="nx">text</span><span class="o">&lt;/</span><span class="nx">span</span><span class="o">&gt;</span> <span class="nx">string</span> <span class="nx">about</span> <span class="nx">nothing</span> <span class="nx">in</span> <span class="nx">particular</span><span class="o">.</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">Here</span> <span class="nx">is</span> <span class="nx">a</span> <span class="o">&lt;</span><span class="nx">span</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;color:#990000;&quot;</span><span class="o">&gt;</span><span class="nx">nice</span> <span class="nx">text</span><span class="o">&lt;/</span><span class="nx">span</span><span class="o">&gt;</span> <span class="nx">string</span> <span class="nx">about</span> <span class="nx">nothing</span> <span class="nx">in</span> <span class="nx">particular</span><span class="o">.</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>This function used to use the <code class="docutils literal"><span class="pre">&lt;strong&gt;</span></code> tag by default. Older browsers
+<p>This function used to use the <code class="docutils literal notranslate"><span class="pre">&lt;strong&gt;</span></code> tag by default. Older browsers
 might not support the new HTML5 mark tag, so it is recommended that you
 insert the following CSS code into your stylesheet if you need to support
 such browsers:</p>
-<div class="last highlight-ci"><div class="highlight"><pre><span></span><span class="nx">mark</span> <span class="p">{</span>
+<div class="last highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">mark</span> <span class="p">{</span>
         <span class="nx">background</span><span class="o">:</span> <span class="c1">#ff0;</span>
         <span class="nx">color</span><span class="o">:</span> <span class="c1">#000;</span>
 <span class="p">};</span>
@@ -795,8 +798,8 @@ such browsers:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
-<li><strong>$charlim</strong> (<em>int</em>) &#8211; Character limit</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
+<li><strong>$charlim</strong> (<em>int</em>) – Character limit</li>
 </ul>
 </td>
 </tr>
@@ -811,7 +814,7 @@ such browsers:</p>
 <p>Wraps text at the specified <em>character</em> count while maintaining
 complete words.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a simple string of text that will help us demonstrate this function.&quot;</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a simple string of text that will help us demonstrate this function.&quot;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">word_wrap</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="mi">25</span><span class="p">);</span>
 
 <span class="c1">// Would produce:</span>
@@ -832,10 +835,10 @@ complete words.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
-<li><strong>$max_length</strong> (<em>int</em>) &#8211; String length limit</li>
-<li><strong>$position</strong> (<em>mixed</em>) &#8211; Position to split at (int or float)</li>
-<li><strong>$ellipsis</strong> (<em>string</em>) &#8211; What to use as the ellipsis character</li>
+<li><strong>$str</strong> (<em>string</em>) – Input string</li>
+<li><strong>$max_length</strong> (<em>int</em>) – String length limit</li>
+<li><strong>$position</strong> (<em>mixed</em>) – Position to split at (int or float)</li>
+<li><strong>$ellipsis</strong> (<em>string</em>) – What to use as the ellipsis character</li>
 </ul>
 </td>
 </tr>
@@ -857,12 +860,12 @@ string, .5 in the middle, and 0 at the left.</p>
 <p>An optional fourth parameter is the kind of ellipsis. By default,
 &amp;hellip; will be inserted.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="s1">&#39;this_string_is_entirely_too_long_and_might_break_my_design.jpg&#39;</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="s1">&#39;this_string_is_entirely_too_long_and_might_break_my_design.jpg&#39;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">ellipsize</span><span class="p">(</span><span class="nv">$str</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Produces:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">this_string_is_e</span><span class="o">&amp;</span><span class="nx">hellip</span><span class="p">;</span><span class="nx">ak_my_design</span><span class="o">.</span><span class="nx">jpg</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">this_string_is_e</span><span class="o">&amp;</span><span class="nx">hellip</span><span class="p">;</span><span class="nx">ak_my_design</span><span class="o">.</span><span class="nx">jpg</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -875,10 +878,10 @@ string, .5 in the middle, and 0 at the left.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$text</strong> (<em>string</em>) &#8211; Text to extract an excerpt</li>
-<li><strong>$phrase</strong> (<em>string</em>) &#8211; Phrase or word to extract the text arround</li>
-<li><strong>$radius</strong> (<em>int</em>) &#8211; Number of characters before and after $phrase</li>
-<li><strong>$ellipsis</strong> (<em>string</em>) &#8211; What to use as the ellipsis character</li>
+<li><strong>$text</strong> (<em>string</em>) – Text to extract an excerpt</li>
+<li><strong>$phrase</strong> (<em>string</em>) – Phrase or word to extract the text arround</li>
+<li><strong>$radius</strong> (<em>int</em>) – Number of characters before and after $phrase</li>
+<li><strong>$ellipsis</strong> (<em>string</em>) – What to use as the ellipsis character</li>
 </ul>
 </td>
 </tr>
@@ -898,7 +901,7 @@ number of characters to count before and after the central phrase. If no phrase
 passed, the excerpt will include the first $radius characters with the elipsis
 at the end.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$text</span> <span class="o">=</span> <span class="s1">&#39;Ut vel faucibus odio. Quisque quis congue libero. Etiam gravida</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$text</span> <span class="o">=</span> <span class="s1">&#39;Ut vel faucibus odio. Quisque quis congue libero. Etiam gravida</span>
 <span class="s1">eros lorem, eget porttitor augue dignissim tincidunt. In eget risus eget</span>
 <span class="s1">mauris faucibus molestie vitae ultricies odio. Vestibulum id ultricies diam.</span>
 <span class="s1">Curabitur non mauris lectus. Phasellus eu sodales sem. Integer dictum purus</span>
@@ -911,7 +914,7 @@ at the end.</p>
 </pre></div>
 </div>
 <p>Produces:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">...</span> <span class="nx">non</span> <span class="nx">mauris</span> <span class="nx">lectus</span><span class="o">.</span> <span class="nx">Phasellus</span> <span class="nx">eu</span> <span class="nx">sodales</span> <span class="nx">sem</span><span class="o">.</span> <span class="nx">Integer</span> <span class="nx">dictum</span> <span class="nx">purus</span> <span class="nx">ac</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">...</span> <span class="nx">non</span> <span class="nx">mauris</span> <span class="nx">lectus</span><span class="o">.</span> <span class="nx">Phasellus</span> <span class="nx">eu</span> <span class="nx">sodales</span> <span class="nx">sem</span><span class="o">.</span> <span class="nx">Integer</span> <span class="nx">dictum</span> <span class="nx">purus</span> <span class="nx">ac</span>
 <span class="nx">enim</span> <span class="nx">hendrerit</span> <span class="nx">gravida</span><span class="o">.</span> <span class="nx">Donec</span> <span class="nx">ac</span> <span class="nx">magna</span> <span class="nx">vel</span> <span class="nx">nunc</span> <span class="nx">tincidunt</span> <span class="nx">molestie</span> <span class="nx">sed</span>
 <span class="nx">vitae</span> <span class="nx">nisl</span><span class="o">.</span> <span class="nx">Cras</span> <span class="nx">sed</span> <span class="nx">auctor</span> <span class="nx">mauris</span><span class="p">,</span> <span class="nx">non</span> <span class="nx">dictum</span> <span class="o">...</span>
 </pre></div>
@@ -943,8 +946,8 @@ at the end.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -966,16 +969,17 @@ at the end.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

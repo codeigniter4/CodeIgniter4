@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Database Forge Class &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Database Forge Class &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Managing Databases" href="index.html"/>
         <link rel="next" title="Database Migrations" href="migration.html"/>
         <link rel="prev" title="Managing Databases" href="index.html"/> 
@@ -234,32 +237,39 @@ database.</p>
 driver must already be running, since the forge class relies on it.</p>
 </div>
 <p>Load the Forge Class as follows:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$forge</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">forge</span><span class="p">();</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">forge</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>You can also pass another database group name to the DB Forge loader, in case
-the database you want to manage isn&#8217;t the default one:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">myforge</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">forge</span><span class="p">(</span><span class="s1">&#39;other_db&#39;</span><span class="p">);</span>
+the database you want to manage isn’t the default one:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">myforge</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">forge</span><span class="p">(</span><span class="s1">&#39;other_db&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>In the above example, we&#8217;re passing the name of a different database group
+<p>In the above example, we’re passing the name of a different database group
 to connect to as the first parameter.</p>
 </div>
 <div class="section" id="creating-and-dropping-databases">
 <h2><a class="toc-backref" href="#id2">Creating and Dropping Databases</a><a class="headerlink" href="#creating-and-dropping-databases" title="Permalink to this headline">¶</a></h2>
-<p><strong>$forge-&gt;createDatabase(&#8216;db_name&#8217;)</strong></p>
+<p><strong>$forge-&gt;createDatabase(‘db_name’)</strong></p>
 <p>Permits you to create the database specified in the first parameter.
 Returns TRUE/FALSE based on success or failure:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createDatabase</span><span class="p">(</span><span class="s1">&#39;my_db&#39;</span><span class="p">))</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createDatabase</span><span class="p">(</span><span class="s1">&#39;my_db&#39;</span><span class="p">))</span>
 <span class="p">{</span>
         <span class="k">echo</span> <span class="s1">&#39;Database created!&#39;</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><strong>$forge-&gt;dropDatabase(&#8216;db_name&#8217;)</strong></p>
+<p>An optional second parameter set to TRUE will add IF EXISTS statement
+or will check if a database exists before create it (depending on DBMS).</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createDatabase</span><span class="p">(</span><span class="s1">&#39;my_db&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+<span class="c1">// gives CREATE DATABASE IF NOT EXISTS my_db</span>
+<span class="c1">// or will check if a database exists</span>
+</pre></div>
+</div>
+<p><strong>$forge-&gt;dropDatabase(‘db_name’)</strong></p>
 <p>Permits you to drop the database specified in the first parameter.
 Returns TRUE/FALSE based on success or failure:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropDatabase</span><span class="p">(</span><span class="s1">&#39;my_db&#39;</span><span class="p">))</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropDatabase</span><span class="p">(</span><span class="s1">&#39;my_db&#39;</span><span class="p">))</span>
 <span class="p">{</span>
         <span class="k">echo</span> <span class="s1">&#39;Database deleted!&#39;</span><span class="p">;</span>
 <span class="p">}</span>
@@ -274,10 +284,10 @@ mechanism for this.</p>
 <div class="section" id="adding-fields">
 <h3><a class="toc-backref" href="#id4">Adding fields</a><a class="headerlink" href="#adding-fields" title="Permalink to this headline">¶</a></h3>
 <p>Fields are normally created via an associative array. Within the array, you must
-include a &#8216;type&#8217; key that relates to the datatype of the field. For
+include a ‘type’ key that relates to the datatype of the field. For
 example, INT, VARCHAR, TEXT, etc. Many datatypes (for example VARCHAR)
-also require a &#8216;constraint&#8217; key.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
+also require a ‘constraint’ key.</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">,</span>
@@ -288,16 +298,16 @@ also require a &#8216;constraint&#8217; key.</p>
 </div>
 <p>Additionally, the following key/values can be used:</p>
 <ul class="simple">
-<li>unsigned/true : to generate &#8220;UNSIGNED&#8221; in the field definition.</li>
+<li>unsigned/true : to generate “UNSIGNED” in the field definition.</li>
 <li>default/value : to generate a default value in the field definition.</li>
-<li>null/true : to generate &#8220;NULL&#8221; in the field definition. Without this,
-the field will default to &#8220;NOT NULL&#8221;.</li>
+<li>null/true : to generate “NULL” in the field definition. Without this,
+the field will default to “NOT NULL”.</li>
 <li>auto_increment/true : generates an auto_increment flag on the
 field. Note that the field type must be a type that supports this,
 such as integer.</li>
 <li>unique/true : to generate a unique key for the field definition.</li>
 </ul>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
@@ -327,20 +337,20 @@ such as integer.</li>
 </pre></div>
 </div>
 <p>After the fields have been defined, they can be added using
-<code class="docutils literal"><span class="pre">$forge-&gt;addField($fields);</span></code> followed by a call to the
-<code class="docutils literal"><span class="pre">createTable()</span></code> method.</p>
+<code class="docutils literal notranslate"><span class="pre">$forge-&gt;addField($fields);</span></code> followed by a call to the
+<code class="docutils literal notranslate"><span class="pre">createTable()</span></code> method.</p>
 <p><strong>$forge-&gt;addField()</strong></p>
 <p>The add fields method will accept the above array.</p>
 <div class="section" id="passing-strings-as-fields">
 <h4>Passing strings as fields<a class="headerlink" href="#passing-strings-as-fields" title="Permalink to this headline">¶</a></h4>
 <p>If you know exactly how you want a field to be created, you can pass the
 string into the field definitions with addField()</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addField</span><span class="p">(</span><span class="s2">&quot;label varchar(100) NOT NULL DEFAULT &#39;default label&#39;&quot;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addField</span><span class="p">(</span><span class="s2">&quot;label varchar(100) NOT NULL DEFAULT &#39;default label&#39;&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Passing raw strings as fields cannot be followed by <code class="docutils literal"><span class="pre">addKey()</span></code> calls on those fields.</p>
+<p class="last">Passing raw strings as fields cannot be followed by <code class="docutils literal notranslate"><span class="pre">addKey()</span></code> calls on those fields.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -352,7 +362,7 @@ string into the field definitions with addField()</p>
 <p>There is a special exception for creating id fields. A field with type
 id will automatically be assigned as an INT(9) auto_incrementing
 Primary Key.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addField</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addField</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">);</span>
 <span class="c1">// gives id INT(9) NOT NULL AUTO_INCREMENT</span>
 </pre></div>
 </div>
@@ -360,14 +370,14 @@ Primary Key.</p>
 </div>
 <div class="section" id="adding-keys">
 <h3><a class="toc-backref" href="#id5">Adding Keys</a><a class="headerlink" href="#adding-keys" title="Permalink to this headline">¶</a></h3>
-<p>Generally speaking, you&#8217;ll want your table to have Keys. This is
-accomplished with $forge-&gt;addKey(&#8216;field&#8217;). The optional second
+<p>Generally speaking, you’ll want your table to have Keys. This is
+accomplished with $forge-&gt;addKey(‘field’). The optional second
 parameter set to TRUE will make it a primary key and the third
 parameter set to TRUE will make it a unique key. Note that addKey()
 must be followed by a call to createTable().</p>
 <p>Multiple column non-primary keys must be sent as an array. Sample output
 below is for MySQL.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
 <span class="c1">// gives PRIMARY KEY `blog_id` (`blog_id`)</span>
 
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
@@ -386,7 +396,7 @@ below is for MySQL.</p>
 </div>
 <p>To make code reading more objective it is also possible to add primary
 and unique keys with specific methods:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addPrimaryKey</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addPrimaryKey</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">);</span>
 <span class="c1">// gives PRIMARY KEY `blog_id` (`blog_id`)</span>
 
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addUniqueKey</span><span class="p">([</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="s1">&#39;uri&#39;</span><span class="p">]);</span>
@@ -398,12 +408,12 @@ and unique keys with specific methods:</p>
 <h3><a class="toc-backref" href="#id6">Adding Foreign Keys</a><a class="headerlink" href="#adding-foreign-keys" title="Permalink to this headline">¶</a></h3>
 <p>Foreign Keys help to enforce relationships and actions across your tables. For tables that support Foreign Keys,
 you may add them directly in forge:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">(</span><span class="s1">&#39;users_id&#39;</span><span class="p">,</span><span class="s1">&#39;users&#39;</span><span class="p">,</span><span class="s1">&#39;id&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">(</span><span class="s1">&#39;users_id&#39;</span><span class="p">,</span><span class="s1">&#39;users&#39;</span><span class="p">,</span><span class="s1">&#39;id&#39;</span><span class="p">);</span>
 <span class="c1">// gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`)</span>
 </pre></div>
 </div>
-<p>You can specify the desired action for the &#8220;on delete&#8221; and &#8220;on update&#8221; properties of the constraint:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">(</span><span class="s1">&#39;users_id&#39;</span><span class="p">,</span><span class="s1">&#39;users&#39;</span><span class="p">,</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;CASCADE&#39;</span><span class="p">,</span><span class="s1">&#39;CASCADE&#39;</span><span class="p">);</span>
+<p>You can specify the desired action for the “on delete” and “on update” properties of the constraint:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">(</span><span class="s1">&#39;users_id&#39;</span><span class="p">,</span><span class="s1">&#39;users&#39;</span><span class="p">,</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;CASCADE&#39;</span><span class="p">,</span><span class="s1">&#39;CASCADE&#39;</span><span class="p">);</span>
 <span class="c1">// gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE</span>
 </pre></div>
 </div>
@@ -412,33 +422,33 @@ you may add them directly in forge:</p>
 <h3><a class="toc-backref" href="#id7">Creating a table</a><a class="headerlink" href="#creating-a-table" title="Permalink to this headline">¶</a></h3>
 <p>After fields and keys have been declared, you can create a new table
 with</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
 <span class="c1">// gives CREATE TABLE table_name</span>
 </pre></div>
 </div>
-<p>An optional second parameter set to TRUE adds an &#8220;IF NOT EXISTS&#8221; clause
+<p>An optional second parameter set to TRUE adds an “IF NOT EXISTS” clause
 into the definition</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
 <span class="c1">// gives CREATE TABLE IF NOT EXISTS table_name</span>
 </pre></div>
 </div>
-<p>You could also pass optional table attributes, such as MySQL&#8217;s <code class="docutils literal"><span class="pre">ENGINE</span></code>:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ENGINE&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;InnoDB&#39;</span><span class="p">];</span>
+<p>You could also pass optional table attributes, such as MySQL’s <code class="docutils literal notranslate"><span class="pre">ENGINE</span></code>:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ENGINE&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;InnoDB&#39;</span><span class="p">];</span>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
 <span class="c1">// produces: CREATE TABLE `table_name` (...) ENGINE = InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Unless you specify the <code class="docutils literal"><span class="pre">CHARACTER</span> <span class="pre">SET</span></code> and/or <code class="docutils literal"><span class="pre">COLLATE</span></code> attributes,
-<code class="docutils literal"><span class="pre">createTable()</span></code> will always add them with your configured <em>charset</em>
+<p class="last">Unless you specify the <code class="docutils literal notranslate"><span class="pre">CHARACTER</span> <span class="pre">SET</span></code> and/or <code class="docutils literal notranslate"><span class="pre">COLLATE</span></code> attributes,
+<code class="docutils literal notranslate"><span class="pre">createTable()</span></code> will always add them with your configured <em>charset</em>
 and <em>DBCollat</em> values, as long as they are not empty (MySQL only).</p>
 </div>
 </div>
 <div class="section" id="dropping-a-table">
 <h3><a class="toc-backref" href="#id8">Dropping a table</a><a class="headerlink" href="#dropping-a-table" title="Permalink to this headline">¶</a></h3>
 <p>Execute a DROP TABLE statement and optionally add an IF EXISTS clause.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Produces: DROP TABLE table_name</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// Produces: DROP TABLE table_name</span>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
 
 <span class="c1">// Produces: DROP TABLE IF EXISTS table_name</span>
@@ -449,7 +459,7 @@ and <em>DBCollat</em> values, as long as they are not empty (MySQL only).</p>
 <div class="section" id="dropping-a-foreign-key">
 <h3><a class="toc-backref" href="#id9">Dropping a Foreign Key</a><a class="headerlink" href="#dropping-a-foreign-key" title="Permalink to this headline">¶</a></h3>
 <p>Execute a DROP FOREIGN KEY.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Produces: ALTER TABLE &#39;tablename&#39; DROP FOREIGN KEY &#39;users_foreign&#39;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// Produces: ALTER TABLE &#39;tablename&#39; DROP FOREIGN KEY &#39;users_foreign&#39;</span>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropForeignKey</span><span class="p">(</span><span class="s1">&#39;tablename&#39;</span><span class="p">,</span><span class="s1">&#39;users_foreign&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -457,7 +467,7 @@ and <em>DBCollat</em> values, as long as they are not empty (MySQL only).</p>
 <div class="section" id="renaming-a-table">
 <h3><a class="toc-backref" href="#id10">Renaming a table</a><a class="headerlink" href="#renaming-a-table" title="Permalink to this headline">¶</a></h3>
 <p>Executes a TABLE rename</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">renameTable</span><span class="p">(</span><span class="s1">&#39;old_table_name&#39;</span><span class="p">,</span> <span class="s1">&#39;new_table_name&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">renameTable</span><span class="p">(</span><span class="s1">&#39;old_table_name&#39;</span><span class="p">,</span> <span class="s1">&#39;new_table_name&#39;</span><span class="p">);</span>
 <span class="c1">// gives ALTER TABLE old_table_name RENAME TO new_table_name</span>
 </pre></div>
 </div>
@@ -468,10 +478,10 @@ and <em>DBCollat</em> values, as long as they are not empty (MySQL only).</p>
 <div class="section" id="adding-a-column-to-a-table">
 <h3><a class="toc-backref" href="#id12">Adding a Column to a Table</a><a class="headerlink" href="#adding-a-column-to-a-table" title="Permalink to this headline">¶</a></h3>
 <p><strong>$forge-&gt;addColumn()</strong></p>
-<p>The <code class="docutils literal"><span class="pre">addColumn()</span></code> method is used to modify an existing table. It
+<p>The <code class="docutils literal notranslate"><span class="pre">addColumn()</span></code> method is used to modify an existing table. It
 accepts the same field array as above, and can be used for an unlimited
 number of additional fields.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">]</span>
 <span class="p">];</span>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addColumn</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="nv">$fields</span><span class="p">);</span>
@@ -481,7 +491,7 @@ number of additional fields.</p>
 <p>If you are using MySQL or CUBIRD, then you can take advantage of their
 AFTER and FIRST clauses to position the new column.</p>
 <p>Examples:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Will place the new column after the `another_field` column:</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// Will place the new column after the `another_field` column:</span>
 <span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;another_field&#39;</span><span class="p">]</span>
 <span class="p">];</span>
@@ -497,17 +507,17 @@ AFTER and FIRST clauses to position the new column.</p>
 <h3><a class="toc-backref" href="#id13">Dropping a Column From a Table</a><a class="headerlink" href="#dropping-a-column-from-a-table" title="Permalink to this headline">¶</a></h3>
 <p><strong>$forge-&gt;dropColumn()</strong></p>
 <p>Used to remove a column from a table.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropColumn</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="s1">&#39;column_to_drop&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropColumn</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="s1">&#39;column_to_drop&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="modifying-a-column-in-a-table">
 <h3><a class="toc-backref" href="#id14">Modifying a Column in a Table</a><a class="headerlink" href="#modifying-a-column-in-a-table" title="Permalink to this headline">¶</a></h3>
 <p><strong>$forge-&gt;modifyColumn()</strong></p>
-<p>The usage of this method is identical to <code class="docutils literal"><span class="pre">addColumn()</span></code>, except it
+<p>The usage of this method is identical to <code class="docutils literal notranslate"><span class="pre">addColumn()</span></code>, except it
 alters an existing column rather than adding a new one. In order to
-change the name, you can add a &#8220;name&#8221; key into the field defining array.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
+change the name, you can add a “name” key into the field defining array.</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;old_name&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;new_name&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span>
@@ -522,18 +532,18 @@ change the name, you can add a &#8220;name&#8221; key into the field defining ar
 <div class="section" id="class-reference">
 <h2><a class="toc-backref" href="#id15">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="CodeIgniterDatabaseForge">
-<em class="property">class </em><code class="descname">CodeIgniterDatabaseForge</code><a class="headerlink" href="#CodeIgniterDatabaseForge" title="Permalink to this definition">¶</a></dt>
+<dt>
+<code class="descname">CodeIgniter\Database\Forge</code></dt>
 <dd><dl class="method">
-<dt id="CodeIgniterDatabaseForge::addColumn">
-<code class="descname">addColumn</code><span class="sig-paren">(</span><em>$table</em><span class="optional">[</span>, <em>$field = []</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseForge::addColumn" title="Permalink to this definition">¶</a></dt>
+<dt id="addColumn">
+<code class="descname">addColumn</code><span class="sig-paren">(</span><em>$table</em><span class="optional">[</span>, <em>$field = []</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addColumn" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$table</strong> (<em>string</em>) &#8211; Table name to add the column to</li>
-<li><strong>$field</strong> (<em>array</em>) &#8211; Column definition(s)</li>
+<li><strong>$table</strong> (<em>string</em>) – Table name to add the column to</li>
+<li><strong>$field</strong> (<em>array</em>) – Column definition(s)</li>
 </ul>
 </td>
 </tr>
@@ -549,14 +559,14 @@ change the name, you can add a &#8220;name&#8221; key into the field defining ar
 </dd></dl>
 
 <dl class="method">
-<dt id="CodeIgniterDatabaseForge::addField">
-<code class="descname">addField</code><span class="sig-paren">(</span><em>$field</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseForge::addField" title="Permalink to this definition">¶</a></dt>
+<dt id="addField">
+<code class="descname">addField</code><span class="sig-paren">(</span><em>$field</em><span class="sig-paren">)</span><a class="headerlink" href="#addField" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$field</strong> (<em>array</em>) &#8211; Field definition to add</li>
+<li><strong>$field</strong> (<em>array</em>) – Field definition to add</li>
 </ul>
 </td>
 </tr>
@@ -572,16 +582,16 @@ change the name, you can add a &#8220;name&#8221; key into the field defining ar
 </dd></dl>
 
 <dl class="method">
-<dt id="CodeIgniterDatabaseForge::addKey">
-<code class="descname">addKey</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$primary = FALSE</em><span class="optional">[</span>, <em>$unique = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseForge::addKey" title="Permalink to this definition">¶</a></dt>
+<dt id="addKey">
+<code class="descname">addKey</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$primary = FALSE</em><span class="optional">[</span>, <em>$unique = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addKey" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>mixed</em>) &#8211; Name of a key field or an array of fields</li>
-<li><strong>$primary</strong> (<em>bool</em>) &#8211; Set to TRUE if it should be a primary key or a regular one</li>
-<li><strong>$unique</strong> (<em>bool</em>) &#8211; Set to TRUE if it should be a unique key or a regular one</li>
+<li><strong>$key</strong> (<em>mixed</em>) – Name of a key field or an array of fields</li>
+<li><strong>$primary</strong> (<em>bool</em>) – Set to TRUE if it should be a primary key or a regular one</li>
+<li><strong>$unique</strong> (<em>bool</em>) – Set to TRUE if it should be a unique key or a regular one</li>
 </ul>
 </td>
 </tr>
@@ -597,14 +607,14 @@ change the name, you can add a &#8220;name&#8221; key into the field defining ar
 </dd></dl>
 
 <dl class="method">
-<dt id="CodeIgniterDatabaseForge::addPrimaryKey">
-<code class="descname">addPrimaryKey</code><span class="sig-paren">(</span><em>$key</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseForge::addPrimaryKey" title="Permalink to this definition">¶</a></dt>
+<dt id="addPrimaryKey">
+<code class="descname">addPrimaryKey</code><span class="sig-paren">(</span><em>$key</em><span class="sig-paren">)</span><a class="headerlink" href="#addPrimaryKey" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>mixed</em>) &#8211; Name of a key field or an array of fields</li>
+<li><strong>$key</strong> (<em>mixed</em>) – Name of a key field or an array of fields</li>
 </ul>
 </td>
 </tr>
@@ -620,14 +630,14 @@ change the name, you can add a &#8220;name&#8221; key into the field defining ar
 </dd></dl>
 
 <dl class="method">
-<dt id="CodeIgniterDatabaseForge::addUniqueKey">
-<code class="descname">addUniqueKey</code><span class="sig-paren">(</span><em>$key</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseForge::addUniqueKey" title="Permalink to this definition">¶</a></dt>
+<dt id="addUniqueKey">
+<code class="descname">addUniqueKey</code><span class="sig-paren">(</span><em>$key</em><span class="sig-paren">)</span><a class="headerlink" href="#addUniqueKey" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>mixed</em>) &#8211; Name of a key field or an array of fields</li>
+<li><strong>$key</strong> (<em>mixed</em>) – Name of a key field or an array of fields</li>
 </ul>
 </td>
 </tr>
@@ -643,14 +653,15 @@ change the name, you can add a &#8220;name&#8221; key into the field defining ar
 </dd></dl>
 
 <dl class="method">
-<dt id="CodeIgniterDatabaseForge::createDatabase">
-<code class="descname">createDatabase</code><span class="sig-paren">(</span><em>$db_name</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseForge::createDatabase" title="Permalink to this definition">¶</a></dt>
+<dt id="createDatabase">
+<code class="descname">createDatabase</code><span class="sig-paren">(</span><em>$dbName</em><span class="optional">[</span>, <em>$ifNotExists = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createDatabase" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$db_name</strong> (<em>string</em>) &#8211; Name of the database to create</li>
+<li><strong>$db_name</strong> (<em>string</em>) – Name of the database to create</li>
+<li><strong>$ifNotExists</strong> (<em>string</em>) – Set to TRUE to add an ‘IF NOT EXISTS’ clause or check if database exists</li>
 </ul>
 </td>
 </tr>
@@ -666,16 +677,16 @@ change the name, you can add a &#8220;name&#8221; key into the field defining ar
 </dd></dl>
 
 <dl class="method">
-<dt id="CodeIgniterDatabaseForge::createTable">
-<code class="descname">createTable</code><span class="sig-paren">(</span><em>$table</em><span class="optional">[</span>, <em>$if_not_exists = FALSE</em><span class="optional">[</span>, <em>array $attributes = []</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseForge::createTable" title="Permalink to this definition">¶</a></dt>
+<dt id="createTable">
+<code class="descname">createTable</code><span class="sig-paren">(</span><em>$table</em><span class="optional">[</span>, <em>$if_not_exists = FALSE</em><span class="optional">[</span>, <em>array $attributes = []</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createTable" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$table</strong> (<em>string</em>) &#8211; Name of the table to create</li>
-<li><strong>$if_not_exists</strong> (<em>string</em>) &#8211; Set to TRUE to add an &#8216;IF NOT EXISTS&#8217; clause</li>
-<li><strong>$attributes</strong> (<em>string</em>) &#8211; An associative array of table attributes</li>
+<li><strong>$table</strong> (<em>string</em>) – Name of the table to create</li>
+<li><strong>$if_not_exists</strong> (<em>string</em>) – Set to TRUE to add an ‘IF NOT EXISTS’ clause</li>
+<li><strong>$attributes</strong> (<em>string</em>) – An associative array of table attributes</li>
 </ul>
 </td>
 </tr>
@@ -691,15 +702,15 @@ change the name, you can add a &#8220;name&#8221; key into the field defining ar
 </dd></dl>
 
 <dl class="method">
-<dt id="CodeIgniterDatabaseForge::dropColumn">
-<code class="descname">dropColumn</code><span class="sig-paren">(</span><em>$table</em>, <em>$column_name</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseForge::dropColumn" title="Permalink to this definition">¶</a></dt>
+<dt id="dropColumn">
+<code class="descname">dropColumn</code><span class="sig-paren">(</span><em>$table</em>, <em>$column_name</em><span class="sig-paren">)</span><a class="headerlink" href="#dropColumn" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$table</strong> (<em>string</em>) &#8211; Table name</li>
-<li><strong>$column_name</strong> (<em>array</em>) &#8211; The column name to drop</li>
+<li><strong>$table</strong> (<em>string</em>) – Table name</li>
+<li><strong>$column_name</strong> (<em>array</em>) – The column name to drop</li>
 </ul>
 </td>
 </tr>
@@ -715,14 +726,14 @@ change the name, you can add a &#8220;name&#8221; key into the field defining ar
 </dd></dl>
 
 <dl class="method">
-<dt id="CodeIgniterDatabaseForge::dropDatabase">
-<code class="descname">dropDatabase</code><span class="sig-paren">(</span><em>$db_name</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseForge::dropDatabase" title="Permalink to this definition">¶</a></dt>
+<dt id="dropDatabase">
+<code class="descname">dropDatabase</code><span class="sig-paren">(</span><em>$dbName</em><span class="sig-paren">)</span><a class="headerlink" href="#dropDatabase" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$db_name</strong> (<em>string</em>) &#8211; Name of the database to drop</li>
+<li><strong>$dbName</strong> (<em>string</em>) – Name of the database to drop</li>
 </ul>
 </td>
 </tr>
@@ -738,15 +749,15 @@ change the name, you can add a &#8220;name&#8221; key into the field defining ar
 </dd></dl>
 
 <dl class="method">
-<dt id="CodeIgniterDatabaseForge::dropTable">
-<code class="descname">dropTable</code><span class="sig-paren">(</span><em>$table_name</em><span class="optional">[</span>, <em>$if_exists = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseForge::dropTable" title="Permalink to this definition">¶</a></dt>
+<dt id="dropTable">
+<code class="descname">dropTable</code><span class="sig-paren">(</span><em>$table_name</em><span class="optional">[</span>, <em>$if_exists = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dropTable" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$table</strong> (<em>string</em>) &#8211; Name of the table to drop</li>
-<li><strong>$if_exists</strong> (<em>string</em>) &#8211; Set to TRUE to add an &#8216;IF EXISTS&#8217; clause</li>
+<li><strong>$table</strong> (<em>string</em>) – Name of the table to drop</li>
+<li><strong>$if_exists</strong> (<em>string</em>) – Set to TRUE to add an ‘IF EXISTS’ clause</li>
 </ul>
 </td>
 </tr>
@@ -762,15 +773,15 @@ change the name, you can add a &#8220;name&#8221; key into the field defining ar
 </dd></dl>
 
 <dl class="method">
-<dt id="CodeIgniterDatabaseForge::modifyColumn">
-<code class="descname">modifyColumn</code><span class="sig-paren">(</span><em>$table</em>, <em>$field</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseForge::modifyColumn" title="Permalink to this definition">¶</a></dt>
+<dt id="modifyColumn">
+<code class="descname">modifyColumn</code><span class="sig-paren">(</span><em>$table</em>, <em>$field</em><span class="sig-paren">)</span><a class="headerlink" href="#modifyColumn" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$table</strong> (<em>string</em>) &#8211; Table name</li>
-<li><strong>$field</strong> (<em>array</em>) &#8211; Column definition(s)</li>
+<li><strong>$table</strong> (<em>string</em>) – Table name</li>
+<li><strong>$field</strong> (<em>array</em>) – Column definition(s)</li>
 </ul>
 </td>
 </tr>
@@ -786,15 +797,15 @@ change the name, you can add a &#8220;name&#8221; key into the field defining ar
 </dd></dl>
 
 <dl class="method">
-<dt id="CodeIgniterDatabaseForge::renameTable">
-<code class="descname">renameTable</code><span class="sig-paren">(</span><em>$table_name</em>, <em>$new_table_name</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseForge::renameTable" title="Permalink to this definition">¶</a></dt>
+<dt id="renameTable">
+<code class="descname">renameTable</code><span class="sig-paren">(</span><em>$table_name</em>, <em>$new_table_name</em><span class="sig-paren">)</span><a class="headerlink" href="#renameTable" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$table</strong> (<em>string</em>) &#8211; Current of the table</li>
-<li><strong>$new_table_name</strong> (<em>string</em>) &#8211; New name of the table</li>
+<li><strong>$table</strong> (<em>string</em>) – Current of the table</li>
+<li><strong>$new_table_name</strong> (<em>string</em>) – New name of the table</li>
 </ul>
 </td>
 </tr>
@@ -836,8 +847,8 @@ change the name, you can add a &#8220;name&#8221; key into the field defining ar
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -859,16 +870,17 @@ change the name, you can add a &#8220;name&#8221; key into the field defining ar
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

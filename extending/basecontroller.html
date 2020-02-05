@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Extending the Controller &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Extending the Controller &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Extending CodeIgniter" href="index.html"/>
         <link rel="next" title="Contributing to CodeIgniter" href="contributing.html"/>
         <link rel="prev" title="Events" href="events.html"/> 
@@ -203,10 +206,10 @@
             
   <div class="section" id="extending-the-controller">
 <h1>Extending the Controller<a class="headerlink" href="#extending-the-controller" title="Permalink to this headline">¶</a></h1>
-<p>CodeIgniter&#8217;s core Controller should not be changed, but a default class extension is provided for you at
-<strong>app/Controllers/BaseController.php</strong>. Any new controllers you make should extend <code class="docutils literal"><span class="pre">BaseController</span></code> to take
+<p>CodeIgniter’s core Controller should not be changed, but a default class extension is provided for you at
+<strong>app/Controllers/BaseController.php</strong>. Any new controllers you make should extend <code class="docutils literal notranslate"><span class="pre">BaseController</span></code> to take
 advantage of preloaded components and any additional functionality you provide:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
 
@@ -218,14 +221,14 @@ advantage of preloaded components and any additional functionality you provide:<
 <div class="section" id="preloading-components">
 <h2>Preloading Components<a class="headerlink" href="#preloading-components" title="Permalink to this headline">¶</a></h2>
 <p>The base controller is a great place to load any helpers, models, libraries, services, etc. that you intend to
-use every time your project runs. Helpers should be added to the pre-defined <code class="docutils literal"><span class="pre">$helpers</span></code> array. For example, if
+use every time your project runs. Helpers should be added to the pre-defined <code class="docutils literal notranslate"><span class="pre">$helpers</span></code> array. For example, if
 you want the HTML and Text helpers universally available:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="nv">$helpers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;html&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">];</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="nv">$helpers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;html&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">];</span>
 </pre></div>
 </div>
-<p>Any other components to load or data to process should be added to the constructor <code class="docutils literal"><span class="pre">initController()</span></code>. For
+<p>Any other components to load or data to process should be added to the constructor <code class="docutils literal notranslate"><span class="pre">initController()</span></code>. For
 example, if your project uses the Session Library heavily you may want to initiate it here:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">initController</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">initController</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="c1">// Do Not Edit This Line</span>
         <span class="k">parent</span><span class="o">::</span><span class="na">initController</span><span class="p">(</span><span class="nv">$request</span><span class="p">,</span> <span class="nv">$response</span><span class="p">,</span> <span class="nv">$logger</span><span class="p">);</span>
@@ -238,17 +241,17 @@ example, if your project uses the Session Library heavily you may want to initia
 <div class="section" id="additional-methods">
 <h2>Additional Methods<a class="headerlink" href="#additional-methods" title="Permalink to this headline">¶</a></h2>
 <p>The base controller is not routable (system config routes it to 404 Page Not Found). As an added security
-measure <strong>all</strong> new methods you create should be declared as <code class="docutils literal"><span class="pre">protected</span></code> or <code class="docutils literal"><span class="pre">private</span></code> and only be accessed through the
-controllers you create that extend <code class="docutils literal"><span class="pre">BaseController</span></code>.</p>
+measure <strong>all</strong> new methods you create should be declared as <code class="docutils literal notranslate"><span class="pre">protected</span></code> or <code class="docutils literal notranslate"><span class="pre">private</span></code> and only be accessed through the
+controllers you create that extend <code class="docutils literal notranslate"><span class="pre">BaseController</span></code>.</p>
 </div>
 <div class="section" id="other-options">
 <h2>Other Options<a class="headerlink" href="#other-options" title="Permalink to this headline">¶</a></h2>
 <p>You may find that you need more than one base controller. You can create new base controllers as long as any other controllers that you make extend the correct base. For example, if your project
-has an involved public interface and a simple administrative portal you may want to extend <code class="docutils literal"><span class="pre">BaseController</span></code> to
-the public controllers and make <code class="docutils literal"><span class="pre">AdminController</span></code> for any administrative controllers.</p>
+has an involved public interface and a simple administrative portal you may want to extend <code class="docutils literal notranslate"><span class="pre">BaseController</span></code> to
+the public controllers and make <code class="docutils literal notranslate"><span class="pre">AdminController</span></code> for any administrative controllers.</p>
 <p>If you do not want to use the base controller you may bypass it by having your controllers extend the system
 Controller instead:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Home</span> <span class="k">extends</span> <span class="nx">Controller</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Home</span> <span class="k">extends</span> <span class="nx">Controller</span>
 <span class="p">{</span>
 
 <span class="p">}</span>
@@ -279,8 +282,8 @@ Controller instead:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -302,16 +305,17 @@ Controller instead:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

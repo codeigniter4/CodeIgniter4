@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Git Installation &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Git Installation &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Installation" href="index.html"/>
         <link rel="next" title="Running Your App" href="running.html"/>
         <link rel="prev" title="Composer Installation" href="installing_composer.html"/> 
@@ -215,28 +218,28 @@ for contributing to the framework.</p>
 <li>cloning <strong>your</strong> forked repository locally</li>
 </ul>
 </div>
-<div class="section" id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
-<p>The command above will create a &#8220;CodeIgniter4&#8221; folder.
+<div class="section" id="setting-up">
+<h2>Setting Up<a class="headerlink" href="#setting-up" title="Permalink to this headline">¶</a></h2>
+<p>The command above will create a “CodeIgniter4” folder.
 Feel free to rename that as you see fit.</p>
-<p>You will want to setup a remote repository alias, so you can synchronize
+<p>You will want to set up a remote repository alias, so you can synchronize
 your repository with the main one:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">git</span> <span class="nx">remote</span> <span class="nx">add</span> <span class="nx">upstream</span> <span class="nx">https</span><span class="o">://</span><span class="nx">github</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">CodeIgniter4</span><span class="o">.</span><span class="nx">git</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">git</span> <span class="nx">remote</span> <span class="nx">add</span> <span class="nx">upstream</span> <span class="nx">https</span><span class="o">://</span><span class="nx">github</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">CodeIgniter4</span><span class="o">.</span><span class="nx">git</span>
 </pre></div>
 </div>
-<p>Copy the provided <code class="docutils literal"><span class="pre">env</span></code> file to <code class="docutils literal"><span class="pre">.env</span></code>, and use that for your git-ignored configuration settings,</p>
-<p>Copy the provided <code class="docutils literal"><span class="pre">phpunit.xml.dist</span></code> to <code class="docutils literal"><span class="pre">phpunit.xml</span></code> and tailor it as needed,
+<p>Copy the provided <code class="docutils literal notranslate"><span class="pre">env</span></code> file to <code class="docutils literal notranslate"><span class="pre">.env</span></code>, and use that for your git-ignored configuration settings,</p>
+<p>Copy the provided <code class="docutils literal notranslate"><span class="pre">phpunit.xml.dist</span></code> to <code class="docutils literal notranslate"><span class="pre">phpunit.xml</span></code> and tailor it as needed,
 if you want custom unit testing for the framework.</p>
 </div>
 <div class="section" id="upgrading">
 <h2>Upgrading<a class="headerlink" href="#upgrading" title="Permalink to this headline">¶</a></h2>
 <p>Update your code anytime:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">git</span> <span class="nx">checkout</span> <span class="nx">develop</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">git</span> <span class="nx">checkout</span> <span class="nx">develop</span>
 <span class="nx">git</span> <span class="nx">pull</span> <span class="nx">upstream</span> <span class="nx">develop</span>
 <span class="nx">git</span> <span class="nx">push</span> <span class="nx">origin</span> <span class="nx">develop</span>
 </pre></div>
 </div>
-<p>Merge conflicts may arise when you pull from &#8220;upstream&#8221;.
+<p>Merge conflicts may arise when you pull from “upstream”.
 You will need to resolve them locally.</p>
 </div>
 <div class="section" id="pros">
@@ -262,7 +265,7 @@ You will need to resolve them locally.</p>
 </div>
 <div class="section" id="structure">
 <h2>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h2>
-<p>Folders in your project after setup:</p>
+<p>Folders in your project after set up:</p>
 <ul class="simple">
 <li>app, public, system, tests, user_guide_src, writable</li>
 </ul>
@@ -277,7 +280,7 @@ These are two independent repositories!</p>
 <p>This is bound and installed automatically as part of the
 codebase installation.</p>
 <p>If you wish to use it inside your project too,
-<code class="docutils literal"><span class="pre">composer</span> <span class="pre">require</span> <span class="pre">codeigniter4/translations</span> <span class="pre">&#64;beta</span></code></p>
+<code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">require</span> <span class="pre">codeigniter4/translations</span> <span class="pre">&#64;beta</span></code></p>
 </div>
 </div>
 </div>
@@ -304,8 +307,8 @@ codebase installation.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -327,16 +330,17 @@ codebase installation.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

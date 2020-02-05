@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Working with Files &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Working with Files &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Library Reference" href="index.html"/>
         <link rel="next" title="Honeypot Class" href="honeypot.html"/>
         <link rel="prev" title="Encryption Service" href="encryption.html"/> 
@@ -231,16 +234,16 @@ and <a class="reference internal" href="images.html"><span class="doc">images</s
 <div class="section" id="getting-a-file-instance">
 <h2><a class="toc-backref" href="#id1">Getting a File instance</a><a class="headerlink" href="#getting-a-file-instance" title="Permalink to this headline">¶</a></h2>
 <p>You create a new File instance by passing in the path to the file in the constructor.
-By default, the file does not need to exist. However, you can pass an additional argument of &#8220;true&#8221;
-to check that the file exists and throw <code class="docutils literal"><span class="pre">FileNotFoundException()</span></code> if it does not.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$file</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Files\File</span><span class="p">(</span><span class="nv">$path</span><span class="p">);</span>
+By default, the file does not need to exist. However, you can pass an additional argument of “true”
+to check that the file exists and throw <code class="docutils literal notranslate"><span class="pre">FileNotFoundException()</span></code> if it does not.</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$file</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Files\File</span><span class="p">(</span><span class="nv">$path</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="taking-advantage-of-spl">
 <h2><a class="toc-backref" href="#id2">Taking Advantage of Spl</a><a class="headerlink" href="#taking-advantage-of-spl" title="Permalink to this headline">¶</a></h2>
 <p>Once you have an instance, you have the full power of the SplFileInfo class at the ready, including:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Get the file&#39;s basename</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// Get the file&#39;s basename</span>
 <span class="k">echo</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getBasename</span><span class="p">();</span>
 <span class="c1">// Get last modified time</span>
 <span class="k">echo</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getMTime</span><span class="p">();</span>
@@ -266,16 +269,16 @@ to check that the file exists and throw <code class="docutils literal"><span cla
 <h2><a class="toc-backref" href="#id3">New Features</a><a class="headerlink" href="#new-features" title="Permalink to this headline">¶</a></h2>
 <p>In addition to all of the methods in the SplFileInfo class, you get some new tools.</p>
 <p><strong>getRandomName()</strong></p>
-<p>You can generate a cryptographically secure random filename, with the current timestamp prepended, with the <code class="docutils literal"><span class="pre">getRandomName()</span></code>
+<p>You can generate a cryptographically secure random filename, with the current timestamp prepended, with the <code class="docutils literal notranslate"><span class="pre">getRandomName()</span></code>
 method. This is especially useful to rename files when moving it so that the filename is unguessable:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Generates something like: 1465965676_385e33f741.jpg</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// Generates something like: 1465965676_385e33f741.jpg</span>
 <span class="nv">$newName</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">();</span>
 </pre></div>
 </div>
 <p><strong>getSize()</strong></p>
-<p>Returns the size of the uploaded file in bytes. You can pass in either &#8216;kb&#8217; or &#8216;mb&#8217; as the first parameter to get
+<p>Returns the size of the uploaded file in bytes. You can pass in either ‘kb’ or ‘mb’ as the first parameter to get
 the results in kilobytes or megabytes, respectively:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$bytes</span>     <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSize</span><span class="p">();</span>      <span class="c1">// 256901</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$bytes</span>     <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSize</span><span class="p">();</span>      <span class="c1">// 256901</span>
 <span class="nv">$kilobytes</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSize</span><span class="p">(</span><span class="s1">&#39;kb&#39;</span><span class="p">);</span>  <span class="c1">// 250.880</span>
 <span class="nv">$megabytes</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSize</span><span class="p">(</span><span class="s1">&#39;mb&#39;</span><span class="p">);</span>  <span class="c1">// 0.245</span>
 </pre></div>
@@ -283,34 +286,34 @@ the results in kilobytes or megabytes, respectively:</p>
 <p><strong>getMimeType()</strong></p>
 <p>Retrieve the media type (mime type) of the file. Uses methods that are considered as secure as possible when determining
 the type of file:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$type</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getMimeType</span><span class="p">();</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$type</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getMimeType</span><span class="p">();</span>
 
 <span class="k">echo</span> <span class="nv">$type</span><span class="p">;</span> <span class="c1">// image/png</span>
 </pre></div>
 </div>
 <p><strong>guessExtension()</strong></p>
-<p>Attempts to determine the file extension based on the trusted <code class="docutils literal"><span class="pre">getMimeType()</span></code> method. If the mime type is unknown,
+<p>Attempts to determine the file extension based on the trusted <code class="docutils literal notranslate"><span class="pre">getMimeType()</span></code> method. If the mime type is unknown,
 will return null. This is often a more trusted source than simply using the extension provided by the filename. Uses
 the values in <strong>app/Config/Mimes.php</strong> to determine extension:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Returns &#39;jpg&#39; (WITHOUT the period)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="c1">// Returns &#39;jpg&#39; (WITHOUT the period)</span>
 <span class="nv">$ext</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">guessExtension</span><span class="p">();</span>
 </pre></div>
 </div>
 <div class="section" id="moving-files">
 <h3><a class="toc-backref" href="#id4">Moving Files</a><a class="headerlink" href="#moving-files" title="Permalink to this headline">¶</a></h3>
-<p>Each file can be moved to its new location with the aptly named <code class="docutils literal"><span class="pre">move()</span></code> method. This takes the directory to move
+<p>Each file can be moved to its new location with the aptly named <code class="docutils literal notranslate"><span class="pre">move()</span></code> method. This takes the directory to move
 the file to as the first parameter:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span><span class="o">.</span><span class="s1">&#39;uploads&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span><span class="o">.</span><span class="s1">&#39;uploads&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>By default, the original filename was used. You can specify a new filename by passing it as the second parameter:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$newName</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">();</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$newName</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">();</span>
 <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span><span class="o">.</span><span class="s1">&#39;uploads&#39;</span><span class="p">,</span> <span class="nv">$newName</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The move() method returns a new File instance that for the relocated file, so you must capture the result if the
 resulting location is needed:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$file</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span><span class="o">.</span><span class="s1">&#39;uploads&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$file</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span><span class="o">.</span><span class="s1">&#39;uploads&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -339,8 +342,8 @@ resulting location is needed:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -362,16 +365,17 @@ resulting location is needed:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

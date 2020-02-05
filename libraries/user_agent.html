@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>User Agent Class &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>User Agent Class &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Library Reference" href="index.html"/>
         <link rel="next" title="Validation" href="validation.html"/>
         <link rel="prev" title="Working with URIs" href="uri.html"/> 
@@ -235,7 +238,7 @@ about the browser, mobile device, or robot visiting your site.</p>
 <p>The User Agent class is always available directly from the current <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest</span></a> instance.
 By default, you will have a request instance in your controller that you can retrieve the
 User Agent class from:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$agent</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getUserAgent</span><span class="p">();</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$agent</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getUserAgent</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
@@ -251,7 +254,7 @@ user agent arrays if needed.</p>
 whether the user agent browsing your site is a web browser, a mobile
 device, or a robot. It will also gather the platform information if it
 is available:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$agent</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getUserAgent</span><span class="p">();</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$agent</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getUserAgent</span><span class="p">();</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isBrowser</span><span class="p">())</span>
 <span class="p">{</span>
@@ -290,7 +293,7 @@ is available:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) &#8211; Optional browser name</li>
+<li><strong>$key</strong> (<em>string</em>) – Optional browser name</li>
 </ul>
 </td>
 </tr>
@@ -303,7 +306,7 @@ is available:</p>
 </tbody>
 </table>
 <p>Returns TRUE/FALSE (boolean) if the user agent is a known web browser.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isBrowser</span><span class="p">(</span><span class="s1">&#39;Safari&#39;</span><span class="p">))</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isBrowser</span><span class="p">(</span><span class="s1">&#39;Safari&#39;</span><span class="p">))</span>
 <span class="p">{</span>
         <span class="k">echo</span> <span class="s1">&#39;You are using Safari.&#39;</span><span class="p">;</span>
 <span class="p">}</span>
@@ -315,7 +318,7 @@ is available:</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The string &#8220;Safari&#8221; in this example is an array key in the list of browser definitions.
+<p class="last">The string “Safari” in this example is an array key in the list of browser definitions.
 You can find this list in <strong>app/Config/UserAgents.php</strong> if you want to add new
 browsers or change the strings.</p>
 </div>
@@ -329,7 +332,7 @@ browsers or change the strings.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) &#8211; Optional mobile device name</li>
+<li><strong>$key</strong> (<em>string</em>) – Optional mobile device name</li>
 </ul>
 </td>
 </tr>
@@ -342,7 +345,7 @@ browsers or change the strings.</p>
 </tbody>
 </table>
 <p>Returns TRUE/FALSE (boolean) if the user agent is a known mobile device.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isMobile</span><span class="p">(</span><span class="s1">&#39;iphone&#39;</span><span class="p">))</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isMobile</span><span class="p">(</span><span class="s1">&#39;iphone&#39;</span><span class="p">))</span>
 <span class="p">{</span>
         <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;iphone/home&#39;</span><span class="p">);</span>
 <span class="p">}</span>
@@ -366,7 +369,7 @@ browsers or change the strings.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$key</strong> (<em>string</em>) &#8211; Optional robot name</li>
+<li><strong>$key</strong> (<em>string</em>) – Optional robot name</li>
 </ul>
 </td>
 </tr>
@@ -497,8 +500,8 @@ that commonly visit your site are missing from the list you can add them to your
 </tr>
 </tbody>
 </table>
-<p>The referrer, if the user agent was referred from another site. Typically you&#8217;ll test for this as follows:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isReferral</span><span class="p">())</span>
+<p>The referrer, if the user agent was referred from another site. Typically you’ll test for this as follows:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">isReferral</span><span class="p">())</span>
 <span class="p">{</span>
         <span class="k">echo</span> <span class="nv">$agent</span><span class="o">-&gt;</span><span class="na">referrer</span><span class="p">();</span>
 <span class="p">}</span>
@@ -520,7 +523,7 @@ that commonly visit your site are missing from the list you can add them to your
 </tbody>
 </table>
 <p>Returns a string containing the full user agent string. Typically it will be something like this:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">Mozilla</span><span class="o">/</span><span class="mf">5.0</span> <span class="p">(</span><span class="nx">Macintosh</span><span class="p">;</span> <span class="nx">U</span><span class="p">;</span> <span class="nx">Intel</span> <span class="nx">Mac</span> <span class="nx">OS</span> <span class="nx">X</span><span class="p">;</span> <span class="nx">en</span><span class="o">-</span><span class="nx">US</span><span class="p">;</span> <span class="nx">rv</span><span class="o">:</span><span class="mf">1.8</span><span class="o">.</span><span class="mf">0.4</span><span class="p">)</span> <span class="nx">Gecko</span><span class="o">/</span><span class="mi">20060613</span> <span class="nx">Camino</span><span class="o">/</span><span class="mf">1.0</span><span class="o">.</span><span class="mi">2</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">Mozilla</span><span class="o">/</span><span class="mf">5.0</span> <span class="p">(</span><span class="nx">Macintosh</span><span class="p">;</span> <span class="nx">U</span><span class="p">;</span> <span class="nx">Intel</span> <span class="nx">Mac</span> <span class="nx">OS</span> <span class="nx">X</span><span class="p">;</span> <span class="nx">en</span><span class="o">-</span><span class="nx">US</span><span class="p">;</span> <span class="nx">rv</span><span class="o">:</span><span class="mf">1.8</span><span class="o">.</span><span class="mf">0.4</span><span class="p">)</span> <span class="nx">Gecko</span><span class="o">/</span><span class="mi">20060613</span> <span class="nx">Camino</span><span class="o">/</span><span class="mf">1.0</span><span class="o">.</span><span class="mi">2</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -533,7 +536,7 @@ that commonly visit your site are missing from the list you can add them to your
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$string</strong> (<em>string</em>) &#8211; A custom user-agent string</li>
+<li><strong>$string</strong> (<em>string</em>) – A custom user-agent string</li>
 </ul>
 </td>
 </tr>
@@ -572,8 +575,8 @@ that commonly visit your site are missing from the list you can add them to your
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -595,16 +598,17 @@ that commonly visit your site are missing from the list you can add them to your
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Content Negotiation &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Content Negotiation &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Controllers and Routing" href="index.html"/>
         <link rel="next" title="HTTP Method Spoofing" href="methodspoofing.html"/>
         <link rel="prev" title="IncomingRequest Class" href="incomingrequest.html"/> 
@@ -211,22 +214,22 @@
 can handle, and what the server can handle. This can be used to determine whether the client is wanting HTML or JSON
 returned, whether the image should be returned as a jpg or png, what type of compression is supported and more. This
 is done by analyzing four different headers which can each support multiple value options, each with their own priority.
-Trying to match this up manually can be pretty challenging. CodeIgniter provides the <code class="docutils literal"><span class="pre">Negotiator</span></code> class that
+Trying to match this up manually can be pretty challenging. CodeIgniter provides the <code class="docutils literal notranslate"><span class="pre">Negotiator</span></code> class that
 can handle this for you.</p>
 <div class="section" id="loading-the-class">
 <h2>Loading the Class<a class="headerlink" href="#loading-the-class" title="Permalink to this headline">¶</a></h2>
 <p>You can load an instance of the class manually through the Service class:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$negotiator</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">negotiator</span><span class="p">();</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$negotiator</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">negotiator</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>This will grab the current request instance and automatically inject it into the Negotiator class.</p>
-<p>This class does not need to be loaded on it&#8217;s own. Instead, it can be accessed through this request&#8217;s <code class="docutils literal"><span class="pre">IncomingRequest</span></code>
-instance. While you cannot access it directly this way, you can easily access all of methods through the <code class="docutils literal"><span class="pre">negotiate()</span></code>
+<p>This class does not need to be loaded on it’s own. Instead, it can be accessed through this request’s <code class="docutils literal notranslate"><span class="pre">IncomingRequest</span></code>
+instance. While you cannot access it directly this way, you can easily access all of methods through the <code class="docutils literal notranslate"><span class="pre">negotiate()</span></code>
 method:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">]);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
-<p>When accessed this way, the first parameter is the type of content you&#8217;re trying to find a match for, while the
+<p>When accessed this way, the first parameter is the type of content you’re trying to find a match for, while the
 second is an array of supported values.</p>
 </div>
 <div class="section" id="negotiating">
@@ -235,17 +238,17 @@ second is an array of supported values.</p>
 both of the methods described above to access the negotiator.</p>
 <div class="section" id="media">
 <h3>Media<a class="headerlink" href="#media" title="Permalink to this headline">¶</a></h3>
-<p>The first aspect to look at is handling &#8216;media&#8217; negotiations. These are provided by the <code class="docutils literal"><span class="pre">Accept</span></code> header and
+<p>The first aspect to look at is handling ‘media’ negotiations. These are provided by the <code class="docutils literal notranslate"><span class="pre">Accept</span></code> header and
 is one of the most complex headers available. A common example is the client telling the server what format it
-wants the data in. This is especially common in API&#8217;s. For example, a client might request JSON formatted data
+wants the data in. This is especially common in API’s. For example, a client might request JSON formatted data
 from an API endpoint:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">GET</span> <span class="o">/</span><span class="nx">foo</span> <span class="nx">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">GET</span> <span class="o">/</span><span class="nx">foo</span> <span class="nx">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
 <span class="nx">Accept</span><span class="o">:</span> <span class="nx">application</span><span class="o">/</span><span class="nx">json</span>
 </pre></div>
 </div>
 <p>The server now needs to provide a list of what type of content it can provide. In this example, the API might
 be able to return data as raw HTML, JSON, or XML. This list should be provided in order of preference:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
         <span class="s1">&#39;text/html&#39;</span><span class="p">,</span>
         <span class="s1">&#39;application/xml&#39;</span>
@@ -256,11 +259,11 @@ be able to return data as raw HTML, JSON, or XML. This list should be provided i
 <span class="nv">$format</span> <span class="o">=</span> <span class="nv">$negotiate</span><span class="o">-&gt;</span><span class="na">media</span><span class="p">(</span><span class="nv">$supported</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>In this case, both the client and the server can agree on formatting the data as JSON so &#8216;json&#8217; is returned from
+<p>In this case, both the client and the server can agree on formatting the data as JSON so ‘json’ is returned from
 the negotiate method. By default, if no match is found, the first element in the $supported array would be returned.
-In some cases, though, you might need to enforce the format to be a strict match. If you pass <code class="docutils literal"><span class="pre">true</span></code> as the
+In some cases, though, you might need to enforce the format to be a strict match. If you pass <code class="docutils literal notranslate"><span class="pre">true</span></code> as the
 final value, it will return an empty string if no match is found:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$format</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="nv">$supported</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$format</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="nv">$supported</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 <span class="c1">// or</span>
 <span class="nv">$format</span> <span class="o">=</span> <span class="nv">$negotiate</span><span class="o">-&gt;</span><span class="na">media</span><span class="p">(</span><span class="nv">$supported</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 </pre></div>
@@ -269,16 +272,16 @@ final value, it will return an empty string if no match is found:</p>
 <div class="section" id="language">
 <h3>Language<a class="headerlink" href="#language" title="Permalink to this headline">¶</a></h3>
 <p>Another common usage is to determine the language the content should be served in. If you are running only a single
-language site, this obviously isn&#8217;t going to make much difference, but any site that can offer up multiple translations
-of content will find this useful, since the browser will typically send the preferred language along in the <code class="docutils literal"><span class="pre">Accept-Language</span></code>
+language site, this obviously isn’t going to make much difference, but any site that can offer up multiple translations
+of content will find this useful, since the browser will typically send the preferred language along in the <code class="docutils literal notranslate"><span class="pre">Accept-Language</span></code>
 header:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">GET</span> <span class="o">/</span><span class="nx">foo</span> <span class="nx">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">GET</span> <span class="o">/</span><span class="nx">foo</span> <span class="nx">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
 <span class="nx">Accept</span><span class="o">-</span><span class="nx">Language</span><span class="o">:</span> <span class="nx">fr</span><span class="p">;</span> <span class="nx">q</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="nx">en</span><span class="p">;</span> <span class="nx">q</span><span class="o">=</span><span class="mf">0.5</span>
 </pre></div>
 </div>
 <p>In this example, the browser would prefer French, with a second choice of English. If your website supports English
 and German you would do something like:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;en&#39;</span><span class="p">,</span>
         <span class="s1">&#39;de&#39;</span>
 <span class="p">];</span>
@@ -288,19 +291,19 @@ and German you would do something like:</p>
 <span class="nv">$lang</span> <span class="o">=</span> <span class="nv">$negotiate</span><span class="o">-&gt;</span><span class="na">language</span><span class="p">(</span><span class="nv">$supported</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>In this example, &#8216;en&#8217; would be returned as the current language. If no match is found, it will return the first element
+<p>In this example, ‘en’ would be returned as the current language. If no match is found, it will return the first element
 in the $supported array, so that should always be the preferred language.</p>
 </div>
 <div class="section" id="encoding">
 <h3>Encoding<a class="headerlink" href="#encoding" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal"><span class="pre">Accept-Encoding</span></code> header contains the character sets the client prefers to receive, and is used to
+<p>The <code class="docutils literal notranslate"><span class="pre">Accept-Encoding</span></code> header contains the character sets the client prefers to receive, and is used to
 specify the type of compression the client supports:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">GET</span> <span class="o">/</span><span class="nx">foo</span> <span class="nx">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">GET</span> <span class="o">/</span><span class="nx">foo</span> <span class="nx">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
 <span class="nx">Accept</span><span class="o">-</span><span class="nx">Encoding</span><span class="o">:</span> <span class="nx">compress</span><span class="p">,</span> <span class="nx">gzip</span>
 </pre></div>
 </div>
 <p>Your web server will define what types of compression you can use. Some, like Apache, only support <strong>gzip</strong>:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$type</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;encoding&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;gzip&#39;</span><span class="p">]);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$type</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;encoding&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;gzip&#39;</span><span class="p">]);</span>
 <span class="c1">// or</span>
 <span class="nv">$type</span> <span class="o">=</span> <span class="nv">$negotiate</span><span class="o">-&gt;</span><span class="na">encoding</span><span class="p">([</span><span class="s1">&#39;gzip&#39;</span><span class="p">]);</span>
 </pre></div>
@@ -309,13 +312,13 @@ specify the type of compression the client supports:</p>
 </div>
 <div class="section" id="character-set">
 <h3>Character Set<a class="headerlink" href="#character-set" title="Permalink to this headline">¶</a></h3>
-<p>The desired character set is passed through the <code class="docutils literal"><span class="pre">Accept-Charset</span></code> header:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">GET</span> <span class="o">/</span><span class="nx">foo</span> <span class="nx">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<p>The desired character set is passed through the <code class="docutils literal notranslate"><span class="pre">Accept-Charset</span></code> header:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">GET</span> <span class="o">/</span><span class="nx">foo</span> <span class="nx">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
 <span class="nx">Accept</span><span class="o">-</span><span class="nx">Charset</span><span class="o">:</span> <span class="nx">utf</span><span class="o">-</span><span class="mi">16</span><span class="p">,</span> <span class="nx">utf</span><span class="o">-</span><span class="mi">8</span>
 </pre></div>
 </div>
 <p>By default, if no matches are found, <strong>utf-8</strong> will be returned:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$charset</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;charset&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;utf-8&#39;</span><span class="p">]);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$charset</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;charset&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;utf-8&#39;</span><span class="p">]);</span>
 <span class="c1">// or</span>
 <span class="nv">$charset</span> <span class="o">=</span> <span class="nv">$negotiate</span><span class="o">-&gt;</span><span class="na">charset</span><span class="p">([</span><span class="s1">&#39;utf-8&#39;</span><span class="p">]);</span>
 </pre></div>
@@ -346,8 +349,8 @@ specify the type of compression the client supports:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -369,16 +372,17 @@ specify the type of compression the client supports:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

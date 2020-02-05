@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>CodeIgniter URLs &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>CodeIgniter URLs &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="General Topics" href="index.html"/>
         <link rel="next" title="Helper Functions" href="helpers.html"/>
         <link rel="prev" title="Working With Configuration Files" href="configuration.html"/> 
@@ -209,14 +212,14 @@
   <div class="section" id="codeigniter-urls">
 <h1>CodeIgniter URLs<a class="headerlink" href="#codeigniter-urls" title="Permalink to this headline">¶</a></h1>
 <p>By default, URLs in CodeIgniter are designed to be search-engine and human-friendly. Rather than using the standard
-&#8220;query-string&#8221; approach to URLs that is synonymous with dynamic systems, CodeIgniter uses a <strong>segment-based</strong> approach:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">news</span><span class="o">/</span><span class="nx">article</span><span class="o">/</span><span class="nx">my_article</span>
+“query-string” approach to URLs that is synonymous with dynamic systems, CodeIgniter uses a <strong>segment-based</strong> approach:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">news</span><span class="o">/</span><span class="nx">article</span><span class="o">/</span><span class="nx">my_article</span>
 </pre></div>
 </div>
 <div class="section" id="uri-segments">
 <h2>URI Segments<a class="headerlink" href="#uri-segments" title="Permalink to this headline">¶</a></h2>
 <p>The segments in the URL, in following with the Model-View-Controller approach, usually represent:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">class</span><span class="o">/</span><span class="nx">method</span><span class="o">/</span><span class="nx">ID</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">class</span><span class="o">/</span><span class="nx">method</span><span class="o">/</span><span class="nx">ID</span>
 </pre></div>
 </div>
 <ol class="arabic simple">
@@ -231,17 +234,17 @@ feature for more flexibility.</p>
 <div class="section" id="removing-the-index-php-file">
 <h2>Removing the index.php file<a class="headerlink" href="#removing-the-index-php-file" title="Permalink to this headline">¶</a></h2>
 <p>By default, the <strong>index.php</strong> file will be included in your URLs:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">news</span><span class="o">/</span><span class="nx">article</span><span class="o">/</span><span class="nx">my_article</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">news</span><span class="o">/</span><span class="nx">article</span><span class="o">/</span><span class="nx">my_article</span>
 </pre></div>
 </div>
 <p>If your server supports rewriting URLs you can easily remove this file with URL rewriting. This is handled differently
 by different servers, but we will show examples for the two most common web servers here.</p>
 <div class="section" id="apache-web-server">
 <h3>Apache Web Server<a class="headerlink" href="#apache-web-server" title="Permalink to this headline">¶</a></h3>
-<p>Apache must have the <em>mod_rewrite</em> extension enabled. If it does, you can use a <code class="docutils literal"><span class="pre">.htaccess</span></code> file with some simple rules.
-Here is an example of such a file, using the &#8220;negative&#8221; method in which everything is redirected except the specified
+<p>Apache must have the <em>mod_rewrite</em> extension enabled. If it does, you can use a <code class="docutils literal notranslate"><span class="pre">.htaccess</span></code> file with some simple rules.
+Here is an example of such a file, using the “negative” method in which everything is redirected except the specified
 items:</p>
-<div class="highlight-apache"><div class="highlight"><pre><span></span><span class="nb">RewriteEngine</span> <span class="k">On</span>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">RewriteEngine</span> <span class="k">On</span>
 <span class="nb">RewriteCond</span> %{REQUEST_FILENAME} !-f
 <span class="nb">RewriteCond</span> %{REQUEST_FILENAME} !-d
 <span class="nb">RewriteRule</span> ^(.*)$ index.php/$1 [L]
@@ -260,9 +263,9 @@ request for your index.php file.</p>
 </div>
 <div class="section" id="nginx">
 <h3>NGINX<a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h3>
-<p>Under NGINX, you can define a location block and use the <code class="docutils literal"><span class="pre">try_files</span></code> directive to get the same effect as we did with
+<p>Under NGINX, you can define a location block and use the <code class="docutils literal notranslate"><span class="pre">try_files</span></code> directive to get the same effect as we did with
 the above Apache configuration:</p>
-<div class="highlight-nginx"><div class="highlight"><pre><span></span><span class="k">location</span> <span class="s">/</span> <span class="p">{</span>
+<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">location</span> <span class="s">/</span> <span class="p">{</span>
         <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="nv">$uri/</span> <span class="s">/index.php/</span><span class="nv">$args</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
@@ -295,8 +298,8 @@ settings of the root and alias directives), and then sends the request to the in
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -318,16 +321,17 @@ settings of the root and alias directives), and then sends the request to the in
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

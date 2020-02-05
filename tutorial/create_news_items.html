@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Create news items &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Create news items &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Tutorial" href="index.html"/>
         <link rel="next" title="Conclusion" href="conclusion.html"/>
         <link rel="prev" title="News section" href="news_section.html"/> 
@@ -203,17 +206,17 @@
   <div class="section" id="create-news-items">
 <h1>Create news items<a class="headerlink" href="#create-news-items" title="Permalink to this headline">¶</a></h1>
 <p>You now know how you can read data from a database using CodeIgniter, but
-you haven&#8217;t written any information to the database yet. In this section,
-you&#8217;ll expand your news controller and model created earlier to include
+you haven’t written any information to the database yet. In this section,
+you’ll expand your news controller and model created earlier to include
 this functionality.</p>
 <div class="section" id="create-a-form">
 <h2>Create a form<a class="headerlink" href="#create-a-form" title="Permalink to this headline">¶</a></h2>
 <p>To input data into the database, you need to create a form where you can
-input the information to be stored. This means you&#8217;ll be needing a form
-with two fields, one for the title and one for the text. You&#8217;ll derive
+input the information to be stored. This means you’ll be needing a form
+with two fields, one for the title and one for the text. You’ll derive
 the slug from our title in the model. Create a new view at
 <strong>app/Views/news/create.php</strong>.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$title</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$title</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 
 <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">validation</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">listErrors</span><span class="p">();</span> <span class="cp">?&gt;</span>
 
@@ -231,13 +234,13 @@ the slug from our title in the model. Create a new view at
 </pre></div>
 </div>
 <p>There is only one thing here that probably look unfamiliar to you: the
-<code class="docutils literal"><span class="pre">\Config\Services::validation()-&gt;listErrors()</span></code> function. It is used to report
+<code class="docutils literal notranslate"><span class="pre">\Config\Services::validation()-&gt;listErrors()</span></code> function. It is used to report
 errors related to form validation.</p>
-<p>Go back to your <code class="docutils literal"><span class="pre">News</span></code> controller. You&#8217;re going to do two things here,
+<p>Go back to your <code class="docutils literal notranslate"><span class="pre">News</span></code> controller. You’re going to do two things here,
 check whether the form was submitted and whether the submitted data
-passed the validation rules. You&#8217;ll use the <a class="reference internal" href="../libraries/validation.html"><span class="doc">form
+passed the validation rules. You’ll use the <a class="reference internal" href="../libraries/validation.html"><span class="doc">form
 validation</span></a> library to do this.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">create</span><span class="p">()</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">create</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">);</span>
     <span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">NewsModel</span><span class="p">();</span>
@@ -283,23 +286,23 @@ slug, perfect for creating URIs.</p>
 <p>After this, a view is loaded to display a success message. Create a view at
 <strong>app/Views/news/success.php</strong> and write a success message.</p>
 <p>This could be as simple as::</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">News</span> <span class="nx">item</span> <span class="nx">created</span> <span class="nx">successfully</span><span class="o">.</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">News</span> <span class="nx">item</span> <span class="nx">created</span> <span class="nx">successfully</span><span class="o">.</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="model-updating">
 <h2>Model Updating<a class="headerlink" href="#model-updating" title="Permalink to this headline">¶</a></h2>
-<p>The only thing that remains is ensuring that your model is setup
-to allow data to be saved properly. The <code class="docutils literal"><span class="pre">save()</span></code> method that was
+<p>The only thing that remains is ensuring that your model is set up
+to allow data to be saved properly. The <code class="docutils literal notranslate"><span class="pre">save()</span></code> method that was
 used will determine whether the information should be inserted
 or if the row already exists and should be updated, based on the presence
-of a primary key. In this case, there is no <code class="docutils literal"><span class="pre">id</span></code> field passed to it,
-so it will insert a new row into it&#8217;s table, <strong>news</strong>.</p>
+of a primary key. In this case, there is no <code class="docutils literal notranslate"><span class="pre">id</span></code> field passed to it,
+so it will insert a new row into it’s table, <strong>news</strong>.</p>
 <p>However, by default the insert and update methods in the model will
-not actually save any data because it doesn&#8217;t know what fields are
+not actually save any data because it doesn’t know what fields are
 safe to be updated. Edit the model to provide it a list of updatable
-fields in the <code class="docutils literal"><span class="pre">$allowedFields</span></code> property.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+fields in the <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> property.</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">NewsModel</span> <span class="k">extends</span> <span class="nx">Model</span>
@@ -311,7 +314,7 @@ fields in the <code class="docutils literal"><span class="pre">$allowedFields</s
 </pre></div>
 </div>
 <p>This new property now contains the fields that we allow to be saved to the
-database. Notice that we leave out the <code class="docutils literal"><span class="pre">id</span></code>? That&#8217;s because you will almost
+database. Notice that we leave out the <code class="docutils literal notranslate"><span class="pre">id</span></code>? That’s because you will almost
 never need to do that, since it is an auto-incrementing field in the database.
 This helps protect against Mass Assignment Vulnerabilities. If your model is
 handling your timestamps, you would also leave those out.</p>
@@ -320,16 +323,16 @@ handling your timestamps, you would also leave those out.</p>
 <h2>Routing<a class="headerlink" href="#routing" title="Permalink to this headline">¶</a></h2>
 <p>Before you can start adding news items into your CodeIgniter application
 you have to add an extra rule to <strong>app/Config/Routes.php</strong> file. Make sure your
-file contains the following. This makes sure CodeIgniter sees &#8216;create&#8217;
-as a method instead of a news item&#8217;s slug.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">match</span><span class="p">([</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;post&#39;</span><span class="p">],</span> <span class="s1">&#39;news/create&#39;</span><span class="p">,</span> <span class="s1">&#39;News::create&#39;</span><span class="p">);</span>
+file contains the following. This makes sure CodeIgniter sees ‘create’
+as a method instead of a news item’s slug.</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">match</span><span class="p">([</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;post&#39;</span><span class="p">],</span> <span class="s1">&#39;news/create&#39;</span><span class="p">,</span> <span class="s1">&#39;News::create&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;News::view/$1&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="s1">&#39;News::index&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::view/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Now point your browser to your local development environment where you
-installed CodeIgniter and add <code class="docutils literal"><span class="pre">/news/create</span></code> to the URL.
+installed CodeIgniter and add <code class="docutils literal notranslate"><span class="pre">/news/create</span></code> to the URL.
 Add some news and check out the different pages you made.</p>
 <a class="reference internal image-reference" href="../_images/tutorial3.png"><img alt="../_images/tutorial3.png" class="align-center" src="../_images/tutorial3.png" style="width: 45%; height: 415px;" /></a>
 <a class="reference internal image-reference" href="../_images/tutorial4.png"><img alt="../_images/tutorial4.png" class="align-center" src="../_images/tutorial4.png" style="width: 45%; height: 415px;" /></a>
@@ -338,7 +341,7 @@ Add some news and check out the different pages you made.</p>
 <div class="section" id="congratulations">
 <h2>Congratulations<a class="headerlink" href="#congratulations" title="Permalink to this headline">¶</a></h2>
 <p>You just completed your first CodeIgniter4 application!</p>
-<p>The image to the left shows your project&#8217;s <strong>app</strong> folder,
+<p>The image to the left shows your project’s <strong>app</strong> folder,
 with all of the files that you created in green.
 The two modified configuration files (Database &amp; Routes) are not shown.</p>
 </div>
@@ -366,8 +369,8 @@ The two modified configuration files (Database &amp; Routes) are not shown.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -389,16 +392,17 @@ The two modified configuration files (Database &amp; Routes) are not shown.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

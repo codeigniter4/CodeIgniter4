@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tutorial &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
+  <title>AJAX Requests &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -37,9 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
-        <link rel="next" title="Static pages" href="static_pages.html"/>
-        <link rel="prev" title="CodeIgniter Repositories" href="../installation/repositories.html"/> 
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -91,20 +89,14 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="static_pages.html">Static pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="news_section.html">News section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="create_news_items.html">Create news items</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conclusion.html">Conclusion</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">General Topics</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
@@ -183,7 +175,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Tutorial</li>
+      <li>AJAX Requests</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -200,41 +192,48 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="tutorial">
-<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
-<p>This tutorial is intended to introduce you to the CodeIgniter4 framework
-and the basic principles of MVC architecture. It will show you how a
-basic CodeIgniter application is constructed in a step-by-step fashion.</p>
-<p>If you are not familiar with PHP, we recommend that you check out
-the <a class="reference external" href="https://www.w3schools.com/php/default.asp">W3Schools PHP Tutorial</a> before continuing.</p>
-<p>In this tutorial, you will be creating a <strong>basic news application</strong>. You
-will begin by writing the code that can load static pages. Next, you
-will create a news section that reads news items from a database.
-Finally, you’ll add a form to create news items in the database.</p>
-<p>This tutorial will primarily focus on:</p>
-<ul class="simple">
-<li>Model-View-Controller basics</li>
-<li>Routing basics</li>
-<li>Form validation</li>
-<li>Performing basic database queries using CodeIgniter’s “Query Builder”</li>
-</ul>
-<p>The entire tutorial is split up over several pages, each explaining a
-small part of the functionality of the CodeIgniter framework. You’ll go
-through the following pages:</p>
-<ul class="simple">
-<li>Introduction, this page, which gives you an overview of what to
-expect.</li>
-<li><a class="reference internal" href="static_pages.html"><span class="doc">Static pages</span></a>, which will teach you the basics
-of controllers, views and routing.</li>
-<li><a class="reference internal" href="news_section.html"><span class="doc">News section</span></a>, where you’ll start using models
-and will be doing some basic database operations.</li>
-<li><a class="reference internal" href="create_news_items.html"><span class="doc">Create news items</span></a>, which will introduce
-more advanced database operations and form validation.</li>
-<li><a class="reference internal" href="conclusion.html"><span class="doc">Conclusion</span></a>, which will give you some pointers on
-further reading and other resources.</li>
-</ul>
-<p>Enjoy your exploration of the CodeIgniter framework.</p>
-<div class="toctree-wrapper compound">
+  <div class="section" id="ajax-requests">
+<h1>AJAX Requests<a class="headerlink" href="#ajax-requests" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">IncomingRequest::isAJAX()</span></code> method uses the <code class="docutils literal notranslate"><span class="pre">X-Requested-With</span></code> header to define whether the request is XHR or normal. However, the most recent JavaScript implementations (i.e. fetch) no longer send this header along with the request, thus the use of <code class="docutils literal notranslate"><span class="pre">IncomingRequest::isAJAX()</span></code> becomes less reliable, because without this header it is not possible to define whether the request is or not XHR.</p>
+<p>To get around this problem, the most efficient solution (so far) is to manually define the request header, forcing the information to be sent to the server, which will then be able to identify that the request is XHR.</p>
+<p>Here’s how to force the <code class="docutils literal notranslate"><span class="pre">X-Requested-With</span></code> header to be sent in the Fetch API and other JavaScript libraries.</p>
+<div class="section" id="fetch-api">
+<h2>Fetch API<a class="headerlink" href="#fetch-api" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="docutils">
+<dt>fetch(url, {</dt>
+<dd><p class="first">method: “get”,
+headers: {</p>
+<blockquote class="last">
+<div>“Content-Type”: “application/json”,
+“X-Requested-With”: “XMLHttpRequest”</div></blockquote>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+</div>
+<div class="section" id="jquery">
+<h2>jQuery<a class="headerlink" href="#jquery" title="Permalink to this headline">¶</a></h2>
+<p>For libraries like jQuery for example, it is not necessary to make explicit the sending of this header, because according to the official documentation &lt;<a class="reference external" href="https://api.jquery.com/jquery.ajax/">https://api.jquery.com/jquery.ajax/</a>&gt; it is a standard header for all requests <code class="docutils literal notranslate"><span class="pre">$.ajax()</span></code>. But if you still want to force the shipment to not take risks, just do it as follows:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>$.ajax({</dt>
+<dd>url: “your url”,
+headers: {‘X-Requested-With’: ‘XMLHttpRequest’}</dd>
+</dl>
+<p>});</p>
+</div></blockquote>
+</div>
+<div class="section" id="vuejs">
+<h2>VueJS<a class="headerlink" href="#vuejs" title="Permalink to this headline">¶</a></h2>
+<p>In VueJS you just need to add the following code to the <code class="docutils literal notranslate"><span class="pre">created</span></code> function, as long as you are using Axios for this type of request.</p>
+<blockquote>
+<div>axios.defaults.headers.common[‘X-Requested-With’] = ‘XMLHttpRequest’;</div></blockquote>
+</div>
+<div class="section" id="react">
+<h2>React<a class="headerlink" href="#react" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>axios.get(“your url”, {headers: {‘Content-Type’: ‘application/json’}})</div></blockquote>
 </div>
 </div>
 
@@ -245,15 +244,6 @@ further reading and other resources.</li>
            </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="static_pages.html" class="btn btn-neutral float-right" title="Static pages" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../installation/repositories.html" class="btn btn-neutral" title="CodeIgniter Repositories" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

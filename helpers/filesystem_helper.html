@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Filesystem Helper &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Filesystem Helper &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Helpers" href="index.html"/>
         <link rel="next" title="Form Helper" href="form_helper.html"/>
         <link rel="prev" title="Date Helper" href="date_helper.html"/> 
@@ -221,7 +224,7 @@ directories.</p>
 <div class="custom-index container"></div><div class="section" id="loading-this-helper">
 <h2><a class="toc-backref" href="#id1">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline">¶</a></h2>
 <p>This helper is loaded using the following code:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;filesystem&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;filesystem&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -236,9 +239,9 @@ directories.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$source_dir</strong> (<em>string</em>) &#8211; Path to the source directory</li>
-<li><strong>$directory_depth</strong> (<em>int</em>) &#8211; Depth of directories to traverse (0 = fully recursive, 1 = current dir, etc)</li>
-<li><strong>$hidden</strong> (<em>bool</em>) &#8211; Whether to include hidden directories</li>
+<li><strong>$source_dir</strong> (<em>string</em>) – Path to the source directory</li>
+<li><strong>$directory_depth</strong> (<em>int</em>) – Depth of directories to traverse (0 = fully recursive, 1 = current dir, etc)</li>
+<li><strong>$hidden</strong> (<em>bool</em>) – Whether to include hidden directories</li>
 </ul>
 </td>
 </tr>
@@ -251,7 +254,7 @@ directories.</p>
 </tbody>
 </table>
 <p>Examples:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$map</span> <span class="o">=</span> <span class="nx">directory_map</span><span class="p">(</span><span class="s1">&#39;./mydirectory/&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$map</span> <span class="o">=</span> <span class="nx">directory_map</span><span class="p">(</span><span class="s1">&#39;./mydirectory/&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -261,17 +264,17 @@ directories.</p>
 <p>Sub-folders contained within the directory will be mapped as well. If
 you wish to control the recursion depth, you can do so using the second
 parameter (integer). A depth of 1 will only map the top level directory:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$map</span> <span class="o">=</span> <span class="nx">directory_map</span><span class="p">(</span><span class="s1">&#39;./mydirectory/&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$map</span> <span class="o">=</span> <span class="nx">directory_map</span><span class="p">(</span><span class="s1">&#39;./mydirectory/&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>By default, hidden files will not be included in the returned array. To
 override this behavior, you may set a third parameter to true (boolean):</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$map</span> <span class="o">=</span> <span class="nx">directory_map</span><span class="p">(</span><span class="s1">&#39;./mydirectory/&#39;</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$map</span> <span class="o">=</span> <span class="nx">directory_map</span><span class="p">(</span><span class="s1">&#39;./mydirectory/&#39;</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Each folder name will be an array index, while its contained files will
 be numerically indexed. Here is an example of a typical array:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">Array</span> <span class="p">(</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">Array</span> <span class="p">(</span>
         <span class="p">[</span><span class="nx">libraries</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
                 <span class="p">(</span>
                         <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">benchmark</span><span class="o">.</span><span class="nx">html</span>
@@ -309,9 +312,9 @@ be numerically indexed. Here is an example of a typical array:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$path</strong> (<em>string</em>) &#8211; File path</li>
-<li><strong>$data</strong> (<em>string</em>) &#8211; Data to write to file</li>
-<li><strong>$mode</strong> (<em>string</em>) &#8211; <code class="docutils literal"><span class="pre">fopen()</span></code> mode</li>
+<li><strong>$path</strong> (<em>string</em>) – File path</li>
+<li><strong>$data</strong> (<em>string</em>) – Data to write to file</li>
+<li><strong>$mode</strong> (<em>string</em>) – <code class="docutils literal notranslate"><span class="pre">fopen()</span></code> mode</li>
 </ul>
 </td>
 </tr>
@@ -326,7 +329,7 @@ be numerically indexed. Here is an example of a typical array:</p>
 <p>Writes data to the file specified in the path. If the file does not exist then the
 function will create it.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="s1">&#39;Some file data&#39;</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="s1">&#39;Some file data&#39;</span><span class="p">;</span>
 <span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nx">write_file</span><span class="p">(</span><span class="s1">&#39;./path/to/file.php&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">))</span>
 <span class="p">{</span>
         <span class="k">echo</span> <span class="s1">&#39;Unable to write the file&#39;</span><span class="p">;</span>
@@ -338,10 +341,10 @@ function will create it.</p>
 </pre></div>
 </div>
 <p>You can optionally set the write mode via the third parameter:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">write_file</span><span class="p">(</span><span class="s1">&#39;./path/to/file.php&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="s1">&#39;r+&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">write_file</span><span class="p">(</span><span class="s1">&#39;./path/to/file.php&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="s1">&#39;r+&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The default mode is &#8216;wb&#8217;. Please see the <a class="reference external" href="http://php.net/manual/en/function.fopen.php">PHP user guide</a>
+<p>The default mode is ‘wb’. Please see the <a class="reference external" href="http://php.net/manual/en/function.fopen.php">PHP user guide</a>
 for mode options.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -369,9 +372,9 @@ are always relative to the main site index.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$path</strong> (<em>string</em>) &#8211; Directory path</li>
-<li><strong>$del_dir</strong> (<em>bool</em>) &#8211; Whether to also delete directories</li>
-<li><strong>$htdocs</strong> (<em>bool</em>) &#8211; Whether to skip deleting .htaccess and index page files</li>
+<li><strong>$path</strong> (<em>string</em>) – Directory path</li>
+<li><strong>$del_dir</strong> (<em>bool</em>) – Whether to also delete directories</li>
+<li><strong>$htdocs</strong> (<em>bool</em>) – Whether to skip deleting .htaccess and index page files</li>
 </ul>
 </td>
 </tr>
@@ -385,13 +388,13 @@ are always relative to the main site index.</p>
 </table>
 <p>Deletes ALL files contained in the supplied path.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">delete_files</span><span class="p">(</span><span class="s1">&#39;./path/to/directory/&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">delete_files</span><span class="p">(</span><span class="s1">&#39;./path/to/directory/&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If the second parameter is set to TRUE, any directories contained within the supplied
 root path will be deleted as well.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">delete_files</span><span class="p">(</span><span class="s1">&#39;./path/to/directory/&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">delete_files</span><span class="p">(</span><span class="s1">&#39;./path/to/directory/&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -408,8 +411,8 @@ root path will be deleted as well.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$source_dir</strong> (<em>string</em>) &#8211; Directory path</li>
-<li><strong>$include_path</strong> (<em>bool</em>) &#8211; Whether to include the path as part of the filenames</li>
+<li><strong>$source_dir</strong> (<em>string</em>) – Directory path</li>
+<li><strong>$include_path</strong> (<em>bool</em>) – Whether to include the path as part of the filenames</li>
 </ul>
 </td>
 </tr>
@@ -425,7 +428,7 @@ root path will be deleted as well.</p>
 contained within it. The file path can optionally be added to the file names by setting
 the second parameter to TRUE.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$controllers</span> <span class="o">=</span> <span class="nx">get_filenames</span><span class="p">(</span><span class="nx">APPPATH</span><span class="o">.</span><span class="s1">&#39;controllers/&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$controllers</span> <span class="o">=</span> <span class="nx">get_filenames</span><span class="p">(</span><span class="nx">APPPATH</span><span class="o">.</span><span class="s1">&#39;controllers/&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -438,12 +441,12 @@ the second parameter to TRUE.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$source_dir</strong> (<em>string</em>) &#8211; Directory path</li>
-<li><strong>$top_level_only</strong> (<em>bool</em>) &#8211; Whether to look only at the specified directory (excluding sub-directories)</li>
+<li><strong>$source_dir</strong> (<em>string</em>) – Directory path</li>
+<li><strong>$top_level_only</strong> (<em>bool</em>) – Whether to look only at the specified directory (excluding sub-directories)</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An array containing info on the supplied directory&#8217;s contents</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An array containing info on the supplied directory’s contents</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array</p>
@@ -456,7 +459,7 @@ dates, and permissions. Sub-folders contained within the specified path are only
 if forced by sending the second parameter to FALSE, as this can be an intensive
 operation.</p>
 <p>Example:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$models_info</span> <span class="o">=</span> <span class="nx">get_dir_file_info</span><span class="p">(</span><span class="nx">APPPATH</span><span class="o">.</span><span class="s1">&#39;models/&#39;</span><span class="p">);</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$models_info</span> <span class="o">=</span> <span class="nx">get_dir_file_info</span><span class="p">(</span><span class="nx">APPPATH</span><span class="o">.</span><span class="s1">&#39;models/&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -469,8 +472,8 @@ operation.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$file</strong> (<em>string</em>) &#8211; File path</li>
-<li><strong>$returned_values</strong> (<em>array|string</em>) &#8211; What type of info to return to be passed as array or comma separated string</li>
+<li><strong>$file</strong> (<em>string</em>) – File path</li>
+<li><strong>$returned_values</strong> (<em>array|string</em>) – What type of info to return to be passed as array or comma separated string</li>
 </ul>
 </td>
 </tr>
@@ -485,7 +488,7 @@ operation.</p>
 <p>Given a file and path, returns (optionally) the <em>name</em>, <em>path</em>, <em>size</em> and <em>date modified</em>
 information attributes for a file. Second parameter allows you to explicitly declare what
 information you want returned.</p>
-<p>Valid <code class="docutils literal"><span class="pre">$returned_values</span></code> options are: <cite>name</cite>, <cite>size</cite>, <cite>date</cite>, <cite>readable</cite>, <cite>writeable</cite>,
+<p>Valid <code class="docutils literal notranslate"><span class="pre">$returned_values</span></code> options are: <cite>name</cite>, <cite>size</cite>, <cite>date</cite>, <cite>readable</cite>, <cite>writeable</cite>,
 <cite>executable</cite> and <cite>fileperms</cite>.</p>
 </dd></dl>
 
@@ -497,7 +500,7 @@ information you want returned.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$perms</strong> (<em>int</em>) &#8211; Permissions</li>
+<li><strong>$perms</strong> (<em>int</em>) – Permissions</li>
 </ul>
 </td>
 </tr>
@@ -509,9 +512,9 @@ information you want returned.</p>
 </tr>
 </tbody>
 </table>
-<p>Takes numeric permissions (such as is returned by <code class="docutils literal"><span class="pre">fileperms()</span></code>) and returns
+<p>Takes numeric permissions (such as is returned by <code class="docutils literal notranslate"><span class="pre">fileperms()</span></code>) and returns
 standard symbolic notation of file permissions.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">symbolic_permissions</span><span class="p">(</span><span class="nb">fileperms</span><span class="p">(</span><span class="s1">&#39;./index.php&#39;</span><span class="p">));</span>  <span class="c1">// -rw-r--r--</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">symbolic_permissions</span><span class="p">(</span><span class="nb">fileperms</span><span class="p">(</span><span class="s1">&#39;./index.php&#39;</span><span class="p">));</span>  <span class="c1">// -rw-r--r--</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -524,7 +527,7 @@ standard symbolic notation of file permissions.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$perms</strong> (<em>int</em>) &#8211; Permissions</li>
+<li><strong>$perms</strong> (<em>int</em>) – Permissions</li>
 </ul>
 </td>
 </tr>
@@ -536,9 +539,9 @@ standard symbolic notation of file permissions.</p>
 </tr>
 </tbody>
 </table>
-<p>Takes numeric permissions (such as is returned by <code class="docutils literal"><span class="pre">fileperms()</span></code>) and returns
+<p>Takes numeric permissions (such as is returned by <code class="docutils literal notranslate"><span class="pre">fileperms()</span></code>) and returns
 a three character octal notation of file permissions.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">octal_permissions</span><span class="p">(</span><span class="nb">fileperms</span><span class="p">(</span><span class="s1">&#39;./index.php&#39;</span><span class="p">));</span> <span class="c1">// 644</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">octal_permissions</span><span class="p">(</span><span class="nb">fileperms</span><span class="p">(</span><span class="s1">&#39;./index.php&#39;</span><span class="p">));</span> <span class="c1">// 644</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -551,8 +554,8 @@ a three character octal notation of file permissions.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>$path</strong> (<em>string</em>) &#8211; Path</li>
-<li><strong>$check_existence</strong> (<em>bool</em>) &#8211; Whether to check if the path actually exists</li>
+<li><strong>$path</strong> (<em>string</em>) – Path</li>
+<li><strong>$check_existence</strong> (<em>bool</em>) – Whether to check if the path actually exists</li>
 </ul>
 </td>
 </tr>
@@ -568,7 +571,7 @@ a three character octal notation of file permissions.</p>
 relative directory structures. An optional second argument will
 cause an error to be triggered if the path cannot be resolved.</p>
 <p>Examples:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$file</span> <span class="o">=</span> <span class="s1">&#39;/etc/php5/apache2/php.ini&#39;</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$file</span> <span class="o">=</span> <span class="s1">&#39;/etc/php5/apache2/php.ini&#39;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">set_realpath</span><span class="p">(</span><span class="nv">$file</span><span class="p">);</span> <span class="c1">// Prints &#39;/etc/php5/apache2/php.ini&#39;</span>
 
 <span class="nv">$non_existent_file</span> <span class="o">=</span> <span class="s1">&#39;/path/to/non-exist-file.txt&#39;</span><span class="p">;</span>
@@ -610,8 +613,8 @@ cause an error to be triggered if the path cannot be resolved.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -633,16 +636,17 @@ cause an error to be triggered if the path cannot be resolved.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

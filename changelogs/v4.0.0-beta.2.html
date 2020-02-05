@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Version 4.0.0-beta.2 &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>Version 4.0.0-beta.2 &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Change Logs" href="index.html"/>
         <link rel="next" title="Version 4.0.0-beta.1" href="v4.0.0-beta.1.html"/>
         <link rel="prev" title="Version 4.0.0-beta.3" href="v4.0.0-beta.3.html"/> 
@@ -131,21 +134,25 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Change Logs</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="next.html">Version 4.0-dev</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-rc.2.html">Version 4.0.0-rc.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-rc.1.html">Version 4.0.0-rc.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-beta.4.html">Version 4.0.0-beta.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-beta.3.html">Version 4.0.0-beta.3</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Version 4.0.0-beta.2</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#prs-merged">PRs merged:</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#version-version">Version 4.0-dev</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="next.html">Version 4.0-dev</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-rc.3.html">Version 4.0.0-rc.3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-rc.2.html">Version 4.0.0-rc.2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-rc.1.html">Version 4.0.0-rc.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-beta.4.html">Version 4.0.0-beta.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-beta.3.html">Version 4.0.0-beta.3</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Version 4.0.0-beta.2</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prs-merged">PRs merged:</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-beta.1.html">Version 4.0.0-beta.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-alpha.5.html">Version 4.0.0-alpha.5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-alpha.4.html">Version 4.0.0-alpha.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-alpha.3.html">Version 4.0.0-alpha.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-alpha.2.html">Version 4.0.0-alpha.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v4.0.0-alpha.1.html">Version 4.0.0-alpha.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-beta.1.html">Version 4.0.0-beta.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-alpha.5.html">Version 4.0.0-alpha.5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-alpha.4.html">Version 4.0.0-alpha.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-alpha.3.html">Version 4.0.0-alpha.3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-alpha.2.html">Version 4.0.0-alpha.2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="v4.0.0-alpha.1.html">Version 4.0.0-alpha.1</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -726,13 +733,13 @@
 <li>#1846 Fix contributing links</li>
 <li>#1844 Model Fix</li>
 <li>#1843 Replace CI3 $this-&gt;input reference</li>
-<li>#1842 Exception &#8216;forPageNotFound&#8217; missing default value</li>
+<li>#1842 Exception ‘forPageNotFound’ missing default value</li>
 <li>#1839 Dont replace slashes with backslashes in the to route</li>
 <li>#1836 Test: Improve ViewView coverage</li>
 <li>#1831 Fix some PHPDoc comments error</li>
 <li>#1829 Improve: Models now require a primary key. This is partially to keep the code …</li>
 <li>#1828 Fix: Remove bootstrap styles from validation views.</li>
-<li>#1827 Fix: Adding include method to View library to render view partials... views.</li>
+<li>#1827 Fix: Adding include method to View library to render view partials… views.</li>
 <li>#1823 Docs: Remove legacy Bootstrap references in Pagination class</li>
 <li>#1822 Test: enhance RouteCollection coverage</li>
 <li>#1820 Fix: Correct sphinx errors in model.rst</li>
@@ -751,7 +758,7 @@
 <li>#1803 Docs: Some Helper Changes</li>
 <li>#1802 Docs: Common function correction</li>
 <li>#1796 Test: Improve Cache coverage</li>
-<li>#1794 Replace nonexistent &#8220;getAffectedRows&#8221;</li>
+<li>#1794 Replace nonexistent “getAffectedRows”</li>
 <li>#1793 Set Model-&gt;chunk return type</li>
 <li>#1791 Fix: Remove is_numeric tests in ValidationRules</li>
 <li>#d08b68 Fix in ControllerTester for missing UserAgent</li>
@@ -760,7 +767,7 @@
 <li>#1776 Fix: replace only last operator in field name</li>
 <li>#1771 Fix: fix typo in matchSimpleBinds</li>
 <li>#1769 Correction in Methods and Spellings</li>
-<li>#1762 Fix: decimal rule. shouldn&#8217;t it accept integers?</li>
+<li>#1762 Fix: decimal rule. shouldn’t it accept integers?</li>
 <li>#1746 Improve: Update Model, to selective update created_at / updated_at field.</li>
 <li>#1590 Improve: Enhance 404Override</li>
 </ul>
@@ -789,8 +796,8 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -812,16 +819,17 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>View Layouts &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>View Layouts &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Building Responses" href="index.html"/>
         <link rel="next" title="View Parser" href="view_parser.html"/>
         <link rel="prev" title="View Renderer" href="view_renderer.html"/> 
@@ -224,8 +227,8 @@ specifies the layout that it wants to extend.</p>
 <div class="section" id="creating-a-layout">
 <h2><a class="toc-backref" href="#id1">Creating A Layout</a><a class="headerlink" href="#creating-a-layout" title="Permalink to this headline">¶</a></h2>
 <p>Layouts are views like any other. The only difference is their intended usage. Layouts are the only view
-files that would make use of the <code class="docutils literal"><span class="pre">renderSection()</span></code> method. This method acts as a placeholder for content.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;!</span><span class="nx">doctype</span> <span class="nx">html</span><span class="o">&gt;</span>
+files that would make use of the <code class="docutils literal notranslate"><span class="pre">renderSection()</span></code> method. This method acts as a placeholder for content.</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;!</span><span class="nx">doctype</span> <span class="nx">html</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">My</span> <span class="nx">Layout</span><span class="o">&lt;/</span><span class="nx">title</span><span class="o">&gt;</span>
@@ -241,32 +244,32 @@ what to name the content section.</p>
 </div>
 <div class="section" id="using-layouts-in-views">
 <h2><a class="toc-backref" href="#id2">Using Layouts in Views</a><a class="headerlink" href="#using-layouts-in-views" title="Permalink to this headline">¶</a></h2>
-<p>Whenever a view wants to be inserted into a layout, it must use the <code class="docutils literal"><span class="pre">extend()</span></code> method at the top of the file:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<p>Whenever a view wants to be inserted into a layout, it must use the <code class="docutils literal notranslate"><span class="pre">extend()</span></code> method at the top of the file:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <p>The extend method takes the name of any view file that you wish to use. Since they are standard views, they will
-be located just like a view. By default, it will look in the application&#8217;s View directory, but will also scan
+be located just like a view. By default, it will look in the application’s View directory, but will also scan
 other PSR-4 defined namespaces. You can include a namespace to locate the view in particular namespace View directory:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;Blog\Views\default&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;Blog\Views\default&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>All content within a view that extends a layout must be included within <code class="docutils literal"><span class="pre">section($name)</span></code> and <code class="docutils literal"><span class="pre">endSection()</span></code> method calls.
-Any content between these calls will be inserted into the layout wherever the <code class="docutils literal"><span class="pre">renderSection($name)</span></code> call that
+<p>All content within a view that extends a layout must be included within <code class="docutils literal notranslate"><span class="pre">section($name)</span></code> and <code class="docutils literal notranslate"><span class="pre">endSection()</span></code> method calls.
+Any content between these calls will be inserted into the layout wherever the <code class="docutils literal notranslate"><span class="pre">renderSection($name)</span></code> call that
 matches the section name exists.:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
 <span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">section</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
     <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Hello World!<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
 <span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">endSection</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal"><span class="pre">endSection()</span></code> does not need the section name. It automatically knows which one to close.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">endSection()</span></code> does not need the section name. It automatically knows which one to close.</p>
 </div>
 <div class="section" id="rendering-the-view">
 <h2><a class="toc-backref" href="#id3">Rendering the View</a><a class="headerlink" href="#rendering-the-view" title="Permalink to this headline">¶</a></h2>
-<p>Rendering the view and it&#8217;s layout is done exactly as any other view would be displayed within a controller:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+<p>Rendering the view and it’s layout is done exactly as any other view would be displayed within a controller:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;some_view&#39;</span><span class="p">);</span>
 <span class="p">}</span>
@@ -277,8 +280,8 @@ matches the section name exists.:</p>
 <div class="section" id="including-view-partials">
 <h2><a class="toc-backref" href="#id4">Including View Partials</a><a class="headerlink" href="#including-view-partials" title="Permalink to this headline">¶</a></h2>
 <p>View partials are view files that do not extend any layout. They typically include content that can be reused from
-view to view. When using view layouts you must use <code class="docutils literal"><span class="pre">$this-&gt;include()</span></code> to include any view partials.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+view to view. When using view layouts you must use <code class="docutils literal notranslate"><span class="pre">$this-&gt;include()</span></code> to include any view partials.</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
 <span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">section</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
     <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Hello World!<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
@@ -314,8 +317,8 @@ cache directives, etc.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -337,16 +340,17 @@ cache directives, etc.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

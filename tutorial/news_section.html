@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>News section &mdash; CodeIgniter4 4.0.0-rc.2 documentation</title>
+  <title>News section &mdash; CodeIgniter4 4.0.0-rc.3 documentation</title>
   
 
   
@@ -34,7 +34,10 @@
   
 
   
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.2 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CodeIgniter4 4.0.0-rc.3 documentation" href="../index.html"/>
         <link rel="up" title="Tutorial" href="index.html"/>
         <link rel="next" title="Create news items" href="create_news_items.html"/>
         <link rel="prev" title="Static pages" href="static_pages.html"/> 
@@ -204,11 +207,11 @@
 <h1>News section<a class="headerlink" href="#news-section" title="Permalink to this headline">¶</a></h1>
 <p>In the last section, we went over some basic concepts of the framework
 by writing a class that references static pages. We cleaned up the URI by
-adding custom routing rules. Now it&#8217;s time to introduce dynamic content
+adding custom routing rules. Now it’s time to introduce dynamic content
 and start using a database.</p>
 <div class="section" id="create-a-database-to-work-with">
 <h2>Create a database to work with<a class="headerlink" href="#create-a-database-to-work-with" title="Permalink to this headline">¶</a></h2>
-<p>The CodeIgniter installation assumes that you have setup an appropriate
+<p>The CodeIgniter installation assumes that you have set up an appropriate
 database, as outlined in the <a class="reference internal" href="../intro/requirements.html"><span class="doc">requirements</span></a>.
 In this tutorial, we provide SQL code for a MySQL database, and
 we also assume that you have a suitable client for issuing database
@@ -216,11 +219,11 @@ commands (mysql, MySQL Workbench, or phpMyAdmin).</p>
 <p>You need to create a database that can be used for this tutorial,
 and then configure CodeIgniter to use it.</p>
 <p>Using your database client, connect to your database and run the SQL command below (MySQL).
-Also, add some seed records. For now, we&#8217;ll just show you the SQL statements needed
+Also, add some seed records. For now, we’ll just show you the SQL statements needed
 to create the table, but you should be aware that this can be done programmatically
 once you are more familiar with CodeIgniter; you can read about <a class="reference internal" href="../dbmgmt/migration.html"><span class="doc">Migrations</span></a>
 and <a class="reference internal" href="../dbmgmt/seeds.html"><span class="doc">Seeds</span></a> to create more useful database setups later.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">CREATE</span> <span class="nx">TABLE</span> <span class="nx">news</span> <span class="p">(</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">CREATE</span> <span class="nx">TABLE</span> <span class="nx">news</span> <span class="p">(</span>
         <span class="nx">id</span> <span class="nx">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="nx">AUTO_INCREMENT</span><span class="p">,</span>
         <span class="nx">title</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
         <span class="nx">slug</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
@@ -230,10 +233,10 @@ and <a class="reference internal" href="../dbmgmt/seeds.html"><span class="doc">
 <span class="p">);</span>
 </pre></div>
 </div>
-<p>A note of interest: a &#8220;slug&#8221;, in the context of web publishing, is a
+<p>A note of interest: a “slug”, in the context of web publishing, is a
 user- and SEO-friendly short text used in a URL to identify and describe a resource.</p>
 <p>The seed records might be something like::</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">INSERT</span> <span class="nx">INTO</span> <span class="nx">news</span> <span class="nx">VALUES</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">INSERT</span> <span class="nx">INTO</span> <span class="nx">news</span> <span class="nx">VALUES</span>
 <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;Elvis sighted&#39;</span><span class="p">,</span><span class="s1">&#39;elvis-sighted&#39;</span><span class="p">,</span><span class="s1">&#39;Elvis was sighted at the Podunk internet cafe. It looked like he was writing a CodeIgniter app.&#39;</span><span class="p">),</span>
 <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;Say it isn\&#39;t so!&#39;</span><span class="p">,</span><span class="s1">&#39;say-it-isnt-so&#39;</span><span class="p">,</span><span class="s1">&#39;Scientists conclude that some programmers have a sense of humor.&#39;</span><span class="p">),</span>
 <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;Caffeination, Yes!&#39;</span><span class="p">,</span><span class="s1">&#39;caffeination-yes&#39;</span><span class="p">,</span><span class="s1">&#39;World\&#39;s largest coffee shop open onsite nested coffee shop for staff only.&#39;</span><span class="p">);</span>
@@ -242,10 +245,10 @@ user- and SEO-friendly short text used in a URL to identify and describe a resou
 </div>
 <div class="section" id="connect-to-your-database">
 <h2>Connect to your database<a class="headerlink" href="#connect-to-your-database" title="Permalink to this headline">¶</a></h2>
-<p>The local configuration file, <code class="docutils literal"><span class="pre">.env</span></code>, that you created when you installed
+<p>The local configuration file, <code class="docutils literal notranslate"><span class="pre">.env</span></code>, that you created when you installed
 CodeIgniter, should have the database property settings uncommented and
 set appropriately for the database you want to use.:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">hostname</span> <span class="o">=</span> <span class="nx">localhost</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">hostname</span> <span class="o">=</span> <span class="nx">localhost</span>
 <span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">database</span> <span class="o">=</span> <span class="nx">ci4tutorial</span>
 <span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">username</span> <span class="o">=</span> <span class="nx">root</span>
 <span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">password</span> <span class="o">=</span> <span class="nx">root</span>
@@ -260,9 +263,9 @@ should be placed in a model, so they can easily be reused later. Models
 are the place where you retrieve, insert, and update information in your
 database or other data stores. They provide access to your data.</p>
 <p>Open up the <strong>app/Models/</strong> directory and create a new file called
-<strong>NewsModel.php</strong> and add the following code. Make sure you&#8217;ve configured
+<strong>NewsModel.php</strong> and add the following code. Make sure you’ve configured
 your database properly as described <a class="reference internal" href="../database/configuration.html"><span class="doc">here</span></a>.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
 
@@ -273,19 +276,19 @@ your database properly as described <a class="reference internal" href="../datab
 </pre></div>
 </div>
 <p>This code looks similar to the controller code that was used earlier. It
-creates a new model by extending <code class="docutils literal"><span class="pre">CodeIgniter\Model</span></code> and loads the database
+creates a new model by extending <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Model</span></code> and loads the database
 library. This will make the database class available through the
-<code class="docutils literal"><span class="pre">$this-&gt;db</span></code> object.</p>
-<p>Now that the database and a model have been set up, you&#8217;ll need a method
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;db</span></code> object.</p>
+<p>Now that the database and a model have been set up, you’ll need a method
 to get all of our posts from our database. To do this, the database
 abstraction layer that is included with CodeIgniter —
 <a class="reference internal" href="../database/query_builder.html"><span class="doc">Query Builder</span></a> — is used. This makes it
-possible to write your &#8216;queries&#8217; once and make them work on <a class="reference internal" href="../intro/requirements.html"><span class="doc">all
+possible to write your ‘queries’ once and make them work on <a class="reference internal" href="../intro/requirements.html"><span class="doc">all
 supported database systems</span></a>. The Model class
 also allows you to easily work with the Query Builder and provides
 some additional tools to make working with data simpler. Add the
 following code to your model.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">getNews</span><span class="p">(</span><span class="nv">$slug</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">getNews</span><span class="p">(</span><span class="nv">$slug</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nv">$slug</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span>
         <span class="p">{</span>
@@ -300,23 +303,23 @@ following code to your model.</p>
 </div>
 <p>With this code, you can perform two different queries. You can get all
 news records, or get a news item by its <a class="reference external" href="#">slug</a>. You might have
-noticed that the <code class="docutils literal"><span class="pre">$slug</span></code> variable wasn&#8217;t sanitized before running the
+noticed that the <code class="docutils literal notranslate"><span class="pre">$slug</span></code> variable wasn’t sanitized before running the
 query; <a class="reference internal" href="../database/query_builder.html"><span class="doc">Query Builder</span></a> does this for you.</p>
-<p>The two methods used here, <code class="docutils literal"><span class="pre">findAll()</span></code> and <code class="docutils literal"><span class="pre">first()</span></code>, are provided
-by the Model class. They already know the table to use based on the <code class="docutils literal"><span class="pre">$table</span></code>
+<p>The two methods used here, <code class="docutils literal notranslate"><span class="pre">findAll()</span></code> and <code class="docutils literal notranslate"><span class="pre">first()</span></code>, are provided
+by the Model class. They already know the table to use based on the <code class="docutils literal notranslate"><span class="pre">$table</span></code>
 property we set in <strong>NewsModel</strong> class, earlier. They are helper methods
 that use the Query Builder to run their commands on the current table, and
 returning an array of results in the format of your choice. In this example,
-<code class="docutils literal"><span class="pre">findAll()</span></code> returns an array of objects.</p>
+<code class="docutils literal notranslate"><span class="pre">findAll()</span></code> returns an array of objects.</p>
 </div>
 <div class="section" id="display-the-news">
 <h2>Display the news<a class="headerlink" href="#display-the-news" title="Permalink to this headline">¶</a></h2>
 <p>Now that the queries are written, the model should be tied to the views
 that are going to display the news items to the user. This could be done
-in our <code class="docutils literal"><span class="pre">Pages</span></code> controller created earlier, but for the sake of clarity,
-a new <code class="docutils literal"><span class="pre">News</span></code> controller is defined. Create the new controller at
+in our <code class="docutils literal notranslate"><span class="pre">Pages</span></code> controller created earlier, but for the sake of clarity,
+a new <code class="docutils literal notranslate"><span class="pre">News</span></code> controller is defined. Create the new controller at
 <em>app/Controllers/News.php</em>.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">App\Models\NewsModel</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
 
@@ -339,18 +342,18 @@ a new <code class="docutils literal"><span class="pre">News</span></code> contro
 </pre></div>
 </div>
 <p>Looking at the code, you may see some similarity with the files we
-created earlier. First, it extends a core CodeIgniter class, <code class="docutils literal"><span class="pre">Controller</span></code>,
+created earlier. First, it extends a core CodeIgniter class, <code class="docutils literal notranslate"><span class="pre">Controller</span></code>,
 which provides a couple of helper methods, and makes sure that you have
-access to the current <code class="docutils literal"><span class="pre">Request</span></code> and <code class="docutils literal"><span class="pre">Response</span></code> objects, as well as the
-<code class="docutils literal"><span class="pre">Logger</span></code> class, for saving information to disk.</p>
+access to the current <code class="docutils literal notranslate"><span class="pre">Request</span></code> and <code class="docutils literal notranslate"><span class="pre">Response</span></code> objects, as well as the
+<code class="docutils literal notranslate"><span class="pre">Logger</span></code> class, for saving information to disk.</p>
 <p>Next, there are two methods, one to view all news items, and one for a specific
-news item. You can see that the <code class="docutils literal"><span class="pre">$slug</span></code> variable is passed to the model&#8217;s
+news item. You can see that the <code class="docutils literal notranslate"><span class="pre">$slug</span></code> variable is passed to the model’s
 method in the second method. The model is using this slug to identify the
 news item to be returned.</p>
 <p>Now the data is retrieved by the controller through our model, but
 nothing is displayed yet. The next thing to do is, passing this data to
-the views. Modify the <code class="docutils literal"><span class="pre">index()</span></code> method to look like this:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+the views. Modify the <code class="docutils literal notranslate"><span class="pre">index()</span></code> method to look like this:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
 <span class="p">{</span>
         <span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">NewsModel</span><span class="p">();</span>
 
@@ -366,11 +369,11 @@ the views. Modify the <code class="docutils literal"><span class="pre">index()</
 </pre></div>
 </div>
 <p>The code above gets all news records from the model and assigns it to a
-variable. The value for the title is also assigned to the <code class="docutils literal"><span class="pre">$data['title']</span></code>
+variable. The value for the title is also assigned to the <code class="docutils literal notranslate"><span class="pre">$data['title']</span></code>
 element and all data is passed to the views. You now need to create a
 view to render the news items. Create <strong>app/Views/news/overview.php</strong>
 and add the next piece of code.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nv">$title</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nv">$title</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 
 <span class="cp">&lt;?php</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$news</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nb">is_array</span><span class="p">(</span><span class="nv">$news</span><span class="p">))</span> <span class="o">:</span> <span class="cp">?&gt;</span>
 
@@ -396,14 +399,14 @@ and add the next piece of code.</p>
 </div>
 <p>Here, each news item is looped and displayed to the user. You can see we
 wrote our template in PHP mixed with HTML. If you prefer to use a template
-language, you can use CodeIgniter&#8217;s <a class="reference internal" href="../outgoing/view_parser.html"><span class="doc">View
+language, you can use CodeIgniter’s <a class="reference internal" href="../outgoing/view_parser.html"><span class="doc">View
 Parser</span></a> or a third party parser.</p>
 <p>The news overview page is now done, but a page to display individual
 news items is still absent. The model created earlier is made in such
 a way that it can easily be used for this functionality. You only need to
 add some code to the controller and create a new view. Go back to the
-<code class="docutils literal"><span class="pre">News</span></code> controller and update the <code class="docutils literal"><span class="pre">view()</span></code> method with the following:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">view</span><span class="p">(</span><span class="nv">$slug</span> <span class="o">=</span> <span class="k">NULL</span><span class="p">)</span>
+<code class="docutils literal notranslate"><span class="pre">News</span></code> controller and update the <code class="docutils literal notranslate"><span class="pre">view()</span></code> method with the following:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">view</span><span class="p">(</span><span class="nv">$slug</span> <span class="o">=</span> <span class="k">NULL</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">NewsModel</span><span class="p">();</span>
 
@@ -422,11 +425,11 @@ add some code to the controller and create a new view. Go back to the
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Instead of calling the <code class="docutils literal"><span class="pre">getNews()</span></code> method without a parameter, the
-<code class="docutils literal"><span class="pre">$slug</span></code> variable is passed, so it will return the specific news item.
+<p>Instead of calling the <code class="docutils literal notranslate"><span class="pre">getNews()</span></code> method without a parameter, the
+<code class="docutils literal notranslate"><span class="pre">$slug</span></code> variable is passed, so it will return the specific news item.
 The only thing left to do is create the corresponding view at
 <strong>app/Views/news/view.php</strong>. Put the following code in this file.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 <span class="k">echo</span> <span class="s1">&#39;&lt;h2&gt;&#39;</span><span class="o">.</span><span class="nv">$news</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="s1">&#39;&lt;/h2&gt;&#39;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nv">$news</span><span class="p">[</span><span class="s1">&#39;body&#39;</span><span class="p">];</span>
 </pre></div>
@@ -437,15 +440,15 @@ The only thing left to do is create the corresponding view at
 <p>Because of the wildcard routing rule created earlier, you need an extra
 route to view the controller that you just made. Modify your routing file
 (<strong>app/config/routes.php</strong>) so it looks as follows.
-This makes sure the requests reach the <code class="docutils literal"><span class="pre">News</span></code> controller instead of
-going directly to the <code class="docutils literal"><span class="pre">Pages</span></code> controller. The first line routes URI&#8217;s
-with a slug to the <code class="docutils literal"><span class="pre">view()</span></code> method in the <code class="docutils literal"><span class="pre">News</span></code> controller.</p>
-<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;News::view/$1&#39;</span><span class="p">);</span>
+This makes sure the requests reach the <code class="docutils literal notranslate"><span class="pre">News</span></code> controller instead of
+going directly to the <code class="docutils literal notranslate"><span class="pre">Pages</span></code> controller. The first line routes URI’s
+with a slug to the <code class="docutils literal notranslate"><span class="pre">view()</span></code> method in the <code class="docutils literal notranslate"><span class="pre">News</span></code> controller.</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;News::view/$1&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="s1">&#39;News::index&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::showme/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Point your browser to your &#8220;news&#8221; page, i.e. <code class="docutils literal"><span class="pre">localhost:8080/news</span></code>,
+<p>Point your browser to your “news” page, i.e. <code class="docutils literal notranslate"><span class="pre">localhost:8080/news</span></code>,
 you should see a list of the news items, each of which has a link
 to display just the one article.</p>
 <img alt="../_images/tutorial2.png" class="align-center" src="../_images/tutorial2.png" />
@@ -474,8 +477,8 @@ to display just the one article.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2019 British Columbia Institute of Technology.
-      Last updated on Oct 12, 2019.
+        &copy; Copyright 2019 CodeIgniter Foundation.
+      Last updated on Feb 04, 2020.
 
     </p>
   </div>
@@ -497,16 +500,17 @@ to display just the one article.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0-rc.2',
+            VERSION:'4.0.0-rc.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: ''
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 
