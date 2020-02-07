@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'CodeIgniter4'
-copyright = u'2019 CodeIgniter Foundation'
+copyright = u'2019-2020 CodeIgniter Foundation'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -229,7 +229,7 @@ man_pages = [
 epub_title = u'CodeIgniter4'
 epub_author = u'CodeIgniter Foundation'
 epub_publisher = u'CodeIgniter Foundation'
-epub_copyright = u'2019 CodeIgniter Foundation'
+epub_copyright = u'2019-2020 CodeIgniter Foundation'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.
