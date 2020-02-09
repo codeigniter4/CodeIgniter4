@@ -3045,6 +3045,17 @@ class BaseBuilder
 
 					if (! empty($matches[4]))
 					{
+						$protectIdentifiers = false;
+						if (strpos($matches[4], '.') !== false)
+						{
+							$protectIdentifiers = true;
+						}
+
+						if (strpos($matches[4], ':') === false)
+						{
+							$matches[4] = $this->db->protectIdentifiers(trim($matches[4]), false, $protectIdentifiers);
+						}
+
 						$matches[4] = ' ' . $matches[4];
 					}
 

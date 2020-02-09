@@ -1215,7 +1215,7 @@ abstract class BaseConnection implements ConnectionInterface
 				// This can happen when this function is being called from a JOIN.
 				if ($fieldExists === false)
 				{
-					$i ++;
+					$i++;
 				}
 
 				// Verify table prefix and replace if necessary
