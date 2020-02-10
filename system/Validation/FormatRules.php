@@ -364,7 +364,7 @@ class FormatRules
 				break;
 		}
 
-		return (bool) filter_var($ip, FILTER_VALIDATE_IP, $which);
+		return (bool) filter_var($ip, FILTER_VALIDATE_IP, $which) || (bool) filter_var(inet_ntop($ip), FILTER_VALIDATE_IP, $which);
 	}
 
 	//--------------------------------------------------------------------
