@@ -93,7 +93,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
@@ -355,15 +355,6 @@ error upon failure, like this:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>You can optionally specify the HTML formatting to be applied to
-the errors, by submitting the opening/closing tags in the function,
-like this:</p>
-<div class="last highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">display_errors</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/p&gt;&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
 <div class="section" id="cropping-images">
 <h4>Cropping Images<a class="headerlink" href="#cropping-images" title="Permalink to this headline">¶</a></h4>
 <p>Images can be cropped so that only a portion of the original image remains. This is often used when creating
@@ -392,7 +383,7 @@ offset values:</p>
 <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">crop</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="nv">$xOffset</span><span class="p">,</span> <span class="nv">$yOffset</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;path/to/new/image.jpg&#39;</span><span class="p">);</span>
+            <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -407,7 +398,7 @@ offset values:</p>
 <div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">convert</span><span class="p">(</span><span class="nx">IMAGETYPE_PNG</span><span class="p">)</span>
-        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;path/to/new/image.png&#39;</span><span class="p">);</span>
+        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.png&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </li>
@@ -438,7 +429,7 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 <div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
-        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;path/to/new/image.jpg&#39;</span><span class="p">);</span>
+        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -459,12 +450,12 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 <div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.png&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">flatten</span><span class="p">()</span>
-        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;path/to/new/image.jpg&#39;</span><span class="p">);</span>
+        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
 
 <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.png&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">flatten</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">112</span><span class="p">)</span>
-        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;path/to/new/image.jpg&#39;</span><span class="p">);</span>
+        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -480,7 +471,7 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 <div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">flip</span><span class="p">(</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
-        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;path/to/new/image.jpg&#39;</span><span class="p">);</span>
+        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -502,7 +493,7 @@ while the other dimension will be altered to match the original image’s aspect
 <div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">resize</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">)</span>
-        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;path/to/new/image.jpg&#39;</span><span class="p">);</span>
+        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -541,7 +532,7 @@ that allow you to specify how the text should be displayed:</p>
             <span class="s1">&#39;vAlign&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;bottom&#39;</span><span class="p">,</span>
             <span class="s1">&#39;fontSize&#39;</span>   <span class="o">=&gt;</span> <span class="mi">20</span>
         <span class="p">])</span>
-        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;path/to/new/image.jpg&#39;</span><span class="p">);</span>
+        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The possible options that are recognized are as follows:</p>
@@ -591,7 +582,7 @@ name of one of the installed system fonts that you wish to use, i.e. Calibri.</p
   <div role="contentinfo">
     <p>
         &copy; Copyright 2019-2020 CodeIgniter Foundation.
-      Last updated on Feb 06, 2020.
+      Last updated on Feb 09, 2020.
 
     </p>
   </div>

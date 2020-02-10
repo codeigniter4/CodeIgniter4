@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tutorial &mdash; CodeIgniter4 4.0.0-rc.4 documentation</title>
+  <title>Build Your First Application &mdash; CodeIgniter4 4.0.0-rc.4 documentation</title>
   
 
   
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
 </ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Build Your First Application</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="static_pages.html">Static pages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="news_section.html">News section</a></li>
 <li class="toctree-l2"><a class="reference internal" href="create_news_items.html">Create news items</a></li>
@@ -183,7 +183,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Tutorial</li>
+      <li>Build Your First Application</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -200,8 +200,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="tutorial">
-<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="build-your-first-application">
+<h1>Build Your First Application<a class="headerlink" href="#build-your-first-application" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>This tutorial is intended to introduce you to the CodeIgniter4 framework
 and the basic principles of MVC architecture. It will show you how a
 basic CodeIgniter application is constructed in a step-by-step fashion.</p>
@@ -223,7 +225,7 @@ small part of the functionality of the CodeIgniter framework. You’ll go
 through the following pages:</p>
 <ul class="simple">
 <li>Introduction, this page, which gives you an overview of what to
-expect.</li>
+expect and gets your default application downloaded and running.</li>
 <li><a class="reference internal" href="static_pages.html"><span class="doc">Static pages</span></a>, which will teach you the basics
 of controllers, views and routing.</li>
 <li><a class="reference internal" href="news_section.html"><span class="doc">News section</span></a>, where you’ll start using models
@@ -235,6 +237,70 @@ further reading and other resources.</li>
 </ul>
 <p>Enjoy your exploration of the CodeIgniter framework.</p>
 <div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="getting-up-and-running">
+<h2>Getting Up and Running<a class="headerlink" href="#getting-up-and-running" title="Permalink to this headline">¶</a></h2>
+<p>You can download a release manually from the site, but for this tutorial we will
+use the recommended way and install the AppStarter package through Composer.
+From your command line type the following:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">➜</span> <span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">appstarter</span> <span class="nx">ci</span><span class="o">-</span><span class="nx">blog</span> <span class="o">-</span><span class="nx">s</span> <span class="nx">rc</span>
+</pre></div>
+</div>
+<p>This creates a new folder, ci-blog, which contains your application code, with
+CodeIgniter installed in the vendor folder.</p>
+<p>By default, CodeIgniter starts up in production mode. This is a safety feature
+to keep your site a bit more secure in case settings are messed up once it is live.
+So first let’s fix that. Copy or renmae the <code class="docutils literal notranslate"><span class="pre">env</span></code> file to <code class="docutils literal notranslate"><span class="pre">.env</span></code>. Open it up.</p>
+<p>This file contains server-specific settings. This means you never will need to
+commit any sensitive information to your version control system. It includes
+some of the most common ones you want to enter already, though they are all commented
+out. So uncomment the line with CI_ENVIRONMENT on it, and change <code class="docutils literal notranslate"><span class="pre">production</span></code> to
+<code class="docutils literal notranslate"><span class="pre">development</span></code>:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">CI_ENVIRONMENT</span> <span class="o">=</span> <span class="nx">development</span>
+</pre></div>
+</div>
+<p>With that out of the way it’s time to view your application in a browser. You can
+serve it through any server of your choice, Apache, Nginx, etc, but CodeIgniter
+comes with a simple command that takes advantage of PHP’s built-in server to get
+you up and running fast on your development machines. Type the following on the
+command line from the root of your project:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-welcome-page">
+<h2>The Welcome Page<a class="headerlink" href="#the-welcome-page" title="Permalink to this headline">¶</a></h2>
+<p>Now point your browser to the correct URL you will be greeted by a welcome screen.
+Try it now by heading to the following URL:</p>
+<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">localhost</span><span class="o">:</span><span class="mi">8080</span>
+</pre></div>
+</div>
+<p>and you should be greeted by the following page:</p>
+<img alt="../_images/welcome1.png" src="../_images/welcome1.png" />
+<p>This means that your application works and you can start making changes to it.</p>
+</div>
+<div class="section" id="debugging">
+<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h2>
+<p>Now that you’re in development mode, you’ll see a toolbar on the bottom of your application.
+This toolbar contains a number of helpful items that you can reference during development.
+This will never show in production environments. Clicking any of the tabs along the bottom
+brings up additional information. Clicking the X on the right of the toolbar minimizes it
+to a small square with the CodeIgniter flame on it. If you click that the toolbar
+will show again.</p>
+<p>In addition to this, CodeIgniter has some helpful error pages when you hit exceptions or
+other errors in your program. Open up <code class="docutils literal notranslate"><span class="pre">app/Controllers/Home.php</span></code> and change some line
+to generate an error (removing a semi-colon or brace should do the trick!). You will be
+greeted by a screen looking something like this:</p>
+<img alt="../_images/error.png" src="../_images/error.png" />
+<p>There are a couple of things to note here:</p>
+<p>1. Hovering over the red header at the top reveals a <code class="docutils literal notranslate"><span class="pre">search</span></code> link that will open up
+Google.com in a new tab and searching for the exception.
+2. Clicking the <code class="docutils literal notranslate"><span class="pre">arguments</span></code> link on any line in the Backtrace will expand a list of
+the arguments that were passed into that function call.</p>
+<p>Everything else should be clear when you see it.</p>
+<p>Now that we know how to get started and how to debug a little, let’s get started building this
+small news application.</p>
 </div>
 </div>
 
@@ -261,7 +327,7 @@ further reading and other resources.</li>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2019-2020 CodeIgniter Foundation.
-      Last updated on Feb 06, 2020.
+      Last updated on Feb 09, 2020.
 
     </p>
   </div>
