@@ -239,7 +239,7 @@ class FileLocator
 
 		foreach ($this->getNamespaces() as $namespace)
 		{
-			if (is_file($namespace['path'] . $path))
+			if (isset($namespace['path']) && is_file($namespace['path'] . $path))
 			{
 				$foundPaths[] = $namespace['path'] . $path;
 			}
@@ -288,7 +288,7 @@ class FileLocator
 		$namespaces = [];
 
 		// Save system for last
-		$system = null;
+		$system = [];
 
 		foreach ($this->autoloader->getNamespace() as $prefix => $paths)
 		{

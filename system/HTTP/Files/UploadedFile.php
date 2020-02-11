@@ -182,8 +182,9 @@ class UploadedFile extends File implements UploadedFileInterface
 		}
 		catch (Exception $e)
 		{
-			$error = error_get_last();
-			throw HTTPException::forMoveFailed(basename($this->path), $targetPath, strip_tags($error['message']));
+			$error   = error_get_last();
+			$message = isset($error['message']) ? strip_tags($error['message']) : '';
+			throw HTTPException::forMoveFailed(basename($this->path), $targetPath, $message);
 		}
 
 		@chmod($targetPath, 0777 & ~umask());
