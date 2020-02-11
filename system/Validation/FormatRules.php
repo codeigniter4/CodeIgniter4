@@ -349,7 +349,11 @@ class FormatRules
 	 * @return boolean
 	 */
 	public function valid_ip(string $ip = null, string $which = null): bool
-	{
+	{	
+		if(empty($ip))
+		{
+			return false;
+		}
 		switch (strtolower($which))
 		{
 			case 'ipv4':
