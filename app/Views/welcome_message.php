@@ -14,6 +14,7 @@
   html, body {
     color: #212529;
     font-family: system, -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
+		font-size: 16px;
     margin: 0;
     padding: 0;
   }
@@ -77,8 +78,11 @@
     -moz-border-radius: 8px;
     border-radius: 8px;
     display: block;
+		font-size: 0.9rem;
     margin: 2rem 0;
-    white-space: pre;
+		padding: 1.5rem;
+    white-space: pre-wrap;
+		word-break: break-all;
   }
   section code {
     display: block;
@@ -137,15 +141,11 @@
 
   <p>If you would like to edit this page you will find it located at:</p>
 
-  <pre><code>
-  app/Views/welcome_message.php
-  </code></pre>
+  <pre><code>app/Views/welcome_message.php</code></pre>
 
   <p>The corresponding controller for this page can be found at:</p>
 
-  <pre><code>
-  app/Controllers/Home.php
-  </code></pre>
+  <pre><code>app/Controllers/Home.php</code></pre>
 
   <p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="https://codeigniter4.github.io/CodeIgniter4" target="_blank">User Guide</a>.</p>
 
