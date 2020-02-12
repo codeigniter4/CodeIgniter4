@@ -45,7 +45,7 @@
     padding: 0 0.5rem;
   }
   header .heroe {
-    margin: 8rem auto 4rem auto;
+    margin: 6rem auto 0 auto;
     max-width: 1100px;
     padding: 0 5rem;
   }
@@ -55,7 +55,7 @@
     line-height: 1.2;
   }
   header .heroe h2 {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 300;
     line-height: 1.2;
   }
@@ -64,7 +64,7 @@
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: cover;
-    min-height: 300px;
+    min-height: 275px;
   }
   section {
     margin: 2rem auto 10rem auto;
@@ -92,7 +92,7 @@
   }
   footer {
     background-color: #DD4814;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 200;
     text-align: center;
   }
