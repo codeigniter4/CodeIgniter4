@@ -209,10 +209,11 @@
 function mobileMenu() {
   var menuItems = document.getElementsByClassName('menu-item');
   for (var i = 0; i < menuItems.length; i ++) {
-    if(menuItems[i].style.display === 'block') {
-      menuItems[i].style.display = 'none';
+    var menuItem = menuItems[i];
+    if (menuItem.style.display === 'block') {
+      menuItem.style.display = 'none';
     } else {
-      menuItems[i].style.display = 'block';
+      menuItem.style.display = 'block';
     }
   }
 }
