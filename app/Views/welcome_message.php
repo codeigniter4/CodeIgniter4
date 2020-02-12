@@ -74,7 +74,7 @@
     min-height: 150px;
   }
   section {
-    margin: 3rem auto 6rem auto;
+    margin: 3rem auto 5rem auto;
     max-width: 1100px;
     padding: 0 1.75rem;
   }
