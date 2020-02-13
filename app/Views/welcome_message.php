@@ -18,6 +18,9 @@
     font-size: 16px;
     margin: 0;
     padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   header {
     background-color: #f7f8f9;
@@ -56,7 +59,7 @@
   header .heroe {
     margin: 0 auto;
     max-width: 1100px;
-		padding: 0.5rem 1.75rem 2rem 1.75rem;
+    padding: 0.5rem 1.75rem 2rem 1.75rem;
   }
   header .heroe h1 {
     font-size: 2.5rem;
