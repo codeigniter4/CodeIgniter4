@@ -61,7 +61,7 @@
   header .heroe {
     margin: 0 auto;
     max-width: 1100px;
-    padding: 0.5rem 1.75rem 2rem 1.75rem;
+    padding: 1rem 1.75rem 1.75rem 1.75rem;
   }
   header .heroe h1 {
     font-size: 2.5rem;
