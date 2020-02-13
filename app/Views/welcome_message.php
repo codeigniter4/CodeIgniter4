@@ -94,7 +94,7 @@
   }
   footer {
     background-color: #dd4814;
-    font-weight: 200;
+    font-weight: 250;
     text-align: center;
   }
   footer .environment {
