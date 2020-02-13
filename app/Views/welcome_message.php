@@ -120,7 +120,7 @@
       padding: 0.75rem 0.5rem;
     }
     header .menu-item {
-      background-color: #f4f4f4;
+      background-color: #f4f5f6;
       border-top: 1px solid #f2f2f2;
       display: none;
       width: 100%;
