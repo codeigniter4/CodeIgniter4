@@ -112,7 +112,7 @@
       display: block!important;
     }
   }
-  @media (max-width: 640px) {
+  @media (max-width: 600px) {
     header ul {
       padding: 0;
     }
