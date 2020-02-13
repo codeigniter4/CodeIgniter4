@@ -24,10 +24,10 @@
   }
   header {
     background-color: #f7f8f9;
-    border-bottom: 1px solid #F2F2F2;
+    border-bottom: 1px solid #f2f2f2;
   }
   header ul {
-    border-bottom: 1px solid #F2F2F2;
+    border-bottom: 1px solid #f2f2f2;
     list-style-type: none;
     margin: 0;
     overflow: hidden;
@@ -78,7 +78,7 @@
   }
   section pre {
     background-color: #f7f8f9;
-    border: 1px solid #F2F2F2;
+    border: 1px solid #f2f2f2;
     display: block;
     font-size: 0.9rem;
     margin: 2rem 0;
@@ -93,16 +93,16 @@
     color: #DD4814;
   }
   footer {
-    background-color: #DD4814;
+    background-color: #dd4814;
     font-weight: 200;
     text-align: center;
   }
   footer .environment {
-    color: #FFFFFF;
+    color: #ffffff;
     padding: 2rem 1.75rem;
   }
   footer .copyrights {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     color: #777777;
     font-size: 0.8rem;
     padding: 0.25rem 1.75rem;
@@ -120,8 +120,8 @@
       padding: 0.75rem 0.5rem;
     }
     header .menu-item {
-      background-color: #F4F4F4;
-      border-top: 1px solid #F2F2F2;
+      background-color: #f4f4f4;
+      border-top: 1px solid #f2f2f2;
       display: none;
       width: 100%;
     }
