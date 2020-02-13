@@ -24,10 +24,10 @@
   }
   header {
     background-color: #f7f8f9;
-    border-bottom: 1px solid #F0F0F0;
+    border-bottom: 1px solid #F2F2F2;
   }
   header ul {
-    border-bottom: 1px solid #F0F0F0;
+    border-bottom: 1px solid #F2F2F2;
     list-style-type: none;
     margin: 0;
     overflow: hidden;
@@ -78,7 +78,7 @@
   }
   section pre {
     background-color: #f7f8f9;
-    border: 1px solid #F0F0F0;
+    border: 1px solid #F2F2F2;
     display: block;
     font-size: 0.9rem;
     margin: 2rem 0;
@@ -121,7 +121,7 @@
     }
     header .menu-item {
       background-color: #F4F4F4;
-      border-top: 1px solid #F0F0F0;
+      border-top: 1px solid #F2F2F2;
       display: none;
       width: 100%;
     }
