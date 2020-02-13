@@ -95,6 +95,20 @@ class Serve extends BaseCommand
 	protected $arguments = [];
 
 	/**
+	 * The current port offset.
+	 *
+	 * @var int
+	 */
+	protected $portOffset = 0;
+
+	/**
+	 * The max number of ports to attempt to serve from
+	 *
+	 * @var int
+	 */
+	protected $tries = 10;
+
+	/**
 	 * Options
 	 *
 	 * @var array
@@ -124,7 +138,7 @@ class Serve extends BaseCommand
 		// Collect any user-supplied options and apply them.
 		$php  = CLI::getOption('php') ?? PHP_BINARY;
 		$host = CLI::getOption('host') ?? 'localhost';
-		$port = CLI::getOption('port') ?? '8080';
+		$port = (int) (CLI::getOption('port') ?? '8080') + $this->portOffset;
 
 		// Get the party started.
 		CLI::write('CodeIgniter development server started on http://' . $host . ':' . $port, 'green');
@@ -139,7 +153,13 @@ class Serve extends BaseCommand
 		// Call PHP's built-in webserver, making sure to set our
 		// base path to the public folder, and to use the rewrite file
 		// to ensure our environment is set and it simulates basic mod_rewrite.
-		passthru($php . ' -S ' . $host . ':' . $port . ' -t ' . $docroot . ' ' . $rewrite);
+		passthru($php . ' -S ' . $host . ':' . $port . ' -t ' . $docroot . ' ' . $rewrite, $status);
+
+		if ($status && $this->portOffset < $this->tries) {
+			$this->portOffset += 1;
+
+			$this->run($params);
+		}
 	}
 
 }
