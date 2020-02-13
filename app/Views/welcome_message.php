@@ -24,12 +24,14 @@
   }
   header {
     background-color: #f7f8f9;
+    border-bottom: 1px solid #F0F0F0;
   }
   header ul {
+    border-bottom: 1px solid #F0F0F0;
     list-style-type: none;
     margin: 0;
     overflow: hidden;
-    padding: 0.75rem;
+    padding: 0.75rem 0;
   }
   header li {
     float: right;
@@ -112,13 +114,14 @@
   }
   @media (max-width: 640px) {
     header ul {
-      padding: 0 0.75rem;
+      padding: 0;
     }
     header .logo {
       padding: 0.75rem 0.75rem;
     }
     header .menu-item {
-      background-color: #FBFBFB;
+      background-color: #F4F4F4;
+      border-top: 1px solid #F0F0F0;
       display: none;
       width: 100%;
     }
