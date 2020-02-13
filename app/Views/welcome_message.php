@@ -117,7 +117,7 @@
       padding: 0;
     }
     header .logo {
-      padding: 0.75rem 0.75rem;
+      padding: 0.75rem 0.5rem;
     }
     header .menu-item {
       background-color: #F4F4F4;
