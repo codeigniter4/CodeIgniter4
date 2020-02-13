@@ -6,27 +6,38 @@ Using CodeIgniter's Model
     :local:
     :depth: 2
 
-Manual Model Creation
-=====================
+Models
+======
 
-You do not need to extend any special class to create a model for your application. All you need is to get an
-instance of the database connection and you're good to go.
+Models provide a way to interact with a specific table in your database. They come out of the box with helper
+methods for much of the standard ways you would need to interact with a database table, including finding records,
+updating records, deleting records, and more.
+
+Accessing Models
+================
+
+Models are typically stored in the ``app/Models`` directory. They should have a namespace that matches their
+location within the directory, like ``namespace App\Models``.
+
+You can access models within your classes by creating a new instance or using the ``model()`` helper function.
 
 ::
 
-    <?php namespace App\Models;
+    // Create a new class manually
+    $userModel = new App\Models\UserModel();
 
-	use CodeIgniter\Database\ConnectionInterface;
+    // Create a new class with the model function
+    $userModel = model('App\Models\UserModel', false);
 
-	class UserModel
-	{
-		protected $db;
+    // Create a shared instance of the model
+    $userModel = model('App\Models\UserModel');
 
-		public function __construct(ConnectionInterface &$db)
-		{
-			$this->db =& $db;
-		}
-	}
+    // Create shared instance with a supplied database connection
+    // When no namespace is given, it will search through all namespaces
+    // the system knows about and attempt to located the UserModel class.
+    $db = db_connect('custom');
+    $userModel = model('UserModel', true, $db);
+
 
 CodeIgniter's Model
 ===================
@@ -740,3 +751,27 @@ afterDelete       Varies by delete* method. See the following:
                   **result** = the result of the delete() call on the Query Builder.
                   **data** = unused.
 ================ =========================================================================================================
+
+
+Manual Model Creation
+=====================
+
+You do not need to extend any special class to create a model for your application. All you need is to get an
+instance of the database connection and you're good to go. This allows you to bypass the features CodeIgniter's
+Model gives you out of the box, and create a fully custom experience.
+
+::
+
+    <?php namespace App\Models;
+
+	use CodeIgniter\Database\ConnectionInterface;
+
+	class UserModel
+	{
+		protected $db;
+
+		public function __construct(ConnectionInterface &$db)
+		{
+			$this->db =& $db;
+		}
+	}
