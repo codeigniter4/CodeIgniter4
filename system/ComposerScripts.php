@@ -71,7 +71,7 @@ class ComposerScripts
 	public static function postUpdate()
 	{
 		static::moveEscaper();
-		static::moveKint();
+		static::buildKint();
 	}
 
 	//--------------------------------------------------------------------
@@ -189,33 +189,65 @@ class ComposerScripts
 	//--------------------------------------------------------------------
 
 	/**
-	 * Moves the Kint file into our base repo so that it's
+	 * Builds the kint.phar file into our base repo so that it's
 	 * available for packaged releases where the users don't user Composer.
 	 */
-	public static function moveKint()
+	public static function buildKint()
 	{
-		$filename = 'vendor/kint-php/kint/build/kint-aante-light.php';
+		if (ini_get('phar.readonly'))
+		{
+			$iniFile = php_ini_loaded_file();
+			echo 'Unable to build Kint' . PHP_EOL;
+			echo 'You must disable phar.readonly in php.ini file located at:' . $iniFile . PHP_EOL;
+			return;
+		}
 
-		if (is_file($filename))
+		$kintDir = 'vendor/kint-php/kint';
+
+		if (is_dir($kintDir))
 		{
 			$base = basename(__DIR__) . '/' . static::$basePath . 'Kint';
 
-			// Remove the contents of the previous Kint folder, if any.
-			if (is_dir($base))
+			$outpath = $base . '/kint.phar';
+
+			if (file_exists($outpath))
 			{
-				static::removeDir($base);
+				unlink($outpath);
 			}
 
-			// Create Kint if it doesn't exist already
-			if (! is_dir($base))
+			$phar = new \Phar($outpath);
+			$phar->setStub("<?php require 'phar://'.__FILE__.'/init_phar.php'; __HALT_COMPILER();");
+
+			$pathlen = strlen($kintDir);
+
+			$dirs = [
+				$kintDir . '/src',
+				$kintDir . '/resources/compiled',
+			];
+
+			$kintFiles = [];
+			foreach ($dirs as $dir)
 			{
-				mkdir($base, 0755);
+				$iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir));
+				foreach ($iterator as $file)
+				{
+					if ($file->isDir())
+					{
+						continue;
+					}
+					$kintFiles[] = $file->getPathname();
+				}
 			}
 
-			if (! static::moveFile($filename, $base . '/kint.php'))
+			foreach ($kintFiles as $file)
 			{
-				die('Error moving: ' . $filename);
+				$local = substr($file, $pathlen);
+				$phar->addFile($file, $local);
 			}
+
+			$phar->addFile($base . '/init_phar.php', '/init_phar.php');
+			$phar->addFile($kintDir . '/init.php', '/init.php');
+			$phar->addFile($kintDir . '/init_helpers.php', '/init_helpers.php');
 		}
 	}
 }
