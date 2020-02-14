@@ -51,14 +51,14 @@ class FileTest extends \CIUnitTestCase
 	{
 		$file = new File(SYSTEMPATH . 'Common.php');
 		$size = number_format(filesize(SYSTEMPATH . 'Common.php') / 1024, 3);
-		$this->assertEquals($size, $file->getSize('kb'));
+		$this->assertEquals($size, $file->getSizeByUnit('kb'));
 	}
 
 	public function testGetSizeReturnsMB()
 	{
 		$file = new File(SYSTEMPATH . 'Common.php');
 		$size = number_format(filesize(SYSTEMPATH . 'Common.php') / 1024 / 1024, 3);
-		$this->assertEquals($size, $file->getSize('mb'));
+		$this->assertEquals($size, $file->getSizeByUnit('mb'));
 	}
 
 	/**

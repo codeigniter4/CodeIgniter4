@@ -86,29 +86,36 @@ class File extends SplFileInfo
 	 * the file in the $_FILES array if available, as PHP calculates this based
 	 * on the actual size transmitted.
 	 *
-	 * @param string $unit The unit to return:
-	 *      - b   Bytes
-	 *      - kb  Kilobytes
-	 *      - mb  Megabytes
-	 *
-	 * @return integer|null The file size in bytes or null if unknown.
+	 * @return integer The file size in bytes
 	 */
-	public function getSize(string $unit = 'b')
+	public function getSize()
 	{
 		if (is_null($this->size))
 		{
-			$this->size = filesize($this->getPathname());
+			$this->size = parent::getSize();
 		}
 
+		return $this->size;
+	}
+
+	/**
+	 * Retrieve the file size by unit.
+	 *
+	 * @param string $unit
+	 *
+	 * @return integer|string
+	 */
+	public function getSizeByUnit(string $unit = 'b')
+	{
 		switch (strtolower($unit))
 		{
 			case 'kb':
-				return number_format($this->size / 1024, 3);
+				return number_format($this->getSize() / 1024, 3);
 			case 'mb':
-				return number_format(($this->size / 1024) / 1024, 3);
+				return number_format(($this->getSize() / 1024) / 1024, 3);
+			default:
+				return $this->getSize();
 		}
-
-		return (int) $this->size;
 	}
 
 	//--------------------------------------------------------------------
