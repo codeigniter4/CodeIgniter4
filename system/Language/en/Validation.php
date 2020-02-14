@@ -24,9 +24,10 @@ return [
 
 	// Rule Messages
    'alpha'                 => 'The {field} field may only contain alphabetical characters.',
-   'alpha_dash'            => 'The {field} field may only contain alpha-numeric characters, underscores, and dashes.',
-   'alpha_numeric'         => 'The {field} field may only contain alpha-numeric characters.',
-   'alpha_numeric_space'   => 'The {field} field may only contain alpha-numeric characters and spaces.',
+   'alpha_dash'            => 'The {field} field may only contain alphanumeric, underscore, and dash characters.',
+   'alpha_numeric'         => 'The {field} field may only contain alphanumeric characters.',
+   'alpha_numeric_punct'   => 'The {field} field may contain only alphanumeric characters, spaces, and  ~ ! # $ % & * - _ + = | : . characters.',
+   'alpha_numeric_space'   => 'The {field} field may only contain alphanumeric and space characters.',
    'alpha_space'           => 'The {field} field may only contain alphabetical characters and spaces.',
    'decimal'               => 'The {field} field must contain a decimal number.',
    'differs'               => 'The {field} field must differ from the {param} field.',

@@ -676,10 +676,15 @@ Rule                    Parameter   Description                                 
 ======================= =========== =============================================================================================== ===================================================
 alpha                   No          Fails if field has anything other than alphabetic characters.
 alpha_space             No          Fails if field contains anything other than alphabetic characters or spaces.
-alpha_dash              No          Fails if field contains anything other than alpha-numeric characters, underscores or dashes.
-alpha_numeric           No          Fails if field contains anything other than alpha-numeric characters or numbers.
-alpha_numeric_space     No          Fails if field contains anything other than alpha-numeric characters, numbers or space.
-decimal                 No          Fails if field contains anything other than a decimal number.
+alpha_dash              No          Fails if field contains anything other than alphanumeric characters, underscores or dashes.
+alpha_numeric           No          Fails if field contains anything other than alphanumeric characters.
+alpha_numeric_space     No          Fails if field contains anything other than alphanumeric or space characters.
+alpha_numeric_punct     No          Fails if field contains anything other than alphanumeric, space, or this limited set of 
+                                    punctuation characters: ~ (tilde), ! (exclamation), # (number), $ (dollar), % (percent), 
+                                    & (ampersand), * (asterisk), - (dash), _ (underscore), + (plus), = (equals), 
+                                    | (vertical bar), : (colon), . (period).
+decimal                 No          Fails if field contains anything other than a decimal number. 
+                                    Also accepts a + or  - sign for the number.
 differs                 Yes         Fails if field does not differ from the one in the parameter.                                   differs[field_name]
 exact_length            Yes         Fails if field is not exactly the parameter value. One or more comma-separated values.          exact_length[5] or exact_length[5,8,12]
 greater_than            Yes         Fails if field is less than or equal to the parameter value or not numeric.                     greater_than[8]
