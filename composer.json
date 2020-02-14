@@ -4,12 +4,18 @@
     "description": "The CodeIgniter framework v4",
     "homepage": "https://codeigniter.com",
     "license": "MIT",
+    "repositories":[
+        {
+            "type": "vcs",
+            "url": "https://github.com/kint-php/kint.git"
+        }
+    ],
     "require": {
         "php": ">=7.2",
         "ext-curl": "*",
         "ext-intl": "*",
         "ext-json": "*",
-        "kint-php/kint": "^2.1",
+        "kint-php/kint": "dev-master#335ac1b",
         "psr/log": "^1.1",
         "laminas/laminas-escaper": "^2.6"
     },

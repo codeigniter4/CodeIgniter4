@@ -194,7 +194,7 @@ class ComposerScripts
 	 */
 	public static function moveKint()
 	{
-		$filename = 'vendor/kint-php/kint/build/kint-aante-light.php';
+		$filename = 'vendor/kint-php/kint/build/kint.phar';
 
 		if (is_file($filename))
 		{
@@ -212,7 +212,7 @@ class ComposerScripts
 				mkdir($base, 0755);
 			}
 
-			if (! static::moveFile($filename, $base . '/kint.php'))
+			if (! static::moveFile($filename, $base . '/kint.phar'))
 			{
 				die('Error moving: ' . $filename);
 			}
