@@ -358,7 +358,11 @@ class Entity
 		}
 
 		if (! $isNullable || ! is_null($value))
-		{
+		{	
+			if (($castTo === 'bool' || $castTo === 'boolean') && !is_int($value))
+			{
+				$value = (int)$value;
+			}
 			// Array casting requires that we serialize the value
 			// when setting it so that it can easily be stored
 			// back to the database.
