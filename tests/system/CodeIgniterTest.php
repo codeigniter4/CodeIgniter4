@@ -55,7 +55,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
+		$this->assertContains('Welcome to CodeIgniter', $output);
 	}
 
 	//--------------------------------------------------------------------
@@ -71,7 +71,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
+		$this->assertContains('Welcome to CodeIgniter', $output);
 	}
 
 	//--------------------------------------------------------------------
@@ -121,7 +121,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
+		$this->assertContains('Welcome to CodeIgniter', $output);
 	}
 
 	//--------------------------------------------------------------------
@@ -237,7 +237,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
+		$this->assertContains('Welcome to CodeIgniter', $output);
 	}
 
 	public function testTransfersCorrectHTTPVersion()
@@ -271,6 +271,6 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
+		$this->assertContains('Welcome to CodeIgniter', $output);
 	}
 }

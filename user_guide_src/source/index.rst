@@ -18,6 +18,10 @@ Getting Started
 
 	installation/index
 
+****************************
+Build Your First Application
+****************************
+
 .. toctree::
 	:includehidden:
 	:titlesonly:

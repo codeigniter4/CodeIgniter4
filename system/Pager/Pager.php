@@ -8,7 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019 CodeIgniter Foundation
+ * Copyright (c) 2019-2020 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2019 CodeIgniter Foundation
+ * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -503,7 +503,7 @@ class Pager implements PagerInterface
 		}
 
 		$this->groups[$group] = [
-			'uri'          => clone Services::request()->uri,
+			'uri'          => clone current_url(true),
 			'hasMore'      => false,
 			'total'        => null,
 			'perPage'      => $this->config->perPage,
@@ -520,7 +520,7 @@ class Pager implements PagerInterface
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	/**
 	 * Calculating the current page
 	 *
@@ -545,7 +545,7 @@ class Pager implements PagerInterface
 
 			$page = (int) ($_GET[$pageSelector] ?? 1);
 
-			$this->groups[$group]['currentPage']  = $page < 1 ? 1 : $page;
+			$this->groups[$group]['currentPage'] = $page < 1 ? 1 : $page;
 		}
 	}
 

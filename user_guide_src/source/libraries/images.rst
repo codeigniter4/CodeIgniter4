@@ -24,7 +24,7 @@ Initializing the Class
 Like most other classes in CodeIgniter, the image class is initialized
 in your controller by calling the Services class::
 
-	$image = Config\Services::image();
+	$image = \Config\Services::image();
 
 You can pass the alias for the image library you wish to use into the
 Service function::
@@ -52,7 +52,7 @@ identical. You will set some preferences corresponding to the action you
 intend to perform, then call one of the available processing functions.
 For example, to create an image thumbnail you'll do this::
 
-	$image = Config\Services::image()
+	$image = \Config\Services::image()
 		->withFile('/path/to/image/mypic.jpg')
 		->fit(100, 100, 'center')
 		->save('/path/to/image/mypic_thumb.jpg');
@@ -69,7 +69,7 @@ needed before saving. The original image is left untouched, and a new image
 is used and passed through each method, applying the results on top of the
 previous results::
 
-	$image = Config\Services::image()
+	$image = \Config\Services::image()
 		->withFile('/path/to/image/mypic.jpg')
 		->reorient()
 		->rotate(90)
@@ -96,7 +96,7 @@ Image Quality
 quality. Values range from 0 to 100 with 90 being the framework default. This parameter
 only applies to JPEG images and will be ignored otherwise::
 
-	$image = Config\Services::image()
+	$image = \Config\Services::image()
 		->withFile('/path/to/image/mypic.jpg')
 		->save('/path/to/image/my_low_quality_pic.jpg', 10);
 
@@ -122,7 +122,7 @@ the error message. A good practice is to catch the exceptions, showing an
 error upon failure, like this::
 
 	try {
-        $image = Config\Services::image()
+        $image = \Config\Services::image()
             ->withFile('/path/to/image/mypic.jpg')
             ->fit(100, 100, 'center')
             ->save('/path/to/image/mypic_thumb.jpg');
@@ -131,12 +131,6 @@ error upon failure, like this::
 	{
 		echo $e->getMessage();
 	}
-
-.. note:: You can optionally specify the HTML formatting to be applied to
-	the errors, by submitting the opening/closing tags in the function,
-	like this::
-
-	$this->image_lib->display_errors('<p>', '</p>');
 
 Cropping Images
 ---------------
@@ -156,7 +150,7 @@ thumbnail images that should match a certain size/aspect ratio. This is handled 
 To take a 50x50 pixel square out of the center of an image, you would need to first calculate the appropriate x and y
 offset values::
 
-    $info = Services::image('imagick')
+    $info = \Config\Services::image('imagick')
 		->withFile('/path/to/image/mypic.jpg')
 		->getFile()
 		->getProperties(true);
@@ -164,10 +158,10 @@ offset values::
     $xOffset = ($info['width'] / 2) - 25;
     $yOffset = ($info['height'] / 2) - 25;
 
-    Services::image('imagick')
+    \Config\Services::image('imagick')
 		->withFile('/path/to/image/mypic.jpg')
 		->crop(50, 50, $xOffset, $yOffset)
-		->save('path/to/new/image.jpg');
+		->save('/path/to/new/image.jpg');
 
 Converting Images
 -----------------
@@ -178,10 +172,10 @@ The ``convert()`` method changes the library's internal indicator for the desire
 
 - **$imageType** is one of PHP's image type constants (see for example https://www.php.net/manual/en/function.image-type-to-mime-type.php)::
 
-	Services::image()
+	\Config\Services::image()
 		->withFile('/path/to/image/mypic.jpg')
 		->convert(IMAGETYPE_PNG)
-		->save('path/to/new/image.png');
+		->save('/path/to/new/image.png');
 
 .. note:: ImageMagick already saves files in the type
 	indicated by their extension, ignoring **$imageType**
@@ -205,10 +199,10 @@ The ``fit()`` method aims to help simplify cropping a portion of an image in a "
 
 This provides a much simpler way to crop that will always maintain the aspect ratio::
 
-	Services::image('imagick')
+	\Config\Services::image('imagick')
 		->withFile('/path/to/image/mypic.jpg')
 		->fit(100, 150, 'left')
-		->save('path/to/new/image.jpg');
+		->save('/path/to/new/image.jpg');
 
 Flattening Images
 -----------------
@@ -227,15 +221,15 @@ The ``flatten()`` method aims to add a background color behind transparent image
 
 ::
 
-	Services::image('imagick')
+	\Config\Services::image('imagick')
 		->withFile('/path/to/image/mypic.png')
 		->flatten()
-		->save('path/to/new/image.jpg');
+		->save('/path/to/new/image.jpg');
 
-	Services::image('imagick')
+	\Config\Services::image('imagick')
 		->withFile('/path/to/image/mypic.png')
 		->flatten(25,25,112)
-		->save('path/to/new/image.jpg');
+		->save('/path/to/new/image.jpg');
 
 Flipping Images
 ---------------
@@ -248,10 +242,10 @@ Images can be flipped along either their horizontal or vertical axis::
 
 ::
 
-	Services::image('imagick')
+	\Config\Services::image('imagick')
 		->withFile('/path/to/image/mypic.jpg')
 		->flip('horizontal')
-		->save('path/to/new/image.jpg');
+		->save('/path/to/new/image.jpg');
 
 Resizing Images
 ---------------
@@ -271,10 +265,10 @@ while the other dimension will be altered to match the original image's aspect r
 
 ::
 
-	Services::image('imagick')
+	\Config\Services::image('imagick')
 		->withFile('/path/to/image/mypic.jpg')
 		->resize(200, 100, true, 'height')
-		->save('path/to/new/image.jpg');
+		->save('/path/to/new/image.jpg');
 
 Rotating Images
 ---------------
@@ -302,7 +296,7 @@ products.
 The first parameter is the string of text that you wish to display. The second parameter is an array of options
 that allow you to specify how the text should be displayed::
 
-	Services::image('imagick')
+	\Config\Services::image('imagick')
 		->withFile('/path/to/image/mypic.jpg')
 		->text('Copyright 2017 My Photo Co', [
 		    'color'      => '#fff',
@@ -312,7 +306,7 @@ that allow you to specify how the text should be displayed::
 		    'vAlign'     => 'bottom',
 		    'fontSize'   => 20
 		])
-		->save('path/to/new/image.jpg');
+		->save('/path/to/new/image.jpg');
 
 The possible options that are recognized are as follows:
 

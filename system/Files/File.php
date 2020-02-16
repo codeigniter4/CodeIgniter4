@@ -8,7 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019 CodeIgniter Foundation
+ * Copyright (c) 2019-2020 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2019 CodeIgniter Foundation
+ * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -86,29 +86,36 @@ class File extends SplFileInfo
 	 * the file in the $_FILES array if available, as PHP calculates this based
 	 * on the actual size transmitted.
 	 *
-	 * @param string $unit The unit to return:
-	 *      - b   Bytes
-	 *      - kb  Kilobytes
-	 *      - mb  Megabytes
-	 *
-	 * @return integer|null The file size in bytes or null if unknown.
+	 * @return integer The file size in bytes
 	 */
-	public function getSize(string $unit = 'b')
+	public function getSize()
 	{
 		if (is_null($this->size))
 		{
-			$this->size = filesize($this->getPathname());
+			$this->size = parent::getSize();
 		}
 
+		return $this->size;
+	}
+
+	/**
+	 * Retrieve the file size by unit.
+	 *
+	 * @param string $unit
+	 *
+	 * @return integer|string
+	 */
+	public function getSizeByUnit(string $unit = 'b')
+	{
 		switch (strtolower($unit))
 		{
 			case 'kb':
-				return number_format($this->size / 1024, 3);
+				return number_format($this->getSize() / 1024, 3);
 			case 'mb':
-				return number_format(($this->size / 1024) / 1024, 3);
+				return number_format(($this->getSize() / 1024) / 1024, 3);
+			default:
+				return $this->getSize();
 		}
-
-		return (int) $this->size;
 	}
 
 	//--------------------------------------------------------------------
