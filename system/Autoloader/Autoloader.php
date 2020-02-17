@@ -423,12 +423,6 @@ class Autoloader
 			unset($paths['CodeIgniter\\']);
 		}
 
-		// Also get rid of Kint to ensure we use our own copy
-		if (isset($paths['Kint\\']))
-		{
-			unset($paths['Kint\\']);
-		}
-
 		// Composer stores namespaces with trailing slash. We don't.
 		$newPaths = [];
 		foreach ($paths as $key => $value)

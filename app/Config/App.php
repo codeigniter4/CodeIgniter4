@@ -266,4 +266,15 @@ class App extends BaseConfig
 	*/
 	public $CSPEnabled = false;
 
+	/*
+	|--------------------------------------------------------------------------
+	| Kint
+	|--------------------------------------------------------------------------
+	|
+	| Kint Related configuration
+	|
+	*/
+	public $kintRendererTheme  = 'aante-light.css';
+	public $kintRendererFolder = false;
+
 }
