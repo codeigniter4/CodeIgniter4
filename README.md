@@ -40,6 +40,10 @@ The user guide updating and deployment is a bit awkward at the moment, but we ar
 
 ## Repository Management
 
+CodeIgniter is developed completely on a volunteer basis. As such, please give up to 7 days 
+for your issues to be reviewed. If you haven't heard from one of the team in that time period, 
+feel free to leave a comment on the issue so that it gets brought back to our attention. 
+
 We use Github issues to track **BUGS** and to track approved **DEVELOPMENT** work packages.
 We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
 FEATURE REQUESTS.
