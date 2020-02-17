@@ -33,11 +33,19 @@
 <h3>Defined Routes</h3>
 
 <table>
+    <thead>
+        <tr>
+            <th>Method</th>
+            <th>Route</th>
+            <th>Handler</th>
+        </tr>
+    </thead>
     <tbody>
     {routes}
         <tr>
-            <td>{from}</td>
-            <td>{to}</td>
+            <td>{method}</td>
+            <td>{route}</td>
+            <td>{handler}</td>
         </tr>
     {/routes}
     </tbody>

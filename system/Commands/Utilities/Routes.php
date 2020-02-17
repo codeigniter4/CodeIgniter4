@@ -120,29 +120,29 @@ class Routes extends BaseCommand
 		];
 
 		$tbody = [];
-		foreach ($methods as $method)
-		{
-			$routes = $collection->getRoutes($method);
+        foreach ($methods as $method)
+        {
+            $routes = $collection->getRoutes($method);
 
-			foreach ($routes as $from => $to)
-			{
-				// filter for strings, as callbacks aren't displayable
-				if (is_string($to))
-				{
-					$tbody[] = [
-						$from,
-						$method,
-						$to,
-					];
-				}
-			}
-		}
+            foreach ($routes as $route => $handler)
+            {
+                // filter for strings, as callbacks aren't displayable
+                if(is_string($handler))
+                {
+                    $tbody[] = [
+                        strtoupper($method),
+                        $route,
+                        $handler,
+                    ];
+                }
+            }
+        }
 
-		$thead = [
-			'Route',
-			'Method',
-			'Command',
-		];
+        $thead = [
+            'Method',
+            'Route',
+            'Handler',
+        ];
 
 		CLI::table($tbody, $thead);
 	}
