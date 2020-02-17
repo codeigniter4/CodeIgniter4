@@ -92,6 +92,7 @@ class AutoloadConfig
 		 */
 		$this->psr4 = [
 			'CodeIgniter' => realpath(SYSTEMPATH),
+			'Kint'        => SYSTEMPATH . 'ThirdParty/Kint',
 		];
 
 		if (isset($_SERVER['CI_ENVIRONMENT']) && $_SERVER['CI_ENVIRONMENT'] === 'testing')
