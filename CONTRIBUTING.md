@@ -7,6 +7,8 @@ We expect all contributions to conform to our [style guide](https://github.com/c
 be documented (in the [user guide](https://codeigniter4.github.io/userguide/)), and unit tested (in the [test folder](https://github.com/codeigniter4/CodeIgniter4/tree/develop/tests)). 
 There is a [Contributing to CodeIgniter](./contributing/README.rst) section in the repository which describes the contribution process; this page is an overview.
 
+Note, we expect all code changes or bug-fixes to be accompanied by one or more tests added to our test suite to prove the code works. If pull requests are not accompanied by relevant tests, they will likely be closed. Since we are a team of volunteers, we don't have any more time to work on the framework than you do. Please make it as painless for your contributions to be included as possible. If you need help with getting tests running on your local machines, ask for help on the forusm. We would be happy to help out. 
+
 The [Open Source Guide](https://opensource.guide/) is a good first read for those new to contributing to open source!
 ## Issues
 
