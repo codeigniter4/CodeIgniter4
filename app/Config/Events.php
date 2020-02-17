@@ -20,14 +20,17 @@ use CodeIgniter\Events\Events;
  */
 
 Events::on('pre_system', function () {
-	while (\ob_get_level() > 0)
+	if (ENVIRONMENT !== 'testing')
 	{
-		\ob_end_flush();
-	}
+		while (\ob_get_level() > 0)
+		{
+			\ob_end_flush();
+		}
 
-	\ob_start(function ($buffer) {
-		return $buffer;
-	});
+		\ob_start(function ($buffer) {
+			return $buffer;
+		});
+	}
 
 	/*
 	 * --------------------------------------------------------------------
