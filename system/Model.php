@@ -498,12 +498,12 @@ class Model
 	 * builder methods and still get validated data, like replace.
 	 *
 	 * @param mixed        $key
-	 * @param string       $value
+	 * @param string|int       $value
 	 * @param boolean|null $escape
 	 *
 	 * @return $this
 	 */
-	public function set($key, string $value = '', bool $escape = null)
+	public function set($key, $value = '', bool $escape = null)
 	{
 		$data = is_array($key)
 			? $key
