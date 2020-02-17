@@ -66,6 +66,7 @@ class BaseService
 	/**
 	 * Cache for instance of any services that
 	 * have been requested as a "shared" instance.
+	 * Keys should be lowercase service names.
 	 *
 	 * @var array
 	 */
@@ -106,6 +107,8 @@ class BaseService
 	 */
 	protected static function getSharedInstance(string $key, ...$params)
 	{
+		$key = strtolower($key);
+
 		// Returns mock if exists
 		if (isset(static::$mocks[$key]))
 		{
