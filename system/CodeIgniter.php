@@ -190,11 +190,45 @@ class CodeIgniter
 		$this->detectEnvironment();
 		$this->bootstrapEnvironment();
 
-		if (CI_DEBUG)
+		$this->initializeKint();
+
+		if (! CI_DEBUG)
 		{
-			require_once SYSTEMPATH . 'ThirdParty/Kint/init.php';
-			\Kint\Renderer\RichRenderer::$theme = 'aante-light.css';
+			\Kint::$enabled_mode = false;
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Initializes Kint
+	 */
+	protected function initializeKint()
+	{
+		// If we have KINT_DIR it means it's already loaded via composer
+		if (! defined('KINT_DIR'))
+		{
+			spl_autoload_register(function ($class) {
+				$class = explode('\\', $class);
+
+				if ('Kint' !== array_shift($class))
+				{
+					return;
+				}
+
+				$file = SYSTEMPATH . 'ThirdParty/Kint/' . implode('/', $class) . '.php';
+
+				file_exists($file) && require_once $file;
+			});
+
+			require_once SYSTEMPATH . 'ThirdParty/Kint/init.php';
+		}
+
+		//Set the kint theme
+		\Kint\Renderer\RichRenderer::$theme = $this->config->kintRendererTheme;
+
+		//Render kint in place instead of toolbar
+		\Kint\Renderer\RichRenderer::$folder = $this->config->kintRendererFolder;
 	}
 
 	//--------------------------------------------------------------------
