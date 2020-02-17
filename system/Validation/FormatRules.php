@@ -321,16 +321,19 @@ class FormatRules
 	}
 
 	/**
-	 * Validate an IP address
+	 * Validate an IP address (human readable format or binary string - inet_pton)
 	 *
 	 * @param string $ip    IP Address
 	 * @param string $which IP protocol: 'ipv4' or 'ipv6'
-	 * @param array  $data
 	 *
 	 * @return boolean
 	 */
-	public function valid_ip(string $ip = null, string $which = null, array $data): bool
-	{
+	public function valid_ip(string $ip = null, string $which = null): bool
+	{	
+		if(empty($ip))
+		{
+			return false;
+		}
 		switch (strtolower($which))
 		{
 			case 'ipv4':
@@ -344,7 +347,7 @@ class FormatRules
 				break;
 		}
 
-		return (bool) filter_var($ip, FILTER_VALIDATE_IP, $which);
+		return (bool) filter_var($ip, FILTER_VALIDATE_IP, $which) || (!ctype_print($ip) && (bool) filter_var(inet_ntop($ip), FILTER_VALIDATE_IP, $which));
 	}
 
 	/**
