@@ -192,7 +192,8 @@ class CodeIgniter
 
 		if (CI_DEBUG)
 		{
-			require_once SYSTEMPATH . 'ThirdParty/Kint/kint.php';
+			require_once SYSTEMPATH . 'ThirdParty/Kint/init.php';
+			\Kint\Renderer\RichRenderer::$theme = 'aante-light.css';
 		}
 	}
 
