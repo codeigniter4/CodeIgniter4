@@ -441,12 +441,12 @@ Or as a labeled style::
     );
 
 If you’d like to include a field’s “human” name, or the optional parameter some rules allow for (such as max_length),
-you can add the ``{field}`` and ``{param}`` tags to your message, respectively::
+or the value that was validated you can add the ``{field}``, ``{param}`` and ``{value}`` tags to your message, respectively::
 
-    'min_length' => '{field} must have at least {param} characters.'
+    'min_length' => 'Supplied value ({value}) for {field} must have at least {param} characters.'
 
-On a field with the human name Username and a rule of min_length[5], an error would display: “Username must have
-at least 5 characters.”
+On a field with the human name Username and a rule of min_length[6] with a value of “Pizza”, an error would display: “Supplied value (Pizza) for Username must have
+at least 6 characters.”
 
 .. note:: If you pass the last parameter the labeled style error messages will be ignored.
 
