@@ -838,13 +838,18 @@ class CodeIgniter
 	 */
 	protected function runController($class)
 	{
+		// If this is a CLI request then use the input segments as parameters
+		$params = (is_cli() && ! (ENVIRONMENT === 'testing'))
+			? $this->request->getSegments()
+			: $this->router->params();
+
 		if (method_exists($class, '_remap'))
 		{
-			$output = $class->_remap($this->method, ...$this->router->params());
+			$output = $class->_remap($this->method, ...$params);
 		}
 		else
 		{
-			$output = $class->{$this->method}(...$this->router->params());
+			$output = $class->{$this->method}(...$params);
 		}
 
 		$this->benchmark->stop('controller');
