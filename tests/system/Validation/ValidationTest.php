@@ -576,4 +576,42 @@ class ValidationTest extends \CIUnitTestCase
 
 		$this->assertEquals('regex_match[/^[0-9]{4}[\-\.\[\/][0-9]{2}[\-\.\[\/][0-9]{2}/]', $result[1]);
 	}
+
+	//--------------------------------------------------------------------
+
+	public function testTagReplacement()
+	{
+		// data
+		$data = [
+			'Username' => 'Pizza',
+		];
+
+		// rules
+		$this->validation->setRules([
+			'Username' => 'min_length[6]',
+		], [
+			'Username' => [
+				'min_length' => 'Supplied value ({value}) for {field} must have at least {param} characters.',
+			],
+		]);
+
+		// run validation
+		$this->validation->run($data);
+
+		// $errors should contain an associative array
+		$errors = $this->validation->getErrors();
+
+		// if "Username" doesn't exist in errors
+		if (! isset($errors['Username']))
+		{
+			$this->fail('Unable to find "Username"');
+		}
+
+		// expected error message
+		$expected = 'Supplied value (Pizza) for Username must have at least 6 characters.';
+
+		// check if they are the same!
+		$this->assertEquals($expected, $errors['Username']);
+	}
+
 }

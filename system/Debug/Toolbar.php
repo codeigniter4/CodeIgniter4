@@ -393,7 +393,7 @@ class Toolbar
 			if (strpos($response->getBody(), '<head>') !== false)
 			{
 				$response->setBody(
-						str_replace('<head>', $script . '<head>', $response->getBody())
+						str_replace('<head>', '<head>' . $script, $response->getBody())
 				);
 
 				return;
