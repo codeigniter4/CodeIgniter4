@@ -838,10 +838,8 @@ class CodeIgniter
 	 */
 	protected function runController($class)
 	{
-		// If this is a CLI request then use the input segments as parameters
-		$params = (is_cli() && ! (ENVIRONMENT === 'testing'))
-			? $this->request->getSegments()
-			: $this->router->params();
+		// If this is a console request then use the input segments as parameters
+		$params = defined('SPARKED') ? $this->request->getSegments() : $this->router->params();
 
 		if (method_exists($class, '_remap'))
 		{
