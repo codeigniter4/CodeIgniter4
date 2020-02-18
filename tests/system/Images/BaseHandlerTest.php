@@ -81,6 +81,7 @@ class BaseHandlerTest extends \CIUnitTestCase
 	public function testForgotWithFile()
 	{
 		$this->expectException(\CodeIgniter\Images\Exceptions\ImageException::class);
+		$handler = Services::image('gd', null, false);
 
 		// Make any call that accesses the image
 		$handler->resize(100, 100);
