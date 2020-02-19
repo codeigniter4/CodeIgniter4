@@ -42,16 +42,13 @@
 	<php>
 		<server name="app.baseURL" value="http://example.com"/>
 
-		<!-- Directory containing Paths.php -->
-		<includePath>./app/Config/</includePath>
+		<!-- Directory containing phpunit.xml -->
+		<const name="HOMEPATH" value="./"/>
+
+		<!-- Directory containing the Paths config file -->
+		<const name="CONFIGPATH" value="./app/Config/"/>
 
 		<!-- Directory containing the front controller (index.php) -->
-		<const name="FCPATH" value="./public/"/>
-
-		<!-- Directory containing the unit tests -->
-		<const name="TESTPATH" value="./tests/"/>
-
-		<!-- Directory containing the test support files -->
-		<const name="SUPPORTPATH" value="./tests/_support/"/>
+		<const name="PUBLICPATH" value="./public/"/>
 	</php>
 </phpunit>
