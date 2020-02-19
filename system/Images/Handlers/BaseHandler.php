@@ -165,7 +165,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 		// Clear out the old resource so that
 		// it doesn't try to use a previous image
 		$this->resource = null;
-		$this->checked  = false;
+		$this->verified = false;
 
 		$this->image = new Image($path, true);
 
@@ -222,7 +222,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	protected function image(): ?Image
 	{
-		if ($this->checked)
+		if ($this->verified)
 		{
 			return $this->image;
 		}
@@ -246,7 +246,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 		}
 
 		// Note that the image has been verified
-		$this->checked = true;
+		$this->verified = true;
 
 		return $this->image;
 	}
