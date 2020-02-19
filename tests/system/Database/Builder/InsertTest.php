@@ -1,7 +1,7 @@
 <?php namespace Builder;
 
 use CodeIgniter\Database\Query;
-use Tests\Support\Database\MockConnection;
+use CodeIgniter\Test\Mock\MockConnection;
 
 class InsertTest extends \CIUnitTestCase
 {

@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Database;
 
-use Tests\Support\Database\MockConnection;
+use CodeIgniter\Test\Mock\MockConnection;
 
 class BaseConnectionTest extends \CIUnitTestCase
 {

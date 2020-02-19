@@ -1,6 +1,6 @@
 <?php namespace Builder;
 
-use Tests\Support\Database\MockConnection;
+use CodeIgniter\Test\Mock\MockConnection;
 
 class DeleteTest extends \CIUnitTestCase
 {

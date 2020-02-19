@@ -1,8 +1,8 @@
 <?php namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
-use Tests\Support\Database\MockQuery;
-use Tests\Support\Database\MockConnection;
+use CodeIgniter\Test\Mock\MockQuery;
+use CodeIgniter\Test\Mock\MockConnection;
 
 class UpdateTest extends \CIUnitTestCase
 {
@@ -128,10 +128,10 @@ class UpdateTest extends \CIUnitTestCase
 
 		$this->assertInstanceOf(MockQuery::class, $query);
 
-		$expected = 'UPDATE "jobs" SET "name" = CASE 
+		$expected = 'UPDATE "jobs" SET "name" = CASE
 WHEN "id" = :id: THEN :name:
 WHEN "id" = :id0: THEN :name0:
-ELSE "name" END, "description" = CASE 
+ELSE "name" END, "description" = CASE
 WHEN "id" = :id: THEN :description:
 WHEN "id" = :id0: THEN :description0:
 ELSE "description" END
@@ -139,10 +139,10 @@ WHERE "id" IN(:id:,:id0:)';
 
 		$this->assertEquals($expected, $query->getOriginalQuery() );
 
-		$expected = 'UPDATE "jobs" SET "name" = CASE 
+		$expected = 'UPDATE "jobs" SET "name" = CASE
 WHEN "id" = 2 THEN \'Comedian\'
 WHEN "id" = 3 THEN \'Cab Driver\'
-ELSE "name" END, "description" = CASE 
+ELSE "name" END, "description" = CASE
 WHEN "id" = 2 THEN \'Theres something in your teeth\'
 WHEN "id" = 3 THEN \'Iam yellow\'
 ELSE "description" END
