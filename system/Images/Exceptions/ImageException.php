@@ -10,6 +10,11 @@ class ImageException extends FrameworkException implements ExceptionInterface
 		return new static(lang('Images.sourceImageRequired'));
 	}
 
+	public static function forFileNotSupported()
+	{
+		return new static(lang('Images.fileNotSupported'));
+	}
+
 	public static function forMissingAngle()
 	{
 		return new static(lang('Images.rotationAngleRequired'));

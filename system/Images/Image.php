@@ -137,7 +137,11 @@ class Image extends File
 	{
 		$path = $this->getPathname();
 
-		$vals  = getimagesize($path);
+		if (! $vals = getimagesize($path))
+		{
+			throw ImageException::forFileNotSupported();
+		}
+
 		$types = [
 			1 => 'gif',
 			2 => 'jpeg',

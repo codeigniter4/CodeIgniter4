@@ -242,7 +242,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 		// File::__construct has verified the file exists - make sure it is an image
 		if (! is_int($this->image->imageType))
 		{
-			throw ImageException::forInvalidPath();
+			throw ImageException::forFileNotSupported();
 		}
 
 		// Note that the image has been verified
