@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter;
 
 use Config\App;
-use Tests\Support\MockCodeIgniter;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Router\RouteCollection;
 use \CodeIgniter\Config\Services;
 

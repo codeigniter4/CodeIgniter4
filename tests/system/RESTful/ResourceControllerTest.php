@@ -3,7 +3,7 @@ namespace CodeIgniter\RESTful;
 
 use CodeIgniter\Config\Services;
 use Config\App;
-use Tests\Support\MockCodeIgniter;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
 
 /**
  * Exercise our ResourceController class.
@@ -205,14 +205,14 @@ class ResourceControllerTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 	public function testModel()
 	{
-		$resource = new \Tests\Support\RESTful\MockResourceController();
+		$resource = new \CodeIgniter\Test\Mock\MockResourceController();
 		$this->assertEmpty($resource->getModel());
 		$this->assertEmpty($resource->getModelName());
 	}
 
 	public function testModelBogus()
 	{
-		$resource = new \Tests\Support\RESTful\MockResourceController();
+		$resource = new \CodeIgniter\Test\Mock\MockResourceController();
 
 		$resource->setModel('Something');
 		$this->assertEmpty($resource->getModel());
@@ -221,7 +221,7 @@ class ResourceControllerTest extends \CIUnitTestCase
 
 	public function testModelByName()
 	{
-		$resource = new \Tests\Support\RESTful\MockResourceController();
+		$resource = new \CodeIgniter\Test\Mock\MockResourceController();
 		$resource->setModel('\Tests\Support\Models\UserModel');
 		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
 		$this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());
@@ -229,7 +229,7 @@ class ResourceControllerTest extends \CIUnitTestCase
 
 	public function testModelByObject()
 	{
-		$resource = new \Tests\Support\RESTful\MockResourceController();
+		$resource = new \CodeIgniter\Test\Mock\MockResourceController();
 		$model    = new \Tests\Support\Models\UserModel();
 		$resource->setModel($model);
 		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
@@ -241,7 +241,7 @@ class ResourceControllerTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 	public function testFormat()
 	{
-		$resource = new \Tests\Support\RESTful\MockResourceController();
+		$resource = new \CodeIgniter\Test\Mock\MockResourceController();
 		$this->assertEquals('json', $resource->getFormat());
 
 		$resource->setFormat('Nonsense');

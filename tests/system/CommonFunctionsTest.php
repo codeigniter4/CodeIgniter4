@@ -9,9 +9,9 @@ use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use Config\Logger;
-use Tests\Support\HTTP\MockIncomingRequest;
+use CodeIgniter\Test\Mock\MockIncomingRequest;
 use Tests\Support\Log\TestLogger;
-use Tests\Support\Session\MockSession;
+use CodeIgniter\Test\Mock\MockSession;
 
 /**
  * @backupGlobals enabled

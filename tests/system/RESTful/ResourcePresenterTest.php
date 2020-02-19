@@ -3,7 +3,7 @@ namespace CodeIgniter\RESTful;
 
 use CodeIgniter\Config\Services;
 use Config\App;
-use Tests\Support\MockCodeIgniter;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
 
 /**
  * Exercise our core ResourcePresenter class.
@@ -212,14 +212,14 @@ class ResourcePresenterTest extends \CIUnitTestCase
 
 	public function testModel()
 	{
-		$resource = new \Tests\Support\RESTful\MockResourcePresenter();
+		$resource = new \CodeIgniter\Test\Mock\MockResourcePresenter();
 		$this->assertEmpty($resource->getModel());
 		$this->assertEmpty($resource->getModelName());
 	}
 
 	public function testModelBogus()
 	{
-		$resource = new \Tests\Support\RESTful\MockResourcePresenter();
+		$resource = new \CodeIgniter\Test\Mock\MockResourcePresenter();
 
 		$resource->setModel('Something');
 		$this->assertEmpty($resource->getModel());
@@ -228,7 +228,7 @@ class ResourcePresenterTest extends \CIUnitTestCase
 
 	public function testModelByName()
 	{
-		$resource = new \Tests\Support\RESTful\MockResourcePresenter();
+		$resource = new \CodeIgniter\Test\Mock\MockResourcePresenter();
 		$resource->setModel('\Tests\Support\Models\UserModel');
 		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
 		$this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());
@@ -236,7 +236,7 @@ class ResourcePresenterTest extends \CIUnitTestCase
 
 	public function testModelByObject()
 	{
-		$resource = new \Tests\Support\RESTful\MockResourcePresenter();
+		$resource = new \CodeIgniter\Test\Mock\MockResourcePresenter();
 		$model    = new \Tests\Support\Models\UserModel();
 		$resource->setModel($model);
 		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
@@ -247,7 +247,7 @@ class ResourcePresenterTest extends \CIUnitTestCase
 
 	public function testChangeSetModelByObject()
 	{
-		$resource = new \Tests\Support\RESTful\MockResourcePresenter();
+		$resource = new \CodeIgniter\Test\Mock\MockResourcePresenter();
 		$resource->setModel('\Tests\Support\Models\UserModel');
 		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
 		$this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());
@@ -260,7 +260,7 @@ class ResourcePresenterTest extends \CIUnitTestCase
 
 	public function testChangeSetModelByName()
 	{
-		$resource = new \Tests\Support\RESTful\MockResourcePresenter();
+		$resource = new \CodeIgniter\Test\Mock\MockResourcePresenter();
 		$resource->setModel('\Tests\Support\Models\UserModel');
 		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
 		$this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());

@@ -2,7 +2,7 @@
 
 use CodeIgniter\View\Cell;
 use CodeIgniter\View\Exceptions\ViewException;
-use Tests\Support\Cache\Handlers\MockHandler;
+use CodeIgniter\Test\Mock\MockHandler;
 
 class CellTest extends \CIUnitTestCase
 {

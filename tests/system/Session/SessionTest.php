@@ -2,7 +2,7 @@
 
 use Config\Logger;
 use Tests\Support\Log\TestLogger;
-use Tests\Support\Session\MockSession;
+use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Session\Handlers\FileHandler;
 
 /**

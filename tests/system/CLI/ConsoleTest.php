@@ -1,8 +1,8 @@
 <?php namespace CodeIgniter\CLI;
 
 use CodeIgniter\HTTP\CLIRequest;
-use Tests\Support\MockCodeIgniter;
-use Tests\Support\Config\MockCLIConfig;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
+use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
 class ConsoleTest extends \CIUnitTestCase

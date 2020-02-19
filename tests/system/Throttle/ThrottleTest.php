@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Throttle;
 
-use Tests\Support\Cache\Handlers\MockHandler;
+use CodeIgniter\Test\Mock\MockHandler;
 
 class ThrottleTest extends \CIUnitTestCase
 {

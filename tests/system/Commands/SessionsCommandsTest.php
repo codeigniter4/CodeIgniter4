@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Commands;
 
 use Config\Services;
-use Tests\Support\Config\MockAppConfig;
+use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\CommandRunner;

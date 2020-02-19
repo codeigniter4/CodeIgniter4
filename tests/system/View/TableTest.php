@@ -2,7 +2,7 @@
 namespace CodeIgniter\View;
 
 use CodeIgniter\Database\MySQLi\Result;
-use Tests\Support\View\MockTable;
+use CodeIgniter\Test\Mock\MockTable;
 
 class TableTest extends \CIUnitTestCase
 {

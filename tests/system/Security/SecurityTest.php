@@ -4,9 +4,9 @@ use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\HTTP\IncomingRequest;
-use Tests\Support\Config\MockAppConfig;
+use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Security\Exceptions\SecurityException;
-use Tests\Support\Security\MockSecurity;
+use CodeIgniter\Test\Mock\MockSecurity;
 
 //--------------------------------------------------------------------
 

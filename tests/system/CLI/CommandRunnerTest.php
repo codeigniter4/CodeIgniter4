@@ -3,7 +3,7 @@ namespace CodeIgniter\CLI;
 
 use CodeIgniter\HTTP\UserAgent;
 use Config\Services;
-use Tests\Support\Config\MockCLIConfig;
+use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
 class CommandRunnerTest extends \CIUnitTestCase

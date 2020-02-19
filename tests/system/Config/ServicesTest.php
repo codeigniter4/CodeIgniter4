@@ -1,7 +1,7 @@
 <?php
 namespace Config;
 
-use Tests\Support\HTTP\MockResponse;
+use CodeIgniter\Test\Mock\MockResponse;
 
 class ServicesTest extends \CIUnitTestCase
 {
