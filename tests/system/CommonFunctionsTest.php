@@ -10,7 +10,7 @@ use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use Config\Logger;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
-use Tests\Support\Log\TestLogger;
+use CodeIgniter\Test\TestLogger;
 use CodeIgniter\Test\Mock\MockSession;
 
 /**

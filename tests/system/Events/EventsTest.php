@@ -5,7 +5,7 @@ use CodeIgniter\Config\Config;
 use Config\Logger;
 use Config\Services;
 use CodeIgniter\Test\Mock\MockEvents;
-use Tests\Support\Log\TestLogger;
+use CodeIgniter\Test\TestLogger;
 
 class EventsTest extends \CIUnitTestCase
 {

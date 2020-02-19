@@ -414,7 +414,7 @@ class LoggerTest extends \CIUnitTestCase
 	public function testFilenameCleaning()
 	{
 		$config = new LoggerConfig();
-		$logger = new \Tests\Support\Log\TestLogger($config);
+		$logger = new \CodeIgniter\Test\TestLogger($config);
 
 		$ohoh     = APPPATH . 'LoggerTest';
 		$expected = 'APPPATH/LoggerTest';

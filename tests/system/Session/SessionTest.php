@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Session;
 
 use Config\Logger;
-use Tests\Support\Log\TestLogger;
+use CodeIgniter\Test\TestLogger;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Session\Handlers\FileHandler;
 
