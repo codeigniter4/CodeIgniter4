@@ -55,6 +55,3 @@
 		<const name="SUPPORTPATH" value="./tests/_support/"/>
 	</php>
 </phpunit>
-
-
-define('SUPPORTPATH', realpath(TESTPATH . '_support/') . DIRECTORY_SEPARATOR);
