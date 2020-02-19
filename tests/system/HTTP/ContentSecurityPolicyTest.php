@@ -9,7 +9,7 @@ use Config\App;
  * See https://apimirror.com/http/headers/content-security-policy
  * See https://cspvalidator.org/
  */
-class ContentSecurityPolicyTest extends \CIUnitTestCase
+class ContentSecurityPolicyTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	// Having this method as setUp() doesn't work - can't find Config\App !?

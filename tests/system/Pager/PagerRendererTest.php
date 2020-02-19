@@ -2,7 +2,7 @@
 
 use CodeIgniter\HTTP\URI;
 
-class PagerRendererTest extends \CIUnitTestCase
+class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	/**
 	 * @var URI

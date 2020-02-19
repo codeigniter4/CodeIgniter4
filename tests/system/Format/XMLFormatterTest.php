@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Format;
 
-class XMLFormatterTest extends \CIUnitTestCase
+class XMLFormatterTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected $xmlFormatter;
 

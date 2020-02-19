@@ -15,7 +15,7 @@ require_once __DIR__ . '/fixtures/InvalidClass.php';
 /**
  * @backupGlobals enabled
  */
-class FiltersTest extends \CIUnitTestCase
+class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected $request;

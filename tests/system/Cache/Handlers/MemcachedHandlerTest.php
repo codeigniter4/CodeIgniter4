@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Cache\Handlers;
 
-class MemcachedHandlerTest extends \CIUnitTestCase
+class MemcachedHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	private $memcachedHandler;
 	private static $key1 = 'key1';

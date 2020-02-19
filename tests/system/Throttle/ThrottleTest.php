@@ -2,7 +2,7 @@
 
 use CodeIgniter\Test\Mock\MockHandler;
 
-class ThrottleTest extends \CIUnitTestCase
+class ThrottleTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void

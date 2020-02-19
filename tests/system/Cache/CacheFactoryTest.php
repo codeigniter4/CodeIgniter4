@@ -1,7 +1,7 @@
 <?php
 namespace CodeIgniter\Cache;
 
-class CacheFactoryTest extends \CIUnitTestCase
+class CacheFactoryTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	private static $directory = 'CacheFactory';

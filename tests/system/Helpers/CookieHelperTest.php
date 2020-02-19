@@ -8,7 +8,7 @@ use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\Mock\MockResponse;
 
-final class CookieHelperTest extends \CIUnitTestCase
+final class CookieHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	private $name;

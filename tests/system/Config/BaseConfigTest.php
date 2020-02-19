@@ -1,7 +1,7 @@
 <?php
 namespace CodeIgniter\Config;
 
-use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\CodeIgniter\Test\CIUnitTestCase;
 
 class BaseConfigTest extends CIUnitTestCase
 {

@@ -4,7 +4,7 @@ namespace CodeIgniter\View;
 use CodeIgniter\Database\MySQLi\Result;
 use CodeIgniter\Test\Mock\MockTable;
 
-class TableTest extends \CIUnitTestCase
+class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	public function setUp(): void

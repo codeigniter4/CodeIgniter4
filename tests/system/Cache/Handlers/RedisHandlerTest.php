@@ -36,7 +36,7 @@
  * @filesource
  */
 
-class RedisHandlerTest extends \CIUnitTestCase
+class RedisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	private $redisHandler;
 	private static $key1 = 'key1';

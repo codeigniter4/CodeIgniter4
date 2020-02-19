@@ -7,7 +7,7 @@ use Config\Services;
 use CodeIgniter\Test\Mock\MockEvents;
 use CodeIgniter\Test\TestLogger;
 
-class EventsTest extends \CIUnitTestCase
+class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**

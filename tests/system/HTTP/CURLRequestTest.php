@@ -6,7 +6,7 @@ use CodeIgniter\Config\Services;
 use Config\App;
 use CodeIgniter\Test\Mock\MockCURLRequest;
 
-class CURLRequestTest extends \CIUnitTestCase
+class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	/**
 	 * @var MockCURLRequest

@@ -1,7 +1,7 @@
 <?php
 namespace CodeIgniter\Helpers;
 
-final class DateHelperTest extends \CIUnitTestCase
+final class DateHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	private $name;

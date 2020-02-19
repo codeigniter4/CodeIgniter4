@@ -13,7 +13,7 @@ use CodeIgniter\Test\Mock\MockSecurity;
 /**
  * @backupGlobals enabled
  */
-class SecurityTest extends \CIUnitTestCase {
+class SecurityTest extends \CodeIgniter\Test\CIUnitTestCase {
 
 	protected function setUp(): void
 	{

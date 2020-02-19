@@ -2,7 +2,7 @@
 
 use org\bovigo\vfs\vfsStream;
 
-class FileWithVfsTest extends \CIUnitTestCase
+class FileWithVfsTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	// For VFS stuff

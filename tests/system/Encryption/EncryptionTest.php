@@ -7,7 +7,7 @@ use Config\Encryption as EncryptionConfig;
 
 //use CodeIgniter\Encryption\Encryption;
 
-class EncryptionTest extends \CIUnitTestCase
+class EncryptionTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	public function setUp(): void

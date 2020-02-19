@@ -2,7 +2,7 @@
 
 use CodeIgniter\Test\Mock\MockConnection;
 
-class DeleteTest extends \CIUnitTestCase
+class DeleteTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected $db;
 

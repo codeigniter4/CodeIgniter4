@@ -1,7 +1,7 @@
 <?php
 namespace CodeIgniter\Helpers;
 
-final class NumberHelperTest extends \CIUnitTestCase
+final class NumberHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void

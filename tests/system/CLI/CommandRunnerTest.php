@@ -6,7 +6,7 @@ use Config\Services;
 use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class CommandRunnerTest extends \CIUnitTestCase
+class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	private $stream_filter;

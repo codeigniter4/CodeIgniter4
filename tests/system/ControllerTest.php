@@ -12,7 +12,7 @@ use CodeIgniter\Test\Mock\MockCodeIgniter;
  *
  * @backupGlobals enabled
  */
-class ControllerTest extends \CIUnitTestCase
+class ControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**

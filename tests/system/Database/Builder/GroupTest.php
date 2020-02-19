@@ -3,7 +3,7 @@
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class GroupTest extends \CIUnitTestCase
+class GroupTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected $db;
 

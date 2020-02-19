@@ -3,7 +3,7 @@ namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
 
-class RouterTest extends \CIUnitTestCase
+class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**

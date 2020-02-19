@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Files;
 
-class FileTest extends \CIUnitTestCase
+class FileTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	public function testNewGoodChecked()

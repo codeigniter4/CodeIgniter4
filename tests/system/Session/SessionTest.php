@@ -9,7 +9,7 @@ use CodeIgniter\Session\Handlers\FileHandler;
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
  */
-class SessionTest extends \CIUnitTestCase
+class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected function setUp(): void
 	{

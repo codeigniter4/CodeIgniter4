@@ -5,7 +5,7 @@ use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class ConsoleTest extends \CIUnitTestCase
+class ConsoleTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	private $stream_filter;

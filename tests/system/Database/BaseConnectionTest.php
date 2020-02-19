@@ -2,7 +2,7 @@
 
 use CodeIgniter\Test\Mock\MockConnection;
 
-class BaseConnectionTest extends \CIUnitTestCase
+class BaseConnectionTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected $options = [
 		'DSN'      => '',

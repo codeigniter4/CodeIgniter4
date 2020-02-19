@@ -8,7 +8,7 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\CommandRunner;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class CommandsTest extends \CIUnitTestCase
+class CommandsTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	private $stream_filter;

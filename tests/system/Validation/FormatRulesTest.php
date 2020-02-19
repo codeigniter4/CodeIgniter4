@@ -2,7 +2,7 @@
 
 namespace CodeIgniter\Validation;
 
-class FormatRulesTest extends \CIUnitTestCase
+class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	const ALPHABET     = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ';

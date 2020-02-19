@@ -4,7 +4,7 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\Mock\MockQuery;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class UpdateTest extends \CIUnitTestCase
+class UpdateTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected $db;
 

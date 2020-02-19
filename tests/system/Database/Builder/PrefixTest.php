@@ -2,7 +2,7 @@
 
 use CodeIgniter\Test\Mock\MockConnection;
 
-class PrefixTest extends \CIUnitTestCase
+class PrefixTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected $db;
 

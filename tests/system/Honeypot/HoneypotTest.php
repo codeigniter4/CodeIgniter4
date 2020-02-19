@@ -5,7 +5,7 @@ namespace CodeIgniter\Honeypot;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
-use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @backupGlobals enabled

@@ -6,7 +6,7 @@ use CodeIgniter\Log\Exceptions\LogException;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Tests\Support\Log\Handlers\TestHandler;
 
-class LoggerTest extends \CIUnitTestCase
+class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	public function testThrowsExceptionWithBadHandlerSettings()

@@ -9,7 +9,7 @@ use CodeIgniter\Validation\Validation;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 
-class RedirectResponseTest extends \CIUnitTestCase
+class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**

@@ -5,7 +5,7 @@ set_error_handler(function (int $errno, string $errstr, string $errfile, int $er
 	//throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
 });
 
-class FileHandlerTest extends \CIUnitTestCase
+class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	private static $directory = 'FileHandler';

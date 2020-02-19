@@ -10,7 +10,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 /**
  * @backupGlobals enabled
  */
-class HoneypotTest extends \CIUnitTestCase
+class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected $config;

@@ -8,7 +8,7 @@ use \CodeIgniter\Config\Services;
 /**
  * @backupGlobals enabled
  */
-class CodeIgniterTest extends \CIUnitTestCase
+class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	/**
 	 * @var \CodeIgniter\CodeIgniter

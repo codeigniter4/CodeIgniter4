@@ -4,7 +4,7 @@ namespace CodeIgniter\HTTP;
 
 use Config\App;
 
-class NegotiateTest extends \CIUnitTestCase
+class NegotiateTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**

@@ -11,7 +11,7 @@ use org\bovigo\vfs\vfsStream;
  * most work, and the virtual file system will be used for
  * testing saving only.
  */
-class BaseHandlerTest extends \CIUnitTestCase
+class BaseHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void

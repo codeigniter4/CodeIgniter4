@@ -4,7 +4,7 @@ use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use CodeIgniter\Test\Mock\MockChromeHandler;
 use CodeIgniter\Services;
 
-class ChromeLoggerHandlerTest extends \CIUnitTestCase
+class ChromeLoggerHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	public function testCanHandleLogLevel()

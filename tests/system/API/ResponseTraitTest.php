@@ -8,7 +8,7 @@ use CodeIgniter\Format\XMLFormatter;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 
-class ResponseTraitTest extends \CIUnitTestCase
+class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected $request;

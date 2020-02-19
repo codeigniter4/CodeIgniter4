@@ -9,7 +9,7 @@ use Config\App;
  *
  * @backupGlobals enabled
  */
-class CLIRequestTest extends \CIUnitTestCase
+class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**

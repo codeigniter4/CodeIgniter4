@@ -5,7 +5,7 @@ use Config\App;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 
-class URITest extends \CIUnitTestCase
+class URITest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void

@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\CommandRunner;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class SessionsCommandsTest extends \CIUnitTestCase
+class SessionsCommandsTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	private $stream_filter;
 	protected $env;

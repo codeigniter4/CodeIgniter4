@@ -14,7 +14,7 @@ use CodeIgniter\Test\Mock\MockCodeIgniter;
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
  */
-class ResourceControllerTest extends \CIUnitTestCase
+class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**

@@ -12,7 +12,7 @@ use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
  */
-class ControllerTesterTest extends \CIUnitTestCase
+class ControllerTesterTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	use ControllerTester;

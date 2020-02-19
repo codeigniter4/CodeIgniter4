@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Format;
 
-class JSONFormatterTest extends \CIUnitTestCase
+class JSONFormatterTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected $jsonFormatter;
 

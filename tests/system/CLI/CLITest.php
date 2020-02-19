@@ -2,7 +2,7 @@
 
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class CLITest extends \CIUnitTestCase
+class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	private $stream_filter;

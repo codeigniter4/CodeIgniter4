@@ -7,7 +7,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 
-class ValidationTest extends \CIUnitTestCase
+class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**

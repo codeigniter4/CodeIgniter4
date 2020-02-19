@@ -5,7 +5,7 @@ use DateTime;
 use DateTimeZone;
 use IntlDateFormatter;
 
-class TimeTest extends \CIUnitTestCase
+class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void

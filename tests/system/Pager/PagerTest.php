@@ -9,7 +9,7 @@ use Config\Services;
 /**
  * @backupGlobals enabled
  */
-class PagerTest extends \CIUnitTestCase
+class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**

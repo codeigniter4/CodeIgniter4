@@ -16,7 +16,7 @@ use CodeIgniter\Test\Mock\MockSession;
 /**
  * @backupGlobals enabled
  */
-class CommonFunctionsTest extends \CIUnitTestCase
+class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	//--------------------------------------------------------------------

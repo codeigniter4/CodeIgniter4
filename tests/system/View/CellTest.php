@@ -4,7 +4,7 @@ use CodeIgniter\View\Cell;
 use CodeIgniter\View\Exceptions\ViewException;
 use CodeIgniter\Test\Mock\MockHandler;
 
-class CellTest extends \CIUnitTestCase
+class CellTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected $cache;

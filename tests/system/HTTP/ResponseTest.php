@@ -9,7 +9,7 @@ use DateTimeZone;
 use CodeIgniter\Config\Config;
 use CodeIgniter\Test\Mock\MockResponse;
 
-class ResponseTest extends \CIUnitTestCase
+class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected $server;

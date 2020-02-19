@@ -3,7 +3,7 @@
 use Config\Autoload;
 use Config\Modules;
 
-class AutoloaderTest extends \CIUnitTestCase
+class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	/**
 	 * @var \CodeIgniter\Autoloader\Autoloader

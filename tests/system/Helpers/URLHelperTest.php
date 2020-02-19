@@ -8,7 +8,7 @@ use CodeIgniter\Config\Services;
 /**
  * @backupGlobals enabled
  */
-class URLHelperTest extends \CIUnitTestCase
+class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void

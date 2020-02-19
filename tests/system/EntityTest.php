@@ -7,7 +7,7 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\ReflectionHelper;
 use Tests\Support\SomeEntity;
 
-class EntityTest extends \CIUnitTestCase
+class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	use ReflectionHelper;
