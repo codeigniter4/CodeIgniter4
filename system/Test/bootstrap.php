@@ -11,11 +11,11 @@ define('ENVIRONMENT', 'testing');
 // Load our paths config file
 require __DIR__ . '/../../app/Config/Paths.php';
 
-// path to the directory that holds the front controller (index.php)
+// Path to the directory that holds the front controller (index.php)
 define('FCPATH', realpath(__DIR__ . '/../../') . '/public' . DIRECTORY_SEPARATOR);
 
 // The path to the "tests" directory
-define('TESTPATH', realpath(__DIR__ . '/../') . DIRECTORY_SEPARATOR);
+define('TESTPATH', realpath(__DIR__ . '/../../') . '/tests' . DIRECTORY_SEPARATOR);
 
 define('SUPPORTPATH', realpath(TESTPATH . '_support/') . DIRECTORY_SEPARATOR);
 
