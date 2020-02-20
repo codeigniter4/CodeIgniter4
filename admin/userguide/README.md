@@ -13,7 +13,7 @@ It has been built from the
 
 More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
 
-##Installation & updates
+## Installation & updates
 
 `composer require codeigniter4/userguide` will install a copy
 of the user guide inside your project, at
