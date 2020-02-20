@@ -68,6 +68,25 @@ class BaseHandlerTest extends \CIUnitTestCase
 		$handler->withFile($this->start . 'No_such_file.jpg');
 	}
 
+	public function testNonImageFile()
+	{
+		$this->expectException(\CodeIgniter\Images\Exceptions\ImageException::class);
+		$handler = Services::image('gd', null, false);
+		$handler->withFile(SUPPORTPATH . 'Files/baker/banana.php');
+
+		// Make any call that accesses the image
+		$handler->resize(100, 100);
+	}
+
+	public function testForgotWithFile()
+	{
+		$this->expectException(\CodeIgniter\Images\Exceptions\ImageException::class);
+		$handler = Services::image('gd', null, false);
+
+		// Make any call that accesses the image
+		$handler->resize(100, 100);
+	}
+
 	public function testFileTypes()
 	{
 		$handler = Services::image('gd', null, false);
