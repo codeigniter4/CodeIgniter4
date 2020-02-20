@@ -82,7 +82,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 *
 	 * @var string
 	 */
-	protected $namespace = 'Tests\Support\DatabaseTestMigrations';
+	protected $namespace = 'Tests\Support';
 
 	/**
 	 * The name of the database group to connect to.
