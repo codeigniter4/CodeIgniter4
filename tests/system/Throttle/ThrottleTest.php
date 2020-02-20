@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Throttle;
 
-use CodeIgniter\Test\Mock\MockHandler;
+use CodeIgniter\Test\Mock\MockCache;
 
 class ThrottleTest extends \CodeIgniter\Test\CIUnitTestCase
 {
@@ -9,7 +9,7 @@ class ThrottleTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->cache = new MockHandler();
+		$this->cache = new MockCache();
 	}
 
 	public function testTokenTime()

@@ -1,12 +1,12 @@
 <?php namespace CodeIgniter\Test\Mock;
 
 /**
- * Class MockHandler
+ * Class MockFileLogger
  *
  * Extends FileHandler, exposing some inner workings
  */
 
-class MockFileHandler extends \CodeIgniter\Log\Handlers\FileHandler
+class MockFileLogger extends \CodeIgniter\Log\Handlers\FileHandler
 {
 	/**
 	 * Where would the log be written?

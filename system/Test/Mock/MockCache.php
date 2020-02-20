@@ -2,7 +2,7 @@
 
 use CodeIgniter\Cache\CacheInterface;
 
-class MockHandler implements CacheInterface
+class MockCache implements CacheInterface
 {
 	/**
 	 * Prefixed to all cache names.
