@@ -128,7 +128,7 @@ class UpdateTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertInstanceOf(MockQuery::class, $query);
 
-		$expected = 'UPDATE "jobs" SET "name" = CASE 
+		$expected = 'UPDATE "jobs" SET "name" = CASE
 WHEN "id" = :id: THEN :name:
 WHEN "id" = :id0: THEN :name0:
 ELSE "name" END, "description" = CASE
@@ -139,7 +139,7 @@ WHERE "id" IN(:id:,:id0:)';
 
 		$this->assertEquals($expected, $query->getOriginalQuery() );
 
-		$expected = 'UPDATE "jobs" SET "name" = CASE 
+		$expected = 'UPDATE "jobs" SET "name" = CASE
 WHEN "id" = 2 THEN \'Comedian\'
 WHEN "id" = 3 THEN \'Cab Driver\'
 ELSE "name" END, "description" = CASE
