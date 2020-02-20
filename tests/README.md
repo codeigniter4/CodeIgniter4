@@ -19,13 +19,13 @@ If running under OS X or Linux, you can create a symbolic link to make running t
 	> ln -s ./vendor/bin/phpunit ./phpunit
 
 You also need to install [XDebug](https://xdebug.org/index.php) in order
-for unit tests to successfully complete.
+for code coverage to be calculated successfully.
 
 ## Setting Up
 
 A number of the tests use a running database. 
 In order to set up the database edit the details for the `tests` group in 
-**app/Config/Database.php**. Make sure that you provide a database engine 
+**app/Config/Database.php** or **phpunit.xml**. Make sure that you provide a database engine 
 that is currently running on your machine. More details on a test database setup are in the 
 *Docs>>Testing>>Testing Your Database* section of the documentation.
 
@@ -78,4 +78,3 @@ The normal practice would be to copy ``phpunit.xml.dist`` to ``phpunit.xml``
 (which is git ignored), and to tailor it as you see fit.
 For instance, you might wish to exclude database tests, or automatically generate 
 HTML code coverage reports.
-
