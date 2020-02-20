@@ -130,7 +130,7 @@ class AutoloadConfig
 		if (isset($_SERVER['CI_ENVIRONMENT']) && $_SERVER['CI_ENVIRONMENT'] === 'testing')
 		{
 			$this->classmap['CodeIgniter\Log\TestLogger'] = SYSTEMPATH . 'Test/TestLogger.php';
-			$this->classmap['CIDatabaseTestCase']         = SYSTEMPATH . 'CIDatabaseTestCase.php';
+			$this->classmap['CIDatabaseTestCase']         = SYSTEMPATH . 'Test/CIDatabaseTestCase.php';
 		}
 	}
 
