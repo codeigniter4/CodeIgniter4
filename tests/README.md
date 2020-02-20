@@ -31,8 +31,8 @@ that is currently running on your machine. More details on a test database setup
 
 If you want to run the tests without using live database you can 
 exclude @DatabaseLive group. Or make a copy of **phpunit.dist.xml** - 
-call it **phpunit.xml** - and uncomment the line within the <testsuite> that excludes 
-the **tests/system/Database/Live** directory. This will make the tests run quite a bit faster.
+call it **phpunit.xml** - and comment out the <testsuite> named "database". This will make
+the tests run quite a bit faster.
 
 ## Running the tests
 
