@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Log\Handlers;
 
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
-use CodeIgniter\Test\Mock\MockChromeHandler;
+use CodeIgniter\Test\Mock\MockChromeLogger;
 use CodeIgniter\Services;
 
 class ChromeLoggerHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
@@ -63,7 +63,7 @@ class ChromeLoggerHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$config                                                              = new LoggerConfig();
 		$config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] = ['critical'];
 
-		$logger            = new MockChromeHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
+		$logger            = new MockChromeLogger($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
 		$data              = new \stdClass();
 		$data->code        = 123;
 		$data->explanation = "That's no moon, it's a pumpkin";
