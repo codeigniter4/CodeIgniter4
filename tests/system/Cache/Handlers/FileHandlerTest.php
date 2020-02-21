@@ -67,11 +67,10 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertInstanceOf(FileHandler::class, $this->fileHandler);
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\Cache\Exceptions\CacheException
-	 */
 	public function testNewWithNonWritablePath()
 	{
+		$this->expectException('CodeIgniter\Cache\Exceptions\CacheException');
+
 		chmod($this->config->storePath, 0444);
 		new FileHandler($this->config);
 	}

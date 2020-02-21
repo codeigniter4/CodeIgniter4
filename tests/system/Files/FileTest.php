@@ -61,11 +61,10 @@ class FileTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($size, $file->getSizeByUnit('mb'));
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\Files\Exceptions\FileNotFoundException
-	 */
 	public function testThrowsExceptionIfNotAFile()
 	{
+		$this->expectException('CodeIgniter\Files\Exceptions\FileNotFoundException');
+
 		$file = new File(SYSTEMPATH . 'Commoner.php', true);
 	}
 

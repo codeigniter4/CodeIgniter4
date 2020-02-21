@@ -76,21 +76,19 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 		CLI::newLine();
 	}
 
-	/**
-	 * @expectedException        RuntimeException
-	 * @expectedExceptionMessage Invalid foreground color: Foreground
-	 */
 	public function testColorExceptionForeground()
 	{
+		$this->expectException('RuntimeException');
+		$this->expectExceptionMessage('Invalid foreground color: Foreground');
+
 		CLI::color('test', 'Foreground');
 	}
 
-	/**
-	 * @expectedException        RuntimeException
-	 * @expectedExceptionMessage Invalid background color: Background
-	 */
 	public function testColorExceptionBackground()
 	{
+		$this->expectException('RuntimeException');
+		$this->expectException('Invalid background color: Background');
+
 		CLI::color('test', 'white', 'Background');
 	}
 

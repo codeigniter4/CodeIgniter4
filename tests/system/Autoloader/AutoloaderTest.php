@@ -122,12 +122,11 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @expectedException        \InvalidArgumentException
-	 * @expectedExceptionMessage Config array must contain either the 'psr4' key or the 'classmap' key.
-	 */
 	public function testInitializeException()
 	{
+		$this->expectException('InvalidArgumentException');
+		$this->expectExceptionMessage('Config array must contain either the 'psr4' key or the 'classmap' key.');
+
 		$config                           = new Autoload();
 		$config->classmap                 = [];
 		$config->psr4                     = [];

@@ -433,11 +433,10 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('2017-05-15 00:00:00', $time2->toDateTimeString());
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
-	 */
 	public function testSetDayOverMaxInCurrentMonth()
 	{
+		$this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+
 		$time = Time::parse('Feb 02, 2009');
 		$time->setDay(29);
 	}
@@ -482,92 +481,85 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('2017-05-10 00:00:20', $time2->toDateTimeString());
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
-	 */
 	public function testSetMonthTooSmall()
 	{
+		$this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+
 		$time = Time::parse('May 10, 2017');
 		$time->setMonth(-5);
 	}
 
 	/**
-	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
+	 * @expectedException \
 	 */
 	public function testSetMonthTooBig()
 	{
+		$this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+
 		$time = Time::parse('May 10, 2017');
 		$time->setMonth(30);
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
-	 */
 	public function testSetDayTooSmall()
 	{
+		$this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+
 		$time = Time::parse('May 10, 2017');
 		$time->setDay(-5);
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
-	 */
 	public function testSetDayTooBig()
 	{
+		$this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+
 		$time = Time::parse('May 10, 2017');
 		$time->setDay(80);
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
-	 */
 	public function testSetHourTooSmall()
 	{
+		$this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+
 		$time = Time::parse('May 10, 2017');
 		$time->setHour(-5);
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
-	 */
 	public function testSetHourTooBig()
 	{
+		$this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+
 		$time = Time::parse('May 10, 2017');
 		$time->setHour(80);
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
-	 */
 	public function testSetMinuteTooSmall()
 	{
+		$this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+
 		$time = Time::parse('May 10, 2017');
 		$time->setMinute(-5);
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
-	 */
 	public function testSetMinuteTooBig()
 	{
+		$this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+
 		$time = Time::parse('May 10, 2017');
 		$time->setMinute(80);
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
-	 */
 	public function testSetSecondTooSmall()
 	{
+		$this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+
 		$time = Time::parse('May 10, 2017');
 		$time->setSecond(-5);
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
-	 */
 	public function testSetSecondTooBig()
 	{
+		$this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+
 		$time = Time::parse('May 10, 2017');
 		$time->setSecond(80);
 	}

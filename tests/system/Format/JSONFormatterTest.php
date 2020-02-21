@@ -49,11 +49,10 @@ class JSONFormatterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $this->jsonFormatter->format($data));
 	}
 
-	/**
-	 * @expectedException RuntimeException
-	 */
 	public function testJSONError()
 	{
+		$this->expectException('RuntimeException');
+
 		$data     = ["\xB1\x31"];
 		$expected = 'Boom';
 		$this->assertEquals($expected, $this->jsonFormatter->format($data));

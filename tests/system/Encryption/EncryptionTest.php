@@ -41,11 +41,11 @@ class EncryptionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * Covers behavior with invalid parameters
-	 *
-	 * @expectedException \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
 	public function testBadDriver()
 	{
+		$this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+
 		// ask for a bad driver
 		$config         = new EncryptionConfig();
 		$config->driver = 'Bogus';
@@ -56,11 +56,11 @@ class EncryptionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	/**
 	 * Covers behavior with invalid parameters
-	 *
-	 * @expectedException \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
 	public function testMissingDriver()
 	{
+		$this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+
 		// ask for a bad driver
 		$config         = new EncryptionConfig();
 		$config->driver = '';
@@ -90,11 +90,10 @@ class EncryptionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertInstanceOf(EncrypterInterface::class, $encrypter);
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\Encryption\Exceptions\EncryptionException
-	 */
 	public function testServiceFailure()
 	{
+		$this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+
 		// ask for a bad driver
 		$config         = new EncryptionConfig();
 		$config->driver = 'Kazoo';
@@ -103,11 +102,10 @@ class EncryptionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$encrypter = Services::encrypter($config);
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\Encryption\Exceptions\EncryptionException
-	 */
 	public function testServiceWithoutKey()
 	{
+		$this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+
 		$encrypter = Services::encrypter();
 	}
 

@@ -19,7 +19,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		Services::reset();
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		parent::tearDown();
 

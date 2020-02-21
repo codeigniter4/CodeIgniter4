@@ -620,11 +620,10 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(['role' => ['admin', 'super']], $filters->getArguments());
 	}
 
-	/**
-	 * @expectedException CodeIgniter\Filters\Exceptions\FilterException
-	 */
 	public function testEnableNonFilter()
 	{
+		$this->expectException('CodeIgniter\Filters\Exceptions\FilterException');
+
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
