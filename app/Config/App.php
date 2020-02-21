@@ -265,16 +265,4 @@ class App extends BaseConfig
 	|   - http://www.w3.org/TR/CSP/
 	*/
 	public $CSPEnabled = false;
-
-	/*
-	|--------------------------------------------------------------------------
-	| Kint
-	|--------------------------------------------------------------------------
-	|
-	| Kint Related configuration
-	|
-	*/
-	public $kintRendererTheme  = 'aante-light.css';
-	public $kintRendererFolder = false;
-
 }

@@ -224,11 +224,36 @@ class CodeIgniter
 			require_once SYSTEMPATH . 'ThirdParty/Kint/init.php';
 		}
 
-		//Set the kint theme
-		\Kint\Renderer\RichRenderer::$theme = $this->config->kintRendererTheme;
+		/**
+		 * Config\Kint
+		 */
+		$config = config('Config\Kint');
 
-		//Render kint in place instead of toolbar
-		\Kint\Renderer\RichRenderer::$folder = $this->config->kintRendererFolder;
+		\Kint::$max_depth           = $config->maxDepth;
+		\Kint::$display_called_from = $config->displayCalledFrom;
+		\Kint::$expanded            = $config->expanded;
+
+		if (! empty($config->plugins) && is_array($config->plugins))
+		{
+			\Kint::$plugins = $config->plugins;
+		}
+
+		\Kint\Renderer\RichRenderer::$theme  = $config->richTheme;
+		\Kint\Renderer\RichRenderer::$folder = $config->richFolder;
+		\Kint\Renderer\RichRenderer::$sort   = $config->richSort;
+		if (! empty($config->richObjectPlugins) && is_array($config->richObjectPlugins))
+		{
+			\Kint\Renderer\RichRenderer::$object_plugins = $config->richObjectPlugins;
+		}
+		if (! empty($config->richTabPlugins) && is_array($config->richTabPlugins))
+		{
+			\Kint\Renderer\RichRenderer::$tab_plugins = $config->richTabPlugins;
+		}
+
+		\Kint\Renderer\CliRenderer::$cli_colors         = $config->cliColors;
+		\Kint\Renderer\CliRenderer::$force_utf8         = $config->cliForceUTF8;
+		\Kint\Renderer\CliRenderer::$detect_width       = $config->cliDetectWidth;
+		\Kint\Renderer\CliRenderer::$min_terminal_width = $config->cliMinWidth;
 	}
 
 	//--------------------------------------------------------------------
