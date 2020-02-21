@@ -705,7 +705,7 @@ class URI
 	{
 		$this->path = $this->filterPath($path);
 
-		$this->segments = explode('/', $this->path);
+		$this->segments = explode('/', trim($this->path, '/'));
 
 		return $this;
 	}
