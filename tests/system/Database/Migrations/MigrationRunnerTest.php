@@ -204,12 +204,11 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$this->assertEquals($mig2, array_shift($migrations));
 	}
 
-	/**
-	 * @expectedException        \CodeIgniter\Exceptions\ConfigException
-	 * @expectedExceptionMessage Migrations have been loaded but are disabled or setup incorrectly.
-	 */
 	public function testMigrationThrowsDisabledException()
 	{
+		$this->expectException('CodeIgniter\Exceptions\ConfigException');
+		$this->expectExceptionMessage('Migrations have been loaded but are disabled or setup incorrectly.');
+
 		$config          = $this->config;
 		$config->enabled = false;
 		$runner          = new MigrationRunner($config);

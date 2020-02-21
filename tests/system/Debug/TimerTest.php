@@ -76,11 +76,10 @@ class TimerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @expectedException RunTimeException
-	 */
 	public function testThrowsExceptionStoppingNonTimer()
 	{
+		$this->expectException('RunTimeException');
+
 		$timer = new Timer();
 
 		$timer->stop('test1');
