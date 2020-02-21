@@ -816,13 +816,13 @@ class Forge
 	/**
 	 * Column Drop
 	 *
-	 * @param string $table       Table name
-	 * @param string $column_name Column name
+	 * @param string       $table       Table name
+	 * @param string|array $column_name Column name Array or comma separated
 	 *
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function dropColumn(string $table, string $column_name)
+	public function dropColumn(string $table, $column_name)
 	{
 		$sql = $this->_alterTable('DROP', $this->db->DBPrefix . $table, $column_name);
 		if ($sql === false)
@@ -897,24 +897,33 @@ class Forge
 	 *
 	 * @param string $alter_type ALTER type
 	 * @param string $table      Table name
-	 * @param mixed  $field      Column definition
+	 * @param mixed  $fields     Column definition
 	 *
 	 * @return string|string[]
 	 */
-	protected function _alterTable(string $alter_type, string $table, $field)
+	protected function _alterTable(string $alter_type, string $table, $fields)
 	{
 		$sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) . ' ';
 
 		// DROP has everything it needs now.
 		if ($alter_type === 'DROP')
 		{
-			return $sql . 'DROP COLUMN ' . $this->db->escapeIdentifiers($field);
+			if (is_string($fields))
+			{
+				$fields = explode(',', $fields);
+			}
+
+			$fields = array_map(function ($field) {
+				return 'DROP COLUMN ' . $this->db->escapeIdentifiers(trim($field));
+			}, $fields);
+
+			return $sql . implode(', ', $fields);
 		}
 
 		$sql .= ($alter_type === 'ADD') ? 'ADD ' : $alter_type . ' COLUMN ';
 
 		$sqls = [];
-		foreach ($field as $data)
+		foreach ($fields as $data)
 		{
 			$sqls[] = $sql
 					  . ($data['_literal'] !== false ? $data['_literal'] : $this->_processColumn($data));
