@@ -190,10 +190,70 @@ class CodeIgniter
 		$this->detectEnvironment();
 		$this->bootstrapEnvironment();
 
-		if (CI_DEBUG)
+		$this->initializeKint();
+
+		if (! CI_DEBUG)
 		{
-			require_once SYSTEMPATH . 'ThirdParty/Kint/kint.php';
+			\Kint::$enabled_mode = false;
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Initializes Kint
+	 */
+	protected function initializeKint()
+	{
+		// If we have KINT_DIR it means it's already loaded via composer
+		if (! defined('KINT_DIR'))
+		{
+			spl_autoload_register(function ($class) {
+				$class = explode('\\', $class);
+
+				if ('Kint' !== array_shift($class))
+				{
+					return;
+				}
+
+				$file = SYSTEMPATH . 'ThirdParty/Kint/' . implode('/', $class) . '.php';
+
+				file_exists($file) && require_once $file;
+			});
+
+			require_once SYSTEMPATH . 'ThirdParty/Kint/init.php';
+		}
+
+		/**
+		 * Config\Kint
+		 */
+		$config = config('Config\Kint');
+
+		\Kint::$max_depth           = $config->maxDepth;
+		\Kint::$display_called_from = $config->displayCalledFrom;
+		\Kint::$expanded            = $config->expanded;
+
+		if (! empty($config->plugins) && is_array($config->plugins))
+		{
+			\Kint::$plugins = $config->plugins;
+		}
+
+		\Kint\Renderer\RichRenderer::$theme  = $config->richTheme;
+		\Kint\Renderer\RichRenderer::$folder = $config->richFolder;
+		\Kint\Renderer\RichRenderer::$sort   = $config->richSort;
+		if (! empty($config->richObjectPlugins) && is_array($config->richObjectPlugins))
+		{
+			\Kint\Renderer\RichRenderer::$object_plugins = $config->richObjectPlugins;
+		}
+		if (! empty($config->richTabPlugins) && is_array($config->richTabPlugins))
+		{
+			\Kint\Renderer\RichRenderer::$tab_plugins = $config->richTabPlugins;
+		}
+
+		\Kint\Renderer\CliRenderer::$cli_colors         = $config->cliColors;
+		\Kint\Renderer\CliRenderer::$force_utf8         = $config->cliForceUTF8;
+		\Kint\Renderer\CliRenderer::$detect_width       = $config->cliDetectWidth;
+		\Kint\Renderer\CliRenderer::$min_terminal_width = $config->cliMinWidth;
 	}
 
 	//--------------------------------------------------------------------
@@ -838,13 +898,16 @@ class CodeIgniter
 	 */
 	protected function runController($class)
 	{
+		// If this is a console request then use the input segments as parameters
+		$params = defined('SPARKED') ? $this->request->getSegments() : $this->router->params();
+
 		if (method_exists($class, '_remap'))
 		{
-			$output = $class->_remap($this->method, ...$this->router->params());
+			$output = $class->_remap($this->method, ...$params);
 		}
 		else
 		{
-			$output = $class->{$this->method}(...$this->router->params());
+			$output = $class->{$this->method}(...$params);
 		}
 
 		$this->benchmark->stop('controller');

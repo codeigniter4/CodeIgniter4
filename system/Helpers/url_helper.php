@@ -106,6 +106,7 @@ if (! function_exists('base_url'))
 		{
 			$uri = implode('/', $uri);
 		}
+		$uri = trim($uri, '/');
 
 		// We should be using the configured baseURL that the user set;
 		// otherwise get rid of the path, because we have

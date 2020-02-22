@@ -149,6 +149,29 @@ class ComposerScripts
 		}
 	}
 
+	protected static function copyDir($source, $dest)
+	{
+		$dir = opendir($source);
+		@mkdir($dest);
+
+		while (false !== ( $file = readdir($dir)))
+		{
+			if (( $file !== '.' ) && ( $file !== '..' ))
+			{
+				if (is_dir($source . '/' . $file))
+				{
+					static::copyDir($source . '/' . $file, $dest . '/' . $file);
+				}
+				else
+				{
+					copy($source . '/' . $file, $dest . '/' . $file);
+				}
+			}
+		}
+
+		closedir($dir);
+	}
+
 	/**
 	 * Moves the Laminas Escaper files into our base repo so that it's
 	 * available for packaged releases where the users don't user Composer.
@@ -194,9 +217,9 @@ class ComposerScripts
 	 */
 	public static function moveKint()
 	{
-		$filename = 'vendor/kint-php/kint/build/kint-aante-light.php';
+		$dir = 'vendor/kint-php/kint/src';
 
-		if (is_file($filename))
+		if (is_dir($dir))
 		{
 			$base = basename(__DIR__) . '/' . static::$basePath . 'Kint';
 
@@ -212,10 +235,10 @@ class ComposerScripts
 				mkdir($base, 0755);
 			}
 
-			if (! static::moveFile($filename, $base . '/kint.php'))
-			{
-				die('Error moving: ' . $filename);
-			}
+			static::copyDir($dir, $base);
+			static::copyDir($dir . '/../resources', $base . '/resources');
+			copy($dir . '/../init.php', $base . '/init.php');
+			copy($dir . '/../init_helpers.php', $base . '/init_helpers.php');
 		}
 	}
 }
