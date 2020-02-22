@@ -493,7 +493,7 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
-	 *
+
 	 * Captures the builder's set() method so that we can validate the
 	 * data here. This allows it to be used with any of the other
 	 * builder methods and still get validated data, like replace.
@@ -502,7 +502,7 @@ class Model
 	 * @param string              $value  Field value, if $key is a single field
 	 * @param boolean             $escape Whether to escape values and identifiers
 	 *
-	 * @return BaseBuilder
+	 * @return $this
 	 */
 	public function set($key, ?string $value = '', bool $escape = null)
 	{
