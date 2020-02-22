@@ -73,7 +73,7 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run($this->routes);
 		$output = ob_get_clean();
 
-		$this->assertContains(lang('RESTful.notImplemented', ['index']), $output);
+		$this->assertStringContainsString(lang('RESTful.notImplemented', ['index']), $output);
 	}
 
 	public function testResourceGetNew()
@@ -91,7 +91,7 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run($this->routes);
 		$output = ob_get_clean();
 
-		$this->assertContains(lang('RESTful.notImplemented', ['new']), $output);
+		$this->assertStringContainsString(lang('RESTful.notImplemented', ['new']), $output);
 	}
 
 	public function testResourceGetEdit()
@@ -110,7 +110,7 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run($this->routes);
 		$output = ob_get_clean();
 
-		$this->assertContains(lang('RESTful.notImplemented', ['edit']), $output);
+		$this->assertStringContainsString(lang('RESTful.notImplemented', ['edit']), $output);
 	}
 
 	public function testResourceGetOne()
@@ -128,7 +128,7 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run($this->routes);
 		$output = ob_get_clean();
 
-		$this->assertContains(lang('RESTful.notImplemented', ['show']), $output);
+		$this->assertStringContainsString(lang('RESTful.notImplemented', ['show']), $output);
 	}
 
 	public function testResourcePost()
@@ -145,7 +145,7 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run($this->routes);
 		$output = ob_get_clean();
 
-		$this->assertContains(lang('RESTful.notImplemented', ['create']), $output);
+		$this->assertStringContainsString(lang('RESTful.notImplemented', ['create']), $output);
 	}
 
 	public function testResourcePatch()
@@ -163,7 +163,7 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run($this->routes);
 		$output = ob_get_clean();
 
-		$this->assertContains(lang('RESTful.notImplemented', ['patch']), $output);
+		$this->assertStringContainsString(lang('RESTful.notImplemented', ['patch']), $output);
 	}
 
 	public function testResourcePut()
@@ -181,7 +181,7 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run($this->routes);
 		$output = ob_get_clean();
 
-		$this->assertContains(lang('RESTful.notImplemented', ['put']), $output);
+		$this->assertStringContainsString(lang('RESTful.notImplemented', ['put']), $output);
 	}
 
 	public function testResourceDelete()
@@ -199,7 +199,7 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run($this->routes);
 		$output = ob_get_clean();
 
-		$this->assertContains(lang('RESTful.notImplemented', ['delete']), $output);
+		$this->assertStringContainsString(lang('RESTful.notImplemented', ['delete']), $output);
 	}
 
 	//--------------------------------------------------------------------

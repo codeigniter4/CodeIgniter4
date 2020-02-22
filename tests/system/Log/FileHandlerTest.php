@@ -53,7 +53,7 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// did the log file get created?
 		$expectedResult = 'This is a test log';
-		$this->assertContains($expectedResult, $line);
+		$this->assertStringContainsString($expectedResult, $line);
 	}
 
 	public function testHandleDateTimeCorrectly()
@@ -71,7 +71,7 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		fclose($fp);
 
 		$expectedResult = 'Test message';
-		$this->assertContains($expectedResult, $line);
+		$this->assertStringContainsString($expectedResult, $line);
 	}
 
 }

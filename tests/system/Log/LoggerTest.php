@@ -406,7 +406,7 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$logs = TestHandler::getLogs();
 
 		$this->assertCount(1, $logs);
-		$this->assertContains($expected, $logs[0]);
+		$this->assertStringContainsString($expected, $logs[0]);
 	}
 
 	//--------------------------------------------------------------------

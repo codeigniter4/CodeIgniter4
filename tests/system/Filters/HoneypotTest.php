@@ -89,7 +89,7 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->response->setBody('<form></form>');
 		$this->response = $filters->run($uri, 'after');
-		$this->assertContains($this->honey->name, $this->response->getBody());
+		$this->assertStringContainsString($this->honey->name, $this->response->getBody());
 	}
 
 	//--------------------------------------------------------------------

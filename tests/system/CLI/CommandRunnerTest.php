@@ -59,8 +59,8 @@ class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = CITestStreamFilter::$buffer;
 
 		// make sure the result looks like a command list
-		$this->assertContains('Lists the available commands.', $result);
-		$this->assertContains('Displays basic usage information.', $result);
+		$this->assertStringContainsString('Lists the available commands.', $result);
+		$this->assertStringContainsString('Displays basic usage information.', $result);
 	}
 
 	public function testDefaultCommand()
@@ -69,8 +69,8 @@ class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = CITestStreamFilter::$buffer;
 
 		// make sure the result looks like basic help
-		$this->assertContains('Displays basic usage information.', $result);
-		$this->assertContains('help command_name', $result);
+		$this->assertStringContainsString('Displays basic usage information.', $result);
+		$this->assertStringContainsString('help command_name', $result);
 	}
 
 	public function testHelpCommand()
@@ -79,8 +79,8 @@ class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = CITestStreamFilter::$buffer;
 
 		// make sure the result looks like basic help
-		$this->assertContains('Displays basic usage information.', $result);
-		$this->assertContains('help command_name', $result);
+		$this->assertStringContainsString('Displays basic usage information.', $result);
+		$this->assertStringContainsString('help command_name', $result);
 	}
 
 	public function testHelpCommandDetails()
@@ -89,9 +89,9 @@ class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = CITestStreamFilter::$buffer;
 
 		// make sure the result looks like more detailed help
-		$this->assertContains('Description:', $result);
-		$this->assertContains('Usage:', $result);
-		$this->assertContains('Options:', $result);
+		$this->assertStringContainsString('Description:', $result);
+		$this->assertStringContainsString('Usage:', $result);
+		$this->assertStringContainsString('Options:', $result);
 	}
 
 	public function testCommandProperties()
@@ -111,7 +111,7 @@ class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = CITestStreamFilter::$buffer;
 
 		// make sure the result looks like a command list
-		$this->assertContains('Lists the available commands.', $result);
+		$this->assertStringContainsString('Lists the available commands.', $result);
 	}
 
 	public function testBadCommand()
@@ -122,7 +122,7 @@ class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 		stream_filter_remove($this->error_filter);
 
 		// make sure the result looks like a command list
-		$this->assertContains('Command "bogus" not found', $result);
+		$this->assertStringContainsString('Command "bogus" not found', $result);
 	}
 
 }

@@ -128,7 +128,7 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 			'bar'        => 'baz',
 		];
 		$expected = '<h1>bar</h1>';
-		$this->assertContains($expected, view('\Tests\Support\View\Views\simple', $data, []));
+		$this->assertStringContainsString($expected, view('\Tests\Support\View\Views\simple', $data, []));
 	}
 
 	public function testViewSavedData()
@@ -138,8 +138,8 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 			'bar'        => 'baz',
 		];
 		$expected = '<h1>bar</h1>';
-		$this->assertContains($expected, view('\Tests\Support\View\Views\simple', $data, ['saveData' => true]));
-		$this->assertContains($expected, view('\Tests\Support\View\Views\simple'));
+		$this->assertStringContainsString($expected, view('\Tests\Support\View\Views\simple', $data, ['saveData' => true]));
+		$this->assertStringContainsString($expected, view('\Tests\Support\View\Views\simple'));
 	}
 
 	// ------------------------------------------------------------------------
@@ -263,12 +263,12 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testCSRFField()
 	{
-		$this->assertContains('<input type="hidden" ', csrf_field());
+		$this->assertStringContainsString('<input type="hidden" ', csrf_field());
 	}
 
 	public function testCSRFMeta()
 	{
-		$this->assertContains('<meta name="X-CSRF-TOKEN" ', csrf_meta());
+		$this->assertStringContainsString('<meta name="X-CSRF-TOKEN" ', csrf_meta());
 	}
 
 	// ------------------------------------------------------------------------

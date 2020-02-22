@@ -68,8 +68,8 @@ class ConsoleTest extends \CodeIgniter\Test\CIUnitTestCase
 		ob_end_clean();
 
 		// make sure the result looks like a command list
-		$this->assertContains('Lists the available commands.', $result);
-		$this->assertContains('Displays basic usage information.', $result);
+		$this->assertStringContainsString('Lists the available commands.', $result);
+		$this->assertStringContainsString('Displays basic usage information.', $result);
 	}
 
 }

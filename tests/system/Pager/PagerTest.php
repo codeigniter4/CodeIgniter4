@@ -321,26 +321,26 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testLinks()
 	{
-		$this->assertContains('<ul class="pagination">', $this->pager->links());
+		$this->assertStringContainsString('<ul class="pagination">', $this->pager->links());
 	}
 
 	public function testSimpleLinks()
 	{
-		$this->assertContains('<ul class="pager">', $this->pager->simpleLinks());
+		$this->assertStringContainsString('<ul class="pager">', $this->pager->simpleLinks());
 	}
 
 	public function testMakeLinks()
 	{
-		$this->assertContains(
+		$this->assertStringContainsString(
 			'<ul class="pagination">', $this->pager->makeLinks(4, 10, 50)
 		);
-		$this->assertContains(
+		$this->assertStringContainsString(
 			'<ul class="pagination">', $this->pager->makeLinks(4, 10, 50, 'default_full')
 		);
-		$this->assertContains(
+		$this->assertStringContainsString(
 			'<ul class="pager">', $this->pager->makeLinks(4, 10, 50, 'default_simple')
 		);
-		$this->assertContains(
+		$this->assertStringContainsString(
 			'<link rel="canonical"', $this->pager->makeLinks(4, 10, 50, 'default_head')
 		);
 	}
@@ -350,19 +350,19 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$first_page = $this->pager->makeLinks(1, 10, 50, 'default_head');
 
 		$this->assertNotContains('<link rel="prev"', $first_page);
-		$this->assertContains('<link rel="canonical"', $first_page);
-		$this->assertContains('<link rel="next"', $first_page);
+		$this->assertStringContainsString('<link rel="canonical"', $first_page);
+		$this->assertStringContainsString('<link rel="next"', $first_page);
 
 		$second_page = $this->pager->makeLinks(2, 10, 50, 'default_head');
 
-		$this->assertContains('<link rel="prev"', $second_page);
-		$this->assertContains('<link rel="canonical"', $second_page);
-		$this->assertContains('<link rel="next"', $second_page);
+		$this->assertStringContainsString('<link rel="prev"', $second_page);
+		$this->assertStringContainsString('<link rel="canonical"', $second_page);
+		$this->assertStringContainsString('<link rel="next"', $second_page);
 
 		$last_page = $this->pager->makeLinks(5, 10, 50, 'default_head');
 
-		$this->assertContains('<link rel="prev"', $last_page);
-		$this->assertContains('<link rel="canonical"', $last_page);
+		$this->assertStringContainsString('<link rel="prev"', $last_page);
+		$this->assertStringContainsString('<link rel="canonical"', $last_page);
 		$this->assertNotContains('<link rel="next"', $last_page);
 	}
 
