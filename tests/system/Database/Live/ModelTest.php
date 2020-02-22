@@ -122,7 +122,7 @@ class ModelTest extends CIDatabaseTestCase
 		$job = $model->asArray()
 					 ->find(4);
 
-		$this->assertInternalType('array', $job);
+		$this->assertIsArray($job);
 	}
 
 	//--------------------------------------------------------------------
@@ -134,7 +134,7 @@ class ModelTest extends CIDatabaseTestCase
 		$job = $model->asObject()
 					 ->find(4);
 
-		$this->assertInternalType('object', $job);
+		$this->assertIsObject($job);
 	}
 
 	//--------------------------------------------------------------------
@@ -662,8 +662,7 @@ class ModelTest extends CIDatabaseTestCase
 			'description' => 'some great marketing stuff',
 		];
 
-		$this->assertInternalType('numeric', $model->skipValidation(true)
-												   ->insert($data));
+		$this->assertIsNumeric($model->skipValidation(true)->insert($data));
 	}
 
 	//--------------------------------------------------------------------

@@ -135,7 +135,7 @@ class RedisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->redisHandler->save(self::$key1, 'value');
 
-		$this->assertInternalType('array', $this->redisHandler->getCacheInfo());
+		$this->assertIsArray($this->redisHandler->getCacheInfo());
 	}
 
 	public function testGetMetaData()

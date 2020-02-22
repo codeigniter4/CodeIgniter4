@@ -183,7 +183,7 @@ class RequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = $this->request->fetchGlobal('post');
 
 		$this->assertEquals($post, $result);
-		$this->assertInternalType('array', $result['ANNOUNCEMENTS']);
+		$this->assertIsArray($result['ANNOUNCEMENTS']);
 		$this->assertCount(2, $result['ANNOUNCEMENTS']);
 	}
 
