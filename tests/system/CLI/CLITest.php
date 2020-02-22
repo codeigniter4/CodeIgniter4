@@ -87,7 +87,7 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testColorExceptionBackground()
 	{
 		$this->expectException('RuntimeException');
-		$this->expectException('Invalid background color: Background');
+		$this->expectExceptionMessage('Invalid background color: Background');
 
 		CLI::color('test', 'white', 'Background');
 	}
