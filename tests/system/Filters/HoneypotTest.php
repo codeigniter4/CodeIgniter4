@@ -113,7 +113,7 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->response->setBody('<div></div>');
 		$this->response = $filters->run($uri, 'after');
-		$this->assertNotContains($this->honey->name, $this->response->getBody());
+		$this->assertStringNotContainsString($this->honey->name, $this->response->getBody());
 	}
 
 }

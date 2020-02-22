@@ -349,7 +349,7 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$first_page = $this->pager->makeLinks(1, 10, 50, 'default_head');
 
-		$this->assertNotContains('<link rel="prev"', $first_page);
+		$this->assertStringNotContainsString('<link rel="prev"', $first_page);
 		$this->assertStringContainsString('<link rel="canonical"', $first_page);
 		$this->assertStringContainsString('<link rel="next"', $first_page);
 
@@ -363,7 +363,7 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertStringContainsString('<link rel="prev"', $last_page);
 		$this->assertStringContainsString('<link rel="canonical"', $last_page);
-		$this->assertNotContains('<link rel="next"', $last_page);
+		$this->assertStringNotContainsString('<link rel="next"', $last_page);
 	}
 
 	public function testBasedURI()

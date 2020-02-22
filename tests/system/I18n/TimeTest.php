@@ -489,9 +489,6 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 		$time->setMonth(-5);
 	}
 
-	/**
-	 * @expectedException \
-	 */
 	public function testSetMonthTooBig()
 	{
 		$this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
