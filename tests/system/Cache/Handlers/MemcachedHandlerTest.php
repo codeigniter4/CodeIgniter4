@@ -120,7 +120,7 @@ class MemcachedHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->memcachedHandler->save(self::$key1, 'value');
 
-		$this->assertInternalType('array', $this->memcachedHandler->getCacheInfo());
+		$this->assertIsArray($this->memcachedHandler->getCacheInfo());
 	}
 
 	public function testGetMetaData()
