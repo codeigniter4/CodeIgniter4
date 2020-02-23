@@ -19,10 +19,9 @@ class ExampleTest extends \CodeIgniter\Test\CIUnitTestCase
 		$env = $config = false;
 
 		// First check in .env
-		$dotenv = new \CodeIgniter\Config\DotEnv(HOMEPATH);
-		if ($vars = $dotenv->parse())
+		if (is_file(HOMEPATH . '.env'))
 		{
-			$env = ! empty($vars['app.baseUrl']);
+			$env = (bool) preg_grep("/^app\.baseURL = './", file(HOMEPATH . '.env'));
 		}
 
 		// Then check the actual config file
