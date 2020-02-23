@@ -20,15 +20,15 @@ class ExampleTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// First check in .env
 		$dotenv = new \CodeIgniter\Config\DotEnv(HOMEPATH);
-
-		if ($dotenv->load())
+		if ($vars = $dotenv->parse())
 		{
-			// Check any line with "app.baseUrl" to see if it actually has a value set
-			foreach (preg_grep('/^app\.baseURL', file(HOMEPATH . '.env')) as $line)
-			{
-			}
+			$env = ! empty($vars['app.baseUrl']);
 		}
 
-		$this->assertTrue($test);
+		// Then check the actual config file
+		$reader = new \Tests\Support\Libraries\ConfigReader();
+		$config = ! empty($reader->baseUrl);
+
+		$this->assertTrue($env || $config);
 	}
 }
