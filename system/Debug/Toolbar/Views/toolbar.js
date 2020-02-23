@@ -4,18 +4,21 @@
 
 var ciDebugBar = {
 
+	toolbarContainer : null,
 	toolbar : null,
 	icon : null,
 
 	//--------------------------------------------------------------------
 
 	init : function () {
+		this.toolbarContainer = document.getElementById('toolbarContainer');
 		this.toolbar = document.getElementById('debug-bar');
 		this.icon    = document.getElementById('debug-icon');
 
 		ciDebugBar.createListeners();
 		ciDebugBar.setToolbarState();
 		ciDebugBar.setToolbarPosition();
+		ciDebugBar.setToolbarTheme();
 		ciDebugBar.toggleViewsHints();
 
 		document.getElementById('debug-bar-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
@@ -498,6 +501,56 @@ var ciDebugBar = {
 				ciDebugBar.createCookie('debug-bar-position', 'bottom', 365);
 				ciDebugBar.removeClass(ciDebugBar.icon, 'fixed-top');
 				ciDebugBar.removeClass(ciDebugBar.toolbar, 'fixed-top');
+			}
+		}, true);
+	},
+
+	//--------------------------------------------------------------------
+
+	setToolbarTheme: function () {
+		var btnTheme = document.getElementById('toolbar-theme');
+		var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+	  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches;
+
+		// If a cookie is set with a value, we force the color scheme
+		if (ciDebugBar.readCookie('debug-bar-theme') === 'dark')
+		{
+			ciDebugBar.removeClass(ciDebugBar.toolbarContainer, 'light');
+			ciDebugBar.addClass(ciDebugBar.toolbarContainer, 'dark');
+		}
+		else if (ciDebugBar.readCookie('debug-bar-theme') === 'light')
+		{
+			ciDebugBar.removeClass(ciDebugBar.toolbarContainer, 'dark');
+			ciDebugBar.addClass(ciDebugBar.toolbarContainer, 'light');
+		}
+
+		btnTheme.addEventListener('click', function () {
+			var theme = ciDebugBar.readCookie('debug-bar-theme');
+
+			if (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
+			{
+				// If there is no cookie, and "prefers-color-scheme" is set to "dark"
+				// It means that the user wants to switch to light mode
+				ciDebugBar.createCookie('debug-bar-theme', 'light', 365);
+				ciDebugBar.removeClass(ciDebugBar.toolbarContainer, 'dark');
+				ciDebugBar.addClass(ciDebugBar.toolbarContainer, 'light');
+			}
+			else
+			{
+				if (theme === 'dark')
+				{
+					ciDebugBar.createCookie('debug-bar-theme', 'light', 365);
+					ciDebugBar.removeClass(ciDebugBar.toolbarContainer, 'dark');
+					ciDebugBar.addClass(ciDebugBar.toolbarContainer, 'light');
+				}
+				else
+				{
+ 					// In any other cases: if there is no cookie, or the cookie is set to
+					// "light", or the "prefers-color-scheme" is "light"...
+					ciDebugBar.createCookie('debug-bar-theme', 'dark', 365);
+					ciDebugBar.removeClass(ciDebugBar.toolbarContainer, 'light');
+					ciDebugBar.addClass(ciDebugBar.toolbarContainer, 'dark');
+				}
 			}
 		}, true);
 	},

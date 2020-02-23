@@ -1,0 +1,149 @@
+// IMPORTS
+// ========================================================================== */
+
+// The "box-shadow" mixin uses colors
+@import '_mixins';
+
+// Graphic charter
+@import '_graphic-charter';
+
+
+// DEBUG ICON
+// ========================================================================== */
+
+#debug-icon {
+	background-color: $t-light;
+	@include box-shadow(0, 0, 4px, $m-gray);
+	a:active, a:link, a:visited {
+		color: $g-orange;
+	}
+}
+
+
+// DEBUG BAR
+// ========================================================================== */
+
+#debug-bar {
+ 	background-color: $t-light;
+ 	color: $g-gray;
+
+	// Reset to prevent conflict with other CSS files */
+ 	h1,
+	h2,
+	h3,
+	p,
+	a,
+	button,
+	table,
+	thead,
+	tr,
+	td,
+	button,
+	.toolbar {
+		background-color: transparent;
+		color: $g-gray;
+	}
+
+	// Buttons
+	button {
+		background-color: $t-light;
+	}
+
+	// Tables
+ 	table {
+ 		strong {
+ 			color: $m-orange;
+ 		}
+ 		tbody tr {
+ 			&:hover {
+ 				background-color: $m-gray;
+ 			}
+ 			&.current {
+ 				background-color: $m-orange;
+				&:hover td {
+	 				background-color: $g-red;
+					color: $t-light;
+	 			}
+ 			}
+ 		}
+ 	}
+
+	// The toolbar
+ 	.toolbar {
+ 		background-color: $t-light;
+ 		@include box-shadow(0, 0, 4px, $m-gray);
+		img {
+			filter: brightness(0) invert(0.4);
+		}
+ 	}
+
+	// Fixed top
+	&.fixed-top {
+		& .toolbar {
+			@include box-shadow(0, 0, 4px, $m-gray);
+		}
+		.tab {
+			@include box-shadow(0, 1px, 4px, $m-gray);
+		}
+	}
+
+	// "Muted" elements
+ 	.muted {
+ 		color: $g-gray;
+ 		td {
+ 			color: $m-gray;
+ 		}
+ 		&:hover td {
+ 			color: $g-gray;
+ 		}
+ 	}
+
+	// The toolbar preferences
+	#toolbar-position,
+	#toolbar-theme, {
+		filter: brightness(0) invert(0.6);
+	}
+
+	// The toolbar menus
+ 	.ci-label {
+ 		&.active {
+ 			background-color: $m-gray;
+ 		}
+ 		&:hover {
+ 			background-color: $m-gray;
+ 		}
+ 		.badge {
+ 			background-color: $g-blue;
+			color: $t-light;
+ 		}
+ 	}
+
+	// The tabs container
+ 	.tab {
+ 		background-color: $t-light;
+		@include box-shadow(0, -1px, 4px, $m-gray);
+ 	}
+
+	// The "Timeline" tab
+	.timeline {
+ 		th,
+		td {
+ 			border-color: $m-gray;
+ 		}
+ 		.timer {
+ 			background-color: $g-orange;
+ 		}
+ 	}
+}
+
+
+// DEBUG VIEW
+// ========================================================================== */
+
+.debug-view.show-view {
+	border-color: $g-orange;
+}
+.debug-view-path {
+	background-color: $m-orange;
+	color: $g-gray;
+}
