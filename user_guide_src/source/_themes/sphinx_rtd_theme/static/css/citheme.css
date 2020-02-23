@@ -72,6 +72,34 @@ div#pulldown-menu {
 	color: #aaaaaa;
 }
 
+.wy-side-nav-search a {
+	color: #ffffff;
+}
+
+.wy-menu-vertical a:active {
+	background-color: #dd4814;
+}
+
+.wy-nav-content {
+	max-width: none;
+}
+
+.wy-nav-content-wrap a, .wy-nav-content-wrap a:visited {
+	color: #dd4814;
+}
+
+.wy-nav-content-wrap a:hover, .wy-nav-content-wrap a:active {
+	color: #97310e;
+}
+
+.wy-alert.wy-alert-success .wy-alert-title, .rst-content .wy-alert-success.note .wy-alert-title, .rst-content .wy-alert-success.attention .wy-alert-title, .rst-content .wy-alert-success.caution .wy-alert-title, .rst-content .wy-alert-success.danger .wy-alert-title, .rst-content .wy-alert-success.error .wy-alert-title, .rst-content .hint .wy-alert-title, .rst-content .important .wy-alert-title, .rst-content .tip .wy-alert-title, .rst-content .wy-alert-success.warning .wy-alert-title, .rst-content .wy-alert-success.seealso .wy-alert-title, .rst-content .wy-alert-success.admonition-todo .wy-alert-title, .wy-alert.wy-alert-success .rst-content .admonition-title, .rst-content .wy-alert.wy-alert-success .admonition-title, .rst-content .wy-alert-success.note .admonition-title, .rst-content .wy-alert-success.attention .admonition-title, .rst-content .wy-alert-success.caution .admonition-title, .rst-content .wy-alert-success.danger .admonition-title, .rst-content .wy-alert-success.error .admonition-title, .rst-content .hint .admonition-title, .rst-content .important .admonition-title, .rst-content .tip .admonition-title, .rst-content .wy-alert-success.warning .admonition-title, .rst-content .wy-alert-success.seealso .admonition-title, .rst-content .wy-alert-success.admonition-todo .admonition-title {
+	background-color: #dd4814;
+}
+
+.wy-alert.wy-alert-success, .rst-content .wy-alert-success.note, .rst-content .wy-alert-success.attention, .rst-content .wy-alert-success.caution, .rst-content .wy-alert-success.danger, .rst-content .wy-alert-success.error, .rst-content .hint, .rst-content .important, .rst-content .tip, .rst-content .wy-alert-success.warning, .rst-content .wy-alert-success.seealso, .rst-content .wy-alert-success.admonition-todo {
+    background: rgba(0,0,0,0.05);
+}
+
 /* override table width restrictions */
 .wy-table-responsive table td, .wy-table-responsive table th {
     white-space: normal;
