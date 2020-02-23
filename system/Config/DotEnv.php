@@ -78,7 +78,7 @@ class DotEnv
 	{
 		$vars = $this->parse();
 
-		if ($vars === false)
+		if ($vars === null)
 		{
 			return false;
 		}
@@ -96,14 +96,14 @@ class DotEnv
 	/**
 	 * Parse the .env file into an array of key => value
 	 *
-	 * @return array
+	 * @return array|null
 	 */
-	public function parse(): array
+	public function parse(): ?array
 	{
 		// We don't want to enforce the presence of a .env file, they should be optional.
 		if (! is_file($this->path))
 		{
-			return false;
+			return null;
 		}
 
 		// Ensure the file is readable
