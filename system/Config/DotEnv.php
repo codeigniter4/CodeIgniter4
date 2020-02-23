@@ -83,9 +83,9 @@ class DotEnv
 			return false;
 		}
 
-		foreach ($vars as $key => $value)
+		foreach ($vars as $name => $value)
 		{
-			$this->setVariable($line);
+			$this->setVariable($name, $value);
 		}
 
 		return true; // for success
