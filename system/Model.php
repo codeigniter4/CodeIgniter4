@@ -493,17 +493,18 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+
 	 * Captures the builder's set() method so that we can validate the
 	 * data here. This allows it to be used with any of the other
 	 * builder methods and still get validated data, like replace.
 	 *
-	 * @param mixed        $key
-	 * @param string       $value
-	 * @param boolean|null $escape
+	 * @param mixed               $key    Field name, or an array of field/value pairs
+	 * @param string              $value  Field value, if $key is a single field
+	 * @param boolean             $escape Whether to escape values and identifiers
 	 *
 	 * @return $this
 	 */
-	public function set($key, string $value = '', bool $escape = null)
+	public function set($key, ?string $value = '', bool $escape = null)
 	{
 		$data = is_array($key)
 			? $key
