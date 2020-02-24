@@ -38,7 +38,7 @@ get a copy of it through the :doc:`Services class </concepts/services>`::
 It's preferable, though, to pass the request in as a dependency if the class is anything other than
 the controller, where you can save it as a class property::
 
-	<?php 
+	<?php
         use CodeIgniter\HTTP\RequestInterface;
 
 	class SomeClass
@@ -72,8 +72,6 @@ be checked with the ``isAJAX()`` and ``isCLI()`` methods::
 	}
 
 .. note:: The ``isAJAX()`` method depends on the ``X-Requested-With`` header, which in some cases is not sent by default in XHR requests via JavaScript (i.e. fetch). See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
-
-::
 
 You can check the HTTP method that this request represents with the ``method()`` method::
 
@@ -261,7 +259,7 @@ You can retrieve a single file uploaded on its own, based on the filename given 
 
 	$file = $request->getFile('uploadedfile');
 
-You can retrieve an array of same-named files uploaded as part of a 
+You can retrieve an array of same-named files uploaded as part of a
 multi-file upload, based on the filename given in the HTML file input::
 
 	$files = $request->getFileMultiple('uploadedfile');

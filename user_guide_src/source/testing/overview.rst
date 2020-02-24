@@ -10,9 +10,9 @@ helper methods to make testing every aspect of your application as painless as p
     :local:
     :depth: 2
 
-************
+*************
 System Set Up
-************
+*************
 
 Installing phpUnit
 ==================
