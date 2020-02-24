@@ -1,5 +1,7 @@
 @import 'theme.css';
 
+/* Titles ------------------------------------------------------------------- */
+
 h1 {
 	margin-bottom: 2rem;
 }
@@ -9,10 +11,12 @@ h2, h3 {
 	margin-top: 3rem;
 }
 
+/* Images ------------------------------------------------------------------- */
+
 .rst-content img {
 	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
 	display: block;
 	height: auto!important;
 	margin: 3rem auto!important;
@@ -30,11 +34,7 @@ h2, h3 {
 	max-width: 400px;
 }
 
-.highlighted {
-	padding: 0px !important;
-	font-weight: inherit !important;
-	background-color: #f1d40f !important;
-}
+/* Navigation --------------------------------------------------------------- */
 
 #nav {
 	background-color: #494949!important;
@@ -102,6 +102,8 @@ div#pulldown-menu {
 	color: #aaaaaa;
 }
 
+/* Side Menu ---------------------------------------------------------------- */
+
 .wy-side-nav-search a {
 	color: #ffffff;
 }
@@ -134,17 +136,20 @@ div#pulldown-menu {
 	color: #97310e;
 }
 
+/* Elements ----------------------------------------------------------------- */
+
+.highlighted {
+	padding: 0px !important;
+	font-weight: inherit !important;
+	background-color: #f1d40f !important;
+}
+
 .wy-alert.wy-alert-success .wy-alert-title, .rst-content .wy-alert-success.note .wy-alert-title, .rst-content .wy-alert-success.attention .wy-alert-title, .rst-content .wy-alert-success.caution .wy-alert-title, .rst-content .wy-alert-success.danger .wy-alert-title, .rst-content .wy-alert-success.error .wy-alert-title, .rst-content .hint .wy-alert-title, .rst-content .important .wy-alert-title, .rst-content .tip .wy-alert-title, .rst-content .wy-alert-success.warning .wy-alert-title, .rst-content .wy-alert-success.seealso .wy-alert-title, .rst-content .wy-alert-success.admonition-todo .wy-alert-title, .wy-alert.wy-alert-success .rst-content .admonition-title, .rst-content .wy-alert.wy-alert-success .admonition-title, .rst-content .wy-alert-success.note .admonition-title, .rst-content .wy-alert-success.attention .admonition-title, .rst-content .wy-alert-success.caution .admonition-title, .rst-content .wy-alert-success.danger .admonition-title, .rst-content .wy-alert-success.error .admonition-title, .rst-content .hint .admonition-title, .rst-content .important .admonition-title, .rst-content .tip .admonition-title, .rst-content .wy-alert-success.warning .admonition-title, .rst-content .wy-alert-success.seealso .admonition-title, .rst-content .wy-alert-success.admonition-todo .admonition-title {
 	background-color: #dd4814;
 }
 
 .wy-alert.wy-alert-success, .rst-content .wy-alert-success.note, .rst-content .wy-alert-success.attention, .rst-content .wy-alert-success.caution, .rst-content .wy-alert-success.danger, .rst-content .wy-alert-success.error, .rst-content .hint, .rst-content .important, .rst-content .tip, .rst-content .wy-alert-success.warning, .rst-content .wy-alert-success.seealso, .rst-content .wy-alert-success.admonition-todo {
 		background: rgba(0,0,0,0.05);
-}
-
-.rst-footer-buttons {
-	margin-bottom: 2.5rem;
-	margin-top: 2.5rem;
 }
 
 /* override table width restrictions */
@@ -156,4 +161,11 @@ div#pulldown-menu {
 		margin-bottom: 24px;
 		max-width: 100%;
 		overflow: visible;
+}
+
+/* Footer ------------------------------------------------------------------- */
+
+.rst-footer-buttons {
+	margin-bottom: 2.5rem;
+	margin-top: 2.5rem;
 }
