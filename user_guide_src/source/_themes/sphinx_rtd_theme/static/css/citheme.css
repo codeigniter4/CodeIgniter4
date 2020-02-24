@@ -163,6 +163,12 @@ div#pulldown-menu {
 		overflow: visible;
 }
 
+.rst-content dl:not(.docutils) dt {
+	background: #fbefeb;
+	color: #dd4814;
+	border-top: solid 3px #dd4814;
+}
+
 /* Footer ------------------------------------------------------------------- */
 
 .rst-footer-buttons {
