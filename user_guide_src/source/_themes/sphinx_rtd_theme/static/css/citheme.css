@@ -112,6 +112,11 @@ div#pulldown-menu {
 		background: rgba(0,0,0,0.05);
 }
 
+.rst-footer-buttons {
+	margin-bottom: 2.5rem;
+	margin-top: 2.5rem;
+}
+
 /* override table width restrictions */
 .wy-table-responsive table td, .wy-table-responsive table th {
 		white-space: normal;
