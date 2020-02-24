@@ -76,6 +76,14 @@ div#pulldown-menu {
 	color: #ffffff;
 }
 
+.wy-nav-top {
+	background-color: #dd4814;
+}
+
+.wy-nav-top a {
+	color: #ffffff!important;
+}
+
 .wy-menu-vertical a:active {
 	background-color: #dd4814;
 }
@@ -97,16 +105,16 @@ div#pulldown-menu {
 }
 
 .wy-alert.wy-alert-success, .rst-content .wy-alert-success.note, .rst-content .wy-alert-success.attention, .rst-content .wy-alert-success.caution, .rst-content .wy-alert-success.danger, .rst-content .wy-alert-success.error, .rst-content .hint, .rst-content .important, .rst-content .tip, .rst-content .wy-alert-success.warning, .rst-content .wy-alert-success.seealso, .rst-content .wy-alert-success.admonition-todo {
-    background: rgba(0,0,0,0.05);
+		background: rgba(0,0,0,0.05);
 }
 
 /* override table width restrictions */
 .wy-table-responsive table td, .wy-table-responsive table th {
-    white-space: normal;
+		white-space: normal;
 }
 
 .wy-table-responsive {
-    margin-bottom: 24px;
-    max-width: 100%;
-    overflow: visible;
+		margin-bottom: 24px;
+		max-width: 100%;
+		overflow: visible;
 }
