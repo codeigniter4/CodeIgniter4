@@ -32,7 +32,7 @@ Installation & Set Up
 
 In the folder above your project root::
 
-    composer create-project codeigniter4/appstarter project-root -s
+    composer create-project codeigniter4/appstarter project-root
 
 The command above will create a "project-root" folder.
 
@@ -46,7 +46,7 @@ trusted dependencies that we bundle, being composer-installed.
 
 A sample such installation command, using the default project-root "appstarter"::
 
-    composer create-project codeigniter4/appstarter -s --no-dev
+    composer create-project codeigniter4/appstarter --no-dev
 
 After installation you should follow the steps in the "Upgrading" section.
 
@@ -103,7 +103,7 @@ develop branch explicitly.
 
 In the folder above your project root::
 
-    composer create-project codeigniter4/devstarter -s dev
+    composer create-project codeigniter4/devstarter dev
 
 The command above will create a "devstarter" folder.
 Feel free to rename that for your project.
@@ -113,7 +113,7 @@ name as the third composer argument, and you can add
 the "--no-dev" argument if your don't want phpunit and its dependencies included.
 An example::
 
-    composer create-project codeigniter4/devstarter my-awesome-project -s dev --no-dev
+    composer create-project codeigniter4/devstarter my-awesome-project dev --no-dev
 
 
 Upgrading
