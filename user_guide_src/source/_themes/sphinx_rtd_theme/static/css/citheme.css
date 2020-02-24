@@ -1,5 +1,14 @@
 @import 'theme.css';
 
+h1 {
+	margin-bottom: 2rem;
+}
+
+h2, h3 {
+	margin-bottom: 2rem;
+	margin-top: 3rem;
+}
+
 .highlighted {
 	padding: 0px !important;
 	font-weight: inherit !important;
