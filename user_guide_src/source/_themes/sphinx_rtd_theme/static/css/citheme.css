@@ -169,6 +169,11 @@ div#pulldown-menu {
 	border-top: solid 3px #dd4814;
 }
 
+.wy-plain-list-disc li ul, .rst-content .section ul li ul, .rst-content .toctree-wrapper ul li ul, article ul li ul {
+		margin-bottom: 0.5rem;
+		margin-top: -0.5rem;
+}
+
 /* Footer ------------------------------------------------------------------- */
 
 .rst-footer-buttons {
