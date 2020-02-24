@@ -9,6 +9,27 @@ h2, h3 {
 	margin-top: 3rem;
 }
 
+.rst-content img {
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	display: block;
+	height: auto!important;
+	margin: 3rem auto!important;
+	max-width: 700px;
+	width: 100%!important;
+}
+
+.rst-content img.align-left {
+	margin-right: 2rem!important;
+	max-width: 375px;
+}
+
+.rst-content img.align-right {
+	margin-left: 2rem!important;
+	max-width: 400px;
+}
+
 .highlighted {
 	padding: 0px !important;
 	font-weight: inherit !important;
