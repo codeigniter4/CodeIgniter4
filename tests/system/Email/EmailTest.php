@@ -1,6 +1,6 @@
 <?php namespace system\Email;
 
-class EmailTest extends \CIUnitTestCase
+class EmailTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	public function testEmailValidation()
 	{

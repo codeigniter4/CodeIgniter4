@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Helpers;
 
-class ArrayHelperTest extends \CIUnitTestCase
+class ArrayHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected function setUp(): void
 	{

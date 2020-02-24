@@ -1,10 +1,10 @@
 <?php namespace CodeIgniter\Log\Handlers;
 
-use Tests\Support\Config\MockLogger as LoggerConfig;
-use Tests\Support\Log\Handlers\MockChromeHandler;
+use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
+use CodeIgniter\Test\Mock\MockChromeLogger;
 use CodeIgniter\Services;
 
-class ChromeLoggerHandlerTest extends \CIUnitTestCase
+class ChromeLoggerHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	public function testCanHandleLogLevel()
@@ -63,7 +63,7 @@ class ChromeLoggerHandlerTest extends \CIUnitTestCase
 		$config                                                              = new LoggerConfig();
 		$config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] = ['critical'];
 
-		$logger            = new MockChromeHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
+		$logger            = new MockChromeLogger($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
 		$data              = new \stdClass();
 		$data->code        = 123;
 		$data->explanation = "That's no moon, it's a pumpkin";

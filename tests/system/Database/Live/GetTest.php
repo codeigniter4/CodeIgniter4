@@ -175,9 +175,11 @@ class GetTest extends CIDatabaseTestCase
 
 	public function testGetRowWithCustomReturnType()
 	{
+		$testClass = new class { };
+
 		$user = $this->db->table('user')
 						 ->get()
-						 ->getRow(0, 'Tests\Support\Database\MockTestClass');
+						 ->getRow(0, get_class($testClass));
 
 		$this->assertEquals('Derek Jones', $user->name);
 	}

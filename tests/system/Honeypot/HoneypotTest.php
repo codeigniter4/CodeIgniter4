@@ -5,12 +5,11 @@ namespace CodeIgniter\Honeypot;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
-use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @backupGlobals enabled
  */
-class HoneypotTest extends CIUnitTestCase
+class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected $config;
@@ -40,10 +39,10 @@ class HoneypotTest extends CIUnitTestCase
 		$this->response->setBody('<form></form>');
 
 		$this->honeypot->attachHoneypot($this->response);
-		$this->assertContains($this->config->name, $this->response->getBody());
+		$this->assertStringContainsString($this->config->name, $this->response->getBody());
 
 		$this->response->setBody('<div></div>');
-		$this->assertNotContains($this->config->name, $this->response->getBody());
+		$this->assertStringNotContainsString($this->config->name, $this->response->getBody());
 	}
 
 	//--------------------------------------------------------------------
@@ -117,7 +116,7 @@ class HoneypotTest extends CIUnitTestCase
 
 		$this->response->setBody('<form></form>');
 		$this->response = $filters->run($uri, 'after');
-		$this->assertContains($this->config->name, $this->response->getBody());
+		$this->assertStringContainsString($this->config->name, $this->response->getBody());
 	}
 
 }

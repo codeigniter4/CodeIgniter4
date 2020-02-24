@@ -10,7 +10,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 /**
  * @backupGlobals enabled
  */
-class CSRFTest extends \CIUnitTestCase
+class CSRFTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected $config;

@@ -2,13 +2,13 @@
 namespace CodeIgniter\Commands;
 
 use Config\Services;
-use Tests\Support\Config\MockAppConfig;
+use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\CommandRunner;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class CommandsTest extends \CIUnitTestCase
+class CommandsTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	private $stream_filter;
@@ -61,8 +61,8 @@ class CommandsTest extends \CIUnitTestCase
 		$result = CITestStreamFilter::$buffer;
 
 		// make sure the result looks like a command list
-		$this->assertContains('Displays basic usage information.', $result);
-		$this->assertContains('command_name', $result);
+		$this->assertStringContainsString('Displays basic usage information.', $result);
+		$this->assertStringContainsString('command_name', $result);
 	}
 
 	public function testListCommands()
@@ -71,8 +71,8 @@ class CommandsTest extends \CIUnitTestCase
 		$result = CITestStreamFilter::$buffer;
 
 		// make sure the result looks like a command list
-		$this->assertContains('Lists the available commands.', $result);
-		$this->assertContains('Displays basic usage information.', $result);
+		$this->assertStringContainsString('Lists the available commands.', $result);
+		$this->assertStringContainsString('Displays basic usage information.', $result);
 	}
 
 	public function testCustomCommand()
@@ -80,7 +80,7 @@ class CommandsTest extends \CIUnitTestCase
 		$this->runner->index(['app:info']);
 		$result = CITestStreamFilter::$buffer;
 
-		$this->assertContains('CI Version:', $result);
+		$this->assertStringContainsString('CI Version:', $result);
 	}
 
 	public function testShowError()
@@ -91,7 +91,7 @@ class CommandsTest extends \CIUnitTestCase
 
 		$command->helpme();
 		$result = CITestStreamFilter::$buffer;
-		$this->assertContains('Displays basic usage information.', $result);
+		$this->assertStringContainsString('Displays basic usage information.', $result);
 	}
 
 	public function testCommandCall()
@@ -105,7 +105,7 @@ class CommandsTest extends \CIUnitTestCase
 		$result = CITestStreamFilter::$buffer;
 		stream_filter_remove($this->error_filter);
 
-		$this->assertContains('Invalid background color:', $result);
+		$this->assertStringContainsString('Invalid background color:', $result);
 	}
 
 	public function testNonexistantCommand()
@@ -116,7 +116,7 @@ class CommandsTest extends \CIUnitTestCase
 		$this->runner->index(['app:oops']);
 		$result = CITestStreamFilter::$buffer;
 
-		$this->assertContains('not found', $result);
+		$this->assertStringContainsString('not found', $result);
 	}
 
 	public function testAbstractCommand()
@@ -127,7 +127,7 @@ class CommandsTest extends \CIUnitTestCase
 		$this->runner->index(['app:pablo']);
 		$result = CITestStreamFilter::$buffer;
 
-		$this->assertContains('not found', $result);
+		$this->assertStringContainsString('not found', $result);
 	}
 
 	public function testNamespacesCommand()
@@ -135,9 +135,9 @@ class CommandsTest extends \CIUnitTestCase
 		$this->runner->index(['namespaces']);
 		$result = CITestStreamFilter::$buffer;
 
-		$this->assertContains('| Namespace', $result);
-		$this->assertContains('| Config', $result);
-		$this->assertContains('| Yes', $result);
+		$this->assertStringContainsString('| Namespace', $result);
+		$this->assertStringContainsString('| Config', $result);
+		$this->assertStringContainsString('| Yes', $result);
 	}
 
 	public function testRoutesCommand()
@@ -145,9 +145,9 @@ class CommandsTest extends \CIUnitTestCase
 		$this->runner->index(['routes']);
 		$result = CITestStreamFilter::$buffer;
 
-		$this->assertContains('| Route', $result);
-		$this->assertContains('| testing', $result);
-		$this->assertContains('\\TestController::index', $result);
+		$this->assertStringContainsString('| Route', $result);
+		$this->assertStringContainsString('| testing', $result);
+		$this->assertStringContainsString('\\TestController::index', $result);
 	}
 
 }

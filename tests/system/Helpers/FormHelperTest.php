@@ -7,7 +7,7 @@ use Config\App;
 use CodeIgniter\Services;
 use Config\Filters;
 
-class FormHelperTest extends \CIUnitTestCase
+class FormHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void

@@ -1,8 +1,8 @@
 <?php namespace CodeIgniter\Database\Builder;
 
-use Tests\Support\Database\MockConnection;
+use CodeIgniter\Test\Mock\MockConnection;
 
-class PrefixTest extends \CIUnitTestCase
+class PrefixTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected $db;
 

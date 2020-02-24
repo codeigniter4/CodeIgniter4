@@ -1,49 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="tests/_support/_bootstrap.php"
-        backupGlobals="false"
-        colors="true"
-        convertErrorsToExceptions="true"
-        convertNoticesToExceptions="true"
-        convertWarningsToExceptions="true"
-        stopOnError="false"
-        stopOnFailure="false"
-        stopOnIncomplete="false"
-        stopOnSkipped="false">
-    <testsuites>
-        <testsuite name="app">
-            <directory>./tests</directory>
-            <exclude>./tests/system</exclude>
-        </testsuite>
-        <testsuite name="system">
-            <directory>./tests/system</directory>
-            <exclude>./tests/system/Database</exclude>
-        </testsuite>
-        <testsuite name="database">
-            <directory>./tests/system/Database</directory>
-        </testsuite>
-    </testsuites>
+<phpunit bootstrap="system/Test/bootstrap.php"
+		backupGlobals="false"
+		colors="true"
+		convertErrorsToExceptions="true"
+		convertNoticesToExceptions="true"
+		convertWarningsToExceptions="true"
+		stopOnError="false"
+		stopOnFailure="false"
+		stopOnIncomplete="false"
+		stopOnSkipped="false">
+	<testsuites>
+		<testsuite name="system">
+			<directory>./tests/system</directory>
+			<exclude>./tests/system/Database</exclude>
+		</testsuite>
+		<testsuite name="database">
+			<directory>./tests/system/Database</directory>
+		</testsuite>
+	</testsuites>
 
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./system</directory>
-            <exclude>
-                <directory>./system/Debug/Toolbar/Views</directory>
-                <directory>./system/Pager/Views</directory>
-                <directory>./system/ThirdParty</directory>
-                <directory>./system/Validation/Views</directory>
-                <file>./system/bootstrap.php</file>
-                <file>./system/Commands/Sessions/Views/migration.tpl.php</file>
-                <file>./system/ComposerScripts.php</file>
-                <file>./system/Config/Routes.php</file>
-            </exclude>
-        </whitelist>
-    </filter>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">./system</directory>
+			<exclude>
+				<directory>./system/Debug/Toolbar/Views</directory>
+				<directory>./system/Pager/Views</directory>
+				<directory>./system/ThirdParty</directory>
+				<directory>./system/Validation/Views</directory>
+				<file>./system/bootstrap.php</file>
+				<file>./system/Commands/Sessions/Views/migration.tpl.php</file>
+				<file>./system/ComposerScripts.php</file>
+				<file>./system/Config/Routes.php</file>
+			</exclude>
+		</whitelist>
+	</filter>
 
-    <logging>
-        <log type="coverage-clover" target="build/logs/clover.xml"/>
-    </logging>
+	<logging>
+		<log type="coverage-clover" target="build/logs/clover.xml"/>
+	</logging>
 
-    <php>
-        <env name="app.baseURL" value="http://example.com"/>
-    </php>
+	<php>
+		<server name="app.baseURL" value="http://example.com"/>
+
+		<!-- Directory containing phpunit.xml -->
+		<const name="HOMEPATH" value="./"/>
+
+		<!-- Directory containing the Paths config file -->
+		<const name="CONFIGPATH" value="./app/Config/"/>
+
+		<!-- Directory containing the front controller (index.php) -->
+		<const name="PUBLICPATH" value="./public/"/>
+	</php>
 </phpunit>

@@ -8,7 +8,7 @@ use org\bovigo\vfs\vfsStream;
 /**
  * @backupGlobals enabled
  */
-class DotEnvTest extends \CIUnitTestCase
+class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected $fixturesFolder;

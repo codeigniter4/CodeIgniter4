@@ -8,7 +8,7 @@ use CodeIgniter\Config\Services;
 /**
  * @backupGlobals enabled
  */
-class URLHelperTest extends \CIUnitTestCase
+class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -19,7 +19,7 @@ class URLHelperTest extends \CIUnitTestCase
 		Services::reset();
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		parent::tearDown();
 

@@ -3,7 +3,7 @@ namespace CodeIgniter\HTTP;
 
 use Config\App;
 
-class ResponseCookieTest extends \CIUnitTestCase
+class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void

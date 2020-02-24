@@ -9,7 +9,7 @@ use Config\App;
  *
  * @backupGlobals enabled
  */
-class CLIRequestTest extends \CIUnitTestCase
+class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**
@@ -376,7 +376,7 @@ class CLIRequestTest extends \CIUnitTestCase
 		$result = $this->request->fetchGlobal('post');
 
 		$this->assertEquals($post, $result);
-		$this->assertInternalType('array', $result['ANNOUNCEMENTS']);
+		$this->assertIsArray($result['ANNOUNCEMENTS']);
 		$this->assertCount(2, $result['ANNOUNCEMENTS']);
 	}
 

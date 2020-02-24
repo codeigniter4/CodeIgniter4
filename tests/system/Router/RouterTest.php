@@ -3,7 +3,7 @@ namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
 
-class RouterTest extends \CIUnitTestCase
+class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**
@@ -171,7 +171,7 @@ class RouterTest extends \CIUnitTestCase
 
 		$expects = $closure(...$router->params());
 
-		$this->assertInternalType('callable', $router->controllerName());
+		$this->assertIsCallable($router->controllerName());
 		$this->assertEquals($expects, '123-alpha');
 	}
 

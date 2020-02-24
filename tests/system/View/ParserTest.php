@@ -3,7 +3,7 @@
 use CodeIgniter\View\Parser;
 use CodeIgniter\View\Exceptions\ViewException;
 
-class ParserTest extends \CIUnitTestCase
+class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void
