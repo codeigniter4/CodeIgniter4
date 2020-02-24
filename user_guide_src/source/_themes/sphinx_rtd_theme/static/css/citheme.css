@@ -76,6 +76,10 @@ div#pulldown-menu {
 	color: #ffffff;
 }
 
+.wy-side-nav-search input[type=text] {
+	border-color: #dd4815;
+}
+
 .wy-nav-top {
 	background-color: #dd4814;
 }
