@@ -19,17 +19,18 @@ Reporting issues is helpful but an even better approach is to send a Pull
 Request, which is done by "Forking" the main repository and committing to your
 own copy. This will require you to use the version control system called Git.
 
-Please see the `Contributing to CodeIgniter4 <https://github.com/codeigniter4/CodeIgniter4/tree/develop/contributing>`_ 
+Please see the `Contributing to CodeIgniter4 <https://github.com/codeigniter4/CodeIgniter4/tree/develop/contributing>`_
 section of our code repository.
-
 
 *******
 Support
 *******
 
 Please note that GitHub is not for general support questions! If you are
-having trouble using a feature of CodeIgniter, ask for help on our
-`forums <http://forum.codeigniter.com/>`_ instead.
+having trouble using a feature, you can:
+
+- Start a new thread on the `forum <http://forum.codeigniter.com/>`_
+- Ask your questions on `Slack <https://codeigniterchat.slack.com/>`_
 
 If you are not sure whether you are using something correctly or if you
 have found a bug, again - please ask on the forums first.
