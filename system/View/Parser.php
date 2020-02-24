@@ -320,7 +320,7 @@ class Parser extends View
 	 */
 	protected function parseSingle(string $key, string $val): array
 	{
-		$pattern = '#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '\s*\|*\s*([|a-zA-Z0-9<>=\(\),:_\-\s\+]+)*\s*!?' . $this->rightDelimiter . '#ms';
+		$pattern = '#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '\s*\|*\s*([|\w<>=\(\),:.\-\s\+]+)*\s*!?' . $this->rightDelimiter . '#ms';
 
 		return [$pattern => $val];
 	}
@@ -402,7 +402,7 @@ class Parser extends View
 						$val = 'Resource';
 					}
 
-					$temp['#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '\s*\|*\s*([|\w<>=\(\),:_\-\s\+]+)*\s*!?' . $this->rightDelimiter . '#s'] = $val;
+					$temp['#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '\s*\|*\s*([|\w<>=\(\),:.\-\s\+]+)*\s*!?' . $this->rightDelimiter . '#s'] = $val;
 				}
 
 				// Now replace our placeholders with the new content.
