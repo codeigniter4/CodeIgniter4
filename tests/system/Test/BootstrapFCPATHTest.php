@@ -3,7 +3,7 @@
 /**
  * Class BootstrapFCPATHTest
  *
- * This test confirms that the tests/_support/_bootstrap.php
+ * This test confirms that the bootstrap.php
  * will set the correct FCPATH regardless of the current directory
  *
  * It writes a file in the temp directory that loads the bootstrap file
@@ -11,7 +11,7 @@
  * from correctFCPATH();
  */
 
-class BootstrapFCPATHTest extends \CIUnitTestCase
+class BootstrapFCPATHTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	private $currentDir = __dir__;
 	private $dir1       = '/tmp/dir1';
@@ -77,8 +77,11 @@ class BootstrapFCPATHTest extends \CIUnitTestCase
 	{
 		$fileContents  = '';
 		$fileContents .= '<?php' . PHP_EOL;
+		$fileContents .= "define('HOMEPATH', '" . $this->currentDir . "' . '/../../../');" . PHP_EOL;
+		$fileContents .= "define('CONFIGPATH', '" . $this->currentDir . "' . '/../../../app/Config/');" . PHP_EOL;
+		$fileContents .= "define('PUBLICPATH', '" . $this->currentDir . "' . '/../../../public/');" . PHP_EOL;
 		$fileContents .= "include_once '" . $this->currentDir . "' . '/../../../vendor/autoload.php';" . PHP_EOL;
-		$fileContents .= "include_once '" . $this->currentDir . "' . '/../../../tests/_support/_bootstrap.php';" . PHP_EOL;
+		$fileContents .= "include_once '" . $this->currentDir . "' . '/../../../system/Test/bootstrap.php';" . PHP_EOL;
 		$fileContents .= '// return value of FCPATH' . PHP_EOL;
 		$fileContents .= 'echo FCPATH;' . PHP_EOL;
 

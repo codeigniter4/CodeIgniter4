@@ -7,7 +7,7 @@ use CodeIgniter\Router\Exceptions\RouterException;
 /**
  * @backupGlobals enabled
  */
-class RouteCollectionTest extends \CIUnitTestCase
+class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	public function tearDown(): void

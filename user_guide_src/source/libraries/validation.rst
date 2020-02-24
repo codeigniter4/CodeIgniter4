@@ -383,6 +383,26 @@ This method sets a rule group from the validation configuration to the validatio
 
     $validation->setRuleGroup('signup');
 
+Running Multiple Validations
+=======================================================
+
+.. note:: ``run()`` method will not reset error state. Should a previous run fail,
+   ``run()`` will always return false and ``getErrors()`` will return
+   all previous errors until explicitly reset.
+
+If you intend to run multiple validations, for instance on different data sets or with different
+rules after one another, you might need to call ``$validation->reset()`` before each run to get rid of
+errors from previous run. Be aware that ``reset()`` will invalidate any data, rule or custom error
+you previously set, so ``setRules()``, ``setRuleGroup()`` etc. need to be repeated::
+
+    for ($userAccounts as $user) {
+        $validation->reset();
+        $validation->setRules($userAccountRules);
+        if (!$validation->run($user)) {
+            // handle validation errors
+        }
+    }
+
 Working With Errors
 ************************************************
 
@@ -441,12 +461,12 @@ Or as a labeled style::
     );
 
 If you’d like to include a field’s “human” name, or the optional parameter some rules allow for (such as max_length),
-you can add the ``{field}`` and ``{param}`` tags to your message, respectively::
+or the value that was validated you can add the ``{field}``, ``{param}`` and ``{value}`` tags to your message, respectively::
 
-    'min_length' => '{field} must have at least {param} characters.'
+    'min_length' => 'Supplied value ({value}) for {field} must have at least {param} characters.'
 
-On a field with the human name Username and a rule of min_length[5], an error would display: “Username must have
-at least 5 characters.”
+On a field with the human name Username and a rule of min_length[6] with a value of “Pizza”, an error would display: “Supplied value (Pizza) for Username must have
+at least 6 characters.”
 
 .. note:: If you pass the last parameter the labeled style error messages will be ignored.
 
@@ -656,10 +676,15 @@ Rule                    Parameter   Description                                 
 ======================= =========== =============================================================================================== ===================================================
 alpha                   No          Fails if field has anything other than alphabetic characters.
 alpha_space             No          Fails if field contains anything other than alphabetic characters or spaces.
-alpha_dash              No          Fails if field contains anything other than alpha-numeric characters, underscores or dashes.
-alpha_numeric           No          Fails if field contains anything other than alpha-numeric characters or numbers.
-alpha_numeric_space     No          Fails if field contains anything other than alpha-numeric characters, numbers or space.
-decimal                 No          Fails if field contains anything other than a decimal number.
+alpha_dash              No          Fails if field contains anything other than alphanumeric characters, underscores or dashes.
+alpha_numeric           No          Fails if field contains anything other than alphanumeric characters.
+alpha_numeric_space     No          Fails if field contains anything other than alphanumeric or space characters.
+alpha_numeric_punct     No          Fails if field contains anything other than alphanumeric, space, or this limited set of 
+                                    punctuation characters: ~ (tilde), ! (exclamation), # (number), $ (dollar), % (percent), 
+                                    & (ampersand), * (asterisk), - (dash), _ (underscore), + (plus), = (equals), 
+                                    | (vertical bar), : (colon), . (period).
+decimal                 No          Fails if field contains anything other than a decimal number. 
+                                    Also accepts a + or  - sign for the number.
 differs                 Yes         Fails if field does not differ from the one in the parameter.                                   differs[field_name]
 exact_length            Yes         Fails if field is not exactly the parameter value. One or more comma-separated values.          exact_length[5] or exact_length[5,8,12]
 greater_than            Yes         Fails if field is less than or equal to the parameter value or not numeric.                     greater_than[8]

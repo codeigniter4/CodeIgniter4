@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Validation;
 
-class FileRulesTest extends \CIUnitTestCase
+class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**

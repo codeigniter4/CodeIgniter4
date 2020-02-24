@@ -7,7 +7,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
- * Copyright (c) 2019 CodeIgniter Foundation
+ * Copyright (c) 2019-2020 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -510,7 +510,7 @@ class Email
 	/**
 	 * Set Recipients
 	 *
-	 * @param string $to
+	 * @param string|array $to
 	 *
 	 * @return Email
 	 */
@@ -892,7 +892,7 @@ class Email
 	/**
 	 * Validate Email Address
 	 *
-	 * @param string $email
+	 * @param string|array $email
 	 *
 	 * @return boolean
 	 */
@@ -907,7 +907,7 @@ class Email
 		{
 			if (! $this->isValidEmail($val))
 			{
-				$this->setErrorMessage(lang('Email.invalidAddress', $val));
+				$this->setErrorMessage(lang('Email.invalidAddress', [$val]));
 				return false;
 			}
 		}
@@ -1489,7 +1489,7 @@ class Email
 		$output                 = '=?' . $this->charset . '?Q?';
 		for ($i = 0, $length = static::strlen($output); $i < $chars; $i ++)
 		{
-			$chr = ($this->charset === 'UTF-8' && ICONV_ENABLED === true) ? '=' . implode('=', str_split(strtoupper(bin2hex(iconv_substr($str, $i, 1, $this->charset))), 2)) : '=' . strtoupper(bin2hex($str[$i]));
+			$chr = ($this->charset === 'UTF-8' && extension_loaded('iconv')) ? '=' . implode('=', str_split(strtoupper(bin2hex(iconv_substr($str, $i, 1, $this->charset))), 2)) : '=' . strtoupper(bin2hex($str[$i]));
 			// RFC 2045 sets a limit of 76 characters per line.
 			// We'll append ?= to the end of each line though.
 			if ($length + ($l = static::strlen($chr)) > 74)

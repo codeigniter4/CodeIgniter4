@@ -13,7 +13,7 @@ use org\bovigo\vfs\vfsStream;
  *
  * Was unable to test fontPath & related logic.
  */
-class GDHandlerTest extends \CIUnitTestCase
+class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void

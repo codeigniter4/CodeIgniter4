@@ -4,7 +4,7 @@ namespace CodeIgniter\Helpers;
 
 use org\bovigo\vfs\vfsStream;
 
-class FilesystemHelperTest extends \CIUnitTestCase
+class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void

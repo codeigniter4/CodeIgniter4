@@ -81,70 +81,29 @@ Folders in your project after set up:
 - vendor/codeigniter4/framework/system
 - vendor/codeigniter4/framework/app & public (compare with yours after updating)
 
-Dev Starter
-============================================================
-
-Installation & Set Up
+Latest Dev
 -------------------------------------------------------
 
-The `CodeIgniter 4 dev starter <https://github.com/codeigniter4/devstarter>`_ 
-repository holds a skeleton application, just like the appstarter above,
-but with a composer dependency on
-the develop branch (unreleased) of the framework.
-It can be composer-installed as described here.
-
-This installation technique would suit a developer who wishes to start
-a new CodeIgniter4 based project, and who is willing to live with the
-latest unreleased changes, which may be unstable.
+The App Starter repo comes with a ``builds`` scripts to switch Composer sources between the
+current stable release and the latest development branch of the framework. Use this script
+for a developer who is willing to live with the latest unreleased changes, which may be unstable.
 
 The `development user guide <https://codeigniter4.github.io/CodeIgniter4/>`_ is accessible online.
 Note that this differs from the released user guide, and will pertain to the
 develop branch explicitly.
 
-In the folder above your project root::
+In your project root::
 
-    composer create-project codeigniter4/devstarter dev
+    php builds development
 
-The command above will create a "devstarter" folder.
-Feel free to rename that for your project.
+The command above will update **composer.json** to point to the ``develop`` branch of the
+working repository, and update the corresponding paths in config and XML files. To revert
+these changes run::
 
-Just like the appstarter, you can provide your own project
-name as the third composer argument, and you can add
-the "--no-dev" argument if your don't want phpunit and its dependencies included.
-An example::
+    php builds release
 
-    composer create-project codeigniter4/devstarter my-awesome-project dev --no-dev
-
-
-Upgrading
--------------------------------------------------------
-
-``composer update`` whenever you are ready for the latest changes,
-or ``composer update --no-dev`` if you used that argument when creating your project.
-
-Check the changelog to see if any recent changes affect your app,
-bearing in mind that the most recent changes may not have made it
-into the changelog!
-
-Pros
--------------------------------------------------------
-
-Simple installation; easy to update; bleeding edge version
-
-Cons
--------------------------------------------------------
-
-This is not guaranteed to be stable; the onus is on you to upgrade.
-You still need to check for ``app/Config`` changes after updating.
-
-Structure
--------------------------------------------------------
-
-Folders in your project after set up:
-
-- app, public, tests, writable 
-- vendor/codeigniter4/codeigniter4/system
-- vendor/codeigniter4/codeigniter4/app & public (compare with yours after updating)
+After using the ``builds`` command be sure to run ``composer update`` to sync your vendor
+folder with the latest target build.
 
 Adding CodeIgniter4 to an Existing Project
 ============================================================

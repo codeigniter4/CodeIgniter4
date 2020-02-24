@@ -5,7 +5,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2019 CodeIgniter Foundation
+ * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -21,6 +21,7 @@ return [
    'gifNotSupported'        => 'GIF images are often not supported due to licensing restrictions. You may have to use JPG or PNG images instead.',
    'jpgNotSupported'        => 'JPG images are not supported.',
    'pngNotSupported'        => 'PNG images are not supported.',
+   'fileNotSupported'       => 'The supplied file is not a supported image type.',
    'unsupportedImageCreate' => 'Your server does not support the GD function required to process this type of image.',
    'jpgOrPngRequired'       => 'The image resize protocol specified in your preferences only works with JPEG or PNG image types.',
    'rotateUnsupported'      => 'Image rotation does not appear to be supported by your server.',

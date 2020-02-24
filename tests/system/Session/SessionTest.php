@@ -1,15 +1,15 @@
 <?php namespace CodeIgniter\Session;
 
 use Config\Logger;
-use Tests\Support\Log\TestLogger;
-use Tests\Support\Session\MockSession;
+use CodeIgniter\Test\TestLogger;
+use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Session\Handlers\FileHandler;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
  */
-class SessionTest extends \CIUnitTestCase
+class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected function setUp(): void
 	{

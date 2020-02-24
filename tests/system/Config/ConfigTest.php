@@ -3,7 +3,7 @@ namespace CodeIgniter\Config;
 
 use Config\DocTypes;
 
-class ConfigTest extends \CIUnitTestCase
+class ConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	public function testCreateSingleInstance()

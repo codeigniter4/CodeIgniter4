@@ -1,11 +1,11 @@
 <?php
 namespace CodeIgniter\Log\Handlers;
 
-use Tests\Support\Config\MockLogger as LoggerConfig;
-use Tests\Support\Log\Handlers\MockFileHandler as MockFileHandler;
+use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
+use CodeIgniter\Test\Mock\MockFileLogger;
 use org\bovigo\vfs\vfsStream;
 
-class FileHandlerTest extends \CIUnitTestCase
+class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -20,7 +20,7 @@ class FileHandlerTest extends \CIUnitTestCase
 		$config                                                                = new LoggerConfig();
 		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
 
-		$logger = new MockFileHandler($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
+		$logger = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
 		$logger->setDateFormat('Y-m-d H:i:s:u');
 		$this->assertTrue($logger->handle('warning', 'This is a test log'));
 	}
@@ -32,7 +32,7 @@ class FileHandlerTest extends \CIUnitTestCase
 		$config                                                                = new LoggerConfig();
 		$config->path                                                          = $this->start . 'charlie/';
 		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
-		$logger                                                                = new MockFileHandler($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
+		$logger                                                                = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
 		$logger->setDateFormat('Y-m-d H:i:s:u');
 		$this->assertTrue($logger->handle('warning', 'This is a test log'));
 	}
@@ -41,7 +41,7 @@ class FileHandlerTest extends \CIUnitTestCase
 	{
 		$config       = new LoggerConfig();
 		$config->path = $this->start;
-		$logger       = new MockFileHandler((array) $config);
+		$logger       = new MockFileLogger((array) $config);
 
 		$logger->setDateFormat('Y-m-d H:i:s:u');
 		$logger->handle('warning', 'This is a test log');
@@ -53,14 +53,14 @@ class FileHandlerTest extends \CIUnitTestCase
 
 		// did the log file get created?
 		$expectedResult = 'This is a test log';
-		$this->assertContains($expectedResult, $line);
+		$this->assertStringContainsString($expectedResult, $line);
 	}
 
 	public function testHandleDateTimeCorrectly()
 	{
 		$config       = new LoggerConfig();
 		$config->path = $this->start;
-		$logger       = new MockFileHandler((array) $config);
+		$logger       = new MockFileLogger((array) $config);
 
 		$logger->setDateFormat('Y-m-d');
 		$expected = 'log-' . date('Y-m-d') . '.log';
@@ -71,7 +71,7 @@ class FileHandlerTest extends \CIUnitTestCase
 		fclose($fp);
 
 		$expectedResult = 'Test message';
-		$this->assertContains($expectedResult, $line);
+		$this->assertStringContainsString($expectedResult, $line);
 	}
 
 }

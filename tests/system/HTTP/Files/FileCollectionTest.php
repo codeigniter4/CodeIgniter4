@@ -1,7 +1,7 @@
 <?php
 namespace CodeIgniter\HTTP\Files;
 
-class FileCollectionTest extends \CIUnitTestCase
+class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void

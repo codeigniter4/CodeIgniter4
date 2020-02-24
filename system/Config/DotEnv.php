@@ -8,7 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019 CodeIgniter Foundation
+ * Copyright (c) 2019-2020 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2019 CodeIgniter Foundation
+ * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -76,18 +76,43 @@ class DotEnv
 	 */
 	public function load(): bool
 	{
-		// We don't want to enforce the presence of a .env file,
-		// they should be optional.
-		if (! is_file($this->path))
+		$vars = $this->parse();
+
+		if ($vars === null)
 		{
 			return false;
 		}
 
-		// Ensure file is readable
+		foreach ($vars as $name => $value)
+		{
+			$this->setVariable($name, $value);
+		}
+
+		return true; // for success
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Parse the .env file into an array of key => value
+	 *
+	 * @return array|null
+	 */
+	public function parse(): ?array
+	{
+		// We don't want to enforce the presence of a .env file, they should be optional.
+		if (! is_file($this->path))
+		{
+			return null;
+		}
+
+		// Ensure the file is readable
 		if (! is_readable($this->path))
 		{
 			throw new \InvalidArgumentException("The .env file is not readable: {$this->path}");
 		}
+
+		$vars = [];
 
 		$lines = file($this->path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
@@ -99,15 +124,15 @@ class DotEnv
 				continue;
 			}
 
-			// If there is an equal sign, then we know we
-			// are assigning a variable.
+			// If there is an equal sign, then we know we are assigning a variable.
 			if (strpos($line, '=') !== false)
 			{
-				$this->setVariable($line);
+				list($name, $value) = $this->normaliseVariable($line);
+				$vars[$name] = $value;
 			}
 		}
 
-		return true; // for success
+		return $vars;
 	}
 
 	//--------------------------------------------------------------------
@@ -122,8 +147,6 @@ class DotEnv
 	 */
 	protected function setVariable(string $name, string $value = '')
 	{
-		list($name, $value) = $this->normaliseVariable($name, $value);
-
 		if (! getenv($name, true))
 		{
 			putenv("$name=$value");

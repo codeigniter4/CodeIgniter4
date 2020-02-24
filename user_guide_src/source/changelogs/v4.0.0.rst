@@ -1,0 +1,24 @@
+Version 4.0.0
+====================================================
+
+Release Date: February 24, 2020
+
+**4.0 release of CodeIgniter4**
+
+Enhancements:
+
+- Updated welcome view file
+- Debug Toolbar now supports dark mode
+- New alpha_numeric_punct validation rule
+- Kint was updated from the 2.x branch to the latest 3.x branch, with new config file to specify options
+- Additional docs for getting started
+- CLI fixed to better handle complex arguments
+- Improvements to File class
+- New model() helper method for easy singleton Models.
+- Tests completely reorganized to make app-level tests simpler out of the box.
+
+Repo changes:
+
+The devstarter repo has been deprecated.
+
+We now have an automated changelog generated in the CHANGELOG.md file in the main repo. See it for more details.

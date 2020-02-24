@@ -15,7 +15,7 @@ require_once __DIR__ . '/fixtures/InvalidClass.php';
 /**
  * @backupGlobals enabled
  */
-class FiltersTest extends \CIUnitTestCase
+class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected $request;
@@ -620,11 +620,10 @@ class FiltersTest extends \CIUnitTestCase
 		$this->assertEquals(['role' => ['admin', 'super']], $filters->getArguments());
 	}
 
-	/**
-	 * @expectedException CodeIgniter\Filters\Exceptions\FilterException
-	 */
 	public function testEnableNonFilter()
 	{
+		$this->expectException('CodeIgniter\Filters\Exceptions\FilterException');
+
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [

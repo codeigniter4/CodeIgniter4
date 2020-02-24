@@ -1,0 +1,37 @@
+{
+	"name": "mydomain/mymodule",
+	"description": "CodeIgniter4 starter module",
+	"homepage": "https://codeigniter.com",
+	"license": "MIT",
+	"minimum-stability": "dev",
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/codeigniter4/codeigniter4"
+		}
+	],
+	"require": {
+		"php": ">=7.2"
+	},
+	"require-dev": {
+		"mikey179/vfsstream": "1.6.*",
+		"phpunit/phpunit": "8.5.*",
+		"codeigniter4/codeigniter4": "dev-develop"
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\Support\\": "tests/_support"
+		}
+	},
+	"scripts": {
+		"test": "phpunit",
+		"post-update-cmd": [
+			"@composer dump-autoload"
+		]
+	},
+	"support": {
+		"forum": "http://forum.codeigniter.com/",
+		"source": "https://github.com/codeigniter4/CodeIgniter4",
+		"slack": "https://codeigniterchat.slack.com"
+	}
+}

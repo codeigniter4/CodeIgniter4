@@ -14,8 +14,9 @@ Release Date: Not Released
 
 .. toctree::
         :titlesonly:
- 
+
         next
+        v4.0.0-rc.4
         v4.0.0-rc.3
         v4.0.0-rc.2
         v4.0.0-rc.1

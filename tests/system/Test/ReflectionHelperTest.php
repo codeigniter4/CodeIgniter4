@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Test;
 
-class ReflectionHelperTest extends \CIUnitTestCase
+class ReflectionHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	public function testGetPrivatePropertyWithObject()
 	{
@@ -12,7 +12,7 @@ class ReflectionHelperTest extends \CIUnitTestCase
 	public function testGetPrivatePropertyWithObjectStaticCall()
 	{
 		$obj    = new __TestForReflectionHelper();
-		$actual = \CIUnitTestCase::getPrivateProperty($obj, 'private');
+		$actual = \CodeIgniter\Test\CIUnitTestCase::getPrivateProperty($obj, 'private');
 		$this->assertEquals('secret', $actual);
 	}
 

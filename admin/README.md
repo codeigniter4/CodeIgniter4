@@ -88,3 +88,4 @@ scripts used by the release manager:
     are built.
 -   The subfolders inside `admin` contain "next release" files in the case of 
     `codeigniter4` and over-written distribution files in the other cases.
+-   The CHANGELOG.md file is auto-generated using the [GitHub Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator)

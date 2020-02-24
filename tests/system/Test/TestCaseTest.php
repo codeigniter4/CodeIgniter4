@@ -6,7 +6,7 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\HTTP\Response;
 use Config\App;
 
-class TestCaseTest extends \CIUnitTestCase
+class TestCaseTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	//  protected function tearDown(): void

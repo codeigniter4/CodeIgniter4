@@ -1,9 +1,9 @@
 <?php namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
-use Tests\Support\Database\MockConnection;
+use CodeIgniter\Test\Mock\MockConnection;
 
-class JoinTest extends \CIUnitTestCase
+class JoinTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected $db;
 

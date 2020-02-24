@@ -3,10 +3,10 @@
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Log\Exceptions\LogException;
-use Tests\Support\Config\MockLogger as LoggerConfig;
+use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Tests\Support\Log\Handlers\TestHandler;
 
-class LoggerTest extends \CIUnitTestCase
+class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	public function testThrowsExceptionWithBadHandlerSettings()
@@ -406,7 +406,7 @@ class LoggerTest extends \CIUnitTestCase
 		$logs = TestHandler::getLogs();
 
 		$this->assertCount(1, $logs);
-		$this->assertContains($expected, $logs[0]);
+		$this->assertStringContainsString($expected, $logs[0]);
 	}
 
 	//--------------------------------------------------------------------
@@ -414,7 +414,7 @@ class LoggerTest extends \CIUnitTestCase
 	public function testFilenameCleaning()
 	{
 		$config = new LoggerConfig();
-		$logger = new \Tests\Support\Log\TestLogger($config);
+		$logger = new \CodeIgniter\Test\TestLogger($config);
 
 		$ohoh     = APPPATH . 'LoggerTest';
 		$expected = 'APPPATH/LoggerTest';

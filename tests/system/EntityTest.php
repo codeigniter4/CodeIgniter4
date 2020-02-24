@@ -7,7 +7,7 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\ReflectionHelper;
 use Tests\Support\SomeEntity;
 
-class EntityTest extends \CIUnitTestCase
+class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	use ReflectionHelper;
@@ -277,7 +277,7 @@ class EntityTest extends \CIUnitTestCase
 		$entity = $this->getCastEntity();
 
 		$entity->first = 3.1;
-		$this->assertInternalType('integer', $entity->first);
+		$this->assertIsInt($entity->first);
 		$this->assertEquals(3, $entity->first);
 
 		$entity->first = 3.6;
@@ -289,11 +289,11 @@ class EntityTest extends \CIUnitTestCase
 		$entity = $this->getCastEntity();
 
 		$entity->second = 3;
-		$this->assertInternalType('float', $entity->second);
+		$this->assertIsFloat($entity->second);
 		$this->assertEquals(3.0, $entity->second);
 
 		$entity->second = '3.6';
-		$this->assertInternalType('float', $entity->second);
+		$this->assertIsFloat($entity->second);
 		$this->assertEquals(3.6, $entity->second);
 	}
 
@@ -302,11 +302,11 @@ class EntityTest extends \CIUnitTestCase
 		$entity = $this->getCastEntity();
 
 		$entity->third = 3;
-		$this->assertInternalType('double', $entity->third);
+		$this->assertIsFloat($entity->third);
 		$this->assertSame(3.0, $entity->third);
 
 		$entity->third = '3.6';
-		$this->assertInternalType('double', $entity->third);
+		$this->assertIsFloat($entity->third);
 		$this->assertSame(3.6, $entity->third);
 	}
 
@@ -315,7 +315,7 @@ class EntityTest extends \CIUnitTestCase
 		$entity = $this->getCastEntity();
 
 		$entity->fourth = 3.1415;
-		$this->assertInternalType('string', $entity->fourth);
+		$this->assertIsString($entity->fourth);
 		$this->assertSame('3.1415', $entity->fourth);
 	}
 
@@ -324,11 +324,11 @@ class EntityTest extends \CIUnitTestCase
 		$entity = $this->getCastEntity();
 
 		$entity->fifth = 1;
-		$this->assertInternalType('bool', $entity->fifth);
+		$this->assertIsBool($entity->fifth);
 		$this->assertTrue($entity->fifth);
 
 		$entity->fifth = 0;
-		$this->assertInternalType('bool', $entity->fifth);
+		$this->assertIsBool($entity->fifth);
 		$this->assertFalse($entity->fifth);
 	}
 
@@ -339,7 +339,7 @@ class EntityTest extends \CIUnitTestCase
 		$data = ['foo' => 'bar'];
 
 		$entity->sixth = $data;
-		$this->assertInternalType('object', $entity->sixth);
+		$this->assertIsObject($entity->sixth);
 		$this->assertEquals((object) $data, $entity->sixth);
 	}
 
@@ -359,7 +359,7 @@ class EntityTest extends \CIUnitTestCase
 		$date = 'March 12, 2017';
 
 		$entity->ninth = $date;
-		$this->assertInternalType('integer', $entity->ninth);
+		$this->assertIsInt($entity->ninth);
 		$this->assertEquals(strtotime($date), $entity->ninth);
 	}
 

@@ -1,9 +1,7 @@
 <?php
 namespace CodeIgniter\Config;
 
-use CodeIgniter\Test\CIUnitTestCase;
-
-class BaseConfigTest extends CIUnitTestCase
+class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected $fixturesFolder;

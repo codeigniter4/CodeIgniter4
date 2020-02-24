@@ -6,9 +6,9 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
-use Tests\Support\HTTP\MockResponse;
+use CodeIgniter\Test\Mock\MockResponse;
 
-final class CookieHelperTest extends \CIUnitTestCase
+final class CookieHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	private $name;

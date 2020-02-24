@@ -4,7 +4,7 @@ namespace CodeIgniter\HTTP\Files;
 use org\bovigo\vfs\vfsStream;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 
-class FileMovingTest extends \CIUnitTestCase
+class FileMovingTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void

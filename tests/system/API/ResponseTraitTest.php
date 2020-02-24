@@ -3,12 +3,12 @@ namespace CodeIgniter\API;
 
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
-use Tests\Support\HTTP\MockResponse;
+use CodeIgniter\Test\Mock\MockResponse;
 use CodeIgniter\Format\XMLFormatter;
 use CodeIgniter\Format\JSONFormatter;
-use Tests\Support\HTTP\MockIncomingRequest;
+use CodeIgniter\Test\Mock\MockIncomingRequest;
 
-class ResponseTraitTest extends \CIUnitTestCase
+class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected $request;

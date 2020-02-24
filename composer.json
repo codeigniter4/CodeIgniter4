@@ -9,14 +9,14 @@
         "ext-curl": "*",
         "ext-intl": "*",
         "ext-json": "*",
-        "kint-php/kint": "^2.1",
+        "kint-php/kint": "^3.3",
         "psr/log": "^1.1",
         "laminas/laminas-escaper": "^2.6"
     },
     "require-dev": {
         "codeigniter4/codeigniter4-standard": "^1.0",
         "mikey179/vfsstream": "1.6.*",
-        "phpunit/phpunit": "^7.0",
+        "phpunit/phpunit": "^8.5",
         "squizlabs/php_codesniffer": "^3.3"
     },
     "autoload": {

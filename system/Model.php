@@ -8,7 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019 CodeIgniter Foundation
+ * Copyright (c) 2019-2020 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2019 CodeIgniter Foundation
+ * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -493,17 +493,18 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+
 	 * Captures the builder's set() method so that we can validate the
 	 * data here. This allows it to be used with any of the other
 	 * builder methods and still get validated data, like replace.
 	 *
-	 * @param mixed        $key
-	 * @param string       $value
-	 * @param boolean|null $escape
+	 * @param mixed               $key    Field name, or an array of field/value pairs
+	 * @param string              $value  Field value, if $key is a single field
+	 * @param boolean             $escape Whether to escape values and identifiers
 	 *
 	 * @return $this
 	 */
-	public function set($key, string $value = '', bool $escape = null)
+	public function set($key, ?string $value = '', bool $escape = null)
 	{
 		$data = is_array($key)
 			? $key
@@ -1123,8 +1124,8 @@ class Model
 	public function paginate(int $perPage = 20, string $group = 'default', int $page = 0)
 	{
 		$pager = \Config\Services::pager(null, null, false);
-		$page = $page >= 1 ? $page : $pager->getCurrentPage($group);
-		
+		$page  = $page >= 1 ? $page : $pager->getCurrentPage($group);
+
 		$total = $this->countAllResults(false);
 
 		// Store it in the Pager library so it can be

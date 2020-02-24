@@ -7,7 +7,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019 CodeIgniter Foundation
+ * Copyright (c) 2019-2020 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2019 CodeIgniter Foundation
+ * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -151,8 +151,8 @@ class GDHandler extends BaseHandler
 	{
 		$srcImg = $this->createImage();
 
-		$width  = $this->image->origWidth;
-		$height = $this->image->origHeight;
+		$width  = $this->image()->origWidth;
+		$height = $this->image()->origHeight;
 
 		if ($direction === 'horizontal')
 		{
@@ -254,8 +254,8 @@ class GDHandler extends BaseHandler
 	 */
 	protected function process(string $action)
 	{
-		$origWidth  = $this->image->origWidth;
-		$origHeight = $this->image->origHeight;
+		$origWidth  = $this->image()->origWidth;
+		$origHeight = $this->image()->origHeight;
 
 		if ($action === 'crop')
 		{
@@ -266,8 +266,8 @@ class GDHandler extends BaseHandler
 			// Modify the "original" width/height to the new
 			// values so that methods that come after have the
 			// correct size to work with.
-			$this->image->origHeight = $this->height;
-			$this->image->origWidth  = $this->width;
+			$this->image()->origHeight = $this->height;
+			$this->image()->origWidth  = $this->width;
 		}
 
 		// Create the image handle
@@ -286,7 +286,7 @@ class GDHandler extends BaseHandler
 
 		$dest = $create($this->width, $this->height);
 
-		if ($this->image->imageType === IMAGETYPE_PNG) // png we can actually preserve transparency
+		if ($this->image()->imageType === IMAGETYPE_PNG) // png we can actually preserve transparency
 		{
 			imagealphablending($dest, false);
 			imagesavealpha($dest, true);
@@ -318,9 +318,9 @@ class GDHandler extends BaseHandler
 	 */
 	public function save(string $target = null, int $quality = 90): bool
 	{
-		$target = empty($target) ? $this->image->getPathname() : $target;
+		$target = empty($target) ? $this->image()->getPathname() : $target;
 
-		switch ($this->image->imageType)
+		switch ($this->image()->imageType)
 		{
 			case IMAGETYPE_GIF:
 				if (! function_exists('imagegif'))
@@ -389,12 +389,12 @@ class GDHandler extends BaseHandler
 
 		if ($path === '')
 		{
-			$path = $this->image->getPathname();
+			$path = $this->image()->getPathname();
 		}
 
 		if ($imageType === '')
 		{
-			$imageType = $this->image->imageType;
+			$imageType = $this->image()->imageType;
 		}
 
 		switch ($imageType)
@@ -490,21 +490,21 @@ class GDHandler extends BaseHandler
 		if ($options['vAlign'] === 'middle')
 		{
 			// Don't apply padding when you're in the middle of the image.
-			$yAxis += ($this->image->origHeight / 2) + ($fontheight / 2) - $options['padding'];
+			$yAxis += ($this->image()->origHeight / 2) + ($fontheight / 2) - $options['padding'];
 		}
 		elseif ($options['vAlign'] === 'bottom')
 		{
-			$yAxis = ($this->image->origHeight - $fontheight - $options['shadowOffset'] - ($fontheight / 2)) - $yAxis;
+			$yAxis = ($this->image()->origHeight - $fontheight - $options['shadowOffset'] - ($fontheight / 2)) - $yAxis;
 		}
 
 		// Set horizontal alignment
 		if ($options['hAlign'] === 'right')
 		{
-			$xAxis += ($this->image->origWidth - ($fontwidth * strlen($text)) - $options['shadowOffset']) - (2 * $options['padding']);
+			$xAxis += ($this->image()->origWidth - ($fontwidth * strlen($text)) - $options['shadowOffset']) - (2 * $options['padding']);
 		}
 		elseif ($options['hAlign'] === 'center')
 		{
-			$xAxis += floor(($this->image->origWidth - ($fontwidth * strlen($text))) / 2);
+			$xAxis += floor(($this->image()->origWidth - ($fontwidth * strlen($text))) / 2);
 		}
 
 		$options['xAxis'] = $xAxis;

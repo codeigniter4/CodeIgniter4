@@ -1,11 +1,11 @@
 <?php namespace CodeIgniter\CLI;
 
 use CodeIgniter\HTTP\CLIRequest;
-use Tests\Support\MockCodeIgniter;
-use Tests\Support\Config\MockCLIConfig;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
+use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class ConsoleTest extends \CIUnitTestCase
+class ConsoleTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	private $stream_filter;
@@ -68,8 +68,8 @@ class ConsoleTest extends \CIUnitTestCase
 		ob_end_clean();
 
 		// make sure the result looks like a command list
-		$this->assertContains('Lists the available commands.', $result);
-		$this->assertContains('Displays basic usage information.', $result);
+		$this->assertStringContainsString('Lists the available commands.', $result);
+		$this->assertStringContainsString('Displays basic usage information.', $result);
 	}
 
 }

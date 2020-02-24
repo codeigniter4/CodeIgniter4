@@ -68,6 +68,15 @@ the results in kilobytes or megabytes, respectively::
 	$kilobytes = $file->getSize('kb');  // 250.880
 	$megabytes = $file->getSize('mb');  // 0.245
 
+**getSizeByUnit()**
+
+Returns the size of the uploaded file default in bytes. You can pass in either 'kb' or 'mb' as the first parameter to get
+the results in kilobytes or megabytes, respectively::
+
+	$bytes     = $file->getSizeByUnit();      // 256901
+	$kilobytes = $file->getSizeByUnit('kb');  // 250.880
+	$megabytes = $file->getSizeByUnit('mb');  // 0.245
+
 **getMimeType()**
 
 Retrieve the media type (mime type) of the file. Uses methods that are considered as secure as possible when determining

@@ -7,7 +7,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019 CodeIgniter Foundation
+ * Copyright (c) 2019-2020 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2019 CodeIgniter Foundation
+ * @copyright  2019-2020 CodeIgniter Foundation
  * @license    https://opensource.org/licenses/MIT	MIT License
  * @link       https://codeigniter.com
  * @since      Version 4.0.0
@@ -185,15 +185,29 @@ class Table
 	}
 
 	/**
-	 * Drops a column from the table.
+	 * Drops columns from the table.
 	 *
-	 * @param string $column
+	 * @param string|array $columns
 	 *
 	 * @return \CodeIgniter\Database\SQLite3\Table
 	 */
-	public function dropColumn(string $column)
+	public function dropColumn($columns)
 	{
-		unset($this->fields[$column]);
+		//unset($this->fields[$column]);
+
+		if (is_string($columns))
+		{
+			$columns = explode(',', $columns);
+		}
+
+		foreach ($columns as $column)
+		{
+			$column = trim($column);
+			if (isset($this->fields[$column]))
+			{
+				unset($this->fields[$column]);
+			}
+		}
 
 		return $this;
 	}

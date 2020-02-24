@@ -36,7 +36,7 @@
  * @filesource
  */
 
-class RedisHandlerTest extends \CIUnitTestCase
+class RedisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	private $redisHandler;
 	private static $key1 = 'key1';
@@ -135,7 +135,7 @@ class RedisHandlerTest extends \CIUnitTestCase
 	{
 		$this->redisHandler->save(self::$key1, 'value');
 
-		$this->assertInternalType('array', $this->redisHandler->getCacheInfo());
+		$this->assertIsArray($this->redisHandler->getCacheInfo());
 	}
 
 	public function testGetMetaData()

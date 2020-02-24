@@ -1,14 +1,14 @@
 <?php namespace CodeIgniter;
 
 use Config\App;
-use Tests\Support\MockCodeIgniter;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Router\RouteCollection;
 use \CodeIgniter\Config\Services;
 
 /**
  * @backupGlobals enabled
  */
-class CodeIgniterTest extends \CIUnitTestCase
+class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	/**
 	 * @var \CodeIgniter\CodeIgniter
@@ -55,7 +55,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
+		$this->assertStringContainsString('Welcome to CodeIgniter', $output);
 	}
 
 	//--------------------------------------------------------------------
@@ -71,7 +71,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
+		$this->assertStringContainsString('Welcome to CodeIgniter', $output);
 	}
 
 	//--------------------------------------------------------------------
@@ -97,7 +97,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertContains('You want to see "about" page.', $output);
+		$this->assertStringContainsString('You want to see "about" page.', $output);
 	}
 
 	//--------------------------------------------------------------------
@@ -121,7 +121,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
+		$this->assertStringContainsString('Welcome to CodeIgniter', $output);
 	}
 
 	//--------------------------------------------------------------------
@@ -147,7 +147,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run($routes);
 		$output = ob_get_clean();
 
-		$this->assertContains('404 Override by Closure.', $output);
+		$this->assertStringContainsString('404 Override by Closure.', $output);
 	}
 
 	//--------------------------------------------------------------------
@@ -173,7 +173,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertContains('You want to see "about" page.', $output);
+		$this->assertStringContainsString('You want to see "about" page.', $output);
 	}
 
 	//--------------------------------------------------------------------
@@ -201,7 +201,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertContains("You want to see 'about' page.", $output);
+		$this->assertStringContainsString("You want to see 'about' page.", $output);
 	}
 
 	//--------------------------------------------------------------------
@@ -237,7 +237,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
+		$this->assertStringContainsString('Welcome to CodeIgniter', $output);
 	}
 
 	public function testTransfersCorrectHTTPVersion()
@@ -271,6 +271,6 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
+		$this->assertStringContainsString('Welcome to CodeIgniter', $output);
 	}
 }
