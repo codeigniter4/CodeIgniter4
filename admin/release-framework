@@ -25,7 +25,7 @@ cprm -rf tests
 mkdir tests
 cp -rf ${CI_DIR}/tests/_support tests/
 
- -rf ${CI_DIR}/admin/framework/* .
+cp -rf ${CI_DIR}/admin/framework/* .
 
 #---------------------------------------------------
 # And finally, get ready for merging

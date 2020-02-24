@@ -1,8 +1,20 @@
 # Changelog
 
-## [4.0.0](https://github.com/codeigniter4/CodeIgniter4/tree/HEAD) (2020-02-24)
+## [4.0.1](https://github.com/codeigniter4/CodeIgniter4/tree/HEAD)
 
-[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.0.0-rc.4...HEAD)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/4.0.0...4.0.1)
+
+**Fixed bugs:**
+
+- Bug: mentioned rc4 in the changelog file of V4 userguide [\#2599](https://github.com/codeigniter4/CodeIgniter4/issues/2599)
+
+**Merged pull requests:**
+
+- \[doc\] Removal of the 'rc' parameter from the installation / update co… [\#2604](https://github.com/codeigniter4/CodeIgniter4/pull/2604) ([jlamim](https://github.com/jlamim))
+
+## [4.0.0](https://github.com/codeigniter4/CodeIgniter4/tree/4.0.0) (2020-02-24)
+
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.0.0-rc.4...4.0.0)
 
 **Fixed bugs:**
 
@@ -10,6 +22,7 @@
 - Bug: testOrHavingBy\(\) requires a select [\#2584](https://github.com/codeigniter4/CodeIgniter4/issues/2584)
 - Bug: Email-\>validateEmail\(\) on wrong email address leads to TypeError  [\#2580](https://github.com/codeigniter4/CodeIgniter4/issues/2580)
 - Bug: $forge-\>dropColumn not allowing arrays [\#2576](https://github.com/codeigniter4/CodeIgniter4/issues/2576)
+- Bug: CI4 set ID to NULL when I try insert a row [\#2557](https://github.com/codeigniter4/CodeIgniter4/issues/2557)
 - "Required" rules are not being enforced at all by the model [\#2555](https://github.com/codeigniter4/CodeIgniter4/issues/2555)
 - Bug: Debug Bar showing before the head tag [\#2545](https://github.com/codeigniter4/CodeIgniter4/issues/2545)
 - Bug: Docs / Library Reference / Validation: missing important information on reset\(\) method [\#2535](https://github.com/codeigniter4/CodeIgniter4/issues/2535)
@@ -17,10 +30,10 @@
 - Bug: multi-column WHERE not prefixed [\#2532](https://github.com/codeigniter4/CodeIgniter4/issues/2532)
 - Bug: CodeIgniter\Files\File::getSize\(\) - wrong type of result [\#2476](https://github.com/codeigniter4/CodeIgniter4/issues/2476)
 - Bug: Move work with $\_GET\['page'\] from Model to Pager [\#2467](https://github.com/codeigniter4/CodeIgniter4/issues/2467)
-- Bug: Filter wildcards ignore default methods [\#2455](https://github.com/codeigniter4/CodeIgniter4/issues/2455)
-- trailing slash cause redirect to root [\#2445](https://github.com/codeigniter4/CodeIgniter4/issues/2445)
 - Bug: ImageHandler has no reality checks [\#2421](https://github.com/codeigniter4/CodeIgniter4/issues/2421)
 - Bug: No default HTTP protocol version is set when creating a new Response [\#2383](https://github.com/codeigniter4/CodeIgniter4/issues/2383)
+- Bug: Filter wildcards ignore default methods [\#2455](https://github.com/codeigniter4/CodeIgniter4/issues/2455)
+- trailing slash cause redirect to root [\#2445](https://github.com/codeigniter4/CodeIgniter4/issues/2445)
 - Bug: Commands cannot accept many paths [\#2148](https://github.com/codeigniter4/CodeIgniter4/issues/2148)
 
 **Closed issues:**
@@ -28,9 +41,10 @@
 - Add an 'alpha\_numeric\_punct' rule to FormatRules [\#2549](https://github.com/codeigniter4/CodeIgniter4/issues/2549)
 - Feature: Forge, Adding Foreign key for table already created  [\#2543](https://github.com/codeigniter4/CodeIgniter4/issues/2543)
 - Error In UserGuide [\#2530](https://github.com/codeigniter4/CodeIgniter4/issues/2530)
-- Update package dependency version for kint-php/kint [\#2373](https://github.com/codeigniter4/CodeIgniter4/issues/2373)
 - Lack of test on Travis for PHP 7.4 and tests don't run on upcoming PHP versions [\#2293](https://github.com/codeigniter4/CodeIgniter4/issues/2293)
 - Feature: model helper  [\#2292](https://github.com/codeigniter4/CodeIgniter4/issues/2292)
+- Issue with layouts renderer and sections =\> merge sections in one view [\#2491](https://github.com/codeigniter4/CodeIgniter4/issues/2491)
+- Update package dependency version for kint-php/kint [\#2373](https://github.com/codeigniter4/CodeIgniter4/issues/2373)
 
 **Merged pull requests:**
 
@@ -144,7 +158,6 @@
 - Mention about events in the upgrading doc pages [\#2521](https://github.com/codeigniter4/CodeIgniter4/issues/2521)
 - Missing Constant in E-Mail [\#2512](https://github.com/codeigniter4/CodeIgniter4/issues/2512)
 - Image Manipulation Class [\#2498](https://github.com/codeigniter4/CodeIgniter4/issues/2498)
-- Issue with layouts renderer and sections =\> merge sections in one view [\#2491](https://github.com/codeigniter4/CodeIgniter4/issues/2491)
 - Schema param in the .env file [\#2483](https://github.com/codeigniter4/CodeIgniter4/issues/2483)
 - system\Database\MigrationRunner-\>regress\(\) resets instance variable $namespace to null [\#2474](https://github.com/codeigniter4/CodeIgniter4/issues/2474)
 - Issue passing data to views [\#2464](https://github.com/codeigniter4/CodeIgniter4/issues/2464)
@@ -324,7 +337,6 @@
 - Don't restrict model's access to properties in a read-only manner [\#2289](https://github.com/codeigniter4/CodeIgniter4/pull/2289) ([lonnieezell](https://github.com/lonnieezell))
 - Fix line numbering in Debug/Exceptions class [\#2288](https://github.com/codeigniter4/CodeIgniter4/pull/2288) ([michalsn](https://github.com/michalsn))
 - Fix error with Host header for CURLRequest class [\#2285](https://github.com/codeigniter4/CodeIgniter4/pull/2285) ([michalsn](https://github.com/michalsn))
-- Fix getErrors\(\) for validation with redirect [\#2284](https://github.com/codeigniter4/CodeIgniter4/pull/2284) ([michalsn](https://github.com/michalsn))
 - Bug in CSRF parameter cleanup [\#2279](https://github.com/codeigniter4/CodeIgniter4/pull/2279) ([michalsn](https://github.com/michalsn))
 - WIP fix store\(\) default value bug [\#2123](https://github.com/codeigniter4/CodeIgniter4/pull/2123) ([lucifergit](https://github.com/lucifergit))
 - WIP Added validation on exists database before created for MySQLi… [\#2100](https://github.com/codeigniter4/CodeIgniter4/pull/2100) ([oleg1540](https://github.com/oleg1540))
@@ -335,6 +347,7 @@
 
 **Merged pull requests:**
 
+- Fix getErrors\(\) for validation with redirect [\#2284](https://github.com/codeigniter4/CodeIgniter4/pull/2284) ([michalsn](https://github.com/michalsn))
 - Fix user guide for Message class [\#2282](https://github.com/codeigniter4/CodeIgniter4/pull/2282) ([michalsn](https://github.com/michalsn))
 - Handle X-CSRF-TOKEN - CSRF [\#2272](https://github.com/codeigniter4/CodeIgniter4/pull/2272) ([nowackipawel](https://github.com/nowackipawel))
 - QUICKFIX Batch Update Where Reset [\#2252](https://github.com/codeigniter4/CodeIgniter4/pull/2252) ([searchy2](https://github.com/searchy2))
@@ -521,9 +534,9 @@
 - Fix prevent soft delete all without conditions set [\#2090](https://github.com/codeigniter4/CodeIgniter4/pull/2090) ([rino7](https://github.com/rino7))
 - Update BaseConfig.php [\#2082](https://github.com/codeigniter4/CodeIgniter4/pull/2082) ([zl59503020](https://github.com/zl59503020))
 - WIP: Migration updates for more wholistic functionality [\#2065](https://github.com/codeigniter4/CodeIgniter4/pull/2065) ([lonnieezell](https://github.com/lonnieezell))
-- Cache Drive Backups  [\#2060](https://github.com/codeigniter4/CodeIgniter4/pull/2060) ([MohKari](https://github.com/MohKari))
 - clean base controller code  [\#2046](https://github.com/codeigniter4/CodeIgniter4/pull/2046) ([behnampro](https://github.com/behnampro))
 - Fix CSRF hash regeneration [\#2027](https://github.com/codeigniter4/CodeIgniter4/pull/2027) ([Workoverflow](https://github.com/Workoverflow))
+- WIP Verbiage revisions [\#2010](https://github.com/codeigniter4/CodeIgniter4/pull/2010) ([kydojo](https://github.com/kydojo))
 - Subqueries in BaseBuilder [\#2001](https://github.com/codeigniter4/CodeIgniter4/pull/2001) ([iRedds](https://github.com/iRedds))
 
 ## [v4.0.0-beta.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.0.0-beta.4) (2019-07-25)
@@ -579,6 +592,7 @@
 - validation rule: then -\> than \(spelling\) [\#2069](https://github.com/codeigniter4/CodeIgniter4/pull/2069) ([nowackipawel](https://github.com/nowackipawel))
 - Bugfix file locator slash error [\#2064](https://github.com/codeigniter4/CodeIgniter4/pull/2064) ([MGatner](https://github.com/MGatner))
 - Ensure query vars are part of request-\>uri. Fixes \#2062 [\#2063](https://github.com/codeigniter4/CodeIgniter4/pull/2063) ([lonnieezell](https://github.com/lonnieezell))
+- Cache Drive Backups  [\#2060](https://github.com/codeigniter4/CodeIgniter4/pull/2060) ([MohKari](https://github.com/MohKari))
 - Add multi-path support to `locateFile\(\)` [\#2059](https://github.com/codeigniter4/CodeIgniter4/pull/2059) ([MGatner](https://github.com/MGatner))
 - Add model exceptions for missing/invalid dateFormat [\#2054](https://github.com/codeigniter4/CodeIgniter4/pull/2054) ([MGatner](https://github.com/MGatner))
 - Change Model's deleted flag to a deleted\_at datetime/timestamp. Fixes \#2041 [\#2053](https://github.com/codeigniter4/CodeIgniter4/pull/2053) ([lonnieezell](https://github.com/lonnieezell))
@@ -600,14 +614,12 @@
 - Added a new Session/ArrayHandler that can be used during testing. [\#2014](https://github.com/codeigniter4/CodeIgniter4/pull/2014) ([lonnieezell](https://github.com/lonnieezell))
 - Use request-\>method for HTTP verb [\#2012](https://github.com/codeigniter4/CodeIgniter4/pull/2012) ([MGatner](https://github.com/MGatner))
 - Set the raw data array without any mutations for the Entity [\#2011](https://github.com/codeigniter4/CodeIgniter4/pull/2011) ([iRedds](https://github.com/iRedds))
-- WIP Verbiage revisions [\#2010](https://github.com/codeigniter4/CodeIgniter4/pull/2010) ([kydojo](https://github.com/kydojo))
 - Add `patch` method to command "routes" [\#2008](https://github.com/codeigniter4/CodeIgniter4/pull/2008) ([MGatner](https://github.com/MGatner))
 - Plugin closures docs update and test [\#2005](https://github.com/codeigniter4/CodeIgniter4/pull/2005) ([lonnieezell](https://github.com/lonnieezell))
 - Allow hasChanged\(\) without parameter [\#2004](https://github.com/codeigniter4/CodeIgniter4/pull/2004) ([MGatner](https://github.com/MGatner))
 - Entity refactor [\#2002](https://github.com/codeigniter4/CodeIgniter4/pull/2002) ([lonnieezell](https://github.com/lonnieezell))
 - use CodeIgniter\Controller; not needed since Home Controller extends … [\#1999](https://github.com/codeigniter4/CodeIgniter4/pull/1999) ([titounnes](https://github.com/titounnes))
 - Attempting to fix CURLRequest debug issue. \#1994 [\#1996](https://github.com/codeigniter4/CodeIgniter4/pull/1996) ([lonnieezell](https://github.com/lonnieezell))
-- argument set\(\) must by type of string - cannot agree [\#1989](https://github.com/codeigniter4/CodeIgniter4/pull/1989) ([nowackipawel](https://github.com/nowackipawel))
 - Prevent reverseRoute from searching closures [\#1959](https://github.com/codeigniter4/CodeIgniter4/pull/1959) ([MGatner](https://github.com/MGatner))
 
 ## [v4.0.0-beta.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.0.0-beta.3) (2019-05-06)
@@ -682,6 +694,7 @@
 **Merged pull requests:**
 
 - Prep for beta.3 [\#1990](https://github.com/codeigniter4/CodeIgniter4/pull/1990) ([jim-parry](https://github.com/jim-parry))
+- argument set\(\) must by type of string - cannot agree [\#1989](https://github.com/codeigniter4/CodeIgniter4/pull/1989) ([nowackipawel](https://github.com/nowackipawel))
 - Correct API docblock problems for phpdocs [\#1987](https://github.com/codeigniter4/CodeIgniter4/pull/1987) ([jim-parry](https://github.com/jim-parry))
 - Update docblock version to 4.0.0 [\#1986](https://github.com/codeigniter4/CodeIgniter4/pull/1986) ([jim-parry](https://github.com/jim-parry))
 - Fix filter processing. Fixes \#1907 [\#1985](https://github.com/codeigniter4/CodeIgniter4/pull/1985) ([jim-parry](https://github.com/jim-parry))
@@ -773,6 +786,7 @@
 - lang bug or not? \(empty translations\) [\#1698](https://github.com/codeigniter4/CodeIgniter4/issues/1698)
 - Issue Extend Core Class [\#1653](https://github.com/codeigniter4/CodeIgniter4/issues/1653)
 - Turn OFF getMyProperty\(\) method during DB save. [\#1646](https://github.com/codeigniter4/CodeIgniter4/issues/1646)
+- Model class crashes when handling complex validation rules [\#1574](https://github.com/codeigniter4/CodeIgniter4/issues/1574)
 - Database ForgeTest hiccup [\#1478](https://github.com/codeigniter4/CodeIgniter4/issues/1478)
 - SQLLite3 Forge needs better column handling [\#1255](https://github.com/codeigniter4/CodeIgniter4/issues/1255)
 - TODO BaseConnection needs better error handling [\#1254](https://github.com/codeigniter4/CodeIgniter4/issues/1254)
@@ -819,7 +833,7 @@
 
 ## [v4.0.0.0-alpha.5](https://github.com/codeigniter4/CodeIgniter4/tree/v4.0.0.0-alpha.5) (2019-01-30)
 
-[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.0.0-alpha.4...v4.0.0.0-alpha.5)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.0.0-alpha.5...v4.0.0.0-alpha.5)
 
 **Implemented enhancements:**
 
@@ -853,7 +867,6 @@
 - Pls remove string type in parameter $group at Database::forge [\#1605](https://github.com/codeigniter4/CodeIgniter4/issues/1605)
 - SQL JOIN : bad aliasing on join with prefixed db tables [\#1599](https://github.com/codeigniter4/CodeIgniter4/issues/1599)
 - Model's update method fails when validation rules exist [\#1584](https://github.com/codeigniter4/CodeIgniter4/issues/1584)
-- Model class crashes when handling complex validation rules [\#1574](https://github.com/codeigniter4/CodeIgniter4/issues/1574)
 - maybe need to modify session garbage collector section. \(FileHandler\) [\#1565](https://github.com/codeigniter4/CodeIgniter4/issues/1565)
 - Maybe routes has problem. \[setTranslateURIDashes\] [\#1564](https://github.com/codeigniter4/CodeIgniter4/issues/1564)
 - ErrorException  Trying to get property 'affected\_rows' of non-object  [\#1559](https://github.com/codeigniter4/CodeIgniter4/issues/1559)
@@ -917,13 +930,13 @@
 - Typo in documentation [\#1613](https://github.com/codeigniter4/CodeIgniter4/pull/1613) ([tpw1314](https://github.com/tpw1314))
 - WIP img fix\(?\) - html\_helper [\#1538](https://github.com/codeigniter4/CodeIgniter4/pull/1538) ([nowackipawel](https://github.com/nowackipawel))
 
-## [v4.0.0-alpha.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.0.0-alpha.4) (2018-12-15)
-
-[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.0.0-alpha.5...v4.0.0-alpha.4)
-
 ## [v4.0.0-alpha.5](https://github.com/codeigniter4/CodeIgniter4/tree/v4.0.0-alpha.5) (2018-12-15)
 
-[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.0.0-alpha.3...v4.0.0-alpha.5)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.0.0-alpha.4...v4.0.0-alpha.5)
+
+## [v4.0.0-alpha.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.0.0-alpha.4) (2018-12-15)
+
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.0.0-alpha.3...v4.0.0-alpha.4)
 
 **Implemented enhancements:**
 
@@ -1135,6 +1148,7 @@
 -  Fix Controller use validate bug Fixes \#1419 [\#1423](https://github.com/codeigniter4/CodeIgniter4/pull/1423) ([bangbangda](https://github.com/bangbangda))
 - normalize composer.json [\#1418](https://github.com/codeigniter4/CodeIgniter4/pull/1418) ([samsonasik](https://github.com/samsonasik))
 - add php 7.3 to travis config [\#1394](https://github.com/codeigniter4/CodeIgniter4/pull/1394) ([samsonasik](https://github.com/samsonasik))
+- Caching Driver Document ,isSupported method has no parameters [\#629](https://github.com/codeigniter4/CodeIgniter4/pull/629) ([bangbangda](https://github.com/bangbangda))
 - Add Header Link Pagination [\#622](https://github.com/codeigniter4/CodeIgniter4/pull/622) ([natanfelles](https://github.com/natanfelles))
 
 ## [v4.0.0-alpha.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.0.0-alpha.2) (2018-10-26)
@@ -1182,10 +1196,12 @@
 
 **Merged pull requests:**
 
+- Add timing assertion to CIUnitTestCase [\#1361](https://github.com/codeigniter4/CodeIgniter4/pull/1361) ([jim-parry](https://github.com/jim-parry))
 - Testing/commands [\#1356](https://github.com/codeigniter4/CodeIgniter4/pull/1356) ([jim-parry](https://github.com/jim-parry))
 - Handle duplicate HTTP verb and generic rules properly [\#1355](https://github.com/codeigniter4/CodeIgniter4/pull/1355) ([jim-parry](https://github.com/jim-parry))
 - Refresh changelog [\#1352](https://github.com/codeigniter4/CodeIgniter4/pull/1352) ([jim-parry](https://github.com/jim-parry))
 - Checks if class is instantiable and is a command [\#1350](https://github.com/codeigniter4/CodeIgniter4/pull/1350) ([natanfelles](https://github.com/natanfelles))
+- Fix sphinx formatting in sessions [\#1348](https://github.com/codeigniter4/CodeIgniter4/pull/1348) ([jim-parry](https://github.com/jim-parry))
 - Fix sphinx formatting in sessions [\#1347](https://github.com/codeigniter4/CodeIgniter4/pull/1347) ([jim-parry](https://github.com/jim-parry))
 - Toolbar Styles [\#1342](https://github.com/codeigniter4/CodeIgniter4/pull/1342) ([lonnieezell](https://github.com/lonnieezell))
 - Make viewpath configurable in Paths.php. Fixes \#1296 [\#1341](https://github.com/codeigniter4/CodeIgniter4/pull/1341) ([lonnieezell](https://github.com/lonnieezell))
@@ -1227,7 +1243,6 @@
 - Fix \#1244 \(form\_hidden declaration\) [\#1245](https://github.com/codeigniter4/CodeIgniter4/pull/1245) ([bvrignaud](https://github.com/bvrignaud))
 - 【Unsolicited PR】I changed the download method to testable. [\#1239](https://github.com/codeigniter4/CodeIgniter4/pull/1239) ([ytetsuro](https://github.com/ytetsuro))
 - Optional parameter for resetSelect\(\) call in Builder's countAll\(\); [\#1217](https://github.com/codeigniter4/CodeIgniter4/pull/1217) ([nowackipawel](https://github.com/nowackipawel))
-- Fix undefined function xml\_convert at Database\BaseUtils [\#1209](https://github.com/codeigniter4/CodeIgniter4/pull/1209) ([samsonasik](https://github.com/samsonasik))
 
 ## [v4.0.0-alpha.1](https://github.com/codeigniter4/CodeIgniter4/tree/v4.0.0-alpha.1) (2018-09-29)
 
@@ -1744,6 +1759,7 @@
 - Niggly fixes [\#1216](https://github.com/codeigniter4/CodeIgniter4/pull/1216) ([jim-parry](https://github.com/jim-parry))
 - Autodiscovery [\#1215](https://github.com/codeigniter4/CodeIgniter4/pull/1215) ([lonnieezell](https://github.com/lonnieezell))
 - Fix warnings in welcome\_message.php [\#1211](https://github.com/codeigniter4/CodeIgniter4/pull/1211) ([puschie286](https://github.com/puschie286))
+- Fix undefined function xml\_convert at Database\BaseUtils [\#1209](https://github.com/codeigniter4/CodeIgniter4/pull/1209) ([samsonasik](https://github.com/samsonasik))
 - Correct helper tests namespace [\#1207](https://github.com/codeigniter4/CodeIgniter4/pull/1207) ([jim-parry](https://github.com/jim-parry))
 - Validation Class - corresponding about the escaped separator. [\#1203](https://github.com/codeigniter4/CodeIgniter4/pull/1203) ([ytetsuro](https://github.com/ytetsuro))
 - Fixes FileRules::max\_size\(\) to use file-\>getSize\(\) instead of number\_formatted size [\#1199](https://github.com/codeigniter4/CodeIgniter4/pull/1199) ([samsonasik](https://github.com/samsonasik))
