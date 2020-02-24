@@ -3,13 +3,20 @@
 	"description": "CodeIgniter4 starter module",
 	"homepage": "https://codeigniter.com",
 	"license": "MIT",
+	"minimum-stability": "dev",
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/codeigniter4/codeigniter4"
+		}
+	],
 	"require": {
-		"php": ">=7.2",
-		"codeigniter4/framework": "^4@rc"
+		"php": ">=7.2"
 	},
 	"require-dev": {
 		"mikey179/vfsstream": "1.6.*",
-		"phpunit/phpunit": "8.5.*"
+		"phpunit/phpunit": "8.5.*",
+		"codeigniter4/codeigniter4": "dev-develop"
 	},
 	"autoload-dev": {
 		"psr-4": {
