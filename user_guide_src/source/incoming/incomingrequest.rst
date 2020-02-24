@@ -71,7 +71,7 @@ be checked with the ``isAJAX()`` and ``isCLI()`` methods::
 		. . .
 	}
 
-.. note:: The ``isAJAX()`` method depends on the ``X-Requested-With`` header, which in some cases is not sent by default in XHR requests via JavaScript (i.e. fetch). See the AJAX Requests </general/ajax> section on how to avoid this problem.
+.. note:: The ``isAJAX()`` method depends on the ``X-Requested-With`` header, which in some cases is not sent by default in XHR requests via JavaScript (i.e. fetch). See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
 
 ::
 
