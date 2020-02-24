@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Commands;
+<?php namespace Tests\Support\Commands;
 
 class CommandsTestStreamFilter extends \php_user_filter
 {
