@@ -36,17 +36,6 @@ You can access configuration files for your classes in several different ways.
 	// Access config class with namespace
 	$config = config( 'Config\\Pager' );
 
-- By using ``\Config\Services::class`` which will apply an instance of the class's config for you::
-
-        // Creates Pager instance usings a \Config\Pager instance automatically
-        $pager = \Config\Services::pager();
-
-- Or use the convenience function ``service()`` to get the same results as the previous example::
-
-        // A Pager object is created using \app\Config\Pager
-        $pager = service('pager');
-
-
 All configuration object properties are public, so you access the settings like any other property::
 
         $config = config('Pager');
