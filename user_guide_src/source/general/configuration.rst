@@ -181,7 +181,7 @@ the full (case-sensitive) namespace of the class.
 
 The same holds for a *short prefix*, which is a namespace using only the lowercase version of 
 the configuration class name. If the short prefix matches the class name, 
-the value will from **.env** replaces the configuration file value.
+the value from **.env** replaces the configuration file value.
 ::
 
     app.CSRFProtection  = true    
