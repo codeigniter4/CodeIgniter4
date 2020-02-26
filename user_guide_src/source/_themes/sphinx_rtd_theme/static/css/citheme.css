@@ -186,6 +186,11 @@ div#pulldown-menu {
 	padding-right: 0.2rem;
 }
 
+.admonition {
+	margin-bottom: 2.5rem!important;
+	margin-top: 2rem;
+}
+
 /* Messages ----------------------------------------------------------------- */
 
 .wy-alert.wy-alert-success .wy-alert-title, .rst-content .wy-alert-success.note .wy-alert-title, .rst-content .wy-alert-success.attention .wy-alert-title, .rst-content .wy-alert-success.caution .wy-alert-title, .rst-content .wy-alert-success.danger .wy-alert-title, .rst-content .wy-alert-success.error .wy-alert-title, .rst-content .hint .wy-alert-title, .rst-content .important .wy-alert-title, .rst-content .tip .wy-alert-title, .rst-content .wy-alert-success.warning .wy-alert-title, .rst-content .wy-alert-success.seealso .wy-alert-title, .rst-content .wy-alert-success.admonition-todo .wy-alert-title, .wy-alert.wy-alert-success .rst-content .admonition-title, .rst-content .wy-alert.wy-alert-success .admonition-title, .rst-content .wy-alert-success.note .admonition-title, .rst-content .wy-alert-success.attention .admonition-title, .rst-content .wy-alert-success.caution .admonition-title, .rst-content .wy-alert-success.danger .admonition-title, .rst-content .wy-alert-success.error .admonition-title, .rst-content .hint .admonition-title, .rst-content .important .admonition-title, .rst-content .tip .admonition-title, .rst-content .wy-alert-success.warning .admonition-title, .rst-content .wy-alert-success.seealso .admonition-title, .rst-content .wy-alert-success.admonition-todo .admonition-title {
