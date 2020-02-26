@@ -1,15 +1,24 @@
 /* Imports ------------------------------------------------------------------ */
 
-@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
 @import 'theme.css';
 
 /* General ------------------------------------------------------------------ */
 
-body, h1, h2, h3, h4, h5, h6, p, legend {
-	font-family: "Raleway",-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+@font-face {
+ font-family: "Railway";
+ src: url("../fonts/Railway.otf");
+}
+
+body, p, legend {
+	font-family: "Helvetica", "Arial", sans-serif;
+	font-weight: 250;
 }
 
 /* Titles ------------------------------------------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Railway", "Helvetica", "Arial", sans-serif;
+}
 
 h1 {
 	margin-bottom: 2rem;
@@ -62,7 +71,6 @@ h2, h3 {
 
 #nav_inner {
 	background-color: transparent;
-	font-family: Lucida Grande,Verdana,Geneva,sans-serif;
 	font-size: 11px;
 	margin: 0;
 	padding: 8px 12px 0 20px;
@@ -98,7 +106,6 @@ div#pulldown-menu {
 	color: #ffffff;
 	text-decoration: none;
 	font-size: 12px;
-	font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;
 	font-weight: 700;
 }
 
@@ -107,7 +114,6 @@ div#pulldown-menu {
 	font-size: 11px;
 	line-height: 1.4em;
 	font-weight: 300;
-	font-family: Lucida Grande,Verdana,Geneva,sans-serif;
 	color: #aaaaaa;
 }
 
@@ -115,6 +121,7 @@ div#pulldown-menu {
 
 .wy-side-nav-search a {
 	color: #ffffff;
+	font-family: "Railway", "Helvetica", "Arial", sans-serif;
 }
 
 .wy-side-nav-search input[type=text] {
