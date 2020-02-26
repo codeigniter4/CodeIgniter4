@@ -186,6 +186,10 @@ div#pulldown-menu {
 	margin-top: 1rem;
 }
 
+.rst-content dl:not(.docutils) tt.descname, .rst-content dl:not(.docutils) tt.descname, .rst-content dl:not(.docutils) code.descname {
+	padding-right: 0.2rem;
+}
+
 /* Footer ------------------------------------------------------------------- */
 
 .rst-footer-buttons {
