@@ -1027,6 +1027,13 @@ class MigrationRunner
 		// Determine DBGroup to use
 		$group = $instance->getDBGroup() ?? config('Database')->defaultGroup;
 
+		// Skip tests db group when not running in testing environment
+		if (ENVIRONMENT !== 'testing' && $group === 'tests' && $this->groupFilter !== 'tests')
+		{
+			$this->groupSkip = true;
+			return true;
+		}
+
 		// Skip migration if group filtering was set
 		if ($direction === 'up' && ! is_null($this->groupFilter) && $this->groupFilter !== $group)
 		{
