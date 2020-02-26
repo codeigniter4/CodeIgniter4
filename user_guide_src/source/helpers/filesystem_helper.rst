@@ -109,7 +109,7 @@ The following functions are available:
 
 		write_file('./path/to/file.php', $data, 'r+');
 
-	The default mode is 'wb'. Please see the `PHP user guide <http://php.net/manual/en/function.fopen.php>`_
+	The default mode is 'wb'. Please see the `PHP user guide <https://www.php.net/manual/en/function.fopen.php>`_
 	for mode options.
 
 	.. note:: In order for this function to write data to a file, its permissions must
@@ -242,4 +242,3 @@ The following functions are available:
 		$non_existent_directory = '/path/to/nowhere';
 		echo set_realpath($non_existent_directory, TRUE);	// Shows an error, as the path cannot be resolved
 		echo set_realpath($non_existent_directory, FALSE);	// Prints '/path/to/nowhere'
-

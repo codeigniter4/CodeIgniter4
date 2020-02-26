@@ -104,7 +104,7 @@ Session data is simply an array associated with a particular session ID
 (cookie).
 
 If you've used sessions in PHP before, you should be familiar with PHP's
-`$_SESSION superglobal <http://php.net/manual/en/reserved.variables.session.php>`_
+`$_SESSION superglobal <https://www.php.net/manual/en/reserved.variables.session.php>`_
 (if not, please read the content on that link).
 
 CodeIgniter gives access to its session data through the same means, as it
@@ -386,7 +386,7 @@ Destroying a Session
 ====================
 
 To clear the current session (for example, during a logout), you may
-simply use either PHP's `session_destroy() <http://php.net/session_destroy>`_
+simply use either PHP's `session_destroy() <https://www.php.net/session_destroy>`_
 function, or the library's ``destroy()`` method. Both will work in exactly the
 same way::
 
@@ -515,7 +515,7 @@ mind that it is in fact not the same code and it has some limitations
 
 To be more specific, it doesn't support PHP's `directory level and mode
 formats used in session.save_path
-<http://php.net/manual/en/session.configuration.php#ini.session.save-path>`_,
+<https://www.php.net/manual/en/session.configuration.php#ini.session.save-path>`_,
 and it has most of the options hard-coded for safety. Instead, only
 absolute paths are supported for ``public $sessionSavePath``.
 
@@ -553,7 +553,7 @@ increase - which is the time when it matters - the file system will
 consistently outperform almost all relational database setups.
 
 In addition, if performance is your only concern, you may want to look
-into using `tmpfs <http://eddmann.com/posts/storing-php-sessions-file-caches-in-memory-using-tmpfs/>`_,
+into using `tmpfs <https://eddmann.com/posts/storing-php-sessions-file-caches-in-memory-using-tmpfs/>`_,
 (warning: external resource), which can make your sessions blazing fast.
 
 DatabaseHandler Driver
@@ -660,7 +660,7 @@ The format here is a bit different and complicated at the same time. It is
 best explained by the *phpredis* extension's README file, so we'll simply
 link you to it:
 
-	https://github.com/phpredis/phpredis#php-session-handler
+	https://github.com/phpredis/phpredis
 
 .. warning:: CodeIgniter's Session library does NOT use the actual 'redis'
 	``session.save_handler``. Take note **only** of the path format in
@@ -681,7 +681,7 @@ MemcachedHandler Driver
 
 The 'MemcachedHandler' driver is very similar to the 'RedisHandler' one in all of its
 properties, except perhaps for availability, because PHP's `Memcached
-<http://php.net/memcached>`_ extension is distributed via PECL and some
+<https://www.php.net/memcached>`_ extension is distributed via PECL and some
 Linux distributions make it available as an easy to install package.
 
 Other than that, and without any intentional bias towards Redis, there's

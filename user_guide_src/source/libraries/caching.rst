@@ -221,7 +221,7 @@ Memcached Caching
 Multiple Memcached servers can be specified in the cache configuration file.
 
 For more information on Memcached, please see
-`http://php.net/memcached <http://php.net/memcached>`_.
+`https://www.php.net/memcached <https://www.php.net/memcached>`_.
 
 ================
 WinCache Caching
@@ -230,7 +230,7 @@ WinCache Caching
 Under Windows, you can also utilize the WinCache driver.
 
 For more information on WinCache, please see
-`http://php.net/wincache <http://php.net/wincache>`_.
+`https://www.php.net/wincache <https://www.php.net/wincache>`_.
 
 =============
 Redis Caching
@@ -249,7 +249,7 @@ Available options are::
 	$config['database'] = 0;
 
 For more information on Redis, please see
-`http://redis.io <http://redis.io>`_.
+`https://redis.io <https://redis.io>`_.
 
 ===========
 Dummy Cache

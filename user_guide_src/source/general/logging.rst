@@ -15,7 +15,7 @@ The second parameter is the message itself::
 		log_message('error', 'Some variable did not contain a value.');
 	}
 
-There are eight different log levels, matching to the `RFC 5424 <http://tools.ietf.org/html/rfc5424>`_ levels, and they are as follows:
+There are eight different log levels, matching to the `RFC 5424 <https://tools.ietf.org/html/rfc5424>`_ levels, and they are as follows:
 
 * **debug** - Detailed debug information.
 * **info** - Interesting events in your application, like a user logging in, logging SQL queries, etc.
@@ -138,7 +138,7 @@ Using Third-Party Loggers
 =========================
 
 You can use any other logger that you might like as long as it extends from either
-``Psr\Log\LoggerInterface`` and is `PSR3 <http://www.php-fig.org/psr/psr-3/>`_ compatible. This means
+``Psr\Log\LoggerInterface`` and is `PSR3 <https://www.php-fig.org/psr/psr-3/>`_ compatible. This means
 that you can easily drop in use for any PSR3-compatible logger, or create your own.
 
 You must ensure that the third-party logger can be found by the system, by adding it to either
@@ -155,4 +155,3 @@ If you would like to implement your libraries in a framework-agnostic method, yo
 the ``CodeIgniter\Log\LoggerAwareTrait`` which implements the ``setLogger()`` method for you.
 Then, when you use your library under different environments for frameworks, your library should
 still be able to log as it would expect, as long as it can find a PSR3 compatible logger.
-

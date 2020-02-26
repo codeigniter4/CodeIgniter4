@@ -462,7 +462,7 @@ The following filters are available when using the parser:
 +               +                     +                                                              +                                     +
 +---------------+---------------------+--------------------------------------------------------------+-------------------------------------+
 
-See `PHP's NumberFormatter <http://php.net/manual/en/numberformatter.create.php>`_ for details relevant to the
+See `PHP's NumberFormatter <https://www.php.net/manual/en/numberformatter.create.php>`_ for details relevant to the
 "local_number" filter.
 
 Custom Filters
