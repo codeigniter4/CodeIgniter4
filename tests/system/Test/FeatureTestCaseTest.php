@@ -189,6 +189,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 				'Tests\Support\Controllers\Popcorn::canyon',
 			],
 		]);
+		ob_start();
 		$response = $this->get('home');
 		$response->assertSee('Hello-o-o');
 	}
