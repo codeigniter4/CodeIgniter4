@@ -44,6 +44,8 @@ before_install:
   - psql -c 'CREATE DATABASE test;' -U postgres
 
 before_script:
+  - phpenv config-rm xdebug.ini
+  - pecl install pcov
   - echo 'extension = memcached.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo 'extension = redis.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer install --prefer-source
