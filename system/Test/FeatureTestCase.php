@@ -168,6 +168,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 		// instance get the right one.
 		Services::injectMock('request', $request);
 
+		ob_start();
 		$response = $this->app
 				->setRequest($request)
 				->run($this->routes, true);
