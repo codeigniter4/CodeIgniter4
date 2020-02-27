@@ -773,7 +773,7 @@ class CodeIgniter
 		}
 
 		// $routes is defined in Config/Routes.php
-		$this->router = Services::router($routes, $this->request);
+		$this->router = Services::router($routes, $this->request, false);
 
 		$path = $this->determinePath();
 
