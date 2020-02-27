@@ -94,7 +94,7 @@ Tasks are defined within Closures. Any output the task creates will be discarded
 added to the Iterator class through the `add()` method. The first parameter is a name you want to refer to
 this test by. The second parameter is the Closure, itself::
 
-	$iterator = new \CodeIgniter\Benchmark\Iterator();
+	$iterator = new \CodeIgniter\Debug\Iterator();
 
 	// Add a new task
 	$iterator->add('single_concat', function()
