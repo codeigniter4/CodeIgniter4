@@ -75,9 +75,11 @@ function newXHR() {
 			var debugbarTime = realXHR.getResponseHeader('Debugbar-Time');
 			if (debugbarTime) {
 				var h2 = document.querySelector('#ci-history > h2');
-				h2.innerHTML = 'History <small>You have new debug data.</small> <button onclick="loadDoc(' + debugbarTime + ')">Update</button>';
-				var badge = document.querySelector('a[data-tab="ci-history"] > span > .badge');
-				badge.className += ' active';
+				if(h2) {
+					h2.innerHTML = 'History <small>You have new debug data.</small> <button onclick="loadDoc(' + debugbarTime + ')">Update</button>';
+					var badge = document.querySelector('a[data-tab="ci-history"] > span > .badge');
+					badge.className += ' active';
+				}
 			}
 		}
 	}, false);
