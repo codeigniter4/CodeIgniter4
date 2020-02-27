@@ -1,12 +1,12 @@
 /* Imports ------------------------------------------------------------------ */
 
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
 @import 'theme.css';
 
 /* General ------------------------------------------------------------------ */
 
-@font-face {
- font-family: "Railway";
- src: url("../fonts/Railway.otf");
+body, p, legend {
+	font-family: "Raleway","Helvetica", "Arial", sans-serif;
 }
 
 /* Titles ------------------------------------------------------------------- */
