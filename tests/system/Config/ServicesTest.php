@@ -295,7 +295,7 @@ class ServicesTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testRouter()
 	{
-		$result = Services::router();
+		$result = Services::router(Services::routes(), Services::request());
 		$this->assertInstanceOf(\CodeIgniter\Router\Router::class, $result);
 	}
 
