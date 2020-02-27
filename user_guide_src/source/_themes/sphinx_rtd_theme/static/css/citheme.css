@@ -83,6 +83,14 @@
 
 /* General ------------------------------------------------------------------ */
 
+.wy-nav-content {
+	background-attachment: fixed;
+	background-image: url('../img/ci-background.png');
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	background-size: 40%;
+}
+
 body, p, legend {
 	font-family: "Raleway","Helvetica", "Arial", sans-serif;
 }
