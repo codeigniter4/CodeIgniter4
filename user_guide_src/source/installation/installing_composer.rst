@@ -131,7 +131,7 @@ to your project root
 Copy the ``env``, ``phpunit.xml.dist`` and ``spark`` files, from
 ``vendor/codeigniter4/framework`` to your project root
 
-You will have to adjust paths to refer to vendor/codeigniter/framework``, 
+You will have to adjust paths to refer to ``/vendor/codeigniter4/framework``,
 - the $systemDirectory variable in ``app/Config/Paths.php``
 
 Upgrading
