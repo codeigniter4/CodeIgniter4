@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v2
+
+      - name: Checkout framework
+        uses: actions/checkout@v2
+        with:
+          repository: codeigniter4/framework
+          path: framework
+
+      - name: Checkout appstarter
+        uses: actions/checkout@v2
+        with:
+          repository: codeigniter4/appstarter
+          path: appstarter
