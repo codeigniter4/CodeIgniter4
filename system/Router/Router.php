@@ -603,10 +603,11 @@ class Router implements RouterInterface
 	 * @param string|null   $dir
 	 * @param boolean|false $append
 	 */
-	protected function setDirectory(string $dir = null, bool $append = false)
+	public function setDirectory(string $dir = null, bool $append = false)
 	{
 		if (empty($dir))
 		{
+			$this->directory = null;
 			return;
 		}
 
