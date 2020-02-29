@@ -215,49 +215,70 @@ header .heroe h2 {
 // ========================================================================== */
 
 section {
-  margin: 0 auto;
+  // Dimensions
   max-width: 1100px;
+
+  // Spacing
+  margin: 0 auto;
   padding: 2.5rem 1.75rem 3.5rem 1.75rem;
 }
 section h1 {
+  // Spacing
   margin-bottom: 2.5rem;
 }
 section h2 {
-  font-size: 120%;
+  // Spacing
   line-height: 2.5rem;
   padding-top: 1.5rem;
+
+  // Typography
+  font-size: 120%;
 }
 section pre {
   // Borders
   border: 1px solid lighten($m-gray,8%);
 
-  background-color: rgba(247, 248, 249, 1);
-  display: block;
-  font-size: .9rem;
+  // Colors
+  background-color: $s-gray;
+
+  // Spacing
   margin: 2rem 0;
   padding: 1rem 1.5rem;
   white-space: pre-wrap;
   word-break: break-all;
+
+  // Typography
+  font-size: .9rem;
+
+  // Other styles
+  display: block;
 }
 section code {
+  // Other styles
   display: block;
 }
 section a {
-  color: rgba(221, 72, 20, 1);
+  // Colors
+  color: $g-red;
 }
 section svg {
+  // Dimensions
+  width: 25px;
+
+  // Spacing
   margin-bottom: -5px;
   margin-right: 5px;
-  width: 25px;
 }
 .further {
   // Borders
   border-bottom: 1px solid lighten($m-gray,8%);
   border-top: 1px solid lighten($m-gray,8%);
 
-  background-color: rgba(247, 248, 249, 1);
+  // Colors
+  background-color: $s-gray;
 }
 .further h2:first-of-type {
+  // Spacing
   padding-top: 0;
 }
 
