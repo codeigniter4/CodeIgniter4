@@ -186,17 +186,19 @@
 
 	footer {
 	  border-top: 1px solid #f3f3f3;
-	  background-color: rgba(221, 72, 20, 0.8);
+	  background-color: #DD4814;
+	  color: #FFFFFF;
 	  text-align: center; }
 
 	footer .environment {
-	  color: white;
 	  padding: 2rem 1.75rem; }
 
 	footer .copyrights {
-	  background-color: #3e3e3e;
-	  color: #c8c8c8;
-	  padding: .25rem 1.75rem; }
+	  background-color: #434343;
+	  color: #DFDFDF;
+	  padding: 0.25rem 1.75rem;
+	  font-size: 80%; }
+
 	</style>
 </head>
 <body>
