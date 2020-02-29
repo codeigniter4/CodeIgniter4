@@ -1,8 +1,9 @@
-/* Imports ------------------------------------------------------------------ */
+/* RTD Theme ---------------------------------------------------------------- */
 
 @import 'theme.css';
 
-/* Raleway */
+/* Raleway Font ------------------------------------------------------------- */
+
 @font-face {
 	font-family: 'Raleway';
 	font-style: normal;
@@ -15,6 +16,7 @@
 			 url('../fonts/Raleway/raleway-v14-latin-200.ttf') format('truetype'), /* Safari, Android, iOS */
 			 url('../fonts/Raleway/raleway-v14-latin-200.svg#Raleway') format('svg'); /* Legacy iOS */
 }
+
 @font-face {
 	font-family: 'Raleway';
 	font-style: italic;
@@ -27,6 +29,7 @@
 			 url('../fonts/Raleway/raleway-v14-latin-200italic.ttf') format('truetype'), /* Safari, Android, iOS */
 			 url('../fonts/Raleway/raleway-v14-latin-200italic.svg#Raleway') format('svg'); /* Legacy iOS */
 }
+
 @font-face {
 	font-family: 'Raleway';
 	font-style: normal;
@@ -39,6 +42,7 @@
 			 url('../fonts/Raleway/raleway-v14-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
 			 url('../fonts/Raleway/raleway-v14-latin-regular.svg#Raleway') format('svg'); /* Legacy iOS */
 }
+
 @font-face {
 	font-family: 'Raleway';
 	font-style: italic;
@@ -51,6 +55,7 @@
 			 url('../fonts/Raleway/raleway-v14-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
 			 url('../fonts/Raleway/raleway-v14-latin-italic.svg#Raleway') format('svg'); /* Legacy iOS */
 }
+
 @font-face {
 	font-family: 'Raleway';
 	font-style: normal;
@@ -63,6 +68,7 @@
 			 url('../fonts/Raleway/raleway-v14-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
 			 url('../fonts/Raleway/raleway-v14-latin-700.svg#Raleway') format('svg'); /* Legacy iOS */
 }
+
 @font-face {
 	font-family: 'Raleway';
 	font-style: italic;
@@ -78,16 +84,16 @@
 
 /* General ------------------------------------------------------------------ */
 
+body, p, legend {
+	font-family: "Raleway","Helvetica", "Arial", sans-serif;
+}
+
 .wy-nav-content {
 	background-attachment: fixed;
 	background-image: url('../img/ci-background.png');
 	background-position: bottom right;
 	background-repeat: no-repeat;
 	background-size: contain;
-}
-
-body, p, legend {
-	font-family: "Raleway","Helvetica", "Arial", sans-serif;
 }
 
 /* Titles ------------------------------------------------------------------- */
