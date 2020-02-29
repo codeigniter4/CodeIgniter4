@@ -417,7 +417,7 @@ if (! function_exists('force_https'))
 
 		if (strpos($baseURL, 'http://') === 0)
 		{
-			$baseURL = (string) substr(rtrim($baseURL, '/'), strlen('http://'));
+			$baseURL = (string) substr($baseURL, strlen('http://'));
 		}
 
 		$uri = URI::createURIString(
