@@ -257,7 +257,7 @@ A ``blog_template`` that might work for the above::
 	{blog_entry}
 		<div>
 			<h2>{title}</h2>
-			<p>{body}{/p}
+			<p>{body}</p>
 		</div>
 	{/blog_entry}
 
@@ -276,7 +276,7 @@ comments in a ``{#  #}`` symbols.
 	{blog_entry}
 		<div>
 			<h2>{title}</h2>
-			<p>{body}{/p}
+			<p>{body}</p>
 		</div>
 	{/blog_entry}
 
