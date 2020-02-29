@@ -64,6 +64,11 @@ writable/debugbar/*
 
 php_errors.log
 
+admin/sass/*.css
+admin/sass/common/*.css
+admin/sass/debug-toolbar/*.css
+admin/sass/welcome-page/*.css
+
 #-------------------------
 # User Guide Temp Files
 #-------------------------
