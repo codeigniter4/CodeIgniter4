@@ -10,13 +10,11 @@
 	<!-- STYLES -->
 
 	<style {csp-style-nonce}>
-	/* CodeIgniter 4 - Welcome page
-	 ============================================================================ */
 	* {
 	  transition: background-color 300ms ease, color 300ms ease; }
 
 	*:focus {
-	  background-color: #F3E6DA;
+	  background-color: #F9F3F3;
 	  outline: none; }
 
 	html, body {
@@ -40,33 +38,33 @@
 	  padding: .4rem 2rem; }
 
 	header ul {
+	  overflow: hidden;
 	  margin: 0;
 	  padding: 0;
 	  list-style-type: none;
-	  overflow: hidden;
 	  text-align: right; }
 
 	header li {
 	  display: inline-block; }
 
 	header li a {
-	  color: #434343;
-	  height: 44px;
 	  border-radius: 5px;
 	  -moz-border-radius: 5px;
 	  -webkit-border-radius: 5px;
+	  color: #434343;
+	  height: 44px;
 	  display: block;
 	  font-weight: 300;
 	  text-decoration: none; }
 
 	header li.menu-item a {
+	  border-radius: 5px;
+	  -moz-border-radius: 5px;
+	  -webkit-border-radius: 5px;
 	  height: 38px;
 	  line-height: 36px;
 	  margin: 5px 0;
 	  padding: .4rem .65rem;
-	  border-radius: 5px;
-	  -moz-border-radius: 5px;
-	  -webkit-border-radius: 5px;
 	  text-align: center; }
 
 	header li.menu-item a:hover,
@@ -80,27 +78,27 @@
 	  padding: .4rem .5rem; }
 
 	header .menu-toggle {
+	  display: none;
 	  float: right;
 	  font-size: 2rem;
-	  font-weight: bold;
-	  display: none; }
+	  font-weight: bold; }
 
 	header .menu-toggle button,
 	header .menu-toggle button:hover,
 	header .menu-toggle button:focus {
 	  border: none;
+	  border-radius: 5px;
+	  -moz-border-radius: 5px;
+	  -webkit-border-radius: 5px;
 	  background-color: #DD4814;
 	  color: #FFFFFF;
 	  height: 36px;
 	  width: 40px;
+	  cursor: pointer;
+	  overflow: visible;
 	  margin: 11px 0;
 	  padding: 0;
-	  font-size: 1.3rem;
-	  border-radius: 5px;
-	  -moz-border-radius: 5px;
-	  -webkit-border-radius: 5px;
-	  cursor: pointer;
-	  overflow: visible; }
+	  font-size: 1.3rem; }
 
 	header .heroe {
 	  max-width: 1100px;
@@ -117,6 +115,7 @@
 
 	@media (max-width: 559px) {
 	  header ul {
+	    margin-bottom: 1rem;
 	    padding: 0; }
 
 	  header .menu-toggle {
@@ -124,8 +123,8 @@
 
 	  header .menu-item {
 	    background-color: none;
-	    width: calc(100% - 30px);
-	    margin: 0 15px; }
+	    width: calc(100% - 0.15rem);
+	    margin: 0.15rem 0; }
 
 	  header .menu-toggle {
 	    display: block; }
@@ -134,14 +133,12 @@
 	    display: none; }
 
 	  header li.menu-item a {
-	    background-color: #F9F3F3;
-	    color: #DD4814;
-	    font-weight: 500; }
+	    background-color: #f3f3f3; }
 
 	  header li.menu-item a:hover,
 	  header li.menu-item a:focus {
-	    background-color: #DD4814;
-	    color: #FFFFFF; } }
+	    background-color: #F9F3F3;
+	    color: #DD4814; } }
 	section {
 	  max-width: 1100px;
 	  margin: 0 auto;
@@ -158,12 +155,12 @@
 	section pre {
 	  border: 1px solid #f3f3f3;
 	  background-color: #FAFAFA;
+	  display: block;
 	  margin: 2rem 0;
 	  padding: 1rem 1.5rem;
 	  white-space: pre-wrap;
 	  word-break: break-all;
-	  font-size: .9rem;
-	  display: block; }
+	  font-size: .9rem; }
 
 	section code {
 	  display: block; }
@@ -198,7 +195,6 @@
 	  color: #DFDFDF;
 	  padding: 0.25rem 1.75rem;
 	  font-size: 80%; }
-
 	</style>
 </head>
 <body>

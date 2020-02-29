@@ -1,5 +1,5 @@
-/* CodeIgniter 4 - Welcome page
- ============================================================================ */
+// CodeIgniter 4 - Welcome page
+// ========================================================================== */
 
 // IMPORTS
 // ========================================================================== */
@@ -13,10 +13,14 @@
 // ========================================================================== */
 
 * {
+  // Transitions
   transition: background-color 300ms ease, color 300ms ease;
 }
 *:focus {
-  background-color: $s-orange;
+  // Colors
+  background-color: $s-red;
+
+  // Other styles
   outline: none;
 }
 html, body {
@@ -59,32 +63,42 @@ header .menu {
   padding: .4rem 2rem;
 }
 header ul {
+  // Display
+  overflow: hidden;
+
   // Spacing
   margin: 0;
   padding: 0;
 
-  // Other styles
+  // Typography
   list-style-type: none;
-  overflow: hidden;
   text-align: right;
 }
 header li {
+  // Display
   display: inline-block;
 }
 header li a {
+  // Borders
+  @include border-radius(5px);
+
   // Colors
   color: $g-gray;
 
   // Dimensions
   height: 44px;
 
-  // Other styles
-  @include border-radius(5px);
+  // Display
   display: block;
+
+  // Typography
   font-weight: 300;
   text-decoration: none;
 }
 header li.menu-item a {
+  // Borders
+  @include border-radius(5px);
+
   // Dimensions
   height: 38px;
 
@@ -93,8 +107,7 @@ header li.menu-item a {
   margin: 5px 0;
   padding: .4rem .65rem;
 
-  // Other styles
-  @include border-radius(5px);
+  // Typography
   text-align: center;
 }
 header li.menu-item a:hover,
@@ -114,21 +127,22 @@ header .logo {
   padding: .4rem .5rem;
 }
 header .menu-toggle {
+  // Display
+  display: none;
+
   // Position
   float: right;
 
   // Typography
   font-size: 2rem;
   font-weight: bold;
-
-  // Other styles
-  display: none;
 }
 header .menu-toggle button,
 header .menu-toggle button:hover,
 header .menu-toggle button:focus {
   // Borders
   border: none;
+  @include border-radius(5px);
 
   // Colors
   background-color: $g-red;
@@ -138,17 +152,16 @@ header .menu-toggle button:focus {
   height: 36px;
   width: 40px;
 
+  // Display
+  cursor: pointer;
+  overflow: visible;
+
   // Spacing
   margin: 11px 0;
   padding: 0;
 
   // Typography
   font-size: 1.3rem;
-
-  // Other styles
-  @include border-radius(5px);
-  cursor: pointer;
-  overflow: visible;
 }
 header .heroe {
   // Dimensions
@@ -175,6 +188,7 @@ header .heroe h2 {
 @media (max-width: 559px) {
   header ul {
     // Spacing
+    margin-bottom: 1rem;
     padding: 0;
   }
   header .menu-toggle {
@@ -186,28 +200,28 @@ header .heroe h2 {
     background-color: none;
 
     // Dimensions
-    width: calc(100% - 30px);
+    width: calc(100% - 0.15rem);
 
     // Spacing
-    margin: 0 15px;
+    margin: 0.15rem 0;
   }
   header .menu-toggle {
+    // Display
     display: block;
   }
   header .hidden {
+    // Display
     display: none;
   }
   header li.menu-item a {
     // Colors
-    background-color: $s-red;
-    color: $g-red;
-    font-weight: 500;
+    background-color: lighten($m-gray,8%);
   }
   header li.menu-item a:hover,
   header li.menu-item a:focus {
     // Colors
-    background-color: $g-red;
-    color: $t-light;
+    background-color: $s-red;
+    color: $g-red;
   }
 }
 
@@ -241,6 +255,9 @@ section pre {
   // Colors
   background-color: $s-gray;
 
+  // Display
+  display: block;
+
   // Spacing
   margin: 2rem 0;
   padding: 1rem 1.5rem;
@@ -249,12 +266,9 @@ section pre {
 
   // Typography
   font-size: .9rem;
-
-  // Other styles
-  display: block;
 }
 section code {
-  // Other styles
+  // Display
   display: block;
 }
 section a {
