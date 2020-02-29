@@ -47,7 +47,7 @@ html, body {
 
 header {
   // Borders
-  border-bottom: 1px solid lighten($m-gray,8%);
+  border-bottom: 1px solid darken($s-gray,2.5%);
 
   // Colors
   background-color: $s-gray;
@@ -57,7 +57,7 @@ header {
 }
 header .menu {
   // Borders
-  border-bottom: 1px solid lighten($m-gray,8%);
+  border-bottom: 1px solid darken($s-gray,2.5%);
 
   // Spacing
   padding: .4rem 2rem;
@@ -215,7 +215,7 @@ header .heroe h2 {
   }
   header li.menu-item a {
     // Colors
-    background-color: lighten($m-gray,8%);
+    background-color: darken($s-gray,2.5%);
   }
   header li.menu-item a:hover,
   header li.menu-item a:focus {
@@ -250,7 +250,7 @@ section h2 {
 }
 section pre {
   // Borders
-  border: 1px solid lighten($m-gray,8%);
+  border: 1px solid darken($s-gray,2.5%);
 
   // Colors
   background-color: $s-gray;
@@ -285,8 +285,8 @@ section svg {
 }
 section:nth-of-type(even) {
   // Borders
-  border-bottom: 1px solid lighten($m-gray,8%);
-  border-top: 1px solid lighten($m-gray,8%);
+  border-bottom: 1px solid darken($s-gray,2.5%);
+  border-top: 1px solid darken($s-gray,2.5%);
 
   // Colors
   background-color: $s-gray;
@@ -301,7 +301,7 @@ section:nth-of-type(even) h2:first-of-type {
 
 footer {
   // Borders
-  border-top: 1px solid lighten($m-gray,8%);
+  border-top: 1px solid darken($s-gray,2.5%);
 
   // Colors
   background-color: $g-red;
