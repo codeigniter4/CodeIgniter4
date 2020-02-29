@@ -2,7 +2,7 @@
 
 @import 'theme.css';
 
-/* raleway-200 - latin */
+/* Raleway */
 @font-face {
   font-family: 'Raleway';
   font-style: normal;
@@ -15,7 +15,6 @@
        url('../fonts/Raleway/raleway-v14-latin-200.ttf') format('truetype'), /* Safari, Android, iOS */
        url('../fonts/Raleway/raleway-v14-latin-200.svg#Raleway') format('svg'); /* Legacy iOS */
 }
-/* raleway-200italic - latin */
 @font-face {
   font-family: 'Raleway';
   font-style: italic;
@@ -28,7 +27,6 @@
        url('../fonts/Raleway/raleway-v14-latin-200italic.ttf') format('truetype'), /* Safari, Android, iOS */
        url('../fonts/Raleway/raleway-v14-latin-200italic.svg#Raleway') format('svg'); /* Legacy iOS */
 }
-/* raleway-regular - latin */
 @font-face {
   font-family: 'Raleway';
   font-style: normal;
@@ -41,7 +39,6 @@
        url('../fonts/Raleway/raleway-v14-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
        url('../fonts/Raleway/raleway-v14-latin-regular.svg#Raleway') format('svg'); /* Legacy iOS */
 }
-/* raleway-italic - latin */
 @font-face {
   font-family: 'Raleway';
   font-style: italic;
@@ -54,7 +51,6 @@
        url('../fonts/Raleway/raleway-v14-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
        url('../fonts/Raleway/raleway-v14-latin-italic.svg#Raleway') format('svg'); /* Legacy iOS */
 }
-/* raleway-700 - latin */
 @font-face {
   font-family: 'Raleway';
   font-style: normal;
@@ -67,7 +63,6 @@
        url('../fonts/Raleway/raleway-v14-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
        url('../fonts/Raleway/raleway-v14-latin-700.svg#Raleway') format('svg'); /* Legacy iOS */
 }
-/* raleway-700italic - latin */
 @font-face {
   font-family: 'Raleway';
   font-style: italic;
@@ -88,7 +83,7 @@
 	background-image: url('../img/ci-background.png');
 	background-position: bottom right;
 	background-repeat: no-repeat;
-	background-size: 40%;
+	background-size: contain;
 }
 
 body, p, legend {
@@ -98,7 +93,7 @@ body, p, legend {
 /* Titles ------------------------------------------------------------------- */
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: "Railway", "Helvetica", "Arial", sans-serif;
+	font-family: "Raleway", "Helvetica", "Arial", sans-serif;
 }
 
 h1 {
