@@ -50,6 +50,23 @@ CSS stylesheets. Therefore, you need to:
 
 
 
+Documentation
+=============
+
+The documentation is generated using Sphinx and the RTD theme.
+
+**Instructions on how to update the theme**
+
+1/ Backup CI's custom files:
+- ``user_guide_src/source/_themes/sphinx_rtd_theme/theme.conf``
+- ``user_guide_src/source/_themes/sphinx_rtd_theme/static/css/citheme.css``
+- ``user_guide_src/source/_themes/sphinx_rtd_theme/static/js/citheme.js``
+2/ Download the latest version of the RTD theme: https://github.com/readthedocs/sphinx_rtd_theme
+3/ Place the latest version in the folder ``user_guide_src/source/_themes/sphinx_rtd_theme/``
+3/ Restore CI's custom files. You may want to check if the file ``theme.conf`` has changed in the latest release of the RTD theme.
+
+
+
 Graphic charter
 ===============
 
