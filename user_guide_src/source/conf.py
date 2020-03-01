@@ -29,6 +29,9 @@ extensions = ['sphinx.ext.ifconfig', 'sphinxcontrib.phpdomain']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
+html_js_files = [
+    'js/citheme.js',
+]
 
 # The suffix of source filenames.
 source_suffix = '.rst'
