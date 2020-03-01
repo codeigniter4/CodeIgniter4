@@ -62,7 +62,7 @@ class JSONFormatter implements FormatterInterface
 
 		$result = json_encode($data, $options, 512);
 
-		if (json_last_error() !== JSON_ERROR_NONE)
+		if ( ! $result && json_last_error() !== JSON_ERROR_NONE)
 		{
 			throw FormatException::forInvalidJSON(json_last_error_msg());
 		}
