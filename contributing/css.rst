@@ -61,9 +61,14 @@ The documentation is generated using Sphinx and the RTD theme.
 - ``user_guide_src/source/_themes/sphinx_rtd_theme/theme.conf``
 - ``user_guide_src/source/_themes/sphinx_rtd_theme/static/css/citheme.css``
 - ``user_guide_src/source/_themes/sphinx_rtd_theme/static/js/citheme.js``
+- ``user_guide_src/source/_themes/sphinx_rtd_theme/static/img/ci-background.png``
 2/ Download the latest version of the RTD theme: https://github.com/readthedocs/sphinx_rtd_theme
 3/ Place the latest version in the folder ``user_guide_src/source/_themes/sphinx_rtd_theme/``
-3/ Restore CI's custom files. You may want to check if the file ``theme.conf`` has changed in the latest release of the RTD theme.
+3/ Restore CI's custom files
+
+You may want to check if:
+- The configuration file ``theme.conf`` has not changed in the latest release of the RTD theme
+- The file path to the original CSS (from the RTD theme) is valid in ``citheme.css` (@import)
 
 
 
