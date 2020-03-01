@@ -201,6 +201,10 @@ div#pulldown-menu {
 
 /* Side Menu ---------------------------------------------------------------- */
 
+.wy-nav-side {
+	background: #252525;
+}
+
 .wy-side-nav-search a {
 	color: #ffffff;
 	font-family: "Railway", "Helvetica", "Arial", sans-serif;
@@ -232,6 +236,10 @@ div#pulldown-menu {
 
 .wy-nav-content-wrap a:hover, .wy-nav-content-wrap a:active {
 	color: #97310e;
+}
+
+.wy-menu-vertical li span.toctree-expand {
+	margin-right: 0.65em;
 }
 
 /* Elements ----------------------------------------------------------------- */
