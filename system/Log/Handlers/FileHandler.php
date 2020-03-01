@@ -8,7 +8,7 @@
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014-2019 British Columbia Institute of Technology
- * Copyright (c) 2019-2020 CodeIgniter Foundation
+ * Copyright (c) 2019 CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,18 +39,27 @@
 
 namespace CodeIgniter\Log\Handlers;
 
+use CodeIgniter\Log\Exceptions\LogException;
+
 /**
- * Log error messages to file system
+ * Writes messages to log file on system
  */
 class FileHandler extends BaseHandler implements HandlerInterface
 {
 
 	/**
-	 * Folder to hold logs
+	 * Directory to hold logs
 	 *
 	 * @var string
 	 */
-	protected $path;
+	protected $logsDir;
+
+	/**
+	 * file name (a prefix to the date)
+	 *
+	 * @var string
+	 */
+	protected $fileName;
 
 	/**
 	 * Extension to use for log files
@@ -66,57 +75,52 @@ class FileHandler extends BaseHandler implements HandlerInterface
 	 */
 	protected $filePermissions;
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Constructor
 	 *
 	 * @param array $config
 	 */
-	public function __construct(array $config = [])
+	public function __construct($config = null)
 	{
+		$config->levelsHandled = $config->fileLevelsHandled ?? null;
 		parent::__construct($config);
 
-		$this->path = $config['path'] ?? WRITEPATH . 'logs/';
+		$this->logsDir = $config->logsDir ?? WRITEPATH . 'logs/';
 
-		$this->fileExtension = empty($config['fileExtension']) ? 'log' : $config['fileExtension'];
+		$this->fileName = $config->fileName ?? 'CI_';
+
+		$this->fileExtension = $config->fileExtension ?? 'log';
 		$this->fileExtension = ltrim($this->fileExtension, '.');
 
-		$this->filePermissions = $config['filePermissions'] ?? 0644;
+		$this->filePermissions = $config->filePermissions ?? 0664;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
-	 * Handles logging the message.
-	 * If the handler returns false, then execution of handlers
-	 * will stop. Any handlers that have not run, yet, will not
-	 * be run.
+	 * Handles writing the message.
 	 *
-	 * @param $level
-	 * @param $message
-	 *
+	 * @param  string
+	 * @param  string
 	 * @return boolean
-	 * @throws \Exception
 	 */
-	public function handle($level, $message): bool
+	public function handle($level, $message, array $context = []): bool
 	{
-		$filepath = $this->path . 'log-' . date('Y-m-d') . '.' . $this->fileExtension;
+		if (\is_string($message))
+		{
+			// Parse our placeholders
+			$message = $this->interpolate($message, $context);
+		}
+
+		$file = $this->logsDir . $this->fileName . date('Y-m-d') . '.' . $this->fileExtension;
 
 		$msg = '';
 
-		if (! is_file($filepath))
+		if (! is_file($file))
 		{
 			$newfile = true;
-
-			// Only add protection to php files
-			if ($this->fileExtension === 'php')
-			{
-				$msg .= "<?php defined('SYSTEMPATH') || exit('No direct script access allowed'); ?>\n\n";
-			}
+			$msg    .= "******** CodeIgniter Application Log ********\n\n";
 		}
 
-		if (! $fp = @fopen($filepath, 'ab'))
+		if (! $fp = @fopen($file, 'ab'))
 		{
 			return false;
 		}
@@ -126,12 +130,23 @@ class FileHandler extends BaseHandler implements HandlerInterface
 		{
 			$microtime_full  = microtime(true);
 			$microtime_short = sprintf('%06d', ($microtime_full - floor($microtime_full)) * 1000000);
-			$date            = new \DateTime(date('Y-m-d H:i:s.' . $microtime_short, $microtime_full));
-			$date            = $date->format($this->dateFormat);
+
+			$date = new \DateTime(date('Y-m-d H:i:s.' . $microtime_short, $microtime_full));
+			$date = $date->format($this->dateFormat);
 		}
 		else
 		{
 			$date = date($this->dateFormat);
+		}
+
+		if (is_numeric($level))
+		{
+			$level = $this->getLevelName($level);
+		}
+
+		if (\is_object($message) || \is_array($message))
+		{
+			$message = \print_r($message, true);
 		}
 
 		$msg .= strtoupper($level) . ' - ' . $date . ' --> ' . $message . "\n";
@@ -154,11 +169,88 @@ class FileHandler extends BaseHandler implements HandlerInterface
 
 		if (isset($newfile) && $newfile === true)
 		{
-			chmod($filepath, $this->filePermissions);
+			chmod($file, $this->filePermissions);
 		}
 
 		return is_int($result);
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * $path setter
+	 *
+	 * @param  string $path
+	 * @return CodeIgniter\Log\Handlers\HandlerInterface For method chaining
+	 */
+	public function setPath(string $path): HandlerInterface
+	{
+		$this->logsDir = $path;
+		return $this;
+	}
+
+	/**
+	 * $fileName setter
+	 *
+	 * @param  string $name
+	 * @return CodeIgniter\Log\Handlers\HandlerInterface For method chaining
+	 * @throws \LogException
+	 */
+	public function setFileName(string $name): HandlerInterface
+	{
+		$blackList = [
+			'/',
+			'\\',
+			'?',
+			'%',
+			'*',
+			':',
+			'|',
+			'"',
+			'<',
+			'>',
+			'.',
+			',',
+			' ',
+		];
+
+		//remove leading/trailing whitespace
+		$cleaned = trim($name);
+
+		// replace internal spaces with underscores
+		$cleaned = str_replace(' ', '_', $cleaned);
+
+		//strip tags, low, and high chars
+		$cleaned = filter_var($cleaned, FILTER_SANITIZE_STRING,
+		FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH | FILTER_FLAG_STRIP_BACKTICK);
+
+		// remove blacklist chars
+		$cleaned = str_replace($blackList, '', $cleaned);
+
+		if (empty($cleaned) || $cleaned === false)
+		{
+			throw LogException::forInvalidFileName($name);
+		}
+
+		// accept only alphanumeric characters
+		$this->fileName = $cleaned;
+
+		return $this;
+	}
+
+	/**
+	 * $fileExtension setter
+	 *
+	 * @param  string $ext
+	 * @return CodeIgniter\Log\Handlers\HandlerInterface For method chaining
+	 */
+	public function setFileExtension(string $ext = 'log'): HandlerInterface
+	{
+		//remove whitespace, force lowercase
+		$ext = strtolower(trim($ext));
+
+		// accept only alphanumeric characters
+		$this->fileExtension = preg_replace('/[^\da-z]/i', '', $ext);
+
+		return $this;
+	}
+
 }

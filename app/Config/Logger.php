@@ -1,133 +1,186 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
 
+/**
+ * The logging system supports "logging" messages using multiple communication technologies.
+ * Currently there are two handlers - File and ChromeLogger.
+ */
 class Logger extends BaseConfig
 {
-	/*
-	|--------------------------------------------------------------------------
-	| Error Logging Threshold
-	|--------------------------------------------------------------------------
-	|
-	| You can enable error logging by setting a threshold over zero. The
-	| threshold determines what gets logged. Any values below or equal to the
-	| threshold will be logged. Threshold options are:
-	|
-	|	0 = Disables logging, Error logging TURNED OFF
-	|	1 = Emergency Messages  - System is unusable
-	|	2 = Alert Messages      - Action Must Be Taken Immediately
-	|   3 = Critical Messages   - Application component unavailable, unexpected exception.
-	|   4 = Runtime Errors      - Don't need immediate action, but should be monitored.
-	|   5 = Warnings               - Exceptional occurrences that are not errors.
-	|   6 = Notices            - Normal but significant events.
-	|   7 = Info             - Interesting events, like user logging in, etc.
-	|   8 = Debug                - Detailed debug information.
-	|   9 = All Messages
-	|
-	| You can also pass an array with threshold levels to show individual error types
-	|
-	| 	array(1, 2, 3, 8) = Emergency, Alert, Critical, and Debug messages
-	|
-	| For a live site you'll usually enable Critical or higher (3) to be logged otherwise
-	| your log files will fill up very fast.
-	|
-	*/
-	public $threshold = 3;
+	// *******************************************************************************
+	//                           File Logging Settings
+	// *******************************************************************************
 
-	/*
-	|--------------------------------------------------------------------------
-	| Error Logging Directory Path
-	|--------------------------------------------------------------------------
-	| By default, logs are written to WRITEPATH . 'logs/'
-	| Specify a different destination here, if desired.
-	*/
-	public $path = '';
+	/**
+	 * The $fileLevelsHandled property defines the message severity levels that
+	 * should be written to the log file.
+	 *
+	 * Here are the values and the message type
+	 *     0 - off
+	 *     1 - 'emergency'
+	 *     2 - 'alert'
+	 *     3 - 'critical'
+	 *     4 - 'error'
+	 *     5 - 'warning'
+	 *     6 - 'notice'
+	 *     7 - 'info'
+	 *     8 - 'debug'
+	 *
+	 * Setting a value of 0 (zero) turns the file logging off.
+	 * You can enable logging by setting a value in the range 1 to 8.
+	 * Not setting a value (leaving it blank) will cause a LogException with
+	 * the message - 'null' is an invalid log level.
+	 *
+	 * If a single value is supplied all severity levels less than or equal to the value
+	 * will be logged. In other words, setting
+	 *     $levelsHandled = 3;
+	 * would mean that critical, alert, and emergency messages would be logged.
+	 *
+	 * You can also pass an array of levels to create a mix of message types.
+	 * For instance,
+	 *     $levelsHandled = [1, 3, 8];
+	 * would result in emergency, alert, and debug messages being logged.
+	 *
+	 * There is no meaning to the order of the values in the array.
+	 * If you put a zero in an array the effect is same as a single int value of 0 which
+	 * turns file logging off.
+	 *
+	 * If you put a single value in an array then only that level will be logged.
+	 * For instance, using
+	 *     $levelsHandled = [8];
+	 * then only 'debug' messages get logged.
+	 *
+	 * For a live site you'll usually want critical (3) or lower to be logged, otherwise
+	 * your log files will fill up very fast.
+	 *
+	 * @var integer|array
+	 */
+	public $fileLevelsHandled = 8;
 
-	/*
-	|--------------------------------------------------------------------------
-	| Date Format for Logs
-	|--------------------------------------------------------------------------
-	|
-	| Each item that is logged has an associated date. You can use PHP date
-	| codes to set your own date formatting
-	|
-	*/
+	/**
+	 * $logsDir
+	 *
+	 * The absolute path to folder where logs will be written.
+	 * Use a full getServer path with trailing slash.
+	 * 
+	 * Leave $logsDir BLANK and get the default 'WRITEPATH/logs/'
+	 *
+	 * @var string
+	 */
+	public $logsDir;
+
+	/**
+	 * $fileName
+	 *
+	 * Really just the text to prefix log file names
+	 *
+	 * Log file names are composed of three parts
+	 *     1. $fileName (defaults to 'CI_')
+	 *     2. The date (in Y-m-d format)
+	 *     3. $fileExtension (defaults to 'log')
+	 *
+	 * For example, put those together and you get CI_2020-02-23.log
+	 *
+	 * Leave $fileName BLANK and get the default 'CI_'
+	 *
+	 * @var string
+	 */
+	public $fileName;
+
+	/**
+	 * The file extension for log files.
+	 *
+	 * Be absolutely certain you are NOT saving log files to
+	 * a directory that is publicly accessible!
+	 *
+	 * Leave $fileExtension BLANK and get the default 'log'.
+	 *
+	 * @var string
+	 */
+	public $fileExtension;
+
+	/**
+	 * The file system permissions to be applied on newly created log files.
+	 *
+	 * IMPORTANT: This MUST be an integer (no quotes) and you MUST use octal
+	 * notation (i.e. 0700, 0644, etc.)
+	 *
+	 * Leave $filePermissions BLANK and get the default 0664.
+	 *
+	 * @var octal
+	 */
+	public $filePermissions;
+
+	// *******************************************************************************
+	//                            Chrome Logger Settings
+	// *******************************************************************************
+
+	/**
+	 * Chrome Logger is a Google Chrome extension for server side logging and debugging
+	 * in chrome console.
+	 * https://chrome.google.com/webstore/detail/chrome-logger/noaneddfkdjfnfdakjjmocngnfkfehhd
+	 *
+	 * Sending potentially sensitive data from a production environment is a very bad idea,
+	 * Therefore, CodeIgniter's interface with Chrome Logger is only allowed to run when
+	 * $enableChromeLogger === true AND ENVIRONMENT === 'development'
+	 *
+	 * And of course, you need to set a value for the $chromeLoggerlevelsHandled property.
+	 * That property is distributed with its value set to zero which,
+	 * as you know, means it is "turned off".
+	 */
+	public $enableChromeLogger = false;
+
+	/**
+	 * $chromeLoggerlevelsHandled serves the same purpose as the $fileLevelsHandled property
+	 * in that it defines the message severity levels. In this case it is the levels that
+	 * should be sent to a Chrome browser that is using the Chrome Logger extension.
+	 *
+	 * The extension is for debugging server side applications using the chrome javascript console.
+	 *
+	 *  The Chrome Console does not use the PSR-3 Logger message types.
+	 * For your reference, this table shows how the PSR-3 values map to the
+	 * Chrome Console message types. PSR-3 type in parenthesis:
+	 *
+	 *     0 - off
+	 *     1 - 'error' (emergency)
+	 *     2 - 'error' (alert)
+	 *     3 - 'error' (critical)
+	 *     4 - 'error' (error)
+	 *     5 - 'warn'  (warning)
+	 *     6 - 'warn'  (notice)
+	 *     7 - 'info'  (info)
+	 *     8 - 'info'  (debug)
+	 *
+	 * @var integer|array
+	 */
+	public $chromeLoggerLevelsHandled = 0; // off by default.
+
+	// *******************************************************************************
+	//                              Logger Settings
+	// *******************************************************************************
+
+	/**
+	 * Format for dates. Used for log entries.
+	 *
+	 * @var string
+	 */
 	public $dateFormat = 'Y-m-d H:i:s';
 
-	/*
-	|--------------------------------------------------------------------------
-	| Log Handlers
-	|--------------------------------------------------------------------------
-	|
-	| The logging system supports multiple actions to be taken when something
-	| is logged. This is done by allowing for multiple Handlers, special classes
-	| designed to write the log to their chosen destinations, whether that is
-	| a file on the getServer, a cloud-based service, or even taking actions such
-	| as emailing the dev team.
-	|
-	| Each handler is defined by the class name used for that handler, and it
-	| MUST implement the CodeIgniter\Log\Handlers\HandlerInterface interface.
-	|
-	| The value of each key is an array of configuration items that are sent
-	| to the constructor of each handler. The only required configuration item
-	| is the 'handles' element, which must be an array of integer log levels.
-	| This is most easily handled by using the constants defined in the
-	| Psr\Log\LogLevel class.
-	|
-	| Handlers are executed in the order defined in this array, starting with
-	| the handler on top and continuing down.
-	|
-	*/
+	/**
+	 * $handlers
+	 *
+	 * The $handlers property is a list of classes that the Logger can use to "handle"
+	 * log requests. Handlers run sequentially in the order defined in the array starting with first item.
+	 *
+	 * Each `$handlers` item is a key/value pair where the key is the handler class name
+	 * and the value is a fully qualified class name constant.
+	 */
 	public $handlers = [
-
-		//--------------------------------------------------------------------
-		// File Handler
-		//--------------------------------------------------------------------
-
-		'CodeIgniter\Log\Handlers\FileHandler' => [
-
-			/*
-			 * The log levels that this handler will handle.
-			 */
-			'handles'         => [
-				'critical',
-				'alert',
-				'emergency',
-				'debug',
-				'error',
-				'info',
-				'notice',
-				'warning',
-			],
-
-			/*
-			 * The default filename extension for log files.
-			 * An extension of 'php' allows for protecting the log files via basic
-			 * scripting, when they are to be stored under a publicly accessible directory.
-			 *
-			 * Note: Leaving it blank will default to 'log'.
-			 */
-			'fileExtension'   => '',
-
-			/*
-			 * The file system permissions to be applied on newly created log files.
-			 *
-			 * IMPORTANT: This MUST be an integer (no quotes) and you MUST use octal
-			 * integer notation (i.e. 0700, 0644, etc.)
-			 */
-			'filePermissions' => 0644,
-		],
-
-		/**
-		 * The ChromeLoggerHandler requires the use of the Chrome web browser
-		 * and the ChromeLogger extension. Uncomment this block to use it.
-		 */
-		//      'CodeIgniter\Log\Handlers\ChromeLoggerHandler' => [
-		//          /*
-		//           * The log levels that this handler will handle.
-		//           */
-		//          'handles' => ['critical', 'alert', 'emergency', 'debug',
-		//                        'error', 'info', 'notice', 'warning'],
-		//      ]
+		'FileHandler'         => \CodeIgniter\Log\Handlers\FileHandler::class,
+		'ChromeLoggerHandler' => \CodeIgniter\Log\Handlers\ChromeLoggerHandler::class,
 	];
+
 }

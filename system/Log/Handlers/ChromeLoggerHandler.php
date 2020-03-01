@@ -39,7 +39,6 @@
 
 namespace CodeIgniter\Log\Handlers;
 
-use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 
@@ -49,26 +48,23 @@ use Config\Services;
  * Allows for logging items to the Chrome console for debugging.
  * Requires the ChromeLogger extension installed in your browser.
  *
- * @see https://craig.is/writing/chrome-logger
+ * @see https://chrome.google.com/webstore/detail/chrome-logger/noaneddfkdjfnfdakjjmocngnfkfehhd
+ *
+ * This handler is ONLY LOADED when
+ *         ENVIRONMENT === 'development'
+ * AND with the following setting in \Config\Logger
+ *         public $enableChromeLogger = true;
  *
  * @package CodeIgniter\Log\Handlers
  */
 class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 {
-
 	/**
 	 * Version of this library - for ChromeLogger use.
 	 *
 	 * @var float
 	 */
-	const VERSION = 1.0;
-
-	/**
-	 * The number of track frames returned from the backtrace.
-	 *
-	 * @var integer
-	 */
-	protected $backtraceLevel = 0;
+	const VERSION = 2.0;
 
 	/**
 	 * The final data that is sent to the browser.
@@ -86,132 +82,188 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	];
 
 	/**
-	 * The header used to pass the data.
-	 *
-	 * @var string
-	 */
-	protected $header = 'X-ChromeLogger-Data';
-
-	/**
-	 * Maps the log levels to the ChromeLogger types.
+	 * Track processed objects prevents objects from referring to each other
+	 * due to recursion
 	 *
 	 * @var array
 	 */
-	protected $levels = [
-		'emergency' => 'error',
-		'alert'     => 'error',
-		'critical'  => 'error',
-		'error'     => 'error',
-		'warning'   => 'warn',
-		'notice'    => 'warn',
-		'info'      => 'info',
-		'debug'     => 'info',
-	];
-
-	//--------------------------------------------------------------------
+	protected $processedObjs = [];
 
 	/**
 	 * Constructor
 	 *
 	 * @param array $config
 	 */
-	public function __construct(array $config = [])
+	public function __construct($config = [])
 	{
+		$config->levelsHandled = $config->chromeLoggerLevelsHandled ?? null;
+
 		parent::__construct($config);
 
 		$request = Services::request(null, true);
 
 		$this->json['request_uri'] = (string) $request->uri;
-
-		Events::on('post_controller', [$this, 'sendLogs'], EVENT_PRIORITY_HIGH);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
-	 * Handles logging the message.
-	 * If the handler returns false, then execution of handlers
-	 * will stop. Any handlers that have not run, yet, will not
-	 * be run.
+	 * Handles logging a message to Chrome Logger.
 	 *
 	 * @param $level
 	 * @param $message
 	 *
 	 * @return boolean
 	 */
-	public function handle($level, $message): bool
+	public function handle($level, $message, array $context = []): bool
 	{
-		// Format our message
-		$message = $this->format($message);
+		$type = $this->mapToChromeLevels($level);
+
+		// Format the message
+		$logs[] = $this->format($message, $context);
 
 		// Generate Backtrace info
-		$backtrace = debug_backtrace(false, $this->backtraceLevel);
-		$backtrace = end($backtrace);
-
-		$backtraceMessage = 'unknown';
-		if (isset($backtrace['file']) && isset($backtrace['line']))
-		{
-			$backtraceMessage = $backtrace['file'] . ':' . $backtrace['line'];
-		}
-
-		// Default to 'log' type.
-		$type = '';
-
-		if (array_key_exists($level, $this->levels))
-		{
-			$type = $this->levels[$level];
-		}
+		// The call to $logger-> should be the fourth stackframe
+		$backtraceMessage = implode(':', $this->backTrace());
 
 		$this->json['rows'][] = [
-			$message,
+			$logs,
 			$backtraceMessage,
 			$type,
 		];
 
+		$this->sendLogs();
+
 		return true;
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * Maps from CI (PSR-3) levels to Chrome Console levels
+	 *
+	 * @param  string $level
+	 * @return string
+	 */
+	protected function mapToChromeLevels($level): string
+	{
+		$levels = [
+			'emergency' => 'error',
+			'alert'     => 'error',
+			'critical'  => 'error',
+			'error'     => 'error',
+			'warning'   => 'warn',
+			'notice'    => 'warn',
+			'info'      => 'info',
+			'debug'     => 'info',
+		];
+
+		return \array_key_exists($level, $levels) ? $levels[$level] : '';
+	}
 
 	/**
 	 * Converts the object to display nicely in the Chrome Logger UI.
 	 *
-	 * @param $object
-	 *
+	 * @param  $object
 	 * @return array
 	 */
-	protected function format($object)
+	public function format($object, $context = [])
 	{
-		if (! is_object($object))
+		if (\is_string($object))
 		{
-			return $object;
+			return $this->interpolate($object, $context);
 		}
 
-		// @todo Modify formatting of objects once we can view them in browser.
-		$objectArray = (array) $object;
+		if (\is_array($object))
+		{
+			$items = [];
+			foreach ($object as $key => $value)
+			{
+				if (\is_object($value))
+				{
+					$items[$key] = $this->format($value);
+					continue;
+				}
 
-		$objectArray['___class_name'] = get_class($object);
+				$type        = gettype($value);
+				$items[$key] = "$type => $value";
+			}
 
-		return $objectArray;
+			return $items;
+		}
+
+		if (! \is_object($object))
+		{
+			return \print_r($object, true);
+		}
+
+		// Track objects processed so we don't do it twice
+		$this->processedObjs[] = $object;
+
+		$objectAsArray = [];
+
+		// first add the class name
+		$objectAsArray['___class_name'] = \get_class($object);
+
+		$reflection = new \ReflectionClass($object);
+
+		// loop through the properties and add those
+		foreach ($reflection->getProperties() as $property)
+		{
+			$type = $this->getPropertyKey($property);
+
+			if (\strpos($type, 'public') === false)
+			{
+				$property->setAccessible(true);
+			}
+
+			$value = $property->getValue($object);
+
+			// same instance as parent object
+			if ($value === $object && \in_array($value, $this->processedObjs, true))
+			{
+				$value = 'recursion - parent object [' . \get_class($value) . ']';
+			}
+
+			$objectAsArray[$type] = $this->format($value);
+		}
+		return $objectAsArray;
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * Turn reflection property into a property name
+	 *
+	 * @param  ReflectionProperty
+	 * @return string
+	 */
+	protected function getPropertyKey($property)
+	{
+		$static = $property->isStatic() ? ' static' : '';
+
+		if ($property->isPublic())
+		{
+			return 'public' . $static . ' ' . $property->getName();
+		}
+		elseif ($property->isProtected())
+		{
+			return 'protected' . $static . ' ' . $property->getName();
+		}
+
+		//$property->isPrivate())
+			return 'private' . $static . ' ' . $property->getName();
+	}
 
 	/**
-	 * Attaches the header and the content to the passed in request object.
+	 * Attaches the header and its value to a response object.
 	 *
 	 * @param ResponseInterface $response
 	 */
-	public function sendLogs(ResponseInterface &$response = null)
+	protected function sendLogs(ResponseInterface &$response = null)
 	{
 		if (is_null($response))
 		{
 			$response = Services::response(null, true);
 		}
 
-		$data = base64_encode(utf8_encode(json_encode($this->json)));
+		$data = \base64_encode(\utf8_encode(\json_encode($this->json)));
 
-		$response->setHeader($this->header, $data);
+		$response->setHeader('X-ChromeLogger-Data', $data);
 	}
 
 }

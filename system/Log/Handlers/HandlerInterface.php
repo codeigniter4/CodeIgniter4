@@ -56,9 +56,7 @@ interface HandlerInterface
 	 *
 	 * @return boolean
 	 */
-	public function handle($level, $message): bool;
-
-	//--------------------------------------------------------------------
+	public function handle($level, $message, array $context = []): bool;
 
 	/**
 	 * Checks whether the Handler will handle logging items of this
@@ -69,8 +67,6 @@ interface HandlerInterface
 	 * @return boolean
 	 */
 	public function canHandle(string $level): bool;
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the preferred date format to use when logging.
