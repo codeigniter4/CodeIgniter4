@@ -413,12 +413,16 @@ if (! function_exists('force_https'))
 				->regenerate();
 		}
 
-		$uri = $request->uri;
-		$uri->setScheme('https');
+		$baseURL = config(App::class)->baseURL;
+
+		if (strpos($baseURL, 'http://') === 0)
+		{
+			$baseURL = (string) substr($baseURL, strlen('http://'));
+		}
 
 		$uri = URI::createURIString(
-			$uri->getScheme(), $uri->getAuthority(true), $uri->getPath(), // Absolute URIs should use a "/" for an empty path
-			$uri->getQuery(), $uri->getFragment()
+			'https', $baseURL, $request->uri->getPath(), // Absolute URIs should use a "/" for an empty path
+			$request->uri->getQuery(), $request->uri->getFragment()
 		);
 
 		// Set an HSTS header
