@@ -338,7 +338,7 @@ update command, with the added benefit of validation, events, etc::
 
     $userModel
         ->whereIn('id', [1,2,3])
-        ->set(['active' => 1]
+        ->set(['active' => 1])
         ->update();
 
 **save()**
