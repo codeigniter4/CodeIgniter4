@@ -181,6 +181,24 @@
 	section:nth-of-type(even) h2:first-of-type {
 		padding-top: 0; }
 
+	section .mini-buttons {
+		margin: 1.75rem 0 1.5rem 0;
+		font-size: 85%; }
+
+	section .button {
+		border: 1px solid #EF9090;
+		border-radius: 5px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		color: #DD4814;
+		margin-right: 0.5rem;
+		padding: 0.3rem 0.6rem;
+		text-decoration: none; }
+
+	section .button:hover,
+	section .button:active {
+		background-color: #F9F3F3; }
+
 	footer {
 		border-top: 1px solid #f4f4f4;
 		background-color: #DD4814;
@@ -279,8 +297,10 @@
 
 		<p>The User Guide contains an introduction, tutorial, a number of "how to"
 			guides, and then reference documentation for the components that make up
-			the framework. Check the <a href="https://codeigniter4.github.io/userguide"
-			target="_blank">User Guide</a> !</p>
+			the framework.</p>
+		<p class="mini-buttons">
+			<a href="https://codeigniter4.github.io/userguide" class="button" target="_blank">Read the User Guide</a>
+		</p>
 
 		<h2>
 			<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M431,320.6c-1-3.6,1.2-8.6,3.3-12.2a33.68,33.68,0,0,1,2.1-3.1A162,162,0,0,0,464,215c.3-92.2-77.5-167-173.7-167C206.4,48,136.4,105.1,120,180.9a160.7,160.7,0,0,0-3.7,34.2c0,92.3,74.8,169.1,171,169.1,15.3,0,35.9-4.6,47.2-7.7s22.5-7.2,25.4-8.3a26.44,26.44,0,0,1,9.3-1.7,26,26,0,0,1,10.1,2L436,388.6a13.52,13.52,0,0,0,3.9,1,8,8,0,0,0,8-8,12.85,12.85,0,0,0-.5-2.7Z' style='fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px'/><path d='M66.46,232a146.23,146.23,0,0,0,6.39,152.67c2.31,3.49,3.61,6.19,3.21,8s-11.93,61.87-11.93,61.87a8,8,0,0,0,2.71,7.68A8.17,8.17,0,0,0,72,464a7.26,7.26,0,0,0,2.91-.6l56.21-22a15.7,15.7,0,0,1,12,.2c18.94,7.38,39.88,12,60.83,12A159.21,159.21,0,0,0,284,432.11' style='fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px'/></svg>
@@ -288,10 +308,11 @@
 		</h2>
 
 		<p>CodeIgniter is a community-developed open source project, with several
-			 venues for the community members to gather and exchange ideas. View all
-			 the threads on <a href="https://forum.codeigniter.com/"
-			 target="_blank">CodeIgniter's forum</a>, or <a href="https://codeigniterchat.slack.com/"
-			 target="_blank">chat on Slack</a> !</p>
+			 venues for the community members to gather and exchange ideas.</p>
+		<p class="mini-buttons">
+			<a href="https://forum.codeigniter.com/" class="button" target="_blank">Visit the forum</a>
+			<a href="https://codeigniterchat.slack.com/" class="button" target="_blank">Chat on Slack</a>
+		</p>
 
 		<h2>
 			 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><line x1='176' y1='48' x2='336' y2='48' style='fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px'/><line x1='118' y1='304' x2='394' y2='304' style='fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px'/><path d='M208,48v93.48a64.09,64.09,0,0,1-9.88,34.18L73.21,373.49C48.4,412.78,76.63,464,123.08,464H388.92c46.45,0,74.68-51.22,49.87-90.51L313.87,175.66A64.09,64.09,0,0,1,304,141.48V48' style='fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px'/></svg>
@@ -299,9 +320,10 @@
 		</h2>
 
 		<p>CodeIgniter is a community driven project and accepts contributions
-			 of code and documentation from the community. Why not
-			 <a href="https://codeigniter.com/en/contribute" target="_blank">
-			 join us</a> ?</p>
+			 of code and documentation from the community.</p>
+		<p class="mini-buttons">
+			<a href="https://github.com/codeigniter4/CodeIgniter4/blob/master/CONTRIBUTING.md" class="button" target="_blank">Join us</a>
+		</p>
 
 	</div>
 

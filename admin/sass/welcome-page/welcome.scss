@@ -295,6 +295,33 @@ section:nth-of-type(even) h2:first-of-type {
   // Spacing
   padding-top: 0;
 }
+section .mini-buttons {
+  // Spacing
+  margin: 1.75rem 0 1.5rem 0;
+
+  // Typography
+  font-size: 85%;
+}
+section .button {
+  // Borders
+  border: 1px solid $m-red;
+  @include border-radius(5px);
+
+  // Colors
+  color: $g-red;
+
+  // Spacing
+  margin-right: 0.5rem;
+  padding: 0.3rem 0.6rem;
+
+  // Typography
+  text-decoration: none;
+}
+section .button:hover,
+section .button:active {
+  // Colors
+  background-color: $s-red;
+}
 
 // FOOTER
 // ========================================================================== */
