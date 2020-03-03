@@ -171,7 +171,6 @@ div#pulldown-menu {
 
 .wy-plain-list-disc li ul, .rst-content .section ul li ul, .rst-content .toctree-wrapper ul li ul, article ul li ul {
 		margin-bottom: 0.5rem;
-		margin-top: -0.5rem;
 }
 
 .rst-content dl:not(.docutils) dt:first-child {
