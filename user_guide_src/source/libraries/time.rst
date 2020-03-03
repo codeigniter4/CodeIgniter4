@@ -58,7 +58,7 @@ today()
 -------
 
 Returns a new instance with the date set to the current date, and the time set to midnight. It accepts strings
-for the timezone and locale in the second and third parameters::
+for the timezone and locale in the first and second parameters::
 
     $myTime = Time::today('America/Chicago', 'en_US');
 
@@ -66,7 +66,7 @@ yesterday()
 -----------
 
 Returns a new instance with the date set to the yesterday's date and the time set to midnight. It accepts strings
-for the timezone and locale in the second and third parameters::
+for the timezone and locale in the first and second parameters::
 
     $myTime = Time::yesterday('America/Chicago', 'en_US');
 
@@ -74,7 +74,7 @@ tomorrow()
 -----------
 
 Returns a new instance with the date set to tomorrow's date and the time set to midnight. It accepts strings
-for the timezone and locale in the second and third parameters::
+for the timezone and locale in the first and second parameters::
 
     $myTime = Time::tomorrow('America/Chicago', 'en_US');
 
