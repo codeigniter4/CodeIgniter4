@@ -1,0 +1,34 @@
+#!/bin/bash
+
+## Deploy codeigniter4/framework
+
+# Setup variables
+SOURCE=$1
+TARGET=$2
+RELEASE=$3
+MESSAGE="$4"
+
+# Prepare the source
+cd $SOURCE
+git checkout master
+
+# Prepare the target
+cd $TARGET
+git checkout master
+
+# Copy common files
+releasable='app public system writable contributing env license.txt spark .gitignore'
+for fff in $releasable ; do
+    if [ -d "$fff" ] ; then
+        rm -rf $fff
+    fi
+    cp -Rf ${TARGET}/$fff ./
+done
+
+# Copy framework-specific files
+cp -Rf ${SOURCE}/admin/framework/* ./
+
+# Commit the changes
+git add .
+git commit -S -m "Release ${RELEASE}"
+git push

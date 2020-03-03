@@ -1,0 +1,42 @@
+#!/bin/bash
+
+## Build app starter distributable
+
+# Setup variables
+. admin/release-config
+TARGET=dist/appstarter
+cd $TARGET
+git checkout $branch
+
+#---------------------------------------------------
+echo -e "${BOLD}Build the framework distributable${NORMAL}"
+
+echo -e "${BOLD}Copy the main files/folders...${NORMAL}"
+releasable='app public writable README.md contributing.md env license.txt spark .gitignore'
+for fff in $releasable ; do
+    if [ -d "$fff" ] ; then
+        rm -rf $fff
+    fi
+    cp -rf ${CI_DIR}/$fff .
+done
+
+rm -rf tests
+mkdir tests
+cp -rf ${CI_DIR}/tests/_support tests/
+
+echo -e "${BOLD}Override as needed...${NORMAL}"
+cp -rf ${CI_DIR}/admin/starter/* .
+
+#---------------------------------------------------
+# And finally, get ready for merging
+echo -e "${BOLD}Assemble the pieces...${NORMAL}"
+git add .
+git commit -S -m "Release ${RELEASE}"
+git checkout master
+git merge $branch
+
+cd $CI_DIR
+
+#---------------------------------------------------
+# Done for now
+echo -e "${BOLD}Distributable app starter ready..${NORMAL}"
