@@ -242,11 +242,17 @@ section h1 {
 }
 section h2 {
   // Spacing
-  line-height: 2.5rem;
-  padding-top: 1.5rem;
+  margin: 2.5rem 0 3rem 0;
 
   // Typography
-  font-size: 120%;
+  font-size: 150%;
+}
+section h3 {
+  // Spacing
+  margin: 3rem 0 1.5rem 0;
+
+  // Typography
+  font-size: 125%;
 }
 section pre {
   // Borders
@@ -291,13 +297,9 @@ section:nth-of-type(even) {
   // Colors
   background-color: $s-gray;
 }
-section:nth-of-type(even) h2:first-of-type {
-  // Spacing
-  padding-top: 0;
-}
 section .mini-buttons {
   // Spacing
-  margin: 1.75rem 0 1.5rem 0;
+  margin: 2rem 0 3rem 0;
 
   // Typography
   font-size: 85%;
