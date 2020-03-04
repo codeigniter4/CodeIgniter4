@@ -6,7 +6,9 @@
 SOURCE=$1
 TARGET=$2
 RELEASE=$3
-MESSAGE="$4"
+
+echo "Preparing for version $3"
+echo "Merging files from $1 to $2"
 
 # Prepare the source
 cd $SOURCE
@@ -22,12 +24,16 @@ for fff in $releasable ; do
     if [ -d "$fff" ] ; then
         rm -rf $fff
     fi
-    cp -Rf ${TARGET}/$fff ./
+    cp -Rf ${SOURCE}/$fff ./
 done
 
 # Copy framework-specific files
 cp -Rf ${SOURCE}/admin/framework/* ./
 
+# Self identify
+git config --global user.email "releasebot@codeigniter.com"
+git config --global user.name "CodeIgniter Release Bot"
+  
 # Commit the changes
 git add .
 git commit -S -m "Release ${RELEASE}"

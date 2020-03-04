@@ -9,18 +9,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Release message
-        id: message
-        uses: actions/github-script@0.8.0
-        with:
-          result-encoding: string
-          script: |
-            return github.repos.getReleaseByTag({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              tag: ${GITHUB_REF##*/}
-            }).body
-
       - name: Checkout source
         uses: actions/checkout@v2
         with:
@@ -29,7 +17,7 @@ jobs:
       - name: Checkout target
         uses: actions/checkout@v2
         with:
-          repository: codeigniter4/framework
+          repository: mgatner/framework
           token: ${{ secrets.ACCESS_TOKEN }}
           path: framework
 
@@ -37,23 +25,29 @@ jobs:
         run: chmod +x ./source/.github/scripts/deploy-framework
 
       - name: Deploy
-        run: ./source/.github/scripts/deploy-framework ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/framework ${GITHUB_REF##*/}  "${{ steps.message.outputs.result }}"
+        run: ./source/.github/scripts/deploy-framework ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/framework ${GITHUB_REF##*/}
+
+      - name: Release
+        uses: actions/github-script@0.8.0
+        with:
+          github-token: ${{secrets.ACCESS_TOKEN}}
+          script: |
+            const release = await github.repos.getLatestRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            })
+            github.repos.createRelease({
+              owner: context.repo.owner,
+              repo: 'framework',
+              tag_name: release.data.tag_name,
+              name: release.data.name,
+              body: release.data.body
+            })
 
   appstarter:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Release message
-        id: message
-        uses: actions/github-script@0.8.0
-        with:
-          result-encoding: string
-          script: |
-            console.log(github.repos.getLatestRelease({
-              owner: context.repo.owner,
-              repo: context.repo.repo
-            })
-
       - name: Checkout source
         uses: actions/checkout@v2
         with:
@@ -62,7 +56,7 @@ jobs:
       - name: Checkout target
         uses: actions/checkout@v2
         with:
-          repository: codeigniter4/appstarter
+          repository: mgatner/appstarter
           token: ${{ secrets.ACCESS_TOKEN }}
           path: appstarter
 
@@ -71,3 +65,20 @@ jobs:
 
       - name: Merge
         run: ./source/.github/scripts/deploy-appstarter ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/appstarter ${GITHUB_REF##*/}
+
+      - name: Release
+        uses: actions/github-script@0.8.0
+        with:
+          github-token: ${{secrets.ACCESS_TOKEN}}
+          script: |
+            const release = await github.repos.getLatestRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            })
+            github.repos.createRelease({
+              owner: context.repo.owner,
+              repo: 'framework',
+              tag_name: release.data.tag_name,
+              name: release.data.name,
+              body: release.data.body
+            })
