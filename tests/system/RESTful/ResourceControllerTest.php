@@ -4,6 +4,7 @@ namespace CodeIgniter\RESTful;
 use CodeIgniter\Config\Services;
 use Config\App;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
+
 /**
  * Exercise our ResourceController class.
  * We know the resource routing works, from RouterTest,
@@ -254,14 +255,14 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testJSONFormatOutput()
 	{
 		$resource = new \CodeIgniter\Test\Mock\MockResourceController();
-		
+
 		$config = new \Config\App;
 		$uri    = new \CodeIgniter\HTTP\URI;
 		$agent  = new \CodeIgniter\HTTP\UserAgent;
 
-		$request = new \CodeIgniter\HTTP\IncomingRequest($config, $uri, '', $agent);
+		$request  = new \CodeIgniter\HTTP\IncomingRequest($config, $uri, '', $agent);
 		$response = new \CodeIgniter\HTTP\Response($config);
-		$logger = new \Psr\Log\NullLogger;
+		$logger   = new \Psr\Log\NullLogger;
 
 		$resource->initController($request, $response, $logger);
 		$resource->setFormat('json');
@@ -271,10 +272,10 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$the_response = $resource->respond($data);
-		$result = $the_response->getBody();
+		$result       = $the_response->getBody();
 
 		$JSONFormatter = new \CodeIgniter\Format\JSONFormatter;
-		$expected = $JSONFormatter->format($data);
+		$expected      = $JSONFormatter->format($data);
 
 		$this->assertEquals($expected, $result);
 	}
@@ -283,14 +284,14 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testXMLFormatOutput()
 	{
 		$resource = new \CodeIgniter\Test\Mock\MockResourceController();
-		
+
 		$config = new \Config\App;
 		$uri    = new \CodeIgniter\HTTP\URI;
 		$agent  = new \CodeIgniter\HTTP\UserAgent;
 
-		$request = new \CodeIgniter\HTTP\IncomingRequest($config, $uri, '', $agent);
+		$request  = new \CodeIgniter\HTTP\IncomingRequest($config, $uri, '', $agent);
 		$response = new \CodeIgniter\HTTP\Response($config);
-		$logger = new \Psr\Log\NullLogger;
+		$logger   = new \Psr\Log\NullLogger;
 
 		$resource->initController($request, $response, $logger);
 		$resource->setFormat('xml');
@@ -300,10 +301,10 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$the_response = $resource->respond($data);
-		$result = $the_response->getBody();
+		$result       = $the_response->getBody();
 
 		$XMLFormatter = new \CodeIgniter\Format\XMLFormatter;
-		$expected = $XMLFormatter->format($data);
+		$expected     = $XMLFormatter->format($data);
 
 		$this->assertEquals($expected, $result);
 	}

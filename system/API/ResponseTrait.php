@@ -373,11 +373,15 @@ trait ResponseTrait
 		// Determine correct response type through content negotiation
 		$config = new Format();
 
-		if (!in_array($this->format, ['json', 'xml']))
+		if (! in_array($this->format, ['json', 'xml']))
+		{
 			$format = $this->request->negotiate('media', $config->supportedResponseFormats, false);
-		else 
+		}
+		else
+		{
 			$format = "application/$this->format";
-			
+		}
+
 		$this->response->setContentType($format);
 
 		// if we don't have a formatter, make one
