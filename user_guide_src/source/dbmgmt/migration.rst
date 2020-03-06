@@ -213,6 +213,7 @@ You can use (rollback) with the following options:
 
 - (-g) to choose database group, otherwise default database group will be used.
 - (-b) to choose a batch: natural numbers specify the batch, negatives indicate a relative batch
+- (-f) to force a bypass confirmation question, it is only asked in a production environment
 
 **refresh**
 
@@ -225,6 +226,7 @@ You can use (refresh) with the following options:
 - (-g) to choose database group, otherwise default database group will be used.
 - (-n) to choose namespace, otherwise (App) namespace will be used.
 - (-all) to refresh all namespaces
+- (-f) to force a bypass confirmation question, it is only asked in a production environment
 
 **status**
 
