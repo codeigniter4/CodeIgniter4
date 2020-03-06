@@ -4,7 +4,6 @@ namespace CodeIgniter\RESTful;
 use CodeIgniter\Config\Services;
 use Config\App;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
-
 /**
  * Exercise our ResourceController class.
  * We know the resource routing works, from RouterTest,
@@ -249,6 +248,64 @@ class ResourceControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$resource->setFormat('xml');
 		$this->assertEquals('xml', $resource->getFormat());
+	}
+
+	//--------------------------------------------------------------------
+	public function testJSONFormatOutput()
+	{
+		$resource = new \CodeIgniter\Test\Mock\MockResourceController();
+		
+		$config = new \Config\App;
+		$uri    = new \CodeIgniter\HTTP\URI;
+		$agent  = new \CodeIgniter\HTTP\UserAgent;
+
+		$request = new \CodeIgniter\HTTP\IncomingRequest($config, $uri, '', $agent);
+		$response = new \CodeIgniter\HTTP\Response($config);
+		$logger = new \Psr\Log\NullLogger;
+
+		$resource->initController($request, $response, $logger);
+		$resource->setFormat('json');
+
+		$data = [
+			'foo' => 'bar',
+		];
+
+		$the_response = $resource->respond($data);
+		$result = $the_response->getBody();
+
+		$JSONFormatter = new \CodeIgniter\Format\JSONFormatter;
+		$expected = $JSONFormatter->format($data);
+
+		$this->assertEquals($expected, $result);
+	}
+
+	//--------------------------------------------------------------------
+	public function testXMLFormatOutput()
+	{
+		$resource = new \CodeIgniter\Test\Mock\MockResourceController();
+		
+		$config = new \Config\App;
+		$uri    = new \CodeIgniter\HTTP\URI;
+		$agent  = new \CodeIgniter\HTTP\UserAgent;
+
+		$request = new \CodeIgniter\HTTP\IncomingRequest($config, $uri, '', $agent);
+		$response = new \CodeIgniter\HTTP\Response($config);
+		$logger = new \Psr\Log\NullLogger;
+
+		$resource->initController($request, $response, $logger);
+		$resource->setFormat('xml');
+
+		$data = [
+			'foo' => 'bar',
+		];
+
+		$the_response = $resource->respond($data);
+		$result = $the_response->getBody();
+
+		$XMLFormatter = new \CodeIgniter\Format\XMLFormatter;
+		$expected = $XMLFormatter->format($data);
+
+		$this->assertEquals($expected, $result);
 	}
 
 }
