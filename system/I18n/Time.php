@@ -423,7 +423,7 @@ class Time extends DateTime
 	 */
 	public function getYear(): string
 	{
-		return $this->toLocalizedString('Y');
+		return $this->toLocalizedString('y');
 	}
 
 	//--------------------------------------------------------------------

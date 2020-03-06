@@ -240,8 +240,10 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testGetYear()
 	{
 		$time = Time::parse('January 1, 2016');
+		$time2 = Time::parse('December 31, 2019');
 
 		$this->assertEquals(2016, $time->year);
+		$this->assertEquals(2019, $time2->year);
 	}
 
 	public function testGetMonth()
