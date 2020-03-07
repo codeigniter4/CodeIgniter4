@@ -36,17 +36,10 @@ Tools Required
 **************
 
 To see the rendered HTML, ePub, PDF, etc., you will need to install Sphinx
-along with the PHP domain extension for Sphinx.  The underlying requirement
-is to have Python installed.  Lastly, you will install the CI Lexer for
-Pygments, so that code blocks can be properly highlighted.
+along with the PHP domain extension for Sphinx. The underlying requirement
+is to have Python installed.
 
-.. code-block:: bash
-
-	easy_install "sphinx==1.4.5"
-	easy_install sphinxcontrib-phpdomain
-
-Then follow the directions in the README file in the :samp:`cilexer` folder
-inside the documentation repository to install the CI Lexer.
+You can read more about installing all tools in /user_guide_src/README.rst
 
 *****************************************
 Page and Section Headings and Subheadings

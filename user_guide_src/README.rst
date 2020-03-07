@@ -13,19 +13,19 @@ output it to various formats. Pages are written in human-readable
 Prerequisites
 =============
 
-Sphinx requires Python, which is already installed if you are running OS X.
+Sphinx requires Python 2, which may already be installed if you are running OS X or Linux.
 You can confirm in a Terminal window by executing the ``python`` command
 without any parameters. It should load up and tell you which version you have
-installed. If you're not on 2.7+, go ahead and install 2.7.2 from
-http://python.org/download/releases/2.7.2/
+installed. If you're not on 2.7+, go ahead and install 2.7+ from
+`Python.org <https://www.python.org/downloads/>`_
 
 Installation
 ============
 
-1. Install `easy_install <http://peak.telecommunity.com/DevCenter/EasyInstall#installing-easy-install>`_
-2. ``easy_install "sphinx==1.8.5"``
-3. ``easy_install sphinxcontrib-phpdomain``
-4. Install the CI Lexer which allows PHP, HTML, CSS, and JavaScript syntax highlighting in code examples (see *cilexer/README*)
+1. Install `pip <https://packaging.python.org/guides/installing-using-linux-tools/>`_ (package manager).
+2. ``pip install "sphinx==1.8.5"``
+3. ``pip install "sphinxcontrib-phpdomain>=0.7.0"``
+4. Reboot your operating system
 5. ``cd user_guide_src``
 6. ``make html``
 
@@ -59,5 +59,5 @@ simply delete the *build* folder's contents and rebuild.
 Style Guideline
 ***************
 
-Please refer to source/contributing/documentation.rst for general guidelines for
+Please refer to /contributing/documentation.rst for general guidelines for
 using Sphinx to document CodeIgniter.
