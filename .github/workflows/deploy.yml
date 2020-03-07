@@ -22,7 +22,7 @@ jobs:
       - name: Checkout target
         uses: actions/checkout@v2
         with:
-          repository: mgatner/framework
+          repository: codeigniter4/framework
           token: ${{ secrets.ACCESS_TOKEN }}
           path: framework
 
@@ -66,7 +66,7 @@ jobs:
       - name: Checkout target
         uses: actions/checkout@v2
         with:
-          repository: mgatner/appstarter
+          repository: codeigniter4/appstarter
           token: ${{ secrets.ACCESS_TOKEN }}
           path: appstarter
 
