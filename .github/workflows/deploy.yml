@@ -9,6 +9,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Identify
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+
       - name: Checkout source
         uses: actions/checkout@v2
         with:
@@ -48,6 +53,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Identify
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+
       - name: Checkout source
         uses: actions/checkout@v2
         with:
@@ -63,7 +73,7 @@ jobs:
       - name: Chmod
         run: chmod +x ./source/.github/scripts/deploy-appstarter
 
-      - name: Merge
+      - name: Deploy
         run: ./source/.github/scripts/deploy-appstarter ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/appstarter ${GITHUB_REF##*/}
 
       - name: Release
@@ -77,7 +87,7 @@ jobs:
             })
             github.repos.createRelease({
               owner: context.repo.owner,
-              repo: 'framework',
+              repo: 'appstarter',
               tag_name: release.data.tag_name,
               name: release.data.name,
               body: release.data.body
