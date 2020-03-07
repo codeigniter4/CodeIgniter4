@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-define('LATEST_RELEASE', '^4@rc');
+define('LATEST_RELEASE', '^4.0');
 define('GITHUB_URL', 'https://github.com/codeigniter4/codeigniter4');
 
 /*
