@@ -17,24 +17,18 @@ git checkout master
 # Prepare the target
 cd $TARGET
 git checkout master
+rm -rf *
 
 # Copy common files
-releasable='app public system writable contributing env license.txt spark .gitignore'
+releasable='app public writable env license.txt spark .gitignore system'
 for fff in $releasable ; do
-    if [ -d "$fff" ] ; then
-        rm -rf $fff
-    fi
     cp -Rf ${SOURCE}/$fff ./
 done
 
-# Copy framework-specific files
-cp -Rf ${SOURCE}/admin/framework/* ./
-
-# Self identify
-git config --global user.email "releasebot@codeigniter.com"
-git config --global user.name "CodeIgniter Release Bot"
+# Copy repo-specific files
+cp -Rf ${SOURCE}/admin/framework/. ./
   
 # Commit the changes
 git add .
-git commit -S -m "Release ${RELEASE}"
+git commit -m "Release ${RELEASE}"
 git push
