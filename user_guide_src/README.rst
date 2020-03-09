@@ -59,7 +59,7 @@ Linux
 Other
 ^^^^^
 
-pip is already installed if you are using Python 3.4+ downloaded from
+pip is already installed if you are using Python 3.5+ downloaded from
 `Python.org <https://www.python.org/downloads/>`_.
 
 Installation
@@ -71,9 +71,9 @@ window as Python won't find all applications we just installed othervise.
 
 .. code-block:: bash
 
-	pip install -r user_guide_src/source/requirements.txt
+	pip install -r user_guide_src/requirements.txt
 
-	pip3 install -r user_guide_src/source/requirements.txt
+	pip3 install -r user_guide_src/requirements.txt
 
 It's time to wrap things up and generate the documentation.
 
