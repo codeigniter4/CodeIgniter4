@@ -984,7 +984,7 @@ class BaseBuilder
 	 */
 	protected function _whereIn(string $key = null, $values = null, bool $not = false, string $type = 'AND ', bool $escape = null, string $clause = 'QBWhere')
 	{
-		if ($key === null || $values === null || (! is_array($values) && ! ($values instanceof Closure)))
+		if ($key === null || $values === null)
 		{
 			return $this;
 		}
