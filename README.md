@@ -2,11 +2,6 @@
 
 [![Build Status](https://travis-ci.org/codeigniter4/CodeIgniter4.svg?branch=develop)](https://travis-ci.org/codeigniter4/CodeIgniter4)
 [![Coverage Status](https://coveralls.io/repos/github/codeigniter4/CodeIgniter4/badge.svg?branch=develop)](https://coveralls.io/github/codeigniter4/CodeIgniter4?branch=develop)
-[![GitHub All Releases](https://img.shields.io/github/downloads/codeigniter4/CodeIgniter4/total)](https://packagist.org/packages/codeigniter4/framework)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/codeigniter4/CodeIgniter4)](https://packagist.org/packages/codeigniter4/framework)
-[![GitHub stars](https://img.shields.io/github/stars/codeigniter4/CodeIgniter4)](https://packagist.org/packages/codeigniter4/framework)
-[![GitHub license](https://img.shields.io/github/license/codeigniter4/CodeIgniter4)](https://github.com/codeigniter4/CodeIgniter4/blob/develop/license.txt)
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/codeigniter4/CodeIgniter4/pulls)
 <br>
 
 ## What is CodeIgniter?
