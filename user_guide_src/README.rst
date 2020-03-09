@@ -66,7 +66,7 @@ Installation
 ============
 
 Now we need to install Sphinx and it's dependencies. Choose ``pip`` or ``pip3``
-depending on operative system. After this step you need restart your Terminal
+depending on operative system. After this step you need to restart your Terminal
 window as Python won't find all applications we just installed othervise.
 
 .. code-block:: bash
