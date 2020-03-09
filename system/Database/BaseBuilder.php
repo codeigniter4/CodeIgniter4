@@ -987,12 +987,22 @@ class BaseBuilder
 	{
 		if (empty($key) || ! is_string($key))
 		{
-			throw new InvalidArgumentException(sprintf('%s() expects $key to be a non-empty string', debug_backtrace(0, 2)[1]['function']));
+			if (CI_DEBUG)
+			{
+				throw new InvalidArgumentException(sprintf('%s() expects $key to be a non-empty string', debug_backtrace(0, 2)[1]['function']));
+			} 
+			
+			return this;
 		}
 
 		if ($values === null || (! is_array($values) && ! ($values instanceof Closure)))
 		{
-			throw new InvalidArgumentException(sprintf('%s() expects $values to be of type array or closure', debug_backtrace(0, 2)[1]['function']));
+			if (CI_DEBUG)
+			{
+				throw new InvalidArgumentException(sprintf('%s() expects $values to be of type array or closure', debug_backtrace(0, 2)[1]['function']));
+			}
+			
+			return this;
 		}
 
 		is_bool($escape) || $escape = $this->db->protectIdentifiers;
