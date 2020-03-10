@@ -68,7 +68,7 @@ class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$data = [
 			'value1' => time(),
 			'value2' => date('Y-m-d H:i:s'),
-		]; 
+		];
 
 		$template = '{ value1|date(Y-m-d) } { value2|date(Y-m-d) } { value1|date(Y.m.d) } { value1|date(Y m d) } { value1|date(Y:m:d) } { value1|date(Y/m/d) } { value1|date(Y\\\m\\\d) }';
 
@@ -408,7 +408,7 @@ EOF;
 			'mynum' => 1234567.891234567890000,
 		];
 
-		$template = '{ mynum|local_currency(EUR,de_DE) }';
+		$template = '{ mynum|local_currency(EUR,de_DE,2) }';
 
 		$parser->setData($data);
 		$this->assertEquals('1.234.567,89 €', $parser->renderString($template));
