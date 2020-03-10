@@ -127,7 +127,7 @@ class OpenSSLHandler extends BaseHandler
 	 * @param  string $data   Encrypted data
 	 * @param  array  $params Over-ridden parameters, specifically the key
 	 * @return string
-	 * @throws \CodeIgniter\Encryption\EncryptionException
+	 * @throws \CodeIgniter\Encryption\Exceptions\EncryptionException
 	 */
 	public function decrypt($data, $params = null)
 	{
