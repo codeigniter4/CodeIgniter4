@@ -68,7 +68,7 @@ class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$data = [
 			'value1' => time(),
 			'value2' => date('Y-m-d H:i:s'),
-		];
+		]; 
 
 		$template = '{ value1|date(Y-m-d) } { value2|date(Y-m-d) } { value1|date(Y.m.d) } { value1|date(Y m d) } { value1|date(Y:m:d) } { value1|date(Y/m/d) } { value1|date(Y\\\m\\\d) }';
 
