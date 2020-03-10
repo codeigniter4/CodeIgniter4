@@ -145,7 +145,7 @@ class OpenSSLHandler extends BaseHandler
 		}
 		if (empty($this->key))
 		{
-			throw EncryptionException::forStarterKeyNeeded();
+			throw EncryptionException::forNeedsStarterKey();
 		}
 
 		// derive a secret key
