@@ -221,7 +221,7 @@ Class Reference
 		:param		$params: Configuration parameters (key)
 		:returns:	Encrypted data or FALSE on failure
 		:rtype:	string
-		:throws:	CodeIgniter\\Encryption\\EncryptionException
+		:throws:	CodeIgniter\\Encryption\\Exceptions\\EncryptionException
 
 		Encrypts the input data and returns its ciphertext.
 
