@@ -125,14 +125,14 @@ phpunit and its dependencies by adding the "--no-dev" argument to the "composer 
 Set Up
 -------------------------------------------------------
 
-Copy the app, public, tests and writable folders from ``vendor/codeigniter4/framework`` 
+Copy the ``app``, ``public``, ``tests`` and ``writable`` folders from ``vendor/codeigniter4/framework``
 to your project root
 
 Copy the ``env``, ``phpunit.xml.dist`` and ``spark`` files, from
 ``vendor/codeigniter4/framework`` to your project root
 
-You will have to adjust paths to refer to vendor/codeigniter/framework``, 
-- the $systemDirectory variable in ``app/Config/Paths.php``
+You will have to adjust the system path to refer to the vendor one, e.g. ``ROOTPATH . '/vendor/codeigniter4/framework/system'``,
+- the ``$systemDirectory`` variable in ``app/Config/Paths.php``
 
 Upgrading
 -------------------------------------------------------
