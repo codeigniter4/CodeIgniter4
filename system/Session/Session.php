@@ -487,13 +487,13 @@ class Session implements SessionInterface
 	 * Get user data that has been set in the session.
 	 *
 	 * If the property exists as "normal", returns it.
-	 * Otherwise, returns an array of any temp or flash data values with the
+	 * Otherwise, returns an null of any temp or flash data values with the
 	 * property key.
 	 *
 	 * Replaces the legacy method $session->userdata();
 	 *
 	 * @param  string $key Identifier of the session property to retrieve
-	 * @return array|null	The property value(s)
+	 * @return string|array|null	The property value(s)
 	 */
 	public function get(string $key = null)
 	{
@@ -503,7 +503,7 @@ class Session implements SessionInterface
 		}
 		elseif (empty($_SESSION))
 		{
-			return [];
+			return null;
 		}
 
 		if (! empty($key))
@@ -524,7 +524,11 @@ class Session implements SessionInterface
 				$userdata[$key] = $_SESSION[$key];
 			}
 		}
-
+		
+		if (empty($userdata)) 
+		{
+			return null;
+		}
 		return $userdata;
 	}
 
