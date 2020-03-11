@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use BadMethodCallException;
 use CodeIgniter\Config\Config;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity;
@@ -1801,4 +1802,27 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertIsArray($model->QBNoEscape);
 	}
+
+	public function testUndefinedModelMethod()
+	{
+		$model = new UserModel($this->db);
+		$this->expectException(BadMethodCallException::class);
+		$this->expectExceptionMessage('Call to undefined method Tests\Support\Models\UserModel::undefinedMethodCall');
+		$model->undefinedMethodCall();
+	}
+
+	public function testUndefinedMethodInBuilder()
+	{
+		$model = new JobModel($this->db);
+
+		$model->find(1);
+
+		$this->expectException(BadMethodCallException::class);
+		$this->expectExceptionMessage('Call to undefined method Tests\Support\Models\JobModel::getBindings');
+
+		$binds = $model->builder()
+			->getBindings();
+
+	}
+
 }

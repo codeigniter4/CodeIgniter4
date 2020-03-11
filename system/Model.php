@@ -1707,6 +1707,10 @@ class Model
 		// and break intermingling of model and builder methods.
 		if ($name !== 'builder' && empty($result))
 		{
+			if(!method_exists($this->builder(), $name)) {
+				$className = get_class($this);
+				throw new \BadMethodCallException("Call to undefined method $className::$name");
+			}
 			return $result;
 		}
 		if ($name !== 'builder' && ! $result instanceof BaseBuilder)
