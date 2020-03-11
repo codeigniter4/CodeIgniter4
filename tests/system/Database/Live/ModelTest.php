@@ -4,7 +4,6 @@ use BadMethodCallException;
 use CodeIgniter\Config\Config;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity;
-use CodeIgniter\Exceptions\EntityException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -504,8 +503,8 @@ class ModelTest extends CIDatabaseTestCase
 	}    //--------------------------------------------------------------------
 
 	/**
-	 * @dataProvider             emptyPkValues
-	 * @return                   void
+	 * @dataProvider emptyPkValues
+	 * @return       void
 	 */
 	public function testThrowExceptionWhenSoftDeleteParamIsEmptyValue($emptyValue)
 	{
@@ -520,8 +519,8 @@ class ModelTest extends CIDatabaseTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @dataProvider             emptyPkValues
-	 * @return                   void
+	 * @dataProvider emptyPkValues
+	 * @return       void
 	 */
 	public function testDontDeleteRowsWhenSoftDeleteParamIsEmpty($emptyValue)
 	{
@@ -1822,7 +1821,6 @@ class ModelTest extends CIDatabaseTestCase
 
 		$binds = $model->builder()
 			->getBindings();
-
 	}
 
 }

@@ -493,14 +493,13 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
-
 	 * Captures the builder's set() method so that we can validate the
 	 * data here. This allows it to be used with any of the other
 	 * builder methods and still get validated data, like replace.
 	 *
-	 * @param mixed               $key    Field name, or an array of field/value pairs
-	 * @param string              $value  Field value, if $key is a single field
-	 * @param boolean             $escape Whether to escape values and identifiers
+	 * @param mixed   $key    Field name, or an array of field/value pairs
+	 * @param string  $value  Field value, if $key is a single field
+	 * @param boolean $escape Whether to escape values and identifiers
 	 *
 	 * @return $this
 	 */
@@ -1707,7 +1706,8 @@ class Model
 		// and break intermingling of model and builder methods.
 		if ($name !== 'builder' && empty($result))
 		{
-			if(!method_exists($this->builder(), $name)) {
+			if (! method_exists($this->builder(), $name))
+			{
 				$className = get_class($this);
 				throw new \BadMethodCallException("Call to undefined method $className::$name");
 			}
