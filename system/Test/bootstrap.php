@@ -59,10 +59,5 @@ $loader->initialize(new Config\Autoload(), new Config\Modules());
 // Register the loader with the SPL autoloader stack.
 $loader->register();
 
-helper('url');
-
-$appConfig = config(\Config\App::class);
-$app       = new \CodeIgniter\CodeIgniter($appConfig);
-$app->initialize();
-
-$app->run();
+$routes = \Config\Services::routes();
+$routes->getRoutes('*');
