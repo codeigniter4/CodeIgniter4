@@ -61,3 +61,5 @@ $loader->register();
 
 $routes = \Config\Services::routes();
 $routes->getRoutes('*');
+
+require_once APPPATH . 'Config/Routes.php';
