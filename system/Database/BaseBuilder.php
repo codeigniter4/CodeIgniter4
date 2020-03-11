@@ -214,6 +214,14 @@ class BaseBuilder
 	protected $binds = [];
 
 	/**
+	 * Collects the key count for named parameters
+	 * in the Query object.
+	 *
+	 * @var array
+	 */
+	protected $bindsKeyCount = [];
+
+	/**
 	 * Some databases, like SQLite, do not by default
 	 * allow limiting of delete clauses.
 	 *
@@ -3402,12 +3410,11 @@ class BaseBuilder
 			return $key;
 		}
 
-		$count = 0;
-
-		while (array_key_exists($key . $count, $this->binds))
+		if (!array_key_exists($key, $this->bindsKeyCount))
 		{
-			++$count;
+			$this->bindsKeyCount[$key] = 0;
 		}
+		$count = $this->bindsKeyCount[$key]++;
 
 		$this->binds[$key . $count] = [
 			$value,
