@@ -25,6 +25,22 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 		'groupA'        => [
 			'foo' => 'required|min_length[5]',
 		],
+		'login'         => [
+			'username' => [
+				'label'  => 'Username',
+				'rules'  => 'required',
+				'errors' => [
+					'required' => 'custom username required error msg.',
+				],
+			],
+			'password' => [
+				'label'  => 'Password',
+				'rules'  => 'required',
+				'errors' => [
+					'required' => 'custom password required error msg.',
+				],
+			],
+		],
 		'groupA_errors' => [
 			'foo' => [
 				'min_length' => 'Shame, shame. Too short.',
@@ -272,6 +288,20 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectException(ValidationException::class);
 
 		$this->validation->setRuleGroup('groupZ');
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetRuleGroupWithCustomErrorMessage()
+	{
+		$this->validation->reset()->setRuleGroup('login');
+		$this->validation->run([
+			'username' => 'codeigniter',
+		]);
+
+		$this->assertEquals([
+			'password' => 'custom password required error msg.',
+		], $this->validation->getErrors());
 	}
 
 	//--------------------------------------------------------------------
