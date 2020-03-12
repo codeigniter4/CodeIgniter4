@@ -203,7 +203,7 @@ Class Reference
 		:param	BaseConfig	$config: Configuration parameters
 		:returns:	CodeIgniter\\Encryption\\EncrypterInterface instance
 		:rtype:	CodeIgniter\\Encryption\\EncrypterInterface
-		:throws:	CodeIgniter\\Encryption\\EncryptionException
+		:throws:	CodeIgniter\\Encryption\\Exceptions\\EncryptionException
 
 		Initializes (configures) the library to use different settings.
 
@@ -221,7 +221,7 @@ Class Reference
 		:param		$params: Configuration parameters (key)
 		:returns:	Encrypted data or FALSE on failure
 		:rtype:	string
-		:throws:	CodeIgniter\\Encryption\\EncryptionException
+		:throws:	CodeIgniter\\Encryption\\Exceptions\\EncryptionException
 
 		Encrypts the input data and returns its ciphertext.
 
@@ -241,7 +241,7 @@ Class Reference
 		:param		$params: Configuration parameters (key)
 		:returns:	Decrypted data or FALSE on failure
 		:rtype:	string
-		:throws:	CodeIgniter\\Encryption\\EncryptionException
+		:throws:	CodeIgniter\\Encryption\\Exceptions\\EncryptionException
 
 		Decrypts the input data and returns it in plain-text.
 
