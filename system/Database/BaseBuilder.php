@@ -987,14 +987,30 @@ class BaseBuilder
 	 * @param string        $type
 	 * @param boolean       $escape
 	 * @param string        $clause (Internal use only)
+	 * @throws InvalidArgumentException
 	 *
 	 * @return BaseBuilder
 	 */
 	protected function _whereIn(string $key = null, $values = null, bool $not = false, string $type = 'AND ', bool $escape = null, string $clause = 'QBWhere')
 	{
-		if ($key === null || $values === null || (! is_array($values) && ! ($values instanceof Closure)))
+		if (empty($key) || ! is_string($key))
 		{
-			return $this;
+			if (CI_DEBUG)
+			{
+				throw new InvalidArgumentException(sprintf('%s() expects $key to be a non-empty string', debug_backtrace(0, 2)[1]['function']));
+			} 
+			
+			return this;
+		}
+
+		if ($values === null || (! is_array($values) && ! ($values instanceof Closure)))
+		{
+			if (CI_DEBUG)
+			{
+				throw new InvalidArgumentException(sprintf('%s() expects $values to be of type array or closure', debug_backtrace(0, 2)[1]['function']));
+			}
+			
+			return this;
 		}
 
 		is_bool($escape) || $escape = $this->db->protectIdentifiers;
