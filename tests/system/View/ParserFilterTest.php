@@ -58,17 +58,22 @@ class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
-		$today = date('Y-m-d');
+		$today_dash = date('Y-m-d');
+		$today_dot = date('Y.m.d');
+		$today_space = date('Y m d');
+		$today_colon = date('Y:m:d');
+		$today_slash = date('Y/m/d');
+		$today_backslash = date('Y\\\m\\\d');
 
 		$data = [
 			'value1' => time(),
 			'value2' => date('Y-m-d H:i:s'),
 		];
 
-		$template = '{ value1|date(Y-m-d) } { value2|date(Y-m-d) }';
+		$template = '{ value1|date(Y-m-d) } { value2|date(Y-m-d) } { value1|date(Y.m.d) } { value1|date(Y m d) } { value1|date(Y:m:d) } { value1|date(Y/m/d) } { value1|date(Y\\\m\\\d) }';
 
 		$parser->setData($data);
-		$this->assertEquals("{$today} {$today}", $parser->renderString($template));
+		$this->assertEquals("{$today_dash} {$today_dash} {$today_dot} {$today_space} {$today_colon} {$today_slash} {$today_backslash}", $parser->renderString($template));
 	}
 
 	//--------------------------------------------------------------------
