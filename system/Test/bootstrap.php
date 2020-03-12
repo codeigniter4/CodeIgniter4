@@ -59,7 +59,5 @@ $loader->initialize(new Config\Autoload(), new Config\Modules());
 // Register the loader with the SPL autoloader stack.
 $loader->register();
 
-$routes = \Config\Services::routes();
-$routes->getRoutes('*');
-
 require_once APPPATH . 'Config/Routes.php';
+$routes->getRoutes('*');
