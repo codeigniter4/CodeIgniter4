@@ -1823,4 +1823,24 @@ class ModelTest extends CIDatabaseTestCase
 			->getBindings();
 	}
 
+	public function testFirstRecoverTempUseSoftDeletes()
+	{
+		$model = new UserModel($this->db);
+		$model->delete(1);
+		$user = $model->withDeleted()->first();
+		$this->assertEquals(1, $user->id);
+		$user2 = $model->first();
+		$this->assertEquals(2, $user2->id);
+
+	}
+
+	public function testcountAllResultsRecoverTempUseSoftDeletes()
+	{
+		$model = new UserModel($this->db);
+		$model->delete(1);
+		$this->assertEquals(4, $model->withDeleted()->countAllResults());
+		$this->assertEquals(3, $model->countAllResults());
+
+	}
+
 }
