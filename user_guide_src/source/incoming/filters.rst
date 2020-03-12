@@ -69,7 +69,7 @@ This is typically used to perform redirects, like in this example::
     }
 
 If a Response instance is returned, the Response will be sent back to the client and script execution will stop.
-This can be useful for implementing rate limiting for API's. See **app/Filters/Throttle.php** for an
+This can be useful for implementing rate limiting for API's. See :doc:`Throttler </libraries/throttler>` for an
 example.
 
 After Filters
