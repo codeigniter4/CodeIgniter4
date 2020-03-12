@@ -474,8 +474,8 @@ class Validation implements ValidationInterface
 	 */
 	public function setRuleGroup(string $group)
 	{
-		$rules       = $this->getRuleGroup($group);
-		$this->rules = $rules;
+		$rules = $this->getRuleGroup($group);
+		$this->setRules($rules);
 
 		$errorName = $group . '_errors';
 		if (isset($this->config->$errorName))
