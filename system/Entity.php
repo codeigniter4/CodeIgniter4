@@ -576,7 +576,7 @@ class Entity
 				$value = $this->castAsJson($value, true);
 				break;
 			case 'datetime':
-				return new \DateTime($value);
+				return $this->mutateDate($value);
 				break;
 			case 'timestamp':
 				return strtotime($value);
