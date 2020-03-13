@@ -129,6 +129,28 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNull($session->get('foo'));
 	}
 
+	public function testGetReturnsNullWhenNotFoundWithXmlHttpRequest()
+	{
+		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest';
+		$_SESSION                         = [];
+
+		$session = $this->getInstance();
+		$session->start();
+
+		$this->assertNull($session->get('foo'));
+	}
+
+	public function testGetReturnsEmptyArrayWhenWithXmlHttpRequest()
+	{
+		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest';
+		$_SESSION                         = [];
+
+		$session = $this->getInstance();
+		$session->start();
+
+		$this->assertEquals([], $session->get());
+	}
+
 	public function testGetReturnsItemValueisZero()
 	{
 		$_SESSION = [];

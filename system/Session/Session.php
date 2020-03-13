@@ -503,7 +503,7 @@ class Session implements SessionInterface
 		}
 		elseif (empty($_SESSION))
 		{
-			return [];
+			return $key === null ? [] : null;
 		}
 
 		if (! empty($key))
