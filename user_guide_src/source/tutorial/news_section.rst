@@ -262,7 +262,7 @@ Routing
 
 Because of the wildcard routing rule created earlier, you need an extra
 route to view the controller that you just made. Modify your routing file
-(**app/config/routes.php**) so it looks as follows.
+(**app/Config/Routes.php**) so it looks as follows.
 This makes sure the requests reach the ``News`` controller instead of
 going directly to the ``Pages`` controller. The first line routes URI's
 with a slug to the ``view()`` method in the ``News`` controller.
