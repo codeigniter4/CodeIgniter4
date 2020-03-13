@@ -93,6 +93,12 @@ trait ResponseTrait
 		'not_implemented'           => 501,
 	];
 
+	/**
+	 *
+	 * @var string the representation format to return resource data in (json/xml)
+	 */
+	protected $format = 'json';
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -366,7 +372,15 @@ trait ResponseTrait
 
 		// Determine correct response type through content negotiation
 		$config = new Format();
-		$format = $this->request->negotiate('media', $config->supportedResponseFormats, false);
+
+		if (! in_array($this->format, ['json', 'xml']))
+		{
+			$format = $this->request->negotiate('media', $config->supportedResponseFormats, false);
+		}
+		else
+		{
+			$format = "application/$this->format";
+		}
 
 		$this->response->setContentType($format);
 
