@@ -44,7 +44,9 @@ sanitizeClass = function(value) {
  *
  * @return {void}
  */
-addClass = function(value, prefix = 'ci-') {
+addClass = function(value, prefix) {
+	prefix = prefix || 'ci-';
+
 	if(value.length > 0) {
 		document.body.classList.add(prefix + value);
 	}
