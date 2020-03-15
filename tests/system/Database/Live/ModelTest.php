@@ -1823,4 +1823,31 @@ class ModelTest extends CIDatabaseTestCase
 			->getBindings();
 	}
 
+	public function testFindEmptyCountAllResults()
+	{
+		$model = new UserModel($this->db);
+
+		$model->find();
+
+		$this->assertEquals(4, $model->countAllResults());
+	}
+
+	public function testFindIdCountAllResults()
+	{
+		$model = new UserModel($this->db);
+
+		$model->find(1, false);
+
+		$this->assertEquals(1, $model->countAllResults());
+	}
+
+	public function testFindArrayCountAllResults()
+	{
+		$model = new UserModel($this->db);
+
+		$model->find([1, 2], false);
+
+		$this->assertEquals(2, $model->countAllResults());
+	}
+
 }

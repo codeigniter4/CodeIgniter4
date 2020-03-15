@@ -356,11 +356,12 @@ class Model
 	 * Fetches the row of database from $this->table with a primary key
 	 * matching $id.
 	 *
-	 * @param mixed|array|null $id One primary key or an array of primary keys
+	 * @param mixed|array|null $id    One primary key or an array of primary keys
+	 * @param boolean          $reset Are we want to clear query builder values after find?
 	 *
 	 * @return array|object|null    The resulting row of data, or null.
 	 */
-	public function find($id = null)
+	public function find($id = null, bool $reset = true)
 	{
 		$builder = $this->builder();
 
@@ -372,19 +373,19 @@ class Model
 		if (is_array($id))
 		{
 			$row = $builder->whereIn($this->table . '.' . $this->primaryKey, $id)
-					->get();
+					->get(null, 0, $reset);
 			$row = $row->getResult($this->tempReturnType);
 		}
 		elseif (is_numeric($id) || is_string($id))
 		{
 			$row = $builder->where($this->table . '.' . $this->primaryKey, $id)
-					->get();
+					->get(null, 0, $reset);
 
 			$row = $row->getFirstRow($this->tempReturnType);
 		}
 		else
 		{
-			$row = $builder->get();
+			$row = $builder->get(null, 0, $reset);
 
 			$row = $row->getResult($this->tempReturnType);
 		}

@@ -229,6 +229,10 @@ insert(), update(), delete() and more.
 
 **find()**
 
+The first parameter is key(s) value of the primary key.
+
+The second parameter let you to reset or clear query builder values or not, by default it is set to `true` mean that query builder always being cleared.
+
 Returns a single row where the primary key matches the value passed in as the first parameter::
 
 	$user = $userModel->find($user_id);
@@ -242,6 +246,18 @@ of just one::
 
 If no parameters are passed in, will return all rows in that model's table, effectively acting
 like findAll(), though less explicit.
+
+**countAllResults()**
+
+Return number of row(s) affected from find() method. In order to get proper result, you should pass second parameter as `false`.
+
+	$users = $userModel->find([1,2,3]);
+	$count = $userModel->countAllResults(); // produce all rows in UserModel
+	
+	$users = $userModel->find([1,2,3], false);
+	$count = $userModel->countAllResults(); // produce 3 rows
+
+.. note:: if you call `countAllResults` after using `find` with passing `$id`, always pass second parameter with `false` to avoid resetting query builder. See [related issue](https://github.com/codeigniter4/CodeIgniter4/issues/2705).
 
 **findColumn()**
 
