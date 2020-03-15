@@ -5,49 +5,71 @@
  * Into: ci-outgoing ci-api-responses
  */
 window.onload = function() {
-	const regexUrl   = new RegExp(/([a-z0-9_.-]+)\/([a-z0-9_.-]+)\.html/);
+	// Regular expression for finding chapter and subject in the current url
+	const regexUrl = new RegExp(/\/([a-z0-9_.-]+)\/([a-z0-9_.-]+)\.html/);
+
+	// Get the current url
 	const currentUrl = window.location.href;
 
-	let urlMatch;
+	// Get the document body
+	const documentBody = document.body;
 
-	if ((urlMatch = regexUrl.exec(currentUrl)) !== null) {
-		if (urlMatch.length === 3) {
-			let parent  = sanitizeClass(urlMatch[1]);
-			let current = sanitizeClass(urlMatch[2]);
+	// Placeholder for documentation index
+	var index = null;
 
-			if (parent === 'html' || parent.length === 0) {
-				parent = 'userguide';
-			}
+	if ((index = regexUrl.exec(currentUrl)) !== null)
+	{
+		// Sanitize the documentation chapter and subject
+		var chapter = sanitizeClass(index[1]);
+		var subject = sanitizeClass(index[2]);
 
-			addClass(parent);
-			addClass(current);
+		// Documentation are generated into an html-folder for developers.
+		// This aren't a valid chapter. We are on documentation index.
+		if (chapter === 'html')
+		{
+			index = null;
 		}
+		// Add chapter and subject className(s) to the document body
+		else
+		{
+			addClass(documentBody, chapter);
+			addClass(documentBody, subject);
+		}
+	}
+
+	// No chapter and subject found. We are on documentation index.
+	if (index === null)
+	{
+		addClass(documentBody, 'documentation');
+		addClass(documentBody, 'index');
 	}
 }
 
 /**
  * Sanitize the string - removing invalid characters
  *
- * @param {string} value Value to be sanitized
+ * @param {string} className className to be sanitized
  *
  * @return {string}
  */
-sanitizeClass = function(value) {
-	return value.replace(/_/g, '-').replace(/[^a-z0-9-]/g, '');
+sanitizeClass = function(className) {
+	return className.replace(/_/g, '-').replace(/[^a-z0-9-]/g, '');
 }
 
 /**
- * Add class to the document body
+ * Add class to HTML DOM Element Object
  *
- * @param {string} value  Value to be added
- * @param {string} prefix Prefix to be added to all classnames
+ * @param {object} el         The HTML DOM Element Object
+ * @param {string} className  className to be added
+ * @param {string} namePrefix namePrefix to be added to className
  *
  * @return {void}
  */
-addClass = function(value, prefix) {
-	prefix = prefix || 'ci-';
+addClass = function(el, className, namePrefix) {
+	namePrefix = namePrefix || 'ci-';
 
-	if(value.length > 0) {
-		document.body.classList.add(prefix + value);
+	if (el.classList && className.length > 0)
+	{
+		el.classList.add(namePrefix + className);
 	}
 }

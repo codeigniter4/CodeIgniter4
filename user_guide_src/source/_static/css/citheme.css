@@ -205,6 +205,10 @@ div#pulldown-menu {
 	background: #252525;
 }
 
+.wy-side-nav-search .logo {
+	width: 100% !important;
+}
+
 .wy-side-nav-search a {
 	color: #ffffff;
 	font-family: "Railway", "Helvetica", "Arial", sans-serif;
