@@ -559,7 +559,7 @@ class Router implements RouterInterface
 					{
 						if (strpos($route, $controller . '::' . $methodName) === 0)
 						{
-							return;
+							throw new PageNotFoundException("Can't find a route for '{$uri}'.");
 						}
 					}
 				}
