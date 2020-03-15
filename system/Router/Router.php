@@ -546,6 +546,25 @@ class Router implements RouterInterface
 		$file = APPPATH . 'Controllers/' . $this->directory . $this->controllerName() . '.php';
 		if (is_file($file))
 		{
+			$controller  = '\\' . $this->collection->getDefaultNamespace();
+			$controller .= $this->directory ? str_replace('/', '\\', $this->directory) : '';
+			$controller .= $this->controllerName();
+			$methodName  = $this->methodName();
+
+			if ($this->collection->getHTTPVerb() !== 'cli')
+			{
+				foreach ($this->collection->getRoutes('cli') as $route)
+				{
+					if (is_string($route))
+					{
+						if ($route === $controller . '::' . $methodName)
+						{
+							return;
+						}
+					}
+				}
+			}
+
 			include_once $file;
 		}
 
