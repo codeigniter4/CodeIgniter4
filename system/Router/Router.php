@@ -557,7 +557,7 @@ class Router implements RouterInterface
 				{
 					if (is_string($route))
 					{
-						if ($route === $controller . '::' . $methodName)
+						if (strpos($route, $controller . '::' . $methodName) !== false)
 						{
 							return;
 						}
