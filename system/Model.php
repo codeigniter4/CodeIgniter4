@@ -486,6 +486,7 @@ class Model
 		$eventData = $this->trigger('afterFind', ['data' => $row]);
 
 		$this->tempReturnType = $this->returnType;
+		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
 		return $eventData['data'];
 	}
@@ -1577,7 +1578,8 @@ class Model
 		{
 			$this->builder()->where($this->table . '.' . $this->deletedField, null);
 		}
-
+		$this->tempUseSoftDeletes = $this->useSoftDeletes;
+		
 		return $this->builder()->countAllResults($reset, $test);
 	}
 
