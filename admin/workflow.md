@@ -12,12 +12,12 @@ release prep (`admin/release <version> <qualifier>`)...
 - move or ignore stuff, distinguishing release from development
 - test that all is as it should be
 - merge the release branch into "master" & "develop"
-- prepare the distribution repos
 
 After these have been vetted ...
 - push the release(s) to github (`admin/release-deploy <version> <qualifier>`)
-- **manually** create the releases & tag them on github, based on master  
+- **manually** create the release & tag it on GitHub, based on master  
   Include any supplementary binaries as part of releases.
+- Confirm the GitHub release action successfully deploys `appstarter` and `framework`
 - **manually** post a sticky announcement thread on the forum
 - **manually** tweet the release announcement
 
@@ -36,6 +36,18 @@ have been suitably edited.
 This script is not intended to deal with hotfixes, i.e. PRs against
 `master` that need to also be merged into `develop`, probably
 as part of a bug fix minor release.
+
+## GitHub Action
+
+There is an action defined to run on any release publish event:
+**.github/workflows/deploy.yml**. This will cascade any release made from
+the main repo to the distribution repos, `appstarter` and `framework`. In order
+for the action to authenticate you must create a Personal Access Token and add it
+as a repo secret `ACCESS_TOKEN`. It is recommended that the PAT be to a secure bot
+account with organization access that is dedicated for this purpose.
+
+If for some reason a release needs to be made that should not cascade the easiest
+solution is to disable repo actions temporarily.
 
 ## Usage
 
