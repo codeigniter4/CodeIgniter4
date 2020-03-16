@@ -218,7 +218,14 @@ I/O will negate positive gains by caching. This requires a writable cache direct
 Memcached Caching
 =================
 
-Multiple Memcached servers can be specified in the cache configuration file.
+Memcached servers can be specified in the cache configuration file. Available options are::
+
+	public $memcached = [
+		'host'   => '127.0.0.1',
+		'port'   => 11211,
+		'weight' => 1,
+		'raw'    => false,
+	];
 
 For more information on Memcached, please see
 `https://www.php.net/memcached <https://www.php.net/memcached>`_.
@@ -239,8 +246,16 @@ Redis Caching
 Redis is an in-memory key-value store which can operate in LRU cache mode.
 To use it, you need `Redis server and phpredis PHP extension <https://github.com/phpredis/phpredis>`_.
 
-Config options to connect to redis server stored in the cache configuration file.
+Config options to connect to redis server stored in the cache configuration file. Available options are::
 
+	public $redis = [
+		'host'     => '127.0.0.1',
+		'password' => null,
+		'port'     => 6379,
+		'timeout'  => 0,
+		'database' => 0,
+	];
+	
 For more information on Redis, please see
 `https://redis.io <https://redis.io>`_.
 
