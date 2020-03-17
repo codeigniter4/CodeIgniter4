@@ -806,6 +806,17 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectException(RouterException::class);
 		$match = $routes->reverseRoute('myController::goto', 13, 'string');
 	}
+	//--------------------------------------------------------------------
+
+	public function testReverseRoutingWithLocale()
+	{
+		$routes = $this->getCollector();
+
+		$routes->add('{locale}/contact', 'myController::goto');
+
+		$this->assertEquals('/en/contact', $routes->reverseRoute('myController::goto'));
+
+	}
 
 	//--------------------------------------------------------------------
 
