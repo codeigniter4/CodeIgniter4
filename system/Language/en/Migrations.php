@@ -33,6 +33,7 @@ return [
    'migHelpRefresh'    => "\t\tUninstalls and re-runs all migrations to freshen database.",
    'migHelpSeed'       => "\tRuns the seeder named [name].",
    'migCreate'         => "\tCreates a new migration named [name]",
+   'migWriteError'     => "\tCan't write a {0} file, check if directory is writable",
    'nameMigration'     => 'Name the migration file',
    'badCreateName'     => 'You must provide a migration file name.',
    'writeError'        => 'Error trying to create file.',
