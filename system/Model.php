@@ -1580,9 +1580,7 @@ class Model
 		}
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
-		$this->builder()->testMode($test);
-
-		return $this->builder()->countAllResults($reset);
+		return $this->builder()->testMode($test)->countAllResults($reset);
 	}
 
 	/**
