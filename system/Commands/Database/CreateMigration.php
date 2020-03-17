@@ -177,7 +177,7 @@ EOD;
 		helper('filesystem');
 		if (! write_file($path, $template))
 		{
-			CLI::error(lang('Migrations.writeError'));
+			CLI::error(lang('Migrations.writeError', [$path]));
 			return;
 		}
 

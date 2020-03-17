@@ -113,7 +113,7 @@ class SessionsCommandsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->runner->index(['session:migration']);
 		$this->result = '';
 
-		$this->assertRegExp('/Can\'t write a .*, check if directory is writable/', CITestStreamFilter::$buffer);
+		$this->assertRegExp('/Error trying to create .* file, check if the directory is writable/', CITestStreamFilter::$buffer);
 
 		chmod(APPPATH . 'Database/Migrations/', 0755);
 	}
