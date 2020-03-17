@@ -1,7 +1,8 @@
 <?php namespace CodeIgniter\Log\Handlers;
 
+use Config\App;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
-use CodeIgniter\Test\Mock\MockChromeLogger;
+use CodeIgniter\Test\Mock\MockResponse;
 use CodeIgniter\Services;
 
 class ChromeLoggerHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
@@ -9,29 +10,28 @@ class ChromeLoggerHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testCanHandleLogLevel()
 	{
-		$config                                                              = new LoggerConfig();
+		$config = new LoggerConfig();
+
 		$config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] = ['critical'];
 
 		$logger = new ChromeLoggerHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
 		$this->assertFalse($logger->canHandle('foo'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testHandle()
 	{
-		$config                                                              = new LoggerConfig();
+		$config = new LoggerConfig();
+
 		$config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] = ['critical'];
 
 		$logger = new ChromeLoggerHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
 		$this->assertTrue($logger->handle('warning', 'This a log test'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSendLogs()
 	{
-		$config                                                              = new LoggerConfig();
+		$config = new LoggerConfig();
+
 		$config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] = ['critical'];
 
 		$logger = new ChromeLoggerHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
@@ -42,11 +42,10 @@ class ChromeLoggerHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($response->hasHeader('X-ChromeLogger-Data'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testSetDateFormat()
 	{
-		$config                                                              = new LoggerConfig();
+		$config = new LoggerConfig();
+
 		$config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] = ['critical'];
 
 		$logger = new ChromeLoggerHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
@@ -56,23 +55,26 @@ class ChromeLoggerHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertObjectHasAttribute('dateFormat', $logger);
 	}
 
-	//--------------------------------------------------------------------
 
-	public function testObjectMessage()
+	public function testChromeLoggerHeaderSent()
 	{
-		$config                                                              = new LoggerConfig();
+		Services::injectMock('response', new MockResponse(new App()));
+		$response = service('response');
+
+		$config = new LoggerConfig();
+
 		$config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] = ['critical'];
 
-		$logger            = new MockChromeLogger($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
+		$logger = new ChromeLoggerHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
+
 		$data              = new \stdClass();
 		$data->code        = 123;
 		$data->explanation = "That's no moon, it's a pumpkin";
 		$result            = $logger->setDateFormat('F j, Y');
 
-		$logger->handle('debug', $data);
-		$peek = $logger->peekaboo();
+		$logger->handle('warning', $data);
 
-		$this->assertEquals($data->explanation, $peek[0]['explanation']);
+		$this->assertTrue($response->hasHeader('x-chromelogger-data'));
 	}
 
 }
