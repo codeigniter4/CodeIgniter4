@@ -164,7 +164,7 @@ class Router implements RouterInterface
 
 		// If we cannot find a URI to match against, then
 		// everything runs off of it's default settings.
-		if (empty($uri))
+		if ($uri === null || $uri === '')
 		{
 			return strpos($this->controller, '\\') === false
 				? $this->collection->getDefaultNamespace() . $this->controller
