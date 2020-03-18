@@ -918,7 +918,7 @@ class URI
 		{
 			$this->user = $parts['user'];
 		}
-		if ($parts['path'] !== '')
+		if (isset($parts['path']) && $parts['path'] !== '')
 		{
 			$this->path = $this->filterPath($parts['path']);
 		}
@@ -958,7 +958,7 @@ class URI
 		}
 
 		// Populate our segments array
-		if ($parts['path'] !== '')
+		if (isset($parts['path']) && $parts['path'] !== '')
 		{
 			$this->segments = explode('/', trim($parts['path'], '/'));
 		}
