@@ -161,7 +161,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 			[
 				'get',
 				'home',
-				'Tests\Support\Controllers\Popcorn::index',
+				'\Tests\Support\Controllers\Popcorn::index',
 			],
 		]);
 		$response = $this->get('home');
@@ -174,7 +174,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 			[
 				'get',
 				'home',
-				'Tests\Support\Controllers\Popcorn::cat',
+				'\Tests\Support\Controllers\Popcorn::cat',
 			],
 		]);
 		$response = $this->get('home');
@@ -187,7 +187,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 			[
 				'get',
 				'home',
-				'Tests\Support\Controllers\Popcorn::canyon',
+				'\Tests\Support\Controllers\Popcorn::canyon',
 			],
 		]);
 		ob_start();

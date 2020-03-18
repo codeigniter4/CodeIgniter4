@@ -228,4 +228,11 @@ class ControllerTesterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($result->isOK());
 	}
 
+	public function testRedirectRoute()
+	{
+		$result = $this->controller(\Tests\Support\Controllers\Popcorn::class)
+						->execute('toindex');
+		$this->assertTrue($result->isRedirect());
+	}
+
 }

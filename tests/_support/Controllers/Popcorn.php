@@ -74,4 +74,9 @@ class Popcorn extends Controller
 		$this->respond('<my><pet>cat</pet></my>');
 	}
 
+	public function toindex()
+	{
+		return redirect()->route('testing-index');
+	}
+
 }
