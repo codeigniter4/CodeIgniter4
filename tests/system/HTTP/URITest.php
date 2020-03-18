@@ -840,4 +840,12 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($uri->getPath(), $request->uri->getPath());
 	}
 
+	public function testZeroAsURIPath()
+	{
+		$url = 'http://example.com/0';
+		$uri = new URI($url);
+		$this->assertEquals($url, (string) $uri);
+		$this->assertEquals('/0', $uri->getPath());
+	}
+
 }
