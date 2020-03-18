@@ -1218,7 +1218,8 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			if (array_key_exists($search, $collection))
 			{
-				return $this->fillRouteParams(key($collection[$search]['route']), $params);
+				$route = $this->fillRouteParams(key($collection[$search]['route']), $params);
+				return $this->localizeRoute($route);
 			}
 		}
 
@@ -1256,12 +1257,27 @@ class RouteCollection implements RouteCollectionInterface
 					continue;
 				}
 
-				return $this->fillRouteParams($from, $params);
+				$route = $this->fillRouteParams($from, $params);
+				return $this->localizeRoute($route);
 			}
 		}
 
 		// If we're still here, then we did not find a match.
 		return false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Replaces the {locale} tag with the current application locale
+	 *
+	 * @param string $route
+	 *
+	 * @return string
+	 */
+	protected function localizeRoute(string $route) :string
+	{
+		return strtr($route, ['{locale}' => Services::language()->getLocale()]);
 	}
 
 	//--------------------------------------------------------------------
