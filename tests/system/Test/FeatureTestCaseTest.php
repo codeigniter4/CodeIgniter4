@@ -1,5 +1,6 @@
 <?php
 
+use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Test\FeatureTestCase;
 use CodeIgniter\Test\FeatureResponse;
 
@@ -194,4 +195,13 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$response->assertSee('Hello-o-o');
 	}
 
+	public function testCallZeroAsPathGot404()
+	{
+		$this->expectException(PageNotFoundException::class);
+		while (\ob_get_level() > 0)
+		{
+			\ob_end_flush();
+		}
+		$this->get('0');
+	}
 }
