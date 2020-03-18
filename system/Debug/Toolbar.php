@@ -415,6 +415,7 @@ class Toolbar
 			return;
 		}
 
+		// @codeCoverageIgnoreStart
 		$request = Services::request();
 
 		// If the request contains '?debugbar then we're
@@ -459,6 +460,7 @@ class Toolbar
 			http_response_code(404);
 			exit; // Exit here is needed to avoid load the index page
 		}
+		// @codeCoverageIgnoreEnd
 	}
 
 	/**

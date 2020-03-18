@@ -550,9 +550,11 @@ class CodeIgniter
 			return;
 		}
 
-		if (is_cli() && ! (ENVIRONMENT === 'testing'))
+		if (is_cli() && ENVIRONMENT !== 'testing')
 		{
+			// @codeCoverageIgnoreStart
 			$this->request = Services::clirequest($this->config);
+			// @codeCoverageIgnoreEnd
 		}
 		else
 		{
@@ -958,10 +960,12 @@ class CodeIgniter
 
 		if (ENVIRONMENT !== 'testing')
 		{
+			// @codeCoverageIgnoreStart
 			if (ob_get_level() > 0)
 			{
 				ob_end_flush();
 			}
+			// @codeCoverageIgnoreEnd
 		}
 		else
 		{

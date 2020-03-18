@@ -199,9 +199,11 @@ class Session implements SessionInterface
 	{
 		if (is_cli() && ENVIRONMENT !== 'testing')
 		{
+			// @codeCoverageIgnoreStart
 			$this->logger->debug('Session: Initialization under CLI aborted.');
 
 			return;
+			// @codeCoverageIgnoreEnd
 		}
 		elseif ((bool) ini_get('session.auto_start'))
 		{
@@ -999,7 +1001,9 @@ class Session implements SessionInterface
 			return;
 		}
 
+		// @codeCoverageIgnoreStart
 		session_start();
+		// @codeCoverageIgnoreEnd
 	}
 
 	//--------------------------------------------------------------------

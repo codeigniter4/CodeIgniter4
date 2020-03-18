@@ -751,7 +751,9 @@ if (! function_exists('old'))
 		// Ensure the session is loaded
 		if (session_status() === PHP_SESSION_NONE && ENVIRONMENT !== 'testing')
 		{
+			// @codeCoverageIgnoreStart
 			session();
+			// @codeCoverageIgnoreEnd
 		}
 
 		$request = Services::request();
