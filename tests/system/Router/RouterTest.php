@@ -74,6 +74,17 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testZeroAsURIPath()
+	{
+		$router = new Router($this->collection, $this->request);
+
+		$router->handle('0');
+
+		$this->assertEquals('0', $router->controllerName());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testURIMapsToController()
 	{
 		$router = new Router($this->collection, $this->request);

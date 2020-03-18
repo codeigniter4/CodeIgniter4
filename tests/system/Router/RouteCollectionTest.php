@@ -907,7 +907,8 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(307, $routes->getRedirectCode('users'));
 	}
 
-	public function testAddRedirectGetMethod(){
+	public function testAddRedirectGetMethod()
+	{
 		$routes = $this->getCollector();
 
 		$routes->get('zombies', 'Zombies::index', ['as' => 'namedRoute']);
@@ -1447,6 +1448,20 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expects = '\App\Controllers\Core\Home';
 
 		$this->assertEquals($expects, $router->handle('/'));
+	}
+
+	public function testZeroAsURIPath()
+	{
+		Services::request()->setMethod('get');
+		$routes = $this->getCollector();
+		$router = new Router($routes, Services::request());
+
+		$routes->setDefaultNamespace('App\Controllers');
+		$routes->get('/0', 'Core\Home::index');
+
+		$expects = '\App\Controllers\Core\Home';
+
+		$this->assertEquals($expects, $router->handle('/0'));
 	}
 
 }
