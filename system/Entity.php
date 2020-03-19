@@ -165,7 +165,7 @@ class Entity
 		// allow our magic methods a chance to do their thing.
 		foreach ($this->attributes as $key => $value)
 		{
-			if (substr($key, 0, 1) === '_')
+			if (strpos($key, '_') === 0)
 			{
 				continue;
 			}
@@ -353,7 +353,7 @@ class Entity
 
 		if (array_key_exists($key, $this->casts))
 		{
-			$isNullable = substr($this->casts[$key], 0, 1) === '?';
+			$isNullable = strpos($this->casts[$key], '?') === 0;
 			$castTo     = $isNullable ? substr($this->casts[$key], 1) : $this->casts[$key];
 		}
 
@@ -530,7 +530,7 @@ class Entity
 
 	protected function castAs($value, string $type)
 	{
-		if (substr($type, 0, 1) === '?')
+		if (strpos($type, '?') === 0)
 		{
 			if ($value === null)
 			{
