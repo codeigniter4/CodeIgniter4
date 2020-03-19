@@ -547,12 +547,14 @@ class Router implements RouterInterface
 			$controller  = '\\' . $this->collection->getDefaultNamespace();
 			$controller .= $this->directory ? str_replace('/', '\\', $this->directory) : '';
 			$controller .= $this->controllerName();
-			$methodName  = $this->methodName();
+			$controller  = strtolower($controller);
+			$methodName  = strtolower($this->methodName());
 
 			foreach ($this->collection->getRoutes('cli') as $route)
 			{
 				if (is_string($route))
 				{
+					$route = strtolower($route);
 					if (strpos($route, $controller . '::' . $methodName) === 0)
 					{
 						throw new PageNotFoundException();
