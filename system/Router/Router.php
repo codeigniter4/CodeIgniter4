@@ -557,6 +557,11 @@ class Router implements RouterInterface
 					{
 						throw new PageNotFoundException();
 					}
+
+					if ($route === $controller)
+					{
+						throw new PageNotFoundException();
+					}
 				}
 			}
 		}

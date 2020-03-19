@@ -218,6 +218,11 @@ class FeatureTestCaseTest extends FeatureTestCase
 				'Hello::index/$1',
 				'Hello/index/samsonasik',
 			],
+			'default method index'  => [
+				'hello',
+				'Hello',
+				'Hello',
+			],
 		];
 	}
 
