@@ -154,7 +154,7 @@ class Pager implements PagerInterface
 	 * @param  string|null $group    optional group (i.e. if we'd like to define custom path)
 	 * @return string
 	 */
-	public function makeLinks(int $page, int $perPage, int $total, string $template = 'default_full', int $segment = 0, ?string $group = null): string
+	public function makeLinks(int $page, int $perPage, int $total, string $template = 'default_full', int $segment = 0, ?string $group = 'default'): string
 	{
 		$name = time();
 
