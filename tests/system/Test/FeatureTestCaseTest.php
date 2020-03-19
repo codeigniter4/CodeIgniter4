@@ -205,21 +205,19 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$this->get('0');
 	}
 
-	public function testOpenCliRoutesFromHttp()
+	public function testOpenCliRoutesFromHttpGot404()
 	{
 		$this->expectException(PageNotFoundException::class);
 
-		$this->withRoutes([
-			[
-				'cli',
-				'hello',
-				'\App\Controllers\Commands\Hello::index',
-			],
-		]);
+		require_once SUPPORTPATH . 'Controllers/Hello.php';
+
+		$routes = \Config\Services::routes();
+		$routes->cli('hello', 'Hello::index');
+
 		while (\ob_get_level() > 0)
 		{
 			\ob_end_flush();
 		}
-		$this->get('commands/hello');
+		$this->get('Hello');
 	}
 }

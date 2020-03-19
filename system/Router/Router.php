@@ -542,29 +542,29 @@ class Router implements RouterInterface
 			$this->params = $segments;
 		}
 
-		// Load the file so that it's available for CodeIgniter.
-		$file = APPPATH . 'Controllers/' . $this->directory . $this->controllerName() . '.php';
-		if (is_file($file))
+		if ($this->collection->getHTTPVerb() !== 'cli')
 		{
 			$controller  = '\\' . $this->collection->getDefaultNamespace();
 			$controller .= $this->directory ? str_replace('/', '\\', $this->directory) : '';
 			$controller .= $this->controllerName();
 			$methodName  = $this->methodName();
 
-			if ($this->collection->getHTTPVerb() !== 'cli')
+			foreach ($this->collection->getRoutes('cli') as $route)
 			{
-				foreach ($this->collection->getRoutes('cli') as $route)
+				if (is_string($route))
 				{
-					if (is_string($route))
+					if (strpos($route, $controller . '::' . $methodName) === 0)
 					{
-						if (strpos($route, $controller . '::' . $methodName) === 0)
-						{
-							throw new PageNotFoundException();
-						}
+						throw new PageNotFoundException();
 					}
 				}
 			}
+		}
 
+		// Load the file so that it's available for CodeIgniter.
+		$file = APPPATH . 'Controllers/' . $this->directory . $this->controllerName() . '.php';
+		if (is_file($file))
+		{
 			include_once $file;
 		}
 
