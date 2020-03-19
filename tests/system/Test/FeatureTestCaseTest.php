@@ -211,8 +211,13 @@ class FeatureTestCaseTest extends FeatureTestCase
 
 		require_once SUPPORTPATH . 'Controllers/Hello.php';
 
-		$routes = \Config\Services::routes();
-		$routes->cli('hello', 'Hello::index');
+		$this->withRoutes([
+			[
+				'cli',
+				'hello',
+				'Hello::index',
+			],
+		]);
 
 		while (\ob_get_level() > 0)
 		{
