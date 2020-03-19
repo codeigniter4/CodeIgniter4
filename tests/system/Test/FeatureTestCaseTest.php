@@ -204,4 +204,22 @@ class FeatureTestCaseTest extends FeatureTestCase
 		}
 		$this->get('0');
 	}
+
+	public function testOpenCliRoutesFromHttp()
+	{
+		$this->expectException(PageNotFoundException::class);
+
+		$this->withRoutes([
+			[
+				'cli',
+				'hello',
+				'\App\Controllers\Commands\Hello::index',
+			],
+		]);
+		while (\ob_get_level() > 0)
+		{
+			\ob_end_flush();
+		}
+		$this->get('commands/hello');
+	}
 }
