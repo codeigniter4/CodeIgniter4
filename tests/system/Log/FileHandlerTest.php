@@ -44,11 +44,12 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$logger                                                             = new MockFileLogger((array) $config);
 
 		$logger->setDateFormat('Y-m-d H:i:s:u');
+		$expected = 'log-' . date('Y-m-d') . '.log';
+		vfsStream::newFile($expected)->at(vfsStream::setup('root'))->withContent('This is a test log');
 		$logger->handle('warning', 'This is a test log');
 
-		$expected = 'log-' . date('Y-m-d') . '.log';
-		$fp       = fopen($config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] . $expected, 'r');
-		$line     = fgets($fp);
+		$fp   = fopen($config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] . $expected, 'r');
+		$line = fgets($fp);
 		fclose($fp);
 
 		// did the log file get created?
@@ -64,7 +65,7 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$logger->setDateFormat('Y-m-d');
 		$expected = 'log-' . date('Y-m-d') . '.log';
-
+		vfsStream::newFile($expected)->at(vfsStream::setup('root'))->withContent('Test message');
 		$logger->handle('debug', 'Test message');
 		$fp   = fopen($config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] . $expected, 'r');
 		$line = fgets($fp); // and get the second line
