@@ -782,6 +782,22 @@ EOH;
 		$this->assertEquals('', set_radio('bar', 'baz'));
 	}
 
+	public function testSetRadioFromPostArrayWithValueZero()
+	{
+		$_SESSION = [
+			'_ci_old_input' => [
+				'post' => [
+					'bar' => [
+						'0',
+						'fuzzy',
+					],
+				],
+			],
+		];
+		$this->assertEquals(' checked="checked"', set_radio('bar', '0'));
+		$this->assertEquals('', set_radio('bar', 'baz'));
+	}
+
 	public function testSetRadioDefault()
 	{
 		$this->assertEquals(' checked="checked"', set_radio('code', 'alpha', true));
