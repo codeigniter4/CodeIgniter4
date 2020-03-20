@@ -725,6 +725,33 @@ EOH;
 	}
 
 	// ------------------------------------------------------------------------
+	public function testSetCheckboxWithValueZero()
+	{
+		$_SESSION = [
+			'_ci_old_input' => [
+				'post' => [
+					'foo' => '0',
+				],
+			],
+		];
+
+		$this->assertEquals(' checked="checked"', set_checkbox('foo', '0'));
+
+		$_SESSION = [
+			'_ci_old_input' => [
+				'post' => [
+					'foo' => ['foo' => '0'],
+				],
+			],
+		];
+		$this->assertEquals(' checked="checked"', set_checkbox('foo', '0'));
+		$this->assertEquals('', set_checkbox('foo', 'baz'));
+
+		$_SESSION = [];
+		$this->assertEquals('', set_checkbox('foo', 'bar'));
+	}
+
+	// ------------------------------------------------------------------------
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
