@@ -116,6 +116,14 @@ class Logger extends BaseConfig
 			 * integer notation (i.e. 0700, 0644, etc.)
 			 */
 			'filePermissions' => 0644,
+
+			/*
+			 * Logging Directory Path
+			 *
+			 * By default, logs are written to WRITEPATH . 'logs/'
+			 * Specify a different destination here, if desired.
+			 */
+			'path'            => '',
 		],
 
 		/**
