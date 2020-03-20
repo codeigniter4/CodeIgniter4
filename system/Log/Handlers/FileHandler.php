@@ -77,7 +77,8 @@ class FileHandler extends BaseHandler implements HandlerInterface
 	{
 		parent::__construct($config);
 
-		$this->path = $config['path'] ?: WRITEPATH . 'logs/';
+		$config['path'] = $config['path'] ?? WRITEPATH . 'logs/';
+		$this->path     = $config['path'] ?: WRITEPATH . 'logs/';
 
 		$this->fileExtension = empty($config['fileExtension']) ? 'log' : $config['fileExtension'];
 		$this->fileExtension = ltrim($this->fileExtension, '.');
