@@ -725,6 +725,33 @@ EOH;
 	}
 
 	// ------------------------------------------------------------------------
+	public function testSetCheckboxWithValueZero()
+	{
+		$_SESSION = [
+			'_ci_old_input' => [
+				'post' => [
+					'foo' => '0',
+				],
+			],
+		];
+
+		$this->assertEquals(' checked="checked"', set_checkbox('foo', '0'));
+
+		$_SESSION = [
+			'_ci_old_input' => [
+				'post' => [
+					'foo' => ['foo' => '0'],
+				],
+			],
+		];
+		$this->assertEquals(' checked="checked"', set_checkbox('foo', '0'));
+		$this->assertEquals('', set_checkbox('foo', 'baz'));
+
+		$_SESSION = [];
+		$this->assertEquals('', set_checkbox('foo', 'bar'));
+	}
+
+	// ------------------------------------------------------------------------
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -755,6 +782,17 @@ EOH;
 		$this->assertEquals('', set_radio('bar', 'boop'));
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testSetRadioFromPostWithValueZero()
+	{
+		$_POST['bar'] = 0;
+		$this->assertEquals(' checked="checked"', set_radio('bar', '0'));
+		$this->assertEquals('', set_radio('bar', 'boop'));
+	}
+
 	public function testSetRadioFromPostArray()
 	{
 		$_SESSION = [
@@ -768,6 +806,22 @@ EOH;
 			],
 		];
 		$this->assertEquals(' checked="checked"', set_radio('bar', 'boop'));
+		$this->assertEquals('', set_radio('bar', 'baz'));
+	}
+
+	public function testSetRadioFromPostArrayWithValueZero()
+	{
+		$_SESSION = [
+			'_ci_old_input' => [
+				'post' => [
+					'bar' => [
+						'0',
+						'fuzzy',
+					],
+				],
+			],
+		];
+		$this->assertEquals(' checked="checked"', set_radio('bar', '0'));
 		$this->assertEquals('', set_radio('bar', 'baz'));
 	}
 
