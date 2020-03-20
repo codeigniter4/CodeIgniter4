@@ -839,7 +839,7 @@ if (! function_exists('set_checkbox'))
 		}
 
 		// Unchecked checkbox and radio inputs are not even submitted by browsers ...
-		if (! empty($request->getPost()) || ! empty(old($field)))
+		if (intval($input) === 0 || ! empty($request->getPost()) || ! empty(old($field)))
 		{
 			return ($input === $value) ? ' checked="checked"' : '';
 		}
