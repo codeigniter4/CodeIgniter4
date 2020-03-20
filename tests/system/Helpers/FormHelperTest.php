@@ -755,6 +755,17 @@ EOH;
 		$this->assertEquals('', set_radio('bar', 'boop'));
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testSetRadioFromPostWithValueZero()
+	{
+		$_POST['bar'] = 0;
+		$this->assertEquals(' checked="checked"', set_radio('bar', '0'));
+		$this->assertEquals('', set_radio('bar', 'boop'));
+	}
+
 	public function testSetRadioFromPostArray()
 	{
 		$_SESSION = [
