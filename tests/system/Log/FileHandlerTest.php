@@ -30,7 +30,7 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testBasicHandle()
 	{
 		$config                                                                = new LoggerConfig();
-		$config->path                                                          = $this->start . 'charlie/';
+		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['path']    = $this->start . 'charlie/';
 		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
 		$logger                                                                = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
 		$logger->setDateFormat('Y-m-d H:i:s:u');
@@ -39,15 +39,15 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testHandleCreateFile()
 	{
-		$config       = new LoggerConfig();
-		$config->path = $this->start;
-		$logger       = new MockFileLogger((array) $config);
+		$config                                                             = new LoggerConfig();
+		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] = $this->start;
+		$logger                                                             = new MockFileLogger((array) $config);
 
 		$logger->setDateFormat('Y-m-d H:i:s:u');
 		$logger->handle('warning', 'This is a test log');
 
 		$expected = 'log-' . date('Y-m-d') . '.log';
-		$fp       = fopen($config->path . $expected, 'r');
+		$fp       = fopen($config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] . $expected, 'r');
 		$line     = fgets($fp);
 		fclose($fp);
 
@@ -58,15 +58,15 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testHandleDateTimeCorrectly()
 	{
-		$config       = new LoggerConfig();
-		$config->path = $this->start;
-		$logger       = new MockFileLogger((array) $config);
+		$config                                                             = new LoggerConfig();
+		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] = $this->start;
+		$logger                                                             = new MockFileLogger((array) $config);
 
 		$logger->setDateFormat('Y-m-d');
 		$expected = 'log-' . date('Y-m-d') . '.log';
 
 		$logger->handle('debug', 'Test message');
-		$fp   = fopen($config->path . $expected, 'r');
+		$fp   = fopen($config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] . $expected, 'r');
 		$line = fgets($fp); // and get the second line
 		fclose($fp);
 
