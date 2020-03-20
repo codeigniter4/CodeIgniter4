@@ -251,6 +251,9 @@ trait ControllerTester
 	{
 		$this->request = $request;
 
+		// Make sure it's available for other classes
+		Services::injectMock('request', $request);
+
 		return $this;
 	}
 
