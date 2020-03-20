@@ -36,15 +36,6 @@ class Logger extends BaseConfig
 
 	/*
 	|--------------------------------------------------------------------------
-	| Error Logging Directory Path
-	|--------------------------------------------------------------------------
-	| By default, logs are written to WRITEPATH . 'logs/'
-	| Specify a different destination here, if desired.
-	*/
-	public $path = '';
-
-	/*
-	|--------------------------------------------------------------------------
 	| Date Format for Logs
 	|--------------------------------------------------------------------------
 	|
