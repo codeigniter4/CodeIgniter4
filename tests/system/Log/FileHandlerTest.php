@@ -32,8 +32,10 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$config                                                                = new LoggerConfig();
 		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['path']    = $this->start . 'charlie/';
 		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
-		$logger                                                                = new MockFileLogger((array) $config);
+		$logger                                                                = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
 		$logger->setDateFormat('Y-m-d H:i:s:u');
+		$expected = 'log-' . date('Y-m-d') . '.log';
+		vfsStream::newFile($expected)->at(vfsStream::setup('root/charlie'))->withContent('This is a test log');
 		$this->assertTrue($logger->handle('warning', 'This is a test log'));
 	}
 
@@ -41,7 +43,7 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$config                                                             = new LoggerConfig();
 		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] = $this->start;
-		$logger                                                             = new MockFileLogger((array) $config);
+		$logger                                                             = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
 
 		$logger->setDateFormat('Y-m-d H:i:s:u');
 		$expected = 'log-' . date('Y-m-d') . '.log';
@@ -61,7 +63,7 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$config                                                             = new LoggerConfig();
 		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] = $this->start;
-		$logger                                                             = new MockFileLogger((array) $config);
+		$logger                                                             = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
 
 		$logger->setDateFormat('Y-m-d');
 		$expected = 'log-' . date('Y-m-d') . '.log';
