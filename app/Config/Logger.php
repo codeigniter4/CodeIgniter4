@@ -109,7 +109,7 @@ class Logger extends BaseConfig
 			'filePermissions' => 0644,
 
 			/*
-			 * Error Logging Directory Path
+			 * Logging Directory Path
 			 *
 			 * By default, logs are written to WRITEPATH . 'logs/'
 			 * Specify a different destination here, if desired.

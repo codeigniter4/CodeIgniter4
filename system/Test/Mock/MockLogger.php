@@ -89,7 +89,7 @@ class MockLogger
 			],
 
 			/*
-			 * Error Logging Directory Path
+			 * Logging Directory Path
 			 */
 			'path'    => '',
 		],
