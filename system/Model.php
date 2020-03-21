@@ -430,7 +430,7 @@ class Model
 	 * @param integer $limit
 	 * @param integer $offset
 	 *
-	 * @return array|null
+	 * @return array
 	 */
 	public function findAll(int $limit = 0, int $offset = 0)
 	{
