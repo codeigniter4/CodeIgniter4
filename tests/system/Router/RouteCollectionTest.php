@@ -815,7 +815,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$routes->add('{locale}/contact', 'myController::goto');
 
 		$this->assertEquals('/en/contact', $routes->reverseRoute('myController::goto'));
-
 	}
 
 	//--------------------------------------------------------------------
@@ -1473,6 +1472,20 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expects = '\App\Controllers\Core\Home';
 
 		$this->assertEquals($expects, $router->handle('/0'));
+	}
+
+	public function testRoutesControllerNameReturnsFQCN()
+	{
+		require_once SUPPORTPATH . 'Controllers/Product.php';
+
+		$routes = $this->getCollector();
+		$routes->setAutoRoute(true);
+		$routes->setDefaultNamespace('App\Controllers');
+
+		$router = new Router($routes, Services::request());
+		$router->handle('/product');
+
+		$this->assertEquals('\App\\Controllers\\Product', $router->controllerName());
 	}
 
 }
