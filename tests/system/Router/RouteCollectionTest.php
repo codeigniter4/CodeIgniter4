@@ -1476,8 +1476,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testRoutesControllerNameReturnsFQCN()
 	{
-		require_once SUPPORTPATH . 'Controllers/Product.php';
-
 		$routes = $this->getCollector();
 		$routes->setAutoRoute(true);
 		$routes->setDefaultNamespace('App\Controllers');
