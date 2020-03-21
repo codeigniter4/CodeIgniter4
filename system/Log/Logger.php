@@ -60,13 +60,6 @@ class Logger implements LoggerInterface
 {
 
 	/**
-	 * Path to save log files to.
-	 *
-	 * @var string
-	 */
-	protected $logPath;
-
-	/**
 	 * Used by the logThreshold Config setting to define
 	 * which errors to show.
 	 *
