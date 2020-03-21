@@ -39,6 +39,7 @@
 
 namespace CodeIgniter\Commands\Database;
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\BaseCommand;
 
 /**
