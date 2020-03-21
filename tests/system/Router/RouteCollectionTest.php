@@ -1474,7 +1474,7 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expects, $router->handle('/0'));
 	}
 
-	public function provideAutoRouteDefaultNamespace()
+	public function provideRouteDefaultNamespace()
 	{
 		return [
 			'with \\ prefix'    => ['\App\Controllers'],
@@ -1483,13 +1483,29 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 
 	/**
-	 * @dataProvider provideAutoRouteDefaultNamespace
+	 * @dataProvider provideRouteDefaultNamespace
 	 */
 	public function testAutoRoutesControllerNameReturnsFQCN($namespace)
 	{
 		$routes = $this->getCollector();
 		$routes->setAutoRoute(true);
 		$routes->setDefaultNamespace($namespace);
+
+		$router = new Router($routes, Services::request());
+		$router->handle('/product');
+
+		$this->assertEquals('\App\\Controllers\\Product', $router->controllerName());
+	}
+
+	/**
+	 * @dataProvider provideRouteDefaultNamespace
+	 */
+	public function testRoutesControllerNameReturnsFQCN($namespace)
+	{
+		$routes = $this->getCollector();
+		$routes->setAutoRoute(false);
+		$routes->setDefaultNamespace($namespace);
+		$routes->get('/product', 'Product');
 
 		$router = new Router($routes, Services::request());
 		$router->handle('/product');
