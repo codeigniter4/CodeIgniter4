@@ -579,7 +579,7 @@ class Router implements RouterInterface
 		// We have to check for a length over 1, since by default it will be '\'
 		if (strpos($this->controller, '\\') === false && strlen($this->collection->getDefaultNamespace()) > 1)
 		{
-			$this->controller = '\\' . str_replace('/', '\\', $this->collection->getDefaultNamespace() . $this->directory . $this->controllerName());
+			$this->controller = '\\' . ltrim(str_replace('/', '\\', $this->collection->getDefaultNamespace() . $this->directory . $this->controllerName()), '\\');
 		}
 	}
 

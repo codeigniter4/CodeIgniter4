@@ -1474,11 +1474,22 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expects, $router->handle('/0'));
 	}
 
-	public function testRoutesControllerNameReturnsFQCN()
+	public function provideAutoRouteDefaultNamespace()
+	{
+		return [
+			'with \\ prefix'    => ['\App\Controllers'],
+			'without \\ prefix' => ['App\Controllers'],
+		];
+	}
+
+	/**
+	 * @dataProvider provideAutoRouteDefaultNamespace
+	 */
+	public function testAutoRoutesControllerNameReturnsFQCN($namespace)
 	{
 		$routes = $this->getCollector();
 		$routes->setAutoRoute(true);
-		$routes->setDefaultNamespace('App\Controllers');
+		$routes->setDefaultNamespace($namespace);
 
 		$router = new Router($routes, Services::request());
 		$router->handle('/product');
