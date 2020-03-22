@@ -644,4 +644,81 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $errors['Username']);
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * @dataProvider arrayFieldDataProvider
+	 */
+	public function testRulesForArrayField($body, $rules, $results)
+	{
+		$config          = new App();
+		$config->baseURL = 'http://example.com';
+
+		$request = new IncomingRequest($config, new URI(), http_build_query($body), new UserAgent());
+		$request->setMethod('post');
+
+		$this->validation->setRules($rules);
+		$this->validation->withRequest($request)
+			->run($body);
+		$this->assertEquals($results, $this->validation->getErrors());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function arrayFieldDataProvider() {
+		return [
+			'all_rules_should_pass' => [
+				'body' => [
+					'foo' => [
+						'a',
+						'b',
+						'c'
+					]
+				],
+				'rules' => [
+					'foo.0' => 'required|alpha|max_length[2]',
+					'foo.1' => 'required|alpha|max_length[2]',
+					'foo.2' => 'required|alpha|max_length[2]'
+				],
+				'results' => []
+			],
+			'first_field_will_return_required_error' => [
+				'body' => [
+					'foo' => [
+						'',
+						'b',
+						'c'
+					]
+				],
+				'rules' => [
+					'foo.0' => 'required|alpha|max_length[2]',
+					'foo.1' => 'required|alpha|max_length[2]',
+					'foo.2' => 'required|alpha|max_length[2]'
+				],
+				'results' => [
+					'foo.0' => 'The foo.0 field is required.'
+				]
+			],
+			'first_and second_field_will_return_required_and_min_length_error' => [
+				'body' => [
+					'foo' => [
+						'',
+						'b',
+						'c'
+					]
+				],
+				'rules' => [
+					'foo.0' => 'required|alpha|max_length[2]',
+					'foo.1' => 'required|alpha|min_length[2]|max_length[4]',
+					'foo.2' => 'required|alpha|max_length[2]'
+				],
+				'results' => [
+					'foo.0' => 'The foo.0 field is required.',
+					'foo.1' => 'The foo.1 field must be at least 2 characters in length.',
+				]
+			]
+		];
+	}
+
+	//--------------------------------------------------------------------
 }
