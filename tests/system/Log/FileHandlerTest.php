@@ -15,9 +15,6 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->start = $this->root->url() . '/';
 	}
 
-/**
- * @group testme
- */
 	public function testHandle()
 	{
 		$config = new LoggerConfig();
