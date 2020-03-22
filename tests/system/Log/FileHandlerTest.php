@@ -15,9 +15,13 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->start = $this->root->url() . '/';
 	}
 
+/**
+ * @group testme
+ */
 	public function testHandle()
 	{
-		$config                                                                = new LoggerConfig();
+		$config = new LoggerConfig();
+
 		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
 
 		$logger = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
@@ -32,7 +36,8 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$config                                                                = new LoggerConfig();
 		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['path']    = $this->start . 'charlie/';
 		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
-		$logger                                                                = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
+
+		$logger = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
 		$logger->setDateFormat('Y-m-d H:i:s:u');
 		$expected = 'log-' . date('Y-m-d') . '.log';
 		vfsStream::newFile($expected)->at(vfsStream::setup('root/charlie'))->withContent('This is a test log');
