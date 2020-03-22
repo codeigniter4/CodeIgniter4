@@ -242,7 +242,7 @@ class PagerRenderer
 		}
 		else
 		{
-			$uri->setSegment($this->segment, 1);
+			$uri->setSegment($this->segment, '');
 		}
 
 		return (string) $uri;
@@ -313,7 +313,7 @@ class PagerRenderer
 		for ($i = $this->first; $i <= $this->last; $i ++)
 		{
 			$links[] = [
-				'uri'    => (string) ($this->segment === 0 ? $uri->addQuery($this->pageSelector, $i) : $uri->setSegment($this->segment, $i)),
+				'uri'    => (string) ($this->segment === 0 ? $uri->addQuery($this->pageSelector, $i) : $uri->setSegment($this->segment,  ($i == $this->first)?'':$i)),
 				'title'  => (int) $i,
 				'active' => ($i === $this->current),
 			];
