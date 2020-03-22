@@ -3,8 +3,6 @@ namespace CodeIgniter\Config;
 
 use org\bovigo\vfs\vfsStream;
 
-//require_once 'system/Benchmark/Timer.php';
-
 /**
  * @backupGlobals enabled
  */

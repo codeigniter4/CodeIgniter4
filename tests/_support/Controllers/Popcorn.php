@@ -51,7 +51,6 @@ class Popcorn extends Controller
 			'lang' => $this->request->getLocale(),
 		]);
 
-		//      echo var_dump($this->response->getBody());
 		return $response;
 	}
 
