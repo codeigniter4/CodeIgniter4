@@ -685,6 +685,13 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue(isset($entity->FakeBar));
 	}
 
+	public function testJsonSerializableEntity()
+	{
+		$entity = $this->getEntity();
+		$entity->setBar('foo');
+		$this->assertEquals(json_encode($entity->toArray()), json_encode($entity));
+	}
+
 	protected function getEntity()
 	{
 		return new class extends Entity

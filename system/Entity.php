@@ -46,7 +46,7 @@ use CodeIgniter\Exceptions\CastException;
 /**
  * Entity encapsulation, for use with CodeIgniter\Model
  */
-class Entity
+class Entity implements \JsonSerializable
 {
 	/**
 	 * Maps names used in sets and gets against unique
@@ -613,5 +613,16 @@ class Entity
 			}
 		}
 		return $tmp;
+	}
+
+	/**
+	 * Support for json_encode()
+	 *
+	 * @return array|mixed
+	 * @throws \Exception
+	 */
+	public function jsonSerialize()
+	{
+		return $this->toArray();
 	}
 }
