@@ -542,6 +542,32 @@ class Router implements RouterInterface
 			$this->params = $segments;
 		}
 
+		if ($this->collection->getHTTPVerb() !== 'cli')
+		{
+			$controller  = '\\' . $this->collection->getDefaultNamespace();
+			$controller .= $this->directory ? str_replace('/', '\\', $this->directory) : '';
+			$controller .= $this->controllerName();
+			$controller  = strtolower($controller);
+			$methodName  = strtolower($this->methodName());
+
+			foreach ($this->collection->getRoutes('cli') as $route)
+			{
+				if (is_string($route))
+				{
+					$route = strtolower($route);
+					if (strpos($route, $controller . '::' . $methodName) === 0)
+					{
+						throw new PageNotFoundException();
+					}
+
+					if ($route === $controller)
+					{
+						throw new PageNotFoundException();
+					}
+				}
+			}
+		}
+
 		// Load the file so that it's available for CodeIgniter.
 		$file = APPPATH . 'Controllers/' . $this->directory . $this->controllerName() . '.php';
 		if (is_file($file))

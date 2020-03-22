@@ -204,4 +204,54 @@ class FeatureTestCaseTest extends FeatureTestCase
 		}
 		$this->get('0');
 	}
+
+	public function provideRoutesData()
+	{
+		return [
+			'non parameterized cli'                => [
+				'hello',
+				'Hello::index',
+				'Hello',
+			],
+			'parameterized cli'                    => [
+				'hello/(:any)',
+				'Hello::index/$1',
+				'Hello/index/samsonasik',
+			],
+			'default method index'                 => [
+				'hello',
+				'Hello',
+				'Hello',
+			],
+			'capitalized controller and/or method' => [
+				'hello',
+				'Hello',
+				'HELLO/INDEX',
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider provideRoutesData
+	 */
+	public function testOpenCliRoutesFromHttpGot404($from, $to, $httpGet)
+	{
+		$this->expectException(PageNotFoundException::class);
+
+		require_once SUPPORTPATH . 'Controllers/Hello.php';
+
+		$this->withRoutes([
+			[
+				'cli',
+				$from,
+				$to,
+			],
+		]);
+
+		while (\ob_get_level() > 0)
+		{
+			\ob_end_flush();
+		}
+		$this->get($httpGet);
+	}
 }
