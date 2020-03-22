@@ -39,6 +39,8 @@
 
 namespace CodeIgniter\Database;
 
+use CodeIgniter\Entity;
+
 /**
  * Class BaseResult
  */
@@ -192,7 +194,7 @@ abstract class BaseResult implements ResultInterface
 
 		while ($row = $this->fetchObject($className))
 		{
-			if (method_exists($row, 'syncOriginal'))
+			if (! is_subclass_of($row, Entity::class) && method_exists($row, 'syncOriginal'))
 			{
 				$row->syncOriginal();
 			}
@@ -283,7 +285,7 @@ abstract class BaseResult implements ResultInterface
 		is_null($this->rowData) || $this->dataSeek(0);
 		while ($row = $this->fetchObject())
 		{
-			if (method_exists($row, 'syncOriginal'))
+			if (! is_subclass_of($row, Entity::class) && method_exists($row, 'syncOriginal'))
 			{
 				$row->syncOriginal();
 			}
