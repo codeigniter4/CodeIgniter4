@@ -205,12 +205,12 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_ENV['foo'] = 'bar';
 
 		$logger->log('debug', 'Test message {file} {line}');
-	$line = __LINE__ - 1;
-	$expected = "LoggerTest.php $line";
+		$line     = __LINE__ - 1;
+		$expected = "LoggerTest.php $line";
 
 		$logs = TestHandler::getLogs();
 
-	$this->assertTrue(strpos($logs[0], $expected) > 1);
+		$this->assertTrue(strpos($logs[0], $expected) > 1);
 	}
 
 	//--------------------------------------------------------------------
