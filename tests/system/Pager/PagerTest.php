@@ -343,6 +343,18 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString(
 			'<link rel="canonical"', $this->pager->makeLinks(4, 10, 50, 'default_head')
 		);
+		$this->assertStringContainsString(
+			'?page=1', $this->pager->makeLinks(1, 10, 1, 'default_full', 0)
+		);
+		$this->assertStringContainsString(
+			'?page=1', $this->pager->makeLinks(1, 10, 1, 'default_full', 0, '')
+		);
+		$this->assertStringContainsString(
+			'?page=1', $this->pager->makeLinks(1, 10, 1, 'default_full', 0, 'default')
+		);
+		$this->assertStringContainsString(
+			'?page_custom=1', $this->pager->makeLinks(1, 10, 1, 'default_full', 0, 'custom')
+		);
 	}
 
 	public function testHeadLinks()

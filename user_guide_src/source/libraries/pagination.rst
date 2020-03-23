@@ -116,7 +116,9 @@ If you in need to show many pagers on one page then additional parameter which w
 
 	$pager = service('pager');
 	$pager->setPath('path/for/my-group', 'my-group'); // Additionally you could define path for every group.
-	$pager->makeLinks($page, $perPage, $total, 'template_name', $segment, 'my-group'); 
+	$pager->makeLinks($page, $perPage, $total, 'template_name', $segment, 'my-group');
+
+Pagination library uses *page* query parameter for HTTP queries by default (if no group or *default* group name given) or *page_[groupName]* for custom group names. 
 
 Paginating with Only Expected Queries
 =====================================
