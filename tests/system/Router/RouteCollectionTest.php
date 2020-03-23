@@ -815,7 +815,6 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$routes->add('{locale}/contact', 'myController::goto');
 
 		$this->assertEquals('/en/contact', $routes->reverseRoute('myController::goto'));
-
 	}
 
 	//--------------------------------------------------------------------
@@ -1473,6 +1472,45 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expects = '\App\Controllers\Core\Home';
 
 		$this->assertEquals($expects, $router->handle('/0'));
+	}
+
+	public function provideRouteDefaultNamespace()
+	{
+		return [
+			'with \\ prefix'    => ['\App\Controllers'],
+			'without \\ prefix' => ['App\Controllers'],
+		];
+	}
+
+	/**
+	 * @dataProvider provideRouteDefaultNamespace
+	 */
+	public function testAutoRoutesControllerNameReturnsFQCN($namespace)
+	{
+		$routes = $this->getCollector();
+		$routes->setAutoRoute(true);
+		$routes->setDefaultNamespace($namespace);
+
+		$router = new Router($routes, Services::request());
+		$router->handle('/product');
+
+		$this->assertEquals('\App\\Controllers\\Product', $router->controllerName());
+	}
+
+	/**
+	 * @dataProvider provideRouteDefaultNamespace
+	 */
+	public function testRoutesControllerNameReturnsFQCN($namespace)
+	{
+		$routes = $this->getCollector();
+		$routes->setAutoRoute(false);
+		$routes->setDefaultNamespace($namespace);
+		$routes->get('/product', 'Product');
+
+		$router = new Router($routes, Services::request());
+		$router->handle('/product');
+
+		$this->assertEquals('\App\\Controllers\\Product', $router->controllerName());
 	}
 
 }
