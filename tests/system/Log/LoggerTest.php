@@ -204,16 +204,13 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$_ENV['foo'] = 'bar';
 
-		// For whatever reason, this will often be the class/function instead of file and line.
-		// Other times it actually returns the line number, so don't look for either
-		$expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message LoggerTest';
-
 		$logger->log('debug', 'Test message {file} {line}');
+		$line     = __LINE__ - 1;
+		$expected = "LoggerTest.php $line";
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertCount(1, $logs);
-		$this->assertTrue(strpos($logs[0], $expected) === 0);
+		$this->assertTrue(strpos($logs[0], $expected) > 1);
 	}
 
 	//--------------------------------------------------------------------
