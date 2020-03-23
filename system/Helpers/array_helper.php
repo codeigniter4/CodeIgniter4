@@ -90,7 +90,7 @@ if (! function_exists('_array_search_dot'))
 			// If $array has more than 1 item, we have to loop over each.
 			if (is_array($array))
 			{
-				foreach ($array as $key => $value)
+				foreach ($array as $value)
 				{
 					$answer = _array_search_dot($indexes, $value);
 

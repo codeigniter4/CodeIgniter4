@@ -820,7 +820,6 @@ class Email
 	 */
 	protected function getProtocol()
 	{
-		$this->protocol                                                      = strtolower($this->protocol);
 		in_array($this->protocol, $this->protocols, true) || $this->protocol = 'mail';
 		return $this->protocol;
 	}

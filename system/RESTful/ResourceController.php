@@ -58,13 +58,13 @@ class ResourceController extends Controller
 	 *
 	 * @var string Name of the model class managing this resource's data
 	 */
-	protected $modelName = null;
+	protected $modelName;
 
 	/**
 	 *
 	 * @var \CodeIgniter\Model the model holding this resource's data
 	 */
-	protected $model = null;
+	protected $model;
 
 	//--------------------------------------------------------------------
 
@@ -93,7 +93,7 @@ class ResourceController extends Controller
 	 *
 	 * @return array	an array
 	 */
-	public function show($id = null)
+	public function show()
 	{
 		return $this->fail(lang('RESTful.notImplemented', ['show']), 501);
 	}
@@ -123,7 +123,7 @@ class ResourceController extends Controller
 	 *
 	 * @return array	an array
 	 */
-	public function edit($id = null)
+	public function edit()
 	{
 		return $this->fail(lang('RESTful.notImplemented', ['edit']), 501);
 	}
@@ -133,7 +133,7 @@ class ResourceController extends Controller
 	 *
 	 * @return array	an array
 	 */
-	public function update($id = null)
+	public function update()
 	{
 		return $this->fail(lang('RESTful.notImplemented', ['update']), 501);
 	}
@@ -143,7 +143,7 @@ class ResourceController extends Controller
 	 *
 	 * @return array	an array
 	 */
-	public function delete($id = null)
+	public function delete()
 	{
 		return $this->fail(lang('RESTful.notImplemented', ['delete']), 501);
 	}

@@ -107,21 +107,21 @@ class Router implements RouterInterface
 	 *
 	 * @var array|null
 	 */
-	protected $matchedRoute = null;
+	protected $matchedRoute;
 
 	/**
 	 * The options set for the matched route.
 	 *
 	 * @var array|null
 	 */
-	protected $matchedRouteOptions = null;
+	protected $matchedRouteOptions;
 
 	/**
 	 * The locale that was detected in a route.
 	 *
 	 * @var string
 	 */
-	protected $detectedLocale = null;
+	protected $detectedLocale;
 
 	/**
 	 * The filter info from Route Collection

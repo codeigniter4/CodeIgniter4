@@ -83,7 +83,7 @@ class FileRules
 	 *
 	 * @return boolean
 	 */
-	public function uploaded(string $blank = null, string $name, array $data): bool
+	public function uploaded(string $blank = null, string $name): bool
 	{
 		$file = $this->request->getFile($name);
 
@@ -114,7 +114,7 @@ class FileRules
 	 *
 	 * @return boolean
 	 */
-	public function max_size(string $blank = null, string $params, array $data): bool
+	public function max_size(string $blank = null, string $params): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
@@ -159,7 +159,7 @@ class FileRules
 	 *
 	 * @return boolean
 	 */
-	public function is_image(string $blank = null, string $params, array $data): bool
+	public function is_image(string $blank = null, string $params): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
@@ -207,7 +207,7 @@ class FileRules
 	 *
 	 * @return boolean
 	 */
-	public function mime_in(string $blank = null, string $params, array $data): bool
+	public function mime_in(string $blank = null, string $params): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
@@ -251,7 +251,7 @@ class FileRules
 	 *
 	 * @return boolean
 	 */
-	public function ext_in(string $blank = null, string $params, array $data): bool
+	public function ext_in(string $blank = null, string $params): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
@@ -296,7 +296,7 @@ class FileRules
 	 *
 	 * @return boolean
 	 */
-	public function max_dims(string $blank = null, string $params, array $data): bool
+	public function max_dims(string $blank = null, string $params): bool
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.

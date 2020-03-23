@@ -61,7 +61,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @return mixed
 	 */
-	public function _prepare(string $sql, array $options = [])
+	public function _prepare(string $sql)
 	{
 		// Mysqli driver doesn't like statements
 		// with terminating semicolons.
@@ -116,9 +116,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		// Bind it
 		$this->statement->bind_param($bindTypes, ...$data);
 
-		$success = $this->statement->execute();
-
-		return $success;
+		return $this->statement->execute();
 	}
 
 	//--------------------------------------------------------------------

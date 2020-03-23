@@ -186,14 +186,14 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @var string
 	 */
-	protected $group = null;
+	protected $group;
 
 	/**
 	 * The current subdomain.
 	 *
 	 * @var string
 	 */
-	protected $currentSubdomain = null;
+	protected $currentSubdomain;
 
 	/**
 	 * Stores copy of current options being
@@ -201,7 +201,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @var null
 	 */
-	protected $currentOptions = null;
+	protected $currentOptions;
 
 	/**
 	 * A little performance booster.
@@ -1214,7 +1214,7 @@ class RouteCollection implements RouteCollectionInterface
 	public function reverseRoute(string $search, ...$params)
 	{
 		// Named routes get higher priority.
-		foreach ($this->routes as $verb => $collection)
+		foreach ($this->routes as $collection)
 		{
 			if (array_key_exists($search, $collection))
 			{
@@ -1225,7 +1225,7 @@ class RouteCollection implements RouteCollectionInterface
 
 		// If it's not a named route, then loop over
 		// all routes to find a match.
-		foreach ($this->routes as $verb => $collection)
+		foreach ($this->routes as $collection)
 		{
 			foreach ($collection as $route)
 			{

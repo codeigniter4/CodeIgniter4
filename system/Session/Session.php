@@ -94,7 +94,7 @@ class Session implements SessionInterface
 	 *
 	 * @var string
 	 */
-	protected $sessionSavePath = null;
+	protected $sessionSavePath;
 
 	/**
 	 * Whether to match the user's IP address when reading the session data.

@@ -51,7 +51,7 @@ class UserAgent
 	 *
 	 * @var string
 	 */
-	protected $agent = null;
+	protected $agent;
 
 	/**
 	 * Flag for if the user-agent belongs to a browser

@@ -424,8 +424,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 			'\\' . '_',
 		], $str
 		);
-
-		return $str;
 	}
 
 	//--------------------------------------------------------------------

@@ -323,8 +323,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$retVal[$i]->type        = $query[$i]->type;
 			$retVal[$i]->max_length  = null;
 			$retVal[$i]->default     = $query[$i]->dflt_value;
-			$retVal[$i]->primary_key = isset($query[$i]->pk) ? (bool)$query[$i]->pk : false;
-			$retVal[$i]->nullable    = isset($query[$i]->notnull) ? ! (bool)$query[$i]->notnull : false;
+			$retVal[$i]->primary_key = isset($query[$i]->pk) && (bool)$query[$i]->pk;
+			$retVal[$i]->nullable    = isset($query[$i]->notnull) && ! (bool)$query[$i]->notnull;
 		}
 
 		return $retVal;

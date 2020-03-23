@@ -55,13 +55,13 @@ class ResourcePresenter extends Controller
 	 *
 	 * @var string Name of the model class managing this resource's data
 	 */
-	protected $modelName = null;
+	protected $modelName;
 
 	/**
 	 *
 	 * @var \CodeIgniter\Model the model holding this resource's data
 	 */
-	protected $model = null;
+	protected $model;
 
 	//--------------------------------------------------------------------
 
@@ -91,7 +91,7 @@ class ResourcePresenter extends Controller
 	 * @param  type $id
 	 * @return string
 	 */
-	public function show($id = null)
+	public function show()
 	{
 		return lang('RESTful.notImplemented', ['show']);
 	}
@@ -124,7 +124,7 @@ class ResourcePresenter extends Controller
 	 * @param  type $id
 	 * @return string
 	 */
-	public function remove($id = null)
+	public function remove()
 	{
 		return lang('RESTful.notImplemented', ['remove']);
 	}
@@ -135,7 +135,7 @@ class ResourcePresenter extends Controller
 	 * @param  type $id
 	 * @return string
 	 */
-	public function delete($id = null)
+	public function delete()
 	{
 		return lang('RESTful.notImplemented', ['delete']);
 	}
@@ -146,7 +146,7 @@ class ResourcePresenter extends Controller
 	 * @param  type $id
 	 * @return string
 	 */
-	public function edit($id = null)
+	public function edit()
 	{
 		return lang('RESTful.notImplemented', ['edit']);
 	}
@@ -158,7 +158,7 @@ class ResourcePresenter extends Controller
 	 * @param  type $id
 	 * @return string
 	 */
-	public function update($id = null)
+	public function update()
 	{
 		return lang('RESTful.notImplemented', ['update']);
 	}

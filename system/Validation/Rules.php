@@ -61,7 +61,7 @@ class Rules
 	 */
 	public function differs(string $str = null, string $field, array $data): bool
 	{
-		return array_key_exists($field, $data) ? ($str !== $data[$field]) : false;
+		return array_key_exists($field, $data) && $str !== $data[$field];
 	}
 
 	//--------------------------------------------------------------------
@@ -91,7 +91,7 @@ class Rules
 	 *
 	 * @return boolean
 	 */
-	public function exact_length(string $str = null, string $val, array $data): bool
+	public function exact_length(string $str = null, string $val): bool
 	{
 		$val = explode(',', $val);
 		foreach ($val as $tmp)
@@ -116,9 +116,9 @@ class Rules
 	 *
 	 * @return boolean
 	 */
-	public function greater_than(string $str = null, string $min, array $data): bool
+	public function greater_than(string $str = null, string $min): bool
 	{
-		return is_numeric($str) ? ($str > $min) : false;
+		return is_numeric($str) && $str > $min;
 	}
 
 	//--------------------------------------------------------------------
@@ -132,9 +132,9 @@ class Rules
 	 *
 	 * @return boolean
 	 */
-	public function greater_than_equal_to(string $str = null, string $min, array $data): bool
+	public function greater_than_equal_to(string $str = null, string $min): bool
 	{
-		return is_numeric($str) ? ($str >= $min) : false;
+		return is_numeric($str) && $str >= $min;
 	}
 
 	//--------------------------------------------------------------------
@@ -188,7 +188,7 @@ class Rules
 	 * @param  array  $data
 	 * @return boolean
 	 */
-	public function in_list(string $value = null, string $list, array $data): bool
+	public function in_list(string $value = null, string $list): bool
 	{
 		$list = explode(',', $list);
 		$list = array_map(function ($value) {
@@ -250,7 +250,7 @@ class Rules
 	 */
 	public function less_than(string $str = null, string $max): bool
 	{
-		return is_numeric($str) ? ($str < $max) : false;
+		return is_numeric($str) && $str < $max;
 	}
 
 	//--------------------------------------------------------------------
@@ -265,7 +265,7 @@ class Rules
 	 */
 	public function less_than_equal_to(string $str = null, string $max): bool
 	{
-		return is_numeric($str) ? ($str <= $max) : false;
+		return is_numeric($str) && $str <= $max;
 	}
 
 	//--------------------------------------------------------------------
@@ -281,7 +281,7 @@ class Rules
 	 */
 	public function matches(string $str = null, string $field, array $data): bool
 	{
-		return array_key_exists($field, $data) ? ($str === $data[$field]) : false;
+		return array_key_exists($field, $data) && $str === $data[$field];
 	}
 
 	//--------------------------------------------------------------------
@@ -295,7 +295,7 @@ class Rules
 	 *
 	 * @return boolean
 	 */
-	public function max_length(string $str = null, string $val, array $data): bool
+	public function max_length(string $str = null, string $val): bool
 	{
 		return ($val >= mb_strlen($str));
 	}
@@ -311,7 +311,7 @@ class Rules
 	 *
 	 * @return boolean
 	 */
-	public function min_length(string $str = null, string $val, array $data): bool
+	public function min_length(string $str = null, string $val): bool
 	{
 		return ($val <= mb_strlen($str));
 	}

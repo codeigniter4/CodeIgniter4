@@ -437,7 +437,7 @@ class CLI
 		// Do it once or more, write with empty string gives us a new line
 		for ($i = 0; $i < $num; $i ++)
 		{
-			static::write('');
+			static::write();
 		}
 	}
 
@@ -504,9 +504,7 @@ class CLI
 			$string .= "\033[4m";
 		}
 
-		$string .= $text . "\033[0m";
-
-		return $string;
+		return $string . ($text . "\033[0m");
 	}
 
 	//--------------------------------------------------------------------
@@ -714,11 +712,6 @@ class CLI
 				static::$segments[] = $_SERVER['argv'][$i];
 				continue;
 			}
-
-			// We set $optionsFound here so that we know to
-			// skip the next argument since it's likely the
-			// value belonging to this option.
-			$optionsFound = true;
 
 			$arg   = str_replace('-', '', $_SERVER['argv'][$i]);
 			$value = null;

@@ -261,7 +261,7 @@ class Parser extends View
 	 * @param  array  $options  Future options
 	 * @return string
 	 */
-	protected function parse(string $template, array $data = [], array $options = null): string
+	protected function parse(string $template, array $data = []): string
 	{
 		if ($template === '')
 		{
@@ -304,9 +304,7 @@ class Parser extends View
 			}
 		}
 
-		$template = $this->insertNoparse($template);
-
-		return $template;
+		return $this->insertNoparse($template);
 	}
 
 	//--------------------------------------------------------------------
@@ -621,9 +619,7 @@ class Parser extends View
 			}
 		}
 
-		$replace = $this->applyFilters($replace, $filters);
-
-		return $replace;
+		return $this->applyFilters($replace, $filters);
 	}
 
 	//--------------------------------------------------------------------

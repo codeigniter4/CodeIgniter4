@@ -417,7 +417,7 @@ abstract class BaseUtils
 	 *
 	 * @return mixed
 	 */
-	abstract public function _backup(array $prefs = null);
+	public abstract function _backup();
 
 	//--------------------------------------------------------------------
 }

@@ -144,7 +144,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @return mixed
 	 */
-	abstract public function _prepare(string $sql, array $options = []);
+	abstract public function _prepare(string $sql);
 
 	//--------------------------------------------------------------------
 

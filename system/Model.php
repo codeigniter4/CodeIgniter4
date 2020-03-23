@@ -691,7 +691,7 @@ class Model
 		// Validate data before saving.
 		if ($this->skipValidation === false)
 		{
-			if ($this->cleanRules(false)->validate($data) === false)
+			if ($this->cleanRules()->validate($data) === false)
 			{
 				return false;
 			}
@@ -759,7 +759,7 @@ class Model
 		{
 			foreach ($set as $row)
 			{
-				if ($this->cleanRules(false)->validate($row) === false)
+				if ($this->cleanRules()->validate($row) === false)
 				{
 					return false;
 				}
@@ -1258,13 +1258,10 @@ class Model
 		{
 			case 'int':
 				return $currentDate;
-				break;
 			case 'datetime':
 				return date('Y-m-d H:i:s', $currentDate);
-				break;
 			case 'date':
 				return date('Y-m-d', $currentDate);
-				break;
 			default:
 				throw ModelException::forNoDateFormat(get_class($this));
 		}

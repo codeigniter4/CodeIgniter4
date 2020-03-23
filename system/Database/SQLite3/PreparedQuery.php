@@ -71,7 +71,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @return mixed
 	 */
-	public function _prepare(string $sql, array $options = [])
+	public function _prepare(string $sql)
 	{
 		if (! ($this->statement = $this->db->connID->prepare($sql)))
 		{

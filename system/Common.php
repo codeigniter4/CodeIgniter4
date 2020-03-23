@@ -319,7 +319,7 @@ if (! function_exists('esc'))
 	{
 		if (is_array($data))
 		{
-			foreach ($data as $key => &$value)
+			foreach ($data as &$value)
 			{
 				$value = esc($value, $context);
 			}

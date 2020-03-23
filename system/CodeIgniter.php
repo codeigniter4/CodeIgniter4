@@ -749,9 +749,7 @@ class CodeIgniter
 	{
 		$this->totalTime = $this->benchmark->getElapsedTime('total_execution');
 
-		$output = str_replace('{elapsed_time}', $this->totalTime, $output);
-
-		return $output;
+		return str_replace('{elapsed_time}', $this->totalTime, $output);
 	}
 
 	//--------------------------------------------------------------------

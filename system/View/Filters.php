@@ -332,13 +332,10 @@ class Filters
 		{
 			case 'common':
 				return round($value, $precision);
-				break;
 			case 'ceil':
 				return ceil($value);
-				break;
 			case 'floor':
 				return floor($value);
-				break;
 		}
 
 		// Still here, just return the value.
