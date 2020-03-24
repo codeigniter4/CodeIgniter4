@@ -88,7 +88,6 @@ class ResourcePresenter extends Controller
 	/**
 	 * Present a view to present a specific resource object
 	 *
-	 * @param  type $id
 	 * @return string
 	 */
 	public function show()
@@ -99,7 +98,6 @@ class ResourcePresenter extends Controller
 	/**
 	 * Present a view to present a new single resource object
 	 *
-	 * @param  type $id
 	 * @return string
 	 */
 	public function new()
@@ -121,7 +119,6 @@ class ResourcePresenter extends Controller
 	/**
 	 * Present a view to confirm the deletion of a specific resource object
 	 *
-	 * @param  type $id
 	 * @return string
 	 */
 	public function remove()
@@ -132,7 +129,6 @@ class ResourcePresenter extends Controller
 	/**
 	 * Process the deletion of a specific resource object
 	 *
-	 * @param  type $id
 	 * @return string
 	 */
 	public function delete()
@@ -143,7 +139,6 @@ class ResourcePresenter extends Controller
 	/**
 	 * Present a view to edit the properties of a specific resource object
 	 *
-	 * @param  type $id
 	 * @return string
 	 */
 	public function edit()
@@ -155,7 +150,6 @@ class ResourcePresenter extends Controller
 	 * Process the updating, full or partial, of a specific resource object.
 	 * This should be a POST.
 	 *
-	 * @param  type $id
 	 * @return string
 	 */
 	public function update()

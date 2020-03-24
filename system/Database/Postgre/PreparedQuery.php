@@ -74,8 +74,6 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 * override this method.
 	 *
 	 * @param string $sql
-	 * @param array  $options Passed to the connection's prepare statement.
-	 *                        Unused in the MySQLi driver.
 	 *
 	 * @return mixed
 	 * @throws \Exception

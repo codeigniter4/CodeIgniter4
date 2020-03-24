@@ -256,9 +256,9 @@ class Parser extends View
 	 * Parses pseudo-variables contained in the specified template,
 	 * replacing them with the data in the second param
 	 *
-	 * @param  string $template
-	 * @param  array  $data
-	 * @param  array  $options  Future options
+	 * @param string $template
+	 * @param array  $data
+	 *
 	 * @return string
 	 */
 	protected function parse(string $template, array $data = []): string

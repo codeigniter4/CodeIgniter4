@@ -186,7 +186,6 @@ class Exceptions
 	 * @param string       $message
 	 * @param string|null  $file
 	 * @param integer|null $line
-	 * @param null         $context
 	 *
 	 * @throws \ErrorException
 	 */

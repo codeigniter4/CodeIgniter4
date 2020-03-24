@@ -218,7 +218,6 @@ class FormatRules
 	 *
 	 * @param string $str
 	 * @param string $pattern
-	 * @param array  $data    Other field/value pairs
 	 *
 	 * @return boolean
 	 */

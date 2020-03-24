@@ -66,8 +66,6 @@ class Utils extends BaseUtils
 	/**
 	 * Platform dependent version of the backup function.
 	 *
-	 * @param array|null $prefs
-	 *
 	 * @return mixed
 	 */
 	public function _backup()

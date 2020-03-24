@@ -158,7 +158,6 @@ class Table
 	 *
 	 * Can be passed as an array or discreet params
 	 *
-	 * @param  mixed
 	 * @return Table
 	 */
 	public function setHeading()
@@ -172,7 +171,6 @@ class Table
 	 *
 	 * Can be passed as an array or discreet params
 	 *
-	 * @param  mixed
 	 * @return Table
 	 */
 	public function setFooting()
@@ -252,7 +250,6 @@ class Table
 	 *
 	 * Can be passed as an array or discreet params
 	 *
-	 * @param  mixed
 	 * @return Table
 	 */
 	public function addRow()

@@ -87,7 +87,6 @@ class Rules
 	 *
 	 * @param string $str
 	 * @param string $val
-	 * @param array  $data
 	 *
 	 * @return boolean
 	 */
@@ -112,7 +111,6 @@ class Rules
 	 *
 	 * @param string $str
 	 * @param string $min
-	 * @param array  $data
 	 *
 	 * @return boolean
 	 */
@@ -128,7 +126,6 @@ class Rules
 	 *
 	 * @param string $str
 	 * @param string $min
-	 * @param array  $data
 	 *
 	 * @return boolean
 	 */
@@ -183,9 +180,9 @@ class Rules
 	/**
 	 * Value should be within an array of values
 	 *
-	 * @param  string $value
-	 * @param  string $list
-	 * @param  array  $data
+	 * @param string $value
+	 * @param string $list
+	 *
 	 * @return boolean
 	 */
 	public function in_list(string $value = null, string $list): bool
@@ -291,7 +288,6 @@ class Rules
 	 *
 	 * @param string $str
 	 * @param string $val
-	 * @param array  $data
 	 *
 	 * @return boolean
 	 */
@@ -307,7 +303,6 @@ class Rules
 	 *
 	 * @param string $str
 	 * @param string $val
-	 * @param array  $data
 	 *
 	 * @return boolean
 	 */

@@ -413,8 +413,6 @@ abstract class BaseUtils
 	/**
 	 * Platform dependent version of the backup function.
 	 *
-	 * @param array|null $prefs
-	 *
 	 * @return mixed
 	 */
 	public abstract function _backup();

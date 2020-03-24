@@ -48,8 +48,6 @@ class Plugins
 	/**
 	 * Wrap helper function to use as view plugin.
 	 *
-	 * @param array $params
-	 *
 	 * @return string|\CodeIgniter\HTTP\URI
 	 */
 	public static function currentURL()
@@ -61,8 +59,6 @@ class Plugins
 
 	/**
 	 * Wrap helper function to use as view plugin.
-	 *
-	 * @param array $params
 	 *
 	 * @return \CodeIgniter\HTTP\URI|mixed|string
 	 */

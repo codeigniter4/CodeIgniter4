@@ -79,7 +79,6 @@ class FileRules
 	 *
 	 * @param string $blank
 	 * @param string $name
-	 * @param array  $data
 	 *
 	 * @return boolean
 	 */
@@ -110,7 +109,6 @@ class FileRules
 	 *
 	 * @param string|null $blank
 	 * @param string      $params
-	 * @param array       $data
 	 *
 	 * @return boolean
 	 */
@@ -155,7 +153,6 @@ class FileRules
 	 *
 	 * @param string|null $blank
 	 * @param string      $params
-	 * @param array       $data
 	 *
 	 * @return boolean
 	 */
@@ -203,7 +200,6 @@ class FileRules
 	 *
 	 * @param string|null $blank
 	 * @param string      $params
-	 * @param array       $data
 	 *
 	 * @return boolean
 	 */
@@ -247,7 +243,6 @@ class FileRules
 	 *
 	 * @param string|null $blank
 	 * @param string      $params
-	 * @param array       $data
 	 *
 	 * @return boolean
 	 */
@@ -292,7 +287,6 @@ class FileRules
 	 *
 	 * @param string|null $blank
 	 * @param string      $params
-	 * @param array       $data
 	 *
 	 * @return boolean
 	 */

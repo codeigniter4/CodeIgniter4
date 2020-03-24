@@ -205,7 +205,6 @@ class CreditCardRules
 	 *
 	 * @param string $ccNumber
 	 * @param string $type
-	 * @param array  $data
 	 *
 	 * @return boolean
 	 */
