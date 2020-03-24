@@ -700,14 +700,12 @@ class CLI
 	 */
 	protected static function parseCommandLine()
 	{
-		$optionsFound = false;
-
 		// start picking segments off from #1, ignoring the invoking program
 		for ($i = 1; $i < $_SERVER['argc']; $i ++)
 		{
 			// If there's no '-' at the beginning of the argument
 			// then add it to our segments.
-			if (! $optionsFound && mb_strpos($_SERVER['argv'][$i], '-') === false)
+			if (mb_strpos($_SERVER['argv'][$i], '-') === false)
 			{
 				static::$segments[] = $_SERVER['argv'][$i];
 				continue;
@@ -724,10 +722,6 @@ class CLI
 			}
 
 			static::$options[$arg] = $value;
-
-			// Reset $optionsFound so it can collect segments
-			// past any options.
-			$optionsFound = false;
 		}
 	}
 
