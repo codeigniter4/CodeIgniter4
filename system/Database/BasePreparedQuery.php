@@ -140,10 +140,11 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	 * The database-dependent portion of the prepare statement.
 	 *
 	 * @param string $sql
+	 * @param array  $options Passed to the connection's prepare statement.
 	 *
 	 * @return mixed
 	 */
-	abstract public function _prepare(string $sql);
+	abstract public function _prepare(string $sql, array $options = []);
 
 	//--------------------------------------------------------------------
 

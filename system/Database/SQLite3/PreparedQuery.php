@@ -66,10 +66,12 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 * override this method.
 	 *
 	 * @param string $sql
+	 * @param array  $options Passed to the connection's prepare statement.
+	 *                        Unused in the MySQLi driver.
 	 *
 	 * @return mixed
 	 */
-	public function _prepare(string $sql)
+	public function _prepare(string $sql, array $options = [])
 	{
 		if (! ($this->statement = $this->db->connID->prepare($sql)))
 		{
