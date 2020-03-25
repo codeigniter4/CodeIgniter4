@@ -220,33 +220,30 @@ class Forge extends \CodeIgniter\Database\Forge
 	{
 		$sqls = [];
 
-		for ($i = 0, $c = count($this->keys); $i < $c; $i++)
+		foreach ($this->keys as $i => $key)
 		{
-			$this->keys[$i] = (array)$this->keys[$i];
-
-			for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
+			$key = (array)$key;
+			foreach ($key as $i2 => $key)
 			{
-				if (! isset($this->fields[$this->keys[$i][$i2]]))
+				if (! isset($this->fields[$key[$i2]]))
 				{
-					unset($this->keys[$i][$i2]);
+						unset($key[$i2]);
 				}
 			}
-			if (count($this->keys[$i]) <= 0)
+			if (count($key) <= 0)
 			{
 				continue;
 			}
-
 			if (in_array($i, $this->uniqueKeys))
 			{
-				$sqls[] = 'CREATE UNIQUE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+				$sqls[] = 'CREATE UNIQUE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $key))
 						  . ' ON ' . $this->db->escapeIdentifiers($table)
-						  . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+						  . ' (' . implode(', ', $this->db->escapeIdentifiers($key)) . ');';
 				continue;
 			}
-
-			$sqls[] = 'CREATE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+			$sqls[] = 'CREATE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $key))
 					  . ' ON ' . $this->db->escapeIdentifiers($table)
-					  . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+					  . ' (' . implode(', ', $this->db->escapeIdentifiers($key)) . ');';
 		}
 
 		return $sqls;

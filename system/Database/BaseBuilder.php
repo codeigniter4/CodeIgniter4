@@ -671,11 +671,11 @@ class BaseBuilder
 			}
 
 			$cond = ' ON ';
-			for ($i = 0, $c = count($conditions); $i < $c; $i ++)
+			foreach ($conditions as $condition)
 			{
-				$operator = $this->getOperator($conditions[$i]);
-				$cond    .= $joints[$i];
-				$cond    .= preg_match("/(\(*)?([\[\]\w\.'-]+)" . preg_quote($operator) . '(.*)/i', $conditions[$i], $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $conditions[$i];
+				$operator = $this->getOperator($condition);
+				$cond    .= $condition;
+				$cond    .= preg_match("/(\(*)?([\[\]\w\.'-]+)" . preg_quote($operator) . '(.*)/i', $condition, $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $condition;
 			}
 		}
 
@@ -981,12 +981,12 @@ class BaseBuilder
 	 * @used-by whereNotIn()
 	 * @used-by orWhereNotIn()
 	 *
-	 * @param string        $key    The field to search
-	 * @param array|Closure $values The values searched on, or anonymous function with subquery
-	 * @param boolean       $not    If the statement would be IN or NOT IN
-	 * @param string        $type
-	 * @param boolean       $escape
-	 * @param string        $clause (Internal use only)
+	 * @param  string        $key    The field to search
+	 * @param  array|Closure $values The values searched on, or anonymous function with subquery
+	 * @param  boolean       $not    If the statement would be IN or NOT IN
+	 * @param  string        $type
+	 * @param  boolean       $escape
+	 * @param  string        $clause (Internal use only)
 	 * @throws InvalidArgumentException
 	 *
 	 * @return BaseBuilder
@@ -998,8 +998,8 @@ class BaseBuilder
 			if (CI_DEBUG)
 			{
 				throw new InvalidArgumentException(sprintf('%s() expects $key to be a non-empty string', debug_backtrace(0, 2)[1]['function']));
-			} 
-			
+			}
+
 			return $this;
 		}
 
@@ -1009,7 +1009,7 @@ class BaseBuilder
 			{
 				throw new InvalidArgumentException(sprintf('%s() expects $values to be of type array or closure', debug_backtrace(0, 2)[1]['function']));
 			}
-			
+
 			return $this;
 		}
 
@@ -3032,7 +3032,7 @@ class BaseBuilder
 	{
 		if (! empty($this->$qb_key))
 		{
-			for ($i = 0, $c = count($this->$qb_key); $i < $c; $i ++)
+			foreach ($this->$qb_key as $i => $qb_key)
 			{
 				// Is this condition already compiled?
 				if (is_string($this->{$qb_key}[$i]))
@@ -3050,10 +3050,10 @@ class BaseBuilder
 						'/((?:^|\s+)AND\s+|(?:^|\s+)OR\s+)/i', $this->{$qb_key}[$i]['condition'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
 				);
 
-				for ($ci = 0, $cc = count($conditions); $ci < $cc; $ci ++)
+				foreach ($conditions as $condition)
 				{
-					if (($op = $this->getOperator($conditions[$ci])) === false
-							|| ! preg_match('/^(\(?)(.*)(' . preg_quote($op, '/') . ')\s*(.*(?<!\)))?(\)?)$/i', $conditions[$ci], $matches)
+					if (($op = $this->getOperator($condition)) === false
+							|| ! preg_match('/^(\(?)(.*)(' . preg_quote($op, '/') . ')\s*(.*(?<!\)))?(\)?)$/i', $condition, $matches)
 					)
 					{
 						continue;
@@ -3066,7 +3066,6 @@ class BaseBuilder
 					//	4 => 'foo',		/* optional, if $op is e.g. 'IS NULL' */
 					//	5 => ')'		/* optional */
 					// );
-
 					if (! empty($matches[4]))
 					{
 						$protectIdentifiers = false;
@@ -3082,8 +3081,7 @@ class BaseBuilder
 
 						$matches[4] = ' ' . $matches[4];
 					}
-
-					$conditions[$ci] = $matches[1] . $this->db->protectIdentifiers(trim($matches[2]))
+					$condition = $matches[1] . $this->db->protectIdentifiers(trim($matches[2]))
 							. ' ' . trim($matches[3]) . $matches[4] . $matches[5];
 				}
 
@@ -3114,16 +3112,15 @@ class BaseBuilder
 	{
 		if (! empty($this->QBGroupBy))
 		{
-			for ($i = 0, $c = count($this->QBGroupBy); $i < $c; $i ++)
+			foreach ($this->QBGroupBy as $QBGroupBy)
 			{
 				// Is it already compiled?
-				if (is_string($this->QBGroupBy[$i]))
+				if (is_string($QBGroupBy))
 				{
 					continue;
 				}
-
-				$this->QBGroupBy[$i] = ($this->QBGroupBy[$i]['escape'] === false ||
-						$this->isLiteral($this->QBGroupBy[$i]['field'])) ? $this->QBGroupBy[$i]['field'] : $this->db->protectIdentifiers($this->QBGroupBy[$i]['field']);
+				$QBGroupBy = ($QBGroupBy['escape'] === false ||
+						$this->isLiteral($QBGroupBy['field'])) ? $QBGroupBy['field'] : $this->db->protectIdentifiers($QBGroupBy['field']);
 			}
 
 			return "\nGROUP BY " . implode(', ', $this->QBGroupBy);
@@ -3149,14 +3146,13 @@ class BaseBuilder
 	{
 		if (is_array($this->QBOrderBy) && ! empty($this->QBOrderBy))
 		{
-			for ($i = 0, $c = count($this->QBOrderBy); $i < $c; $i ++)
+			foreach ($this->QBOrderBy as $i => $QBOrderBy)
 			{
-				if ($this->QBOrderBy[$i]['escape'] !== false && ! $this->isLiteral($this->QBOrderBy[$i]['field']))
+				if ($QBOrderBy['escape'] !== false && ! $this->isLiteral($QBOrderBy['field']))
 				{
-					$this->QBOrderBy[$i]['field'] = $this->db->protectIdentifiers($this->QBOrderBy[$i]['field']);
+					$this->QBOrderBy[$i]['field'] = $this->db->protectIdentifiers($QBOrderBy['field']);
 				}
-
-				$this->QBOrderBy[$i] = $this->QBOrderBy[$i]['field'] . $this->QBOrderBy[$i]['direction'];
+				$QBOrderBy = $QBOrderBy['field'] . $QBOrderBy['direction'];
 			}
 
 			return $this->QBOrderBy = "\nORDER BY " . implode(', ', $this->QBOrderBy);
@@ -3426,7 +3422,7 @@ class BaseBuilder
 			return $key;
 		}
 
-		if (!array_key_exists($key, $this->bindsKeyCount))
+		if (! array_key_exists($key, $this->bindsKeyCount))
 		{
 			$this->bindsKeyCount[$key] = 0;
 		}

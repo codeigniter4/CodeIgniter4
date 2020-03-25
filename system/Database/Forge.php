@@ -542,9 +542,9 @@ class Forge
 			// Most databases don't support creating indexes from within the CREATE TABLE statement
 			if (! empty($this->keys))
 			{
-				for ($i = 0, $sqls = $this->_processIndexes($table), $c = count($sqls); $i < $c; $i++)
+				foreach ($this->_processIndexes($table) as $sql)
 				{
-					$this->db->query($sqls[$i]);
+					$this->db->query($sql);
 				}
 			}
 		}
@@ -582,10 +582,10 @@ class Forge
 			: 'CREATE TABLE';
 
 		$columns = $this->_processFields(true);
-		for ($i = 0, $c = count($columns); $i < $c; $i++)
+		foreach ($columns as &$column)
 		{
-			$columns[$i] = ($columns[$i]['_literal'] !== false) ? "\n\t" . $columns[$i]['_literal']
-				: "\n\t" . $this->_processColumn($columns[$i]);
+			$column = ($column['_literal'] !== false) ? "\n\t" . $column['_literal']
+				: "\n\t" . $this->_processColumn($column);
 		}
 
 		$columns = implode(',', $columns);
@@ -800,9 +800,9 @@ class Forge
 			return false;
 		}
 
-		for ($i = 0, $c = count($sqls); $i < $c; $i++)
+		foreach ($sqls as $sql)
 		{
-			if ($this->db->query($sqls[$i]) === false)
+			if ($this->db->query($sql) === false)
 			{
 				return false;
 			}
@@ -878,9 +878,9 @@ class Forge
 
 		if ($sqls !== null)
 		{
-			for ($i = 0, $c = count($sqls); $i < $c; $i++)
+			foreach ($sqls as $i => $sql)
 			{
-				if ($this->db->query($sqls[$i]) === false)
+				if ($this->db->query($sql) === false)
 				{
 					return false;
 				}
@@ -1206,11 +1206,11 @@ class Forge
 	{
 		$sql = '';
 
-		for ($i = 0, $c = count($this->primaryKeys); $i < $c; $i++)
+		foreach ($this->primaryKeys as $primaryKey)
 		{
-			if (! isset($this->fields[$this->primaryKeys[$i]]))
+			if (! isset($this->fields[$primaryKey]))
 			{
-				unset($this->primaryKeys[$i]);
+				unset($primaryKey);
 			}
 		}
 
@@ -1236,33 +1236,30 @@ class Forge
 	{
 		$sqls = [];
 
-		for ($i = 0, $c = count($this->keys); $i < $c; $i++)
+		foreach ($this->keys as $i => $key)
 		{
-			$this->keys[$i] = (array)$this->keys[$i];
-
-			for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
+			$key = (array)$key;
+			foreach ($key as $i2 => $key)
 			{
-				if (! isset($this->fields[$this->keys[$i][$i2]]))
+				if (! isset($this->fields[$key[$i2]]))
 				{
-					unset($this->keys[$i][$i2]);
+						unset($key[$i2]);
 				}
 			}
-			if (count($this->keys[$i]) <= 0)
+			if (count($key) <= 0)
 			{
 				continue;
 			}
-
 			if (in_array($i, $this->uniqueKeys))
 			{
 				$sqls[] = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table)
-						  . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
-						  . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+						  . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $key))
+						  . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($key)) . ');';
 				continue;
 			}
-
-			$sqls[] = 'CREATE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+			$sqls[] = 'CREATE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $key))
 					  . ' ON ' . $this->db->escapeIdentifiers($table)
-					  . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+					  . ' (' . implode(', ', $this->db->escapeIdentifiers($key)) . ');';
 		}
 
 		return $sqls;

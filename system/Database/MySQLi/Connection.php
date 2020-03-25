@@ -484,16 +484,14 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$query = $query->getResultObject();
 
 		$retVal = [];
-		for ($i = 0, $c = count($query); $i < $c; $i++)
+		foreach ($query as $i => $query)
 		{
 			$retVal[$i]       = new \stdClass();
-			$retVal[$i]->name = $query[$i]->Field;
-
-			sscanf($query[$i]->Type, '%[a-z](%d)', $retVal[$i]->type, $retVal[$i]->max_length);
-
-			$retVal[$i]->nullable    = $query[$i]->Null === 'YES';
-			$retVal[$i]->default     = $query[$i]->Default;
-			$retVal[$i]->primary_key = (int)($query[$i]->Key === 'PRI');
+			$retVal[$i]->name = $query->Field;
+			sscanf($query->Type, '%[a-z](%d)', $query->type, $query->max_length);
+			$retVal[$i]->nullable    = $query->Null === 'YES';
+			$retVal[$i]->default     = $query->Default;
+			$retVal[$i]->primary_key = (int)($query->Key === 'PRI');
 		}
 
 		return $retVal;

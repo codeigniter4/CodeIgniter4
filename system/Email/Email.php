@@ -669,13 +669,13 @@ class Email
 	 */
 	public function setAttachmentCID($filename)
 	{
-		for ($i = 0, $c = count($this->attachments); $i < $c; $i ++)
+		foreach ($this->attachments as $i => $attachment)
 		{
-			if ($this->attachments[$i]['name'][0] === $filename)
+			if ($attachment['name'][0] === $filename)
 			{
 				$this->attachments[$i]['multipart'] = 'related';
-				$this->attachments[$i]['cid']       = uniqid(basename($this->attachments[$i]['name'][0]) . '@', true);
-				return $this->attachments[$i]['cid'];
+				$this->attachments[$i]['cid']       = uniqid(basename($attachment['name'][0]) . '@', true);
+				return $attachment['cid'];
 			}
 		}
 		return false;
@@ -1257,20 +1257,20 @@ class Email
 	 */
 	protected function appendAttachments(&$body, $boundary, $multipart = null)
 	{
-		for ($i = 0, $c = count($this->attachments); $i < $c; $i ++)
+		foreach ($this->attachments as $attachment)
 		{
-			if (isset($multipart) && $this->attachments[$i]['multipart'] !== $multipart)
+			if (isset($multipart) && $attachment['multipart'] !== $multipart)
 			{
 				continue;
 			}
-			$name  = isset($this->attachments[$i]['name'][1]) ? $this->attachments[$i]['name'][1] : basename($this->attachments[$i]['name'][0]);
+			$name  = isset($attachment['name'][1]) ? $attachment['name'][1] : basename($attachment['name'][0]);
 			$body .= '--' . $boundary . $this->newline
-					. 'Content-Type: ' . $this->attachments[$i]['type'] . '; name="' . $name . '"' . $this->newline
-					. 'Content-Disposition: ' . $this->attachments[$i]['disposition'] . ';' . $this->newline
+					. 'Content-Type: ' . $attachment['type'] . '; name="' . $name . '"' . $this->newline
+					. 'Content-Disposition: ' . $attachment['disposition'] . ';' . $this->newline
 					. 'Content-Transfer-Encoding: base64' . $this->newline
-					. (empty($this->attachments[$i]['cid']) ? '' : 'Content-ID: <' . $this->attachments[$i]['cid'] . '>' . $this->newline)
+					. (empty($attachment['cid']) ? '' : 'Content-ID: <' . $attachment['cid'] . '>' . $this->newline)
 					. $this->newline
-					. $this->attachments[$i]['content'] . $this->newline;
+					. $attachment['content'] . $this->newline;
 		}
 		// $name won't be set if no attachments were appended,
 		// and therefore a boundary wouldn't be necessary
@@ -1563,11 +1563,11 @@ class Email
 		$float = $this->BCCBatchSize - 1;
 		$set   = '';
 		$chunk = [];
-		for ($i = 0, $c = count($this->BCCArray); $i < $c; $i ++)
+		foreach ($this->BCCArray as $i => $BCCArray)
 		{
-			if (isset($this->BCCArray[$i]))
+			if (isset($BCCArray))
 			{
-				$set .= ', ' . $this->BCCArray[$i];
+				$set .= ', ' . $BCCArray;
 			}
 			if ($i === $float)
 			{
@@ -1580,10 +1580,10 @@ class Email
 				$chunk[] = static::substr($set, 1);
 			}
 		}
-		for ($i = 0, $c = count($chunk); $i < $c; $i ++)
+		foreach ($chunk as $chunk)
 		{
 			unset($this->headers['Bcc']);
-			$bcc = $this->cleanEmail($this->stringToArray($chunk[$i]));
+			$bcc = $this->cleanEmail($this->stringToArray($chunk));
 			if ($this->protocol !== 'smtp')
 			{
 				$this->setHeader('Bcc', implode(', ', $bcc));

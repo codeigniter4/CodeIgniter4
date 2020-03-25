@@ -316,13 +316,13 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$query = $query->getResultObject();
 
 		$retVal = [];
-		for ($i = 0, $c = count($query); $i < $c; $i ++)
+		foreach ($query as $i => $query)
 		{
 			$retVal[$i]             = new \stdClass();
-			$retVal[$i]->name       = $query[$i]->column_name;
-			$retVal[$i]->type       = $query[$i]->data_type;
-			$retVal[$i]->default    = $query[$i]->column_default;
-			$retVal[$i]->max_length = $query[$i]->character_maximum_length > 0 ? $query[$i]->character_maximum_length : $query[$i]->numeric_precision;
+			$retVal[$i]->name       = $query->column_name;
+			$retVal[$i]->type       = $query->data_type;
+			$retVal[$i]->default    = $query->column_default;
+			$retVal[$i]->max_length = $query->character_maximum_length > 0 ? $query->character_maximum_length : $query->numeric_precision;
 		}
 
 		return $retVal;

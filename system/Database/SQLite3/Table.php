@@ -247,20 +247,18 @@ class Table
 			return $this;
 		}
 
-		for ($i = 0; $i < count($this->foreignKeys); $i++)
+		foreach ($this->foreignKeys as &$foreignKey)
 		{
-			if ($this->foreignKeys[$i]->table_name !== $this->tableName)
+			if ($foreignKey->table_name !== $this->tableName)
 			{
 				continue;
 			}
-
 			// The column name should be the first thing in the constraint name
-			if (strpos($this->foreignKeys[$i]->constraint_name, $column) !== 0)
+			if (strpos($foreignKey->constraint_name, $column) !== 0)
 			{
 				continue;
 			}
-
-			unset($this->foreignKeys[$i]);
+			unset($foreignKey);
 		}
 
 		return $this;

@@ -243,31 +243,28 @@ class Forge extends \CodeIgniter\Database\Forge
 	{
 		$sql = '';
 
-		for ($i = 0, $c = count($this->keys); $i < $c; $i ++)
+		foreach ($this->keys as $i => $key)
 		{
-			if (is_array($this->keys[$i]))
+			if (is_array($key))
 			{
-				for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2 ++)
+				foreach ($key as $i2 => $key)
 				{
-					if (! isset($this->fields[$this->keys[$i][$i2]]))
-					{
-						unset($this->keys[$i][$i2]);
-						continue;
+					if (! isset($this->fields[$key[$i2]]))
+						{
+							unset($key[$i2]);
+							continue;
 					}
 				}
 			}
-			elseif (! isset($this->fields[$this->keys[$i]]))
+			elseif (! isset($this->fields[$key]))
 			{
-				unset($this->keys[$i]);
+				unset($key);
 				continue;
 			}
-
-			is_array($this->keys[$i]) || $this->keys[$i] = [$this->keys[$i]];
-
-			$unique = in_array($i, $this->uniqueKeys) ? 'UNIQUE ' : '';
-
-			$sql .= ",\n\t{$unique}KEY " . $this->db->escapeIdentifiers(implode('_', $this->keys[$i]))
-				. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
+			is_array($key) || $key = [$key];
+			$unique                = in_array($i, $this->uniqueKeys) ? 'UNIQUE ' : '';
+			$sql                  .= ",\n\t{$unique}KEY " . $this->db->escapeIdentifiers(implode('_', $key))
+				. ' (' . implode(', ', $this->db->escapeIdentifiers($key)) . ')';
 		}
 
 		$this->keys = [];

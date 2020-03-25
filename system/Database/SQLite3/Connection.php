@@ -316,15 +316,15 @@ class Connection extends BaseConnection implements ConnectionInterface
 			return [];
 		}
 		$retVal = [];
-		for ($i = 0, $c = count($query); $i < $c; $i++)
+		foreach ($query as $i => $query)
 		{
 			$retVal[$i]              = new \stdClass();
-			$retVal[$i]->name        = $query[$i]->name;
-			$retVal[$i]->type        = $query[$i]->type;
+			$retVal[$i]->name        = $query->name;
+			$retVal[$i]->type        = $query->type;
 			$retVal[$i]->max_length  = null;
-			$retVal[$i]->default     = $query[$i]->dflt_value;
-			$retVal[$i]->primary_key = isset($query[$i]->pk) ? (bool)$query[$i]->pk : false;
-			$retVal[$i]->nullable    = isset($query[$i]->notnull) ? ! (bool)$query[$i]->notnull : false;
+			$retVal[$i]->default     = $query->dflt_value;
+			$retVal[$i]->primary_key = isset($query->pk) ? (bool)$query->pk : false;
+			$retVal[$i]->nullable    = isset($query->notnull) ? ! (bool)$query->notnull : false;
 		}
 
 		return $retVal;

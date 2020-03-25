@@ -121,9 +121,9 @@ abstract class BaseUtils
 			return $this->db->dataCache['db_names'];
 		}
 
-		for ($i = 0, $query = $query->getResultArray(), $c = count($query); $i < $c; $i ++)
+		foreach ($query->getResultArray() as $query)
 		{
-			$this->db->dataCache['db_names'][] = current($query[$i]);
+			$this->db->dataCache['db_names'][] = current($query);
 		}
 
 		return $this->db->dataCache['db_names'];

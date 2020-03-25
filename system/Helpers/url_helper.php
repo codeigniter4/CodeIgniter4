@@ -470,7 +470,7 @@ if (! function_exists('safe_mailto'))
 		$output = '<script type="text/javascript">'
 				. 'var l=new Array();';
 
-		for ($i = 0, $c = count($x); $i < $c; $i ++)
+		foreach ($x as $i => $x)
 		{
 			$output .= 'l[' . $i . "] = '" . $x[$i] . "';";
 		}
