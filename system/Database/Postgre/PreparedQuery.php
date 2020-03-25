@@ -74,11 +74,13 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 * override this method.
 	 *
 	 * @param string $sql
+	 * @param array  $options Passed to the connection's prepare statement.
+	 *                        Unused in the MySQLi driver.
 	 *
 	 * @return mixed
 	 * @throws \Exception
 	 */
-	public function _prepare(string $sql)
+	public function _prepare(string $sql, array $options = [])
 	{
 		$this->name = random_int(1, 10000000000000000);
 
@@ -146,10 +148,12 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		// Track our current value
 		$count = 0;
 
-		return preg_replace_callback('/\?/', function ($matches) use (&$count) {
+		$sql = preg_replace_callback('/\?/', function ($matches) use (&$count) {
 			$count ++;
 			return "\${$count}";
 		}, $sql);
+
+		return $sql;
 	}
 
 	//--------------------------------------------------------------------
