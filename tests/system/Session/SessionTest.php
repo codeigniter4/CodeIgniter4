@@ -532,4 +532,14 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals(['foo', 'bar'], $session->getTempKeys());
 	}
+
+	public function testGetDotKey()
+	{
+		$session = $this->getInstance();
+		$session->start();
+
+		$session->set('test.1', 'value');
+
+		$this->assertEquals('value', $session->get('test.1'));
+	}
 }
