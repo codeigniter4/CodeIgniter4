@@ -221,6 +221,8 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	protected function tearDown(): void
 	{
+		parent::tearDown();
+
 		if (! empty($this->insertCache))
 		{
 			foreach ($this->insertCache as $row)
