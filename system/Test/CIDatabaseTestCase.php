@@ -169,13 +169,12 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 		if ($this->refresh === true)
 		{
-
 			// If no namespace was specified then rollback/migrate all
 			if (empty($this->namespace))
 			{
 				$this->migrations->setNamespace(null);
 
-				$this->migrations->regress(0,'tests');
+				$this->migrations->regress(0, 'tests');
 
 				$this->migrations->latest('tests');
 			}
@@ -188,7 +187,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 				foreach ($namespaces as $namespace)
 				{
 					$this->migrations->setNamespace($namespace);
-					$this->migrations->regress(0,'tests');
+					$this->migrations->regress(0, 'tests');
 				}
 
 				foreach ($namespaces as $namespace)
@@ -220,7 +219,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * Takes care of any required cleanup after the test, like
 	 * removing any rows inserted via $this->hasInDatabase()
 	 */
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		if (! empty($this->insertCache))
 		{
