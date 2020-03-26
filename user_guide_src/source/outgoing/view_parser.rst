@@ -671,17 +671,17 @@ using a view fragment::
 		['title' => 'Second Link', 'link' => '/second'],
 	];
 
-	foreach ($data1 as $menuitem)
+	foreach ($data1 as $menuItem)
 	{
-		$temp .= $parser->setData($menuItem)->renderString();
+		$temp .= $parser->setData($menuItem)->renderString($template1);
 	}
 
-	$template = '<ul>{menuitems}</ul>';
+	$template2 = '<ul>{menuitems}</ul>';
 	$data = [
 		'menuitems' => $temp
 	];
 	echo $parser->setData($data)
-	             ->renderString($template);
+	             ->renderString($template2);
 
 Result::
 
