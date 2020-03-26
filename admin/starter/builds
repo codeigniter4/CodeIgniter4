@@ -41,6 +41,7 @@ if (is_file($file))
 			{
 				// Set 'minimum-stability'
 				$array['minimum-stability'] = 'dev';
+				$array['prefer-stable']     = true;
 
 				// Make sure the repo is configured
 				if (! isset($array['repositories']))
@@ -72,7 +73,7 @@ if (is_file($file))
 				$array['require']['codeigniter4/codeigniter4'] = 'dev-develop';
 				unset($array['require']['codeigniter4/framework']);
 			}
-			
+
 			// Release
 			else
 			{
