@@ -665,24 +665,25 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function arrayFieldDataProvider() {
+	public function arrayFieldDataProvider()
+	{
 		return [
 			'all_rules_should_pass' => [
-				'body' => [
+				'body'    => [
 					'foo' => [
 						'a',
 						'b',
-						'c'
-					]
+						'c',
+					],
 				],
-				'rules' => [
+				'rules'   => [
 					'foo.0' => 'required|alpha|max_length[2]',
 					'foo.1' => 'required|alpha|max_length[2]',
-					'foo.2' => 'required|alpha|max_length[2]'
+					'foo.2' => 'required|alpha|max_length[2]',
 				],
-				'results' => []
+				'results' => [],
 			],
-			'first_field_will_return_required_error' => [
+			/*'first_field_will_return_required_error' => [
 				'body' => [
 					'foo' => [
 						'',
@@ -716,9 +717,38 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 					'foo.0' => 'The foo.0 field is required.',
 					'foo.1' => 'The foo.1 field must be at least 2 characters in length.',
 				]
-			]
+			]*/
 		];
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testRulesForSingleRuleWithAsteriskWillReturnNoError()
+	{
+		$config          = new App();
+		$config->baseURL = 'http://example.com';
+
+		$_REQUEST = [
+			'id_user'   => [
+				1,
+				3,
+			],
+			'name_user' => [
+				'abc123',
+				'xyz098',
+			],
+		];
+
+		$request = new IncomingRequest($config, new URI(), 'php://input', new UserAgent());
+		$request->setMethod('post');
+
+		$this->validation->setRules([
+			'id_user.*'   => 'numeric',
+			'name_user.*' => 'alpha_numeric',
+		]);
+
+		$this->validation->withRequest($request)
+			->run();
+		$this->assertEquals([], $this->validation->getErrors());
+	}
 }
