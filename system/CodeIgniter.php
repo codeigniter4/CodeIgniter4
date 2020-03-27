@@ -976,7 +976,7 @@ class CodeIgniter
 			}
 		}
 
-		throw PageNotFoundException::forPageNotFound($e->getMessage());
+		throw PageNotFoundException::forPageNotFound(ENVIRONMENT !== 'production' || is_cli() ? $e->getMessage() : '');
 	}
 
 	//--------------------------------------------------------------------
