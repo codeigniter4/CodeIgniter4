@@ -751,4 +751,38 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 			->run();
 		$this->assertEquals([], $this->validation->getErrors());
 	}
+
+	//--------------------------------------------------------------------
+
+	public function testRulesForSingleRuleWithAsteriskWillReturnError()
+	{
+		$config          = new App();
+		$config->baseURL = 'http://example.com';
+
+		$_REQUEST = [
+			'id_user'   => [
+				'1dfd',
+				3,
+			],
+			'name_user' => [
+				123,
+				'xyz098',
+			],
+		];
+
+		$request = new IncomingRequest($config, new URI(), 'php://input', new UserAgent());
+		$request->setMethod('post');
+
+		$this->validation->setRules([
+			'id_user.*'   => 'numeric',
+			'name_user.*' => 'alpha',
+		]);
+
+		$this->validation->withRequest($request)
+			->run();
+		$this->assertEquals([
+			'id_user.*'   => 'The id_user.* field must contain only numbers.',
+			'name_user.*' => 'The name_user.* field may only contain alphabetical characters.',
+		], $this->validation->getErrors());
+	}
 }
