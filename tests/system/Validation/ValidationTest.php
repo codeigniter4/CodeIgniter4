@@ -785,4 +785,31 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 			'name_user.*' => 'The name_user.* field may only contain alphabetical characters.',
 		], $this->validation->getErrors());
 	}
+
+	//--------------------------------------------------------------------
+
+	public function testRulesForSingleRuleWithSingleValue()
+	{
+		$config          = new App();
+		$config->baseURL = 'http://example.com';
+
+		$_REQUEST = [
+			'id_user' => 'gh',
+		];
+
+		$request = new IncomingRequest($config, new URI(), 'php://input', new UserAgent());
+		$request->setMethod('post');
+
+		$this->validation->setRules([
+			'id_user' => 'numeric',
+		]);
+
+		$this->validation->withRequest($request)
+			->run();
+		$this->assertEquals([
+			'id_user' => 'The id_user field must contain only numbers.',
+		], $this->validation->getErrors());
+	}
+
+	//--------------------------------------------------------------------
 }
