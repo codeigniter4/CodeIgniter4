@@ -283,6 +283,20 @@ You can use the '*' wildcard symbol to match any one level of the array::
         'contacts.*.name' => 'required'
     ]);
 
+"dot array syntax" can also be useful when you have single dimension array data.
+For example, data returned by multi select dropdown::
+
+    // The data to test:
+    'user_ids' => [
+        1,
+        2,
+        3
+    ]
+    // Rule
+    $validation->setRules([
+        'user_ids.*' => 'required'
+    ]);
+
 Validate 1 Value
 ================================================
 
