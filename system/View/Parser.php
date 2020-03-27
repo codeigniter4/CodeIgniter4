@@ -258,10 +258,11 @@ class Parser extends View
 	 *
 	 * @param string $template
 	 * @param array  $data
+	 * @param array  $options  Future options
 	 *
 	 * @return string
 	 */
-	protected function parse(string $template, array $data = []): string
+	protected function parse(string $template, array $data = [], array $options = null): string
 	{
 		if ($template === '')
 		{
