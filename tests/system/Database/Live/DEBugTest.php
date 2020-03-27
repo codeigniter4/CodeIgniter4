@@ -13,7 +13,7 @@ class DEBugTest extends CIDatabaseTestCase
 	public function testDBDebugTrue()
 	{
 		$this->setPrivateProperty($this->db, 'DBDebug', true);
-		$this->expectException('mysqli_sql_exception');
+		$this->expectException('Exception');
 		$result = $this->db->simpleQuery('SELECT * FROM db_error');
 	}
 
@@ -22,5 +22,11 @@ class DEBugTest extends CIDatabaseTestCase
 		$this->setPrivateProperty($this->db, 'DBDebug', false);
 		$result = $this->db->simpleQuery('SELECT * FROM db_error');
 		$this->assertEquals(false, $result);
+	}
+
+	public function tearDown(): void
+	{
+		$this->setPrivateProperty($this->db, 'DBDebug', true);
+		parent::tearDown();
 	}
 }
