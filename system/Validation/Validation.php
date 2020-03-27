@@ -172,7 +172,15 @@ class Validation implements ValidationInterface
 
 			$value = dot_array_search($rField, $data);
 
-			$this->processRules($rField, $rSetup['label'] ?? $rField, $value ?? null, $rules, $data);
+			if (! is_array($value))
+			{
+				$value = [$value];
+			}
+
+			foreach ($value as $val)
+			{
+				$this->processRules($rField, $rSetup['label'] ?? $rField, $val ?? null, $rules, $data);
+			}
 		}
 
 		return ! empty($this->getErrors()) ? false : true;
