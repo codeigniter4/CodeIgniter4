@@ -170,16 +170,19 @@ class Validation implements ValidationInterface
 				$rules = $this->splitRules($rules);
 			}
 
-			$value = dot_array_search($rField, $data);
+			$value          = dot_array_search($rField, $data);
+			$fieldNameToken = explode('.', $rField);
 
-			if (! is_array($value))
+			if (is_array($value) && end($fieldNameToken) === '*')
 			{
-				$value = [$value];
+				foreach ($value as $val)
+				{
+					$this->processRules($rField, $rSetup['label'] ?? $rField, $val ?? null, $rules, $data);
+				}
 			}
-
-			foreach ($value as $val)
+			else
 			{
-				$this->processRules($rField, $rSetup['label'] ?? $rField, $val ?? null, $rules, $data);
+				$this->processRules($rField, $rSetup['label'] ?? $rField, $value ?? null, $rules, $data);
 			}
 		}
 
