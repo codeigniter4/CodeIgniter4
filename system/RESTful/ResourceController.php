@@ -93,7 +93,7 @@ class ResourceController extends Controller
 	 *
 	 * @return array	an array
 	 */
-	public function show()
+	public function show($id = null)
 	{
 		return $this->fail(lang('RESTful.notImplemented', ['show']), 501);
 	}
@@ -123,7 +123,7 @@ class ResourceController extends Controller
 	 *
 	 * @return array	an array
 	 */
-	public function edit()
+	public function edit($id = null)
 	{
 		return $this->fail(lang('RESTful.notImplemented', ['edit']), 501);
 	}
@@ -133,7 +133,7 @@ class ResourceController extends Controller
 	 *
 	 * @return array	an array
 	 */
-	public function update()
+	public function update($id = null)
 	{
 		return $this->fail(lang('RESTful.notImplemented', ['update']), 501);
 	}
@@ -143,7 +143,7 @@ class ResourceController extends Controller
 	 *
 	 * @return array	an array
 	 */
-	public function delete()
+	public function delete($id = null)
 	{
 		return $this->fail(lang('RESTful.notImplemented', ['delete']), 501);
 	}
