@@ -88,9 +88,10 @@ class ResourcePresenter extends Controller
 	/**
 	 * Present a view to present a specific resource object
 	 *
+	 * @param  type $id
 	 * @return string
 	 */
-	public function show()
+	public function show($id = null)
 	{
 		return lang('RESTful.notImplemented', ['show']);
 	}
@@ -119,9 +120,10 @@ class ResourcePresenter extends Controller
 	/**
 	 * Present a view to confirm the deletion of a specific resource object
 	 *
+	 * @param  type $id
 	 * @return string
 	 */
-	public function remove()
+	public function remove($id = null)
 	{
 		return lang('RESTful.notImplemented', ['remove']);
 	}
@@ -129,9 +131,10 @@ class ResourcePresenter extends Controller
 	/**
 	 * Process the deletion of a specific resource object
 	 *
+	 * @param  type $id
 	 * @return string
 	 */
-	public function delete()
+	public function delete($id = null)
 	{
 		return lang('RESTful.notImplemented', ['delete']);
 	}
@@ -139,9 +142,10 @@ class ResourcePresenter extends Controller
 	/**
 	 * Present a view to edit the properties of a specific resource object
 	 *
+	 * @param  type $id
 	 * @return string
 	 */
-	public function edit()
+	public function edit($id = null)
 	{
 		return lang('RESTful.notImplemented', ['edit']);
 	}
@@ -150,9 +154,10 @@ class ResourcePresenter extends Controller
 	 * Process the updating, full or partial, of a specific resource object.
 	 * This should be a POST.
 	 *
+	 * @param  type $id
 	 * @return string
 	 */
-	public function update()
+	public function update($id = null)
 	{
 		return lang('RESTful.notImplemented', ['update']);
 	}
