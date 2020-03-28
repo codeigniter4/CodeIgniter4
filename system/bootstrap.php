@@ -118,6 +118,7 @@ require_once SYSTEMPATH . 'Common.php';
 
 if (! class_exists(Config\Autoload::class, false))
 {
+	require_once SYSTEMPATH . 'Config/AutoloadConfig.php';
 	require_once APPPATH . 'Config/Autoload.php';
 	require_once APPPATH . 'Config/Modules.php';
 }
@@ -132,9 +133,9 @@ if (! class_exists('CodeIgniter\Services', false))
 	class_alias('Config\Services', 'CodeIgniter\Services');
 }
 
-$loader = CodeIgniter\Services::autoloader();
-$loader->initialize(new Config\Autoload(), new Config\Modules());
-$loader->register();    // Register the loader with the SPL autoloader stack.
+CodeIgniter\Services::autoloader()->
+	initialize(new Config\Autoload(), new Config\Modules())
+	->register();    // Register the loader with the SPL autoloader stack.
 
 // Now load Composer's if it's available
 if (is_file(COMPOSER_PATH))
@@ -163,8 +164,7 @@ helper('url');
  * the pieces all working together.
  */
 
-$appConfig = config(\Config\App::class);
-$app       = new \CodeIgniter\CodeIgniter($appConfig);
+$app       = new \CodeIgniter\CodeIgniter(config(\Config\App::class));
 $app->initialize();
 
 return $app;
