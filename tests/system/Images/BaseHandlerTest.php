@@ -11,7 +11,7 @@ use org\bovigo\vfs\vfsStream;
  * most work, and the virtual file system will be used for
  * testing saving only.
  */
-class BaseHandlerTest extends \CIUnitTestCase
+class BaseHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -66,6 +66,25 @@ class BaseHandlerTest extends \CIUnitTestCase
 		$this->expectException(\CodeIgniter\Files\Exceptions\FileNotFoundException::class);
 		$handler = Services::image('gd', null, false);
 		$handler->withFile($this->start . 'No_such_file.jpg');
+	}
+
+	public function testNonImageFile()
+	{
+		$this->expectException(\CodeIgniter\Images\Exceptions\ImageException::class);
+		$handler = Services::image('gd', null, false);
+		$handler->withFile(SUPPORTPATH . 'Files/baker/banana.php');
+
+		// Make any call that accesses the image
+		$handler->resize(100, 100);
+	}
+
+	public function testForgotWithFile()
+	{
+		$this->expectException(\CodeIgniter\Images\Exceptions\ImageException::class);
+		$handler = Services::image('gd', null, false);
+
+		// Make any call that accesses the image
+		$handler->resize(100, 100);
 	}
 
 	public function testFileTypes()

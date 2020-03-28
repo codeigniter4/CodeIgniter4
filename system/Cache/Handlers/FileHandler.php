@@ -154,7 +154,7 @@ class FileHandler implements CacheInterface
 	{
 		$key = $this->prefix . $key;
 
-		return is_file($this->path . $key) ? unlink($this->path . $key) : false;
+		return is_file($this->path . $key) && unlink($this->path . $key);
 	}
 
 	//--------------------------------------------------------------------
@@ -322,7 +322,11 @@ class FileHandler implements CacheInterface
 
 		if ($data['ttl'] > 0 && time() > $data['time'] + $data['ttl'])
 		{
-			unlink($this->path . $key);
+			// If the file is still there then remove it
+			if (is_file($this->path . $key))
+			{
+				unlink($this->path . $key);
+			}
 
 			return false;
 		}

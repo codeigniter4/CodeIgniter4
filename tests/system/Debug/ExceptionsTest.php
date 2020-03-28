@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Debug;
 
-class ExceptionsTest extends \CIUnitTestCase
+class ExceptionsTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	public function testNew()
 	{

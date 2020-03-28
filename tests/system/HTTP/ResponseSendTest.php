@@ -9,7 +9,7 @@ use Config\App;
  * buffering from PHPUnit, and the individual
  * test cases need to be run as separate processes.
  */
-class ResponseSendTest extends \CIUnitTestCase
+class ResponseSendTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**

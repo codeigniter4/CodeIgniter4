@@ -105,9 +105,7 @@ subforum for an up-to-date list!
 **Events**
 
 - Hooks have been replaced by Events
-- Instead of CI3's ``$hook['post_controller_constructor']`` you now use
- ``Events::on('post_controller_constructor', ['MyClass', 'MyFunction']);``,
- with the namespace ``CodeIgniter\Events\Events;``
+- Instead of CI3's ``$hook['post_controller_constructor']`` you now use ``Events::on('post_controller_constructor', ['MyClass', 'MyFunction']);``, with the namespace ``CodeIgniter\Events\Events;``
 - Events are always enabled, and are available globally
 
 **Extending the framework**

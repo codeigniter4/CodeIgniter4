@@ -9,7 +9,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 /**
  * @backupGlobals enabled
  */
-class DebugToolbarTest extends \CIUnitTestCase
+class DebugToolbarTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected $request;

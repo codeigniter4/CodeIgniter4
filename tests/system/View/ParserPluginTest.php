@@ -1,6 +1,6 @@
 <?php
 
-class ParserPluginTest extends \CIUnitTestCase
+class ParserPluginTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	/**
 	 * @var \CodeIgniter\View\Parser

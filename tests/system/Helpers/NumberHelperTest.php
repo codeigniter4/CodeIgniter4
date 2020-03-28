@@ -1,7 +1,7 @@
 <?php
 namespace CodeIgniter\Helpers;
 
-final class NumberHelperTest extends \CIUnitTestCase
+final class NumberHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -112,8 +112,9 @@ final class NumberHelperTest extends \CIUnitTestCase
 	 */
 	public function testCurrencyCurrentLocale()
 	{
-		$this->assertEquals('$1,234.56', number_to_currency(1234.56, 'USD', 'en_US'));
-		$this->assertEquals('£1,234.56', number_to_currency(1234.56, 'GBP', 'en_GB'));
+		$this->assertEquals('$1,234.56', number_to_currency(1234.56, 'USD', 'en_US', 2));
+		$this->assertEquals('£1,234.56', number_to_currency(1234.56, 'GBP', 'en_GB', 2));
+		$this->assertEquals('1.234,56 RSD', number_to_currency(1234.56, 'RSD', 'sr_RS', 2));
 	}
 
 	public function testNumbersThatArent()

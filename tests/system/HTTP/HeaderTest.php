@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\HTTP;
 
-class HeaderTest extends \CIUnitTestCase
+class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	public function testHeaderStoresBasics()
 	{

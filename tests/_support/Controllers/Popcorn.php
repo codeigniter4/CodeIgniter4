@@ -47,7 +47,6 @@ class Popcorn extends Controller
 	// @see https://github.com/codeigniter4/CodeIgniter4/issues/1834
 	public function index3()
 	{
-		// echo var_dump($this->response->getBody());
 		return $this->response->setJSON(['lang' => $this->request->getLocale()]);
 	}
 
@@ -68,6 +67,11 @@ class Popcorn extends Controller
 	public function xml()
 	{
 		$this->respond('<my><pet>cat</pet></my>');
+	}
+
+	public function toindex()
+	{
+		return redirect()->route('testing-index');
 	}
 
 }

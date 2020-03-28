@@ -7,7 +7,7 @@ use Config\App;
 /**
  * @backupGlobals enabled
  */
-class IncomingRequestDetectingTest extends \CIUnitTestCase
+class IncomingRequestDetectingTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**

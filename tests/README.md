@@ -8,7 +8,7 @@ use to test your application. Those details can be found in the documentation.
 ## Requirements
 
 It is recommended to use the latest version of PHPUnit. At the time of this 
-writing we are running version 7.5.1. Support for this has been built into the 
+writing we are running version 8.5.2. Support for this has been built into the 
 **composer.json** file that ships with CodeIgniter and can easily be installed 
 via [Composer](https://getcomposer.org/) if you don't already have it installed globally.
 
@@ -19,20 +19,20 @@ If running under OS X or Linux, you can create a symbolic link to make running t
 	> ln -s ./vendor/bin/phpunit ./phpunit
 
 You also need to install [XDebug](https://xdebug.org/index.php) in order
-for unit tests to successfully complete.
+for code coverage to be calculated successfully.
 
 ## Setting Up
 
 A number of the tests use a running database. 
 In order to set up the database edit the details for the `tests` group in 
-**app/Config/Database.php**. Make sure that you provide a database engine 
+**app/Config/Database.php** or **phpunit.xml**. Make sure that you provide a database engine 
 that is currently running on your machine. More details on a test database setup are in the 
 *Docs>>Testing>>Testing Your Database* section of the documentation.
 
 If you want to run the tests without using live database you can 
 exclude @DatabaseLive group. Or make a copy of **phpunit.dist.xml** - 
-call it **phpunit.xml** - and uncomment the line within the <testsuite> that excludes 
-the **tests/system/Database/Live** directory. This will make the tests run quite a bit faster.
+call it **phpunit.xml** - and comment out the <testsuite> named "database". This will make
+the tests run quite a bit faster.
 
 ## Running the tests
 
@@ -78,4 +78,3 @@ The normal practice would be to copy ``phpunit.xml.dist`` to ``phpunit.xml``
 (which is git ignored), and to tailor it as you see fit.
 For instance, you might wish to exclude database tests, or automatically generate 
 HTML code coverage reports.
-

@@ -3,7 +3,7 @@ namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
 
-class RouterTest extends \CIUnitTestCase
+class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**
@@ -70,6 +70,17 @@ class RouterTest extends \CIUnitTestCase
 
 		$this->assertEquals($this->collection->getDefaultController(), $router->controllerName());
 		$this->assertEquals($this->collection->getDefaultMethod(), $router->methodName());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testZeroAsURIPath()
+	{
+		$router = new Router($this->collection, $this->request);
+
+		$router->handle('0');
+
+		$this->assertEquals('0', $router->controllerName());
 	}
 
 	//--------------------------------------------------------------------
@@ -171,7 +182,7 @@ class RouterTest extends \CIUnitTestCase
 
 		$expects = $closure(...$router->params());
 
-		$this->assertInternalType('callable', $router->controllerName());
+		$this->assertIsCallable($router->controllerName());
 		$this->assertEquals($expects, '123-alpha');
 	}
 

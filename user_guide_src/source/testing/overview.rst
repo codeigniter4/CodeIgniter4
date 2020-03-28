@@ -10,9 +10,9 @@ helper methods to make testing every aspect of your application as painless as p
     :local:
     :depth: 2
 
-************
+*************
 System Set Up
-************
+*************
 
 Installing phpUnit
 ==================
@@ -61,14 +61,16 @@ Your ``phpunit.xml`` should exclude the ``system`` folder, as well as any ``vend
 The Test Class
 ==============
 
-In order to take advantage of the additional tools provided, your tests must extend ``\CIUnitTestCase``. All tests
+In order to take advantage of the additional tools provided, your tests must extend ``CIUnitTestCase``. All tests
 are expected to be located in the **tests/app** directory by default.
 
 To test a new library, **Foo**, you would create a new file at **tests/app/Libraries/FooTest.php**::
 
     <?php namespace App\Libraries;
 
-    class FooTest extends \CIUnitTestCase
+    use CodeIgniter\Test\CIUnitTestCase;
+
+    class FooTest extends CIUnitTestCase
     {
         public function testFooNotBar()
         {
@@ -80,7 +82,9 @@ To test one of your models, you might end up with something like this in ``tests
 
     <?php namespace App\Models;
 
-    class OneOfMyModelsTest extends \CIUnitTestCase
+    use CodeIgniter\Test\CIUnitTestCase;
+
+    class OneOfMyModelsTest extends CIUnitTestCase
     {
         public function testFooNotBar()
         {

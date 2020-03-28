@@ -2,7 +2,7 @@
 
 namespace CodeIgniter\Helpers;
 
-class TextHelperTest extends \CIUnitTestCase
+class TextHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	private $_long_string = 'Once upon a time, a framework had no tests. It sad. So some nice people began to write tests. The more time that went on, the happier it became. Everyone was happy.';
@@ -99,9 +99,9 @@ class TextHelperTest extends \CIUnitTestCase
 		$this->assertEquals(16, strlen(random_string('numeric', 16)));
 		$this->assertEquals(8, strlen(random_string('numeric')));
 
-		$this->assertInternalType('string', random_string('basic'));
+		$this->assertIsString(random_string('basic'));
 		$this->assertEquals(16, strlen($random = random_string('crypto', 16)));
-		$this->assertInternalType('string', $random);
+		$this->assertIsString($random);
 
 		$this->assertEquals(32, strlen($random = random_string('md5')));
 		$this->assertEquals(40, strlen($random = random_string('sha1')));

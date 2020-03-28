@@ -188,9 +188,10 @@ class FeatureTestCase extends CIDatabaseTestCase
 		}
 		// @codeCoverageIgnoreEnd
 
-		$featureResponse = new FeatureResponse($response);
+		// Reset directory if it has been set
+		Services::router()->setDirectory(null);
 
-		return $featureResponse;
+		return new FeatureResponse($response);
 	}
 
 	/**

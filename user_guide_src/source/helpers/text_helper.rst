@@ -37,7 +37,7 @@ The following functions are available:
 	specifies the length. The following choices are available:
 
 	-  **alpha**: A string with lower and uppercase letters only.
-	-  **alnum**: Alpha-numeric string with lower and uppercase characters.
+	-  **alnum**: Alphanumeric string with lower and uppercase characters.
 	-  **basic**: A random number based on ``mt_rand()`` (length ignored).
 	-  **numeric**: Numeric string.
 	-  **nozero**: Numeric string with no zeros.

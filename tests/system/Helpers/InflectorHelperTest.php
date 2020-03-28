@@ -1,7 +1,7 @@
 <?php
 namespace CodeIgniter\Helpers;
 
-final class InflectorHelperTest extends \CIUnitTestCase
+final class InflectorHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void

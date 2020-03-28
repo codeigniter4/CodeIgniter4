@@ -1,9 +1,9 @@
 <?php namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
-use Tests\Support\Database\MockConnection;
+use CodeIgniter\Test\Mock\MockConnection;
 
-class LimitTest extends \CIUnitTestCase
+class LimitTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected $db;
 

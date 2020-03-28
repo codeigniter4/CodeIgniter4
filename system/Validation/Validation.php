@@ -170,9 +170,20 @@ class Validation implements ValidationInterface
 				$rules = $this->splitRules($rules);
 			}
 
-			$value = dot_array_search($rField, $data);
+			$value          = dot_array_search($rField, $data);
+			$fieldNameToken = explode('.', $rField);
 
-			$this->processRules($rField, $rSetup['label'] ?? $rField, $value ?? null, $rules, $data);
+			if (is_array($value) && end($fieldNameToken) === '*')
+			{
+				foreach ($value as $val)
+				{
+					$this->processRules($rField, $rSetup['label'] ?? $rField, $val ?? null, $rules, $data);
+				}
+			}
+			else
+			{
+				$this->processRules($rField, $rSetup['label'] ?? $rField, $value ?? null, $rules, $data);
+			}
 		}
 
 		return ! empty($this->getErrors()) ? false : true;
@@ -208,11 +219,11 @@ class Validation implements ValidationInterface
 	 * the error to $this->errors and moves on to the next,
 	 * so that we can collect all of the first errors.
 	 *
-	 * @param string      $field
-	 * @param string|null $label
-	 * @param string      $value
-	 * @param array|null  $rules
-	 * @param array       $data  // All of the fields to check.
+	 * @param string       $field
+	 * @param string|null  $label
+	 * @param string|array $value Value to be validated, can be a string or an array
+	 * @param array|null   $rules
+	 * @param array        $data  // All of the fields to check.
 	 *
 	 * @return boolean
 	 */
@@ -291,7 +302,14 @@ class Validation implements ValidationInterface
 			// Set the error message if we didn't survive.
 			if ($passed === false)
 			{
-				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $field, $label, $param) : $error;
+				// if the $value is an array, convert it to as string representation
+				if (is_array($value))
+				{
+					$value = '[' . implode(', ', $value) . ']';
+				}
+
+				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $field, $label, $param, $value)
+					: $error;
 
 				return false;
 			}
@@ -467,8 +485,8 @@ class Validation implements ValidationInterface
 	 */
 	public function setRuleGroup(string $group)
 	{
-		$rules       = $this->getRuleGroup($group);
-		$this->rules = $rules;
+		$rules = $this->getRuleGroup($group);
+		$this->setRules($rules);
 
 		$errorName = $group . '_errors';
 		if (isset($this->config->$errorName))
@@ -682,10 +700,11 @@ class Validation implements ValidationInterface
 	 * @param string      $field
 	 * @param string|null $label
 	 * @param string      $param
+	 * @param string      $value The value that caused the validation to fail.
 	 *
 	 * @return string
 	 */
-	protected function getErrorMessage(string $rule, string $field, string $label = null, string $param = null): string
+	protected function getErrorMessage(string $rule, string $field, string $label = null, string $param = null, string $value = null): string
 	{
 		// Check if custom message has been defined by user
 		if (isset($this->customErrors[$field][$rule]))
@@ -703,7 +722,7 @@ class Validation implements ValidationInterface
 		$message = str_replace('{field}', $label ?? $field, $message);
 		$message = str_replace('{param}', $this->rules[$param]['label'] ?? $param, $message);
 
-		return $message;
+		return str_replace('{value}', $value, $message);
 	}
 
 	/**

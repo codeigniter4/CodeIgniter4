@@ -1,9 +1,9 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use BadMethodCallException;
 use CodeIgniter\Config\Config;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity;
-use CodeIgniter\Exceptions\EntityException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -122,7 +122,7 @@ class ModelTest extends CIDatabaseTestCase
 		$job = $model->asArray()
 					 ->find(4);
 
-		$this->assertInternalType('array', $job);
+		$this->assertIsArray($job);
 	}
 
 	//--------------------------------------------------------------------
@@ -134,7 +134,7 @@ class ModelTest extends CIDatabaseTestCase
 		$job = $model->asObject()
 					 ->find(4);
 
-		$this->assertInternalType('object', $job);
+		$this->assertIsObject($job);
 	}
 
 	//--------------------------------------------------------------------
@@ -503,13 +503,14 @@ class ModelTest extends CIDatabaseTestCase
 	}    //--------------------------------------------------------------------
 
 	/**
-	 * @expectedException        \CodeIgniter\Database\Exceptions\DatabaseException
-	 * @expectedExceptionMessage Deletes are not allowed unless they contain a "where" or "like" clause.
-	 * @dataProvider             emptyPkValues
-	 * @return                   void
+	 * @dataProvider emptyPkValues
+	 * @return       void
 	 */
 	public function testThrowExceptionWhenSoftDeleteParamIsEmptyValue($emptyValue)
 	{
+		$this->expectException('CodeIgniter\Database\Exceptions\DatabaseException');
+		$this->expectExceptionMessage('Deletes are not allowed unless they contain a "where" or "like" clause.');
+
 		$model = new UserModel();
 		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 		$model->delete($emptyValue);
@@ -518,13 +519,14 @@ class ModelTest extends CIDatabaseTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @expectedException        \CodeIgniter\Database\Exceptions\DatabaseException
-	 * @expectedExceptionMessage Deletes are not allowed unless they contain a "where" or "like" clause.
-	 * @dataProvider             emptyPkValues
-	 * @return                   void
+	 * @dataProvider emptyPkValues
+	 * @return       void
 	 */
 	public function testDontDeleteRowsWhenSoftDeleteParamIsEmpty($emptyValue)
 	{
+		$this->expectException('CodeIgniter\Database\Exceptions\DatabaseException');
+		$this->expectExceptionMessage('Deletes are not allowed unless they contain a "where" or "like" clause.');
+
 		$model = new UserModel();
 		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 		$model->delete($emptyValue);
@@ -660,8 +662,7 @@ class ModelTest extends CIDatabaseTestCase
 			'description' => 'some great marketing stuff',
 		];
 
-		$this->assertInternalType('numeric', $model->skipValidation(true)
-												   ->insert($data));
+		$this->assertIsNumeric($model->skipValidation(true)->insert($data));
 	}
 
 	//--------------------------------------------------------------------
@@ -1262,12 +1263,11 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @expectedException        \CodeIgniter\Exceptions\ModelException
-	 * @expectedExceptionMessage `Tests\Support\Models\UserModel` model class does not specify a Primary Key.
-	 */
 	public function testThrowsWithNoPrimaryKey()
 	{
+		$this->expectException('CodeIgniter\Exceptions\ModelException');
+		$this->expectExceptionMessage('`Tests\Support\Models\UserModel` model class does not specify a Primary Key.');
+
 		$model = new UserModel();
 		$this->setPrivateProperty($model, 'primaryKey', '');
 
@@ -1276,12 +1276,11 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @expectedException        \CodeIgniter\Exceptions\ModelException
-	 * @expectedExceptionMessage `Tests\Support\Models\UserModel` model class does not have a valid dateFormat.
-	 */
 	public function testThrowsWithNoDateFormat()
 	{
+		$this->expectException('CodeIgniter\Exceptions\ModelException');
+		$this->expectExceptionMessage('`Tests\Support\Models\UserModel` model class does not have a valid dateFormat.');
+
 		$model = new UserModel();
 		$this->setPrivateProperty($model, 'dateFormat', '');
 
@@ -1802,4 +1801,46 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertIsArray($model->QBNoEscape);
 	}
+
+	public function testUndefinedModelMethod()
+	{
+		$model = new UserModel($this->db);
+		$this->expectException(BadMethodCallException::class);
+		$this->expectExceptionMessage('Call to undefined method Tests\Support\Models\UserModel::undefinedMethodCall');
+		$model->undefinedMethodCall();
+	}
+
+	public function testUndefinedMethodInBuilder()
+	{
+		$model = new JobModel($this->db);
+
+		$model->find(1);
+
+		$this->expectException(BadMethodCallException::class);
+		$this->expectExceptionMessage('Call to undefined method Tests\Support\Models\JobModel::getBindings');
+
+		$binds = $model->builder()
+			->getBindings();
+	}
+
+	public function testFirstRecoverTempUseSoftDeletes()
+	{
+		$model = new UserModel($this->db);
+		$model->delete(1);
+		$user = $model->withDeleted()->first();
+		$this->assertEquals(1, $user->id);
+		$user2 = $model->first();
+		$this->assertEquals(2, $user2->id);
+
+	}
+
+	public function testcountAllResultsRecoverTempUseSoftDeletes()
+	{
+		$model = new UserModel($this->db);
+		$model->delete(1);
+		$this->assertEquals(4, $model->withDeleted()->countAllResults());
+		$this->assertEquals(3, $model->countAllResults());
+
+	}
+
 }

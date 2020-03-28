@@ -4,7 +4,7 @@ namespace CodeIgniter\Commands;
 use Config\Services;
 use CodeIgniter\CLI\CommandRunner;
 
-class BaseCommandTest extends \CIUnitTestCase
+class BaseCommandTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected $logger;
 	protected $runner;

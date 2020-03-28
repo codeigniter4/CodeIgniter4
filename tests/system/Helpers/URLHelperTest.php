@@ -8,7 +8,7 @@ use CodeIgniter\Config\Services;
 /**
  * @backupGlobals enabled
  */
-class URLHelperTest extends \CIUnitTestCase
+class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -19,7 +19,7 @@ class URLHelperTest extends \CIUnitTestCase
 		Services::reset();
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		parent::tearDown();
 
@@ -1160,7 +1160,6 @@ class URLHelperTest extends \CIUnitTestCase
 
 		$this->assertEquals('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $config));
 		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
-		$this->assertEquals(base_url(uri_string()), current_url());
 	}
 
 	public function testBasedWithIndex()
@@ -1178,7 +1177,6 @@ class URLHelperTest extends \CIUnitTestCase
 
 		$this->assertEquals('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $config));
 		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
-		$this->assertEquals(base_url(uri_string()), current_url());
 	}
 
 	public function testBasedWithoutIndex()
@@ -1196,7 +1194,6 @@ class URLHelperTest extends \CIUnitTestCase
 
 		$this->assertEquals('http://example.com/ci/v4/controller/method', site_url('controller/method', null, $config));
 		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
-		$this->assertEquals(base_url(uri_string()), current_url());
 	}
 
 	public function testBasedWithOtherIndex()
@@ -1214,7 +1211,6 @@ class URLHelperTest extends \CIUnitTestCase
 
 		$this->assertEquals('http://example.com/ci/v4/fc.php/controller/method', site_url('controller/method', null, $config));
 		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
-		$this->assertEquals(base_url(uri_string()), current_url());
 	}
 
 }

@@ -7,6 +7,8 @@ We expect all contributions to conform to our [style guide](https://github.com/c
 be documented (in the [user guide](https://codeigniter4.github.io/userguide/)), and unit tested (in the [test folder](https://github.com/codeigniter4/CodeIgniter4/tree/develop/tests)). 
 There is a [Contributing to CodeIgniter](./contributing/README.rst) section in the repository which describes the contribution process; this page is an overview.
 
+Note, we expect all code changes or bug-fixes to be accompanied by one or more tests added to our test suite to prove the code works. If pull requests are not accompanied by relevant tests, they will likely be closed. Since we are a team of volunteers, we don't have any more time to work on the framework than you do. Please make it as painless for your contributions to be included as possible. If you need help with getting tests running on your local machines, ask for help on the forums. We would be happy to help out. 
+
 The [Open Source Guide](https://opensource.guide/) is a good first read for those new to contributing to open source!
 ## Issues
 
@@ -23,7 +25,7 @@ Reporting Issues is helpful, but an even [better approach](./contributing/workfl
 Before we look into how to contribute to CodeIgniter4, here are some guidelines. If your Pull Requests fail
 to pass these guidelines, they will be declined, and you will need to re-submit
 when you’ve made the changes. This might sound a bit tough, but it is required
-for us to maintain quality of the codebase.
+for us to maintain the quality of the codebase.
 
 ### PHP Style
 
@@ -59,7 +61,7 @@ each other and from whatever else you are doing with your repository!
 
 ### Signing
 
-You must [GPG-sign](./contributing/signing.rst) your work, certifying that you either wrote the work or otherwise have the right to pass it on to an open source project. This is *not* just a "signed-off-by" commit, but instead, a digitally signed one.
+You must [GPG-sign](./contributing/signing.rst) your work, certifying that you either wrote the work or otherwise have the right to pass it on to an open-source project. This is *not* just a "signed-off-by" commit, but instead, a digitally signed one.
 
 ## How-to Guide
 

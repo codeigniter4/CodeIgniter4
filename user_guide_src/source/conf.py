@@ -29,6 +29,9 @@ extensions = ['sphinx.ext.ifconfig', 'sphinxcontrib.phpdomain']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
+html_js_files = [
+    'js/citheme.js',
+]
 
 # The suffix of source filenames.
 source_suffix = '.rst'
@@ -116,12 +119,12 @@ html_theme_path = ["./_themes"]
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-#html_logo = None
+html_logo = 'images/ci-logo-text.png'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-html_favicon = 'images/ci-icon.ico'
+html_favicon = 'images/favicon.ico'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

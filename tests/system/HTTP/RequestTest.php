@@ -6,7 +6,7 @@ use Config\App;
 /**
  * @backupGlobals enabled
  */
-class RequestTest extends \CIUnitTestCase
+class RequestTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**
@@ -183,7 +183,7 @@ class RequestTest extends \CIUnitTestCase
 		$result = $this->request->fetchGlobal('post');
 
 		$this->assertEquals($post, $result);
-		$this->assertInternalType('array', $result['ANNOUNCEMENTS']);
+		$this->assertIsArray($result['ANNOUNCEMENTS']);
 		$this->assertCount(2, $result['ANNOUNCEMENTS']);
 	}
 
@@ -285,7 +285,6 @@ class RequestTest extends \CIUnitTestCase
 		];
 		$this->request->setGlobal('post', $post);
 
-		//      echo var_dump($this->request->fetchGlobal('post', 'clients[][zipcode]'));
 		$this->assertEquals($expected, $this->request->fetchGlobal('post', 'clients[]'));
 	}
 

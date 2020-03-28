@@ -4,7 +4,7 @@ namespace CodeIgniter\Test;
 use CodeIgniter\Log\Logger;
 use Config\App;
 use Config\Services;
-use Tests\Support\Config\MockLogger as LoggerConfig;
+use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 
 /**
  * Exercise our Controller class.
@@ -12,7 +12,7 @@ use Tests\Support\Config\MockLogger as LoggerConfig;
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
  */
-class ControllerTesterTest extends \CIUnitTestCase
+class ControllerTesterTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	use ControllerTester;
@@ -226,6 +226,13 @@ class ControllerTesterTest extends \CIUnitTestCase
 
 		$body = $result->getBody();
 		$this->assertTrue($result->isOK());
+	}
+
+	public function testRedirectRoute()
+	{
+		$result = $this->controller(\Tests\Support\Controllers\Popcorn::class)
+						->execute('toindex');
+		$this->assertTrue($result->isRedirect());
 	}
 
 }

@@ -11,9 +11,6 @@ There are several development repositories, of interest to potential contributor
 +==================+==============+=================================================================+
 + CodeIgniter4     + contributors + Project codebase, including tests & user guide sources          +
 +------------------+--------------+-----------------------------------------------------------------+
-+ devstarter       + developers   + Starter project (app/public/writable).                          +
-+                  +              + Dependent on develop branch of codebase repository              +
-+------------------+--------------+-----------------------------------------------------------------+
 + translations     + developers   + System message translations                                     +
 +------------------+--------------+-----------------------------------------------------------------+
 + coding-standard  + contributors + Coding style conventions & rules                                +
@@ -52,10 +49,7 @@ These correspond to the repositories mentioned above:
 
 - `codeigniter4/framework <https://packagist.org/packages/codeigniter4/framework>`_
 - `codeigniter4/appstarter <https://packagist.org/packages/codeigniter4/appstarter>`_
-- `codeigniter4/devstarter <https://packagist.org/packages/codeigniter4/devstarter>`_
-- `codeigniter4/userguide <https://packagist.org/packages/codeigniter4/userguide>`_
 - `codeigniter4/translations <https://packagist.org/packages/codeigniter4/translations>`_
-- `codeigniter4/CodeIgniter4 <https://packagist.org/packages/codeigniter4/CodeIgniter4>`_
 - `codeigniter4/coding-standard <https://packagist.org/packages/codeigniter4/codeigniter4-standard>`_
 
 See the :doc:`Installation </installation/index>` page for more information.
@@ -64,19 +58,13 @@ CodeIgniter 4 Projects
 ======================
 
 We maintain a `codeigniter4projects <https://github.com/codeigniter4projects>`_ organization
-on Github as well, with projects that are not part of the framework, 
+on Github as well, with projects that are not part of the framework,
 but which showcase it or make it easier to work with!
 
 +------------------+--------------+-----------------------------------------------------------------+
 + Repository       + Audience     + Description                                                     +
 +==================+==============+=================================================================+
 + website2         + developers   + The codeigniter.com website, written in CodeIgniter 4           +
-+------------------+--------------+-----------------------------------------------------------------+
-+ module-tests     + plugin       + PHPunit testing scaffold for CI4 module / plugin developers     +
-+                  + developers   +                                                                 +
-+------------------+--------------+-----------------------------------------------------------------+
-+ project-tests    + app          + PHPunit testugn scaffold for CI4 projects                       +
-+                  + developers   +                                                                 +
 +------------------+--------------+-----------------------------------------------------------------+
 +                  +              +                                                                 +
 +------------------+--------------+-----------------------------------------------------------------+

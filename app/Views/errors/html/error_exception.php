@@ -132,7 +132,7 @@
 					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var]))
 					{
 						continue;
-} ?>
+					} ?>
 
 					<h3>$<?= $var ?></h3>
 
@@ -235,7 +235,7 @@
 					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var]))
 					{
 						continue;
-} ?>
+					} ?>
 
 					<?php $empty = false; ?>
 
@@ -287,15 +287,15 @@
 							</tr>
 						</thead>
 						<tbody>
-						<?php foreach ($headers as $name => $value) : ?>
+						<?php foreach ($headers as $value) : ?>
 							<?php if (empty($value))
 							{
 								continue;
-} ?>
+							} ?>
 							<?php if (! is_array($value))
 							{
 								$value = [$value];
-} ?>
+							} ?>
 							<?php foreach ($value as $h) : ?>
 								<tr>
 									<td><?= esc($h->getName(), 'html') ?></td>

@@ -316,7 +316,7 @@ class Builder extends BaseBuilder
 	protected function _updateBatch(string $table, array $values, string $index): string
 	{
 		$ids = [];
-		foreach ($values as $key => $val)
+		foreach ($values as $val)
 		{
 			$ids[] = $val[$index];
 

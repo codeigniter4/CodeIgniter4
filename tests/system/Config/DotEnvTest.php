@@ -3,12 +3,10 @@ namespace CodeIgniter\Config;
 
 use org\bovigo\vfs\vfsStream;
 
-//require_once 'system/Benchmark/Timer.php';
-
 /**
  * @backupGlobals enabled
  */
-class DotEnvTest extends \CIUnitTestCase
+class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected $fixturesFolder;

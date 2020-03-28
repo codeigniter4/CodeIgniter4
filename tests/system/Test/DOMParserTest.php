@@ -1,7 +1,7 @@
 <?php
 namespace CodeIgniter\Test;
 
-class DOMParserTest extends CIUnitTestCase
+class DOMParserTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void

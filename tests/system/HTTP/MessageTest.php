@@ -4,7 +4,7 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 
-class MessageTest extends \CIUnitTestCase
+class MessageTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**

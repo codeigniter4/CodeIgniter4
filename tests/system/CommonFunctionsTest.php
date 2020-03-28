@@ -9,14 +9,14 @@ use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use Config\Logger;
-use Tests\Support\HTTP\MockIncomingRequest;
-use Tests\Support\Log\TestLogger;
-use Tests\Support\Session\MockSession;
+use CodeIgniter\Test\Mock\MockIncomingRequest;
+use CodeIgniter\Test\TestLogger;
+use CodeIgniter\Test\Mock\MockSession;
 
 /**
  * @backupGlobals enabled
  */
-class CommonFunctionsTest extends \CIUnitTestCase
+class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	//--------------------------------------------------------------------
@@ -128,7 +128,7 @@ class CommonFunctionsTest extends \CIUnitTestCase
 			'bar'        => 'baz',
 		];
 		$expected = '<h1>bar</h1>';
-		$this->assertContains($expected, view('\Tests\Support\View\Views\simple', $data, []));
+		$this->assertStringContainsString($expected, view('\Tests\Support\View\Views\simple', $data, []));
 	}
 
 	public function testViewSavedData()
@@ -138,8 +138,8 @@ class CommonFunctionsTest extends \CIUnitTestCase
 			'bar'        => 'baz',
 		];
 		$expected = '<h1>bar</h1>';
-		$this->assertContains($expected, view('\Tests\Support\View\Views\simple', $data, ['saveData' => true]));
-		$this->assertContains($expected, view('\Tests\Support\View\Views\simple'));
+		$this->assertStringContainsString($expected, view('\Tests\Support\View\Views\simple', $data, ['saveData' => true]));
+		$this->assertStringContainsString($expected, view('\Tests\Support\View\Views\simple'));
 	}
 
 	// ------------------------------------------------------------------------
@@ -263,12 +263,12 @@ class CommonFunctionsTest extends \CIUnitTestCase
 
 	public function testCSRFField()
 	{
-		$this->assertContains('<input type="hidden" ', csrf_field());
+		$this->assertStringContainsString('<input type="hidden" ', csrf_field());
 	}
 
 	public function testCSRFMeta()
 	{
-		$this->assertContains('<meta name="X-CSRF-TOKEN" ', csrf_meta());
+		$this->assertStringContainsString('<meta name="X-CSRF-TOKEN" ', csrf_meta());
 	}
 
 	// ------------------------------------------------------------------------

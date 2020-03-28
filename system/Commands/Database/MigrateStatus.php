@@ -42,7 +42,6 @@ namespace CodeIgniter\Commands\Database;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
-use Config\Autoload;
 
 /**
  * Displays a list of all migrations and whether they've been run or not.
@@ -106,6 +105,10 @@ class MigrateStatus extends BaseCommand
 		'CodeIgniter',
 		'Config',
 		'Tests\Support',
+		'Kint',
+		'Laminas\ZendFrameworkBridge',
+		'Laminas\Escaper',
+		'Psr\Log',
 	];
 
 	/**
@@ -124,9 +127,11 @@ class MigrateStatus extends BaseCommand
 			$runner->setGroup($group);
 		}
 
-		// Get all namespaces from  PSR4 paths.
-		$config     = new Autoload();
-		$namespaces = $config->psr4;
+		// Get all namespaces
+		$namespaces = Services::autoloader()->getNamespace();
+
+		// Determines whether any migrations were found
+		$found = false;
 
 		// Loop for all $namespaces
 		foreach ($namespaces as $namespace => $path)
@@ -138,15 +143,16 @@ class MigrateStatus extends BaseCommand
 
 			$runner->setNamespace($namespace);
 			$migrations = $runner->findMigrations();
-			$history    = $runner->getHistory();
-
-			CLI::write($namespace);
 
 			if (empty($migrations))
 			{
-				CLI::error(lang('Migrations.noneFound'));
 				continue;
 			}
+
+			$found   = true;
+			$history = $runner->getHistory();
+
+			CLI::write($namespace);
 
 			ksort($migrations);
 
@@ -175,6 +181,11 @@ class MigrateStatus extends BaseCommand
 				}
 				CLI::write(str_pad('  ' . $migration->name, $max + 6) . ($date ? $date : '---'));
 			}
+		}
+
+		if (! $found)
+		{
+			CLI::error(lang('Migrations.noneFound'));
 		}
 	}
 

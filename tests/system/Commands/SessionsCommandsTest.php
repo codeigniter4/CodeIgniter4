@@ -1,13 +1,13 @@
 <?php namespace CodeIgniter\Commands;
 
 use Config\Services;
-use Tests\Support\Config\MockAppConfig;
+use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\CommandRunner;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class SessionsCommandsTest extends \CIUnitTestCase
+class SessionsCommandsTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	private $stream_filter;
 	protected $env;
@@ -51,6 +51,11 @@ class SessionsCommandsTest extends \CIUnitTestCase
 
 	public function tearDown(): void
 	{
+		if (! $this->result)
+		{
+			return;
+		}
+
 		stream_filter_remove($this->stream_filter);
 
 		$result = remove_invisible_characters($this->result);
@@ -70,9 +75,9 @@ class SessionsCommandsTest extends \CIUnitTestCase
 		// make sure we end up with a migration class in the right place
 		// or at least that we claim to have done so
 		// separate assertions avoid console color codes
-		$this->assertContains('Created file:', $result);
-		$this->assertContains('APPPATH/Database/Migrations/', $result);
-		$this->assertContains('_create_ci_sessions_table.php', $result);
+		$this->assertStringContainsString('Created file:', $result);
+		$this->assertStringContainsString('APPPATH/Database/Migrations/', $result);
+		$this->assertStringContainsString('_create_ci_sessions_table.php', $result);
 
 		$this->result = $result;
 	}
@@ -92,11 +97,25 @@ class SessionsCommandsTest extends \CIUnitTestCase
 		$result = CITestStreamFilter::$buffer;
 
 		// make sure we end up with a migration class in the right place
-		$this->assertContains('Created file:', $result);
-		$this->assertContains('APPPATH/Database/Migrations/', $result);
-		$this->assertContains('_create_mygoodies_table.php', $result);
+		$this->assertStringContainsString('Created file:', $result);
+		$this->assertStringContainsString('APPPATH/Database/Migrations/', $result);
+		$this->assertStringContainsString('_create_mygoodies_table.php', $result);
 
 		$this->result = $result;
+	}
+
+	public function testCannotWriteFileOnCreateMigrationCommand()
+	{
+		$this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
+
+		chmod(APPPATH . 'Database/Migrations/', 0444);
+
+		$this->runner->index(['session:migration']);
+		$this->result = '';
+
+		$this->assertRegExp('/Error trying to create .* file, check if the directory is writable/', CITestStreamFilter::$buffer);
+
+		chmod(APPPATH . 'Database/Migrations/', 0755);
 	}
 
 }

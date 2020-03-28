@@ -203,7 +203,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 						"Database: Unable to set the configured connection charset ('{$this->charset}').");
 					$this->mysqli->close();
 
-					if ($this->db->debug)
+					if ($this->DBDebug)
 					{
 						throw new DatabaseException('Unable to set client connection character set: ' . $this->charset);
 					}
@@ -424,8 +424,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 			'\\' . '_',
 		], $str
 		);
-
-		return $str;
 	}
 
 	//--------------------------------------------------------------------

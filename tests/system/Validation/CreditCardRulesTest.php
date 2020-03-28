@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Validation;
 
-class CreditCardRulesTest extends \CIUnitTestCase
+class CreditCardRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**

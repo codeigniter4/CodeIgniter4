@@ -1,10 +1,10 @@
 <?php namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
-use Tests\Support\Database\MockQuery;
-use Tests\Support\Database\MockConnection;
+use CodeIgniter\Test\Mock\MockQuery;
+use CodeIgniter\Test\Mock\MockConnection;
 
-class UpdateTest extends \CIUnitTestCase
+class UpdateTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected $db;
 

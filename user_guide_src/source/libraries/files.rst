@@ -2,7 +2,7 @@
 Working with Files
 ******************
 
-CodeIgniter provides a File class that wraps the `SplFileInfo <http://php.net/manual/en/class.splfileinfo.php>`_ class
+CodeIgniter provides a File class that wraps the `SplFileInfo <https://www.php.net/manual/en/class.splfileinfo.php>`_ class
 and provides some additional convenience methods. This class is the base class for :doc:`uploaded files </libraries/uploaded_files>`
 and :doc:`images </libraries/images>`.
 
@@ -67,6 +67,15 @@ the results in kilobytes or megabytes, respectively::
 	$bytes     = $file->getSize();      // 256901
 	$kilobytes = $file->getSize('kb');  // 250.880
 	$megabytes = $file->getSize('mb');  // 0.245
+
+**getSizeByUnit()**
+
+Returns the size of the uploaded file default in bytes. You can pass in either 'kb' or 'mb' as the first parameter to get
+the results in kilobytes or megabytes, respectively::
+
+	$bytes     = $file->getSizeByUnit();      // 256901
+	$kilobytes = $file->getSizeByUnit('kb');  // 250.880
+	$megabytes = $file->getSizeByUnit('mb');  // 0.245
 
 **getMimeType()**
 

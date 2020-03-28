@@ -10,7 +10,7 @@ use Config\App;
  * buffering from PHPUnit, and the individual
  * test cases need to be run as separate processes.
  */
-class TestCaseEmissionsTest extends \CIUnitTestCase
+class TestCaseEmissionsTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**

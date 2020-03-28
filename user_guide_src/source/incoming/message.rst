@@ -76,7 +76,7 @@ Class Reference
 	.. php:method:: getHeader([$name[, $filter = null]])
 
 		:param  string  $name: The name of the header you want to retrieve the value of.
-		:param  int  $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
+		:param  int  $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`_.
 		:returns: The current value of the header. If the header has multiple values, they will be returned as an array.
 		:rtype: string|array|null
 
@@ -194,7 +194,7 @@ Class Reference
 		array, with the rest following in descending order of priority. If no match can be made between the header
 		values and the supported values, the first element of the array will be returned.
 
-		Per the `RFC <http://tools.ietf.org/html/rfc7231#section-5.3>`_ the match has the option of returning a
+		Per the `RFC <https://tools.ietf.org/html/rfc7231#section-5.3>`_ the match has the option of returning a
 		default value, like this method does, or to return an empty string. If you need to have an exact match and
 		would like an empty string returned instead, pass ``true`` as the second parameter::
 
@@ -203,7 +203,7 @@ Class Reference
 
 		The matching process takes into account the priorities and specificity of the RFC. This means that the more
 		specific header values will have a higher order of precedence, unless modified by a different ``q`` value.
-		For more details, please read the `appropriate section of the RFC <http://tools.ietf.org/html/rfc7231#section-5.3.2>`_.
+		For more details, please read the `appropriate section of the RFC <https://tools.ietf.org/html/rfc7231#section-5.3.2>`_.
 
 	.. php:method:: negotiateCharset($supported)
 
@@ -254,4 +254,3 @@ Class Reference
 			$language = $message->negotiateLanguage($supported);
 
 		More information about the language tags is available in `RFC 1766 <https://www.ietf.org/rfc/rfc1766.txt>`_.
-

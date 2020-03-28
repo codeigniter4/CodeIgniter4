@@ -1,7 +1,7 @@
 <?php
 namespace CodeIgniter\I18n;
 
-class TimeDifferenceTest extends \CIUnitTestCase
+class TimeDifferenceTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void

@@ -2,9 +2,9 @@
 
 use CodeIgniter\View\Cell;
 use CodeIgniter\View\Exceptions\ViewException;
-use Tests\Support\Cache\Handlers\MockHandler;
+use CodeIgniter\Test\Mock\MockCache;
 
-class CellTest extends \CIUnitTestCase
+class CellTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected $cache;
@@ -20,7 +20,7 @@ class CellTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->cache = new MockHandler();
+		$this->cache = new MockCache();
 		$this->cell  = new Cell($this->cache);
 	}
 

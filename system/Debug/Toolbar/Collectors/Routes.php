@@ -132,17 +132,38 @@ class Routes extends BaseCollector
 		];
 
 		/*
-		 * Defined Routes
-		 */
-		$rawRoutes = $rawRoutes->getRoutes();
+		* Defined Routes
+		*/
 		$routes    = [];
+		$methods    = [
+			'get',
+			'head',
+			'post',
+			'patch',
+			'put',
+			'delete',
+			'options',
+			'trace',
+			'connect',
+			'cli',
+		];
 
-		foreach ($rawRoutes as $from => $to)
+		foreach ($methods as $method)
 		{
-			$routes[] = [
-				'from' => $from,
-				'to'   => $to,
-			];
+			$raw = $rawRoutes->getRoutes($method);
+
+			foreach ($raw as $route => $handler)
+			{
+				// filter for strings, as callbacks aren't displayable
+				if (is_string($handler))
+				{
+					$routes[] = [
+						'method' => strtoupper($method),
+						'route' => $route,
+						'handler' => $handler,
+					];
+				}
+			}
 		}
 
 		return [

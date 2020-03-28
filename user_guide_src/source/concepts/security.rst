@@ -6,11 +6,11 @@ We take security seriously.
 CodeIgniter incorporates a number of features and techniques to either enforce
 good security practices, or to enable you to do so easily.
 
-We respect the `Open Web Application Security Project (OWASP) <https://www.owasp.org>`_
+We respect the `Open Web Application Security Project (OWASP) <https://owasp.org>`_
 and follow their recommendations as much as possible.
 
 The following comes from
-`OWASP Top Ten Cheat Sheet <https://www.owasp.org/index.php/OWASP_Top_Ten_Cheat_Sheet>`_,
+`OWASP Top Ten Cheat Sheet <https://owasp.org/www-project-top-ten/>`_,
 identifying the top vulnerabilities for web applications.
 For each, we provide a brief description, the OWASP recommendations, and then
 the CodeIgniter provisions to address the problem.
