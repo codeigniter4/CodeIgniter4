@@ -80,6 +80,10 @@ html_theme_options = {
 	'style_nav_header_background': '#DD4814',
 }
 
+# If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
+# using the given strftime format.
+html_last_updated_fmt = '%b %d, %Y'
+
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
 html_logo = '_static/ci-logo-text.png'
