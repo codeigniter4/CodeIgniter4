@@ -39,7 +39,7 @@
 
 namespace CodeIgniter\View;
 
-use CodeIgniter\Log\Logger;
+use Psr\Log\LoggerInterface;
 use CodeIgniter\View\Exceptions\ViewException;
 
 /**
@@ -97,9 +97,9 @@ class Parser extends View
 	 * @param string       $viewPath
 	 * @param mixed        $loader
 	 * @param boolean      $debug
-	 * @param Logger       $logger
+	 * @param LoggerInterface	$logger
 	 */
-	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, Logger $logger = null)
+	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, LoggerInterface $logger = null)
 	{
 		// Ensure user plugins override core plugins.
 		$this->plugins = $config->plugins ?? [];
