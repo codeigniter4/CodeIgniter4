@@ -774,6 +774,41 @@ if (! function_exists('old'))
 	}
 }
 
+if (! function_exists('parser'))
+{
+	/**
+	 * Grabs the current RendererInterface-compatible class
+	 * and tells it to render the specified view. Simply provides
+	 * a convenience method that can be used in Controllers,
+	 * libraries, and routed closures.
+	 *
+	 * NOTE: Does not provide any escaping of the data, so that must
+	 * all be handled manually by the developer.
+	 *
+	 * @param string $name
+	 * @param array  $data
+	 * @param array  $options Unused - reserved for third-party extensions.
+	 *
+	 * @return string
+	 */
+	function parser(string $name, array $data = [], array $options = []): string
+	{
+		/**
+		 * @var CodeIgniter\View\Parser $parser
+		 */
+		$parser = \Config\Services::parser();
+
+		$saveData = null;
+		if (array_key_exists('saveData', $options) && $options['saveData'] === true)
+		{
+			$saveData = (bool) $options['saveData'];
+			unset($options['saveData']);
+		}
+
+		return $parser->setData($data, 'raw')->render($name, $options, $saveData);
+	}
+}
+
 if (! function_exists('redirect'))
 {
 	/**
