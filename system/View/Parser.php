@@ -256,9 +256,10 @@ class Parser extends View
 	 * Parses pseudo-variables contained in the specified template,
 	 * replacing them with the data in the second param
 	 *
-	 * @param  string $template
-	 * @param  array  $data
-	 * @param  array  $options  Future options
+	 * @param string $template
+	 * @param array  $data
+	 * @param array  $options  Future options
+	 *
 	 * @return string
 	 */
 	protected function parse(string $template, array $data = [], array $options = null): string
@@ -304,9 +305,7 @@ class Parser extends View
 			}
 		}
 
-		$template = $this->insertNoparse($template);
-
-		return $template;
+		return $this->insertNoparse($template);
 	}
 
 	//--------------------------------------------------------------------
@@ -621,9 +620,7 @@ class Parser extends View
 			}
 		}
 
-		$replace = $this->applyFilters($replace, $filters);
-
-		return $replace;
+		return $this->applyFilters($replace, $filters);
 	}
 
 	//--------------------------------------------------------------------

@@ -396,7 +396,7 @@ class BaseBuilder
 	 */
 	public function selectMax(string $select = '', string $alias = '')
 	{
-		return $this->maxMinAvgSum($select, $alias, 'MAX');
+		return $this->maxMinAvgSum($select, $alias);
 	}
 
 	//--------------------------------------------------------------------
@@ -981,12 +981,12 @@ class BaseBuilder
 	 * @used-by whereNotIn()
 	 * @used-by orWhereNotIn()
 	 *
-	 * @param string        $key    The field to search
-	 * @param array|Closure $values The values searched on, or anonymous function with subquery
-	 * @param boolean       $not    If the statement would be IN or NOT IN
-	 * @param string        $type
-	 * @param boolean       $escape
-	 * @param string        $clause (Internal use only)
+	 * @param  string        $key    The field to search
+	 * @param  array|Closure $values The values searched on, or anonymous function with subquery
+	 * @param  boolean       $not    If the statement would be IN or NOT IN
+	 * @param  string        $type
+	 * @param  boolean       $escape
+	 * @param  string        $clause (Internal use only)
 	 * @throws InvalidArgumentException
 	 *
 	 * @return BaseBuilder
@@ -998,8 +998,8 @@ class BaseBuilder
 			if (CI_DEBUG)
 			{
 				throw new InvalidArgumentException(sprintf('%s() expects $key to be a non-empty string', debug_backtrace(0, 2)[1]['function']));
-			} 
-			
+			}
+
 			return $this;
 		}
 
@@ -1009,7 +1009,7 @@ class BaseBuilder
 			{
 				throw new InvalidArgumentException(sprintf('%s() expects $values to be of type array or closure', debug_backtrace(0, 2)[1]['function']));
 			}
-			
+
 			return $this;
 		}
 
@@ -1325,7 +1325,7 @@ class BaseBuilder
 	 */
 	public function groupStart()
 	{
-		return $this->groupStartPrepare('', 'AND ', 'QBWhere');
+		return $this->groupStartPrepare();
 	}
 
 	//--------------------------------------------------------------------
@@ -1337,7 +1337,7 @@ class BaseBuilder
 	 */
 	public function orGroupStart()
 	{
-		return $this->groupStartPrepare('', 'OR ', 'QBWhere');
+		return $this->groupStartPrepare('', 'OR ');
 	}
 
 	//--------------------------------------------------------------------
@@ -1349,7 +1349,7 @@ class BaseBuilder
 	 */
 	public function notGroupStart()
 	{
-		return $this->groupStartPrepare('NOT ', 'AND ', 'QBWhere');
+		return $this->groupStartPrepare('NOT ');
 	}
 
 	//--------------------------------------------------------------------
@@ -1361,7 +1361,7 @@ class BaseBuilder
 	 */
 	public function orNotGroupStart()
 	{
-		return $this->groupStartPrepare('NOT ', 'OR ', 'QBWhere');
+		return $this->groupStartPrepare('NOT ', 'OR ');
 	}
 
 	//--------------------------------------------------------------------
@@ -1373,7 +1373,7 @@ class BaseBuilder
 	 */
 	public function groupEnd()
 	{
-		return $this->groupEndPrepare('QBWhere');
+		return $this->groupEndPrepare();
 	}
 
 	// --------------------------------------------------------------------
@@ -2597,7 +2597,7 @@ class BaseBuilder
 		$ids   = [];
 		$final = [];
 
-		foreach ($values as $key => $val)
+		foreach ($values as $val)
 		{
 			$ids[] = $val[$index];
 
@@ -2646,7 +2646,7 @@ class BaseBuilder
 
 		is_bool($escape) || $escape = $this->db->protectIdentifiers;
 
-		foreach ($key as $k => $v)
+		foreach ($key as $v)
 		{
 			$index_set = false;
 			$clean     = [];
@@ -3426,7 +3426,7 @@ class BaseBuilder
 			return $key;
 		}
 
-		if (!array_key_exists($key, $this->bindsKeyCount))
+		if (! array_key_exists($key, $this->bindsKeyCount))
 		{
 			$this->bindsKeyCount[$key] = 0;
 		}

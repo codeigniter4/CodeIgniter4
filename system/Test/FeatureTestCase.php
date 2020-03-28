@@ -191,9 +191,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 		// Reset directory if it has been set
 		Services::router()->setDirectory(null);
 
-		$featureResponse = new FeatureResponse($response);
-
-		return $featureResponse;
+		return new FeatureResponse($response);
 	}
 
 	/**

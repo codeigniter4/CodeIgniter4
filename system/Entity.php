@@ -570,17 +570,15 @@ class Entity implements \JsonSerializable
 				$value = (array)$value;
 				break;
 			case 'json':
-				$value = $this->castAsJson($value, false);
+				$value = $this->castAsJson($value);
 				break;
 			case 'json-array':
 				$value = $this->castAsJson($value, true);
 				break;
 			case 'datetime':
 				return $this->mutateDate($value);
-				break;
 			case 'timestamp':
 				return strtotime($value);
-				break;
 		}
 
 		return $value;

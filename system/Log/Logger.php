@@ -534,9 +534,8 @@ class Logger implements LoggerInterface
 	{
 		$file = str_replace(APPPATH, 'APPPATH/', $file);
 		$file = str_replace(SYSTEMPATH, 'SYSTEMPATH/', $file);
-		$file = str_replace(FCPATH, 'FCPATH/', $file);
 
-		return $file;
+		return str_replace(FCPATH, 'FCPATH/', $file);
 	}
 
 	//--------------------------------------------------------------------

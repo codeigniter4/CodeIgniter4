@@ -721,9 +721,8 @@ class Validation implements ValidationInterface
 
 		$message = str_replace('{field}', $label ?? $field, $message);
 		$message = str_replace('{param}', $this->rules[$param]['label'] ?? $param, $message);
-		$message = str_replace('{value}', $value, $message);
 
-		return $message;
+		return str_replace('{value}', $value, $message);
 	}
 
 	/**

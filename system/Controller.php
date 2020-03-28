@@ -213,12 +213,10 @@ class Controller
 			$rules = $validation->$rules;
 		}
 
-		$success = $this->validator
+		return $this->validator
 			->withRequest($this->request)
 			->setRules($rules, $messages)
 			->run();
-
-		return $success;
 	}
 
 	//--------------------------------------------------------------------

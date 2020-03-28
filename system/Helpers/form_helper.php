@@ -180,7 +180,7 @@ if (! function_exists('form_hidden'))
 
 		if (! is_array($value))
 		{
-			$form .= '<input type="hidden" name="' . $name . '" value="' . esc($value, 'html') . "\" style=\"display:none;\" />\n";
+			$form .= '<input type="hidden" name="' . $name . '" value="' . esc($value) . "\" style=\"display:none;\" />\n";
 		}
 		else
 		{
@@ -408,7 +408,7 @@ if (! function_exists('form_dropdown'))
 				{
 					$sel   = in_array($optgroup_key, $selected) ? ' selected="selected"' : '';
 					$form .= '<option value="' . htmlspecialchars($optgroup_key) . '"' . $sel . '>'
-							. (string) $optgroup_val . "</option>\n";
+							. $optgroup_val . "</option>\n";
 				}
 				$form .= "</optgroup>\n";
 			}
@@ -416,7 +416,7 @@ if (! function_exists('form_dropdown'))
 			{
 				$form .= '<option value="' . htmlspecialchars($key) . '"'
 						. (in_array($key, $selected) ? ' selected="selected"' : '') . '>'
-						. (string) $val . "</option>\n";
+						. $val . "</option>\n";
 			}
 		}
 
@@ -645,9 +645,7 @@ if (! function_exists('form_datalist'))
 			$out .= "<option value='$option'>" . "\n";
 		}
 
-		$out .= '</datalist>' . "\n";
-
-		return $out;
+		return $out . ('</datalist>' . "\n");
 	}
 }
 
@@ -741,7 +739,7 @@ if (! function_exists('set_value'))
 			$value = $request->getPost($field) ?? $default;
 		}
 
-		return ($html_escape) ? esc($value, 'html') : $value;
+		return ($html_escape) ? esc($value) : $value;
 	}
 }
 
@@ -944,7 +942,7 @@ if (! function_exists('parse_form_attributes'))
 			{
 				if ($key === 'value')
 				{
-					$val = esc($val, 'html');
+					$val = esc($val);
 				}
 				elseif ($key === 'name' && ! strlen($default['name']))
 				{

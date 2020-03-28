@@ -207,8 +207,7 @@ class Services extends BaseService
 		{
 			$config = new \Config\Email();
 		}
-		$email = new \CodeIgniter\Email\Email($config);
-		return $email;
+		return new \CodeIgniter\Email\Email($config);
 	}
 
 	/**
@@ -232,8 +231,7 @@ class Services extends BaseService
 		}
 
 		$encryption = new Encryption($config);
-		$encrypter  = $encryption->initialize($config);
-		return $encrypter;
+		return $encryption->initialize($config);
 	}
 
 	//--------------------------------------------------------------------
@@ -542,7 +540,7 @@ class Services extends BaseService
 			$viewPath = $paths->viewDirectory;
 		}
 
-		return new Parser($config, $viewPath, static::locator(true), CI_DEBUG, static::logger(true));
+		return new Parser($config, $viewPath, static::locator(), CI_DEBUG, static::logger());
 	}
 
 	//--------------------------------------------------------------------
@@ -577,7 +575,7 @@ class Services extends BaseService
 			$viewPath = $paths->viewDirectory;
 		}
 
-		return new \CodeIgniter\View\View($config, $viewPath, static::locator(true), CI_DEBUG, static::logger(true));
+		return new \CodeIgniter\View\View($config, $viewPath, static::locator(), CI_DEBUG, static::logger());
 	}
 
 	//--------------------------------------------------------------------
@@ -705,7 +703,7 @@ class Services extends BaseService
 
 		if (empty($routes))
 		{
-			$routes = static::routes(true);
+			$routes = static::routes();
 		}
 
 		return new Router($routes, $request);
@@ -759,7 +757,7 @@ class Services extends BaseService
 			$config = config(App::class);
 		}
 
-		$logger = static::logger(true);
+		$logger = static::logger();
 
 		$driverName = $config->sessionDriver;
 		$driver     = new $driverName($config, static::request()->getIpAddress());

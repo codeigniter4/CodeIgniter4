@@ -475,13 +475,11 @@ if (! function_exists('safe_mailto'))
 			$output .= 'l[' . $i . "] = '" . $x[$i] . "';";
 		}
 
-		$output .= 'for (var i = l.length-1; i >= 0; i=i-1) {'
+		return $output . ('for (var i = l.length-1; i >= 0; i=i-1) {'
 				. "if (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");"
 				. 'else document.write(unescape(l[i]));'
 				. '}'
-				. '</script>';
-
-		return $output;
+				. '</script>');
 	}
 }
 

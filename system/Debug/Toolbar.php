@@ -118,7 +118,7 @@ class Toolbar
 		$data['startTime']       = $startTime;
 		$data['totalTime']       = $totalTime * 1000;
 		$data['totalMemory']     = number_format((memory_get_peak_usage()) / 1024 / 1024, 3);
-		$data['segmentDuration'] = $this->roundTo($data['totalTime'] / 7, 5);
+		$data['segmentDuration'] = $this->roundTo($data['totalTime'] / 7);
 		$data['segmentCount']    = (int) ceil($data['totalTime'] / $data['segmentDuration']);
 		$data['CI_VERSION']      = \CodeIgniter\CodeIgniter::CI_VERSION;
 		$data['collectors']      = [];
@@ -167,7 +167,7 @@ class Toolbar
 			$data['vars']['post'][esc($name)] = is_array($value) ? '<pre>' . esc(print_r($value, true)) . '</pre>' : esc($value);
 		}
 
-		foreach ($request->getHeaders() as $header => $value)
+		foreach ($request->getHeaders() as $value)
 		{
 			if (empty($value))
 			{

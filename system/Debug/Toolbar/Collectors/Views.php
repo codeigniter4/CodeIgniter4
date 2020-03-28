@@ -126,7 +126,7 @@ class Views extends BaseCollector
 
 		$rows = $this->viewer->getPerformanceData();
 
-		foreach ($rows as $name => $info)
+		foreach ($rows as $info)
 		{
 			$data[] = [
 				'name'      => 'View: ' . $info['view'],
