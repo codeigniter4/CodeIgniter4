@@ -42,6 +42,7 @@ namespace CodeIgniter;
 use Closure;
 use CodeIgniter\Exceptions\ModelException;
 use Config\Database;
+use Config\Services;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
 use CodeIgniter\Database\BaseBuilder;
@@ -341,7 +342,7 @@ class Model
 
 		if (is_null($validation))
 		{
-			$validation = \Config\Services::validation(null, false);
+			$validation = Services::validation(null, false);
 		}
 
 		$this->validation = $validation;
@@ -371,22 +372,15 @@ class Model
 
 		if (is_array($id))
 		{
-			$row = $builder->whereIn($this->table . '.' . $this->primaryKey, $id)
-					->get();
-			$row = $row->getResult($this->tempReturnType);
+			$row = $builder->whereIn($this->table . '.' . $this->primaryKey, $id)->get()->getResult($this->tempReturnType);
 		}
 		elseif (is_numeric($id) || is_string($id))
 		{
-			$row = $builder->where($this->table . '.' . $this->primaryKey, $id)
-					->get();
-
-			$row = $row->getFirstRow($this->tempReturnType);
+			$row = $builder->where($this->table . '.' . $this->primaryKey, $id)->get()->getFirstRow($this->tempReturnType);
 		}
 		else
 		{
-			$row = $builder->get();
-
-			$row = $row->getResult($this->tempReturnType);
+			$row = $builder->get()->getResult($this->tempReturnType);
 		}
 
 		$eventData = $this->trigger('afterFind', ['id' => $id, 'data' => $row]);
@@ -414,9 +408,7 @@ class Model
 			throw DataException::forFindColumnHaveMultipleColumns();
 		}
 
-		$resultSet = $this->select($columnName)
-						  ->asArray()
-						  ->find();
+		$resultSet = $this->select($columnName)->asArray()->find();
 
 		return (! empty($resultSet)) ? array_column($resultSet, $columnName) : null;
 	}
@@ -441,10 +433,7 @@ class Model
 			$builder->where($this->table . '.' . $this->deletedField, null);
 		}
 
-		$row = $builder->limit($limit, $offset)
-				->get();
-
-		$row = $row->getResult($this->tempReturnType);
+		$row = $builder->limit($limit, $offset)->get()->getResult($this->tempReturnType);
 
 		$eventData = $this->trigger('afterFind', ['data' => $row, 'limit' => $limit, 'offset' => $offset]);
 
@@ -478,10 +467,7 @@ class Model
 			$builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
 		}
 
-		$row = $builder->limit(1, 0)
-				->get();
-
-		$row = $row->getFirstRow($this->tempReturnType);
+		$row = $builder->limit(1, 0)->get()->getFirstRow($this->tempReturnType);
 
 		$eventData = $this->trigger('afterFind', ['data' => $row]);
 
@@ -506,9 +492,7 @@ class Model
 	 */
 	public function set($key, ?string $value = '', bool $escape = null)
 	{
-		$data = is_array($key)
-			? $key
-			: [$key => $value];
+		$data = is_array($key) ? $key : [$key => $value];
 
 		$this->tempData['escape'] = $escape;
 		$this->tempData['data']   = array_merge($this->tempData['data'] ?? [], $data);
@@ -717,9 +701,7 @@ class Model
 		$eventData = $this->trigger('beforeInsert', ['data' => $data]);
 
 		// Must use the set() method to ensure objects get converted to arrays
-		$result = $this->builder()
-				->set($eventData['data'], '', $escape)
-				->insert();
+		$result = $this->builder()->set($eventData['data'], '', $escape)->insert();
 
 		// If insertion succeeded then save the insert ID
 		if ($result)
@@ -846,9 +828,7 @@ class Model
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays
-		$result = $builder
-				->set($eventData['data'], '', $escape)
-				->update();
+		$result = $builder->set($eventData['data'], '', $escape)->update();
 
 		$this->trigger('afterUpdate', ['id' => $id, 'data' => $eventData['data'], 'result' => $result]);
 
@@ -957,9 +937,7 @@ class Model
 			return true;
 		}
 
-		return $this->builder()
-				->where($this->table . '.' . $this->deletedField . ' IS NOT NULL')
-				->delete();
+		return $this->builder()->where($this->table . '.' . $this->deletedField . ' IS NOT NULL')->delete();
 	}
 
 	//--------------------------------------------------------------------
@@ -991,8 +969,7 @@ class Model
 	{
 		$this->tempUseSoftDeletes = false;
 
-		$this->builder()
-			 ->where($this->table . '.' . $this->deletedField . ' IS NOT NULL');
+		$this->builder()->where($this->table . '.' . $this->deletedField . ' IS NOT NULL');
 
 		return $this;
 	}
@@ -1072,8 +1049,7 @@ class Model
 	 */
 	public function chunk(int $size, Closure $userFunc)
 	{
-		$total = $this->builder()
-				->countAllResults(false);
+		$total = $this->builder()->countAllResults(false);
 
 		$offset = 0;
 
@@ -1123,7 +1099,7 @@ class Model
 	 */
 	public function paginate(int $perPage = 20, string $group = 'default', int $page = 0)
 	{
-		$pager = \Config\Services::pager(null, null, false);
+		$pager = Services::pager(null, null, false);
 		$page  = $page >= 1 ? $page : $pager->getCurrentPage($group);
 
 		$total = $this->countAllResults(false);
@@ -1412,9 +1388,7 @@ class Model
 			$rules = $this->validation->loadRuleGroup($rules);
 		}
 
-		$rules = $this->cleanValidationRules
-			? $this->cleanValidationRules($rules, $data)
-			: $rules;
+		$rules = $this->cleanValidationRules ? $this->cleanValidationRules($rules, $data) : $rules;
 
 		// If no data existed that needs validation
 		// our job is done here.
@@ -1425,12 +1399,10 @@ class Model
 
 		// Replace any placeholders (i.e. {id}) in the rules with
 		// the value found in $data, if exists.
-		$rules = $this->fillPlaceholders($rules, $data);
 
-		$this->validation->setRules($rules, $this->validationMessages);
-		$valid = $this->validation->run($data, null, $this->DBGroup);
+		$this->validation->setRules($this->fillPlaceholders($rules, $data), $this->validationMessages);
 
-		return (bool) $valid;
+		return (bool) $this->validation->run($data, null, $this->DBGroup);
 	}
 
 	//--------------------------------------------------------------------
