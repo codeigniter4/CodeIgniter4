@@ -47,11 +47,7 @@ class Popcorn extends Controller
 	// @see https://github.com/codeigniter4/CodeIgniter4/issues/1834
 	public function index3()
 	{
-		$response = $this->response->setJSON([
-			'lang' => $this->request->getLocale(),
-		]);
-
-		return $response;
+		return $this->response->setJSON(['lang' => $this->request->getLocale()]);
 	}
 
 	public function canyon()
@@ -65,7 +61,7 @@ class Popcorn extends Controller
 
 	public function json()
 	{
-		$this->responsd(['answer' => 42]);
+		$this->respond(['answer' => 42]);
 	}
 
 	public function xml()
