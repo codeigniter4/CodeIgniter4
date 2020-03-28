@@ -69,7 +69,7 @@ class AutoloadConfig
 	 *       'CodeIgniter' => SYSTEMPATH
 	 *   `];
 	 */
-	public $corePsr4 = [
+	protected $corePsr4 = [
 		'CodeIgniter' => SYSTEMPATH
 	];
 
@@ -89,7 +89,7 @@ class AutoloadConfig
 	 *       'MyClass'   => '/path/to/class/file.php'
 	 *   ];
 	 */
-	public $coreClassmap = [
+	protected $coreClassmap = [
 		'Psr\Log\AbstractLogger'           => SYSTEMPATH . 'ThirdParty/PSR/Log/AbstractLogger.php',
 		'Psr\Log\InvalidArgumentException' => SYSTEMPATH . 'ThirdParty/PSR/Log/InvalidArgumentException.php',
 		'Psr\Log\LoggerAwareInterface'     => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerAwareInterface.php',
