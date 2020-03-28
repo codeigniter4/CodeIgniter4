@@ -208,3 +208,56 @@ Once set up, you can then launch your webapp inside a VM, with the command::
 Your webapp will be accessible at ``http://localhost:8080``, with the code coverage
 report for your build at ``http://localhost:8081`` and the user guide for
 it at ``http://localhost:8082``.
+
+Shared Hosting with cPanel
+=================================================
+
+cPanel is a Linux-based web hosting control panel that provides a powerful set of automation tools in an easy and
+straightforward interface, allowing a simplified process for hosting websites.
+
+The contents of CodeIgniter's ``public`` folder should be placed in your domain's **Document Root**, in cPanel's case it's
+called ``public_html`` for your **Main Domain**. Here is an example of a directory structure that are created by cPanel:
+
+::
+
+    /bin
+    /cache
+    /cpanelbranding
+    /etc
+    /logs
+    /mail
+    /perl
+    /php
+    /public_ftp
+    /public_html
+    /ssl
+    /tmp
+    /var
+
+All other **Default Directories** (see: :doc:`Application Structure </concepts/structure>`) should be placed in your
+**Home Directory** ``/home/username/`` referred to as ``/`` above. But this will just turn into a mess as it's difficult
+to see what folder/files belong to cPanel and/or CodeIgniter.
+
+Therefor it's recommended to create another folder named after your domain name in your home directory,
+and place all other folders and files (refer to **...** below) in it. This makes the final structure look like this:
+
+::
+
+    /example.com
+        /app
+        /system
+        /writable
+        /tests
+        ...
+    /public_html
+        robots.txt
+        index.php
+        favicon.ico
+        .htaccess
+
+Since we changed the directory structure we have to tell CodeIgniter about it. Open ``/public_html/index.php``
+in a text editor and change the following line to match your domain name directory that we previously created.
+
+::
+
+    $pathsPath = FCPATH . '../example.com/app/Config/Paths.php';
