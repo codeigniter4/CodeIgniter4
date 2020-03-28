@@ -668,7 +668,7 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function arrayFieldDataProvider()
 	{
 		return [
-			'all_rules_should_pass' => [
+			'all_rules_should_pass'                                            => [
 				'body'    => [
 					'foo' => [
 						'a',
@@ -683,41 +683,41 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 				],
 				'results' => [],
 			],
-			/*'first_field_will_return_required_error' => [
-				'body' => [
+			'first_field_will_return_required_error'                           => [
+				'body'    => [
 					'foo' => [
 						'',
 						'b',
-						'c'
-					]
+						'c',
+					],
 				],
-				'rules' => [
+				'rules'   => [
 					'foo.0' => 'required|alpha|max_length[2]',
 					'foo.1' => 'required|alpha|max_length[2]',
-					'foo.2' => 'required|alpha|max_length[2]'
+					'foo.2' => 'required|alpha|max_length[2]',
 				],
 				'results' => [
-					'foo.0' => 'The foo.0 field is required.'
-				]
+					'foo.0' => 'The foo.0 field is required.',
+				],
 			],
 			'first_and second_field_will_return_required_and_min_length_error' => [
-				'body' => [
+				'body'    => [
 					'foo' => [
 						'',
 						'b',
-						'c'
-					]
+						'c',
+					],
 				],
-				'rules' => [
+				'rules'   => [
 					'foo.0' => 'required|alpha|max_length[2]',
 					'foo.1' => 'required|alpha|min_length[2]|max_length[4]',
-					'foo.2' => 'required|alpha|max_length[2]'
+					'foo.2' => 'required|alpha|max_length[2]',
 				],
 				'results' => [
 					'foo.0' => 'The foo.0 field is required.',
 					'foo.1' => 'The foo.1 field must be at least 2 characters in length.',
-				]
-			]*/
+				],
+			],
 		];
 	}
 
