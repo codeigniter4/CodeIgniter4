@@ -356,7 +356,7 @@ abstract class BaseUtils
 			'tables'             => [],
 			'ignore'             => [],
 			'filename'           => '',
-			'format'             => 'gzip', // gzip, zip, txt
+			'format'             => 'gzip', // gzip, txt
 			'add_drop'           => true,
 			'add_insert'         => true,
 			'newline'            => "\n",
@@ -383,15 +383,14 @@ abstract class BaseUtils
 		}
 
 		// Validate the format
-		if (! in_array($prefs['format'], ['gzip', 'zip', 'txt'], true))
+		if (! in_array($prefs['format'], ['gzip', 'txt'], true))
 		{
 			$prefs['format'] = 'txt';
 		}
 
 		// Is the encoder supported? If not, we'll either issue an
 		// error or use plain text depending on the debug settings
-		if (($prefs['format'] === 'gzip' && ! function_exists('gzencode'))
-			|| ( $prefs['format'] === 'zip' && ! function_exists('gzcompress')))
+		if ($prefs['format'] === 'gzip' && ! function_exists('gzencode'))
 		{
 			if ($this->db->DBDebug)
 			{
@@ -401,46 +400,12 @@ abstract class BaseUtils
 			$prefs['format'] = 'txt';
 		}
 
-		// Was a Zip file requested?
-		if ($prefs['format'] === 'zip')
-		{
-			// Set the filename if not provided (only needed with Zip files)
-			if ($prefs['filename'] === '')
-			{
-				$prefs['filename'] = (count($prefs['tables']) === 1 ? $prefs['tables'] : $this->db->database)
-					. date('Y-m-d_H-i', time()) . '.sql';
-			}
-			else
-			{
-				// If they included the .zip file extension we'll remove it
-				if (preg_match('|.+?\.zip$|', $prefs['filename']))
-				{
-					$prefs['filename'] = str_replace('.zip', '', $prefs['filename']);
-				}
-
-				// Tack on the ".sql" file extension if needed
-				if (! preg_match('|.+?\.sql$|', $prefs['filename']))
-				{
-					$prefs['filename'] .= '.sql';
-				}
-			}
-
-			// Load the Zip class and output it
-			//          $CI =& get_instance();
-			//          $CI->load->library('zip');
-			//          $CI->zip->add_data($prefs['filename'], $this->_backup($prefs));
-			//          return $CI->zip->get_zip();
-		}
-		elseif ($prefs['format'] === 'txt') // Was a text file requested?
+		if ($prefs['format'] === 'txt') // Was a text file requested?
 		{
 			return $this->_backup($prefs);
 		}
-		elseif ($prefs['format'] === 'gzip') // Was a Gzip file requested?
-		{
-			return gzencode($this->_backup($prefs));
-		}
 
-		return;
+		return gzencode($this->_backup($prefs));
 	}
 
 	//--------------------------------------------------------------------

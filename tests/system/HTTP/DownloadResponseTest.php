@@ -6,7 +6,7 @@ use DateTime;
 use DateTimeZone;
 use CodeIgniter\Exceptions\DownloadException;
 
-class DownloadResponseTest extends \CIUnitTestCase
+class DownloadResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	public function tearDown(): void

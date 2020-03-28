@@ -430,7 +430,7 @@ class Model
 	 * @param integer $limit
 	 * @param integer $offset
 	 *
-	 * @return array|null
+	 * @return array
 	 */
 	public function findAll(int $limit = 0, int $offset = 0)
 	{
@@ -485,7 +485,8 @@ class Model
 
 		$eventData = $this->trigger('afterFind', ['data' => $row]);
 
-		$this->tempReturnType = $this->returnType;
+		$this->tempReturnType     = $this->returnType;
+		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
 		return $eventData['data'];
 	}
@@ -497,13 +498,13 @@ class Model
 	 * data here. This allows it to be used with any of the other
 	 * builder methods and still get validated data, like replace.
 	 *
-	 * @param mixed        $key
-	 * @param string       $value
-	 * @param boolean|null $escape
+	 * @param mixed   $key    Field name, or an array of field/value pairs
+	 * @param string  $value  Field value, if $key is a single field
+	 * @param boolean $escape Whether to escape values and identifiers
 	 *
 	 * @return $this
 	 */
-	public function set($key, string $value = '', bool $escape = null)
+	public function set($key, ?string $value = '', bool $escape = null)
 	{
 		$data = is_array($key)
 			? $key
@@ -690,7 +691,7 @@ class Model
 		// Validate data before saving.
 		if ($this->skipValidation === false)
 		{
-			if ($this->cleanRules(false)->validate($data) === false)
+			if ($this->cleanRules()->validate($data) === false)
 			{
 				return false;
 			}
@@ -758,7 +759,7 @@ class Model
 		{
 			foreach ($set as $row)
 			{
-				if ($this->cleanRules(false)->validate($row) === false)
+				if ($this->cleanRules()->validate($row) === false)
 				{
 					return false;
 				}
@@ -1257,13 +1258,10 @@ class Model
 		{
 			case 'int':
 				return $currentDate;
-				break;
 			case 'datetime':
 				return date('Y-m-d H:i:s', $currentDate);
-				break;
 			case 'date':
 				return date('Y-m-d', $currentDate);
-				break;
 			default:
 				throw ModelException::forNoDateFormat(get_class($this));
 		}
@@ -1577,8 +1575,9 @@ class Model
 		{
 			$this->builder()->where($this->table . '.' . $this->deletedField, null);
 		}
+		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
-		return $this->builder()->countAllResults($reset, $test);
+		return $this->builder()->testMode($test)->countAllResults($reset);
 	}
 
 	/**
@@ -1706,6 +1705,11 @@ class Model
 		// and break intermingling of model and builder methods.
 		if ($name !== 'builder' && empty($result))
 		{
+			if (! method_exists($this->builder(), $name))
+			{
+				$className = get_class($this);
+				throw new \BadMethodCallException("Call to undefined method $className::$name");
+			}
 			return $result;
 		}
 		if ($name !== 'builder' && ! $result instanceof BaseBuilder)

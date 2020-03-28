@@ -3,10 +3,10 @@
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Log\Exceptions\LogException;
-use Tests\Support\Config\MockLogger as LoggerConfig;
+use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Tests\Support\Log\Handlers\TestHandler;
 
-class LoggerTest extends \CIUnitTestCase
+class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	public function testThrowsExceptionWithBadHandlerSettings()
@@ -204,16 +204,13 @@ class LoggerTest extends \CIUnitTestCase
 
 		$_ENV['foo'] = 'bar';
 
-		// For whatever reason, this will often be the class/function instead of file and line.
-		// Other times it actually returns the line number, so don't look for either
-		$expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message LoggerTest';
-
 		$logger->log('debug', 'Test message {file} {line}');
+		$line     = __LINE__ - 1;
+		$expected = "LoggerTest.php $line";
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertCount(1, $logs);
-		$this->assertTrue(strpos($logs[0], $expected) === 0);
+		$this->assertTrue(strpos($logs[0], $expected) > 1);
 	}
 
 	//--------------------------------------------------------------------
@@ -406,7 +403,7 @@ class LoggerTest extends \CIUnitTestCase
 		$logs = TestHandler::getLogs();
 
 		$this->assertCount(1, $logs);
-		$this->assertContains($expected, $logs[0]);
+		$this->assertStringContainsString($expected, $logs[0]);
 	}
 
 	//--------------------------------------------------------------------
@@ -414,7 +411,7 @@ class LoggerTest extends \CIUnitTestCase
 	public function testFilenameCleaning()
 	{
 		$config = new LoggerConfig();
-		$logger = new \Tests\Support\Log\TestLogger($config);
+		$logger = new \CodeIgniter\Test\TestLogger($config);
 
 		$ohoh     = APPPATH . 'LoggerTest';
 		$expected = 'APPPATH/LoggerTest';

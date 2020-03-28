@@ -1,15 +1,15 @@
 <?php namespace CodeIgniter\Session;
 
 use Config\Logger;
-use Tests\Support\Log\TestLogger;
-use Tests\Support\Session\MockSession;
+use CodeIgniter\Test\TestLogger;
+use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Session\Handlers\FileHandler;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
  */
-class SessionTest extends \CIUnitTestCase
+class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected function setUp(): void
 	{
@@ -127,6 +127,28 @@ class SessionTest extends \CIUnitTestCase
 		$session->start();
 
 		$this->assertNull($session->get('foo'));
+	}
+
+	public function testGetReturnsNullWhenNotFoundWithXmlHttpRequest()
+	{
+		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest';
+		$_SESSION                         = [];
+
+		$session = $this->getInstance();
+		$session->start();
+
+		$this->assertNull($session->get('foo'));
+	}
+
+	public function testGetReturnsEmptyArrayWhenWithXmlHttpRequest()
+	{
+		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest';
+		$_SESSION                         = [];
+
+		$session = $this->getInstance();
+		$session->start();
+
+		$this->assertEquals([], $session->get());
 	}
 
 	public function testGetReturnsItemValueisZero()
@@ -509,5 +531,15 @@ class SessionTest extends \CIUnitTestCase
 		$session->set('baz', 'ballywhoo');
 
 		$this->assertEquals(['foo', 'bar'], $session->getTempKeys());
+	}
+
+	public function testGetDotKey()
+	{
+		$session = $this->getInstance();
+		$session->start();
+
+		$session->set('test.1', 'value');
+
+		$this->assertEquals('value', $session->get('test.1'));
 	}
 }

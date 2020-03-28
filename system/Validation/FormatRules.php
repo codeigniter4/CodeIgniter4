@@ -59,8 +59,6 @@ class FormatRules
 		return ctype_alpha($str);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Alpha with spaces.
 	 *
@@ -78,10 +76,8 @@ class FormatRules
 		return (bool) preg_match('/^[A-Z ]+$/i', $value);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
-	 * Alpha-numeric with underscores and dashes
+	 * Alphanumeric with underscores and dashes
 	 *
 	 * @param string $str
 	 *
@@ -89,13 +85,27 @@ class FormatRules
 	 */
 	public function alpha_dash(string $str = null): bool
 	{
-		return (bool) preg_match('/^[a-z0-9_-]+$/i', $str);
+			return (bool) preg_match('/^[a-z0-9_-]+$/i', $str);
 	}
 
-	//--------------------------------------------------------------------
+		/**
+		 * Alphanumeric, spaces, and a limited set of punctuation characters.
+		 * Accepted punctuation characters are: ~ tilde, ! exclamation,
+		 * # number, $ dollar, % percent, & ampersand, * asterisk, - dash,
+		 * _ underscore, + plus, = equals, | vertical bar, : colon, . period
+		 * ~ ! # $ % & * - _ + = | : .
+		 *
+		 * @param string $str
+		 *
+		 * @return boolean
+		 */
+	public function alpha_numeric_punct($str)
+	{
+		return (bool) preg_match('/^[A-Z0-9 ~!#$%\&\*\-_+=|:.]+$/i', $str);
+	}
 
 	/**
-	 * Alpha-numeric
+	 * Alphanumeric
 	 *
 	 * @param string $str
 	 *
@@ -106,10 +116,8 @@ class FormatRules
 		return ctype_alnum($str);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
-	 * Alpha-numeric w/ spaces
+	 * Alphanumeric w/ spaces
 	 *
 	 * @param string $str
 	 *
@@ -119,8 +127,6 @@ class FormatRules
 	{
 		return (bool) preg_match('/^[A-Z0-9 ]+$/i', $str);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Any type of string
@@ -137,8 +143,6 @@ class FormatRules
 		return is_string($str);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Decimal number
 	 *
@@ -148,10 +152,8 @@ class FormatRules
 	 */
 	public function decimal(string $str = null): bool
 	{
-		return (bool) preg_match('/^[\-+]?[0-9]+(|\.[0-9]+)$/', $str);
+		return (bool) preg_match('/^[-+]?[0-9]{0,}\.?[0-9]+$/', $str);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * String of hexidecimal characters
@@ -165,8 +167,6 @@ class FormatRules
 		return ctype_xdigit($str);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Integer
 	 *
@@ -179,8 +179,6 @@ class FormatRules
 		return (bool) preg_match('/^[\-+]?[0-9]+$/', $str);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Is a Natural number  (0,1,2,3, etc.)
 	 *
@@ -192,8 +190,6 @@ class FormatRules
 		return ctype_digit($str);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Is a Natural number, but not a zero  (1,2,3, etc.)
 	 *
@@ -204,8 +200,6 @@ class FormatRules
 	{
 		return ($str !== '0' && ctype_digit($str));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Numeric
@@ -219,18 +213,15 @@ class FormatRules
 		return (bool) preg_match('/^[\-+]?[0-9]*\.?[0-9]+$/', $str);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Compares value against a regular expression pattern.
 	 *
 	 * @param string $str
 	 * @param string $pattern
-	 * @param array  $data    Other field/value pairs
 	 *
 	 * @return boolean
 	 */
-	public function regex_match(string $str = null, string $pattern, array $data): bool
+	public function regex_match(string $str = null, string $pattern): bool
 	{
 		if (strpos($pattern, '/') !== 0)
 		{
@@ -239,8 +230,6 @@ class FormatRules
 
 		return (bool) preg_match($pattern, $str);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Validates that the string is a valid timezone as per the
@@ -257,8 +246,6 @@ class FormatRules
 		return in_array($str, timezone_identifiers_list());
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Valid Base64
 	 *
@@ -273,8 +260,6 @@ class FormatRules
 		return (base64_encode(base64_decode($str)) === $str);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Valid JSON
 	 *
@@ -287,8 +272,6 @@ class FormatRules
 		json_decode($str);
 		return json_last_error() === JSON_ERROR_NONE;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Checks for a correctly formatted email address
@@ -306,8 +289,6 @@ class FormatRules
 
 		return (bool) filter_var($str, FILTER_VALIDATE_EMAIL);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Validate a comma-separated list of email addresses.
@@ -338,19 +319,20 @@ class FormatRules
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
-	 * Validate an IP address
+	 * Validate an IP address (human readable format or binary string - inet_pton)
 	 *
 	 * @param string $ip    IP Address
 	 * @param string $which IP protocol: 'ipv4' or 'ipv6'
-	 * @param array  $data
 	 *
 	 * @return boolean
 	 */
-	public function valid_ip(string $ip = null, string $which = null, array $data): bool
+	public function valid_ip(string $ip = null, string $which = null): bool
 	{
+		if (empty($ip))
+		{
+			return false;
+		}
 		switch (strtolower($which))
 		{
 			case 'ipv4':
@@ -364,10 +346,8 @@ class FormatRules
 				break;
 		}
 
-		return (bool) filter_var($ip, FILTER_VALIDATE_IP, $which);
+		return (bool) filter_var($ip, FILTER_VALIDATE_IP, $which) || (! ctype_print($ip) && (bool) filter_var(inet_ntop($ip), FILTER_VALIDATE_IP, $which));
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Checks a URL to ensure it's formed correctly.
@@ -397,8 +377,6 @@ class FormatRules
 		return (filter_var($str, FILTER_VALIDATE_URL) !== false);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Checks for a valid date and matches a given date format
 	 *
@@ -419,5 +397,4 @@ class FormatRules
 		return (bool) $date && \DateTime::getLastErrors()['warning_count'] === 0 && \DateTime::getLastErrors()['error_count'] === 0;
 	}
 
-	//--------------------------------------------------------------------
 }

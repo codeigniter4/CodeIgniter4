@@ -106,6 +106,7 @@ if (! function_exists('base_url'))
 		{
 			$uri = implode('/', $uri);
 		}
+		$uri = trim($uri, '/');
 
 		// We should be using the configured baseURL that the user set;
 		// otherwise get rid of the path, because we have
@@ -474,13 +475,11 @@ if (! function_exists('safe_mailto'))
 			$output .= 'l[' . $i . "] = '" . $x[$i] . "';";
 		}
 
-		$output .= 'for (var i = l.length-1; i >= 0; i=i-1) {'
+		return $output . ('for (var i = l.length-1; i >= 0; i=i-1) {'
 				. "if (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");"
 				. 'else document.write(unescape(l[i]));'
 				. '}'
-				. '</script>';
-
-		return $output;
+				. '</script>');
 	}
 }
 

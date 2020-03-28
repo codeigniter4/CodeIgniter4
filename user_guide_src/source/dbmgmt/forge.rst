@@ -313,7 +313,7 @@ Examples::
 		'preferences' => ['type' => 'TEXT', 'first' => TRUE]
 	];
 
-Dropping a Column From a Table
+Dropping Columns From a Table
 ==============================
 
 **$forge->dropColumn()**
@@ -322,7 +322,14 @@ Used to remove a column from a table.
 
 ::
 
-	$forge->dropColumn('table_name', 'column_to_drop');
+	$forge->dropColumn('table_name', 'column_to_drop'); // to drop one single column
+
+Used to remove multiple columns from a table.
+
+::
+
+    $forge->dropColumn('table_name', 'column_1,column_2'); // by proving comma separated column names
+    $forge->dropColumn('table_name', ['column_1', 'column_2']); // by proving array of column names
 
 Modifying a Column in a Table
 =============================
@@ -415,11 +422,11 @@ Class Reference
 	.. php:method:: dropColumn($table, $column_name)
 
 		:param	string	$table: Table name
-		:param	array	$column_name: The column name to drop
+		:param	mixed	$column_names: Comma-delimited string or an array of column names
 		:returns:	TRUE on success, FALSE on failure
 		:rtype:	bool
 
-		Drops a column from a table. Usage:  See `Dropping a Column From a Table`_.
+		Drops single or multiple columns from a table. Usage:  See `Dropping Columns From a Table`_.
 
 	.. php:method:: dropDatabase($dbName)
 

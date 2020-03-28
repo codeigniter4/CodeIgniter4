@@ -1,0 +1,386 @@
+/* CodeIgniter 4 - Debug bar
+ ============================================================================ */
+
+/* Forum: 	https://forum.codeigniter.com
+ * Github:	https://github.com/codeigniter4/codeigniter4
+ * Slack: 	https://codeigniterchat.slack.com
+ * Website: https://codeigniter.com
+ */
+
+
+// IMPORTS
+// ========================================================================== */
+
+@import '_mixins';
+@import '_settings';
+
+
+// DEBUG ICON
+// ========================================================================== */
+
+#debug-icon {
+	// Position
+	bottom: 0;
+	position: fixed;
+	right: 0;
+	z-index: 10000;
+
+	// Size
+	height: 36px;
+	width: 36px;
+
+	// Spacing
+	margin: 0px;
+	padding: 0px;
+
+	// Content
+	clear: both;
+	text-align: center;
+	a svg {
+		margin: 8px;
+		max-width: 20px;
+		max-height: 20px;
+	}
+	&.fixed-top {
+		bottom: auto;
+		top: 0;
+	}
+	.debug-bar-ndisplay {
+		display: none;
+	}
+}
+
+
+// DEBUG BAR
+// ========================================================================== */
+
+#debug-bar {
+	// Position
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+	z-index: 10000;
+
+	// Size
+	height: 36px;
+
+	// Spacing
+	line-height: 36px;
+
+	// Typography
+	font-family: $base-font;
+	font-size: $base-size;
+	font-weight: 400;
+
+	// General elements
+	h1 {
+		bottom: 0;
+		display: inline-block;
+		font-size: $base-size - 2;
+		font-weight: normal;
+		margin: 0 16px 0 0;
+		padding: 0;
+		position: absolute;
+		right: 30px;
+		text-align: left;
+		top: 0;
+	}
+	h2 {
+		font-size: $base-size;
+		margin: 0;
+		padding: 5px 0 10px 0;
+		span {
+			font-size: 13px;
+		}
+	}
+	h3 {
+		font-size: $base-size - 4;
+		font-weight: 200;
+		margin: 0 0 0 10px;
+		padding: 0;
+		text-transform: uppercase;
+	}
+	p {
+		font-size: $base-size - 4;
+		margin: 0 0 0 15px;
+		padding: 0;
+	}
+	a {
+		text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+	button {
+		border: 1px solid;
+		@include border-radius(4px);
+		cursor: pointer;
+		line-height: 15px;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+	table {
+		border-collapse: collapse;
+		font-size: $base-size - 2;
+		line-height: normal;
+		margin: 5px 10px 15px 10px; // Tables indentation
+		width: calc(100% - 10px); // Make sure it still fits the container, even with the margins
+		strong {
+			font-weight: 500;
+		}
+		th {
+			display: table-cell;
+			font-weight: 600;
+			padding-bottom: 0.7em;
+			text-align: left;
+		}
+		tr {
+			border: none;
+		}
+		td {
+			border: none;
+			display: table-cell;
+			margin: 0;
+			text-align: left;
+			&:first-child {
+				max-width: 20%;
+				&.narrow {
+					width: 7em;
+				}
+			}
+		}
+	}
+
+	// The toolbar
+	.toolbar {
+		display: block;
+		overflow: hidden;
+		overflow-y: auto;
+		padding: 0 12px 0 12px;	/* give room for OS X scrollbar */
+		white-space: nowrap;
+		z-index: 10000;
+	}
+
+	// Fixed top
+	&.fixed-top {
+		bottom: auto;
+		top: 0;
+		.tab {
+			bottom: auto;
+			top: 36px;
+		}
+	}
+
+	// The toolbar preferences
+	#toolbar-position,
+	#toolbar-theme {
+		a {
+			float: left;
+			padding: 0 6px;
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+
+	// The "Open/Close" toggle
+	#debug-bar-link {
+		bottom: 0;
+		display: inline-block;
+		font-size: $base-size;
+		line-height: 36px;
+		padding: 6px;
+		position: absolute;
+		right: 10px;
+		top: 0;
+		width: 24px;
+	}
+
+	// The toolbar menus
+	.ci-label {
+		display: inline-block;
+		font-size: $base-size - 2;
+		vertical-align: baseline;
+		&:hover {
+			cursor: pointer;
+		}
+		a {
+			color: inherit;
+			display: block;
+			letter-spacing: normal;
+			padding: 0 10px;
+			text-decoration: none;
+		}
+
+		// The toolbar icons
+		img {
+			clear: left;
+			display: inline-block;
+			float: left;
+			margin: 6px 3px 6px 0;
+		}
+
+		// The toolbar notification badges
+		.badge {
+			@include border-radius(12px);
+			display: inline-block;
+			font-size: 75%;
+			font-weight: bold;
+			line-height: 12px;
+			margin-left: 5px;
+			padding: 2px 5px;
+			text-align: center;
+			vertical-align: baseline;
+			white-space: nowrap;
+		}
+	}
+
+	// The tabs container
+	.tab {
+		bottom: 35px;
+		display: none;
+		left: 0;
+		max-height: 62%;
+		overflow: hidden;
+		overflow-y: auto;
+		padding: 1em 2em;
+		position: fixed;
+		right: 0;
+		z-index: 9999;
+	}
+
+	// The "Timeline" tab
+	.timeline {
+		margin-left: 0;
+		width: 100%;
+		th {
+			border-left: 1px solid;
+			font-size: $base-size - 4;
+			font-weight: 200;
+			padding: 5px 5px 10px 5px;
+			position: relative;
+			text-align: left;
+			&:first-child {
+				border-left: 0;
+			}
+		}
+		td {
+			border-left: 1px solid;
+			padding: 5px;
+			position: relative;
+			&:first-child {
+				border-left: 0;
+			}
+		}
+		.timer {
+			@include border-radius(4px);
+			display: inline-block;
+			padding: 5px;
+			position: absolute;
+			top: 30%;
+		}
+	}
+
+	// The "Routes" tab
+	.route-params,
+	.route-params-item {
+		vertical-align: top;
+
+		td:first-child {
+			font-style: italic;
+			padding-left: 1em;
+			text-align: right;
+		}
+	}
+}
+
+
+// DEBUG VIEW
+// ========================================================================== */
+
+.debug-view.show-view {
+	border: 1px solid;
+	margin: 4px;
+}
+
+.debug-view-path {
+	font-family: monospace;
+	font-size: $base-size - 4;
+	letter-spacing: normal;
+	min-height: 16px;
+	padding: 2px;
+	text-align: left;
+}
+
+.show-view .debug-view-path {
+	display: block !important;
+}
+
+
+// RESPONSIVE DESIGN
+// ========================================================================== */
+
+@media screen and (max-width: 1024px) {
+	.hide-sm {
+		display: none !important;
+	}
+}
+
+
+// THEMES
+// ========================================================================== */
+
+// Default theme is "Light"
+@import '_theme-light';
+
+// If the browser supports "prefers-color-scheme" and the scheme is "Dark"
+@media (prefers-color-scheme: dark) {
+	@import '_theme-dark';
+}
+
+// If we force the "Dark" theme
+#toolbarContainer.dark {
+	@import '_theme-dark';
+}
+
+// If we force the "Light" theme
+#toolbarContainer.light {
+	@import '_theme-light';
+}
+
+
+// LAYOUT HELPERS
+// ========================================================================== */
+
+.debug-bar-width30 {
+	width: 30%;
+}
+.debug-bar-width10 {
+	width: 10%;
+}
+.debug-bar-width70p {
+	width: 70px;
+}
+.debug-bar-width140p {
+	width: 140px;
+}
+.debug-bar-width20e {
+	width: 20em;
+}
+.debug-bar-width6r {
+	width: 6rem;
+}
+.debug-bar-ndisplay {
+	display: none;
+}
+.debug-bar-alignRight {
+	text-align: right;
+}
+.debug-bar-alignLeft {
+	text-align: left;
+}
+.debug-bar-noverflow {
+	overflow: hidden;
+}

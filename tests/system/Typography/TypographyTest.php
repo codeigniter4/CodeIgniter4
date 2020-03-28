@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Typography;
 
-class TypographyTest extends \CIUnitTestCase
+class TypographyTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	protected $typography;
 

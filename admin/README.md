@@ -16,7 +16,7 @@ This folder contains tools or docs useful for project maintainers.
     It is meant to be downloaded by developers, or composer-installed.  
     This is a read-only repository.
 -   **appstarter** is the released application starter repository.  
-    It is derived from the framework's `application` and `public` folders, with
+    It is derived from the framework's `app` and `public` folders, with
     a composer requirement dependency to pull in the framework itself.  
     It is meant to be downloaded or composer-installed.  
     This is a read-only repository.
@@ -64,14 +64,10 @@ scripts used by the release manager:
     in it, and it will run the related scripts following, to revise
     the release distributions.  
 	Usage: `admin/release version qualifier`
--   **release-framework** builds the distributable framework repo.  
-    It could be used on its own, but is normally part of `release`.
--   **release-appstarter** builds the distributable appstarter repo.  
-    It could be used on its own, but is normally part of `release`.
 -   **release-userguide** builds the distributable userguide repo.  
     It could be used on its own, but is normally part of `release`.
 -   **release-deploy** pushes the release changes to the appropriate github
-    repositories. Tag & create releases on github. This is not easily reversible!  
+    repositories. Tag & create releases on GitHub. This is not easily reversible!  
 	Usage: `admin/release-deploy version qualifier`
 -   **release-revert** can be used to restore your repositories to the state they
     were in before you started a release. **IF** you haven't deployed. 
@@ -88,3 +84,4 @@ scripts used by the release manager:
     are built.
 -   The subfolders inside `admin` contain "next release" files in the case of 
     `codeigniter4` and over-written distribution files in the other cases.
+-   The CHANGELOG.md file is auto-generated using the [GitHub Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator)

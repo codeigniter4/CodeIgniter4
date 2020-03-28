@@ -1,16 +1,16 @@
 Manual Installation
 ###############################################################################
 
-The `CodeIgniter 4 framework <https://github.com/codeigniter4/framework>`_ 
+The `CodeIgniter 4 framework <https://github.com/codeigniter4/framework>`_
 repository holds the released versions of the framework.
 It is intended for developers who do not wish to use Composer.
 
-Develop your app inside the ``app`` folder, and the ``public`` folder 
+Develop your app inside the ``app`` folder, and the ``public`` folder
 will be your public-facing document root. Do not change anything inside the ``system``
 folder!
 
-**Note**: This is the installation technique closest to that described 
-for `CodeIgniter 3 <https://www.codeigniter.com/user_guide/installation/index.html>`_.
+**Note**: This is the installation technique closest to that described
+for `CodeIgniter 3 <https://codeigniter.com/user_guide/installation/index.html>`_.
 
 Installation
 ============================================================
@@ -46,7 +46,7 @@ Structure
 -------------------------------------------------------
 
 Folders in your project after set up:
-app, public, system, writable 
+app, public, system, writable
 
 
 Translations Installation

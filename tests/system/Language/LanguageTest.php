@@ -2,10 +2,10 @@
 namespace CodeIgniter\Language;
 
 use Config\Services;
-use Tests\Support\Language\MockLanguage;
+use CodeIgniter\Test\Mock\MockLanguage;
 use Tests\Support\Language\SecondMockLanguage;
 
-class LanguageTest extends \CIUnitTestCase
+class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	public function testReturnsStringWithNoFileInMessage()

@@ -5,7 +5,7 @@ set_error_handler(function (int $errno, string $errstr, string $errfile, int $er
 	//throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
 });
 
-class FileHandlerTest extends \CIUnitTestCase
+class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	private static $directory = 'FileHandler';
@@ -67,11 +67,10 @@ class FileHandlerTest extends \CIUnitTestCase
 		$this->assertInstanceOf(FileHandler::class, $this->fileHandler);
 	}
 
-	/**
-	 * @expectedException \CodeIgniter\Cache\Exceptions\CacheException
-	 */
 	public function testNewWithNonWritablePath()
 	{
+		$this->expectException('CodeIgniter\Cache\Exceptions\CacheException');
+
 		chmod($this->config->storePath, 0444);
 		new FileHandler($this->config);
 	}

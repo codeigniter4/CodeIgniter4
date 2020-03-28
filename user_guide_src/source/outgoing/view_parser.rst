@@ -257,7 +257,7 @@ A ``blog_template`` that might work for the above::
 	{blog_entry}
 		<div>
 			<h2>{title}</h2>
-			<p>{body}{/p}
+			<p>{body}</p>
 		</div>
 	{/blog_entry}
 
@@ -276,7 +276,7 @@ comments in a ``{#  #}`` symbols.
 	{blog_entry}
 		<div>
 			<h2>{title}</h2>
-			<p>{body}{/p}
+			<p>{body}</p>
 		</div>
 	{/blog_entry}
 
@@ -462,7 +462,7 @@ The following filters are available when using the parser:
 +               +                     +                                                              +                                     +
 +---------------+---------------------+--------------------------------------------------------------+-------------------------------------+
 
-See `PHP's NumberFormatter <http://php.net/manual/en/numberformatter.create.php>`_ for details relevant to the
+See `PHP's NumberFormatter <https://www.php.net/manual/en/numberformatter.create.php>`_ for details relevant to the
 "local_number" filter.
 
 Custom Filters
@@ -671,17 +671,17 @@ using a view fragment::
 		['title' => 'Second Link', 'link' => '/second'],
 	];
 
-	foreach ($data1 as $menuitem)
+	foreach ($data1 as $menuItem)
 	{
-		$temp .= $parser->setData($menuItem)->renderString();
+		$temp .= $parser->setData($menuItem)->renderString($template1);
 	}
 
-	$template = '<ul>{menuitems}</ul>';
+	$template2 = '<ul>{menuitems}</ul>';
 	$data = [
 		'menuitems' => $temp
 	];
 	echo $parser->setData($data)
-	             ->renderString($template);
+	             ->renderString($template2);
 
 Result::
 

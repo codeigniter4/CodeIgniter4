@@ -2,7 +2,7 @@
 
 use Config\Modules;
 
-class FileLocatorTest extends \CIUnitTestCase
+class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 	/**
 	 * @var \CodeIgniter\Autoloader\FileLocator

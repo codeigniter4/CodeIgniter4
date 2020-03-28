@@ -4,7 +4,7 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\FeatureResponse;
 use CodeIgniter\HTTP\RedirectResponse;
 
-class FeatureResponseTest extends CIUnitTestCase
+class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**
@@ -221,7 +221,7 @@ class FeatureResponseTest extends CIUnitTestCase
 		// this should be "" - json_encode('');
 		$this->assertEquals('""', $this->feature->getJSON());
 	}
-	
+
 	public function testFalseJSON()
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
@@ -232,7 +232,7 @@ class FeatureResponseTest extends CIUnitTestCase
 		// this should be FALSE - json_encode(false)
 		$this->assertEquals('false', $this->feature->getJSON());
 	}
-	
+
 	public function testTrueJSON()
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>');
@@ -243,7 +243,7 @@ class FeatureResponseTest extends CIUnitTestCase
 		// this should be TRUE - json_encode(true)
 		$this->assertEquals('true', $this->feature->getJSON());
 	}
-	
+
 	public function testInvalidJSON()
 	{
 		$tmp = ' test " case ';

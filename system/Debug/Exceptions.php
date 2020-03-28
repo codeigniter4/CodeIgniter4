@@ -186,11 +186,10 @@ class Exceptions
 	 * @param string       $message
 	 * @param string|null  $file
 	 * @param integer|null $line
-	 * @param null         $context
 	 *
 	 * @throws \ErrorException
 	 */
-	public function errorHandler(int $severity, string $message, string $file = null, int $line = null, $context = null)
+	public function errorHandler(int $severity, string $message, string $file = null, int $line = null)
 	{
 		if (! (error_reporting() & $severity))
 		{

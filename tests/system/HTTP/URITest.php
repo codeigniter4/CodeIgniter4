@@ -5,7 +5,7 @@ use Config\App;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 
-class URITest extends \CIUnitTestCase
+class URITest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected function setUp(): void
@@ -838,6 +838,14 @@ class URITest extends \CIUnitTestCase
 		$this->assertEquals('/ci/v4/index.php/controller/method', $uri->getPath());
 
 		$this->assertEquals($uri->getPath(), $request->uri->getPath());
+	}
+
+	public function testZeroAsURIPath()
+	{
+		$url = 'http://example.com/0';
+		$uri = new URI($url);
+		$this->assertEquals($url, (string) $uri);
+		$this->assertEquals('/0', $uri->getPath());
 	}
 
 }

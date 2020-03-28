@@ -440,9 +440,7 @@ class Query implements QueryInterface
 			$replacers[":{$placeholder}:"] = $escapedValue;
 		}
 
-		$sql = strtr($sql, $replacers);
-
-		return $sql;
+		return strtr($sql, $replacers);
 	}
 
 	//--------------------------------------------------------------------

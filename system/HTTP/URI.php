@@ -566,7 +566,7 @@ class URI
 			$uri .= $authority;
 		}
 
-		if ($path)
+		if ($path !== '')
 		{
 			$uri .= substr($uri, -1, 1) !== '/' ? '/' . ltrim($path, '/') : $path;
 		}
@@ -597,7 +597,12 @@ class URI
 	{
 		$parts = parse_url($str);
 
-		if (empty($parts['host']) && ! empty($parts['path']))
+		if (! isset($parts['path']))
+		{
+			$parts['path'] = $this->getPath();
+		}
+
+		if (empty($parts['host']) && $parts['path'] !== '')
 		{
 			$parts['host'] = $parts['path'];
 			unset($parts['path']);
@@ -913,7 +918,7 @@ class URI
 		{
 			$this->user = $parts['user'];
 		}
-		if (! empty($parts['path']))
+		if (isset($parts['path']) && $parts['path'] !== '')
 		{
 			$this->path = $this->filterPath($parts['path']);
 		}
@@ -953,7 +958,7 @@ class URI
 		}
 
 		// Populate our segments array
-		if (! empty($parts['path']))
+		if (isset($parts['path']) && $parts['path'] !== '')
 		{
 			$this->segments = explode('/', trim($parts['path'], '/'));
 		}
@@ -1048,14 +1053,14 @@ class URI
 	 */
 	protected function mergePaths(URI $base, URI $reference): string
 	{
-		if (! empty($base->getAuthority()) && empty($base->getPath()))
+		if (! empty($base->getAuthority()) && $base->getPath() === '')
 		{
 			return '/' . ltrim($reference->getPath(), '/ ');
 		}
 
 		$path = explode('/', $base->getPath());
 
-		if (empty($path[0]))
+		if ($path[0] === '')
 		{
 			unset($path[0]);
 		}
@@ -1082,7 +1087,7 @@ class URI
 	 */
 	public function removeDotSegments(string $path): string
 	{
-		if (empty($path) || $path === '/')
+		if ($path === '' || $path === '/')
 		{
 			return $path;
 		}
@@ -1091,7 +1096,7 @@ class URI
 
 		$input = explode('/', $path);
 
-		if (empty($input[0]))
+		if ($input[0] === '')
 		{
 			unset($input[0]);
 			$input = array_values($input);

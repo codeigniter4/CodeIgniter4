@@ -7,9 +7,9 @@ use Config\Format;
 use DateTime;
 use DateTimeZone;
 use CodeIgniter\Config\Config;
-use Tests\Support\HTTP\MockResponse;
+use CodeIgniter\Test\Mock\MockResponse;
 
-class ResponseTest extends \CIUnitTestCase
+class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	protected $server;

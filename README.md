@@ -2,6 +2,11 @@
 
 [![Build Status](https://travis-ci.org/codeigniter4/CodeIgniter4.svg?branch=develop)](https://travis-ci.org/codeigniter4/CodeIgniter4)
 [![Coverage Status](https://coveralls.io/repos/github/codeigniter4/CodeIgniter4/badge.svg?branch=develop)](https://coveralls.io/github/codeigniter4/CodeIgniter4?branch=develop)
+[![GitHub All Releases](https://img.shields.io/github/downloads/codeigniter4/CodeIgniter4/total)](https://packagist.org/packages/codeigniter4/framework)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/codeigniter4/CodeIgniter4)](https://packagist.org/packages/codeigniter4/framework)
+[![GitHub stars](https://img.shields.io/github/stars/codeigniter4/CodeIgniter4)](https://packagist.org/packages/codeigniter4/framework)
+[![GitHub license](https://img.shields.io/github/license/codeigniter4/CodeIgniter4)](https://github.com/codeigniter4/CodeIgniter4/blob/develop/license.txt)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/codeigniter4/CodeIgniter4/pulls)
 <br>
 
 ## What is CodeIgniter?
@@ -12,8 +17,6 @@ More information can be found at the [official site](http://codeigniter.com).
 This repository holds the source code for CodeIgniter 4 only. 
 Version 4 is a complete rewrite to bring the quality and the code into a more modern version, 
 while still keeping as many of the things intact that has made people love the framework over the years. 
-
-**This is pre-release code and should not be used in production sites.**
 
 More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
 
@@ -39,6 +42,10 @@ framework are exposed.
 The user guide updating and deployment is a bit awkward at the moment, but we are working on it!
 
 ## Repository Management
+
+CodeIgniter is developed completely on a volunteer basis. As such, please give up to 7 days 
+for your issues to be reviewed. If you haven't heard from one of the team in that time period, 
+feel free to leave a comment on the issue so that it gets brought back to our attention. 
 
 We use Github issues to track **BUGS** and to track approved **DEVELOPMENT** work packages.
 We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss

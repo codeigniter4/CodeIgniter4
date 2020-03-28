@@ -3,7 +3,7 @@
 use CodeIgniter\Log\Logger;
 use Config\App;
 use CodeIgniter\HTTP\UserAgent;
-use Tests\Support\MockCodeIgniter;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
 
 /**
  * Exercise our core Controller class.
@@ -12,7 +12,7 @@ use Tests\Support\MockCodeIgniter;
  *
  * @backupGlobals enabled
  */
-class ControllerTest extends \CIUnitTestCase
+class ControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**

@@ -516,11 +516,7 @@ class Mimes
 
 		foreach (static::$mimes as $ext => $types)
 		{
-			if (is_string($types) && $types === $type)
-			{
-				return $ext;
-			}
-			else if (is_array($types) && in_array($type, $types))
+			if ((is_string($types) && $types === $type) || (is_array($types) && in_array($type, $types)))
 			{
 				return $ext;
 			}

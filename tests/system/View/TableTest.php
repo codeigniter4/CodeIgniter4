@@ -2,9 +2,9 @@
 namespace CodeIgniter\View;
 
 use CodeIgniter\Database\MySQLi\Result;
-use Tests\Support\View\MockTable;
+use CodeIgniter\Test\Mock\MockTable;
 
-class TableTest extends \CIUnitTestCase
+class TableTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	public function setUp(): void
@@ -352,21 +352,21 @@ class TableTest extends \CIUnitTestCase
 		$table = $this->table->generate($data);
 
 		// Test the table header
-		$this->assertContains('<th>Name</th>', $table);
-		$this->assertContains('<th>Color</th>', $table);
-		$this->assertContains('<th>Size</th>', $table);
+		$this->assertStringContainsString('<th>Name</th>', $table);
+		$this->assertStringContainsString('<th>Color</th>', $table);
+		$this->assertStringContainsString('<th>Size</th>', $table);
 
 		// Test the first entry
-		$this->assertContains('<td>Fred</td>', $table);
-		$this->assertContains('<td>Blue</td>', $table);
-		$this->assertContains('<td>Small</td>', $table);
+		$this->assertStringContainsString('<td>Fred</td>', $table);
+		$this->assertStringContainsString('<td>Blue</td>', $table);
+		$this->assertStringContainsString('<td>Small</td>', $table);
 
 		// Check for the caption
-		$this->assertContains('<caption>Awesome table</caption>', $table);
+		$this->assertStringContainsString('<caption>Awesome table</caption>', $table);
 
 		// Test the table footing
-		$this->assertContains('<td>Subtotal</td>', $table);
-		$this->assertContains('<td>12345</td>', $table);
+		$this->assertStringContainsString('<td>Subtotal</td>', $table);
+		$this->assertStringContainsString('<td>12345</td>', $table);
 	}
 
 	public function testGenerateEmptyCell()
@@ -399,7 +399,7 @@ class TableTest extends \CIUnitTestCase
 		$this->table->setEmpty('Huh?');
 		$table = $this->table->generate($data);
 
-		$this->assertContains('<td>Huh?</td>', $table);
+		$this->assertStringContainsString('<td>Huh?</td>', $table);
 	}
 
 	// --------------------------------------------------------------------
@@ -438,7 +438,7 @@ class TableTest extends \CIUnitTestCase
 
 		$generated = $table->generate($data);
 
-		$this->assertContains('<table border="1" cellpadding="2" cellspacing="1" class="mytable">', $generated);
+		$this->assertStringContainsString('<table border="1" cellpadding="2" cellspacing="1" class="mytable">', $generated);
 	}
 
 	public function testGenerateFromDBResult()
@@ -452,12 +452,12 @@ class TableTest extends \CIUnitTestCase
 		$table = $this->table->generate($DBResult);
 
 		// Test the table header
-		$this->assertContains('<th>name</th>', $table);
-		$this->assertContains('<th>email</th>', $table);
+		$this->assertStringContainsString('<th>name</th>', $table);
+		$this->assertStringContainsString('<th>email</th>', $table);
 
 		// Test the first entry
-		$this->assertContains('<td>John Doe</td>', $table);
-		$this->assertContains('<td>foo@bar.com</td>', $table);
+		$this->assertStringContainsString('<td>John Doe</td>', $table);
+		$this->assertStringContainsString('<td>foo@bar.com</td>', $table);
 	}
 
 	public function testUndefined()
@@ -481,7 +481,7 @@ class TableTest extends \CIUnitTestCase
 
 		$generated = $this->table->generate();
 
-		$this->assertContains('<td>Fred</td><td>&lt;strong&gt;Blue&lt;/strong&gt;</td><td>Small</td>', $generated);
+		$this->assertStringContainsString('<td>Fred</td><td>&lt;strong&gt;Blue&lt;/strong&gt;</td><td>Small</td>', $generated);
 	}
 
 	public function testInvalidCallback()
@@ -493,7 +493,7 @@ class TableTest extends \CIUnitTestCase
 
 		$generated = $this->table->generate();
 
-		$this->assertContains('<td>Fred</td><td><strong>Blue</strong></td><td>Small</td>', $generated);
+		$this->assertStringContainsString('<td>Fred</td><td><strong>Blue</strong></td><td>Small</td>', $generated);
 	}
 
 }

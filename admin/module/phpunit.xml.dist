@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/codeigniter4/framework/system/Test/bootstrap.php"
+		backupGlobals="false"
+		colors="true"
+		convertErrorsToExceptions="true"
+		convertNoticesToExceptions="true"
+		convertWarningsToExceptions="true"
+		stopOnError="false"
+		stopOnFailure="false"
+		stopOnIncomplete="false"
+		stopOnSkipped="false">
+	<testsuites>
+		<testsuite name="app">
+			<directory>./tests</directory>
+		</testsuite>
+	</testsuites>
+
+	<filter>
+		<whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">./src</directory>
+			<exclude>
+				<directory suffix=".php">./src/Views</directory>
+				<file>./src/Config/Routes.php</file>
+			</exclude>
+		</whitelist>
+	</filter>
+
+	<logging>
+		<log type="coverage-html" target="build/logs/html"/>
+		<log type="coverage-clover" target="build/logs/clover.xml"/>
+		<log type="coverage-php" target="build/logs/coverage.serialized"/>
+		<log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
+		<log type="testdox-html" target="build/logs/testdox.html"/>
+		<log type="testdox-text" target="build/logs/testdox.txt"/>
+		<log type="junit" target="build/logs/logfile.xml"/>
+	</logging>
+
+	<php>
+		<server name="app.baseURL" value="http://example.com"/>
+
+		<!-- Directory containing phpunit.xml -->
+		<const name="HOMEPATH" value="./"/>
+
+		<!-- Directory containing the Paths config file -->
+		<const name="CONFIGPATH" value="./vendor/codeigniter4/framework/app/Config/"/>
+
+		<!-- Directory containing the front controller (index.php) -->
+		<const name="PUBLICPATH" value="./vendor/codeigniter4/framework/public/"/>
+
+		<!-- Database configuration -->
+<!--	<env name="database.tests.hostname" value="localhost"/>  -->
+<!--	<env name="database.tests.database" value="tests"/>	     -->
+<!--	<env name="database.tests.username" value="tests_user"/> -->
+<!--	<env name="database.tests.password" value=""/>		     -->
+<!--	<env name="database.tests.DBDriver" value="MySQLi"/>	 -->
+<!--	<env name="database.tests.DBPrefix" value="tests_"/>	 -->
+		<env name="database.tests.database" value=":memory:"/>
+		<env name="database.tests.DBDriver" value="SQLite3"/>
+	</php>
+</phpunit>

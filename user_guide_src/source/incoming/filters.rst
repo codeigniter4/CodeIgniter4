@@ -69,7 +69,7 @@ This is typically used to perform redirects, like in this example::
     }
 
 If a Response instance is returned, the Response will be sent back to the client and script execution will stop.
-This can be useful for implementing rate limiting for API's. See **app/Filters/Throttle.php** for an
+This can be useful for implementing rate limiting for API's. See :doc:`Throttler </libraries/throttler>` for an
 example.
 
 After Filters
@@ -165,6 +165,8 @@ specify the method name in lowercase. It's value would be an array of filters to
 In addition to the standard HTTP methods, this also supports two special cases: 'cli', and 'ajax'. The names are
 self-explanatory here, but 'cli' would apply to all requests that were run from the command line, while 'ajax'
 would apply to every AJAX request.
+
+.. note:: The AJAX requests depends on the ``X-Requested-With`` header, which in some cases is not sent by default in XHR requests via JavaScript (i.e. fetch). See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
 
 $filters
 ========

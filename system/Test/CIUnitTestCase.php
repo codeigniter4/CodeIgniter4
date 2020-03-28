@@ -42,7 +42,7 @@ namespace CodeIgniter\Test;
 use Config\Paths;
 use CodeIgniter\Events\Events;
 use PHPUnit\Framework\TestCase;
-use Tests\Support\Log\TestLogger;
+use CodeIgniter\Test\TestLogger;
 
 /**
  * PHPunit test case.

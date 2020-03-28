@@ -136,7 +136,7 @@ redirect them back to the same page after they log in, you may find this example
 	$routes->add('login/(.+)', 'Auth::login/$1');
 
 For those of you who don’t know regular expressions and want to learn more about them,
-`regular-expressions.info <http://www.regular-expressions.info/>`_ might be a good starting point.
+`regular-expressions.info <https://www.regular-expressions.info/>`_ might be a good starting point.
 
 .. important:: Note: You can also mix and match wildcards with regular expressions.
 

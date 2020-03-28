@@ -48,12 +48,11 @@ class AlterTableTest extends CIDatabaseTestCase
 		$this->forge->dropTable('foo_fk', true);
 	}
 
-	/**
-	 * @expectedException        \CodeIgniter\Database\Exceptions\DataException
-	 * @expectedExceptionMessage Table `foo` was not found in the current database.
-	 */
 	public function testFromTableThrowsOnNoTable()
 	{
+		$this->expectException('CodeIgniter\Database\Exceptions\DataException');
+		$this->expectExceptionMessage('Table `foo` was not found in the current database.');
+
 		$this->table->fromTable('foo');
 	}
 

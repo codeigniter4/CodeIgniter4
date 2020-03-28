@@ -48,11 +48,9 @@ class Plugins
 	/**
 	 * Wrap helper function to use as view plugin.
 	 *
-	 * @param array $params
-	 *
 	 * @return string|\CodeIgniter\HTTP\URI
 	 */
-	public static function currentURL(array $params = [])
+	public static function currentURL()
 	{
 		return current_url();
 	}
@@ -62,11 +60,9 @@ class Plugins
 	/**
 	 * Wrap helper function to use as view plugin.
 	 *
-	 * @param array $params
-	 *
 	 * @return \CodeIgniter\HTTP\URI|mixed|string
 	 */
-	public static function previousURL(array $params = [])
+	public static function previousURL()
 	{
 		return previous_url();
 	}

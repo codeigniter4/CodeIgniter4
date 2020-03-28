@@ -51,7 +51,6 @@ class Popcorn extends Controller
 			'lang' => $this->request->getLocale(),
 		]);
 
-		//      echo var_dump($this->response->getBody());
 		return $response;
 	}
 
@@ -72,6 +71,11 @@ class Popcorn extends Controller
 	public function xml()
 	{
 		$this->respond('<my><pet>cat</pet></my>');
+	}
+
+	public function toindex()
+	{
+		return redirect()->route('testing-index');
 	}
 
 }

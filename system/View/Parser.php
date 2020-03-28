@@ -39,7 +39,7 @@
 
 namespace CodeIgniter\View;
 
-use CodeIgniter\Log\Logger;
+use Psr\Log\LoggerInterface;
 use CodeIgniter\View\Exceptions\ViewException;
 
 /**
@@ -97,9 +97,9 @@ class Parser extends View
 	 * @param string       $viewPath
 	 * @param mixed        $loader
 	 * @param boolean      $debug
-	 * @param Logger       $logger
+	 * @param LoggerInterface	$logger
 	 */
-	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, Logger $logger = null)
+	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, LoggerInterface $logger = null)
 	{
 		// Ensure user plugins override core plugins.
 		$this->plugins = $config->plugins ?? [];
@@ -256,9 +256,10 @@ class Parser extends View
 	 * Parses pseudo-variables contained in the specified template,
 	 * replacing them with the data in the second param
 	 *
-	 * @param  string $template
-	 * @param  array  $data
-	 * @param  array  $options  Future options
+	 * @param string $template
+	 * @param array  $data
+	 * @param array  $options  Future options
+	 *
 	 * @return string
 	 */
 	protected function parse(string $template, array $data = [], array $options = null): string
@@ -304,9 +305,7 @@ class Parser extends View
 			}
 		}
 
-		$template = $this->insertNoparse($template);
-
-		return $template;
+		return $this->insertNoparse($template);
 	}
 
 	//--------------------------------------------------------------------
@@ -320,7 +319,7 @@ class Parser extends View
 	 */
 	protected function parseSingle(string $key, string $val): array
 	{
-		$pattern = '#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '\s*\|*\s*([|a-zA-Z0-9<>=\(\),:_\-\s\+]+)*\s*!?' . $this->rightDelimiter . '#ms';
+		$pattern = '#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '\s*\|*\s*([|\w<>=\(\),:.\-\s\+\\\\/]+)*\s*!?' . $this->rightDelimiter . '#ms';
 
 		return [$pattern => $val];
 	}
@@ -402,7 +401,7 @@ class Parser extends View
 						$val = 'Resource';
 					}
 
-					$temp['#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '\s*\|*\s*([|\w<>=\(\),:_\-\s\+]+)*\s*!?' . $this->rightDelimiter . '#s'] = $val;
+					$temp['#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '\s*\|*\s*([|\w<>=\(\),:.\-\s\+\\\\/]+)*\s*!?' . $this->rightDelimiter . '#s'] = $val;
 				}
 
 				// Now replace our placeholders with the new content.
@@ -621,9 +620,7 @@ class Parser extends View
 			}
 		}
 
-		$replace = $this->applyFilters($replace, $filters);
-
-		return $replace;
+		return $this->applyFilters($replace, $filters);
 	}
 
 	//--------------------------------------------------------------------
@@ -686,7 +683,7 @@ class Parser extends View
 		foreach ($filters as $filter)
 		{
 			// Grab any parameter we might need to send
-			preg_match('/\([a-zA-Z0-9\-:_ +,<>=]+\)/', $filter, $param);
+			preg_match('/\([\w<>=\/\\\,:.\-\s\+]+\)/', $filter, $param);
 
 			// Remove the () and spaces to we have just the parameter left
 			$param = ! empty($param) ? trim($param[0], '() ') : null;

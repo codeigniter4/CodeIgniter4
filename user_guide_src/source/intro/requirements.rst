@@ -2,15 +2,15 @@
 Server Requirements
 ###################
 
-`PHP <http://php.net/>`_ version 7.2 or newer is required, with the 
-`*intl* extension <http://php.net/manual/en/intl.requirements.php>`_ 
-installed. 
+`PHP <https://www.php.net/>`_ version 7.2 or newer is required, with the 
+`*intl* extension <https://www.php.net/manual/en/intl.requirements.php>`_
+installed.
 
 The following PHP extensions should be enabled on your server:
-``php-json``, ``php-mbstring``, ``php-mysqlnd``, `php-xml``
+``php-json``, ``php-mbstring``, ``php-mysqlnd``, ``php-xml``
 
-In order to use the :doc:`CURLRequest </libraries/curlrequest>`, you will need 
-`libcurl <http://php.net/manual/en/curl.requirements.php>`_ installed.
+In order to use the :doc:`CURLRequest </libraries/curlrequest>`, you will need
+`libcurl <https://www.php.net/manual/en/curl.requirements.php>`_ installed.
 
 A database is required for most web application programming.
 Currently supported databases are:
@@ -30,4 +30,3 @@ The list below shows the outstanding ones.
   - CUBRID via the *cubrid* and *pdo* drivers
   - Interbase/Firebird via the *ibase* and *pdo* drivers
   - ODBC via the *odbc* and *pdo* drivers (you should know that ODBC is actually an abstraction layer)
-

@@ -7,7 +7,7 @@ use CodeIgniter\HTTP\Files\UploadedFile;
 /**
  * @backupGlobals enabled
  */
-class IncomingRequestTest extends \CIUnitTestCase
+class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 
 	/**
