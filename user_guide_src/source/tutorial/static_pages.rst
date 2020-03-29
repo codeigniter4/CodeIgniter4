@@ -13,7 +13,7 @@ For example, when a call is made to:
 
 ::
 
-	http://example.com/news/latest/10
+    http://example.com/news/latest/10
 
 We might imagine that there is a controller named "news". The method
 being called on news would be "latest". The news method's job could be to
@@ -22,7 +22,7 @@ you'll see URL patterns that match:
 
 ::
 
-	http://example.com/[controller-class]/[controller-method]/[arguments]
+    http://example.com/[controller-class]/[controller-method]/[arguments]
 
 As URL schemes become more complex, this may change. But for now, this
 is all we will need to know.
@@ -35,21 +35,21 @@ code.
 
 ::
 
-	<?php namespace App\Controllers;
+    <?php namespace App\Controllers;
 
-	use CodeIgniter\Controller;
+    use CodeIgniter\Controller;
 
-	class Pages extends Controller {
+    class Pages extends Controller
+    {
+        public function index()
+        {
+            return view('welcome_message');
+        }
 
-		public function index()
-		{
-			return view('welcome_message');
-		}
-
-		public function view($page = 'home')
-		{
-		}
-	}
+        public function view($page = 'home')
+        {
+        }
+    }
 
 You have created a class named ``Pages``, with a ``view()`` method that accepts
 one argument named ``$page``. It also has an ``index()`` method, the same
@@ -74,14 +74,14 @@ the following code:
 
 ::
 
-	<!doctype html>
-	<html>
-	<head>
-		<title>CodeIgniter Tutorial</title>
-	</head>
-	<body>
+    <!doctype html>
+    <html>
+    <head>
+        <title>CodeIgniter Tutorial</title>
+    </head>
+    <body>
 
-		<h1><?= esc($title); ?></h1>
+        <h1><?= esc($title); ?></h1>
 
 The header contains the basic HTML code that you'll want to display
 before loading the main view, together with a heading. It will also
@@ -91,19 +91,19 @@ includes the following code:
 
 ::
 
-		<em>&copy; 2019</em>
-	</body>
-	</html>
+        <em>&copy; 2019</em>
+    </body>
+    </html>
 
 .. note:: If you look closely in **header.php** template we are using an **esc()**
-	function. It's a global function provided by CodeIgniter to help prevent
-	XSS attacks. You can read more about it :doc:`here </general/common_functions>`.
+    function. It's a global function provided by CodeIgniter to help prevent
+    XSS attacks. You can read more about it :doc:`here </general/common_functions>`.
 
 .. warning:: There are two **view()** functions referred to in this tutorial.
-	One is the class method created with ``public function view($page = 'home')``
-	and ``echo view('welcome_message');`` for displaying a view.
-	Both are *technically* a function. But when you create a function in a class,
-	it's called a method.
+    One is the class method created with ``public function view($page = 'home')``
+    and ``echo view('welcome_message');`` for displaying a view.
+    Both are *technically* a function. But when you create a function in a class,
+    it's called a method.
 
 Adding logic to the controller
 -------------------------------------------------------
@@ -123,20 +123,20 @@ in the ``Pages`` controller created above:
 
 ::
 
-	public function view($page = 'home')
-	{
-		if ( ! is_file(APPPATH.'/Views/pages/'.$page.'.php'))
-		{
-		    // Whoops, we don't have a page for that!
-		    throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
-		}
+    public function view($page = 'home')
+    {
+        if ( ! is_file(APPPATH.'/Views/pages/'.$page.'.php'))
+        {
+            // Whoops, we don't have a page for that!
+            throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+        }
 
-		$data['title'] = ucfirst($page); // Capitalize the first letter
+        $data['title'] = ucfirst($page); // Capitalize the first letter
 
-		echo view('templates/header', $data);
-		echo view('pages/'.$page, $data);
-		echo view('templates/footer', $data);
-	}
+        echo view('templates/header', $data);
+        echo view('pages/'.$page, $data);
+        echo view('templates/footer', $data);
+    }
 
 Now, when the requested page does exist, it is loaded, including the header and
 footer, and displayed to the user. If the requested page doesn't exist, a "404
@@ -161,9 +161,9 @@ is assigned to a variable with the name of its key. So the value of
 view.
 
 .. note:: Any files and directory names passed into the **view()** function MUST
-	match the case of the actual directory and file itself or the system will
-	throw errors on case-sensitive platforms. You can read more about it
-	:doc:`here </outgoing/views>`.
+    match the case of the actual directory and file itself or the system will
+    throw errors on case-sensitive platforms. You can read more about it
+    :doc:`here </outgoing/views>`.
 
 Running the App
 -------------------------------------------------------
@@ -186,30 +186,30 @@ You can now try several URLs in the browser location field, to see what the ``Pa
 controller you made above produces...
 
 .. table::
-	:widths: 20 80
+    :widths: 20 80
 
-	+---------------------------------+-----------------------------------------------------------------+
-	| URL                             | Will show                                                       |
-	+=================================+=================================================================+
-	| localhost:8080/pages            | the results from the `index` method inside our `Pages`          |
-	|                                 | controller, which is to display the CodeIgniter "welcome" page, |
-	|                                 | because "index" is the default controller method                |
-	+---------------------------------+-----------------------------------------------------------------+
-	| localhost:8080/pages/index      | the CodeIgniter "welcome" page, because we explicitly asked for |
-	|                                 | the "index" method                                              |
-	+---------------------------------+-----------------------------------------------------------------+
-	| localhost:8080/pages/view       | the "home" page that you made above, because it is the default  |
-	|                                 | "page" parameter to the ``view()`` method.                      |
-	+---------------------------------+-----------------------------------------------------------------+
-	| localhost:8080/pages/view/home  | show the "home" page that you made above, because we explicitly |
-	|                                 | asked for it                                                    |
-	+---------------------------------+-----------------------------------------------------------------+
-	| localhost:8080/pages/view/about | the "about" page that you made above, because we explicitly     |
-	|                                 | asked for it                                                    |
-	+---------------------------------+-----------------------------------------------------------------+
-	| localhost:8080/pages/view/shop  | a "404 - File Not Found" error page, because there is no        |
-	|                                 | `app/Views/pages/shop.php`                                      |
-	+---------------------------------+-----------------------------------------------------------------+
+    +---------------------------------+-----------------------------------------------------------------+
+    | URL                             | Will show                                                       |
+    +=================================+=================================================================+
+    | localhost:8080/pages            | the results from the `index` method inside our `Pages`          |
+    |                                 | controller, which is to display the CodeIgniter "welcome" page, |
+    |                                 | because "index" is the default controller method                |
+    +---------------------------------+-----------------------------------------------------------------+
+    | localhost:8080/pages/index      | the CodeIgniter "welcome" page, because we explicitly asked for |
+    |                                 | the "index" method                                              |
+    +---------------------------------+-----------------------------------------------------------------+
+    | localhost:8080/pages/view       | the "home" page that you made above, because it is the default  |
+    |                                 | "page" parameter to the ``view()`` method.                      |
+    +---------------------------------+-----------------------------------------------------------------+
+    | localhost:8080/pages/view/home  | show the "home" page that you made above, because we explicitly |
+    |                                 | asked for it                                                    |
+    +---------------------------------+-----------------------------------------------------------------+
+    | localhost:8080/pages/view/about | the "about" page that you made above, because we explicitly     |
+    |                                 | asked for it                                                    |
+    +---------------------------------+-----------------------------------------------------------------+
+    | localhost:8080/pages/view/shop  | a "404 - File Not Found" error page, because there is no        |
+    |                                 | `app/Views/pages/shop.php`                                      |
+    +---------------------------------+-----------------------------------------------------------------+
 
 
 Routing
@@ -222,7 +222,7 @@ controller and method, and break free from the normal convention:
 
 ::
 
-	http://example.com/[controller-class]/[controller-method]/[arguments]
+    http://example.com/[controller-class]/[controller-method]/[arguments]
 
 Let's do that. Open the routing file located at
 **app/Config/Routes.php** and look for the "Route Definitions"
@@ -232,7 +232,7 @@ The only uncommented line there to start with should be:
 
 ::
 
-	$routes->get('/', 'Home::index');
+    $routes->get('/', 'Home::index');
 
 This directive says that any incoming request without any content
 specified should be handled by the ``index()`` method inside the ``Home`` controller.
@@ -241,7 +241,7 @@ Add the following line, **after** the route directive for '/'.
 
 ::
 
-	$routes->get('(:any)', 'Pages::view/$1');
+    $routes->get('(:any)', 'Pages::view/$1');
 
 CodeIgniter reads its routing rules from top to bottom and routes the
 request to the first matching rule. Each rule is a regular expression
