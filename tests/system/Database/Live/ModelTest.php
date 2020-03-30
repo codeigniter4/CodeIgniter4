@@ -1340,6 +1340,19 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testPaginateChangeConfigPager()
+	{
+		config('Pager')->perPage = 1;
+
+		$model = new ValidModel($this->db);
+
+		$data = $model->paginate();
+
+		$this->assertEquals(1, count($data));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testValidationByObject()
 	{
 		$model = new ValidModel($this->db);
@@ -1831,7 +1844,6 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertEquals(1, $user->id);
 		$user2 = $model->first();
 		$this->assertEquals(2, $user2->id);
-
 	}
 
 	public function testcountAllResultsRecoverTempUseSoftDeletes()
@@ -1840,7 +1852,6 @@ class ModelTest extends CIDatabaseTestCase
 		$model->delete(1);
 		$this->assertEquals(4, $model->withDeleted()->countAllResults());
 		$this->assertEquals(3, $model->countAllResults());
-
 	}
 
 }
