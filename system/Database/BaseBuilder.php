@@ -1706,9 +1706,9 @@ class BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _limit(string $sql): string
+	protected function _limit(string $sql, bool $offsetIgnore = false): string
 	{
-		return $sql . ' LIMIT ' . ($this->QBOffset ? $this->QBOffset . ', ' : '') . $this->QBLimit;
+		return $sql . ' LIMIT ' . (false === $offsetIgnore && $this->QBOffset ? $this->QBOffset . ', ' : '') . $this->QBLimit;
 	}
 
 	//--------------------------------------------------------------------
@@ -2469,7 +2469,7 @@ class BaseBuilder
 		return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . implode(', ', $valStr)
 				. $this->compileWhereHaving('QBWhere')
 				. $this->compileOrderBy()
-				. ($this->QBLimit ? $this->_limit(' ') : '');
+				. ($this->QBLimit ? $this->_limit(' ', true) : '');
 	}
 
 	//--------------------------------------------------------------------
@@ -2811,7 +2811,7 @@ class BaseBuilder
 				throw new DatabaseException('SQLite3 does not allow LIMITs on DELETE queries.');
 			}
 
-			$sql = $this->_limit($sql);
+			$sql = $this->_limit($sql, true);
 		}
 
 		if ($reset_data)
