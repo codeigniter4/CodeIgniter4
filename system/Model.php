@@ -1114,19 +1114,20 @@ class Model
 	 * Expects a GET variable (?page=2) that specifies the page of results
 	 * to display.
 	 *
-	 * @param integer $perPage
-	 * @param string  $group   Will be used by the pagination library
-	 *                         to identify a unique pagination set.
-	 * @param integer $page    Optional page number (useful when the page number is provided in different way)
+	 * @param integer|null $perPage
+	 * @param string       $group   Will be used by the pagination library
+	 *                              to identify a unique pagination set.
+	 * @param integer      $page    Optional page number (useful when the page number is provided in different way)
 	 *
 	 * @return array|null
 	 */
-	public function paginate(int $perPage = 20, string $group = 'default', int $page = 0)
+	public function paginate(int $perPage = null, string $group = 'default', int $page = 0)
 	{
 		$pager = \Config\Services::pager(null, null, false);
 		$page  = $page >= 1 ? $page : $pager->getCurrentPage($group);
 
-		$total = $this->countAllResults(false);
+		$total   = $this->countAllResults(false);
+		$perPage = $perPage ?? config('Pager')->perPage;
 
 		// Store it in the Pager library so it can be
 		// paginated in the views.
