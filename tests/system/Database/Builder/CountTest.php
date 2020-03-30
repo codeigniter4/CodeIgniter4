@@ -42,5 +42,18 @@ class CountTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
 	}
 
+	public function testCountAllResultsWithGroupBy()
+	{
+		$builder = new BaseBuilder('jobs', $this->db);
+		$builder->groupBy('id');
+		$builder->testMode();
+
+		$answer = $builder->where('id >', 3)->countAllResults(false);
+
+		$expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM ( SELECT * FROM "jobs" WHERE "id" > :id: GROUP BY "id" ) CI_count_all_results';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
+	}
+
 	//--------------------------------------------------------------------
 }
