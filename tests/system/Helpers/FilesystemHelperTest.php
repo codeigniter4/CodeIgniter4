@@ -179,6 +179,29 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testGetFilenames()
 	{
+		$this->assertTrue(function_exists('delete_files'));
+
+		// Not sure the directory names should actually show up
+		// here but this matches v3.x results.
+		$expected = [
+			'.hidden',
+			'AnEmptyFolder',
+			'bar',
+			'baz',
+			'boo',
+			'far',
+			'faz',
+			'foo',
+			'simpleFile',
+		];
+
+		$vfs = vfsStream::setup('root', null, $this->structure);
+
+		$this->assertEquals($expected, get_filenames($vfs->url(), false));
+	}
+
+	public function testGetFilenamesWithRelativeSource()
+	{
 		$this->assertTrue(function_exists('get_filenames'));
 
 		$expected = [
@@ -195,10 +218,10 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$vfs = vfsStream::setup('root', null, $this->structure);
 
-		$this->assertEquals($expected, get_filenames($vfs->url(), false));
+		$this->assertEquals($expected, get_filenames($vfs->url(), 'relative'));
 	}
 
-	public function testGetFilenamesWithSource()
+	public function testGetFilenamesWithFullSource()
 	{
 		$this->assertTrue(function_exists('get_filenames'));
 

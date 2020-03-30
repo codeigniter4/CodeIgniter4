@@ -209,12 +209,12 @@ if (! function_exists('get_filenames'))
 	 * Reads the specified directory and builds an array containing the filenames.
 	 * Any sub-folders contained within the specified path are read as well.
 	 *
-	 * @param string  $source_dir   Path to source
-	 * @param boolean $include_path Whether to include the path as part of the filename
+	 * @param string $source_dir   Path to source
+	 * @param mixed  $include_path Whether to include the path as part of the filename; empty for no path, 'relative' for a relative path, not empty for full path
 	 *
 	 * @return array
 	 */
-	function get_filenames(string $source_dir, bool $include_path = false): array
+	function get_filenames(string $source_dir, $include_path = ''): array
 	{
 		$files = [];
 
@@ -228,7 +228,18 @@ if (! function_exists('get_filenames'))
 					RecursiveIteratorIterator::SELF_FIRST
 				) as $name => $object)
 			{
-				$files[] = $include_path ? $name : str_replace($source_dir, '', $name);
+				if (empty($include_path))
+				{
+					$files[] = pathinfo($name, PATHINFO_BASENAME);
+				}
+				elseif ($include_path === 'relative')
+				{
+					$files[] = str_replace($source_dir, '', $name);
+				}
+				else
+				{
+					$files[] = $name;
+				}
 			}
 		}
 		catch (\Throwable $e)

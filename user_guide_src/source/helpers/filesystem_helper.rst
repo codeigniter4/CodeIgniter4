@@ -148,13 +148,14 @@ The following functions are available:
 .. php:function:: get_filenames($source_dir[, $include_path = FALSE])
 
 	:param	string	$source_dir: Directory path
-	:param	bool	$include_path: Whether to include the path as part of the filenames
+	:param	string	$include_path: Whether to include the path as part of the filename; empty for no path, 'relative' for a relative path, not empty for full path
 	:returns:	An array of file names
 	:rtype:	array
 
 	Takes a server path as input and returns an array containing the names of all files
 	contained within it. The file path can optionally be added to the file names by setting
-	the second parameter to TRUE, otherwise file names will be relative to the source.
+	the second parameter to 'relative' for relative paths or any other non-empty value for
+	a full file path.
 
 	Example::
 
