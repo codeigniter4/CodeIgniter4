@@ -211,43 +211,33 @@ if (! function_exists('get_filenames'))
 	 *
 	 * @param string  $source_dir   Path to source
 	 * @param boolean $include_path Whether to include the path as part of the filename
-	 * @param boolean $recursion    Internal variable to determine recursion status - do not use in calls
 	 *
 	 * @return array
 	 */
-	function get_filenames(string $source_dir, bool $include_path = false, bool $recursion = false): array
+	function get_filenames(string $source_dir, bool $include_path = false): array
 	{
-		static $fileData = [];
+		$files = [];
+
+		$source_dir = rtrim($source_dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
 		try
 		{
-			$fp = opendir($source_dir);
-			// reset the array and make sure $source_dir has a trailing slash on the initial call
-			if ($recursion === false)
+			foreach (new RecursiveIteratorIterator(
+					new RecursiveDirectoryIterator($source_dir, RecursiveDirectoryIterator::SKIP_DOTS),
+					RecursiveIteratorIterator::SELF_FIRST
+				) as $name => $object)
 			{
-				$fileData   = [];
-				$source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+				$files[] = $include_path ? $name : str_replace($source_dir, '', $name);
 			}
-
-			while (false !== ($file = readdir($fp)))
-			{
-				if (is_dir($source_dir . $file) && $file[0] !== '.')
-				{
-					get_filenames($source_dir . $file . DIRECTORY_SEPARATOR, $include_path, true);
-				}
-				elseif ($file[0] !== '.')
-				{
-					$fileData[] = ($include_path === true) ? $source_dir . $file : $file;
-				}
-			}
-
-			closedir($fp);
-			return $fileData;
 		}
-		catch (\Exception $fe)
+		catch (\Throwable $e)
 		{
 			return [];
 		}
+
+		sort($files);
+
+		return $files;
 	}
 }
 

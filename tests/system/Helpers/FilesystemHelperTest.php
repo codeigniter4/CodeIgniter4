@@ -179,14 +179,17 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testGetFilenames()
 	{
-		$this->assertTrue(function_exists('delete_files'));
+		$this->assertTrue(function_exists('get_filenames'));
 
-		// Not sure the directory names should actually show up
-		// here but this matches v3.x results.
 		$expected = [
-			'foo',
-			'boo',
+			'.hidden',
 			'AnEmptyFolder',
+			'boo',
+			'boo/far',
+			'boo/faz',
+			'foo',
+			'foo/bar',
+			'foo/baz',
 			'simpleFile',
 		];
 
@@ -197,18 +200,21 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testGetFilenamesWithSource()
 	{
-		$this->assertTrue(function_exists('delete_files'));
-
-		// Not sure the directory names should actually show up
-		// here but this matches v3.x results.
-		$expected = [
-			DIRECTORY_SEPARATOR . 'foo',
-			DIRECTORY_SEPARATOR . 'boo',
-			DIRECTORY_SEPARATOR . 'AnEmptyFolder',
-			DIRECTORY_SEPARATOR . 'simpleFile',
-		];
+		$this->assertTrue(function_exists('get_filenames'));
 
 		$vfs = vfsStream::setup('root', null, $this->structure);
+
+		$expected = [
+			$vfs->url() . DIRECTORY_SEPARATOR . '.hidden',
+			$vfs->url() . DIRECTORY_SEPARATOR . 'AnEmptyFolder',
+			$vfs->url() . DIRECTORY_SEPARATOR . 'boo',
+			$vfs->url() . DIRECTORY_SEPARATOR . 'boo/far',
+			$vfs->url() . DIRECTORY_SEPARATOR . 'boo/faz',
+			$vfs->url() . DIRECTORY_SEPARATOR . 'foo',
+			$vfs->url() . DIRECTORY_SEPARATOR . 'foo/bar',
+			$vfs->url() . DIRECTORY_SEPARATOR . 'foo/baz',
+			$vfs->url() . DIRECTORY_SEPARATOR . 'simpleFile',
+		];
 
 		$this->assertEquals($expected, get_filenames($vfs->url(), true));
 	}
