@@ -1342,6 +1342,7 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testPaginateChangeConfigPager()
 	{
+		$perPage                 = config('Pager')->perPage;
 		config('Pager')->perPage = 1;
 
 		$model = new ValidModel($this->db);
@@ -1349,6 +1350,8 @@ class ModelTest extends CIDatabaseTestCase
 		$data = $model->paginate();
 
 		$this->assertEquals(1, count($data));
+
+		config('Pager')->perPage = $perPage;
 	}
 
 	//--------------------------------------------------------------------
