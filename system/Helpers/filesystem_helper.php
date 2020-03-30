@@ -218,6 +218,7 @@ if (! function_exists('get_filenames'))
 	{
 		$files = [];
 
+		$source_dir = realpath($source_dir) ?: $source_dir;
 		$source_dir = rtrim($source_dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
 		try
