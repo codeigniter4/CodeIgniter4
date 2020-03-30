@@ -2873,8 +2873,7 @@ class BaseBuilder
 	 */
 	protected function _delete(string $table): string
 	{
-		return 'DELETE ' . $this->compileIgnore('delete') . 'FROM ' . $table . $this->compileWhereHaving('QBWhere')
-				. ($this->QBLimit ? ' LIMIT ' . $this->QBLimit : '');
+		return 'DELETE ' . $this->compileIgnore('delete') . 'FROM ' . $table . $this->compileWhereHaving('QBWhere');
 	}
 
 	//--------------------------------------------------------------------
