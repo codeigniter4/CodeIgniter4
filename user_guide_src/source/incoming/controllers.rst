@@ -205,11 +205,11 @@ be passed as a parameter to the ``_remap()`` method::
 	{
 		if ($method === 'some_method')
 		{
-			$this->$method();
+			return $this->$method();
 		}
 		else
 		{
-			$this->default_method();
+			return $this->default_method();
 		}
 	}
 
