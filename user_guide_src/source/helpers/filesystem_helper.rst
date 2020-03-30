@@ -154,7 +154,7 @@ The following functions are available:
 
 	Takes a server path as input and returns an array containing the names of all files
 	contained within it. The file path can optionally be added to the file names by setting
-	the second parameter to TRUE.
+	the second parameter to TRUE, otherwise file names will be relative to the source.
 
 	Example::
 
