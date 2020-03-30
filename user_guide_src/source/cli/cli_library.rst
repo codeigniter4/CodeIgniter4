@@ -137,7 +137,7 @@ to STDERR, instead of STDOUT, like ``write()`` and ``color()`` do. This can be u
 for errors so they don't have to sift through all of the information, only the actual error messages. You use it
 exactly as you would the ``write()`` method::
 
-	CLI::error('Cannot write to file: '. $file);
+	CLI::error('Cannot write to file: ' . $file);
 
 **wrap()**
 
@@ -170,11 +170,11 @@ every line after the first line, so that you will have a crisp column edge on th
 	{
 		CLI::write(
 			// Display the title on the left of the row
-			$title[$i].'   '.
+			$title[$i] . '   ' .
 			// Wrap the descriptions in a right-hand column
 			// with its left side 3 characters wider than
 			// the longest item on the left.
-			CLI::wrap($descriptions[$i], 40, $maxlen+3)
+			CLI::wrap($descriptions[$i], 40, $maxlen + 3)
 		);
 	}
 

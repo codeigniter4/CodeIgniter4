@@ -111,7 +111,7 @@ HTTP Caching
 ============
 
 Built into the HTTP specification are tools help the client (often the web browser) cache the results. Used correctly,
-this can lend a huge performance boost to your application because it will tell the client that they don't need
+this can lead to a huge performance boost to your application because it will tell the client that they don't need
 to contact the getServer at all since nothing has changed. And you can't get faster than that.
 
 This are handled through the ``Cache-Control`` and ``ETag`` headers. This guide is not the proper place for a thorough
