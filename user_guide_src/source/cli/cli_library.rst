@@ -66,7 +66,7 @@ method which takes the string to output as the first parameter::
 
 	CLI::write('The rain in Spain falls mainly on the plains.');
 
-You can change the color of the text by passing in a color name as the first parameter::
+You can change the color of the text by passing in a color name as the second parameter::
 
 	CLI::write('File created.', 'green');
 

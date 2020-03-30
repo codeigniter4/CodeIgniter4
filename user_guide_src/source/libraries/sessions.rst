@@ -314,7 +314,7 @@ Similarly to flashdata, tempdata variables are managed internally by the
 CodeIgniter session handler.
 
 To mark an existing item as "tempdata", simply pass its key and expiry time
-(in seconds!) to the ``mark_as_temp()`` method::
+(in seconds!) to the ``markAsTempdata()`` method::
 
 	// 'item' will be erased after 300 seconds
 	$session->markAsTempdata('item', 300);
@@ -341,7 +341,7 @@ Or alternatively, using the ``setTempdata()`` method::
 
 	$session->setTempdata('item', 'value', 300);
 
-You can also pass an array to ``set_tempdata()``::
+You can also pass an array to ``setTempdata()``::
 
 	$tempdata = ['newuser' => TRUE, 'message' => 'Thanks for joining!'];
 	$session->setTempdata($tempdata, NULL, $expire);

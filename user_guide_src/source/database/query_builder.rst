@@ -427,7 +427,7 @@ searches.
 
 		$builder->like('title', 'match');
 		$builder->like('body', 'match');
-		// WHERE `title` LIKE '%match%' ESCAPE '!' AND  `body` LIKE '%match% ESCAPE '!'
+		// WHERE `title` LIKE '%match%' ESCAPE '!' AND  `body` LIKE '%match%' ESCAPE '!'
 
 	If you want to control where the wildcard (%) is placed, you can use
 	an optional third argument. Your options are 'before', 'after' and

@@ -118,7 +118,7 @@ In controller::
        }
     }
 
-where the **images** is loop is from the form field name
+where the **images** is a loop from the form field name
 
 If there are multiple files with the same name you can use ``getFile()`` ro retrieve every file individually::
 In controller::
@@ -250,13 +250,13 @@ With the simplest usage, a single file might be submitted like::
 
 	<input type="file" name="userfile" />
 
-By default, Upload files are saved in writable/uploads directory. the YYYYMMDD folder
-and random file name will be created. return a file path::
+By default, upload files are saved in writable/uploads directory. The YYYYMMDD folder
+and random file name will be created. Returns a file path::
 
 	$path = $this->request->getFile('userfile')->store();
 
-You can specify directory to movethe file to as the first parameter.a new filename by
-passing it as thesecond parameter::
+You can specify a directory to move the file to as the first parameter. A new filename by
+passing it as the second parameter::
 
 	$path = $this->request->getFile('userfile')->store('head_img/', 'user_name.jpg');
 

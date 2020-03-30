@@ -124,8 +124,8 @@ to set the Cache values to what you need, though, through the ``setCache()`` met
 
 	$options = [
 		'max-age'  => 300,
-		's-maxage' => 900
-		'etag'     => 'abcde',
+		's-maxage' => 900,
+		'etag'     => 'abcde'
 	];
 	$this->response->setCache($options);
 
@@ -183,7 +183,7 @@ Runtime Configuration
 If your application needs to make changes at run-time, you can access the instance at ``$response->CSP``. The
 class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
 Examples are shown below, with different combinations of parameters, though all accept either a directive
-name or anarray of them.::
+name or an array of them.::
 
         // specify the default directive treatment
 	$response->CSP->reportOnly(false);

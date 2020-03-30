@@ -51,7 +51,7 @@ the public controllers and make ``AdminController`` for any administrative contr
 If you do not want to use the base controller you may bypass it by having your controllers extend the system
 Controller instead::
 
-	class Home extends Controller
+	class Home extends \CodeIgniter\Controller
 	{
 	
 	}

@@ -119,8 +119,8 @@ The following functions are available:
 	Example::
 
 		$str = [
-			'question' => 'Is your name O\'reilly?',
-			'answer'   => 'No, my name is O\'connor.'
+			'question' => "Is your name O\'reilly?",
+			'answer'   => "No, my name is O\'connor."
 		];
 
 		$str = strip_slashes($str);

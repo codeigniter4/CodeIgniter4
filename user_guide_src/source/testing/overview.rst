@@ -138,7 +138,7 @@ Ensure that a header or cookie was actually emitted::
 
     ob_start();
     $this->response->send();
-    $output = ob_get_clean(); // in case you want to check the adtual body
+    $output = ob_get_clean(); // in case you want to check the actual body
 
     $this->assertHeaderEmitted("Set-Cookie: foo=bar");
 
@@ -153,7 +153,7 @@ Ensure that a header or cookie was not emitted::
 
     ob_start();
     $this->response->send();
-    $output = ob_get_clean(); // in case you want to check the adtual body
+    $output = ob_get_clean(); // in case you want to check the actual body
 
     $this->assertHeaderNotEmitted("Set-Cookie: banana");
 
