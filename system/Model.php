@@ -1114,10 +1114,10 @@ class Model
 	 * Expects a GET variable (?page=2) that specifies the page of results
 	 * to display.
 	 *
-	 * @param integer|null $perPage
-	 * @param string       $group   Will be used by the pagination library
-	 *                              to identify a unique pagination set.
-	 * @param integer      $page    Optional page number (useful when the page number is provided in different way)
+	 * @param integer $perPage
+	 * @param string  $group   Will be used by the pagination library
+	 *                         to identify a unique pagination set.
+	 * @param integer $page    Optional page number (useful when the page number is provided in different way)
 	 *
 	 * @return array|null
 	 */
