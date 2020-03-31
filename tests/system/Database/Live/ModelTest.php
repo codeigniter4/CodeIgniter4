@@ -1367,6 +1367,17 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testPaginateForQueryWithGroupBy()
+	{
+		$model = new ValidModel($this->db);
+		$model->groupBy('id');
+
+		$model->paginate();
+		$this->assertEquals(4, $model->pager->getDetails()['total']);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testValidationByObject()
 	{
 		$model = new ValidModel($this->db);
