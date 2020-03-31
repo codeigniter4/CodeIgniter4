@@ -1123,7 +1123,7 @@ class Model
 	 */
 	public function paginate(int $perPage = null, string $group = 'default', int $page = 0)
 	{
-		$pager = \Config\Services::pager(null, null, true);
+		$pager = \Config\Services::pager(null, null, false);
 		$page  = $page >= 1 ? $page : $pager->getCurrentPage($group);
 
 		$total = $this->countAllResults(false);
