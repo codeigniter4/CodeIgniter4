@@ -59,9 +59,9 @@ From your command line type the following:
 
 ::
 
-    composer create-project codeigniter4/appstarter ci-blog -s rc
+    composer create-project codeigniter4/appstarter ci-news
 
-This creates a new folder, ci-blog, which contains your application code, with
+This creates a new folder, ci-news, which contains your application code, with
 CodeIgniter installed in the vendor folder.
 
 By default, CodeIgniter starts up in production mode. This is a safety feature
