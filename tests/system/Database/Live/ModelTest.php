@@ -1345,6 +1345,9 @@ class ModelTest extends CIDatabaseTestCase
 		$perPage                 = config('Pager')->perPage;
 		config('Pager')->perPage = 1;
 
+		// ensure new instance for new "perPage" config from config('Pager')
+		\Config\Services::pager(config('Pager'), null, true);
+
 		$model = new ValidModel($this->db);
 
 		$data = $model->paginate();
@@ -1352,6 +1355,9 @@ class ModelTest extends CIDatabaseTestCase
 		$this->assertEquals(1, count($data));
 
 		config('Pager')->perPage = $perPage;
+
+		// rollback to use same instance on call
+		\Config\Services::pager(config('Pager'), null, false);
 	}
 
 	//--------------------------------------------------------------------
