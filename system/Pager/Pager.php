@@ -205,7 +205,7 @@ class Pager implements PagerInterface
 	{
 		$this->segment[$group] = $segment;
 
-		$this->ensureGroup($group);
+		$this->ensureGroup($group, $perPage);
 
 		$perPage                             = $perPage ?? $this->config->perPage;
 		$this->groups[$group]['currentPage'] = $page;
@@ -494,9 +494,10 @@ class Pager implements PagerInterface
 	/**
 	 * Ensures that an array exists for the group specified.
 	 *
-	 * @param string $group
+	 * @param string  $group
+	 * @param integer $perPage
 	 */
-	protected function ensureGroup(string $group)
+	protected function ensureGroup(string $group, int $perPage = null)
 	{
 		if (array_key_exists($group, $this->groups))
 		{
@@ -507,7 +508,7 @@ class Pager implements PagerInterface
 			'uri'          => clone current_url(true),
 			'hasMore'      => false,
 			'total'        => null,
-			'perPage'      => $this->config->perPage,
+			'perPage'      => $perPage ?? $this->config->perPage,
 			'pageCount'    => 1,
 			'pageSelector' => $group === 'default' ? 'page' : 'page_' . $group,
 		];
