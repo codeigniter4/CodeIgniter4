@@ -500,7 +500,7 @@ class Services extends BaseService
 
 		if (empty($config))
 		{
-			$config = new \Config\Pager();
+			$config = config('Pager');
 		}
 
 		if (! $view instanceof RendererInterface)

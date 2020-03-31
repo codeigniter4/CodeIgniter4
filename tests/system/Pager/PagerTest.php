@@ -100,6 +100,17 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($details['currentPage'], 3);
 	}
 
+	public function testStoreDoesBasicCalcsOnPerPageReadFromPagerConfig()
+	{
+		$this->pager->store('foo', 3, null, 100);
+
+		$details = $this->pager->getDetails('foo');
+
+		$this->assertEquals($details['total'], 100);
+		$this->assertEquals($details['perPage'], 20);
+		$this->assertEquals($details['currentPage'], 3);
+	}
+
 	public function testStoreAndHasMore()
 	{
 		$this->pager->store('foo', 3, 25, 100);
@@ -354,6 +365,9 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		);
 		$this->assertStringContainsString(
 			'?page_custom=1', $this->pager->makeLinks(1, 10, 1, 'default_full', 0, 'custom')
+		);
+		$this->assertStringContainsString(
+			'?page_custom=1', $this->pager->makeLinks(1, null, 1, 'default_full', 0, 'custom')
 		);
 	}
 
