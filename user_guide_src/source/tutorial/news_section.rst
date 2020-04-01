@@ -11,7 +11,7 @@ Create a database to work with
 
 The CodeIgniter installation assumes that you have set up an appropriate
 database, as outlined in the :doc:`requirements </intro/requirements>`.
-In this tutorial, we provide SQL code for a MySQL database, and 
+In this tutorial, we provide SQL code for a MySQL database, and
 we also assume that you have a suitable client for issuing database
 commands (mysql, MySQL Workbench, or phpMyAdmin).
 
@@ -26,22 +26,23 @@ and :doc:`Seeds <../dbmgmt/seeds>` to create more useful database setups later.
 
 ::
 
-	CREATE TABLE news (
-		id int(11) NOT NULL AUTO_INCREMENT,
-		title varchar(128) NOT NULL,
-		slug varchar(128) NOT NULL,
-		body text NOT NULL,
-		PRIMARY KEY (id),
-		KEY slug (slug)
-	);
+    CREATE TABLE news (
+        id int(11) NOT NULL AUTO_INCREMENT,
+        title varchar(128) NOT NULL,
+        slug varchar(128) NOT NULL,
+        body text NOT NULL,
+        PRIMARY KEY (id),
+        KEY slug (slug)
+    );
 
-A note of interest: a "slug", in the context of web publishing, is a 
+A note of interest: a "slug", in the context of web publishing, is a
 user- and SEO-friendly short text used in a URL to identify and describe a resource.
 
-The seed records might be something like:::
+The seed records might be something like:
 
+::
 
-    INSERT INTO news VALUES 
+    INSERT INTO news VALUES
     (1,'Elvis sighted','elvis-sighted','Elvis was sighted at the Podunk internet cafe. It looked like he was writing a CodeIgniter app.'),
     (2,'Say it isn\'t so!','say-it-isnt-so','Scientists conclude that some programmers have a sense of humor.'),
     (3,'Caffeination, Yes!','caffeination-yes','World\'s largest coffee shop open onsite nested coffee shop for staff only.');
@@ -50,8 +51,11 @@ Connect to your database
 -------------------------------------------------------
 
 The local configuration file, ``.env``, that you created when you installed
-CodeIgniter, should have the database property settings uncommented and 
-set appropriately for the database you want to use.::
+CodeIgniter, should have the database property settings uncommented and
+set appropriately for the database you want to use. Make sure you've configured
+your database properly as described :doc:`here <../database/configuration>`.
+
+::
 
     database.default.hostname = localhost
     database.default.database = ci4tutorial
@@ -66,21 +70,21 @@ Instead of writing database operations right in the controller, queries
 should be placed in a model, so they can easily be reused later. Models
 are the place where you retrieve, insert, and update information in your
 database or other data stores. They provide access to your data.
+You can read more about it :doc:`here </models/model>`.
 
 Open up the **app/Models/** directory and create a new file called
-**NewsModel.php** and add the following code. Make sure you've configured
-your database properly as described :doc:`here <../database/configuration>`.
+**NewsModel.php** and add the following code.
 
 ::
 
-        <?php namespace App\Models;
+    <?php namespace App\Models;
 
-        use CodeIgniter\Model;
+    use CodeIgniter\Model;
 
-	class NewsModel extends Model
-	{
-		protected $table = 'news';
-	}
+    class NewsModel extends Model
+    {
+        protected $table = 'news';
+    }
 
 This code looks similar to the controller code that was used earlier. It
 creates a new model by extending ``CodeIgniter\Model`` and loads the database
@@ -99,17 +103,17 @@ following code to your model.
 
 ::
 
-	public function getNews($slug = false)
-	{
-		if ($slug === false)
-		{
-			return $this->findAll();
-		}
+    public function getNews($slug = false)
+    {
+        if ($slug === false)
+        {
+            return $this->findAll();
+        }
 
-		return $this->asArray()
-		             ->where(['slug' => $slug])
-		             ->first();
-	}
+        return $this->asArray()
+                    ->where(['slug' => $slug])
+                    ->first();
+    }
 
 With this code, you can perform two different queries. You can get all
 news records, or get a news item by its `slug <#>`_. You might have
@@ -130,30 +134,31 @@ Now that the queries are written, the model should be tied to the views
 that are going to display the news items to the user. This could be done
 in our ``Pages`` controller created earlier, but for the sake of clarity,
 a new ``News`` controller is defined. Create the new controller at
-*app/Controllers/News.php*.
+**app/Controllers/News.php**.
 
 ::
 
-	<?php namespace App\Controllers;
-	use App\Models\NewsModel;
-        use CodeIgniter\Controller;
+    <?php namespace App\Controllers;
 
-	class News extends Controller
-	{
-		public function index()
-		{
-			$model = new NewsModel();
+    use App\Models\NewsModel;
+    use CodeIgniter\Controller;
 
-			$data['news'] = $model->getNews();
-		}
+    class News extends Controller
+    {
+        public function index()
+        {
+            $model = new NewsModel();
 
-		public function view($slug = null)
-		{
-			$model = new NewsModel();
+            $data['news'] = $model->getNews();
+        }
 
-			$data['news'] = $model->getNews($slug);
-		}
-	}
+        public function view($slug = null)
+        {
+            $model = new NewsModel();
+
+            $data['news'] = $model->getNews($slug);
+        }
+    }
 
 Looking at the code, you may see some similarity with the files we
 created earlier. First, it extends a core CodeIgniter class, ``Controller``,
@@ -170,19 +175,19 @@ Now the data is retrieved by the controller through our model, but
 nothing is displayed yet. The next thing to do is, passing this data to
 the views. Modify the ``index()`` method to look like this::
 
-	public function index()
-	{
-		$model = new NewsModel();
+    public function index()
+    {
+        $model = new NewsModel();
 
-		$data = [
-			'news'  => $model->getNews(),
-			'title' => 'News archive',
-		];
+        $data = [
+            'news'  => $model->getNews(),
+            'title' => 'News archive',
+        ];
 
-		echo view('templates/header', $data);
-		echo view('news/overview', $data);
-		echo view('templates/footer');
-	}
+        echo view('templates/header', $data);
+        echo view('news/overview', $data);
+        echo view('templates/footer', $data);
+    }
 
 The code above gets all news records from the model and assigns it to a
 variable. The value for the title is also assigned to the ``$data['title']``
@@ -192,28 +197,28 @@ and add the next piece of code.
 
 ::
 
-	<h2><?= $title ?></h2>
+    <h2><?= esc($title); ?></h2>
 
-	<?php if (! empty($news) && is_array($news)) : ?>
+    <?php if (! empty($news) && is_array($news)) : ?>
 
-		<?php foreach ($news as $news_item): ?>
+        <?php foreach ($news as $news_item): ?>
 
-			<h3><?= $news_item['title'] ?></h3>
+            <h3><?= esc($news_item['title']); ?></h3>
 
-			<div class="main">
-				<?= $news_item['body'] ?>
-			</div>
-			<p><a href="<?= '/news/'.$news_item['slug'] ?>">View article</a></p>
+            <div class="main">
+                <?= esc($news_item['body']); ?>
+            </div>
+            <p><a href="/news/<?= esc($news_item['slug'], 'url'); ?>">View article</a></p>
 
-		<?php endforeach; ?>
+        <?php endforeach; ?>
 
-	<?php else : ?>
+    <?php else : ?>
 
-		<h3>No News</h3>
+        <h3>No News</h3>
 
-		<p>Unable to find any news for you.</p>
+        <p>Unable to find any news for you.</p>
 
-	<?php endif ?>
+    <?php endif ?>
 
 Here, each news item is looped and displayed to the user. You can see we
 wrote our template in PHP mixed with HTML. If you prefer to use a template
@@ -228,23 +233,23 @@ add some code to the controller and create a new view. Go back to the
 
 ::
 
-	public function view($slug = NULL)
-	{
-		$model = new NewsModel();
+    public function view($slug = NULL)
+    {
+        $model = new NewsModel();
 
-		$data['news'] = $model->getNews($slug);
+        $data['news'] = $model->getNews($slug);
 
-		if (empty($data['news']))
-		{
-			throw new \CodeIgniter\Exceptions\PageNotFoundException('Cannot find the news item: '. $slug);
-		}
+        if (empty($data['news']))
+        {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Cannot find the news item: '. $slug);
+        }
 
-		$data['title'] = $data['news']['title'];
+        $data['title'] = $data['news']['title'];
 
-		echo view('templates/header', $data);
-		echo view('news/view', $data);
-		echo view('templates/footer');
-	}
+        echo view('templates/header', $data);
+        echo view('news/view', $data);
+        echo view('templates/footer', $data);
+    }
 
 Instead of calling the ``getNews()`` method without a parameter, the
 ``$slug`` variable is passed, so it will return the specific news item.
@@ -253,9 +258,13 @@ The only thing left to do is create the corresponding view at
 
 ::
 
-	<?php
-	echo '<h2>'.$news['title'].'</h2>';
-	echo $news['body'];
+    <h2><?= esc($news['title']); ?></h2>
+    <?= esc($news['body']); ?>
+
+.. note:: We are again using using **esc()** to help prevent XSS attacks.
+    But this time we also passed "url" as a second parameter. That's because
+    attack patterns are different depending on the context in which the output
+    is used. You can read more about it :doc:`here </general/common_functions>`.
 
 Routing
 -------------------------------------------------------
@@ -269,9 +278,9 @@ with a slug to the ``view()`` method in the ``News`` controller.
 
 ::
 
-	$routes->get('news/(:segment)', 'News::view/$1');
-	$routes->get('news', 'News::index');
-	$routes->get('(:any)', 'Pages::showme/$1');
+    $routes->get('news/(:segment)', 'News::view/$1');
+    $routes->get('news', 'News::index');
+    $routes->get('(:any)', 'Pages::view/$1');
 
 Point your browser to your "news" page, i.e. ``localhost:8080/news``,
 you should see a list of the news items, each of which has a link

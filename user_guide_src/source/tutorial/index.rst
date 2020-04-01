@@ -59,9 +59,9 @@ From your command line type the following:
 
 ::
 
-    ➜ composer create-project codeigniter4/appstarter ci-blog -s rc
+    composer create-project codeigniter4/appstarter ci-news
 
-This creates a new folder, ci-blog, which contains your application code, with
+This creates a new folder, ci-news, which contains your application code, with
 CodeIgniter installed in the vendor folder.
 
 By default, CodeIgniter starts up in production mode. This is a safety feature
@@ -121,9 +121,9 @@ greeted by a screen looking something like this:
 There are a couple of things to note here:
 
 1. Hovering over the red header at the top reveals a ``search`` link that will open up
-Google.com in a new tab and searching for the exception.
+   Google.com in a new tab and searching for the exception.
 2. Clicking the ``arguments`` link on any line in the Backtrace will expand a list of
-the arguments that were passed into that function call.
+   the arguments that were passed into that function call.
 
 Everything else should be clear when you see it.
 

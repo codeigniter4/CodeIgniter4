@@ -11,14 +11,18 @@ It is the glue of your web application.
 
 For example, when a call is made to:
 
-	``http://example.com/news/latest/10``
+::
+
+    http://example.com/news/latest/10
 
 We might imagine that there is a controller named "news". The method
 being called on news would be "latest". The news method's job could be to
 grab 10 news items, and render them on the page. Very often in MVC,
 you'll see URL patterns that match:
 
-	``http://example.com/[controller-class]/[controller-method]/[arguments]``
+::
+
+    http://example.com/[controller-class]/[controller-method]/[arguments]
 
 As URL schemes become more complex, this may change. But for now, this
 is all we will need to know.
@@ -32,21 +36,22 @@ code.
 ::
 
     <?php namespace App\Controllers;
+
     use CodeIgniter\Controller;
 
-	class Pages extends Controller {
-
+    class Pages extends Controller
+    {
         public function index()
         {
             return view('welcome_message');
         }
 
-        public function showme($page = 'home')
+        public function view($page = 'home')
         {
         }
-	}
+    }
 
-You have created a class named ``Pages``, with a ``showme`` method that accepts
+You have created a class named ``Pages``, with a ``view()`` method that accepts
 one argument named ``$page``. It also has an ``index()`` method, the same
 as the default controller found in **app/Controllers/Home.php**; that method
 displays the CodeIgniter welcome page.
@@ -69,14 +74,14 @@ the following code:
 
 ::
 
-	<!doctype html>
-	<html>
-	<head>
-		<title>CodeIgniter Tutorial</title>
-	</head>
-	<body>
+    <!doctype html>
+    <html>
+    <head>
+        <title>CodeIgniter Tutorial</title>
+    </head>
+    <body>
 
-		<h1><?= $title; ?></h1>
+        <h1><?= esc($title); ?></h1>
 
 The header contains the basic HTML code that you'll want to display
 before loading the main view, together with a heading. It will also
@@ -86,14 +91,24 @@ includes the following code:
 
 ::
 
-		<em>&copy; 2019</em>
-	</body>
-	</html>
+        <em>&copy; 2019</em>
+    </body>
+    </html>
+
+.. note:: If you look closely in **header.php** template we are using an **esc()**
+    function. It's a global function provided by CodeIgniter to help prevent
+    XSS attacks. You can read more about it :doc:`here </general/common_functions>`.
+
+.. warning:: There are two **view()** functions referred to in this tutorial.
+    One is the class method created with ``public function view($page = 'home')``
+    and ``echo view('welcome_message');`` for displaying a view.
+    Both are *technically* a function. But when you create a function in a class,
+    it's called a method.
 
 Adding logic to the controller
 -------------------------------------------------------
 
-Earlier you set up a controller with a ``showme()`` method. The method
+Earlier you set up a controller with a ``view()`` method. The method
 accepts one parameter, which is the name of the page to be loaded. The
 static page bodies will be located in the **app/Views/pages/**
 directory.
@@ -103,25 +118,25 @@ Within those files, type some text − anything you'd like − and save them.
 If you like to be particularly un-original, try "Hello World!".
 
 In order to load those pages, you'll have to check whether the requested
-page actually exists. This will be the body of the ``showme()`` method
+page actually exists. This will be the body of the ``view()`` method
 in the ``Pages`` controller created above:
 
 ::
 
-	public function showme($page = 'home')
-	{
-		if ( ! is_file(APPPATH.'/Views/pages/'.$page.'.php'))
-		{
-		    // Whoops, we don't have a page for that!
-		    throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
-		}
+    public function view($page = 'home')
+    {
+        if ( ! is_file(APPPATH.'/Views/pages/'.$page.'.php'))
+        {
+            // Whoops, we don't have a page for that!
+            throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+        }
 
-		$data['title'] = ucfirst($page); // Capitalize the first letter
+        $data['title'] = ucfirst($page); // Capitalize the first letter
 
-		echo view('templates/header', $data);
-		echo view('pages/'.$page, $data);
-		echo view('templates/footer', $data);
-	}
+        echo view('templates/header', $data);
+        echo view('pages/'.$page, $data);
+        echo view('templates/footer', $data);
+    }
 
 Now, when the requested page does exist, it is loaded, including the header and
 footer, and displayed to the user. If the requested page doesn't exist, a "404
@@ -138,16 +153,17 @@ assigning the value to a variable, it is assigned to the title element
 in the ``$data`` array.
 
 The last thing that has to be done is loading the views in the order
-they should be displayed. The ``view()`` method built-in to
-CodeIgniter will be used to do this. The second parameter in the ``view()`` method is
-used to pass values to the view. Each value in the ``$data`` array is
-assigned to a variable with the name of its key. So the value of
+they should be displayed. The ``view()`` function built-in to
+CodeIgniter will be used to do this. The second parameter in the ``view()``
+function is used to pass values to the view. Each value in the ``$data`` array
+is assigned to a variable with the name of its key. So the value of
 ``$data['title']`` in the controller is equivalent to ``$title`` in the
 view.
 
 .. note:: Any files and directory names passed into the **view()** function MUST
-	match the case of the actual directory and file itself or the system will
-	throw errors on case-sensitive platforms.
+    match the case of the actual directory and file itself or the system will
+    throw errors on case-sensitive platforms. You can read more about it
+    :doc:`here </outgoing/views>`.
 
 Running the App
 -------------------------------------------------------
@@ -166,22 +182,34 @@ From the command line, at the root of your project:
 will start a web server, accessible on port 8080. If you set the location field
 in your browser to ``localhost:8080``, you should see the CodeIgniter welcome page.
 
-You can now try several URLs in the browser location field, to see what the `Pages`
+You can now try several URLs in the browser location field, to see what the ``Pages``
 controller you made above produces...
 
-- ``localhost:8080/pages`` will show the results from the `index` method
-  inside our `Pages` controller, which is to display the CodeIgniter "welcome" page,
-  because "index" is the default controller method
-- ``localhost:8080/pages/index`` will also show the CodeIgniter "welcome" page,
-  because we explicitly asked for the "index" method
-- ``localhost:8080/pages/showme`` will show the "home" page that you made above,
-  because it is the default "page" parameter to the `showme()` method.
-- ``localhost:8080/pages/showme/home`` will also show the "home" page that you made above,
-  because we explicitly asked for it
-- ``localhost:8080/pages/showme/about`` will show the "about" page that you made above,
-  because we explicitly asked for it
-- ``localhost:8080/pages/showme/shop`` will show a "404 - File Not Found" error page,
-  because there is no `app/Views/pages/shop.php`
+.. table::
+    :widths: 20 80
+
+    +---------------------------------+-----------------------------------------------------------------+
+    | URL                             | Will show                                                       |
+    +=================================+=================================================================+
+    | localhost:8080/pages            | the results from the `index` method inside our `Pages`          |
+    |                                 | controller, which is to display the CodeIgniter "welcome" page, |
+    |                                 | because "index" is the default controller method                |
+    +---------------------------------+-----------------------------------------------------------------+
+    | localhost:8080/pages/index      | the CodeIgniter "welcome" page, because we explicitly asked for |
+    |                                 | the "index" method                                              |
+    +---------------------------------+-----------------------------------------------------------------+
+    | localhost:8080/pages/view       | the "home" page that you made above, because it is the default  |
+    |                                 | "page" parameter to the ``view()`` method.                      |
+    +---------------------------------+-----------------------------------------------------------------+
+    | localhost:8080/pages/view/home  | show the "home" page that you made above, because we explicitly |
+    |                                 | asked for it                                                    |
+    +---------------------------------+-----------------------------------------------------------------+
+    | localhost:8080/pages/view/about | the "about" page that you made above, because we explicitly     |
+    |                                 | asked for it                                                    |
+    +---------------------------------+-----------------------------------------------------------------+
+    | localhost:8080/pages/view/shop  | a "404 - File Not Found" error page, because there is no        |
+    |                                 | `app/Views/pages/shop.php`                                      |
+    +---------------------------------+-----------------------------------------------------------------+
 
 
 Routing
@@ -191,24 +219,29 @@ The controller is now functioning!
 
 Using custom routing rules, you have the power to map any URI to any
 controller and method, and break free from the normal convention:
-``http://example.com/[controller-class]/[controller-method]/[arguments]``
+
+::
+
+    http://example.com/[controller-class]/[controller-method]/[arguments]
 
 Let's do that. Open the routing file located at
-*app/Config/Routes.php* and look for the "Route Definitions"
+**app/Config/Routes.php** and look for the "Route Definitions"
 section of the configuration file.
 
-The only uncommented line there to start with should be:::
+The only uncommented line there to start with should be:
+
+::
 
     $routes->get('/', 'Home::index');
 
 This directive says that any incoming request without any content
-specified should be handled by the ``index`` method inside the ``Home`` controller.
+specified should be handled by the ``index()`` method inside the ``Home`` controller.
 
 Add the following line, **after** the route directive for '/'.
 
 ::
 
-	$routes->get('(:any)', 'Pages::showme/$1');
+    $routes->get('(:any)', 'Pages::view/$1');
 
 CodeIgniter reads its routing rules from top to bottom and routes the
 request to the first matching rule. Each rule is a regular expression
@@ -224,7 +257,7 @@ Here, the second rule in the ``$routes`` array matches **any** request
 using the wildcard string ``(:any)``. and passes the parameter to the
 ``view()`` method of the ``Pages`` class.
 
-Now visit ``home``. Did it get routed correctly to the ``showme()``
+Now visit ``localhost:8080/home``. Did it get routed correctly to the ``view()``
 method in the pages controller? Awesome!
 
 You should see something like the following:
