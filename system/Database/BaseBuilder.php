@@ -1921,7 +1921,7 @@ class BaseBuilder
 		$limit         = $this->QBLimit;
 		$this->QBLimit = false;
 
-		$sql = ($this->QBDistinct === true)
+		$sql = ($this->QBDistinct === true || ! empty($this->QBGroupBy))
 			?
 			$this->countString . $this->db->protectIdentifiers('numrows') . "\nFROM (\n" . $this->compileSelect() . "\n) CI_count_all_results"
 			:
