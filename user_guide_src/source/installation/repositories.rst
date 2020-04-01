@@ -7,15 +7,15 @@ The CodeIgniter 4 open source project has its own
 There are several development repositories, of interest to potential contributors:
 
 +------------------+--------------+-----------------------------------------------------------------+
-+ Repository       + Audience     + Description                                                     +
+| Repository       | Audience     | Description                                                     |
 +==================+==============+=================================================================+
-+ CodeIgniter4     + contributors + Project codebase, including tests & user guide sources          +
+| CodeIgniter4     | contributors | Project codebase, including tests & user guide sources          |
 +------------------+--------------+-----------------------------------------------------------------+
-+ translations     + developers   + System message translations                                     +
+| translations     | developers   | System message translations                                     |
 +------------------+--------------+-----------------------------------------------------------------+
-+ coding-standard  + contributors + Coding style conventions & rules                                +
+| coding-standard  | contributors | Coding style conventions & rules                                |
 +------------------+--------------+-----------------------------------------------------------------+
-+                  +              +                                                                 +
+|                  |              |                                                                 |
 +------------------+--------------+-----------------------------------------------------------------+
 
 There are also several deployment repositories, referenced in the installation directions.
@@ -23,16 +23,16 @@ The deployment repositories are built automatically when a new version is releas
 are not directly contributed to.
 
 +------------------+--------------+-----------------------------------------------------------------+
-+ Repository       + Audience     + Description                                                     +
+| Repository       | Audience     | Description                                                     |
 +==================+==============+=================================================================+
-+ framework        + developers   + Released versions of the framework                              +
+| framework        | developers   | Released versions of the framework                              |
 +------------------+--------------+-----------------------------------------------------------------+
-+ appstarter       + developers   + Starter project (app/public/writable).                          +
-+                  +              + Dependent on "framework"                                        +
+| appstarter       | developers   | Starter project (app/public/writable).                          |
+|                  |              | Dependent on "framework"                                        |
 +------------------+--------------+-----------------------------------------------------------------+
-+ userguide        + anyone       + Pre-built user guide                                            +
+| userguide        | anyone       | Pre-built user guide                                            |
 +------------------+--------------+-----------------------------------------------------------------+
-+                  +              +                                                                 +
+|                  |              |                                                                 |
 +------------------+--------------+-----------------------------------------------------------------+
 
 In all the above, the latest version of a repository can be downloaded
@@ -62,11 +62,11 @@ on Github as well, with projects that are not part of the framework,
 but which showcase it or make it easier to work with!
 
 +------------------+--------------+-----------------------------------------------------------------+
-+ Repository       + Audience     + Description                                                     +
+| Repository       | Audience     | Description                                                     |
 +==================+==============+=================================================================+
-+ website2         + developers   + The codeigniter.com website, written in CodeIgniter 4           +
+| website2         | developers   | The codeigniter.com website, written in CodeIgniter 4           |
 +------------------+--------------+-----------------------------------------------------------------+
-+                  +              +                                                                 +
+|                  |              |                                                                 |
 +------------------+--------------+-----------------------------------------------------------------+
 
 These are not composer-installable repositories.

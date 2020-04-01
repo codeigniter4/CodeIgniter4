@@ -25,7 +25,7 @@ subforum for an up-to-date list!
 **Downloads**
 
 - CI4 is still available as a ready-to-run zip or tarball, which
-  includes the user guide (though in the `docs` subfolder
+  includes the user guide (though in the `docs` subfolder)
 - It can also be installed using Composer
 
 **Namespaces**
