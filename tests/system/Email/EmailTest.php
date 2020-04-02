@@ -10,4 +10,25 @@ class EmailTest extends \CodeIgniter\Test\CIUnitTestCase
 		$email->setTo('invalid');
 		$this->assertStringContainsString('Invalid email address: invalid', $email->printDebugger());
 	}
+
+	public function autoClearProvider()
+	{
+		return [
+			'autoclear'     => [true],
+			'not autoclear' => [false],
+		];
+	}
+
+	/**
+	 * @dataProvider autoClearProvider
+	 */
+	public function testEmailSendWithClearance($autoClear)
+	{
+		$config           = config('Email');
+		$config->validate = true;
+		$email            = new \CodeIgniter\Test\Mock\MockEmail($config);
+		$email->setTo('foo@foo.com');
+
+		$this->assertTrue($email->send($autoClear));
+	}
 }

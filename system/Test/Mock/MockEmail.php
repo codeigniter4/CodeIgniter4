@@ -6,7 +6,10 @@ class MockEmail extends Email
 {
 	public function send($autoClear = true)
 	{
-		$this->clear();
+		if ($autoClear)
+		{
+			$this->clear();
+		}
 
 		return true;
 	}
