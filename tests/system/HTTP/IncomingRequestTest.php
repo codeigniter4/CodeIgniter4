@@ -365,6 +365,40 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testGetFileMultiple()
+	{
+		$_FILES = [
+			'userfile' => [
+				'name'     => [
+					'someFile.txt',
+					'someFile2.txt',
+				],
+				'type'     => [
+					'text/plain',
+					'text/plain',
+				],
+				'size'     => [
+					'124',
+					'125',
+				],
+				'tmp_name' => [
+					'/tmp/myTempFile.txt',
+					'/tmp/myTempFile2.txt',
+				],
+				'error'    => [
+					0,
+					0,
+				],
+			],
+		];
+
+		$gotit = $this->request->getFileMultiple('userfile');
+		$this->assertEquals(124, $gotit[0]->getSize());
+		$this->assertEquals(125, $gotit[1]->getSize());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testGetFile()
 	{
 		$_FILES = [
