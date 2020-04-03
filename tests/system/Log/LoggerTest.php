@@ -419,4 +419,18 @@ class LoggerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $logger->cleanup($ohoh));
 	}
 
+	//--------------------------------------------------------------------
+
+	public function testDetermineFileNoStackTrace()
+	{
+		$config = new LoggerConfig();
+		$logger = new Logger($config);
+
+		$expected = [
+			'unknown',
+			'unknown',
+		];
+
+		$this->assertEquals($expected, $logger->determineFile());
+	}
 }
