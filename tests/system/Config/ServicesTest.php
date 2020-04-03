@@ -55,6 +55,18 @@ class ServicesTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\HTTP\CURLRequest::class, $actual);
 	}
 
+	public function testNewEmail()
+	{
+		$actual = Services::email();
+		$this->assertInstanceOf(\CodeIgniter\Email\Email::class, $actual);
+	}
+
+	public function testNewUnsharedEmail()
+	{
+		$actual = Services::email(null, true);
+		$this->assertInstanceOf(\CodeIgniter\Email\Email::class, $actual);
+	}
+
 	public function testNewExceptions()
 	{
 		$actual = Services::exceptions(new Exceptions(), Services::request(), Services::response());
