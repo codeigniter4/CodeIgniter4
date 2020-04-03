@@ -255,4 +255,9 @@ class CellTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::work', $params));
 	}
 
+	public function testCallInitControllerIfMethodExists()
+	{
+		$this->assertEquals('CodeIgniter\HTTP\Response', $this->cell->render('\Tests\Support\View\SampleClassWithInitController::index'));
+	}
+
 }
