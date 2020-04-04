@@ -30,6 +30,10 @@ class EmailTest extends \CodeIgniter\Test\CIUnitTestCase
 		$email->setTo('foo@foo.com');
 
 		$this->assertTrue($email->send($autoClear));
-		$this->assertEquals('foo@foo.com', $email->archive['recipients'][0]);
+
+		if (! $autoClear)
+		{
+			$this->assertEquals('foo@foo.com', $email->archive['recipients'][0]);
+		}
 	}
 }

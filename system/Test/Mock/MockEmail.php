@@ -13,13 +13,12 @@ class MockEmail extends Email
 
 	public function send($autoClear = true)
 	{
-		$this->archive = get_object_vars($this);
-
 		if ($autoClear)
 		{
 			$this->clear();
 		}
 
+		$this->archive = get_object_vars($this);
 		return true;
 	}
 }
