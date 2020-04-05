@@ -69,4 +69,33 @@ class FromTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testFromReset()
+	{
+		$builder = new BaseBuilder('user', $this->db);
+
+		$builder->from(['jobs', 'roles']);
+
+		$expectedSQL = 'SELECT * FROM "user", "jobs", "roles"';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+		$expectedSQL = 'SELECT * FROM "user"';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+		$expectedSQL = 'SELECT *';
+
+		$builder->from(null, true);
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+		$expectedSQL = 'SELECT * FROM "jobs"';
+
+		$builder->from('jobs');
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
+
+	//--------------------------------------------------------------------
 }

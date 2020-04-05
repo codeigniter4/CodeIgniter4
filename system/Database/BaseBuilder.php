@@ -981,12 +981,12 @@ class BaseBuilder
 	 * @used-by whereNotIn()
 	 * @used-by orWhereNotIn()
 	 *
-	 * @param string        $key    The field to search
-	 * @param array|Closure $values The values searched on, or anonymous function with subquery
-	 * @param boolean       $not    If the statement would be IN or NOT IN
-	 * @param string        $type
-	 * @param boolean       $escape
-	 * @param string        $clause (Internal use only)
+	 * @param  string        $key    The field to search
+	 * @param  array|Closure $values The values searched on, or anonymous function with subquery
+	 * @param  boolean       $not    If the statement would be IN or NOT IN
+	 * @param  string        $type
+	 * @param  boolean       $escape
+	 * @param  string        $clause (Internal use only)
 	 * @throws InvalidArgumentException
 	 *
 	 * @return BaseBuilder
@@ -998,8 +998,8 @@ class BaseBuilder
 			if (CI_DEBUG)
 			{
 				throw new InvalidArgumentException(sprintf('%s() expects $key to be a non-empty string', debug_backtrace(0, 2)[1]['function']));
-			} 
-			
+			}
+
 			return this;
 		}
 
@@ -1009,7 +1009,7 @@ class BaseBuilder
 			{
 				throw new InvalidArgumentException(sprintf('%s() expects $values to be of type array or closure', debug_backtrace(0, 2)[1]['function']));
 			}
-			
+
 			return this;
 		}
 
@@ -3328,6 +3328,12 @@ class BaseBuilder
 		{
 			$this->db->setAliasedTables([]);
 		}
+
+		// Reset QBFrom part
+		if (! empty($this->QBFrom))
+		{
+			$this->from(array_shift($this->QBFrom), true);
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -3426,7 +3432,7 @@ class BaseBuilder
 			return $key;
 		}
 
-		if (!array_key_exists($key, $this->bindsKeyCount))
+		if (! array_key_exists($key, $this->bindsKeyCount))
 		{
 			$this->bindsKeyCount[$key] = 0;
 		}
