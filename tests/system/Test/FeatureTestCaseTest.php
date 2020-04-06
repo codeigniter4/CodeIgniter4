@@ -198,10 +198,6 @@ class FeatureTestCaseTest extends FeatureTestCase
 	public function testCallZeroAsPathGot404()
 	{
 		$this->expectException(PageNotFoundException::class);
-		while (\ob_get_level() > 0)
-		{
-			\ob_end_flush();
-		}
 		$this->get('0');
 	}
 
@@ -247,11 +243,6 @@ class FeatureTestCaseTest extends FeatureTestCase
 				$to,
 			],
 		]);
-
-		while (\ob_get_level() > 0)
-		{
-			\ob_end_flush();
-		}
 		$this->get($httpGet);
 	}
 }
