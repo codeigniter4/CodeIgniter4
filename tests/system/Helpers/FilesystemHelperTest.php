@@ -184,7 +184,6 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		// Not sure the directory names should actually show up
 		// here but this matches v3.x results.
 		$expected = [
-			'.hidden',
 			'AnEmptyFolder',
 			'bar',
 			'baz',
@@ -200,12 +199,34 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, get_filenames($vfs->url(), false));
 	}
 
+	public function testGetFilenamesWithHidden()
+	{
+		$this->assertTrue(function_exists('delete_files'));
+
+		// Not sure the directory names should actually show up
+		// here but this matches v3.x results.
+		$expected = [
+			'.hidden',
+			'AnEmptyFolder',
+			'bar',
+			'baz',
+			'boo',
+			'far',
+			'faz',
+			'foo',
+			'simpleFile',
+		];
+
+		$vfs = vfsStream::setup('root', null, $this->structure);
+
+		$this->assertEquals($expected, get_filenames($vfs->url(), false, true));
+	}
+
 	public function testGetFilenamesWithRelativeSource()
 	{
 		$this->assertTrue(function_exists('get_filenames'));
 
 		$expected = [
-			'.hidden',
 			'AnEmptyFolder',
 			'boo',
 			'boo/far',
@@ -228,7 +249,6 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$vfs = vfsStream::setup('root', null, $this->structure);
 
 		$expected = [
-			$vfs->url() . DIRECTORY_SEPARATOR . '.hidden',
 			$vfs->url() . DIRECTORY_SEPARATOR . 'AnEmptyFolder',
 			$vfs->url() . DIRECTORY_SEPARATOR . 'boo',
 			$vfs->url() . DIRECTORY_SEPARATOR . 'boo/far',

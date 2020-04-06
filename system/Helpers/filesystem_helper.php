@@ -211,10 +211,11 @@ if (! function_exists('get_filenames'))
 	 *
 	 * @param string       $source_dir   Path to source
 	 * @param boolean|null $include_path Whether to include the path as part of the filename; false for no path, null for a relative path, true for full path
+	 * @param boolean      $hidden       Whether to include hidden files (files beginning with a period)
 	 *
 	 * @return array
 	 */
-	function get_filenames(string $source_dir, ?bool $include_path = false): array
+	function get_filenames(string $source_dir, ?bool $include_path = false, bool $hidden = false): array
 	{
 		$files = [];
 
@@ -228,9 +229,15 @@ if (! function_exists('get_filenames'))
 					RecursiveIteratorIterator::SELF_FIRST
 				) as $name => $object)
 			{
-				if ($include_path === false)
+				$basename = pathinfo($name, PATHINFO_BASENAME);
+
+				if (! $hidden && $basename[0] === '.')
 				{
-					$files[] = pathinfo($name, PATHINFO_BASENAME);
+					continue;
+				}
+				elseif ($include_path === false)
+				{
+					$files[] = $basename;
 				}
 				elseif (is_null($include_path))
 				{
