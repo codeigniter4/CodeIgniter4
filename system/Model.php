@@ -818,6 +818,12 @@ class Model
 			$data = (array) $data;
 		}
 
+		// If it's still empty here, means $data is no change or is empty object
+		if (empty($data))
+		{
+			throw DataException::forEmptyDataset('update');
+		}
+
 		// Validate data before saving.
 		if ($this->skipValidation === false)
 		{
