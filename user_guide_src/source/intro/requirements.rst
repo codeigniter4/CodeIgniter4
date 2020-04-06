@@ -2,12 +2,12 @@
 Server Requirements
 ###################
 
-`PHP <https://www.php.net/>`_ version 7.2 or newer is required, with the 
-`*intl* extension <https://www.php.net/manual/en/intl.requirements.php>`_
+`PHP <https://www.php.net/>`_ version 7.2 or newer is required, with the
+`*intl* extension <https://www.php.net/manual/en/intl.requirements.php>`_ and `*mbstring* extension <https://www.php.net/manual/en/mbstring.requirements.php>`_
 installed.
 
 The following PHP extensions should be enabled on your server:
-``php-json``, ``php-mbstring``, ``php-mysqlnd``, ``php-xml``
+``php-json``, ``php-mysqlnd``, ``php-xml``
 
 In order to use the :doc:`CURLRequest </libraries/curlrequest>`, you will need
 `libcurl <https://www.php.net/manual/en/curl.requirements.php>`_ installed.

@@ -211,6 +211,16 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testSanitizationAllowUnicodeChars()
+	{
+		$test     = 'Ä/path/to/some/file.php_';
+		$expected = 'Ä/path/to/some/file.php';
+
+		$this->assertEquals($expected, $this->loader->sanitizeFilename($test));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testSanitizationAllowsWindowsFilepaths()
 	{
 		$test = 'C:\path\to\some/file.php';
