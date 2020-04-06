@@ -413,6 +413,7 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertSame('', $entity->string_empty);
 		$this->assertSame(null, $entity->integer_null);
 		$this->assertSame(0, $entity->integer_0);
+		$this->assertSame('value', $entity->string_value_not_null);
 	}
 
 	//--------------------------------------------------------------------
@@ -566,6 +567,23 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		]);
 	}
 
+	public function testToArraySkipAttributesWithUnderscoreInFirstCharacter()
+	{
+		$entity = new class extends Entity
+		{
+			protected $attributes = [
+				'_foo' => null,
+				'bar'  => null,
+			];
+		};
+
+		$result = $entity->toArray();
+
+		$this->assertEquals($result, [
+			'bar' => null,
+		]);
+	}
+
 	public function testAsArrayOnlyChanged()
 	{
 		$entity = $this->getEntity();
@@ -672,6 +690,12 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$entity->foo = 'bar';
 
 		$this->assertTrue($entity->hasChanged());
+	}
+
+	public function testHasChangedKeyNotExists()
+	{
+		$entity = $this->getEntity();
+		$this->assertFalse($entity->hasChanged('xxx'));
 	}
 
 	public function testIssetKeyMap()
@@ -824,24 +848,27 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		return new class extends Entity
 		{
 			protected $attributes = [
-				'string_null'  => null,
-				'string_empty' => null,
-				'integer_null' => null,
-				'integer_0'    => null,
+				'string_null'           => null,
+				'string_empty'          => null,
+				'integer_null'          => null,
+				'integer_0'             => null,
+				'string_value_not_null' => 'value',
 			];
 			protected $_original  = [
-				'string_null'  => null,
-				'string_empty' => null,
-				'integer_null' => null,
-				'integer_0'    => null,
+				'string_null'           => null,
+				'string_empty'          => null,
+				'integer_null'          => null,
+				'integer_0'             => null,
+				'string_value_not_null' => 'value',
 			];
 
 			// 'bar' is db column, 'foo' is internal representation
 			protected $casts = [
-				'string_null'  => '?string',
-				'string_empty' => 'string',
-				'integer_null' => '?integer',
-				'integer_0'    => 'integer',
+				'string_null'           => '?string',
+				'string_empty'          => 'string',
+				'integer_null'          => '?integer',
+				'integer_0'             => 'integer',
+				'string_value_not_null' => '?string',
 			];
 		};
 	}
