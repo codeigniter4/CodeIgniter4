@@ -239,7 +239,7 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testGetYear()
 	{
-		$time = Time::parse('January 1, 2016');
+		$time  = Time::parse('January 1, 2016');
 		$time2 = Time::parse('December 31, 2019');
 
 		$this->assertEquals(2016, $time->year);
@@ -589,6 +589,12 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$time = Time::parse('May 10, 2017', 'America/Chicago');
 		$this->assertEquals('2017-05-10', $time->toDateString());
+	}
+
+	public function testToFormattedDateString()
+	{
+		$time = Time::parse('2017-05-10', 'America/Chicago');
+		$this->assertEquals('May 10, 2017', $time->toFormattedDateString());
 	}
 
 	/**
