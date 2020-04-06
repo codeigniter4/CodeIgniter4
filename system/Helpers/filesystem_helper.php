@@ -209,45 +209,54 @@ if (! function_exists('get_filenames'))
 	 * Reads the specified directory and builds an array containing the filenames.
 	 * Any sub-folders contained within the specified path are read as well.
 	 *
-	 * @param string  $source_dir   Path to source
-	 * @param boolean $include_path Whether to include the path as part of the filename
-	 * @param boolean $recursion    Internal variable to determine recursion status - do not use in calls
+	 * @param string       $source_dir   Path to source
+	 * @param boolean|null $include_path Whether to include the path as part of the filename; false for no path, null for a relative path, true for full path
+	 * @param boolean      $hidden       Whether to include hidden files (files beginning with a period)
 	 *
 	 * @return array
 	 */
-	function get_filenames(string $source_dir, bool $include_path = false, bool $recursion = false): array
+	function get_filenames(string $source_dir, ?bool $include_path = false, bool $hidden = false): array
 	{
-		static $fileData = [];
+		$files = [];
+
+		$source_dir = realpath($source_dir) ?: $source_dir;
+		$source_dir = rtrim($source_dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
 		try
 		{
-			$fp = opendir($source_dir);
-			// reset the array and make sure $source_dir has a trailing slash on the initial call
-			if ($recursion === false)
+			foreach (new RecursiveIteratorIterator(
+					new RecursiveDirectoryIterator($source_dir, RecursiveDirectoryIterator::SKIP_DOTS),
+					RecursiveIteratorIterator::SELF_FIRST
+				) as $name => $object)
 			{
-				$fileData   = [];
-				$source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-			}
+				$basename = pathinfo($name, PATHINFO_BASENAME);
 
-			while (false !== ($file = readdir($fp)))
-			{
-				if (is_dir($source_dir . $file) && $file[0] !== '.')
+				if (! $hidden && $basename[0] === '.')
 				{
-					get_filenames($source_dir . $file . DIRECTORY_SEPARATOR, $include_path, true);
+					continue;
 				}
-				elseif ($file[0] !== '.')
+				elseif ($include_path === false)
 				{
-					$fileData[] = ($include_path === true) ? $source_dir . $file : $file;
+					$files[] = $basename;
+				}
+				elseif (is_null($include_path))
+				{
+					$files[] = str_replace($source_dir, '', $name);
+				}
+				else
+				{
+					$files[] = $name;
 				}
 			}
-
-			closedir($fp);
-			return $fileData;
 		}
-		catch (\Exception $fe)
+		catch (\Throwable $e)
 		{
 			return [];
 		}
+
+		sort($files);
+
+		return $files;
 	}
 }
 
