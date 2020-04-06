@@ -194,7 +194,7 @@ class Controller
 		// If you replace the $rules array with the name of the group
 		if (is_string($rules))
 		{
-			$validation = new \Config\Validation();
+			$validation = config('Validation');
 
 			// If the rule wasn't found in the \Config\Validation, we
 			// should throw an exception so the developer can find it.
