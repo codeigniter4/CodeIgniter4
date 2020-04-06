@@ -218,7 +218,7 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$vfs = vfsStream::setup('root', null, $this->structure);
 
-		$this->assertEquals($expected, get_filenames($vfs->url(), 'relative'));
+		$this->assertEquals($expected, get_filenames($vfs->url(), null));
 	}
 
 	public function testGetFilenamesWithFullSource()

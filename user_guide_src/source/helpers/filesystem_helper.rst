@@ -148,7 +148,7 @@ The following functions are available:
 .. php:function:: get_filenames($source_dir[, $include_path = FALSE])
 
 	:param	string	$source_dir: Directory path
-	:param	string	$include_path: Whether to include the path as part of the filename; empty for no path, 'relative' for a relative path, not empty for full path
+	:param	string	$include_path: Whether to include the path as part of the filename; false for no path, null for the path relative to $source_dir, true for the full path
 	:returns:	An array of file names
 	:rtype:	array
 
