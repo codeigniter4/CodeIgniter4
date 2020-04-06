@@ -3328,6 +3328,12 @@ class BaseBuilder
 		{
 			$this->db->setAliasedTables([]);
 		}
+
+		// Reset QBFrom part
+		if (! empty($this->QBFrom))
+		{
+			$this->from(array_shift($this->QBFrom), true);
+		}
 	}
 
 	//--------------------------------------------------------------------
