@@ -211,7 +211,7 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testSanitizationAllowSomeUnicodeChars()
+	public function testSanitizationAllowUnicodeChars()
 	{
 		$test     = 'Ä/path/to/some/file.php_';
 		$expected = 'Ä/path/to/some/file.php';
