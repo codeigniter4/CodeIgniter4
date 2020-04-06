@@ -4,6 +4,7 @@ use CodeIgniter\Log\Logger;
 use Config\App;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
+use CodeIgniter\Validation\Exceptions\ValidationException;
 
 /**
  * Exercise our core Controller class.
@@ -100,6 +101,59 @@ class ControllerTest extends \CodeIgniter\Test\CIUnitTestCase
 		// and that we can attempt validation, with no rules
 		$method = $this->getPrivateMethodInvoker($this->controller, 'validate');
 		$this->assertFalse($method([]));
+	}
+
+	public function testValidateWithStringRulesNotFound()
+	{
+		$this->expectException(ValidationException::class);
+
+		// make sure we can instantiate one
+		$this->controller = new Controller();
+		$this->controller->initController($this->request, $this->response, $this->logger);
+
+		$method = $this->getPrivateMethodInvoker($this->controller, 'validate');
+		$this->assertFalse($method('signup'));
+	}
+
+	public function testValidateWithStringRulesFoundReadMessagesFromValidationConfig()
+	{
+		$validation                = config('Validation');
+		$validation->signup        = [
+			'username' => 'required',
+		];
+		$validation->signup_errors = [
+			'username' => [
+				'required' => 'You must choose a username.',
+			],
+		];
+
+		// make sure we can instantiate one
+		$this->controller = new Controller();
+		$this->controller->initController($this->request, $this->response, $this->logger);
+
+		$method = $this->getPrivateMethodInvoker($this->controller, 'validate');
+		$this->assertFalse($method('signup'));
+		$this->assertEquals('You must choose a username.', Services::validation()->getError());
+	}
+
+	public function testValidateWithStringRulesFoundUseMessagesParameter()
+	{
+		$validation         = config('Validation');
+		$validation->signup = [
+			'username' => 'required',
+		];
+
+		// make sure we can instantiate one
+		$this->controller = new Controller();
+		$this->controller->initController($this->request, $this->response, $this->logger);
+
+		$method = $this->getPrivateMethodInvoker($this->controller, 'validate');
+		$this->assertFalse($method('signup', [
+			'username' => [
+				'required' => 'You must choose a username.',
+			],
+		]));
+		$this->assertEquals('You must choose a username.', Services::validation()->getError());
 	}
 
 	//--------------------------------------------------------------------
