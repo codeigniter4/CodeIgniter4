@@ -721,7 +721,7 @@ class IncomingRequest extends Request
 		$query = $parts['query'] ?? '';
 		$uri   = $parts['path'] ?? '';
 
-		if (isset($_SERVER['SCRIPT_NAME'][0]))
+		if (isset($_SERVER['SCRIPT_NAME'][0]) && pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_EXTENSION) === 'php')
 		{
 			// strip the script name from the beginning of the URI
 			if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0)
