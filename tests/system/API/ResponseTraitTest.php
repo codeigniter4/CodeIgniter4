@@ -489,7 +489,7 @@ EOH;
 		};
 
 		$controller->respondCreated(['id' => 3], 'A Custom Reason');
-		$this->assertStringStartsWith('application/json; charset=UTF-8', $response->getHeaderLine('Content-Type'));
+		$this->assertStringStartsWith(config('Format')->supportedResponseFormats[0], $response->getHeaderLine('Content-Type'));
 	}
 
 }
