@@ -927,7 +927,9 @@ class Model
 				{
 					throw new DatabaseException('Deletes are not allowed unless they contain a "where" or "like" clause.');
 				}
+				// @codeCoverageIgnoreStart
 				return false;
+				// @codeCoverageIgnoreEnd
 			}
 			$set[$this->deletedField] = $this->setDate();
 
