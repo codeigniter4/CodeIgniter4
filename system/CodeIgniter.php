@@ -194,7 +194,9 @@ class CodeIgniter
 
 		if (! CI_DEBUG)
 		{
+			// @codeCoverageIgnoreStart
 			\Kint::$enabled_mode = false;
+			// @codeCoverageIgnoreEnd
 		}
 	}
 
