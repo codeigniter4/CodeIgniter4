@@ -554,7 +554,7 @@ class Model
 	 * @return array
 	 * @throws \ReflectionException
 	 */
-	protected static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = true): array
+	public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = true): array
 	{
 		if (method_exists($data, 'toRawArray'))
 		{
