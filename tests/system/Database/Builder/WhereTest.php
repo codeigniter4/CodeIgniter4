@@ -221,6 +221,49 @@ class WhereTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function provideInvalidKeys()
+	{
+		return [
+			'null'         => [null],
+			'empty string' => [''],
+		];
+	}
+
+	/**
+	 * @dataProvider provideInvalidKeys
+	 */
+	public function testWhereInvalidKeyThrowInvalidArgumentException($key)
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		$builder = $this->db->table('jobs');
+
+		$builder->whereIn($key, ['Politician', 'Accountant']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function provideInvalidValues()
+	{
+		return [
+			'null'                    => [null],
+			'not array'               => ['not array'],
+			'not instanceof \Closure' => [new \stdClass],
+		];
+	}
+
+	/**
+	 * @dataProvider provideInvalidValues
+	 */
+	public function testWhereInEmptyValuesThrowInvalidArgumentException($values)
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		$builder = $this->db->table('jobs');
+
+		$builder->whereIn('name', $values);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testWhereNotIn()
 	{
 		$builder = $this->db->table('jobs');
