@@ -997,7 +997,7 @@ class Model
 		// Validate data before saving.
 		if (! empty($data) && $this->skipValidation === false)
 		{
-			if ($this->cleanRules(true)->validate($data) === false)
+			if ($this->cleanRules()->validate($data) === false)
 			{
 				return false;
 			}
