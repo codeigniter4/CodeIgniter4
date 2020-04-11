@@ -142,6 +142,7 @@ class Exceptions
 	 */
 	public function exceptionHandler(Throwable $exception)
 	{
+		// @codeCoverageIgnoreStart
 		$codes      = $this->determineCodes($exception);
 		$statusCode = $codes[0];
 		$exitCode   = $codes[1];
@@ -171,6 +172,7 @@ class Exceptions
 		$this->render($exception, $statusCode);
 
 		exit($exitCode);
+		// @codeCoverageIgnoreEnd
 	}
 
 	//--------------------------------------------------------------------
