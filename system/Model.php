@@ -675,7 +675,7 @@ class Model
 		// Validate data before saving.
 		if ($this->skipValidation === false)
 		{
-			if ($this->cleanRules(false)->validate($data) === false)
+			if ($this->cleanRules()->validate($data) === false)
 			{
 				return false;
 			}
@@ -741,7 +741,7 @@ class Model
 		{
 			foreach ($set as $row)
 			{
-				if ($this->cleanRules(false)->validate($row) === false)
+				if ($this->cleanRules()->validate($row) === false)
 				{
 					return false;
 				}
@@ -809,7 +809,7 @@ class Model
 		// Validate data before saving.
 		if ($this->skipValidation === false)
 		{
-			if ($this->cleanRules()->validate($data) === false)
+			if ($this->cleanRules(true)->validate($data) === false)
 			{
 				return false;
 			}
@@ -862,7 +862,7 @@ class Model
 		{
 			foreach ($set as $row)
 			{
-				if ($this->cleanRules()->validate($row) === false)
+				if ($this->cleanRules(true)->validate($row) === false)
 				{
 					return false;
 				}
@@ -997,7 +997,7 @@ class Model
 		// Validate data before saving.
 		if (! empty($data) && $this->skipValidation === false)
 		{
-			if ($this->cleanRules()->validate($data) === false)
+			if ($this->cleanRules(true)->validate($data) === false)
 			{
 				return false;
 			}
@@ -1350,7 +1350,7 @@ class Model
 	 *
 	 * @return $this
 	 */
-	public function cleanRules(bool $clean = true)
+	public function cleanRules(bool $clean = false)
 	{
 		$this->cleanValidationRules = $clean;
 
