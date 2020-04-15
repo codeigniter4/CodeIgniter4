@@ -242,6 +242,16 @@ EOH;
 		$this->assertEquals($this->formatter->format(['id' => 3]), $this->response->getBody());
 	}
 
+	public function testUpdated()
+	{
+		$controller = $this->makeController();
+		$controller->respondUpdated(['id' => 3], 'A Custom Reason');
+
+		$this->assertEquals('A Custom Reason', $this->response->getReason());
+		$this->assertEquals(200, $this->response->getStatusCode());
+		$this->assertEquals($this->formatter->format(['id' => 3]), $this->response->getBody());
+	}
+
 	public function testUnauthorized()
 	{
 		$controller = $this->makeController();

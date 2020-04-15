@@ -66,6 +66,7 @@ trait ResponseTrait
 	protected $codes = [
 		'created'                   => 201,
 		'deleted'                   => 200,
+		'updated'                   => 200,
 		'no_content'                => 204,
 		'invalid_request'           => 400,
 		'unsupported_response_type' => 400,
@@ -194,6 +195,19 @@ trait ResponseTrait
 	public function respondDeleted($data = null, string $message = '')
 	{
 		return $this->respond($data, $this->codes['deleted'], $message);
+	}
+
+	/**
+	 * Used after a resource has been successfully updated.
+	 *
+	 * @param mixed  $data    Data.
+	 * @param string $message Message.
+	 *
+	 * @return mixed
+	 */
+	public function respondUpdated($data = null, string $message = '')
+	{
+		return $this->respond($data, $this->codes['updated'], $message);
 	}
 
 	//--------------------------------------------------------------------
