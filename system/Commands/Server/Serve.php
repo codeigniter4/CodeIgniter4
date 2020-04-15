@@ -131,8 +131,10 @@ class Serve extends BaseCommand
 		// Valid PHP Version?
 		if (phpversion() < $this->minPHPVersion)
 		{
+			// @codeCoverageIgnoreStart
 			die('Your PHP version must be ' . $this->minPHPVersion .
 				' or higher to run CodeIgniter. Current version: ' . phpversion());
+			// @codeCoverageIgnoreEnd
 		}
 
 		// Collect any user-supplied options and apply them.
