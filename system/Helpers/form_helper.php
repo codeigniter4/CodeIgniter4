@@ -69,6 +69,12 @@ if (! function_exists('form_open'))
 		} // If an action is not a full URL then turn it into one
 		elseif (strpos($action, '://') === false)
 		{
+			// If an action has {locale}
+			if (strpos($action, '{locale}') !== false)
+			{
+				$action = str_replace('{locale}', Services::request()->getLocale(), $action);
+			}
+
 			$action = site_url($action);
 		}
 

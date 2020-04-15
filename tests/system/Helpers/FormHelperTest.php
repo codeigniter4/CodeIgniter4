@@ -56,6 +56,29 @@ EOH;
 	}
 
 	// ------------------------------------------------------------------------
+	public function testFormOpenHasLocale()
+	{
+		$config            = new App();
+		$config->baseURL   = '';
+		$config->indexPage = 'index.php';
+		$request           = Services::request($config);
+		$request->uri      = new URI('http://example.com/');
+
+		Services::injectMock('request', $request);
+		$expected = <<<EOH
+<form action="http://example.com/index.php/en/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
+
+EOH;
+
+		$attributes = [
+			'name'   => 'form',
+			'id'     => 'form',
+			'method' => 'POST',
+		];
+		$this->assertEquals($expected, form_open('{locale}/foo/bar', $attributes));
+	}
+
+	// ------------------------------------------------------------------------
 	public function testFormOpenWithoutAction()
 	{
 		$config            = new App();
