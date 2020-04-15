@@ -711,14 +711,8 @@ class URI
 		$this->path = $this->filterPath($path);
 
 		$tempPath = trim($this->path, '/');
-		if ($tempPath === '')
-		{
-			$this->segments = [];
-		}
-		else
-		{
-			$this->segments = explode('/', $tempPath);
-		}
+
+		$this->segments = ($tempPath === '') ? [] : explode('/', $tempPath);
 
 		return $this;
 	}
@@ -735,15 +729,8 @@ class URI
 		$this->path = $this->filterPath(implode('/', $this->segments));
 
 		$tempPath = trim($this->path, '/');
-		if ($tempPath === '')
-		{
-			$this->segments = [];
-		}
-		else
-		{
-			$this->segments = explode('/', $tempPath);
-		}
-		$this->segments = explode('/', trim($this->path, '/'));
+
+		$this->segments = ($tempPath === '') ? [] : explode('/', $tempPath);
 
 		return $this;
 	}
@@ -977,15 +964,9 @@ class URI
 		// Populate our segments array
 		if (isset($parts['path']) && $parts['path'] !== '')
 		{
-			$path = trim($parts['path'], '/');
-			if ($path === '')
-			{
-				$this->segments = [];
-			}
-			else
-			{
-				$this->segments = explode('/', $path);
-			}
+			$tempPath = trim($parts['path'], '/');
+
+			$this->segments = ($tempPath === '') ? [] : explode('/', $tempPath);
 		}
 	}
 
