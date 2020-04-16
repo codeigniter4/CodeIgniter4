@@ -41,8 +41,8 @@ to run as the parameter::
         public function testShowCategories()
         {
             $result = $this->withURI('http://example.com/categories')
-			    ->controller(\App\Controllers\ForumController::class)
-			    ->execute('showCategories');
+                           ->controller(\App\Controllers\ForumController::class)
+                           ->execute('showCategories');
 
             $this->assertTrue($result->isOK());
         }
@@ -63,7 +63,7 @@ Specifies the class name of the controller to test. The first parameter must be 
 Executes the specified method within the controller. The only parameter is the name of the method to run::
 
     $results = $this->controller(\App\Controllers\ForumController::class)
-                     ->execute('showCategories');
+                    ->execute('showCategories');
 
 This returns a new helper class that provides a number of routines for checking the response itself. See below
 for details.
@@ -76,8 +76,8 @@ Allows you to pass in a modified version of **Config\App.php** to test with diff
     $config->appTimezone = 'America/Chicago';
 
     $results = $this->withConfig($config)
-                     ->controller(\App\Controllers\ForumController::class)
-                     ->execute('showCategories');
+                    ->controller(\App\Controllers\ForumController::class)
+                    ->execute('showCategories');
 
 If you do not provide one, the application's App config file will be used.
 
@@ -89,8 +89,8 @@ Allows you to provide an **IncomingRequest** instance tailored to your testing n
     $request->setLocale($locale);
 
     $results = $this->withRequest($request)
-                     ->controller(\App\Controllers\ForumController::class)
-                     ->execute('showCategories');
+                    ->controller(\App\Controllers\ForumController::class)
+                    ->execute('showCategories');
 
 If you do not provide one, a new IncomingRequest instance with the default application values will be passed
 into your controller.
@@ -102,8 +102,8 @@ Allows you to provide a **Response** instance::
     $response = new CodeIgniter\HTTP\Response(new Config\App());
 
     $results = $this->withResponse($response)
-                     ->controller(\App\Controllers\ForumController::class)
-                     ->execute('showCategories');
+                    ->controller(\App\Controllers\ForumController::class)
+                    ->execute('showCategories');
 
 If you do not provide one, a new Response instance with the default application values will be passed
 into your controller.
@@ -115,9 +115,9 @@ Allows you to provide a **Logger** instance::
     $logger = new CodeIgniter\Log\Handlers\FileHandler();
 
     $results = $this->withResponse($response)
-                    -> withLogger($logger)
-                     ->controller(\App\Controllers\ForumController::class)
-                     ->execute('showCategories');
+                    ->withLogger($logger)
+                    ->controller(\App\Controllers\ForumController::class)
+                    ->execute('showCategories');
 
 If you do not provide one, a new Logger instance with the default configuration values will be passed
 into your controller.
@@ -129,8 +129,8 @@ This is helpful if you need to check URI segments within your controller. The on
 representing a valid URI::
 
     $results = $this->withURI('http://example.com/forums/categories')
-                     ->controller(\App\Controllers\ForumController::class)
-                     ->execute('showCategories');
+                    ->controller(\App\Controllers\ForumController::class)
+                    ->execute('showCategories');
 
 It is a good practice to always provide the URI during testing to avoid surprises.
 
@@ -142,8 +142,8 @@ you need to set a JSON value as the body. The only parameter is a string that re
     $body = json_encode(['foo' => 'bar']);
 
     $results = $this->withBody($body)
-                     ->controller(\App\Controllers\ForumController::class)
-                     ->execute('showCategories');
+                    ->controller(\App\Controllers\ForumController::class)
+                    ->execute('showCategories');
 
 Checking the Response
 =====================
@@ -157,8 +157,8 @@ This provides a simple check that the response would be considered a "successful
 the HTTP status code is within the 200 or 300 ranges::
 
     $results = $this->withBody($body)
-                     ->controller(\App\Controllers\ForumController::class)
-                     ->execute('showCategories');
+                    ->controller(\App\Controllers\ForumController::class)
+                    ->execute('showCategories');
 
     if ($results->isOK())
     {
@@ -170,8 +170,8 @@ the HTTP status code is within the 200 or 300 ranges::
 Checks to see if the final response was a redirection of some sort::
 
     $results = $this->withBody($body)
-                     ->controller(\App\Controllers\ForumController::class)
-                     ->execute('showCategories');
+                    ->controller(\App\Controllers\ForumController::class)
+                    ->execute('showCategories');
 
     if ($results->isRedirect())
     {
@@ -183,8 +183,8 @@ Checks to see if the final response was a redirection of some sort::
 You can access the Request object that was generated with this method::
 
     $results = $this->withBody($body)
-                     ->controller(\App\Controllers\ForumController::class)
-                     ->execute('showCategories');
+                    ->controller(\App\Controllers\ForumController::class)
+                    ->execute('showCategories');
 
     $request = $results->request();
 
@@ -193,8 +193,8 @@ You can access the Request object that was generated with this method::
 This allows you access to the response object that was generated, if any::
 
     $results = $this->withBody($body)
-                     ->controller(\App\Controllers\ForumController::class)
-                     ->execute('showCategories');
+                    ->controller(\App\Controllers\ForumController::class)
+                    ->execute('showCategories');
 
     $response = $results->response();
 
@@ -204,8 +204,8 @@ You can access the body of the response that would have been sent to the client 
 be generated HTML, or a JSON response, etc.::
 
     $results = $this->withBody($body)
-                     ->controller(\App\Controllers\ForumController::class)
-                     ->execute('showCategories');
+                    ->controller(\App\Controllers\ForumController::class)
+                    ->execute('showCategories');
 
     $body = $results->getBody();
 

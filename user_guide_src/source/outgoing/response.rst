@@ -111,7 +111,7 @@ HTTP Caching
 ============
 
 Built into the HTTP specification are tools help the client (often the web browser) cache the results. Used correctly,
-this can lend a huge performance boost to your application because it will tell the client that they don't need
+this can lead to a huge performance boost to your application because it will tell the client that they don't need
 to contact the getServer at all since nothing has changed. And you can't get faster than that.
 
 This are handled through the ``Cache-Control`` and ``ETag`` headers. This guide is not the proper place for a thorough
@@ -124,8 +124,8 @@ to set the Cache values to what you need, though, through the ``setCache()`` met
 
 	$options = [
 		'max-age'  => 300,
-		's-maxage' => 900
-		'etag'     => 'abcde',
+		's-maxage' => 900,
+		'etag'     => 'abcde'
 	];
 	$this->response->setCache($options);
 
@@ -183,7 +183,7 @@ Runtime Configuration
 If your application needs to make changes at run-time, you can access the instance at ``$response->CSP``. The
 class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
 Examples are shown below, with different combinations of parameters, though all accept either a directive
-name or anarray of them.::
+name or an array of them.::
 
         // specify the default directive treatment
 	$response->CSP->reportOnly(false);
