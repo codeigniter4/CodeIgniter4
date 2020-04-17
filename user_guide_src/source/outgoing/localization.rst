@@ -113,9 +113,17 @@ Languages do not have any specific naming convention that are required. The file
 describe the type of content it holds. For example, let's say you want to create a file containing error messages.
 You might name it simply: **Errors.php**.
 
-Within the file, you would return an array, where each element in the array has a language key and the string to return::
+Within the file, you would return an array, where each element in the array has a language key and can have string to return::
 
         'language_key' => 'The actual message to be shown.'
+
+It also support nested definition:
+
+        'language_key' => [
+            'nested' => [
+                'key' => 'The actual message to be shown.'
+            ],
+        ],
 
 .. note:: It's good practice to use a common prefix for all messages in a given file to avoid collisions with
     similarly named items in other files. For example, if you are creating error messages you might prefix them
@@ -127,6 +135,11 @@ Within the file, you would return an array, where each element in the array has 
         'errorEmailMissing'    => 'You must submit an email address',
         'errorURLMissing'      => 'You must submit a URL',
         'errorUsernameMissing' => 'You must submit a username',
+        'nested'             => [
+            'error' => [
+                'message' => 'A specific error message',
+            ],
+        ],
     ];
 
 Basic Usage
@@ -138,8 +151,12 @@ filename and the language key as the first parameter, separated by a period (.).
 
     echo lang('Errors.errorEmailMissing');
 
+For nested definition, you would do the following::
+
+    echo lang('Errors.nested.error.message');
+
 If the requested language key doesn't exist in the file for the current locale, the string will be passed
-back, unchanged. In this example, it would return 'Errors.errorEmailMissing' if it didn't exist.
+back, unchanged. In this example, it would return 'Errors.errorEmailMissing' or 'Errors.nested.error.message' if it didn't exist.
 
 Replacing Parameters
 --------------------
