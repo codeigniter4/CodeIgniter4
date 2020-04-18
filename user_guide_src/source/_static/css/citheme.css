@@ -246,6 +246,10 @@ div#pulldown-menu {
 	margin-right: 0.65em;
 }
 
+.wy-menu-vertical li span.toctree-expand::before {
+	display: none !important;
+}
+
 /* Elements ----------------------------------------------------------------- */
 
 .highlighted {

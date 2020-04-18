@@ -74,6 +74,7 @@ html_static_path = ['_static']
 html_theme_options = {
 	'collapse_navigation': False,
 	'sticky_navigation': False,
+	'navigation_depth': 2,
 	'includehidden': False,
 	'logo_only': True,
 	'display_version': False,
