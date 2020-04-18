@@ -1138,7 +1138,7 @@ class Model
 
 		// Store it in the Pager library so it can be
 		// paginated in the views.
-		$this->pager = $pager->store($group, $page, $perPage, $total,$segment);
+		$this->pager = $pager->store($group, $page, $perPage, $total, $segment);
 		$perPage     = $this->pager->getPerPage($group);
 		$offset      = ($page - 1) * $perPage;
 
