@@ -16,12 +16,14 @@ $paths = new Config\Paths();
 defined('APPPATH')       || define('APPPATH', realpath($paths->appDirectory) . DIRECTORY_SEPARATOR);
 defined('WRITEPATH')     || define('WRITEPATH', realpath($paths->writableDirectory) . DIRECTORY_SEPARATOR);
 defined('SYSTEMPATH')    || define('SYSTEMPATH', realpath($paths->systemDirectory) . DIRECTORY_SEPARATOR);
+defined('VIEWPATH')      || define('VIEWPATH', realpath($paths->viewDirectory) . DIRECTORY_SEPARATOR);
 defined('ROOTPATH')      || define('ROOTPATH', realpath(APPPATH . '../') . DIRECTORY_SEPARATOR);
 defined('CIPATH')        || define('CIPATH', realpath(SYSTEMPATH . '../') . DIRECTORY_SEPARATOR);
 defined('FCPATH')        || define('FCPATH', realpath(PUBLICPATH) . DIRECTORY_SEPARATOR);
 defined('TESTPATH')      || define('TESTPATH', realpath(HOMEPATH . 'tests/') . DIRECTORY_SEPARATOR);
 defined('SUPPORTPATH')   || define('SUPPORTPATH', realpath(TESTPATH . '_support/') . DIRECTORY_SEPARATOR);
 defined('COMPOSER_PATH') || define('COMPOSER_PATH', realpath(HOMEPATH . 'vendor/autoload.php'));
+defined('VENDORPATH')    || define('VENDORPATH', realpath(HOMEPATH . 'vendor') . DIRECTORY_SEPARATOR);
 
 // Load Common.php from App then System
 if (file_exists(APPPATH . 'Common.php'))
