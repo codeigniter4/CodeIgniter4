@@ -256,6 +256,11 @@ div#pulldown-menu {
 	background-color: #f1d40f !important;
 }
 
+/* override table width restrictions */
+.wy-table-responsive table td, .wy-table-responsive table th {
+	white-space: pre;
+}
+
 .rst-content dl:not(.docutils) dt {
 	background: #fdc894;
 	color: #434343;
