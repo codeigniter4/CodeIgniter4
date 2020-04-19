@@ -87,6 +87,14 @@ if (! defined('TESTPATH'))
 	define('TESTPATH', realpath($paths->testsDirectory) . DIRECTORY_SEPARATOR);
 }
 
+/**
+ * The path to the views directory
+ */
+if (! defined('VIEWPATH'))
+{
+	define('VIEWPATH', realpath($paths->viewDirectory) . DIRECTORY_SEPARATOR);
+}
+
 /*
  * ---------------------------------------------------------------
  * GRAB OUR CONSTANTS & COMMON
@@ -139,6 +147,16 @@ $loader->register();    // Register the loader with the SPL autoloader stack.
 // Now load Composer's if it's available
 if (is_file(COMPOSER_PATH))
 {
+	/**
+	 * The path to the vendor directory.
+	 *
+	 * We do not want to enforce this, so set the constant if Composer was used.
+	 */
+	if (! defined('VENDORPATH'))
+	{
+		define('VENDORPATH', realpath(ROOTPATH . 'vendor') . DIRECTORY_SEPARATOR);
+	}
+
 	require_once COMPOSER_PATH;
 }
 
