@@ -149,6 +149,7 @@ class Language
 			$parsedLine,
 		] = $this->parseLine($line, $this->locale);
 
+		$lines = [];
 		foreach (explode('.', $parsedLine) as $row)
 		{
 			if (! isset($current))
@@ -161,6 +162,14 @@ class Language
 			{
 				$current = $output;
 			}
+			else
+			{
+				$lines[] = $row;
+			}
+		}
+		if ($output === null && isset($current) && $lines != [])
+		{
+			$output = $current[implode('.', $lines)] ?? ($this->language[$this->locale][$file][$parsedLine] ?? null);
 		}
 
 		if ($output === null && strpos($this->locale, '-'))
