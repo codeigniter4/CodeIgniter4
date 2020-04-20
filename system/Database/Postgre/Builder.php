@@ -271,7 +271,7 @@ class Builder extends BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _limit(string $sql): string
+	protected function _limit(string $sql, bool $offsetIgnore = false): string
 	{
 		return $sql . ' LIMIT ' . $this->QBLimit . ($this->QBOffset ? " OFFSET {$this->QBOffset}" : '');
 	}
