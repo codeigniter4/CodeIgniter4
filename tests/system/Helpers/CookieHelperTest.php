@@ -104,4 +104,13 @@ final class CookieHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(5, get_cookie('TEST'));
 	}
 
+	public function testDeleteCookieAfterLastSet()
+	{
+		delete_cookie($this->name);
+
+		$cookie = $this->response->getCookie($this->name);
+		// The cookie is set to be cleared when the request is sent....
+		$this->assertEquals('', $cookie['value']);
+	}
+
 }
