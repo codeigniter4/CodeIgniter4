@@ -232,6 +232,21 @@ class CellTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params, 1, 'rememberme'));
 	}
 
+	public function testRenderCachedAutoName()
+	{
+		$params   = 'one=two,three=four';
+		$expected = [
+			'one'   => 'two',
+			'three' => 'four',
+		];
+
+		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params, 60));
+		$params = 'one=six,three=five';
+		// When auto-generating it takes the params as part of cachename, so it wouldn't have actually cached this, but
+		// we want to make sure it doesn't throw us a curveball here.
+		$this->assertEquals('six,five', $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params, 1));
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testParametersMatch()
