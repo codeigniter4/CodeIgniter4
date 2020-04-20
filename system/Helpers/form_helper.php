@@ -357,7 +357,7 @@ if (! function_exists('form_dropdown'))
 	 *
 	 * @return string
 	 */
-	function form_dropdown($data = '', $options = [], $selected = [], $extra = ''): string
+		function form_dropdown($data = '', $options = [], $selected = [], $extra = ''): string
 	{
 		$defaults = [];
 		if (is_array($data))
@@ -372,6 +372,11 @@ if (! function_exists('form_dropdown'))
 				$options = $data['options'];
 				unset($data['options']); // select tags don't use an options attribute
 			}
+			if (isset($data['disabled_options']))
+			{
+				$disabled_options = !is_array($data['disabled_options']) ? [$data['disabled_options']] : $data['disabled_options'];
+				unset($data['disabled_options']); // select tags use disabled attribute as well as options attribute
+			}
 		}
 		else
 		{
@@ -380,6 +385,7 @@ if (! function_exists('form_dropdown'))
 
 		is_array($selected) || $selected = [$selected];
 		is_array($options) || $options   = [$options];
+		is_array($disabled_options ?? false) || $disabled_options = [];
 
 		// If no selected state was submitted we will attempt to set it automatically
 		if (empty($selected))
@@ -397,6 +403,7 @@ if (! function_exists('form_dropdown'))
 			}
 		}
 
+
 		$extra    = stringify_attributes($extra);
 		$multiple = (count($selected) > 1 && stripos($extra, 'multiple') === false) ? ' multiple="multiple"' : '';
 		$form     = '<select ' . rtrim(parse_form_attributes($data, $defaults)) . $extra . $multiple . ">\n";
@@ -412,17 +419,19 @@ if (! function_exists('form_dropdown'))
 				$form .= '<optgroup label="' . $key . "\">\n";
 				foreach ($val as $optgroup_key => $optgroup_val)
 				{
-					$sel   = in_array($optgroup_key, $selected) ? ' selected="selected"' : '';
-					$form .= '<option value="' . htmlspecialchars($optgroup_key) . '"' . $sel . '>'
-							. $optgroup_val . "</option>\n";
+					$form .= '<option value="' . htmlspecialchars($optgroup_key) . '"'
+						. in_array($optgroup_key, $selected) ? ' selected="selected"' : ''
+						. in_array($optgroup_key, $disabled_options) ? ' disabled' : '' . '>'
+						. (string) $optgroup_val . "</option>\n";
 				}
 				$form .= "</optgroup>\n";
 			}
 			else
 			{
 				$form .= '<option value="' . htmlspecialchars($key) . '"'
-						. (in_array($key, $selected) ? ' selected="selected"' : '') . '>'
-						. $val . "</option>\n";
+					. (in_array($key, $selected) ? ' selected="selected"' : '')
+					. (in_array($key, $disabled_options) ? ' disabled' : '') . '>'
+					. (string) $val . "</option>\n";
 			}
 		}
 
