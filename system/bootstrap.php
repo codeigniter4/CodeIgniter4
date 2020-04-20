@@ -87,14 +87,6 @@ if (! defined('TESTPATH'))
 	define('TESTPATH', realpath($paths->testsDirectory) . DIRECTORY_SEPARATOR);
 }
 
-/**
- * The path to the views directory
- */
-if (! defined('VIEWPATH'))
-{
-	define('VIEWPATH', realpath($paths->viewDirectory) . DIRECTORY_SEPARATOR);
-}
-
 /*
  * ---------------------------------------------------------------
  * GRAB OUR CONSTANTS & COMMON

@@ -374,9 +374,6 @@ class Exceptions
 	{
 		switch (true)
 		{
-			case strpos($file, VIEWPATH) === 0:
-				$file = 'VIEWPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(VIEWPATH));
-				break;
 			case strpos($file, APPPATH) === 0:
 				$file = 'APPPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(APPPATH));
 				break;

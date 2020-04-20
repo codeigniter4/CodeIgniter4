@@ -26,16 +26,8 @@ class ExceptionsTest extends \CodeIgniter\Test\CIUnitTestCase
 				'APPPATH' . $ds . 'Config' . $ds . 'App.php',
 			],
 			[
-				APPPATH . 'Views' . $ds . 'welcome_message.php',
-				'VIEWPATH' . $ds . 'welcome_message.php',
-			],
-			[
 				SYSTEMPATH . 'CodeIgniter.php',
 				'SYSTEMPATH' . $ds . 'CodeIgniter.php',
-			],
-			[
-				VIEWPATH . 'errors' . $ds . 'html' . $ds . 'error_exception.php',
-				'VIEWPATH' . $ds . 'errors' . $ds . 'html' . $ds . 'error_exception.php',
 			],
 			[
 				VENDORPATH . 'autoload.php',
