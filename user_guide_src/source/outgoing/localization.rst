@@ -115,15 +115,15 @@ You might name it simply: **Errors.php**.
 
 Within the file, you would return an array, where each element in the array has a language key and can have string to return::
 
-        'language_key' => 'The actual message to be shown.'
+    'language_key' => 'The actual message to be shown.'
 
-It also support nested definition:
+It also support nested definition::
 
-        'language_key' => [
-            'nested' => [
-                'key' => 'The actual message to be shown.'
-            ],
+    'language_key' => [
+        'nested' => [
+            'key' => 'The actual message to be shown.'
         ],
+    ],
 
 .. note:: It's good practice to use a common prefix for all messages in a given file to avoid collisions with
     similarly named items in other files. For example, if you are creating error messages you might prefix them
