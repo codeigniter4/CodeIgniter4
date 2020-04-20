@@ -326,8 +326,19 @@ class Connection extends BaseConnection implements ConnectionInterface
 				$res->free();
 			}
 		}
-
-		return $this->connID->query($this->prepQuery($sql));
+		try
+		{
+			return $this->connID->query($this->prepQuery($sql));
+		}
+		catch (\mysqli_sql_exception $e)
+		{
+			log_message('error', $e);
+			if ($this->DBDebug)
+			{
+				throw $e;
+			}
+		}
+		return false;
 	}
 
 	//--------------------------------------------------------------------
