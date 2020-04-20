@@ -295,9 +295,9 @@ The following functions are available:
 	.. note:: Instead of the *maxlength* and *size* attributes in the above example,
 		you will instead specify *rows* and *cols*.
 
-.. php:function:: form_dropdown([$name = ''[, $options = [][, $selected = [][, $extra = '']]]])
+.. php:function:: form_dropdown([$data = ''[, $options = [][, $selected = [][, $extra = '']]]])
 
-	:param	string	$name: Field name
+	:param	mixed	$data: Field attributes data or field name if string 
 	:param	array	$options: An associative array of options to be listed
     	:param	array	$selected: List of fields to mark with the *selected* attribute
 	:param	mixed	$extra: Extra attributes to be added to the tag either as an array or a literal string
@@ -334,18 +334,19 @@ The following functions are available:
 			</select>
 		*/
 
-		echo form_dropdown('shirts', $options, $shirts_on_sale);
+		echo form_dropdown(['name' => 'shirts', 'disabled_options' => ['med']], $options, $shirts_on_sale);
 
 		/*
 			Would produce:
 
 			<select name="shirts" multiple="multiple">
 				<option value="small" selected="selected">Small Shirt</option>
-				<option value="med">Medium Shirt</option>
+				<option value="med" disabled>Medium Shirt</option>
 				<option value="large" selected="selected">Large Shirt</option>
 				<option value="xlarge">Extra Large Shirt</option>
 			</select>
 		*/
+
 
 	If you would like the opening <select> to contain additional data, like
 	an id attribute or JavaScript, you can pass it as a string in the fourth
