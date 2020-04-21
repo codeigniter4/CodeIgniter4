@@ -116,9 +116,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		// Bind it
 		$this->statement->bind_param($bindTypes, ...$data);
 
-		$success = $this->statement->execute();
-
-		return $success;
+		return $this->statement->execute();
 	}
 
 	//--------------------------------------------------------------------

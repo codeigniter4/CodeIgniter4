@@ -11,6 +11,8 @@ require_once __DIR__ . '/fixtures/GoogleYou.php';
 require_once __DIR__ . '/fixtures/GoogleEmpty.php';
 require_once __DIR__ . '/fixtures/GoogleCurious.php';
 require_once __DIR__ . '/fixtures/InvalidClass.php';
+require_once __DIR__ . '/fixtures/Multiple1.php';
+require_once __DIR__ . '/fixtures/Multiple2.php';
 
 /**
  * @backupGlobals enabled
@@ -830,6 +832,32 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 
 		$this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2831
+	 */
+	public function testFilterAlitasMultiple()
+	{
+		$config  = [
+			'aliases' => [
+				'multipeTest' => [
+					'CodeIgniter\Filters\fixtures\Multiple1',
+					'CodeIgniter\Filters\fixtures\Multiple2',
+				],
+			],
+			'globals' => [
+				'before' => [
+					'multipeTest',
+				],
+			],
+		];
+		$filters = new Filters((object) $config, $this->request, $this->response);
+		$uri     = 'admin/foo/bar';
+
+		$request = $filters->run($uri, 'before');
+		$this->assertEquals('http://exampleMultipleURL.com', $request->url);
+		$this->assertEquals('http://exampleMultipleCSP.com', $request->csp);
 	}
 
 }

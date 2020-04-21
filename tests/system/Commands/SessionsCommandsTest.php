@@ -51,6 +51,11 @@ class SessionsCommandsTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function tearDown(): void
 	{
+		if (! $this->result)
+		{
+			return;
+		}
+
 		stream_filter_remove($this->stream_filter);
 
 		$result = remove_invisible_characters($this->result);
@@ -97,6 +102,20 @@ class SessionsCommandsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('_create_mygoodies_table.php', $result);
 
 		$this->result = $result;
+	}
+
+	public function testCannotWriteFileOnCreateMigrationCommand()
+	{
+		$this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
+
+		chmod(APPPATH . 'Database/Migrations/', 0444);
+
+		$this->runner->index(['session:migration']);
+		$this->result = '';
+
+		$this->assertRegExp('/Error trying to create .* file, check if the directory is writable/', CITestStreamFilter::$buffer);
+
+		chmod(APPPATH . 'Database/Migrations/', 0755);
 	}
 
 }

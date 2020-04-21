@@ -151,6 +151,15 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 */
 	public function call(string $method, string $path, array $params = null)
 	{
+		// Clean up any open output buffers
+		// not relevant to unit testing
+		// @codeCoverageIgnoreStart
+		if (\ob_get_level() > 0 && $this->clean)
+		{
+			\ob_end_clean();
+		}
+		// @codeCoverageIgnoreEnd
+
 		// Simulate having a blank session
 		$_SESSION                  = [];
 		$_SERVER['REQUEST_METHOD'] = $method;
@@ -178,19 +187,10 @@ class FeatureTestCase extends CIDatabaseTestCase
 			$response->setBody($output);
 		}
 
-		// Clean up any open output buffers
-		// not relevant to unit testing
-		// @codeCoverageIgnoreStart
+		// Reset directory if it has been set
+		Services::router()->setDirectory(null);
 
-		if (ob_get_level() > 0 && $this->clean)
-		{
-			ob_end_clean();
-		}
-		// @codeCoverageIgnoreEnd
-
-		$featureResponse = new FeatureResponse($response);
-
-		return $featureResponse;
+		return new FeatureResponse($response);
 	}
 
 	/**

@@ -1,9 +1,9 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use BadMethodCallException;
 use CodeIgniter\Config\Config;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity;
-use CodeIgniter\Exceptions\EntityException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -503,8 +503,8 @@ class ModelTest extends CIDatabaseTestCase
 	}    //--------------------------------------------------------------------
 
 	/**
-	 * @dataProvider             emptyPkValues
-	 * @return                   void
+	 * @dataProvider emptyPkValues
+	 * @return       void
 	 */
 	public function testThrowExceptionWhenSoftDeleteParamIsEmptyValue($emptyValue)
 	{
@@ -519,8 +519,8 @@ class ModelTest extends CIDatabaseTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @dataProvider             emptyPkValues
-	 * @return                   void
+	 * @dataProvider emptyPkValues
+	 * @return       void
 	 */
 	public function testDontDeleteRowsWhenSoftDeleteParamIsEmpty($emptyValue)
 	{
@@ -1340,6 +1340,44 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testPaginateChangeConfigPager()
+	{
+		$perPage                 = config('Pager')->perPage;
+		config('Pager')->perPage = 1;
+
+		$model = new ValidModel($this->db);
+
+		$data = $model->paginate();
+
+		$this->assertEquals(1, count($data));
+
+		config('Pager')->perPage = $perPage;
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testPaginatePassPerPageParameter()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = $model->paginate(2);
+
+		$this->assertEquals(2, count($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testPaginateForQueryWithGroupBy()
+	{
+		$model = new ValidModel($this->db);
+		$model->groupBy('id');
+
+		$model->paginate();
+		$this->assertEquals(4, $model->pager->getDetails()['total']);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testValidationByObject()
 	{
 		$model = new ValidModel($this->db);
@@ -1801,4 +1839,44 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertIsArray($model->QBNoEscape);
 	}
+
+	public function testUndefinedModelMethod()
+	{
+		$model = new UserModel($this->db);
+		$this->expectException(BadMethodCallException::class);
+		$this->expectExceptionMessage('Call to undefined method Tests\Support\Models\UserModel::undefinedMethodCall');
+		$model->undefinedMethodCall();
+	}
+
+	public function testUndefinedMethodInBuilder()
+	{
+		$model = new JobModel($this->db);
+
+		$model->find(1);
+
+		$this->expectException(BadMethodCallException::class);
+		$this->expectExceptionMessage('Call to undefined method Tests\Support\Models\JobModel::getBindings');
+
+		$binds = $model->builder()
+			->getBindings();
+	}
+
+	public function testFirstRecoverTempUseSoftDeletes()
+	{
+		$model = new UserModel($this->db);
+		$model->delete(1);
+		$user = $model->withDeleted()->first();
+		$this->assertEquals(1, $user->id);
+		$user2 = $model->first();
+		$this->assertEquals(2, $user2->id);
+	}
+
+	public function testcountAllResultsRecoverTempUseSoftDeletes()
+	{
+		$model = new UserModel($this->db);
+		$model->delete(1);
+		$this->assertEquals(4, $model->withDeleted()->countAllResults());
+		$this->assertEquals(3, $model->countAllResults());
+	}
+
 }

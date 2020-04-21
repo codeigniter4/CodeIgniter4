@@ -1,7 +1,7 @@
 <?php namespace Config;
 
 // Create a new instance of our RouteCollection class.
-$routes = Services::routes(true);
+$routes = Services::routes();
 
 // Load the system's routing file first, so that the app and ENVIRONMENT
 // can override as needed.

@@ -1,4 +1,4 @@
-Events 
+Events
 #####################################
 
 CodeIgniter's Events feature provides a means to tap into and modify the inner workings of the framework without hacking
@@ -29,7 +29,7 @@ a callable that will be run when that event is triggered::
 
 In this example, whenever the **pre_controller** event is executed, an instance of ``MyClass`` is created and the
 ``MyFunction`` method is run. Note that the second parameter can be *any* form of
-`callable <http://php.net/manual/en/function.is-callable.php>`_ that PHP recognizes::
+`callable <https://www.php.net/manual/en/function.is-callable.php>`_ that PHP recognizes::
 
 	// Call a standalone function
 	Events::on('pre_system', 'some_function');
@@ -108,4 +108,3 @@ The following is a list of available event points within the CodeIgniter core co
 * **pre_system** Called very early during system execution. Only the benchmark and events class have been loaded at this point. No routing or other processes have happened.
 * **post_controller_constructor** Called immediately after your controller is instantiated, but prior to any method calls happening.
 * **post_system** Called after the final rendered page is sent to the browser, at the end of system execution after the finalized data is sent to the browser.
-

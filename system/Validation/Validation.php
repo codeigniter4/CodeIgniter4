@@ -170,9 +170,20 @@ class Validation implements ValidationInterface
 				$rules = $this->splitRules($rules);
 			}
 
-			$value = dot_array_search($rField, $data);
+			$value          = dot_array_search($rField, $data);
+			$fieldNameToken = explode('.', $rField);
 
-			$this->processRules($rField, $rSetup['label'] ?? $rField, $value ?? null, $rules, $data);
+			if (is_array($value) && end($fieldNameToken) === '*')
+			{
+				foreach ($value as $val)
+				{
+					$this->processRules($rField, $rSetup['label'] ?? $rField, $val ?? null, $rules, $data);
+				}
+			}
+			else
+			{
+				$this->processRules($rField, $rSetup['label'] ?? $rField, $value ?? null, $rules, $data);
+			}
 		}
 
 		return ! empty($this->getErrors()) ? false : true;
@@ -474,8 +485,8 @@ class Validation implements ValidationInterface
 	 */
 	public function setRuleGroup(string $group)
 	{
-		$rules       = $this->getRuleGroup($group);
-		$this->rules = $rules;
+		$rules = $this->getRuleGroup($group);
+		$this->setRules($rules);
 
 		$errorName = $group . '_errors';
 		if (isset($this->config->$errorName))
@@ -710,9 +721,8 @@ class Validation implements ValidationInterface
 
 		$message = str_replace('{field}', $label ?? $field, $message);
 		$message = str_replace('{param}', $this->rules[$param]['label'] ?? $param, $message);
-		$message = str_replace('{value}', $value, $message);
 
-		return $message;
+		return str_replace('{value}', $value, $message);
 	}
 
 	/**

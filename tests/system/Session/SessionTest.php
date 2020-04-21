@@ -129,6 +129,28 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNull($session->get('foo'));
 	}
 
+	public function testGetReturnsNullWhenNotFoundWithXmlHttpRequest()
+	{
+		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest';
+		$_SESSION                         = [];
+
+		$session = $this->getInstance();
+		$session->start();
+
+		$this->assertNull($session->get('foo'));
+	}
+
+	public function testGetReturnsEmptyArrayWhenWithXmlHttpRequest()
+	{
+		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest';
+		$_SESSION                         = [];
+
+		$session = $this->getInstance();
+		$session->start();
+
+		$this->assertEquals([], $session->get());
+	}
+
 	public function testGetReturnsItemValueisZero()
 	{
 		$_SESSION = [];
@@ -509,5 +531,15 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$session->set('baz', 'ballywhoo');
 
 		$this->assertEquals(['foo', 'bar'], $session->getTempKeys());
+	}
+
+	public function testGetDotKey()
+	{
+		$session = $this->getInstance();
+		$session->start();
+
+		$session->set('test.1', 'value');
+
+		$this->assertEquals('value', $session->get('test.1'));
 	}
 }

@@ -353,7 +353,11 @@ class FileLocator
 				// Remove the file extension (.php)
 				$className = mb_substr($className, 0, -4);
 
-				return $className;
+				// Check if this exists
+				if (class_exists($className))
+				{
+					return $className;
+				}
 			}
 		}
 

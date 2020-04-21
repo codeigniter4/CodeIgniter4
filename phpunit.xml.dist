@@ -31,6 +31,7 @@
 				<file>./system/Commands/Sessions/Views/migration.tpl.php</file>
 				<file>./system/ComposerScripts.php</file>
 				<file>./system/Config/Routes.php</file>
+				<file>./system/Test/bootstrap.php</file>
 			</exclude>
 		</whitelist>
 	</filter>

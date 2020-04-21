@@ -430,7 +430,7 @@ class Model
 	 * @param integer $limit
 	 * @param integer $offset
 	 *
-	 * @return array|null
+	 * @return array
 	 */
 	public function findAll(int $limit = 0, int $offset = 0)
 	{
@@ -485,7 +485,8 @@ class Model
 
 		$eventData = $this->trigger('afterFind', ['data' => $row]);
 
-		$this->tempReturnType = $this->returnType;
+		$this->tempReturnType     = $this->returnType;
+		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
 		return $eventData['data'];
 	}
@@ -493,14 +494,13 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
-
 	 * Captures the builder's set() method so that we can validate the
 	 * data here. This allows it to be used with any of the other
 	 * builder methods and still get validated data, like replace.
 	 *
-	 * @param mixed               $key    Field name, or an array of field/value pairs
-	 * @param string              $value  Field value, if $key is a single field
-	 * @param boolean             $escape Whether to escape values and identifiers
+	 * @param mixed   $key    Field name, or an array of field/value pairs
+	 * @param string  $value  Field value, if $key is a single field
+	 * @param boolean $escape Whether to escape values and identifiers
 	 *
 	 * @return $this
 	 */
@@ -691,7 +691,7 @@ class Model
 		// Validate data before saving.
 		if ($this->skipValidation === false)
 		{
-			if ($this->cleanRules(false)->validate($data) === false)
+			if ($this->cleanRules()->validate($data) === false)
 			{
 				return false;
 			}
@@ -759,7 +759,7 @@ class Model
 		{
 			foreach ($set as $row)
 			{
-				if ($this->cleanRules(false)->validate($row) === false)
+				if ($this->cleanRules()->validate($row) === false)
 				{
 					return false;
 				}
@@ -816,6 +816,12 @@ class Model
 		if (is_object($data))
 		{
 			$data = (array) $data;
+		}
+
+		// If it's still empty here, means $data is no change or is empty object
+		if (empty($data))
+		{
+			throw DataException::forEmptyDataset('update');
 		}
 
 		// Validate data before saving.
@@ -921,7 +927,9 @@ class Model
 				{
 					throw new DatabaseException('Deletes are not allowed unless they contain a "where" or "like" clause.');
 				}
+				// @codeCoverageIgnoreStart
 				return false;
+				// @codeCoverageIgnoreEnd
 			}
 			$set[$this->deletedField] = $this->setDate();
 
@@ -1121,7 +1129,7 @@ class Model
 	 *
 	 * @return array|null
 	 */
-	public function paginate(int $perPage = 20, string $group = 'default', int $page = 0)
+	public function paginate(int $perPage = null, string $group = 'default', int $page = 0)
 	{
 		$pager = \Config\Services::pager(null, null, false);
 		$page  = $page >= 1 ? $page : $pager->getCurrentPage($group);
@@ -1131,8 +1139,8 @@ class Model
 		// Store it in the Pager library so it can be
 		// paginated in the views.
 		$this->pager = $pager->store($group, $page, $perPage, $total);
-
-		$offset = ($page - 1) * $perPage;
+		$perPage     = $this->pager->getPerPage($group);
+		$offset      = ($page - 1) * $perPage;
 
 		return $this->findAll($perPage, $offset);
 	}
@@ -1258,13 +1266,10 @@ class Model
 		{
 			case 'int':
 				return $currentDate;
-				break;
 			case 'datetime':
 				return date('Y-m-d H:i:s', $currentDate);
-				break;
 			case 'date':
 				return date('Y-m-d', $currentDate);
-				break;
 			default:
 				throw ModelException::forNoDateFormat(get_class($this));
 		}
@@ -1578,8 +1583,9 @@ class Model
 		{
 			$this->builder()->where($this->table . '.' . $this->deletedField, null);
 		}
+		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
-		return $this->builder()->countAllResults($reset, $test);
+		return $this->builder()->testMode($test)->countAllResults($reset);
 	}
 
 	/**
@@ -1707,6 +1713,11 @@ class Model
 		// and break intermingling of model and builder methods.
 		if ($name !== 'builder' && empty($result))
 		{
+			if (! method_exists($this->builder(), $name))
+			{
+				$className = get_class($this);
+				throw new \BadMethodCallException("Call to undefined method $className::$name");
+			}
 			return $result;
 		}
 		if ($name !== 'builder' && ! $result instanceof BaseBuilder)

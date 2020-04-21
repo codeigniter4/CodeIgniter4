@@ -357,7 +357,6 @@ class GDHandler extends BaseHandler
 				break;
 			default:
 				throw ImageException::forInvalidImageCreate();
-				break;
 		}
 
 		imagedestroy($this->resource);
@@ -519,7 +518,7 @@ class GDHandler extends BaseHandler
 			$this->textOverlay($text, $options, true);
 		}
 
-		$this->textOverlay($text, $options, false);
+		$this->textOverlay($text, $options);
 	}
 
 	//--------------------------------------------------------------------

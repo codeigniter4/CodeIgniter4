@@ -11,27 +11,27 @@ rename or relocate your application directory.
 Renaming or Relocating the Application Directory
 ================================================
 
-If you would like to rename your application directory or even move 
+If you would like to rename your application directory or even move
 it to a different location on your server, other than your project root, open
 your main **app/Config/Paths.php** and set a *full server path* in the
 ``$appDirectory`` variable (at about line 38)::
 
-	public $appDirectory = '/path/to/your/application';
+    public $appDirectory = '/path/to/your/application';
 
 You will need to modify two additional files in your project root, so that
-they can find the ``Paths`` configuration file: 
+they can find the ``Paths`` configuration file:
 
 - ``/spark`` runs command line apps; the path is specified on or about line 36::
 
-        require 'app/Config/Paths.php';
-        // ^^^ Change this if you move your application folder
+    require 'app/Config/Paths.php';
+    // ^^^ Change this if you move your application folder
 
 
 - ``/public/index.php`` is the front controller for your webapp; the config
-    path is specified on or about line 16::
+  path is specified on or about line 16::
 
-        $pathsPath = FCPATH . '../app/Config/Paths.php';
-        // ^^^ Change this if you move your application folder
+    $pathsPath = FCPATH . '../app/Config/Paths.php';
+    // ^^^ Change this if you move your application folder
 
 
 Running Multiple Applications with one CodeIgniter Installation
@@ -44,9 +44,9 @@ inside your application directory into their own (sub)-directory.
 For example, let's say you want to create two applications, named "foo"
 and "bar". You could structure your application project directories like this::
 
-	foo/app, public, tests and writable
-        bar/app/, public, tests and writable
-        codeigniter/system and docs
+    foo/app, public, tests and writable
+    bar/app/, public, tests and writable
+    codeigniter/system and docs
 
 This would have two apps, "foo" and "bar", both having standard application directories
 and a ``public`` folder, and sharing a common codeigniter framework.

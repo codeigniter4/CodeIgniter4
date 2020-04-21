@@ -90,7 +90,9 @@ class ComposerScripts
 
 		if (empty($source))
 		{
+			// @codeCoverageIgnoreStart
 			die('Cannot move file. Source path invalid.');
+			// @codeCoverageIgnoreEnd
 		}
 
 		if (! is_file($source))
@@ -203,7 +205,9 @@ class ComposerScripts
 			{
 				if (! static::moveFile($source, $dest))
 				{
+					// @codeCoverageIgnoreStart
 					die('Error moving: ' . $source);
+					// @codeCoverageIgnoreEnd
 				}
 			}
 		}

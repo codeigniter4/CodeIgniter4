@@ -180,7 +180,7 @@ into the `$option` array in the third parameter.
 
 	echo view('blogview', $data, ['saveData' => true]);
 
-Additionally, if you would like the default functionality of the view method to be that it does save the data
+Additionally, if you would like the default functionality of the view function to be that it does save the data
 between calls, you can set ``$saveData`` to **true** in **app/Config/Views.php**.
 
 Creating Loops

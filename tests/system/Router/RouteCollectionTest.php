@@ -806,6 +806,16 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectException(RouterException::class);
 		$match = $routes->reverseRoute('myController::goto', 13, 'string');
 	}
+	//--------------------------------------------------------------------
+
+	public function testReverseRoutingWithLocale()
+	{
+		$routes = $this->getCollector();
+
+		$routes->add('{locale}/contact', 'myController::goto');
+
+		$this->assertEquals('/en/contact', $routes->reverseRoute('myController::goto'));
+	}
 
 	//--------------------------------------------------------------------
 
@@ -907,7 +917,8 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(307, $routes->getRedirectCode('users'));
 	}
 
-	public function testAddRedirectGetMethod(){
+	public function testAddRedirectGetMethod()
+	{
 		$routes = $this->getCollector();
 
 		$routes->get('zombies', 'Zombies::index', ['as' => 'namedRoute']);
@@ -1106,7 +1117,7 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$routes = $this->getCollector($config, [], $moduleConfig);
 
-		$routes->add('testing', 'MainRoutes::index');
+		$routes->add('testing', 'MainRoutes::index', ['as' => 'testing-index']);
 
 		$match = $routes->getRoutes();
 
@@ -1447,6 +1458,59 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expects = '\App\Controllers\Core\Home';
 
 		$this->assertEquals($expects, $router->handle('/'));
+	}
+
+	public function testZeroAsURIPath()
+	{
+		Services::request()->setMethod('get');
+		$routes = $this->getCollector();
+		$router = new Router($routes, Services::request());
+
+		$routes->setDefaultNamespace('App\Controllers');
+		$routes->get('/0', 'Core\Home::index');
+
+		$expects = '\App\Controllers\Core\Home';
+
+		$this->assertEquals($expects, $router->handle('/0'));
+	}
+
+	public function provideRouteDefaultNamespace()
+	{
+		return [
+			'with \\ prefix'    => ['\App\Controllers'],
+			'without \\ prefix' => ['App\Controllers'],
+		];
+	}
+
+	/**
+	 * @dataProvider provideRouteDefaultNamespace
+	 */
+	public function testAutoRoutesControllerNameReturnsFQCN($namespace)
+	{
+		$routes = $this->getCollector();
+		$routes->setAutoRoute(true);
+		$routes->setDefaultNamespace($namespace);
+
+		$router = new Router($routes, Services::request());
+		$router->handle('/product');
+
+		$this->assertEquals('\App\\Controllers\\Product', $router->controllerName());
+	}
+
+	/**
+	 * @dataProvider provideRouteDefaultNamespace
+	 */
+	public function testRoutesControllerNameReturnsFQCN($namespace)
+	{
+		$routes = $this->getCollector();
+		$routes->setAutoRoute(false);
+		$routes->setDefaultNamespace($namespace);
+		$routes->get('/product', 'Product');
+
+		$router = new Router($routes, Services::request());
+		$router->handle('/product');
+
+		$this->assertEquals('\App\\Controllers\\Product', $router->controllerName());
 	}
 
 }

@@ -75,6 +75,15 @@ The following functions are available:
 
 		<form method="post" accept-charset="utf-8" action="http://example.com/index.php/email/send">
 
+	You can also add {locale} like the following::
+
+		echo form_open('{locale}/email/send');
+
+	The above example would create a form that points to your base URL plus the current request locale with
+	"email/send" URI segments, like this::
+
+		<form method="post" accept-charset="utf-8" action="http://example.com/index.php/en/email/send">
+
 	**Adding Attributes**
 
 		Attributes can be added by passing an associative array to the second
@@ -90,13 +99,13 @@ The following functions are available:
 		The above examples would create a form similar to this::
 
 			<form method="post" accept-charset="utf-8" action="http://example.com/index.php/email/send" class="email" id="myform">
-			
+
 		If CSRF filter is turned on `form_open()` will generate CSRF field at the beginning of the form. You can specify ID of this field by passing csrf_id as one of the $attribute array:
-		
+
 			form_open('/u/sign-up', ['csrf_id' => 'my-id']);
-			
+
 		will return:
-		
+
 			<form action="/u/sign-up" method="post" accept-charset="utf-8">
 			<input type="hidden" id="my-id" name="csrf_field" value="964ede6e0ae8a680f7b8eab69136717d" />
 

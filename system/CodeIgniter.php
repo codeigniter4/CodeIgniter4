@@ -66,7 +66,7 @@ class CodeIgniter
 	/**
 	 * The current version of CodeIgniter Framework
 	 */
-	const CI_VERSION = '4.0.1';
+	const CI_VERSION = '4.0.2';
 
 	/**
 	 * App startup time.
@@ -194,7 +194,9 @@ class CodeIgniter
 
 		if (! CI_DEBUG)
 		{
+			// @codeCoverageIgnoreStart
 			\Kint::$enabled_mode = false;
+			// @codeCoverageIgnoreEnd
 		}
 	}
 
@@ -496,9 +498,11 @@ class CodeIgniter
 		}
 		else
 		{
+			// @codeCoverageIgnoreStart
 			header('HTTP/1.1 503 Service Unavailable.', true, 503);
 			echo 'The application environment is not set correctly.';
 			exit(1); // EXIT_ERROR
+			// @codeCoverageIgnoreEnd
 		}
 	}
 
@@ -550,9 +554,11 @@ class CodeIgniter
 			return;
 		}
 
-		if (is_cli() && ! (ENVIRONMENT === 'testing'))
+		if (is_cli() && ENVIRONMENT !== 'testing')
 		{
+			// @codeCoverageIgnoreStart
 			$this->request = Services::clirequest($this->config);
+			// @codeCoverageIgnoreEnd
 		}
 		else
 		{
@@ -747,9 +753,7 @@ class CodeIgniter
 	{
 		$this->totalTime = $this->benchmark->getElapsedTime('total_execution');
 
-		$output = str_replace('{elapsed_time}', $this->totalTime, $output);
-
-		return $output;
+		return str_replace('{elapsed_time}', $this->totalTime, $output);
 	}
 
 	//--------------------------------------------------------------------
@@ -958,10 +962,12 @@ class CodeIgniter
 
 		if (ENVIRONMENT !== 'testing')
 		{
+			// @codeCoverageIgnoreStart
 			if (ob_get_level() > 0)
 			{
 				ob_end_flush();
 			}
+			// @codeCoverageIgnoreEnd
 		}
 		else
 		{
@@ -972,7 +978,7 @@ class CodeIgniter
 			}
 		}
 
-		throw PageNotFoundException::forPageNotFound($e->getMessage());
+		throw PageNotFoundException::forPageNotFound(ENVIRONMENT !== 'production' || is_cli() ? $e->getMessage() : '');
 	}
 
 	//--------------------------------------------------------------------
@@ -1110,7 +1116,9 @@ class CodeIgniter
 	 */
 	protected function callExit($code)
 	{
+		// @codeCoverageIgnoreStart
 		exit($code);
+		// @codeCoverageIgnoreEnd
 	}
 
 	//--------------------------------------------------------------------

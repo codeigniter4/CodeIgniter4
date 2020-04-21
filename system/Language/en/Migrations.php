@@ -35,8 +35,10 @@ return [
    'migCreate'         => "\tCreates a new migration named [name]",
    'nameMigration'     => 'Name the migration file',
    'badCreateName'     => 'You must provide a migration file name.',
-   'writeError'        => 'Error trying to create file.',
+   'writeError'        => 'Error trying to create {0} file, check if the directory is writable.',
    'migNumberError'    => 'Migration number must be three digits, and there must not be any gaps in the sequence.',
+   'rollBackConfirm'   => 'Are you sure you want to rollback?',
+   'refreshConfirm'    => 'Are you sure you want to refresh?',
 
    'latest'            => 'Running all new migrations...',
    'generalFault'      => 'Migration failed!',

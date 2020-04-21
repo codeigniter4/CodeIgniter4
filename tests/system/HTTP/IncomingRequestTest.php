@@ -365,6 +365,40 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testGetFileMultiple()
+	{
+		$_FILES = [
+			'userfile' => [
+				'name'     => [
+					'someFile.txt',
+					'someFile2.txt',
+				],
+				'type'     => [
+					'text/plain',
+					'text/plain',
+				],
+				'size'     => [
+					'124',
+					'125',
+				],
+				'tmp_name' => [
+					'/tmp/myTempFile.txt',
+					'/tmp/myTempFile2.txt',
+				],
+				'error'    => [
+					0,
+					0,
+				],
+			],
+		];
+
+		$gotit = $this->request->getFileMultiple('userfile');
+		$this->assertEquals(124, $gotit[0]->getSize());
+		$this->assertEquals(125, $gotit[1]->getSize());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testGetFile()
 	{
 		$_FILES = [
@@ -387,6 +421,17 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->request->setMethod('WINK');
 		$this->assertEquals('wink', $this->request->getMethod());
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2839
+	 */
+	public function testGetPostEmpty()
+	{
+		$_POST['TEST'] = 5;
+		$_GET['TEST']  = 3;
+		$this->assertEquals($_POST, $this->request->getPostGet());
+		$this->assertEquals($_GET, $this->request->getGetPost());
 	}
 
 }

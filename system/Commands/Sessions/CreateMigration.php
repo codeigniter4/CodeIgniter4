@@ -126,7 +126,7 @@ class CreateMigration extends BaseCommand
 		helper('filesystem');
 		if (! write_file($path, $template))
 		{
-			CLI::error(lang('Migrations.migWriteError'));
+			CLI::error(lang('Migrations.writeError', [$path]));
 			return;
 		}
 

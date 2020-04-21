@@ -854,7 +854,7 @@ if (! function_exists('excerpt'))
 		$post  = ' ';
 		$count = 0;
 
-		foreach (array_reverse($pre) as $pr => $e)
+		foreach (array_reverse($pre) as $e)
 		{
 			if ((strlen($e) + $count + 1) < $radius)
 			{
@@ -865,7 +865,7 @@ if (! function_exists('excerpt'))
 
 		$count = 0;
 
-		foreach ($pos as $po => $s)
+		foreach ($pos as $s)
 		{
 			if ((strlen($s) + $count + 1) < $radius)
 			{

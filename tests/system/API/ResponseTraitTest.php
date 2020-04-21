@@ -242,6 +242,16 @@ EOH;
 		$this->assertEquals($this->formatter->format(['id' => 3]), $this->response->getBody());
 	}
 
+	public function testUpdated()
+	{
+		$controller = $this->makeController();
+		$controller->respondUpdated(['id' => 3], 'A Custom Reason');
+
+		$this->assertEquals('A Custom Reason', $this->response->getReason());
+		$this->assertEquals(200, $this->response->getStatusCode());
+		$this->assertEquals($this->formatter->format(['id' => 3]), $this->response->getBody());
+	}
+
 	public function testUnauthorized()
 	{
 		$controller = $this->makeController();
@@ -450,6 +460,46 @@ EOH;
 
 EOH;
 		$this->assertEquals($expected, $this->response->getBody());
+	}
+
+	public function testFormatByRequestNegotiateIfFormatIsNotJsonOrXML()
+	{
+		$config = [
+			'baseURL'          => 'http://example.com',
+			'uriProtocol'      => 'REQUEST_URI',
+			'defaultLocale'    => 'en',
+			'negotiateLocale'  => false,
+			'supportedLocales' => ['en'],
+			'CSPEnabled'       => false,
+			'cookiePrefix'     => '',
+			'cookieDomain'     => '',
+			'cookiePath'       => '/',
+			'cookieSecure'     => false,
+			'cookieHTTPOnly'   => false,
+			'proxyIPs'         => [],
+		];
+
+		$request  = new MockIncomingRequest((object) $config, new URI($config['baseURL']), null, new UserAgent());
+		$response = new MockResponse((object) $config);
+
+		$controller = new class($request, $response)
+		{
+			use ResponseTrait;
+
+			protected $request;
+			protected $response;
+
+			public function __construct(&$request, &$response)
+			{
+				$this->request  = $request;
+				$this->response = $response;
+
+				$this->format = 'txt';
+			}
+		};
+
+		$controller->respondCreated(['id' => 3], 'A Custom Reason');
+		$this->assertStringStartsWith(config('Format')->supportedResponseFormats[0], $response->getHeaderLine('Content-Type'));
 	}
 
 }

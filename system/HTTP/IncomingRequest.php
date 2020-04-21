@@ -427,7 +427,7 @@ class IncomingRequest extends Request
 		// Use $_POST directly here, since filter_has_var only
 		// checks the initial POST data, not anything that might
 		// have been added since.
-		return isset($_POST[$index]) ? $this->getPost($index, $filter, $flags) : $this->getGet($index, $filter, $flags);
+		return isset($_POST[$index]) ? $this->getPost($index, $filter, $flags) : (isset($_GET[$index]) ? $this->getGet($index, $filter, $flags) : $this->getPost());
 	}
 
 	//--------------------------------------------------------------------
@@ -446,7 +446,7 @@ class IncomingRequest extends Request
 		// Use $_GET directly here, since filter_has_var only
 		// checks the initial GET data, not anything that might
 		// have been added since.
-		return isset($_GET[$index]) ? $this->getGet($index, $filter, $flags) : $this->getPost($index, $filter, $flags);
+		return isset($_GET[$index]) ? $this->getGet($index, $filter, $flags) : (isset($_POST[$index]) ? $this->getPost($index, $filter, $flags) : $this->getGet());
 	}
 
 	//--------------------------------------------------------------------
@@ -616,7 +616,6 @@ class IncomingRequest extends Request
 			$this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
 			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
 			$this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
-			$this->uri->resolveRelativeURI(parse_url($baseURL, PHP_URL_PATH));
 
 			// Ensure we have any query vars
 			$this->uri->setQuery($_SERVER['QUERY_STRING'] ?? '');
@@ -722,7 +721,7 @@ class IncomingRequest extends Request
 		$query = $parts['query'] ?? '';
 		$uri   = $parts['path'] ?? '';
 
-		if (isset($_SERVER['SCRIPT_NAME'][0]))
+		if (isset($_SERVER['SCRIPT_NAME'][0]) && pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_EXTENSION) === 'php')
 		{
 			// strip the script name from the beginning of the URI
 			if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0)

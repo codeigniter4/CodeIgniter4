@@ -26,6 +26,7 @@ class ExampleDatabaseTest extends \Tests\Support\DatabaseTestCase
 	{
 		$model = new ExampleModel();
 		$this->setPrivateProperty($model, 'useSoftDeletes', true);
+		$this->setPrivateProperty($model, 'tempUseSoftDeletes', true);
 
 		$object = $model->first();
 		$model->delete($object->id);

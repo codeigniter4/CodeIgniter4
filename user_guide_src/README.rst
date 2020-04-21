@@ -8,26 +8,79 @@ Setup Instructions
 
 The CodeIgniter user guide uses Sphinx to manage the documentation and
 output it to various formats. Pages are written in human-readable
-`ReStructured Text <http://sphinx.pocoo.org/rest.html>`_ format.
+`ReStructured Text <https://en.wikipedia.org/wiki/ReStructuredText>`_ format.
 
 Prerequisites
 =============
 
-Sphinx requires Python, which is already installed if you are running OS X.
-You can confirm in a Terminal window by executing the ``python`` command
-without any parameters. It should load up and tell you which version you have
-installed. If you're not on 2.7+, go ahead and install 2.7.2 from
-http://python.org/download/releases/2.7.2/
+Python
+------
+
+Sphinx requires Python 3.5+, which may already be installed if you are running
+OS X or Linux. You can confirm in a Terminal window by executing ``python``
+or ``python3``.
+
+.. code-block:: bash
+
+	python --version
+	Python 2.7.17
+
+	python3 --version
+	Python 3.6.9
+
+If you're not on 3.5+, go ahead and install the latest 3.x version from
+`Python.org <https://www.python.org/downloads/>`_. Linux users should use their
+operative systems built in Package Managers to update.
+
+pip
+---
+
+Now that you have Python 3.x up and running, we will be installing
+`pip <https://pip.pypa.io/en/stable/>`_ (The Python Package Installer).
+
+You can check if you have pip installed with ``pip`` or ``pip3``.
+As you can see pip follow the same naming convention as Python.
+Please take note that it should say ``python 3.x`` at the very end.
+
+.. code-block:: bash
+
+	pip --version
+	pip 9.0.1 from /usr/lib/python2.7/dist-packages (python 2.7)
+
+	pip3 --version
+	pip 9.0.1 from /usr/lib/python3/dist-packages (python 3.6)
+
+Linux
+^^^^^
+
+`Installing pip/setuptools/wheel with Linux Package Managers
+<https://packaging.python.org/guides/installing-using-linux-tools/>`_
+
+Other
+^^^^^
+
+pip is already installed if you are using Python 3.5+ downloaded from
+`Python.org <https://www.python.org/downloads/>`_.
 
 Installation
 ============
 
-1. Install `easy_install <http://peak.telecommunity.com/DevCenter/EasyInstall#installing-easy-install>`_
-2. ``easy_install "sphinx==1.8.5"``
-3. ``easy_install sphinxcontrib-phpdomain``
-4. Install the CI Lexer which allows PHP, HTML, CSS, and JavaScript syntax highlighting in code examples (see *cilexer/README*)
-5. ``cd user_guide_src``
-6. ``make html``
+Now we need to install Sphinx and it's dependencies. Choose ``pip`` or ``pip3``
+depending on operative system. After this step you need to restart your Terminal
+window as Python won't find all applications we just installed othervise.
+
+.. code-block:: bash
+
+	pip install -r user_guide_src/requirements.txt
+
+	pip3 install -r user_guide_src/requirements.txt
+
+It's time to wrap things up and generate the documentation.
+
+.. code-block:: bash
+
+	cd user_guide_src
+	make html
 
 Editing and Creating Documentation
 ==================================
@@ -59,5 +112,5 @@ simply delete the *build* folder's contents and rebuild.
 Style Guideline
 ***************
 
-Please refer to source/contributing/documentation.rst for general guidelines for
+Please refer to /contributing/documentation.rst for general guidelines for
 using Sphinx to document CodeIgniter.

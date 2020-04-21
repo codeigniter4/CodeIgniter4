@@ -382,9 +382,7 @@ if (! function_exists('video'))
 					. "\n";
 		}
 
-		$video .= "</video>\n";
-
-		return $video;
+		return $video . "</video>\n";
 	}
 }
 
@@ -447,9 +445,7 @@ if (! function_exists('audio'))
 			$audio .= "\n" . _space_indent() . $unsupportedMessage . "\n";
 		}
 
-		$audio .= "</audio>\n";
-
-		return $audio;
+		return $audio . "</audio>\n";
 	}
 }
 
@@ -501,9 +497,7 @@ if (! function_exists('_media'))
 			$media .= _space_indent() . $unsupportedMessage . "\n";
 		}
 
-		$media .= '</' . $name . ">\n";
-
-		return $media;
+		return $media . ('</' . $name . ">\n");
 	}
 }
 
@@ -545,9 +539,7 @@ if (! function_exists('source'))
 			$source .= ' ' . $attributes;
 		}
 
-		$source .= ' />';
-
-		return $source;
+		return $source . ' />';
 	}
 }
 
@@ -623,9 +615,7 @@ if (! function_exists('object'))
 			$object .= _space_indent() . $param . "\n";
 		}
 
-		$object .= "</object>\n";
-
-		return $object;
+		return $object . "</object>\n";
 	}
 }
 

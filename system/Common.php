@@ -246,9 +246,11 @@ if (! function_exists('dd'))
 	 */
 	function dd(...$vars)
 	{
+		// @codeCoverageIgnoreStart
 		Kint::$aliases[] = 'dd';
 		Kint::dump(...$vars);
 		exit;
+		// @codeCoverageIgnoreEnd
 	}
 }
 
@@ -319,7 +321,7 @@ if (! function_exists('esc'))
 	{
 		if (is_array($data))
 		{
-			foreach ($data as $key => &$value)
+			foreach ($data as &$value)
 			{
 				$value = esc($value, $context);
 			}
@@ -404,7 +406,7 @@ if (! function_exists('force_https'))
 		{
 			return;
 		}
-
+		// @codeCoverageIgnoreStart
 		// If the session library is loaded, we should regenerate
 		// the session ID for safety sake.
 		if (class_exists('Session', false))
@@ -413,12 +415,16 @@ if (! function_exists('force_https'))
 				->regenerate();
 		}
 
-		$uri = $request->uri;
-		$uri->setScheme('https');
+		$baseURL = config(App::class)->baseURL;
+
+		if (strpos($baseURL, 'http://') === 0)
+		{
+			$baseURL = (string) substr($baseURL, strlen('http://'));
+		}
 
 		$uri = URI::createURIString(
-			$uri->getScheme(), $uri->getAuthority(true), $uri->getPath(), // Absolute URIs should use a "/" for an empty path
-			$uri->getQuery(), $uri->getFragment()
+			'https', $baseURL, $request->uri->getPath(), // Absolute URIs should use a "/" for an empty path
+			$request->uri->getQuery(), $request->uri->getFragment()
 		);
 
 		// Set an HSTS header
@@ -427,6 +433,7 @@ if (! function_exists('force_https'))
 		$response->sendHeaders();
 
 		exit();
+		// @codeCoverageIgnoreEnd
 	}
 }
 
@@ -747,7 +754,9 @@ if (! function_exists('old'))
 		// Ensure the session is loaded
 		if (session_status() === PHP_SESSION_NONE && ENVIRONMENT !== 'testing')
 		{
+			// @codeCoverageIgnoreStart
 			session();
+			// @codeCoverageIgnoreEnd
 		}
 
 		$request = Services::request();

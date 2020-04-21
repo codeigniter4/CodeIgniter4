@@ -313,4 +313,12 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Hanging Gardens of Babylon', $language->getLine('Allin.sev'));
 	}
 
+	public function testLanguageNestedArrayDefinition()
+	{
+		$lang = new SecondMockLanguage('en');
+		$lang->loadem('Nested', 'en');
+
+		$this->assertEquals('e', $lang->getLine('Nested.a.b.c.d'));
+	}
+
 }

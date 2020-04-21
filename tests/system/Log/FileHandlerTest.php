@@ -17,7 +17,8 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testHandle()
 	{
-		$config                                                                = new LoggerConfig();
+		$config = new LoggerConfig();
+
 		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
 
 		$logger = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
@@ -30,25 +31,29 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testBasicHandle()
 	{
 		$config                                                                = new LoggerConfig();
-		$config->path                                                          = $this->start . 'charlie/';
+		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['path']    = $this->start . 'charlie/';
 		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
-		$logger                                                                = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
+
+		$logger = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
 		$logger->setDateFormat('Y-m-d H:i:s:u');
+		$expected = 'log-' . date('Y-m-d') . '.log';
+		vfsStream::newFile($expected)->at(vfsStream::setup('root/charlie'))->withContent('This is a test log');
 		$this->assertTrue($logger->handle('warning', 'This is a test log'));
 	}
 
 	public function testHandleCreateFile()
 	{
-		$config       = new LoggerConfig();
-		$config->path = $this->start;
-		$logger       = new MockFileLogger((array) $config);
+		$config                                                             = new LoggerConfig();
+		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] = $this->start;
+		$logger                                                             = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
 
 		$logger->setDateFormat('Y-m-d H:i:s:u');
+		$expected = 'log-' . date('Y-m-d') . '.log';
+		vfsStream::newFile($expected)->at(vfsStream::setup('root'))->withContent('This is a test log');
 		$logger->handle('warning', 'This is a test log');
 
-		$expected = 'log-' . date('Y-m-d') . '.log';
-		$fp       = fopen($config->path . $expected, 'r');
-		$line     = fgets($fp);
+		$fp   = fopen($config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] . $expected, 'r');
+		$line = fgets($fp);
 		fclose($fp);
 
 		// did the log file get created?
@@ -58,15 +63,15 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testHandleDateTimeCorrectly()
 	{
-		$config       = new LoggerConfig();
-		$config->path = $this->start;
-		$logger       = new MockFileLogger((array) $config);
+		$config                                                             = new LoggerConfig();
+		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] = $this->start;
+		$logger                                                             = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
 
 		$logger->setDateFormat('Y-m-d');
 		$expected = 'log-' . date('Y-m-d') . '.log';
-
+		vfsStream::newFile($expected)->at(vfsStream::setup('root'))->withContent('Test message');
 		$logger->handle('debug', 'Test message');
-		$fp   = fopen($config->path . $expected, 'r');
+		$fp   = fopen($config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] . $expected, 'r');
 		$line = fgets($fp); // and get the second line
 		fclose($fp);
 

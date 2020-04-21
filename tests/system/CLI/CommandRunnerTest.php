@@ -69,8 +69,8 @@ class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = CITestStreamFilter::$buffer;
 
 		// make sure the result looks like basic help
+		$this->assertStringContainsString('Lists the available commands.', $result);
 		$this->assertStringContainsString('Displays basic usage information.', $result);
-		$this->assertStringContainsString('help command_name', $result);
 	}
 
 	public function testHelpCommand()

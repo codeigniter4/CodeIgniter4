@@ -66,6 +66,7 @@ trait ResponseTrait
 	protected $codes = [
 		'created'                   => 201,
 		'deleted'                   => 200,
+		'updated'                   => 200,
 		'no_content'                => 204,
 		'invalid_request'           => 400,
 		'unsupported_response_type' => 400,
@@ -92,6 +93,12 @@ trait ResponseTrait
 		'unsupported_grant_type'    => 501,
 		'not_implemented'           => 501,
 	];
+
+	/**
+	 *
+	 * @var string the representation format to return resource data in (json/xml)
+	 */
+	protected $format = 'json';
 
 	//--------------------------------------------------------------------
 
@@ -188,6 +195,19 @@ trait ResponseTrait
 	public function respondDeleted($data = null, string $message = '')
 	{
 		return $this->respond($data, $this->codes['deleted'], $message);
+	}
+
+	/**
+	 * Used after a resource has been successfully updated.
+	 *
+	 * @param mixed  $data    Data.
+	 * @param string $message Message.
+	 *
+	 * @return mixed
+	 */
+	public function respondUpdated($data = null, string $message = '')
+	{
+		return $this->respond($data, $this->codes['updated'], $message);
 	}
 
 	//--------------------------------------------------------------------
@@ -366,7 +386,15 @@ trait ResponseTrait
 
 		// Determine correct response type through content negotiation
 		$config = new Format();
-		$format = $this->request->negotiate('media', $config->supportedResponseFormats, false);
+
+		if (! in_array($this->format, ['json', 'xml']))
+		{
+			$format = $this->request->negotiate('media', $config->supportedResponseFormats, false);
+		}
+		else
+		{
+			$format = "application/$this->format";
+		}
 
 		$this->response->setContentType($format);
 

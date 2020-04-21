@@ -13,14 +13,6 @@ class ModelFactory
 	static private $instances = [];
 
 	/**
-	 * The Database connection to use,
-	 * if other than default.
-	 *
-	 * @var ConnectionInterface
-	 */
-	static private $connection = null;
-
-	/**
 	 * Create new configuration instances or return
 	 * a shared instance
 	 *

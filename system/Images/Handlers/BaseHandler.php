@@ -60,12 +60,12 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @var \CodeIgniter\Images\Image
 	 */
-	protected $image = null;
+	protected $image;
 
 	/**
 	 * Whether the image file has been confirmed.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $verified = false;
 
@@ -531,28 +531,21 @@ abstract class BaseHandler implements ImageHandlerInterface
 		{
 			case 2:
 				return $this->flip('horizontal');
-				break;
 			case 3:
 				return $this->rotate(180);
-				break;
 			case 4:
 				return $this->rotate(180)
 								->flip('horizontal');
-				break;
 			case 5:
 				return $this->rotate(270)
 								->flip('horizontal');
-				break;
 			case 6:
 				return $this->rotate(270);
-				break;
 			case 7:
 				return $this->rotate(90)
 								->flip('horizontal');
-				break;
 			case 8:
 				return $this->rotate(90);
-				break;
 			default:
 				return $this;
 		}

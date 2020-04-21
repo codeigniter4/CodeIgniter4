@@ -61,14 +61,16 @@ Your ``phpunit.xml`` should exclude the ``system`` folder, as well as any ``vend
 The Test Class
 ==============
 
-In order to take advantage of the additional tools provided, your tests must extend ``\CIUnitTestCase``. All tests
+In order to take advantage of the additional tools provided, your tests must extend ``CIUnitTestCase``. All tests
 are expected to be located in the **tests/app** directory by default.
 
 To test a new library, **Foo**, you would create a new file at **tests/app/Libraries/FooTest.php**::
 
     <?php namespace App\Libraries;
 
-    class FooTest extends \CIUnitTestCase
+    use CodeIgniter\Test\CIUnitTestCase;
+
+    class FooTest extends CIUnitTestCase
     {
         public function testFooNotBar()
         {
@@ -80,7 +82,9 @@ To test one of your models, you might end up with something like this in ``tests
 
     <?php namespace App\Models;
 
-    class OneOfMyModelsTest extends \CIUnitTestCase
+    use CodeIgniter\Test\CIUnitTestCase;
+
+    class OneOfMyModelsTest extends CIUnitTestCase
     {
         public function testFooNotBar()
         {
@@ -134,7 +138,7 @@ Ensure that a header or cookie was actually emitted::
 
     ob_start();
     $this->response->send();
-    $output = ob_get_clean(); // in case you want to check the adtual body
+    $output = ob_get_clean(); // in case you want to check the actual body
 
     $this->assertHeaderEmitted("Set-Cookie: foo=bar");
 
@@ -149,7 +153,7 @@ Ensure that a header or cookie was not emitted::
 
     ob_start();
     $this->response->send();
-    $output = ob_get_clean(); // in case you want to check the adtual body
+    $output = ob_get_clean(); // in case you want to check the actual body
 
     $this->assertHeaderNotEmitted("Set-Cookie: banana");
 

@@ -101,7 +101,7 @@ do the following::
 	return $response->download('/path/to/photo.jpg', NULL);
 
 Use the optional ``setFileName()`` method to change the filename as it is sent to the client's browser::
-	
+
 	return $response->download('awkwardEncryptedFileName.fakeExt')->setFileName('expenses.csv');
 
 .. note:: The response object MUST be returned for the download to be sent to the client. This allows the response
@@ -111,13 +111,12 @@ HTTP Caching
 ============
 
 Built into the HTTP specification are tools help the client (often the web browser) cache the results. Used correctly,
-this can lend a huge performance boost to your application because it will tell the client that they don't need
+this can lead to a huge performance boost to your application because it will tell the client that they don't need
 to contact the getServer at all since nothing has changed. And you can't get faster than that.
 
 This are handled through the ``Cache-Control`` and ``ETag`` headers. This guide is not the proper place for a thorough
 introduction to all of the cache headers power, but you can get a good understanding over at
-`Google Developers <https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching>`_
-and the `Mobify Blog <https://www.mobify.com/blog/beginners-guide-to-http-cache-headers/>`_.
+`Google Developers <https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching>`_.
 
 By default, all response objects sent through CodeIgniter have HTTP caching turned off. The options and exact
 circumstances are too varied for us to be able to create a good default other than turning it off. It's simple
@@ -125,8 +124,8 @@ to set the Cache values to what you need, though, through the ``setCache()`` met
 
 	$options = [
 		'max-age'  => 300,
-		's-maxage' => 900
-		'etag'     => 'abcde',
+		's-maxage' => 900,
+		'etag'     => 'abcde'
 	];
 	$this->response->setCache($options);
 
@@ -150,9 +149,9 @@ is served by the same domain (http://example.com), it is very simple to integrat
 As this is a complex subject, this user guide will not go over all of the details. For more information, you should
 visit the following sites:
 
-* `Content Security Policy main site <http://content-security-policy.com/>`_
+* `Content Security Policy main site <https://content-security-policy.com/>`_
 * `W3C Specification <https://www.w3.org/TR/CSP>`_
-* `Introduction at HTML5Rocks <http://www.html5rocks.com/en/tutorials/security/content-security-policy/>`_
+* `Introduction at HTML5Rocks <https://www.html5rocks.com/en/tutorials/security/content-security-policy/>`_
 * `Article at SitePoint <https://www.sitepoint.com/improving-web-security-with-the-content-security-policy/>`_
 
 Turning CSP On
@@ -169,7 +168,7 @@ needed during runtime, then the correctly formatted header is sent and you're al
 
 With CSP enabled, two header lines are added to the HTTP response: a Content-Security-Policy header, with
 policies identifying content types or origins that are explicitly allowed for different
-contexts, and a Content-Security-Policy-Report-Only header, which identifies content types 
+contexts, and a Content-Security-Policy-Report-Only header, which identifies content types
 or origins that will be allowed but which will also be reported to the destination
 of your choice.
 
@@ -184,13 +183,13 @@ Runtime Configuration
 If your application needs to make changes at run-time, you can access the instance at ``$response->CSP``. The
 class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
 Examples are shown below, with different combinations of parameters, though all accept either a directive
-name or anarray of them.::
+name or an array of them.::
 
-        // specify the default directive treatment 
-	$response->CSP->reportOnly(false); 
-        
+        // specify the default directive treatment
+	$response->CSP->reportOnly(false);
+
         // specify the origin to use if none provided for a directive
-	$response->CSP->setDefaultSrc('cdn.example.com'); 
+	$response->CSP->setDefaultSrc('cdn.example.com');
         // specify the URL that "report-only" reports get sent to
 	$response->CSP->setReportURI('http://example.com/csp/reports');
         // specify that HTTP requests be upgraded to HTTPS

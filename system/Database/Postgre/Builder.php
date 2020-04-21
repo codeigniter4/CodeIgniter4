@@ -196,7 +196,9 @@ class Builder extends BaseBuilder
 			{
 				throw new DatabaseException('You must use the "set" method to update an entry.');
 			}
+			// @codeCoverageIgnoreStart
 			return false;
+			// @codeCoverageIgnoreEnd
 		}
 
 		$table = $this->QBFrom[0];
@@ -269,7 +271,7 @@ class Builder extends BaseBuilder
 	 *
 	 * @return string
 	 */
-	protected function _limit(string $sql): string
+	protected function _limit(string $sql, bool $offsetIgnore = false): string
 	{
 		return $sql . ' LIMIT ' . $this->QBLimit . ($this->QBOffset ? " OFFSET {$this->QBOffset}" : '');
 	}
@@ -316,7 +318,7 @@ class Builder extends BaseBuilder
 	protected function _updateBatch(string $table, array $values, string $index): string
 	{
 		$ids = [];
-		foreach ($values as $key => $val)
+		foreach ($values as $val)
 		{
 			$ids[] = $val[$index];
 
