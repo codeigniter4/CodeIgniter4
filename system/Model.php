@@ -1126,6 +1126,7 @@ class Model
 	 * @param string  $group   Will be used by the pagination library
 	 *                         to identify a unique pagination set.
 	 * @param integer $page    Optional page number (useful when the page number is provided in different way)
+	 * @param integer $segment Optional URI segment number (if page number is provided by URI segment)
 	 *
 	 * @return array|null
 	 */
