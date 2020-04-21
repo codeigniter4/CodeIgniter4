@@ -423,4 +423,15 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('wink', $this->request->getMethod());
 	}
 
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2839
+	 */
+	public function testGetPostEmpty()
+	{
+		$_POST['TEST'] = 5;
+		$_GET['TEST']  = 3;
+		$this->assertEquals($_POST, $this->request->getPostGet());
+		$this->assertEquals($_GET, $this->request->getGetPost());
+	}
+
 }
