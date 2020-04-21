@@ -374,8 +374,14 @@ class IncomingRequest extends Request
 	 */
 	public function getRawInput()
 	{
-		parse_str($this->body, $output);
-
+		if ((($ContentType = $this->getHeader('Content-Type')) !== null) && $ContentType->getValue() === 'application/json')
+		{
+			$output = $this->getJSON(true);
+		}
+		else
+		{
+			parse_str($this->body, $output);
+		}
 		return $output;
 	}
 

@@ -295,6 +295,22 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $request->getRawInput());
 	}
 
+	public function testCanParseJsonGetRawInput()
+	{
+		$rawstring = '{"test":3}';
+
+		$expected = [
+			'test' => 3,
+		];
+
+		$config          = new App();
+		$config->baseURL = 'http://example.com';
+
+		$request = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
+		$request->setHeader('Content-Type', 'application/json');
+		$this->assertEquals($expected, $request->getRawInput());
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testIsCLI()
