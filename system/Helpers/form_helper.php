@@ -357,7 +357,7 @@ if (! function_exists('form_dropdown'))
 	 *
 	 * @return string
 	 */
-		function form_dropdown($data = '', $options = [], $selected = [], $extra = ''): string
+	function form_dropdown($data = '', $options = [], $selected = [], $extra = ''): string
 	{
 		$defaults = [];
 		if (is_array($data))
@@ -420,8 +420,8 @@ if (! function_exists('form_dropdown'))
 				foreach ($val as $optgroup_key => $optgroup_val)
 				{
 					$form .= '<option value="' . htmlspecialchars($optgroup_key) . '"'
-						. in_array($optgroup_key, $selected) ? ' selected="selected"' : ''
-						. in_array($optgroup_key, $disabled_options) ? ' disabled' : '' . '>'
+						. (in_array($optgroup_key, $selected) ? ' selected="selected"' : '')
+						. (in_array($optgroup_key, $disabled_options) ? ' disabled' : '') . '>'
 						. (string) $optgroup_val . "</option>\n";
 				}
 				$form .= "</optgroup>\n";
