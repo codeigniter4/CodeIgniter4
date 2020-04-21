@@ -811,7 +811,19 @@ if (! function_exists('parser'))
 			unset($options['saveData']);
 		}
 
-		return $parser->setData($data, 'raw')->render($name, $options, $saveData);
+		if (is_array($data))
+		{
+			$parser->setData($data, 'raw');
+		}
+
+		$file = empty(pathinfo($name, PATHINFO_EXTENSION)) ? $name . '.php' : $name;
+
+		if (is_file(APPPATH."Views/{$file}"))
+		{
+			return $parser->render($name, $options, $saveData);
+		}
+		
+		return $parser->renderString($name, $options, $saveData);
 	}
 }
 
