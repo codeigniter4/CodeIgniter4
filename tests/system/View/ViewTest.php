@@ -361,7 +361,7 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		$view->setVar('testString', 'test');
 		$view->render('simple', null, true);
 		$view->render('simple', null, false);
-		$this->assertEquals('test', $view->render('simple', null, false));
+		$this->assertStringContainsString('<h1>test</h1>', $view->render('simple', null, false));
 	}
 
 }
