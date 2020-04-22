@@ -230,14 +230,17 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testRenderStringSavingData()
 	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
-
-		$view->setVar('testString', 'Hello World');
+		$view     = new View($this->config, $this->viewsDir, $this->loader);
 		$expected = '<h1>Hello World</h1>';
-		$this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
-		$this->assertArrayHasKey('testString', $view->getData());
+
+		//I think saveData is sava current data, is not clean already set data.
+		$view->setVar('testString', 'Hello World');
 		$this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>', [], false));
 		$this->assertArrayNotHasKey('testString', $view->getData());
+
+		$view->setVar('testString', 'Hello World');
+		$this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
+		$this->assertArrayHasKey('testString', $view->getData());
 	}
 
 	//--------------------------------------------------------------------
@@ -341,6 +344,24 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		$expected = '';
 
 		$this->assertStringContainsString($expected, $view->render('apples'));
+	}
+
+	public function testRenderSaveDataCover()
+	{
+		$view = new View($this->config, $this->viewsDir, $this->loader);
+		$this->setPrivateProperty($view, 'saveData', true);
+		$view->setVar('testString', 'test');
+		$view->render('simple', null, false);
+		$this->assertEquals(true, $this->getPrivateProperty($view, 'saveData'));
+	}
+
+	public function testRenderSaveDataUseAflterSaveDataFalse()
+	{
+		$view = new View($this->config, $this->viewsDir, $this->loader);
+		$view->setVar('testString', 'test');
+		$view->render('simple', null, true);
+		$view->render('simple', null, false);
+		$this->assertStringContainsString('<h1>test</h1>', $view->render('simple', null, false));
 	}
 
 }

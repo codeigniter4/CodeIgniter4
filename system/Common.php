@@ -38,6 +38,7 @@
  */
 
 use Config\App;
+use Config\View;
 use Config\Logger;
 use Config\Database;
 use Config\Services;
@@ -1069,8 +1070,9 @@ if (! function_exists('view'))
 		 */
 		$renderer = Services::renderer();
 
-		$saveData = true;
-		if (array_key_exists('saveData', $options) && $options['saveData'] === true)
+		$saveData = config(View::class)->saveData;
+
+		if (array_key_exists('saveData', $options))
 		{
 			$saveData = (bool) $options['saveData'];
 			unset($options['saveData']);

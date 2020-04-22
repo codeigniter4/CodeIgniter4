@@ -93,11 +93,11 @@ class Parser extends View
 	/**
 	 * Constructor
 	 *
-	 * @param \Config\View $config
-	 * @param string       $viewPath
-	 * @param mixed        $loader
-	 * @param boolean      $debug
-	 * @param LoggerInterface	$logger
+	 * @param \Config\View    $config
+	 * @param string          $viewPath
+	 * @param mixed           $loader
+	 * @param boolean         $debug
+	 * @param LoggerInterface $logger
 	 */
 	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, LoggerInterface $logger = null)
 	{
@@ -157,20 +157,25 @@ class Parser extends View
 			throw ViewException::forInvalidFile($file);
 		}
 
+		if (is_null($this->tempData))
+		{
+			$this->tempData = $this->data;
+		}
+
 		$template = file_get_contents($file);
-		$output   = $this->parse($template, $this->data, $options);
+		$output   = $this->parse($template, $this->tempData, $options);
 		$this->logPerformance($start, microtime(true), $view);
 
-		if (! $saveData)
+		if ($saveData)
 		{
-			$this->data = [];
+			$this->data = $this->tempData;
 		}
 		// Should we cache?
 		if (isset($options['cache']))
 		{
 			cache()->save($cacheName, $output, (int) $options['cache']);
 		}
-
+		$this->tempData = null;
 		return $output;
 	}
 
@@ -196,14 +201,22 @@ class Parser extends View
 			$saveData = $this->config->saveData;
 		}
 
-		$output = $this->parse($template, $this->data, $options);
+		if (is_null($this->tempData))
+		{
+			$this->tempData = $this->data;
+		}
+
+		$output = $this->parse($template, $this->tempData, $options);
 
 		$this->logPerformance($start, microtime(true), $this->excerpt($template));
 
-		if (! $saveData)
+		if ($saveData)
 		{
-			$this->data = [];
+			$this->data = $this->tempData;
 		}
+
+		$this->tempData = null;
+
 		return $output;
 	}
 
@@ -243,7 +256,8 @@ class Parser extends View
 			}
 		}
 
-		$this->data = array_merge($this->data, $data);
+		$this->tempData = $this->tempData ?? $this->data;
+		$this->tempData = array_merge($this->tempData, $data);
 
 		return $this;
 	}
@@ -532,7 +546,14 @@ class Parser extends View
 
 		// Parse the PHP itself, or insert an error so they can debug
 		ob_start();
-		extract($this->data);
+
+		if (is_null($this->tempData))
+		{
+			$this->tempData = $this->data;
+		}
+
+		extract($this->tempData);
+
 		try
 		{
 			eval('?>' . $template . '<?php ');
@@ -542,6 +563,7 @@ class Parser extends View
 			ob_end_clean();
 			throw ViewException::forTagSyntaxError(str_replace(['?>', '<?php '], '', $template));
 		}
+
 		return ob_get_clean();
 	}
 

@@ -25,7 +25,8 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 	protected function setUp(): void
 	{
 		parent::setUp();
-
+		$renderer = Services::renderer();
+		$renderer->resetData();
 		unset($_ENV['foo'], $_SERVER['foo']);
 	}
 
@@ -427,6 +428,16 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$content = ob_get_clean();
 
 		$this->assertStringContainsString('Debug Backtrace', $content);
+	}
+
+	public function testViewNotSaveData()
+	{
+		$data = [
+			'testString' => 'bar',
+			'bar'        => 'baz',
+		];
+		$this->assertStringContainsString('<h1>bar</h1>', view('\Tests\Support\View\Views\simples', $data, ['saveData' => false]));
+		$this->assertStringContainsString('<h1>is_not</h1>', view('\Tests\Support\View\Views\simples'));
 	}
 
 }
