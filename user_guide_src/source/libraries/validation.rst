@@ -487,7 +487,7 @@ at least 6 characters.”
 Translation Of Messages And Validation Labels
 =============================================
 
-To use translated strings from language files, we can simply use the dot syntax. Let's say we have a file with translations located here: `app/Languages/en/Rules.php`. We can simply use the language lines defined in this file, like this:
+To use translated strings from language files, we can simply use the dot syntax. Let's say we have a file with translations located here: ``app/Languages/en/Rules.php``. We can simply use the language lines defined in this file, like this:
 
     $validation->setRules([
             'username' => [
