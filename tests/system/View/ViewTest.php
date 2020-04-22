@@ -146,6 +146,12 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>'));
 	}
 
+	public function testRenderStringNullTempdata()
+	{
+		$view = new View($this->config, $this->viewsDir, $this->loader);
+		$this->assertEquals('test string', $view->renderString('test string'));
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testRendersThrowsExceptionIfFileNotFound()
