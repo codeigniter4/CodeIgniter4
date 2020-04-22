@@ -856,7 +856,7 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 				'label'  => 'Foo.bar',
 				'rules'  => 'min_length[10]',
 				'errors' => [
-					'min_length' => 'The {field} field is very short.',
+					'min_length' => 'Foo.bar.min_length1',
 				],
 			],
 		];
@@ -885,7 +885,7 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		], [
 			'Username' => [
-				'min_length' => 'Supplied value ({value}) for {field} must have at least {param} characters.',
+				'min_length' => 'Foo.bar.min_length2',
 			],
 		]);
 

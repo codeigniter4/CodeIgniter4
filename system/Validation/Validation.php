@@ -709,7 +709,7 @@ class Validation implements ValidationInterface
 		// Check if custom message has been defined by user
 		if (isset($this->customErrors[$field][$rule]))
 		{
-			$message = $this->customErrors[$field][$rule];
+			$message = lang($this->customErrors[$field][$rule]);
 		}
 		else
 		{
