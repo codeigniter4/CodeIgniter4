@@ -230,7 +230,7 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testRenderStringSavingData()
 	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+		$view     = new View($this->config, $this->viewsDir, $this->loader);
 		$expected = '<h1>Hello World</h1>';
 
 		//I think saveData is sava current data, is not clean already set data.

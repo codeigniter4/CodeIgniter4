@@ -432,16 +432,12 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testViewNotSaveData()
 	{
-
-		$data     = [
+		$data = [
 			'testString' => 'bar',
 			'bar'        => 'baz',
 		];
-		view('\Tests\Support\View\Views\simple', $data, ['saveData' => false]);
-		ob_get_clean();
-		$this->expectException('Exception');
-		view('\Tests\Support\View\Views\simple');
-		ob_get_clean();
+		$this->assertStringContainsString('<h1>bar</h1>', view('\Tests\Support\View\Views\simples', $data, ['saveData' => false]));
+		$this->assertStringContainsString('<h1>is_not</h1>', view('\Tests\Support\View\Views\simples'));
 	}
 
 }

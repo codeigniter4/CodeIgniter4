@@ -957,10 +957,10 @@ class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$expected = '<h1>Hello World</h1>';
 		$pattern  = '<h1>{testString}</h1>';
-		$this->assertEquals($expected, $parser->renderString($pattern, [], true));
-		$this->assertArrayHasKey('testString', $parser->getData());
 		$this->assertEquals($expected, $parser->renderString($pattern, [], false));
 		$this->assertArrayNotHasKey('testString', $parser->getData());
+		$this->assertEquals($expected, $parser->renderString($pattern, [], true));
+		$this->assertArrayHasKey('testString', $parser->getData());
 	}
 
 	public function testRenderFindsOtherView()

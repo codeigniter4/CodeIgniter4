@@ -194,7 +194,7 @@ class View implements RendererInterface
 		// Store the results here so even if
 		// multiple views are called in a view, it won't
 		// clean it unless we mean it to.
-		if ($saveData === null)
+		if (is_null($saveData))
 		{
 			$saveData = $this->saveData;
 		}
@@ -230,7 +230,7 @@ class View implements RendererInterface
 
 		// Make our view data available to the view.
 
-		if(is_null($this->tempData))
+		if (is_null($this->tempData))
 		{
 			$this->tempData = $this->data;
 		}
@@ -286,7 +286,9 @@ class View implements RendererInterface
 		{
 			cache()->save($this->renderVars['cacheName'], $output, (int) $this->renderVars['options']['cache']);
 		}
+
 		$this->tempData = null;
+
 		return $output;
 	}
 
@@ -316,7 +318,7 @@ class View implements RendererInterface
 			$saveData = $this->saveData;
 		}
 
-		if(is_null($this->tempData))
+		if (is_null($this->tempData))
 		{
 			$this->tempData = $this->data;
 		}
@@ -335,7 +337,9 @@ class View implements RendererInterface
 		@ob_end_clean();
 
 		$this->logPerformance($start, microtime(true), $this->excerpt($view));
+
 		$this->tempData = null;
+
 		return $output;
 	}
 
@@ -370,6 +374,7 @@ class View implements RendererInterface
 		{
 			$data = \esc($data, $context);
 		}
+
 		$this->tempData = $this->tempData ?? $this->data;
 		$this->tempData = array_merge($this->tempData, $data);
 
@@ -395,7 +400,7 @@ class View implements RendererInterface
 			$value = \esc($value, $context);
 		}
 
-		$this->tempData = $this->tempData ?? $this->data;
+		$this->tempData        = $this->tempData ?? $this->data;
 		$this->tempData[$name] = $value;
 
 		return $this;
@@ -424,7 +429,7 @@ class View implements RendererInterface
 	 */
 	public function getData(): array
 	{
-		return $this->tempData ?? $this->data;
+		return is_null($this->tempData) ? $this->data : $this->tempData;
 	}
 
 	//--------------------------------------------------------------------
