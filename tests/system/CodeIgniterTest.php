@@ -1,9 +1,9 @@
 <?php namespace CodeIgniter;
 
-use Config\App;
-use CodeIgniter\Test\Mock\MockCodeIgniter;
-use CodeIgniter\Router\RouteCollection;
 use \CodeIgniter\Config\Services;
+use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
+use Config\App;
 
 /**
  * @backupGlobals enabled

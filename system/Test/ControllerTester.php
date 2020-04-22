@@ -41,9 +41,9 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\UserAgent;
 use Config\App;
 use Config\Services;
 use InvalidArgumentException;

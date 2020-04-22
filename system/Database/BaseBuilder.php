@@ -39,9 +39,9 @@
 
 namespace CodeIgniter\Database;
 
+use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
-use Closure;
 
 /**
  * Class BaseBuilder

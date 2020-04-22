@@ -37,20 +37,20 @@
  * @filesource
  */
 
-use Config\App;
-use Config\View;
-use Config\Logger;
-use Config\Database;
-use Config\Services;
-use CodeIgniter\HTTP\URI;
-use Laminas\Escaper\Escaper;
 use CodeIgniter\Config\Config;
-use CodeIgniter\Test\TestLogger;
+use CodeIgniter\Database\ConnectionInterface;
+use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Database\ConnectionInterface;
-use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use CodeIgniter\HTTP\URI;
+use CodeIgniter\Test\TestLogger;
+use Config\App;
+use Config\Database;
+use Config\Logger;
+use Config\Services;
+use Config\View;
+use Laminas\Escaper\Escaper;
 
 /**
  * Common Functions

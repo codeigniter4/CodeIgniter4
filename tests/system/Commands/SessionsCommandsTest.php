@@ -1,11 +1,11 @@
 <?php namespace CodeIgniter\Commands;
 
-use Config\Services;
-use CodeIgniter\Test\Mock\MockAppConfig;
-use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\CommandRunner;
+use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\Mock\MockAppConfig;
+use Config\Services;
 
 class SessionsCommandsTest extends \CodeIgniter\Test\CIUnitTestCase
 {

@@ -38,10 +38,8 @@
 
 namespace CodeIgniter\Encryption;
 
-use Config\Encryption as EncryptionConfig;
-use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Config\BaseConfig;
-use Config\Services;
+use CodeIgniter\Encryption\Exceptions\EncryptionException;
 
 /**
  * CodeIgniter Encryption Manager

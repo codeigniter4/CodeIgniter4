@@ -1,8 +1,8 @@
 <?php
 namespace CodeIgniter\Language;
 
-use Config\Services;
 use CodeIgniter\Test\Mock\MockLanguage;
+use Config\Services;
 use Tests\Support\Language\SecondMockLanguage;
 
 class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase

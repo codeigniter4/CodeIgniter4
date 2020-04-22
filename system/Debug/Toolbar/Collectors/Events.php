@@ -39,8 +39,8 @@
 
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
-use Config\Services;
 use CodeIgniter\View\RendererInterface;
+use Config\Services;
 
 /**
  * Views collector

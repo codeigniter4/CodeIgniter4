@@ -1,11 +1,10 @@
 <?php namespace CodeIgniter\Database;
 
 use CodeIgniter\Exceptions\ConfigException;
-use Config\Migrations;
-use org\bovigo\vfs\vfsStream;
 use CodeIgniter\Test\CIDatabaseTestCase;
-use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
+use Config\Migrations;
 use Config\Services;
+use org\bovigo\vfs\vfsStream;
 
 /**
  * @group DatabaseLive

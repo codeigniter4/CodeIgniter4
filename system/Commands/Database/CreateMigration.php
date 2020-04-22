@@ -41,7 +41,6 @@ namespace CodeIgniter\Commands\Database;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
-use Config\Migrations;
 
 /**
  * Creates a new migration file.

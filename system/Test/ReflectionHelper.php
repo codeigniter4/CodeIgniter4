@@ -39,9 +39,9 @@
 
 namespace CodeIgniter\Test;
 
+use ReflectionClass;
 use ReflectionMethod;
 use ReflectionObject;
-use ReflectionClass;
 
 /**
  * Testing helper.

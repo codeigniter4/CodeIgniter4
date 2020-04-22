@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Images;
 
-use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Config\Services;
+use CodeIgniter\Images\Exceptions\ImageException;
 use org\bovigo\vfs\vfsStream;
 
 /**

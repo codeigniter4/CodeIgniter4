@@ -2,9 +2,9 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Log\Logger;
+use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\App;
 use Config\Services;
-use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 
 /**
  * Exercise our Controller class.

@@ -2,9 +2,9 @@
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\HTTP\UserAgent;
-use Config\Services;
-use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\Mock\MockCLIConfig;
+use Config\Services;
 
 class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 {

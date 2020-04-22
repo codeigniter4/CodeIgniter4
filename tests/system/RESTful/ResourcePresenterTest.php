@@ -2,8 +2,8 @@
 namespace CodeIgniter\RESTful;
 
 use CodeIgniter\Config\Services;
-use Config\App;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
+use Config\App;
 
 /**
  * Exercise our core ResourcePresenter class.
@@ -252,7 +252,7 @@ class ResourcePresenterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
 		$this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());
 
-		$model    = new \Tests\Support\Models\EntityModel();
+		$model = new \Tests\Support\Models\EntityModel();
 		$resource->setModel($model);
 		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
 		$this->assertEquals('Tests\Support\Models\EntityModel', $resource->getModelName());

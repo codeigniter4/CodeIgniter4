@@ -1,12 +1,12 @@
 <?php
 namespace CodeIgniter\Helpers;
 
-use Config\App;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\Mock\MockResponse;
+use Config\App;
 
 final class CookieHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 {

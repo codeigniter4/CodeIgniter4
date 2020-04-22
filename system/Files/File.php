@@ -39,9 +39,9 @@
 
 namespace CodeIgniter\Files;
 
-use SplFileInfo;
 use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use SplFileInfo;
 
 /**
  * Wrapper for PHP's built-in SplFileInfo, with goodies.

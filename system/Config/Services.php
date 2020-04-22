@@ -39,6 +39,8 @@
 namespace CodeIgniter\Config;
 
 use CodeIgniter\Cache\CacheFactory;
+use CodeIgniter\Database\ConnectionInterface;
+use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Debug\Exceptions;
 use CodeIgniter\Debug\Iterator;
 use CodeIgniter\Debug\Timer;
@@ -70,10 +72,8 @@ use CodeIgniter\Typography\Typography;
 use CodeIgniter\Validation\Validation;
 use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
-use Config\App;
-use CodeIgniter\Database\ConnectionInterface;
-use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\View\RendererInterface;
+use Config\App;
 use Config\Cache;
 use Config\Images;
 use Config\Logger;

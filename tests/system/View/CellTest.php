@@ -1,8 +1,8 @@
 <?php
 
+use CodeIgniter\Test\Mock\MockCache;
 use CodeIgniter\View\Cell;
 use CodeIgniter\View\Exceptions\ViewException;
-use CodeIgniter\Test\Mock\MockCache;
 
 class CellTest extends \CodeIgniter\Test\CIUnitTestCase
 {

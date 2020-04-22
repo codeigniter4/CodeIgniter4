@@ -3,7 +3,6 @@ namespace Tests\Support\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Controller;
-use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 /**
  * This is a testing only controller, intended to blow up in multiple
