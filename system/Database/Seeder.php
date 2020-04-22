@@ -41,6 +41,7 @@ namespace CodeIgniter\Database;
 
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Database\Forge;
 
 /**
  * Class Seeder
@@ -122,6 +123,8 @@ class Seeder
 		}
 
 		$this->db = & $db;
+
+		$this->forge = \Config\Database::forge($this->DBGroup);
 	}
 
 	//--------------------------------------------------------------------
