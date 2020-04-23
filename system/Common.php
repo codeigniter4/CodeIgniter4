@@ -402,7 +402,9 @@ if (! function_exists('force_https'))
 
 		if (ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure()))
 		{
+			// @codeCoverageIgnoreStart
 			return;
+			// @codeCoverageIgnoreEnd
 		}
 
 		// If the session status is active, we should regenerate

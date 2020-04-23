@@ -440,4 +440,11 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('<h1>is_not</h1>', view('\Tests\Support\View\Views\simples'));
 	}
 
+	//--------------------------------------------------------------------
+
+	public function testForceHttpsNullRequestAndResponse()
+	{
+		$this->assertNull(force_https());
+	}
+
 }
