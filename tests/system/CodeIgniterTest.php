@@ -298,7 +298,6 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
-		$response = $this->getPrivateProperty($codeigniter, 'response');
 		$this->assertEquals('https://example.com', $response->getHeader('Location')->getValue());
 	}
 }
