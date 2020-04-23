@@ -145,8 +145,6 @@ class Throttler implements ThrottlerInterface
 			// capacity - 1, and save it to the cache.
 			$this->cache->save($tokenName, $capacity - $cost, $seconds);
 			$this->cache->save($tokenName . 'Time', time(), $seconds);
-
-			return true;
 		}
 
 		// If $tokens > 0, then we need to replenish the bucket
@@ -171,7 +169,7 @@ class Throttler implements ThrottlerInterface
 
 		// If $tokens > 0, then we are safe to perform the action, but
 		// we need to decrement the number of available tokens.
-		if ($tokens > 0)
+		if ($tokens >= 0)
 		{
 			$this->cache->save($tokenName, $tokens - $cost, $seconds);
 			$this->cache->save($tokenName . 'Time', time(), $seconds);
