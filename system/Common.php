@@ -409,10 +409,12 @@ if (! function_exists('force_https'))
 
 		// If the session status is active, we should regenerate
 		// the session ID for safety sake.
-		if (session_status() === PHP_SESSION_ACTIVE)
+		if (ENVIRONMENT !== 'testing' && session_status() === PHP_SESSION_ACTIVE)
 		{
+			// @codeCoverageIgnoreStart
 			Services::session(null, true)
 				->regenerate();
+			// @codeCoverageIgnoreEnd
 		}
 
 		$baseURL = config(App::class)->baseURL;
