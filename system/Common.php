@@ -403,7 +403,7 @@ if (! function_exists('force_https'))
 			$response = Services::response(null, true);
 		}
 
-		if (is_cli() || $request->isSecure())
+		if (ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure()))
 		{
 			return;
 		}
@@ -433,7 +433,10 @@ if (! function_exists('force_https'))
 		$response->redirect($uri);
 		$response->sendHeaders();
 
-		exit();
+		if (ENVIRONMENT !== 'testing')
+		{
+			exit();
+		}
 		// @codeCoverageIgnoreEnd
 	}
 }

@@ -273,4 +273,26 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertStringContainsString('Welcome to CodeIgniter', $output);
 	}
+
+	//--------------------------------------------------------------------
+
+	public function testRunForceSecure()
+	{
+		$_SERVER['argv'] = [
+			'index.php',
+			'/',
+		];
+		$_SERVER['argc'] = 2;
+
+		$config                            = new App();
+		$config->forceGlobalSecureRequests = true;
+		$codeigniter                       = new MockCodeIgniter($config);
+
+		ob_start();
+		$codeigniter->useSafeOutput(true)->run();
+		$output = ob_get_clean();
+
+		$response = $this->getPrivateProperty($codeigniter, 'response');
+		$this->assertEquals('https://example.com', $response->getHeader('Location')->getValue());
+	}
 }
