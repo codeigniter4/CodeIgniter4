@@ -387,10 +387,7 @@ if (! function_exists('force_https'))
 	 * @param RequestInterface  $request
 	 * @param ResponseInterface $response
 	 *
-	 * Not testable, as it will exit!
-	 *
-	 * @throws             \CodeIgniter\HTTP\Exceptions\HTTPException
-	 * @codeCoverageIgnore
+	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException
 	 */
 	function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
 	{
@@ -407,7 +404,7 @@ if (! function_exists('force_https'))
 		{
 			return;
 		}
-		// @codeCoverageIgnoreStart
+
 		// If the session library is loaded, we should regenerate
 		// the session ID for safety sake.
 		if (class_exists('Session', false))
@@ -435,9 +432,10 @@ if (! function_exists('force_https'))
 
 		if (ENVIRONMENT !== 'testing')
 		{
+			// @codeCoverageIgnoreStart
 			exit();
+			// @codeCoverageIgnoreEnd
 		}
-		// @codeCoverageIgnoreEnd
 	}
 }
 
