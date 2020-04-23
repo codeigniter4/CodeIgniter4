@@ -444,7 +444,8 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testForceHttpsNullRequestAndResponse()
 	{
-		$this->assertNull(force_https());
+		force_https();
+		$this->assertEquals('https://example.com', Services::response()->getHeader('Location')->getValue());
 	}
 
 }
