@@ -405,9 +405,9 @@ if (! function_exists('force_https'))
 			return;
 		}
 
-		// If the session library is loaded, we should regenerate
+		// If the session status is active, we should regenerate
 		// the session ID for safety sake.
-		if (class_exists('Session', false))
+		if (session_status() === PHP_SESSION_ACTIVE)
 		{
 			Services::session(null, true)
 				->regenerate();
