@@ -442,6 +442,10 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
 	public function testForceHttpsNullRequestAndResponse()
 	{
 		$this->assertNull(Services::response()->getHeader('Location'));
