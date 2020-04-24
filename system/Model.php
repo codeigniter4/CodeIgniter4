@@ -1126,10 +1126,11 @@ class Model
 	 * @param string  $group   Will be used by the pagination library
 	 *                         to identify a unique pagination set.
 	 * @param integer $page    Optional page number (useful when the page number is provided in different way)
+	 * @param integer $segment Optional URI segment number (if page number is provided by URI segment)
 	 *
 	 * @return array|null
 	 */
-	public function paginate(int $perPage = null, string $group = 'default', int $page = 0)
+	public function paginate(int $perPage = null, string $group = 'default', int $page = 0, int $segment = 0)
 	{
 		$pager = \Config\Services::pager(null, null, false);
 		$page  = $page >= 1 ? $page : $pager->getCurrentPage($group);
@@ -1138,7 +1139,7 @@ class Model
 
 		// Store it in the Pager library so it can be
 		// paginated in the views.
-		$this->pager = $pager->store($group, $page, $perPage, $total);
+		$this->pager = $pager->store($group, $page, $perPage, $total, $segment);
 		$perPage     = $this->pager->getPerPage($group);
 		$offset      = ($page - 1) * $perPage;
 
