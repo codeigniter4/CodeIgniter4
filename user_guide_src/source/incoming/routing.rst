@@ -73,27 +73,27 @@ The following placeholders are available for you to use in your routes:
 Examples
 ========
 
-Here are a few basic routing examples::
-
-	$routes->add('journals', 'App\Blogs');
+Here are a few basic routing examples.
 
 A URL containing the word "journals" in the first segment will be remapped to the "App\Blogs" class,
 and the default method, which is usually ``index()``::
 
-	$routes->add('blog/joe', 'Blogs::users/34');
+	$routes->add('journals', 'App\Blogs');
 
 A URL containing the segments "blog/joe" will be remapped to the “\Blogs” class and the “users” method.
 The ID will be set to “34”::
 
-	$routes->add('product/(:any)', 'Catalog::productLookup');
+	$routes->add('blog/joe', 'Blogs::users/34');
 
 A URL with “product” as the first segment, and anything in the second will be remapped to the “\Catalog” class
 and the “productLookup” method::
 
-	$routes->add('product/(:num)', 'Catalog::productLookupByID/$1';
+	$routes->add('product/(:any)', 'Catalog::productLookup');
 
 A URL with “product” as the first segment, and a number in the second will be remapped to the “\Catalog” class
-and the “productLookupByID” method passing in the match as a variable to the method.
+and the “productLookupByID” method passing in the match as a variable to the method::
+
+	$routes->add('product/(:num)', 'Catalog::productLookupByID/$1';
 
 .. important:: While the ``add()`` method is convenient, it is recommended to always use the HTTP-verb-based
     routes, described below, as it is more secure. It will also provide a slight performance increase, since
