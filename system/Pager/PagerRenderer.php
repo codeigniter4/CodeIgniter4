@@ -146,7 +146,7 @@ class PagerRenderer
 	 */
 	public function hasPrevious(): bool
 	{
-		return $this->first > 1;
+		return $this->current > 1;
 	}
 
 	//--------------------------------------------------------------------
@@ -171,11 +171,11 @@ class PagerRenderer
 
 		if ($this->segment === 0)
 		{
-			$uri->addQuery($this->pageSelector, $this->first - 1);
+			$uri->addQuery($this->pageSelector, $this->current - 1);
 		}
 		else
 		{
-			$uri->setSegment($this->segment, $this->first - 1);
+			$uri->setSegment($this->segment, $this->current - 1);
 		}
 
 		return (string) $uri;
@@ -190,7 +190,7 @@ class PagerRenderer
 	 */
 	public function hasNext(): bool
 	{
-		return $this->pageCount > $this->last;
+		return $this->pageCount > $this->current;
 	}
 
 	//--------------------------------------------------------------------
@@ -215,11 +215,11 @@ class PagerRenderer
 
 		if ($this->segment === 0)
 		{
-			$uri->addQuery($this->pageSelector, $this->last + 1);
+			$uri->addQuery($this->pageSelector, $this->current + 1);
 		}
 		else
 		{
-			$uri->setSegment($this->segment, $this->last + 1);
+			$uri->setSegment($this->segment, $this->current + 1);
 		}
 
 		return (string) $uri;
