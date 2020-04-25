@@ -364,19 +364,17 @@ Or pass all settings in an array::
     {
         public $signup = [
             'username' => [
-                'label'  => 'Username',
                 'rules'  => 'required',
                 'errors' => [
-                    'required' => 'You must choose a {field}.'
+                    'required' => 'You must choose a Username.'
                 ]
             ],
-            'email'    => 'required|valid_email'
-        ];
-
-        public $signup_errors = [
-            'email' => [
-                'valid_email' => 'Please check the Email field. It does not appear to be valid.'
-            ]
+            'email'    => [
+                'rules'  => 'required|valid_email',
+                'errors' => [
+                    'valid_email' => 'Please check the Email field. It does not appear to be valid.'
+                ]
+            ],
         ];
     }
 
