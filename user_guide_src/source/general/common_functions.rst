@@ -2,7 +2,7 @@
 Global Functions and Constants
 ##############################
 
-CodeIgniter uses provides a few functions and variables that are globally defined, and are available to you at any point.
+CodeIgniter provides a few functions and variables that are globally defined, and are available to you at any point.
 These do not require loading any additional libraries or helpers.
 
 .. contents::
@@ -80,6 +80,14 @@ Service Accessors
 	Retrieves a locale-specific file based on an alias string.
 
 	For more information, see the :doc:`Localization </outgoing/localization>` page.
+
+.. php:function:: model($name [, $getShared = true [, &$conn = null ]])
+
+    :param string                   $name:
+    :param boolean                  $getShared:
+    :param ConnectionInterface|null $conn:
+    :returns: More simple way of getting model instances
+    :rtype: mixed
 
 .. php:function:: old( $key[, $default = null, [, $escape = 'html' ]] )
 
@@ -166,8 +174,26 @@ Service Accessors
 
 	For more details, see the :doc:`Views </outgoing/views>` page.
 
+.. php:function:: view_cell ( $library [, $params = null [, $ttl = 0 [, $cacheName = null]]] )
+
+    :param string      $library:
+    :param null        $params:
+    :param integer     $ttl:
+    :param string|null $cacheName:
+    :returns: View cells are used within views to insert HTML chunks that are managed by other classes.
+    :rtype: string
+
+    For more details, see the :doc:`View Cells </outgoing/view_cells>` page.
+
 Miscellaneous Functions
 =======================
+
+.. php:function:: app_timezone ()
+
+    :returns: The timezone the application has been set to display dates in.
+    :rtype: string
+
+    Returns the timezone the application has been set to display dates in.
 
 .. php:function:: csrf_token ()
 
@@ -195,7 +221,7 @@ Miscellaneous Functions
 	:returns: A string with the HTML for hidden input with all required CSRF information.
 	:rtype: string
 
-	Returns a hidden input with the CSRF information already inserted:
+	Returns a hidden input with the CSRF information already inserted::
 
 		<input type="hidden" name="{csrf_token}" value="{csrf_hash}">
 
@@ -204,7 +230,7 @@ Miscellaneous Functions
 	:returns: A string with the HTML for meta tag with all required CSRF information.
 	:rtype: string
 
-	Returns a meta tag with the CSRF information already inserted:
+	Returns a meta tag with the CSRF information already inserted::
 
 		<meta name="{csrf_header}" content="{csrf_hash}">
 
@@ -219,10 +245,22 @@ Miscellaneous Functions
 	but through HTTPS. Will set the HTTP Strict Transport Security header, which instructs
 	modern browsers to automatically modify any HTTP requests to HTTPS requests for the $duration.
 
+.. php:function:: function_usable ( $function_name )
+
+    :param string $function_name: Function to check for
+    :returns: TRUE if the function exists and is safe to call, FALSE otherwise.
+    :rtype: bool
+
 .. php:function:: is_cli ()
 
 	:returns: TRUE if the script is being executed from the command line or FALSE otherwise.
 	:rtype: bool
+
+.. php:function:: is_really_writable ( $file )
+
+    :param string $file: The filename being checked.
+    :returns: TRUE if you can write to the file, FALSE otherwise.
+    :rtype: bool
 
 .. php:function:: log_message ($level, $message [, $context])
 
@@ -318,6 +356,14 @@ Miscellaneous Functions
 	Identical to the **service()** function described above, except that all calls to this
 	function will return a new instance of the class, where **service** returns the same
 	instance every time.
+
+.. php:function:: slash_item ( $item )
+
+    :param string $item: Config item name
+    :returns: The configuration item or NULL if the item doesn't exist
+    :rtype:  string|null
+
+    Fetch a config file item with slash appended (if not empty)
 
 .. php:function:: stringify_attributes ( $attributes [, $js] )
 

@@ -42,17 +42,29 @@ several different applications, simply put all of the directories located
 inside your application directory into their own (sub)-directory.
 
 For example, let's say you want to create two applications, named "foo"
-and "bar". You could structure your application project directories like this::
+and "bar". You could structure your application project directories like this:
 
-    foo/app, public, tests and writable
-    bar/app/, public, tests and writable
-    codeigniter/system and docs
+.. code-block:: text
+
+    /foo
+        /app
+        /public
+        /tests
+        /writable
+    /bar
+        /app
+        /public
+        /tests
+        /writable
+    /codeigniter
+        /system
+        /docs
 
 This would have two apps, "foo" and "bar", both having standard application directories
 and a ``public`` folder, and sharing a common codeigniter framework.
 
 The ``index.php`` inside each application would refer to its own configuration,
-``.../app/Config/Paths.php``, and the ``$systemDirectory`` variable inside each
+``../app/Config/Paths.php``, and the ``$systemDirectory`` variable inside each
 of those would be set to refer to the shared common "system" folder.
 
 If either of the applications had a command-line component, then you would also
