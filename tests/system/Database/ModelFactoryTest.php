@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Database;
 
-use Tests\Support\Models\JobModel;
 use CodeIgniter\Test\CIDatabaseTestCase;
+use Tests\Support\Models\JobModel;
 
 class ModelFactoryTest extends CIDatabaseTestCase
 {

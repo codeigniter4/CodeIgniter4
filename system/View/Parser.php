@@ -39,8 +39,8 @@
 
 namespace CodeIgniter\View;
 
-use Psr\Log\LoggerInterface;
 use CodeIgniter\View\Exceptions\ViewException;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class Parser

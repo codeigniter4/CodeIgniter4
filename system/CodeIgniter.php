@@ -39,20 +39,20 @@
 namespace CodeIgniter;
 
 use Closure;
+use CodeIgniter\Debug\Timer;
+use CodeIgniter\Events\Events;
+use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
-use CodeIgniter\HTTP\ResponseInterface;
-use Config\Services;
-use Config\Cache;
-use CodeIgniter\HTTP\URI;
-use CodeIgniter\Debug\Timer;
-use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\RouteCollectionInterface;
-use CodeIgniter\Exceptions\PageNotFoundException;
+use Config\Cache;
+use Config\Services;
 use Exception;
 
 /**

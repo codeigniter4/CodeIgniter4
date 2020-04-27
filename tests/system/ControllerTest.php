@@ -1,10 +1,9 @@
 <?php namespace CodeIgniter;
 
-use CodeIgniter\Log\Logger;
-use Config\App;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Validation\Exceptions\ValidationException;
+use Config\App;
 
 /**
  * Exercise our core Controller class.

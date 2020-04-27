@@ -40,7 +40,6 @@ namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use http\Encoding\Stream\Inflate;
 
 /**
  * Builder for Postgre

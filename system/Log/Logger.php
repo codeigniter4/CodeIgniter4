@@ -39,8 +39,8 @@
 
 namespace CodeIgniter\Log;
 
-use Psr\Log\LoggerInterface;
 use CodeIgniter\Log\Exceptions\LogException;
+use Psr\Log\LoggerInterface;
 
 /**
  * The CodeIgntier Logger
@@ -466,7 +466,6 @@ class Logger implements LoggerInterface
 		// interpolate replacement values into the message and return
 		return strtr($message, $replace);
 	}
-
 
 	/**
 	 * Determines the file and line that the logging call

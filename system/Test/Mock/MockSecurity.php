@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Test\Mock;
 
-use CodeIgniter\Security\Security;
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\Security\Security;
 
 class MockSecurity extends Security
 {

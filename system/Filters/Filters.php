@@ -39,9 +39,9 @@
 namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Filters\Exceptions\FilterException;
 
 /**
  * Filters

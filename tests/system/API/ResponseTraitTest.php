@@ -1,12 +1,12 @@
 <?php
 namespace CodeIgniter\API;
 
+use CodeIgniter\Format\JSONFormatter;
+use CodeIgniter\Format\XMLFormatter;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
-use CodeIgniter\Test\Mock\MockResponse;
-use CodeIgniter\Format\XMLFormatter;
-use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
+use CodeIgniter\Test\Mock\MockResponse;
 
 class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 {

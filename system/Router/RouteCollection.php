@@ -38,10 +38,10 @@
 
 namespace CodeIgniter\Router;
 
-use CodeIgniter\HTTP\Request;
-use Config\Services;
 use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RouterException;
+use Config\Services;
 
 /**
  * Class RouteCollection

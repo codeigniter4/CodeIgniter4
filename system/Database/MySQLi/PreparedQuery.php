@@ -39,8 +39,8 @@
 
 namespace CodeIgniter\Database\MySQLi;
 
-use CodeIgniter\Database\PreparedQueryInterface;
 use CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Database\PreparedQueryInterface;
 
 /**
  * Prepared query for MySQLi

@@ -3,8 +3,8 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Services;
-use Config\App;
 use CodeIgniter\Test\Mock\MockCURLRequest;
+use Config\App;
 
 class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 {

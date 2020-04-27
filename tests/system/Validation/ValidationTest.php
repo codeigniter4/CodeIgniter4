@@ -1,11 +1,11 @@
 <?php namespace CodeIgniter\Validation;
 
-use CodeIgniter\Validation\Exceptions\ValidationException;
-use Config\Services;
-use Config\App;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Validation\Exceptions\ValidationException;
+use Config\App;
+use Config\Services;
 
 class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 {

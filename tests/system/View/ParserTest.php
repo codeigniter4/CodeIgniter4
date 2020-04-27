@@ -1,7 +1,7 @@
 <?php
 
-use CodeIgniter\View\Parser;
 use CodeIgniter\View\Exceptions\ViewException;
+use CodeIgniter\View\Parser;
 
 class ParserTest extends \CodeIgniter\Test\CIUnitTestCase
 {

@@ -1,8 +1,8 @@
 <?php namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\Test\Mock\MockQuery;
 use CodeIgniter\Test\Mock\MockConnection;
+use CodeIgniter\Test\Mock\MockQuery;
 
 class UpdateTest extends \CodeIgniter\Test\CIUnitTestCase
 {

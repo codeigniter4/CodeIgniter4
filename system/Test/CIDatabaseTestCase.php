@@ -38,14 +38,12 @@
 
 namespace CodeIgniter\Test;
 
-use CodeIgniter\Config\Config;
-use Config\Autoload;
-use Config\Database;
-use Config\Migrations;
-use Config\Services;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Exceptions\ConfigException;
+use Config\Database;
+use Config\Migrations;
+use Config\Services;
 
 /**
  * CIDatabaseTestCase

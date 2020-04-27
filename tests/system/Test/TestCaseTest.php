@@ -2,8 +2,8 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Events\Events;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\HTTP\Response;
+use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\App;
 
 class TestCaseTest extends \CodeIgniter\Test\CIUnitTestCase

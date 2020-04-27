@@ -39,8 +39,8 @@
 
 namespace CodeIgniter\Database;
 
-use CodeIgniter\Events\Events;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Events\Events;
 
 /**
  * Class BaseConnection

@@ -40,10 +40,10 @@
 
 namespace CodeIgniter\HTTP;
 
-use Config\App;
-use Config\Format;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
+use Config\App;
+use Config\Format;
 
 /**
  * Representation of an outgoing, getServer-side response.

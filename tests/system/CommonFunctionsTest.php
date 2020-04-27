@@ -1,17 +1,17 @@
 <?php
 
-use CodeIgniter\Session\Handlers\FileHandler;
-use CodeIgniter\HTTP\Response;
-use Config\App;
 use CodeIgniter\Config\Services;
-use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
-use Config\Logger;
+use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
-use CodeIgniter\Test\TestLogger;
 use CodeIgniter\Test\Mock\MockSession;
+use CodeIgniter\Test\TestLogger;
+use Config\App;
+use Config\Logger;
 use Tests\Support\Models\JobModel;
 
 /**

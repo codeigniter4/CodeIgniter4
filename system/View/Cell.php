@@ -40,8 +40,8 @@ namespace CodeIgniter\View;
 
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\View\Exceptions\ViewException;
-use ReflectionMethod;
 use Config\Services;
+use ReflectionMethod;
 
 /**
  * Class Cell

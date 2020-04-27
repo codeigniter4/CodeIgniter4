@@ -39,10 +39,9 @@
 
 namespace CodeIgniter\Test;
 
-use Config\Paths;
 use CodeIgniter\Events\Events;
+use Config\Paths;
 use PHPUnit\Framework\TestCase;
-use CodeIgniter\Test\TestLogger;
 
 /**
  * PHPunit test case.
