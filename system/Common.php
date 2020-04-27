@@ -387,10 +387,7 @@ if (! function_exists('force_https'))
 	 * @param RequestInterface  $request
 	 * @param ResponseInterface $response
 	 *
-	 * Not testable, as it will exit!
-	 *
-	 * @throws             \CodeIgniter\HTTP\Exceptions\HTTPException
-	 * @codeCoverageIgnore
+	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException
 	 */
 	function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
 	{
@@ -403,17 +400,21 @@ if (! function_exists('force_https'))
 			$response = Services::response(null, true);
 		}
 
-		if (is_cli() || $request->isSecure())
+		if (ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure()))
 		{
+			// @codeCoverageIgnoreStart
 			return;
+			// @codeCoverageIgnoreEnd
 		}
-		// @codeCoverageIgnoreStart
-		// If the session library is loaded, we should regenerate
+
+		// If the session status is active, we should regenerate
 		// the session ID for safety sake.
-		if (class_exists('Session', false))
+		if (ENVIRONMENT !== 'testing' && session_status() === PHP_SESSION_ACTIVE)
 		{
+			// @codeCoverageIgnoreStart
 			Services::session(null, true)
 				->regenerate();
+			// @codeCoverageIgnoreEnd
 		}
 
 		$baseURL = config(App::class)->baseURL;
@@ -433,8 +434,12 @@ if (! function_exists('force_https'))
 		$response->redirect($uri);
 		$response->sendHeaders();
 
-		exit();
-		// @codeCoverageIgnoreEnd
+		if (ENVIRONMENT !== 'testing')
+		{
+			// @codeCoverageIgnoreStart
+			exit();
+			// @codeCoverageIgnoreEnd
+		}
 	}
 }
 
