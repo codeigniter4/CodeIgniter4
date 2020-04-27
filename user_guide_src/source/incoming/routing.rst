@@ -257,7 +257,7 @@ separated by a double colon (::), much like you would use when writing the initi
 should be passed to the route are passed in next::
 
 	// The route is defined as:
-	$routes->add('users/(:id)/gallery(:any)', 'App\Controllers\Galleries::showUserGallery/$1/$2');
+	$routes->add('users/(:num)/gallery(:any)', 'App\Controllers\Galleries::showUserGallery/$1/$2');
 
 	// Generate the relative URL to link to user ID 15, gallery 12
 	// Generates: /users/15/gallery/12
@@ -272,7 +272,7 @@ will still work without you having to make any changes. A route is named by pass
 with the name of the route::
 
     // The route is defined as:
-    $routes->add('users/(:id)/gallery(:any)', 'Galleries::showUserGallery/$1/$2', ['as' => 'user_gallery');
+    $routes->add('users/(:num)/gallery(:any)', 'Galleries::showUserGallery/$1/$2', ['as' => 'user_gallery']);
 
     // Generate the relative URL to link to user ID 15, gallery 12
     // Generates: /users/15/gallery/12
