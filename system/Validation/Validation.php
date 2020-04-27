@@ -157,7 +157,7 @@ class Validation implements ValidationInterface
 
 		// Replace any placeholders (i.e. {id}) in the rules with
 		// the value found in $data, if exists.
-		$this->fillPlaceholders($data);
+		$this->rules = $this->fillPlaceholders($this->rules, $data);
 
 		// Need this for searching arrays in validation.
 		helper('array');
@@ -624,9 +624,12 @@ class Validation implements ValidationInterface
 	 *
 	 *  'required|is_unique[users,email,id,13]'
 	 *
+	 * @param array $rules
 	 * @param array $data
+	 *
+	 * @return array
 	 */
-	protected function fillPlaceholders(array $data)
+	protected function fillPlaceholders(array $rules, array $data): array
 	{
 		$replacements = [];
 
@@ -637,7 +640,7 @@ class Validation implements ValidationInterface
 
 		if (! empty($replacements))
 		{
-			foreach ($this->rules as &$rule)
+			foreach ($rules as &$rule)
 			{
 				if (is_array($rule))
 				{
@@ -658,6 +661,8 @@ class Validation implements ValidationInterface
 				$rule = strtr($rule, $replacements);
 			}
 		}
+
+		return $rules;
 	}
 
 	//--------------------------------------------------------------------
