@@ -23,14 +23,15 @@ class MetadataTest extends CIDatabaseTestCase
 		parent::setUp();
 
 		// Prepare the array of expected tables once
-		$prefix = $this->db->getPrefix();
+		$prefix               = $this->db->getPrefix();
 		$this->expectedTables = [
 			$prefix . 'migrations',
 			$prefix . 'user',
 			$prefix . 'job',
 			$prefix . 'misc',
 			$prefix . 'empty',
-			$prefix . 'secondary'
+			$prefix . 'secondary',
+			$prefix . 'stringifypkey',
 		];
 	}
 
@@ -62,8 +63,14 @@ class MetadataTest extends CIDatabaseTestCase
 
 		// Create a table with the new prefix
 		$fields = [
-			'name'       => ['type' => 'varchar', 'constraint' => 31],
-			'created_at' => ['type' => 'datetime', 'null' => true],
+			'name'       => [
+				'type'       => 'varchar',
+				'constraint' => 31,
+			],
+			'created_at' => [
+				'type' => 'datetime',
+				'null' => true,
+			],
 		];
 		$this->forge->addField($fields);
 		$this->forge->createTable('widgets');
