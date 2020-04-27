@@ -487,7 +487,7 @@ at least 6 characters.”
 Translation Of Messages And Validation Labels
 =============================================
 
-To use translated strings from language files, we can simply use the dot syntax. Let's say we have a file with translations located here: ``app/Languages/en/Rules.php``. We can simply use the language lines defined in this file, like this:
+To use translated strings from language files, we can simply use the dot syntax. Let's say we have a file with translations located here: ``app/Languages/en/Rules.php``. We can simply use the language lines defined in this file, like this::
 
     $validation->setRules([
             'username' => [
@@ -716,11 +716,11 @@ alpha_space             No          Fails if field contains anything other than 
 alpha_dash              No          Fails if field contains anything other than alphanumeric characters, underscores or dashes.
 alpha_numeric           No          Fails if field contains anything other than alphanumeric characters.
 alpha_numeric_space     No          Fails if field contains anything other than alphanumeric or space characters.
-alpha_numeric_punct     No          Fails if field contains anything other than alphanumeric, space, or this limited set of 
-                                    punctuation characters: ~ (tilde), ! (exclamation), # (number), $ (dollar), % (percent), 
-                                    & (ampersand), * (asterisk), - (dash), _ (underscore), + (plus), = (equals), 
+alpha_numeric_punct     No          Fails if field contains anything other than alphanumeric, space, or this limited set of
+                                    punctuation characters: ~ (tilde), ! (exclamation), # (number), $ (dollar), % (percent),
+                                    & (ampersand), * (asterisk), - (dash), _ (underscore), + (plus), = (equals),
                                     | (vertical bar), : (colon), . (period).
-decimal                 No          Fails if field contains anything other than a decimal number. 
+decimal                 No          Fails if field contains anything other than a decimal number.
                                     Also accepts a + or  - sign for the number.
 differs                 Yes         Fails if field does not differ from the one in the parameter.                                   differs[field_name]
 exact_length            Yes         Fails if field is not exactly the parameter value. One or more comma-separated values.          exact_length[5] or exact_length[5,8,12]
