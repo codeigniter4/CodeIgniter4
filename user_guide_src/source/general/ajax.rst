@@ -16,13 +16,9 @@ Fetch API
     fetch(url, {
         method: "get",
         headers: {
-
           "Content-Type": "application/json",
-
           "X-Requested-With": "XMLHttpRequest"
-
         }
-
     });
 
 
@@ -35,9 +31,7 @@ For libraries like jQuery for example, it is not necessary to make explicit the 
 
     $.ajax({
         url: "your url",
-
         headers: {'X-Requested-With': 'XMLHttpRequest'}
-
     });
 
 
