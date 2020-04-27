@@ -155,6 +155,10 @@ class Validation implements ValidationInterface
 			return false;
 		}
 
+		// Replace any placeholders (i.e. {id}) in the rules with
+		// the value found in $data, if exists.
+		$this->rules = $this->fillPlaceholders($this->rules, $data);
+
 		// Need this for searching arrays in validation.
 		helper('array');
 
@@ -601,6 +605,64 @@ class Validation implements ValidationInterface
 		}
 
 		return $this->rules;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Replace any placeholders within the rules with the values that
+	 * match the 'key' of any properties being set. For example, if
+	 * we had the following $data array:
+	 *
+	 * [ 'id' => 13 ]
+	 *
+	 * and the following rule:
+	 *
+	 *  'required|is_unique[users,email,id,{id}]'
+	 *
+	 * The value of {id} would be replaced with the actual id in the form data:
+	 *
+	 *  'required|is_unique[users,email,id,13]'
+	 *
+	 * @param array $rules
+	 * @param array $data
+	 *
+	 * @return array
+	 */
+	protected function fillPlaceholders(array $rules, array $data): array
+	{
+		$replacements = [];
+
+		foreach ($data as $key => $value)
+		{
+			$replacements["{{$key}}"] = $value;
+		}
+
+		if (! empty($replacements))
+		{
+			foreach ($rules as &$rule)
+			{
+				if (is_array($rule))
+				{
+					foreach ($rule as &$row)
+					{
+						// Should only be an `errors` array
+						// which doesn't take placeholders.
+						if (is_array($row))
+						{
+							continue;
+						}
+
+						$row = strtr($row, $replacements);
+					}
+					continue;
+				}
+
+				$rule = strtr($rule, $replacements);
+			}
+		}
+
+		return $rules;
 	}
 
 	//--------------------------------------------------------------------

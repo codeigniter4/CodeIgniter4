@@ -64,11 +64,11 @@ The Form
 Using a text editor, create a form called **Signup.php**. In it, place this
 code and save it to your **app/Views/** folder::
 
-	<html>
-	<head>
-	    <title>My Form</title>
-	</head>
-	<body>
+    <html>
+    <head>
+        <title>My Form</title>
+    </head>
+    <body>
 
         <?= $validation->listErrors() ?>
 
@@ -90,8 +90,8 @@ code and save it to your **app/Views/** folder::
 
         </form>
 
-	</body>
-	</html>
+    </body>
+    </html>
 
 The Success Page
 ================================================
@@ -99,18 +99,18 @@ The Success Page
 Using a text editor, create a form called **Success.php**. In it, place
 this code and save it to your **app/Views/** folder::
 
-	<html>
-	<head>
-	    <title>My Form</title>
-	</head>
-	<body>
+    <html>
+    <head>
+        <title>My Form</title>
+    </head>
+    <body>
 
         <h3>Your form was successfully submitted!</h3>
 
         <p><?= anchor('form', 'Try it again!') ?></p>
 
-	</body>
-	</html>
+    </body>
+    </html>
 
 The Controller
 ================================================
@@ -118,43 +118,43 @@ The Controller
 Using a text editor, create a controller called **Form.php**. In it, place
 this code and save it to your **app/Controllers/** folder::
 
-	<?php namespace App\Controllers;
+    <?php namespace App\Controllers;
 
-	use CodeIgniter\Controller;
+    use CodeIgniter\Controller;
 
-	class Form extends Controller
-	{
-		public function index()
-		{
-			helper(['form', 'url']);
+    class Form extends Controller
+    {
+        public function index()
+        {
+            helper(['form', 'url']);
 
-			if (! $this->validate([]))
-			{
-				echo view('Signup', [
-					'validation' => $this->validator
-				]);
-			}
-			else
-			{
-				echo view('Success');
-			}
-		}
-	}
+            if (! $this->validate([]))
+            {
+                echo view('Signup', [
+                    'validation' => $this->validator
+                ]);
+            }
+            else
+            {
+                echo view('Success');
+            }
+        }
+    }
 
 Try it!
 ================================================
 
 To try your form, visit your site using a URL similar to this one::
 
-	example.com/index.php/form/
+    example.com/index.php/form/
 
 If you submit the form you should simply see the form reload. That's
 because you haven't set up any validation rules yet.
 
-**Since you haven't told the Validation class to validate anything
-yet, it returns false (boolean false) by default. The** ``validate()`` **method
-only returns true if it has successfully applied your rules without any
-of them failing.**
+.. note:: Since you haven't told the **Validation class** to validate anything
+    yet, it **returns false** (boolean false) **by default**. The ``validate()``
+    method only returns true if it has successfully applied your rules without
+    any of them failing.
 
 Explanation
 ================================================
@@ -171,7 +171,7 @@ The form (Signup.php) is a standard web form with a couple of exceptions:
 #. At the top of the form you'll notice the following function call:
    ::
 
-	<?= $validation->listErrors() ?>
+    <?= $validation->listErrors() ?>
 
    This function will return any error messages sent back by the
    validator. If there are no messages it returns an empty string.
@@ -364,19 +364,17 @@ Or pass all settings in an array::
     {
         public $signup = [
             'username' => [
-                'label'  => 'Username',
                 'rules'  => 'required',
                 'errors' => [
-                    'required' => 'You must choose a {field}.'
+                    'required' => 'You must choose a Username.'
                 ]
             ],
-            'email'    => 'required|valid_email'
-        ];
-
-        public $signup_errors = [
-            'email' => [
-                'valid_email' => 'Please check the Email field. It does not appear to be valid.'
-            ]
+            'email'    => [
+                'rules'  => 'required|valid_email',
+                'errors' => [
+                    'valid_email' => 'Please check the Email field. It does not appear to be valid.'
+                ]
+            ],
         ];
     }
 
@@ -416,6 +414,37 @@ you previously set, so ``setRules()``, ``setRuleGroup()`` etc. need to be repeat
             // handle validation errors
         }
     }
+
+Validation Placeholders
+=======================================================
+
+The Validation class provides a simple method to replace parts of your rules based on data that's being passed into it. This
+sounds fairly obscure but can be especially handy with the ``is_unique`` validation rule. Placeholders are simply
+the name of the field (or array key) that was passed in as $data surrounded by curly brackets. It will be
+replaced by the **value** of the matched incoming field. An example should clarify this::
+
+    $validation->setRules([
+        'email' => 'required|valid_email|is_unique[users.email,id,{id}]'
+    ];
+
+In this set of rules, it states that the email address should be unique in the database, except for the row
+that has an id matching the placeholder's value. Assuming that the form POST data had the following::
+
+    $_POST = [
+        'id' => 4,
+        'email' => 'foo@example.com'
+    ]
+
+then the ``{id}`` placeholder would be replaced with the number **4**, giving this revised rule::
+
+    $validation->setRules([
+        'email' => 'required|valid_email|is_unique[users.email,id,4]'
+    ];
+
+So it will ignore the row in the database that has ``id=4`` when it verifies the email is unique.
+
+This can also be used to create more dynamic rules at runtime, as long as you take care that any dynamic
+keys passed in don't conflict with your form data.
 
 Working With Errors
 ************************************************
@@ -487,7 +516,9 @@ at least 6 characters.”
 Translation Of Messages And Validation Labels
 =============================================
 
-To use translated strings from language files, we can simply use the dot syntax. Let's say we have a file with translations located here: ``app/Languages/en/Rules.php``. We can simply use the language lines defined in this file, like this::
+To use translated strings from language files, we can simply use the dot syntax.
+Let's say we have a file with translations located here: ``app/Languages/en/Rules.php``.
+We can simply use the language lines defined in this file, like this::
 
     $validation->setRules([
             'username' => [
@@ -611,10 +642,10 @@ autoloader can find it. These files are called RuleSets. To add a new RuleSet, e
 add the new file to the ``$ruleSets`` array::
 
     public $ruleSets = [
-		\CodeIgniter\Validation\Rules::class,
-		\CodeIgniter\Validation\FileRules::class,
-		\CodeIgniter\Validation\CreditCardRules::class,
-	];
+        \CodeIgniter\Validation\Rules::class,
+        \CodeIgniter\Validation\FileRules::class,
+        \CodeIgniter\Validation\CreditCardRules::class,
+    ];
 
 You can add it as either a simple string with the fully qualified class name, or using the ``::class`` suffix as
 shown above. The primary benefit here is that it provides some extra navigation capabilities in more advanced IDEs.
@@ -658,41 +689,41 @@ If your method needs to work with parameters, the function will need a minimum o
 the parameter string, and an array with all of the data that was submitted the form. The $data array is especially handy
 for rules like ``require_with`` that needs to check the value of another submitted field to base its result on::
 
-	public function required_with($str, string $fields, array $data): bool
-	{
-		$fields = explode(',', $fields);
+    public function required_with($str, string $fields, array $data): bool
+    {
+        $fields = explode(',', $fields);
 
-		// If the field is present we can safely assume that
-		// the field is here, no matter whether the corresponding
-		// search field is present or not.
-		$present = $this->required($str ?? '');
+        // If the field is present we can safely assume that
+        // the field is here, no matter whether the corresponding
+        // search field is present or not.
+        $present = $this->required($str ?? '');
 
-		if ($present)
-		{
-			return true;
-		}
+        if ($present)
+        {
+            return true;
+        }
 
         // Still here? Then we fail this test if
-		// any of the fields are present in $data
-		// as $fields is the lis
-		$requiredFields = [];
+        // any of the fields are present in $data
+        // as $fields is the lis
+        $requiredFields = [];
 
-		foreach ($fields as $field)
-		{
-			if (array_key_exists($field, $data))
-			{
-				$requiredFields[] = $field;
-			}
-		}
+        foreach ($fields as $field)
+        {
+            if (array_key_exists($field, $data))
+            {
+                $requiredFields[] = $field;
+            }
+        }
 
-		// Remove any keys with empty values since, that means they
-		// weren't truly there, as far as this is concerned.
-		$requiredFields = array_filter($requiredFields, function ($item) use ($data) {
-			return ! empty($data[$item]);
-		});
+        // Remove any keys with empty values since, that means they
+        // weren't truly there, as far as this is concerned.
+        $requiredFields = array_filter($requiredFields, function ($item) use ($data) {
+            return ! empty($data[$item]);
+        });
 
-		return empty($requiredFields);
-	}
+        return empty($requiredFields);
+    }
 
 Custom errors can be returned as the fourth parameter, just as described above.
 
@@ -701,12 +732,20 @@ Available Rules
 
 The following is a list of all the native rules that are available to use:
 
-.. note:: Rule is a string; there must be no spaces between the parameters, especially the "is_unique" rule.
-	There can be no spaces before and after "ignore_value".
+.. note:: Rule is a string; there must be **no spaces** between the parameters, especially the ``is_unique`` rule.
+    There can be no spaces before and after ``ignore_value``.
 
-- "is_unique[supplier.name,uuid, $uuid]"   is not ok
-- "is_unique[supplier.name,uuid,$uuid ]"   is not ok
-- "is_unique[supplier.name,uuid,$uuid]"    is ok
+::
+
+    // is_unique[table.field,ignore_field,ignore_value]
+
+    $validation->setRules([
+        'name' => "is_unique[supplier.name,uuid, $uuid]",  // is not ok
+        'name' => "is_unique[supplier.name,uuid,$uuid ]",  // is not ok
+        'name' => "is_unique[supplier.name,uuid,$uuid]",   // is ok
+        'name' => "is_unique[supplier.name,uuid,{uuid}]",  // is ok - see "Validation Placeholders"
+    ]);
+
 
 ======================= =========== =============================================================================================== ===================================================
 Rule                    Parameter   Description                                                                                     Example
@@ -802,5 +841,5 @@ is_image                Yes         Fails if the file cannot be determined to be
 The file validation rules apply for both single and multiple file uploads.
 
 .. note:: You can also use any native PHP functions that permit up
-	to two parameters, where at least one is required (to pass
-	the field data).
+    to two parameters, where at least one is required (to pass
+    the field data).

@@ -1432,10 +1432,6 @@ class Model
 			return true;
 		}
 
-		// Replace any placeholders (i.e. {id}) in the rules with
-		// the value found in $data, if exists.
-		$rules = $this->fillPlaceholders($rules, $data);
-
 		$this->validation->setRules($rules, $this->validationMessages);
 		$valid = $this->validation->run($data, null, $this->DBGroup);
 
@@ -1487,6 +1483,10 @@ class Model
 	 * The value of {id} would be replaced with the actual id in the form data:
 	 *
 	 *  'required|is_unique[users,email,id,13]'
+	 *
+	 * @codeCoverageIgnore
+	 *
+	 * @deprecated use fillPlaceholders($rules, $data) from Validation instead
 	 *
 	 * @param array $rules
 	 * @param array $data
