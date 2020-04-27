@@ -73,10 +73,10 @@ Change the Placeholder Used
 By default, the ``segment`` placeholder is used when a resource ID is needed. You can change this by passing
 in the ``placeholder`` option with the new string to use::
 
-	$routes->resource('photos', ['placeholder' => '(:id)']);
+	$routes->resource('photos', ['placeholder' => '(:num)']);
 
 	// Generates routes like:
-	$routes->get('photos/(:id)', 'Photos::show/$1');
+	$routes->get('photos/(:num)', 'Photos::show/$1');
 
 Limit the Routes Made
 ---------------------
@@ -177,10 +177,10 @@ Change the Placeholder Used
 By default, the ``segment`` placeholder is used when a resource ID is needed. You can change this by passing
 in the ``placeholder`` option with the new string to use::
 
-	$routes->presenter('photos', ['placeholder' => '(:id)']);
+	$routes->presenter('photos', ['placeholder' => '(:num)']);
 
 	// Generates routes like:
-	$routes->get('photos/(:id)', 'Photos::show/$1');
+	$routes->get('photos/(:num)', 'Photos::show/$1');
 
 Limit the Routes Made
 ---------------------
