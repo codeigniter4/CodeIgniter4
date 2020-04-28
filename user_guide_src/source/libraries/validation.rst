@@ -425,7 +425,7 @@ replaced by the **value** of the matched incoming field. An example should clari
 
     $validation->setRules([
         'email' => 'required|valid_email|is_unique[users.email,id,{id}]'
-    ];
+    ]);
 
 In this set of rules, it states that the email address should be unique in the database, except for the row
 that has an id matching the placeholder's value. Assuming that the form POST data had the following::
@@ -433,13 +433,13 @@ that has an id matching the placeholder's value. Assuming that the form POST dat
     $_POST = [
         'id' => 4,
         'email' => 'foo@example.com'
-    ]
+    ];
 
 then the ``{id}`` placeholder would be replaced with the number **4**, giving this revised rule::
 
     $validation->setRules([
         'email' => 'required|valid_email|is_unique[users.email,id,4]'
-    ];
+    ]);
 
 So it will ignore the row in the database that has ``id=4`` when it verifies the email is unique.
 
