@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \CodeIgniter\Pager\PagerRenderer $pager
  */
@@ -16,7 +17,7 @@ $pager->setSurroundCount(2);
 			</li>
 			<li>
 				<a href="<?= $pager->getPrevious() ?>" aria-label="<?= lang('Pager.previous') ?>">
-					<span aria-hidden="true">&laquo;</span>
+					<span aria-hidden="true"><?= lang('Pager.previous') ?></span>
 				</a>
 			</li>
 		<?php endif ?>
@@ -32,7 +33,7 @@ $pager->setSurroundCount(2);
 		<?php if ($pager->hasNext()) : ?>
 			<li>
 				<a href="<?= $pager->getNext() ?>" aria-label="<?= lang('Pager.next') ?>">
-					<span aria-hidden="true">&raquo;</span>
+					<span aria-hidden="true"><?= lang('Pager.next') ?></span>
 				</a>
 			</li>
 			<li>
