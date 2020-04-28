@@ -57,6 +57,10 @@ Within the view, we then need to tell it where to display the resulting links::
 And that's all it takes. The Pager class will render First and Last page links, as well as Next and Previous links
 for any pages more than two pages on either side of the current page.
 
+It is important to be aware that the library pattern for Next and Previous is different from what is used in the traditional way of paging results.
+
+Next and Previous here is linked to the group of links to be displayed in the pagination structure, and not to the next or previous page of records.
+
 If you prefer a simpler output, you can use the ``simpleLinks()`` method, which only uses "Older" and "Newer" links,
 instead of the details pagination links::
 
@@ -229,13 +233,13 @@ usefulness. It is easiest to demonstrate creating a new view by showing you the 
         <ul class="pagination">
         <?php if ($pager->hasPrevious()) : ?>
             <li>
-                <a href="<?= $pager->getFirst() ?>" aria-label="First">
-                    <span aria-hidden="true">First</span>
+                <a href="<?= $pager->getFirst() ?>" aria-label="<?= lang('Pager.first') ?>">
+                    <span aria-hidden="true"><?= lang('Pager.first') ?></span>
                 </a>
             </li>
             <li>
-                <a href="<?= $pager->getPrevious() ?>" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
+                <a href="<?= $pager->getPrevious() ?>" aria-label="<?= lang('Pager.previous') ?>">
+                    <span aria-hidden="true"><?= lang('Pager.previous') ?></span>
                 </a>
             </li>
         <?php endif ?>
@@ -250,13 +254,13 @@ usefulness. It is easiest to demonstrate creating a new view by showing you the 
 
         <?php if ($pager->hasNext()) : ?>
             <li>
-                <a href="<?= $pager->getNext() ?>" aria-label="Previous">
-                    <span aria-hidden="true">&raquo;</span>
+                <a href="<?= $pager->getNext() ?>" aria-label="<?= lang('Pager.next') ?>">
+                    <span aria-hidden="true"><?= lang('Pager.next') ?></span>
                 </a>
             </li>
             <li>
-                <a href="<?= $pager->getLast() ?>" aria-label="Last">
-                    <span aria-hidden="true">Last</span>
+                <a href="<?= $pager->getLast() ?>" aria-label="<?= lang('Pager.last') ?>">
+                    <span aria-hidden="true"><?= lang('Pager.last') ?></span>
                 </a>
             </li>
         <?php endif ?>
@@ -296,3 +300,57 @@ title, which is just the number, and a boolean that tells whether the link is th
 		'uri'    => 'http://example.com/foo?page=2',
 		'title'  => 1
 	];
+
+In the code presented for the standard pagination structure, the methods ``getPrevious()`` and ``getNext()`` are used to obtain the links to the previous and next pagination groups respectively.
+
+If you want to use the pagination structure where prev and next will be links to the previous and next pages based on the current page, just replace the ``getPrevious()`` and ``getNext()`` methods with ``getPreviousPage()`` and ``getNextPage()``, and the methods ``hasPrevious()`` and ``hasNext()`` by ``hasPreviousPage()`` and ``hasNextPage()`` respectively.
+
+See following an example with these changes::
+
+    <nav aria-label="<?= lang('Pager.pageNavigation') ?>">
+        <ul class="pagination">
+            <?php if ($pager->hasPreviousPage()) : ?>
+                <li>
+                    <a href="<?= $pager->getFirst() ?>" aria-label="<?= lang('Pager.first') ?>">
+                        <span aria-hidden="true"><?= lang('Pager.first') ?></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?= $pager->getPreviousPage() ?>" aria-label="<?= lang('Pager.previous') ?>">
+                        <span aria-hidden="true"><?= lang('Pager.previous') ?></span>
+                    </a>
+                </li>
+            <?php endif ?>
+
+            <?php foreach ($pager->links() as $link) : ?>
+                <li <?= $link['active'] ? 'class="active"' : '' ?>>
+                    <a href="<?= $link['uri'] ?>">
+                        <?= $link['title'] ?>
+                    </a>
+                </li>
+            <?php endforeach ?>
+
+            <?php if ($pager->hasNextPage()) : ?>
+                <li>
+                    <a href="<?= $pager->getNextPage() ?>" aria-label="<?= lang('Pager.next') ?>">
+                        <span aria-hidden="true"><?= lang('Pager.next') ?></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?= $pager->getLast() ?>" aria-label="<?= lang('Pager.last') ?>">
+                        <span aria-hidden="true"><?= lang('Pager.last') ?></span>
+                    </a>
+                </li>
+            <?php endif ?>
+        </ul>
+    </nav>
+
+**hasPreviousPage()** & **hasNextPage()**
+
+This method returns a boolean true if there are links to a page before and after, respectively, the current page being displayed.
+
+Their difference to ``hasPrevious()`` and ``hasNext()`` is that they are based on the current page while ``hasPrevious()`` and ``hasNext()`` are based on the set of links to be displayed before and after the current page based on the value passed in ``setSurroundCount``.
+
+**getPreviousPage()** & **getNextPage()**
+
+These methods return a URL for the previous and next pages in relation to the current page being displayed, unlike ``getPrevious()`` and ``getNext()`` that return the URL for the previous or next pages of results on either side of the numbered links. See the previous paragraph for a full explanation.
