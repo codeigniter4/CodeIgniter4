@@ -14,6 +14,7 @@ use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
 use Tests\Support\Models\SimpleEntity;
+use Tests\Support\Models\StringifyPkeyModel;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidErrorsModel;
 use Tests\Support\Models\ValidModel;
@@ -395,6 +396,19 @@ class ModelTest extends CIDatabaseTestCase
 		$model->delete(1);
 
 		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDeleteStringPrimaryKey()
+	{
+		$model = new StringifyPkeyModel();
+
+		$this->seeInDatabase('stringifypkey', ['value' => 'test']);
+
+		$model->delete('A01');
+
+		$this->dontSeeInDatabase('stringifypkey', ['value' => 'test']);
 	}
 
 	//--------------------------------------------------------------------

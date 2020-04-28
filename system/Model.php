@@ -898,15 +898,15 @@ class Model
 	 * Deletes a single record from $this->table where $id matches
 	 * the table's primaryKey
 	 *
-	 * @param integer|array|null $id    The rows primary key(s)
-	 * @param boolean            $purge Allows overriding the soft deletes setting.
+	 * @param integer|string|array|null $id    The rows primary key(s)
+	 * @param boolean                   $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function delete($id = null, bool $purge = false)
 	{
-		if (! empty($id) && is_numeric($id))
+		if (! empty($id) && (is_numeric($id) || is_string($id)))
 		{
 			$id = [$id];
 		}
