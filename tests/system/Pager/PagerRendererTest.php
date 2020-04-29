@@ -466,6 +466,7 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$pager = new PagerRenderer($details);
 
+		$this->assertNull($pager->getPreviousPage());
 		$this->assertFalse($pager->hasPreviousPage());
 	}
 
@@ -482,6 +483,7 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$pager = new PagerRenderer($details);
 
+		$this->assertNull($pager->getNextPage());
 		$this->assertFalse($pager->hasNextPage());
 	}
 
@@ -500,6 +502,7 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$pager = new PagerRenderer($details);
 
+		$this->assertNotNull($pager->getPreviousPage());
 		$this->assertTrue($pager->hasPreviousPage());
 		$this->assertEquals('http://example.com/foo?page=2', $pager->getPreviousPage());
 	}
@@ -519,6 +522,7 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$pager = new PagerRenderer($details);
 
+		$this->assertNotNull($pager->getNextPage());
 		$this->assertTrue($pager->hasNextPage());
 		$this->assertEquals('http://example.com/foo?page=4', $pager->getNextPage());
 	}
