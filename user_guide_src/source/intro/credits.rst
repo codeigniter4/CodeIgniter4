@@ -14,5 +14,5 @@ In 2014, CodeIgniter was acquired by the `British Columbia Institute of Technolo
 <https://www.bcit.ca/>`_ and was then officially announced as a community-maintained
 project.
 
-Bleeding edge development is spearheaded by the handpicked contributors
-of the CodeIgniter Council.
+In 2019, the CodeIgniter Foundation was formed to provide a perpetual managing group
+separate from any other entity to help ensure the framework's future.

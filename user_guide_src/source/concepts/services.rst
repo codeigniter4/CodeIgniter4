@@ -9,7 +9,7 @@ Services
 Introduction
 ============
 
-All of the classes within CodeIgniter are provided as "services". This simply means that, instead
+All of the core classes within CodeIgniter are provided as "services". This simply means that, instead
 of hard-coding a class name to load, the classes to call are defined within a very simple
 configuration file. This file acts as a type of factory to create new instances of the required class.
 

@@ -2,13 +2,13 @@
 Configuration
 #############
 
-Every framework uses configuration files to define numerous parameters and 
-initial settings. CodeIgniter configuration files define simple classes where 
-the required settings are public properties.  
+Every framework uses configuration files to define numerous parameters and
+initial settings. CodeIgniter configuration files define simple classes where
+the required settings are public properties.
 
-Unlike many other frameworks, CodeIgniter configurable items aren't contained in 
-a single file. Instead, each class that needs configurable items will have a 
-configuration file with the same name as the class that uses it. You will find 
+Unlike many other frameworks, CodeIgniter configurable items aren't contained in
+a single file. Instead, each class that needs configurable items will have a
+configuration file with the same name as the class that uses it. You will find
 the application configuration files in the **/app/Config** folder.
 
 .. contents::
@@ -21,14 +21,11 @@ Working With Configuration Files
 You can access configuration files for your classes in several different ways.
 
 - By using the ``new`` keyword to create an instance::
- 
+
 	// Creating new configuration object by hand
 	$config = new \Config\Pager();
 
 - By using the ``config()`` function::
-
-	// Creating a new object with config function
-	$config = config('Pager', false);
 
 	// Get shared instance with config function
 	$config = config('Pager');
@@ -36,30 +33,33 @@ You can access configuration files for your classes in several different ways.
 	// Access config class with namespace
 	$config = config( 'Config\\Pager' );
 
+	// Creating a new object with config function
+	$config = config('Pager', false);
+
 All configuration object properties are public, so you access the settings like any other property::
 
         $config = config('Pager');
 	// Access settings as object properties
 	$pageSize = $config->perPage;
 
-If no namespace is provided, it will look for the file in all defined namespaces 
-as well as **/app/Config/**. 
+If no namespace is provided, it will look for the file in all defined namespaces
+as well as **/app/Config/**.
 
-All of the configuration files that ship with CodeIgniter are namespaced with 
-``Config``. Using this namespace in your application will provide the best 
+All of the configuration files that ship with CodeIgniter are namespaced with
+``Config``. Using this namespace in your application will provide the best
 performance since it knows exactly where to find the files.
 
-You can put configuration files in any folder you want by using a different namespace. 
-This allows you to put configuration files on the production server in a folder 
-that is not web-accessible while keeping it under **/app** for easy access 
+You can put configuration files in any folder you want by using a different namespace.
+This allows you to put configuration files on the production server in a folder
+that is not web-accessible while keeping it under **/app** for easy access
 during development.
 
 Creating Configuration Files
 ============================
 
-When you need a new configuration, first you create a new file at your desired location. 
-The default file location (recommended for most cases) is **/app/Config**.  
-The class should use the appropriate namespace, and it should extend 
+When you need a new configuration, first you create a new file at your desired location.
+The default file location (recommended for most cases) is **/app/Config**.
+The class should use the appropriate namespace, and it should extend
 ``CodeIgniter\Config\BaseConfig`` to ensure that it can receive environment-specific settings.
 
 Define the class and fill it with public properties that represent your settings.::
@@ -87,11 +87,11 @@ Environment Variables and CodeIgniter
 
 CodeIgniter makes it simple and painless to set Environment Variables by using a “dotenv” file. The term comes from the file name, which starts with a dot before the text “env”.
 
-CodeIgniter expects **.env** to be at the root of your project alongside the ``system`` 
-and ``app`` directories. There is a template file distributed with CodeIgniter that’s 
-located at the project root named **env** (Notice there’s no dot (**.**) at the start?). 
-It has a large collection of variables your project might use that have been assigned 
-empty, dummy, or default values. You can use this file as a starting place for your 
+CodeIgniter expects **.env** to be at the root of your project alongside the ``system``
+and ``app`` directories. There is a template file distributed with CodeIgniter that’s
+located at the project root named **env** (Notice there’s no dot (**.**) at the start?).
+It has a large collection of variables your project might use that have been assigned
+empty, dummy, or default values. You can use this file as a starting place for your
 application by either renaming the template to **.env**, or by making a copy of it named **.env**.
 
 .. important:: Make sure the **.env** file is NOT tracked by your version control system. For *git* that means adding it to **.gitignore**. Failure to do so could result in sensitive credentials being exposed to the public.
@@ -103,10 +103,10 @@ Settings are stored in **.env** files as a simple a collection of name/value pai
 	SECRET_KEY = super_secret_key
         CI_ENVIRONMENT = development
 
-When your application runs, **.env** will be loaded automatically, and the variables put 
-into the environment. If a variable already exists in the environment, it will NOT be 
-overwritten. The loaded Environment variables are accessed using any of the following: 
-``getenv()``, ``$_SERVER``, or ``$_ENV``. 
+When your application runs, **.env** will be loaded automatically, and the variables put
+into the environment. If a variable already exists in the environment, it will NOT be
+overwritten. The loaded Environment variables are accessed using any of the following:
+``getenv()``, ``$_SERVER``, or ``$_ENV``.
 ::
 
 	$s3_bucket = getenv('S3_BUCKET');
@@ -127,8 +127,8 @@ variable name within ``${...}``
 Namespaced Variables
 ====================
 
-There will be times when you will have several variables with the same name. 
-The system needs a way of knowing what the correct setting should be. 
+There will be times when you will have several variables with the same name.
+The system needs a way of knowing what the correct setting should be.
 This problem is solved by "*namespacing*" the variables.
 
 Namespaced variables use a dot notation to qualify variable names so they will be unique
@@ -153,27 +153,27 @@ Configuration Classes and Environment Variables
 When you instantiate a configuration class, any *namespaced* environment variables
 are considered for merging into the configuration object's properties.
 
-If the prefix of a namespaced variable exactly matches the namespace of the configuration 
-class, then the trailing part of the setting (after the dot) is treated as a configuration 
-property. If it matches an existing configuration property, the environment variable's 
-value will replace the corresponding value from the configuration file. If there is no match, 
-the configuration class properties are left unchanged. In this usage, the prefix must be 
-the full (case-sensitive) namespace of the class. 
+If the prefix of a namespaced variable exactly matches the namespace of the configuration
+class, then the trailing part of the setting (after the dot) is treated as a configuration
+property. If it matches an existing configuration property, the environment variable's
+value will replace the corresponding value from the configuration file. If there is no match,
+the configuration class properties are left unchanged. In this usage, the prefix must be
+the full (case-sensitive) namespace of the class.
 ::
 
-    Config\App.CSRFProtection  = true    
+    Config\App.CSRFProtection  = true
     Config\App.CSRFCookieName = csrf_cookie
     Config\App.CSPEnabled = true
 
 
 .. note:: Both the namespace prefix and the property name are case-sensitive. They must exactly match the full namespace and property names as defined in the configuration class file.
 
-The same holds for a *short prefix*, which is a namespace using only the lowercase version of 
-the configuration class name. If the short prefix matches the class name, 
+The same holds for a *short prefix*, which is a namespace using only the lowercase version of
+the configuration class name. If the short prefix matches the class name,
 the value from **.env** replaces the configuration file value.
 ::
 
-    app.CSRFProtection  = true    
+    app.CSRFProtection  = true
     app.CSRFCookieName = csrf_cookie
     app.CSPEnabled = true
 
@@ -216,9 +216,9 @@ Handling Different Environments
 
 Configuring multiple environments is easily accomplished by using a separate **.env** file with values modified to meet that environment's needs.
 
-The file should not contain every possible setting for every configuration class used by the application. In truth, it should include only those items that are specific to the environment or are sensitive details like passwords and API keys and other information that should not be exposed. But anything that changes between deployments is fair-game. 
+The file should not contain every possible setting for every configuration class used by the application. In truth, it should include only those items that are specific to the environment or are sensitive details like passwords and API keys and other information that should not be exposed. But anything that changes between deployments is fair-game.
 
-In each environment, place the **.env** file in the project's root folder. For most setups, this will be the same level as the ``system`` and ``app`` directories. 
+In each environment, place the **.env** file in the project's root folder. For most setups, this will be the same level as the ``system`` and ``app`` directories.
 
 Do not track **.env** files with your version control system. If you do, and the repository is made public, you will have put sensitive information where everybody can find it.
 
