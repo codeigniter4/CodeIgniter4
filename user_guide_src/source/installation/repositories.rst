@@ -66,7 +66,7 @@ but which showcase it or make it easier to work with!
 +==================+==============+=================================================================+
 | website2         | developers   | The codeigniter.com website, written in CodeIgniter 4           |
 +------------------+--------------+-----------------------------------------------------------------+
-|                  |              |                                                                 |
+| playground       | developers   | Basic code examples in project form. Still growing.             |
 +------------------+--------------+-----------------------------------------------------------------+
 
 These are not composer-installable repositories.
