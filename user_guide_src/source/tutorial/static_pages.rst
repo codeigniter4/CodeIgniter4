@@ -264,3 +264,7 @@ You should see something like the following:
 
 .. image:: ../images/tutorial1.png
     :align: center
+
+.. note:: When manually specifying routes, it is recommended to disable
+    auto-routing by setting ``$routes->setAutoRoute(false);`` in the Routes.php file.
+    This ensures that only routes you define can be accessed.
