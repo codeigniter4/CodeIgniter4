@@ -502,4 +502,19 @@ EOH;
 		$this->assertStringStartsWith(config('Format')->supportedResponseFormats[0], $response->getHeaderLine('Content-Type'));
 	}
 
+	public function testResponseFormat()
+	{
+		$data = ['foo' => 'something'];
+
+		$controller = $this->makeController();
+		$controller->setResponseFormat('json');
+		$controller->respond($data, 201);
+
+		$this->assertStringStartsWith('application/json', $this->response->getHeaderLine('Content-Type'));
+
+		$controller->setResponseFormat('xml');
+		$controller->respond($data, 201);
+
+		$this->assertStringStartsWith('application/xml', $this->response->getHeaderLine('Content-Type'));
+	}
 }
