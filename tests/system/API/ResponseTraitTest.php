@@ -512,7 +512,7 @@ EOH;
 
 		$this->assertStringStartsWith('application/json', $this->response->getHeaderLine('Content-Type'));
 
-		$controller->responseFormat('xml');
+		$controller->setResponseFormat('xml');
 		$controller->respond($data, 201);
 
 		$this->assertStringStartsWith('application/xml', $this->response->getHeaderLine('Content-Type'));
