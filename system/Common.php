@@ -37,19 +37,20 @@
  * @filesource
  */
 
-use Config\App;
-use Config\Logger;
-use Config\Database;
-use Config\Services;
-use CodeIgniter\HTTP\URI;
-use Laminas\Escaper\Escaper;
 use CodeIgniter\Config\Config;
-use CodeIgniter\Test\TestLogger;
+use CodeIgniter\Database\ConnectionInterface;
+use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Database\ConnectionInterface;
-use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use CodeIgniter\HTTP\URI;
+use CodeIgniter\Test\TestLogger;
+use Config\App;
+use Config\Database;
+use Config\Logger;
+use Config\Services;
+use Config\View;
+use Laminas\Escaper\Escaper;
 
 /**
  * Common Functions
@@ -386,10 +387,7 @@ if (! function_exists('force_https'))
 	 * @param RequestInterface  $request
 	 * @param ResponseInterface $response
 	 *
-	 * Not testable, as it will exit!
-	 *
-	 * @throws             \CodeIgniter\HTTP\Exceptions\HTTPException
-	 * @codeCoverageIgnore
+	 * @throws \CodeIgniter\HTTP\Exceptions\HTTPException
 	 */
 	function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
 	{
@@ -402,17 +400,21 @@ if (! function_exists('force_https'))
 			$response = Services::response(null, true);
 		}
 
-		if (is_cli() || $request->isSecure())
+		if (ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure()))
 		{
+			// @codeCoverageIgnoreStart
 			return;
+			// @codeCoverageIgnoreEnd
 		}
-		// @codeCoverageIgnoreStart
-		// If the session library is loaded, we should regenerate
+
+		// If the session status is active, we should regenerate
 		// the session ID for safety sake.
-		if (class_exists('Session', false))
+		if (ENVIRONMENT !== 'testing' && session_status() === PHP_SESSION_ACTIVE)
 		{
+			// @codeCoverageIgnoreStart
 			Services::session(null, true)
 				->regenerate();
+			// @codeCoverageIgnoreEnd
 		}
 
 		$baseURL = config(App::class)->baseURL;
@@ -432,8 +434,12 @@ if (! function_exists('force_https'))
 		$response->redirect($uri);
 		$response->sendHeaders();
 
-		exit();
-		// @codeCoverageIgnoreEnd
+		if (ENVIRONMENT !== 'testing')
+		{
+			// @codeCoverageIgnoreStart
+			exit();
+			// @codeCoverageIgnoreEnd
+		}
 	}
 }
 
@@ -1069,8 +1075,9 @@ if (! function_exists('view'))
 		 */
 		$renderer = Services::renderer();
 
-		$saveData = true;
-		if (array_key_exists('saveData', $options) && $options['saveData'] === true)
+		$saveData = config(View::class)->saveData;
+
+		if (array_key_exists('saveData', $options))
 		{
 			$saveData = (bool) $options['saveData'];
 			unset($options['saveData']);

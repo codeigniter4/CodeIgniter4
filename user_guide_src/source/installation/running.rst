@@ -28,7 +28,7 @@ CodeIgniter, this can be done by setting the ``ENVIRONMENT`` constant, which
 is more fully described on the :doc:`environments page </general/environments>`.
 By default, the application will run using the "production" environment. To
 take advantage of the debugging tools provided, you should set the environment
-to "develop".
+to "development".
 
 .. note:: If you will be running your site using a web server (e.g. Apache or Nginx),
     you will need to modify the permissions for the ``writable`` folder inside

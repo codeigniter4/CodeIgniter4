@@ -96,7 +96,7 @@ Now that all of the pieces are in place, you would work with the Entity class as
     $userModel->save($user);
 
     // Create
-    $user = new App\Entities\User();
+    $user = new \App\Entities\User();
     $user->username = 'foo';
     $user->email    = 'foo@example.com';
     $userModel->save($user);
@@ -122,7 +122,7 @@ on your entities without worrying much about stray fields getting saved incorrec
 
     $data = $this->request->getPost();
 
-    $user = new App\Entities\User();
+    $user = new \App\Entities\User();
     $user->fill($data);
     $userModel->save($user);
 
@@ -132,7 +132,7 @@ You can also pass the data in the constructor and the data will be passed throug
 
     $data = $this->request->getPost();
 
-    $user = new App\Entities\User($data);
+    $user = new \App\Entities\User($data);
     $userModel->save($user);
 
 Handling Business Logic
@@ -291,7 +291,7 @@ You can define which properties are automatically converted by adding the name t
 Now, when any of those properties are set, they will be converted to a Time instance, using the application's
 current timezone, as set in **app/Config/App.php**::
 
-    $user = new App\Entities\User();
+    $user = new \App\Entities\User();
 
     // Converted to Time instance
     $user->created_at = 'April 15, 2017 10:30:00';

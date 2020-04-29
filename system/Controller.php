@@ -39,11 +39,11 @@
 
 namespace CodeIgniter;
 
-use Config\Services;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Validation\Validation;
 use CodeIgniter\Validation\Exceptions\ValidationException;
+use CodeIgniter\Validation\Validation;
+use Config\Services;
 use Psr\Log\LoggerInterface;
 
 /**

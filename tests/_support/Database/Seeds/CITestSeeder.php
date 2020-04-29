@@ -6,7 +6,7 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 	{
 		// Job Data
 		$data = [
-			'user' => [
+			'user'          => [
 				[
 					'name'    => 'Derek Jones',
 					'email'   => 'derek@world.com',
@@ -28,7 +28,7 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 					'country' => 'UK',
 				],
 			],
-			'job'  => [
+			'job'           => [
 				[
 					'name'        => 'Developer',
 					'description' => 'Awesome job, but sometimes makes you bored',
@@ -46,7 +46,7 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 					'description' => 'Only Coldplay can actually called Musician',
 				],
 			],
-			'misc' => [
+			'misc'          => [
 				[
 					'key'   => '\\xxxfoo456',
 					'value' => 'Entry with \\xxx',
@@ -58,6 +58,12 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 				[
 					'key'   => 'spaces and tabs',
 					'value' => ' One  two   three	tab',
+				],
+			],
+			'stringifypkey' => [
+				[
+					'id'    => 'A01',
+					'value' => 'test',
 				],
 			],
 		];

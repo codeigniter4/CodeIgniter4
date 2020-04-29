@@ -2,10 +2,7 @@
 namespace CodeIgniter\Events;
 
 use CodeIgniter\Config\Config;
-use Config\Logger;
-use Config\Services;
 use CodeIgniter\Test\Mock\MockEvents;
-use CodeIgniter\Test\TestLogger;
 
 class EventsTest extends \CodeIgniter\Test\CIUnitTestCase
 {

@@ -38,10 +38,10 @@
 
 namespace CodeIgniter\Database;
 
-use Config\Services;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Exceptions\ConfigException;
+use Config\Services;
 
 /**
  * Class MigrationRunner

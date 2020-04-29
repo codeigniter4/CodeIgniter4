@@ -1,9 +1,9 @@
 <?php namespace CodeIgniter\Session;
 
-use Config\Logger;
-use CodeIgniter\Test\TestLogger;
-use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Session\Handlers\FileHandler;
+use CodeIgniter\Test\Mock\MockSession;
+use CodeIgniter\Test\TestLogger;
+use Config\Logger;
 
 /**
  * @runTestsInSeparateProcesses

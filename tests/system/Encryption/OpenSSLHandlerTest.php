@@ -1,8 +1,6 @@
 <?php
 namespace CodeIgniter\Encrypt;
 
-use CodeIgniter\Config\Services;
-
 class OpenSSLHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
 

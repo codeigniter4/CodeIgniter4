@@ -40,7 +40,6 @@
 namespace CodeIgniter\Pager;
 
 use CodeIgniter\Pager\Exceptions\PagerException;
-use Config\Services;
 use CodeIgniter\View\RendererInterface;
 
 /**
@@ -208,10 +207,12 @@ class Pager implements PagerInterface
 		$this->ensureGroup($group, $perPage);
 
 		$perPage                             = $perPage ?? $this->config->perPage;
+		$pageCount                           = (int)ceil($total / $perPage);
+		$page                                = $page > $pageCount ? $pageCount : $page;
 		$this->groups[$group]['currentPage'] = $page;
 		$this->groups[$group]['perPage']     = $perPage;
 		$this->groups[$group]['total']       = $total;
-		$this->groups[$group]['pageCount']   = (int)ceil($total / $perPage);
+		$this->groups[$group]['pageCount']   = $pageCount;
 
 		return $this;
 	}

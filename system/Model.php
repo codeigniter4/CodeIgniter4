@@ -40,16 +40,16 @@
 namespace CodeIgniter;
 
 use Closure;
-use CodeIgniter\Exceptions\ModelException;
-use Config\Database;
-use CodeIgniter\I18n\Time;
-use CodeIgniter\Pager\Pager;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
-use CodeIgniter\Validation\ValidationInterface;
-use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Exceptions\ModelException;
+use CodeIgniter\I18n\Time;
+use CodeIgniter\Pager\Pager;
+use CodeIgniter\Validation\ValidationInterface;
+use Config\Database;
 use ReflectionClass;
 use ReflectionProperty;
 use stdClass;
@@ -898,15 +898,15 @@ class Model
 	 * Deletes a single record from $this->table where $id matches
 	 * the table's primaryKey
 	 *
-	 * @param integer|array|null $id    The rows primary key(s)
-	 * @param boolean            $purge Allows overriding the soft deletes setting.
+	 * @param integer|string|array|null $id    The rows primary key(s)
+	 * @param boolean                   $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function delete($id = null, bool $purge = false)
 	{
-		if (! empty($id) && is_numeric($id))
+		if (! empty($id) && (is_numeric($id) || is_string($id)))
 		{
 			$id = [$id];
 		}
@@ -1126,10 +1126,11 @@ class Model
 	 * @param string  $group   Will be used by the pagination library
 	 *                         to identify a unique pagination set.
 	 * @param integer $page    Optional page number (useful when the page number is provided in different way)
+	 * @param integer $segment Optional URI segment number (if page number is provided by URI segment)
 	 *
 	 * @return array|null
 	 */
-	public function paginate(int $perPage = null, string $group = 'default', int $page = 0)
+	public function paginate(int $perPage = null, string $group = 'default', int $page = 0, int $segment = 0)
 	{
 		$pager = \Config\Services::pager(null, null, false);
 		$page  = $page >= 1 ? $page : $pager->getCurrentPage($group);
@@ -1138,7 +1139,7 @@ class Model
 
 		// Store it in the Pager library so it can be
 		// paginated in the views.
-		$this->pager = $pager->store($group, $page, $perPage, $total);
+		$this->pager = $pager->store($group, $page, $perPage, $total, $segment);
 		$perPage     = $this->pager->getPerPage($group);
 		$offset      = ($page - 1) * $perPage;
 

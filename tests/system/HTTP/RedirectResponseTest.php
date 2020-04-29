@@ -2,12 +2,12 @@
 
 namespace CodeIgniter\HTTP;
 
-use Config\App;
 use CodeIgniter\Config\Config;
 use CodeIgniter\Config\Services;
-use CodeIgniter\Validation\Validation;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
+use CodeIgniter\Validation\Validation;
+use Config\App;
 
 class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 {

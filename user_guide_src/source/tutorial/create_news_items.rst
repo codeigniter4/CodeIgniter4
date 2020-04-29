@@ -61,7 +61,7 @@ validation <../libraries/validation>` library to do this.
         {
             $model->save([
                 'title' => $this->request->getVar('title'),
-                'slug'  => url_title($this->request->getVar('title')),
+                'slug'  => url_title($this->request->getVar('title'), '-', TRUE),
                 'body'  => $this->request->getVar('body'),
             ]);
 

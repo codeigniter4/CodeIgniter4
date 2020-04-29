@@ -42,7 +42,6 @@ namespace CodeIgniter\Commands\Database;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
-use Config\Autoload;
 
 /**
  * Runs all of the migrations in reverse order, until they have

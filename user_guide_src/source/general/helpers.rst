@@ -37,17 +37,17 @@ Loading a helper file is quite simple using the following method::
 	helper('name');
 
 Where **name** is the file name of the helper, without the .php file
-extension or the "helper" part.
+extension or the "_helper" part.
 
 For example, to load the **Cookie Helper** file, which is named
 **cookie_helper.php**, you would do this::
 
-	helper('cookie');
+    helper('cookie');
 
 If you need to load more than one helper at a time, you can pass
 an array of file names in and all of them will be loaded::
 
-	helper(['cookie', 'date']);
+    helper(['cookie', 'date']);
 
 A helper can be loaded anywhere within your controller methods (or
 even within your View files, although that's not a good practice), as
@@ -57,7 +57,7 @@ any function, or you can load a helper in a specific function that needs
 it.
 
 .. note:: The Helper loading method above does not return a value, so
-	don't try to assign it to a variable. Just use it as shown.
+    don't try to assign it to a variable. Just use it as shown.
 
 .. note:: The URL helper is always loaded so you do not need to load it yourself.
 
@@ -78,10 +78,10 @@ code into its own namespace, ``Example\Blog``. The files exist on our server at
 **/Modules/Blog/Helpers/blog_helper.php**. Within our controller we could
 use the following command to load the helper for us::
 
-	helper('Modules\Blog\blog');
+    helper('Modules\Blog\blog');
 
 .. note:: The functions within files loaded this way are not truly namespaced.
-		The namespace is simply used as a convenient way to locate the files.
+    The namespace is simply used as a convenient way to locate the files.
 
 Using a Helper
 ==============
@@ -92,7 +92,7 @@ use, you'll call it the way you would a standard PHP function.
 For example, to create a link using the ``anchor()`` function in one of
 your view files you would do this::
 
-	<?php echo anchor('blog/comments', 'Click Here');?>
+    <?php echo anchor('blog/comments', 'Click Here');?>
 
 Where "Click Here" is the name of the link, and "blog/comments" is the
 URI to the controller/method you wish to link to.
@@ -109,36 +109,36 @@ function operates - then it's overkill to replace the entire helper with
 your version. In this case, it's better to simply "extend" the Helper.
 
 .. note:: The term "extend" is used loosely since Helper functions are
-	procedural and discrete and cannot be extended in the traditional
-	programmatic sense. Under the hood, this gives you the ability to
-	add to, or to replace the functions a Helper provides.
+    procedural and discrete and cannot be extended in the traditional
+    programmatic sense. Under the hood, this gives you the ability to
+    add to, or to replace the functions a Helper provides.
 
 For example, to extend the native **Array Helper** you'll create a file
 named **app/Helpers/array_helper.php**, and add or override
 functions::
 
-	// any_in_array() is not in the Array Helper, so it defines a new function
-	function any_in_array($needle, $haystack)
-	{
-		$needle = is_array($needle) ? $needle : [$needle];
+    // any_in_array() is not in the Array Helper, so it defines a new function
+    function any_in_array($needle, $haystack)
+    {
+        $needle = is_array($needle) ? $needle : [$needle];
 
-		foreach ($needle as $item)
-		{
-			if (in_array($item, $haystack))
-			{
-				return TRUE;
-			}
-	        }
+        foreach ($needle as $item)
+        {
+            if (in_array($item, $haystack))
+            {
+                return TRUE;
+            }
+            }
 
-		return FALSE;
-	}
+        return FALSE;
+    }
 
-	// random_element() is included in Array Helper, so it overrides the native function
-	function random_element($array)
-	{
-		shuffle($array);
-		return array_pop($array);
-	}
+    // random_element() is included in Array Helper, so it overrides the native function
+    function random_element($array)
+    {
+        shuffle($array);
+        return array_pop($array);
+    }
 
 The **helper()** method will scan through all PSR-4 namespaces defined in **app/Config/Autoload.php**
 and load in ALL matching helpers of the same name. This allows any module's helpers
@@ -152,5 +152,5 @@ is as follows:
 Now What?
 =========
 
-In the Table of Contents, you'll find a list of all the available Helper
-Files. Browse each one to see what they do.
+In the Table of Contents, you'll find a list of all the available :doc:`Helpers </helpers/index>`.
+Browse each one to see what they do.

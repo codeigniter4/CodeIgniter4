@@ -89,11 +89,10 @@ body, p, legend {
 }
 
 .wy-nav-content {
-	background-attachment: fixed;
 	background-image: url('../img/ci-background.png');
 	background-position: bottom right;
 	background-repeat: no-repeat;
-	background-size: contain;
+	background-size: 200px;
 }
 
 /* Titles ------------------------------------------------------------------- */
@@ -211,7 +210,6 @@ div#pulldown-menu {
 
 .wy-side-nav-search a {
 	color: #ffffff;
-	font-family: "Railway", "Helvetica", "Arial", sans-serif;
 }
 
 .wy-side-nav-search input[type=text] {
@@ -231,7 +229,7 @@ div#pulldown-menu {
 }
 
 .wy-nav-content {
-	max-width: none;
+	max-width: 900px;
 }
 
 .wy-nav-content-wrap a, .wy-nav-content-wrap a:visited {
@@ -246,6 +244,10 @@ div#pulldown-menu {
 	margin-right: 0.65em;
 }
 
+.wy-menu-vertical li span.toctree-expand::before {
+	display: none !important;
+}
+
 /* Elements ----------------------------------------------------------------- */
 
 .highlighted {
@@ -256,13 +258,7 @@ div#pulldown-menu {
 
 /* override table width restrictions */
 .wy-table-responsive table td, .wy-table-responsive table th {
-	white-space: normal;
-}
-
-.wy-table-responsive {
-	margin-bottom: 24px;
-	max-width: 100%;
-	overflow: visible;
+	white-space: pre;
 }
 
 .rst-content {

@@ -2,8 +2,8 @@
 namespace CodeIgniter\RESTful;
 
 use CodeIgniter\Config\Services;
-use Config\App;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
+use Config\App;
 
 /**
  * Exercise our ResourceController class.

@@ -1,11 +1,11 @@
 <?php namespace CodeIgniter\Validation;
 
-use CodeIgniter\Validation\Exceptions\ValidationException;
-use Config\Services;
-use Config\App;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Validation\Exceptions\ValidationException;
+use Config\App;
+use Config\Services;
 
 class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 {
@@ -809,6 +809,103 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals([
 			'id_user' => 'The id_user field must contain only numbers.',
 		], $this->validation->getErrors());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testTranslatedLabel()
+	{
+		$rules = [
+			'foo' => [
+				'label' => 'Foo.bar',
+				'rules' => 'min_length[10]',
+			],
+		];
+
+		$this->validation->setRules($rules, []);
+
+		$this->validation->run(['foo' => 'abc']);
+
+		$this->assertEquals('The Foo Bar Translated field must be at least 10 characters in length.', $this->validation->getError('foo'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testTranslatedLabelIsMissing()
+	{
+		$rules = [
+			'foo' => [
+				'label' => 'Foo.bar.is.missing',
+				'rules' => 'min_length[10]',
+			],
+		];
+
+		$this->validation->setRules($rules, []);
+
+		$this->validation->run(['foo' => 'abc']);
+
+		$this->assertEquals('The Foo.bar.is.missing field must be at least 10 characters in length.', $this->validation->getError('foo'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testTranslatedLabelWithCustomErrorMessage()
+	{
+		$rules = [
+			'foo' => [
+				'label'  => 'Foo.bar',
+				'rules'  => 'min_length[10]',
+				'errors' => [
+					'min_length' => 'Foo.bar.min_length1',
+				],
+			],
+		];
+
+		$this->validation->setRules($rules, []);
+
+		$this->validation->run(['foo' => 'abc']);
+
+		$this->assertEquals('The Foo Bar Translated field is very short.', $this->validation->getError('foo'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testTranslatedLabelTagReplacement()
+	{
+		// data
+		$data = [
+			'Username' => 'Pizza',
+		];
+
+		// rules
+		$this->validation->setRules([
+			'Username' => [
+				'label' => 'Foo.bar',
+				'rules' => 'min_length[6]',
+			],
+		], [
+			'Username' => [
+				'min_length' => 'Foo.bar.min_length2',
+			],
+		]);
+
+		// run validation
+		$this->validation->run($data);
+
+		// $errors should contain an associative array
+		$errors = $this->validation->getErrors();
+
+		// if "Username" doesn't exist in errors
+		if (! isset($errors['Username']))
+		{
+			$this->fail('Unable to find "Username"');
+		}
+
+		// expected error message
+		$expected = 'Supplied value (Pizza) for Foo Bar Translated must have at least 6 characters.';
+
+		// check if they are the same!
+		$this->assertEquals($expected, $errors['Username']);
 	}
 
 	//--------------------------------------------------------------------

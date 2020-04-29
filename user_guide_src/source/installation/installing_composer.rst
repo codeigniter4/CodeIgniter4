@@ -171,6 +171,6 @@ they can be added to your project in a similar fashion.
 
 From the command line inside your project root::
 
-    composer require codeigniter4/translations @rc
+    composer require codeigniter4/translations
 
 These will be updated along with the framework whenever you do a ``composer update``.

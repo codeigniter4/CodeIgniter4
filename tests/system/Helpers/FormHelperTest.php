@@ -3,8 +3,8 @@
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\HTTP\URI;
-use Config\App;
 use CodeIgniter\Services;
+use Config\App;
 use Config\Filters;
 
 class FormHelperTest extends \CodeIgniter\Test\CIUnitTestCase

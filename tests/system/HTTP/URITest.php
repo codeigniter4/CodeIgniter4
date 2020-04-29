@@ -1,9 +1,9 @@
 <?php
 namespace CodeIgniter\HTTP;
 
-use Config\App;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use Config\App;
 
 class URITest extends \CodeIgniter\Test\CIUnitTestCase
 {

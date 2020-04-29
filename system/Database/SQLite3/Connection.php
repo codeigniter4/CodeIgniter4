@@ -165,9 +165,21 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function execute(string $sql)
 	{
-		return $this->isWriteType($sql)
-			? $this->connID->exec($sql)
-			: $this->connID->query($sql);
+		try
+		{
+			return $this->isWriteType($sql)
+				? $this->connID->exec($sql)
+				: $this->connID->query($sql);
+		}
+		catch (\ErrorException $e)
+		{
+			log_message('error', $e);
+			if ($this->DBDebug)
+			{
+				throw $e;
+			}
+		}
+		return false;
 	}
 
 	//--------------------------------------------------------------------

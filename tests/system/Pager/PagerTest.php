@@ -419,4 +419,10 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals((string)$expected, $this->pager->getPreviousPageURI('foo'));
 	}
 
+	public function testAccessPageMoreThanPageCountGetLastPage()
+	{
+		$this->pager->store('default', 11, 1, 10);
+		$this->assertEquals(10, $this->pager->getCurrentPage());
+	}
+
 }

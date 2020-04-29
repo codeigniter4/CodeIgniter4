@@ -39,8 +39,8 @@
 
 namespace CodeIgniter\Router;
 
-use CodeIgniter\HTTP\Request;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\Exceptions\RouterException;
 

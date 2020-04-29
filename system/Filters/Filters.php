@@ -39,9 +39,9 @@
 namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Filters\Exceptions\FilterException;
 
 /**
  * Filters
@@ -150,47 +150,59 @@ class Filters
 				throw FilterException::forNoAlias($alias);
 			}
 
-			$class = new $this->config->aliases[$alias]();
-
-			if (! $class instanceof FilterInterface)
+			if (is_array($this->config->aliases[$alias]))
 			{
-				throw FilterException::forIncorrectInterface(get_class($class));
+				$classNames = $this->config->aliases[$alias];
+			}
+			else
+			{
+				$classNames = [$this->config->aliases[$alias]];
 			}
 
-			if ($position === 'before')
+			foreach ($classNames as $className)
 			{
-				$result = $class->before($this->request, $this->arguments[$alias] ?? null);
+				$class = new $className();
 
-				if ($result instanceof RequestInterface)
+				if (! $class instanceof FilterInterface)
 				{
-					$this->request = $result;
-					continue;
+					throw FilterException::forIncorrectInterface(get_class($class));
 				}
 
-				// If the response object was sent back,
-				// then send it and quit.
-				if ($result instanceof ResponseInterface)
+				if ($position === 'before')
 				{
-					// short circuit - bypass any other filters
+					$result = $class->before($this->request, $this->arguments[$alias] ?? null);
+
+					if ($result instanceof RequestInterface)
+					{
+						$this->request = $result;
+						continue;
+					}
+
+					// If the response object was sent back,
+					// then send it and quit.
+					if ($result instanceof ResponseInterface)
+					{
+						// short circuit - bypass any other filters
+						return $result;
+					}
+
+					// Ignore an empty result
+					if (empty($result))
+					{
+						continue;
+					}
+
 					return $result;
 				}
-
-				// Ignore an empty result
-				if (empty($result))
+				elseif ($position === 'after')
 				{
-					continue;
-				}
+					$result = $class->after($this->request, $this->response);
 
-				return $result;
-			}
-			elseif ($position === 'after')
-			{
-				$result = $class->after($this->request, $this->response);
-
-				if ($result instanceof ResponseInterface)
-				{
-					$this->response = $result;
-					continue;
+					if ($result instanceof ResponseInterface)
+					{
+						$this->response = $result;
+						continue;
+					}
 				}
 			}
 		}

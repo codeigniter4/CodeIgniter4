@@ -1,9 +1,9 @@
 <?php namespace CodeIgniter\Log\Handlers;
 
-use Config\App;
+use CodeIgniter\Services;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use CodeIgniter\Test\Mock\MockResponse;
-use CodeIgniter\Services;
+use Config\App;
 
 class ChromeLoggerHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
@@ -54,7 +54,6 @@ class ChromeLoggerHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertObjectHasAttribute('dateFormat', $result);
 		$this->assertObjectHasAttribute('dateFormat', $logger);
 	}
-
 
 	public function testChromeLoggerHeaderSent()
 	{

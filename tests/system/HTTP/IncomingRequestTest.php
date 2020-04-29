@@ -1,8 +1,8 @@
 <?php
 namespace CodeIgniter\HTTP;
 
-use Config\App;
 use CodeIgniter\HTTP\Files\UploadedFile;
+use Config\App;
 
 /**
  * @backupGlobals enabled
@@ -202,22 +202,43 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2774
+	 */
 	public function testNegotiatesLocale()
 	{
-		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'es; q=1.0, en; q=0.5';
+		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'fr-FR; q=1.0, en; q=0.5';
 
 		$config                   = new App();
 		$config->negotiateLocale  = true;
 		$config->supportedLocales = [
+			'fr',
 			'en',
-			'es',
 		];
 		$config->baseURL          = 'http://example.com';
 
 		$request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
 		$this->assertEquals($config->defaultLocale, $request->getDefaultLocale());
-		$this->assertEquals('es', $request->getLocale());
+		$this->assertEquals('fr', $request->getLocale());
+	}
+
+	public function testNegotiatesLocaleOnlyBroad()
+	{
+		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'fr; q=1.0, en; q=0.5';
+
+		$config                   = new App();
+		$config->negotiateLocale  = true;
+		$config->supportedLocales = [
+			'fr',
+			'en',
+		];
+		$config->baseURL          = 'http://example.com';
+
+		$request = new IncomingRequest($config, new URI(), null, new UserAgent());
+
+		$this->assertEquals($config->defaultLocale, $request->getDefaultLocale());
+		$this->assertEquals('fr', $request->getLocale());
 	}
 
 	// The negotiation tests below are not intended to exercise the HTTP\Negotiate class -
@@ -421,6 +442,17 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->request->setMethod('WINK');
 		$this->assertEquals('wink', $this->request->getMethod());
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2839
+	 */
+	public function testGetPostEmpty()
+	{
+		$_POST['TEST'] = 5;
+		$_GET['TEST']  = 3;
+		$this->assertEquals($_POST, $this->request->getPostGet());
+		$this->assertEquals($_GET, $this->request->getGetPost());
 	}
 
 }

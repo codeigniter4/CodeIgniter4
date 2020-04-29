@@ -77,8 +77,8 @@ Class Reference
 
 		:param  string  $name: The name of the header you want to retrieve the value of.
 		:param  int  $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`_.
-		:returns: The current value of the header. If the header has multiple values, they will be returned as an array.
-		:rtype: string|array|null
+		:returns: Returns a single header object. If multiple headers with the same name exist, then will return an array of header objects.
+		:rtype: \CodeIgniter\HTTP\Header|array
 
 		Allows you to retrieve the current value of a single message header. ``$name`` is the case-insensitive header name.
 		While the header is converted internally as described above, you can access the header with any type of case::
@@ -86,12 +86,17 @@ Class Reference
 			// These are all the same:
 			$message->getHeader('HOST');
 			$message->getHeader('Host');
-			$message->getHeader('host');
+			$message->getHeader('host');	
 
-		If the header has multiple values, the values will return as an array of values. You can use the ``headerLine()``
+		If the header has multiple values, ``getValue()`` will return as an array of values. You can use the ``getValueLine()``
 		method to retrieve the values as a string::
 
 			echo $message->getHeader('Accept-Language');
+
+			// Outputs something like:
+			'Accept-Language: en,en-US'
+
+			echo $message->getHeader('Accept-Language')->getValue();
 
 			// Outputs something like:
 			[
@@ -99,11 +104,16 @@ Class Reference
 				'en-US'
 			]
 
+			echo $message->getHeader('Accept-Language')->getValueLine();
+
+			// Outputs something like:
+			'en,en-US'
+
 		You can filter the header by passing a filter value in as the second parameter::
 
 			$message->getHeader('Document-URI', FILTER_SANITIZE_URL);
 
-	.. php:method:: headerLine($name)
+	.. php:method:: getHeaderLine($name)
 
 		:param  string $name: The name of the header to retrieve.
 		:returns: A string representing the header value.
@@ -112,7 +122,7 @@ Class Reference
 		Returns the value(s) of the header as a string. This method allows you to easily get a string representation
 		of the header values when the header has multiple values. The values are appropriately joined::
 
-			echo $message->headerLine('Accept-Language');
+			echo $message->getHeaderLine('Accept-Language');
 
 			// Outputs:
 			en, en-US

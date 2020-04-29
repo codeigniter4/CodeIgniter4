@@ -1,11 +1,7 @@
 <?php
 namespace CodeIgniter\Filters;
 
-use Config\Filters as FilterConfig;
 use CodeIgniter\Config\Services;
-use CodeIgniter\Filters\Exceptions\FilterException;
-use CodeIgniter\Honeypot\Exceptions\HoneypotException;
-use CodeIgniter\HTTP\ResponseInterface;
 
 /**
  * @backupGlobals enabled

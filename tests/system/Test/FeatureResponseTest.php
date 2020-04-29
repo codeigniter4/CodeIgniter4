@@ -1,8 +1,8 @@
 <?php
 
+use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\FeatureResponse;
-use CodeIgniter\HTTP\RedirectResponse;
 
 class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 {
@@ -251,7 +251,7 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->response->setBody($tmp);
 
 		// this should be FALSE - invalid JSON - will see if this is working that way ;-)
-		$this->assertFalse($this->response->getBody() == $this->feature->getJSON());
+		$this->assertFalse($this->response->getBody() === $this->feature->getJSON());
 	}
 
 	public function testGetXML()
