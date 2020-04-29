@@ -17,7 +17,7 @@ CodeIgniter's CLI library makes creating interactive command-line scripts simple
 Initializing the Class
 ======================
 
-You do not need to create an instance of the CLI library, since all of it's methods are static. Instead, you simply
+You do not need to create an instance of the CLI library, since all of its methods are static. Instead, you simply
 need to ensure your controller can locate it via a ``use`` statement above your class::
 
 	<?php namespace App\Controllers;
@@ -58,6 +58,9 @@ Finally, you can pass validation rules to the answer input as the third paramete
 Providing Feedback
 ==================
 
+.. note:: For more choices in formatting options and available foreground and background colors, you may try the
+ new and improved :doc:`CLI Output Library </cli/cli_output>`.
+
 **write()**
 
 Several methods are provided for you to provide feedback to your users. This can be as simple as a single status update
@@ -80,7 +83,6 @@ The following foreground colors are available:
 * black
 * dark_gray
 * blue
-* dark_blue
 * light_blue
 * green
 * light_green
