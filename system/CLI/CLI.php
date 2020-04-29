@@ -39,8 +39,6 @@
 
 namespace CodeIgniter\CLI;
 
-use CodeIgniter\CLI\Exceptions\CLIException;
-
 /**
  * Set of static methods useful for CLI request handling.
  *
@@ -86,47 +84,6 @@ class CLI
 	protected static $initialized = false;
 
 	/**
-	 * Foreground color list
-	 *
-	 * @var array
-	 */
-	protected static $foreground_colors = [
-		'black'        => '0;30',
-		'dark_gray'    => '1;30',
-		'blue'         => '0;34',
-		'dark_blue'    => '1;34',
-		'light_blue'   => '1;34',
-		'green'        => '0;32',
-		'light_green'  => '1;32',
-		'cyan'         => '0;36',
-		'light_cyan'   => '1;36',
-		'red'          => '0;31',
-		'light_red'    => '1;31',
-		'purple'       => '0;35',
-		'light_purple' => '1;35',
-		'light_yellow' => '0;33',
-		'yellow'       => '1;33',
-		'light_gray'   => '0;37',
-		'white'        => '1;37',
-	];
-
-	/**
-	 * Background color list
-	 *
-	 * @var array
-	 */
-	protected static $background_colors = [
-		'black'      => '40',
-		'red'        => '41',
-		'green'      => '42',
-		'yellow'     => '43',
-		'blue'       => '44',
-		'magenta'    => '45',
-		'cyan'       => '46',
-		'light_gray' => '47',
-	];
-
-	/**
 	 * List of array segments.
 	 *
 	 * @var array
@@ -137,15 +94,6 @@ class CLI
 	 * @var array
 	 */
 	protected static $options = [];
-
-	/**
-	 * Helps track internally whether the last
-	 * output was a "write" or a "print" to
-	 * keep the output clean and as expected.
-	 *
-	 * @var string
-	 */
-	protected static $lastWrite;
 
 	//--------------------------------------------------------------------
 
@@ -304,17 +252,13 @@ class CLI
 	 * @param string      $text
 	 * @param string|null $foreground
 	 * @param string|null $background
+	 *
+	 * @deprecated         Use `CLIOutput::print()` instead
+	 * @codeCoverageIgnore
 	 */
 	public static function print(string $text = '', string $foreground = null, string $background = null)
 	{
-		if ($foreground || $background)
-		{
-			$text = static::color($text, $foreground, $background);
-		}
-
-		static::$lastWrite = null;
-
-		fwrite(STDOUT, $text);
+		(new CLIOutput())->print($text, $foreground, $background);
 	}
 
 	/**
@@ -323,21 +267,13 @@ class CLI
 	 * @param string $text       The text to output
 	 * @param string $foreground
 	 * @param string $background
+	 *
+	 * @deprecated         Use `CLIOutput::write()` instead
+	 * @codeCoverageIgnore
 	 */
 	public static function write(string $text = '', string $foreground = null, string $background = null)
 	{
-		if ($foreground || $background)
-		{
-			$text = static::color($text, $foreground, $background);
-		}
-
-		if (static::$lastWrite !== 'write')
-		{
-			$text              = PHP_EOL . $text;
-			static::$lastWrite = 'write';
-		}
-
-		fwrite(STDOUT, $text . PHP_EOL);
+		(new CLIOutput())->write($text, $foreground, $background);
 	}
 
 	//--------------------------------------------------------------------
@@ -348,15 +284,13 @@ class CLI
 	 * @param string|array $text       The text to output, or array of errors
 	 * @param string       $foreground
 	 * @param string       $background
+	 *
+	 * @deprecated         Use `CLIOutput::error()` instead
+	 * @codeCoverageIgnore
 	 */
 	public static function error(string $text, string $foreground = 'light_red', string $background = null)
 	{
-		if ($foreground || $background)
-		{
-			$text = static::color($text, $foreground, $background);
-		}
-
-		fwrite(STDERR, $text . PHP_EOL);
+		(new CLIOutput())->error($text, $foreground, $background);
 	}
 
 	//--------------------------------------------------------------------
@@ -379,36 +313,13 @@ class CLI
 	 *
 	 * @param integer $seconds   Number of seconds
 	 * @param boolean $countdown Show a countdown or not
+	 *
+	 * @deprecated         Use `CLIOutput::wait()` instead
+	 * @codeCoverageIgnore
 	 */
 	public static function wait(int $seconds, bool $countdown = false)
 	{
-		if ($countdown === true)
-		{
-			$time = $seconds;
-
-			while ($time > 0)
-			{
-				fwrite(STDOUT, $time . '... ');
-				sleep(1);
-				$time --;
-			}
-			static::write();
-		}
-		else
-		{
-			if ($seconds > 0)
-			{
-				sleep($seconds);
-			}
-			else
-			{
-				// this chunk cannot be tested because of keyboard input
-				// @codeCoverageIgnoreStart
-				static::write(static::$wait_msg);
-				static::input();
-				// @codeCoverageIgnoreEnd
-			}
-		}
+		(new CLIOutput())->wait($seconds, $countdown);
 	}
 
 	//--------------------------------------------------------------------
@@ -430,15 +341,13 @@ class CLI
 	 *
 	 * @param integer $num Number of lines to output
 	 *
-	 * @return void
+	 * @return             void
+	 * @deprecated         Use `CLIOutput::newLine()` instead
+	 * @codeCoverageIgnore
 	 */
 	public static function newLine(int $num = 1)
 	{
-		// Do it once or more, write with empty string gives us a new line
-		for ($i = 0; $i < $num; $i ++)
-		{
-			static::write();
-		}
+		(new CLIOutput())->newLine($num);
 	}
 
 	//--------------------------------------------------------------------
@@ -447,17 +356,12 @@ class CLI
 	 * Clears the screen of output
 	 *
 	 * @return             void
+	 * @deprecated         Use `CLIOutput::clearScreen()` instead
 	 * @codeCoverageIgnore
 	 */
 	public static function clearScreen()
 	{
-		static::isWindows()
-
-				// Windows is a bit crap at this, but their terminal is tiny so shove this in
-						? static::newLine(40)
-
-				// Anything with a flair of Unix will handle these magic characters
-						: fwrite(STDOUT, chr(27) . '[H' . chr(27) . '[2J');
+		(new CLIOutput())->clearScreen();
 	}
 
 	//--------------------------------------------------------------------
@@ -469,42 +373,89 @@ class CLI
 	 * @param string $text       The text to color
 	 * @param string $foreground The foreground color
 	 * @param string $background The background color
-	 * @param string $format     Other formatting to apply. Currently only 'underline' is understood
+	 * @param string $format     Other formatting to apply.
 	 *
-	 * @return string    The color coded string
+	 * @return             string    The color coded string
+	 * @deprecated         Use `CLIOutput::color()` instead
+	 * @codeCoverageIgnore
 	 */
-	public static function color(string $text, string $foreground, string $background = null, string $format = null): string
+	public static function color(string $text, string $foreground = null, string $background = null, string $format = null): string
 	{
-		if (static::isWindows() && ! isset($_SERVER['ANSICON']))
+		$foreground = self::translateForegroundColors($foreground);
+		$background = self::translateBackgroundColors($background);
+		$format     = self::translateOption($format);
+
+		return (new CLIOutput())->color($text, $foreground, $background, $format);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Translate the foreground colors from the old list to
+	 * the new list of colors by CLIOutput.
+	 *
+	 * @param string|null $color
+	 *
+	 * @return   string|null
+	 * @internal Used only to prevent BC break
+	 */
+	private static function translateForegroundColors(?string $color): ?string
+	{
+		if ($color === null)
 		{
-			// @codeCoverageIgnoreStart
-			return $text;
-			// @codeCoverageIgnoreEnd
+			return null;
 		}
 
-		if (! array_key_exists($foreground, static::$foreground_colors))
+		$fgTrans = [
+			'dark_gray'    => 'bright_black',
+			'light_red'    => 'bright_red',
+			'light_green'  => 'bright_green',
+			'light_yellow' => 'bright_yellow',
+			'light_blue'   => 'bright_blue',
+			'light_purple' => 'bright_magenta',
+			'light_cyan'   => 'bright_cyan',
+			'white'        => 'bright_white',
+			'light_gray'   => 'white',
+		];
+
+		return strtr($color, $fgTrans);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Translate the background colors from the old list
+	 * to the new list by CLIOutput.
+	 *
+	 * @param string|null $color
+	 *
+	 * @return   string|null
+	 * @internal Used only to prevent BC break
+	 */
+	private static function translateBackgroundColors(?string $color): ?string
+	{
+		if ($color === null)
 		{
-			throw CLIException::forInvalidColor('foreground', $foreground);
+			return null;
 		}
 
-		if ($background !== null && ! array_key_exists($background, static::$background_colors))
-		{
-			throw CLIException::forInvalidColor('background', $background);
-		}
+		return strtr($color, ['light_gray' => 'white']);
+	}
 
-		$string = "\033[" . static::$foreground_colors[$foreground] . 'm';
+	//--------------------------------------------------------------------
 
-		if ($background !== null)
-		{
-			$string .= "\033[" . static::$background_colors[$background] . 'm';
-		}
-
-		if ($format === 'underline')
-		{
-			$string .= "\033[4m";
-		}
-
-		return $string . ($text . "\033[0m");
+	/**
+	 * Used to translate options written as string
+	 * to the required array format.
+	 *
+	 * @param string|null $option
+	 *
+	 * @return   array
+	 * @internal Used to prevent BC break
+	 */
+	private static function translateOption(?string $option): array
+	{
+		return $option !== null ? [$option] : [];
 	}
 
 	//--------------------------------------------------------------------
@@ -515,27 +466,13 @@ class CLI
 	 *
 	 * @param string $string
 	 *
-	 * @return integer
+	 * @return             integer
+	 * @deprecated         Use `CLIOutput::strlen()` instead
+	 * @codeCoverageIgnore
 	 */
 	public static function strlen(?string $string): int
 	{
-		if (is_null($string))
-		{
-			return 0;
-		}
-		foreach (static::$foreground_colors as $color)
-		{
-			$string = strtr($string, ["\033[" . $color . 'm' => '']);
-		}
-
-		foreach (static::$background_colors as $color)
-		{
-			$string = strtr($string, ["\033[" . $color . 'm' => '']);
-		}
-
-		$string = strtr($string, ["\033[4m" => '', "\033[0m" => '']);
-
-		return mb_strlen($string);
+		return CLIOutput::strlen($string);
 	}
 
 	//--------------------------------------------------------------------
@@ -592,36 +529,13 @@ class CLI
 	 *
 	 * @param integer|boolean $thisStep
 	 * @param integer         $totalSteps
+	 *
+	 * @deprecated         Use `CLIOutput::showProgress()` instead
+	 * @codeCoverageIgnore
 	 */
 	public static function showProgress($thisStep = 1, int $totalSteps = 10)
 	{
-		static $inProgress = false;
-
-		// restore cursor position when progress is continuing.
-		if ($inProgress !== false && $inProgress <= $thisStep)
-		{
-			fwrite(STDOUT, "\033[1A");
-		}
-		$inProgress = $thisStep;
-
-		if ($thisStep !== false)
-		{
-			// Don't allow div by zero or negative numbers....
-			$thisStep   = abs($thisStep);
-			$totalSteps = $totalSteps < 1 ? 1 : $totalSteps;
-
-			$percent = intval(($thisStep / $totalSteps) * 100);
-			$step    = (int) round($percent / 10);
-
-			// Write the progress bar
-			fwrite(STDOUT, "[\033[32m" . str_repeat('#', $step) . str_repeat('.', 10 - $step) . "\033[0m]");
-			// Textual representation...
-			fwrite(STDOUT, sprintf(' %3d%% Complete', $percent) . PHP_EOL);
-		}
-		else
-		{
-			fwrite(STDOUT, "\007");
-		}
+		(new CLIOutput())->showProgress($thisStep, $totalSteps);
 	}
 
 	//--------------------------------------------------------------------
@@ -650,12 +564,12 @@ class CLI
 
 		if ($max === 0)
 		{
-			$max = CLI::getWidth();
+			$max = static::getWidth();
 		}
 
-		if (CLI::getWidth() < $max)
+		if (static::getWidth() < $max)
 		{
-			$max = CLI::getWidth();
+			$max = static::getWidth();
 		}
 
 		$max = $max - $pad_left;
@@ -664,7 +578,7 @@ class CLI
 
 		if ($pad_left > 0)
 		{
-			$lines = explode(PHP_EOL, $lines);
+			$lines = explode("\n", $lines);
 
 			$first = true;
 
@@ -679,10 +593,27 @@ class CLI
 				}
 			});
 
-			$lines = implode(PHP_EOL, $lines);
+			$lines = implode("\n", $lines);
 		}
 
 		return $lines;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a well formatted table
+	 *
+	 * @param array $tbody List of rows
+	 * @param array $thead List of columns
+	 *
+	 * @return             void
+	 * @deprecated         Use `CLIOutput::table()` instead
+	 * @codeCoverageIgnore
+	 */
+	public static function table(array $tbody, array $thead = [])
+	{
+		(new CLIOutput())->table($tbody, $thead);
 	}
 
 	//--------------------------------------------------------------------
@@ -842,110 +773,6 @@ class CLI
 		}
 
 		return $out;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns a well formatted table
-	 *
-	 * @param array $tbody List of rows
-	 * @param array $thead List of columns
-	 *
-	 * @return void
-	 */
-	public static function table(array $tbody, array $thead = [])
-	{
-		// All the rows in the table will be here until the end
-		$table_rows = [];
-
-		// We need only indexes and not keys
-		if (! empty($thead))
-		{
-			$table_rows[] = array_values($thead);
-		}
-
-		foreach ($tbody as $tr)
-		{
-			$table_rows[] = array_values($tr);
-		}
-
-		// Yes, it really is necessary to know this count
-		$total_rows = count($table_rows);
-
-		// Store all columns lengths
-		// $all_cols_lengths[row][column] = length
-		$all_cols_lengths = [];
-
-		// Store maximum lengths by column
-		// $max_cols_lengths[column] = length
-		$max_cols_lengths = [];
-
-		// Read row by row and define the longest columns
-		for ($row = 0; $row < $total_rows; $row ++)
-		{
-			$column = 0; // Current column index
-			foreach ($table_rows[$row] as $col)
-			{
-				// Sets the size of this column in the current row
-				$all_cols_lengths[$row][$column] = static::strlen($col);
-
-				// If the current column does not have a value among the larger ones
-				// or the value of this is greater than the existing one
-				// then, now, this assumes the maximum length
-				if (! isset($max_cols_lengths[$column]) || $all_cols_lengths[$row][$column] > $max_cols_lengths[$column])
-				{
-					$max_cols_lengths[$column] = $all_cols_lengths[$row][$column];
-				}
-
-				// We can go check the size of the next column...
-				$column ++;
-			}
-		}
-
-		// Read row by row and add spaces at the end of the columns
-		// to match the exact column length
-		for ($row = 0; $row < $total_rows; $row ++)
-		{
-			$column = 0;
-			foreach ($table_rows[$row] as $col)
-			{
-				$diff = $max_cols_lengths[$column] - static::strlen($col);
-				if ($diff)
-				{
-					$table_rows[$row][$column] = $table_rows[$row][$column] . str_repeat(' ', $diff);
-				}
-				$column ++;
-			}
-		}
-
-		$table = '';
-
-		// Joins columns and append the well formatted rows to the table
-		for ($row = 0; $row < $total_rows; $row ++)
-		{
-			// Set the table border-top
-			if ($row === 0)
-			{
-				$cols = '+';
-				foreach ($table_rows[$row] as $col)
-				{
-					$cols .= str_repeat('-', static::strlen($col) + 2) . '+';
-				}
-				$table .= $cols . PHP_EOL;
-			}
-
-			// Set the columns borders
-			$table .= '| ' . implode(' | ', $table_rows[$row]) . ' |' . PHP_EOL;
-
-			// Set the thead and table borders-bottom
-			if ($row === 0 && ! empty($thead) || $row + 1 === $total_rows)
-			{
-				$table .= $cols . PHP_EOL;
-			}
-		}
-
-		static::write($table);
 	}
 
 	//--------------------------------------------------------------------

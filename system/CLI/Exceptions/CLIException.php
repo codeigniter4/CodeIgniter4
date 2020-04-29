@@ -12,4 +12,14 @@ class CLIException extends \RuntimeException
 	{
 		return new static(lang('CLI.invalidColor', [$type, $color]));
 	}
+
+	/**
+	 * @param string $option
+	 *
+	 * @return \CodeIgniter\CLI\Exceptions\CLIException
+	 */
+	public static function forInvalidOption(string $option)
+	{
+		return new static(lang('CLI.invalidOption', [$option]));
+	}
 }

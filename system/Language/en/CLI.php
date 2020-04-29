@@ -21,4 +21,5 @@ return [
    'helpOptions'     => 'Options:',
    'helpArguments'   => 'Arguments:',
    'invalidColor'    => 'Invalid {0} color: {1}.',
+   'invalidOption'   => 'Invalid option: {0}.',
 ];
