@@ -330,7 +330,7 @@ class ModelTest extends CIDatabaseTestCase
 
 		$user = $model->first();
 
-		if (! $aggregate)
+		if (! $aggregate || $groupBy)
 		{
 			// fix for PHP7.2
 			$count = is_array($user) ? count($user) : 1;
@@ -339,14 +339,7 @@ class ModelTest extends CIDatabaseTestCase
 		}
 		else
 		{
-			if ($groupBy)
-			{
-				$this->assertEquals(2, $user->id);
-			}
-			else
-			{
-				$this->assertEquals(9, $user->id);
-			}
+			$this->assertEquals(9, $user->id);
 		}
 
 		$user = $model->withDeleted();
@@ -1977,20 +1970,13 @@ class ModelTest extends CIDatabaseTestCase
 
 		$user = $model->withDeleted()->first();
 
-		if (! $aggregate)
+		if (! $aggregate || $groupBy)
 		{
 			$this->assertEquals(1, $user->id);
 		}
 		else
 		{
-			if ($groupBy)
-			{
-				$this->assertEquals(1, $user->id);
-			}
-			else
-			{
-				$this->assertEquals(10, $user->id);
-			}
+			$this->assertEquals(10, $user->id);
 		}
 
 		$user2 = $model->first();
