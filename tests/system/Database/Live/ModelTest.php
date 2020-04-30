@@ -276,23 +276,47 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testFirstRespectsSoftDeletes()
+	public function provideGroupBy()
+	{
+		return [
+			[true],
+			[false],
+		];
+	}
+
+	/**
+	 * @dataProvider provideGroupBy
+	 */
+	public function testFirstRespectsSoftDeletes($groupBy)
 	{
 		$this->db->table('user')
 				 ->where('id', 1)
 				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$model = new UserModel();
-
-		$user = $model->first();
+		if ($groupBy)
+		{
+			$user = $model->groupBy('id')->first();
+		}
+		else
+		{
+			$user = $model->first();
+		}
 
 		// fix for PHP7.2
 		$count = is_array($user) ? count($user) : 1;
 		$this->assertEquals(1, $count);
 		$this->assertEquals(2, $user->id);
 
-		$user = $model->withDeleted()
-					  ->first();
+		$user = $model->withDeleted();
+		if ($groupBy)
+		{
+			$user = $model->groupBy('id')->first();
+		}
+		else
+		{
+			$user = $model->first();
+		}
 
 		$this->assertEquals(1, $user->id);
 	}
@@ -1900,13 +1924,31 @@ class ModelTest extends CIDatabaseTestCase
 			->getBindings();
 	}
 
-	public function testFirstRecoverTempUseSoftDeletes()
+	/**
+	 * @dataProvider provideGroupBy
+	 */
+	public function testFirstRecoverTempUseSoftDeletes($groupBy)
 	{
 		$model = new UserModel($this->db);
 		$model->delete(1);
-		$user = $model->withDeleted()->first();
+		if ($groupBy)
+		{
+			$user = $model->groupBy('id')->withDeleted()->first();
+		}
+		else
+		{
+			$user = $model->withDeleted()->first();
+		}
 		$this->assertEquals(1, $user->id);
 		$user2 = $model->first();
+		if ($groupBy)
+		{
+			$user2 = $model->groupBy('id')->first();
+		}
+		else
+		{
+			$user2 = $model->first();
+		}
 		$this->assertEquals(2, $user2->id);
 	}
 
