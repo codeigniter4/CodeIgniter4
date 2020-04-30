@@ -254,33 +254,34 @@ class ModelTest extends CIDatabaseTestCase
 	public function provideGroupBy()
 	{
 		return [
-			[true],
-			[false],
+			[
+				true,
+				3,
+			],
+			[
+				false,
+				7,
+			],
 		];
 	}
 
 	/**
 	 * @dataProvider provideGroupBy
 	 */
-	public function testFirstAggregate($groupBy)
+	public function testFirstAggregate($groupBy, $total)
 	{
 		$model = new UserModel();
 
 		if ($groupBy)
 		{
-			$user = $model->select('SUM(id) as total')
-						->where('id >', 2)
-						->groupBy('id')
-						->first();
-			$this->assertEquals(3, $user->total);
+			$model->groupBy('id');
 		}
-		else
-		{
-			$user = $model->select('SUM(id) as total')
-						->where('id >', 2)
-						->first();
-			$this->assertEquals(7, $user->total);
-		}
+
+		$user = $model->select('SUM(id) as total')
+					  ->where('id >', 2)
+					  ->first();
+
+		$this->assertEquals($total, $user->total);
 	}
 
 	//--------------------------------------------------------------------
