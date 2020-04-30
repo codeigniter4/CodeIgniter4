@@ -36,22 +36,30 @@ Class Reference
 
 .. php:class:: CodeIgniter\\HTTP\\Message
 
-    .. php:method:: body()
+    .. php:method:: getBody()
 
         :returns: The current message body
         :rtype: mixed
 
         Returns the current message body, if any has been set. If not body exists, returns null::
 
-            echo $message->body();
+            echo $message->getBody();
 
-    .. php:method:: setBody([$data])
+    .. php:method:: setBody($data)
 
         :param  mixed  $data: The body of the message.
         :returns: the Message|Response instance to allow methods to be chained together.
         :rtype: CodeIgniter\\HTTP\\Message|CodeIgniter\\HTTP\\Response
 
         Sets the body of the current request.
+
+    .. php:method:: appendBody($data)
+
+        :param  mixed  $data: The body of the message.
+        :returns: the Message|Response instance to allow methods to be chained together.
+        :rtype: CodeIgniter\\HTTP\\Message|CodeIgniter\\HTTP\\Response
+
+        Appends data to the body of the current request.
 
     .. php:method:: populateHeaders()
 
@@ -73,7 +81,7 @@ Class Reference
 
         Returns an array of all headers found or previously set.
 
-    .. php:method:: getHeader([$name])
+    .. php:method:: getHeader($name)
 
         :param  string  $name: The name of the header you want to retrieve the value of.
         :returns: Returns a single header object. If multiple headers with the same name exist, then will return an array of header objects.
@@ -112,7 +120,7 @@ Class Reference
 
             $message->getHeader('Document-URI', FILTER_SANITIZE_URL);
 
-    .. php:method:: hasHeader([$name])
+    .. php:method:: hasHeader($name)
 
         :param  string  $name: The name of the header you want to see if it exists.
         :returns: Returns TRUE if it exists, FALSE otherwise.
@@ -132,7 +140,7 @@ Class Reference
             // Outputs:
             en, en-US
 
-    .. php:method:: setHeader([$name[, $value]])
+    .. php:method:: setHeader($name, $value)
 
         :param string $name: The name of the header to set the value for.
         :param mixed  $value: The value to set the header to.
@@ -145,7 +153,7 @@ Class Reference
 
             $message->setHeader('Host', 'codeigniter.com');
 
-    .. php:method:: removeHeader([$name])
+    .. php:method:: removeHeader($name)
 
         :param string $name: The name of the header to remove.
         :returns: The current message instance
@@ -153,9 +161,9 @@ Class Reference
 
         Removes the header from the Message. ``$name`` is the case-insensitive name of the header::
 
-            $message->remove('Host');
+            $message->removeHeader('Host');
 
-    .. php:method:: appendHeader([$name[, $value]]))
+    .. php:method:: appendHeader($name, $value)
 
         :param string $name: The name of the header to modify
         :param string  $value: The value to add to the header.
@@ -168,7 +176,7 @@ Class Reference
 
             $message->appendHeader('Accept-Language', 'en-US; q=0.8');
 
-    .. php:method:: prependHeader([$name[, $value]]))
+    .. php:method:: prependHeader($name, $value)
 
         :param string $name: The name of the header to modify
         :param string  $value: The value to prepend to the header.
