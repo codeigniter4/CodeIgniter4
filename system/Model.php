@@ -473,9 +473,13 @@ class Model
 
 		// Some databases, like PostgreSQL, need order
 		// information to consistently return correct results when there is group by
-		if (! empty($this->QBGroupBy) && empty($builder->QBOrderBy) && ! empty($this->primaryKey))
+		// except when soft delete is enabled
+		if (empty($builder->QBOrderBy) && ! empty($this->primaryKey))
 		{
-			$builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
+			if (! empty($this->QBGroupBy) || $this->tempUseSoftDeletes === true)
+			{
+				$builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
+			}
 		}
 
 		$row = $builder->limit(1, 0)
