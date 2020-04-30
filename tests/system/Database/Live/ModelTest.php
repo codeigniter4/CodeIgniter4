@@ -342,8 +342,8 @@ class ModelTest extends CIDatabaseTestCase
 			$this->assertEquals(9, $user->id);
 		}
 
-		$user = $model->withDeleted();
-		$user = $model->first();
+		$user = $model->withDeleted()
+					  ->first();
 
 		$this->assertEquals(1, $user->id);
 	}
