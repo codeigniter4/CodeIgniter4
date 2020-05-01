@@ -470,16 +470,23 @@ class Model
 		{
 			$builder->where($this->table . '.' . $this->deletedField, null);
 		}
+		else
+		{
+			if ($this->useSoftDeletes === true && empty($builder->QBGroupBy) && ! empty($this->primaryKey))
+			{
+				$builder->groupBy($this->table . '.' . $this->primaryKey);
+			}
+		}
 
 		// Some databases, like PostgreSQL, need order
 		// information to consistently return correct results.
-		if (empty($builder->QBOrderBy) && ! empty($this->primaryKey))
+		if (! empty($builder->QBGroupBy) && empty($builder->QBOrderBy) && ! empty($this->primaryKey))
 		{
 			$builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
 		}
 
 		$row = $builder->limit(1, 0)
-				->get();
+					   ->get();
 
 		$row = $row->getFirstRow($this->tempReturnType);
 

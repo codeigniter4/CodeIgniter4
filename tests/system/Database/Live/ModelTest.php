@@ -251,20 +251,96 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testFirstRespectsSoftDeletes()
+	public function provideGroupBy()
+	{
+		return [
+			[
+				true,
+				3,
+			],
+			[
+				false,
+				7,
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider provideGroupBy
+	 */
+	public function testFirstAggregate($groupBy, $total)
+	{
+		$model = new UserModel();
+
+		if ($groupBy)
+		{
+			$model->groupBy('id');
+		}
+
+		$user = $model->select('SUM(id) as total')
+					  ->where('id >', 2)
+					  ->first();
+
+		$this->assertEquals($total, $user->total);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function provideAggregateAndGroupBy()
+	{
+		return [
+			[
+				true,
+				true,
+			],
+			[
+				false,
+				false,
+			],
+			[
+				true,
+				false,
+			],
+			[
+				false,
+				true,
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider provideAggregateAndGroupBy
+	 */
+	public function testFirstRespectsSoftDeletes($aggregate, $groupBy)
 	{
 		$this->db->table('user')
 				 ->where('id', 1)
 				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$model = new UserModel();
+		if ($aggregate)
+		{
+			$model->select('SUM(id) as id');
+		}
+
+		if ($groupBy)
+		{
+			$model->groupBy('id');
+		}
 
 		$user = $model->first();
 
-		// fix for PHP7.2
-		$count = is_array($user) ? count($user) : 1;
-		$this->assertEquals(1, $count);
-		$this->assertEquals(2, $user->id);
+		if (! $aggregate || $groupBy)
+		{
+			// fix for PHP7.2
+			$count = is_array($user) ? count($user) : 1;
+			$this->assertEquals(1, $count);
+			$this->assertEquals(2, $user->id);
+		}
+		else
+		{
+			$this->assertEquals(9, $user->id);
+		}
 
 		$user = $model->withDeleted()
 					  ->first();
@@ -1875,12 +1951,26 @@ class ModelTest extends CIDatabaseTestCase
 			->getBindings();
 	}
 
-	public function testFirstRecoverTempUseSoftDeletes()
+	/**
+	 * @dataProvider provideAggregateAndGroupBy
+	 */
+	public function testFirstRecoverTempUseSoftDeletes($aggregate, $groupBy)
 	{
 		$model = new UserModel($this->db);
 		$model->delete(1);
+		if ($aggregate)
+		{
+			$model->select('sum(id) as id');
+		}
+
+		if ($groupBy)
+		{
+			$model->groupBy('id');
+		}
+
 		$user = $model->withDeleted()->first();
 		$this->assertEquals(1, $user->id);
+
 		$user2 = $model->first();
 		$this->assertEquals(2, $user2->id);
 	}

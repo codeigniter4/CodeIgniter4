@@ -103,7 +103,7 @@ class BaseBuilder
 	 *
 	 * @var array
 	 */
-	protected $QBGroupBy = [];
+	public $QBGroupBy = [];
 
 	/**
 	 * QB HAVING data
