@@ -479,7 +479,7 @@ class Model
 		}
 
 		// Some databases, like PostgreSQL, need order
-		// information to consistently return correct results
+		// information to consistently return correct results.
 		if (! empty($builder->QBGroupBy) && empty($builder->QBOrderBy) && ! empty($this->primaryKey))
 		{
 			$builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
