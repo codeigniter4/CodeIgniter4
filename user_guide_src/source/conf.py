@@ -16,7 +16,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'CodeIgniter4'
+project = 'CodeIgniter'
 author = 'CodeIgniter Foundation'
 copyright = '2019-2020 CodeIgniter Foundation'
 
