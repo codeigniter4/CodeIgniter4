@@ -9,7 +9,7 @@ Services
 Introduction
 ============
 
-All of the classes within CodeIgniter are provided as "services". This simply means that, instead
+All of the core classes within CodeIgniter are provided as "services". This simply means that, instead
 of hard-coding a class name to load, the classes to call are defined within a very simple
 configuration file. This file acts as a type of factory to create new instances of the required class.
 
@@ -65,7 +65,7 @@ Defining Services
 =================
 
 To make services work well, you have to be able to rely on each class having a constant API, or
-`interface <http://php.net/manual/en/language.oop5.interfaces.php>`_, to use. Almost all of
+`interface <https://www.php.net/manual/en/language.oop5.interfaces.php>`_, to use. Almost all of
 CodeIgniter's classes provide an interface that they adhere to. When you want to extend or replace
 core classes, you only need to ensure you meet the requirements of the interface and you know that
 the classes are compatible.

@@ -155,6 +155,10 @@ class Validation implements ValidationInterface
 			return false;
 		}
 
+		// Replace any placeholders (i.e. {id}) in the rules with
+		// the value found in $data, if exists.
+		$this->rules = $this->fillPlaceholders($this->rules, $data);
+
 		// Need this for searching arrays in validation.
 		helper('array');
 
@@ -170,9 +174,20 @@ class Validation implements ValidationInterface
 				$rules = $this->splitRules($rules);
 			}
 
-			$value = dot_array_search($rField, $data);
+			$value          = dot_array_search($rField, $data);
+			$fieldNameToken = explode('.', $rField);
 
-			$this->processRules($rField, $rSetup['label'] ?? $rField, $value ?? null, $rules, $data);
+			if (is_array($value) && end($fieldNameToken) === '*')
+			{
+				foreach ($value as $val)
+				{
+					$this->processRules($rField, $rSetup['label'] ?? $rField, $val ?? null, $rules, $data);
+				}
+			}
+			else
+			{
+				$this->processRules($rField, $rSetup['label'] ?? $rField, $value ?? null, $rules, $data);
+			}
 		}
 
 		return ! empty($this->getErrors()) ? false : true;
@@ -474,8 +489,8 @@ class Validation implements ValidationInterface
 	 */
 	public function setRuleGroup(string $group)
 	{
-		$rules       = $this->getRuleGroup($group);
-		$this->rules = $rules;
+		$rules = $this->getRuleGroup($group);
+		$this->setRules($rules);
 
 		$errorName = $group . '_errors';
 		if (isset($this->config->$errorName))
@@ -593,6 +608,64 @@ class Validation implements ValidationInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Replace any placeholders within the rules with the values that
+	 * match the 'key' of any properties being set. For example, if
+	 * we had the following $data array:
+	 *
+	 * [ 'id' => 13 ]
+	 *
+	 * and the following rule:
+	 *
+	 *  'required|is_unique[users,email,id,{id}]'
+	 *
+	 * The value of {id} would be replaced with the actual id in the form data:
+	 *
+	 *  'required|is_unique[users,email,id,13]'
+	 *
+	 * @param array $rules
+	 * @param array $data
+	 *
+	 * @return array
+	 */
+	protected function fillPlaceholders(array $rules, array $data): array
+	{
+		$replacements = [];
+
+		foreach ($data as $key => $value)
+		{
+			$replacements["{{$key}}"] = $value;
+		}
+
+		if (! empty($replacements))
+		{
+			foreach ($rules as &$rule)
+			{
+				if (is_array($rule))
+				{
+					foreach ($rule as &$row)
+					{
+						// Should only be an `errors` array
+						// which doesn't take placeholders.
+						if (is_array($row))
+						{
+							continue;
+						}
+
+						$row = strtr($row, $replacements);
+					}
+					continue;
+				}
+
+				$rule = strtr($rule, $replacements);
+			}
+		}
+
+		return $rules;
+	}
+
+	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
 	// Errors
 	//--------------------------------------------------------------------
@@ -698,7 +771,7 @@ class Validation implements ValidationInterface
 		// Check if custom message has been defined by user
 		if (isset($this->customErrors[$field][$rule]))
 		{
-			$message = $this->customErrors[$field][$rule];
+			$message = lang($this->customErrors[$field][$rule]);
 		}
 		else
 		{
@@ -708,11 +781,10 @@ class Validation implements ValidationInterface
 			$message = lang('Validation.' . $rule);
 		}
 
-		$message = str_replace('{field}', $label ?? $field, $message);
-		$message = str_replace('{param}', $this->rules[$param]['label'] ?? $param, $message);
-		$message = str_replace('{value}', $value, $message);
+		$message = str_replace('{field}', empty($label) ? $field : lang($label), $message);
+		$message = str_replace('{param}', empty($this->rules[$param]['label']) ? $param : lang($this->rules[$param]['label']), $message);
 
-		return $message;
+		return str_replace('{value}', $value, $message);
 	}
 
 	/**

@@ -21,7 +21,8 @@ the slug from our title in the model. Create a new view at
 
     <?= \Config\Services::validation()->listErrors(); ?>
 
-    <form action="/news/create">
+    <form action="/news/create" method="post">
+        <?= csrf_field() ?>
 
         <label for="title">Title</label>
         <input type="input" name="title" /><br />
@@ -33,9 +34,10 @@ the slug from our title in the model. Create a new view at
 
     </form>
 
-There is only one thing here that probably look unfamiliar to you: the 
-``\Config\Services::validation()->listErrors()`` function. It is used to report
-errors related to form validation.
+There are probably only two things here that look unfamiliar. The
+``\Config\Services::validation()->listErrors()`` function is used to report
+errors related to form validation. The ``csrf_field()`` function creates
+a hidden input with a CSRF token that helps protect against some common attacks.
 
 Go back to your ``News`` controller. You're going to do two things here,
 check whether the form was submitted and whether the submitted data
@@ -46,7 +48,6 @@ validation <../libraries/validation>` library to do this.
 
     public function create()
     {
-        helper('form');
         $model = new NewsModel();
 
         if (! $this->validate([
@@ -57,23 +58,22 @@ validation <../libraries/validation>` library to do this.
             echo view('templates/header', ['title' => 'Create a news item']);
             echo view('news/create');
             echo view('templates/footer');
-
         }
         else
         {
             $model->save([
                 'title' => $this->request->getVar('title'),
-                'slug'  => url_title($this->request->getVar('title')),
+                'slug'  => url_title($this->request->getVar('title'), '-', TRUE),
                 'body'  => $this->request->getVar('body'),
             ]);
+
             echo view('news/success');
         }
     }
 
-The code above adds a lot of functionality. The first few lines load the
-form helper and the NewsModel. After that, the Controller-provided helper
-function is used to validate the $_POST fields. In this case, the title and
-text fields are required.
+The code above adds a lot of functionality. First we load the NewsModel.
+After that, the Controller-provided helper function is used to validate
+the $_POST fields. In this case, the title and text fields are required.
 
 CodeIgniter has a powerful validation library as demonstrated
 above. You can read :doc:`more about this library
@@ -83,18 +83,20 @@ Continuing down, you can see a condition that checks whether the form
 validation ran successfully. If it did not, the form is displayed; if it
 was submitted **and** passed all the rules, the model is called. This
 takes care of passing the news item into the model.
-This contains a new function, url\_title(). This function -
+This contains a new function ``url_title()``. This function -
 provided by the :doc:`URL helper <../helpers/url_helper>` - strips down
 the string you pass it, replacing all spaces by dashes (-) and makes
 sure everything is in lowercase characters. This leaves you with a nice
 slug, perfect for creating URIs.
 
 After this, a view is loaded to display a success message. Create a view at
-**app/Views/news/success.php** and write a success message. 
+**app/Views/news/success.php** and write a success message.
 
-This could be as simple as:::
+This could be as simple as:
 
-    News item created successfully. 
+::
+
+    News item created successfully.
 
 Model Updating
 -------------------------------------------------------
@@ -134,8 +136,9 @@ Routing
 
 Before you can start adding news items into your CodeIgniter application
 you have to add an extra rule to **app/Config/Routes.php** file. Make sure your
-file contains the following. This makes sure CodeIgniter sees 'create'
-as a method instead of a news item's slug.
+file contains the following. This makes sure CodeIgniter sees ``create``
+as a method instead of a news item's slug. You can read more about different
+routing types :doc:`here </incoming/routing>`.
 
 ::
 
@@ -158,15 +161,14 @@ Add some news and check out the different pages you made.
     :height: 415px
     :width: 45%
 
-.. image:: ../images/tutorial9.png
-    :align: left
- 
-
 Congratulations
 -------------------------------------------------------
 
 You just completed your first CodeIgniter4 application!
 
-The image to the left shows your project's **app** folder,
+The image underneath shows your project's **app** folder,
 with all of the files that you created in green.
 The two modified configuration files (Database & Routes) are not shown.
+
+.. image:: ../images/tutorial9.png
+    :align: left

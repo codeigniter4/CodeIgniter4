@@ -1,10 +1,10 @@
 <?php
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Exceptions\DownloadException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use DateTime;
 use DateTimeZone;
-use CodeIgniter\Exceptions\DownloadException;
 
 class DownloadResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 {

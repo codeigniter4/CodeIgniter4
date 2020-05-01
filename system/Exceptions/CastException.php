@@ -19,22 +19,17 @@ class CastException extends CriticalError
 		switch($error)
 		{
 			case JSON_ERROR_DEPTH:
-				throw new static(lang('Cast.jsonErrorDepth'));
-			break;
+				return new static(lang('Cast.jsonErrorDepth'));
 			case JSON_ERROR_STATE_MISMATCH:
-				throw new static(lang('Cast.jsonErrorStateMismatch'));
-			break;
+				return new static(lang('Cast.jsonErrorStateMismatch'));
 			case JSON_ERROR_CTRL_CHAR:
-				throw new static(lang('Cast.jsonErrorCtrlChar'));
-			break;
+				return new static(lang('Cast.jsonErrorCtrlChar'));
 			case JSON_ERROR_SYNTAX:
-				throw new static(lang('Cast.jsonErrorSyntax'));
-			break;
+				return new static(lang('Cast.jsonErrorSyntax'));
 			case JSON_ERROR_UTF8:
-				throw new static(lang('Cast.jsonErrorUtf8'));
-			break;
+				return new static(lang('Cast.jsonErrorUtf8'));
 			default:
-				throw new static(lang('Cast.jsonErrorUnknown'));
+				return new static(lang('Cast.jsonErrorUnknown'));
 		}
 	}
 

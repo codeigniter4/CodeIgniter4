@@ -95,13 +95,14 @@ The following functions are available:
     :param mixed $num: Number to format
     :param string $currency: The currency type, i.e. USD, EUR, etc
     :param string $locale: The locale to use for formatting
+    :param integer $fraction: Number of fraction digits after decimal point
     :returns: The number as the appropriate currency for the locale
     :rtype: string
 
     Converts a number in common currency formats, like USD, EUR, GBP, etc::
 
         echo number_to_currency(1234.56, 'USD');  // Returns $1,234.56
-        echo number_to_currency(1234.56, 'EUR');  // Returns £1,234.56
+        echo number_to_currency(1234.56, 'EUR');  // Returns €1,234.56
         echo number_to_currency(1234.56, 'GBP');  // Returns £1,234.56
         echo number_to_currency(1234.56, 'YEN');  // Returns YEN1,234.56
 

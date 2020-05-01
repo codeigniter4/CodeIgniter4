@@ -1,7 +1,8 @@
 <?php
 
-use CodeIgniter\Test\FeatureTestCase;
+use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Test\FeatureResponse;
+use CodeIgniter\Test\FeatureTestCase;
 
 /**
  * @group                       DatabaseLive
@@ -160,7 +161,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 			[
 				'get',
 				'home',
-				'Tests\Support\Controllers\Popcorn::index',
+				'\Tests\Support\Controllers\Popcorn::index',
 			],
 		]);
 		$response = $this->get('home');
@@ -173,7 +174,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 			[
 				'get',
 				'home',
-				'Tests\Support\Controllers\Popcorn::cat',
+				'\Tests\Support\Controllers\Popcorn::cat',
 			],
 		]);
 		$response = $this->get('home');
@@ -186,11 +187,62 @@ class FeatureTestCaseTest extends FeatureTestCase
 			[
 				'get',
 				'home',
-				'Tests\Support\Controllers\Popcorn::canyon',
+				'\Tests\Support\Controllers\Popcorn::canyon',
 			],
 		]);
+		ob_start();
 		$response = $this->get('home');
 		$response->assertSee('Hello-o-o');
 	}
 
+	public function testCallZeroAsPathGot404()
+	{
+		$this->expectException(PageNotFoundException::class);
+		$this->get('0');
+	}
+
+	public function provideRoutesData()
+	{
+		return [
+			'non parameterized cli'                => [
+				'hello',
+				'Hello::index',
+				'Hello',
+			],
+			'parameterized cli'                    => [
+				'hello/(:any)',
+				'Hello::index/$1',
+				'Hello/index/samsonasik',
+			],
+			'default method index'                 => [
+				'hello',
+				'Hello',
+				'Hello',
+			],
+			'capitalized controller and/or method' => [
+				'hello',
+				'Hello',
+				'HELLO/INDEX',
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider provideRoutesData
+	 */
+	public function testOpenCliRoutesFromHttpGot404($from, $to, $httpGet)
+	{
+		$this->expectException(PageNotFoundException::class);
+
+		require_once SUPPORTPATH . 'Controllers/Hello.php';
+
+		$this->withRoutes([
+			[
+				'cli',
+				$from,
+				$to,
+			],
+		]);
+		$this->get($httpGet);
+	}
 }

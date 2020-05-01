@@ -211,6 +211,16 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testSanitizationAllowUnicodeChars()
+	{
+		$test     = 'Ä/path/to/some/file.php_';
+		$expected = 'Ä/path/to/some/file.php';
+
+		$this->assertEquals($expected, $this->loader->sanitizeFilename($test));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testSanitizationAllowsWindowsFilepaths()
 	{
 		$test = 'C:\path\to\some/file.php';
@@ -231,5 +241,23 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$namespaces = $this->loader->getNamespace();
 		$this->assertArrayHasKey('Laminas\\Escaper', $namespaces);
+	}
+
+	public function testFindsComposerRoutesWithComposerPathNotFound()
+	{
+		$composerPath = COMPOSER_PATH;
+
+		$config                           = new Autoload();
+		$moduleConfig                     = new Modules();
+		$moduleConfig->discoverInComposer = true;
+
+		$this->loader = new Autoloader();
+
+		rename(COMPOSER_PATH, COMPOSER_PATH . '.backup');
+		$this->loader->initialize($config, $moduleConfig);
+		rename(COMPOSER_PATH . '.backup', $composerPath);
+
+		$namespaces = $this->loader->getNamespace();
+		$this->assertArrayNotHasKey('Laminas\\Escaper', $namespaces);
 	}
 }

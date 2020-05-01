@@ -39,9 +39,9 @@
 namespace CodeIgniter\Honeypot;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 
 /**
  * class Honeypot

@@ -316,4 +316,23 @@ class QueryTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals($expected, $query->getQuery());
 	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2762
+	 */
+	public function testSetQueryBinds()
+	{
+		$query = new Query($this->db);
+
+		$binds = [
+			1,
+			2,
+		];
+
+		$query->setQuery('SELECT @factorA := ?, @factorB := ?', $binds);
+
+		$expected = 'SELECT @factorA := 1, @factorB := 2';
+
+		$this->assertEquals($expected, $query->getQuery());
+	}
 }

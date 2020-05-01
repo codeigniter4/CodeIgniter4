@@ -39,9 +39,9 @@
 
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
+use CodeIgniter\CodeIgniter;
 use Config\App;
 use Config\Services;
-use CodeIgniter\CodeIgniter;
 
 /**
  * Debug toolbar configuration

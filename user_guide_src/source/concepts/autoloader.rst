@@ -11,7 +11,7 @@ headache and very error-prone. That's where autoloaders come in.
 
 CodeIgniter provides a very flexible autoloader that can be used with very little configuration.
 It can locate individual non-namespaced classes, namespaced classes that adhere to
-`PSR4 <http://www.php-fig.org/psr/psr-4/>`_ autoloading
+`PSR4 <https://www.php-fig.org/psr/psr-4/>`_ autoloading
 directory structures, and will even attempt to locate classes in common directories (like Controllers,
 Models, etc).
 
@@ -20,7 +20,7 @@ For performance improvement, the core CodeIgniter components have been added to 
 The autoloader works great by itself, but can also work with other autoloaders, like
 `Composer <https://getcomposer.org>`_, or even your own custom autoloaders, if needed.
 Because they're all registered through
-`spl_autoload_register <http://php.net/manual/en/function.spl-autoload-register.php>`_,
+`spl_autoload_register <https://www.php.net/manual/en/function.spl-autoload-register.php>`_,
 they work in sequence and don't get in each other's way.
 
 The autoloader is always active, being registered with ``spl_autoload_register()`` at the
@@ -40,10 +40,10 @@ application's files. This is most important for any business-logic related class
 etc. The ``psr4`` array in the configuration file allows you to map the namespace to the directory
 those classes can be found in::
 
-	$psr4 = [
-		'App'         => APPPATH,
-		'CodeIgniter' => SYSTEMPATH,
-	];
+    $psr4 = [
+        'App'         => APPPATH,
+        'CodeIgniter' => SYSTEMPATH,
+    ];
 
 The key of each row is the namespace itself. This does not need a trailing slash. If you use double-quotes
 to define the array, be sure to escape the backward slash. That means that it would be ``My\\App``,
@@ -55,13 +55,13 @@ libraries, or models in the application directory, if you do, they will be found
 You may change this namespace by editing the **/app/Config/Constants.php** file and setting the
 new namespace value under the ``APP_NAMESPACE`` setting::
 
-	define('APP_NAMESPACE', 'App');
+    define('APP_NAMESPACE', 'App');
 
 You will need to modify any existing files that are referencing the current namespace.
 
 .. important:: Config files are namespaced in the ``Config`` namespace, not in ``App\Config`` as you might
-	expect. This allows the core system files to always be able to locate them, even when the application
-	namespace has changed.
+    expect. This allows the core system files to always be able to locate them, even when the application
+    namespace has changed.
 
 Classmap
 ========
@@ -70,9 +70,9 @@ The classmap is used extensively by CodeIgniter to eke the last ounces of perfor
 by not hitting the file-system with extra ``is_file()`` calls. You can use the classmap to link to
 third-party libraries that are not namespaced::
 
-	$classmap = [
-		'Markdown' => APPPATH .'third_party/markdown.php'
-	];
+    $classmap = [
+        'Markdown' => APPPATH .'third_party/markdown.php'
+    ];
 
 The key of each row is the name of the class that you want to locate. The value is the path to locate it at.
 
@@ -89,7 +89,7 @@ Composer Support
 ================
 
 Composer support is automatically initialized by default. By default, it looks for Composer's autoload file at
-ROOTPATH.'vendor/autoload.php'. If you need to change the location of that file for any reason, you can modify
+``ROOTPATH.'vendor/autoload.php'``. If you need to change the location of that file for any reason, you can modify
 the value defined in ``Config\Constants.php``.
 
 .. note:: If the same namespace is defined in both CodeIgniter and Composer, CodeIgniter's autoloader will be

@@ -1,9 +1,9 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use BadMethodCallException;
 use CodeIgniter\Config\Config;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity;
-use CodeIgniter\Exceptions\EntityException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -14,6 +14,7 @@ use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
 use Tests\Support\Models\SimpleEntity;
+use Tests\Support\Models\StringifyPkeyModel;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidErrorsModel;
 use Tests\Support\Models\ValidModel;
@@ -250,20 +251,96 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testFirstRespectsSoftDeletes()
+	public function provideGroupBy()
+	{
+		return [
+			[
+				true,
+				3,
+			],
+			[
+				false,
+				7,
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider provideGroupBy
+	 */
+	public function testFirstAggregate($groupBy, $total)
+	{
+		$model = new UserModel();
+
+		if ($groupBy)
+		{
+			$model->groupBy('id');
+		}
+
+		$user = $model->select('SUM(id) as total')
+					  ->where('id >', 2)
+					  ->first();
+
+		$this->assertEquals($total, $user->total);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function provideAggregateAndGroupBy()
+	{
+		return [
+			[
+				true,
+				true,
+			],
+			[
+				false,
+				false,
+			],
+			[
+				true,
+				false,
+			],
+			[
+				false,
+				true,
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider provideAggregateAndGroupBy
+	 */
+	public function testFirstRespectsSoftDeletes($aggregate, $groupBy)
 	{
 		$this->db->table('user')
 				 ->where('id', 1)
 				 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
 		$model = new UserModel();
+		if ($aggregate)
+		{
+			$model->select('SUM(id) as id');
+		}
+
+		if ($groupBy)
+		{
+			$model->groupBy('id');
+		}
 
 		$user = $model->first();
 
-		// fix for PHP7.2
-		$count = is_array($user) ? count($user) : 1;
-		$this->assertEquals(1, $count);
-		$this->assertEquals(2, $user->id);
+		if (! $aggregate || $groupBy)
+		{
+			// fix for PHP7.2
+			$count = is_array($user) ? count($user) : 1;
+			$this->assertEquals(1, $count);
+			$this->assertEquals(2, $user->id);
+		}
+		else
+		{
+			$this->assertEquals(9, $user->id);
+		}
 
 		$user = $model->withDeleted()
 					  ->first();
@@ -399,6 +476,19 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testDeleteStringPrimaryKey()
+	{
+		$model = new StringifyPkeyModel();
+
+		$this->seeInDatabase('stringifypkey', ['value' => 'test']);
+
+		$model->delete('A01');
+
+		$this->dontSeeInDatabase('stringifypkey', ['value' => 'test']);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testDeleteWithSoftDeletes()
 	{
 		$model = new UserModel();
@@ -503,8 +593,8 @@ class ModelTest extends CIDatabaseTestCase
 	}    //--------------------------------------------------------------------
 
 	/**
-	 * @dataProvider             emptyPkValues
-	 * @return                   void
+	 * @dataProvider emptyPkValues
+	 * @return       void
 	 */
 	public function testThrowExceptionWhenSoftDeleteParamIsEmptyValue($emptyValue)
 	{
@@ -519,8 +609,8 @@ class ModelTest extends CIDatabaseTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @dataProvider             emptyPkValues
-	 * @return                   void
+	 * @dataProvider emptyPkValues
+	 * @return       void
 	 */
 	public function testDontDeleteRowsWhenSoftDeleteParamIsEmpty($emptyValue)
 	{
@@ -1340,6 +1430,44 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testPaginateChangeConfigPager()
+	{
+		$perPage                 = config('Pager')->perPage;
+		config('Pager')->perPage = 1;
+
+		$model = new ValidModel($this->db);
+
+		$data = $model->paginate();
+
+		$this->assertEquals(1, count($data));
+
+		config('Pager')->perPage = $perPage;
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testPaginatePassPerPageParameter()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = $model->paginate(2);
+
+		$this->assertEquals(2, count($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testPaginateForQueryWithGroupBy()
+	{
+		$model = new ValidModel($this->db);
+		$model->groupBy('id');
+
+		$model->paginate();
+		$this->assertEquals(4, $model->pager->getDetails()['total']);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testValidationByObject()
 	{
 		$model = new ValidModel($this->db);
@@ -1801,4 +1929,58 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertIsArray($model->QBNoEscape);
 	}
+
+	public function testUndefinedModelMethod()
+	{
+		$model = new UserModel($this->db);
+		$this->expectException(BadMethodCallException::class);
+		$this->expectExceptionMessage('Call to undefined method Tests\Support\Models\UserModel::undefinedMethodCall');
+		$model->undefinedMethodCall();
+	}
+
+	public function testUndefinedMethodInBuilder()
+	{
+		$model = new JobModel($this->db);
+
+		$model->find(1);
+
+		$this->expectException(BadMethodCallException::class);
+		$this->expectExceptionMessage('Call to undefined method Tests\Support\Models\JobModel::getBindings');
+
+		$binds = $model->builder()
+			->getBindings();
+	}
+
+	/**
+	 * @dataProvider provideAggregateAndGroupBy
+	 */
+	public function testFirstRecoverTempUseSoftDeletes($aggregate, $groupBy)
+	{
+		$model = new UserModel($this->db);
+		$model->delete(1);
+		if ($aggregate)
+		{
+			$model->select('sum(id) as id');
+		}
+
+		if ($groupBy)
+		{
+			$model->groupBy('id');
+		}
+
+		$user = $model->withDeleted()->first();
+		$this->assertEquals(1, $user->id);
+
+		$user2 = $model->first();
+		$this->assertEquals(2, $user2->id);
+	}
+
+	public function testcountAllResultsRecoverTempUseSoftDeletes()
+	{
+		$model = new UserModel($this->db);
+		$model->delete(1);
+		$this->assertEquals(4, $model->withDeleted()->countAllResults());
+		$this->assertEquals(3, $model->countAllResults());
+	}
+
 }

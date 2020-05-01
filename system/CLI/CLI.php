@@ -437,7 +437,7 @@ class CLI
 		// Do it once or more, write with empty string gives us a new line
 		for ($i = 0; $i < $num; $i ++)
 		{
-			static::write('');
+			static::write();
 		}
 	}
 
@@ -504,9 +504,7 @@ class CLI
 			$string .= "\033[4m";
 		}
 
-		$string .= $text . "\033[0m";
-
-		return $string;
+		return $string . ($text . "\033[0m");
 	}
 
 	//--------------------------------------------------------------------
@@ -702,23 +700,16 @@ class CLI
 	 */
 	protected static function parseCommandLine()
 	{
-		$optionsFound = false;
-
 		// start picking segments off from #1, ignoring the invoking program
 		for ($i = 1; $i < $_SERVER['argc']; $i ++)
 		{
 			// If there's no '-' at the beginning of the argument
 			// then add it to our segments.
-			if (! $optionsFound && mb_strpos($_SERVER['argv'][$i], '-') === false)
+			if (mb_strpos($_SERVER['argv'][$i], '-') === false)
 			{
 				static::$segments[] = $_SERVER['argv'][$i];
 				continue;
 			}
-
-			// We set $optionsFound here so that we know to
-			// skip the next argument since it's likely the
-			// value belonging to this option.
-			$optionsFound = true;
 
 			$arg   = str_replace('-', '', $_SERVER['argv'][$i]);
 			$value = null;
@@ -731,10 +722,6 @@ class CLI
 			}
 
 			static::$options[$arg] = $value;
-
-			// Reset $optionsFound so it can collect segments
-			// past any options.
-			$optionsFound = false;
 		}
 	}
 
@@ -958,7 +945,7 @@ class CLI
 			}
 		}
 
-		fwrite(STDOUT, $table);
+		static::write($table);
 	}
 
 	//--------------------------------------------------------------------

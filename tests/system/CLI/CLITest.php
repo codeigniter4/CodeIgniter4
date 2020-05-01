@@ -367,7 +367,7 @@ EOT;
 				[],
 				"+---+-----+\n" .
 				"| 1 | bar |\n" .
-				"+---+-----+\n",
+				"+---+-----+\n\n",
 			],
 			[
 				$one_row,
@@ -376,7 +376,7 @@ EOT;
 				"| ID | Title |\n" .
 				"+----+-------+\n" .
 				"| 1  | bar   |\n" .
-				"+----+-------+\n",
+				"+----+-------+\n\n",
 			],
 			[
 				$many_rows,
@@ -385,7 +385,7 @@ EOT;
 				"| 1 | bar             |\n" .
 				"| 2 | bar * 2         |\n" .
 				"| 3 | bar + bar + bar |\n" .
-				"+---+-----------------+\n",
+				"+---+-----------------+\n\n",
 			],
 			[
 				$many_rows,
@@ -396,7 +396,7 @@ EOT;
 				"| 1  | bar             |\n" .
 				"| 2  | bar * 2         |\n" .
 				"| 3  | bar + bar + bar |\n" .
-				"+----+-----------------+\n",
+				"+----+-----------------+\n\n",
 			],
 		];
 	}
@@ -405,5 +405,6 @@ EOT;
 	{
 		$this->assertEquals(18, mb_strlen(CLI::color('success', 'green')));
 		$this->assertEquals(7, CLI::strlen(CLI::color('success', 'green')));
+		$this->assertEquals(0, CLI::strlen(null));
 	}
 }

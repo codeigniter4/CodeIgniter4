@@ -39,8 +39,8 @@
 
 namespace CodeIgniter\Router;
 
-use CodeIgniter\HTTP\Request;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\Exceptions\RouterException;
 
@@ -107,21 +107,21 @@ class Router implements RouterInterface
 	 *
 	 * @var array|null
 	 */
-	protected $matchedRoute = null;
+	protected $matchedRoute;
 
 	/**
 	 * The options set for the matched route.
 	 *
 	 * @var array|null
 	 */
-	protected $matchedRouteOptions = null;
+	protected $matchedRouteOptions;
 
 	/**
 	 * The locale that was detected in a route.
 	 *
 	 * @var string
 	 */
-	protected $detectedLocale = null;
+	protected $detectedLocale;
 
 	/**
 	 * The filter info from Route Collection
@@ -164,7 +164,7 @@ class Router implements RouterInterface
 
 		// If we cannot find a URI to match against, then
 		// everything runs off of it's default settings.
-		if (empty($uri))
+		if ($uri === null || $uri === '')
 		{
 			return strpos($this->controller, '\\') === false
 				? $this->collection->getDefaultNamespace() . $this->controller
@@ -542,6 +542,32 @@ class Router implements RouterInterface
 			$this->params = $segments;
 		}
 
+		if ($this->collection->getHTTPVerb() !== 'cli')
+		{
+			$controller  = '\\' . $this->collection->getDefaultNamespace();
+			$controller .= $this->directory ? str_replace('/', '\\', $this->directory) : '';
+			$controller .= $this->controllerName();
+			$controller  = strtolower($controller);
+			$methodName  = strtolower($this->methodName());
+
+			foreach ($this->collection->getRoutes('cli') as $route)
+			{
+				if (is_string($route))
+				{
+					$route = strtolower($route);
+					if (strpos($route, $controller . '::' . $methodName) === 0)
+					{
+						throw new PageNotFoundException();
+					}
+
+					if ($route === $controller)
+					{
+						throw new PageNotFoundException();
+					}
+				}
+			}
+		}
+
 		// Load the file so that it's available for CodeIgniter.
 		$file = APPPATH . 'Controllers/' . $this->directory . $this->controllerName() . '.php';
 		if (is_file($file))
@@ -553,7 +579,7 @@ class Router implements RouterInterface
 		// We have to check for a length over 1, since by default it will be '\'
 		if (strpos($this->controller, '\\') === false && strlen($this->collection->getDefaultNamespace()) > 1)
 		{
-			$this->controller = str_replace('/', '\\', $this->collection->getDefaultNamespace() . $this->directory . $this->controllerName());
+			$this->controller = '\\' . ltrim(str_replace('/', '\\', $this->collection->getDefaultNamespace() . $this->directory . $this->controllerName()), '\\');
 		}
 	}
 
@@ -603,10 +629,11 @@ class Router implements RouterInterface
 	 * @param string|null   $dir
 	 * @param boolean|false $append
 	 */
-	protected function setDirectory(string $dir = null, bool $append = false)
+	public function setDirectory(string $dir = null, bool $append = false)
 	{
 		if (empty($dir))
 		{
+			$this->directory = null;
 			return;
 		}
 

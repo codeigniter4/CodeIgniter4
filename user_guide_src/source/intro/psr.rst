@@ -2,14 +2,14 @@
 PSR Compliance
 **************
 
-The `PHP-FIG <http://www.php-fig.org/>`_ was created in 2009 to help make code more interoperable between frameworks
+The `PHP-FIG <https://www.php-fig.org/>`_ was created in 2009 to help make code more interoperable between frameworks
 by ratifying Interfaces, style guides, and more that members were free to implement or not. While CodeIgniter is
 not a member of the FIG, we are compatible with a number of their proposals. This guide is meant to list the
 status of our compliance with the various accepted, and some draft, proposals.
 
 **PSR-1: Basic Coding Standard**
 
-This recommendation covers basic class, method, and file-naming standards. Our 
+This recommendation covers basic class, method, and file-naming standards. Our
 `style guide <https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/styleguide.rst>`_
 meets PSR-1 and adds its own requirements on top of it.
 

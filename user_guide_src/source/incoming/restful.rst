@@ -8,10 +8,10 @@ RESTful Resource Handling
 Representational State Transfer (REST) is an architectural style for
 distributed applications, first described by Roy Fielding in his
 2000 PhD dissertation, `Architectural Styles and
-the Design of Network-based Software Architectures 
+the Design of Network-based Software Architectures
 <https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm>`_.
 That might be a bit of a dry read, and you might find Martin Fowler's
-`Richardson Maturity Model <https://martinfowler.com/articles/richardsonMaturityModel.html>`_ 
+`Richardson Maturity Model <https://martinfowler.com/articles/richardsonMaturityModel.html>`_
 a gentler introduction.
 
 REST has been interpreted, and mis-interpreted, in more ways than most
@@ -62,10 +62,10 @@ Change the Controller Used
 You can specify the controller that should be used by passing in the ``controller`` option with the name of
 the controller that should be used::
 
-	$routes->resource('photos', ['controller' =>'App\Gallery']);
+    $routes->resource('photos', ['controller' =>'App\Gallery']);
 
-	// Would create routes like:
-	$routes->get('photos', 'App\Gallery::index');
+    // Would create routes like:
+    $routes->get('photos', 'App\Gallery::index');
 
 Change the Placeholder Used
 ---------------------------
@@ -73,10 +73,10 @@ Change the Placeholder Used
 By default, the ``segment`` placeholder is used when a resource ID is needed. You can change this by passing
 in the ``placeholder`` option with the new string to use::
 
-	$routes->resource('photos', ['placeholder' => '(:id)']);
+    $routes->resource('photos', ['placeholder' => '(:num)']);
 
-	// Generates routes like:
-	$routes->get('photos/(:id)', 'Photos::show/$1');
+    // Generates routes like:
+    $routes->get('photos/(:num)', 'Photos::show/$1');
 
 Limit the Routes Made
 ---------------------
@@ -84,11 +84,11 @@ Limit the Routes Made
 You can restrict the routes generated with the ``only`` option. This should be an array or comma separated list of method names that should
 be created. Only routes that match one of these methods will be created. The rest will be ignored::
 
-	$routes->resource('photos', ['only' => ['index', 'show']]);
+    $routes->resource('photos', ['only' => ['index', 'show']]);
 
 Otherwise you can remove unused routes with the ``except`` option. This option run after ``only``::
 
-	$routes->resource('photos', ['except' => 'new,edit']);
+    $routes->resource('photos', ['except' => 'new,edit']);
 
 Valid methods are: index, show, create, update, new, edit and delete.
 
@@ -101,23 +101,22 @@ with methods that correspond to the resource routes above.
 Extend it, over-riding the `modelName` and `format` properties, and then
 implement those methods that you want handled.::
 
-	<?php namespace App\Controllers;
+    <?php namespace App\Controllers;
 
-	use CodeIgniter\RESTful\ResourceController;
+    use CodeIgniter\RESTful\ResourceController;
 
-	class Photos extends ResourceController
-	{
+    class Photos extends ResourceController
+    {
+        protected $modelName = 'App\Models\Photos';
+        protected $format    = 'json';
 
-		protected $modelName = 'App\Models\Photos';
-		protected $format    = 'json';
+        public function index()
+        {
+            return $this->respond($this->model->findAll());
+        }
 
-		public function index()
-		{
-			return $this->respond($this->model->findAll());
-		}
-
-                // ...
-	}
+        // ...
+    }
 
 The routing for this would be::
 
@@ -158,7 +157,7 @@ controller. You need to distinguish them, for instance::
     $routes->presenter('admin/photos');
 
 
-The second parameter accepts an array of options that can be used to modify the routes that are generated. 
+The second parameter accepts an array of options that can be used to modify the routes that are generated.
 
 Change the Controller Used
 --------------------------
@@ -166,10 +165,10 @@ Change the Controller Used
 You can specify the controller that should be used by passing in the ``controller`` option with the name of
 the controller that should be used::
 
-	$routes->presenter('photos', ['controller' =>'App\Gallery']);
+    $routes->presenter('photos', ['controller' =>'App\Gallery']);
 
-	// Would create routes like:
-	$routes->get('photos', 'App\Gallery::index');
+    // Would create routes like:
+    $routes->get('photos', 'App\Gallery::index');
 
 Change the Placeholder Used
 ---------------------------
@@ -177,10 +176,10 @@ Change the Placeholder Used
 By default, the ``segment`` placeholder is used when a resource ID is needed. You can change this by passing
 in the ``placeholder`` option with the new string to use::
 
-	$routes->presenter('photos', ['placeholder' => '(:id)']);
+    $routes->presenter('photos', ['placeholder' => '(:num)']);
 
-	// Generates routes like:
-	$routes->get('photos/(:id)', 'Photos::show/$1');
+    // Generates routes like:
+    $routes->get('photos/(:num)', 'Photos::show/$1');
 
 Limit the Routes Made
 ---------------------
@@ -188,11 +187,11 @@ Limit the Routes Made
 You can restrict the routes generated with the ``only`` option. This should be an array or comma separated list of method names that should
 be created. Only routes that match one of these methods will be created. The rest will be ignored::
 
-	$routes->presenter('photos', ['only' => ['index', 'show']]);
+    $routes->presenter('photos', ['only' => ['index', 'show']]);
 
 Otherwise you can remove unused routes with the ``except`` option. This option run after ``only``::
 
-	$routes->presenter('photos', ['except' => 'new,edit']);
+    $routes->presenter('photos', ['except' => 'new,edit']);
 
 Valid methods are: index, show, new, create, edit, update, remove and delete.
 
@@ -206,22 +205,22 @@ with methods that align to the resource routes above.
 Extend it, over-riding the `modelName` property, and then
 implement those methods that you want handled.::
 
-	<?php namespace App\Controllers;
+    <?php namespace App\Controllers;
 
-	use CodeIgniter\RESTful\ResourcePresenter;
+    use CodeIgniter\RESTful\ResourcePresenter;
 
-	class Photos extends ResourcePresenter
-	{
+    class Photos extends ResourcePresenter
+    {
 
-		protected $modelName = 'App\Models\Photos';
+        protected $modelName = 'App\Models\Photos';
 
-		public function index()
-		{
-			return view('templates/list',$this->model->findAll());
-		}
+        public function index()
+        {
+            return view('templates/list',$this->model->findAll());
+        }
 
-                // ...
-	}
+        // ...
+    }
 
 The routing for this would be::
 
@@ -243,9 +242,9 @@ Create (alias)   POST                             photos/create                 
 **Show**         GET       photos/(:segment)      photos/(:segment)        ``show($id = null)``   ``show($id = null)``
 Show (alias)     GET                              photos/show/(:segment)                          ``show($id = null)``
 **Edit**         GET       photos/(:segment)/edit photos/edit/(:segment)   ``edit($id = null)``   ``edit($id = null)``
-**Update**       PUT/PATCH photos/(:segment)                               ``update($id = null)`` 
+**Update**       PUT/PATCH photos/(:segment)                               ``update($id = null)``
 Update (websafe) POST      photos/(:segment)      photos/update/(:segment) ``update($id = null)`` ``update($id = null)``
 **Remove**       GET                              photos/remove/(:segment)                        ``remove($id = null)``
-**Delete**       DELETE    photos/(:segment)                               ``delete($id = null)`` 
+**Delete**       DELETE    photos/(:segment)                               ``delete($id = null)``
 Delete (websafe) POST                             photos/delete/(:segment) ``delete($id = null)`` ``delete($id = null)``
 ================ ========= ====================== ======================== ====================== ======================

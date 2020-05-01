@@ -2,9 +2,9 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Log\Logger;
+use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\App;
 use Config\Services;
-use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 
 /**
  * Exercise our Controller class.
@@ -226,6 +226,13 @@ class ControllerTesterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$body = $result->getBody();
 		$this->assertTrue($result->isOK());
+	}
+
+	public function testRedirectRoute()
+	{
+		$result = $this->controller(\Tests\Support\Controllers\Popcorn::class)
+						->execute('toindex');
+		$this->assertTrue($result->isRedirect());
 	}
 
 }

@@ -1,9 +1,9 @@
 <?php namespace CodeIgniter;
 
-use Config\App;
-use CodeIgniter\Test\Mock\MockCodeIgniter;
-use CodeIgniter\Router\RouteCollection;
 use \CodeIgniter\Config\Services;
+use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
+use Config\App;
 
 /**
  * @backupGlobals enabled
@@ -272,5 +272,32 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$output = ob_get_clean();
 
 		$this->assertStringContainsString('Welcome to CodeIgniter', $output);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRunForceSecure()
+	{
+		$_SERVER['argv'] = [
+			'index.php',
+			'/',
+		];
+		$_SERVER['argc'] = 2;
+
+		$config                            = new App();
+		$config->forceGlobalSecureRequests = true;
+		$codeigniter                       = new MockCodeIgniter($config);
+
+		$this->getPrivateMethodInvoker($codeigniter, 'getRequestObject')();
+		$this->getPrivateMethodInvoker($codeigniter, 'getResponseObject')();
+
+		$response = $this->getPrivateProperty($codeigniter, 'response');
+		$this->assertNull($response->getHeader('Location'));
+
+		ob_start();
+		$codeigniter->useSafeOutput(true)->run();
+		$output = ob_get_clean();
+
+		$this->assertEquals('https://example.com', $response->getHeader('Location')->getValue());
 	}
 }

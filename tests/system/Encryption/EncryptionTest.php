@@ -1,9 +1,8 @@
 <?php
 namespace CodeIgniter\Encryption;
 
-use Config\Services;
-use CodeIgniter\Config\BaseConfig;
 use Config\Encryption as EncryptionConfig;
+use Config\Services;
 
 //use CodeIgniter\Encryption\Encryption;
 

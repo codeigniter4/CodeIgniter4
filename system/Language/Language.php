@@ -149,7 +149,19 @@ class Language
 			$parsedLine,
 		] = $this->parseLine($line, $this->locale);
 
-		$output = $this->language[$this->locale][$file][$parsedLine] ?? null;
+		foreach (explode('.', $parsedLine) as $row)
+		{
+			if (! isset($current))
+			{
+				$current = $this->language[$this->locale][$file] ?? null;
+			}
+
+			$output = $current[$row] ?? null;
+			if (is_array($output))
+			{
+				$current = $output;
+			}
+		}
 
 		if ($output === null && strpos($this->locale, '-'))
 		{

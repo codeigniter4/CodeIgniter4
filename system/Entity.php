@@ -39,14 +39,13 @@
 
 namespace CodeIgniter;
 
-use CodeIgniter\Exceptions\EntityException;
-use CodeIgniter\I18n\Time;
 use CodeIgniter\Exceptions\CastException;
+use CodeIgniter\I18n\Time;
 
 /**
  * Entity encapsulation, for use with CodeIgniter\Model
  */
-class Entity
+class Entity implements \JsonSerializable
 {
 	/**
 	 * Maps names used in sets and gets against unique
@@ -165,7 +164,7 @@ class Entity
 		// allow our magic methods a chance to do their thing.
 		foreach ($this->attributes as $key => $value)
 		{
-			if (substr($key, 0, 1) === '_')
+			if (strpos($key, '_') === 0)
 			{
 				continue;
 			}
@@ -353,7 +352,7 @@ class Entity
 
 		if (array_key_exists($key, $this->casts))
 		{
-			$isNullable = substr($this->casts[$key], 0, 1) === '?';
+			$isNullable = strpos($this->casts[$key], '?') === 0;
 			$castTo     = $isNullable ? substr($this->casts[$key], 1) : $this->casts[$key];
 		}
 
@@ -530,7 +529,7 @@ class Entity
 
 	protected function castAs($value, string $type)
 	{
-		if (substr($type, 0, 1) === '?')
+		if (strpos($type, '?') === 0)
 		{
 			if ($value === null)
 			{
@@ -570,17 +569,15 @@ class Entity
 				$value = (array)$value;
 				break;
 			case 'json':
-				$value = $this->castAsJson($value, false);
+				$value = $this->castAsJson($value);
 				break;
 			case 'json-array':
 				$value = $this->castAsJson($value, true);
 				break;
 			case 'datetime':
-				return new \DateTime($value);
-				break;
+				return $this->mutateDate($value);
 			case 'timestamp':
 				return strtotime($value);
-				break;
 		}
 
 		return $value;
@@ -613,5 +610,16 @@ class Entity
 			}
 		}
 		return $tmp;
+	}
+
+	/**
+	 * Support for json_encode()
+	 *
+	 * @return array|mixed
+	 * @throws \Exception
+	 */
+	public function jsonSerialize()
+	{
+		return $this->toArray();
 	}
 }

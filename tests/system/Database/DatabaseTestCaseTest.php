@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Database;
 
-use Config\Services;
 use CodeIgniter\Test\CIDatabaseTestCase;
+use Config\Services;
 
 class DatabaseTestCaseTest extends CIDatabaseTestCase
 {
@@ -23,7 +23,7 @@ class DatabaseTestCaseTest extends CIDatabaseTestCase
 	 */
 	protected $seed = [
 		'Tests\Support\Database\Seeds\CITestSeeder',
-		'Tests\Support\Database\Seeds\AnotherSeeder'
+		'Tests\Support\Database\Seeds\AnotherSeeder',
 	];
 
 	/**

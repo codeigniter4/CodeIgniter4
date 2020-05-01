@@ -40,7 +40,6 @@
 namespace CodeIgniter\Pager;
 
 use CodeIgniter\Pager\Exceptions\PagerException;
-use Config\Services;
 use CodeIgniter\View\RendererInterface;
 
 /**
@@ -145,22 +144,22 @@ class Pager implements PagerInterface
 	 * Allows for a simple, manual, form of pagination where all of the data
 	 * is provided by the user. The URL is the current URI.
 	 *
-	 * @param integer     $page
-	 * @param integer     $perPage
-	 * @param integer     $total
-	 * @param string      $template The output template alias to render.
-	 * @param integer     $segment  (if page number is provided by URI segment)
+	 * @param integer $page
+	 * @param integer $perPage
+	 * @param integer $total
+	 * @param string  $template The output template alias to render.
+	 * @param integer $segment  (if page number is provided by URI segment)
 	 *
-	 * @param  string|null $group    optional group (i.e. if we'd like to define custom path)
+	 * @param  string  $group    optional group (i.e. if we'd like to define custom path)
 	 * @return string
 	 */
-	public function makeLinks(int $page, int $perPage, int $total, string $template = 'default_full', int $segment = 0, ?string $group = null): string
+	public function makeLinks(int $page, int $perPage = null, int $total, string $template = 'default_full', int $segment = 0, ?string $group = 'default'): string
 	{
-		$name = time();
+		$group = $group === '' ? 'default' : $group;
 
-		$this->store($group ?? $name, $page, $perPage, $total, $segment);
+		$this->store($group, $page, $perPage ?? $this->config->perPage, $total, $segment);
 
-		return $this->displayLinks($group ?? $name, $template);
+		return $this->displayLinks($group, $template);
 	}
 
 	//--------------------------------------------------------------------
@@ -201,16 +200,19 @@ class Pager implements PagerInterface
 	 *
 	 * @return $this
 	 */
-	public function store(string $group, int $page, int $perPage, int $total, int $segment = 0)
+	public function store(string $group, int $page, int $perPage = null, int $total, int $segment = 0)
 	{
 		$this->segment[$group] = $segment;
 
-		$this->ensureGroup($group);
+		$this->ensureGroup($group, $perPage);
 
+		$perPage                             = $perPage ?? $this->config->perPage;
+		$pageCount                           = (int)ceil($total / $perPage);
+		$page                                = $page > $pageCount ? $pageCount : $page;
 		$this->groups[$group]['currentPage'] = $page;
 		$this->groups[$group]['perPage']     = $perPage;
 		$this->groups[$group]['total']       = $total;
-		$this->groups[$group]['pageCount']   = (int)ceil($total / $perPage);
+		$this->groups[$group]['pageCount']   = $pageCount;
 
 		return $this;
 	}
@@ -493,9 +495,10 @@ class Pager implements PagerInterface
 	/**
 	 * Ensures that an array exists for the group specified.
 	 *
-	 * @param string $group
+	 * @param string  $group
+	 * @param integer $perPage
 	 */
-	protected function ensureGroup(string $group)
+	protected function ensureGroup(string $group, int $perPage = null)
 	{
 		if (array_key_exists($group, $this->groups))
 		{
@@ -506,7 +509,7 @@ class Pager implements PagerInterface
 			'uri'          => clone current_url(true),
 			'hasMore'      => false,
 			'total'        => null,
-			'perPage'      => $this->config->perPage,
+			'perPage'      => $perPage ?? $this->config->perPage,
 			'pageCount'    => 1,
 			'pageSelector' => $group === 'default' ? 'page' : 'page_' . $group,
 		];

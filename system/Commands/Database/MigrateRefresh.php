@@ -40,6 +40,7 @@
 namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\CLI;
 
 /**
  * Does a rollback followed by a latest to refresh the current state
@@ -95,6 +96,7 @@ class MigrateRefresh extends BaseCommand
 		'-n'   => 'Set migration namespace',
 		'-g'   => 'Set database group',
 		'-all' => 'Set latest for all namespace, will ignore (-n) option',
+		'-f'   => 'Force command - this option allows you to bypass the confirmation question when running this command in a production environment',
 	];
 
 	/**
@@ -105,7 +107,20 @@ class MigrateRefresh extends BaseCommand
 	 */
 	public function run(array $params = [])
 	{
-		$this->call('migrate:rollback', ['-b' => 0]);
+		$params = ['-b' => 0];
+
+		if (ENVIRONMENT === 'production')
+		{
+			$force = $params['-f'] ?? CLI::getOption('f');
+			if (is_null($force) && CLI::prompt(lang('Migrations.refreshConfirm'), ['y', 'n']) === 'n')
+			{
+				return;
+			}
+
+			$params['-f'] = '';
+		}
+
+		$this->call('migrate:rollback', $params);
 		$this->call('migrate');
 	}
 

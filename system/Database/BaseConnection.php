@@ -39,8 +39,8 @@
 
 namespace CodeIgniter\Database;
 
-use CodeIgniter\Events\Events;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Events\Events;
 
 /**
  * Class BaseConnection
@@ -1002,7 +1002,7 @@ abstract class BaseConnection implements ConnectionInterface
 			$this->initialize();
 		}
 
-		$this->pretend(true);
+		$this->pretend();
 
 		$sql = $func($this);
 
@@ -1381,9 +1381,7 @@ abstract class BaseConnection implements ConnectionInterface
 	{
 		if (is_array($str))
 		{
-			$str = array_map([&$this, 'escape'], $str);
-
-			return $str;
+			return array_map([&$this, 'escape'], $str);
 		}
 		else if (is_string($str) || ( is_object($str) && method_exists($str, '__toString')))
 		{

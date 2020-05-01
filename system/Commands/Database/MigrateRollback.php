@@ -42,7 +42,6 @@ namespace CodeIgniter\Commands\Database;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
-use Config\Autoload;
 
 /**
  * Runs all of the migrations in reverse order, until they have
@@ -97,6 +96,7 @@ class MigrateRollback extends BaseCommand
 	protected $options = [
 		'-b' => 'Specify a batch to roll back to; e.g. "3" to return to batch #3 or "-2" to roll back twice',
 		'-g' => 'Set database group',
+		'-f' => 'Force command - this option allows you to bypass the confirmation question when running this command in a production environment',
 	];
 
 	/**
@@ -107,6 +107,15 @@ class MigrateRollback extends BaseCommand
 	 */
 	public function run(array $params = [])
 	{
+		if (ENVIRONMENT === 'production')
+		{
+			$force = $params['-f'] ?? CLI::getOption('f');
+			if (is_null($force) && CLI::prompt(lang('Migrations.rollBackConfirm'), ['y', 'n']) === 'n')
+			{
+				return;
+			}
+		}
+
 		$runner = Services::migrations();
 
 		$group = $params['-g'] ?? CLI::getOption('g');

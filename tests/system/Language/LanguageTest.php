@@ -1,8 +1,8 @@
 <?php
 namespace CodeIgniter\Language;
 
-use Config\Services;
 use CodeIgniter\Test\Mock\MockLanguage;
+use Config\Services;
 use Tests\Support\Language\SecondMockLanguage;
 
 class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
@@ -311,6 +311,14 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Temple of Artemis', $language->getLine('Allin.fiv'));
 		$this->assertEquals('envy', $language->getLine('Allin.six'));
 		$this->assertEquals('Hanging Gardens of Babylon', $language->getLine('Allin.sev'));
+	}
+
+	public function testLanguageNestedArrayDefinition()
+	{
+		$lang = new SecondMockLanguage('en');
+		$lang->loadem('Nested', 'en');
+
+		$this->assertEquals('e', $lang->getLine('Nested.a.b.c.d'));
 	}
 
 }

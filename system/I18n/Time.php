@@ -40,12 +40,12 @@
 namespace CodeIgniter\I18n;
 
 use CodeIgniter\I18n\Exceptions\I18nException;
-use IntlCalendar;
-use Locale;
-use DateTime;
 use DateInterval;
+use DateTime;
 use DateTimeZone;
+use IntlCalendar;
 use IntlDateFormatter;
+use Locale;
 
 /**
  * Class Time
@@ -423,7 +423,7 @@ class Time extends DateTime
 	 */
 	public function getYear(): string
 	{
-		return $this->toLocalizedString('Y');
+		return $this->toLocalizedString('y');
 	}
 
 	//--------------------------------------------------------------------

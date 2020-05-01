@@ -3,8 +3,8 @@
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\HTTP\URI;
-use Config\App;
 use CodeIgniter\Services;
+use Config\App;
 use Config\Filters;
 
 class FormHelperTest extends \CodeIgniter\Test\CIUnitTestCase
@@ -53,6 +53,29 @@ EOH;
 			'method' => 'POST',
 		];
 		$this->assertEquals($expected, form_open('foo/bar', $attributes));
+	}
+
+	// ------------------------------------------------------------------------
+	public function testFormOpenHasLocale()
+	{
+		$config            = new App();
+		$config->baseURL   = '';
+		$config->indexPage = 'index.php';
+		$request           = Services::request($config);
+		$request->uri      = new URI('http://example.com/');
+
+		Services::injectMock('request', $request);
+		$expected = <<<EOH
+<form action="http://example.com/index.php/en/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
+
+EOH;
+
+		$attributes = [
+			'name'   => 'form',
+			'id'     => 'form',
+			'method' => 'POST',
+		];
+		$this->assertEquals($expected, form_open('{locale}/foo/bar', $attributes));
 	}
 
 	// ------------------------------------------------------------------------
@@ -725,6 +748,33 @@ EOH;
 	}
 
 	// ------------------------------------------------------------------------
+	public function testSetCheckboxWithValueZero()
+	{
+		$_SESSION = [
+			'_ci_old_input' => [
+				'post' => [
+					'foo' => '0',
+				],
+			],
+		];
+
+		$this->assertEquals(' checked="checked"', set_checkbox('foo', '0'));
+
+		$_SESSION = [
+			'_ci_old_input' => [
+				'post' => [
+					'foo' => ['foo' => '0'],
+				],
+			],
+		];
+		$this->assertEquals(' checked="checked"', set_checkbox('foo', '0'));
+		$this->assertEquals('', set_checkbox('foo', 'baz'));
+
+		$_SESSION = [];
+		$this->assertEquals('', set_checkbox('foo', 'bar'));
+	}
+
+	// ------------------------------------------------------------------------
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState  disabled
@@ -755,6 +805,17 @@ EOH;
 		$this->assertEquals('', set_radio('bar', 'boop'));
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
+	public function testSetRadioFromPostWithValueZero()
+	{
+		$_POST['bar'] = 0;
+		$this->assertEquals(' checked="checked"', set_radio('bar', '0'));
+		$this->assertEquals('', set_radio('bar', 'boop'));
+	}
+
 	public function testSetRadioFromPostArray()
 	{
 		$_SESSION = [
@@ -768,6 +829,22 @@ EOH;
 			],
 		];
 		$this->assertEquals(' checked="checked"', set_radio('bar', 'boop'));
+		$this->assertEquals('', set_radio('bar', 'baz'));
+	}
+
+	public function testSetRadioFromPostArrayWithValueZero()
+	{
+		$_SESSION = [
+			'_ci_old_input' => [
+				'post' => [
+					'bar' => [
+						'0',
+						'fuzzy',
+					],
+				],
+			],
+		];
+		$this->assertEquals(' checked="checked"', set_radio('bar', '0'));
 		$this->assertEquals('', set_radio('bar', 'baz'));
 	}
 

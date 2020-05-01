@@ -3,7 +3,6 @@ namespace Tests\Support\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Controller;
-use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 /**
  * This is a testing only controller, intended to blow up in multiple
@@ -47,12 +46,7 @@ class Popcorn extends Controller
 	// @see https://github.com/codeigniter4/CodeIgniter4/issues/1834
 	public function index3()
 	{
-		$response = $this->response->setJSON([
-			'lang' => $this->request->getLocale(),
-		]);
-
-		//      echo var_dump($this->response->getBody());
-		return $response;
+		return $this->response->setJSON(['lang' => $this->request->getLocale()]);
 	}
 
 	public function canyon()
@@ -66,12 +60,17 @@ class Popcorn extends Controller
 
 	public function json()
 	{
-		$this->responsd(['answer' => 42]);
+		$this->respond(['answer' => 42]);
 	}
 
 	public function xml()
 	{
 		$this->respond('<my><pet>cat</pet></my>');
+	}
+
+	public function toindex()
+	{
+		return redirect()->route('testing-index');
 	}
 
 }

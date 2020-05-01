@@ -2,9 +2,9 @@
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\HTTP\UserAgent;
-use Config\Services;
-use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\Mock\MockCLIConfig;
+use Config\Services;
 
 class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 {
@@ -69,8 +69,8 @@ class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$result = CITestStreamFilter::$buffer;
 
 		// make sure the result looks like basic help
+		$this->assertStringContainsString('Lists the available commands.', $result);
 		$this->assertStringContainsString('Displays basic usage information.', $result);
-		$this->assertStringContainsString('help command_name', $result);
 	}
 
 	public function testHelpCommand()

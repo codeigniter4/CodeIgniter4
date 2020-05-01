@@ -154,7 +154,7 @@ class FileHandler implements CacheInterface
 	{
 		$key = $this->prefix . $key;
 
-		return is_file($this->path . $key) ? unlink($this->path . $key) : false;
+		return is_file($this->path . $key) && unlink($this->path . $key);
 	}
 
 	//--------------------------------------------------------------------

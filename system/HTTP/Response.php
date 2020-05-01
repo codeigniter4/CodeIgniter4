@@ -40,10 +40,10 @@
 
 namespace CodeIgniter\HTTP;
 
-use Config\App;
-use Config\Format;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
+use Config\App;
+use Config\Format;
 
 /**
  * Representation of an outgoing, getServer-side response.
@@ -986,6 +986,7 @@ class Response extends Message implements ResponseInterface
 
 		$name = $prefix . $name;
 
+		$cookieHasFlag = false;
 		foreach ($this->cookies as &$cookie)
 		{
 			if ($cookie['name'] === $name)
@@ -1000,9 +1001,14 @@ class Response extends Message implements ResponseInterface
 				}
 				$cookie['value']   = '';
 				$cookie['expires'] = '';
-
+				$cookieHasFlag     = true;
 				break;
 			}
+		}
+
+		if (! $cookieHasFlag)
+		{
+			$this->setCookie($name, '', '', $domain, $path, $prefix);
 		}
 
 		return $this;

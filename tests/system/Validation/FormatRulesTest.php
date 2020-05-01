@@ -840,6 +840,10 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 				null,
 				false,
 			],
+			[
+				'.25',
+				true,
+			],
 		];
 	}
 

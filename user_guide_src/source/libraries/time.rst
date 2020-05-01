@@ -27,8 +27,8 @@ be any string that PHP's strtotime function can parse::
     $myTime = new Time('now');
 
 You can pass in strings representing the timezone and the locale in the second and parameters, respectively. Timezones
-can be any supported by PHP's `DateTimeZone <http://php.net/manual/en/timezones.php>`__ class. The locale can be
-any supported by PHP's `Locale <http://php.net/manual/en/class.locale.php>`__ class. If no locale or timezone is
+can be any supported by PHP's `DateTimeZone <https://www.php.net/manual/en/timezones.php>`__ class. The locale can be
+any supported by PHP's `Locale <https://www.php.net/manual/en/class.locale.php>`__ class. If no locale or timezone is
 provided, the application defaults will be used.
 
 ::
@@ -58,7 +58,7 @@ today()
 -------
 
 Returns a new instance with the date set to the current date, and the time set to midnight. It accepts strings
-for the timezone and locale in the second and third parameters::
+for the timezone and locale in the first and second parameters::
 
     $myTime = Time::today('America/Chicago', 'en_US');
 
@@ -66,7 +66,7 @@ yesterday()
 -----------
 
 Returns a new instance with the date set to the yesterday's date and the time set to midnight. It accepts strings
-for the timezone and locale in the second and third parameters::
+for the timezone and locale in the first and second parameters::
 
     $myTime = Time::yesterday('America/Chicago', 'en_US');
 
@@ -74,7 +74,7 @@ tomorrow()
 -----------
 
 Returns a new instance with the date set to tomorrow's date and the time set to midnight. It accepts strings
-for the timezone and locale in the second and third parameters::
+for the timezone and locale in the first and second parameters::
 
     $myTime = Time::tomorrow('America/Chicago', 'en_US');
 
@@ -155,8 +155,8 @@ toLocalizedString()
 -------------------
 
 This is the localized version of DateTime's format() method. Instead of using the values you might be familiar with, though,
-you must use values acceptable to the `IntlDateFormatter <http://php.net/manual/en/class.intldateformatter.php>`__ class.
-A full listing of values can be found `here <http://www.icu-project.org/apiref/icu4c/classSimpleDateFormat.html#details>`__.
+you must use values acceptable to the `IntlDateFormatter <https://www.php.net/manual/en/class.intldateformatter.php>`__ class.
+A full listing of values can be found `here <https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classSimpleDateFormat.html#details>`__.
 ::
 
     $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
@@ -304,7 +304,7 @@ Returns boolean true if the Time instance is in UTC time::
 getTimezone()
 -------------
 
-Returns a new `DateTimeZone <http://php.net/manual/en/class.datetimezone.php>`__ object set the timezone of the Time
+Returns a new `DateTimeZone <https://www.php.net/manual/en/class.datetimezone.php>`__ object set the timezone of the Time
 instance::
 
     $tz = Time::now()->getTimezone();
@@ -316,7 +316,7 @@ instance::
 getTimezoneName()
 -----------------
 
-Returns the full `timezone string <http://php.net/manual/en/timezones.php>`__ of the Time instance::
+Returns the full `timezone string <https://www.php.net/manual/en/timezones.php>`__ of the Time instance::
 
     echo Time::now('America/Chicago')->getTimezoneName();   // America/Chicago
     echo Time::now('Europe/London')->timezoneName;          // Europe/London

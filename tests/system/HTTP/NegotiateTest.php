@@ -138,6 +138,17 @@ class NegotiateTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2774
+	 */
+	public function testAcceptLanguageMatchesBroadly()
+	{
+		$this->request->setHeader('Accept-Language', 'fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7');
+
+		$this->assertEquals('fr', $this->negotiate->language(['fr', 'en']));
+	}
+
 	public function testBestMatchEmpty()
 	{
 		$this->expectException(Exceptions\HTTPException::class);

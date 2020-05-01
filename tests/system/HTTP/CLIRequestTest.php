@@ -478,7 +478,6 @@ class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 		$this->request->setGlobal('post', $post);
 
-		//      echo var_dump($this->request->fetchGlobal('post', 'clients[][zipcode]'));
 		$this->assertEquals($expected, $this->request->fetchGlobal('post', 'clients[]'));
 	}
 

@@ -392,7 +392,7 @@ class Autoloader
 		// be a path.
 		// http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_278
 		// Modified to allow backslash and colons for on Windows machines.
-		$filename = preg_replace('/[^a-zA-Z0-9\s\/\-\_\.\:\\\\]/', '', $filename);
+		$filename = preg_replace('/[^0-9\p{L}\s\/\-\_\.\:\\\\]/u', '', $filename);
 
 		// Clean up our filename edges.
 		$filename = trim($filename, '.-_');

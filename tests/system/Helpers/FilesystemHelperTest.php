@@ -184,9 +184,13 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		// Not sure the directory names should actually show up
 		// here but this matches v3.x results.
 		$expected = [
-			'foo',
-			'boo',
 			'AnEmptyFolder',
+			'bar',
+			'baz',
+			'boo',
+			'far',
+			'faz',
+			'foo',
 			'simpleFile',
 		];
 
@@ -195,20 +199,65 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, get_filenames($vfs->url(), false));
 	}
 
-	public function testGetFilenamesWithSource()
+	public function testGetFilenamesWithHidden()
 	{
 		$this->assertTrue(function_exists('delete_files'));
 
 		// Not sure the directory names should actually show up
 		// here but this matches v3.x results.
 		$expected = [
-			DIRECTORY_SEPARATOR . 'foo',
-			DIRECTORY_SEPARATOR . 'boo',
-			DIRECTORY_SEPARATOR . 'AnEmptyFolder',
-			DIRECTORY_SEPARATOR . 'simpleFile',
+			'.hidden',
+			'AnEmptyFolder',
+			'bar',
+			'baz',
+			'boo',
+			'far',
+			'faz',
+			'foo',
+			'simpleFile',
 		];
 
 		$vfs = vfsStream::setup('root', null, $this->structure);
+
+		$this->assertEquals($expected, get_filenames($vfs->url(), false, true));
+	}
+
+	public function testGetFilenamesWithRelativeSource()
+	{
+		$this->assertTrue(function_exists('get_filenames'));
+
+		$expected = [
+			'AnEmptyFolder',
+			'boo',
+			'boo/far',
+			'boo/faz',
+			'foo',
+			'foo/bar',
+			'foo/baz',
+			'simpleFile',
+		];
+
+		$vfs = vfsStream::setup('root', null, $this->structure);
+
+		$this->assertEquals($expected, get_filenames($vfs->url(), null));
+	}
+
+	public function testGetFilenamesWithFullSource()
+	{
+		$this->assertTrue(function_exists('get_filenames'));
+
+		$vfs = vfsStream::setup('root', null, $this->structure);
+
+		$expected = [
+			$vfs->url() . DIRECTORY_SEPARATOR . 'AnEmptyFolder',
+			$vfs->url() . DIRECTORY_SEPARATOR . 'boo',
+			$vfs->url() . DIRECTORY_SEPARATOR . 'boo/far',
+			$vfs->url() . DIRECTORY_SEPARATOR . 'boo/faz',
+			$vfs->url() . DIRECTORY_SEPARATOR . 'foo',
+			$vfs->url() . DIRECTORY_SEPARATOR . 'foo/bar',
+			$vfs->url() . DIRECTORY_SEPARATOR . 'foo/baz',
+			$vfs->url() . DIRECTORY_SEPARATOR . 'simpleFile',
+		];
 
 		$this->assertEquals($expected, get_filenames($vfs->url(), true));
 	}

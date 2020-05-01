@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Validation;
 
-use Config\Database;
 use CodeIgniter\Test\CIDatabaseTestCase;
+use Config\Database;
 
 class UniqueRulesTest extends CIDatabaseTestCase
 {
@@ -106,6 +106,37 @@ class UniqueRulesTest extends CIDatabaseTestCase
 
 		$this->validation->setRules([
 			'email' => "is_unique[user.email,id,{$row->id}]",
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group DatabaseLive
+	 */
+	public function testIsUniqueIgnoresParamsPlaceholders()
+	{
+		$this->hasInDatabase('user', [
+			'name'    => 'Derek',
+			'email'   => 'derek@world.co.uk',
+			'country' => 'GB',
+		]);
+
+		$db  = Database::connect();
+		$row = $db->table('user')
+				  ->limit(1)
+				  ->get()
+				  ->getRow();
+
+		$data = [
+			'id'    => $row->id,
+			'email' => 'derek@world.co.uk',
+		];
+
+		$this->validation->setRules([
+			'email' => "is_unique[user.email,id,{id}]",
 		]);
 
 		$this->assertTrue($this->validation->run($data));

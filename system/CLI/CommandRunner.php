@@ -40,8 +40,8 @@
 
 namespace CodeIgniter\CLI;
 
-use Config\Services;
 use CodeIgniter\Controller;
+use Config\Services;
 
 /**
  * Command runner
@@ -104,7 +104,7 @@ class CommandRunner extends Controller
 
 		if (is_null($command))
 		{
-			$command = 'help';
+			$command = 'list';
 		}
 
 		return $this->runCommand($command, $params);

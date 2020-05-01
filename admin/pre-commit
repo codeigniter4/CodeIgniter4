@@ -17,13 +17,13 @@ SFILES=${SFILES:-$STAGED_FILES_CMD}
 echo "Checking PHP Lint..."
 for FILE in $SFILES
 do
-	php -l -d display_errors=0 $PROJECT/$FILE
+	php -l -d display_errors=0 "$PROJECT/$FILE"
 	if [ $? != 0 ]
 	then
 		echo "Fix the error before commit."
 		exit 1
 	fi
-	FILES="$FILES $PROJECT/$FILE"
+	FILES="$FILES $FILE"
 done
 
 if [ "$FILES" != "" ]

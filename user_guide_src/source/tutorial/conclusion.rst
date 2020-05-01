@@ -10,7 +10,7 @@ design patterns, which you can expand upon.
 Now that you've completed this tutorial, we recommend you check out the
 rest of the documentation. CodeIgniter is often praised because of its
 comprehensive documentation. Use this to your advantage and read the
-"Introduction" and "General Topics" sections thoroughly. You should read
+"Overview" and "General Topics" sections thoroughly. You should read
 the class and helper references when needed.
 
 Every intermediate PHP programmer should be able to get the hang of

@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Pager;
+<?php
+
+namespace CodeIgniter\Pager;
 
 use CodeIgniter\HTTP\URI;
 
@@ -243,7 +245,7 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 			'uri'         => $uri,
 			'pageCount'   => 10, // 10 pages
 			'currentPage' => 4,
-			'total'       => 100,// 100 records, so 10 per page
+			'total'       => 100, // 100 records, so 10 per page
 		];
 
 		$pager = new PagerRenderer($details);
@@ -451,4 +453,77 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/foo/50?foo=bar', $pager->getLast());
 	}
 
+	//--------------------------------------------------------------------
+
+	public function testHasPreviousPageReturnsFalseWhenCurrentPageIsFirst()
+	{
+		$details = [
+			'uri'         => $this->uri,
+			'pageCount'   => 5,
+			'currentPage' => 1,
+			'total'       => 100
+		];
+
+		$pager = new PagerRenderer($details);
+
+		$this->assertNull($pager->getPreviousPage());
+		$this->assertFalse($pager->hasPreviousPage());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testHasNextPageReturnsFalseWhenCurrentPageIsLast()
+	{
+		$details = [
+			'uri'         => $this->uri,
+			'pageCount'   => 5,
+			'currentPage' => 5,
+			'total'       => 100
+		];
+
+		$pager = new PagerRenderer($details);
+
+		$this->assertNull($pager->getNextPage());
+		$this->assertFalse($pager->hasNextPage());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testHasPreviousPageReturnsTrueWhenFirstIsMoreThanCurrent()
+	{
+		$uri = $this->uri;
+
+		$details = [
+			'uri'         => $uri,
+			'pageCount'   => 10,
+			'currentPage' => 3,
+			'total'       => 100
+		];
+
+		$pager = new PagerRenderer($details);
+
+		$this->assertNotNull($pager->getPreviousPage());
+		$this->assertTrue($pager->hasPreviousPage());
+		$this->assertEquals('http://example.com/foo?page=2', $pager->getPreviousPage());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testHasNextPageReturnsTrueWhenLastIsMoreThanCurrent()
+	{
+		$uri = $this->uri;
+
+		$details = [
+			'uri'         => $uri,
+			'pageCount'   => 10,
+			'currentPage' => 3,
+			'total'       => 100
+		];
+
+		$pager = new PagerRenderer($details);
+
+		$this->assertNotNull($pager->getNextPage());
+		$this->assertTrue($pager->hasNextPage());
+		$this->assertEquals('http://example.com/foo?page=4', $pager->getNextPage());
+	}
 }

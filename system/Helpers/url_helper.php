@@ -475,13 +475,11 @@ if (! function_exists('safe_mailto'))
 			$output .= 'l[' . $i . "] = '" . $x[$i] . "';";
 		}
 
-		$output .= 'for (var i = l.length-1; i >= 0; i=i-1) {'
+		return $output . ('for (var i = l.length-1; i >= 0; i=i-1) {'
 				. "if (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");"
 				. 'else document.write(unescape(l[i]));'
 				. '}'
-				. '</script>';
-
-		return $output;
+				. '</script>');
 	}
 }
 
@@ -603,7 +601,6 @@ if (! function_exists('url_title'))
 		$str = strip_tags($str);
 		foreach ($trans as $key => $val)
 		{
-			//			$str = preg_replace('#'.$key.'#i'.( UTF8_ENABLED ? 'u' : ''), $val, $str);
 			$str = preg_replace('#' . $key . '#iu', $val, $str);
 		}
 

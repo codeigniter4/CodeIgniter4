@@ -1,9 +1,9 @@
 <?php
 namespace CodeIgniter\HTTP;
 
-use Config\App;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use Config\App;
 
 class URITest extends \CodeIgniter\Test\CIUnitTestCase
 {
@@ -838,6 +838,22 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('/ci/v4/index.php/controller/method', $uri->getPath());
 
 		$this->assertEquals($uri->getPath(), $request->uri->getPath());
+	}
+
+	public function testZeroAsURIPath()
+	{
+		$url = 'http://example.com/0';
+		$uri = new URI($url);
+		$this->assertEquals($url, (string) $uri);
+		$this->assertEquals('/0', $uri->getPath());
+	}
+
+	public function testEmptyURIPath()
+	{
+		$url = 'http://example.com/';
+		$uri = new URI($url);
+		$this->assertEquals([], $uri->getSegments());
+		$this->assertEquals(0, $uri->getTotalSegments());
 	}
 
 }

@@ -2,7 +2,7 @@
 Working with Files
 ******************
 
-CodeIgniter provides a File class that wraps the `SplFileInfo <http://php.net/manual/en/class.splfileinfo.php>`_ class
+CodeIgniter provides a File class that wraps the `SplFileInfo <https://www.php.net/manual/en/class.splfileinfo.php>`_ class
 and provides some additional convenience methods. This class is the base class for :doc:`uploaded files </libraries/uploaded_files>`
 and :doc:`images </libraries/images>`.
 

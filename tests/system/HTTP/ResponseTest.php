@@ -1,13 +1,13 @@
 <?php
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Config;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 use Config\Format;
 use DateTime;
 use DateTimeZone;
-use CodeIgniter\Config\Config;
-use CodeIgniter\Test\Mock\MockResponse;
 
 class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 {

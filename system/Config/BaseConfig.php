@@ -164,16 +164,12 @@ class BaseConfig
 		{
 			case array_key_exists("{$shortPrefix}.{$property}", $_ENV):
 				return $_ENV["{$shortPrefix}.{$property}"];
-				break;
 			case array_key_exists("{$shortPrefix}.{$property}", $_SERVER):
 				return $_SERVER["{$shortPrefix}.{$property}"];
-				break;
 			case array_key_exists("{$prefix}.{$property}", $_ENV):
 				return $_ENV["{$prefix}.{$property}"];
-				break;
 			case array_key_exists("{$prefix}.{$property}", $_SERVER):
 				return $_SERVER["{$prefix}.{$property}"];
-				break;
 			default:
 				$value = getenv($property);
 				return $value === false ? null : $value;

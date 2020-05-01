@@ -38,14 +38,12 @@
 
 namespace CodeIgniter\Test;
 
-use CodeIgniter\Config\Config;
-use Config\Autoload;
-use Config\Database;
-use Config\Migrations;
-use Config\Services;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Exceptions\ConfigException;
+use Config\Database;
+use Config\Migrations;
+use Config\Services;
 
 /**
  * CIDatabaseTestCase
@@ -169,29 +167,13 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 		if ($this->refresh === true)
 		{
-			// Delete all of the tables to ensure we're at a clean start.
-			$tables = $this->db->listTables();
-
-			if (is_array($tables))
-			{
-				$forge = Database::forge('tests');
-
-				foreach ($tables as $table)
-				{
-					if ($table === $this->db->DBPrefix . 'migrations')
-					{
-						$this->db->table($table)->truncate();
-						continue;
-					}
-
-					$forge->dropTable($table, true);
-				}
-			}
-
-			// If no namespace was specified then migrate all
+			// If no namespace was specified then rollback/migrate all
 			if (empty($this->namespace))
 			{
 				$this->migrations->setNamespace(null);
+
+				$this->migrations->regress(0, 'tests');
+
 				$this->migrations->latest('tests');
 			}
 
@@ -199,6 +181,13 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			else
 			{
 				$namespaces = is_array($this->namespace) ? $this->namespace : [$this->namespace];
+
+				foreach ($namespaces as $namespace)
+				{
+					$this->migrations->setNamespace($namespace);
+					$this->migrations->regress(0, 'tests');
+				}
+
 				foreach ($namespaces as $namespace)
 				{
 					$this->migrations->setNamespace($namespace);
@@ -228,8 +217,10 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * Takes care of any required cleanup after the test, like
 	 * removing any rows inserted via $this->hasInDatabase()
 	 */
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
+		parent::tearDown();
+
 		if (! empty($this->insertCache))
 		{
 			foreach ($this->insertCache as $row)

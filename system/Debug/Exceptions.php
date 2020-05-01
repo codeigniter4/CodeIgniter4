@@ -142,6 +142,7 @@ class Exceptions
 	 */
 	public function exceptionHandler(Throwable $exception)
 	{
+		// @codeCoverageIgnoreStart
 		$codes      = $this->determineCodes($exception);
 		$statusCode = $codes[0];
 		$exitCode   = $codes[1];
@@ -171,6 +172,7 @@ class Exceptions
 		$this->render($exception, $statusCode);
 
 		exit($exitCode);
+		// @codeCoverageIgnoreEnd
 	}
 
 	//--------------------------------------------------------------------
@@ -186,11 +188,10 @@ class Exceptions
 	 * @param string       $message
 	 * @param string|null  $file
 	 * @param integer|null $line
-	 * @param null         $context
 	 *
 	 * @throws \ErrorException
 	 */
-	public function errorHandler(int $severity, string $message, string $file = null, int $line = null, $context = null)
+	public function errorHandler(int $severity, string $message, string $file = null, int $line = null)
 	{
 		if (! (error_reporting() & $severity))
 		{
@@ -371,17 +372,20 @@ class Exceptions
 	 */
 	public static function cleanPath(string $file): string
 	{
-		if (strpos($file, APPPATH) === 0)
+		switch (true)
 		{
-			$file = 'APPPATH/' . substr($file, strlen(APPPATH));
-		}
-		elseif (strpos($file, SYSTEMPATH) === 0)
-		{
-			$file = 'SYSTEMPATH/' . substr($file, strlen(SYSTEMPATH));
-		}
-		elseif (strpos($file, FCPATH) === 0)
-		{
-			$file = 'FCPATH/' . substr($file, strlen(FCPATH));
+			case strpos($file, APPPATH) === 0:
+				$file = 'APPPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(APPPATH));
+				break;
+			case strpos($file, SYSTEMPATH) === 0:
+				$file = 'SYSTEMPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(SYSTEMPATH));
+				break;
+			case strpos($file, FCPATH) === 0:
+				$file = 'FCPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(FCPATH));
+				break;
+			case defined('VENDORPATH') && strpos($file, VENDORPATH) === 0;
+				$file = 'VENDORPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(VENDORPATH));
+				break;
 		}
 
 		return $file;

@@ -119,8 +119,8 @@ The following functions are available:
 	Example::
 
 		$str = [
-			'question' => 'Is your name O\'reilly?',
-			'answer'   => 'No, my name is O\'connor.'
+			'question' => "Is your name O\'reilly?",
+			'answer'   => "No, my name is O\'connor."
 		];
 
 		$str = strip_slashes($str);
@@ -148,13 +148,13 @@ The following functions are available:
 	after each other. Example::
 
 		$string = "Fred, Bill,, Joe, Jimmy";
-		$string = reduce_multiples($string,","); //results in "Fred, Bill, Joe, Jimmy"
+		$string = reduce_multiples($string, ","); // results in "Fred, Bill, Joe, Jimmy"
 
 	If the third parameter is set to TRUE it will remove occurrences of the
 	character at the beginning and the end of the string. Example::
 
 		$string = ",Fred, Bill,, Joe, Jimmy,";
-		$string = reduce_multiples($string, ", ", TRUE); //results in "Fred, Bill, Joe, Jimmy"
+		$string = reduce_multiples($string, ", ", TRUE); // results in "Fred, Bill, Joe, Jimmy"
 
 .. php:function:: quotes_to_entities($str)
 

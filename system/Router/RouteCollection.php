@@ -38,10 +38,10 @@
 
 namespace CodeIgniter\Router;
 
-use CodeIgniter\HTTP\Request;
-use Config\Services;
 use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RouterException;
+use Config\Services;
 
 /**
  * Class RouteCollection
@@ -186,14 +186,14 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @var string
 	 */
-	protected $group = null;
+	protected $group;
 
 	/**
 	 * The current subdomain.
 	 *
 	 * @var string
 	 */
-	protected $currentSubdomain = null;
+	protected $currentSubdomain;
 
 	/**
 	 * Stores copy of current options being
@@ -201,7 +201,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @var null
 	 */
-	protected $currentOptions = null;
+	protected $currentOptions;
 
 	/**
 	 * A little performance booster.
@@ -1214,17 +1214,18 @@ class RouteCollection implements RouteCollectionInterface
 	public function reverseRoute(string $search, ...$params)
 	{
 		// Named routes get higher priority.
-		foreach ($this->routes as $verb => $collection)
+		foreach ($this->routes as $collection)
 		{
 			if (array_key_exists($search, $collection))
 			{
-				return $this->fillRouteParams(key($collection[$search]['route']), $params);
+				$route = $this->fillRouteParams(key($collection[$search]['route']), $params);
+				return $this->localizeRoute($route);
 			}
 		}
 
 		// If it's not a named route, then loop over
 		// all routes to find a match.
-		foreach ($this->routes as $verb => $collection)
+		foreach ($this->routes as $collection)
 		{
 			foreach ($collection as $route)
 			{
@@ -1256,12 +1257,27 @@ class RouteCollection implements RouteCollectionInterface
 					continue;
 				}
 
-				return $this->fillRouteParams($from, $params);
+				$route = $this->fillRouteParams($from, $params);
+				return $this->localizeRoute($route);
 			}
 		}
 
 		// If we're still here, then we did not find a match.
 		return false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Replaces the {locale} tag with the current application locale
+	 *
+	 * @param string $route
+	 *
+	 * @return string
+	 */
+	protected function localizeRoute(string $route) :string
+	{
+		return strtr($route, ['{locale}' => Services::language()->getLocale()]);
 	}
 
 	//--------------------------------------------------------------------
