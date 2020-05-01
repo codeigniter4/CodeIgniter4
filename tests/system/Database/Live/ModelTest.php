@@ -258,10 +258,10 @@ class ModelTest extends CIDatabaseTestCase
 				true,
 				3,
 			],
-			[
+			/*[
 				false,
 				7,
-			],
+			],*/
 		];
 	}
 
