@@ -472,7 +472,7 @@ class Model
 		}
 		else
 		{
-			if (empty($builder->QBGroupBy) && ! empty($this->primaryKey))
+			if ($this->useSoftDeletes === true && empty($builder->QBGroupBy) && ! empty($this->primaryKey))
 			{
 				$builder->groupBy($this->table . '.' . $this->primaryKey);
 			}
