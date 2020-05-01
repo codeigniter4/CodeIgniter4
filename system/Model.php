@@ -470,19 +470,23 @@ class Model
 		{
 			$builder->where($this->table . '.' . $this->deletedField, null);
 		}
-
-		preg_match('/(MAX\(.+\))|(MIN\(.+\))|(AVG\(.+\))|(SUM\(.+\))|(COUNT\(.+\))/', $builder->getCompiledSelect(false), $matches);
-		if ($matches)
+		else
 		{
-			// Some databases, like PostgreSQL, need order
-			// information to consistently return correct results.
-			if (! empty($builder->QBGroupBy) && empty($builder->QBOrderBy) && ! empty($this->primaryKey))
+			if (empty($builder->QBGroupBy) && ! empty($this->primaryKey))
 			{
-				$builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
+				$builder->groupBy($this->table . '.' . $this->primaryKey);
 			}
 		}
 
-		$row = $builder->limit(1, 0)->get();
+		// Some databases, like PostgreSQL, need order
+		// information to consistently return correct results
+		if (! empty($builder->QBGroupBy) && empty($builder->QBOrderBy) && ! empty($this->primaryKey))
+		{
+			$builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
+		}
+
+		$row = $builder->limit(1, 0)
+					   ->get();
 
 		$row = $row->getFirstRow($this->tempReturnType);
 

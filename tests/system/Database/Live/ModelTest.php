@@ -258,10 +258,10 @@ class ModelTest extends CIDatabaseTestCase
 				true,
 				3,
 			],
-			/*[
+			[
 				false,
 				7,
-			],*/
+			],
 		];
 	}
 
@@ -1969,15 +1969,7 @@ class ModelTest extends CIDatabaseTestCase
 		}
 
 		$user = $model->withDeleted()->first();
-
-		if (! $aggregate || $groupBy)
-		{
-			$this->assertEquals(1, $user->id);
-		}
-		else
-		{
-			$this->assertEquals(10, $user->id);
-		}
+		$this->assertEquals(1, $user->id);
 
 		$user2 = $model->first();
 		$this->assertEquals(2, $user2->id);
