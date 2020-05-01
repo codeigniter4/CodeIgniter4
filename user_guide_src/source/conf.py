@@ -21,10 +21,10 @@ author = 'CodeIgniter Foundation'
 copyright = '2019-2020 CodeIgniter Foundation'
 
 # The short X.Y version.
-version = '4.0-dev'
+version = '4.0'
 
 # The full version, including alpha/beta/rc tags.
-release = '4.0.2'
+release = '4.0.3'
 
 # -- General configuration ---------------------------------------------------
 
