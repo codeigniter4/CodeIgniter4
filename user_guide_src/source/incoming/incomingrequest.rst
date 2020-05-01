@@ -15,43 +15,43 @@ Accessing the Request
 An instance of the request class already populated for you if the current class is a descendant of
 ``CodeIgniter\Controller`` and can be accessed as a class property::
 
-        <?php namespace App\Controllers;
+    <?php namespace App\Controllers;
 
-        use CodeIgniter\Controller;
+    use CodeIgniter\Controller;
 
-	class UserController extends Controller
-	{
-		public function index()
-		{
-			if ($this->request->isAJAX())
-			{
-				. . .
-			}
-		}
-	}
+    class UserController extends Controller
+    {
+        public function index()
+        {
+            if ($this->request->isAJAX())
+            {
+                // ...
+            }
+        }
+    }
 
 If you are not within a controller, but still need access to the application's Request object, you can
 get a copy of it through the :doc:`Services class </concepts/services>`::
 
-	$request = \Config\Services::request();
+    $request = \Config\Services::request();
 
 It's preferable, though, to pass the request in as a dependency if the class is anything other than
 the controller, where you can save it as a class property::
 
-	<?php
-        use CodeIgniter\HTTP\RequestInterface;
+    <?php
+    use CodeIgniter\HTTP\RequestInterface;
 
-	class SomeClass
-	{
-		protected $request;
+    class SomeClass
+    {
+        protected $request;
 
-		public function __construct(RequestInterface $request)
-		{
-			$this->request = $request;
-		}
-	}
+        public function __construct(RequestInterface $request)
+        {
+            $this->request = $request;
+        }
+    }
 
-	$someClass = new SomeClass(\Config\Services::request());
+    $someClass = new SomeClass(\Config\Services::request());
 
 Determining Request Type
 ----------------------------------------------------------------------------
@@ -59,37 +59,37 @@ Determining Request Type
 A request could be of several types, including an AJAX request or a request from the command line. This can
 be checked with the ``isAJAX()`` and ``isCLI()`` methods::
 
-	// Check for AJAX request.
-	if ($request->isAJAX())
-	{
-		. . .
-	}
+    // Check for AJAX request.
+    if ($request->isAJAX())
+    {
+        // ...
+    }
 
-	// Check for CLI Request
-	if ($request->isCLI())
-	{
-		. . .
-	}
+    // Check for CLI Request
+    if ($request->isCLI())
+    {
+        // ...
+    }
 
 .. note:: The ``isAJAX()`` method depends on the ``X-Requested-With`` header, which in some cases is not sent by default in XHR requests via JavaScript (i.e. fetch). See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
 
 You can check the HTTP method that this request represents with the ``method()`` method::
 
-	// Returns 'post'
-	$method = $request->getMethod();
+    // Returns 'post'
+    $method = $request->getMethod();
 
 By default, the method is returned as a lower-case string (i.e. 'get', 'post', etc). You can get an
 uppercase version by passing in ``true`` as the only parameter::
 
-	// Returns 'GET'
-	$method = $request->getMethod(true);
+    // Returns 'GET'
+    $method = $request->getMethod(true);
 
 You can also check if the request was made through and HTTPS connection with the ``isSecure()`` method::
 
-	if (! $request->isSecure())
-	{
-		force_https();
-	}
+    if (! $request->isSecure())
+    {
+        force_https();
+    }
 
 Retrieving Input
 ----------------------------------------------------------------------------
@@ -101,11 +101,11 @@ will return null if the item doesn't exist, and you can have the data filtered. 
 use data without having to test whether an item exists first. In other words, normally you might do something
 like this::
 
-	$something = isset($_POST['foo']) ? $_POST['foo'] : NULL;
+    $something = isset($_POST['foo']) ? $_POST['foo'] : NULL;
 
 With CodeIgniter’s built in methods you can simply do this::
 
-	$something = $request->getVar('foo');
+    $something = $request->getVar('foo');
 
 The ``getVar()`` method will pull from $_REQUEST, so will return any data from $_GET, $POST, or $_COOKIE. While this
 is convenient, you will often need to use a more specific method, like:
@@ -130,7 +130,7 @@ You can grab the contents of php://input as a JSON stream with ``getJSON()``.
 
 ::
 
-	$json = $request->getJSON();
+    $json = $request->getJSON();
 
 By default, this will return any objects in the JSON data as objects. If you want that converted to associative
 arrays, pass in ``true`` as the first parameter.
@@ -142,29 +142,29 @@ The second and third parameters match up to the ``depth`` and ``options`` argume
 
 Finally, you can grab the contents of php://input as a raw stream with ``getRawInput()``::
 
-	$data = $request->getRawInput();
+    $data = $request->getRawInput();
 
 This will retrieve data and convert it to an array. Like this::
 
-	var_dump($request->getRawInput());
+    var_dump($request->getRawInput());
 
-	[
-		'Param1' => 'Value1',
-		'Param2' => 'Value2'
-	]
+    [
+        'Param1' => 'Value1',
+        'Param2' => 'Value2'
+    ]
 
 **Filtering Input Data**
 
 To maintain security of your application, you will want to filter all input as you access it. You can
-pass the type of filter to use as the last parameter of any of these methods. The native ``filter_var()``
+pass the type of filter to use as the second parameter of any of these methods. The native ``filter_var()``
 function is used for the filtering. Head over to the PHP manual for a list of `valid
 filter types <https://www.php.net/manual/en/filter.filters.php>`_.
 
 Filtering a POST variable would look like this::
 
-	$email = $request->getVar('email', FILTER_SANITIZE_EMAIL);
+    $email = $request->getVar('email', FILTER_SANITIZE_EMAIL);
 
-All of the methods mentioned above support the filter type passed in as the last parameter, with the
+All of the methods mentioned above support the filter type passed in as the second parameter, with the
 exception of ``getJSON()``.
 
 Retrieving Headers
@@ -174,28 +174,28 @@ You can get access to any header that was sent with the request with the ``getHe
 an array of all headers, with the key as the name of the header, and the value is an instance of
 ``CodeIgniter\HTTP\Header``::
 
-	var_dump($request->getHeaders());
+    var_dump($request->getHeaders());
 
-	[
-		'Host'          => CodeIgniter\HTTP\Header,
-		'Cache-Control' => CodeIgniter\HTTP\Header,
-		'Accept'        => CodeIgniter\HTTP\Header,
-	]
+    [
+        'Host'          => CodeIgniter\HTTP\Header,
+        'Cache-Control' => CodeIgniter\HTTP\Header,
+        'Accept'        => CodeIgniter\HTTP\Header,
+    ]
 
 If you only need a single header, you can pass the name into the ``getHeader()`` method. This will grab the
 specified header object in a case-insensitive manner if it exists. If not, then it will return ``null``::
 
-	// these are all equivalent
-	$host = $request->getHeader('host');
-	$host = $request->getHeader('Host');
-	$host = $request->getHeader('HOST');
+    // these are all equivalent
+    $host = $request->getHeader('host');
+    $host = $request->getHeader('Host');
+    $host = $request->getHeader('HOST');
 
 You can always use ``hasHeader()`` to see if the header existed in this request::
 
-	if ($request->hasHeader('DNT'))
-	{
-		// Don't track something...
-	}
+    if ($request->hasHeader('DNT'))
+    {
+        // Don't track something...
+    }
 
 If you need the value of header as a string with all values on one line, you can use the ``getHeaderLine()`` method::
 
@@ -204,7 +204,7 @@ If you need the value of header as a string with all values on one line, you can
 
 If you need the entire header, with the name and values in a single string, simply cast the header as a string::
 
-	echo (string)$header;
+    echo (string)$header;
 
 The Request URL
 ----------------------------------------------------------------------------
@@ -212,22 +212,22 @@ The Request URL
 You can retrieve a :doc:`URI </libraries/uri>` object that represents the current URI for this request through the
 ``$request->uri`` property. You can cast this object as a string to get a full URL for the current request::
 
-	$uri = (string)$request->uri;
+    $uri = (string)$request->uri;
 
 The object gives you full abilities to grab any part of the request on it's own::
 
-	$uri = $request->uri;
+    $uri = $request->uri;
 
-	echo $uri->getScheme();         // http
-	echo $uri->getAuthority();      // snoopy:password@example.com:88
-	echo $uri->getUserInfo();       // snoopy:password
-	echo $uri->getHost();           // example.com
-	echo $uri->getPort();           // 88
-	echo $uri->getPath();           // /path/to/page
-	echo $uri->getQuery();          // foo=bar&bar=baz
-	echo $uri->getSegments();       // ['path', 'to', 'page']
-	echo $uri->getSegment(1);       // 'path'
-	echo $uri->getTotalSegments();  // 3
+    echo $uri->getScheme();         // http
+    echo $uri->getAuthority();      // snoopy:password@example.com:88
+    echo $uri->getUserInfo();       // snoopy:password
+    echo $uri->getHost();           // example.com
+    echo $uri->getPort();           // 88
+    echo $uri->getPath();           // /path/to/page
+    echo $uri->getQuery();          // foo=bar&bar=baz
+    echo $uri->getSegments();       // ['path', 'to', 'page']
+    echo $uri->getSegment(1);       // 'path'
+    echo $uri->getTotalSegments();  // 3
 
 Uploaded Files
 ----------------------------------------------------------------------------
@@ -237,43 +237,43 @@ Information about all uploaded files can be retrieved through ``$request->getFil
 and uses best practices to minimize any security risks.
 ::
 
-	$files = $request->getFiles();
+    $files = $request->getFiles();
 
-	// Grab the file by name given in HTML form
-	if ($files->hasFile('uploadedFile')
-	{
-		$file = $files->getFile('uploadedfile');
+    // Grab the file by name given in HTML form
+    if ($files->hasFile('uploadedFile')
+    {
+        $file = $files->getFile('uploadedfile');
 
-		// Generate a new secure name
-		$name = $file->getRandomName();
+        // Generate a new secure name
+        $name = $file->getRandomName();
 
-		// Move the file to it's new home
-		$file->move('/path/to/dir', $name);
+        // Move the file to it's new home
+        $file->move('/path/to/dir', $name);
 
-		echo $file->getSize('mb');      // 1.23
-		echo $file->getExtension();     // jpg
-		echo $file->getType();          // image/jpg
-	}
+        echo $file->getSize('mb');      // 1.23
+        echo $file->getExtension();     // jpg
+        echo $file->getType();          // image/jpg
+    }
 
 You can retrieve a single file uploaded on its own, based on the filename given in the HTML file input::
 
-	$file = $request->getFile('uploadedfile');
+    $file = $request->getFile('uploadedfile');
 
 You can retrieve an array of same-named files uploaded as part of a
 multi-file upload, based on the filename given in the HTML file input::
 
-	$files = $request->getFileMultiple('uploadedfile');
+    $files = $request->getFileMultiple('uploadedfile');
 
 Content Negotiation
 ----------------------------------------------------------------------------
 
 You can easily negotiate content types with the request through the ``negotiate()`` method::
 
-	$language    = $request->negotiate('language', ['en-US', 'en-GB', 'fr', 'es-mx']);
-	$imageType   = $request->negotiate('media', ['image/png', 'image/jpg']);
-	$charset     = $request->negotiate('charset', ['UTF-8', 'UTF-16']);
-	$contentType = $request->negotiate('media', ['text/html', 'text/xml']);
-	$encoding    = $request->negotiate('encoding', ['gzip', 'compress']);
+    $language    = $request->negotiate('language', ['en-US', 'en-GB', 'fr', 'es-mx']);
+    $imageType   = $request->negotiate('media', ['image/png', 'image/jpg']);
+    $charset     = $request->negotiate('charset', ['UTF-8', 'UTF-16']);
+    $contentType = $request->negotiate('media', ['text/html', 'text/xml']);
+    $encoding    = $request->negotiate('encoding', ['gzip', 'compress']);
 
 See the :doc:`Content Negotiation </incoming/content_negotiation>` page for more details.
 
@@ -286,25 +286,27 @@ Class Reference
 The methods provided by the parent classes that are available are:
 
 * :meth:`CodeIgniter\\HTTP\\Request::getIPAddress`
-* :meth:`CodeIgniter\\HTTP\\Request::validIP`
+* :meth:`CodeIgniter\\HTTP\\Request::isValidIP`
 * :meth:`CodeIgniter\\HTTP\\Request::getMethod`
+* :meth:`CodeIgniter\\HTTP\\Request::setMethod`
 * :meth:`CodeIgniter\\HTTP\\Request::getServer`
+* :meth:`CodeIgniter\\HTTP\\Request::getEnv`
+* :meth:`CodeIgniter\\HTTP\\Request::setGlobal`
+* :meth:`CodeIgniter\\HTTP\\Request::fetchGlobal`
 * :meth:`CodeIgniter\\HTTP\\Message::getBody`
 * :meth:`CodeIgniter\\HTTP\\Message::setBody`
+* :meth:`CodeIgniter\\HTTP\\Message::appendBody`
 * :meth:`CodeIgniter\\HTTP\\Message::populateHeaders`
-* :meth:`CodeIgniter\\HTTP\\Message::headers`
-* :meth:`CodeIgniter\\HTTP\\Message::header`
-* :meth:`CodeIgniter\\HTTP\\Message::headerLine`
+* :meth:`CodeIgniter\\HTTP\\Message::getHeaders`
+* :meth:`CodeIgniter\\HTTP\\Message::getHeader`
+* :meth:`CodeIgniter\\HTTP\\Message::hasHeader`
+* :meth:`CodeIgniter\\HTTP\\Message::getHeaderLine`
 * :meth:`CodeIgniter\\HTTP\\Message::setHeader`
 * :meth:`CodeIgniter\\HTTP\\Message::removeHeader`
 * :meth:`CodeIgniter\\HTTP\\Message::appendHeader`
-* :meth:`CodeIgniter\\HTTP\\Message::protocolVersion`
+* :meth:`CodeIgniter\\HTTP\\Message::prependHeader`
+* :meth:`CodeIgniter\\HTTP\\Message::getProtocolVersion`
 * :meth:`CodeIgniter\\HTTP\\Message::setProtocolVersion`
-* :meth:`CodeIgniter\\HTTP\\Message::negotiateMedia`
-* :meth:`CodeIgniter\\HTTP\\Message::negotiateCharset`
-* :meth:`CodeIgniter\\HTTP\\Message::negotiateEncoding`
-* :meth:`CodeIgniter\\HTTP\\Message::negotiateLanguage`
-* :meth:`CodeIgniter\\HTTP\\Message::negotiateLanguage`
 
 .. php:class:: CodeIgniter\\HTTP\\IncomingRequest
 

@@ -9,7 +9,7 @@ URI Routing
 Typically there is a one-to-one relationship between a URL string and its corresponding
 controller class/method. The segments in a URI normally follow this pattern::
 
-    example.com/class/function/id/
+    example.com/class/method/id/
 
 In some instances, however, you may want to remap this relationship so that a different
 class/method can be called instead of the one corresponding to the URL.
@@ -37,10 +37,10 @@ be listed in the same way that you would use a static method, by separating the 
 and its method with a double-colon, like ``Users::list``. If that method requires parameters to be
 passed to it, then they would be listed after the method name, separated by forward-slashes::
 
-	// Calls the $Users->list()
-	Users::list
-	// Calls $Users->list(1, 23)
-	Users::list/1/23
+    // Calls the $Users->list()
+    Users::list
+    // Calls $Users->list(1, 23)
+    Users::list/1/23
 
 Placeholders
 ============
@@ -60,12 +60,16 @@ used for readability.
 
 The following placeholders are available for you to use in your routes:
 
-* **(:any)** will match all characters from that point to the end of the URI. This may include multiple URI segments.
-* **(:segment)** will match any character except for a forward slash (/) restricting the result to a single segment.
-* **(:num)** will match any integer.
-* **(:alpha)** will match any string of alphabetic characters
-* **(:alphanum)** will match any string of alphabetic characters or integers, or any combination of the two.
-* **(:hash)** is the same as **:segment**, but can be used to easily see which routes use hashed ids (see the :doc:`Model </models/model>` docs).
+============ ===========================================================================================================
+Placeholders Description
+============ ===========================================================================================================
+(:any)       will match all characters from that point to the end of the URI. This may include multiple URI segments.
+(:segment)   will match any character except for a forward slash (/) restricting the result to a single segment.
+(:num)       will match any integer.
+(:alpha)     will match any string of alphabetic characters
+(:alphanum)  will match any string of alphabetic characters or integers, or any combination of the two.
+(:hash)      is the same as **(:segment)**, but can be used to easily see which routes use hashed ids (see the :doc:`Model </models/model>` docs).
+============ ===========================================================================================================
 
 .. note:: **{locale}** cannot be used as a placeholder or other part of the route, as it is reserved for use
     in :doc:`localization </outgoing/localization>`.
@@ -78,12 +82,12 @@ Here are a few basic routing examples.
 A URL containing the word "journals" in the first segment will be remapped to the "App\Blogs" class,
 and the default method, which is usually ``index()``::
 
-	$routes->add('journals', 'App\Blogs');
+    $routes->add('journals', 'App\Blogs');
 
 A URL containing the segments "blog/joe" will be remapped to the “\Blogs” class and the “users” method.
 The ID will be set to “34”::
 
-	$routes->add('blog/joe', 'Blogs::users/34');
+    $routes->add('blog/joe', 'Blogs::users/34');
 
 A URL with “product” as the first segment, and anything in the second will be remapped to the “\Catalog” class
 and the “productLookup” method::
@@ -93,7 +97,7 @@ and the “productLookup” method::
 A URL with “product” as the first segment, and a number in the second will be remapped to the “\Catalog” class
 and the “productLookupByID” method passing in the match as a variable to the method::
 
-	$routes->add('product/(:num)', 'Catalog::productLookupByID/$1';
+    $routes->add('product/(:num)', 'Catalog::productLookupByID/$1';
 
 .. important:: While the ``add()`` method is convenient, it is recommended to always use the HTTP-verb-based
     routes, described below, as it is more secure. It will also provide a slight performance increase, since
@@ -110,8 +114,8 @@ You add new placeholders with the ``addPlaceholder`` method. The first parameter
 the placeholder. The second parameter is the Regular Expression pattern it should be replaced with.
 This must be called before you add the route::
 
-	$routes->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
-	$routes->add('users/(:uuid)', 'Users::show/$1');
+    $routes->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
+    $routes->add('users/(:uuid)', 'Users::show/$1');
 
 Regular Expressions
 ===================
@@ -122,7 +126,7 @@ is allowed, as are back-references.
 .. important:: Note: If you use back-references you must use the dollar syntax rather than the double backslash syntax.
     A typical RegEx route might look something like this::
 
-	$routes->add('products/([a-z]+)/(\d+)', 'Products::show/$1/id_$2');
+    $routes->add('products/([a-z]+)/(\d+)', 'Products::show/$1/id_$2');
 
 In the above example, a URI similar to products/shirts/123 would instead call the ``show`` method
 of the ``Products`` controller class, with the original first and second segment passed as arguments to it.
@@ -133,7 +137,7 @@ represent the delimiter between multiple segments.
 For example, if a user accesses a password protected area of your web application and you wish to be able to
 redirect them back to the same page after they log in, you may find this example useful::
 
-	$routes->add('login/(.+)', 'Auth::login/$1');
+    $routes->add('login/(.+)', 'Auth::login/$1');
 
 For those of you who don’t know regular expressions and want to learn more about them,
 `regular-expressions.info <https://www.regular-expressions.info/>`_ might be a good starting point.
@@ -158,13 +162,13 @@ Mapping multiple routes
 
 While the add() method is simple to use, it is often handier to work with multiple routes at once, using
 the ``map()`` method. Instead of calling the ``add()`` method for each route that you need to add, you can
-define an array of routes and then pass it as the first parameter to the `map()` method::
+define an array of routes and then pass it as the first parameter to the ``map()`` method::
 
-	$routes = [];
-	$routes['product/(:num)']      = 'Catalog::productLookupById';
-	$routes['product/(:alphanum)'] = 'Catalog::productLookupByName';
+    $routes = [];
+    $routes['product/(:num)']      = 'Catalog::productLookupById';
+    $routes['product/(:alphanum)'] = 'Catalog::productLookupByName';
 
-	$collection->map($routes);
+    $collection->map($routes);
 
 Redirecting Routes
 ==================
@@ -192,32 +196,32 @@ You can group your routes under a common name with the ``group()`` method. The g
 appears prior to the routes defined inside of the group. This allows you to reduce the typing needed to build out an
 extensive set of routes that all share the opening string, like when building an admin area::
 
-	$routes->group('admin', function($routes)
-	{
-		$routes->add('users', 'Admin\Users::index');
-		$routes->add('blog', 'Admin\Blog::index');
-	});
+    $routes->group('admin', function($routes)
+    {
+        $routes->add('users', 'Admin\Users::index');
+        $routes->add('blog', 'Admin\Blog::index');
+    });
 
 This would prefix the 'users' and 'blog" URIs with "admin", handling URLs like ``/admin/users`` and ``/admin/blog``.
 It is possible to nest groups within groups for finer organization if you need it::
 
-	$routes->group('admin', function($routes)
-	{
-		$routes->group('users', function($routes)
-		{
-			$routes->add('list', 'Admin\Users::list');
-		});
+    $routes->group('admin', function($routes)
+    {
+        $routes->group('users', function($routes)
+        {
+            $routes->add('list', 'Admin\Users::list');
+        });
 
-	});
+    });
 
 This would handle the URL at ``admin/users/list``.
 
 If you need to assign options to a group, like a `namespace <#assigning-namespace>`_, do it before the callback::
 
-	$routes->group('api', ['namespace' => 'App\API\v1'], function($routes)
-	{
-		$routes->resource('users');
-	});
+    $routes->group('api', ['namespace' => 'App\API\v1'], function($routes)
+    {
+        $routes->resource('users');
+    });
 
 This would handle a resource route to the ``App\API\v1\Users`` controller with the ``/api/users`` URI.
 
@@ -239,10 +243,10 @@ tools that only the developer can use on their local machines that are not reach
 This can be done with the ``environment()`` method. The first parameter is the name of the environment. Any
 routes defined within this closure are only accessible from the given environment::
 
-	$routes->environment('development', function($routes)
-	{
-		$routes->add('builder', 'Tools\Builder::index');
-	});
+    $routes->environment('development', function($routes)
+    {
+        $routes->add('builder', 'Tools\Builder::index');
+    });
 
 Reverse Routing
 ===============
@@ -256,12 +260,12 @@ function to get the current route that should be used. The first parameter is th
 separated by a double colon (::), much like you would use when writing the initial route itself. Any parameters that
 should be passed to the route are passed in next::
 
-	// The route is defined as:
-	$routes->add('users/(:num)/gallery(:any)', 'App\Controllers\Galleries::showUserGallery/$1/$2');
+    // The route is defined as:
+    $routes->add('users/(:num)/gallery(:any)', 'App\Controllers\Galleries::showUserGallery/$1/$2');
 
-	// Generate the relative URL to link to user ID 15, gallery 12
-	// Generates: /users/15/gallery/12
-	<a href="<?= route_to('App\Controllers\Galleries::showUserGallery', 15, 12) ?>">View Gallery</a>
+    // Generate the relative URL to link to user ID 15, gallery 12
+    // Generates: /users/15/gallery/12
+    <a href="<?= route_to('App\Controllers\Galleries::showUserGallery', 15, 12) ?>">View Gallery</a>
 
 Using Named Routes
 ==================
@@ -287,14 +291,14 @@ It is possible to use HTTP verbs (request method) to define your routing rules. 
 useful when building RESTFUL applications. You can use any standard HTTP verb (GET, POST, PUT, DELETE, etc).
 Each verb has its own method you can use::
 
-	$routes->get('products', 'Product::feature');
-	$routes->post('products', 'Product::feature');
-	$routes->put('products/(:num)', 'Product::feature');
-	$routes->delete('products/(:num)', 'Product::feature');
+    $routes->get('products', 'Product::feature');
+    $routes->post('products', 'Product::feature');
+    $routes->put('products/(:num)', 'Product::feature');
+    $routes->delete('products/(:num)', 'Product::feature');
 
 You can supply multiple verbs that a route should match by passing them in as an array to the ``match`` method::
 
-	$routes->match(['get', 'put'], 'products', 'Product::feature');
+    $routes->match(['get', 'put'], 'products', 'Product::feature');
 
 Command-Line only Routes
 ========================
@@ -304,7 +308,7 @@ You can create routes that work only from the command-line, and are inaccessible
 route methods will also be inaccessible from the CLI, but routes created by the ``any()`` method will still be
 available from the command line::
 
-	$routes->cli('migrate', 'App\Database::migrate');
+    $routes->cli('migrate', 'App\Database::migrate');
 
 Global Options
 ==============
@@ -312,18 +316,18 @@ Global Options
 All of the methods for creating a route (add, get, post, `resource <restful.html>`_ etc) can take an array of options that
 can modify the generated routes, or further restrict them. The ``$options`` array is always the last parameter::
 
-	$routes->add('from', 'to', $options);
-	$routes->get('from', 'to', $options);
-	$routes->post('from', 'to', $options);
-	$routes->put('from', 'to', $options);
-	$routes->head('from', 'to', $options);
-	$routes->options('from', 'to', $options);
-	$routes->delete('from', 'to', $options);
-	$routes->patch('from', 'to', $options);
-	$routes->match(['get', 'put'], 'from', 'to', $options);
-	$routes->resource('photos', $options);
-	$routes->map($array, $options);
-	$routes->group('name', $options, function());
+    $routes->add('from', 'to', $options);
+    $routes->get('from', 'to', $options);
+    $routes->post('from', 'to', $options);
+    $routes->put('from', 'to', $options);
+    $routes->head('from', 'to', $options);
+    $routes->options('from', 'to', $options);
+    $routes->delete('from', 'to', $options);
+    $routes->patch('from', 'to', $options);
+    $routes->match(['get', 'put'], 'from', 'to', $options);
+    $routes->resource('photos', $options);
+    $routes->map($array, $options);
+    $routes->group('name', $options, function());
 
 Applying Filters
 ----------------
@@ -345,8 +349,8 @@ While a default namespace will be prepended to the generated controllers (see be
 a different namespace to be used in any options array, with the ``namespace`` option. The value should be the
 namespace you want modified::
 
-	// Routes to \Admin\Users::index()
-	$routes->add('admin/users', 'Users::index', ['namespace' => 'Admin']);
+    // Routes to \Admin\Users::index()
+    $routes->add('admin/users', 'Users::index', ['namespace' => 'Admin']);
 
 The new namespace is only applied during that call for any methods that create a single route, like get, post, etc.
 For any methods that create multiple routes, the new namespace is attached to all routes generated by that function
@@ -358,7 +362,7 @@ Limit to Hostname
 You can restrict groups of routes to function only in certain domain or sub-domains of your application
 by passing the "hostname" option along with the desired domain to allow it on as part of the options array::
 
-	$collection->get('from', 'to', ['hostname' => 'accounts.example.com']);
+    $collection->get('from', 'to', ['hostname' => 'accounts.example.com']);
 
 This example would only allow the specified hosts to work if the domain exactly matched "accounts.example.com".
 It would not work under the main site at "example.com".
@@ -369,18 +373,18 @@ Limit to Subdomains
 When the ``subdomain`` option is present, the system will restrict the routes to only be available on that
 sub-domain. The route will only be matched if the subdomain is the one the application is being viewed through::
 
-	// Limit to media.example.com
-	$routes->add('from', 'to', ['subdomain' => 'media']);
+    // Limit to media.example.com
+    $routes->add('from', 'to', ['subdomain' => 'media']);
 
 You can restrict it to any subdomain by setting the value to an asterisk, (*). If you are viewing from a URL
 that does not have any subdomain present, this will not be matched::
 
-	// Limit to any sub-domain
-	$routes->add('from', 'to', ['subdomain' => '*']);
+    // Limit to any sub-domain
+    $routes->add('from', 'to', ['subdomain' => '*']);
 
 .. important:: The system is not perfect and should be tested for your specific domain before being used in production.
-	Most domains should work fine but some edge case ones, especially with a period in the domain itself (not used
-	to separate suffixes or www) can potentially lead to false positives.
+    Most domains should work fine but some edge case ones, especially with a period in the domain itself (not used
+    to separate suffixes or www) can potentially lead to false positives.
 
 Offsetting the Matched Parameters
 ---------------------------------
@@ -391,10 +395,10 @@ value being the number of segments to offset.
 This can be beneficial when developing API's with the first URI segment being the version number. It can also
 be used when the first parameter is a language string::
 
-	$routes->get('users/(:num)', 'users/show/$1', ['offset' => 1]);
+    $routes->get('users/(:num)', 'users/show/$1', ['offset' => 1]);
 
-	// Creates:
-	$routes['users/(:num)'] = 'users/show/$2';
+    // Creates:
+    $routes['users/(:num)'] = 'users/show/$2';
 
 Routes Configuration Options
 ============================
@@ -420,13 +424,13 @@ controller::
 If your controllers are not explicitly namespaced, there is no need to change this. If you namespace your controllers,
 then you can change this value to save typing::
 
-	$routes->setDefaultNamespace('App');
+    $routes->setDefaultNamespace('App');
 
-	// Controller is \App\Users
-	$routes->add('users', 'Users::index');
+    // Controller is \App\Users
+    $routes->add('users', 'Users::index');
 
-	// Controller is \App\Admin\Users
-	$routes->add('users', 'Admin\Users::index');
+    // Controller is \App\Admin\Users
+    $routes->add('users', 'Admin\Users::index');
 
 Default Controller
 ------------------
@@ -435,8 +439,8 @@ When a user visits the root of your site (i.e. example.com) the controller to us
 the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
 which matches the controller at ``/app/Controllers/Home.php``::
 
-	// example.com routes to app/Controllers/Welcome.php
-	$routes->setDefaultController('Welcome');
+    // example.com routes to app/Controllers/Welcome.php
+    $routes->setDefaultController('Welcome');
 
 The default controller is also used when no matching route has been found, and the URI would point to a directory
 in the controllers directory. For example, if the user visits ``example.com/admin``, if a controller was found at
@@ -447,12 +451,12 @@ Default Method
 
 This works similar to the default controller setting, but is used to determine the default method that is used
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
-``index``::
-
-	$routes->setDefaultMethod('listAll');
+``index``.
 
 In this example, if the user were to visit example.com/products, and a Products controller existed, the
-``Products::listAll()`` method would be executed.
+``Products::listAll()`` method would be executed::
+
+    $routes->setDefaultMethod('listAll');
 
 Translate URI Dashes
 --------------------
@@ -461,7 +465,7 @@ This option enables you to automatically replace dashes (‘-‘) with underscor
 URI segments, thus saving you additional route entries if you need to do that. This is required because the
 dash isn’t a valid class or method name character and would cause a fatal error if you try to use it::
 
-	$routes->setTranslateURIDashes(true);
+    $routes->setTranslateURIDashes(true);
 
 Use Defined Routes Only
 -----------------------
@@ -470,7 +474,7 @@ When no defined route is found that matches the URI, the system will attempt to 
 controllers and methods as described above. You can disable this automatic matching, and restrict routes
 to only those defined by you, by setting the ``setAutoRoute()`` option to false::
 
-	$routes->setAutoRoute(false);
+    $routes->setAutoRoute(false);
 
 404 Override
 ------------

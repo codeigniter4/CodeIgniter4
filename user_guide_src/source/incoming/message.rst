@@ -36,231 +36,173 @@ Class Reference
 
 .. php:class:: CodeIgniter\\HTTP\\Message
 
-	.. php:method:: body()
+    .. php:method:: getBody()
 
-		:returns: The current message body
-		:rtype: string
+        :returns: The current message body
+        :rtype: mixed
 
-		Returns the current message body, if any has been set. If not body exists, returns null::
+        Returns the current message body, if any has been set. If not body exists, returns null::
 
-			echo $message->body();
+            echo $message->getBody();
 
-	.. php:method:: setBody([$str])
+    .. php:method:: setBody($data)
 
-	   :param  string  $str: The body of the message.
-	   :returns: the Message instance to allow methods to be chained together.
-	   :rtype: CodeIgniter\\HTTP\\Message instance.
+        :param  mixed  $data: The body of the message.
+        :returns: the Message|Response instance to allow methods to be chained together.
+        :rtype: CodeIgniter\\HTTP\\Message|CodeIgniter\\HTTP\\Response
 
-		Sets the body of the current request.
+        Sets the body of the current request.
 
-	.. php:method:: populateHeaders()
+    .. php:method:: appendBody($data)
 
-		:returns: void
+        :param  mixed  $data: The body of the message.
+        :returns: the Message|Response instance to allow methods to be chained together.
+        :rtype: CodeIgniter\\HTTP\\Message|CodeIgniter\\HTTP\\Response
 
-		Scans and parses the headers found in the SERVER data and stores it for later access.
-		This is used by the :doc:`IncomingRequest Class </incoming/incomingrequest>` to make
-		the current request's headers available.
+        Appends data to the body of the current request.
+
+    .. php:method:: populateHeaders()
+
+        :returns: void
+
+        Scans and parses the headers found in the SERVER data and stores it for later access.
+        This is used by the :doc:`IncomingRequest Class </incoming/incomingrequest>` to make
+        the current request's headers available.
 
                 The headers are any SERVER data that starts with ``HTTP_``, like ``HTTP_HOST``. Each message
-		is converted from it's standard uppercase and underscore format to a ucwords and dash format.
-		The preceding ``HTTP_`` is removed from the string. So ``HTTP_ACCEPT_LANGUAGE`` becomes
-		``Accept-Language``.
+        is converted from it's standard uppercase and underscore format to a ucwords and dash format.
+        The preceding ``HTTP_`` is removed from the string. So ``HTTP_ACCEPT_LANGUAGE`` becomes
+        ``Accept-Language``.
 
-	.. php:method:: getHeaders()
+    .. php:method:: getHeaders()
 
-		:returns: An array of all of the headers found.
-		:rtype: array
+        :returns: An array of all of the headers found.
+        :rtype: array
 
-		Returns an array of all headers found or previously set.
+        Returns an array of all headers found or previously set.
 
-	.. php:method:: getHeader([$name[, $filter = null]])
+    .. php:method:: getHeader($name)
 
-		:param  string  $name: The name of the header you want to retrieve the value of.
-		:param  int  $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`_.
-		:returns: Returns a single header object. If multiple headers with the same name exist, then will return an array of header objects.
-		:rtype: \CodeIgniter\HTTP\Header|array
+        :param  string  $name: The name of the header you want to retrieve the value of.
+        :returns: Returns a single header object. If multiple headers with the same name exist, then will return an array of header objects.
+        :rtype: \CodeIgniter\\HTTP\\Header|array
 
-		Allows you to retrieve the current value of a single message header. ``$name`` is the case-insensitive header name.
-		While the header is converted internally as described above, you can access the header with any type of case::
+        Allows you to retrieve the current value of a single message header. ``$name`` is the case-insensitive header name.
+        While the header is converted internally as described above, you can access the header with any type of case::
 
-			// These are all the same:
-			$message->getHeader('HOST');
-			$message->getHeader('Host');
-			$message->getHeader('host');	
+            // These are all the same:
+            $message->getHeader('HOST');
+            $message->getHeader('Host');
+            $message->getHeader('host');
 
-		If the header has multiple values, ``getValue()`` will return as an array of values. You can use the ``getValueLine()``
-		method to retrieve the values as a string::
+        If the header has multiple values, ``getValue()`` will return as an array of values. You can use the ``getValueLine()``
+        method to retrieve the values as a string::
 
-			echo $message->getHeader('Accept-Language');
+            echo $message->getHeader('Accept-Language');
 
-			// Outputs something like:
-			'Accept-Language: en,en-US'
+            // Outputs something like:
+            'Accept-Language: en,en-US'
 
-			echo $message->getHeader('Accept-Language')->getValue();
+            echo $message->getHeader('Accept-Language')->getValue();
 
-			// Outputs something like:
-			[
-				'en',
-				'en-US'
-			]
+            // Outputs something like:
+            [
+                'en',
+                'en-US'
+            ]
 
-			echo $message->getHeader('Accept-Language')->getValueLine();
+            echo $message->getHeader('Accept-Language')->getValueLine();
 
-			// Outputs something like:
-			'en,en-US'
+            // Outputs something like:
+            'en,en-US'
 
-		You can filter the header by passing a filter value in as the second parameter::
+        You can filter the header by passing a filter value in as the second parameter::
 
-			$message->getHeader('Document-URI', FILTER_SANITIZE_URL);
+            $message->getHeader('Document-URI', FILTER_SANITIZE_URL);
 
-	.. php:method:: getHeaderLine($name)
+    .. php:method:: hasHeader($name)
 
-		:param  string $name: The name of the header to retrieve.
-		:returns: A string representing the header value.
-		:rtype: string
+        :param  string  $name: The name of the header you want to see if it exists.
+        :returns: Returns TRUE if it exists, FALSE otherwise.
+        :rtype: bool
 
-		Returns the value(s) of the header as a string. This method allows you to easily get a string representation
-		of the header values when the header has multiple values. The values are appropriately joined::
+    .. php:method:: getHeaderLine($name)
 
-			echo $message->getHeaderLine('Accept-Language');
+        :param  string $name: The name of the header to retrieve.
+        :returns: A string representing the header value.
+        :rtype: string
 
-			// Outputs:
-			en, en-US
+        Returns the value(s) of the header as a string. This method allows you to easily get a string representation
+        of the header values when the header has multiple values. The values are appropriately joined::
 
-	.. php:method:: setHeader([$name[, $value]])
-                :noindex:
+            echo $message->getHeaderLine('Accept-Language');
 
-		:param string $name: The name of the header to set the value for.
-		:param mixed  $value: The value to set the header to.
-		:returns: The current message instance
-		:rtype: CodeIgniter\\HTTP\\Message
+            // Outputs:
+            en, en-US
 
-		Sets the value of a single header. ``$name`` is the case-insensitive name of the header. If the header
-		doesn't already exist in the collection, it will be created. The ``$value`` can be either a string
-		or an array of strings::
+    .. php:method:: setHeader($name, $value)
 
-			$message->setHeader('Host', 'codeigniter.com');
+        :param string $name: The name of the header to set the value for.
+        :param mixed  $value: The value to set the header to.
+        :returns: The current Message|Response instance
+        :rtype: CodeIgniter\\HTTP\\Message|CodeIgniter\\HTTP\\Response
 
-	.. php:method:: removeHeader([$name])
+        Sets the value of a single header. ``$name`` is the case-insensitive name of the header. If the header
+        doesn't already exist in the collection, it will be created. The ``$value`` can be either a string
+        or an array of strings::
 
-		:param string $name: The name of the header to remove.
-		:returns: The current message instance
-		:rtype: CodeIgniter\\HTTP\\Message
+            $message->setHeader('Host', 'codeigniter.com');
 
-		Removes the header from the Message. ``$name`` is the case-insensitive name of the header::
+    .. php:method:: removeHeader($name)
 
-			$message->remove('Host');
+        :param string $name: The name of the header to remove.
+        :returns: The current message instance
+        :rtype: CodeIgniter\\HTTP\\Message
 
-	.. php:method:: appendHeader([$name[, $value]]))
+        Removes the header from the Message. ``$name`` is the case-insensitive name of the header::
 
-		:param string $name:  The name of the header to modify
-		:param mixed  $value: The value to add to the header.
-		:returns: The current message instance
-		:rtype: CodeIgniter\\HTTP\\Message
+            $message->removeHeader('Host');
 
-		Adds a value to an existing header. The header must already be an array of values instead of a single string.
-		If it is a string then a LogicException will be thrown.
-		::
+    .. php:method:: appendHeader($name, $value)
 
-			$message->appendHeader('Accept-Language', 'en-US; q=0.8');
+        :param string $name: The name of the header to modify
+        :param string  $value: The value to add to the header.
+        :returns: The current message instance
+        :rtype: CodeIgniter\\HTTP\\Message
 
-	.. php:method:: protocolVersion()
+        Adds a value to an existing header. The header must already be an array of values instead of a single string.
+        If it is a string then a LogicException will be thrown.
+        ::
 
-		:returns: The current HTTP protocol version
-		:rtype: string
+            $message->appendHeader('Accept-Language', 'en-US; q=0.8');
 
-		Returns the message's current HTTP protocol. If none has been set, will return ``null``. Acceptable values
-		are ``1.0`` and ``1.1``.
+    .. php:method:: prependHeader($name, $value)
 
-	.. php:method:: setProtocolVersion($version)
+        :param string $name: The name of the header to modify
+        :param string  $value: The value to prepend to the header.
+        :returns: The current message instance
+        :rtype: CodeIgniter\\HTTP\\Message
 
-		:param string $version: The HTTP protocol version
-		:returns: The current message instance
-		:rtype: CodeIgniter\\HTTP\\Message
+        Prepends a value to an existing header. The header must already be an array of values instead of a single string.
+        If it is a string then a LogicException will be thrown.
+        ::
 
-		Sets the HTTP protocol version this Message uses. Valid values are ``1.0`` or ``1.1``::
+            $message->prependHeader('Accept-Language', 'en,');
 
-			$message->setProtocolVersion('1.1');
+    .. php:method:: getProtocolVersion()
 
-	.. php:method:: negotiateMedia($supported[, $strictMatch=false])
+        :returns: The current HTTP protocol version
+        :rtype: string
 
-		:param array $supported: An array of media types the application supports
-		:param bool $strictMatch: Whether it should force an exact match to happen.
-		:returns: The supported media type that best matches what is requested.
-		:rtype: string
+        Returns the message's current HTTP protocol. If none has been set, will return ``null``.
+        Acceptable values are ``1.0``, ``1.1`` and ``2.0``.
 
-		Parses the ``Accept`` header and compares with the application's supported media types to determine
-		the best match. Returns the appropriate media type. The first parameter is an array of application supported
-		media types that should be compared against header values::
+    .. php:method:: setProtocolVersion($version)
 
-			$supported = [
-				'image/png',
-				'image/jpg',
-				'image/gif'
-			];
-			$imageType = $message->negotiateMedia($supported);
+        :param string $version: The HTTP protocol version
+        :returns: The current message instance
+        :rtype: CodeIgniter\\HTTP\\Message
 
-		The ``$supported`` array should be structured so that the application's preferred format is the first in the
-		array, with the rest following in descending order of priority. If no match can be made between the header
-		values and the supported values, the first element of the array will be returned.
+        Sets the HTTP protocol version this Message uses. Valid values are ``1.0``, ``1.1`` and ``2.0``::
 
-		Per the `RFC <https://tools.ietf.org/html/rfc7231#section-5.3>`_ the match has the option of returning a
-		default value, like this method does, or to return an empty string. If you need to have an exact match and
-		would like an empty string returned instead, pass ``true`` as the second parameter::
-
-			// Returns empty string if no match.
-			$imageType = $message->negotiateMedia($supported, true);
-
-		The matching process takes into account the priorities and specificity of the RFC. This means that the more
-		specific header values will have a higher order of precedence, unless modified by a different ``q`` value.
-		For more details, please read the `appropriate section of the RFC <https://tools.ietf.org/html/rfc7231#section-5.3.2>`_.
-
-	.. php:method:: negotiateCharset($supported)
-
-		:param array $supported: An array of character sets the application supports.
-		:returns: The supported character set that best matches what is required.
-		:rtype: string
-
-		This is used identically to the ``negotiateMedia()`` method, except that it matches against the ``Accept-Charset``
-		header string::
-
-			$supported = [
-				'utf-8',
-				'iso-8895-9'
-			];
-			$charset = $message->negotiateCharset($supported);
-
-		If no match is found, the system will default to ``utf-8``.
-
-	.. php:method:: negotiateEncoding($supported)
-
-		:param array $supported: An array of character encodings the application supports.
-		:returns: The supported character set that best matches what is required.
-		:rtype: string
-
-		Determines the best match between the application-supported values and the ``Accept-Encoding`` header value.
-		If no match is found, will return the first element of the ``$supported`` array::
-
-			$supported = [
-				'gzip',
-				'compress'
-			];
-			$encoding = $message->negotiateEncoding($supported);
-
-	.. php:method:: negotiateLanguage($supported)
-
-		:param array $supported: An array of languages the application supports.
-		:returns: The supported language that best matches what is required.
-		:rtype: string
-
-		Determines the best match between the application-supported languages and the ``Accept-Language`` header value.
-		If no match is found, will return the first element of the ``$supported`` array::
-
-			$supported = [
-				'en',
-				'fr',
-				'x-pig-latin'
-			];
-			$language = $message->negotiateLanguage($supported);
-
-		More information about the language tags is available in `RFC 1766 <https://www.ietf.org/rfc/rfc1766.txt>`_.
+            $message->setProtocolVersion('1.1');

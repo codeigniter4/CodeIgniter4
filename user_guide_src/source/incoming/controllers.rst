@@ -16,7 +16,7 @@ A Controller is simply a class file that is named in a way that it can be associ
 
 Consider this URI::
 
-	example.com/index.php/helloworld/
+    example.com/index.php/helloworld/
 
 In the above example, CodeIgniter would attempt to find a controller named Helloworld.php and load it.
 
@@ -28,17 +28,17 @@ Let's try it: Hello World!
 Let's create a simple controller so you can see it in action. Using your text editor, create a file called Helloworld.php,
 and put the following code in it::
 
-	<?php namespace App\Controllers;
+    <?php namespace App\Controllers;
 
-        use CodeIgniter\Controller;
+    use CodeIgniter\Controller;
 
-	class Helloworld extends Controller
+    class Helloworld extends Controller
+    {
+        public function index()
         {
-		public function index()
-		{
-			echo 'Hello World!';
-		}
-	}
+            echo 'Hello World!';
+        }
+    }
 
 Then save the file to your **/app/Controllers/** directory.
 
@@ -46,46 +46,62 @@ Then save the file to your **/app/Controllers/** directory.
 
 Now visit your site using a URL similar to this::
 
-	example.com/index.php/helloworld
+    example.com/index.php/helloworld
 
 If you did it right you should see::
 
-	Hello World!
+    Hello World!
 
 .. important:: Controller class names MUST start with an uppercase letter and ONLY the first character can be uppercase.
 
 This is valid::
 
-	<?php namespace App\Controllers;
+    <?php namespace App\Controllers;
 
-        use CodeIgniter\Controller;
+    use CodeIgniter\Controller;
 
-	class Helloworld extends Controller {
+    class Helloworld extends Controller
+    {
 
-	}
-
-This is **not** valid::
-
-	<?php namespace App\Controllers;
-
-        use CodeIgniter\Controller;
-
-	class helloworld extends Controller {
-
-	}
+    }
 
 This is **not** valid::
 
-	<?php namespace App\Controllers;
+    <?php namespace App\Controllers;
 
-        use CodeIgniter\Controller;
+    use CodeIgniter\Controller;
 
-	class HelloWorld extends Controller {
+    class helloworld extends Controller
+    {
 
-	}
+    }
+
+This is **not** valid::
+
+    <?php namespace App\Controllers;
+
+    use CodeIgniter\Controller;
+
+    class HelloWorld extends Controller
+    {
+
+    }
 
 Also, always make sure your controller extends the parent controller
 class so that it can inherit all its methods.
+
+.. note::
+    The system will attempt to match the URI against Controllers by matching each segment against
+    folders/files in APPPATH/Controllers, when a match wasn't found against defined routes.
+    That's why your folders/files MUST start with a capital letter and the rest MUST be lowercase.
+    If you want another naming convention you need to manually define it using the
+    :doc:`URI Routing <routing>` feature.
+
+    Here is an example based on PSR-4: Autoloader::
+
+        \<NamespaceName>(\<SubNamespaceNames>)*\<ClassName>
+
+        $routes->get('helloworld', 'App\Controllers\HelloWorld::index');
 
 Methods
 =======
@@ -94,34 +110,33 @@ In the above example, the method name is ``index()``. The "index" method
 is always loaded by default if the **second segment** of the URI is
 empty. Another way to show your "Hello World" message would be this::
 
-	example.com/index.php/helloworld/index/
+    example.com/index.php/helloworld/index/
 
 **The second segment of the URI determines which method in the
 controller gets called.**
 
 Let's try it. Add a new method to your controller::
 
-	<?php namespace App\Controllers;
+    <?php namespace App\Controllers;
 
-        use CodeIgniter\Controller;
+    use CodeIgniter\Controller;
 
-	class Helloworld extends Controller
+    class Helloworld extends Controller
+    {
+        public function index()
         {
+            echo 'Hello World!';
+        }
 
-		public function index()
-		{
-			echo 'Hello World!';
-		}
-
-		public function comment()
-		{
-			echo 'I am not flat!';
-		}
-	}
+        public function comment()
+        {
+            echo 'I am not flat!';
+        }
+    }
 
 Now load the following URL to see the comment method::
 
-	example.com/index.php/helloworld/comment/
+    example.com/index.php/helloworld/comment/
 
 You should see your new message.
 
@@ -133,39 +148,38 @@ method as parameters.
 
 For example, let's say you have a URI like this::
 
-	example.com/index.php/products/shoes/sandals/123
+    example.com/index.php/products/shoes/sandals/123
 
 Your method will be passed URI segments 3 and 4 ("sandals" and "123")::
 
-	<?php namespace App\Controllers;
+    <?php namespace App\Controllers;
 
-        use CodeIgniter\Controller;
+    use CodeIgniter\Controller;
 
-	class Products extends Controller
+    class Products extends Controller
+    {
+        public function shoes($sandals, $id)
         {
-
-		public function shoes($sandals, $id)
-		{
-			echo $sandals;
-			echo $id;
-		}
-	}
+            echo $sandals;
+            echo $id;
+        }
+    }
 
 .. important:: If you are using the :doc:`URI Routing <routing>`
-	feature, the segments passed to your method will be the re-routed
-	ones.
+    feature, the segments passed to your method will be the re-routed
+    ones.
 
 Defining a Default Controller
 =============================
 
 CodeIgniter can be told to load a default controller when a URI is not
 present, as will be the case when only your site root URL is requested. Let's try it
-with the Helloworld controller. 
+with the Helloworld controller.
 
 To specify a default controller open your **app/Config/Routes.php**
 file and set this variable::
 
-	$routes->setDefaultController('Helloworld');
+    $routes->setDefaultController('Helloworld');
 
 Where 'Helloworld' is the name of the controller class you want to be used.
 
@@ -188,58 +202,58 @@ As noted above, the second segment of the URI typically determines which
 method in the controller gets called. CodeIgniter permits you to override
 this behavior through the use of the ``_remap()`` method::
 
-	public function _remap()
-	{
-		// Some code here...
-	}
+    public function _remap()
+    {
+        // Some code here...
+    }
 
 .. important:: If your controller contains a method named _remap(),
-	it will **always** get called regardless of what your URI contains. It
-	overrides the normal behavior in which the URI determines which method
-	is called, allowing you to define your own method routing rules.
+    it will **always** get called regardless of what your URI contains. It
+    overrides the normal behavior in which the URI determines which method
+    is called, allowing you to define your own method routing rules.
 
 The overridden method call (typically the second segment of the URI) will
 be passed as a parameter to the ``_remap()`` method::
 
-	public function _remap($method)
-	{
-		if ($method === 'some_method')
-		{
-			return $this->$method();
-		}
-		else
-		{
-			return $this->default_method();
-		}
-	}
+    public function _remap($method)
+    {
+        if ($method === 'some_method')
+        {
+            return $this->$method();
+        }
+        else
+        {
+            return $this->default_method();
+        }
+    }
 
 Any extra segments after the method name are passed into ``_remap()``. These parameters can be passed to the method
 to emulate CodeIgniter's default behavior.
 
 Example::
 
-	public function _remap($method, ...$params)
-	{
-		$method = 'process_'.$method;
-		if (method_exists($this, $method))
-		{
-			return $this->$method(...$params);
-		}
-		throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-	}
+    public function _remap($method, ...$params)
+    {
+        $method = 'process_'.$method;
+        if (method_exists($this, $method))
+        {
+            return $this->$method(...$params);
+        }
+        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+    }
 
 Private methods
 ===============
 
 In some cases, you may want certain methods hidden from public access.
-To achieve this, simply declare the method as private or protected. 
+To achieve this, simply declare the method as private or protected.
 That will prevent it from being served by a URL request. For example,
 if you were to define a method like this for the `Helloworld` controller::
 
-	protected function utility()
-	{
-		// some code
-	}
+    protected function utility()
+    {
+        // some code
+    }
 
 then trying to access it using the following URL will not work::
 
@@ -255,15 +269,16 @@ permits you to do this.
 Simply create sub-directories under the main *app/Controllers/*
 one and place your controller classes within them.
 
+.. important:: Folder names MUST start with an uppercase letter and ONLY the first character can be uppercase.
+
 .. note:: When using this feature the first segment of your URI must
-	specify the folder. For example, let's say you have a controller located
-	here::
+    specify the folder. For example, let's say you have a controller located here::
 
-		app/Controllers/products/Shoes.php
+        app/Controllers/Products/Shoes.php
 
-	To call the above controller your URI will look something like this::
+    To call the above controller your URI will look something like this::
 
-		example.com/index.php/products/shoes/show/123
+        example.com/index.php/products/shoes/show/123
 
 Each of your sub-directories may contain a default controller which will be
 called if the URL contains *only* the sub-directory. Simply put a controller
@@ -299,46 +314,46 @@ An instance of the :doc:`Logger <../general/logging>` class is available as a cl
 A convenience method for forcing a method to be accessed via HTTPS is available within all
 controllers::
 
-	if (! $this->request->isSecure())
-	{
-		$this->forceHTTPS();
-	}
+    if (! $this->request->isSecure())
+    {
+        $this->forceHTTPS();
+    }
 
 By default, and in modern browsers that support the HTTP Strict Transport Security header, this
 call should force the browser to convert non-HTTPS calls to HTTPS calls for one year. You can
 modify this by passing the duration (in seconds) as the first parameter::
 
-	if (! $this->request->isSecure())
-	{
-		$this->forceHTTPS(31536000);    // one year
-	}
+    if (! $this->request->isSecure())
+    {
+        $this->forceHTTPS(31536000);    // one year
+    }
 
 .. note:: A number of :doc:`time-based constants </general/common_functions>` are always available for you to use, including YEAR, MONTH, and more.
 
-helpers
+Helpers
 -------
 
-You can define an array of helper files as a class property. Whenever the controller is loaded 
+You can define an array of helper files as a class property. Whenever the controller is loaded
 these helper files will be automatically loaded into memory so that you can use their methods anywhere
 inside the controller::
 
-	namespace App\Controllers;
-        use CodeIgniter\Controller;
+    namespace App\Controllers;
+    use CodeIgniter\Controller;
 
-	class MyController extends Controller
-	{
-		protected $helpers = ['url', 'form'];
-	}
+    class MyController extends Controller
+    {
+        protected $helpers = ['url', 'form'];
+    }
 
 Validating data
 ======================
 
-To simplify data checking, the controller also provides the convenience method ``validate()``. 
-The method accepts an array of rules in the first parameter, 
-and in the optional second parameter, an array of custom error messages to display 
+To simplify data checking, the controller also provides the convenience method ``validate()``.
+The method accepts an array of rules in the first parameter,
+and in the optional second parameter, an array of custom error messages to display
 if the items are not valid. Internally, this uses the controller's
-**$this->request** instance to get the data to be validated. 
-The :doc:`Validation Library docs </libraries/validation>` have details on 
+**$this->request** instance to get the data to be validated.
+The :doc:`Validation Library docs </libraries/validation>` have details on
 rule and message array formats, as well as available rules.::
 
     public function updateUser(int $userID)
@@ -356,7 +371,7 @@ rule and message array formats, as well as available rules.::
         // do something here if successful...
     }
 
-If you find it simpler to keep the rules in the configuration file, you can replace 
+If you find it simpler to keep the rules in the configuration file, you can replace
 the $rules array with the name of the group as defined in ``Config\Validation.php``::
 
     public function updateUser(int $userID)
