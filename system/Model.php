@@ -1524,12 +1524,16 @@ class Model
 							continue;
 						}
 
-						$row = strtr($row, $replacements);
+						$row = preg_replace_callback('/\{(\w+)\}/', function ($matches) use ($replacements) {
+							return array_key_exists($matches[0], $replacements) ? $replacements[$matches[0]] : '';
+						}, $row);
 					}
 					continue;
 				}
 
-				$rule = strtr($rule, $replacements);
+				$rule = preg_replace_callback('/\{(\w+)\}/', function ($matches) use ($replacements) {
+					return array_key_exists($matches[0], $replacements) ? $replacements[$matches[0]] : '';
+				}, $rule);
 			}
 		}
 
