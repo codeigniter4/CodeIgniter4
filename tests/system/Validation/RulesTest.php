@@ -612,37 +612,6 @@ class RulesTest extends CIDatabaseTestCase
 	/**
 	 * @group DatabaseLive
 	 */
-	public function testIsUniqueIgnoresParamsAsVariable()
-	{
-		$db   = Database::connect();
-		$user = $db->table('user')
-				   ->insert([
-					   'name'    => 'Developer A',
-					   'email'   => 'deva@example.com',
-					   'country' => 'Elbonia',
-				   ]);
-		$row  = $db->table('user')
-				   ->limit(1)
-				   ->get()
-				   ->getRow();
-
-		$data = [
-			'id'    => $row->id,
-			'email' => 'deva@example.com',
-		];
-
-		$this->validation->setRules([
-			'email' => 'is_unique[user.email,id,{id}]',
-		]);
-
-		$this->assertTrue($this->validation->run($data));
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * @group DatabaseLive
-	 */
 	public function testIsUniqueIgnoresParamsAsVariableWithEmptyPlaceholder()
 	{
 		$db   = Database::connect();
