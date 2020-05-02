@@ -1524,10 +1524,22 @@ class Model
 							continue;
 						}
 
+						// Skip regex_match rule
+						if (strpos($row, 'regex_match[') !== false)
+						{
+							continue;
+						}
+
 						$row = preg_replace_callback('/\{(\w+)\}/', function ($matches) use ($replacements) {
 							return array_key_exists($matches[0], $replacements) ? $replacements[$matches[0]] : '';
 						}, $row);
 					}
+					continue;
+				}
+
+				// Skip regex_match rule
+				if (strpos($rule, 'regex_match[') !== false)
+				{
 					continue;
 				}
 
