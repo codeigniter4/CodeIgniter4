@@ -1381,6 +1381,37 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Allows to set validation rules.
+	 * It could be used when you have to change default or override current validate rules.
+	 *
+	 * @param array $validationRules
+	 *
+	 * @return void
+	 */
+	public function setValidationRules(array $validationRules)
+	{
+		$this->validationRules = $validationRules;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Allows to set field wise validation rules.
+	 * It could be used when you have to change default or override current validate rules.
+	 *
+	 * @param string       $field
+	 * @param string|array $fieldRules
+	 *
+	 * @return void
+	 */
+	public function setValidationRule(string $field, $fieldRules)
+	{
+		$this->validationRules[$field] = $fieldRules;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Should validation rules be removed before saving?
 	 * Most handy when doing updates.
 	 *
