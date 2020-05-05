@@ -15,6 +15,6 @@
  */
 
 return [
-	'invalidModel'      => 'Invalid model supplied for fabrication.',
-	'missingFormatters' => 'No valid formatters defined.',
+   'invalidModel'      => 'Invalid model supplied for fabrication.',
+   'missingFormatters' => 'No valid formatters defined.',
 ];

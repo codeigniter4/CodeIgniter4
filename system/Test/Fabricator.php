@@ -83,9 +83,9 @@ class Fabricator
 	/**
 	 * Store the model instance and initialize Faker to the locale.
 	 *
-	 * @param string|Model $model   Instance or classname of the model to use
-	 * @param string|null  $locale  Locale for Faker provider
-	 * @param array $formatters     Array of property => formatter
+	 * @param string|Model $model      Instance or classname of the model to use
+	 * @param string|null  $locale     Locale for Faker provider
+	 * @param array        $formatters Array of property => formatter
 	 *
 	 * @throws \InvalidArgumentException
 	 */
@@ -109,7 +109,7 @@ class Fabricator
 		}
 
 		// Will throw \InvalidArgumentException for unmatched locales
-        $this->faker = Factory::create($locale);
+		$this->faker = Factory::create($locale);
 
 		// Set the formatters
 		$this->setFormatters($formatters);
@@ -232,8 +232,8 @@ class Fabricator
 	/**
 	 * Generate new entities with faked data
 	 *
-	 * @param int|null $count  Optional number to create a collection
-	 * @param array $override  Array of data to add/override
+	 * @param integer|null $count    Optional number to create a collection
+	 * @param array        $override Array of data to add/override
 	 *
 	 * @return array|object  An array or object (based on returnType), or an array of returnTypes
 	 */
@@ -242,16 +242,16 @@ class Fabricator
 		// If a singleton was requested then go straight to it
 		if (is_null($count))
 		{
-			return $this->model->returnType == 'array' ?
+			return $this->model->returnType === 'array' ?
 				$this->makeArray($override) :
 				$this->makeObject($override);
 		}
 
 		$return = [];
-		
+
 		for ($i = 0; $i < $count; $i++)
 		{
-			$return[] = $this->model->returnType == 'array' ?
+			$return[] = $this->model->returnType === 'array' ?
 				$this->makeArray($override) :
 				$this->makeObject($override);
 		}
@@ -262,7 +262,7 @@ class Fabricator
 	/**
 	 * Generate an array of faked data
 	 *
-	 * @param array $override  Array of data to add/override
+	 * @param array $override Array of data to add/override
 	 *
 	 * @return array  An array of faked data
 	 *
@@ -310,7 +310,7 @@ class Fabricator
 	/**
 	 * Generate an object of faked data
 	 *
-	 * @param array $override  Array of data to add/override
+	 * @param array $override Array of data to add/override
 	 *
 	 * @return array  An array of faked data
 	 *
@@ -324,7 +324,7 @@ class Fabricator
 		if (is_null($this->formatters) && method_exists($this->model, 'fake'))
 		{
 			$result = $this->model->fake();
-			
+
 			if ($result instanceof $class)
 			{
 				// Set overrides manually
@@ -357,4 +357,3 @@ class Fabricator
 		return $object;
 	}
 }
-
