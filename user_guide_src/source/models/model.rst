@@ -492,9 +492,8 @@ The other way to set the validation rules to fields by functions,
     Usage example::
 
         $fieldName = 'username';
-        $fieldRules = [
-            'required|alpha_numeric_space|min_length[3]',
-        ];
+        $fieldRules = 'required|alpha_numeric_space|min_length[3]';
+        
         $model->setValidationRule($fieldName, $fieldRules);
 
 .. php:function:: setValidationRules($validationRules)
