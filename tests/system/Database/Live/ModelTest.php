@@ -677,8 +677,7 @@ class ModelTest extends CIDatabaseTestCase
 		];
 
 		$model->setValidationRule('description', [
-			'required',
-			'min_length[50]',
+			'rules'  => 'required|min_length[50]',
 			'errors' => [
 				'min_length' => 'Description is too short baby.',
 			],
@@ -703,14 +702,13 @@ class ModelTest extends CIDatabaseTestCase
 
 		$model->setValidationRules([
 			'name'        => [
-				'required',
+				'rules'  => 'required',
 				'errors' => [
 					'required' => 'Give me a name baby.',
 				],
 			],
 			'description' => [
-				'required',
-				'min_length[50]',
+				'rules'  => 'required|min_length[50]',
 				'errors' => [
 					'min_length' => 'Description is too short baby.',
 				],

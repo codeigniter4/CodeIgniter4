@@ -493,7 +493,7 @@ The other way to set the validation rules to fields by functions,
 
         $fieldName = 'username';
         $fieldRules = [
-            'required', 'alpha_numeric_space', 'min_length[3]',
+            'required|alpha_numeric_space|min_length[3]',
         ];
         $model->setValidationRule($fieldName, $fieldRules);
 
@@ -508,7 +508,7 @@ The other way to set the validation rules to fields by functions,
         $validationRules = [
             'username' => 'required|alpha_numeric_space|min_length[3]',
             'email' => [
-                'required', 'valid_email', 'is_unique[users.email]',
+                'rules'  => 'required|valid_email|is_unique[users.email]',
                 'errors' => [
                     'required' => 'We really need your email.',
                 ],
