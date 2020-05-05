@@ -321,4 +321,12 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('e', $lang->getLine('Nested.a.b.c.d'));
 	}
 
+	public function testLanguageKeySeparatedByDot()
+	{
+		$lang = new SecondMockLanguage('en');
+		$lang->loadem('Foo', 'en');
+
+		$this->assertEquals('The fieldname field is very short.', $lang->getLine('Foo.bar.min_length1', ['field' => 'fieldname']));
+	}
+
 }
