@@ -298,7 +298,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 		$config = config(App::class);
 		$uri    = new URI($config->baseURL . '/' . trim($path, '/ '));
 
-		$request      = new IncomingRequest($config, clone($uri), $params, new UserAgent());
+		$request      = new IncomingRequest($config, clone($uri), $params ?? 'php://input', new UserAgent());
 		$request->uri = $uri;
 
 		$request->setMethod($method);
