@@ -327,6 +327,7 @@ class LanguageTest extends \CodeIgniter\Test\CIUnitTestCase
 		$lang->loadem('Foo', 'en');
 
 		$this->assertEquals('The fieldname field is very short.', $lang->getLine('Foo.bar.min_length1', ['field' => 'fieldname']));
+		$this->assertEquals('The fieldname field is very short.', $lang->getLine('Foo.baz.min_length3.short', ['field' => 'fieldname']));
 	}
 
 }
