@@ -195,6 +195,31 @@ class RedirectResponse extends Response
 	}
 
 	/**
+	 * Copies any headers from the global Response instance
+	 * into this RedirectResponse. Useful when you've just
+	 * set a header be need to ensure its actually sent
+	 * with the redirect response.
+	 *
+	 * @return $this|RedirectResponse
+	 */
+	public function withHeaders()
+	{
+		$headers = service('response')->getHeaders();
+
+		if (empty($headers))
+		{
+			return $this;
+		}
+
+		foreach ($headers as $name => $header)
+		{
+			$this->setHeader($name, $header->getValue());
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Ensures the session is loaded and started.
 	 *
 	 * @return \CodeIgniter\Session\Session
