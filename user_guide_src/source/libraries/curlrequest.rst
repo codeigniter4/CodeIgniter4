@@ -33,7 +33,7 @@ You can pass in an array of default options as the first parameter to modify how
 The options are described later in this document::
 
 	$options = [
-		'base_uri' => 'http://example.com/api/v1/',
+		'baseURI' => 'http://example.com/api/v1/',
 		'timeout'  => 3
 	];
 	$client = \Config\Services::curlrequest($options);
@@ -92,12 +92,12 @@ each take the URL as the first parameter and an array of options as the second::
 Base URI
 --------
 
-A ``base_uri`` can be set as one of the options during the instantiation of the class. This allows you to
+A ``baseURI`` can be set as one of the options during the instantiation of the class. This allows you to
 set a base URI, and then make all requests with that client using relative URLs. This is especially handy
 when working with APIs::
 
 	$client = \Config\Services::curlrequest([
-		'base_uri' => 'https://example.com/api/v1/'
+		'baseURI' => 'https://example.com/api/v1/'
 	]);
 
 	// GET http:example.com/api/v1/photos
@@ -107,12 +107,12 @@ when working with APIs::
 	$client->delete('photos/13');
 
 When a relative URI is provided to the ``request()`` method or any of the shortcut methods, it will be combined
-with the base_uri according to the rules described by
+with the baseURI according to the rules described by
 `RFC 2986, section 2 <https://tools.ietf.org/html/rfc3986#section-5.2>`_. To save you some time, here are some
 examples of how the combinations are resolved.
 
 	=====================   ================   ========================
-	base_uri                URI                Result
+	baseURI                URI                Result
 	=====================   ================   ========================
 	`http://foo.com`        /bar               `http://foo.com/bar`
 	`http://foo.com/foo`    /bar               `http://foo.com/bar`
