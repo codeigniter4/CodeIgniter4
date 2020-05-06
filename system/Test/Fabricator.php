@@ -65,6 +65,13 @@ class Fabricator
 	protected $model;
 
 	/**
+	 * Locale used to initialize Faker
+	 *
+	 * @var string
+	 */
+	protected $locale;
+
+	/**
 	 * Map of properties and their formatter to use
 	 *
 	 * @var array
@@ -84,12 +91,12 @@ class Fabricator
 	 * Store the model instance and initialize Faker to the locale.
 	 *
 	 * @param string|Model $model      Instance or classname of the model to use
+	 * @param array|null   $formatters Array of property => formatter
 	 * @param string|null  $locale     Locale for Faker provider
-	 * @param array        $formatters Array of property => formatter
 	 *
 	 * @throws \InvalidArgumentException
 	 */
-	public function __construct($model, string $locale = null, array $formatters = null)
+	public function __construct($model, array $formatters = null, string $locale = null)
 	{
 		if (is_string($model))
 		{
@@ -102,14 +109,19 @@ class Fabricator
 			throw new \InvalidArgumentException(lang('Fabricator.invalidModel'));
 		}
 
+		$this->model = $model;
+
 		// If no locale was specified then use the App default
 		if (is_null($locale))
 		{
 			$locale = config('App')->defaultLocale;
 		}
 
-		// Will throw \InvalidArgumentException for unmatched locales
-		$this->faker = Factory::create($locale);
+		// There is no easy way to retrieve the locale from Faker so we will store it
+		$this->locale = $locale;
+
+		// Create the locale-specific Generator
+		$this->faker = Factory::create($this->locale);
 
 		// Set the formatters
 		$this->setFormatters($formatters);
@@ -128,11 +140,21 @@ class Fabricator
 	}
 
 	/**
+	 * Returns the locale
+	 *
+	 * @return string
+	 */
+	public function getLocale(): string
+	{
+		return $this->locale;
+	}
+
+	/**
 	 * Returns the Faker generator
 	 *
 	 * @return Faker\Generator
 	 */
-	public function getFaker(): Faker
+	public function getFaker(): Generator
 	{
 		return $this->faker;
 	}
@@ -169,7 +191,7 @@ class Fabricator
 			$formatters = $this->detectFormatters();
 		}
 
-		return $this->faker;
+		return $this;
 	}
 
 	/**
@@ -196,7 +218,7 @@ class Fabricator
 	 *
 	 * @return string  Name of the formatter
 	 */
-	protected function guessFormatter($field): self
+	protected function guessFormatter($field): string
 	{
 		// First check for a Faker formatter of the same name - covers things like "email"
 		try
@@ -207,6 +229,16 @@ class Fabricator
 		catch (\InvalidArgumentException $e)
 		{
 			// No match, keep going
+		}
+
+		// Next look for known model fields
+		if (in_array($field, [$this->model->createdField, $this->model->updatedField, $this->model->deletedField]))
+		{
+			return $this->model->dateFormat;
+		}
+		elseif ($field === $this->model->primaryKey)
+		{
+			return 'numberBetween';
 		}
 
 		// Check some common partials
@@ -318,7 +350,7 @@ class Fabricator
 	 */
 	protected function makeObject(array $override = [])
 	{
-		$class = $this->model->returnType;
+		$class = $this->model->returnType === 'object' ? 'stdClass' : $this->model->returnType;
 
 		// If using the model's fake() method then check it for the correct return type
 		if (is_null($this->formatters) && method_exists($this->model, 'fake'))
@@ -348,7 +380,7 @@ class Fabricator
 		}
 		else
 		{
-			foreach ($result as $key => $value)
+			foreach ($array as $key => $value)
 			{
 				$object->{$key} = $value;
 			}
