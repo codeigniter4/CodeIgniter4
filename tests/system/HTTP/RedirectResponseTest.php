@@ -213,4 +213,19 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		Config::reset();
 	}
+
+	public function testWithCookies()
+	{
+		$_SESSION = [];
+
+		$baseResponse = service('response');
+		$baseResponse->setCookie('foo', 'bar');
+
+		$response = new RedirectResponse(new App());
+		$this->assertFalse($response->hasCookie('foo', 'bar'));
+
+		$response = $response->withCookies();
+
+		$this->assertTrue($response->hasCookie('foo', 'bar'));
+	}
 }

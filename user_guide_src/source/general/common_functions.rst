@@ -299,6 +299,9 @@ Miscellaneous Functions
 		// Set a flash message
 		return redirect()->back()->with('foo', 'message');
 
+		// Copies all cookies from global response instance
+		return redirect()->back()->withCookies();
+
 	When passing a URI into the function, it is treated as a reverse-route request, not a relative/full URI, treating
         it the same as using redirect()->route()::
 

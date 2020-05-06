@@ -161,6 +161,40 @@ class RedirectResponse extends Response
 	}
 
 	/**
+	 * Copies any cookies from the global Response instance
+	 * into this RedirectResponse. Useful when you've just
+	 * set a cookie but need ensure that's actually sent
+	 * with the response instead of lost.
+	 *
+	 * @return $this|RedirectResponse
+	 */
+	public function withCookies()
+	{
+		$cookies = service('response')->getCookies();
+
+		if (empty($cookies))
+		{
+			return $this;
+		}
+
+		foreach ($cookies as $cookie)
+		{
+			$this->setCookie(
+				$cookie['name'],
+				$cookie['value'],
+				$cookie['expires'],
+				$cookie['domain'],
+				$cookie['path'],
+				'', // prefix
+				$cookie['secure'],
+				$cookie['httponly']
+			);
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Ensures the session is loaded and started.
 	 *
 	 * @return \CodeIgniter\Session\Session
