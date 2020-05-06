@@ -356,4 +356,86 @@ class Fabricator
 
 		return $object;
 	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Generate new entities from the database
+	 *
+	 * @param integer|null $count    Optional number to create a collection
+	 * @param array        $override Array of data to add/override
+	 * @param boolean      $mock     Whether to execute or mock the insertion
+	 *
+	 * @return array|object  An array or object (based on returnType), or an array of returnTypes
+	 */
+	public function create(int $count = null, array $override = [], bool $mock = false)
+	{
+		// Intercept mock requests
+		if ($mock)
+		{
+			return $this->createMock($count, $override);
+		}
+
+		$ids = [];
+
+		// Iterate over new entities and insert each one, storing insert IDs
+		foreach ($this->make($count ?? 1, $override) as $result)
+		{
+			$ids[] = $this->model->insert($row, true);
+		}
+
+		return $this->model->find(is_null($count) ? reset($ids) : $ids);
+	}
+
+	/**
+	 * Generate new database entities without actually inserting them
+	 *
+	 * @param integer|null $count    Optional number to create a collection
+	 * @param array        $override Array of data to add/override
+	 *
+	 * @return array|object  An array or object (based on returnType), or an array of returnTypes
+	 */
+	protected function createMock(int $count = null, array $override = [])
+	{
+		$datetime = $this->model->setDate();
+
+		// Determine which fields we will need
+		$fields = [];
+
+		if ($this->model->useTimestamps)
+		{
+			$fields[$this->model->createdField] = $datetime;
+			$fields[$this->model->updatedField] = $datetime;
+		}
+
+		if ($this->model->useSoftDeletes)
+		{
+			$fields[$this->model->deletedField] = $datetime;
+		}
+
+		// Iterate over new entities and add the necessary fields
+		$return = [];
+		foreach ($this->make($count ?? 1, $override) as $i => $result)
+		{
+			// Set the ID
+			$fields[$this->model->primaryKey] = $i;
+
+			// Merge fields
+			if (is_array($result))
+			{
+				$result = array_merge($result, $fields);
+			}
+			else
+			{
+				foreach ($fields as $key => $value)
+				{
+					$result->{$key} = $value;
+				}
+			}
+
+			$return[] = $result;
+		}
+
+		return is_null($count) ? reset($return) : $return;
+	}
 }
