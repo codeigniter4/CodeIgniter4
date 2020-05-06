@@ -145,15 +145,21 @@ class Database extends BaseCollector
 			];
 		}
 
+		$start = 0;
+		$duration = 0;
+
 		foreach (static::$queries as $query)
 		{
-			$data[] = [
-				'name'      => 'Query',
-				'component' => 'Database',
-				'start'     => $query->getStartTime(true),
-				'duration'  => $query->getDuration(),
-			];
+			$start = $query->getStartTime(true);
+			$duration += $query->getDuration();
 		}
+
+		$data[] = [
+			'name'      => 'Queries ('.count(static::$queries).')',
+			'component' => 'Database',
+			'start'     => $start,
+			'duration'  => $duration,
+		];
 
 		return $data;
 	}
