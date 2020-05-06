@@ -11,7 +11,7 @@ need to be run against the production machines next time you deploy.
 The database table **migration** tracks which migrations have already been
 run so all you have to do is make sure your migrations are in place and
 call ``$migration->latest()`` to bring the database up to the most recent
-state. You can also use ``$migration->setNamespace(null)->progess()`` to
+state. You can also use ``$migration->setNamespace(null)->latest()`` to
 include migrations from all namespaces.
 
 .. contents::
