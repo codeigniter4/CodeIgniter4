@@ -163,6 +163,13 @@ class Language
 			}
 		}
 
+		if ($output === null)
+		{
+			$row    = current(explode('.', $parsedLine));
+			$key    = substr($parsedLine, strlen($row) + 1);
+			$output = $this->language[$this->locale][$file][$row][$key] ?? null;
+		}
+
 		if ($output === null && strpos($this->locale, '-'))
 		{
 			[$locale] = explode('-', $this->locale, 2);
