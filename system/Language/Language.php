@@ -210,14 +210,15 @@ class Language
 			}
 		}
 
-		if ($output === null)
+		if ($output !== null)
 		{
-			$row    = current(explode('.', $parsedLine));
-			$key    = substr($parsedLine, strlen($row) + 1);
-			$output = $this->language[$locale][$file][$row][$key] ?? null;
+			return $output;
 		}
 
-		return $output;
+		$row = current(explode('.', $parsedLine));
+		$key = substr($parsedLine, strlen($row) + 1);
+
+		return $this->language[$locale][$file][$row][$key] ?? null;
 	}
 
 	/**
