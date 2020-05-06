@@ -667,6 +667,63 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testValidationWithSetValidationRule()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name'        => 'some name',
+			'description' => 'some great marketing stuff',
+		];
+
+		$model->setValidationRule('description', [
+			'rules'  => 'required|min_length[50]',
+			'errors' => [
+				'min_length' => 'Description is too short baby.',
+			],
+		]);
+		$this->assertFalse($model->insert($data));
+
+		$errors = $model->errors();
+
+		$this->assertEquals('Description is too short baby.', $errors['description']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testValidationWithSetValidationRules()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name'        => '',
+			'description' => 'some great marketing stuff',
+		];
+
+		$model->setValidationRules([
+			'name'        => [
+				'rules'  => 'required',
+				'errors' => [
+					'required' => 'Give me a name baby.',
+				],
+			],
+			'description' => [
+				'rules'  => 'required|min_length[50]',
+				'errors' => [
+					'min_length' => 'Description is too short baby.',
+				],
+			],
+		]);
+		$this->assertFalse($model->insert($data));
+
+		$errors = $model->errors();
+
+		$this->assertEquals('Give me a name baby.', $errors['name']);
+		$this->assertEquals('Description is too short baby.', $errors['description']);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testValidationWithSetValidationMessage()
 	{
 		$model = new ValidModel($this->db);
