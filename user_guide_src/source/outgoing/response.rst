@@ -525,3 +525,11 @@ The methods provided by the parent class that are available are:
 		Example::
 
 			$cookie = $response->getCookie($name);
+
+    .. php:method:: getCookies()
+
+        :rtype array
+
+        Returns all cookies currently set within the Response instance.
+        These are any cookies that you have specifically specified to set during the current
+        request only.

@@ -1015,6 +1015,16 @@ class Response extends Message implements ResponseInterface
 	}
 
 	/**
+	 * Returns all cookies currently set.
+	 *
+	 * @return array
+	 */
+	public function getCookies()
+	{
+		return $this->cookies;
+	}
+
+	/**
 	 * Actually sets the cookies.
 	 */
 	protected function sendCookies()

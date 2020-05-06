@@ -299,10 +299,16 @@ Miscellaneous Functions
 		// Set a flash message
 		return redirect()->back()->with('foo', 'message');
 
+		// Copies all cookies from global response instance
+		return redirect()->back()->withCookies();
+
+		// Copies all headers from the global response instance
+		return redirect()->back()->withHeaders();
+
 	When passing a URI into the function, it is treated as a reverse-route request, not a relative/full URI, treating
         it the same as using redirect()->route()::
 
-                // Go to a named/reverse-routed URI
+        // Go to a named/reverse-routed URI
 		return redirect('named_route');
 
 .. php:function:: remove_invisible_characters($str[, $urlEncoded = TRUE])
