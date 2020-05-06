@@ -81,13 +81,13 @@ available to you::
 While the ``request()`` method is the most flexible, you can also use the following shortcut methods. They
 each take the URL as the first parameter and an array of options as the second::
 
-* $client->get('http://example.com');
-* $client->delete('http://example.com');
-* $client->head('http://example.com');
-* $client->options('http://example.com');
-* $client->patch('http://example.com');
-* $client->put('http://example.com');
-* $client->post('http://example.com');
+    $client->get('http://example.com');
+    $client->delete('http://example.com');
+    $client->head('http://example.com');
+    $client->options('http://example.com');
+    $client->patch('http://example.com');
+    $client->put('http://example.com');
+    $client->post('http://example.com');
 
 Base URI
 --------
@@ -112,7 +112,7 @@ with the baseURI according to the rules described by
 examples of how the combinations are resolved.
 
 	=====================   ================   ========================
-	baseURI                URI                Result
+	baseURI                 URI                Result
 	=====================   ================   ========================
 	`http://foo.com`        /bar               `http://foo.com/bar`
 	`http://foo.com/foo`    /bar               `http://foo.com/bar`
