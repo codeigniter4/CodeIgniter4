@@ -40,6 +40,7 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\ResponseInterface;
 use Config\Format;
 use PHPUnit\Framework\TestCase;
 
