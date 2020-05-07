@@ -123,6 +123,40 @@ class FabricatorTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testSetOverridesSets()
+	{
+		$overrides  = ['name' => 'Steve'];
+		$fabricator = new Fabricator(UserModel::class);
+
+		$fabricator->setOverrides($overrides);
+
+		$this->assertEquals($overrides, $fabricator->getOverrides());
+	}
+
+	public function testSetOverridesDefaultPersists()
+	{
+		$overrides  = ['name' => 'Steve'];
+		$fabricator = new Fabricator(UserModel::class);
+
+		$fabricator->setOverrides($overrides);
+		$fabricator->getOverrides();
+
+		$this->assertEquals($overrides, $fabricator->getOverrides());
+	}
+
+	public function testSetOverridesOnce()
+	{
+		$overrides  = ['name' => 'Steve'];
+		$fabricator = new Fabricator(UserModel::class);
+
+		$fabricator->setOverrides($overrides, false);
+		$fabricator->getOverrides();
+
+		$this->assertEquals([], $fabricator->getOverrides());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testGuessFormattersReturnsActual()
 	{
 		$fabricator = new Fabricator(UserModel::class);
@@ -195,16 +229,17 @@ class FabricatorTest extends CIUnitTestCase
 		$this->assertIsArray($result);
 	}
 
-	public function testMakeArrayUsesOverride()
+	public function testMakeArrayUsesOverrides()
 	{
-		$fabricator = new Fabricator(UserModel::class, $this->formatters);
+		$overrides = ['name' => 'The Admiral'];
 
-		$override = ['name' => 'The Admiral'];
+		$fabricator = new Fabricator(UserModel::class, $this->formatters);
+		$fabricator->setOverrides($overrides);
 
 		$method = $this->getPrivateMethodInvoker($fabricator, 'makeArray');
-		$result = $method($override);
+		$result = $method();
 
-		$this->assertEquals($override['name'], $result['name']);
+		$this->assertEquals($overrides['name'], $result['name']);
 	}
 
 	public function testMakeArrayReturnsValidData()

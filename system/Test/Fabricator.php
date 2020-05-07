@@ -79,6 +79,20 @@ class Fabricator
 	protected $formatters;
 
 	/**
+	 * Array of data to add or override faked versions
+	 *
+	 * @var array
+	 */
+	protected $overrides = [];
+
+	/**
+	 * Array of single-use data to override faked versions
+	 *
+	 * @var array|null
+	 */
+	protected $tmpOverrides;
+
+	/**
 	 * Default formatter to use when nothing is detected
 	 *
 	 * @var string
@@ -121,6 +135,22 @@ class Fabricator
 		$this->setFormatters($formatters);
 	}
 
+	/**
+	 * Reset state to defaults
+	 *
+	 * @return $this
+	 */
+	public function reset(): self
+	{
+		$this->setFormatters();
+
+		$this->overrides = $this->tmpOverrides = [];
+		$this->locale    = config('App')->defaultLocale;
+		$this->faker     = Factory::create($this->locale);
+
+		return $this;
+	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -156,6 +186,42 @@ class Fabricator
 	//--------------------------------------------------------------------
 
 	/**
+	 * Return and reset tmpOverrides
+	 *
+	 * @return array
+	 */
+	public function getOverrides(): array
+	{
+		$overrides = $this->tmpOverrides ?? $this->overrides;
+
+		$this->tmpOverrides = $this->overrides;
+
+		return $overrides;
+	}
+
+	/**
+	 * Set the overrides, once or persistent
+	 *
+	 * @param array   $overrides Array of [field => value]
+	 * @param boolean $persist   Whether these overrides should persist through the next operation
+	 *
+	 * @return $this
+	 */
+	public function setOverrides(array $overrides = [], $persist = true): self
+	{
+		if ($persist)
+		{
+			$this->overrides = $overrides;
+		}
+
+		$this->tmpOverrides = $overrides;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the current formatters
 	 *
 	 * @return array|null
@@ -167,6 +233,8 @@ class Fabricator
 
 	/**
 	 * Set the formatters to use. Will attempt to autodetect if none are available.
+	 *
+	 * @param array|null $formatters Array of [field => formatter], or null to detect
 	 *
 	 * @return $this
 	 */
@@ -258,19 +326,18 @@ class Fabricator
 	/**
 	 * Generate new entities with faked data
 	 *
-	 * @param integer|null $count    Optional number to create a collection
-	 * @param array        $override Array of data to add/override
+	 * @param integer|null $count Optional number to create a collection
 	 *
 	 * @return array|object  An array or object (based on returnType), or an array of returnTypes
 	 */
-	public function make(int $count = null, array $override = [])
+	public function make(int $count = null)
 	{
 		// If a singleton was requested then go straight to it
 		if (is_null($count))
 		{
 			return $this->model->returnType === 'array' ?
-				$this->makeArray($override) :
-				$this->makeObject($override);
+				$this->makeArray() :
+				$this->makeObject();
 		}
 
 		$return = [];
@@ -278,8 +345,8 @@ class Fabricator
 		for ($i = 0; $i < $count; $i++)
 		{
 			$return[] = $this->model->returnType === 'array' ?
-				$this->makeArray($override) :
-				$this->makeObject($override);
+				$this->makeArray() :
+				$this->makeObject();
 		}
 
 		return $return;
@@ -288,13 +355,11 @@ class Fabricator
 	/**
 	 * Generate an array of faked data
 	 *
-	 * @param array $override Array of data to add/override
-	 *
 	 * @return array  An array of faked data
 	 *
 	 * @throws \RuntimeException
 	 */
-	protected function makeArray(array $override = [])
+	protected function makeArray()
 	{
 		if (! is_null($this->formatters))
 		{
@@ -330,19 +395,17 @@ class Fabricator
 		}
 
 		// Replace overridden fields
-		return array_merge($result, $override);
+		return array_merge($result, $this->getOverrides());
 	}
 
 	/**
 	 * Generate an object of faked data
 	 *
-	 * @param array $override Array of data to add/override
-	 *
 	 * @return array  An array of faked data
 	 *
 	 * @throws \RuntimeException
 	 */
-	protected function makeObject(array $override = [])
+	protected function makeObject()
 	{
 		$class = $this->model->returnType === 'object' ? 'stdClass' : $this->model->returnType;
 
@@ -354,7 +417,7 @@ class Fabricator
 			if ($result instanceof $class)
 			{
 				// Set overrides manually
-				foreach ($override as $key => $value)
+				foreach ($this->getOverrides() as $key => $value)
 				{
 					$result->{$key} = $value;
 				}
@@ -364,7 +427,7 @@ class Fabricator
 		}
 
 		// Get the array values and format them as returnType
-		$array  = $this->makeArray($override);
+		$array  = $this->makeArray();
 		$object = new $class();
 
 		// Check for the entity method
