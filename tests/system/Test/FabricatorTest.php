@@ -1,6 +1,8 @@
 <?php namespace CodeIgniter\Test;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Tests\Support\Models\EntityModel;
+use Tests\Support\Models\EventModel;
 use Tests\Support\Models\FabricatorModel;
 use Tests\Support\Models\UserModel;
 
@@ -223,8 +225,7 @@ class FabricatorTest extends CIUnitTestCase
 	{
 		$fabricator = new Fabricator(UserModel::class, $this->formatters);
 
-		$method = $this->getPrivateMethodInvoker($fabricator, 'makeArray');
-		$result = $method();
+		$result = $fabricator->makeArray();
 
 		$this->assertIsArray($result);
 	}
@@ -236,8 +237,7 @@ class FabricatorTest extends CIUnitTestCase
 		$fabricator = new Fabricator(UserModel::class, $this->formatters);
 		$fabricator->setOverrides($overrides);
 
-		$method = $this->getPrivateMethodInvoker($fabricator, 'makeArray');
-		$result = $method();
+		$result = $fabricator->makeArray();
 
 		$this->assertEquals($overrides['name'], $result['name']);
 	}
@@ -246,8 +246,7 @@ class FabricatorTest extends CIUnitTestCase
 	{
 		$fabricator = new Fabricator(UserModel::class, $this->formatters);
 
-		$method = $this->getPrivateMethodInvoker($fabricator, 'makeArray');
-		$result = $method();
+		$result = $fabricator->makeArray();
 
 		$this->assertEquals($result['email'], filter_var($result['email'], FILTER_VALIDATE_EMAIL));
 	}
@@ -256,9 +255,78 @@ class FabricatorTest extends CIUnitTestCase
 	{
 		$fabricator = new Fabricator(FabricatorModel::class);
 
-		$method = $this->getPrivateMethodInvoker($fabricator, 'makeArray');
-		$result = $method();
+		$result = $fabricator->makeArray();
 
 		$this->assertEquals($result['name'], filter_var($result['name'], FILTER_VALIDATE_IP));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMakeObjectReturnsModelReturnType()
+	{
+		$fabricator = new Fabricator(EntityModel::class, $this->formatters);
+		$expected   = $fabricator->getModel()->returnType;
+
+		$result = $fabricator->makeObject();
+
+		$this->assertInstanceOf($expected, $result);
+	}
+
+	public function testMakeObjectReturnsProvidedClass()
+	{
+		$fabricator = new Fabricator(UserModel::class, $this->formatters);
+		$className  = 'Tests\Support\Models\SimpleEntity';
+
+		$result = $fabricator->makeObject($className);
+
+		$this->assertInstanceOf($className, $result);
+	}
+
+	public function testMakeObjectReturnsStdClassForArrayReturnType()
+	{
+		$fabricator = new Fabricator(EventModel::class, $this->formatters);
+
+		$result = $fabricator->makeObject();
+
+		$this->assertInstanceOf(\stdClass::class, $result);
+	}
+
+	public function testMakeObjectReturnsStdClassForObjectReturnType()
+	{
+		$fabricator = new Fabricator(UserModel::class, $this->formatters);
+
+		$result = $fabricator->makeObject();
+
+		$this->assertInstanceOf(\stdClass::class, $result);
+	}
+
+	public function testMakeObjectUsesOverrides()
+	{
+		$overrides = ['name' => 'The Admiral'];
+
+		$fabricator = new Fabricator(UserModel::class, $this->formatters);
+		$fabricator->setOverrides($overrides);
+
+		$result = $fabricator->makeObject();
+
+		$this->assertEquals($overrides['name'], $result->name);
+	}
+
+	public function testMakeObjectReturnsValidData()
+	{
+		$fabricator = new Fabricator(UserModel::class, $this->formatters);
+
+		$result = $fabricator->makeObject();
+
+		$this->assertEquals($result->email, filter_var($result->email, FILTER_VALIDATE_EMAIL));
+	}
+
+	public function testMakeObjectUsesFakeMethod()
+	{
+		$fabricator = new Fabricator(FabricatorModel::class);
+
+		$result = $fabricator->makeObject();
+
+		$this->assertEquals($result->name, filter_var($result->name, FILTER_VALIDATE_IP));
 	}
 }

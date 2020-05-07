@@ -335,18 +335,18 @@ class Fabricator
 		// If a singleton was requested then go straight to it
 		if (is_null($count))
 		{
-			return $this->model->returnType === 'array' ?
-				$this->makeArray() :
-				$this->makeObject();
+			return $this->model->returnType === 'array'
+				? $this->makeArray()
+				: $this->makeObject();
 		}
 
 		$return = [];
 
 		for ($i = 0; $i < $count; $i++)
 		{
-			$return[] = $this->model->returnType === 'array' ?
-				$this->makeArray() :
-				$this->makeObject();
+			$return[] = $this->model->returnType === 'array'
+				? $this->makeArray()
+				: $this->makeObject();
 		}
 
 		return $return;
@@ -359,7 +359,7 @@ class Fabricator
 	 *
 	 * @throws \RuntimeException
 	 */
-	protected function makeArray()
+	public function makeArray()
 	{
 		if (! is_null($this->formatters))
 		{
@@ -401,20 +401,32 @@ class Fabricator
 	/**
 	 * Generate an object of faked data
 	 *
-	 * @return array  An array of faked data
+	 * @param string|null $className Class name of the object to create; null to use model default
+	 *
+	 * @return object  An instance of the class with faked data
 	 *
 	 * @throws \RuntimeException
 	 */
-	protected function makeObject()
+	public function makeObject(string $className = null): object
 	{
-		$class = $this->model->returnType === 'object' ? 'stdClass' : $this->model->returnType;
+		if (is_null($className))
+		{
+			if ($this->model->returnType === 'object' || $this->model->returnType === 'array')
+			{
+				$className = 'stdClass';
+			}
+			else
+			{
+				$className = $this->model->returnType;
+			}
+		}
 
 		// If using the model's fake() method then check it for the correct return type
 		if (is_null($this->formatters) && method_exists($this->model, 'fake'))
 		{
 			$result = $this->model->fake($this->faker);
 
-			if ($result instanceof $class)
+			if ($result instanceof $className)
 			{
 				// Set overrides manually
 				foreach ($this->getOverrides() as $key => $value)
@@ -426,9 +438,9 @@ class Fabricator
 			}
 		}
 
-		// Get the array values and format them as returnType
+		// Get the array values and apply them to the object
 		$array  = $this->makeArray();
-		$object = new $class();
+		$object = new $className();
 
 		// Check for the entity method
 		if (method_exists($object, 'fill'))
