@@ -775,6 +775,19 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testReverseRoutingWithLocaleAndFindsSimpleMatch()
+	{
+		$routes = $this->getCollector();
+
+		$routes->add('{locale}/path/(:any)/to/(:num)', 'myController::goto/$1/$2');
+
+		$match = $routes->reverseRoute('myController::goto', 'string', 13);
+
+		$this->assertEquals('/en/path/string/to/13', $match);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testReverseRoutingReturnsFalseWithBadParamCount()
 	{
 		$routes = $this->getCollector();
@@ -830,6 +843,17 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testNamedRoutesWithLocale()
+	{
+		$routes = $this->getCollector();
+
+		$routes->add('{locale}/users', 'Users::index', ['as' => 'namedRoute']);
+
+		$this->assertEquals('/en/users', $routes->reverseRoute('namedRoute'));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testNamedRoutesFillInParams()
 	{
 		$routes = $this->getCollector();
@@ -839,6 +863,19 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 		$match = $routes->reverseRoute('namedRoute', 'string', 13);
 
 		$this->assertEquals('/path/string/to/13', $match);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testNamedRoutesWithLocaleAndFillInParams()
+	{
+		$routes = $this->getCollector();
+
+		$routes->add('{locale}/path/(:any)/to/(:num)', 'myController::goto/$1/$2', ['as' => 'namedRoute']);
+
+		$match = $routes->reverseRoute('namedRoute', 'string', 13);
+
+		$this->assertEquals('/en/path/string/to/13', $match);
 	}
 
 	//--------------------------------------------------------------------
@@ -871,6 +908,38 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/642
+	 */
+	public function testNamedRoutesWithLocaleAndWithSameURIDifferentMethods()
+	{
+		$routes = $this->getCollector();
+
+		$routes->get('{locale}/user/insert', 'myController::goto/$1/$2', ['as' => 'namedRoute1']);
+		$routes->post(
+			'{locale}/user/insert',
+			function () {
+			},
+			['as' => 'namedRoute2']
+		);
+		$routes->put(
+			'{locale}/user/insert',
+			function () {
+			},
+			['as' => 'namedRoute3']
+		);
+
+		$match1 = $routes->reverseRoute('namedRoute1');
+		$match2 = $routes->reverseRoute('namedRoute2');
+		$match3 = $routes->reverseRoute('namedRoute3');
+
+		$this->assertEquals('/en/user/insert', $match1);
+		$this->assertEquals('/en/user/insert', $match2);
+		$this->assertEquals('/en/user/insert', $match3);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testReverseRouteMatching()
 	{
 		$routes = $this->getCollector();
@@ -881,6 +950,21 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('/test/1/2', $match);
 	}
+
+	//--------------------------------------------------------------------
+
+	public function testReverseRouteMatchingWithLocale()
+	{
+		$routes = $this->getCollector();
+
+		$routes->get('{locale}/test/(:segment)/(:segment)', 'TestController::test/$1/$2', ['as' => 'testRouter']);
+
+		$match = $routes->reverseRoute('testRouter', 1, 2);
+
+		$this->assertEquals('/en/test/1/2', $match);
+	}
+
+	//--------------------------------------------------------------------
 
 	public function testAddRedirect()
 	{
