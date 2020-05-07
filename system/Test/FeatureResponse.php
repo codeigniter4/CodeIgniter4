@@ -67,7 +67,7 @@ class FeatureResponse extends TestCase
 	/**
 	 * Constructor.
 	 *
-	 * @param Response $response
+	 * @param ResponseInterface $response
 	 */
 	public function __construct(ResponseInterface $response = null)
 	{
