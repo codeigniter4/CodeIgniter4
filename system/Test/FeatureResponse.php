@@ -39,7 +39,6 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\RedirectResponse;
-use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Format;
 use PHPUnit\Framework\TestCase;
@@ -53,7 +52,7 @@ class FeatureResponse extends TestCase
 	/**
 	 * The response.
 	 *
-	 * @var \CodeIgniter\HTTP\Response
+	 * @var \CodeIgniter\HTTP\ResponseInterface
 	 */
 	public $response;
 
