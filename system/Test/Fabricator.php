@@ -469,18 +469,18 @@ class Fabricator
 	 *
 	 * @return array|object  An array or object (based on returnType), or an array of returnTypes
 	 */
-	public function create(int $count = null, array $override = [], bool $mock = false)
+	public function create(int $count = null, bool $mock = false)
 	{
 		// Intercept mock requests
 		if ($mock)
 		{
-			return $this->createMock($count, $override);
+			return $this->createMock($count);
 		}
 
 		$ids = [];
 
 		// Iterate over new entities and insert each one, storing insert IDs
-		foreach ($this->make($count ?? 1, $override) as $result)
+		foreach ($this->make($count ?? 1) as $result)
 		{
 			$ids[] = $this->model->insert($row, true);
 		}
@@ -516,7 +516,7 @@ class Fabricator
 
 		// Iterate over new entities and add the necessary fields
 		$return = [];
-		foreach ($this->make($count ?? 1, $override) as $i => $result)
+		foreach ($this->make($count ?? 1) as $i => $result)
 		{
 			// Set the ID
 			$fields[$this->model->primaryKey] = $i;
