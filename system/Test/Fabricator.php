@@ -246,7 +246,7 @@ class Fabricator
 		{
 			if (stripos($field, $term) !== false)
 			{
-				return $field;
+				return $term;
 			}
 		}
 
@@ -315,7 +315,7 @@ class Fabricator
 		// If no formatters were defined then look for a model fake() method
 		elseif (method_exists($this->model, 'fake'))
 		{
-			$result = $this->model->fake();
+			$result = $this->model->fake($this->faker);
 
 			// This should cover entities
 			if (method_exists($result, 'toArray'))
@@ -355,7 +355,7 @@ class Fabricator
 		// If using the model's fake() method then check it for the correct return type
 		if (is_null($this->formatters) && method_exists($this->model, 'fake'))
 		{
-			$result = $this->model->fake();
+			$result = $this->model->fake($this->faker);
 
 			if ($result instanceof $class)
 			{

@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Test;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Tests\Support\Models\FabricatorModel;
 use Tests\Support\Models\UserModel;
 
 class FabricatorTest extends CIUnitTestCase
@@ -16,6 +17,8 @@ class FabricatorTest extends CIUnitTestCase
 		'country'    => 'country',
 		'deleted_at' => 'datetime',
 	];
+
+	//--------------------------------------------------------------------
 
 	public function testConstructorWithString()
 	{
@@ -63,6 +66,8 @@ class FabricatorTest extends CIUnitTestCase
 		$this->assertEquals($locale, $fabricator->getLocale());
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testGetModelReturnsModel()
 	{
 		$fabricator = new Fabricator(UserModel::class);
@@ -81,6 +86,8 @@ class FabricatorTest extends CIUnitTestCase
 
 		$this->assertIsNumeric($faker->randomDigit);
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testSetFormattersChangesFormatters()
 	{
@@ -114,4 +121,109 @@ class FabricatorTest extends CIUnitTestCase
 		$this->assertEquals($this->formatters, $fabricator->getFormatters());
 	}
 
+	//--------------------------------------------------------------------
+
+	public function testGuessFormattersReturnsActual()
+	{
+		$fabricator = new Fabricator(UserModel::class);
+
+		$method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
+
+		$field     = 'catchPhrase';
+		$formatter = $method($field);
+
+		$this->assertEquals($field, $formatter);
+	}
+
+	public function testGuessFormattersFieldReturnsDateFormat()
+	{
+		$fabricator = new Fabricator(UserModel::class);
+
+		$method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
+
+		$field     = 'created_at';
+		$formatter = $method($field);
+
+		$this->assertEquals($fabricator->getModel()->dateFormat, $formatter);
+	}
+
+	public function testGuessFormattersPrimaryReturnsNumberBetween()
+	{
+		$fabricator = new Fabricator(UserModel::class);
+
+		$method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
+
+		$field     = 'id';
+		$formatter = $method($field);
+
+		$this->assertEquals('numberBetween', $formatter);
+	}
+
+	public function testGuessFormattersMatchesPartial()
+	{
+		$fabricator = new Fabricator(UserModel::class);
+
+		$method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
+
+		$field     = 'business_email';
+		$formatter = $method($field);
+
+		$this->assertEquals('email', $formatter);
+	}
+
+	public function testGuessFormattersFallback()
+	{
+		$fabricator = new Fabricator(UserModel::class);
+
+		$method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
+
+		$field     = 'zaboomafoo';
+		$formatter = $method($field);
+
+		$this->assertEquals($fabricator->defaultFormatter, $formatter);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMakeArrayReturnsArray()
+	{
+		$fabricator = new Fabricator(UserModel::class, $this->formatters);
+
+		$method = $this->getPrivateMethodInvoker($fabricator, 'makeArray');
+		$result = $method();
+
+		$this->assertIsArray($result);
+	}
+
+	public function testMakeArrayUsesOverride()
+	{
+		$fabricator = new Fabricator(UserModel::class, $this->formatters);
+
+		$override = ['name' => 'The Admiral'];
+
+		$method = $this->getPrivateMethodInvoker($fabricator, 'makeArray');
+		$result = $method($override);
+
+		$this->assertEquals($override['name'], $result['name']);
+	}
+
+	public function testMakeArrayReturnsValidData()
+	{
+		$fabricator = new Fabricator(UserModel::class, $this->formatters);
+
+		$method = $this->getPrivateMethodInvoker($fabricator, 'makeArray');
+		$result = $method();
+
+		$this->assertEquals($result['email'], filter_var($result['email'], FILTER_VALIDATE_EMAIL));
+	}
+
+	public function testMakeArrayUsesFakeMethod()
+	{
+		$fabricator = new Fabricator(FabricatorModel::class);
+
+		$method = $this->getPrivateMethodInvoker($fabricator, 'makeArray');
+		$result = $method();
+
+		$this->assertEquals($result['name'], filter_var($result['name'], FILTER_VALIDATE_IP));
+	}
 }
