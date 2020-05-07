@@ -58,9 +58,9 @@ class Fabricator
 	protected $faker;
 
 	/**
-	 * Model instance
+	 * Model instance (can be non-framework if it follows framework design)
 	 *
-	 * @var \CodeIgniter\Model
+	 * @var CodeIgniter\Model|object
 	 */
 	protected $model;
 
@@ -90,9 +90,9 @@ class Fabricator
 	/**
 	 * Store the model instance and initialize Faker to the locale.
 	 *
-	 * @param string|Model $model      Instance or classname of the model to use
-	 * @param array|null   $formatters Array of property => formatter
-	 * @param string|null  $locale     Locale for Faker provider
+	 * @param string|object $model      Instance or classname of the model to use
+	 * @param array|null    $formatters Array of property => formatter
+	 * @param string|null   $locale     Locale for Faker provider
 	 *
 	 * @throws \InvalidArgumentException
 	 */
@@ -100,13 +100,7 @@ class Fabricator
 	{
 		if (is_string($model))
 		{
-			$model = new $model();
-		}
-
-		// Verify the model
-		if (! $model instanceof Model)
-		{
-			throw new \InvalidArgumentException(lang('Fabricator.invalidModel'));
+			$model = model($model);
 		}
 
 		$this->model = $model;
@@ -132,9 +126,9 @@ class Fabricator
 	/**
 	 * Returns the model instance
 	 *
-	 * @return CodeIgniter\Model
+	 * @return object  Framework or compatible model
 	 */
-	public function getModel(): Model
+	public function getModel()
 	{
 		return $this->model;
 	}
