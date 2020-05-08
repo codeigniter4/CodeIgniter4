@@ -299,7 +299,7 @@ class Fabricator
 			switch ($this->model->dateFormat)
 			{
 				case 'datetime':
-					return 'dateTime';
+					return 'date';
 				break;
 
 				case 'date':
@@ -495,23 +495,29 @@ class Fabricator
 		// Iterate over new entities and insert each one, storing insert IDs
 		foreach ($this->make($count ?? 1) as $result)
 		{
-			$ids[] = $this->model->insert($row, true);
+			$ids[] = $this->model->insert($result, true);
 		}
 
-		return $this->model->find(is_null($count) ? reset($ids) : $ids);
+		return $this->model->withDeleted()->find(is_null($count) ? reset($ids) : $ids);
 	}
 
 	/**
 	 * Generate new database entities without actually inserting them
 	 *
-	 * @param integer|null $count    Optional number to create a collection
-	 * @param array        $override Array of data to add/override
+	 * @param integer|null $count Optional number to create a collection
 	 *
 	 * @return array|object  An array or object (based on returnType), or an array of returnTypes
 	 */
-	protected function createMock(int $count = null, array $override = [])
+	protected function createMock(int $count = null)
 	{
-		$datetime = $this->model->setDate();
+		switch ($this->model->dateFormat)
+		{
+			case 'datetime':
+				$datetime = date('Y-m-d H:i:s');
+			case 'date':
+				$datetime = date('Y-m-d');
+			default:
+				$datetime = time();                        }
 
 		// Determine which fields we will need
 		$fields = [];
