@@ -17,7 +17,7 @@ class FabricatorTest extends CIUnitTestCase
 		'name'       => 'name',
 		'email'      => 'email',
 		'country'    => 'country',
-		'deleted_at' => 'datetime',
+		'deleted_at' => 'dateTime',
 	];
 
 	//--------------------------------------------------------------------
@@ -180,7 +180,7 @@ class FabricatorTest extends CIUnitTestCase
 		$field     = 'created_at';
 		$formatter = $method($field);
 
-		$this->assertEquals($fabricator->getModel()->dateFormat, $formatter);
+		$this->assertEquals('dateTime', $formatter);
 	}
 
 	public function testGuessFormattersPrimaryReturnsNumberBetween()
@@ -264,7 +264,7 @@ class FabricatorTest extends CIUnitTestCase
 
 	public function testMakeObjectReturnsModelReturnType()
 	{
-		$fabricator = new Fabricator(EntityModel::class, $this->formatters);
+		$fabricator = new Fabricator(EntityModel::class);
 		$expected   = $fabricator->getModel()->returnType;
 
 		$result = $fabricator->makeObject();
@@ -284,7 +284,7 @@ class FabricatorTest extends CIUnitTestCase
 
 	public function testMakeObjectReturnsStdClassForArrayReturnType()
 	{
-		$fabricator = new Fabricator(EventModel::class, $this->formatters);
+		$fabricator = new Fabricator(EventModel::class);
 
 		$result = $fabricator->makeObject();
 
@@ -328,5 +328,27 @@ class FabricatorTest extends CIUnitTestCase
 		$result = $fabricator->makeObject();
 
 		$this->assertEquals($result->name, filter_var($result->name, FILTER_VALIDATE_IP));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMakeReturnsSingleton()
+	{
+		$fabricator = new Fabricator(UserModel::class);
+
+		$result = $fabricator->make();
+
+		$this->assertInstanceOf('stdClass', $result);
+	}
+
+	public function testMakeReturnsExpectedCount()
+	{
+		$fabricator = new Fabricator(UserModel::class);
+
+		$count  = 10;
+		$result = $fabricator->make($count);
+
+		$this->assertIsArray($result);
+		$this->assertCount($count, $result);
 	}
 }
