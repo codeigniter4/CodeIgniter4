@@ -469,12 +469,14 @@ class URI
 	/**
 	 * Returns the value of a specific segment of the URI path.
 	 *
-	 * @param integer $number
+	 * @param integer     $number  Segment number
+	 * @param string|null $default Default value when segment is empty (equal to '')
+	 * @param boolean     $silent  Throw an exception or not
 	 *
-	 * @return string     The value of the segment. If no segment is found,
-	 *                    throws InvalidArgumentError
+	 * @return string|null The value of the segment. If no segment is found,
+	 *                     throws InvalidArgumentError
 	 */
-	public function getSegment(int $number): string
+	public function getSegment(int $number, ?string $default = '', bool $silent = false): ?string
 	{
 		// The segment should treat the array as 1-based for the user
 		// but we still have to deal with a zero-based array.
@@ -482,10 +484,17 @@ class URI
 
 		if ($number > count($this->segments))
 		{
+			if ($silent)
+			{
+				return $default;
+			}
+
 			throw HTTPException::forURISegmentOutOfRange($number);
 		}
 
-		return $this->segments[$number] ?? '';
+		return (isset($this->segments[$number]) && $this->segments[$number] !== '')
+		 ? $this->segments[$number]
+		 : $default;
 	}
 
 	/**

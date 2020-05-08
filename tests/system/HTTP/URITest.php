@@ -65,6 +65,45 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testSegmentOutOfRangeWithDefaultValue()
+	{
+		$this->expectException(HTTPException::class);
+		$url = 'http://abc.com/a123/b/c';
+		$uri = new URI($url);
+		$uri->getSegment(22, 'something');
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSegmentsWithDefaultValue()
+	{
+		$uri = new URI('http://hostname/path/to');
+
+		$this->assertEquals(['path', 'to'], $uri->getSegments());
+		$this->assertEquals('path', $uri->getSegment(1));
+		$this->assertEquals('to', $uri->getSegment(2, 'different'));
+		$this->assertEquals('script', $uri->getSegment(3, 'script'));
+		$this->assertEquals('', $uri->getSegment(3));
+
+		$this->assertEquals(2, $uri->getTotalSegments());
+		$this->assertEquals(['path', 'to'], $uri->getSegments());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSegmentOutOfRangeSilent()
+	{
+		$uri = new URI('http://hostname/path/to/script');
+
+		$this->assertEquals('', $uri->getSegment(22, '', true));
+		$this->assertEquals('something', $uri->getSegment(33, 'something', true));
+
+		$this->assertEquals(3, $uri->getTotalSegments());
+		$this->assertEquals(['path', 'to', 'script'], $uri->getSegments());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testCanCastAsString()
 	{
 		$url = 'http://username:password@hostname:9090/path?arg=value#anchor';

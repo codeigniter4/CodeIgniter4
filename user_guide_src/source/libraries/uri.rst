@@ -234,6 +234,18 @@ what the values of the segments are. The segments start at 1 being the furthest 
 		echo $request->uri->getSegment(2);
 	}
 
+By default, if we want to get a segment number that is not available, the exception ``HTTPException::forURISegmentOutOfRange``
+will be thrown. Therefore, additional parameters for the ``getSegment()`` method are available to allow more convenient work.
+These parameters allow you to return the default value for a segment, even if it's not defined. In a code example below 'foo'
+is now default value if a given segment is not available and the last parameter ``true`` prevents the exception to be thrown. 
+In some situations, you may find it very handy.
+::
+
+	// URI = http://example.com/users/15/profile
+
+	// Prints 'foo'
+	echo $request->uri->getSegment(5, 'foo', true);
+
 You can get a count of the total segments::
 
 	$total = $request->uri->getTotalSegments(); // 3
