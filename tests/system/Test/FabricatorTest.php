@@ -17,7 +17,7 @@ class FabricatorTest extends CIUnitTestCase
 		'name'       => 'name',
 		'email'      => 'email',
 		'country'    => 'country',
-		'deleted_at' => 'dateTime',
+		'deleted_at' => 'date',
 	];
 
 	//--------------------------------------------------------------------
@@ -180,7 +180,7 @@ class FabricatorTest extends CIUnitTestCase
 		$field     = 'created_at';
 		$formatter = $method($field);
 
-		$this->assertEquals('dateTime', $formatter);
+		$this->assertEquals('date', $formatter);
 	}
 
 	public function testGuessFormattersPrimaryReturnsNumberBetween()
@@ -350,5 +350,38 @@ class FabricatorTest extends CIUnitTestCase
 
 		$this->assertIsArray($result);
 		$this->assertCount($count, $result);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testCreateMockReturnsSingleton()
+	{
+		$fabricator = new Fabricator(UserModel::class);
+
+		$result = $fabricator->create(null, true);
+
+		$this->assertInstanceOf('stdClass', $result);
+	}
+
+	public function testCreateMockReturnsExpectedCount()
+	{
+		$fabricator = new Fabricator(UserModel::class);
+
+		$count  = 10;
+		$result = $fabricator->create($count, true);
+
+		$this->assertIsArray($result);
+		$this->assertCount($count, $result);
+	}
+
+	public function testCreateMockSetsDatabaseFields()
+	{
+		$fabricator = new Fabricator(FabricatorModel::class);
+
+		$result = $fabricator->create(null, true);
+
+		$this->assertIsInt($result->id);
+		$this->assertIsInt($result->created_at);
+		$this->assertIsInt($result->deleted_at);
 	}
 }
