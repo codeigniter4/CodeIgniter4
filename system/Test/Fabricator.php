@@ -296,7 +296,20 @@ class Fabricator
 		// Next look for known model fields
 		if (in_array($field, [$this->model->createdField, $this->model->updatedField, $this->model->deletedField]))
 		{
-			return $this->model->dateFormat;
+			switch ($this->model->dateFormat)
+			{
+				case 'datetime':
+					return 'dateTime';
+				break;
+
+				case 'date':
+					return 'date';
+				break;
+
+				case 'int':
+					return 'unixTime';
+				break;
+			}
 		}
 		elseif ($field === $this->model->primaryKey)
 		{
