@@ -9,7 +9,9 @@ class FabricatorModel extends Model
 
 	protected $returnType = 'object';
 
-	protected $useSoftDeletes = false;
+	protected $useSoftDeletes = true;
+
+	protected $useTimestamps = true;
 
 	protected $dateFormat = 'int';
 
