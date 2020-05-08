@@ -482,19 +482,12 @@ class URI
 		// but we still have to deal with a zero-based array.
 		$number -= 1;
 
-		if ($number > count($this->segments))
+		if (! $silent && $number > count($this->segments))
 		{
-			if ($silent)
-			{
-				return $default;
-			}
-
 			throw HTTPException::forURISegmentOutOfRange($number);
 		}
 
-		return (isset($this->segments[$number]) && $this->segments[$number] !== '')
-		 ? $this->segments[$number]
-		 : $default;
+		return $this->segments[$number] ?? $default;
 	}
 
 	/**
