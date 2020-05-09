@@ -104,7 +104,7 @@ class Exceptions
 	{
 		$this->ob_level = ob_get_level();
 
-		$this->viewPath = realpath(trim($config->errorViewPath)) . DIRECTORY_SEPARATOR;
+		$this->viewPath = rtrim($config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;
 
 		$this->config = $config;
 
@@ -241,7 +241,7 @@ class Exceptions
 	{
 		// Production environments should have a custom exception file.
 		$view          = 'production.php';
-		$template_path = realpath(trim($template_path)) . DIRECTORY_SEPARATOR;
+		$template_path = rtrim($template_path, '\\/ ') . DIRECTORY_SEPARATOR;
 
 		if (str_ireplace(['off', 'none', 'no', 'false', 'null'], '', ini_get('display_errors')))
 		{
@@ -275,7 +275,7 @@ class Exceptions
 	{
 		// Determine possible directories of error views
 		$path    = $this->viewPath;
-		$altPath = realpath((new Paths())->viewDirectory) . DIRECTORY_SEPARATOR . 'errors' . DIRECTORY_SEPARATOR;
+		$altPath = rtrim((new Paths())->viewDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'errors' . DIRECTORY_SEPARATOR;
 
 		$path    .= (is_cli() ? 'cli' : 'html') . DIRECTORY_SEPARATOR;
 		$altPath .= (is_cli() ? 'cli' : 'html') . DIRECTORY_SEPARATOR;
