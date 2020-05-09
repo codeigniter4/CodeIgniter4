@@ -341,6 +341,18 @@ class ImageMagickHandler extends BaseHandler
 	//--------------------------------------------------------------------
 
 	/**
+	 * Make the image resource object if needed
+	 *
+	 * @throws \Exception
+	 */
+	protected function ensureResource()
+	{
+		$this->getResourcePath();
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Handler-specific method for overlaying text on an image.
 	 *
 	 * @param string $text
