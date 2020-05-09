@@ -425,4 +425,10 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(10, $this->pager->getCurrentPage());
 	}
 
+	public function testSegmentOutOfBound()
+	{
+		$this->pager->store('default', 10, 1, 10, 1000);
+		$this->assertEquals(1, $this->pager->getCurrentPage());
+	}
+
 }
