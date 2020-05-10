@@ -403,6 +403,48 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(['foo' => 'bar'], $entity->seventh);
 	}
 
+	public function testCastArrayByFill()
+	{
+		$entity = $this->getCastEntity();
+
+		$data = [
+			'seventh' => [
+				1,
+				2,
+				3,
+			],
+		];
+
+		$entity->fill($data);
+
+		// Check if serialiazed
+		$check = $this->getPrivateProperty($entity, 'attributes')['seventh'];
+		$this->assertEquals(serialize([1, 2, 3]), $check);
+
+		// Check if unserialized
+		$this->assertEquals([1, 2, 3], $entity->seventh);
+	}
+
+	public function testCastArrayByConstructor()
+	{
+		$data = [
+			'seventh' => [
+				1,
+				2,
+				3,
+			],
+		];
+
+		$entity = $this->getCastEntity($data);
+
+		// Check if serialiazed
+		$check = $this->getPrivateProperty($entity, 'attributes')['seventh'];
+		$this->assertEquals(serialize([1, 2, 3]), $check);
+
+		// Check if unserialized
+		$this->assertEquals([1, 2, 3], $entity->seventh);
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testCastNullable()
@@ -447,6 +489,47 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('["Sun","Mon","Tue"]', $check);
 
 		$this->assertEquals($data, $entity->eleventh);
+	}
+
+	public function testCastAsJsonByFill()
+	{
+		$entity = $this->getCastEntity();
+		$data   = [
+			'eleventh' => [
+				1,
+				2,
+				3,
+			],
+		];
+
+		$entity->fill($data);
+
+		// Check if serialiazed
+		$check = $this->getPrivateProperty($entity, 'attributes')['eleventh'];
+		$this->assertEquals(json_encode([1, 2, 3]), $check);
+
+		// Check if unserialized
+		$this->assertEquals([1, 2, 3], $entity->eleventh);
+	}
+
+	public function testCastAsJsonByConstructor()
+	{
+		$data = [
+			'eleventh' => [
+				1,
+				2,
+				3,
+			],
+		];
+
+		$entity = $this->getCastEntity($data);
+
+		// Check if serialiazed
+		$check = $this->getPrivateProperty($entity, 'attributes')['eleventh'];
+		$this->assertEquals(json_encode([1, 2, 3]), $check);
+
+		// Check if unserialized
+		$this->assertEquals([1, 2, 3], $entity->eleventh);
 	}
 
 	public function testCastAsJSONErrorDepth()
@@ -789,9 +872,9 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		};
 	}
 
-	protected function getCastEntity()
+	protected function getCastEntity($data = null)
 	{
-		return new class extends Entity
+		return new class($data) extends Entity
 		{
 			protected $attributes = [
 				'first'    => null,
