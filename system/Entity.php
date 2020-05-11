@@ -124,18 +124,7 @@ class Entity implements \JsonSerializable
 
 		foreach ($data as $key => $value)
 		{
-			$key = $this->mapProperty($key);
-
-			$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
-
-			if (method_exists($this, $method))
-			{
-				$this->$method($value);
-			}
-			else
-			{
-				$this->attributes[$key] = $value;
-			}
+			$this->$key = $value;
 		}
 
 		return $this;
