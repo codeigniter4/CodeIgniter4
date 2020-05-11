@@ -285,6 +285,66 @@ class RulesTest extends CIDatabaseTestCase
 				['foo' => 0.0],
 				true,
 			],
+			[
+				['foo' => 'permit_empty|required_with[bar]'],
+				['foo' => ''],
+				true,
+			],
+			[
+				['foo' => 'permit_empty|required_with[bar]'],
+				['foo' => 0],
+				true,
+			],
+			[
+				[
+					'foo' => 'permit_empty|required_with[bar]',
+				],
+				[
+					'foo' => 0.0,
+					'bar' => 1,
+				],
+				true,
+			],
+			[
+				[
+					'foo' => 'permit_empty|required_with[bar]',
+				],
+				[
+					'foo' => '',
+					'bar' => 1,
+				],
+				false,
+			],
+			[
+				['foo' => 'permit_empty|required_without[bar]'],
+				['foo' => ''],
+				false,
+			],
+			[
+				['foo' => 'permit_empty|required_without[bar]'],
+				['foo' => 0],
+				true,
+			],
+			[
+				[
+					'foo' => 'permit_empty|required_without[bar]',
+				],
+				[
+					'foo' => 0.0,
+					'bar' => 1,
+				],
+				true,
+			],
+			[
+				[
+					'foo' => 'permit_empty|required_without[bar]',
+				],
+				[
+					'foo' => '',
+					'bar' => 1,
+				],
+				true,
+			],
 		];
 	}
 
