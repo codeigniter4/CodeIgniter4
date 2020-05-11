@@ -95,51 +95,15 @@ final class InflectorHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testCounted()
 	{
 		$triplets = [
-			[
-				3,
-				'cat',
-				'3 cats',
-			],
-			[
-				1,
-				'cat',
-				'1 cat',
-			],
-			[
-				0,
-				'cat',
-				'0 cats',
-			],
-			[
-				3,
-				'cats',
-				'3 cats',
-			],
-			[
-				1,
-				'cats',
-				'1 cat',
-			],
-			[
-				0,
-				'cats',
-				'0 cats',
-			],
-			[
-				3,
-				'fish',
-				'3 fish',
-			],
-			[
-				1,
-				'fish',
-				'1 fish',
-			],
-			[
-				0,
-				'fish',
-				'0 fish',
-			],
+			[3, 'cat', '3 cats'],
+			[1, 'cat', '1 cat'],
+			[0, 'cat', '0 cats'],
+			[3, 'cats', '3 cats'],
+			[1, 'cats', '1 cat'],
+			[0, 'cats', '0 cats'],
+			[3, 'fish', '3 fish'],
+			[1, 'fish', '1 fish'],
+			[0, 'fish', '0 fish'],
 		];
 
 		foreach ($triplets as $triplet)
