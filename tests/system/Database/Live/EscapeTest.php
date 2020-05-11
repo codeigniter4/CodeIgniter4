@@ -35,7 +35,7 @@ class EscapeTest extends CIDatabaseTestCase
 	public function testEscape()
 	{
 		$expected = "SELECT * FROM brands WHERE name = 'O" . $this->char . "'Doules'";
-		$sql      = "SELECT * FROM brands WHERE name = " . $this->db->escape("O'Doules");
+		$sql      = 'SELECT * FROM brands WHERE name = ' . $this->db->escape("O'Doules");
 
 		$this->assertEquals($expected, $sql);
 	}
@@ -55,7 +55,7 @@ class EscapeTest extends CIDatabaseTestCase
 	public function testEscapeLikeString()
 	{
 		$expected = "SELECT * FROM brands WHERE column LIKE '%10!% more%' ESCAPE '!'";
-		$sql      = "SELECT * FROM brands WHERE column LIKE '%" . $this->db->escapeLikeString("10% more") . "%' ESCAPE '!'";
+		$sql      = "SELECT * FROM brands WHERE column LIKE '%" . $this->db->escapeLikeString('10% more') . "%' ESCAPE '!'";
 
 		$this->assertEquals($expected, $sql);
 	}
@@ -67,7 +67,7 @@ class EscapeTest extends CIDatabaseTestCase
 		if ($this->db->DBDriver === 'MySQLi')
 		{
 			$expected = "SHOW COLUMNS FROM brands WHERE column LIKE 'wild\_chars%'";
-			$sql      = "SHOW COLUMNS FROM brands WHERE column LIKE '". $this->db->escapeLikeStringDirect("wild_chars") . "%'";
+			$sql      = "SHOW COLUMNS FROM brands WHERE column LIKE '" . $this->db->escapeLikeStringDirect('wild_chars') . "%'";
 
 			$this->assertEquals($expected, $sql);
 		}
