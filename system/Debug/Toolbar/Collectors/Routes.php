@@ -134,8 +134,8 @@ class Routes extends BaseCollector
 		/*
 		* Defined Routes
 		*/
-		$routes    = [];
-		$methods    = [
+		$routes  = [];
+		$methods = [
 			'get',
 			'head',
 			'post',
@@ -158,8 +158,8 @@ class Routes extends BaseCollector
 				if (is_string($handler))
 				{
 					$routes[] = [
-						'method' => strtoupper($method),
-						'route' => $route,
+						'method'  => strtoupper($method),
+						'route'   => $route,
 						'handler' => $handler,
 					];
 				}

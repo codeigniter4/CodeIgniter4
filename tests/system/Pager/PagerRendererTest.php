@@ -461,7 +461,7 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 			'uri'         => $this->uri,
 			'pageCount'   => 5,
 			'currentPage' => 1,
-			'total'       => 100
+			'total'       => 100,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -478,7 +478,7 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 			'uri'         => $this->uri,
 			'pageCount'   => 5,
 			'currentPage' => 5,
-			'total'       => 100
+			'total'       => 100,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -497,7 +497,7 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 			'uri'         => $uri,
 			'pageCount'   => 10,
 			'currentPage' => 3,
-			'total'       => 100
+			'total'       => 100,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -517,7 +517,7 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 			'uri'         => $uri,
 			'pageCount'   => 10,
 			'currentPage' => 3,
-			'total'       => 100
+			'total'       => 100,
 		];
 
 		$pager = new PagerRenderer($details);

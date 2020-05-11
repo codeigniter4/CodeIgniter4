@@ -58,11 +58,11 @@ class ParserFilterTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
-		$today_dash = date('Y-m-d');
-		$today_dot = date('Y.m.d');
-		$today_space = date('Y m d');
-		$today_colon = date('Y:m:d');
-		$today_slash = date('Y/m/d');
+		$today_dash      = date('Y-m-d');
+		$today_dot       = date('Y.m.d');
+		$today_space     = date('Y m d');
+		$today_colon     = date('Y:m:d');
+		$today_slash     = date('Y/m/d');
 		$today_backslash = date('Y\\\m\\\d');
 
 		$data = [
