@@ -149,26 +149,7 @@ class Language
 			$parsedLine,
 		] = $this->parseLine($line, $this->locale);
 
-		foreach (explode('.', $parsedLine) as $row)
-		{
-			if (! isset($current))
-			{
-				$current = $this->language[$this->locale][$file] ?? null;
-			}
-
-			$output = $current[$row] ?? null;
-			if (is_array($output))
-			{
-				$current = $output;
-			}
-		}
-
-		if ($output === null)
-		{
-			$row    = current(explode('.', $parsedLine));
-			$key    = substr($parsedLine, strlen($row) + 1);
-			$output = $this->language[$this->locale][$file][$row][$key] ?? null;
-		}
+		$output = $this->getTranslationOutput($this->locale, $file, $parsedLine);
 
 		if ($output === null && strpos($this->locale, '-'))
 		{
@@ -179,14 +160,17 @@ class Language
 				$parsedLine,
 			] = $this->parseLine($line, $locale);
 
-			$output = $this->language[$locale][$file][$parsedLine] ?? null;
+			$output = $this->getTranslationOutput($locale, $file, $parsedLine);
 		}
 
 		// if still not found, try English
-		if (empty($output))
+		if ($output === null)
 		{
-			$this->parseLine($line, 'en');
-			$output = $this->language['en'][$file][$parsedLine] ?? null;
+			[
+				$file,
+				$parsedLine,
+			]       = $this->parseLine($line, 'en');
+			$output = $this->getTranslationOutput('en', $file, $parsedLine);
 		}
 
 		$output = $output ?? $line;
@@ -200,6 +184,42 @@ class Language
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * @return array|string|null
+	 */
+	private function getTranslationOutput(string $locale, string $file, string $parsedLine)
+	{
+		$output = $this->language[$locale][$file][$parsedLine] ?? null;
+		if ($output !== null)
+		{
+			return $output;
+		}
+
+		foreach (explode('.', $parsedLine) as $row)
+		{
+			if (! isset($current))
+			{
+				$current = $this->language[$locale][$file] ?? null;
+			}
+
+			$output = $current[$row] ?? null;
+			if (is_array($output))
+			{
+				$current = $output;
+			}
+		}
+
+		if ($output !== null)
+		{
+			return $output;
+		}
+
+		$row = current(explode('.', $parsedLine));
+		$key = substr($parsedLine, strlen($row) + 1);
+
+		return $this->language[$locale][$file][$row][$key] ?? null;
+	}
 
 	/**
 	 * Parses the language string which should include the
