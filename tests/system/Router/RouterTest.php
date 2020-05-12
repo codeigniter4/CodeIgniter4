@@ -520,4 +520,15 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		];
 		$this->assertEquals($expected, $router->params());
 	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2965
+	 */
+	public function testAutoRouteMethodEmpty()
+	{
+		$router = new Router($this->collection, $this->request);
+		$router->handle('Home/');
+		$this->assertEquals('Home', $router->controllerName());
+		$this->assertEquals('index', $router->methodName());
+	}
 }
