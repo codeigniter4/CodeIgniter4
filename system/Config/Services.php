@@ -760,7 +760,7 @@ class Services extends BaseService
 		$logger = static::logger();
 
 		$driverName = $config->sessionDriver;
-		$driver     = new $driverName($config, static::request()->getIpAddress());
+		$driver     = new $driverName($config, static::request()->getIPAddress());
 		$driver->setLogger($logger);
 
 		$session = new Session($driver, $config);
