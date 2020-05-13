@@ -76,19 +76,9 @@ class DotEnv
 	 */
 	public function load(): bool
 	{
-		$vars = $this->parse();
+		$loaded = $this->parse();
 
-		if ($vars === null)
-		{
-			return false;
-		}
-
-		foreach ($vars as $name => $value)
-		{
-			$this->setVariable($name, $value);
-		}
-
-		return true; // for success
+		return $loaded; // for success
 	}
 
 	//--------------------------------------------------------------------
@@ -96,14 +86,14 @@ class DotEnv
 	/**
 	 * Parse the .env file into an array of key => value
 	 *
-	 * @return array|null
+	 * @return boolean
 	 */
-	public function parse(): ?array
+	public function parse(): bool
 	{
 		// We don't want to enforce the presence of a .env file, they should be optional.
 		if (! is_file($this->path))
 		{
-			return null;
+			return false;
 		}
 
 		// Ensure the file is readable
@@ -112,9 +102,9 @@ class DotEnv
 			throw new \InvalidArgumentException("The .env file is not readable: {$this->path}");
 		}
 
-		$vars = [];
-
 		$lines = file($this->path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+		
+		$parsed = false;
 
 		foreach ($lines as $line)
 		{
@@ -127,12 +117,13 @@ class DotEnv
 			// If there is an equal sign, then we know we are assigning a variable.
 			if (strpos($line, '=') !== false)
 			{
+				$parsed = true;
 				list($name, $value) = $this->normaliseVariable($line);
-				$vars[$name]        = $value;
+				$this->setVariable($name, $value);
 			}
 		}
-
-		return $vars;
+		
+		return $parsed;
 	}
 
 	//--------------------------------------------------------------------
