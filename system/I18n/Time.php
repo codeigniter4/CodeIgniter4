@@ -780,7 +780,8 @@ class Time extends DateTime
 	 */
 	public function setTimezone($timezone)
 	{
-		return Time::parse($this->toDateTimeString(), $timezone, $this->locale);
+		$timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
+		return Time::instance($this->toDateTime()->setTimezone($timezone), $this->locale);
 	}
 
 	/**

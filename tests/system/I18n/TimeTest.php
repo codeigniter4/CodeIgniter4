@@ -974,6 +974,14 @@ class TimeTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Just now', $time->humanize());
 	}
 
+	public function testSetTimezoneDate()
+	{
+		$time  = Time::parse('13 May 2020 10:00', 'GMT');
+		$time2 = $time->setTimezone('GMT+8');
+		$this->assertEquals('2020-05-13 10:00:00', $time->toDateTimeString());
+		$this->assertEquals('2020-05-13 18:00:00', $time2->toDateTimeString());
+	}
+
 	//--------------------------------------------------------------------
 	// Missing tests
 
