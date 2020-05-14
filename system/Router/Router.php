@@ -534,7 +534,7 @@ class Router implements RouterInterface
 		// has already been set.
 		if (! empty($segments))
 		{
-			$this->method = array_shift($segments);
+			$this->method = array_shift($segments) ?: $this->method;
 		}
 
 		if (! empty($segments))
