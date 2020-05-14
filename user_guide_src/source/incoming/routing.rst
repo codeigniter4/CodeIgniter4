@@ -97,7 +97,7 @@ and the “productLookup” method::
 A URL with “product” as the first segment, and a number in the second will be remapped to the “\Catalog” class
 and the “productLookupByID” method passing in the match as a variable to the method::
 
-    $routes->add('product/(:num)', 'Catalog::productLookupByID/$1';
+    $routes->add('product/(:num)', 'Catalog::productLookupByID/$1');
 
 .. important:: While the ``add()`` method is convenient, it is recommended to always use the HTTP-verb-based
     routes, described below, as it is more secure. It will also provide a slight performance increase, since
