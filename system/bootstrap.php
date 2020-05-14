@@ -118,12 +118,14 @@ require_once SYSTEMPATH . 'Common.php';
 
 if (! class_exists(Config\Autoload::class, false))
 {
+	require_once SYSTEMPATH . 'Config/AutoloadConfig.php';
 	require_once APPPATH . 'Config/Autoload.php';
 	require_once APPPATH . 'Config/Modules.php';
 }
 
 require_once SYSTEMPATH . 'Autoloader/Autoloader.php';
 require_once SYSTEMPATH . 'Config/BaseService.php';
+require_once SYSTEMPATH . 'Config/Services.php';
 require_once APPPATH . 'Config/Services.php';
 
 // Use Config\Services as CodeIgniter\Services
