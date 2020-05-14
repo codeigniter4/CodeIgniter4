@@ -252,6 +252,20 @@ class BaseBuilder
 	 */
 	protected $testMode = false;
 
+	/**
+	 * Tables relation types
+	 *
+	 * @var array
+	 */
+	protected $joinTypes = [
+		'LEFT',
+		'RIGHT',
+		'OUTER',
+		'INNER',
+		'LEFT OUTER',
+		'RIGHT OUTER',
+	];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -623,7 +637,7 @@ class BaseBuilder
 		{
 			$type = strtoupper(trim($type));
 
-			if (! in_array($type, ['LEFT', 'RIGHT', 'OUTER', 'INNER', 'LEFT OUTER', 'RIGHT OUTER'], true))
+			if (! in_array($type, $this->joinTypes, true))
 			{
 				$type = '';
 			}
