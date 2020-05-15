@@ -260,5 +260,5 @@ that will prevent throwing exceptions.
 	// Disable throwing exceptions
 	$uri->setSilent();
 
-	// Enable throwing exceptions
+	// Enable throwing exceptions (default)
 	$uri->setSilent(false);
