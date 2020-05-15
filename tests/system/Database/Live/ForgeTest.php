@@ -165,6 +165,8 @@ class ForgeTest extends CIDatabaseTestCase
 		{
 			$this->assertEquals(strtolower($fieldsData[0]->type), 'integer');
 		}
+
+		$this->forge->dropTable('forge_test_table', true);
 	}
 
 	public function testCreateTableWithAttributes()
