@@ -258,7 +258,7 @@ that will prevent throwing exceptions.
 ::
 
 	// Disable throwing exceptions
-	$request->setSilent();
+	$uri->setSilent();
 
 	// Enable throwing exceptions
-	$request->setSilent(false);
+	$uri->setSilent(false);
