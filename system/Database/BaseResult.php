@@ -167,11 +167,11 @@ abstract class BaseResult implements ResultInterface
 		$_data = null;
 		if (($c = count($this->resultArray)) > 0)
 		{
-			$_data = 'result_array';
+			$_data = 'resultArray';
 		}
 		elseif (($c = count($this->resultObject)) > 0)
 		{
-			$_data = 'result_object';
+			$_data = 'resultObject';
 		}
 
 		if ($_data !== null)
