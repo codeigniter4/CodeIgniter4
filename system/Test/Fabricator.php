@@ -517,7 +517,8 @@ class Fabricator
 			case 'date':
 				$datetime = date('Y-m-d');
 			default:
-				$datetime = time();                        }
+				$datetime = time();
+		}
 
 		// Determine which fields we will need
 		$fields = [];
@@ -530,7 +531,15 @@ class Fabricator
 
 		if ($this->model->useSoftDeletes)
 		{
-			$fields[$this->model->deletedField] = $datetime;
+			// Make a 20% chance of returning a deleted item
+			if (rand(1, 5) === 3)
+			{
+				$fields[$this->model->deletedField] = $datetime;
+			}
+			else
+			{
+				$fields[$this->model->deletedField] = null;
+			}
 		}
 
 		// Iterate over new entities and add the necessary fields
