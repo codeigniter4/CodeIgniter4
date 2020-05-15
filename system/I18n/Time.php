@@ -773,7 +773,7 @@ class Time extends DateTime
 	/**
 	 * Returns a new instance with the revised timezone.
 	 *
-	 * @param \DateTimeZone $timezone
+	 * @param string|\DateTimeZone $timezone
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 * @throws \Exception
