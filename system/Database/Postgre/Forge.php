@@ -205,6 +205,10 @@ class Forge extends \CodeIgniter\Database\Forge
 				$attributes['TYPE']     = 'INTEGER';
 				$attributes['UNSIGNED'] = false;
 				break;
+			case 'BIGINT':
+				$attributes['TYPE']     = 'BIGINT';
+				$attributes['UNSIGNED'] = false;
+				break;
 			case 'DATETIME':
 				$attributes['TYPE'] = 'TIMESTAMP';
 				break;
@@ -227,7 +231,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	{
 		if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true)
 		{
-			$field['type'] = $field['type'] === 'NUMERIC' ? 'BIGSERIAL' : 'SERIAL';
+			$field['type'] = $field['type'] === 'BIGINT' ? 'BIGSERIAL' : 'SERIAL';
 		}
 	}
 
