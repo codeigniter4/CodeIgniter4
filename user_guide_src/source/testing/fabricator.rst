@@ -143,3 +143,56 @@ the object with extra database fields above without actually touching the databa
 
     $this->assertIsNumeric($user->id);
     $this->dontSeeInDatabase('user', ['id' => $user->id]);
+
+Specifying Test Data
+====================
+
+Generated data is great, but sometimes you may want to supply a specific field for a test without
+compromising your formatters configuration. Rather then creating a new fabricator for each variant
+you can use ``setOverrides()`` to specify the value for any fields::
+
+    $fabricator->setOverrides(['first' => 'Bobby']);
+    $bobbyUser = $fabricator->make();
+
+Now any data generated with ``make()`` or ``create()`` will always use "Bobby" for the ``first`` field:
+
+    array(
+        'first'  => "Bobby",
+        'email'  => "latta.kindel@company.org",
+        'phone'  => "251-806-2169",
+        'avatar' => "http://lorempixel.com/800/400/",
+        'login'  => null,
+    )
+
+    array(
+        'first'  => "Bobby",
+        'email'  => "melissa.strike@fabricon.us",
+        'phone'  => "525-214-2656 x23546",
+        'avatar' => "http://lorempixel.com/800/400/",
+        'login'  => null,
+    )
+
+``setOverrides()`` can take a second parameter to indicate whether this should be a persistent
+override (default) or only for a single action::
+
+    $fabricator->setOverrides(['first' => 'Bobby'], false);
+    $bobbyUser = $fabricator->make();
+    $bobbyUser = $fabricator->make();
+
+Notice after the first return the fabricator stops using the overrides::
+
+    array(
+        'first'  => "Bobby",
+        'email'  => "belingadon142@example.org",
+        'phone'  => "741-857-1933 x1351",
+        'avatar' => "http://lorempixel.com/800/400/",
+        'login'  => null,
+    )
+
+    array(
+        'first'  => "Hans",
+        'email'  => "hoppifur@metraxalon.com",
+        'phone'  => "487-235-7006",
+        'avatar' => "http://lorempixel.com/800/400/",
+        'login'  => null,
+    )
