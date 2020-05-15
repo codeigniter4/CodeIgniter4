@@ -773,14 +773,15 @@ class Time extends DateTime
 	/**
 	 * Returns a new instance with the revised timezone.
 	 *
-	 * @param \DateTimeZone $timezone
+	 * @param string|\DateTimeZone $timezone
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 * @throws \Exception
 	 */
 	public function setTimezone($timezone)
 	{
-		return Time::parse($this->toDateTimeString(), $timezone, $this->locale);
+		$timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
+		return Time::instance($this->toDateTime()->setTimezone($timezone), $this->locale);
 	}
 
 	/**
