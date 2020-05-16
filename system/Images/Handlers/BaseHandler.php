@@ -533,15 +533,15 @@ abstract class BaseHandler implements ImageHandlerInterface
 				return $this->rotate(180)
 								->flip('horizontal');
 			case 5:
-				return $this->rotate(270)
-								->flip('horizontal');
-			case 6:
-				return $this->rotate(270);
-			case 7:
 				return $this->rotate(90)
 								->flip('horizontal');
-			case 8:
+			case 6:
 				return $this->rotate(90);
+			case 7:
+				return $this->rotate(270)
+								->flip('horizontal');
+			case 8:
+				return $this->rotate(270);
 			default:
 				return $this;
 		}
