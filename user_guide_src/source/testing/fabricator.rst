@@ -173,9 +173,9 @@ Now any data generated with ``make()`` or ``create()`` will always use "Bobby" f
     )
 
 ``setOverrides()`` can take a second parameter to indicate whether this should be a persistent
-override (default) or only for a single action::
+override or only for a single action::
 
-    $fabricator->setOverrides(['first' => 'Bobby'], false);
+    $fabricator->setOverrides(['first' => 'Bobby'], $persist = false);
     $bobbyUser = $fabricator->make();
     $bobbyUser = $fabricator->make();
 
@@ -196,3 +196,5 @@ Notice after the first return the fabricator stops using the overrides::
         'avatar' => "http://lorempixel.com/800/400/",
         'login'  => null,
     )
+
+If no second parameter is supplied then passed values will persist by default.
