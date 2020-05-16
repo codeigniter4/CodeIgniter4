@@ -90,7 +90,7 @@ class Fabricator
 	 *
 	 * @var array|null
 	 */
-	protected $tmpOverrides;
+	protected $tempOverrides;
 
 	/**
 	 * Default formatter to use when nothing is detected
@@ -145,7 +145,7 @@ class Fabricator
 	{
 		$this->setFormatters();
 
-		$this->overrides = $this->tmpOverrides = [];
+		$this->overrides = $this->tempOverrides = [];
 		$this->locale    = config('App')->defaultLocale;
 		$this->faker     = Factory::create($this->locale);
 
@@ -187,15 +187,15 @@ class Fabricator
 	//--------------------------------------------------------------------
 
 	/**
-	 * Return and reset tmpOverrides
+	 * Return and reset tempOverrides
 	 *
 	 * @return array
 	 */
 	public function getOverrides(): array
 	{
-		$overrides = $this->tmpOverrides ?? $this->overrides;
+		$overrides = $this->tempOverrides ?? $this->overrides;
 
-		$this->tmpOverrides = $this->overrides;
+		$this->tempOverrides = $this->overrides;
 
 		return $overrides;
 	}
@@ -215,7 +215,7 @@ class Fabricator
 			$this->overrides = $overrides;
 		}
 
-		$this->tmpOverrides = $overrides;
+		$this->tempOverrides = $overrides;
 
 		return $this;
 	}
