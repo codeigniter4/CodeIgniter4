@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Test;
 
+use CodeIgniter\Database\ModelFactory;
 use CodeIgniter\Test\CIUnitTestCase;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
@@ -69,6 +70,16 @@ class FabricatorTest extends CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testModelUsesNewInstance()
+	{
+		// Inject the wrong model for UserModel to show it is ignored by Fabricator
+		$mock = new FabricatorModel();
+		ModelFactory::injectMock('Tests\Support\Models\UserModel', $mock);
+
+		$fabricator = new Fabricator(UserModel::class);
+		$this->assertInstanceOf(UserModel::class, $fabricator->getModel());
+	}
 
 	public function testGetModelReturnsModel()
 	{

@@ -114,7 +114,8 @@ class Fabricator
 	{
 		if (is_string($model))
 		{
-			$model = model($model);
+			// Create a new model instance
+			$model = model($model, false);
 		}
 
 		$this->model = $model;
