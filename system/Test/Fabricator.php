@@ -531,15 +531,7 @@ class Fabricator
 
 		if ($this->model->useSoftDeletes)
 		{
-			// Make a 20% chance of returning a deleted item
-			if (rand(1, 5) === 3)
-			{
-				$fields[$this->model->deletedField] = $datetime;
-			}
-			else
-			{
-				$fields[$this->model->deletedField] = null;
-			}
+			$fields[$this->model->deletedField] = null;
 		}
 
 		// Iterate over new entities and add the necessary fields
