@@ -248,3 +248,17 @@ Finally, you can retrieve an array of all of the segments::
 		1 => '15',
 		2 => 'profile'
 	]
+
+===========================
+Disable Throwing Exceptions
+===========================
+
+By default, some methods of this class may throw an exception. If you want to disable it, you can set a special flag
+that will prevent throwing exceptions.
+::
+
+	// Disable throwing exceptions
+	$uri->setSilent();
+
+	// Enable throwing exceptions (default)
+	$uri->setSilent(false);
