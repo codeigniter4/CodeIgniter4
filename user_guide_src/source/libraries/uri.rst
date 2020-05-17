@@ -234,6 +234,19 @@ what the values of the segments are. The segments start at 1 being the furthest 
 		echo $request->uri->getSegment(2);
 	}
 
+You can also get the different default value for a given segment. Default value is set by using the second parameter of the ``getSegment()`` method.
+::
+	// URI = http://example.com/users/15/profile
+
+	// will print 'profile'
+	echo $request->uri->getSegment(3, 'foo');
+	// will print 'bar'
+	echo $request->uri->getSegment(4, 'bar');
+	// will throw an exception
+	echo $request->uri->getSegment(5, 'baz');
+	// will print 'baz'
+	echo $request->uri->setSilent()->getSegment(5, 'baz');
+
 You can get a count of the total segments::
 
 	$total = $request->uri->getTotalSegments(); // 3
