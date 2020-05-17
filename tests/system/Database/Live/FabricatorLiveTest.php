@@ -26,6 +26,9 @@ class FabricatorLiveTest extends CIDatabaseTestCase
 
 		$fabricator = new Fabricator(UserModel::class);
 
+		// Some countries violate the 40 character limit so override that
+		$fabricator->setOverrides(['country' => 'France']);
+
 		$result = $fabricator->create($count);
 
 		$this->seeNumRecords($count, 'user', []);
