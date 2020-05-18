@@ -261,9 +261,9 @@ class View implements RendererInterface
 
 		if ($this->debug && (! isset($options['debug']) || $options['debug'] === true))
 		{
-			$toolbarCollectors = config(\Config\Toolbar::class)->collectors;
+			$toolbarConfig = config('toolbar');
 
-			if (in_array(\CodeIgniter\Debug\Toolbar\Collectors\Views::class, $toolbarCollectors))
+			if ($toolbarConfig->enabled && in_array(\CodeIgniter\Debug\Toolbar\Collectors\Views::class, $toolbarConfig->collectors))
 			{
 				// Clean up our path names to make them a little cleaner
 				foreach (['APPPATH', 'SYSTEMPATH', 'ROOTPATH'] as $path)

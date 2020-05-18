@@ -15,11 +15,16 @@ class Filters extends BaseConfig
 	// Always applied before every request
 	public $globals = [
 		'before' => [
+			'toolbar' => [
+				'except' => 'api/*',
+			],
 			//'honeypot'
 			// 'csrf',
 		],
 		'after'  => [
-			'toolbar',
+			'toolbar' => [
+				'except' => 'api/*',
+			],
 			//'honeypot'
 		],
 	];

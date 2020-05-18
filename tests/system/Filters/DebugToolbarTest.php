@@ -23,6 +23,16 @@ class DebugToolbarTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testDebugToolbarFilterExcept()
+	{
+		$data     = [
+			'testString' => 'bar',
+			'bar'        => 'baz',
+		];
+		$expected = '<h1>bar</h1>';
+		$this->assertEquals($expected, view('\Tests\Support\View\Views\simple', $data, []));
+	}
+
 	public function testDebugToolbarFilter()
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
@@ -45,6 +55,18 @@ class DebugToolbarTest extends \CodeIgniter\Test\CIUnitTestCase
 		// nothing should change here, since we are running in the CLI
 		$filter->after($this->request, $this->response);
 		$this->assertEquals($expectedAfter, $this->response);
+	}
+
+	public function testDebugToolbarFilterView()
+	{
+		$filter = new DebugToolbar();
+		$filter->before($this->request);
+		$data     = [
+			'testString' => 'bar',
+			'bar'        => 'baz',
+		];
+		$expected = 'DEBUG-VIEW';
+		$this->assertStringContainsString($expected, view('\Tests\Support\View\Views\simple', $data, []));
 	}
 
 }

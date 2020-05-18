@@ -57,6 +57,7 @@ class DebugToolbar implements FilterInterface
 	 */
 	public function before(RequestInterface $request)
 	{
+		config('toolbar')->enabled = true;
 	}
 
 	//--------------------------------------------------------------------

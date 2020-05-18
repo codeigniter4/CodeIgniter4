@@ -16,6 +16,9 @@ class Toolbar extends BaseConfig
 	| toolbarMaxHistory = Number of history files, 0 for none or -1 for unlimited
 	|
 	*/
+
+	public $enabled = false;
+
 	public $collectors = [
 		\CodeIgniter\Debug\Toolbar\Collectors\Timers::class,
 		\CodeIgniter\Debug\Toolbar\Collectors\Database::class,
