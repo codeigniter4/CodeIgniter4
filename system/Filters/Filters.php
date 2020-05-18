@@ -60,6 +60,11 @@ class Filters
 		'after'  => [],
 	];
 
+	protected $filtersClass = [
+		'before' => [],
+		'after'  => [],
+	];
+
 	/**
 	 * The original config file
 	 *
@@ -138,71 +143,49 @@ class Filters
 	{
 		$this->initialize(strtolower($uri));
 
-		foreach ($this->filters[$position] as $alias => $rules)
+		foreach ($this->filtersClass[$position] as $className)
 		{
-			if (is_numeric($alias) && is_string($rules))
+			$class = new $className();
+
+			if (! $class instanceof FilterInterface)
 			{
-				$alias = $rules;
+				throw FilterException::forIncorrectInterface(get_class($class));
 			}
 
-			if (! array_key_exists($alias, $this->config->aliases))
+			if ($position === 'before')
 			{
-				throw FilterException::forNoAlias($alias);
-			}
+				$result = $class->before($this->request);
 
-			if (is_array($this->config->aliases[$alias]))
-			{
-				$classNames = $this->config->aliases[$alias];
-			}
-			else
-			{
-				$classNames = [$this->config->aliases[$alias]];
-			}
-
-			foreach ($classNames as $className)
-			{
-				$class = new $className();
-
-				if (! $class instanceof FilterInterface)
+				if ($result instanceof RequestInterface)
 				{
-					throw FilterException::forIncorrectInterface(get_class($class));
+					$this->request = $result;
+					continue;
 				}
 
-				if ($position === 'before')
+				// If the response object was sent back,
+				// then send it and quit.
+				if ($result instanceof ResponseInterface)
 				{
-					$result = $class->before($this->request, $this->arguments[$alias] ?? null);
-
-					if ($result instanceof RequestInterface)
-					{
-						$this->request = $result;
-						continue;
-					}
-
-					// If the response object was sent back,
-					// then send it and quit.
-					if ($result instanceof ResponseInterface)
-					{
-						// short circuit - bypass any other filters
-						return $result;
-					}
-
-					// Ignore an empty result
-					if (empty($result))
-					{
-						continue;
-					}
-
+					// short circuit - bypass any other filters
 					return $result;
 				}
-				elseif ($position === 'after')
-				{
-					$result = $class->after($this->request, $this->response);
 
-					if ($result instanceof ResponseInterface)
-					{
-						$this->response = $result;
-						continue;
-					}
+				// Ignore an empty result
+				if (empty($result))
+				{
+					continue;
+				}
+
+				return $result;
+			}
+			elseif ($position === 'after')
+			{
+				$result = $class->after($this->request, $this->response);
+
+				if ($result instanceof ResponseInterface)
+				{
+					$this->response = $result;
+					continue;
 				}
 			}
 		}
@@ -239,6 +222,8 @@ class Filters
 		$this->processGlobals($uri);
 		$this->processMethods();
 		$this->processFilters($uri);
+		$this->processAliasesToClass('before');
+		$this->processAliasesToClass('after');
 
 		$this->initialized = true;
 
@@ -255,6 +240,11 @@ class Filters
 	public function getFilters(): array
 	{
 		return $this->filters;
+	}
+
+	public function getFiltersClass() :array
+	{
+		return $this->filtersClass;
 	}
 
 	/**
@@ -295,10 +285,6 @@ class Filters
 	/**
 	 * Ensures that a specific filter is on and enabled for the current request.
 	 *
-	 * Filters can have "arguments". This is done by placing a colon immediately
-	 * after the filter name, followed by a comma-separated list of arguments that
-	 * are passed to the filter when executed.
-	 *
 	 * @param string $name
 	 * @param string $when
 	 *
@@ -306,19 +292,6 @@ class Filters
 	 */
 	public function enableFilter(string $name, string $when = 'before')
 	{
-		// Get parameters and clean name
-		if (strpos($name, ':') !== false)
-		{
-			list($name, $params) = explode(':', $name);
-
-			$params = explode(',', $params);
-			array_walk($params, function (&$item) {
-				$item = trim($item);
-			});
-
-			$this->arguments[$name] = $params;
-		}
-
 		if (! array_key_exists($name, $this->config->aliases))
 		{
 			throw FilterException::forNoAlias($name);
@@ -329,19 +302,12 @@ class Filters
 			$this->filters[$when][] = $name;
 		}
 
+		if (! in_array($this->config->aliases, $this->filtersClass[$when]))
+		{
+			$this->filtersClass[$when][] = $this->config->aliases[$name];
+		}
+
 		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the arguments for a specified key, or all.
-	 *
-	 * @return mixed
-	 */
-	public function getArguments(string $key = null)
-	{
-		return is_null($key) ? $this->arguments : $this->arguments[$key];
 	}
 
 	//--------------------------------------------------------------------
@@ -463,6 +429,36 @@ class Filters
 				{
 					$this->filters['after'][] = $alias;
 				}
+			}
+		}
+	}
+
+	/**
+	 * filter alias to class
+	 *
+	 * @return type
+	 */
+	protected function processAliasesToClass(string $position)
+	{
+		foreach ($this->filters[$position] as $alias => $rules)
+		{
+			if (is_numeric($alias) && is_string($rules))
+			{
+				$alias = $rules;
+			}
+
+			if (! array_key_exists($alias, $this->config->aliases))
+			{
+				throw FilterException::forNoAlias($alias);
+			}
+
+			if (is_array($this->config->aliases[$alias]))
+			{
+				$this->filtersClass[$position] = array_merge($this->filtersClass[$position], $this->config->aliases[$alias]);
+			}
+			else
+			{
+				$this->filtersClass[$position][] = $this->config->aliases[$alias];
 			}
 		}
 	}
