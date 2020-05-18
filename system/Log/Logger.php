@@ -39,6 +39,7 @@
 
 namespace CodeIgniter\Log;
 
+use CodeIgniter\Debug\Exceptions;
 use CodeIgniter\Log\Exceptions\LogException;
 use Psr\Log\LoggerInterface;
 
@@ -518,8 +519,8 @@ class Logger implements LoggerInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Cleans the paths of filenames by replacing APPPATH, SYSTEMPATH, FCPATH
-	 * with the actual var. i.e.
+	 * Cleans the paths of filenames by replacing APPPATH, SYSTEMPATH, FCPATH,
+	 * and VENDORPATH with the actual var. i.e.
 	 *
 	 *  /var/www/site/app/Controllers/Home.php
 	 *      becomes:
@@ -531,10 +532,7 @@ class Logger implements LoggerInterface
 	 */
 	protected function cleanFileNames(string $file): string
 	{
-		$file = str_replace(APPPATH, 'APPPATH/', $file);
-		$file = str_replace(SYSTEMPATH, 'SYSTEMPATH/', $file);
-
-		return str_replace(FCPATH, 'FCPATH/', $file);
+		return Exceptions::cleanPath($file);
 	}
 
 	//--------------------------------------------------------------------
