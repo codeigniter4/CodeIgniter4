@@ -339,7 +339,7 @@ class Exceptions
 	 *
 	 * @param \Throwable $exception
 	 *
-	 * @return integer[]
+	 * @return array
 	 */
 	protected function determineCodes(Throwable $exception): array
 	{
