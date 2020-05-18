@@ -72,6 +72,22 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$response->assertSee('Hello Mars');
 	}
 
+	public function testCallPostWithBody()
+	{
+		$this->withRoutes([
+			[
+				'post',
+				'home',
+				function () {
+					return 'Hello ' . service('request')->getPost('foo') . '!';
+				},
+			],
+		]);
+		$response = $this->post('home', ['foo' => 'Mars']);
+
+		$response->assertSee('Hello Mars!');
+	}
+
 	public function testCallPut()
 	{
 		$this->withRoutes([
@@ -181,7 +197,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$response->assertEmpty($response->response->getBody());
 	}
 
-	public function testEchoes()
+	public function testEchoesWithParams()
 	{
 		$this->withRoutes([
 			[
@@ -191,8 +207,22 @@ class FeatureTestCaseTest extends FeatureTestCase
 			],
 		]);
 		ob_start();
-		$response = $this->get('home');
-		$response->assertSee('Hello-o-o');
+		$response = $this->get('home', ['foo' => 'bar']);
+		$response->assertSee('Hello-o-o bar');
+	}
+
+	public function testEchoesWithQuery()
+	{
+		$this->withRoutes([
+			[
+				'get',
+				'home',
+				'\Tests\Support\Controllers\Popcorn::canyon',
+			],
+		]);
+		ob_start();
+		$response = $this->get('home?foo=bar');
+		$response->assertSee('Hello-o-o bar');
 	}
 
 	public function testCallZeroAsPathGot404()

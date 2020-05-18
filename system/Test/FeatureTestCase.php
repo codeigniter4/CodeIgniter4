@@ -164,7 +164,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 		$_SESSION                  = [];
 		$_SERVER['REQUEST_METHOD'] = $method;
 
-		$request = $this->setupRequest($method, $path, $params);
+		$request = $this->setupRequest($method, $path);
 		$request = $this->populateGlobals($method, $request, $params);
 
 		// Make sure the RouteCollection knows what method we're using...
@@ -289,16 +289,15 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 *
 	 * @param string      $method
 	 * @param string|null $path
-	 * @param array|null  $params
 	 *
 	 * @return \CodeIgniter\HTTP\IncomingRequest
 	 */
-	protected function setupRequest(string $method, string $path = null, array $params = null): IncomingRequest
+	protected function setupRequest(string $method, string $path = null): IncomingRequest
 	{
 		$config = config(App::class);
 		$uri    = new URI($config->baseURL . '/' . trim($path, '/ '));
 
-		$request      = new IncomingRequest($config, clone($uri), $params, new UserAgent());
+		$request      = new IncomingRequest($config, clone($uri), null, new UserAgent());
 		$request->uri = $uri;
 
 		$request->setMethod($method);
@@ -322,7 +321,13 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 */
 	protected function populateGlobals(string $method, Request $request, array $params = null)
 	{
-		$request->setGlobal('get', $this->getPrivateProperty($request->uri, 'query'));
+		// $params should set the query vars if present,
+		// otherwise set it from the URL.
+		$get = ! empty($params) && $method === 'get'
+			? $params
+			: $this->getPrivateProperty($request->uri, 'query');
+
+		$request->setGlobal('get', $get);
 		if ($method !== 'get')
 		{
 			$request->setGlobal($method, $params);

@@ -166,7 +166,7 @@ class IncomingRequest extends Request
 			$body = file_get_contents('php://input');
 		}
 
-		$this->body      = $body;
+		$this->body      = ! empty($body) ? $body : null;
 		$this->config    = $config;
 		$this->userAgent = $userAgent;
 

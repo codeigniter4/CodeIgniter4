@@ -455,4 +455,12 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($_GET, $this->request->getGetPost());
 	}
 
+	public function testWithFalseBody()
+	{
+		// Use `false` here to simulate file_get_contents returning a false value
+		$request = new IncomingRequest(new App(), new URI(), false, new UserAgent());
+
+		$this->assertTrue($request->getBody() !== false);
+		$this->assertTrue($request->getBody() === null);
+	}
 }
