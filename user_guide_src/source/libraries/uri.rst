@@ -229,31 +229,33 @@ what the values of the segments are. The segments start at 1 being the furthest 
 	// URI = http://example.com/users/15/profile
 
 	// Prints '15'
-	if ($request->uri->getSegment(1) == 'users')
+	if ($uri->getSegment(1) == 'users')
 	{
-		echo $request->uri->getSegment(2);
+		echo $uri->getSegment(2);
 	}
 
-You can also get the different default value for a given segment. Default value is set by using the second parameter of the ``getSegment()`` method.
+You can also set a different default value for a particular segment by using the second parameter of the ``getSegment()`` method. The default is empty string.
 ::
 	// URI = http://example.com/users/15/profile
 
 	// will print 'profile'
-	echo $request->uri->getSegment(3, 'foo');
+	echo $uri->getSegment(3, 'foo');
 	// will print 'bar'
-	echo $request->uri->getSegment(4, 'bar');
+	echo $uri->getSegment(4, 'bar');
 	// will throw an exception
-	echo $request->uri->getSegment(5, 'baz');
+	echo $uri->getSegment(5, 'baz');
 	// will print 'baz'
-	echo $request->uri->setSilent()->getSegment(5, 'baz');
+	echo $uri->setSilent()->getSegment(5, 'baz');
+	// will print '' (empty string)
+	echo $uri->setSilent()->getSegment(5);
 
 You can get a count of the total segments::
 
-	$total = $request->uri->getTotalSegments(); // 3
+	$total = $uri->getTotalSegments(); // 3
 
 Finally, you can retrieve an array of all of the segments::
 
-	$segments = $request->uri->getSegments();
+	$segments = $uri->getSegments();
 
 	// $segments =
 	[

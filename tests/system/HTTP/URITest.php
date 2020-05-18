@@ -105,7 +105,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('', $uri->getSegment(3));
 
 		$this->assertEquals(2, $uri->getTotalSegments());
-		$this->assertEquals(['path', 'to'], $uri->getSegments());
 	}
 
 	//--------------------------------------------------------------------
