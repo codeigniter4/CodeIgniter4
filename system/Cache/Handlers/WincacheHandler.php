@@ -133,7 +133,7 @@ class WincacheHandler implements CacheInterface
 	 *
 	 * @param string $key Cache item name
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
 	public function delete(string $key)
 	{
@@ -192,7 +192,7 @@ class WincacheHandler implements CacheInterface
 	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
 	public function clean()
 	{

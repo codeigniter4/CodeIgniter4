@@ -263,7 +263,7 @@ class MemcachedHandler implements CacheInterface
 	 *
 	 * @param string $key Cache item name
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
 	public function delete(string $key)
 	{
@@ -322,7 +322,7 @@ class MemcachedHandler implements CacheInterface
 	/**
 	 * Will delete all items in the entire cache.
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
 	public function clean()
 	{
