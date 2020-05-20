@@ -249,7 +249,7 @@ class PredisHandler implements CacheInterface
 	 */
 	public function clean()
 	{
-		return $this->redis->flushdb() === 'OK';
+		return $this->redis->flushdb()->getPayload() === 'OK';
 	}
 
 	//--------------------------------------------------------------------
