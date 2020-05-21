@@ -101,19 +101,19 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			throw SessionException::forEmptySavepath();
 		}
-		elseif (preg_match('#(?:tcp://)?([^:?]+)(?:\:(\d+))?(\?.+)?#', $this->savePath, $matches))
+		elseif (\preg_match('#(?:tcp://)?([^:?]+)(?:\:(\d+))?(\?.+)?#', $this->savePath, $matches))
 		{
 			isset($matches[3]) || $matches[3] = ''; // Just to avoid undefined index notices below
 
 			$this->savePath = [
 				'host'     => $matches[1],
 				'port'     => empty($matches[2]) ? null : $matches[2],
-				'password' => preg_match('#auth=([^\s&]+)#', $matches[3], $match) ? $match[1] : null,
-				'database' => preg_match('#database=(\d+)#', $matches[3], $match) ? (int) $match[1] : null,
-				'timeout'  => preg_match('#timeout=(\d+\.\d+)#', $matches[3], $match) ? (float) $match[1] : null,
+				'password' => \preg_match('#auth=([^\s&]+)#', $matches[3], $match) ? $match[1] : null,
+				'database' => \preg_match('#database=(\d+)#', $matches[3], $match) ? (int) $match[1] : null,
+				'timeout'  => \preg_match('#timeout=(\d+\.\d+)#', $matches[3], $match) ? (float) $match[1] : null,
 			];
 
-			preg_match('#prefix=([^\s&]+)#', $matches[3], $match) && $this->keyPrefix = $match[1];
+			\preg_match('#prefix=([^\s&]+)#', $matches[3], $match) && $this->keyPrefix = $match[1];
 		}
 		else
 		{
@@ -185,15 +185,15 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		if (isset($this->redis) && $this->lockSession($sessionID))
 		{
 			// Needed by write() to detect session_regenerate_id() calls
-			if (is_null($this->sessionID))
+			if (\is_null($this->sessionID))
 			{
 				$this->sessionID = $sessionID;
 			}
 
 			$session_data                               = $this->redis->get($this->keyPrefix . $sessionID);
-			is_string($session_data) ? $this->keyExists = true : $session_data = '';
+			\is_string($session_data) ? $this->keyExists = true : $session_data = '';
 
-			$this->fingerprint = md5($session_data);
+			$this->fingerprint = \md5($session_data);
 
 			return $session_data;
 		}
@@ -235,7 +235,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			$this->redis->expire($this->lockKey, 300);
 
-			if ($this->fingerprint !== ($fingerprint = md5($sessionData)) || $this->keyExists === false)
+			if ($this->fingerprint !== ($fingerprint = \md5($sessionData)) || $this->keyExists === false)
 			{
 				if ($this->redis->set($this->keyPrefix . $sessionID, $sessionData, $this->sessionExpiration))
 				{
@@ -363,11 +363,11 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			if (($ttl = $this->redis->ttl($lock_key)) > 0)
 			{
-				sleep(1);
+				\sleep(1);
 				continue;
 			}
 
-			if (! $this->redis->setex($lock_key, 300, time()))
+			if (! $this->redis->setex($lock_key, 300, \time()))
 			{
 				$this->logger->error('Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID);
 				return false;

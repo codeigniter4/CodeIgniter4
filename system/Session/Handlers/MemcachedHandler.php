@@ -100,7 +100,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 
 		if (! empty($this->keyPrefix))
 		{
-			ini_set('memcached.sess_prefix', $this->keyPrefix);
+			\ini_set('memcached.sess_prefix', $this->keyPrefix);
 		}
 
 		$this->sessionExpiration = $config->sessionExpiration;
@@ -130,7 +130,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 			$server_list[] = $server['host'] . ':' . $server['port'];
 		}
 
-		if (! preg_match_all('#,?([^,:]+)\:(\d{1,5})(?:\:(\d+))?#', $this->savePath, $matches, PREG_SET_ORDER)
+		if (! \preg_match_all('#,?([^,:]+)\:(\d{1,5})(?:\:(\d+))?#', $this->savePath, $matches, PREG_SET_ORDER)
 		)
 		{
 			$this->memcached = null;
@@ -142,7 +142,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		foreach ($matches as $match)
 		{
 			// If Memcached already has this server (or if the port is invalid), skip it
-			if (in_array($match[1] . ':' . $match[2], $server_list, true))
+			if (\in_array($match[1] . ':' . $match[2], $server_list, true))
 			{
 				$this->logger->debug('Session: Memcached server pool already has ' . $match[1] . ':' . $match[2]);
 				continue;
@@ -184,13 +184,13 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		if (isset($this->memcached) && $this->lockSession($sessionID))
 		{
 			// Needed by write() to detect session_regenerate_id() calls
-			if (is_null($this->sessionID))
+			if (\is_null($this->sessionID))
 			{
 				$this->sessionID = $sessionID;
 			}
 
 			$session_data      = (string) $this->memcached->get($this->keyPrefix . $sessionID);
-			$this->fingerprint = md5($session_data);
+			$this->fingerprint = \md5($session_data);
 
 			return $session_data;
 		}
@@ -224,15 +224,15 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 				return false;
 			}
 
-			$this->fingerprint = md5('');
+			$this->fingerprint = \md5('');
 			$this->sessionID   = $sessionID;
 		}
 
 		if (isset($this->lockKey))
 		{
-			$this->memcached->replace($this->lockKey, time(), 300);
+			$this->memcached->replace($this->lockKey, \time(), 300);
 
-			if ($this->fingerprint !== ($fingerprint = md5($sessionData)))
+			if ($this->fingerprint !== ($fingerprint = \md5($sessionData)))
 			{
 				if ($this->memcached->set($this->keyPrefix . $sessionID, $sessionData, $this->sessionExpiration))
 				{
@@ -333,7 +333,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		if (isset($this->lockKey))
 		{
-			return $this->memcached->replace($this->lockKey, time(), 300);
+			return $this->memcached->replace($this->lockKey, \time(), 300);
 		}
 
 		// 30 attempts to obtain a lock, in case another request already has it
@@ -344,11 +344,11 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			if ($this->memcached->get($lock_key))
 			{
-				sleep(1);
+				\sleep(1);
 				continue;
 			}
 
-			if (! $this->memcached->set($lock_key, time(), 300))
+			if (! $this->memcached->set($lock_key, \time(), 300))
 			{
 				$this->logger->error('Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID);
 
