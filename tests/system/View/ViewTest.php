@@ -370,4 +370,28 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('<h1>test</h1>', $view->render('simple', null, false));
 	}
 
+	public function testRenderSectionNotExists()
+	{
+		$view    = new View($this->config, $this->viewsDir, $this->loader);
+		$content = $view->renderSection('content');
+
+		$this->assertEquals('', $content);
+	}
+
+	public function testRenderSectionExists()
+	{
+		$view = new View($this->config, $this->viewsDir, $this->loader);
+		(function ($view) {
+			$view->sections = [
+				'content' => [
+					'a',
+					'b',
+				],
+			];
+		})->bindTo($view, View::class)($view);
+
+		$content = $view->renderSection('content');
+		$this->assertEquals('ab', $content);
+	}
+
 }

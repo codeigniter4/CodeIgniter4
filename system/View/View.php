@@ -493,20 +493,21 @@ class View implements RendererInterface
 	 *
 	 * @param string $sectionName
 	 */
-	public function renderSection(string $sectionName)
+	public function renderSection(string $sectionName) : string
 	{
 		if (! isset($this->sections[$sectionName]))
 		{
-			echo '';
-
-			return;
+			return '';
 		}
 
+		$result = '';
 		foreach ($this->sections[$sectionName] as $key => $contents)
 		{
-			echo $contents;
+			$result .= $contents;
 			unset($this->sections[$sectionName][$key]);
 		}
+
+		return $result;
 	}
 
 	//--------------------------------------------------------------------
