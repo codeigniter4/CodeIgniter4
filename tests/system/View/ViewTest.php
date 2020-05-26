@@ -370,10 +370,20 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('<h1>test</h1>', $view->render('simple', null, false));
 	}
 
-	public function testRenderSectionNotExists()
+	public function testRenderSectionNotExistsEchoed()
+	{
+		$view = new View($this->config, $this->viewsDir, $this->loader);
+		ob_start();
+		$view->renderSection('content');
+		$content = ob_get_clean();
+
+		$this->assertEquals('', $content);
+	}
+
+	public function testRenderSectionNotExistsReturnedString()
 	{
 		$view    = new View($this->config, $this->viewsDir, $this->loader);
-		$content = $view->renderSection('content');
+		$content = $view->renderSection('content', false);
 
 		$this->assertEquals('', $content);
 	}
@@ -390,7 +400,26 @@ class ViewTest extends \CodeIgniter\Test\CIUnitTestCase
 			];
 		})->bindTo($view, View::class)($view);
 
-		$content = $view->renderSection('content');
+		ob_start();
+		$view->renderSection('content');
+		$content = ob_get_clean();
+
+		$this->assertEquals('ab', $content);
+	}
+
+	public function testRenderSectionExistsReturnedString()
+	{
+		$view = new View($this->config, $this->viewsDir, $this->loader);
+		(function ($view) {
+			$view->sections = [
+				'content' => [
+					'a',
+					'b',
+				],
+			];
+		})->bindTo($view, View::class)($view);
+
+		$content = $view->renderSection('content', false);
 		$this->assertEquals('ab', $content);
 	}
 

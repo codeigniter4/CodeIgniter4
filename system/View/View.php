@@ -491,12 +491,21 @@ class View implements RendererInterface
 	/**
 	 * Renders a section's contents.
 	 *
-	 * @param string $sectionName
+	 * @param string  $sectionName
+	 * @param boolean $echoed
+	 *
+	 * @return void|string
 	 */
-	public function renderSection(string $sectionName) : string
+	public function renderSection(string $sectionName, bool $echoed = true)
 	{
 		if (! isset($this->sections[$sectionName]))
 		{
+			if ($echoed)
+			{
+				echo '';
+				return;
+			}
+
 			return '';
 		}
 
@@ -505,6 +514,12 @@ class View implements RendererInterface
 		{
 			$result .= $contents;
 			unset($this->sections[$sectionName][$key]);
+		}
+
+		if ($echoed)
+		{
+			echo $result;
+			return;
 		}
 
 		return $result;
