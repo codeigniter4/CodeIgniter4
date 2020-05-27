@@ -239,6 +239,7 @@ class App extends BaseConfig
 	| CSRFTokenName   = The token name
 	| CSRFHeaderName  = The header name
 	| CSRFCookieName  = The cookie name
+	| CSRFCookieSameSite  = The cookie SameSite attribute (none, Lax or Strict)
 	| CSRFExpire      = The number in seconds the token should expire.
 	| CSRFRegenerate  = Regenerate token on every submission
 	| CSRFRedirect    = Redirect to previous page with error on failure
@@ -246,6 +247,7 @@ class App extends BaseConfig
 	public $CSRFTokenName  = 'csrf_test_name';
 	public $CSRFHeaderName = 'X-CSRF-TOKEN';
 	public $CSRFCookieName = 'csrf_cookie_name';
+	public $CSRFCookieSameSite = 'strict';
 	public $CSRFExpire     = 7200;
 	public $CSRFRegenerate = true;
 	public $CSRFRedirect   = true;
