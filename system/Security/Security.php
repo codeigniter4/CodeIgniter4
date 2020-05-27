@@ -93,6 +93,15 @@ class Security
 	 * @var string
 	 */
 	protected $CSRFCookieName = 'CSRFToken';
+	
+	/**
+     	* CSRF Cookie SameSite attribute
+     	*
+     	* SameSite attribute for Cross Site Request Forgery protection cookie.
+     	*
+     	* @var string
+     	*/
+    	protected $CSRFCookieSameSite = 'Strict';
 
 	/**
 	 * CSRF Regenerate
@@ -181,6 +190,7 @@ class Security
 		// Store our CSRF-related settings
 		$this->CSRFExpire     = $config->CSRFExpire;
 		$this->CSRFTokenName  = $config->CSRFTokenName;
+		$this->CSRFCookieSameSite  = $config->CSRFCookieSameSite;
 		$this->CSRFHeaderName = $config->CSRFHeaderName;
 		$this->CSRFCookieName = $config->CSRFCookieName;
 		$this->CSRFRegenerate = $config->CSRFRegenerate;
@@ -283,9 +293,21 @@ class Security
 			return false;
 		}
 
-		setcookie(
-				$this->CSRFCookieName, $this->CSRFHash, $expire, $this->cookiePath, $this->cookieDomain, $secure_cookie, true                // Enforce HTTP only cookie for security
-		);
+		if (PHP_VERSION_ID < 70300) {
+		    setcookie(
+			$this->CSRFCookieName, $this->CSRFHash, $expire, $this->cookiePath . "; samesite=" . $this->CSRFCookieSameSite, $this->cookieDomain, $secure_cookie, true                // Enforce HTTP only cookie for security
+		    );
+		}
+		else {
+		    setcookie($this->CSRFCookieName, $this->CSRFHash, [
+			'expires' => $expire,
+			'path' => $this->cookiePath,
+			'domain' => $this->cookieDomain,
+			'secure' => $secure_cookie,
+			'httponly' => true,         // Enforce HTTP only cookie for security
+			'samesite' => $this->CSRFCookieSameSite,
+		    ]);
+		}
 
 		log_message('info', 'CSRF cookie sent');
 
