@@ -94,7 +94,7 @@ class CLI
 		'black'        => '0;30',
 		'dark_gray'    => '1;30',
 		'blue'         => '0;34',
-		'darkt_blue'   => '0;34',
+		'dark_blue'    => '0;34',
 		'light_blue'   => '1;34',
 		'green'        => '0;32',
 		'light_green'  => '1;32',
