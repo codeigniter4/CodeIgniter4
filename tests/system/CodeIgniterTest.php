@@ -305,16 +305,16 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_SERVER['argv']        = [
 			'index.php',
-			'example',
+			'redirect/named',
 		];
 		$_SERVER['argc']        = 2;
-		$_SERVER['REQUEST_URI'] = '/example';
+		$_SERVER['REQUEST_URI'] = '/redirect/named';
 
 		// Inject mock router.
 		$routes = Services::routes();
 		$routes->add('pages/common', function () {
 		}, ['as' => 'common']);
-		$routes->addRedirect('example', 'common');
+		$routes->addRedirect('redirect/named', 'common');
 
 		$router = Services::router($routes, Services::request());
 		Services::injectMock('router', $router);
@@ -330,16 +330,16 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_SERVER['argv']        = [
 			'index.php',
-			'example',
+			'redirect/uri',
 		];
 		$_SERVER['argc']        = 2;
-		$_SERVER['REQUEST_URI'] = '/example';
+		$_SERVER['REQUEST_URI'] = '/redirect/uri';
 
 		// Inject mock router.
 		$routes = Services::routes();
 		$routes->add('pages/common', function () {
 		});
-		$routes->addRedirect('example', 'pages/common');
+		$routes->addRedirect('redirect/uri', 'pages/common');
 
 		$router = Services::router($routes, Services::request());
 		Services::injectMock('router', $router);
@@ -358,14 +358,14 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_SERVER['argv']        = [
 			'index.php',
-			'example',
+			'redirect/uri/notset',
 		];
 		$_SERVER['argc']        = 2;
-		$_SERVER['REQUEST_URI'] = '/example';
+		$_SERVER['REQUEST_URI'] = '/redirect/uri/notset';
 
 		// Inject mock router.
 		$routes = Services::routes();
-		$routes->addRedirect('example', 'pages/common');
+		$routes->addRedirect('redirect/uri/notset', 'pages/common');
 
 		$router = Services::router($routes, Services::request());
 		Services::injectMock('router', $router);
