@@ -300,4 +300,80 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		$this->assertEquals('https://example.com', $response->getHeader('Location')->getValue());
 	}
+
+	public function testRunRedirectionWithNamed()
+	{
+		$_SERVER['argv']        = [
+			'index.php',
+			'example',
+		];
+		$_SERVER['argc']        = 2;
+		$_SERVER['REQUEST_URI'] = '/example';
+
+		// Inject mock router.
+		$routes = Services::routes();
+		$routes->add('pages/common', function () {
+		}, ['as' => 'common']);
+		$routes->addRedirect('example', 'common');
+
+		$router = Services::router($routes, Services::request());
+		Services::injectMock('router', $router);
+
+		ob_start();
+		$this->codeigniter->useSafeOutput(true)->run();
+		ob_get_clean();
+		$response = $this->getPrivateProperty($this->codeigniter, 'response');
+		$this->assertEquals('302', $response->getStatusCode());
+	}
+
+	public function testRunRedirectionWithURI()
+	{
+		$_SERVER['argv']        = [
+			'index.php',
+			'example',
+		];
+		$_SERVER['argc']        = 2;
+		$_SERVER['REQUEST_URI'] = '/example';
+
+		// Inject mock router.
+		$routes = Services::routes();
+		$routes->add('pages/common', function () {
+		});
+		$routes->addRedirect('example', 'pages/common');
+
+		$router = Services::router($routes, Services::request());
+		Services::injectMock('router', $router);
+
+		ob_start();
+		$this->codeigniter->useSafeOutput(true)->run();
+		ob_get_clean();
+		$response = $this->getPrivateProperty($this->codeigniter, 'response');
+		$this->assertEquals('302', $response->getStatusCode());
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3041
+	 */
+	public function testRunRedirectionWithURINotSet()
+	{
+		$_SERVER['argv']        = [
+			'index.php',
+			'example',
+		];
+		$_SERVER['argc']        = 2;
+		$_SERVER['REQUEST_URI'] = '/example';
+
+		// Inject mock router.
+		$routes = Services::routes();
+		$routes->addRedirect('example', 'pages/common');
+
+		$router = Services::router($routes, Services::request());
+		Services::injectMock('router', $router);
+
+		ob_start();
+		$this->codeigniter->useSafeOutput(true)->run();
+		ob_get_clean();
+		$response = $this->getPrivateProperty($this->codeigniter, 'response');
+		$this->assertEquals('302', $response->getStatusCode());
+	}
 }
