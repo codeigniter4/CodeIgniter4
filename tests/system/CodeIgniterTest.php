@@ -41,6 +41,11 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 	}
 
+	public static function tearDownAfterClass(): void
+	{
+		Services::reset();
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testRunDefaultRoute()
@@ -305,16 +310,16 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_SERVER['argv']        = [
 			'index.php',
-			'redirect/named',
+			'example',
 		];
 		$_SERVER['argc']        = 2;
-		$_SERVER['REQUEST_URI'] = '/redirect/named';
+		$_SERVER['REQUEST_URI'] = '/example';
 
 		// Inject mock router.
 		$routes = Services::routes();
-		$routes->add('pages/common', function () {
-		}, ['as' => 'common']);
-		$routes->addRedirect('redirect/named', 'common');
+		$routes->add('pages/named', function () {
+		}, ['as' => 'name']);
+		$routes->addRedirect('example', 'name');
 
 		$router = Services::router($routes, Services::request());
 		Services::injectMock('router', $router);
@@ -323,23 +328,23 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		ob_get_clean();
 		$response = $this->getPrivateProperty($this->codeigniter, 'response');
-		$this->assertEquals('302', $response->getStatusCode());
+		$this->assertEquals('http://example.com/pages/named', $response->getHeader('Location')->getValue());
 	}
 
 	public function testRunRedirectionWithURI()
 	{
 		$_SERVER['argv']        = [
 			'index.php',
-			'redirect/uri',
+			'example',
 		];
 		$_SERVER['argc']        = 2;
-		$_SERVER['REQUEST_URI'] = '/redirect/uri';
+		$_SERVER['REQUEST_URI'] = '/example';
 
 		// Inject mock router.
 		$routes = Services::routes();
-		$routes->add('pages/common', function () {
+		$routes->add('pages/uri', function () {
 		});
-		$routes->addRedirect('redirect/uri', 'pages/common');
+		$routes->addRedirect('example', 'pages/uri');
 
 		$router = Services::router($routes, Services::request());
 		Services::injectMock('router', $router);
@@ -348,7 +353,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		ob_get_clean();
 		$response = $this->getPrivateProperty($this->codeigniter, 'response');
-		$this->assertEquals('302', $response->getStatusCode());
+		$this->assertEquals('http://example.com/pages/uri', $response->getHeader('Location')->getValue());
 	}
 
 	/**
@@ -358,14 +363,14 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_SERVER['argv']        = [
 			'index.php',
-			'redirect/uri/notset',
+			'example',
 		];
 		$_SERVER['argc']        = 2;
-		$_SERVER['REQUEST_URI'] = '/redirect/uri/notset';
+		$_SERVER['REQUEST_URI'] = '/example';
 
 		// Inject mock router.
 		$routes = Services::routes();
-		$routes->addRedirect('redirect/uri/notset', 'pages/common');
+		$routes->addRedirect('example', 'pages/notset');
 
 		$router = Services::router($routes, Services::request());
 		Services::injectMock('router', $router);
@@ -374,6 +379,6 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->codeigniter->useSafeOutput(true)->run();
 		ob_get_clean();
 		$response = $this->getPrivateProperty($this->codeigniter, 'response');
-		$this->assertEquals('302', $response->getStatusCode());
+		$this->assertEquals('http://example.com/pages/notset', $response->getHeader('Location')->getValue());
 	}
 }
