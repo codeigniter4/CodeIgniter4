@@ -1439,18 +1439,22 @@ class RouteCollection implements RouteCollectionInterface
 			$from = str_ireplace(':' . $tag, $pattern, $from);
 		}
 
-		// If no namespace found, add the default namespace
-		if (is_string($to) && (strpos($to, '\\') === false || strpos($to, '\\') > 0))
+		//If is redirect, No processing
+		if (! isset($options['redirect']))
 		{
-			$namespace = $options['namespace'] ?? $this->defaultNamespace;
-			$to        = trim($namespace, '\\') . '\\' . $to;
-		}
+			// If no namespace found, add the default namespace
+			if (is_string($to) && (strpos($to, '\\') === false || strpos($to, '\\') > 0))
+			{
+				$namespace = $options['namespace'] ?? $this->defaultNamespace;
+				$to        = trim($namespace, '\\') . '\\' . $to;
+			}
 
-		// Always ensure that we escape our namespace so we're not pointing to
-		// \CodeIgniter\Routes\Controller::method.
-		if (is_string($to))
-		{
-			$to = '\\' . ltrim($to, '\\');
+			// Always ensure that we escape our namespace so we're not pointing to
+			// \CodeIgniter\Routes\Controller::method.
+			if (is_string($to))
+			{
+				$to = '\\' . ltrim($to, '\\');
+			}
 		}
 
 		$name = $options['as'] ?? $from;

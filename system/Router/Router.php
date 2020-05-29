@@ -427,7 +427,7 @@ class Router implements RouterInterface
 				// Is this route supposed to redirect to another?
 				if ($this->collection->isRedirect($key))
 				{
-					throw new RedirectException(key($val), $this->collection->getRedirectCode($key));
+					throw new RedirectException(is_array($val) ? key($val) : $val, $this->collection->getRedirectCode($key));
 				}
 				// Store our locale so CodeIgniter object can
 				// assign it to the Request.
