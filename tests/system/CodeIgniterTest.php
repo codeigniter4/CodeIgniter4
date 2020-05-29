@@ -43,8 +43,9 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public static function tearDownAfterClass(): void
 	{
+		//reset routes, router
 		Services::reset();
-		new App();
+		new MockCodeIgniter(new App());
 	}
 
 	//--------------------------------------------------------------------
