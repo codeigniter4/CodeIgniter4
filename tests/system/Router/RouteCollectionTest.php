@@ -969,11 +969,11 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testAddRedirect()
 	{
 		$routes = $this->getCollector();
-
-		$routes->addRedirect('users', 'Users::index', 307);
+		//The second parameter is either the new URI to redirect to, or the name of a named route.
+		$routes->addRedirect('users', 'user/index', 307);
 
 		$expected = [
-			'users' => '\Users::index',
+			'users' => 'user/index',
 		];
 
 		$this->assertEquals($expected, $routes->getRoutes());

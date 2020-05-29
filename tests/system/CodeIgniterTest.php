@@ -44,6 +44,7 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 	public static function tearDownAfterClass(): void
 	{
 		Services::reset();
+		new App();
 	}
 
 	//--------------------------------------------------------------------
