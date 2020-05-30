@@ -66,14 +66,14 @@ class Logger implements LoggerInterface
 	 * @var array
 	 */
 	protected $logLevels = [
-		'emergency' => 1,
-		'alert'     => 2,
-		'critical'  => 3,
-		'error'     => 4,
-		'warning'   => 5,
-		'notice'    => 6,
-		'info'      => 7,
-		'debug'     => 8,
+		'emergency' => 0,
+		'alert'     => 1,
+		'critical'  => 2,
+		'error'     => 3,
+		'warning'   => 4,
+		'notice'    => 5,
+		'info'      => 6,
+		'debug'     => 7,
 	];
 
 	/**
