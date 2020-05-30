@@ -20,7 +20,7 @@ git checkout master
 rm -rf *
 
 # Copy common files
-releasable='app public writable env license.txt spark .gitignore system'
+releasable='app public writable env license.txt spark system'
 for fff in $releasable ; do
     cp -Rf ${SOURCE}/$fff ./
 done
