@@ -96,7 +96,7 @@ Your fork is now up to date. This should be done regularly and, at the least, be
 ## Translations Installation
 
 If you wish to contribute to the system message translations,
-then fork and clone the [translations repository](https://github.com/codeigniter4/translations>) 
+then fork and clone the [translations repository](https://github.com/codeigniter4/translations) 
 separately from the codebase. 
 
 These are two independent repositories!
