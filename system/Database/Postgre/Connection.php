@@ -62,7 +62,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @var string
 	 */
-	public $schema = 'public';
+	public $schema = '';
 
 	/**
 	 * Identifier escape character
