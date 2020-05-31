@@ -1438,7 +1438,9 @@ class Model
 	 */
 	public function validate($data): bool
 	{
-		if ($this->skipValidation === true || empty($this->validationRules) || empty($data))
+		$rules = $this->getValidationRules();
+		
+		if ($this->skipValidation === true || empty($rules) || empty($data))
 		{
 			return true;
 		}
@@ -1449,8 +1451,6 @@ class Model
 		{
 			$data = (array) $data;
 		}
-
-		$rules = $this->validationRules;
 
 		// ValidationRules can be either a string, which is the group name,
 		// or an array of rules.
@@ -1580,6 +1580,13 @@ class Model
 	public function getValidationRules(array $options = []): array
 	{
 		$rules = $this->validationRules;
+		
+		// ValidationRules can be either a string, which is the group name,
+		// or an array of rules.
+		if (is_string($rules))
+		{
+			$rules = $this->validation->loadRuleGroup($rules);
+		}
 
 		if (isset($options['except']))
 		{
