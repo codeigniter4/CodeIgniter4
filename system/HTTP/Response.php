@@ -43,6 +43,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
 use Config\App;
+use Config\ContentSecurityPolicy();
 use Config\Format;
 
 /**
@@ -156,6 +157,13 @@ class Response extends Message implements ResponseInterface
 	protected $statusCode = 200;
 
 	/**
+	 * Response Formatter
+	 *
+	 * @var \Config\Format
+	 */
+	public $formatter;
+
+	/**
 	 * Whether Content Security Policy is being enforced.
 	 *
 	 * @var boolean
@@ -239,8 +247,10 @@ class Response extends Message implements ResponseInterface
 		// Also ensures that a Cache-control header exists.
 		$this->noCache();
 
+		$this->formatter = new Format();
+		
 		// We need CSP object even if not enabled to avoid calls to non existing methods
-		$this->CSP = new ContentSecurityPolicy(new \Config\ContentSecurityPolicy());
+		$this->CSP = new ContentSecurityPolicy(new ContentSecurityPolicy());
 
 		$this->CSPEnabled     = $config->CSPEnabled;
 		$this->cookiePrefix   = $config->cookiePrefix;
@@ -467,11 +477,7 @@ class Response extends Message implements ResponseInterface
 
 		if ($this->bodyFormat !== 'json')
 		{
-			/**
-			 * @var Format $config
-			 */
-			$config    = config(Format::class);
-			$formatter = $config->getFormatter('application/json');
+			$formatter = $this->formatter->get('application/json');
 
 			$body = $formatter->format($body);
 		}
@@ -509,11 +515,7 @@ class Response extends Message implements ResponseInterface
 
 		if ($this->bodyFormat !== 'xml')
 		{
-			/**
-			 * @var Format $config
-			 */
-			$config    = config(Format::class);
-			$formatter = $config->getFormatter('application/xml');
+			$formatter = $this->formatter->get('application/xml');
 
 			$body = $formatter->format($body);
 		}
@@ -542,11 +544,7 @@ class Response extends Message implements ResponseInterface
 		// Nothing much to do for a string...
 		if (! is_string($body) || $format === 'json-unencoded')
 		{
-			/**
-			 * @var Format $config
-			 */
-			$config    = config(Format::class);
-			$formatter = $config->getFormatter($mime);
+			$formatter = $this->formatter->get($mime);
 
 			$body = $formatter->format($body);
 		}
