@@ -386,13 +386,13 @@ trait ResponseTrait
 			return $data;
 		}
 
-		$config = new Format();
+		$formatter = new Format();
 		$format = "application/$this->format";
 
 		// Determine correct response type through content negotiation if not explicitly declared
 		if (empty($this->format) || ! in_array($this->format, ['json', 'xml']))
 		{
-			$format = $this->request->negotiate('media', $config->supportedResponseFormats, false);
+			$format = $this->request->negotiate('media', $formatter->responseFormats;
 		}
 
 		$this->response->setContentType($format);
@@ -401,7 +401,7 @@ trait ResponseTrait
 		if (! isset($this->formatter))
 		{
 			// if no formatter, use the default
-			$this->formatter = $config->getFormatter($format);
+			$this->formatter = $formatter->get($format);
 		}
 
 		if ($format !== 'application/json')
