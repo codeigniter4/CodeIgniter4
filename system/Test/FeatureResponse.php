@@ -389,7 +389,7 @@ class FeatureResponse extends TestCase
 		if (is_array($test))
 		{
 			$config    = new Format();
-			$formatter = $config->getFormatter('application/json');
+			$formatter = $config->get('application/json');
 			$test      = $formatter->format($test);
 		}
 
