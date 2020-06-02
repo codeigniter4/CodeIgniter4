@@ -770,20 +770,18 @@ class Response extends Message implements ResponseInterface
 		{
 			$code = 302;
 		}
-
 		// IIS environment likely? Use 'refresh' for better compatibility
 		if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false)
 		{
 			$method = 'refresh';
 		}
-
 		// override status code for HTTP/1.1 & higher
 		// reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
 		if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $this->getProtocolVersion() >= 1.1)
 		{
 			if ($method !== 'refresh')
 			{
-				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303 : 307;
+				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303 : $code;
 			}
 		}
 

@@ -360,6 +360,56 @@ class CodeIgniterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/pages/notset', $response->getHeader('Location')->getValue());
 	}
 
+	public function testRunRedirectionWithHTTPCode303()
+	{
+		$_SERVER['argv']            = [
+			'index.php',
+			'example',
+		];
+		$_SERVER['argc']            = 2;
+		$_SERVER['REQUEST_URI']     = '/example';
+		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+		$_SERVER['REQUEST_METHOD']  = 'POST';
+
+		// Inject mock router.
+		$routes = Services::routes();
+		$routes->addRedirect('example', 'pages/notset', 301);
+
+		$router = Services::router($routes, Services::request());
+		Services::injectMock('router', $router);
+
+		ob_start();
+		$this->codeigniter->useSafeOutput(true)->run();
+		ob_get_clean();
+		$response = $this->getPrivateProperty($this->codeigniter, 'response');
+		$this->assertEquals('303', $response->getStatusCode());
+	}
+
+	public function testRunRedirectionWithHTTPCode301()
+	{
+		$_SERVER['argv']            = [
+			'index.php',
+			'example',
+		];
+		$_SERVER['argc']            = 2;
+		$_SERVER['REQUEST_URI']     = '/example';
+		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+		$_SERVER['REQUEST_METHOD']  = 'GET';
+
+		// Inject mock router.
+		$routes = Services::routes();
+		$routes->addRedirect('example', 'pages/notset', 301);
+
+		$router = Services::router($routes, Services::request());
+		Services::injectMock('router', $router);
+
+		ob_start();
+		$this->codeigniter->useSafeOutput(true)->run();
+		ob_get_clean();
+		$response = $this->getPrivateProperty($this->codeigniter, 'response');
+		$this->assertEquals('301', $response->getStatusCode());
+	}
+
 	/**
 	 * The method after all test, reset Servces:: config
 	 * Can't use static::tearDownAfterClass. This will cause a buffer exception
