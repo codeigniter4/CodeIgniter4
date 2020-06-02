@@ -783,7 +783,7 @@ class Response extends Message implements ResponseInterface
 		{
 			if ($method !== 'refresh')
 			{
-				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303 : 307;
+				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303 : ($code === 302 ? 307 : $code);
 			}
 		}
 
