@@ -411,6 +411,8 @@ class Router implements RouterInterface
 				? $key
 				: ltrim($key, '/ ');
 
+			$matchedKey = $key;
+
 			// Are we dealing with a locale?
 			if (strpos($key, '{locale}') !== false)
 			{
@@ -418,7 +420,8 @@ class Router implements RouterInterface
 
 				// Replace it with a regex so it
 				// will actually match.
-				$key = str_replace('{locale}', '[^/]+', $key);
+                $key = str_replace('/', '\/', $key);
+				$key = str_replace('{locale}', '[^\/]+', $key);
 			}
 
 			// Does the RegEx match?
@@ -452,11 +455,11 @@ class Router implements RouterInterface
 					$this->params = $matches;
 
 					$this->matchedRoute = [
-						$key,
+						$matchedKey,
 						$val,
 					];
 
-					$this->matchedRouteOptions = $this->collection->getRoutesOptions($key);
+					$this->matchedRouteOptions = $this->collection->getRoutesOptions($matchedKey);
 
 					return true;
 				}
@@ -490,11 +493,11 @@ class Router implements RouterInterface
 				$this->setRequest(explode('/', $val));
 
 				$this->matchedRoute = [
-					$key,
+					$matchedKey,
 					$val,
 				];
 
-				$this->matchedRouteOptions = $this->collection->getRoutesOptions($key);
+				$this->matchedRouteOptions = $this->collection->getRoutesOptions($matchedKey);
 
 				return true;
 			}
