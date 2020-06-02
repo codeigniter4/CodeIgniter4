@@ -373,11 +373,14 @@ abstract class BaseConnection implements ConnectionInterface
 
 		$this->connectTime = microtime(true);
 
-		try {
+		try 
+		{
 			// Connect to the database and set the connection ID
 			$this->connID = $this->connect($this->pConnect);
-		} catch (\Exception $e) {
-			log_message('error', 'Database: '.$e->getMessage());
+		} 
+		catch (\Throwable $e) 
+		{
+			log_message('error', 'connect database error: ' . $e->getMessage());
 		}
 
 		// No connection resource? Check if there is a failover else throw an error
@@ -398,11 +401,14 @@ abstract class BaseConnection implements ConnectionInterface
 						}
 					}
 
-					try {
+					try 
+					{
 						// Try to connect
 						$this->connID = $this->connect($this->pConnect);
-					} catch (\Exception $e) {
-						log_message('error', 'Database: '.$e->getMessage());
+					} 
+					catch (\Throwable $e) 
+					{
+						log_message('error', 'connect database error: '.$e->getMessage());
 					}
 
 					// If a connection is made break the foreach loop
