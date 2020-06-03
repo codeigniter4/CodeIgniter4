@@ -239,7 +239,7 @@ class App extends BaseConfig
 	| CSRFTokenName   = The token name
 	| CSRFHeaderName  = The header name
 	| CSRFCookieName  = The cookie name
-	| CSRFCookieSameSite  = The cookie SameSite attribute (none, Lax or Strict)
+	| CSRFCookieSameSite  = The cookie SameSite attribute (none, lax or strict)
 	| CSRFExpire      = The number in seconds the token should expire.
 	| CSRFRegenerate  = Regenerate token on every submission
 	| CSRFRedirect    = Redirect to previous page with error on failure
