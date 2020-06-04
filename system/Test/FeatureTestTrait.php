@@ -279,6 +279,11 @@ trait FeatureTestTrait
 		$request->setMethod($method);
 		$request->setProtocolVersion('1.1');
 
+		if ($config->forceGlobalSecureRequests)
+		{
+			$_SERVER['HTTPS'] = 'test';
+		}
+
 		return $request;
 	}
 

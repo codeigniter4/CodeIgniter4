@@ -400,7 +400,7 @@ if (! function_exists('force_https'))
 			$response = Services::response(null, true);
 		}
 
-		if (ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure()))
+		if ((ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure())) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'test'))
 		{
 			// @codeCoverageIgnoreStart
 			return;
