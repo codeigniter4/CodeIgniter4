@@ -14,8 +14,9 @@ and more.
 The Test Class
 ==============
 
-Feature testing requires that all of your test classes extend the ``CodeIgniter\Test\FeatureTestCase`` class. Since this
-extends `CIDatabaseTestCase <database.html>`_ you must always ensure that ``parent::setUp()`` and ``parent::tearDown()``
+Feature testing requires that all of your test classes extend the ``CodeIgniter\Test\FeatureTestCase``
+class or use the ``CodeIgniter\Test\FeatureTestTrait``. Since these testing tools extend
+`CIDatabaseTestCase <database.html>`_ you must always ensure that ``parent::setUp()`` and ``parent::tearDown()``
 are called before you take your actions.
 ::
 
