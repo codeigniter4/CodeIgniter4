@@ -198,3 +198,19 @@ Notice after the first return the fabricator stops using the overrides::
     )
 
 If no second parameter is supplied then passed values will persist by default.
+
+Test Helper
+===========
+
+Often all you will need is a one-and-done fake object for testing. The Test Helper provides
+the ``fake($model, $overrides)`` function to do just this::
+
+	helper('test');
+	$user = fake('App\Models\UserModel', ['name' => 'Gerry']);
+
+This is equivalent to::
+	
+    $fabricator = new Fabricator('App\Models\UserModel');
+    $fabricator->setOverrides(['name' => 'Gerry']);
+    $user = $fabricator->create();
+

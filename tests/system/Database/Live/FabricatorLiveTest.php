@@ -34,4 +34,12 @@ class FabricatorLiveTest extends CIDatabaseTestCase
 		$this->seeNumRecords($count, 'user', []);
 	}
 
+	public function testHelperCreates()
+	{
+		helper('test');
+
+		$result = fake(UserModel::class);
+
+		$this->seeInDatabase('user', ['name' => $result->name]);
+	}
 }
