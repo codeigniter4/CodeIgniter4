@@ -128,6 +128,30 @@ class FeatureResponse extends TestCase
 	}
 
 	/**
+	 * Returns the URL set for redirection.
+	 *
+	 * @return string|null
+	 */
+	public function getRedirectUrl(): ?string
+	{
+		if (! $this->isRedirect())
+		{
+			return null;
+		}
+
+		if ($this->response->hasHeader('Location'))
+		{
+			return $this->response->getHeaderLine('Location');
+		}
+		elseif ($this->response->hasHeader('Refresh'))
+		{
+			return str_replace('0;url=', '', $this->response->getHeaderLine('Refresh'));
+		}
+
+		return null;
+	}
+
+	/**
 	 * Asserts that the status is a specific value.
 	 *
 	 * @param integer $code

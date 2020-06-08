@@ -156,6 +156,14 @@ Asserts that the Response is an instance of RedirectResponse.
 
     $this->assertRedirect();
 
+**getRedirectUrl()**
+
+Returns the URL set for a RedirectResponse, or null for failure.
+::
+
+    $url = $result->getRedirectUrl();
+    $this->assertEquals(site_url('foo/bar'), $url);
+
 **assertStatus(int $code)**
 
 Asserts that the HTTP status code returned matches $code.
