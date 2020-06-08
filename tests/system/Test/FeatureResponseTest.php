@@ -122,6 +122,22 @@ class FeatureResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->feature->assertRedirect();
 	}
 
+	public function testGetRedirectUrlReturnsUrl()
+	{
+		$this->getFeatureResponse('<h1>Hello World</h1>');
+		$this->feature->response = new RedirectResponse(new Config\App());
+		$this->feature->response->redirect('foo/bar');
+
+		$this->assertEquals('foo/bar', $this->feature->getRedirectUrl());
+	}
+
+	public function testGetRedirectUrlReturnsNull()
+	{
+		$this->getFeatureResponse('<h1>Hello World</h1>');
+
+		$this->assertNull($this->feature->getRedirectUrl());
+	}
+
 	public function testAssertStatus()
 	{
 		$this->getFeatureResponse('<h1>Hello World</h1>', ['statusCode' => 201]);
