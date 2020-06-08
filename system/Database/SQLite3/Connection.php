@@ -91,7 +91,15 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 		catch (\Exception $e)
 		{
-			throw new DatabaseException('SQLite3 error: ' . $e->getMessage());
+			if (empty($this->failover))
+			{
+				// Clean sensitive information from errors.
+				$msg = $e->getMessage();
+
+				$msg = str_replace($this->password, '****', $msg);
+
+				throw new DatabaseException('SQLite3 error: ' . $msg);
+			}
 		}
 	}
 

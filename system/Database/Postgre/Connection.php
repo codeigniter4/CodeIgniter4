@@ -81,10 +81,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function connect(bool $persistent = false)
 	{
-		if (empty($this->DSN))
-		{
-			$this->buildDSN();
-		}
+		$this->buildDSN();
 
 		// Strip pgsql if exists
 		if (mb_strpos($this->DSN, 'pgsql:') === 0)
@@ -95,7 +92,22 @@ class Connection extends BaseConnection implements ConnectionInterface
 		// Convert semicolons to spaces.
 		$this->DSN = str_replace(';', ' ', $this->DSN);
 
-		$this->connID = $persistent === true ? pg_pconnect($this->DSN) : pg_connect($this->DSN);
+		try
+		{
+			$this->connID = $persistent === true ? pg_pconnect($this->DSN) : pg_connect($this->DSN);
+		}
+		catch (\Exception $e)
+		{
+			if (empty($this->failover))
+			{
+				// Clean sensitive information from errors.
+				$msg = $e->getMessage();
+
+				$msg = str_replace($this->username, '****', $msg);
+
+				throw new DatabaseException('PostgreSQL error: ' . $msg);
+			}
+		}
 
 		if ($this->connID !== false)
 		{

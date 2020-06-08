@@ -383,7 +383,7 @@ abstract class BaseConnection implements ConnectionInterface
 			if (! empty($this->failover) && is_array($this->failover))
 			{
 				// Go over all the failovers
-				foreach ($this->failover as $failover)
+				foreach ($this->failover as $item => $failover)
 				{
 					// Replace the current settings with those of the failover
 					foreach ($failover as $key => $val)
@@ -393,6 +393,8 @@ abstract class BaseConnection implements ConnectionInterface
 							$this->$key = $val;
 						}
 					}
+
+					unset($this->failover[$item]);
 
 					// Try to connect
 					$this->connID = $this->connect($this->pConnect);

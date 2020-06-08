@@ -73,4 +73,18 @@ class ConnectTest extends CIDatabaseTestCase
 		$this->assertNotInstanceOf(\CodeIgniter\Database\SQLite3\Connection::class, $db1);
 		$this->assertEquals('MySQLi', $this->getPrivateProperty($db1, 'DBDriver'));
 	}
+
+	public function testConnectWithFailover()
+	{
+		$this->group1['failover'][] = $this->group1;
+
+		unset($this->group1['failover'][0]['failover']);
+
+		$this->group1['username'] = 'wrong';
+
+		$db1 = Database::connect($this->group1);
+
+		$this->assertInstanceOf(\CodeIgniter\Database\MySQLi\Connection::class, $db1);
+		$this->assertTrue(count($db1->listTables()) >= 0);
+	}
 }

@@ -216,13 +216,16 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 		catch (\Throwable $e)
 		{
-			// Clean sensitive information from errors.
-			$msg = $e->getMessage();
+			if (empty($this->failover))
+			{
+				// Clean sensitive information from errors.
+				$msg = $e->getMessage();
 
-			$msg = str_replace($this->username, '****', $msg);
-			$msg = str_replace($this->password, '****', $msg);
+				$msg = str_replace($this->username, '****', $msg);
+				$msg = str_replace($this->password, '****', $msg);
 
-			throw new \mysqli_sql_exception($msg, $e->getCode(), $e);
+				throw new \mysqli_sql_exception($msg, $e->getCode(), $e);
+			}
 		}
 
 		return false;
