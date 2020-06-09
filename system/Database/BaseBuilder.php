@@ -704,6 +704,25 @@ class BaseBuilder
 
 		return $this;
 	}
+        
+        
+        
+        public function innerJoin(string $table, string $cond, bool $escape = null)
+        {
+            return $this->join($table, $cond, 'INNER', $escape);
+        }
+
+        public function leftJoin(string $table, string $cond, bool $escape = null)
+        {
+            return $this->join($table, $cond, 'LEFT', $escape);
+        }
+
+        public function rightJoin(string $table, string $cond, bool $escape = null)
+        {
+            return $this->join($table, $cond, 'RIGHT', $escape);
+        }
+        
+        
 
 	//--------------------------------------------------------------------
 
