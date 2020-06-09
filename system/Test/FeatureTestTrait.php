@@ -314,6 +314,8 @@ trait FeatureTestTrait
 			$request->setGlobal($method, $params);
 		}
 
+		$request->setGlobal('request', $params);
+
 		$_SESSION = $this->session ?? [];
 
 		return $request;
