@@ -287,11 +287,11 @@ class Exceptions
 		// Check if the view exists
 		if (is_file($path . $view))
 		{
-			$file = $path . $view;
+			$renderFilePath = $path . $view;
 		}
 		elseif (is_file($altPath . $altView))
 		{
-			$file = $altPath . $altView;
+			$renderFilePath = $altPath . $altView;
 		}
 
 		// Prepare the vars
@@ -305,7 +305,7 @@ class Exceptions
 		}
 
 		ob_start();
-		include $file;
+		include $renderFilePath;
 		$buffer = ob_get_contents();
 		ob_end_clean();
 		echo $buffer;
