@@ -136,8 +136,6 @@ trait FeatureTestTrait
 		}
 		// @codeCoverageIgnoreEnd
 
-		// Simulate having a blank session
-		$_SESSION                  = [];
 		$_SERVER['REQUEST_METHOD'] = $method;
 
 		$request = $this->setupRequest($method, $path);
@@ -316,7 +314,10 @@ trait FeatureTestTrait
 
 		$request->setGlobal('request', $params);
 
-		$_SESSION = $this->session ?? [];
+		if (! empty($this->session))
+		{
+			$_SESSION = $this->session;
+		}
 
 		return $request;
 	}

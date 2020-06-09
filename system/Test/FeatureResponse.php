@@ -57,6 +57,13 @@ class FeatureResponse extends TestCase
 	public $response;
 
 	/**
+	 * State of $_SESSION after the call.
+	 *
+	 * @var array|null
+	 */
+	public $session;
+
+	/**
 	 * DOM for the body.
 	 *
 	 * @var \CodeIgniter\Test\DOMParser
@@ -77,6 +84,10 @@ class FeatureResponse extends TestCase
 		{
 			$this->domParser = (new DOMParser())->withString($body);
 		}
+
+		// Store the session and reset it
+		$this->session = $_SESSION;
+		$_SESSION      = [];
 	}
 
 	//--------------------------------------------------------------------
