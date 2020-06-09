@@ -90,13 +90,13 @@ trait FeatureTestTrait
 	/**
 	 * Sets any values that should exist during this session.
 	 *
-	 * @param array $values
+	 * @param array|null Array of values, or null to use the current $_SESSION
 	 *
 	 * @return $this
 	 */
-	public function withSession(array $values)
+	public function withSession(array $values = null)
 	{
-		$this->session = $values;
+		$this->session = is_null($values) ? $_SESSION : $values;
 
 		return $this;
 	}
