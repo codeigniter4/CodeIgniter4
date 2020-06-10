@@ -171,6 +171,27 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$response->assertSessionMissing('popcorn');
 	}
 
+	public function testWithSessionNull()
+	{
+		$_SESSION = [
+			'fruit'    => 'apple',
+			'greeting' => 'hello',
+		];
+
+		$response = $this->withRoutes([
+			[
+				'get',
+				'home',
+				function () {
+					return 'Home';
+				},
+			],
+		])->withSession()->get('home');
+
+		$response->assertSessionHas('fruit', 'apple');
+		$response->assertSessionMissing('popcorn');
+	}
+
 	public function testReturns()
 	{
 		$this->withRoutes([
