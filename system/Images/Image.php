@@ -146,6 +146,7 @@ class Image extends File
 			1 => 'gif',
 			2 => 'jpeg',
 			3 => 'png',
+			3 => 'webp'
 		];
 
 		$mime = 'image/' . ($types[$vals[2]] ?? 'jpg');

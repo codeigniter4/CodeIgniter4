@@ -365,6 +365,17 @@ class GDHandler extends BaseHandler
 					throw ImageException::forSaveFailed();
 				}
 				break;
+			case IMAGETYPE_WEBP:
+				if (! function_exists('imagewebp'))
+				{
+					throw ImageException::forInvalidImageCreate(lang('images.webpNotSupported'));
+				}
+
+				if (! @imagewebp($this->resource, $target))
+				{
+					throw ImageException::forSaveFailed();
+				}
+				break;	
 			default:
 				throw ImageException::forInvalidImageCreate();
 		}
@@ -429,6 +440,13 @@ class GDHandler extends BaseHandler
 				}
 
 				return imagecreatefrompng($path);
+			case IMAGETYPE_WEBP:
+				if (! function_exists('imagecreatefromwebp'))
+				{
+					throw ImageException::forInvalidImageCreate(lang('images.webpNotSupported'));
+				}
+
+				return imagecreatefromwebp($path);	
 			default:
 				throw ImageException::forInvalidImageCreate('Ima');
 		}
@@ -456,6 +474,9 @@ class GDHandler extends BaseHandler
 				case IMAGETYPE_PNG:
 					$this->resource = imagecreatefrompng($path);
 					break;
+				case IMAGETYPE_WEBP:
+					$this->resource = imagecreatefromwebp($path);
+					break;	
 			}
 		}
 	}
