@@ -706,17 +706,49 @@ class BaseBuilder
 	}
         
         
-        
+        /**
+	 * INNER JOIN
+	 *
+	 * Generates the INNER JOIN portion of the query
+	 *
+	 * @param string  $table
+	 * @param string  $cond   The join condition
+	 * @param boolean $escape Whether not to try to escape identifiers
+	 *
+	 * @return BaseBuilder
+	 */
         public function innerJoin(string $table, string $cond, bool $escape = null)
         {
             return $this->join($table, $cond, 'INNER', $escape);
         }
 
+        /**
+	 * LEFT JOIN
+	 *
+	 * Generates the LEFT JOIN portion of the query
+	 *
+	 * @param string  $table
+	 * @param string  $cond   The join condition
+	 * @param boolean $escape Whether not to try to escape identifiers
+	 *
+	 * @return BaseBuilder
+	 */
         public function leftJoin(string $table, string $cond, bool $escape = null)
         {
             return $this->join($table, $cond, 'LEFT', $escape);
         }
 
+        /**
+	 * RIGHT JOIN
+	 *
+	 * Generates the RIGHT JOIN portion of the query
+	 *
+	 * @param string  $table
+	 * @param string  $cond   The join condition
+	 * @param boolean $escape Whether not to try to escape identifiers
+	 *
+	 * @return BaseBuilder
+	 */
         public function rightJoin(string $table, string $cond, bool $escape = null)
         {
             return $this->join($table, $cond, 'RIGHT', $escape);
