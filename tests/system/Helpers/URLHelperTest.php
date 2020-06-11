@@ -16,7 +16,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		parent::setUp();
 
 		helper('url');
-		Services::reset();
+		Services::reset(true);
 	}
 
 	public function tearDown(): void
@@ -1139,6 +1139,43 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		foreach ($words as $in => $out)
 		{
 			$this->assertEquals($out, url_title($in, '_'));
+		}
+	}
+
+	//--------------------------------------------------------------------
+	// Test mb_url_title
+
+	public function testMbUrlTitle()
+	{
+		helper('text');
+
+		$words = [
+			'foo bar /'       => 'foo-bar',
+			'\  testing 12'   => 'testing-12',
+			'Éléphant de PHP' => 'elephant-de-php',
+			'ä ö ü Ĝ β ę'     => 'ae-oe-ue-g-v-e',
+		];
+
+		foreach ($words as $in => $out)
+		{
+			$this->assertEquals($out, mb_url_title($in, '-', true));
+		}
+	}
+
+	public function testMbUrlTitleExtraDashes()
+	{
+		helper('text');
+
+		$words = [
+			'_foo bar_'                 => 'foo_bar',
+			'_What\'s wrong with CSS?_' => 'Whats_wrong_with_CSS',
+			'Éléphant de PHP'           => 'Elephant_de_PHP',
+			'ä ö ü Ĝ β ę'               => 'ae_oe_ue_G_v_e',
+		];
+
+		foreach ($words as $in => $out)
+		{
+			$this->assertEquals($out, mb_url_title($in, '_'));
 		}
 	}
 
