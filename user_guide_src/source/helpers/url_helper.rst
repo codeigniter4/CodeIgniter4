@@ -337,6 +337,17 @@ The following functions are available:
         $url_title = url_title($title, '-', TRUE);
         // Produces: whats-wrong-with-css
 
+.. php:function:: mb_url_title($str[, $separator = '-'[, $lowercase = FALSE]])
+
+    :param  string  $str: Input string
+    :param  string  $separator: Word separator (usually '-' or '_')
+    :param  bool    $lowercase: Whether to transform the output string to lowercase
+    :returns: URL-formatted string
+    :rtype: string
+
+    This function works the same as :php:func:`url_title()` but it converts all
+    accented characters automatically.
+
 .. php:function:: prep_url($str = '')
 
     :param  string  $str: URL string
