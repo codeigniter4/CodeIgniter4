@@ -6,6 +6,16 @@ Often you will need sample data for your application to run its tests. The ``Fab
 uses fzaninotto's `Faker <https://github.com/fzaninotto/Faker//>`_ to turn models into generators
 of random data. Use fabricators in your seeds or test cases to stage fake data for your unit tests.
 
+Supported Models
+================
+
+``Fabricator`` supports any model that extends the framework's core model, ``CodeIgniter\Model``.
+You may use your own custom models by ensuring they implement ``CodeIgniter\Test\Interfaces\FabricatorModel``::
+
+	class MyModel implements CodeIgniter\Test\Interfaces\FabricatorModel
+
+.. note:: In addition to methods, the interface outlines some necessary properties for the target model. Please see the interface code for details.
+
 Loading Fabricators
 ===================
 
