@@ -44,7 +44,7 @@
     {routes}
         <tr>
             <td>{method}</td>
-            <td>{route}</td>
+            <td data-debugbar-route="{method}">{route}</td>
             <td>{handler}</td>
         </tr>
     {/routes}
