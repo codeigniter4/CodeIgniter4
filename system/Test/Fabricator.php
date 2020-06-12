@@ -79,6 +79,13 @@ class Fabricator
 	protected $formatters;
 
 	/**
+	 * Date fields present in the model
+	 *
+	 * @var array
+	 */
+	protected $dateFields = [];
+
+	/**
 	 * Array of data to add or override faked versions
 	 *
 	 * @var array
@@ -131,6 +138,15 @@ class Fabricator
 
 		// Create the locale-specific Generator
 		$this->faker = Factory::create($this->locale);
+
+		// Determine eligible date fields
+		foreach (['createdField', 'updatedField', 'deletedField'] as $field)
+		{
+			if (! empty($this->model->$field))
+			{
+				$this->dateFields[] = $this->model->$field;
+			}
+		}
 
 		// Set the formatters
 		$this->setFormatters($formatters);
@@ -266,9 +282,12 @@ class Fabricator
 	{
 		$this->formatters = [];
 
-		foreach ($this->model->allowedFields as $field)
+		if (! empty($this->model->allowedFields))
 		{
-			$this->formatters[$field] = $this->guessFormatter($field);
+			foreach ($this->model->allowedFields as $field)
+			{
+				$this->formatters[$field] = $this->guessFormatter($field);
+			}
 		}
 
 		return $this;
@@ -295,7 +314,7 @@ class Fabricator
 		}
 
 		// Next look for known model fields
-		if (in_array($field, [$this->model->createdField, $this->model->updatedField, $this->model->deletedField]))
+		if (in_array($field, $this->dateFields))
 		{
 			switch ($this->model->dateFormat)
 			{
@@ -499,7 +518,13 @@ class Fabricator
 			$ids[] = $this->model->insert($result, true);
 		}
 
-		return $this->model->withDeleted()->find(is_null($count) ? reset($ids) : $ids);
+		// If the model defines a "withDeleted" method for handling soft deletes then use it
+		if (method_exists($this->model, 'withDeleted'))
+		{
+			$this->model->withDeleted();
+		}
+
+		return $this->model->find(is_null($count) ? reset($ids) : $ids);
 	}
 
 	/**
@@ -524,13 +549,13 @@ class Fabricator
 		// Determine which fields we will need
 		$fields = [];
 
-		if ($this->model->useTimestamps)
+		if (! empty($this->model->useTimestamps))
 		{
 			$fields[$this->model->createdField] = $datetime;
 			$fields[$this->model->updatedField] = $datetime;
 		}
 
-		if ($this->model->useSoftDeletes)
+		if (! empty($this->model->useSoftDeletes))
 		{
 			$fields[$this->model->deletedField] = null;
 		}
