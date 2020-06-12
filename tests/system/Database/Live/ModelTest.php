@@ -1798,7 +1798,7 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testInsertWithNoDataException()
+	public function testInsertArrayWithNoDataException()
 	{
 		$model = new UserModel();
 		$data  = [];
@@ -1809,7 +1809,7 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testUpdateWithNoDataException()
+	public function testUpdateArrayWithNoDataException()
 	{
 		$model = new EventModel();
 
@@ -1823,6 +1823,40 @@ class ModelTest extends CIDatabaseTestCase
 		$id = $model->insert($data);
 
 		$data = [];
+
+		$this->expectException(DataException::class);
+		$this->expectExceptionMessage('There is no data to update.');
+
+		$model->update($id, $data);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testInsertObjectWithNoDataException()
+	{
+		$model = new UserModel();
+		$data  = new \stdClass();
+		$this->expectException(DataException::class);
+		$this->expectExceptionMessage('There is no data to insert.');
+		$model->insert($data);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUpdateObjectWithNoDataException()
+	{
+		$model = new EventModel();
+
+		$data = (object) [
+							 'name'    => 'Foo',
+							 'email'   => 'foo@example.com',
+							 'country' => 'US',
+							 'deleted' => 0,
+						 ];
+
+		$id = $model->insert($data);
+
+		$data = new \stdClass();
 
 		$this->expectException(DataException::class);
 		$this->expectExceptionMessage('There is no data to update.');
