@@ -50,29 +50,31 @@ validation <../libraries/validation>` library to do this.
     {
         $model = new NewsModel();
 
-        if (! $this->validate([
-            'title' => 'required|min_length[3]|max_length[255]',
-            'body'  => 'required'
-        ]))
+        if ($this->request->getMethod() === 'post' && $this->validate([
+                'title' => 'required|min_length[3]|max_length[255]',
+                'body'  => 'required'
+            ]))
+        {
+            $model->save([
+                'title' => $this->request->getPost('title'),
+                'slug'  => url_title($this->request->getPost('title'), '-', TRUE),
+                'body'  => $this->request->getPost('body'),
+            ]);
+
+            echo view('news/success');
+            
+        }
+        else
         {
             echo view('templates/header', ['title' => 'Create a news item']);
             echo view('news/create');
             echo view('templates/footer');
         }
-        else
-        {
-            $model->save([
-                'title' => $this->request->getVar('title'),
-                'slug'  => url_title($this->request->getVar('title'), '-', TRUE),
-                'body'  => $this->request->getVar('body'),
-            ]);
-
-            echo view('news/success');
-        }
     }
 
 The code above adds a lot of functionality. First we load the NewsModel.
-After that, the Controller-provided helper function is used to validate
+After that, we check if we deal with the ``POST`` request and then
+the Controller-provided helper function is used to validate
 the $_POST fields. In this case, the title and text fields are required.
 
 CodeIgniter has a powerful validation library as demonstrated
