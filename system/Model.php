@@ -695,6 +695,11 @@ class Model
 			$data = (array) $data;
 		}
 
+		if (empty($data))
+		{
+			throw DataException::forEmptyDataset('insert');
+		}
+
 		// Validate data before saving.
 		if ($this->skipValidation === false)
 		{
@@ -1439,7 +1444,7 @@ class Model
 	public function validate($data): bool
 	{
 		$rules = $this->getValidationRules();
-		
+
 		if ($this->skipValidation === true || empty($rules) || empty($data))
 		{
 			return true;
@@ -1580,7 +1585,7 @@ class Model
 	public function getValidationRules(array $options = []): array
 	{
 		$rules = $this->validationRules;
-		
+
 		// ValidationRules can be either a string, which is the group name,
 		// or an array of rules.
 		if (is_string($rules))
