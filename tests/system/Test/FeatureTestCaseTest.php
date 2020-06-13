@@ -296,4 +296,21 @@ class FeatureTestCaseTest extends FeatureTestCase
 		]);
 		$this->get($httpGet);
 	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3072
+	 */
+	public function testIsOkWithRedirects()
+	{
+		$this->withRoutes([
+			[
+				'get',
+				'home',
+				'\Tests\Support\Controllers\Popcorn::goaway',
+			],
+		]);
+		$response = $this->get('home');
+		$this->assertTrue($response->isRedirect());
+		$this->assertTrue($response->isOK());
+	}
 }
