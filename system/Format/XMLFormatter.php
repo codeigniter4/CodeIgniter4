@@ -91,19 +91,21 @@ class XMLFormatter implements FormatterInterface
 		{
 			if (is_array($value))
 			{
-				if (! is_numeric($key))
+				if (is_numeric($key))
 				{
-					$subnode = $output->addChild("$key");
-					$this->arrayToXML($value, $subnode);
+					$key = "item{$key}";
 				}
-				else
-				{
-					$subnode = $output->addChild("item{$key}");
-					$this->arrayToXML($value, $subnode);
-				}
+
+				$subnode = $output->addChild("$key");
+				$this->arrayToXML($value, $subnode);
 			}
 			else
 			{
+				if (is_numeric($key))
+				{
+					$key = "item{$key}";
+				}
+
 				$output->addChild("$key", htmlspecialchars("$value"));
 			}
 		}
