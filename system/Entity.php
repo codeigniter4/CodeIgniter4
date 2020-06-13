@@ -372,7 +372,7 @@ class Entity
 			// back to the database.
 			if (($castTo === 'json' || $castTo === 'json-array') && function_exists('json_encode'))
 			{
-				$value = json_encode($value);
+				$value = json_encode($value, JSON_UNESCAPED_UNICODE);
 
 				if (json_last_error() !== JSON_ERROR_NONE)
 				{
