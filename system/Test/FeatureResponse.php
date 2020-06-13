@@ -91,15 +91,17 @@ class FeatureResponse extends TestCase
 	 */
 	public function isOK(): bool
 	{
+		$status = $this->response->getStatusCode();
+
 		// Only 200 and 300 range status codes
 		// are considered valid.
-		if ($this->response->getStatusCode() >= 400 || $this->response->getStatusCode() < 200)
+		if ($status >= 400 || $status < 200)
 		{
 			return false;
 		}
 
-		// Empty bodies are not considered valid.
-		if (empty($this->response->getBody()))
+		// Empty bodies are not considered valid, unless in redirects
+		if ($status < 300 && empty($this->response->getBody()))
 		{
 			return false;
 		}
