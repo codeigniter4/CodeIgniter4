@@ -940,6 +940,21 @@ class RouteCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3048
+	 */
+	public function testNamedRoutesWithPipesInRegex()
+	{
+		$routes = $this->getCollector();
+
+		$routes->get('/system/(this|that)', 'myController::system/$1', ['as' => 'pipedRoute']);
+
+		$this->assertEquals('/system/this', $routes->reverseRoute('pipedRoute', 'this'));
+		$this->assertEquals('/system/that', $routes->reverseRoute('pipedRoute', 'that'));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testReverseRouteMatching()
 	{
 		$routes = $this->getCollector();
