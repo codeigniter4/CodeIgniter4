@@ -38,7 +38,7 @@
 
 namespace CodeIgniter\Validation;
 
-use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
 
@@ -359,11 +359,11 @@ class Validation implements ValidationInterface
 	 * Takes a Request object and grabs the input data to use from its
 	 * array values.
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
+	 * @param \CodeIgniter\HTTP\IncomingRequest $request
 	 *
 	 * @return \CodeIgniter\Validation\ValidationInterface
 	 */
-	public function withRequest(RequestInterface $request): ValidationInterface
+	public function withRequest(IncomingRequest $request): ValidationInterface
 	{
 		if (in_array($request->getMethod(), ['put', 'patch', 'delete']))
 		{

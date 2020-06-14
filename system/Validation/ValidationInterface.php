@@ -39,7 +39,7 @@
 
 namespace CodeIgniter\Validation;
 
-use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\IncomingRequest;
 
 /**
  * Expected behavior of a validator
@@ -78,11 +78,11 @@ interface ValidationInterface
 	 * Takes a Request object and grabs the input data to use from its
 	 * array values.
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface $request
+	 * @param \CodeIgniter\HTTP\IncomingRequest $request
 	 *
 	 * @return \CodeIgniter\Validation\ValidationInterface
 	 */
-	public function withRequest(RequestInterface $request): ValidationInterface;
+	public function withRequest(IncomingRequest $request): ValidationInterface;
 
 	//--------------------------------------------------------------------
 	// Rules
