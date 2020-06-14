@@ -117,7 +117,7 @@ The following functions are available:
     :returns: An URI string
     :rtype:	string
 
-    Returns the path part of your current URL.
+    Returns the path part relative to **baseUrl**.
     For example, if your URL was this::
 
         http://some-site.com/blog/comments/123
