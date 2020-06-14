@@ -826,7 +826,7 @@ class RouteCollection implements RouteCollectionInterface
 		// Make sure we capture back-references
 		$id = '(' . trim($id, '()') . ')';
 
-		$methods = isset($options['only']) ? is_string($options['only']) ? explode(',', $options['only']) : $options['only'] : ['index', 'show', 'create', 'update', 'delete', 'new', 'edit'];
+		$methods = isset($options['only']) ? (is_string($options['only']) ? explode(',', $options['only']) : $options['only']) : ['index', 'show', 'create', 'update', 'delete', 'new', 'edit'];
 
 		if (isset($options['except']))
 		{
@@ -941,7 +941,7 @@ class RouteCollection implements RouteCollectionInterface
 		// Make sure we capture back-references
 		$id = '(' . trim($id, '()') . ')';
 
-		$methods = isset($options['only']) ? is_string($options['only']) ? explode(',', $options['only']) : $options['only'] : ['index', 'show', 'new', 'create', 'edit', 'update', 'remove', 'delete'];
+		$methods = isset($options['only']) ? (is_string($options['only']) ? explode(',', $options['only']) : $options['only']) : ['index', 'show', 'new', 'create', 'edit', 'update', 'remove', 'delete'];
 
 		if (isset($options['except']))
 		{
@@ -1348,7 +1348,7 @@ class RouteCollection implements RouteCollectionInterface
 			// the expected param type.
 			$pos = strpos($from, $pattern);
 
-			if (preg_match("|{$pattern}|", $params[$index]))
+			if (preg_match('#' . $pattern . '#', $params[$index]))
 			{
 				$from = substr_replace($from, $params[$index], $pos, strlen($pattern));
 			}
