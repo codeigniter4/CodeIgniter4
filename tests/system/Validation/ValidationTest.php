@@ -306,6 +306,20 @@ class ValidationTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testRunGroupWithCustomErrorMessage()
+	{
+		$this->validation->reset();
+		$this->validation->run([
+			'username' => 'codeigniter',
+		], 'login');
+
+		$this->assertEquals([
+			'password' => 'custom password required error msg.',
+		], $this->validation->getErrors());
+	}
+
+	//--------------------------------------------------------------------
+
 	/**
 	 * @dataProvider rulesSetupProvider
 	 */
