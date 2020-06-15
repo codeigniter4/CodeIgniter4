@@ -331,8 +331,8 @@ Miscellaneous Functions
 	:param   string   $method: The named route alias, or name of the controller/method to match.
 	:param   mixed   $params: One or more parameters to be passed to be matched in the route.
 
-	Generates a relative URI for you based on either a named route alias, or a controller::method
-	combination. Will take parameters into effect, if provided.
+	Generates a URI relative to the domain name (not **baseUrl**) for you based on either a named route alias, 
+	or a controller::method combination. Will take parameters into effect, if provided.
 
 	For full details, see the :doc:`/incoming/routing` page.
 
