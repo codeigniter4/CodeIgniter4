@@ -168,11 +168,15 @@ trait FeatureTestTrait
 		// Reset directory if it has been set
 		Services::router()->setDirectory(null);
 
-		// Ensure the output buffer is clean so no tests are risky
+		// Ensure the output buffer is identical so no tests are risky
 		// @codeCoverageIgnoreStart
 		while (\ob_get_level() > $buffer)
 		{
 			\ob_end_clean();
+		}
+		while (\ob_get_level() < $buffer)
+		{
+			\ob_start();
 		}
 		// @codeCoverageIgnoreEnd
 
