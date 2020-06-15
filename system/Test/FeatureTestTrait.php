@@ -127,6 +127,8 @@ trait FeatureTestTrait
 	 */
 	public function call(string $method, string $path, array $params = null)
 	{
+		$buffer = \ob_get_level();
+
 		// Clean up any open output buffers
 		// not relevant to unit testing
 		// @codeCoverageIgnoreStart
@@ -157,7 +159,7 @@ trait FeatureTestTrait
 				->setRequest($request)
 				->run($this->routes, true);
 
-		$output = ob_get_contents();
+		$output = \ob_get_contents();
 		if (empty($response->getBody()) && ! empty($output))
 		{
 			$response->setBody($output);
@@ -165,6 +167,14 @@ trait FeatureTestTrait
 
 		// Reset directory if it has been set
 		Services::router()->setDirectory(null);
+
+		// Ensure the output buffer is clean so no tests are risky
+		// @codeCoverageIgnoreStart
+		while (\ob_get_level() > $buffer)
+		{
+			\ob_end_clean();
+		}
+		// @codeCoverageIgnoreEnd
 
 		return new FeatureResponse($response);
 	}
