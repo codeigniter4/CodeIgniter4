@@ -132,7 +132,7 @@ class UserAgent
 	 *
 	 * @param null|\Config\UserAgents $config
 	 */
-	public function __construct(?UserAgents $config = null)
+	public function __construct(UserAgents $config = null)
 	{
 		$this->config = $config ?? new UserAgents();
 
