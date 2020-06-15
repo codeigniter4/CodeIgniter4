@@ -288,23 +288,34 @@ class ImageMagickHandler extends BaseHandler
 	{
 		$target = empty($target) ? $this->image() : $target;
 
-		// If no new resource has been created, then we're
-		// simply copy the existing one.
-		if (empty($this->resource))
+		// If no new resource has been created,  and we
+		// aren't adjusting the quality then we're simply
+		// copy the existing one.
+		if (empty($this->resource) && $quality == 100)
 		{
+			// we're moving it to the same spot so don't do anything.
+			if($target === null)
+			{
+				return true;
+			}
+
 			$name = basename($target);
 			$path = pathinfo($target, PATHINFO_DIRNAME);
 
 			return $this->image()->copy($path, $name);
 		}
 
+		$source = $this->image()->getPathname();
+
 		// Copy the file through ImageMagick so that it has
 		// a chance to convert file format.
-		$action = '"' . $this->resource . '" "' . $target . '"';
+		$action = '"' . $source . '" "' . $target . '"';
 
 		$result = $this->process($action, $quality);
 
-		unlink($this->resource);
+		if(!empty($this->resource)) {
+			unlink($this->resource);
+		}
 
 		return true;
 	}
