@@ -52,6 +52,15 @@ class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 				'width'    => 640,
 				'height'   => 400,
 			],
+			'photo'   => [
+				'tmp_name' => TESTPATH . '_support/Validation/uploads/phpUxc0ty',
+				'name'     => 'my-photo.png',
+				'size'     => 4614,
+				'type'     => 'image/png',
+				'error'    => 1, // upload_max_filesize exceeded
+				'width'    => 640,
+				'height'   => 400,
+			],
 		];
 	}
 
@@ -99,6 +108,14 @@ class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->validation->setRules([
 			'avatar' => 'max_size[avatar,4]',
+		]);
+		$this->assertFalse($this->validation->run([]));
+	}
+
+	public function testMaxSizeFailDueToUploadMaxFilesizeExceededInPhpIni()
+	{
+		$this->validation->setRules([
+			'photo' => 'max_size[photo,100]',
 		]);
 		$this->assertFalse($this->validation->run([]));
 	}

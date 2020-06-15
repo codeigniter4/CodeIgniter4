@@ -136,6 +136,11 @@ class FileRules
 				return true;
 			}
 
+			if ($file->getError() === UPLOAD_ERR_INI_SIZE)
+			{
+				return false;
+			}
+
 			if ($file->getSize() / 1024 > $params[0])
 			{
 				return false;
