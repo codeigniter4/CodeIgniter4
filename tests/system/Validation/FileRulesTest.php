@@ -61,6 +61,66 @@ class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 				'width'    => 640,
 				'height'   => 400,
 			],
+			'images'  => [
+				'tmp_name' => [
+					TESTPATH . '_support/Validation/uploads/phpUxc0ty',
+					TESTPATH . '_support/Validation/uploads/phpUxc0ty',
+				],
+				'name'     => [
+					'my_avatar.png',
+					'my_bigfile.png',
+				],
+				'size'     => [
+					4614,
+					1024000,
+				],
+				'type'     => [
+					'image/png',
+					'image/png',
+				],
+				'error'    => [
+					0,
+					0,
+				],
+				'width'    => [
+					640,
+					640,
+				],
+				'height'   => [
+					400,
+					400,
+				],
+			],
+			'photos'  => [
+				'tmp_name' => [
+					TESTPATH . '_support/Validation/uploads/phpUxc0ty',
+					TESTPATH . '_support/Validation/uploads/phpUxc0ty',
+				],
+				'name'     => [
+					'my_avatar.png',
+					'my_bigfile.png',
+				],
+				'size'     => [
+					4614,
+					1024000,
+				],
+				'type'     => [
+					'image/png',
+					'image/png',
+				],
+				'error'    => [
+					1,
+					0,
+				],
+				'width'    => [
+					640,
+					640,
+				],
+				'height'   => [
+					400,
+					400,
+				],
+			],
 		];
 	}
 
@@ -79,6 +139,24 @@ class FileRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->validation->setRules([
 			'avatar' => 'uploaded[userfile]',
+		]);
+
+		$this->assertFalse($this->validation->run([]));
+	}
+
+	public function testUploadedArrayReturnsTrue()
+	{
+		$this->validation->setRules([
+			'images' => 'uploaded[images]',
+		]);
+
+		$this->assertTrue($this->validation->run([]));
+	}
+
+	public function testUploadedArrayReturnsFalse()
+	{
+		$this->validation->setRules([
+			'photos' => 'uploaded[photos]',
 		]);
 
 		$this->assertFalse($this->validation->run([]));
