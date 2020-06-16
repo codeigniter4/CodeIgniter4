@@ -305,7 +305,7 @@ class ImageMagickHandler extends BaseHandler
 			return $this->image()->copy($path, $name);
 		}
 
-		$source = $this->image()->getPathname();
+		$source = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
 
 		// Copy the file through ImageMagick so that it has
 		// a chance to convert file format.
