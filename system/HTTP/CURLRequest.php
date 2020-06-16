@@ -493,6 +493,7 @@ class CURLRequest extends Request
 			$this->populateHeaders();
 			// Otherwise, it will corrupt the request
 			$this->removeHeader('Host');
+			$this->removeHeader('Accept-Encoding');
 		}
 
 		$headers = $this->getHeaders();
