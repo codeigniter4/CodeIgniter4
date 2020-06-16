@@ -146,10 +146,8 @@ trait FeatureTestTrait
 		$request = $this->populateGlobals($method, $request, $params);
 
 		// Make sure the RouteCollection knows what method we're using...
-		if (! empty($this->routes))
-		{
-			$this->routes->setHTTPVerb($method);
-		}
+		$routes = $this->routes ?: Services::routes();
+		$routes->setHTTPVerb($method);
 
 		// Make sure any other classes that might call the request
 		// instance get the right one.
@@ -157,7 +155,7 @@ trait FeatureTestTrait
 
 		$response = $this->app
 				->setRequest($request)
-				->run($this->routes, true);
+				->run($routes, true);
 
 		$output = \ob_get_contents();
 		if (empty($response->getBody()) && ! empty($output))
