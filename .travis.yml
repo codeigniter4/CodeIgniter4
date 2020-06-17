@@ -47,7 +47,6 @@ before_script:
   - echo 'extension = memcached.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo 'extension = redis.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer install --prefer-source
-  - yes | pecl install imagick
 
 after_success:
   - travis_retry php tests/bin/php-coveralls.phar -v
