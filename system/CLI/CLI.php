@@ -606,8 +606,8 @@ class CLI
 			// @codeCoverageIgnoreStart
 			if (($shell = getenv('SHELL')) && preg_match('/(?:bash|zsh)(?:\.exe)?$/', $shell) || getenv('TERM'))
 			{
-				static::$height = (int) exec('tput cols');
-				static::$width  = (int) exec('tput lines');
+				static::$height = (int) exec('tput lines');
+				static::$width  = (int) exec('tput cols');
 			}
 			else
 			{
@@ -621,8 +621,8 @@ class CLI
 					// Searching for "Columns:" or "Lines:" will fail on non-English locales
 					if (preg_match('/:\s*(\d+)\n[^:]+:\s*(\d+)\n/', implode("\n", $output), $matches))
 					{
-						static::$height = (int) $matches[2];
-						static::$width  = (int) $matches[1];
+						static::$height = (int) $matches[1];
+						static::$width  = (int) $matches[2];
 					}
 				}
 			}
@@ -632,13 +632,13 @@ class CLI
 		{
 			if (($size = exec('stty size')) && preg_match('/(\d+)\s+(\d+)/', $size, $matches))
 			{
-				static::$height = (int) $matches[2];
-				static::$width  = (int) $matches[1];
+				static::$height = (int) $matches[1];
+				static::$width  = (int) $matches[2];
 			}
 			else
 			{
-				static::$height = (int) exec('tput cols');
-				static::$width  = (int) exec('tput lines');
+				static::$height = (int) exec('tput lines');
+				static::$width  = (int) exec('tput cols');
 			}
 		}
 	}
