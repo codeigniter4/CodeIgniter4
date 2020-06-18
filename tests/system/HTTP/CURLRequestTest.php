@@ -176,6 +176,7 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_SERVER['HTTP_HOST']            = 'site1.com';
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
+		$_SERVER['HTTP_ACCEPT_ENCODING'] = 'gzip, deflate, br';
 
 		$options = [
 			'base_uri' => 'http://www.foo.com/api/v1/',
@@ -187,6 +188,8 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('en-US', $request->getHeader('Accept-Language')->getValue());
 		// but we skip Host header - since it would corrupt the request
 		$this->assertNull($request->getHeader('Host'));
+		// and Accept-Encoding
+		$this->assertNull($request->getHeader('Accept-Encoding'));
 	}
 
 	/**
@@ -196,16 +199,21 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_SERVER['HTTP_HOST']            = 'site1.com';
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
+		$_SERVER['HTTP_ACCEPT_ENCODING'] = 'gzip, deflate, br';
 
 		$options = [
 			'base_uri' => 'http://www.foo.com/api/v1/',
-			'headers'  => ['Host' => 'www.foo.com'],
+			'headers'  => [
+				'Host'            => 'www.foo.com',
+				'Accept-Encoding' => '',
+			],
 		];
 		$request = $this->getRequest($options);
 		$request->get('example');
 		// if headers for the request are defined we use them
 		$this->assertNull($request->getHeader('Accept-Language'));
 		$this->assertEquals('www.foo.com', $request->getHeader('Host')->getValue());
+		$this->assertEquals('', $request->getHeader('Accept-Encoding')->getValue());
 	}
 
 	//--------------------------------------------------------------------
