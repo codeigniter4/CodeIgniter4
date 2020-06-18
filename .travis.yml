@@ -42,6 +42,8 @@ before_install:
   - mysql -e "CREATE DATABASE IF NOT EXISTS test;" -uroot;
   - mysql -e "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'test';" -uroot
   - psql -c 'CREATE DATABASE test;' -U postgres
+  - sudo apt-get install ghostscript
+  - yes | pecl install imagick
 
 before_script:
   - echo 'extension = memcached.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini

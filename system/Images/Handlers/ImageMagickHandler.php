@@ -106,7 +106,9 @@ class ImageMagickHandler extends BaseHandler
 			$escape = '';
 		}
 
-		$action = $maintainRatio === true ? ' -resize ' . $this->width . 'x' . $this->height . ' "' . $source . '" "' . $destination . '"' : ' -resize ' . $this->width . 'x' . $this->height . "{$escape}! \"" . $source . '" "' . $destination . '"';
+		$action = $maintainRatio === true
+			? ' -resize ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . ' "' . $source . '" "' . $destination . '"'
+			: ' -resize ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . "{$escape}! \"" . $source . '" "' . $destination . '"';
 
 		$this->process($action);
 
@@ -126,7 +128,13 @@ class ImageMagickHandler extends BaseHandler
 		$source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
 		$destination = $this->getResourcePath();
 
-		$action = ' -crop ' . $this->width . 'x' . $this->height . '+' . $this->xAxis . '+' . $this->yAxis . ' "' . $source . '" "' . $destination . '"';
+		$extent = ' ';
+		if ($this->xAxis >= $this->width || $this->yAxis > $this->height)
+		{
+			$extent = ' -background transparent -extent ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . ' ';
+		}
+
+		$action = ' -crop ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . '+' . ($this->xAxis ?? 0) . '+' . ($this->yAxis ?? 0) . $extent . escapeshellarg($source) . ' ' . escapeshellarg($destination);
 
 		$this->process($action);
 
@@ -151,7 +159,7 @@ class ImageMagickHandler extends BaseHandler
 		$source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
 		$destination = $this->getResourcePath();
 
-		$action = ' ' . $angle . ' "' . $source . '" "' . $destination . '"';
+		$action = ' ' . $angle . ' ' . escapeshellarg($source) . ' ' . escapeshellarg($destination);
 
 		$this->process($action);
 
@@ -172,12 +180,12 @@ class ImageMagickHandler extends BaseHandler
 	 */
 	public function _flatten(int $red = 255, int $green = 255, int $blue = 255)
 	{
-		$flatten = "-background RGB({$red},{$green},{$blue}) -flatten";
+		$flatten = "-background 'rgb({$red},{$green},{$blue})' -flatten";
 
 		$source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
 		$destination = $this->getResourcePath();
 
-		$action = ' ' . $flatten . ' "' . $source . '" "' . $destination . '"';
+		$action = ' ' . $flatten . ' ' . escapeshellarg($source) . ' ' . escapeshellarg($destination);
 
 		$this->process($action);
 
@@ -201,7 +209,7 @@ class ImageMagickHandler extends BaseHandler
 		$source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
 		$destination = $this->getResourcePath();
 
-		$action = ' ' . $angle . ' "' . $source . '" "' . $destination . '"';
+		$action = ' ' . $angle . ' ' . escapeshellarg($source) . ' ' . escapeshellarg($destination);
 
 		$this->process($action);
 
@@ -300,7 +308,7 @@ class ImageMagickHandler extends BaseHandler
 
 		// Copy the file through ImageMagick so that it has
 		// a chance to convert file format.
-		$action = '"' . $this->resource . '" "' . $target . '"';
+		$action = escapeshellarg($this->resource) . ' ' . escapeshellarg($target);
 
 		$result = $this->process($action, $quality);
 
@@ -334,6 +342,11 @@ class ImageMagickHandler extends BaseHandler
 		}
 
 		$this->resource = WRITEPATH . 'cache/' . time() . '_' . bin2hex(random_bytes(10)) . '.png';
+
+		$name = basename($this->resource);
+		$path = pathinfo($this->resource, PATHINFO_DIRNAME);
+
+		$this->image()->copy($path, $name);
 
 		return $this->resource;
 	}
@@ -462,7 +475,7 @@ class ImageMagickHandler extends BaseHandler
 	 */
 	public function _getWidth()
 	{
-		return imagesx($this->resource);
+		return imagesx(imagecreatefromstring(file_get_contents($this->resource)));
 	}
 
 	/**
@@ -472,7 +485,7 @@ class ImageMagickHandler extends BaseHandler
 	 */
 	public function _getHeight()
 	{
-		return imagesy($this->resource);
+		return imagesy(imagecreatefromstring(file_get_contents($this->resource)));
 	}
 
 }
