@@ -55,6 +55,7 @@ class EmailTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertTrue($email->send());
 
 		$this->assertIsArray($result);
+		$this->assertEquals(['foo@foo.com'], $result['recipients']);
 	}
 
 	public function testFailreDoesNotTriggerEvent()
