@@ -240,7 +240,7 @@ and uses best practices to minimize any security risks.
     $files = $request->getFiles();
 
     // Grab the file by name given in HTML form
-    if ($files->hasFile('uploadedFile')
+    if ($files->hasFile('uploadedFile'))
     {
         $file = $files->getFile('uploadedfile');
 
