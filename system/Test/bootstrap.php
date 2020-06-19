@@ -42,7 +42,7 @@ if (! isset($_SERVER['app.baseURL']))
 require_once SYSTEMPATH . 'Config/AutoloadConfig.php';
 require_once APPPATH . 'Config/Autoload.php';
 require_once APPPATH . 'Config/Constants.php';
-require_once SYSTEMPATH . 'Config/Modules.php';
+require_once SYSTEMPATH . 'Modules/Modules.php';
 require_once APPPATH . 'Config/Modules.php';
 
 require_once SYSTEMPATH . 'Autoloader/Autoloader.php';
