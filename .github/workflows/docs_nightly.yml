@@ -16,8 +16,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Build docs
+      - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Build docs
         uses: ammaraskar/sphinx-action@master
         with:
           docs-folder: "user_guide_src/"
