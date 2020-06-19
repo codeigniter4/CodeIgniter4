@@ -2,10 +2,13 @@
 # any user guide build errors.
 name: UserGuide CI
 
-on: pull_request
+on:
+  pull_request:
+    paths:
+      - 'user_guide_src/**'
 
 jobs:
-  doc_syntax_check:
+  syntax_check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
