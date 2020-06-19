@@ -2,6 +2,7 @@
 
 use BadMethodCallException;
 use CodeIgniter\Config\Config;
+use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity;
 use CodeIgniter\I18n\Time;
@@ -1525,6 +1526,32 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testPaginateWithDeleted()
+	{
+		$model = new UserModel($this->db);
+		$model->delete(1);
+
+		$data = $model->withDeleted()->paginate();
+
+		$this->assertEquals(4, count($data));
+		$this->assertEquals(4, $model->pager->getDetails()['total']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testPaginateWithoutDeleted()
+	{
+		$model = new UserModel($this->db);
+		$model->delete(1);
+
+		$data = $model->withDeleted(false)->paginate();
+
+		$this->assertEquals(3, count($data));
+		$this->assertEquals(3, $model->pager->getDetails()['total']);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testValidationByObject()
 	{
 		$model = new ValidModel($this->db);
@@ -2072,6 +2099,94 @@ class ModelTest extends CIDatabaseTestCase
 		$model->delete(1);
 		$this->assertEquals(4, $model->withDeleted()->countAllResults());
 		$this->assertEquals(3, $model->countAllResults());
+	}
+
+	public function testcountAllResultsFalseWithDeletedTrue()
+	{
+		$builder     = new BaseBuilder('user', $this->db);
+		$expectedSQL = $builder->testMode()->countAllResults();
+
+		$model = new UserModel($this->db);
+		$model->delete(1);
+
+		$this->assertEquals(4, $model->withDeleted()->countAllResults(false));
+
+		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
+
+		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
+
+		$this->assertEquals(4, $model->countAllResults());
+
+		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
+
+		$this->assertTrue($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
+	}
+
+	public function testcountAllResultsFalseWithDeletedFalse()
+	{
+		$builder     = new BaseBuilder('user', $this->db);
+		$expectedSQL = $builder->testMode()->where('user.deleted_at', null)->countAllResults();
+
+		$model = new UserModel($this->db);
+		$model->delete(1);
+
+		$this->assertEquals(3, $model->withDeleted(false)->countAllResults(false));
+
+		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
+
+		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
+
+		$this->assertEquals(3, $model->countAllResults());
+
+		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
+
+		$this->assertTrue($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
+	}
+
+	public function testcountAllResultsFalseWithDeletedTrueUseSoftDeletesFalse()
+	{
+		$builder     = new BaseBuilder('user', $this->db);
+		$expectedSQL = $builder->testMode()->countAllResults();
+
+		$model = new UserModel($this->db);
+		$model->delete(1);
+
+		$this->setPrivateProperty($model, 'useSoftDeletes', false);
+
+		$this->assertEquals(4, $model->withDeleted()->countAllResults(false));
+
+		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
+
+		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
+
+		$this->assertEquals(4, $model->countAllResults());
+
+		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
+
+		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
+	}
+
+	public function testcountAllResultsFalseWithDeletedFalseUseSoftDeletesFalse()
+	{
+		$builder     = new BaseBuilder('user', $this->db);
+		$expectedSQL = $builder->testMode()->where('user.deleted_at', null)->countAllResults();
+
+		$model = new UserModel($this->db);
+		$model->delete(1);
+
+		$this->setPrivateProperty($model, 'useSoftDeletes', false);
+
+		$this->assertEquals(3, $model->withDeleted(false)->countAllResults(false));
+
+		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
+
+		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
+
+		$this->assertEquals(3, $model->countAllResults());
+
+		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
+
+		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 	}
 
 }
