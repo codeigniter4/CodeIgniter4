@@ -374,4 +374,44 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(exif_imagetype($this->root . 'ci-logo.png'), IMAGETYPE_PNG);
 	}
 
+	public function testImageReorientLandscape()
+	{
+		for ($i = 0; $i <= 8; $i++)
+		{
+			$source = $this->origin . 'EXIFsamples/landscape_' . '' . $i . '.jpg';
+			$result = $this->root . 'landscape_' . $i . '_reoriented.jpg';
+
+			$this->handler->withFile($source);
+			$this->handler->reorient();
+
+			$resource = imagecreatefromstring(file_get_contents($this->handler->getResource()));
+			$point    = imagecolorat($resource, 0, 0);
+			$rgb      = imagecolorsforindex($resource, $point);
+
+			$this->handler->save($result);
+
+			$this->assertEquals(['red' => 62, 'green' => 62, 'blue' => 62, 'alpha' => 0], $rgb);
+		}
+	}
+
+	public function testImageReorientPortrait()
+	{
+		for ($i = 0; $i <= 8; $i++)
+		{
+			$source = $this->origin . 'EXIFsamples/portrait_' . '' . $i . '.jpg';
+			$result = $this->root . 'portrait_' . $i . '_reoriented.jpg';
+
+			$this->handler->withFile($source);
+			$this->handler->reorient();
+
+			$resource = imagecreatefromstring(file_get_contents($this->handler->getResource()));
+			$point    = imagecolorat($resource, 0, 0);
+			$rgb      = imagecolorsforindex($resource, $point);
+
+			$this->handler->save($result);
+
+			$this->assertEquals(['red' => 62, 'green' => 62, 'blue' => 62, 'alpha' => 0], $rgb);
+		}
+	}
+
 }
