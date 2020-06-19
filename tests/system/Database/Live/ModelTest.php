@@ -2,6 +2,7 @@
 
 use BadMethodCallException;
 use CodeIgniter\Config\Config;
+use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity;
 use CodeIgniter\I18n\Time;
@@ -2102,46 +2103,51 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testcountAllResultsFalseWithDeletedTrue()
 	{
+		$builder     = new BaseBuilder('user', $this->db);
+		$expectedSQL = $builder->testMode()->countAllResults();
+
 		$model = new UserModel($this->db);
 		$model->delete(1);
 
 		$this->assertEquals(4, $model->withDeleted()->countAllResults(false));
 
-		$expected = 'SELECT COUNT(*) AS "numrows" FROM "db_user"';
-		$this->assertEquals($expected, str_replace("\n", ' ', (string)$this->db->getLastQuery()));
+		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
 
 		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 
 		$this->assertEquals(4, $model->countAllResults());
 
-		$expected = 'SELECT COUNT(*) AS "numrows" FROM "db_user"';
-		$this->assertEquals($expected, str_replace("\n", ' ', (string)$this->db->getLastQuery()));
+		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
 
 		$this->assertTrue($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 	}
 
 	public function testcountAllResultsFalseWithDeletedFalse()
 	{
+		$builder     = new BaseBuilder('user', $this->db);
+		$expectedSQL = $builder->testMode()->where('user.deleted_at', null)->countAllResults();
+
 		$model = new UserModel($this->db);
 		$model->delete(1);
 
 		$this->assertEquals(3, $model->withDeleted(false)->countAllResults(false));
 
-		$expected = 'SELECT COUNT(*) AS "numrows" FROM "db_user" WHERE "db_user"."deleted_at" IS NULL';
-		$this->assertEquals($expected, str_replace("\n", ' ', (string)$this->db->getLastQuery()));
+		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
 
 		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 
 		$this->assertEquals(3, $model->countAllResults());
 
-		$expected = 'SELECT COUNT(*) AS "numrows" FROM "db_user" WHERE "db_user"."deleted_at" IS NULL';
-		$this->assertEquals($expected, str_replace("\n", ' ', (string)$this->db->getLastQuery()));
+		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
 
 		$this->assertTrue($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 	}
 
 	public function testcountAllResultsFalseWithDeletedTrueUseSoftDeletesFalse()
 	{
+		$builder     = new BaseBuilder('user', $this->db);
+		$expectedSQL = $builder->testMode()->countAllResults();
+
 		$model = new UserModel($this->db);
 		$model->delete(1);
 
@@ -2149,21 +2155,22 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertEquals(4, $model->withDeleted()->countAllResults(false));
 
-		$expected = 'SELECT COUNT(*) AS "numrows" FROM "db_user"';
-		$this->assertEquals($expected, str_replace("\n", ' ', (string)$this->db->getLastQuery()));
+		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
 
 		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 
 		$this->assertEquals(4, $model->countAllResults());
 
-		$expected = 'SELECT COUNT(*) AS "numrows" FROM "db_user"';
-		$this->assertEquals($expected, str_replace("\n", ' ', (string)$this->db->getLastQuery()));
+		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
 
 		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 	}
 
 	public function testcountAllResultsFalseWithDeletedFalseUseSoftDeletesFalse()
 	{
+		$builder     = new BaseBuilder('user', $this->db);
+		$expectedSQL = $builder->testMode()->where('user.deleted_at', null)->countAllResults();
+
 		$model = new UserModel($this->db);
 		$model->delete(1);
 
@@ -2171,15 +2178,13 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertEquals(3, $model->withDeleted(false)->countAllResults(false));
 
-		$expected = 'SELECT COUNT(*) AS "numrows" FROM "db_user" WHERE "db_user"."deleted_at" IS NULL';
-		$this->assertEquals($expected, str_replace("\n", ' ', (string)$this->db->getLastQuery()));
+		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
 
 		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 
 		$this->assertEquals(3, $model->countAllResults());
 
-		$expected = 'SELECT COUNT(*) AS "numrows" FROM "db_user" WHERE "db_user"."deleted_at" IS NULL';
-		$this->assertEquals($expected, str_replace("\n", ' ', (string)$this->db->getLastQuery()));
+		$this->assertEquals($expectedSQL, (string)$this->db->getLastQuery());
 
 		$this->assertFalse($this->getPrivateProperty($model, 'tempUseSoftDeletes'));
 	}
