@@ -5,7 +5,7 @@ name: UserGuide CI
 on: pull_request
 
 jobs:
-  docs:
+  doc_syntax_check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
