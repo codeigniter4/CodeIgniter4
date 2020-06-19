@@ -487,5 +487,44 @@ class ImageMagickHandler extends BaseHandler
 	{
 		return imagesy(imagecreatefromstring(file_get_contents($this->resource)));
 	}
+	
+	//--------------------------------------------------------------------
 
+	/**
+	 * Reads the EXIF information from the image and modifies the orientation
+	 * so that displays correctly in the browser. This is especially an issue
+	 * with images taken by smartphones who always store the image up-right,
+	 * but set the orientation flag to display it correctly.
+	 *
+	 * @param boolean $silent If true, will ignore exceptions when PHP doesn't support EXIF.
+	 *
+	 * @return $this
+	 */
+	public function reorient(bool $silent = false)
+	{
+		$orientation = $this->getEXIF('Orientation', $silent);
+
+		switch ($orientation)
+		{
+			case 2:
+				return $this->flip('horizontal');
+			case 3:
+				return $this->rotate(180);
+			case 4:
+				return $this->rotate(180)
+								->flip('horizontal');
+			case 5:
+				return $this->rotate(90)
+								->flip('horizontal');
+			case 6:
+				return $this->rotate(90);
+			case 7:
+				return $this->rotate(270)
+								->flip('horizontal');
+			case 8:
+				return $this->rotate(270);
+			default:
+				return $this;
+		}
+	}
 }
