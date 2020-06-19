@@ -1634,7 +1634,15 @@ class Model
 		{
 			$this->builder()->where($this->table . '.' . $this->deletedField, null);
 		}
-		$this->tempUseSoftDeletes = $this->useSoftDeletes;
+
+		// When $reset === false, the $tempUseSoftDeletes will be
+		// dependant on $useSoftDeletes value because we don't
+		// want to add the same "where" condition for the second time
+		$this->tempUseSoftDeletes = ($reset === true)
+			? $this->useSoftDeletes
+			: ($this->useSoftDeletes === true
+				? false
+				: $this->useSoftDeletes);
 
 		return $this->builder()->testMode($test)->countAllResults($reset);
 	}
