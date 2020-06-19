@@ -338,7 +338,12 @@ class Language
 	 */
 	protected function requireFile(string $path): array
 	{
-		$files   = Services::locator()->search($path);
+		// since the locator uses the namespaces to lookup
+		// the files (where the App and the Config namespace
+		// is preferred) we can simply turn around the array
+		// to have the most important file as the last file
+		// (which then overrides the files before)
+		$files   = array_reverse(Services::locator()->search($path));
 		$strings = [];
 
 		foreach ($files as $file)
