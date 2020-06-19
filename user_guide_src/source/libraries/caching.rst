@@ -255,19 +255,19 @@ Config options to connect to redis server stored in the cache configuration file
 		'timeout'  => 0,
 		'database' => 0,
 	];
-	
+
 For more information on Redis, please see
 `https://redis.io <https://redis.io>`_.
 
-=============
+==============
 Predis Caching
-=============
+==============
 
 Predis is a flexible and feature-complete PHP client library for the Redis key-value store.
 To use it, from the command line inside your project root::
 
     composer require predis/predis
-	
+
 For more information on Redis, please see
 `https://github.com/nrk/predis <https://github.com/nrk/predis>`_.
 

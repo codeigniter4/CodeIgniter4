@@ -164,7 +164,7 @@ you can use ``setOverrides()`` to specify the value for any fields::
     $fabricator->setOverrides(['first' => 'Bobby']);
     $bobbyUser = $fabricator->make();
 
-Now any data generated with ``make()`` or ``create()`` will always use "Bobby" for the ``first`` field:
+Now any data generated with ``make()`` or ``create()`` will always use "Bobby" for the ``first`` field::
 
     array(
         'first'  => "Bobby",
@@ -219,8 +219,7 @@ the ``fake($model, $overrides)`` function to do just this::
 	$user = fake('App\Models\UserModel', ['name' => 'Gerry']);
 
 This is equivalent to::
-	
+
     $fabricator = new Fabricator('App\Models\UserModel');
     $fabricator->setOverrides(['name' => 'Gerry']);
     $user = $fabricator->create();
-
