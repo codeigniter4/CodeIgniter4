@@ -56,12 +56,12 @@ class PredisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testGet()
 	{
-		$this->PredisHandler->save(self::$key1, 'value', 1);
+		$this->PredisHandler->save(self::$key1, 'value', 2);
 
 		$this->assertSame('value', $this->PredisHandler->get(self::$key1));
 		$this->assertNull($this->PredisHandler->get(self::$dummy));
 
-		\CodeIgniter\CLI\CLI::wait(2);
+		\CodeIgniter\CLI\CLI::wait(3);
 		$this->assertNull($this->PredisHandler->get(self::$key1));
 	}
 
