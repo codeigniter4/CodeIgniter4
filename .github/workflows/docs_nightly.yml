@@ -14,7 +14,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-      steps:
+    steps:
       - name: Build docs
         - uses: actions/checkout@v2
         - uses: ammaraskar/sphinx-action@master
