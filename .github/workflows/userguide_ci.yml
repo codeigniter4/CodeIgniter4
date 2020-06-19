@@ -2,8 +2,7 @@
 # any user guide build errors.
 name: UserGuide CI
 
-on:
-  - pull-request
+on: pull_request
 
 jobs:
   docs:
