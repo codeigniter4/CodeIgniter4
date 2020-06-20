@@ -236,6 +236,7 @@ what the values of the segments are. The segments start at 1 being the furthest 
 
 You can also set a different default value for a particular segment by using the second parameter of the ``getSegment()`` method. The default is empty string.
 ::
+
 	// URI = http://example.com/users/15/profile
 
 	// will print 'profile'
