@@ -98,6 +98,13 @@ class Model
 	protected $primaryKey = 'id';
 
 	/**
+	 * Primary key is autoincrement
+	 *
+	 * @var boolean
+	 */
+	protected $hasAutoincrement = true;
+
+	/**
 	 * Last insert ID
 	 *
 	 * @var integer
@@ -721,7 +728,19 @@ class Model
 				->insert();
 
 		// If insertion succeeded then save the insert ID
-		if ($result)
+		if ( ! $this->hasAutoincrement)
+		{
+			if (isset($data[$this->primaryKey]))
+			{
+				$this->insertID = $data[$this->primaryKey];
+			}
+			else
+			{
+				// ??
+				// INSERT INTO {$this->table} %data% RETURNING {$this->primaryKey}
+			}
+		}
+		elseif ($result)
 		{
 			$this->insertID = $this->db->insertID();
 		}
