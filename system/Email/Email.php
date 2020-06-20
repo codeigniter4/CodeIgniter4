@@ -1548,13 +1548,13 @@ class Email
 		}
 		$this->buildMessage();
 		$result = $this->spoolEmail();
-		if ($result && $autoClear)
-		{
-			$this->clear();
-		}
-
 		if ($result)
 		{
+			if ($autoClear)
+			{
+				$this->clear();
+			}
+
 			Events::trigger('email', get_object_vars($this));
 		}
 

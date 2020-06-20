@@ -39,7 +39,7 @@ class EmailTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 	}
 
-	public function testSuccessTriggersEvent()
+	public function testSuccessDoesTriggerEvent()
 	{
 		$config           = config('Email');
 		$config->validate = true;
@@ -58,7 +58,7 @@ class EmailTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(['foo@foo.com'], $result['recipients']);
 	}
 
-	public function testFailreDoesNotTriggerEvent()
+	public function testFailureDoesNotTriggerEvent()
 	{
 		$config           = config('Email');
 		$config->validate = true;

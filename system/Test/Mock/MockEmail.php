@@ -23,13 +23,13 @@ class MockEmail extends Email
 	{
 		$this->archive = get_object_vars($this);
 
-		if ($autoClear)
-		{
-			$this->clear();
-		}
-
 		if ($this->returnValue)
 		{
+			if ($autoClear)
+			{
+				$this->clear();
+			}
+
 			Events::trigger('email', $this->archive);
 		}
 
