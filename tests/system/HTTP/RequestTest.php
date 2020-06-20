@@ -290,6 +290,246 @@ class RequestTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testFetchGlobalFiltersWithNull()
+	{
+		$expected = [
+			'foo'     => false,
+			'number'  => 5,
+			'address' => [
+				'street'  => false,
+				'zipcode' => 91210,
+			],
+			'people'  => [
+				[
+					'name' => false,
+					'age'  => 26,
+					'pets' => [
+						'cats' => [
+							'name' => false,
+							'age'  => 3,
+						],
+					],
+				],
+				[
+					'name' => false,
+					'age'  => 23,
+					'pets' => [
+						'fishes' => [
+							'name' => false,
+							'age'  => 1,
+						],
+					],
+				],
+			],
+		];
+		$post     = [
+			'foo'     => 'bar',
+			'number'  => '5',
+			'address' => [
+				'street'  => 'Beverly Hills',
+				'zipcode' => '91210',
+			],
+			'people'  => [
+				[
+					'name' => 'Brandon',
+					'age'  => '26',
+					'pets' => [
+						'cats' => [
+							'name' => 'Simon',
+							'age'  => '3',
+						],
+					],
+				],
+				[
+					'name' => 'Brenda',
+					'age'  => '23',
+					'pets' => [
+						'fishes' => [
+							'name' => 'Nemo',
+							'age'  => '1',
+						],
+					],
+				],
+			],
+		];
+		$this->request->setGlobal('post', $post);
+
+		$this->assertEquals($expected, $this->request->fetchGlobal('post', null, FILTER_VALIDATE_INT));
+	}
+
+	public function testFetchGlobalFiltersWithValue()
+	{
+		$expected = [
+			[
+				'name' => false,
+				'age'  => 26,
+				'pets' => [
+					'cats' => [
+						'name' => false,
+						'age'  => 3,
+					],
+				],
+			],
+			[
+				'name' => false,
+				'age'  => 23,
+				'pets' => [
+					'fishes' => [
+						'name' => false,
+						'age'  => 1,
+					],
+				],
+			],
+		];
+		$post     = [
+			'foo'     => 'bar',
+			'number'  => '5',
+			'address' => [
+				'street'  => 'Beverly Hills',
+				'zipcode' => '91210',
+			],
+			'people'  => [
+				[
+					'name' => 'Brandon',
+					'age'  => '26',
+					'pets' => [
+						'cats' => [
+							'name' => 'Simon',
+							'age'  => '3',
+						],
+					],
+				],
+				[
+					'name' => 'Brenda',
+					'age'  => '23',
+					'pets' => [
+						'fishes' => [
+							'name' => 'Nemo',
+							'age'  => '1',
+						],
+					],
+				],
+			],
+		];
+		$this->request->setGlobal('post', $post);
+
+		$this->assertEquals($expected, $this->request->fetchGlobal('post', 'people', FILTER_VALIDATE_INT));
+	}
+
+	public function testFetchGlobalFiltersWithValues()
+	{
+		$expected = [
+			'address' => [
+				'street'  => false,
+				'zipcode' => 91210,
+			],
+			'people'  => [
+				[
+					'name' => false,
+					'age'  => 26,
+					'pets' => [
+						'cats' => [
+							'name' => false,
+							'age'  => 3,
+						],
+					],
+				],
+				[
+					'name' => false,
+					'age'  => 23,
+					'pets' => [
+						'fishes' => [
+							'name' => false,
+							'age'  => 1,
+						],
+					],
+				],
+			],
+		];
+		$post     = [
+			'foo'     => 'bar',
+			'number'  => '5',
+			'address' => [
+				'street'  => 'Beverly Hills',
+				'zipcode' => '91210',
+			],
+			'people'  => [
+				[
+					'name' => 'Brandon',
+					'age'  => '26',
+					'pets' => [
+						'cats' => [
+							'name' => 'Simon',
+							'age'  => '3',
+						],
+					],
+				],
+				[
+					'name' => 'Brenda',
+					'age'  => '23',
+					'pets' => [
+						'fishes' => [
+							'name' => 'Nemo',
+							'age'  => '1',
+						],
+					],
+				],
+			],
+		];
+		$this->request->setGlobal('post', $post);
+
+		$this->assertEquals($expected, $this->request->fetchGlobal('post', ['address', 'people'], FILTER_VALIDATE_INT));
+	}
+
+	public function testFetchGlobalFiltersWithArrayChildElement()
+	{
+		$expected = [
+			'name' => false,
+			'age'  => 26,
+			'pets' => [
+				'cats' => [
+					'name' => false,
+					'age'  => 3,
+				],
+			],
+		];
+		$post     = [
+			'foo'     => 'bar',
+			'number'  => '5',
+			'address' => [
+				'street'  => 'Beverly Hills',
+				'zipcode' => '91210',
+			],
+			'people'  => [
+				[
+					'name' => 'Brandon',
+					'age'  => '26',
+					'pets' => [
+						'cats' => [
+							'name' => 'Simon',
+							'age'  => '3',
+						],
+					],
+				],
+				[
+					'name' => 'Brenda',
+					'age'  => '23',
+					'pets' => [
+						'fishes' => [
+							'name' => 'Nemo',
+							'age'  => '1',
+						],
+					],
+				],
+			],
+		];
+		$this->request->setGlobal('post', $post);
+
+		$this->assertEquals($expected, $this->request->fetchGlobal('post', 'people[0]', FILTER_VALIDATE_INT));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function ipAddressChecks()
 	{
 		return [
