@@ -151,49 +151,9 @@ class GDHandler extends BaseHandler
 	{
 		$srcImg = $this->createImage();
 
-		$width  = $this->image()->origWidth;
-		$height = $this->image()->origHeight;
+		$angle = $direction === 'horizontal' ? IMG_FLIP_HORIZONTAL : IMG_FLIP_VERTICAL;
 
-		if ($direction === 'horizontal')
-		{
-			for ($i = 0; $i < $height; $i ++)
-			{
-				$left  = 0;
-				$right = $width - 1;
-
-				while ($left < $right)
-				{
-					$cl = imagecolorat($srcImg, $left, $i);
-					$cr = imagecolorat($srcImg, $right, $i);
-
-					imagesetpixel($srcImg, $left, $i, $cr);
-					imagesetpixel($srcImg, $right, $i, $cl);
-
-					$left ++;
-					$right --;
-				}
-			}
-		}
-		else
-		{
-			for ($i = 0; $i < $width; $i ++)
-			{
-				$top    = 0;
-				$bottom = $height - 1;
-
-				while ($top < $bottom)
-				{
-					$ct = imagecolorat($srcImg, $i, $top);
-					$cb = imagecolorat($srcImg, $i, $bottom);
-
-					imagesetpixel($srcImg, $i, $top, $cb);
-					imagesetpixel($srcImg, $i, $bottom, $ct);
-
-					$top ++;
-					$bottom --;
-				}
-			}
-		}
+		imageflip($srcImg, $angle);
 
 		$this->resource = $srcImg;
 
