@@ -498,6 +498,47 @@ class Model
 		return $eventData['data'];
 	}
 
+    	//--------------------------------------------------------------------
+
+    	/**
+     	* Returns the last row of the result set. Will take any previous
+     	* Query Builder calls into account when determining the result set.
+     	*
+     	* @return array|object|null
+     	*/
+    	public function last()
+    	{
+		$builder = $this->builder();
+
+		if ($this->tempUseSoftDeletes === true)
+		{
+	    		$builder->where($this->table . '.' . $this->deletedField, null);
+		}
+		else
+		{
+			if ($this->useSoftDeletes === true && empty($builder->QBGroupBy) && ! empty($this->primaryKey))
+			{
+				$builder->groupBy($this->table . '.' . $this->primaryKey);
+			}
+		}
+
+		// Some databases, like PostgreSQL, need order
+		// information to consistently return correct results.
+		if (! empty($builder->QBGroupBy) && empty($builder->QBOrderBy) && ! empty($this->primaryKey))
+		{
+	    		$builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
+		}
+
+		$eventData = $this->trigger('afterFind', [
+	    		'data' => $builder->get()->getLastRow($this->tempReturnType)
+		]);
+
+		$this->tempReturnType     = $this->returnType;
+		$this->tempUseSoftDeletes = $this->useSoftDeletes;
+
+		return $eventData['data'];
+    	}
+
 	//--------------------------------------------------------------------
 
 	/**
