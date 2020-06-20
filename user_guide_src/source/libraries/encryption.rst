@@ -82,7 +82,7 @@ an instance of either the `Config\\Encryption` class or an object
 that extends `CodeIgniter\\Config\\BaseConfig`.
 ::
 
-    $config         = new Config\Encryption();
+    $config         = new \Config\Encryption();
     $config->key    = 'aBigsecret_ofAtleast32Characters';
     $config->driver = 'OpenSSL';
 
