@@ -275,6 +275,14 @@ Returns the first row in the result set. This is best used in combination with t
     $user = $userModel->where('deleted', 0)
                       ->first();
 
+**last()**
+
+Returns the last row in the result set. This is best used in combination with the query builder.
+::
+
+    $user = $userModel->where('deleted', 0)
+                      ->last();
+
 **withDeleted()**
 
 If $useSoftDeletes is true, then the find* methods will not return any rows where 'deleted_at IS NOT NULL'.
@@ -777,6 +785,7 @@ afterFind         Varies by find* method. See the following:
                   **limit** = the number of rows to find.
                   **offset** = the number of rows to skip during the search.
 - first()         **data** = the resulting row found during the search, or null if none found.
+- last()          **data** = the resulting row found during the search, or null if none found.
 beforeDelete      Varies by delete* method. See the following:
 - delete()        **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
