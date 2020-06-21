@@ -3,6 +3,7 @@
 # deploy to gh-pages so that our development
 # docs are always up to date.
 name: "Update development docs"
+
 on:
   push:
     branches:
@@ -15,22 +16,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Build docs
-        - uses: actions/checkout@v2
-        - uses: ammaraskar/sphinx-action@master
-          with:
-            docs-folder: "user_guide_src/"
+        uses: ammaraskar/sphinx-action@master
+        with:
+          docs-folder: "user_guide_src/"
+
       - name: Commit documentation changes
-          run: |
-            git clone https://github.com/codeigniter4/CodeIgniter4.git --branch gh-pages --single-branch gh-pages
-            cp -r user_guide_src/_build/html/* gh-pages/
-            cd gh-pages
-            git config --local user.email "action@github.com"
-            git config --local user.name "${GITHUB_ACTOR}"
-            git add .
-            git commit -m "Update documentation" -a || true
-            # The above command will fail if no changes were present, so we ignore
-            # that.
+        run: |
+          git clone https://github.com/codeigniter4/CodeIgniter4.git --branch gh-pages --single-branch gh-pages
+          cp -r user_guide_src/_build/html/* gh-pages/
+          cd gh-pages
+          git config --local user.email "action@github.com"
+          git config --local user.name "${GITHUB_ACTOR}"
+          git add .
+          git commit -m "Update documentation" -a || true
+          # The above command will fail if no changes were present, so we ignore
+          # that.
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
