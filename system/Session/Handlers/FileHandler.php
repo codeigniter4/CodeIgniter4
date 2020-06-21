@@ -41,6 +41,22 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
+use function rtrim;
+use function ini_set;
+use function ini_get;
+use function md5;
+use function flock;
+use function fclose;
+use function unlink;
+use function rewind;
+use function is_resource;
+use function is_file;
+use function is_dir;
+use function clearstatcache;
+use function strlen;
+use function substr;
+use function time;
+
 
 /**
  * Session handler using file system for storage
@@ -97,12 +113,12 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 
 		if (! empty($config->sessionSavePath))
 		{
-			$this->savePath = \rtrim($config->sessionSavePath, '/\\');
-			\ini_set('session.save_path', $config->sessionSavePath);
+			$this->savePath = rtrim($config->sessionSavePath, '/\\');
+			ini_set('session.save_path', $config->sessionSavePath);
 		}
 		else
 		{
-			$sessionPath = \rtrim(\ini_get('session.save_path'), '/\\');
+			$sessionPath = rtrim(ini_get('session.save_path'), '/\\');
 
 			if (! $sessionPath)
 			{
@@ -132,7 +148,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	public function open($savePath, $name): bool
 	{
-		if (! \is_dir($savePath))
+		if (! is_dir($savePath))
 		{
 			if (! \mkdir($savePath, 0700, true))
 			{
@@ -147,7 +163,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		$this->savePath = $savePath;
 		$this->filePath = $this->savePath . '/'
 						  . $name // we'll use the session cookie name as a prefix to avoid collisions
-						  . ($this->matchIP ? \md5($this->ipAddress) : '');
+						  . ($this->matchIP ? md5($this->ipAddress) : '');
 
 		return true;
 	}
@@ -169,7 +185,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		// which re-reads session data
 		if ($this->fileHandle === null)
 		{
-			$this->fileNew = ! \is_file($this->filePath . $sessionID);
+			$this->fileNew = ! is_file($this->filePath . $sessionID);
 
 			if (($this->fileHandle = \fopen($this->filePath . $sessionID, 'c+b')) === false)
 			{
@@ -178,10 +194,10 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 				return false;
 			}
 
-			if (\flock($this->fileHandle, LOCK_EX) === false)
+			if (flock($this->fileHandle, LOCK_EX) === false)
 			{
 				$this->logger->error("Session: Unable to obtain lock for file '" . $this->filePath . $sessionID . "'.");
-				\fclose($this->fileHandle);
+				fclose($this->fileHandle);
 				$this->fileHandle = null;
 
 				return false;
@@ -196,19 +212,19 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 			if ($this->fileNew)
 			{
 				\chmod($this->filePath . $sessionID, 0600);
-				$this->fingerprint = \md5('');
+				$this->fingerprint = md5('');
 
 				return '';
 			}
 		}
 		else
 		{
-			\rewind($this->fileHandle);
+			rewind($this->fileHandle);
 		}
 
 		$session_data = '';
-		\clearstatcache();    // Address https://github.com/codeigniter4/CodeIgniter4/issues/2056
-		for ($read = 0, $length = \filesize($this->filePath . $sessionID); $read < $length; $read += \strlen($buffer))
+		clearstatcache();    // Address https://github.com/codeigniter4/CodeIgniter4/issues/2056
+		for ($read = 0, $length = \filesize($this->filePath . $sessionID); $read < $length; $read += strlen($buffer))
 		{
 			if (($buffer = \fread($this->fileHandle, $length - $read)) === false)
 			{
@@ -218,7 +234,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 			$session_data .= $buffer;
 		}
 
-		$this->fingerprint = \md5($session_data);
+		$this->fingerprint = md5($session_data);
 
 		return $session_data;
 	}
@@ -243,11 +259,11 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 			$this->sessionID = $sessionID;
 		}
 
-		if (! \is_resource($this->fileHandle))
+		if (! is_resource($this->fileHandle))
 		{
 			return false;
 		}
-		elseif ($this->fingerprint === \md5($sessionData))
+		elseif ($this->fingerprint === md5($sessionData))
 		{
 			return ($this->fileNew) ? true : \touch($this->filePath . $sessionID);
 		}
@@ -255,14 +271,14 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		if (! $this->fileNew)
 		{
 			\ftruncate($this->fileHandle, 0);
-			\rewind($this->fileHandle);
+			rewind($this->fileHandle);
 		}
 
-		if (($length = \strlen($sessionData)) > 0)
+		if (($length = strlen($sessionData)) > 0)
 		{
 			for ($written = 0; $written < $length; $written += $result)
 			{
-				if (($result = \fwrite($this->fileHandle, \substr($sessionData, $written))) === false)
+				if (($result = \fwrite($this->fileHandle, substr($sessionData, $written))) === false)
 				{
 					break;
 				}
@@ -270,14 +286,14 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 
 			if (! \is_int($result))
 			{
-				$this->fingerprint = \md5(\substr($sessionData, 0, $written));
+				$this->fingerprint = md5(substr($sessionData, 0, $written));
 				$this->logger->error('Session: Unable to write data.');
 
 				return false;
 			}
 		}
 
-		$this->fingerprint = \md5($sessionData);
+		$this->fingerprint = md5($sessionData);
 
 		return true;
 	}
@@ -293,10 +309,10 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	public function close(): bool
 	{
-		if (\is_resource($this->fileHandle))
+		if (is_resource($this->fileHandle))
 		{
-			\flock($this->fileHandle, LOCK_UN);
-			\fclose($this->fileHandle);
+			flock($this->fileHandle, LOCK_UN);
+			fclose($this->fileHandle);
 
 			$this->fileHandle = $this->fileNew = null;
 
@@ -321,15 +337,15 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		if ($this->close())
 		{
-			return \is_file($this->filePath . $session_id)
-				? (\unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
+			return is_file($this->filePath . $session_id)
+				? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
 		}
 		elseif ($this->filePath !== null)
 		{
-			\clearstatcache();
+			clearstatcache();
 
-			return \is_file($this->filePath . $session_id)
-				? (\unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
+			return is_file($this->filePath . $session_id)
+				? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
 		}
 
 		return false;
@@ -348,14 +364,14 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	public function gc($maxlifetime): bool
 	{
-		if (! \is_dir($this->savePath) || ($directory = \opendir($this->savePath)) === false)
+		if (! is_dir($this->savePath) || ($directory = \opendir($this->savePath)) === false)
 		{
 			$this->logger->debug("Session: Garbage collector couldn't list files under directory '" . $this->savePath . "'.");
 
 			return false;
 		}
 
-		$ts = \time() - $maxlifetime;
+		$ts = time() - $maxlifetime;
 
 		$pattern = $this->matchIP === true
 			? '[0-9a-f]{32}'
@@ -363,14 +379,14 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 
 		$pattern = \sprintf(
 			'#\A%s' . $pattern . $this->sessionIDRegex . '\z#',
-			preg_quote($this->cookieName)
+			\preg_quote($this->cookieName)
 		);
 
 		while (($file = \readdir($directory)) !== false)
 		{
 			// If the filename doesn't match this pattern, it's either not a session file or is not ours
 			if (! \preg_match($pattern, $file)
-				|| ! \is_file($this->savePath . DIRECTORY_SEPARATOR . $file)
+				|| ! is_file($this->savePath . DIRECTORY_SEPARATOR . $file)
 				|| ($mtime = \filemtime($this->savePath . DIRECTORY_SEPARATOR . $file)) === false
 				|| $mtime > $ts
 			)
@@ -378,7 +394,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 				continue;
 			}
 
-			\unlink($this->savePath . DIRECTORY_SEPARATOR . $file);
+			unlink($this->savePath . DIRECTORY_SEPARATOR . $file);
 		}
 
 		\closedir($directory);
@@ -393,14 +409,14 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	protected function configureSessionIDRegex()
 	{
-		$bitsPerCharacter = (int)\ini_get('session.sid_bits_per_character');
-		$SIDLength        = (int)\ini_get('session.sid_length');
+		$bitsPerCharacter = (int)ini_get('session.sid_bits_per_character');
+		$SIDLength        = (int)ini_get('session.sid_length');
 
 		if (($bits = $SIDLength * $bitsPerCharacter) < 160)
 		{
 			// Add as many more characters as necessary to reach at least 160 bits
-			$SIDLength += (int)ceil((160 % $bits) / $bitsPerCharacter);
-			\ini_set('session.sid_length', $SIDLength);
+			$SIDLength += (int) \ceil((160 % $bits) / $bitsPerCharacter);
+			ini_set('session.sid_length', $SIDLength);
 		}
 
 		// Yes, 4,5,6 are the only known possible values as of 2016-10-27

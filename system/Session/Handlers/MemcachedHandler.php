@@ -40,6 +40,9 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
+use function md5;
+use function time;
+use function Memcached;
 
 /**
  * Session handler using Memcache for persistence
@@ -120,8 +123,8 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	public function open($save_path, $name): bool
 	{
-		$this->memcached = new \Memcached();
-		$this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, true); // required for touch() usage
+		$this->memcached = new Memcached();
+		$this->memcached->setOption(Memcached::OPT_BINARY_PROTOCOL, true); // required for touch() usage
 
 		$server_list = [];
 
@@ -190,7 +193,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 			}
 
 			$session_data      = (string) $this->memcached->get($this->keyPrefix . $sessionID);
-			$this->fingerprint = \md5($session_data);
+			$this->fingerprint = md5($session_data);
 
 			return $session_data;
 		}
@@ -224,15 +227,15 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 				return false;
 			}
 
-			$this->fingerprint = \md5('');
+			$this->fingerprint = md5('');
 			$this->sessionID   = $sessionID;
 		}
 
 		if (isset($this->lockKey))
 		{
-			$this->memcached->replace($this->lockKey, \time(), 300);
+			$this->memcached->replace($this->lockKey, time(), 300);
 
-			if ($this->fingerprint !== ($fingerprint = \md5($sessionData)))
+			if ($this->fingerprint !== ($fingerprint = md5($sessionData)))
 			{
 				if ($this->memcached->set($this->keyPrefix . $sessionID, $sessionData, $this->sessionExpiration))
 				{
@@ -333,7 +336,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		if (isset($this->lockKey))
 		{
-			return $this->memcached->replace($this->lockKey, \time(), 300);
+			return $this->memcached->replace($this->lockKey, time(), 300);
 		}
 
 		// 30 attempts to obtain a lock, in case another request already has it
@@ -348,7 +351,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 				continue;
 			}
 
-			if (! $this->memcached->set($lock_key, \time(), 300))
+			if (! $this->memcached->set($lock_key, time(), 300))
 			{
 				$this->logger->error('Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID);
 
@@ -386,7 +389,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		if (isset($this->memcached, $this->lockKey) && $this->lock)
 		{
 			if (! $this->memcached->delete($this->lockKey) &&
-					$this->memcached->getResultCode() !== \Memcached::RES_NOTFOUND
+					$this->memcached->getResultCode() !== Memcached::RES_NOTFOUND
 			)
 			{
 				$this->logger->error('Session: Error while trying to free lock for ' . $this->lockKey);

@@ -43,6 +43,10 @@ use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\Database;
+use function strpos;
+use function md5;
+use function time;
+use function base64_encode;
 
 /**
  * Session handler using current Database for storage
@@ -112,11 +116,11 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 
 		// Determine Database type
 		$driver = \strtolower(\get_class($this->db));
-		if (\strpos($driver, 'mysql') !== false)
+		if (strpos($driver, 'mysql') !== false)
 		{
 			$this->platform = 'mysql';
 		}
-		elseif (\strpos($driver, 'postgre') !== false)
+		elseif (strpos($driver, 'postgre') !== false)
 		{
 			$this->platform = 'postgre';
 		}
@@ -160,7 +164,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		if ($this->lockSession($sessionID) === false)
 		{
-			$this->fingerprint = \md5('');
+			$this->fingerprint = md5('');
 			return '';
 		}
 
@@ -187,7 +191,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 			// ID regeneration, so we need to explicitly set this to
 			// FALSE instead of relying on the default ...
 			$this->rowExists   = false;
-			$this->fingerprint = \md5('');
+			$this->fingerprint = md5('');
 
 			return '';
 		}
@@ -204,7 +208,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 			$result = ($this->platform === 'postgre') ? \base64_decode(\rtrim($result->data)) : $result->data;
 		}
 
-		$this->fingerprint = \md5($result);
+		$this->fingerprint = md5($result);
 		$this->rowExists   = true;
 
 		return $result;
@@ -241,8 +245,8 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 			$insertData = [
 				'id'         => $sessionID,
 				'ip_address' => $this->ipAddress,
-				'timestamp'  => \time(),
-				'data'       => $this->platform === 'postgre' ? \base64_encode($sessionData) : $sessionData,
+				'timestamp'  => time(),
+				'data'       => $this->platform === 'postgre' ? base64_encode($sessionData) : $sessionData,
 			];
 
 			if (! $this->db->table($this->table)->insert($insertData))
@@ -250,7 +254,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 				return $this->fail();
 			}
 
-			$this->fingerprint = \md5($sessionData);
+			$this->fingerprint = md5($sessionData);
 			$this->rowExists   = true;
 
 			return true;
@@ -264,12 +268,12 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 
 		$updateData = [
-			'timestamp' => \time(),
+			'timestamp' => time(),
 		];
 
-		if ($this->fingerprint !== \md5($sessionData))
+		if ($this->fingerprint !== md5($sessionData))
 		{
-			$updateData['data'] = ($this->platform === 'postgre') ? \base64_encode($sessionData) : $sessionData;
+			$updateData['data'] = ($this->platform === 'postgre') ? base64_encode($sessionData) : $sessionData;
 		}
 
 		if (! $builder->update($updateData))
@@ -277,7 +281,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 			return $this->fail();
 		}
 
-		$this->fingerprint = \md5($sessionData);
+		$this->fingerprint = md5($sessionData);
 
 		return true;
 	}
@@ -347,7 +351,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	public function gc($maxlifetime): bool
 	{
-		return ($this->db->table($this->table)->delete('timestamp < ' . (\time() - $maxlifetime))) ? true : $this->fail();
+		return ($this->db->table($this->table)->delete('timestamp < ' . (time() - $maxlifetime))) ? true : $this->fail();
 	}
 
 	//--------------------------------------------------------------------
@@ -362,7 +366,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		if ($this->platform === 'mysql')
 		{
-			$arg = \md5($sessionID . ($this->matchIP ? '_' . $this->ipAddress : ''));
+			$arg = md5($sessionID . ($this->matchIP ? '_' . $this->ipAddress : ''));
 			if ($this->db->query("SELECT GET_LOCK('{$arg}', 300) AS ci_session_lock")->getRow()->ci_session_lock)
 			{
 				$this->lock = $arg;
