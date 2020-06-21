@@ -593,6 +593,7 @@ class Email
 	 */
 	public function setSubject($subject)
 	{
+		$this->subject = $subject;
 		$subject = $this->prepQEncoding($subject);
 		$this->setHeader('Subject', $subject);
 		return $this;
