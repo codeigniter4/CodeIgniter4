@@ -509,6 +509,24 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testGetPreviousPageWithSegmentHigherThanZero()
+	{
+		$uri = $this->uri;
+
+		$details = [
+			'uri'         => $uri,
+			'pageCount'   => 10,
+			'currentPage' => 3,
+			'total'       => 100,
+			'segment'     => 2,
+		];
+
+		$pager = new PagerRenderer($details);
+		$this->assertEquals('http://example.com/foo/2', $pager->getPreviousPage());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testHasNextPageReturnsTrueWhenLastIsMoreThanCurrent()
 	{
 		$uri = $this->uri;
@@ -525,5 +543,21 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNotNull($pager->getNextPage());
 		$this->assertTrue($pager->hasNextPage());
 		$this->assertEquals('http://example.com/foo?page=4', $pager->getNextPage());
+	}
+
+	public function testGetNextPageWithSegmentHigherThanZero()
+	{
+		$uri = $this->uri;
+
+		$details = [
+			'uri'         => $uri,
+			'pageCount'   => 10,
+			'currentPage' => 3,
+			'total'       => 100,
+			'segment'     => 2,
+		];
+
+		$pager = new PagerRenderer($details);
+		$this->assertEquals('http://example.com/foo/4', $pager->getNextPage());
 	}
 }
