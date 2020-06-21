@@ -40,9 +40,9 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
+use Memcached;
 use function md5;
 use function time;
-use function Memcached;
 
 /**
  * Session handler using Memcache for persistence
