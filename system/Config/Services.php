@@ -48,6 +48,7 @@ use CodeIgniter\Debug\Toolbar;
 use CodeIgniter\Encryption\EncrypterInterface;
 use CodeIgniter\Encryption\Encryption;
 use CodeIgniter\Filters\Filters;
+use CodeIgniter\Format\Format;
 use CodeIgniter\Honeypot\Honeypot;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\CURLRequest;
@@ -306,6 +307,31 @@ class Services extends BaseService
 		}
 
 		return new Filters($config, static::request(), static::response());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * The Format class works as a factory for formatters.
+	 *
+	 * @param mixed   $config
+	 * @param boolean $getShared
+	 *
+	 * @return \CodeIgniter\Format\Format
+	 */
+	public static function format($config = null, bool $getShared = true)
+	{
+		if ($getShared)
+		{
+			return static::getSharedInstance('format', $config);
+		}
+
+		if (is_null($config))
+		{
+			$config = new \Config\Format();
+		}
+
+		return new Format($config);
 	}
 
 	//--------------------------------------------------------------------
