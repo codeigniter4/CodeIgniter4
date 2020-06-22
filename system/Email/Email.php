@@ -56,6 +56,12 @@ use Config\Mimes;
 class Email
 {
 	/**
+	 * Properties from the last successful send.
+	 *
+	 * @var array
+	 */
+	public $archive = [];
+	/**
 	 * @var string
 	 */
 	public $fromEmail;
@@ -421,6 +427,7 @@ class Email
 		$this->BCCArray     = [];
 		$this->headers      = [];
 		$this->debugMessage = [];
+		$this->archive      = [];
 		$this->setHeader('Date', $this->setDate());
 		if ($clearAttachments !== false)
 		{
@@ -452,6 +459,11 @@ class Email
 				$this->validateEmail($this->stringToArray($returnPath));
 			}
 		}
+
+		// Archive the plain text values
+		$this->archive['fromEmail'] = $from;
+		$this->archive['fromName']  = $name;
+
 		// prepare the display name
 		if ($name !== '')
 		{
@@ -469,6 +481,8 @@ class Email
 		$this->setHeader('From', $name . ' <' . $from . '>');
 		isset($returnPath) || $returnPath = $from;
 		$this->setHeader('Return-Path', '<' . $returnPath . '>');
+		$this->archive['returnPath'] = $returnPath;
+
 		return $this;
 	}
 	//--------------------------------------------------------------------
@@ -492,6 +506,8 @@ class Email
 		}
 		if ($name !== '')
 		{
+			$this->archive['replyName'] = $name;
+
 			// only use Q encoding if there are characters that would require it
 			if (! preg_match('/[\200-\377]/', $name))
 			{
@@ -505,6 +521,10 @@ class Email
 		}
 		$this->setHeader('Reply-To', $name . ' <' . $replyto . '>');
 		$this->replyToFlag = true;
+
+		// Archive the plain text values
+		$this->archive['replyTo'] = $replyto;
+
 		return $this;
 	}
 	//--------------------------------------------------------------------
@@ -550,6 +570,7 @@ class Email
 		{
 			$this->CCArray = $cc;
 		}
+		$this->archive['CCArray'] = $cc;
 		return $this;
 	}
 	//--------------------------------------------------------------------
@@ -580,6 +601,7 @@ class Email
 		else
 		{
 			$this->setHeader('Bcc', implode(', ', $bcc));
+			$this->archive['BCCArray'] = $bcc;
 		}
 		return $this;
 	}
@@ -593,8 +615,8 @@ class Email
 	 */
 	public function setSubject($subject)
 	{
-		$this->subject = $subject;
-		$subject = $this->prepQEncoding($subject);
+		$this->archive['subject'] = $subject;
+		$subject                  = $this->prepQEncoding($subject);
 		$this->setHeader('Subject', $subject);
 		return $this;
 	}
@@ -1551,12 +1573,17 @@ class Email
 		$result = $this->spoolEmail();
 		if ($result)
 		{
+			// Determine the correct properties to archive
+			$archive = array_merge(get_object_vars($this), $this->archive);
+			unset($archive['archive']);
+
 			if ($autoClear)
 			{
 				$this->clear();
 			}
 
-			Events::trigger('email', get_object_vars($this));
+			Events::trigger('email', $archive);
+			$this->archive = $archive;
 		}
 
 		return $result;
@@ -1603,7 +1630,11 @@ class Email
 			$this->spoolEmail();
 		}
 
-		Events::trigger('email', $this->printDebugger());
+		// Update the archive
+		$archive = array_merge(get_object_vars($this), $this->archive);
+		unset($archive['archive']);
+		Events::trigger('email', $archive);
+		$this->archive = $archive;
 	}
 	//--------------------------------------------------------------------
 	/**

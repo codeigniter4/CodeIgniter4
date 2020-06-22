@@ -39,6 +39,35 @@ class EmailTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 	}
 
+	public function testEmailSendStoresArchive()
+	{
+		$config           = config('Email');
+		$config->validate = true;
+		$email            = new \CodeIgniter\Test\Mock\MockEmail($config);
+		$email->setTo('foo@foo.com');
+		$email->setFrom('bar@foo.com');
+		$email->setSubject('Archive Test');
+
+		$this->assertTrue($email->send());
+
+		$this->assertNotEmpty($email->archive);
+		$this->assertEquals(['foo@foo.com'], $email->archive['recipients']);
+		$this->assertEquals('bar@foo.com', $email->archive['fromEmail']);
+		$this->assertEquals('Archive Test', $email->archive['subject']);
+	}
+
+	public function testAutoClearLeavesArchive()
+	{
+		$config           = config('Email');
+		$config->validate = true;
+		$email            = new \CodeIgniter\Test\Mock\MockEmail($config);
+		$email->setTo('foo@foo.com');
+
+		$this->assertTrue($email->send(true));
+
+		$this->assertNotEmpty($email->archive);
+	}
+
 	public function testSuccessDoesTriggerEvent()
 	{
 		$config           = config('Email');

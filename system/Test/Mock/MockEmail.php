@@ -6,13 +6,6 @@ use CodeIgniter\Events\Events;
 class MockEmail extends Email
 {
 	/**
-	 * Record of mock emails sent.
-	 *
-	 * @var array
-	 */
-	public $archive = [];
-
-	/**
 	 * Value to return from mocked send().
 	 *
 	 * @var boolean
@@ -21,16 +14,19 @@ class MockEmail extends Email
 
 	public function send($autoClear = true)
 	{
-		$this->archive = get_object_vars($this);
-
 		if ($this->returnValue)
 		{
+			// Determine the correct properties to archive
+			$archive = array_merge(get_object_vars($this), $this->archive);
+			unset($archive['archive']);
+
 			if ($autoClear)
 			{
 				$this->clear();
 			}
 
-			Events::trigger('email', $this->archive);
+			Events::trigger('email', $archive);
+			$this->archive = $archive;
 		}
 
 		return $this->returnValue;
