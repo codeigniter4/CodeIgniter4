@@ -43,7 +43,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
 use Config\App;
-use Config\Format;
+use Config\Services;
 
 /**
  * Representation of an outgoing, getServer-side response.
@@ -212,13 +212,6 @@ class Response extends Message implements ResponseInterface
 	protected $cookies = [];
 
 	/**
-	 * Instance of Format class
-	 *
-	 * @var \CodeIgniter\Format\Format
-	 */
-	protected $format;
-
-	/**
 	 * If true, will not write output. Useful during testing.
 	 *
 	 * @var boolean
@@ -255,8 +248,6 @@ class Response extends Message implements ResponseInterface
 		$this->cookiePath     = $config->cookiePath;
 		$this->cookieSecure   = $config->cookieSecure;
 		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
-
-		$this->format = new Format(new \Config\Format());
 
 		// Default to an HTML Content-Type. Devs can override if needed.
 		$this->setContentType('text/html');
@@ -476,7 +467,8 @@ class Response extends Message implements ResponseInterface
 
 		if ($this->bodyFormat !== 'json')
 		{
-			$body = $this->format->getFormatter('application/json')->format($body);
+			$format = Services::format();
+			$body = $format->getFormatter('application/json')->format($body);
 		}
 
 		return $body ?: null;
@@ -512,7 +504,8 @@ class Response extends Message implements ResponseInterface
 
 		if ($this->bodyFormat !== 'xml')
 		{
-			$body = $this->format->getFormatter('application/xml')->format($body);
+			$format = Services::format();
+			$body = $format->getFormatter('application/xml')->format($body);
 		}
 
 		return $body;
@@ -539,7 +532,8 @@ class Response extends Message implements ResponseInterface
 		// Nothing much to do for a string...
 		if (! is_string($body) || $format === 'json-unencoded')
 		{
-			$body = $this->format->getFormatter($mime)->format($body);
+			$format = Services::format();
+			$body = $format->getFormatter($mime)->format($body);
 		}
 
 		return $body;
