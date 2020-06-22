@@ -39,12 +39,15 @@ if (! isset($_SERVER['app.baseURL']))
 }
 
 // Load necessary components
+require_once SYSTEMPATH . 'Config/AutoloadConfig.php';
 require_once APPPATH . 'Config/Autoload.php';
 require_once APPPATH . 'Config/Constants.php';
+require_once SYSTEMPATH . 'Modules/Modules.php';
 require_once APPPATH . 'Config/Modules.php';
 
 require_once SYSTEMPATH . 'Autoloader/Autoloader.php';
 require_once SYSTEMPATH . 'Config/BaseService.php';
+require_once SYSTEMPATH . 'Config/Services.php';
 require_once APPPATH . 'Config/Services.php';
 
 // Use Config\Services as CodeIgniter\Services
