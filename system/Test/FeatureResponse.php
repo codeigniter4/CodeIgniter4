@@ -414,9 +414,8 @@ class FeatureResponse extends TestCase
 
 		if (is_array($test))
 		{
-			$config    = new Format();
-			$formatter = $config->getFormatter('application/json');
-			$test      = $formatter->format($test);
+			$format    = new Format(new \Config\Format());
+			$test 	   = $format->getFormatter('application/json')->format($test);
 		}
 
 		$this->assertJsonStringEqualsJsonString($test, $json, 'Response does not contain matching JSON.');
