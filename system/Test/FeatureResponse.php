@@ -40,7 +40,7 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\ResponseInterface;
-use Config\Format;
+use Config\Services;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -414,7 +414,7 @@ class FeatureResponse extends TestCase
 
 		if (is_array($test))
 		{
-			$format    = new Format(new \Config\Format());
+			$format    = Services::format();
 			$test 	   = $format->getFormatter('application/json')->format($test);
 		}
 
