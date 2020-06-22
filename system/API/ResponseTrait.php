@@ -41,6 +41,7 @@ namespace CodeIgniter\API;
 
 use CodeIgniter\HTTP\Response;
 use Config\Format;
+use Config\Services;
 
 /**
  * Response trait.
@@ -386,32 +387,27 @@ trait ResponseTrait
 			return $data;
 		}
 
-		$config = new Format();
-		$format = "application/$this->format";
+		$mime = "application/$this->format";
 
 		// Determine correct response type through content negotiation if not explicitly declared
 		if (empty($this->format) || ! in_array($this->format, ['json', 'xml']))
 		{
-			$format = $this->request->negotiate('media', $config->supportedResponseFormats, false);
+			$config = new Format();
+			$mime = $this->request->negotiate('media', $config->supportedResponseFormats);
 		}
 
-		$this->response->setContentType($format);
+		$this->response->setContentType($mime);
 
-		// if we don't have a formatter, make one
-		if (! isset($this->formatter))
-		{
-			// if no formatter, use the default
-			$this->formatter = $config->getFormatter($format);
-		}
-
-		if ($format !== 'application/json')
+		if ($mime !== 'application/json')
 		{
 			// Recursively convert objects into associative arrays
 			// Conversion not required for JSONFormatter
 			$data = json_decode(json_encode($data), true);
 		}
+		
+		$format = Services::format();
 
-		return $this->formatter->format($data);
+		return $format->getFormatter($mime)->format($data);
 	}
 
 	/**
