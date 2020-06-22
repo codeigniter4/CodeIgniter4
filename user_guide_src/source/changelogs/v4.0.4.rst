@@ -1,0 +1,15 @@
+Version 4.0.4
+====================================================
+
+Release Date: Unreleased
+
+**4.0.4 release of CodeIgniter4**
+
+The location for the SQLite3 database has changed and by default will be now located in a ``writable/data`` folder instead of the ``public`` folder.
+
+Enhancements:
+
+
+Bugs Fixed:
+
+- Fixed location for the SQLite3 database which by default will be now located in a ``writable/data`` folder instead of the ``public`` folder.
