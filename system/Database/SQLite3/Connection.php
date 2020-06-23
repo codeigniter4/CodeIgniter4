@@ -88,7 +88,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$this->database = ($this->database === ':memory:')
 				? $this->database
 				: (strpos($this->database, DIRECTORY_SEPARATOR) === false
-					? WRITEPATH . DIRECTORY_SEPARATOR . $this->database
+					? WRITEPATH . $this->database
 					: $this->database);
 
 			return (! $this->password)
