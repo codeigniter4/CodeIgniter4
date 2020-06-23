@@ -2,7 +2,7 @@
 
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\FeatureResponse;
 use Config\App;
 use Config\Services;
