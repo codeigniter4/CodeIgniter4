@@ -32,7 +32,7 @@ class AlterTableTest extends CIDatabaseTestCase
 
 		$config = [
 			'DBDriver' => 'SQLite3',
-			'database' => ':memory:',
+			'database' => 'database.db',
 		];
 
 		$this->db    = db_connect($config);
