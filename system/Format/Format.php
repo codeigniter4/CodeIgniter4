@@ -92,4 +92,19 @@ class Format
 
 		return new $class();
 	}
+
+	/**
+	 * Get instance of format configuration class
+	 *
+	 * @return \Config\Format
+	 */
+	public function getConfig(): object
+	{
+		if (! $this->config instanceof \Config\Format)
+		{
+			return $this->config;
+		}
+
+		return new \Config\Format();
+	}
 }
