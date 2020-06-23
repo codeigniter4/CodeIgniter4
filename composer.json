@@ -28,6 +28,7 @@
         }
     },
     "scripts": {
+		"test": "phpunit",
         "post-update-cmd": [
             "@composer dump-autoload",
             "CodeIgniter\\ComposerScripts::postUpdate",

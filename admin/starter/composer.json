@@ -9,8 +9,9 @@
 		"codeigniter4/framework": "^4"
 	},
 	"require-dev": {
-		"mikey179/vfsstream": "1.6.*",
-		"phpunit/phpunit": "8.5.*"
+        "fzaninotto/faker": "^1.9@dev",
+        "mikey179/vfsstream": "1.6.*",
+        "phpunit/phpunit": "^8.5"
 	},
 	"autoload-dev": {
 		"psr-4": {
