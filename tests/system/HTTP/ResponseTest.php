@@ -5,7 +5,7 @@ use CodeIgniter\Config\Config;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
-use Config\Format;
+use Config\Services;
 use DateTime;
 use DateTimeZone;
 
@@ -341,8 +341,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testJSONWithArray()
 	{
 		$response  = new Response(new App());
-		$config    = new Format();
-		$formatter = $config->getFormatter('application/json');
 
 		$body     = [
 			'foo' => 'bar',
@@ -352,19 +350,16 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 				3,
 			],
 		];
-		$expected = $formatter->format($body);
 
 		$response->setJSON($body);
 
-		$this->assertEquals($expected, $response->getJSON());
+		$this->assertEquals(Services::format()->getFormatter('application/json')->format($body), $response->getJSON());
 		$this->assertTrue(strpos($response->getHeaderLine('content-type'), 'application/json') !== false);
 	}
 
 	public function testJSONGetFromNormalBody()
 	{
 		$response  = new Response(new App());
-		$config    = new Format();
-		$formatter = $config->getFormatter('application/json');
 
 		$body     = [
 			'foo' => 'bar',
@@ -374,11 +369,10 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 				3,
 			],
 		];
-		$expected = $formatter->format($body);
 
 		$response->setBody($body);
 
-		$this->assertEquals($expected, $response->getJSON());
+		$this->assertEquals(Services::format()->getFormatter('application/json')->format($body), $response->getJSON());
 	}
 
 	//--------------------------------------------------------------------
@@ -386,8 +380,6 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testXMLWithArray()
 	{
 		$response  = new Response(new App());
-		$config    = new Format();
-		$formatter = $config->getFormatter('application/xml');
 
 		$body     = [
 			'foo' => 'bar',
@@ -397,19 +389,16 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 				3,
 			],
 		];
-		$expected = $formatter->format($body);
 
 		$response->setXML($body);
 
-		$this->assertEquals($expected, $response->getXML());
+		$this->assertEquals(Services::format()->getFormatter('application/xml')->format($body), $response->getXML());
 		$this->assertTrue(strpos($response->getHeaderLine('content-type'), 'application/xml') !== false);
 	}
 
 	public function testXMLGetFromNormalBody()
 	{
 		$response  = new Response(new App());
-		$config    = new Format();
-		$formatter = $config->getFormatter('application/xml');
 
 		$body     = [
 			'foo' => 'bar',
@@ -419,11 +408,10 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 				3,
 			],
 		];
-		$expected = $formatter->format($body);
 
 		$response->setBody($body);
 
-		$this->assertEquals($expected, $response->getXML());
+		$this->assertEquals(Services::format()->getFormatter('application/xml')->format($body), $response->getXML());
 	}
 
 	//--------------------------------------------------------------------
