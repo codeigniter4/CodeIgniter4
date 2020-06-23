@@ -85,10 +85,13 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 		try
 		{
+			$dataPath = ROOTPATH . 'data';
+			! is_dir($dataPath) && mkdir($dataPath, 0777, true);
+
 			$this->database = ($this->database === ':memory:')
 				? $this->database
 				: (strpos($this->database, DIRECTORY_SEPARATOR) === false
-					? WRITEPATH . 'data' . DIRECTORY_SEPARATOR . $this->database
+					? $dataPath . DIRECTORY_SEPARATOR . $this->database
 					: $this->database);
 
 			return (! $this->password)
