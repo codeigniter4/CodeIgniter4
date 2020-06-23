@@ -13,6 +13,8 @@ on:
 
 jobs:
   build:
+    if: (github.repository == 'codeigniter4/CodeIgniter4')
+
     runs-on: ubuntu-latest
 
     steps:
