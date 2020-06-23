@@ -1727,20 +1727,18 @@ class Email
 	 */
 	protected function sendWithMail()
 	{
-		if (is_array($this->recipients))
-		{
-			$this->recipients = implode(', ', $this->recipients);
-		}
+		$recipients = is_array($this->recipients) ? implode(', ', $this->recipients) : $this->recipients;
+
 		// _validate_email_for_shell() below accepts by reference,
 		// so this needs to be assigned to a variable
 		$from = $this->cleanEmail($this->headers['Return-Path']);
 		if (! $this->validateEmailForShell($from))
 		{
-			return mail($this->recipients, $this->subject, $this->finalBody, $this->headerStr);
+			return mail($recipients, $this->subject, $this->finalBody, $this->headerStr);
 		}
 		// most documentation of sendmail using the "-f" flag lacks a space after it, however
 		// we've encountered servers that seem to require it to be in place.
-		return mail($this->recipients, $this->subject, $this->finalBody, $this->headerStr, '-f ' . $from);
+		return mail($recipients, $this->subject, $this->finalBody, $this->headerStr, '-f ' . $from);
 	}
 	//--------------------------------------------------------------------
 	/**
