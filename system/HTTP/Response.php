@@ -467,8 +467,7 @@ class Response extends Message implements ResponseInterface
 
 		if ($this->bodyFormat !== 'json')
 		{
-			$format = Services::format();
-			$body = $format->getFormatter('application/json')->format($body);
+			$body = Services::format()->getFormatter('application/json')->format($body);
 		}
 
 		return $body ?: null;
@@ -504,8 +503,7 @@ class Response extends Message implements ResponseInterface
 
 		if ($this->bodyFormat !== 'xml')
 		{
-			$format = Services::format();
-			$body = $format->getFormatter('application/xml')->format($body);
+			$body = Services::format()->getFormatter('application/xml')->format($body);
 		}
 
 		return $body;
@@ -532,8 +530,7 @@ class Response extends Message implements ResponseInterface
 		// Nothing much to do for a string...
 		if (! is_string($body) || $format === 'json-unencoded')
 		{
-			$format = Services::format();
-			$body = $format->getFormatter($mime)->format($body);
+			$body = Services::format()->getFormatter($mime)->format($body);
 		}
 
 		return $body;
