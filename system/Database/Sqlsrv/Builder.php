@@ -45,7 +45,6 @@ use CodeIgniter\Database\Exceptions\DataException;
  * Builder for Sqlsrv
  */
 class Builder extends BaseBuilder {
-
 	/// TODO: auto check for TextCastToInt
 	/// TODO: auto check for InsertIndexValue
 	/// TODO: replace: delete index entries before insert
@@ -69,13 +68,11 @@ class Builder extends BaseBuilder {
 	 * @var boolean
 	 */
 	protected $_quoted_identifier = true;
-
 	// handle increment/decrement on text
 	public $castTextToInt = true;
-
 	public $keyPermission = false;
 
-	protected function _truncate(string $table) : string
+	protected function _truncate(string $table): string
 	{
 		return 'TRUNCATE TABLE ' . $table;
 	}
@@ -98,14 +95,13 @@ class Builder extends BaseBuilder {
 
 		// check for index key
 		// TODO: implement check for this instad static $insertKeyPermission
-
 		// insert statement
 		$statement = 'INSERT INTO ' . $fullTableName . ' (' . implode(',', $keys) . ') VALUES (' . implode(', ', $unescapedKeys) . ')';
 
 		return $this->keyPermission ? $this->addIdentity($fullTableName, $statement) : $statement;
 	}
 
-	protected function _update(string $table, array $values) : string
+	protected function _update(string $table, array $values): string
 	{
 		$valstr = [];
 
@@ -115,7 +111,7 @@ class Builder extends BaseBuilder {
 		}
 
 		$statement = 'UPDATE ' . ( empty($this->QBLimit) ? '' : 'TOP(' . $this->QBLimit . ') ' ) . $table . ' SET '
-			. implode(', ', $valstr) . $this->compileWhereHaving('QBWhere') . $this->compileOrderBy();
+				. implode(', ', $valstr) . $this->compileWhereHaving('QBWhere') . $this->compileOrderBy();
 
 		return $this->keyPermission ? $this->addIdentity($this->getFullName($table), $statement) : $statement;
 	}
@@ -126,11 +122,11 @@ class Builder extends BaseBuilder {
 
 		if ($this->castTextToInt)
 		{
-			$values = [ $column => "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$column})) + {$value})" ];
+			$values = [$column => "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$column})) + {$value})"];
 		}
 		else
 		{
-			$values = [ $column => "{$column} + {$value}" ];
+			$values = [$column => "{$column} + {$value}"];
 		}
 		$sql = $this->_update($this->QBFrom[0], $values);
 
@@ -143,11 +139,11 @@ class Builder extends BaseBuilder {
 
 		if ($this->castTextToInt)
 		{
-			$values = [ $column => "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$column})) - {$value})" ];
+			$values = [$column => "CONVERT(VARCHAR(MAX),CONVERT(INT,CONVERT(VARCHAR(MAX), {$column})) - {$value})"];
 		}
 		else
 		{
-			$values = [ $column => "{$column} + {$value}" ];
+			$values = [$column => "{$column} + {$value}"];
 		}
 		$sql = $this->_update($this->QBFrom[0], $values);
 
@@ -173,17 +169,32 @@ class Builder extends BaseBuilder {
 		return 'SET IDENTITY_INSERT ' . $fullTable . " ON\n" . $insert . "\nSET IDENTITY_INSERT " . $fullTable . ' OFF';
 	}
 
-	// not used -> custom implementation required
+	/**
+	 * Local implementation of limit
+	 *
+	 * @param  string  $sql
+	 * @param  boolean $offsetIgnore
+	 * @return string
+	 */
 	protected function _limit(string $sql, bool $offsetIgnore = false): string
 	{
-		// As of SQL Server 2012 (11.0.*) OFFSET is supported
-		if (version_compare($this->version(), '11', '>='))
-		{
-			// SQL Server OFFSET-FETCH can be used only with the ORDER BY clause
-			empty($this->qb_orderby) && $sql .= ' ORDER BY 1';
+		// Ref ->  return $sql . ' LIMIT ' . (false === $offsetIgnore && $this->QBOffset ? $this->QBOffset . ', ' : '') . $this->QBLimit;
 
-			return $sql . ' OFFSET ' . (int) $this->qb_offset . ' ROWS FETCH NEXT ' . $this->qb_limit . ' ROWS ONLY';
+		if (empty($this->QBOrderBy))
+		{
+			$sql .= ' ORDER BY (SELECT NULL) ';
 		}
+
+		if (true === $offsetIgnore)
+		{
+			$sql .= ' OFFSET 0 ';
+		}
+		else
+		{
+			$sql .= is_int( $this->QBOffset) ? ' OFFSET ' . $this->QBOffset : ' OFFSET 0 ';
+		}
+
+		return $sql .= ' ROWS FETCH NEXT ' . $this->QBLimit . ' ROWS ONLY ';
 	}
 
 	public function replace(array $set = null)
@@ -191,7 +202,7 @@ class Builder extends BaseBuilder {
 		$keyPermission = $this->keyPermission;
 		// TODO: delete old entry
 		$this->keyPermission = true;
-		$this->insert( $set );
+		$this->insert($set);
 		$this->keyPermission = $keyPermission;
 	}
 
@@ -239,12 +250,7 @@ class Builder extends BaseBuilder {
 			return parent::compileSelect($select_override);
 		}
 
-		$sql = ( ! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
-
-		if (! empty($this->QBLimit))
-		{
-			$sql .= 'TOP ' . $this->QBLimit . ' ';
-		}
+		$sql = (! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
 
 		if (empty($this->QBSelect))
 		{
@@ -277,11 +283,15 @@ class Builder extends BaseBuilder {
 		}
 
 		$sql .= $this->compileWhereHaving('QBWhere')
-			. $this->compileGroupBy()
-			. $this->compileWhereHaving('QBHaving')
-			. $this->compileOrderBy(); // ORDER BY
+				. $this->compileGroupBy()
+				. $this->compileWhereHaving('QBHaving')
+				. $this->compileOrderBy(); // ORDER BY
+		// LIMIT
+		if ($this->QBLimit)
+		{
+			return $sql = $this->_limit($sql . "\n");
+		}
 
-			var_dump($sql);
 		return $sql;
 	}
 
@@ -356,4 +366,5 @@ class Builder extends BaseBuilder {
 
 		return $this;
 	}
+
 }
