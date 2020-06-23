@@ -68,6 +68,23 @@ class EmailTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNotEmpty($email->archive);
 	}
 
+	public function testEmailSendRepeatUpdatesArchive()
+	{
+		$config = config('Email');
+		$email  = new \CodeIgniter\Test\Mock\MockEmail($config);
+		$email->setTo('foo@foo.com');
+		$email->setFrom('bar@foo.com');
+
+		$this->assertTrue($email->send());
+
+		$email->setFrom('');
+		$email->setSubject('Archive Test');
+		$this->assertTrue($email->send());
+
+		$this->assertEquals('', $email->archive['fromEmail']);
+		$this->assertEquals('Archive Test', $email->archive['subject']);
+	}
+
 	public function testSuccessDoesTriggerEvent()
 	{
 		$config           = config('Email');

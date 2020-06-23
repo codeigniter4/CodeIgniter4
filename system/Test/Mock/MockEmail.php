@@ -16,17 +16,14 @@ class MockEmail extends Email
 	{
 		if ($this->returnValue)
 		{
-			// Determine the correct properties to archive
-			$archive = array_merge(get_object_vars($this), $this->archive);
-			unset($archive['archive']);
+			$this->setArchiveValues();
 
 			if ($autoClear)
 			{
 				$this->clear();
 			}
 
-			Events::trigger('email', $archive);
-			$this->archive = $archive;
+			Events::trigger('email', $this->archive);
 		}
 
 		return $this->returnValue;

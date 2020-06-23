@@ -58,9 +58,15 @@ class Email
 	/**
 	 * Properties from the last successful send.
 	 *
+	 * @var array|null
+	 */
+	public $archive;
+	/**
+	 * Properties to be added to the next archive.
+	 *
 	 * @var array
 	 */
-	public $archive = [];
+	protected $tmpArchive = [];
 	/**
 	 * @var string
 	 */
@@ -427,7 +433,6 @@ class Email
 		$this->BCCArray     = [];
 		$this->headers      = [];
 		$this->debugMessage = [];
-		$this->archive      = [];
 		$this->setHeader('Date', $this->setDate());
 		if ($clearAttachments !== false)
 		{
@@ -460,9 +465,9 @@ class Email
 			}
 		}
 
-		// Archive the plain text values
-		$this->archive['fromEmail'] = $from;
-		$this->archive['fromName']  = $name;
+		// Store the plain text values
+		$this->tmpArchive['fromEmail'] = $from;
+		$this->tmpArchive['fromName']  = $name;
 
 		// prepare the display name
 		if ($name !== '')
@@ -481,7 +486,7 @@ class Email
 		$this->setHeader('From', $name . ' <' . $from . '>');
 		isset($returnPath) || $returnPath = $from;
 		$this->setHeader('Return-Path', '<' . $returnPath . '>');
-		$this->archive['returnPath'] = $returnPath;
+		$this->tmpArchive['returnPath'] = $returnPath;
 
 		return $this;
 	}
@@ -506,7 +511,7 @@ class Email
 		}
 		if ($name !== '')
 		{
-			$this->archive['replyName'] = $name;
+			$this->tmpArchive['replyName'] = $name;
 
 			// only use Q encoding if there are characters that would require it
 			if (! preg_match('/[\200-\377]/', $name))
@@ -520,10 +525,8 @@ class Email
 			}
 		}
 		$this->setHeader('Reply-To', $name . ' <' . $replyto . '>');
-		$this->replyToFlag = true;
-
-		// Archive the plain text values
-		$this->archive['replyTo'] = $replyto;
+		$this->replyToFlag           = true;
+		$this->tmpArchive['replyTo'] = $replyto;
 
 		return $this;
 	}
@@ -570,7 +573,7 @@ class Email
 		{
 			$this->CCArray = $cc;
 		}
-		$this->archive['CCArray'] = $cc;
+		$this->tmpArchive['CCArray'] = $cc;
 		return $this;
 	}
 	//--------------------------------------------------------------------
@@ -601,7 +604,7 @@ class Email
 		else
 		{
 			$this->setHeader('Bcc', implode(', ', $bcc));
-			$this->archive['BCCArray'] = $bcc;
+			$this->tmpArchive['BCCArray'] = $bcc;
 		}
 		return $this;
 	}
@@ -615,8 +618,9 @@ class Email
 	 */
 	public function setSubject($subject)
 	{
-		$this->archive['subject'] = $subject;
-		$subject                  = $this->prepQEncoding($subject);
+		$this->tmpArchive['subject'] = $subject;
+
+		$subject = $this->prepQEncoding($subject);
 		$this->setHeader('Subject', $subject);
 		return $this;
 	}
@@ -1573,17 +1577,14 @@ class Email
 		$result = $this->spoolEmail();
 		if ($result)
 		{
-			// Determine the correct properties to archive
-			$archive = array_merge(get_object_vars($this), $this->archive);
-			unset($archive['archive']);
+			$this->setArchiveValues();
 
 			if ($autoClear)
 			{
 				$this->clear();
 			}
 
-			Events::trigger('email', $archive);
-			$this->archive = $archive;
+			Events::trigger('email', $this->archive);
 		}
 
 		return $result;
@@ -1631,10 +1632,8 @@ class Email
 		}
 
 		// Update the archive
-		$archive = array_merge(get_object_vars($this), $this->archive);
-		unset($archive['archive']);
-		Events::trigger('email', $archive);
-		$this->archive = $archive;
+		$this->setArchiveValues();
+		Events::trigger('email', $this->archive);
 	}
 	//--------------------------------------------------------------------
 	/**
@@ -2170,5 +2169,22 @@ class Email
 			return mb_substr($str, $start, $length, '8bit');
 		}
 		return isset($length) ? substr($str, $start, $length) : substr($str, $start);
+	}
+	//--------------------------------------------------------------------
+	/**
+	 * Determines the values that should be stored in $archive.
+	 *
+	 * @return array The updated archive values
+	 */
+	protected function setArchiveValues(): array
+	{
+		// Get property values and add anything prepped in tmpArchive
+		$this->archive = array_merge(get_object_vars($this), $this->tmpArchive);
+		unset($this->archive['archive']);
+
+		// Clear tmpArchive for next run
+		$this->tmpArchive = [];
+
+		return $this->archive;
 	}
 }
