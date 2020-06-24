@@ -201,7 +201,7 @@ if (! function_exists('delete_files'))
 
 			return true;
 		}
-		catch (\Exception $e)
+		catch (\Throwable $e)
 		{
 			return false;
 		}
