@@ -40,7 +40,6 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Events\Events;
-use Config\Paths;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -245,8 +244,6 @@ class CIUnitTestCase extends TestCase
 	 */
 	protected function createApplication()
 	{
-		$paths = new Paths();
-
 		return require realpath(__DIR__ . '/../') . '/bootstrap.php';
 	}
 
