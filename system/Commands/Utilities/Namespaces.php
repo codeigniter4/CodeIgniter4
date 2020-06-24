@@ -110,11 +110,11 @@ class Namespaces extends BaseCommand
 		$tbody = [];
 		foreach ($config->psr4 as $ns => $path)
 		{
-			$path = realpath($path) ?? $path;
+			$path = realpath($path) ?: $path;
 
 			$tbody[] = [
 				$ns,
-				realpath($path) ?? $path,
+				realpath($path) ?: $path,
 				is_dir($path) ? 'Yes' : 'MISSING',
 			];
 		}
