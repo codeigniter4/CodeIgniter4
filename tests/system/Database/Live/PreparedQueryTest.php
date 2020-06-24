@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Test\CIDatabaseTestCase;
@@ -6,11 +8,10 @@ use CodeIgniter\Test\CIDatabaseTestCase;
 /**
  * @group DatabaseLive
  */
-class PreparedQueryTest extends CIDatabaseTestCase
-{
-	protected $refresh = true;
+class PreparedQueryTest extends CIDatabaseTestCase {
 
-	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+	protected $refresh = true;
+	protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	//--------------------------------------------------------------------
 
@@ -35,7 +36,15 @@ class PreparedQueryTest extends CIDatabaseTestCase
 			$placeholders = '$1, $2';
 		}
 
-		$expected = "INSERT INTO {$ec}{$pre}user{$ec} ({$ec}name{$ec}, {$ec}email{$ec}) VALUES ({$placeholders})";
+		if ($this->db->DBDriver === 'Sqlsrv')
+		{
+			$database = $this->db->getDatabase();
+			$expected = "INSERT INTO {$ec}{$database}{$ec}.{$ec}dbo{$ec}.{$ec}{$pre}user{$ec} ({$ec}name{$ec},{$ec}email{$ec}) VALUES ({$placeholders})";
+		}
+		else
+		{
+			$expected = "INSERT INTO {$ec}{$pre}user{$ec} ({$ec}name{$ec}, {$ec}email{$ec}) VALUES ({$placeholders})";
+		}
 		$this->assertEquals($expected, $query->getQueryString());
 
 		$query->close();
@@ -63,5 +72,4 @@ class PreparedQueryTest extends CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
-
 }
