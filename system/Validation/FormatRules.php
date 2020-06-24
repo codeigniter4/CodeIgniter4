@@ -368,11 +368,11 @@ class FormatRules
 			{
 				return false;
 			}
-
-			$str = $matches[2];
 		}
-
-		$str = 'http://' . $str;
+		else
+		{
+			return false;
+		}
 
 		return (filter_var($str, FILTER_VALIDATE_URL) !== false);
 	}

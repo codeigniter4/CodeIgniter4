@@ -77,11 +77,9 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 		$data = [
 			'foo' => $url,
 		];
-
 		$this->validation->setRules([
 			'foo' => 'valid_url',
 		]);
-
 		$this->assertEquals($expected, $this->validation->run($data));
 	}
 
@@ -90,7 +88,7 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 		return [
 			[
 				'www.codeigniter.com',
-				true,
+				false,
 			],
 			[
 				'http://codeigniter.com',
@@ -104,6 +102,10 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 			[
 				'http://reject_underscores',
 				false,
+			],
+			[
+				'http://codeingiter.com/index_a.html',
+				true,
 			],
 			// https://github.com/codeigniter4/CodeIgniter/issues/4415
 			[
@@ -127,24 +129,13 @@ class FormatRulesTest extends \CodeIgniter\Test\CIUnitTestCase
 				false,
 			],
 			[
-				'http://',
-				true,
-			], // this is apparently valid!
-			[
 				'http:///oops.com',
 				false,
 			],
+			//https://github.com/codeigniter4/CodeIgniter4/issues/3156
 			[
-				'123.com',
-				true,
-			],
-			[
-				'abc.123',
-				true,
-			],
-			[
-				'http:8080//abc.com',
-				true,
+				'codeigniter',
+				false,
 			],
 		];
 	}
