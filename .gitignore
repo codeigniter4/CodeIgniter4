@@ -60,10 +60,10 @@ writable/session/*
 writable/uploads/*
 !writable/uploads/index.html
 
-writable/data/*
-!writable/data/index.html
-
 writable/debugbar/*
+
+writable/*.db
+writable/*.sqlite
 
 php_errors.log
 
