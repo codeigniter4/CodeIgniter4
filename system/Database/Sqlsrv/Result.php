@@ -45,8 +45,8 @@ use stdClass;
 /**
  * Result for Sqlsrv
  */
-class Result extends BaseResult implements ResultInterface
-{
+class Result extends BaseResult implements ResultInterface {
+
 	/**
 	 * Row offset
 	 *
@@ -165,8 +165,9 @@ class Result extends BaseResult implements ResultInterface
 	protected function fetchObject(string $className = 'stdClass')
 	{
 		//return sqlsrv_fetch_object($this->resultID, $className, null, SQLSRV_SCROLL_RELATIVE, $this->rowOffset );
-		return sqlsrv_fetch_object($this->resultID, $className );
+		return sqlsrv_fetch_object($this->resultID, $className);
 	}
 
 	//--------------------------------------------------------------------
+
 }
