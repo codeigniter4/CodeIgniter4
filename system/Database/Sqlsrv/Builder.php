@@ -39,7 +39,10 @@
 namespace CodeIgniter\Database\Sqlsrv;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\ResultInterface;
+use const CI_DEBUG;
 
 /**
  * Builder for Sqlsrv
@@ -191,7 +194,7 @@ class Builder extends BaseBuilder {
 		}
 		else
 		{
-			$sql .= is_int( $this->QBOffset) ? ' OFFSET ' . $this->QBOffset : ' OFFSET 0 ';
+			$sql .= is_int($this->QBOffset) ? ' OFFSET ' . $this->QBOffset : ' OFFSET 0 ';
 		}
 
 		return $sql .= ' ROWS FETCH NEXT ' . $this->QBLimit . ' ROWS ONLY ';
@@ -240,7 +243,54 @@ class Builder extends BaseBuilder {
 
 	protected function _delete(string $table): string
 	{
-		return 'DELETE' . (empty($this->QBLimit) ? '' : ' TOP ' . $this->QBLimit . '') . ' FROM ' . $table . $this->compileWhereHaving('QBWhere');
+		return 'DELETE' . (empty($this->QBLimit) ? '' : ' TOP (' . $this->QBLimit . ') ') . ' FROM ' . $table . $this->compileWhereHaving('QBWhere');
+	}
+
+	/**
+	 * Delete
+	 *
+	 * Compiles a delete string and runs the query
+	 *
+	 * @param mixed   $where      The where clause
+	 * @param integer $limit      The limit clause
+	 * @param boolean $reset_data
+	 *
+	 * @return mixed
+	 * @throws DatabaseException
+	 */
+	public function delete($where = '', int $limit = null, bool $reset_data = true)
+	{
+		$table = $this->db->protectIdentifiers($this->QBFrom[0], true, null, false);
+
+		if ($where !== '')
+		{
+			$this->where($where);
+		}
+
+		if (empty($this->QBWhere))
+		{
+			if (CI_DEBUG)
+			{
+				throw new DatabaseException('Deletes are not allowed unless they contain a "where" or "like" clause.');
+			}
+			// @codeCoverageIgnoreStart
+			return false;
+			// @codeCoverageIgnoreEnd
+		}
+
+		if (! empty($limit))
+		{
+			$this->QBLimit = $limit;
+		}
+
+		$sql = $this->_delete($table);
+
+		if ($reset_data)
+		{
+			$this->resetWrite();
+		}
+
+		return $this->testMode ? $sql : $this->db->query($sql, $this->binds, false);
 	}
 
 	protected function compileSelect($select_override = false): string
@@ -365,6 +415,38 @@ class Builder extends BaseBuilder {
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Get
+	 *
+	 * Compiles the select statement based on the other functions called
+	 * and runs the query
+	 *
+	 * @param integer $limit  The limit clause
+	 * @param integer $offset The offset clause
+	 * @param boolean $reset  Are we want to clear query builder values?
+	 *
+	 * @return ResultInterface
+	 */
+	public function get(int $limit = null, int $offset = 0, bool $reset = true)
+	{
+		if (! is_null($limit))
+		{
+			$this->limit($limit, $offset);
+		}
+
+		$result = $this->testMode ? $this->getCompiledSelect($reset) : $this->db->query($this->compileSelect(), $this->binds, false);
+
+		if ($reset === true)
+		{
+			$this->resetSelect();
+
+			// Clear our binds so we don't eat up memory
+			$this->binds = [];
+		}
+
+		return $result;
 	}
 
 }
