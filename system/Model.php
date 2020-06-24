@@ -759,9 +759,8 @@ class Model
 	 *
 	 * @param array   $set       An associative array of insert values
 	 * @param boolean $escape    Whether to escape values and identifiers
-	 *
-	 * @param integer $batchSize
-	 * @param boolean $testing
+	 * @param integer $batchSize The size of the batch to run
+	 * @param boolean $testing   True means only number of records is returned, false will execute the query
 	 *
 	 * @return integer|boolean Number of rows inserted or FALSE on failure
 	 */
@@ -778,7 +777,7 @@ class Model
 			}
 		}
 
-		return $this->builder()->insertBatch($set, $escape, $batchSize, $testing);
+		return $this->builder()->testMode($testing)->insertBatch($set, $escape, $batchSize);
 	}
 
 	//--------------------------------------------------------------------
@@ -901,7 +900,7 @@ class Model
 			}
 		}
 
-		return $this->builder()->updateBatch($set, $index, $batchSize, $returnSQL);
+		return $this->builder()->testMode($returnSQL)->updateBatch($set, $index, $batchSize);
 	}
 
 	//--------------------------------------------------------------------
