@@ -40,7 +40,6 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Events\Events;
-use Config\Paths;
 use PHPUnit\Framework\TestCase;
 
 /**
