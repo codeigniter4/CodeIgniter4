@@ -155,8 +155,15 @@ class Builder extends BaseBuilder {
 
 	private function getFullName(string $table): string
 	{
-		// TODO: replace static dbo group with config
-		return '[' . $this->db->getDatabase() . '].[dbo].[' . str_replace('"', '', $table) . ']';
+		// TODO: replace static dbo schema with config option
+		if ('"' === $this->db->escapeChar)
+		{
+			return '"' . $this->db->getDatabase() . '"."dbo"."' . str_replace('"', '', $table) . '"';
+		}
+		else
+		{
+			return '[' . $this->db->getDatabase() . '].[dbo].[' . str_replace('"', '', $table) . ']';
+		}
 	}
 
 	/**
