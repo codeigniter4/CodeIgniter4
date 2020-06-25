@@ -48,22 +48,11 @@ use CodeIgniter\Database\BasePreparedQuery;
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface {
 
 	/**
-	 * Stores the name this query can be
-	 * used under by postgres. Only used internally.
+	 * Parameters array used to store the dynamic variables.
 	 *
-	 * @var string
+	 * @var array
 	 */
-	protected $name;
-
-	/**
-	 * The result resource from a successful
-	 * pg_exec. Or false.
-	 *
-	 * @var
-	 */
-	protected $result;
-
-	//--------------------------------------------------------------------
+	protected $parameters = [];
 
 	/**
 	 * Prepares the query against the database, and saves the connection
@@ -73,25 +62,25 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface 
 	 * override this method.
 	 *
 	 * @param string $sql
-	 * @param array  $options Passed to the connection's prepare statement.
-	 *                        Unused in the MySQLi driver.
+	 * @param array  $options Options takes an associative array;
 	 *
 	 * @return mixed
 	 * @throws \Exception
 	 */
 	public function _prepare(string $sql, array $options = [])
 	{
-		$this->name = random_int(1, 10000000000000000);
+		/* Prepare parameters for the query */
+		$queryString = $this->getQueryString();
 
-		//$sql = $this->parameterize($sql);
-		// Update the query object since the parameters are slightly different
-		// than what was put in.
-		$this->query->setQuery($sql);
+		$parameters = $this->parameterize($queryString);
 
-		if (! $this->statement = sqlsrv_prepare($this->db->connID, $sql, $options))
+		/* Prepare  the query */
+		$this->statement = sqlsrv_prepare($this->db->connID, $sql, $parameters);
+
+		if (! $this->statement)
 		{
 			$this->errorCode   = 0;
-			$this->errorString = sqlsrv_errors($this->db->connID);
+			$this->errorString = sqlsrv_errors();
 		}
 
 		return $this;
@@ -114,6 +103,11 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface 
 			throw new \BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
 		}
 
+		foreach ($data as $key => $value)
+		{
+			$this->parameters[$key] = $value;
+		}
+
 		$this->result = sqlsrv_execute($this->statement);
 
 		return (bool) $this->result;
@@ -134,25 +128,25 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Replaces the ? placeholders with $1, $2, etc parameters for use
-	 * within the prepared query.
 	 *
-	 * @param string $sql
-	 *
-	 * @return string
+	 * @param  string $querystring
+	 * @return array
 	 */
-	public function parameterize(string $sql): string
+	protected function parameterize(string $querystring): array
 	{
-		// Track our current value
-		$count = 0;
+		$numberOfVariables = substr_count($querystring, '?');
 
-		$sql = preg_replace_callback('/\?/', function ($matches) use (&$count) {
-			$count++;
-			return "\${$count}";
-		}, $sql);
+		$params = [];
 
-		return $sql;
+		for ($c = 0; $c < $numberOfVariables; $c++)
+		{
+			$this->parameters[$c] = null;
+			$params[]             = &$this->parameters[$c];
+		}
+
+		return $params;
 	}
 
 	//--------------------------------------------------------------------
+
 }
