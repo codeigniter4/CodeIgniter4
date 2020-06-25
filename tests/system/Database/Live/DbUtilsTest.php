@@ -139,7 +139,7 @@ class DbUtilsTest extends CIDatabaseTestCase
 
 		$d = $util->optimizeTable('db_job');
 
-		if ($this->db->DBDriver === 'Postgre' || $this->db->DBDriver === 'SQLite3')
+		if ($this->db->DBDriver === 'Postgre' || $this->db->DBDriver === 'SQLite3' || $this->db->DBDriver === 'Sqlsrv')
 		{
 			$this->assertFalse((bool)$d);
 		}

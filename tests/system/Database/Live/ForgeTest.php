@@ -606,6 +606,16 @@ class ForgeTest extends CIDatabaseTestCase
 
 			$this->assertEquals($fieldsData[1]->default, null);
 		}
+		elseif ($this->db->DBDriver === 'Sqlsrv')
+		{
+			//Check types
+			$this->assertEquals($fieldsData[0]->type, 'int');
+			$this->assertEquals($fieldsData[0]->max_length, 10);
+
+			$this->assertEquals($fieldsData[1]->type, 'varchar');
+			$this->assertNull($fieldsData[1]->default);
+			$this->assertEquals($fieldsData[1]->max_length, 255);
+		}
 		else
 		{
 			$this->assertTrue(false, 'DB Driver not supported');
@@ -677,6 +687,20 @@ class ForgeTest extends CIDatabaseTestCase
 			$this->assertEquals($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
 			$this->assertEquals($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
 			$this->assertEquals($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+		}
+		elseif ($this->db->DBDriver === 'Sqlsrv')
+		{
+			$this->assertEquals($keys['pk_db_forge_test_1']->name, 'pk_db_forge_test_1');
+			$this->assertEquals($keys['pk_db_forge_test_1']->fields, ['id']);
+			$this->assertEquals($keys['pk_db_forge_test_1']->type, 'PRIMARY');
+
+			$this->assertEquals($keys['db_forge_test_1_code_company']->name, 'db_forge_test_1_code_company');
+			$this->assertEquals($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
+			$this->assertEquals($keys['db_forge_test_1_code_company']->type, 'INDEX');
+
+			$this->assertEquals($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
+			$this->assertEquals($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+			$this->assertEquals($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
 		}
 
 		$this->forge->dropTable('forge_test_1', true);
