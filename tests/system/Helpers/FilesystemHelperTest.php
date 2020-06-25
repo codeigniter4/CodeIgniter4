@@ -128,7 +128,7 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		delete_files(vfsStream::url('root'));
 
 		$this->assertFalse($vfs->hasChild('simpleFile'));
-		$this->assertFalse($vfs->hasChild('.hidden'));
+		$this->assertTrue($vfs->hasChild('.hidden'));
 		$this->assertTrue($vfs->hasChild('foo'));
 		$this->assertTrue($vfs->hasChild('boo'));
 		$this->assertTrue($vfs->hasChild('AnEmptyFolder'));
@@ -143,7 +143,7 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		delete_files(vfsStream::url('root'), true);
 
 		$this->assertFalse($vfs->hasChild('simpleFile'));
-		$this->assertFalse($vfs->hasChild('.hidden'));
+		$this->assertTrue($vfs->hasChild('.hidden'));
 		$this->assertFalse($vfs->hasChild('foo'));
 		$this->assertFalse($vfs->hasChild('boo'));
 		$this->assertFalse($vfs->hasChild('AnEmptyFolder'));
@@ -162,6 +162,29 @@ class FilesystemHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		delete_files(vfsStream::url('root'), true, true);
 
 		$this->assertFalse($vfs->hasChild('simpleFile'));
+		$this->assertTrue($vfs->hasChild('.hidden'));
+		$this->assertFalse($vfs->hasChild('foo'));
+		$this->assertFalse($vfs->hasChild('boo'));
+		$this->assertFalse($vfs->hasChild('AnEmptyFolder'));
+		$this->assertTrue($vfs->hasChild('.htaccess'));
+		$this->assertTrue($vfs->hasChild('index.html'));
+		$this->assertTrue($vfs->hasChild('index.php'));
+	}
+
+	public function testDeleteFilesIncludingHidden()
+	{
+		$structure = array_merge($this->structure, [
+			'.htaccess'  => 'Deny All',
+			'index.html' => 'foo',
+			'index.php'  => 'blah',
+		]);
+
+		$vfs = vfsStream::setup('root', null, $structure);
+
+		delete_files(vfsStream::url('root'), true, true, true);
+
+		$this->assertFalse($vfs->hasChild('simpleFile'));
+		$this->assertFalse($vfs->hasChild('.hidden'));
 		$this->assertFalse($vfs->hasChild('foo'));
 		$this->assertFalse($vfs->hasChild('boo'));
 		$this->assertFalse($vfs->hasChild('AnEmptyFolder'));
