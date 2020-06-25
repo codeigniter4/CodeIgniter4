@@ -298,6 +298,16 @@ class BaseBuilder
 			}
 		}
 	}
+	
+	/**
+	 * Return the protected QBFrom[];
+	 *
+	 * @return Array
+	 */
+	public function getQBFrom(): array
+	{
+		return $this->QBFrom;
+	}
 
 	//--------------------------------------------------------------------
 
