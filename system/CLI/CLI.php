@@ -468,10 +468,10 @@ class CLI
 		static::isWindows()
 
 				// Windows is a bit crap at this, but their terminal is tiny so shove this in
-						? static::newLine(40)
+				? static::newLine(40)
 
 				// Anything with a flair of Unix will handle these magic characters
-						: fwrite(STDOUT, chr(27) . '[H' . chr(27) . '[2J');
+				: fwrite(STDOUT, chr(27) . '[H' . chr(27) . '[2J');
 	}
 
 	//--------------------------------------------------------------------
@@ -489,11 +489,9 @@ class CLI
 	 */
 	public static function color(string $text, string $foreground, string $background = null, string $format = null): string
 	{
-		if (static::isWindows() && ! isset($_SERVER['ANSICON']))
+		if (! static::hasColorSupport(STDOUT))
 		{
-			// @codeCoverageIgnoreStart
 			return $text;
-			// @codeCoverageIgnoreEnd
 		}
 
 		if (! array_key_exists($foreground, static::$foreground_colors))
@@ -537,6 +535,7 @@ class CLI
 		{
 			return 0;
 		}
+
 		foreach (static::$foreground_colors as $color)
 		{
 			$string = strtr($string, ["\033[" . $color . 'm' => '']);
@@ -550,6 +549,73 @@ class CLI
 		$string = strtr($string, ["\033[4m" => '', "\033[0m" => '']);
 
 		return mb_strlen($string);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Checks whether the current stream resource supports or
+	 * refers to a valid terminal type device.
+	 *
+	 * @param string   $function
+	 * @param resource $resource
+	 *
+	 * @return boolean
+	 */
+	public static function streamSupports(string $function, $resource): bool
+	{
+		if (ENVIRONMENT === 'testing')
+		{
+			// In the current setup of the tests we cannot fully check
+			// if the stream supports the function since we are using
+			// filtered streams.
+			return function_exists($function);
+		}
+
+		// @codeCoverageIgnoreStart
+		return function_exists($function) && @$function($resource);
+		// @codeCoverageIgnoreEnd
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns true if the stream resource supports colors.
+	 *
+	 * This is tricky on Windows, because Cygwin, Msys2 etc. emulate pseudo
+	 * terminals via named pipes, so we can only check the environment.
+	 *
+	 * Reference: https://github.com/composer/xdebug-handler/blob/master/src/Process.php
+	 *
+	 * @param resource $resource
+	 *
+	 * @return boolean
+	 */
+	public static function hasColorSupport($resource): bool
+	{
+		// Follow https://no-color.org/
+		if (isset($_SERVER['NO_COLOR']) || getenv('NO_COLOR') !== false)
+		{
+			return false;
+		}
+
+		if (getenv('TERM_PROGRAM') === 'Hyper')
+		{
+			return true;
+		}
+
+		if (static::isWindows())
+		{
+			// @codeCoverageIgnoreStart
+			return static::streamSupports('sapi_windows_vt100_support', $resource)
+				|| isset($_SERVER['ANSICON'])
+				|| getenv('ANSICON') !== false
+				|| getenv('ConEmuANSI') === 'ON'
+				|| getenv('TERM') === 'xterm';
+			// @codeCoverageIgnoreEnd
+		}
+
+		return static::streamSupports('stream_isatty', $resource);
 	}
 
 	//--------------------------------------------------------------------
