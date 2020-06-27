@@ -516,6 +516,37 @@ class CLI
 			$string .= "\033[4m";
 		}
 
+		// Detect if color method was already in use with this text
+		if (strpos($text, "\033[0m") !== false)
+		{
+			// Split the text into parts so that we can see
+			// if any part missing the color definition
+			$chunks = mb_split("\\033\[0m", $text);
+			// Reset text
+			$text = '';
+
+			foreach ($chunks as $chunk)
+			{
+				if (empty($chunk))
+				{
+					continue;
+				}
+
+				// If chunk doesn't have colors defined we need to add them
+				if (strpos($chunk, "\033[") === false)
+				{
+					$chunk = static::color($chunk, $foreground, $background, $format);
+
+					// Add color reset before chunk and clear end of the string
+					$text .= rtrim("\033[0m" . $chunk, "\033[0m");
+				}
+				else
+				{
+					$text .= $chunk;
+				}
+			}
+		}
+
 		return $string . ($text . "\033[0m");
 	}
 
