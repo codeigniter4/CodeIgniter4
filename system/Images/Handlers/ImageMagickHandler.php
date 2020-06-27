@@ -369,7 +369,7 @@ class ImageMagickHandler extends BaseHandler
 				{
 					throw ImageException::forInvalidImageCreate(lang('images.webpNotSupported'));
 				}
-				break;	
+				break;
 		}
 	}
 
@@ -497,7 +497,7 @@ class ImageMagickHandler extends BaseHandler
 	{
 		return imagesy(imagecreatefromstring(file_get_contents($this->resource)));
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**

@@ -310,7 +310,7 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testImageCreation()
 	{
-		foreach (['gif', 'jpeg', 'png'] as $type)
+		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
 			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
 			$this->handler->text('vertical');
@@ -323,7 +323,7 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testImageCopy()
 	{
-		foreach (['gif', 'jpeg', 'png'] as $type)
+		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
 			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
 			$this->handler->save($this->start . 'work/ci-logo.' . $type);
@@ -338,7 +338,7 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testImageCompressionGetResource()
 	{
-		foreach (['gif', 'jpeg', 'png'] as $type)
+		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
 			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
 			$this->handler->getResource(); // make sure resource is loaded
@@ -354,7 +354,7 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testImageCompressionWithResource()
 	{
-		foreach (['gif', 'jpeg', 'png'] as $type)
+		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
 			$this->handler->withFile($this->origin . 'ci-logo.' . $type)
 				->withResource() // make sure resource is loaded
