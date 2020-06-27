@@ -361,6 +361,16 @@ class ImageMagickHandler extends BaseHandler
 	protected function ensureResource()
 	{
 		$this->getResourcePath();
+
+		switch ($this->image()->imageType)
+		{
+			case IMAGETYPE_WEBP:
+				if (! in_array('WEBP', \Imagick::queryFormats()))
+				{
+					throw ImageException::forInvalidImageCreate(lang('images.webpNotSupported'));
+				}
+				break;	
+		}
 	}
 
 	//--------------------------------------------------------------------
