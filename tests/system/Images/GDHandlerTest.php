@@ -314,7 +314,7 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		{
 			if ($type === 'webp' && ! function_exists('imagecreatefromwebp'))
 			{
-				$this->expectException('ImageException');
+				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
 			}
 
@@ -348,7 +348,7 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		{
 			if ($type === 'webp' && ! function_exists('imagecreatefromwebp'))
 			{
-				$this->expectException('ImageException');
+				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
 			}
 
@@ -370,7 +370,7 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		{
 			if ($type === 'webp' && ! function_exists('imagecreatefromwebp'))
 			{
-				$this->expectException('ImageException');
+				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
 			}
 

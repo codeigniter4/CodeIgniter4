@@ -310,7 +310,7 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		{
 			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats()))
 			{
-				$this->expectException('\CodeIgniter\Images\Exceptions\ImageException');
+				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
 			}
 
@@ -344,7 +344,7 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		{
 			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats()))
 			{
-				$this->expectException('\CodeIgniter\Images\Exceptions\ImageException');
+				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
 			}
 
@@ -366,7 +366,7 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 		{
 			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats()))
 			{
-				$this->expectException('\CodeIgniter\Images\Exceptions\ImageException');
+				$this->expectException(ImageException::class);
 				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
 			}
 
