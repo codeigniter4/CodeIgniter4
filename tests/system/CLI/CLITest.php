@@ -159,6 +159,20 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
+	public function testWriteForegroundWithColorBefore()
+	{
+		CLI::write(CLI::color('green', 'green') . ' red', 'red');
+		$expected = "\033[0;31m\033[0;32mgreen\033[0m\033[0;31m red\033[0m" . PHP_EOL;
+		$this->assertEquals($expected, CITestStreamFilter::$buffer);
+	}
+
+	public function testWriteForegroundWithColorAfter()
+	{
+		CLI::write('red ' . CLI::color('green', 'green'), 'red');
+		$expected = "\033[0;31mred \033[0;32mgreen\033[0m" . PHP_EOL;
+		$this->assertEquals($expected, CITestStreamFilter::$buffer);
+	}
+
 	public function testWriteBackground()
 	{
 		CLI::write('test', 'red', 'green');
