@@ -815,7 +815,7 @@ class CLI
 
 		$max = $max - $pad_left;
 
-		$lines = wordwrap($string, $max);
+		$lines = wordwrap($string, $max, PHP_EOL);
 
 		if ($pad_left > 0)
 		{
