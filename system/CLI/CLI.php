@@ -527,7 +527,7 @@ class CLI
 
 			foreach ($chunks as $chunk)
 			{
-				if (empty($chunk))
+				if ($chunk === '')
 				{
 					continue;
 				}
@@ -536,7 +536,6 @@ class CLI
 				if (strpos($chunk, "\033[") === false)
 				{
 					$chunk = static::color($chunk, $foreground, $background, $format);
-
 					// Add color reset before chunk and clear end of the string
 					$text .= rtrim("\033[0m" . $chunk, "\033[0m");
 				}
