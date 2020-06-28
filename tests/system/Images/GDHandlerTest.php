@@ -312,6 +312,12 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
+			if ($type === 'webp' && ! function_exists('imagecreatefromwebp'))
+			{
+				$this->expectException('ImageException');
+				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
+			}
+
 			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
 			$this->handler->text('vertical');
 			$this->assertEquals(155, $this->handler->getWidth());
@@ -340,6 +346,12 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
+			if ($type === 'webp' && ! function_exists('imagecreatefromwebp'))
+			{
+				$this->expectException('ImageException');
+				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
+			}
+
 			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
 			$this->handler->getResource(); // make sure resource is loaded
 			$this->handler->save($this->start . 'work/ci-logo.' . $type);
@@ -356,6 +368,12 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
+			if ($type === 'webp' && ! function_exists('imagecreatefromwebp'))
+			{
+				$this->expectException('ImageException');
+				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
+			}
+
 			$this->handler->withFile($this->origin . 'ci-logo.' . $type)
 				->withResource() // make sure resource is loaded
 				->save($this->start . 'work/ci-logo.' . $type);

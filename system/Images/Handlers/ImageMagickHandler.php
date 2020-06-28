@@ -252,6 +252,11 @@ class ImageMagickHandler extends BaseHandler
 			throw ImageException::forInvalidImageLibraryPath($this->config->libraryPath);
 		}
 
+		if ($action !== '-version')
+		{
+			$this->supportedFormatCheck();
+		}
+
 		if (! preg_match('/convert$/i', $this->config->libraryPath))
 		{
 			$this->config->libraryPath = rtrim($this->config->libraryPath, '/') . '/convert';
@@ -362,6 +367,16 @@ class ImageMagickHandler extends BaseHandler
 	{
 		$this->getResourcePath();
 
+		$this->supportedFormatCheck();
+	}
+
+	/**
+	 * Check if given image format is supported
+	 *
+	 * @throws ImageException
+	 */
+	protected function supportedFormatCheck()
+	{
 		switch ($this->image()->imageType)
 		{
 			case IMAGETYPE_WEBP:

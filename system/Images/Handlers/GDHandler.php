@@ -335,7 +335,7 @@ class GDHandler extends BaseHandler
 				{
 					throw ImageException::forSaveFailed();
 				}
-				break;	
+				break;
 			default:
 				throw ImageException::forInvalidImageCreate();
 		}
@@ -377,6 +377,38 @@ class GDHandler extends BaseHandler
 			$imageType = $this->image()->imageType;
 		}
 
+		return $this->getImageResource($path, $imageType);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Make the image resource object if needed
+	 */
+	protected function ensureResource()
+	{
+		if ($this->resource === null)
+		{
+			// if valid image type, make corresponding image resource
+			$this->resource = $this->getImageResource(
+				$this->image()->getPathname(), $this->image()->imageType
+			);
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Check if image type is supported and return image resource
+	 *
+	 * @param string  $path      Image path
+	 * @param integer $imageType Image type
+	 *
+	 * @return resource
+	 * @throws type ImageException
+	 */
+	protected function getImageResource(string $path, int $imageType)
+	{
 		switch ($imageType)
 		{
 			case IMAGETYPE_GIF:
@@ -406,38 +438,9 @@ class GDHandler extends BaseHandler
 					throw ImageException::forInvalidImageCreate(lang('images.webpNotSupported'));
 				}
 
-				return imagecreatefromwebp($path);	
+				return imagecreatefromwebp($path);
 			default:
 				throw ImageException::forInvalidImageCreate('Ima');
-		}
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Make the image resource object if needed
-	 */
-	protected function ensureResource()
-	{
-		if ($this->resource === null)
-		{
-			$path = $this->image()->getPathname();
-			// if valid image type, make corresponding image resource
-			switch ($this->image()->imageType)
-			{
-				case IMAGETYPE_GIF:
-					$this->resource = imagecreatefromgif($path);
-					break;
-				case IMAGETYPE_JPEG:
-					$this->resource = imagecreatefromjpeg($path);
-					break;
-				case IMAGETYPE_PNG:
-					$this->resource = imagecreatefrompng($path);
-					break;
-				case IMAGETYPE_WEBP:
-					$this->resource = imagecreatefromwebp($path);
-					break;	
-			}
 		}
 	}
 
