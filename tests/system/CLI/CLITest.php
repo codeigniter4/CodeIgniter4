@@ -97,6 +97,7 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 		$nocolor = getenv('NO_COLOR');
 		putenv('NO_COLOR=1');
 
+		CLI::init(); // force re-check on env
 		$this->assertEquals('test', CLI::color('test', 'white', 'green'));
 		putenv($nocolor ? "NO_COLOR=$nocolor" : 'NO_COLOR');
 	}
@@ -106,6 +107,7 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 		$termProgram = getenv('TERM_PROGRAM');
 		putenv('TERM_PROGRAM=Hyper');
 
+		CLI::init(); // force re-check on env
 		$this->assertEquals("\033[1;37m\033[42m\033[4mtest\033[0m", CLI::color('test', 'white', 'green', 'underline'));
 		putenv($termProgram ? "TERM_PROGRAM=$termProgram" : 'TERM_PROGRAM');
 	}
@@ -118,6 +120,9 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testColor()
 	{
+		// After the tests on NO_COLOR and TERM_PROGRAM above,
+		// the $isColored variable is rigged. So we reset this.
+		CLI::init();
 		$this->assertEquals("\033[1;37m\033[42m\033[4mtest\033[0m", CLI::color('test', 'white', 'green', 'underline'));
 	}
 

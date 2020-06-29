@@ -161,6 +161,13 @@ class CLI
 	 */
 	protected static $width;
 
+	/**
+	 * Whether the current stream supports colored output.
+	 *
+	 * @var boolean
+	 */
+	protected static $isColored = false;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -176,6 +183,9 @@ class CLI
 		// clear segments & options to keep testing clean
 		static::$segments = [];
 		static::$options  = [];
+
+		// Check our stream resource for color support
+		static::$isColored = static::hasColorSupport(STDOUT);
 
 		static::parseCommandLine();
 
@@ -487,7 +497,7 @@ class CLI
 	 */
 	public static function color(string $text, string $foreground, string $background = null, string $format = null): string
 	{
-		if (! static::hasColorSupport(STDOUT))
+		if (! static::$isColored)
 		{
 			return $text;
 		}
@@ -544,7 +554,7 @@ class CLI
 			}
 		}
 
-		return $string . ($text . "\033[0m");
+		return $string . $text . "\033[0m";
 	}
 
 	//--------------------------------------------------------------------
