@@ -345,8 +345,8 @@ The following functions are available:
     :returns: URL-formatted string
     :rtype: string
 
-    This function works the same as :php:func:`url_title()` but it converts all
-    accented characters automatically.
+    This function works the same as :php:func:`url_title()` but it supports Unicode
+    and converts all accented characters automatically.
 
 .. php:function:: prep_url($str = '')
 

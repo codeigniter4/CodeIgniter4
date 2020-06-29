@@ -1154,6 +1154,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 			'\  testing 12'   => 'testing-12',
 			'Éléphant de PHP' => 'elephant-de-php',
 			'ä ö ü Ĝ β ę'     => 'ae-oe-ue-g-v-e',
+			'মশিউর রহমান'     => 'মশিউর-রহমান',
 		];
 
 		foreach ($words as $in => $out)
@@ -1171,6 +1172,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 			'_What\'s wrong with CSS?_' => 'Whats_wrong_with_CSS',
 			'Éléphant de PHP'           => 'Elephant_de_PHP',
 			'ä ö ü Ĝ β ę'               => 'ae_oe_ue_G_v_e',
+			'মশিউর রহমান'               => 'মশিউর_রহমান',
 		];
 
 		foreach ($words as $in => $out)
