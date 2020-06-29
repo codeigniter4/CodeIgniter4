@@ -465,13 +465,11 @@ class CLI
 	 */
 	public static function clearScreen()
 	{
-		static::isWindows()
-
-				// Windows is a bit crap at this, but their terminal is tiny so shove this in
-				? static::newLine(40)
-
-				// Anything with a flair of Unix will handle these magic characters
-				: fwrite(STDOUT, chr(27) . '[H' . chr(27) . '[2J');
+		// Unix systems, and Windows with VT100 Terminal support (i.e. Win10)
+		// can handle CSI sequences. For lower than Win10 we just shove in 40 new lines.
+		static::isWindows() && ! static::streamSupports('sapi_windows_vt100_support', STDOUT)
+			? static::newLine(40)
+			: fwrite(STDOUT, "\033[H\033[2J");
 	}
 
 	//--------------------------------------------------------------------
