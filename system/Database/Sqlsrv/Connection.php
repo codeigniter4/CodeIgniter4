@@ -279,8 +279,9 @@ class Connection extends BaseConnection implements ConnectionInterface {
 		$retVal = [];
 		foreach ($query as $row)
 		{
-			$obj         = new stdClass();
-			$obj->name   = $row->index_name;
+			$obj       = new stdClass();
+			$obj->name = $row->index_name;
+
 			$_fields     = explode(',', trim($row->index_keys));
 			$obj->fields = array_map(function ($v) {
 				return trim($v);

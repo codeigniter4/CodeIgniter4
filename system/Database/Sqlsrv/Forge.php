@@ -132,9 +132,40 @@ class Forge extends \CodeIgniter\Database\Forge {
 	 */
 	protected function _alterTable(string $alter_type, string $table, $field)
 	{
-		if (in_array($alter_type, ['DROP', 'ADD'], true))
+		if (in_array($alter_type, ['ADD'], true))
 		{
 			return parent::_alterTable($alter_type, $table, $field);
+		}
+
+		// Handle DROP here
+		if ('DROP' === $alter_type)
+		{
+			// check if fields are part of any indexes
+			$indexData = $this->db->getIndexData($table);
+
+			foreach ($indexData as $index)
+			{
+				if (is_string($field))
+				{
+					$field = explode(',', $field);
+				}
+
+				$fld = array_intersect($field, $index->fields);
+
+				// Drop index if field is part of an index
+				if (! empty($fld))
+				{
+					$this->_dropIndex($table, $index);
+				}
+			}
+
+			$sql = 'ALTER TABLE [' . $table . '] DROP ';
+
+			$fields = array_map(function ($item) {
+				return 'COLUMN [' . trim($item) . ']';
+			}, $field);
+
+			return $sql .= implode(',', $fields);
 		}
 
 		$sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
@@ -184,6 +215,20 @@ class Forge extends \CodeIgniter\Database\Forge {
 	}
 
 	//--------------------------------------------------------------------
+
+	protected function _dropIndex(string $table, object $indexData)
+	{
+		if ('PRIMARY' === $indexData->type)
+		{
+			$sql = 'ALTER TABLE [' . $this->db->schema . '].[' . $table . '] DROP [' . $indexData->name . ']';
+		}
+		else
+		{
+			$sql = 'DROP INDEX [' . $indexData->name . '] ON [' . $this->db->schema . '].[' . $table . ']';
+		}
+
+		return $this->db->simpleQuery($sql);
+	}
 
 	/**
 	 * Process column
