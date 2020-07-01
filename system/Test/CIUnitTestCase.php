@@ -60,7 +60,7 @@ class CIUnitTestCase extends TestCase
 	protected $app;
 
 	/**
-	 * Callbacks to run during setUp.
+	 * Methods to run during setUp.
 	 *
 	 * @var array of methods
 	 */
@@ -70,7 +70,7 @@ class CIUnitTestCase extends TestCase
 	];
 
 	/**
-	 * Callbacks to run during tearDown.
+	 * Methods to run during tearDown.
 	 *
 	 * @var array of methods
 	 */
