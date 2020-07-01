@@ -354,7 +354,16 @@ class Builder extends BaseBuilder {
 
 		return $sql;
 	}
-
+		/**
+		 * whereHaving
+		 *
+		 * @param  string  $qb_key
+		 * @param  type    $key
+		 * @param  type    $value
+		 * @param  string  $type
+		 * @param  boolean $escape
+		 * @return $this
+		 */
 	protected function whereHaving(string $qb_key, $key, $value = null, string $type = 'AND ', bool $escape = null)
 	{
 		if (! is_array($key))
