@@ -57,7 +57,6 @@ class Forge extends \CodeIgniter\Database\Forge {
 	 */
 	/// TODO: missing charset, collat & check for existant
 	protected $createDatabaseIfStr = "DECLARE @DBName VARCHAR(255) = '%s'\nDECLARE @SQL VARCHAR(max) = 'IF DB_ID( ''' + @DBName + ''' ) IS NULL CREATE DATABASE ' + @DBName\nEXEC( @SQL )";
-
 	/// TODO: missing charset & collat
 	protected $createDatabaseStr = 'CREATE DATABASE %s ';
 
@@ -105,7 +104,6 @@ class Forge extends \CodeIgniter\Database\Forge {
 	 * @var string
 	 */
 	protected $_drop_table_if = "IF EXISTS (SELECT * FROM sysobjects WHERE ID = object_id(N'%s') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)\nDROP TABLE";
-
 	protected $createTableStr = "%s %s (%s\n) ";
 
 	//--------------------------------------------------------------------
@@ -152,33 +150,33 @@ class Forge extends \CodeIgniter\Database\Forge {
 			if (isset($data['type']))
 			{
 				$sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-					. " {$data['type']}{$data['length']}";
+						. " {$data['type']}{$data['length']}";
 			}
 
 			if (! empty($data['default']))
 			{
 				$sqls[] = $sql . ' ALTER COLUMN ADD CONSTRAINT ' . $this->db->escapeIdentifiers($data['name']) . '_def'
-					. " DEFAULT {$data['default']} FOR " . $this->db->escapeIdentifiers($data['name']);
+						. " DEFAULT {$data['default']} FOR " . $this->db->escapeIdentifiers($data['name']);
 			}
 
 			if (isset($data['null']))
 			{
 				$sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-					. ($data['null'] === true ? ' DROP' : '') . " {$data['type']}{$data['length']} NOT NULL";
+						. ($data['null'] === true ? ' DROP' : '') . " {$data['type']}{$data['length']} NOT NULL";
 			}
 
 			if (! empty($data['comment']))
 			{
 				$sqls[] = 'EXEC sys.sp_addextendedproperty '
-					. "@name=N'Caption', @value=N'" . $data['comment'] . "' , "
-					. "@level0type=N'SCHEMA',@level0name=N'dbo', "
-					. "@level1type=N'TABLE',@level1name=N'" . $this->db->escapeIdentifiers($table) . "', "
-					. "@level2type=N'COLUMN',@level2name=N'" . $this->db->escapeIdentifiers($data['name']) . "'";
+						. "@name=N'Caption', @value=N'" . $data['comment'] . "' , "
+						. "@level0type=N'SCHEMA',@level0name=N'" . $this->db->schema . "', "
+						. "@level1type=N'TABLE',@level1name=N'" . $this->db->escapeIdentifiers($table) . "', "
+						. "@level2type=N'COLUMN',@level2name=N'" . $this->db->escapeIdentifiers($data['name']) . "'";
 			}
 			if (! empty($data['new_name']))
 			{
 				// EXEC sp_rename '[dbo].[db_misc].[value]', 'valueasdasd', 'COLUMN';
-				$sqls[] = "EXEC sp_rename  '[dbo].[" . $table . '].[' . $data['name'] . "]' , '" . $data['new_name'] . "', 'COLUMN';";
+				$sqls[] = "EXEC sp_rename  '[" . $this->db->schema . '].[' . $table . '].[' . $data['name'] . "]' , '" . $data['new_name'] . "', 'COLUMN';";
 			}
 		}
 
@@ -196,15 +194,17 @@ class Forge extends \CodeIgniter\Database\Forge {
 	protected function _processColumn(array $field): string
 	{
 		return $this->db->escapeIdentifiers($field['name'])
-			. (empty($field['new_name']) ? '' : ' ' . $this->db->escapeIdentifiers($field['new_name']))
-			. ' ' . $field['type'] . $field['length']
-			. $field['default']
-			. $field['null']
-			. $field['auto_increment']
-			. '' // (empty($field['comment']) ? '' : ' COMMENT ' . $field['comment'])
-			. $field['unique'];
+				. (empty($field['new_name']) ? '' : ' ' . $this->db->escapeIdentifiers($field['new_name']))
+				. ' ' . $field['type'] . $field['length']
+				. $field['default']
+				. $field['null']
+				. $field['auto_increment']
+				. '' // (empty($field['comment']) ? '' : ' COMMENT ' . $field['comment'])
+				. $field['unique'];
 	}
+
 	//--------------------------------------------------------------------
+
 	/**
 	 * Process foreign keys
 	 *
@@ -228,15 +228,17 @@ class Forge extends \CodeIgniter\Database\Forge {
 		{
 			foreach ($this->foreignKeys as $field => $fkey)
 			{
+				// TODO: Review and fix this.
+
 				/*
-				  ALTER TABLE [dbo].[NewTable]  ADD FOREIGN KEY ([system]) REFERENCES [dbo].[lofasz] ([asdasdasd])
-				 *
-				 * CONSTRAINT FK_TempSales_SalesReason FOREIGN KEY (TempID)  REFERENCES Sales.SalesReason (SalesReasonID)         ON DELETE CASCADE        ON UPDATE CASCADE                    */
+				 *  ALTER TABLE [dbo].[NewTable]  ADD FOREIGN KEY ([system]) REFERENCES [dbo].[lofasz] ([asdasdasd])
+				 * CONSTRAINT FK_TempSales_SalesReason FOREIGN KEY (TempID)  REFERENCES Sales.SalesReason (SalesReasonID) ON DELETE CASCADE  ON UPDATE CASCADE
+				 */
 				$name_index = $table . '_' . $field . '_foreign';
 
 				$sql .= ",\n\t CONSTRAINT " . $this->db->escapeIdentifiers($name_index)
-					. ' FOREIGN KEY (' . $this->db->escapeIdentifiers($field) . ') '
-					. ' REFERENCES ' . $this->db->escapeIdentifiers($this->db->getPrefix() . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
+						. ' FOREIGN KEY (' . $this->db->escapeIdentifiers($field) . ') '
+						. ' REFERENCES ' . $this->db->escapeIdentifiers($this->db->getPrefix() . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
 
 				if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions))
 				{
@@ -275,7 +277,7 @@ class Forge extends \CodeIgniter\Database\Forge {
 		if (count($this->primaryKeys) > 0)
 		{
 			$sql = ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers('pk_' . $table)
-				. ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys)) . ')';
+					. ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys)) . ')';
 		}
 
 		return $sql ?? '';
@@ -300,7 +302,8 @@ class Forge extends \CodeIgniter\Database\Forge {
 			$attributes['CONSTRAINT'] = null;
 		}
 
-		switch (strtoupper($attributes['TYPE'])) {
+		switch (strtoupper($attributes['TYPE']))
+		{
 			case 'MEDIUMINT':
 				$attributes['TYPE']     = 'INTEGER';
 				$attributes['UNSIGNED'] = false;
@@ -314,9 +317,9 @@ class Forge extends \CodeIgniter\Database\Forge {
 				$attributes['CONSTRAINT'] = null;
 
 				break;
-			/*case 'DATETIME':
-				$attributes['TYPE'] = 'TIMESTAMP';
-				break;*/
+			/* case 'DATETIME':
+			  $attributes['TYPE'] = 'TIMESTAMP';
+			  break; */
 			case 'TIMESTAMP':
 				$attributes['TYPE'] = 'DATETIME';
 				break;
