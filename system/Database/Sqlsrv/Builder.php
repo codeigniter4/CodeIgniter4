@@ -308,7 +308,7 @@ class Builder extends BaseBuilder {
 
 		return $this->testMode ? $sql : $this->db->query($sql, $this->binds, false);
 	}
-
+	//--------------------------------------------------------------------
 	protected function compileSelect($select_override = false): string
 	{
 		if (empty($this->QBLimit) || $select_override !== false)
@@ -441,6 +441,7 @@ class Builder extends BaseBuilder {
 
 		return $this;
 	}
+	//--------------------------------------------------------------------
 
 	/**
 	 * Get
@@ -473,5 +474,5 @@ class Builder extends BaseBuilder {
 
 		return $result;
 	}
-
+	//--------------------------------------------------------------------
 }
