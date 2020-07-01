@@ -205,7 +205,11 @@ class Builder extends BaseBuilder {
 
 		return $sql .= ' ROWS FETCH NEXT ' . $this->QBLimit . ' ROWS ONLY ';
 	}
-
+		/**
+		 * replace
+		 *
+		 * @param array $set
+		 */
 	public function replace(array $set = null)
 	{
 		$keyPermission = $this->keyPermission;
