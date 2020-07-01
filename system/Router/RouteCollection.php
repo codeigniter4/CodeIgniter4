@@ -1348,7 +1348,7 @@ class RouteCollection implements RouteCollectionInterface
 			// the expected param type.
 			$pos = strpos($from, $pattern);
 
-			if (preg_match('#' . $pattern . '#', $params[$index]))
+			if (preg_match('#^' . $pattern . '$#u', $params[$index]))
 			{
 				$from = substr_replace($from, $params[$index], $pos, strlen($pattern));
 			}
