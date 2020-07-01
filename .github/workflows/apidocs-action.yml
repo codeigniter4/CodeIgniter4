@@ -13,7 +13,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Identify
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+
+      - name: Checkout repo
         uses: actions/checkout@v2
 
       - name: Setup PHP
@@ -27,12 +32,9 @@ jobs:
         run: |
           sudo apt-get install -yq graphviz
 
-      # I can't get curl download this correctly. The phar file has
-      # appended HTML saying it is redirected. Any clues?
-      # For now, I manually downloaded the phar
-      # - name: Download phpDocumentor
-      #   run: |
-      #     curl https://github.com/phpDocumentor/phpDocumentor/releases/download/v2.9.1/phpDocumentor.phar -o ./admin/phpDocumentor.phar
+      - name: Download phpDocumentor
+        run: |
+          curl -L https://github.com/phpDocumentor/phpDocumentor/releases/download/v2.9.1/phpDocumentor.phar -o ./admin/phpDocumentor.phar
 
       - name: Prepare source
         run: |
@@ -55,8 +57,6 @@ jobs:
       - name: Deploy API
         run: |
           cd ./build/api
-          git config --global user.email "action@github.com"
-          git config --global user.name "${GITHUB_ACTOR}"
           git add .
           git commit -m "API bot sync for ${GITHUB_SHA}"
           git push -f origin master
