@@ -118,7 +118,13 @@ class Builder extends BaseBuilder {
 
 		return $this->keyPermission ? $this->addIdentity($this->getFullName($table), $statement) : $statement;
 	}
-
+		/**
+		 * increment
+		 *
+		 * @param  string  $column
+		 * @param  integer $value
+		 * @return type
+		 */
 	public function increment(string $column, int $value = 1)
 	{
 		$column = $this->db->protectIdentifiers($column);
