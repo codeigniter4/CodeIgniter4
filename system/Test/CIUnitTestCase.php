@@ -90,7 +90,7 @@ class CIUnitTestCase extends TestCase
 		helper(['url', 'test']);
 	}
 
-	public function setUp(): void
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -105,7 +105,7 @@ class CIUnitTestCase extends TestCase
 		}
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		parent::tearDown();
 
