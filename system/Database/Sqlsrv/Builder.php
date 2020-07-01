@@ -155,8 +155,6 @@ class Builder extends BaseBuilder {
 
 	private function getFullName(string $table): string
 	{
-		// TODO: replace static dbo schema with config option
-
 		if ('"' === $this->db->escapeChar)
 		{
 			return '"' . $this->db->getDatabase() . '"."' . $this->db->schema . '"."' . str_replace('"', '', $table) . '"';
