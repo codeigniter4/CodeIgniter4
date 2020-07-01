@@ -306,8 +306,14 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testImageCreation()
 	{
-		foreach (['gif', 'jpeg', 'png'] as $type)
+		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
+			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats()))
+			{
+				$this->expectException(ImageException::class);
+				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
+			}
+
 			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
 			$this->handler->text('vertical');
 			$this->assertEquals(155, $this->handler->getWidth());
@@ -319,7 +325,7 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testImageCopy()
 	{
-		foreach (['gif', 'jpeg', 'png'] as $type)
+		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
 			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
 			$this->handler->save($this->root . 'ci-logo.' . $type);
@@ -334,8 +340,14 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testImageCompressionGetResource()
 	{
-		foreach (['gif', 'jpeg', 'png'] as $type)
+		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
+			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats()))
+			{
+				$this->expectException(ImageException::class);
+				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
+			}
+
 			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
 			$this->handler->getResource(); // make sure resource is loaded
 			$this->handler->save($this->root . 'ci-logo.' . $type);
@@ -350,8 +362,14 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testImageCompressionWithResource()
 	{
-		foreach (['gif', 'jpeg', 'png'] as $type)
+		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
+			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats()))
+			{
+				$this->expectException(ImageException::class);
+				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
+			}
+
 			$this->handler->withFile($this->origin . 'ci-logo.' . $type)
 				->withResource() // make sure resource is loaded
 				->save($this->root . 'ci-logo.' . $type);

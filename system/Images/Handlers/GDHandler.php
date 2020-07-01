@@ -325,6 +325,17 @@ class GDHandler extends BaseHandler
 					throw ImageException::forSaveFailed();
 				}
 				break;
+			case IMAGETYPE_WEBP:
+				if (! function_exists('imagewebp'))
+				{
+					throw ImageException::forInvalidImageCreate(lang('images.webpNotSupported'));
+				}
+
+				if (! @imagewebp($this->resource, $target))
+				{
+					throw ImageException::forSaveFailed();
+				}
+				break;
 			default:
 				throw ImageException::forInvalidImageCreate();
 		}
@@ -366,6 +377,38 @@ class GDHandler extends BaseHandler
 			$imageType = $this->image()->imageType;
 		}
 
+		return $this->getImageResource($path, $imageType);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Make the image resource object if needed
+	 */
+	protected function ensureResource()
+	{
+		if ($this->resource === null)
+		{
+			// if valid image type, make corresponding image resource
+			$this->resource = $this->getImageResource(
+				$this->image()->getPathname(), $this->image()->imageType
+			);
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Check if image type is supported and return image resource
+	 *
+	 * @param string  $path      Image path
+	 * @param integer $imageType Image type
+	 *
+	 * @return resource
+	 * @throws type ImageException
+	 */
+	protected function getImageResource(string $path, int $imageType)
+	{
 		switch ($imageType)
 		{
 			case IMAGETYPE_GIF:
@@ -389,34 +432,15 @@ class GDHandler extends BaseHandler
 				}
 
 				return imagecreatefrompng($path);
+			case IMAGETYPE_WEBP:
+				if (! function_exists('imagecreatefromwebp'))
+				{
+					throw ImageException::forInvalidImageCreate(lang('images.webpNotSupported'));
+				}
+
+				return imagecreatefromwebp($path);
 			default:
 				throw ImageException::forInvalidImageCreate('Ima');
-		}
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Make the image resource object if needed
-	 */
-	protected function ensureResource()
-	{
-		if ($this->resource === null)
-		{
-			$path = $this->image()->getPathname();
-			// if valid image type, make corresponding image resource
-			switch ($this->image()->imageType)
-			{
-				case IMAGETYPE_GIF:
-					$this->resource = imagecreatefromgif($path);
-					break;
-				case IMAGETYPE_JPEG:
-					$this->resource = imagecreatefromjpeg($path);
-					break;
-				case IMAGETYPE_PNG:
-					$this->resource = imagecreatefrompng($path);
-					break;
-			}
 		}
 	}
 
