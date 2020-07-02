@@ -283,7 +283,7 @@ trait FeatureTestTrait
 	protected function setupRequest(string $method, string $path = null): IncomingRequest
 	{
 		$config = config(App::class);
-		$uri    = new URI($config->baseURL . '/' . trim($path, '/ '));
+		$uri    = new URI(rtrim($config->baseURL, '/') . '/' . trim($path, '/ '));
 
 		$request      = new IncomingRequest($config, clone($uri), null, new UserAgent());
 		$request->uri = $uri;
