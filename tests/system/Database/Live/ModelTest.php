@@ -17,6 +17,7 @@ use Tests\Support\Models\SimpleEntity;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidErrorsModel;
 use Tests\Support\Models\ValidModel;
+use Tests\Support\Models\WithoutAutoincrementModel;
 
 /**
  * @group DatabaseLive
@@ -1734,6 +1735,26 @@ class ModelTest extends CIDatabaseTestCase
 
 		// Just making sure it didn't throw ambiguous deleted error
 		$this->assertEquals(1, $results->id);
+	}
+
+	//--------------------------------------------------------------------
+	
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3134
+	 */
+	public function testWithoutAutoincrement()
+	{
+		$model = new WithoutAutoincrementModel();
+		
+		$key = 'some_random_key';
+		
+		$model->insert([
+			'key' => $key,
+			'value' => 'some value',
+		]);
+		
+		$this->assertEquals($key, $model->getInsertID(), 'Cant find inserting key without autoincrement');
+		$this->seeInDatabase('without_autoincrement', ['id' => $key]);
 	}
 
 	//--------------------------------------------------------------------

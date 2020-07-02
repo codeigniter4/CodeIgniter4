@@ -736,8 +736,7 @@ class Model
 			}
 			else
 			{
-				// ??
-				// INSERT INTO {$this->table} %data% RETURNING {$this->primaryKey}
+				throw new \Exception('Can\'t return primary key');
 			}
 		}
 		elseif ($result)
