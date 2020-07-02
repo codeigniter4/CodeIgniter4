@@ -553,7 +553,7 @@ the model will return boolean **false**. You can use the ``errors()`` method to 
 
     if ($model->save($data) === false)
     {
-        return view('updateUser', ['errors' => $model->errors()];
+        return view('updateUser', ['errors' => $model->errors()]);
     }
 
 This returns an array with the field names and their associated errors that can be used to either show all of the
