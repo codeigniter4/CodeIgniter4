@@ -1141,10 +1141,16 @@ class Model
 	 *
 	 * @return array|null
 	 */
-	public function paginate(int $perPage = null, string $group = 'default', int $page = 0, int $segment = 0)
+	public function paginate(int $perPage = null, string $group = 'default', int $page = null, int $segment = 0)
 	{
 		$pager = \Config\Services::pager(null, null, false);
-		$page  = $page >= 1 ? $page : $pager->getCurrentPage($group);
+
+		if ($segment)
+		{
+			$pager->setSegment($segment);
+		}
+
+		$page = $page >= 1 ? $page : $pager->getCurrentPage($group);
 
 		$total = $this->countAllResults(false);
 
