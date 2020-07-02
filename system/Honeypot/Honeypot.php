@@ -124,7 +124,7 @@ class Honeypot
 
 		if ($this->config->hidden)
 		{
-			$template = '<div style="display:none">' . $template . '</div>';
+			$template = '<div style="display:none" class="hidden d-none">' . $template . '</div>';
 		}
 		return $template;
 	}
