@@ -1144,7 +1144,13 @@ class Model
 	public function paginate(int $perPage = null, string $group = 'default', int $page = null, int $segment = 0)
 	{
 		$pager = \Config\Services::pager(null, null, false);
-		$page  = $page >= 1 ? $page : $pager->getCurrentPage($group);
+
+		if ($segment)
+		{
+			$pager->setSegment($segment);
+		}
+
+		$page = $page >= 1 ? $page : $pager->getCurrentPage($group);
 
 		$total = $this->countAllResults(false);
 
