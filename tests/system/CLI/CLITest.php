@@ -283,14 +283,15 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 			'-parm',
 			'pvalue',
 			'd2',
+			'da-sh',
 		];
-		$_SERVER['argc'] = 7;
+		$_SERVER['argc'] = 8;
 		CLI::init();
 		$this->assertEquals(null, CLI::getSegment(7));
 		$this->assertEquals('b', CLI::getSegment(1));
 		$this->assertEquals('c', CLI::getSegment(2));
 		$this->assertEquals('d', CLI::getSegment(3));
-		$this->assertEquals(['b', 'c', 'd', 'd2'], CLI::getSegments());
+		$this->assertEquals(['b', 'c', 'd', 'd2', 'da-sh'], CLI::getSegments());
 	}
 
 	public function testParseCommandOption()
