@@ -60,7 +60,9 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->expectException(HTTPException::class);
 		$url = 'http://abc.com/a123/b/c';
 		$uri = new URI($url);
-		$uri->getSegment(22);
+		$uri->getSegment(4);
+		$uri->getSegment(0);
+		$uri->getSegment(-1);
 	}
 
 	//--------------------------------------------------------------------
@@ -70,6 +72,9 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$url = 'http://abc.com/a123/b/c';
 		$uri = new URI($url);
 		$this->assertEquals('', $uri->setSilent()->getSegment(22));
+		$this->assertEquals('', $uri->setSilent()->getSegment(4));
+		$this->assertEquals('', $uri->setSilent()->getSegment(0));
+		$this->assertEquals('', $uri->setSilent()->getSegment(-1));
 	}
 
 	//--------------------------------------------------------------------
@@ -80,6 +85,8 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$url = 'http://abc.com/a123/b/c';
 		$uri = new URI($url);
 		$uri->getSegment(22, 'something');
+		$uri->getSegment(4, 'something');
+		$uri->getSegment(-1, 'something');
 	}
 
 	//--------------------------------------------------------------------
@@ -102,7 +109,6 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('path', $uri->getSegment(1));
 		$this->assertEquals('to', $uri->getSegment(2, 'different'));
 		$this->assertEquals('script', $uri->getSegment(3, 'script'));
-		$this->assertEquals('', $uri->getSegment(3));
 
 		$this->assertEquals(2, $uri->getTotalSegments());
 	}
@@ -115,7 +121,12 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$uri->setSilent();
 
 		$this->assertEquals('', $uri->getSegment(22));
+		$this->assertEquals('', $uri->getSegment(4));
+		$this->assertEquals('', $uri->getSegment(0));
 		$this->assertEquals('something', $uri->getSegment(33, 'something'));
+		$this->assertEquals('something', $uri->getSegment(4, 'something'));
+		$this->assertEquals('something', $uri->getSegment(0, 'something'));
+		$this->assertEquals('something', $uri->getSegment(-1, 'something'));
 
 		$this->assertEquals(3, $uri->getTotalSegments());
 		$this->assertEquals(['path', 'to', 'script'], $uri->getSegments());
