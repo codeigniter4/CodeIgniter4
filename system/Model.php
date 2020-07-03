@@ -728,20 +728,23 @@ class Model
 				->insert();
 
 		// If insertion succeeded then save the insert ID
-		if ( ! $this->hasAutoincrement)
+		if ($result)
 		{
-			if (isset($data[$this->primaryKey]))
+			if ( ! $this->hasAutoincrement)
 			{
-				$this->insertID = $data[$this->primaryKey];
+				if (isset($data[$this->primaryKey]))
+				{
+					$this->insertID = $data[$this->primaryKey];
+				}
+				else
+				{
+					throw new \Exception('Can\'t return primary key');
+				}
 			}
 			else
 			{
-				throw new \Exception('Can\'t return primary key');
+				$this->insertID = $this->db->insertID();
 			}
-		}
-		elseif ($result)
-		{
-			$this->insertID = $this->db->insertID();
 		}
 
 		// Trigger afterInsert events with the inserted data and new ID
