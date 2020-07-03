@@ -56,6 +56,18 @@ use Config\Mimes;
 class Email
 {
 	/**
+	 * Properties from the last successful send.
+	 *
+	 * @var array|null
+	 */
+	public $archive;
+	/**
+	 * Properties to be added to the next archive.
+	 *
+	 * @var array
+	 */
+	protected $tmpArchive = [];
+	/**
 	 * @var string
 	 */
 	public $fromEmail;
@@ -452,6 +464,11 @@ class Email
 				$this->validateEmail($this->stringToArray($returnPath));
 			}
 		}
+
+		// Store the plain text values
+		$this->tmpArchive['fromEmail'] = $from;
+		$this->tmpArchive['fromName']  = $name;
+
 		// prepare the display name
 		if ($name !== '')
 		{
@@ -469,6 +486,8 @@ class Email
 		$this->setHeader('From', $name . ' <' . $from . '>');
 		isset($returnPath) || $returnPath = $from;
 		$this->setHeader('Return-Path', '<' . $returnPath . '>');
+		$this->tmpArchive['returnPath'] = $returnPath;
+
 		return $this;
 	}
 	//--------------------------------------------------------------------
@@ -492,6 +511,8 @@ class Email
 		}
 		if ($name !== '')
 		{
+			$this->tmpArchive['replyName'] = $name;
+
 			// only use Q encoding if there are characters that would require it
 			if (! preg_match('/[\200-\377]/', $name))
 			{
@@ -504,7 +525,9 @@ class Email
 			}
 		}
 		$this->setHeader('Reply-To', $name . ' <' . $replyto . '>');
-		$this->replyToFlag = true;
+		$this->replyToFlag           = true;
+		$this->tmpArchive['replyTo'] = $replyto;
+
 		return $this;
 	}
 	//--------------------------------------------------------------------
@@ -550,6 +573,7 @@ class Email
 		{
 			$this->CCArray = $cc;
 		}
+		$this->tmpArchive['CCArray'] = $cc;
 		return $this;
 	}
 	//--------------------------------------------------------------------
@@ -580,6 +604,7 @@ class Email
 		else
 		{
 			$this->setHeader('Bcc', implode(', ', $bcc));
+			$this->tmpArchive['BCCArray'] = $bcc;
 		}
 		return $this;
 	}
@@ -593,7 +618,8 @@ class Email
 	 */
 	public function setSubject($subject)
 	{
-		$this->subject = $subject;
+		$this->tmpArchive['subject'] = $subject;
+
 		$subject = $this->prepQEncoding($subject);
 		$this->setHeader('Subject', $subject);
 		return $this;
@@ -1551,12 +1577,14 @@ class Email
 		$result = $this->spoolEmail();
 		if ($result)
 		{
+			$this->setArchiveValues();
+
 			if ($autoClear)
 			{
 				$this->clear();
 			}
 
-			Events::trigger('email', get_object_vars($this));
+			Events::trigger('email', $this->archive);
 		}
 
 		return $result;
@@ -1603,7 +1631,9 @@ class Email
 			$this->spoolEmail();
 		}
 
-		Events::trigger('email', $this->printDebugger());
+		// Update the archive
+		$this->setArchiveValues();
+		Events::trigger('email', $this->archive);
 	}
 	//--------------------------------------------------------------------
 	/**
@@ -1697,20 +1727,18 @@ class Email
 	 */
 	protected function sendWithMail()
 	{
-		if (is_array($this->recipients))
-		{
-			$this->recipients = implode(', ', $this->recipients);
-		}
+		$recipients = is_array($this->recipients) ? implode(', ', $this->recipients) : $this->recipients;
+
 		// _validate_email_for_shell() below accepts by reference,
 		// so this needs to be assigned to a variable
 		$from = $this->cleanEmail($this->headers['Return-Path']);
 		if (! $this->validateEmailForShell($from))
 		{
-			return mail($this->recipients, $this->subject, $this->finalBody, $this->headerStr);
+			return mail($recipients, $this->subject, $this->finalBody, $this->headerStr);
 		}
 		// most documentation of sendmail using the "-f" flag lacks a space after it, however
 		// we've encountered servers that seem to require it to be in place.
-		return mail($this->recipients, $this->subject, $this->finalBody, $this->headerStr, '-f ' . $from);
+		return mail($recipients, $this->subject, $this->finalBody, $this->headerStr, '-f ' . $from);
 	}
 	//--------------------------------------------------------------------
 	/**
@@ -2139,5 +2167,22 @@ class Email
 			return mb_substr($str, $start, $length, '8bit');
 		}
 		return isset($length) ? substr($str, $start, $length) : substr($str, $start);
+	}
+	//--------------------------------------------------------------------
+	/**
+	 * Determines the values that should be stored in $archive.
+	 *
+	 * @return array The updated archive values
+	 */
+	protected function setArchiveValues(): array
+	{
+		// Get property values and add anything prepped in tmpArchive
+		$this->archive = array_merge(get_object_vars($this), $this->tmpArchive);
+		unset($this->archive['archive']);
+
+		// Clear tmpArchive for next run
+		$this->tmpArchive = [];
+
+		return $this->archive;
 	}
 }

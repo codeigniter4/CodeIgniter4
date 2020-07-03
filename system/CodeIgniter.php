@@ -186,12 +186,13 @@ class CodeIgniter
 		// Set default timezone on the server
 		date_default_timezone_set($this->config->appTimezone ?? 'UTC');
 
+		// Define environment variables
+		$this->detectEnvironment();
+		$this->bootstrapEnvironment();
+
 		// Setup Exception Handling
 		Services::exceptions()
 				->initialize();
-
-		$this->detectEnvironment();
-		$this->bootstrapEnvironment();
 
 		$this->initializeKint();
 

@@ -85,11 +85,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 		try
 		{
-			$this->database = ($this->database === ':memory:')
-				? $this->database
-				: (strpos($this->database, DIRECTORY_SEPARATOR) === false
-					? WRITEPATH . 'data' . DIRECTORY_SEPARATOR . $this->database
-					: $this->database);
+			if ($this->database !== ':memory:' && strpos($this->database, DIRECTORY_SEPARATOR) === false)
+			{
+				$this->database = WRITEPATH . $this->database;
+			}
 
 			return (! $this->password)
 				? new \SQLite3($this->database)

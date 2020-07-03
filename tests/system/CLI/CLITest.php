@@ -92,8 +92,37 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 		CLI::color('test', 'white', 'Background');
 	}
 
+	public function testColorSupportOnNoColor()
+	{
+		$nocolor = getenv('NO_COLOR');
+		putenv('NO_COLOR=1');
+
+		CLI::init(); // force re-check on env
+		$this->assertEquals('test', CLI::color('test', 'white', 'green'));
+		putenv($nocolor ? "NO_COLOR=$nocolor" : 'NO_COLOR');
+	}
+
+	public function testColorSupportOnHyperTerminals()
+	{
+		$termProgram = getenv('TERM_PROGRAM');
+		putenv('TERM_PROGRAM=Hyper');
+
+		CLI::init(); // force re-check on env
+		$this->assertEquals("\033[1;37m\033[42m\033[4mtest\033[0m", CLI::color('test', 'white', 'green', 'underline'));
+		putenv($termProgram ? "TERM_PROGRAM=$termProgram" : 'TERM_PROGRAM');
+	}
+
+	public function testStreamSupports()
+	{
+		$this->assertTrue(CLI::streamSupports('stream_isatty', STDOUT));
+		$this->assertIsBool(CLI::streamSupports('sapi_windows_vt100_support', STDOUT));
+	}
+
 	public function testColor()
 	{
+		// After the tests on NO_COLOR and TERM_PROGRAM above,
+		// the $isColored variable is rigged. So we reset this.
+		CLI::init();
 		$this->assertEquals("\033[1;37m\033[42m\033[4mtest\033[0m", CLI::color('test', 'white', 'green', 'underline'));
 	}
 
@@ -124,31 +153,35 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testWrite()
 	{
 		CLI::write('test');
-		$expected = <<<EOT
-
-test
-
-EOT;
+		$expected = PHP_EOL . 'test' . PHP_EOL;
 		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
 	public function testWriteForeground()
 	{
 		CLI::write('test', 'red');
-		$expected = <<<EOT
-\033[0;31mtest\033[0m
+		$expected = "\033[0;31mtest\033[0m" . PHP_EOL;
+		$this->assertEquals($expected, CITestStreamFilter::$buffer);
+	}
 
-EOT;
+	public function testWriteForegroundWithColorBefore()
+	{
+		CLI::write(CLI::color('green', 'green') . ' red', 'red');
+		$expected = "\033[0;31m\033[0;32mgreen\033[0m\033[0;31m red\033[0m" . PHP_EOL;
+		$this->assertEquals($expected, CITestStreamFilter::$buffer);
+	}
+
+	public function testWriteForegroundWithColorAfter()
+	{
+		CLI::write('red ' . CLI::color('green', 'green'), 'red');
+		$expected = "\033[0;31mred \033[0;32mgreen\033[0m" . PHP_EOL;
 		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
 	public function testWriteBackground()
 	{
 		CLI::write('test', 'red', 'green');
-		$expected = <<<EOT
-\033[0;31m\033[42mtest\033[0m
-
-EOT;
+		$expected = "\033[0;31m\033[42mtest\033[0m" . PHP_EOL;
 		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
@@ -157,10 +190,7 @@ EOT;
 		$this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
 		CLI::error('test');
 		// red expected cuz stderr
-		$expected = <<<EOT
-\033[1;31mtest\033[0m
-
-EOT;
+		$expected = "\033[1;31mtest\033[0m" . PHP_EOL;
 		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
@@ -168,10 +198,7 @@ EOT;
 	{
 		$this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
 		CLI::error('test', 'purple');
-		$expected = <<<EOT
-\033[0;35mtest\033[0m
-
-EOT;
+		$expected = "\033[0;35mtest\033[0m" . PHP_EOL;
 		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
@@ -179,10 +206,7 @@ EOT;
 	{
 		$this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
 		CLI::error('test', 'purple', 'green');
-		$expected = <<<EOT
-\033[0;35m\033[42mtest\033[0m
-
-EOT;
+		$expected = "\033[0;35m\033[42mtest\033[0m" . PHP_EOL;
 		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
@@ -199,19 +223,16 @@ EOT;
 		CLI::write('third.');
 		CLI::showProgress(1, 20);
 
-		$expected = <<<EOT
-first.
-[\033[32m#.........\033[0m]   5% Complete
-\033[1A[\033[32m#####.....\033[0m]  50% Complete
-\033[1A[\033[32m##########\033[0m] 100% Complete
-second.
-[\033[32m#.........\033[0m]   5% Complete
-\033[1A[\033[32m#####.....\033[0m]  50% Complete
-\033[1A[\033[32m##########\033[0m] 100% Complete
-third.
-[\033[32m#.........\033[0m]   5% Complete
-
-EOT;
+		$expected = 'first.' . PHP_EOL .
+					"[\033[32m#.........\033[0m]   5% Complete" . PHP_EOL .
+					"\033[1A[\033[32m#####.....\033[0m]  50% Complete" . PHP_EOL .
+					"\033[1A[\033[32m##########\033[0m] 100% Complete" . PHP_EOL .
+					'second.' . PHP_EOL .
+					"[\033[32m#.........\033[0m]   5% Complete" . PHP_EOL .
+					"\033[1A[\033[32m#####.....\033[0m]  50% Complete" . PHP_EOL .
+					"\033[1A[\033[32m##########\033[0m] 100% Complete" . PHP_EOL .
+					'third.' . PHP_EOL .
+					"[\033[32m#.........\033[0m]   5% Complete" . PHP_EOL;
 		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
@@ -222,10 +243,7 @@ EOT;
 		CLI::showProgress(false, 20);
 		CLI::showProgress(false, 20);
 
-		$expected = <<<EOT
-first.
-\007\007\007
-EOT;
+		$expected = 'first.' . PHP_EOL . "\007\007\007";
 		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
@@ -365,38 +383,38 @@ EOT;
 			[
 				$one_row,
 				[],
-				"+---+-----+\n" .
-				"| 1 | bar |\n" .
-				"+---+-----+\n\n",
+				'+---+-----+' . PHP_EOL .
+				'| 1 | bar |' . PHP_EOL .
+				'+---+-----+' . PHP_EOL . PHP_EOL,
 			],
 			[
 				$one_row,
 				$head,
-				"+----+-------+\n" .
-				"| ID | Title |\n" .
-				"+----+-------+\n" .
-				"| 1  | bar   |\n" .
-				"+----+-------+\n\n",
+				'+----+-------+' . PHP_EOL .
+				'| ID | Title |' . PHP_EOL .
+				'+----+-------+' . PHP_EOL .
+				'| 1  | bar   |' . PHP_EOL .
+				'+----+-------+' . PHP_EOL . PHP_EOL,
 			],
 			[
 				$many_rows,
 				[],
-				"+---+-----------------+\n" .
-				"| 1 | bar             |\n" .
-				"| 2 | bar * 2         |\n" .
-				"| 3 | bar + bar + bar |\n" .
-				"+---+-----------------+\n\n",
+				'+---+-----------------+' . PHP_EOL .
+				'| 1 | bar             |' . PHP_EOL .
+				'| 2 | bar * 2         |' . PHP_EOL .
+				'| 3 | bar + bar + bar |' . PHP_EOL .
+				'+---+-----------------+' . PHP_EOL . PHP_EOL,
 			],
 			[
 				$many_rows,
 				$head,
-				"+----+-----------------+\n" .
-				"| ID | Title           |\n" .
-				"+----+-----------------+\n" .
-				"| 1  | bar             |\n" .
-				"| 2  | bar * 2         |\n" .
-				"| 3  | bar + bar + bar |\n" .
-				"+----+-----------------+\n\n",
+				'+----+-----------------+' . PHP_EOL .
+				'| ID | Title           |' . PHP_EOL .
+				'+----+-----------------+' . PHP_EOL .
+				'| 1  | bar             |' . PHP_EOL .
+				'| 2  | bar * 2         |' . PHP_EOL .
+				'| 3  | bar + bar + bar |' . PHP_EOL .
+				'+----+-----------------+' . PHP_EOL . PHP_EOL,
 			],
 		];
 	}

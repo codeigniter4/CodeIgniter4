@@ -31,7 +31,7 @@ return [
    'emptySupportedNegotiations' => 'You must provide an array of supported values to all Negotiations.',
 
 	// RedirectResponse
-   'invalidRoute'               => '{0, string} route cannot be found while reverse-routing.',
+   'invalidRoute'               => '{0} route cannot be found while reverse-routing.',
 
 	// DownloadResponse
    'cannotSetBinary'            => 'When setting filepath cannot set binary.',
@@ -42,7 +42,7 @@ return [
 
 	// Response
    'missingResponseStatus'      => 'HTTP Response is missing a status code',
-   'invalidStatusCode'          => '{0, string} is not a valid HTTP return status code',
+   'invalidStatusCode'          => '{0} is not a valid HTTP return status code',
    'unknownStatusCode'          => 'Unknown HTTP status code provided with no message: {0}',
 
 	// URI

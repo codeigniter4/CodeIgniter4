@@ -41,7 +41,7 @@ class FabricatorLiveTest extends CIDatabaseTestCase
 	{
 		helper('test');
 
-		$result = fake(UserModel::class);
+		$result = fake(UserModel::class, ['country' => 'Italy']);
 
 		$this->seeInDatabase('user', ['name' => $result->name]);
 	}

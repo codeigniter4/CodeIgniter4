@@ -193,7 +193,7 @@ class File extends SplFileInfo
 			throw FileException::forUnableToMove($this->getBasename(), $targetPath, strip_tags($error['message']));
 		}
 
-		@chmod($targetPath, 0777 & ~umask());
+		@chmod($destination, 0777 & ~umask());
 
 		return new File($destination);
 	}

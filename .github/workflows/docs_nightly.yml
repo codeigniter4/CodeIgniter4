@@ -13,6 +13,8 @@ on:
 
 jobs:
   build:
+    if: (github.repository == 'codeigniter4/CodeIgniter4')
+
     runs-on: ubuntu-latest
 
     steps:
@@ -22,6 +24,12 @@ jobs:
     - uses: ammaraskar/sphinx-action@master
       with:
         docs-folder: "user_guide_src/"
+
+    # Create an artifact of the html output
+    - uses: actions/upload-artifact@v2
+      with:
+        name: HTML Documentation
+        path: user_guide_src/_build/html/
 
     # Commit changes to the gh-pages branch
     - name: Commit documentation changes

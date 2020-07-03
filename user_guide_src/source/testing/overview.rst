@@ -101,6 +101,51 @@ have the correct namespace relative to ``App``.
 
 When testing database results, you must use the `CIDatabaseTestClass <database.html>`_ class.
 
+Staging
+-------
+
+Most tests require some preparation in order to run correctly. PHPUnit's ``TestCase`` provides four methods
+to help with staging and clean up::
+
+	public static function setUpBeforeClass(): void
+	public static function tearDownAfterClass(): void
+	public function setUp(): void
+	public function tearDown(): void
+
+The static methods run before and after the entire test case, whereas the local methods run
+between each test. If you implement any of these special functions make sure you run their
+parent as well so extended test cases do not interfere with staging::
+
+	public function setUp(): void
+	{
+		parent::setUp();
+		helper('text');
+	}
+
+In addition to these methods, ``CIUnitTestCase`` also comes with a convenience property for
+parameter-free methods you want run during set up and tear down::
+
+	protected $setUpMethods = [
+		'mockEmail',
+		'mockSession',
+	];
+	
+	protected $tearDownMethods = [];
+
+You can see by default these handle the mocking of intrusive services, but your class may override
+that or provide their own::
+
+	class OneOfMyModelsTest extends CIUnitTestCase
+	{
+		protected $tearDownMethods = [
+			'purgeRows',
+		];
+		
+		protected function purgeRows()
+		{
+			$this->model->purgeDeleted()
+		}
+
 Additional Assertions
 ---------------------
 
@@ -262,7 +307,7 @@ class exactly. The second parameter is the instance to replace it with.
 
 Removes all mocked classes from the Services class, bringing it back to its original state.
 
-
+.. note:: The ``Email`` and ``Session`` services are mocked by default to prevent intrusive testing behavior. To prevent these from mocking remove their method callback from the class property: ``$setUpMethods = ['mockEmail', 'mockSession'];``
 
 Stream Filters
 ==============
