@@ -369,6 +369,12 @@ class PagerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString(
 			'?page_custom=1', $this->pager->makeLinks(1, null, 1, 'default_full', 0, 'custom')
 		);
+		$this->assertStringContainsString(
+			'/1', $this->pager->makeLinks(1, 10, 1, 'default_full', 1)
+		);
+		$this->assertStringContainsString(
+			'<li class="active">', $this->pager->makeLinks(1, 10, 1, 'default_full', 1)
+		);
 	}
 
 	public function testHeadLinks()
