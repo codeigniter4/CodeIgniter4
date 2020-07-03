@@ -1754,7 +1754,7 @@ class ModelTest extends CIDatabaseTestCase
 		]);
 		
 		$this->assertEquals($key, $model->getInsertID(), 'Cant find inserting key without autoincrement');
-		$this->seeInDatabase('without_autoincrement', ['id' => $key]);
+		$this->seeInDatabase('without_autoincrement', ['key' => $key]);
 	}
 
 	//--------------------------------------------------------------------
