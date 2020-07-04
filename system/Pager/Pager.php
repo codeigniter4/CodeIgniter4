@@ -559,7 +559,7 @@ class Pager implements PagerInterface
 		{
 			try
 			{
-				$this->groups[$group]['currentPage'] = (int) $this->groups[$group]['uri']->getSegment($this->segment[$group]);
+				$this->groups[$group]['currentPage'] = (int) $this->groups[$group]['uri']->setSilent(false)->getSegment($this->segment[$group]);
 			}
 			catch (\CodeIgniter\HTTP\Exceptions\HTTPException $e)
 			{
