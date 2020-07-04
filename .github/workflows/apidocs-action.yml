@@ -13,13 +13,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Identify
+      - name: Setup credentials
         run: |
           git config --global user.email "action@github.com"
           git config --global user.name "${GITHUB_ACTOR}"
 
-      - name: Checkout repo
+      - name: Checkout source
         uses: actions/checkout@v2
+        with:
+          path: source
+
+      - name: Checkout api
+        uses: actions/checkout@v2
+        with:
+          repository: codeigniter4/api
+          token: ${{ secrets.ACCESS_TOKEN }}
+          path: api
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -34,29 +43,27 @@ jobs:
 
       - name: Download phpDocumentor
         run: |
-          curl -L https://github.com/phpDocumentor/phpDocumentor/releases/download/v2.9.1/phpDocumentor.phar -o ./admin/phpDocumentor.phar
+          curl \
+            -L https://github.com/phpDocumentor/phpDocumentor/releases/download/v2.9.1/phpDocumentor.phar \
+            -o admin/phpDocumentor.phar
 
-      - name: Prepare source
+      - name: Prepare API
         run: |
-          rm -rf ./build/api*
-          mkdir -p ./build/api/docs
-          cd build/api
-          git init
-          git remote add origin https://github.com/codeigniter4/api.git
-          git fetch
-          git checkout master
-          git reset --hard origin/master
-          rm -r docs/*
+          cd ./api
+          rm -rf ./api/docs*
+          mkdir -p ./api/docs
+          git reset --hard master
 
       - name: Make the new API docs
         run: |
-          chmod +x ./admin/phpDocumentor.phar
-          ./admin/phpDocumentor.phar
-          cp -R ./api/build/* ./build/api/docs
+          cd ./source
+          chmod +x admin/phpDocumentor.phar
+          admin/phpDocumentor.phar
+          cp -R ${GITHUB_WORKSPACE}/source/api/build/* ${GITHUB_WORKSPACE}/api/docs
 
       - name: Deploy API
         run: |
-          cd ./build/api
+          cd ./api
           git add .
-          git commit -m "API bot sync for ${GITHUB_SHA}"
-          git push -f origin master
+          git commit -m "API sync for ${GITHUB_SHA}"
+          git push
