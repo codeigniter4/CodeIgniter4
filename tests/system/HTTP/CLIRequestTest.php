@@ -164,7 +164,7 @@ class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->request = new CLIRequest(new App());
 
 		$expectedOptions = '-foo bar -baz "queue some stuff"';
-		$expectedPath    = 'users/21';
+		$expectedPath    = 'users/21/pro-file';
 		$this->assertEquals($expectedOptions, $this->request->getOptionString());
 		$this->assertEquals($expectedPath, $this->request->getPath());
 	}

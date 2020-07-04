@@ -373,12 +373,12 @@ abstract class BaseConnection implements ConnectionInterface
 
 		$this->connectTime = microtime(true);
 
-		try 
+		try
 		{
 			// Connect to the database and set the connection ID
 			$this->connID = $this->connect($this->pConnect);
-		} 
-		catch (\Throwable $e) 
+		}
+		catch (\Throwable $e)
 		{
 			log_message('error', 'Error connecting to the database: ' . $e->getMessage());
 		}
@@ -401,14 +401,14 @@ abstract class BaseConnection implements ConnectionInterface
 						}
 					}
 
-					try 
+					try
 					{
 						// Try to connect
 						$this->connID = $this->connect($this->pConnect);
-					} 
-					catch (\Throwable $e) 
+					}
+					catch (\Throwable $e)
 					{
-						log_message('error', 'Error connecting to the database: '.$e->getMessage());
+						log_message('error', 'Error connecting to the database: ' . $e->getMessage());
 					}
 
 					// If a connection is made break the foreach loop
@@ -553,17 +553,6 @@ abstract class BaseConnection implements ConnectionInterface
 	public function getPrefix(): string
 	{
 		return $this->DBPrefix;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the last error encountered by this connection.
-	 *
-	 * @return mixed
-	 */
-	public function getError()
-	{
 	}
 
 	//--------------------------------------------------------------------

@@ -194,6 +194,9 @@ class CIDatabaseTestCase extends CIUnitTestCase
 					$this->migrations->latest('tests');
 				}
 			}
+
+			// Reset counts on faked items
+			Fabricator::resetCounts();
 		}
 
 		if (! empty($this->seed))

@@ -223,3 +223,58 @@ This is equivalent to::
     $fabricator = new Fabricator('App\Models\UserModel');
     $fabricator->setOverrides(['name' => 'Gerry']);
     $user = $fabricator->create();
+
+Table Counts
+============
+
+Frequently your faked data will depend on other faked data. ``Fabricator`` provides a static
+count of the number of faked items you have created for each table. Consider the following
+example:
+
+Your project has users and groups. In your test case you want to create various scenarios
+with groups of different sizes, so you use ``Fabricator`` to create a bunch of groups.
+Now you want to create fake users but don't want to assign them to a non-existant group ID.
+Your model's fake method could look like this::
+
+    class UserModel
+    {
+        protected $table = 'users';
+
+        public function fake(Generator &$faker)
+        {
+        	return [
+                'first'    => $faker->firstName,
+                'email'    => $faker->email,
+                'group_id' => rand(1, Fabricator::getCount('users')),
+        	];
+        }
+
+Now creating a new user will ensure it is a part of a valid group: ``$user = fake(UserModel::class);``
+
+``Fabricator`` handles the counts internally but you can also access these static methods
+to assist with using them:
+
+**getCount(string $table): int**
+
+Return the current value for a specific table (default: 0).
+
+**setCount(string $table, int $count): int**
+
+Set the value for a specific table manually, for example if you create some test items
+without using a fabricator that you still wanted factored into the final counts.
+
+**upCount(string $table): int**
+
+Increment the value for a specific table by one and return the new value. (This is what is
+used internally with ``Fabricator::create()``).
+
+**downCount(string $table): int**
+
+Decrement the value for a specific table by one and return the new value, for example if
+you deleted a fake item but wanted to track the change.
+
+**resetCounts()**
+
+Resets all counts. Good idea to call this between test cases (though using
+``CIDatabaseTestCase::$refresh = true`` does it automatically).
+
