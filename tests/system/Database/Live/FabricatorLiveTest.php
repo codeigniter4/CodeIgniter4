@@ -45,4 +45,25 @@ class FabricatorLiveTest extends CIDatabaseTestCase
 
 		$this->seeInDatabase('user', ['name' => $result->name]);
 	}
+
+	public function testCreateIncrementsCount()
+	{
+		$fabricator = new Fabricator(UserModel::class);
+		$fabricator->setOverrides(['country' => 'China']);
+
+		$count = Fabricator::getCount('user');
+
+		$fabricator->create();
+
+		$this->assertEquals($count + 1, Fabricator::getCount('user'));
+	}
+
+	public function testHelperIncrementsCount()
+	{
+		$count = Fabricator::getCount('user');
+
+		fake(UserModel::class, ['country' => 'Italy']);
+
+		$this->assertEquals($count + 1, Fabricator::getCount('user'));
+	}
 }
