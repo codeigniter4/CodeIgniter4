@@ -211,7 +211,12 @@ class Pager implements PagerInterface
 
 		if ($segment > 0 && $this->groups[$group]['currentPage'] > 0)
 		{
-			$page = $this->groups[$group]['currentPage'];
+				try
+				{
+					$this->groups[$group]['currentPage'] = $this->groups[$group]['uri']->getSegment($this->segment[$group]);
+					$page = $this->groups[$group]['currentPage'];
+				}
+				catch (\CodeIgniter\HTTP\Exceptions\HTTPException $e){}
 		}
 
 		$perPage                             = $perPage ?? $this->config->perPage;
