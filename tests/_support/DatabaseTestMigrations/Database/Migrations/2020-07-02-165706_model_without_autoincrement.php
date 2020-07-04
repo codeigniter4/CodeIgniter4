@@ -2,7 +2,7 @@
 
 use CodeIgniter\Database\Migration;
 
-class ModelWithoutAutoincrement extends Migration
+class Migration_model_without_autoincrement extends Migration
 {
 	public function up()
 	{
