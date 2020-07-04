@@ -1334,7 +1334,7 @@ class Model
 		}
 
 		// Still here? Grab the database-specific error, if any.
-		$error = $this->db->getError();
+		$error = $this->db->error();
 
 		return $error['message'] ?? null;
 	}
