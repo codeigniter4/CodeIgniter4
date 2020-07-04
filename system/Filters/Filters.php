@@ -163,14 +163,21 @@ class Filters
 			{
 				$class = new $className();
 
-				if (! $class instanceof FilterInterface)
+				if ((! $class instanceof FilterInterface) && (! $class instanceof FilterInterfaceWithArguments))
 				{
 					throw FilterException::forIncorrectInterface(get_class($class));
 				}
 
 				if ($position === 'before')
 				{
-					$result = $class->before($this->request, $this->arguments[$alias] ?? null);
+					if ($class instanceof FilterInterfaceWithArguments)
+					{
+						$result = $class->before($this->request, $this->arguments[$alias] ?? []);
+					}
+					else
+					{
+						$result = $class->before($this->request, $this->arguments[$alias] ?? null);
+					}
 
 					if ($result instanceof RequestInterface)
 					{
@@ -196,7 +203,14 @@ class Filters
 				}
 				elseif ($position === 'after')
 				{
-					$result = $class->after($this->request, $this->response);
+					if ($class instanceof FilterInterfaceWithArguments)
+					{
+						$result = $class->after($this->request, $this->response, $this->arguments[$alias] ?? []);
+					}
+					else
+					{
+						$result = $class->after($this->request, $this->response);
+					}
 
 					if ($result instanceof ResponseInterface)
 					{
@@ -309,7 +323,10 @@ class Filters
 		// Get parameters and clean name
 		if (strpos($name, ':') !== false)
 		{
-			list($name, $params) = explode(':', $name);
+			[
+				$name,
+				$params,
+			] = explode(':', $name);
 
 			$params = explode(',', $params);
 			array_walk($params, function (&$item) {
