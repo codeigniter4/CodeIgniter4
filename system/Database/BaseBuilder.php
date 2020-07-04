@@ -2452,7 +2452,9 @@ class BaseBuilder
 		{
 			$this->resetWrite();
 
-			if ($this->db->query($sql, $this->binds, false))
+			$result = $this->db->query($sql, $this->binds, false);
+
+			if ($result->resultID)
 			{
 				// Clear our binds so we don't eat up memory
 				$this->binds = [];
