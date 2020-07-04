@@ -1,8 +1,8 @@
-<?php namespace App\Database\Migrations;
+<?php namespace Tests\Support\DatabaseTestMigrations\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Migration_model_without_autoincrement extends Migration
+class ModelWithoutAutoincrement extends Migration
 {
 	public function up()
 	{
