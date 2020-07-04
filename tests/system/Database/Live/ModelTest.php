@@ -1154,11 +1154,38 @@ class ModelTest extends CIDatabaseTestCase
 			'deleted' => 0,
 		];
 
-		$id = $model->insert($data);
-		$model->update([1, 2], ['name' => 'Foo Bar']);
+		$id     = $model->insert($data);
+		$result = $model->update([1, 2], ['name' => 'Foo Bar']);
+
+		$this->assertTrue($result);
 
 		$this->seeInDatabase('user', ['id' => 1, 'name' => 'Foo Bar']);
 		$this->seeInDatabase('user', ['id' => 2, 'name' => 'Foo Bar']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUpdateResultFail()
+	{
+		$this->setPrivateProperty($this->db, 'DBDebug', false);
+
+		$model = new EventModel();
+
+		$data = [
+			'name'    => 'Foo',
+			'email'   => 'foo@example.com',
+			'country' => 'US',
+			'deleted' => 0,
+		];
+
+		$id = $model->insert($data);
+
+		$this->setPrivateProperty($model, 'allowedFields', ['name123']);
+		$result = $model->update(1, ['name123' => 'Foo Bar 1']);
+
+		$this->assertFalse($result);
+
+		$this->dontSeeInDatabase('user', ['id' => 1, 'name' => 'Foo Bar 1']);
 	}
 
 	//--------------------------------------------------------------------
