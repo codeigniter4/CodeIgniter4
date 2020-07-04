@@ -56,7 +56,14 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public $DBDriver = 'SQLite3';
 
-	// --------------------------------------------------------------------
+	/**
+	 * Identifier escape character
+	 *
+	 * @var string
+	 */
+	public $escapeChar = '`';
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * ORDER BY random keyword
