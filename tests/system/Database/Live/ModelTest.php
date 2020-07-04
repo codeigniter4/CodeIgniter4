@@ -470,9 +470,26 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->seeInDatabase('job', ['name' => 'Developer']);
 
-		$model->delete(1);
+		$result = $model->delete(1);
+		$this->assertTrue($result->resultID);
 
 		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDeleteFail()
+	{
+		$this->setPrivateProperty($this->db, 'DBDebug', false);
+
+		$model = new JobModel();
+
+		$this->seeInDatabase('job', ['name' => 'Developer']);
+
+		$result = $model->where('name123', 'Developer')->delete();
+		$this->assertFalse($result->resultID);
+
+		$this->seeInDatabase('job', ['name' => 'Developer']);
 	}
 
 	//--------------------------------------------------------------------
@@ -496,9 +513,26 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 
-		$model->delete(1);
+		$result = $model->delete(1);
+		$this->assertTrue($result);
 
 		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL' => null]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDeleteWithSoftDeleteFail()
+	{
+		$this->setPrivateProperty($this->db, 'DBDebug', false);
+
+		$model = new UserModel();
+
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+
+		$result = $model->where('name123', 'Derek Jones')->delete();
+		$this->assertFalse($result);
+
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 	}
 
 	//--------------------------------------------------------------------
@@ -1452,6 +1486,52 @@ class ModelTest extends CIDatabaseTestCase
 		$lastInsertId = $model->getInsertID();
 
 		$this->seeInDatabase('job', ['id' => $lastInsertId]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testInsertResult()
+	{
+		$model = new JobModel();
+
+		$data = [
+			'name'        => 'Apprentice',
+			'description' => 'That thing you do.',
+		];
+
+		$result = $model->protect(false)
+			  ->insert($data, false);
+
+		$this->assertTrue($result->resultID);
+
+		$lastInsertId = $model->getInsertID();
+
+		$this->seeInDatabase('job', ['id' => $lastInsertId]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testInsertResultFail()
+	{
+		$this->setPrivateProperty($this->db, 'DBDebug', false);
+
+		$model = new JobModel();
+
+		$data = [
+			'name123'     => 'Apprentice',
+			'description' => 'That thing you do.',
+		];
+
+		$result = $model->protect(false)
+			  ->insert($data, false);
+
+		$this->assertFalse($result->resultID);
+
+		$lastInsertId = $model->getInsertID();
+
+		$this->assertEquals(0, $lastInsertId);
+
+		$this->dontSeeInDatabase('job', ['id' => $lastInsertId]);
 	}
 
 	//--------------------------------------------------------------------
