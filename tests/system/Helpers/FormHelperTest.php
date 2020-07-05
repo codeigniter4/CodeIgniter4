@@ -745,6 +745,9 @@ EOH;
 
 		$_SESSION = [];
 		$this->assertEquals('', set_checkbox('foo', 'bar'));
+
+		$_SESSION = [];
+		$this->assertEquals(' checked="checked"', set_checkbox('foo', 'bar', true));
 	}
 
 	// ------------------------------------------------------------------------
@@ -772,6 +775,9 @@ EOH;
 
 		$_SESSION = [];
 		$this->assertEquals('', set_checkbox('foo', 'bar'));
+
+		$_SESSION = [];
+		$this->assertEquals(' checked="checked"', set_checkbox('foo', '0', true));
 	}
 
 	// ------------------------------------------------------------------------
@@ -803,6 +809,7 @@ EOH;
 		$_POST['bar'] = 'baz';
 		$this->assertEquals(' checked="checked"', set_radio('bar', 'baz'));
 		$this->assertEquals('', set_radio('bar', 'boop'));
+		$this->assertEquals(' checked="checked"', set_radio('bar', 'boop', true));
 	}
 
 	/**
@@ -814,6 +821,9 @@ EOH;
 		$_POST['bar'] = 0;
 		$this->assertEquals(' checked="checked"', set_radio('bar', '0'));
 		$this->assertEquals('', set_radio('bar', 'boop'));
+
+		$_POST = [];
+		$this->assertEquals(' checked="checked"', set_radio('bar', '0', true));
 	}
 
 	public function testSetRadioFromPostArray()
