@@ -409,7 +409,28 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testSaveUpdateRecordObject()
+	public function testSaveNewRecordArrayFail()
+	{
+		$this->setPrivateProperty($this->db, 'DBDebug', false);
+
+		$model = new JobModel();
+
+		$data = [
+			'name123'     => 'Apprentice',
+			'description' => 'That thing you do.',
+		];
+
+		$result = $model->protect(false)
+			  ->save($data);
+
+		$this->assertFalse($result);
+
+		$this->dontSeeInDatabase('job', ['name' => 'Apprentice']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSaveUpdateRecordArray()
 	{
 		$model = new JobModel();
 
@@ -428,7 +449,29 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testSaveUpdateRecordArray()
+	public function testSaveUpdateRecordArrayFail()
+	{
+		$this->setPrivateProperty($this->db, 'DBDebug', false);
+
+		$model = new JobModel();
+
+		$data = [
+			'id'          => 1,
+			'name123'     => 'Apprentice',
+			'description' => 'That thing you do.',
+		];
+
+		$result = $model->protect(false)
+						->save($data);
+
+		$this->assertFalse($result);
+
+		$this->dontSeeInDatabase('job', ['name' => 'Apprentice']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSaveUpdateRecordObject()
 	{
 		$model = new JobModel();
 
