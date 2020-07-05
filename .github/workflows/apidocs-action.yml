@@ -1,15 +1,15 @@
 name: API Documentation
 
-on: [push]
-  # push:
-  #   branches:
-  #     - 'develop'
+on:
+  push:
+    branches:
+      - 'develop'
 
 jobs:
 
   build:
     name: Generate API Docs
-    # if: (github.repository == 'codeigniter4/CodeIgniter4')
+    if: (github.repository == 'codeigniter4/CodeIgniter4')
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +26,7 @@ jobs:
       - name: Checkout api
         uses: actions/checkout@v2
         with:
-          repository: paulbalandan/api
+          repository: codeigniter4/api
           token: ${{ secrets.ACCESS_TOKEN }}
           path: api
 
