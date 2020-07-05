@@ -471,7 +471,7 @@ class ModelTest extends CIDatabaseTestCase
 		$this->seeInDatabase('job', ['name' => 'Developer']);
 
 		$result = $model->delete(1);
-		$this->assertTrue($result->resultID);
+		$this->assertTrue($result->resultID !== false);
 
 		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
 	}
@@ -1529,7 +1529,7 @@ class ModelTest extends CIDatabaseTestCase
 		$result = $model->protect(false)
 			  ->insert($data, false);
 
-		$this->assertTrue($result->resultID);
+		$this->assertTrue($result->resultID !== false);
 
 		$lastInsertId = $model->getInsertID();
 

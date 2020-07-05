@@ -558,7 +558,7 @@ class Model
 
 			if ($response instanceof BaseResult)
 			{
-				$response = $response->resultID;
+				$response = $response->resultID !== false;
 			}
 			elseif ($response !== false)
 			{
