@@ -42,6 +42,7 @@ namespace CodeIgniter;
 use Closure;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
@@ -555,8 +556,12 @@ class Model
 		else
 		{
 			$response = $this->insert($data, false);
-			// call insert directly if you want the ID or the record object
-			if ($response !== false)
+
+			if ($response instanceof BaseResult)
+			{
+				$response = $response->resultID !== false;
+			}
+			elseif ($response !== false)
 			{
 				$response = true;
 			}
@@ -658,7 +663,7 @@ class Model
 	 * @param array|object $data
 	 * @param boolean      $returnID Whether insert ID should be returned or not.
 	 *
-	 * @return integer|string|boolean
+	 * @return BaseResult|integer|string|false
 	 * @throws \ReflectionException
 	 */
 	public function insert($data = null, bool $returnID = true)
@@ -734,7 +739,7 @@ class Model
 				->insert();
 
 		// If insertion succeeded then save the insert ID
-		if ($result)
+		if ($result->resultID)
 		{
 			$this->insertID = $this->db->insertID();
 		}
@@ -912,7 +917,7 @@ class Model
 	 * @param integer|string|array|null $id    The rows primary key(s)
 	 * @param boolean                   $purge Allows overriding the soft deletes setting.
 	 *
-	 * @return mixed
+	 * @return BaseResult|boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function delete($id = null, bool $purge = false)

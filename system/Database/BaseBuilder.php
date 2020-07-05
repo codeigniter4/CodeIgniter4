@@ -2454,7 +2454,7 @@ class BaseBuilder
 
 			$result = $this->db->query($sql, $this->binds, false);
 
-			if ($result->resultID)
+			if ($result->resultID !== false)
 			{
 				// Clear our binds so we don't eat up memory
 				$this->binds = [];
