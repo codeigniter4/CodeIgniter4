@@ -94,7 +94,7 @@ if (! function_exists('directory_map'))
 			closedir($fp);
 			return $fileData;
 		}
-		catch (\Exception $fe)
+		catch (\Throwable $e)
 		{
 			return [];
 		}
@@ -138,7 +138,7 @@ if (! function_exists('write_file'))
 
 			return is_int($result);
 		}
-		catch (\Exception $fe)
+		catch (\Throwable $e)
 		{
 			return false;
 		}
@@ -320,7 +320,7 @@ if (! function_exists('get_dir_file_info'))
 				return $fileData;
 			}
 		}
-		catch (\Exception $fe)
+		catch (\Throwable $fe)
 		{
 			return [];
 		}
