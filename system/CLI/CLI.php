@@ -375,12 +375,19 @@ class CLI
 	 */
 	public static function error(string $text, string $foreground = 'light_red', string $background = null)
 	{
+		// Check color support for STDERR
+		$stdout            = static::$isColored;
+		static::$isColored = static::hasColorSupport(STDERR);
+
 		if ($foreground || $background)
 		{
 			$text = static::color($text, $foreground, $background);
 		}
 
 		fwrite(STDERR, $text . PHP_EOL);
+
+		// return STDOUT color support
+		static::$isColored = $stdout;
 	}
 
 	//--------------------------------------------------------------------
