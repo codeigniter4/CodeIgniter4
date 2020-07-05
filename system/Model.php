@@ -641,7 +641,7 @@ class Model
 	/**
 	 * Returns last insert ID or 0.
 	 *
-	 * @return integer
+	 * @return integer|mixed
 	 */
 	public function getInsertID()
 	{
