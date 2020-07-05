@@ -102,7 +102,7 @@ class Model
 	 *
 	 * @var boolean
 	 */
-	protected $hasAutoincrement = true;
+	protected $useAutoIncrement = true;
 
 	/**
 	 * Last insert ID
@@ -643,7 +643,7 @@ class Model
 	 *
 	 * @return integer
 	 */
-	public function getInsertID(): int
+	public function getInsertID()
 	{
 		return $this->insertID;
 	}
@@ -730,20 +730,17 @@ class Model
 		// If insertion succeeded then save the insert ID
 		if ($result)
 		{
-			if ( ! $this->hasAutoincrement)
+			if (! $this->useAutoIncrement)
 			{
-				if (isset($data[$this->primaryKey]))
+				if (empty($data[$this->primaryKey]))
 				{
-					$this->insertID = $data[$this->primaryKey];
+					throw DataException::forEmptyDataset('pk');
 				}
-				else
-				{
-					throw new \Exception('Can\'t return primary key');
-				}
+				$this->insertID = $data[$this->primaryKey];
 			}
 			else
 			{
-				$this->insertID = $this->db->insertID();
+				$this->insertID = (int) $this->db->insertID();
 			}
 		}
 
