@@ -8,60 +8,58 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Image Manipulation Class &mdash; CodeIgniter4 4.0.0-rc.4 documentation</title>
+  <title>Image Manipulation Class &mdash; CodeIgniter 4.0.3 documentation</title>
   
 
   
   
-    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
   
   
 
   
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
   
     
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/js/citheme.js"></script>
+        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-
-  
-  
-    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="CodeIgniter4 4.0.0-rc.4 documentation" href="../index.html"/>
-        <link rel="up" title="Library Reference" href="index.html"/>
-        <link rel="next" title="Pagination" href="pagination.html"/>
-        <link rel="prev" title="Honeypot Class" href="honeypot.html"/> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Pagination" href="pagination.html" />
+    <link rel="prev" title="Honeypot Class" href="honeypot.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search"  style="background: #DD4814" >
           
 
           
-            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+            <a href="../index.html">
           
 
+          
+            
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -87,34 +85,121 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/requirements.html">Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/credits.html">Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/psr.html">PSR Compliance</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create news items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/autoloader.html">Autoloading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/http.html">Working With HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/security.html">Security Guidelines</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../general/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/urls.html">CodeIgniter URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/helpers.html">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/logging.html">Logging Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/errors.html">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/ajax.html">AJAX Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/modules.html">Code Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/managing_apps.html">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/environments.html">Handling Multiple Environments</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/content_negotiation.html">Content Negotiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/methodspoofing.html">HTTP Method Spoofing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/restful.html">RESTful Resource Handling</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/views.html">Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_cells.html">View Cells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_renderer.html">View Renderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_layouts.html">View Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_parser.html">View Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../database/examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/queries.html">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/helpers.html">Query Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/query_builder.html">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/transactions.html">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/metadata.html">Getting MetaData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/events.html">Database Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/utilities.html">Database Utilities</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../models/model.html">Using CodeIgniter's Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/entities.html">Using Entity Classes</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/forge.html">Database Manipulation with Database Forge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/migration.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/seeds.html">Database Seeding</a></li>
+</ul>
+</li>
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Library Reference</a><ul class="current">
@@ -139,20 +224,54 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/array_helper.html">Array Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/cookie_helper.html">Cookie Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/date_helper.html">Date Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/filesystem_helper.html">Filesystem Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/form_helper.html">Form Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/html_helper.html">HTML Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/inflector_helper.html">Inflector Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/number_helper.html">Number Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/security_helper.html">Security Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/test_helper.html">Test Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/text_helper.html">Text Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/url_helper.html">URL Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/xml_helper.html">XML Helper</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../testing/overview.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/fabricator.html">Generating Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli.html">Running via the Command Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Custom CLI Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/core_classes.html">Creating Core System Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/common.html">Replacing Common Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/basecontroller.html">Extending the Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/authentication.html">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/contributing.html">Contributing to CodeIgniter</a></li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
+</li>
 </ul>
 
             
@@ -164,17 +283,18 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">CodeIgniter4</a>
+          <a href="../index.html">CodeIgniter</a>
         
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -195,7 +315,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="index.html">Library Reference</a> &raquo;</li>
         
@@ -242,12 +362,12 @@ actions:</p>
 <h2><a class="toc-backref" href="#id1">Initializing the Class</a><a class="headerlink" href="#initializing-the-class" title="Permalink to this headline">¶</a></h2>
 <p>Like most other classes in CodeIgniter, the image class is initialized
 in your controller by calling the Services class:</p>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>You can pass the alias for the image library you wish to use into the
 Service function:</p>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The available Handlers are as follows:</p>
@@ -270,7 +390,7 @@ and can run <code class="docutils literal notranslate"><span class="pre">exec()<
 identical. You will set some preferences corresponding to the action you
 intend to perform, then call one of the available processing functions.
 For example, to create an image thumbnail you’ll do this:</p>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic_thumb.jpg&#39;</span><span class="p">);</span>
@@ -286,7 +406,7 @@ desired aspect ratio, and then crop and resize the result.</p>
 needed before saving. The original image is left untouched, and a new image
 is used and passed through each method, applying the results on top of the
 previous results:</p>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">reorient</span><span class="p">()</span>
         <span class="o">-&gt;</span><span class="na">rotate</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
@@ -316,14 +436,23 @@ adjust PHP memory limits.</p>
 <p><code class="docutils literal notranslate"><span class="pre">save()</span></code> can take an additional parameter <code class="docutils literal notranslate"><span class="pre">$quality</span></code> to alter the resulting image
 quality. Values range from 0 to 100 with 90 being the framework default. This parameter
 only applies to JPEG images and will be ignored otherwise:</p>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
+        <span class="c1">// processing methods</span>
         <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/image/my_low_quality_pic.jpg&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Higher quality will result in larger file sizes. See also <a class="reference external" href="https://www.php.net/manual/en/function.imagejpeg.php">https://www.php.net/manual/en/function.imagejpeg.php</a></p>
+</div>
+<p>If you are only interested in changing the image quality without doing any processing.
+You will need to include the image resource or you will end up with an exact copy:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">withResource</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/image/my_low_quality_pic.jpg&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="processing-methods">
@@ -343,7 +472,7 @@ only applies to JPEG images and will be ignored otherwise:</p>
 If they fail they will throw a <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Images\ImageException</span></code> that contains
 the error message. A good practice is to catch the exceptions, showing an
 error upon failure, like this:</p>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="k">try</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">try</span> <span class="p">{</span>
 <span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">)</span>
@@ -359,7 +488,7 @@ error upon failure, like this:</p>
 <h4>Cropping Images<a class="headerlink" href="#cropping-images" title="Permalink to this headline">¶</a></h4>
 <p>Images can be cropped so that only a portion of the original image remains. This is often used when creating
 thumbnail images that should match a certain size/aspect ratio. This is handled with the <code class="docutils literal notranslate"><span class="pre">crop()</span></code> method:</p>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">crop</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$x</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$y</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">bool</span> <span class="nv">$maintainRatio</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$masterDim</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">crop</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$x</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$y</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">bool</span> <span class="nv">$maintainRatio</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$masterDim</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -372,7 +501,7 @@ thumbnail images that should match a certain size/aspect ratio. This is handled 
 </ul>
 <p>To take a 50x50 pixel square out of the center of an image, you would need to first calculate the appropriate x and y
 offset values:</p>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nv">$info</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$info</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">getFile</span><span class="p">()</span>
             <span class="o">-&gt;</span><span class="na">getProperties</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
@@ -390,12 +519,12 @@ offset values:</p>
 <div class="section" id="converting-images">
 <h4>Converting Images<a class="headerlink" href="#converting-images" title="Permalink to this headline">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">convert()</span></code> method changes the library’s internal indicator for the desired file format. This doesn’t touch the actual image resource, but indicates to <code class="docutils literal notranslate"><span class="pre">save()</span></code> what format to use:</p>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">convert</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$imageType</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">convert</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$imageType</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul>
 <li><p class="first"><strong>$imageType</strong> is one of PHP’s image type constants (see for example <a class="reference external" href="https://www.php.net/manual/en/function.image-type-to-mime-type.php">https://www.php.net/manual/en/function.image-type-to-mime-type.php</a>):</p>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">convert</span><span class="p">(</span><span class="nx">IMAGETYPE_PNG</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.png&#39;</span><span class="p">);</span>
@@ -417,7 +546,7 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 <li>Crop the original image.</li>
 <li>Resize to the final dimensions.</li>
 </ul>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">fit</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$position</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">fit</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$position</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -426,7 +555,7 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 <li><strong>$position</strong> determines the portion of the image to crop out. Allowed positions: ‘top-left’, ‘top’, ‘top-right’, ‘left’, ‘center’, ‘right’, ‘bottom-left’, ‘bottom’, ‘bottom-right’.</li>
 </ul>
 <p>This provides a much simpler way to crop that will always maintain the aspect ratio:</p>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -439,7 +568,7 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 <ul class="simple">
 <li>Specify a background color when converting from transparent images to jpgs.</li>
 </ul>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">flatten</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$red</span> <span class="o">=</span> <span class="mi">255</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$green</span> <span class="o">=</span> <span class="mi">255</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$blue</span> <span class="o">=</span> <span class="mi">255</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">flatten</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$red</span> <span class="o">=</span> <span class="mi">255</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$green</span> <span class="o">=</span> <span class="mi">255</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$blue</span> <span class="o">=</span> <span class="mi">255</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -447,7 +576,7 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 <li><strong>$green</strong> is the green value of the background.</li>
 <li><strong>$blue</strong> is the blue value of the background.</li>
 </ul>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.png&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">flatten</span><span class="p">()</span>
         <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -462,13 +591,13 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 <div class="section" id="flipping-images">
 <h4>Flipping Images<a class="headerlink" href="#flipping-images" title="Permalink to this headline">¶</a></h4>
 <p>Images can be flipped along either their horizontal or vertical axis:</p>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">flip</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$dir</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">flip</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$dir</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><strong>$dir</strong> specifies the axis to flip along. Can be either ‘vertical’ or ‘horizontal’.</li>
 </ul>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">flip</span><span class="p">(</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -478,7 +607,7 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 <div class="section" id="resizing-images">
 <h4>Resizing Images<a class="headerlink" href="#resizing-images" title="Permalink to this headline">¶</a></h4>
 <p>Images can be resized to fit any dimension you require with the resize() method:</p>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">resize</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span><span class="p">,</span> <span class="nx">bool</span> <span class="nv">$maintainRatio</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$masterDim</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">resize</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span><span class="p">,</span> <span class="nx">bool</span> <span class="nv">$maintainRatio</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$masterDim</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -490,7 +619,7 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 <p>When resizing images you can choose whether to maintain the ratio of the original image, or stretch/squash the new
 image to fit the desired dimensions. If $maintainRatio is true, the dimension specified by $masterDim will stay the same,
 while the other dimension will be altered to match the original image’s aspect ratio.</p>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">resize</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -500,7 +629,7 @@ while the other dimension will be altered to match the original image’s aspect
 <div class="section" id="rotating-images">
 <h4>Rotating Images<a class="headerlink" href="#rotating-images" title="Permalink to this headline">¶</a></h4>
 <p>The rotate() method allows you to rotate an image in 90 degree increments:</p>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">rotate</span><span class="p">(</span><span class="nx">float</span> <span class="nv">$angle</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">rotate</span><span class="p">(</span><span class="nx">float</span> <span class="nv">$angle</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -517,12 +646,12 @@ If the value is any other than the three values listed above, it will throw a Co
 <p>You can overlay a text watermark onto the image very simply with the text() method. This is useful for placing copyright
 notices, photographer names, or simply marking the images as a preview so they won’t be used in other people’s final
 products.</p>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">text</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$text</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span> <span class="o">=</span> <span class="p">[])</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">text</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$text</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span> <span class="o">=</span> <span class="p">[])</span>
 </pre></div>
 </div>
 <p>The first parameter is the string of text that you wish to display. The second parameter is an array of options
 that allow you to specify how the text should be displayed:</p>
-<div class="highlight-ci notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">text</span><span class="p">(</span><span class="s1">&#39;Copyright 2017 My Photo Co&#39;</span><span class="p">,</span> <span class="p">[</span>
             <span class="s1">&#39;color&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;#fff&#39;</span><span class="p">,</span>
@@ -561,9 +690,7 @@ name of one of the installed system fonts that you wish to use, i.e. Calibri.</p
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -572,7 +699,7 @@ name of one of the installed system fonts that you wish to use, i.e. Calibri.</p
         <a href="pagination.html" class="btn btn-neutral float-right" title="Pagination" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="honeypot.html" class="btn btn-neutral" title="Honeypot Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="honeypot.html" class="btn btn-neutral float-left" title="Honeypot Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -581,12 +708,22 @@ name of one of the installed system fonts that you wish to use, i.e. Calibri.</p
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019-2020 CodeIgniter Foundation.
-      Last updated on Feb 09, 2020.
+        
+        &copy; Copyright 2019-2020 CodeIgniter Foundation
+      <span class="lastupdated">
+        Last updated on Jul 05, 2020.
+      </span>
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -598,38 +735,15 @@ name of one of the installed system fonts that you wish to use, i.e. Calibri.</p
   </div>
   
 
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'4.0.0-rc.4',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  false,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/language_data.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(false);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

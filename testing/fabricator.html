@@ -1,0 +1,662 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Generating Test Data &mdash; CodeIgniter 4.0.3 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/js/citheme.js"></script>
+        <script type="text/javascript" src="../_static/js/carbon.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Testing Controllers" href="controllers.html" />
+    <link rel="prev" title="Testing Your Database" href="database.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #DD4814" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/requirements.html">Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/credits.html">Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/psr.html">PSR Compliance</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create news items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/autoloader.html">Autoloading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/http.html">Working With HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/security.html">Security Guidelines</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../general/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/urls.html">CodeIgniter URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/helpers.html">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/logging.html">Logging Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/errors.html">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/ajax.html">AJAX Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/modules.html">Code Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/managing_apps.html">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/environments.html">Handling Multiple Environments</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/content_negotiation.html">Content Negotiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/methodspoofing.html">HTTP Method Spoofing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/restful.html">RESTful Resource Handling</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/views.html">Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_cells.html">View Cells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_renderer.html">View Renderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_layouts.html">View Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_parser.html">View Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../database/examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/queries.html">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/helpers.html">Query Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/query_builder.html">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/transactions.html">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/metadata.html">Getting MetaData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/events.html">Database Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/utilities.html">Database Utilities</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../models/model.html">Using CodeIgniter's Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/entities.html">Using Entity Classes</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/forge.html">Database Manipulation with Database Forge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/migration.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/seeds.html">Database Seeding</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/honeypot.html">Honeypot Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/images.html">Image Manipulation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/security.html">Security Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/sessions.html">Session Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/throttler.html">Throttler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/time.html">Dates and Times</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/typography.html">Typography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uploaded_files.html">Working with Uploaded Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uri.html">Working with URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/user_agent.html">User Agent Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/validation.html">Validation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/array_helper.html">Array Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/cookie_helper.html">Cookie Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/date_helper.html">Date Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/filesystem_helper.html">Filesystem Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/form_helper.html">Form Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/html_helper.html">HTML Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/inflector_helper.html">Inflector Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/number_helper.html">Number Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/security_helper.html">Security Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/test_helper.html">Test Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/text_helper.html">Text Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/url_helper.html">URL Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/xml_helper.html">XML Helper</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Testing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Generating Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controllers.html">Controller Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature.html">HTTP Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html">Debugging Your Application</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli.html">Running via the Command Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Custom CLI Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/core_classes.html">Creating Core System Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/common.html">Replacing Common Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/basecontroller.html">Extending the Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/authentication.html">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/contributing.html">Contributing to CodeIgniter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Testing</a> &raquo;</li>
+        
+      <li>Generating Test Data</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="generating-test-data">
+<h1>Generating Test Data<a class="headerlink" href="#generating-test-data" title="Permalink to this headline">¶</a></h1>
+<p>Often you will need sample data for your application to run its tests. The <code class="docutils literal notranslate"><span class="pre">Fabricator</span></code> class
+uses fzaninotto’s <a class="reference external" href="https://github.com/fzaninotto/Faker//">Faker</a> to turn models into generators
+of random data. Use fabricators in your seeds or test cases to stage fake data for your unit tests.</p>
+<div class="section" id="supported-models">
+<h2>Supported Models<a class="headerlink" href="#supported-models" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Fabricator</span></code> supports any model that extends the framework’s core model, <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Model</span></code>.
+You may use your own custom models by ensuring they implement <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\Interfaces\FabricatorModel</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyModel</span> <span class="k">implements</span> <span class="nx">CodeIgniter\Test\Interfaces\FabricatorModel</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In addition to methods, the interface outlines some necessary properties for the target model. Please see the interface code for details.</p>
+</div>
+</div>
+<div class="section" id="loading-fabricators">
+<h2>Loading Fabricators<a class="headerlink" href="#loading-fabricators" title="Permalink to this headline">¶</a></h2>
+<p>At its most basic a fabricator takes the model to act on:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">App\Models\UserModel</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\Fabricator</span><span class="p">;</span>
+
+<span class="nv">$fabricator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Fabricator</span><span class="p">(</span><span class="nx">UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The parameter can be a string specifying the name of the model, or an instance of the model itself:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserModel</span><span class="p">(</span><span class="nv">$testDbConnection</span><span class="p">);</span>
+
+<span class="nv">$fabricator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Fabricator</span><span class="p">(</span><span class="nv">$model</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="defining-formatters">
+<h2>Defining Formatters<a class="headerlink" href="#defining-formatters" title="Permalink to this headline">¶</a></h2>
+<p>Faker generates data by requesting it from a formatter. With no formatters defined, <code class="docutils literal notranslate"><span class="pre">Fabricator</span></code> will
+attempt to guess at the most appropriate fit based on the field name and properties of the model it
+represents, falling back on <code class="docutils literal notranslate"><span class="pre">$fabricator-&gt;defaultFormatter</span></code>. This may be fine if your field names
+correspond with common formatters, or if you don’t care much about the content of the fields, but most
+of the time you will want to specify the formatters to use as the second parameter to the constructor:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$formatters</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;firstName&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;phoneNumber&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;imageUrl&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$fabricator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Fabricator</span><span class="p">(</span><span class="nx">UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="nv">$formatters</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You can also change the formatters after a fabricator is initialized by using the <code class="docutils literal notranslate"><span class="pre">setFormatters()</span></code> method.</p>
+<p><strong>Advanced Formatting</strong></p>
+<p>Sometimes the default return of a formatter is not enough. Faker providers allow parameters to most formatters
+to further limit the scope of random data. A fabricator will check its representative model for the <code class="docutils literal notranslate"><span class="pre">fake()</span></code>
+method where you can define exactly what the faked data should look like:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserModel</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">fake</span><span class="p">(</span><span class="nx">Generator</span> <span class="o">&amp;</span><span class="nv">$faker</span><span class="p">)</span>
+    <span class="p">{</span>
+            <span class="k">return</span> <span class="p">[</span>
+                <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">firstName</span><span class="p">,</span>
+                <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">,</span>
+                <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">phoneNumber</span><span class="p">,</span>
+                <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="nx">Faker\Provider\Image</span><span class="o">::</span><span class="na">imageUrl</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">400</span><span class="p">),</span>
+                <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Auth&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">allowRemembering</span> <span class="o">?</span> <span class="nb">date</span><span class="p">(</span><span class="s1">&#39;Y-m-d&#39;</span><span class="p">)</span> <span class="o">:</span> <span class="k">null</span><span class="p">,</span>
+            <span class="p">];</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<p>Notice in this example how the first three values are equivalent to the formatters from before. However for <code class="docutils literal notranslate"><span class="pre">avatar</span></code>
+we have requested an image size other than the default and <code class="docutils literal notranslate"><span class="pre">login</span></code> uses a conditional based on app configuration,
+neither of which are possible using the <code class="docutils literal notranslate"><span class="pre">$formatters</span></code> parameter.
+You may want to keep your test data separate from your production models, so it is a good practice to define
+a child class in your test support folder:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">Tests\Support\Models</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserFabricator</span> <span class="k">extends</span> <span class="nx">\App\Models\UserModel</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">fake</span><span class="p">(</span><span class="o">&amp;</span><span class="nv">$faker</span><span class="p">)</span>
+    <span class="p">{</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="localization">
+<h2>Localization<a class="headerlink" href="#localization" title="Permalink to this headline">¶</a></h2>
+<p>Faker supports a lot of different locales. Check their documentation to determine which providers
+support your locale. Specify a locale in the third parameter while initiating a fabricator:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fabricator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Fabricator</span><span class="p">(</span><span class="nx">UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="s1">&#39;fr_FR&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If no locale is specified it will use the one defined in <strong>app/Config/App.php</strong> as <code class="docutils literal notranslate"><span class="pre">defaultLocale</span></code>.
+You can check the locale of an existing fabricator using its <code class="docutils literal notranslate"><span class="pre">getLocale()</span></code> method.</p>
+</div>
+<div class="section" id="faking-the-data">
+<h2>Faking the Data<a class="headerlink" href="#faking-the-data" title="Permalink to this headline">¶</a></h2>
+<p>Once you have a properly-initialized fabricator it is easy to generate test data with the <code class="docutils literal notranslate"><span class="pre">make()</span></code> command:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fabricator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Fabricator</span><span class="p">(</span><span class="nx">UserFabricator</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
+<span class="nv">$testUser</span>   <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">();</span>
+<span class="nb">print_r</span><span class="p">(</span><span class="nv">$testUser</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You might get back something like this:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;Maynard&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;king.alford@example.org&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;201-886-0269 x3767&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;http://lorempixel.com/800/400/&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also get a lot of them back by supplying a count:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The return type of <code class="docutils literal notranslate"><span class="pre">make()</span></code> mimics what is defined in the representative model, but you can
+force a type using the methods directly:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$userArray</span>  <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">makeArray</span><span class="p">();</span>
+<span class="nv">$userObject</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">makeObject</span><span class="p">();</span>
+<span class="nv">$userEntity</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">makeObject</span><span class="p">(</span><span class="s1">&#39;App\Entities\User&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The return from <code class="docutils literal notranslate"><span class="pre">make()</span></code> is ready to be used in tests or inserted into the database. Alternatively
+<code class="docutils literal notranslate"><span class="pre">Fabricator</span></code> includes the <code class="docutils literal notranslate"><span class="pre">create()</span></code> command to insert it for you, and return the result. Due
+to model callbacks, database formatting, and special keys like primary and timestamps the return
+from <code class="docutils literal notranslate"><span class="pre">create()</span></code> can differ from <code class="docutils literal notranslate"><span class="pre">make()</span></code>. You might get back something like this:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;id&#39;</span>         <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;first&#39;</span>      <span class="o">=&gt;</span> <span class="s2">&quot;Rachel&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="s2">&quot;bradley72@gmail.com&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;phone&#39;</span>      <span class="o">=&gt;</span> <span class="s2">&quot;741-241-2356&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;avatar&#39;</span>     <span class="o">=&gt;</span> <span class="s2">&quot;http://lorempixel.com/800/400/&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;login&#39;</span>      <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+    <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;2020-05-08 14:52:10&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;2020-05-08 14:52:10&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Similar to <code class="docutils literal notranslate"><span class="pre">make()</span></code> you can supply a count to insert and return an array of objects:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Finally, there may be times you want to test with the full database object but you are not actually
+using a database. <code class="docutils literal notranslate"><span class="pre">create()</span></code> takes a second parameter to allowing mocking the object, returning
+the object with extra database fields above without actually touching the database:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertIsNumeric</span><span class="p">(</span><span class="nv">$user</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dontSeeInDatabase</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="specifying-test-data">
+<h2>Specifying Test Data<a class="headerlink" href="#specifying-test-data" title="Permalink to this headline">¶</a></h2>
+<p>Generated data is great, but sometimes you may want to supply a specific field for a test without
+compromising your formatters configuration. Rather then creating a new fabricator for each variant
+you can use <code class="docutils literal notranslate"><span class="pre">setOverrides()</span></code> to specify the value for any fields:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setOverrides</span><span class="p">([</span><span class="s1">&#39;first&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Bobby&#39;</span><span class="p">]);</span>
+<span class="nv">$bobbyUser</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Now any data generated with <code class="docutils literal notranslate"><span class="pre">make()</span></code> or <code class="docutils literal notranslate"><span class="pre">create()</span></code> will always use “Bobby” for the <code class="docutils literal notranslate"><span class="pre">first</span></code> field:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;Bobby&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;latta.kindel@company.org&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;251-806-2169&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;http://lorempixel.com/800/400/&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;Bobby&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;melissa.strike@fabricon.us&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;525-214-2656 x23546&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;http://lorempixel.com/800/400/&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">setOverrides()</span></code> can take a second parameter to indicate whether this should be a persistent
+override or only for a single action:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setOverrides</span><span class="p">([</span><span class="s1">&#39;first&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Bobby&#39;</span><span class="p">],</span> <span class="nv">$persist</span> <span class="o">=</span> <span class="k">false</span><span class="p">);</span>
+<span class="nv">$bobbyUser</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">();</span>
+<span class="nv">$bobbyUser</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Notice after the first return the fabricator stops using the overrides:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;Bobby&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;belingadon142@example.org&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;741-857-1933 x1351&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;http://lorempixel.com/800/400/&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;Hans&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;hoppifur@metraxalon.com&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;487-235-7006&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;http://lorempixel.com/800/400/&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>If no second parameter is supplied then passed values will persist by default.</p>
+</div>
+<div class="section" id="test-helper">
+<h2>Test Helper<a class="headerlink" href="#test-helper" title="Permalink to this headline">¶</a></h2>
+<p>Often all you will need is a one-and-done fake object for testing. The Test Helper provides
+the <code class="docutils literal notranslate"><span class="pre">fake($model,</span> <span class="pre">$overrides)</span></code> function to do just this:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">);</span>
+<span class="nv">$user</span> <span class="o">=</span> <span class="nx">fake</span><span class="p">(</span><span class="s1">&#39;App\Models\UserModel&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Gerry&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>This is equivalent to:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fabricator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Fabricator</span><span class="p">(</span><span class="s1">&#39;App\Models\UserModel&#39;</span><span class="p">);</span>
+<span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setOverrides</span><span class="p">([</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Gerry&#39;</span><span class="p">]);</span>
+<span class="nv">$user</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="table-counts">
+<h2>Table Counts<a class="headerlink" href="#table-counts" title="Permalink to this headline">¶</a></h2>
+<p>Frequently your faked data will depend on other faked data. <code class="docutils literal notranslate"><span class="pre">Fabricator</span></code> provides a static
+count of the number of faked items you have created for each table. Consider the following
+example:</p>
+<p>Your project has users and groups. In your test case you want to create various scenarios
+with groups of different sizes, so you use <code class="docutils literal notranslate"><span class="pre">Fabricator</span></code> to create a bunch of groups.
+Now you want to create fake users but don’t want to assign them to a non-existant group ID.
+Your model’s fake method could look like this:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserModel</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">&#39;users&#39;</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">fake</span><span class="p">(</span><span class="nx">Generator</span> <span class="o">&amp;</span><span class="nv">$faker</span><span class="p">)</span>
+    <span class="p">{</span>
+            <span class="k">return</span> <span class="p">[</span>
+            <span class="s1">&#39;first&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">firstName</span><span class="p">,</span>
+            <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">,</span>
+            <span class="s1">&#39;group_id&#39;</span> <span class="o">=&gt;</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">Fabricator</span><span class="o">::</span><span class="na">getCount</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)),</span>
+            <span class="p">];</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<p>Now creating a new user will ensure it is a part of a valid group: <code class="docutils literal notranslate"><span class="pre">$user</span> <span class="pre">=</span> <span class="pre">fake(UserModel::class);</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Fabricator</span></code> handles the counts internally but you can also access these static methods
+to assist with using them:</p>
+<p><strong>getCount(string $table): int</strong></p>
+<p>Return the current value for a specific table (default: 0).</p>
+<p><strong>setCount(string $table, int $count): int</strong></p>
+<p>Set the value for a specific table manually, for example if you create some test items
+without using a fabricator that you still wanted factored into the final counts.</p>
+<p><strong>upCount(string $table): int</strong></p>
+<p>Increment the value for a specific table by one and return the new value. (This is what is
+used internally with <code class="docutils literal notranslate"><span class="pre">Fabricator::create()</span></code>).</p>
+<p><strong>downCount(string $table): int</strong></p>
+<p>Decrement the value for a specific table by one and return the new value, for example if
+you deleted a fake item but wanted to track the change.</p>
+<p><strong>resetCounts()</strong></p>
+<p>Resets all counts. Good idea to call this between test cases (though using
+<code class="docutils literal notranslate"><span class="pre">CIDatabaseTestCase::$refresh</span> <span class="pre">=</span> <span class="pre">true</span></code> does it automatically).</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="controllers.html" class="btn btn-neutral float-right" title="Testing Controllers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="database.html" class="btn btn-neutral float-left" title="Testing Your Database" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020 CodeIgniter Foundation
+      <span class="lastupdated">
+        Last updated on Jul 05, 2020.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
