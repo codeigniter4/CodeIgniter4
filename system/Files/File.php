@@ -144,7 +144,9 @@ class File extends SplFileInfo
 	{
 		if (! function_exists('finfo_open'))
 		{
+			// @codeCoverageIgnoreStart
 			return $this->originalMimeType ?? 'application/octet-stream';
+			// @codeCoverageIgnoreEnd
 		}
 
 		$finfo    = finfo_open(FILEINFO_MIME_TYPE);
