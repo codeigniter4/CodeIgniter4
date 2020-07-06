@@ -641,11 +641,11 @@ class Model
 	/**
 	 * Returns last insert ID or 0.
 	 *
-	 * @return integer|mixed
+	 * @return integer|string
 	 */
 	public function getInsertID()
 	{
-		return $this->insertID;
+		return is_numeric($this->insertID) ? (int) $this->insertID : $this->insertID;
 	}
 
 	//--------------------------------------------------------------------
@@ -734,13 +734,16 @@ class Model
 			{
 				if (empty($data[$this->primaryKey]))
 				{
-					throw DataException::forEmptyDataset('pk');
+					$this->insertID = null;
 				}
-				$this->insertID = $data[$this->primaryKey];
+				else
+				{
+					$this->insertID = $data[$this->primaryKey];
+				}
 			}
 			else
 			{
-				$this->insertID = (int) $this->db->insertID();
+				$this->insertID = $this->db->insertID();
 			}
 		}
 
