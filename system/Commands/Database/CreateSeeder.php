@@ -62,7 +62,7 @@ class CreateSeeder extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $name = 'db:seed:create';
+	protected $name = 'make:seeder';
 
 	/**
 	 * the Command's short description
@@ -76,7 +76,7 @@ class CreateSeeder extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $usage = 'db:seed:create [seeder_name] [options]';
+	protected $usage = 'make:seeder [seeder_name] [options]';
 
 	/**
 	 * the Command's Arguments
