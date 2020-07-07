@@ -152,6 +152,23 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
+	 * The commands utility for running and working with CLI commands.
+	 *
+	 * @param boolean $getShared
+	 *
+	 * @return \CodeIgniter\CLI\Commands|mixed
+	 */
+	public static function commands(bool $getShared = true)
+	{
+		if ($getShared)
+		{
+			return static::getSharedInstance('commands');
+		}
+
+		return new \CodeIgniter\CLI\Commands();
+	}
+
+	/**
 	 * The CURL Request class acts as a simple HTTP client for interacting
 	 * with other servers, typically through APIs.
 	 *

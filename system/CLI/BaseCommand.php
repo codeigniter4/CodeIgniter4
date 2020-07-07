@@ -115,10 +115,10 @@ abstract class BaseCommand
 	/**
 	 * BaseCommand constructor.
 	 *
-	 * @param \Psr\Log\LoggerInterface       $logger
-	 * @param \CodeIgniter\CLI\CommandRunner $commands
+	 * @param \Psr\Log\LoggerInterface $logger
+	 * @param Commands                 $commands
 	 */
-	public function __construct(LoggerInterface $logger, CommandRunner $commands)
+	public function __construct(LoggerInterface $logger, Commands $commands)
 	{
 		$this->logger   = $logger;
 		$this->commands = $commands;
@@ -151,7 +151,7 @@ abstract class BaseCommand
 		// for the command name.
 		array_unshift($params, $command);
 
-		return $this->commands->index($params);
+		return $this->commands->run($command, $params);
 	}
 
 	//--------------------------------------------------------------------

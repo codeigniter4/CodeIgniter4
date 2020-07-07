@@ -87,7 +87,7 @@ class CommandsTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$this->runner->index(['app:info']);
 		$commands = $this->runner->getCommands();
-		$command  = new $commands['app:info']['class']($this->logger, $this->runner);
+		$command  = new $commands['app:info']['class']($this->logger, service('commands'));
 
 		$command->helpme();
 		$result = CITestStreamFilter::$buffer;
@@ -99,7 +99,7 @@ class CommandsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->error_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
 		$this->runner->index(['app:info']);
 		$commands = $this->runner->getCommands();
-		$command  = new $commands['app:info']['class']($this->logger, $this->runner);
+		$command  = new $commands['app:info']['class']($this->logger, service('commands'));
 
 		$command->bomb();
 		$result = CITestStreamFilter::$buffer;
