@@ -11,14 +11,23 @@ class Honeypot extends BaseConfig
 	 * @var boolean
 	 */
 	public $hidden = true;
-	 /**
-         * Hide the Honypot. The default is style, but if the CSP is enabled, it is better to use class.
+	
+	/**
+         * Hide the Honeypot. If not set or null, the style parameter will be use. Otherwise it will be set the class parametr by inserted string.
          * Example:
-         * public $hiddenBy = 'class="hidden"';
+         * public $hiddenBy = 'hidden';
+         * 
+         * @var ?string 
+         */
+        public $hiddenByClass = null;
+	
+	/**
+         * Div wrapper of honeypot.
          * 
          * @var string 
          */
-        public $hiddenBy = 'style="display:none"';
+        public $hiddenContainer = '<div %s>%s</div>';
+	
 	/**
 	 * Honeypot Label Content
 	 *
