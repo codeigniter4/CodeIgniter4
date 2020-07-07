@@ -38,7 +38,6 @@ from each other by dashes, underscores, or not at all. For example:
 * 2012-10-31-100538_alter_blog_track_views.php
 * 2012_10_31_100539_alter_blog_add_translations.php
 
-
 ******************
 Create a Migration
 ******************
@@ -50,7 +49,10 @@ as *20121031100537_add_blog.php*.
 
 	<?php namespace App\Database\Migrations;
 
-	class AddBlog extends \CodeIgniter\Database\Migration {
+	use CodeIgniter\Database\Migration;
+
+	class AddBlog extends Migration
+	{
 
 		public function up()
 		{
@@ -59,7 +61,7 @@ as *20121031100537_add_blog.php*.
 					'type'           => 'INT',
 					'constraint'     => 5,
 					'unsigned'       => TRUE,
-					'auto_increment' => TRUE
+					'auto_increment' => TRUE,
 				],
 				'blog_title'       => [
 					'type'           => 'VARCHAR',
@@ -95,14 +97,14 @@ To temporarily bypass the foreign key checks while running migrations, use the `
 
 ::
 
-    public function up()
-    {
-        $this->db->disableForeignKeyChecks();
+	public function up()
+	{
+		$this->db->disableForeignKeyChecks()
 
-        // Migration rules would go here...
+		// Migration rules would go here..
 
-        $this->db->enableForeignKeyChecks();
-    }
+		$this->db->enableForeignKeyChecks();
+	}
 
 Database Groups
 ===============
@@ -115,16 +117,18 @@ another database is used for mission critical data. You can ensure that migratio
 against the proper group by setting the ``$DBGroup`` property on your migration. This name must
 match the name of the database group exactly::
 
-    <?php namespace App\Database\Migrations;
+	<?php namespace App\Database\Migrations;
 
-    class AddBlog extends \CodeIgniter\Database\Migration
-    {
-        protected $DBGroup = 'alternate_db_group';
+	use CodeIgniter\Database\Migration;
 
-        public function up() { . . . }
+	class AddBlog extends Migration
+	{
+		protected $DBGroup = 'alternate_db_group';
 
-        public function down() { . . . }
-    }
+		public function up() { . . . }
+
+		public function down() { . . . }
+	}
 
 Namespaces
 ==========
@@ -141,7 +145,7 @@ configuration file::
 
 	$psr4 = [
 		'App'       => APPPATH,
-		'MyCompany' => ROOTPATH.'MyCompany'
+		'MyCompany' => ROOTPATH . 'MyCompany',
 	];
 
 This will look for any migrations located at both **APPPATH/Database/Migrations** and
@@ -155,7 +159,7 @@ Usage Example
 In this example some simple code is placed in **app/Controllers/Migrate.php**
 to update the schema::
 
-    <?php namespace App\Controllers;
+	<?php namespace App\Controllers;
 
 	class Migrate extends \CodeIgniter\Controller
 	{
@@ -166,11 +170,11 @@ to update the schema::
 
 			try
 			{
-			  $migrate->latest();
+				$migrate->latest();
 			}
-			catch (\Exception $e)
+			catch (\Throwable $e)
 			{
-			  // Do something with the error here...
+				// Do something with the error here...
 			}
 		}
 
@@ -191,9 +195,9 @@ Migrates a database group with all available migrations::
 
 You can use (migrate) with the following options:
 
-- (-g) to chose database group, otherwise default database group will be used.
-- (-n) to choose namespace, otherwise (App) namespace will be used.
-- (-all) to migrate all namespaces to the latest migration
+- ``-g`` - to chose database group, otherwise default database group will be used.
+- ``-n`` - to choose namespace, otherwise (App) namespace will be used.
+- ``-all`` - to migrate all namespaces to the latest migration
 
 This example will migrate Blog namespace with any new migrations on the test database group::
 
@@ -211,9 +215,9 @@ Rolls back all migrations, taking the database group to a blank slate, effective
 
 You can use (rollback) with the following options:
 
-- (-g) to choose database group, otherwise default database group will be used.
-- (-b) to choose a batch: natural numbers specify the batch, negatives indicate a relative batch
-- (-f) to force a bypass confirmation question, it is only asked in a production environment
+- ``-g`` - to choose database group, otherwise default database group will be used.
+- ``-b`` - to choose a batch: natural numbers specify the batch, negatives indicate a relative batch
+- ``-f`` - to force a bypass confirmation question, it is only asked in a production environment
 
 **refresh**
 
@@ -223,10 +227,10 @@ Refreshes the database state by first rolling back all migrations, and then migr
 
 You can use (refresh) with the following options:
 
-- (-g) to choose database group, otherwise default database group will be used.
-- (-n) to choose namespace, otherwise (App) namespace will be used.
-- (-all) to refresh all namespaces
-- (-f) to force a bypass confirmation question, it is only asked in a production environment
+- ``-g`` - to choose database group, otherwise default database group will be used.
+- ``-n`` - to choose namespace, otherwise (App) namespace will be used.
+- ``-all`` - to refresh all namespaces
+- ``-f`` - to force a bypass confirmation question, it is only asked in a production environment
 
 **status**
 
@@ -238,7 +242,7 @@ Displays a list of all migrations and the date and time they ran, or '--' if the
 
 You can use (status) with the following options:
 
-- (-g) to choose database group, otherwise default database group will be used.
+- ``-g`` - to choose database group, otherwise default database group will be used.
 
 **create**
 
@@ -246,12 +250,13 @@ Creates a skeleton migration file in **app/Database/Migrations**.
 It automatically prepends the current timestamp. The class name it
 creates is the Pascal case version of the filename.
 
-  > php spark migrate:create [filename]
+::
 
+  > php spark migrate:create [filename]
 
 You can use (create) with the following options:
 
-- (-n) to choose namespace, otherwise (App) namespace will be used.
+- ``-n`` - to choose namespace, otherwise (App) namespace will be used.
 
 *********************
 Migration Preferences
