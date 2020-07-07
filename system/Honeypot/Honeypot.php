@@ -72,9 +72,15 @@ class Honeypot
 		{
 			throw HoneypotException::forNoHiddenValue();
 		}
-		if ($this->config->hiddenBy === '')
+		
+		if (!$this->config->hiddenByClass)
 		{
-			throw HoneypotException::forNoHiddenValue();
+			$this->config->hiddenByClass = null;
+		}
+		
+		if (!$this->config->hiddenContainer)
+		{
+			$this->config->hiddenContainer = '<div %s>%s</div>';
 		}
 
 		if ($this->config->template === '')
@@ -128,7 +134,13 @@ class Honeypot
 
 		if ($this->config->hidden)
 		{
-			$template = '<div ' . $this->config->hiddenBy .  '>' . $template . '</div>';
+			if(substr_count($this->config->hiddenContainer, "%") != 2)
+			{
+				$this->config->hiddenContainer = '<div %s>%s</div>';
+			}
+			$template = sprintf($this->config->hiddenContainer,
+				($this->config->hiddenByClass ? (sprintf('class="%s"', $this->config->hiddenByClass)) : (sprintf('style="%s"', 'display:none'))),
+				$template);
 		}
 		return $template;
 	}
