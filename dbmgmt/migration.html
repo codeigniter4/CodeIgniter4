@@ -385,7 +385,10 @@ migrations go in the <strong>app/Database/Migrations/</strong> directory and hav
 as <em>20121031100537_add_blog.php</em>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Database\Migrations</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">AddBlog</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Database\Migration</span> <span class="p">{</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\Migration</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">AddBlog</span> <span class="k">extends</span> <span class="nx">Migration</span>
+<span class="p">{</span>
 
         <span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span>
         <span class="p">{</span>
@@ -393,8 +396,8 @@ as <em>20121031100537_add_blog.php</em>.</p>
                         <span class="s1">&#39;blog_id&#39;</span>          <span class="o">=&gt;</span> <span class="p">[</span>
                                 <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
                                 <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
-                                <span class="s1">&#39;unsigned&#39;</span>       <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
-                                <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span>
+                                <span class="s1">&#39;unsigned&#39;</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+                                <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
                         <span class="p">],</span>
                         <span class="s1">&#39;blog_title&#39;</span>       <span class="o">=&gt;</span> <span class="p">[</span>
                                 <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
@@ -402,10 +405,10 @@ as <em>20121031100537_add_blog.php</em>.</p>
                         <span class="p">],</span>
                         <span class="s1">&#39;blog_description&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
                                 <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span>
-                                <span class="s1">&#39;null&#39;</span>           <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+                                <span class="s1">&#39;null&#39;</span>           <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
                         <span class="p">],</span>
                 <span class="p">]);</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
                 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">);</span>
         <span class="p">}</span>
 
@@ -427,11 +430,11 @@ To temporarily bypass the foreign key checks while running migrations, use the <
 <code class="docutils literal notranslate"><span class="pre">enableForeignKeyChecks()</span></code> methods on the database connection.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span>
 <span class="p">{</span>
-    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">disableForeignKeyChecks</span><span class="p">();</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">disableForeignKeyChecks</span><span class="p">()</span>
 
-    <span class="c1">// Migration rules would go here...</span>
+        <span class="c1">// Migration rules would go here..</span>
 
-    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">enableForeignKeyChecks</span><span class="p">();</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">enableForeignKeyChecks</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -447,13 +450,15 @@ against the proper group by setting the <code class="docutils literal notranslat
 match the name of the database group exactly:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Database\Migrations</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">AddBlog</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Database\Migration</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\Migration</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">AddBlog</span> <span class="k">extends</span> <span class="nx">Migration</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$DBGroup</span> <span class="o">=</span> <span class="s1">&#39;alternate_db_group&#39;</span><span class="p">;</span>
+        <span class="k">protected</span> <span class="nv">$DBGroup</span> <span class="o">=</span> <span class="s1">&#39;alternate_db_group&#39;</span><span class="p">;</span>
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span> <span class="p">{</span> <span class="o">.</span> <span class="o">.</span> <span class="o">.</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span> <span class="p">{</span> <span class="o">.</span> <span class="o">.</span> <span class="o">.</span> <span class="p">}</span>
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">down</span><span class="p">()</span> <span class="p">{</span> <span class="o">.</span> <span class="o">.</span> <span class="o">.</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">down</span><span class="p">()</span> <span class="p">{</span> <span class="o">.</span> <span class="o">.</span> <span class="o">.</span> <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -469,7 +474,7 @@ it finds in Database/Migrations.</p>
 configuration file:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$psr4</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;App&#39;</span>       <span class="o">=&gt;</span> <span class="nx">APPPATH</span><span class="p">,</span>
-        <span class="s1">&#39;MyCompany&#39;</span> <span class="o">=&gt;</span> <span class="nx">ROOTPATH</span><span class="o">.</span><span class="s1">&#39;MyCompany&#39;</span>
+        <span class="s1">&#39;MyCompany&#39;</span> <span class="o">=&gt;</span> <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;MyCompany&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -484,24 +489,24 @@ re-usable, modular code suites.</p>
 to update the schema:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
-    <span class="k">class</span> <span class="nc">Migrate</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span>
-    <span class="p">{</span>
+<span class="k">class</span> <span class="nc">Migrate</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span>
+<span class="p">{</span>
 
-            <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
-            <span class="p">{</span>
-                    <span class="nv">$migrate</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">migrations</span><span class="p">();</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+        <span class="p">{</span>
+                <span class="nv">$migrate</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">migrations</span><span class="p">();</span>
 
-                    <span class="k">try</span>
-                    <span class="p">{</span>
-                      <span class="nv">$migrate</span><span class="o">-&gt;</span><span class="na">latest</span><span class="p">();</span>
-                    <span class="p">}</span>
-                    <span class="k">catch</span> <span class="p">(</span><span class="nx">\Exception</span> <span class="nv">$e</span><span class="p">)</span>
-                    <span class="p">{</span>
-                      <span class="c1">// Do something with the error here...</span>
-                    <span class="p">}</span>
-            <span class="p">}</span>
+                <span class="k">try</span>
+                <span class="p">{</span>
+                        <span class="nv">$migrate</span><span class="o">-&gt;</span><span class="na">latest</span><span class="p">();</span>
+                <span class="p">}</span>
+                <span class="k">catch</span> <span class="p">(</span><span class="nx">\Throwable</span> <span class="nv">$e</span><span class="p">)</span>
+                <span class="p">{</span>
+                        <span class="c1">// Do something with the error here...</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
 
-    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -517,9 +522,9 @@ that wish to use them. The tools primarily provide access to the same methods th
 </div>
 <p>You can use (migrate) with the following options:</p>
 <ul class="simple">
-<li>(-g) to chose database group, otherwise default database group will be used.</li>
-<li>(-n) to choose namespace, otherwise (App) namespace will be used.</li>
-<li>(-all) to migrate all namespaces to the latest migration</li>
+<li><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to chose database group, otherwise default database group will be used.</li>
+<li><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise (App) namespace will be used.</li>
+<li><code class="docutils literal notranslate"><span class="pre">-all</span></code> - to migrate all namespaces to the latest migration</li>
 </ul>
 <p>This example will migrate Blog namespace with any new migrations on the test database group:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span> <span class="o">-</span><span class="nx">g</span> <span class="nx">test</span> <span class="o">-</span><span class="nx">n</span> <span class="nx">Blog</span>
@@ -535,9 +540,9 @@ to minimize any potential conflicts between the main application and any modules
 </div>
 <p>You can use (rollback) with the following options:</p>
 <ul class="simple">
-<li>(-g) to choose database group, otherwise default database group will be used.</li>
-<li>(-b) to choose a batch: natural numbers specify the batch, negatives indicate a relative batch</li>
-<li>(-f) to force a bypass confirmation question, it is only asked in a production environment</li>
+<li><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to choose database group, otherwise default database group will be used.</li>
+<li><code class="docutils literal notranslate"><span class="pre">-b</span></code> - to choose a batch: natural numbers specify the batch, negatives indicate a relative batch</li>
+<li><code class="docutils literal notranslate"><span class="pre">-f</span></code> - to force a bypass confirmation question, it is only asked in a production environment</li>
 </ul>
 <p><strong>refresh</strong></p>
 <p>Refreshes the database state by first rolling back all migrations, and then migrating all:</p>
@@ -546,10 +551,10 @@ to minimize any potential conflicts between the main application and any modules
 </div>
 <p>You can use (refresh) with the following options:</p>
 <ul class="simple">
-<li>(-g) to choose database group, otherwise default database group will be used.</li>
-<li>(-n) to choose namespace, otherwise (App) namespace will be used.</li>
-<li>(-all) to refresh all namespaces</li>
-<li>(-f) to force a bypass confirmation question, it is only asked in a production environment</li>
+<li><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to choose database group, otherwise default database group will be used.</li>
+<li><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise (App) namespace will be used.</li>
+<li><code class="docutils literal notranslate"><span class="pre">-all</span></code> - to refresh all namespaces</li>
+<li><code class="docutils literal notranslate"><span class="pre">-f</span></code> - to force a bypass confirmation question, it is only asked in a production environment</li>
 </ul>
 <p><strong>status</strong></p>
 <p>Displays a list of all migrations and the date and time they ran, or ‘–’ if they have not been run:</p>
@@ -560,17 +565,18 @@ to minimize any potential conflicts between the main application and any modules
 </div>
 <p>You can use (status) with the following options:</p>
 <ul class="simple">
-<li>(-g) to choose database group, otherwise default database group will be used.</li>
+<li><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to choose database group, otherwise default database group will be used.</li>
 </ul>
 <p><strong>create</strong></p>
 <p>Creates a skeleton migration file in <strong>app/Database/Migrations</strong>.
 It automatically prepends the current timestamp. The class name it
 creates is the Pascal case version of the filename.</p>
-<blockquote>
-<div>&gt; php spark migrate:create [filename]</div></blockquote>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span><span class="o">:</span><span class="nx">create</span> <span class="p">[</span><span class="nx">filename</span><span class="p">]</span>
+</pre></div>
+</div>
 <p>You can use (create) with the following options:</p>
 <ul class="simple">
-<li>(-n) to choose namespace, otherwise (App) namespace will be used.</li>
+<li><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise (App) namespace will be used.</li>
 </ul>
 </div>
 <div class="section" id="migration-preferences">
@@ -592,8 +598,8 @@ creates is the Pascal case version of the filename.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><strong>enabled</strong></td>
-<td>TRUE</td>
-<td>TRUE / FALSE</td>
+<td>true</td>
+<td>true / false</td>
 <td>Enable or disable migrations.</td>
 </tr>
 <tr class="row-odd"><td><strong>table</strong></td>
@@ -642,7 +648,7 @@ creates is the Pascal case version of the filename.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -667,7 +673,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure or no migrations are found</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure or no migrations are found</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -696,7 +702,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -722,7 +728,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The current MigrationRunner instance</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniterDatabaseMigrationRunner</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\Database\MigrationRunner</p>
 </td>
 </tr>
 </tbody>
@@ -749,7 +755,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The current MigrationRunner instance</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniterDatabaseMigrationRunner</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\Database\MigrationRunner</p>
 </td>
 </tr>
 </tbody>
