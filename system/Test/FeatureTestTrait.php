@@ -153,6 +153,9 @@ trait FeatureTestTrait
 		// instance get the right one.
 		Services::injectMock('request', $request);
 
+		// Make sure filters are reset between tests
+		Services::injectMock('filters', Services::filters(null, false));
+
 		$response = $this->app
 				->setRequest($request)
 				->run($routes, true);
