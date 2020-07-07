@@ -60,8 +60,8 @@ as *20121031100537_add_blog.php*.
 				'blog_id'          => [
 					'type'           => 'INT',
 					'constraint'     => 5,
-					'unsigned'       => TRUE,
-					'auto_increment' => TRUE,
+					'unsigned'       => true,
+					'auto_increment' => true,
 				],
 				'blog_title'       => [
 					'type'           => 'VARCHAR',
@@ -69,10 +69,10 @@ as *20121031100537_add_blog.php*.
 				],
 				'blog_description' => [
 					'type'           => 'TEXT',
-					'null'           => TRUE,
+					'null'           => true,
 				],
 			]);
-			$this->forge->addKey('blog_id', TRUE);
+			$this->forge->addKey('blog_id', true);
 			$this->forge->createTable('blog');
 		}
 
@@ -267,7 +267,7 @@ The following is a table of all the config options for migrations, available in 
 ========================== ====================== ========================== =============================================================
 Preference                 Default                Options                    Description
 ========================== ====================== ========================== =============================================================
-**enabled**                TRUE                   TRUE / FALSE               Enable or disable migrations.
+**enabled**                true                   true / false               Enable or disable migrations.
 **table**                  migrations             None                       The table name for storing the schema version number.
 **timestampFormat**        Y-m-d-His\_                                        The format to use for timestamps when creating a migration.
 ========================== ====================== ========================== =============================================================
@@ -288,7 +288,7 @@ Class Reference
 	.. php:method:: latest($group)
 
 		:param	mixed	$group: database group name, if null default database group will be used.
-		:returns:	TRUE on success, FALSE on failure
+		:returns:	``true`` on success, ``false`` on failure
 		:rtype:	bool
 
 		This locates migrations for a namespace (or all namespaces), determines which migrations
@@ -298,7 +298,7 @@ Class Reference
 
 		:param	mixed	$batch: previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g. -3 means "three batches back")
 		:param	mixed	$group: database group name, if null default database group will be used.
-		:returns:	TRUE on success, FALSE on failure or no migrations are found
+		:returns:	``true`` on success, ``false`` on failure or no migrations are found
 		:rtype:	bool
 
 		Regress can be used to roll back changes to a previous state, batch by batch.
@@ -312,7 +312,7 @@ Class Reference
 		:param	mixed	$path:  path to a valid migration file.
 		:param	mixed	$namespace: namespace of the provided migration.
 		:param	mixed	$group: database group name, if null default database group will be used.
-		:returns:	TRUE on success, FALSE on failure
+		:returns:	``true`` on success, ``false`` on failure
 		:rtype:	bool
 
 		This forces a single file to migrate regardless of order or batches. Method "up" or "down" is detected based on whether it has already been migrated. **Note**: This method is recommended only for testing and could cause data consistency issues.
@@ -321,7 +321,7 @@ Class Reference
 
 	  :param  string  $namespace: application namespace.
 	  :returns:   The current MigrationRunner instance
-	  :rtype:     CodeIgniter\Database\MigrationRunner
+	  :rtype:     CodeIgniter\\Database\\MigrationRunner
 
 	  Sets the path the library should look for migration files::
 
@@ -331,7 +331,7 @@ Class Reference
 
 	  :param  string  $group: database group name.
 	  :returns:   The current MigrationRunner instance
-	  :rtype:     CodeIgniter\Database\MigrationRunner
+	  :rtype:     CodeIgniter\\Database\\MigrationRunner
 
 	  Sets the path the library should look for migration files::
 
