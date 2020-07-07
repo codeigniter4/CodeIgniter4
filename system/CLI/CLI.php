@@ -305,8 +305,10 @@ class CLI
 	 */
 	protected static function validate(string $field, string $value, string $rules): bool
 	{
+		$label      = $field;
+		$field      = 'temp';
 		$validation = \Config\Services::validation(null, false);
-		$validation->setRule($field, null, $rules);
+		$validation->setRule($field, $label, $rules);
 		$validation->run([$field => $value]);
 
 		if ($validation->hasError($field))
