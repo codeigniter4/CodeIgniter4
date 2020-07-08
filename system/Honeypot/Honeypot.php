@@ -134,13 +134,7 @@ class Honeypot
 
 		if ($this->config->hidden)
 		{
-			if(substr_count($this->config->hiddenContainer, "%") != 2)
-			{
-				$this->config->hiddenContainer = '<div %s>%s</div>';
-			}
-			$template = sprintf($this->config->hiddenContainer,
-				($this->config->hiddenByClass ? (sprintf('class="%s"', $this->config->hiddenByClass)) : (sprintf('style="%s"', 'display:none'))),
-				$template);
+			$template = sprintf($this->config->container, $template);
 		}
 		return $template;
 	}
