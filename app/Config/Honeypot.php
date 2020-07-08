@@ -26,7 +26,7 @@ class Honeypot extends BaseConfig
          * 
          * @var string 
          */
-        public $hiddenContainer = '<div %s>%s</div>';
+        public $container = '<div style="display:none">%s</div>';
 	
 	/**
 	 * Honeypot Label Content
