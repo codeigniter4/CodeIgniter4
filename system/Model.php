@@ -267,45 +267,60 @@ class Model
 	 */
 
 	/**
+	 * Whether to trigger the defined callbacks
+	 *
+	 * @var boolean
+	 */
+	protected $allowCallbacks = true;
+
+	/**
+	 * Used by allowCallbacks() to override the
+	 * model's allowCallbacks setting.
+	 *
+	 * @var boolean
+	 */
+	protected $tempAllowCallbacks;
+
+	/**
 	 * Callbacks for beforeInsert
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $beforeInsert = [];
 	/**
 	 * Callbacks for afterInsert
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $afterInsert = [];
 	/**
 	 * Callbacks for beforeUpdate
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $beforeUpdate = [];
 	/**
 	 * Callbacks for afterUpdate
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $afterUpdate = [];
 	/**
 	 * Callbacks for afterFind
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $afterFind = [];
 	/**
 	 * Callbacks for beforeDelete
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $beforeDelete = [];
 	/**
 	 * Callbacks for afterDelete
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $afterDelete = [];
 
@@ -339,6 +354,7 @@ class Model
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
+		$this->tempAllowCallbacks = $this->allowCallbacks;
 
 		if (is_null($validation))
 		{
@@ -1658,6 +1674,21 @@ class Model
 	}
 
 	/**
+	 * Sets $tempAllowCallbacks value so that we can temporarily override
+	 * the setting. Resets after the next trigger.
+	 *
+	 * @param boolean $val
+	 *
+	 * @return Model
+	 */
+	public function allowCallbacks(bool $val = true)
+	{
+		$this->tempAllowCallbacks = $val;
+
+		return $this;
+	}
+
+	/**
 	 * A simple event trigger for Model Events that allows additional
 	 * data manipulation within the model. Specifically intended for
 	 * usage by child models this can be used to format data,
@@ -1670,6 +1701,8 @@ class Model
 	 * data for callback methods (like an array of key/value pairs to insert
 	 * or update, an array of results, etc)
 	 *
+	 * If callbacks are not allowed then returns $eventData immediately.
+	 *
 	 * @param string $event
 	 * @param array  $eventData
 	 *
@@ -1678,6 +1711,14 @@ class Model
 	 */
 	protected function trigger(string $event, array $eventData)
 	{
+		$allowed                  = $this->tempAllowCallbacks;
+		$this->tempAllowCallbacks = $this->allowCallbacks;
+
+		if (! $allowed)
+		{
+			return $eventData;
+		}
+
 		// Ensure it's a valid event
 		if (! isset($this->{$event}) || empty($this->{$event}))
 		{

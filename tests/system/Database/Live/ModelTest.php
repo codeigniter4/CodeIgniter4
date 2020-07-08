@@ -1106,6 +1106,57 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testAllowCallbacksFalsePreventsTriggers()
+	{
+		$model = new EventModel();
+
+		$model->allowCallbacks(false)->find(1);
+
+		$this->assertFalse($model->hasToken('afterFind'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAllowCallbacksTrueFiresTriggers()
+	{
+		$model = new EventModel();
+		$this->setPrivateProperty($model, 'allowCallbacks', false);
+
+		$model->allowCallbacks(true)->find(1);
+
+		$this->assertTrue($model->hasToken('afterFind'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAllowCallbacksResetsAfterTrigger()
+	{
+		$model = new EventModel();
+
+		$model->allowCallbacks(false)->find(1);
+		$model->delete(1);
+
+		$this->assertFalse($model->hasToken('afterFind'));
+		$this->assertTrue($model->hasToken('afterDelete'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAllowCallbacksUsesModelProperty()
+	{
+		$model = new EventModel();
+		$this->setPrivateProperty($model, 'allowCallbacks', false);
+		$this->setPrivateProperty($model, 'tempAllowCallbacks', false); // Was already set by the constructor
+
+		$model->find(1);
+		$model->delete(1);
+
+		$this->assertFalse($model->hasToken('afterFind'));
+		$this->assertFalse($model->hasToken('afterDelete'));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testSetWorksWithInsert()
 	{
 		$model = new EventModel();
