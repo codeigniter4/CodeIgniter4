@@ -78,9 +78,9 @@ class Honeypot
 			$this->config->hiddenByClass = null;
 		}
 		
-		if (!$this->config->hiddenContainer)
+		if (empty($this->config->container) || strpos($this->config->container, '%s') === false)
 		{
-			$this->config->hiddenContainer = '<div %s>%s</div>';
+			$this->config->container = '<div style="display:none">%s</div>';
 		}
 
 		if ($this->config->template === '')
