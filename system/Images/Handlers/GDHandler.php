@@ -49,8 +49,8 @@ class GDHandler extends BaseHandler
 	/**
 	 * Constructor.
 	 *
-	 * @param  type $config
-	 * @throws type
+	 * @param  \Config\Images|null $config
+	 * @throws ImageException
 	 */
 	public function __construct($config = null)
 	{
@@ -184,7 +184,7 @@ class GDHandler extends BaseHandler
 	/**
 	 * Resizes the image.
 	 *
-	 * @return boolean|\CodeIgniter\Images\Handlers\GDHandler
+	 * @return \CodeIgniter\Images\Handlers\GDHandler
 	 */
 	public function _resize()
 	{
@@ -196,7 +196,7 @@ class GDHandler extends BaseHandler
 	/**
 	 * Crops the image.
 	 *
-	 * @return boolean|\CodeIgniter\Images\Handlers\GDHandler
+	 * @return \CodeIgniter\Images\Handlers\GDHandler
 	 */
 	public function _crop()
 	{
@@ -210,7 +210,7 @@ class GDHandler extends BaseHandler
 	 *
 	 * @param string $action
 	 *
-	 * @return $this|bool
+	 * @return $this
 	 */
 	protected function process(string $action)
 	{
@@ -404,8 +404,8 @@ class GDHandler extends BaseHandler
 	 * @param string  $path      Image path
 	 * @param integer $imageType Image type
 	 *
-	 * @return resource
-	 * @throws type ImageException
+	 * @return resource|boolean
+	 * @throws ImageException
 	 */
 	protected function getImageResource(string $path, int $imageType)
 	{
@@ -549,6 +549,8 @@ class GDHandler extends BaseHandler
 	 * @param string  $text
 	 * @param array   $options
 	 * @param boolean $isShadow Whether we are drawing the dropshadow or actual text
+	 *
+	 * @return void
 	 */
 	protected function textOverlay(string $text, array $options = [], bool $isShadow = false)
 	{
