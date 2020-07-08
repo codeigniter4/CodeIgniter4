@@ -13,19 +13,10 @@ class Honeypot extends BaseConfig
 	public $hidden = true;
 	
 	/**
-         * Hide the Honeypot. If not set or null, the style parameter will be use. Otherwise it will be set the class parametr by inserted string.
-         * Example:
-         * public $hiddenBy = 'hidden';
-         * 
-         * @var ?string 
-         */
-        public $hiddenByClass = null;
-	
-	/**
-         * Div wrapper of honeypot.
-         * 
-         * @var string 
-         */
+	 * Div wrapper of honeypot.
+	 * 
+	 * @var string 
+	 */
         public $container = '<div style="display:none">%s</div>';
 	
 	/**
