@@ -357,9 +357,9 @@ class Services extends BaseService
 	 * Acts as a factory for ImageHandler classes and returns an instance
 	 * of the handler. Used like Services::image()->withFile($path)->rotate(90)->save();
 	 *
-	 * @param string  $handler
-	 * @param mixed   $config
-	 * @param boolean $getShared
+	 * @param string|null         $handler
+	 * @param \Config\Images|null $config
+	 * @param boolean             $getShared
 	 *
 	 * @return \CodeIgniter\Images\Handlers\BaseHandler
 	 */

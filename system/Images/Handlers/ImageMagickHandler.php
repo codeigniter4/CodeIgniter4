@@ -60,7 +60,7 @@ class ImageMagickHandler extends BaseHandler
 	/**
 	 * Stores image resource in memory.
 	 *
-	 * @var
+	 * @var string
 	 */
 	protected $resource;
 
@@ -69,8 +69,8 @@ class ImageMagickHandler extends BaseHandler
 	/**
 	 * Constructor.
 	 *
-	 * @param  type $config
-	 * @throws type
+	 * @param  \Config\Images $config
+	 * @throws ImageException
 	 */
 	public function __construct($config = null)
 	{
@@ -496,7 +496,7 @@ class ImageMagickHandler extends BaseHandler
 	/**
 	 * Return the width of an image.
 	 *
-	 * @return type
+	 * @return integer
 	 */
 	public function _getWidth()
 	{
@@ -506,7 +506,7 @@ class ImageMagickHandler extends BaseHandler
 	/**
 	 * Return the height of an image.
 	 *
-	 * @return type
+	 * @return integer
 	 */
 	public function _getHeight()
 	{
