@@ -132,6 +132,11 @@ class Fabricator
 			$model = model($model, false);
 		}
 
+		if (! is_object($model))
+		{
+			throw new \InvalidArgumentException(lang('Fabricator.invalidModel'));
+		}
+
 		$this->model = $model;
 
 		// If no locale was specified then use the App default
