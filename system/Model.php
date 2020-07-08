@@ -1681,7 +1681,7 @@ class Model
 	 *
 	 * @return Model
 	 */
-	public function allowCallbacks($val = true)
+	public function allowCallbacks(bool $val = true)
 	{
 		$this->tempAllowCallbacks = $val;
 
