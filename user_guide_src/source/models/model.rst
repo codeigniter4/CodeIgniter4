@@ -218,6 +218,10 @@ this model will never validate.
 These arrays allow you to specify callback methods that will be run on the data at the
 time specified in the property name.
 
+**$allowCallbacks**
+
+Whether the callbacks defined above should be used.
+
 Working With Data
 =================
 
@@ -749,6 +753,15 @@ use the same callback in multiple events::
 
     protected $beforeInsert = ['hashPassword'];
     protected $beforeUpdate = ['hashPassword'];
+
+Additionally, each model may allow (default) or deny callbacks class-wide by setting its $allowCallbacks property::
+
+	protected $allowCallbacks = false;
+
+You may also change this setting temporarily for a single model call sing the ``allowCallbacks()`` method::
+
+	$model->allowCallbacks(false)->find(1); // No callbacks triggered
+	$model->find(1);                        // Callbacks subject to original property value
 
 Event Parameters
 ----------------
