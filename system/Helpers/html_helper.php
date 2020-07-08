@@ -308,14 +308,14 @@ if (! function_exists('link_tag'))
 			$link .= 'href="' . $href . '" ';
 		}
 
-		if( $hreflang !== '' )
+		if ($hreflang !== '')
 		{
 		    $link .= 'hreflang="' . $hreflang .'" ';
 		}
 
 		$link .= 'rel="' . $rel . '" ';
 
-		if( !in_array($rel, ['alternate','canonical']) )
+		if (! in_array($rel, ['alternate','canonical']))
 		{
 		    $link .= 'type="' . $type . '" ';
 		}
