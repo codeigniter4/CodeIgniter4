@@ -73,11 +73,6 @@ class Honeypot
 			throw HoneypotException::forNoHiddenValue();
 		}
 		
-		if (!$this->config->hiddenByClass)
-		{
-			$this->config->hiddenByClass = null;
-		}
-		
 		if (empty($this->config->container) || strpos($this->config->container, '%s') === false)
 		{
 			$this->config->container = '<div style="display:none">%s</div>';
