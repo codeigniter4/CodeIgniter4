@@ -250,7 +250,10 @@ class FileLocator
 				}
 				else
 				{
-					$appPaths[] = $fullPath;
+					if (! in_array($fullPath, $appPaths, true) && strpos($fullPath, APPPATH) === 0)
+					{
+						$appPaths[] = $fullPath;
+					}
 				}
 			}
 		}
@@ -260,7 +263,7 @@ class FileLocator
 
 		if (! $prioritizeApp && ! empty($appPaths))
 		{
-			$foundPaths = array_merge($foundPaths, array_unique($appPaths));
+			$foundPaths = array_merge($foundPaths, $appPaths);
 		}
 
 		return $foundPaths;
