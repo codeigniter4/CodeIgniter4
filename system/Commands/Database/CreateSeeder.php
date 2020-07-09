@@ -131,7 +131,7 @@ class CreateSeeder extends BaseCommand
 		}
 		else
 		{
-			$ns = 'App';
+			$ns = defined('APP_NAMESPACE') ? APP_NAMESPACE : 'App';
 		}
 
 		// full path
