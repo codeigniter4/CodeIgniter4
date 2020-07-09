@@ -338,16 +338,7 @@ class Language
 	 */
 	protected function requireFile(string $path): array
 	{
-		$files = Services::locator()->search($path);
-		$files = array_merge(
-			array_filter($files, function ($value) {
-				return strpos($value, APPPATH) === false;
-			}),
-			array_filter($files, function ($value) {
-				return strpos($value, APPPATH) === 0;
-			})
-		);
-
+		$files   = Services::locator()->search($path, 'php', false);
 		$strings = [];
 
 		foreach ($files as $file)

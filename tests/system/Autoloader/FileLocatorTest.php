@@ -191,6 +191,22 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayNotHasKey(0, $foundFiles);
 	}
 
+	//--------------------------------------------------------------------
+
+	public function testSearchPrioritizeSystemOverApp()
+	{
+		$foundFiles = $this->locator->search('Language/en/Validation.php', 'php', false);
+
+		$this->assertEquals([
+			SYSTEMPATH . 'Language/en/Validation.php',
+			APPPATH . 'Language/en/Validation.php',
+		],
+			$foundFiles
+		);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testListNamespaceFilesEmptyPrefixAndPath()
 	{
 		$this->assertEmpty($this->locator->listNamespaceFiles('', ''));

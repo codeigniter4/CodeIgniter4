@@ -226,27 +226,42 @@ class FileLocator
 	 *      'app/Modules/bar/Config/Routes.php',
 	 *  ]
 	 *
-	 * @param string $path
-	 * @param string $ext
+	 * @param string  $path
+	 * @param string  $ext
+	 * @param boolean $prioritizeApp
 	 *
 	 * @return array
 	 */
-	public function search(string $path, string $ext = 'php'): array
+	public function search(string $path, string $ext = 'php', bool $prioritizeApp = true): array
 	{
 		$path = $this->ensureExt($path, $ext);
 
 		$foundPaths = [];
+		$appPaths   = [];
 
 		foreach ($this->getNamespaces() as $namespace)
 		{
 			if (isset($namespace['path']) && is_file($namespace['path'] . $path))
 			{
-				$foundPaths[] = $namespace['path'] . $path;
+				$fullPath = $namespace['path'] . $path;
+				if ($prioritizeApp || strpos($fullPath, APPPATH) !== 0)
+				{
+					$foundPaths[] = $fullPath;
+				}
+				else
+				{
+					$appPaths[] = $fullPath;
+				}
 			}
 		}
 
 		// Remove any duplicates
 		$foundPaths = array_unique($foundPaths);
+
+		if (! $prioritizeApp && ! empty($appPaths))
+		{
+			$foundPaths = array_merge($foundPaths, array_unique($appPaths));
+		}
 
 		return $foundPaths;
 	}
