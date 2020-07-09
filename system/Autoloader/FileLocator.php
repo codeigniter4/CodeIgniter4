@@ -244,15 +244,19 @@ class FileLocator
 			if (isset($namespace['path']) && is_file($namespace['path'] . $path))
 			{
 				$fullPath = $namespace['path'] . $path;
-				if ($prioritizeApp || strpos($fullPath, APPPATH) !== 0)
+				if ($prioritizeApp)
 				{
 					$foundPaths[] = $fullPath;
 				}
 				else
 				{
-					if (! in_array($fullPath, $appPaths, true) && strpos($fullPath, APPPATH) === 0)
+					if (strpos($fullPath, APPPATH) === 0)
 					{
 						$appPaths[] = $fullPath;
+					}
+					else
+					{
+						$foundPaths[] = $fullPath;
 					}
 				}
 			}
@@ -263,7 +267,7 @@ class FileLocator
 
 		if (! $prioritizeApp && ! empty($appPaths))
 		{
-			$foundPaths = array_merge($foundPaths, $appPaths);
+			$foundPaths = array_merge($foundPaths, array_unique($appPaths));
 		}
 
 		return $foundPaths;
