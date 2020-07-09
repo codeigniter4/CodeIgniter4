@@ -141,7 +141,7 @@ class CreateSeeder extends BaseCommand
 		}
 
 		// full path
-		$path = $homepath . '/Database/Seeds/' . $name . '.php';
+		$path = $homepath . 'Database/Seeds/' . $name . '.php';
 
 		// Class name should be pascal case now (camel case with upper first letter)
 		$name = pascalize($name);
