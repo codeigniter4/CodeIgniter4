@@ -118,13 +118,14 @@ class Builder extends BaseBuilder {
 
 		return $this->keyPermission ? $this->addIdentity($this->getFullName($table), $statement) : $statement;
 	}
-		/**
-		 * increment
-		 *
-		 * @param  string  $column
-		 * @param  integer $value
-		 * @return type
-		 */
+
+	/**
+	 * increment
+	 *
+	 * @param  string  $column
+	 * @param  integer $value
+	 * @return type
+	 */
 	public function increment(string $column, int $value = 1)
 	{
 		$column = $this->db->protectIdentifiers($column);
@@ -211,18 +212,140 @@ class Builder extends BaseBuilder {
 
 		return $sql .= ' ROWS FETCH NEXT ' . $this->QBLimit . ' ROWS ONLY ';
 	}
-		/**
-		 * replace
-		 *
-		 * @param array $set
-		 */
+
+	/**
+	 * Replace
+	 *
+	 * Compiles an replace into string and runs the query
+	 *
+	 * @param array $set An associative array of insert values
+	 *
+	 * @return BaseResult|Query|string|false
+	 * @throws DatabaseException
+	 */
 	public function replace(array $set = null)
 	{
-		$keyPermission = $this->keyPermission;
-		// TODO: delete old entry
-		$this->keyPermission = true;
-		$this->insert($set);
-		$this->keyPermission = $keyPermission;
+		if ($set !== null)
+		{
+			$this->set($set);
+		}
+
+		if (empty($this->QBSet))
+		{
+			if (CI_DEBUG)
+			{
+				throw new DatabaseException('You must use the "set" method to update an entry.');
+			}
+			// @codeCoverageIgnoreStart
+			return false;
+			// @codeCoverageIgnoreEnd
+		}
+
+		$table = $this->QBFrom[0];
+
+		$sql = $this->_replace($table, array_keys($this->QBSet), array_values($this->QBSet));
+
+		$this->resetWrite();
+
+		if ($this->testMode)
+		{
+			return $sql;
+		}
+		else
+		{
+			$this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->escapeIdentifiers($table) . ' ON');
+			$returnValue = $this->db->query($sql, $this->binds, false);
+			$this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->escapeIdentifiers($table) . ' OFF');
+
+			return $returnValue;
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Replace statement
+	 *
+	 * Generates a platform-specific replace string from the supplied data
+	 *
+	 * on match delete and insert
+	 *
+	 * @param string $table  The table name
+	 * @param array  $keys   The insert keys
+	 * @param array  $values The insert values
+	 *
+	 * @return string
+	 */
+	protected function _replace(string $table, array $keys, array $values): string
+	{
+		// check whether the existing keys are part of the primary key.
+		// if so then use them for the "ON" part and exclude them from the $values and $keys
+		$pKeys     = $this->db->getIndexData($table);
+		$keyFields = [];
+
+		foreach ($pKeys as $key)
+		{
+			if ('PRIMARY' === $key->type)
+			{
+				$keyFields = [
+					...$keyFields,
+					...$key->fields,
+				];
+			}
+
+			if ('UNIQUE' === $key->type)
+			{
+				$keyFields = [
+					...$keyFields,
+					...$key->fields,
+				];
+			}
+		}
+
+		// Get the unique field names
+		$keyFields = array_values(array_flip(array_flip($keyFields)));
+
+		// Get the fields out of binds
+		$set = $this->binds;
+		array_walk($set, function (&$item, $key) {
+			$item = $item[0];
+		});
+
+		// Get the common field and values from the bind data and index fields
+		$setKeys = array_keys($set);
+		$common  = array_intersect($setKeys, $keyFields);
+
+		$bingo = [];
+		foreach ($common as $k => $v)
+		{
+			$bingo[$v] = $set[$v];
+		}
+
+		// Querying existing data
+		$builder = $this->db->table($table);
+		foreach ($bingo as $k => $v)
+		{
+			$builder->where($k, $v);
+		}
+		$q = $builder->get()->getResult();
+
+		// Delete entries if we find them
+		if (count($q) > 0)
+		{
+			$delete = $this->db->table($table);
+			foreach ($bingo as $k => $v)
+			{
+				$delete->where($k, $v);
+			}
+			$delete->delete();
+		}
+
+		// Key field names are not escaped, so escape them
+		$escapedKeyFields = array_map(function ($item) {
+			return $this->db->escapeIdentifiers($item);
+		}, $keyFields);
+
+		return'INSERT INTO ' . $table . ' (' . implode(',', $keys) . ') VALUES (' . implode(',', $values) . ');';
 	}
 
 	// handle float return value
@@ -308,6 +431,7 @@ class Builder extends BaseBuilder {
 
 		return $this->testMode ? $sql : $this->db->query($sql, $this->binds, false);
 	}
+
 	//--------------------------------------------------------------------
 	protected function compileSelect($select_override = false): string
 	{
@@ -360,16 +484,17 @@ class Builder extends BaseBuilder {
 
 		return $sql;
 	}
-		/**
-		 * whereHaving
-		 *
-		 * @param  string  $qb_key
-		 * @param  type    $key
-		 * @param  type    $value
-		 * @param  string  $type
-		 * @param  boolean $escape
-		 * @return $this
-		 */
+
+	/**
+	 * whereHaving
+	 *
+	 * @param  string  $qb_key
+	 * @param  type    $key
+	 * @param  type    $value
+	 * @param  string  $type
+	 * @param  boolean $escape
+	 * @return $this
+	 */
 	protected function whereHaving(string $qb_key, $key, $value = null, string $type = 'AND ', bool $escape = null)
 	{
 		if (! is_array($key))
@@ -441,6 +566,7 @@ class Builder extends BaseBuilder {
 
 		return $this;
 	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -474,5 +600,6 @@ class Builder extends BaseBuilder {
 
 		return $result;
 	}
+
 	//--------------------------------------------------------------------
 }
