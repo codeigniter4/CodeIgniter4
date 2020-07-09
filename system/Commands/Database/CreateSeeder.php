@@ -109,13 +109,7 @@ class CreateSeeder extends BaseCommand
 
 		if (empty($name))
 		{
-			$name = CLI::prompt(lang('Seed.nameFile'));
-		}
-
-		if (empty($name))
-		{
-			CLI::error(lang('Seed.badName'));
-			return;
+			$name = CLI::prompt(lang('Seed.nameFile'), null, 'required');
 		}
 
 		$ns       = $params['-n'] ?? CLI::getOption('n');
