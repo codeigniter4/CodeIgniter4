@@ -293,7 +293,7 @@ class Connection extends BaseConnection implements ConnectionInterface {
 			}
 			else
 			{
-				$obj->type = (strpos($row->index_description, 'unique key') !== false) ? 'UNIQUE' : 'INDEX';
+				$obj->type = (strpos($row->index_description, 'nonclustered, unique') !== false) ? 'UNIQUE' : 'INDEX';
 			}
 
 			$retVal[$obj->name] = $obj;
