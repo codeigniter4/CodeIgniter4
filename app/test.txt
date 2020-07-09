@@ -8,5 +8,5 @@ user edit the pledge
 main website :
 Overall pledge counter
 user feeds
-Updates
-etc
+
+new updates etc
