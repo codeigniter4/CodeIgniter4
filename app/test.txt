@@ -1,0 +1,12 @@
+User panel:
+user regestration
+creates a pledge
+user login
+user input the progress
+user edit the pledge 
+
+main website :
+Overall pledge counter
+user feeds
+Updates
+etc
