@@ -143,7 +143,7 @@ class CreateSeeder extends BaseCommand
 		$template = <<<EOD
 <?php namespace $ns\Database\Seeds;
 
-use CodeIgniter\DataBase\Seeder;
+use CodeIgniter\Database\Seeder;
 
 class {name} extends Seeder
 {
