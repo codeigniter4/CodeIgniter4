@@ -130,7 +130,7 @@ class CreateSeeder extends BaseCommand
 			{
 				if ($namespace === $ns)
 				{
-					$homepath = realpath(reset($path));
+					$homepath = realpath(reset($path)) . DIRECTORY_SEPARATOR;
 					break;
 				}
 			}
