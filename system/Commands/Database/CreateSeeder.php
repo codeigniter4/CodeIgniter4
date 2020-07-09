@@ -147,7 +147,7 @@ class CreateSeeder extends BaseCommand
 		$name = pascalize($name);
 
 		$template = <<<EOD
-<?php namespace $ns\DataBase\Seeds;
+<?php namespace $ns\Database\Seeds;
 
 use CodeIgniter\DataBase\Seeder;
 
