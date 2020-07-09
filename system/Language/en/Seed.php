@@ -17,6 +17,5 @@
 return [
     // Seed command
     'nameFile'   => 'Name the seeder file',
-    'badName'    => 'You must provide a seeder file name.',
     'writeError' => 'Error trying to create {0} file, check if the directory is writable.',
 ];
