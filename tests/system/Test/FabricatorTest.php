@@ -21,6 +21,13 @@ class FabricatorTest extends CIUnitTestCase
 		'deleted_at' => 'date',
 	];
 
+	protected function tearDown(): void
+	{
+		parent::tearDown();
+
+		Fabricator::resetCounts();
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testConstructorWithString()
@@ -37,6 +44,14 @@ class FabricatorTest extends CIUnitTestCase
 		$fabricator = new Fabricator($model);
 
 		$this->assertInstanceOf(Fabricator::class, $fabricator);
+	}
+
+	public function testConstructorWithInvalid()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage(lang('Fabricator.invalidModel'));
+
+		$fabricator = new Fabricator('SillyRabbit\Models\AreForKids');
 	}
 
 	public function testConstructorSetsFormatters()
@@ -397,5 +412,83 @@ class FabricatorTest extends CIUnitTestCase
 
 		$this->assertObjectHasAttribute('deleted_at', $result);
 		$this->assertNull($result->deleted_at);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetCountReturnsCount()
+	{
+		$result = Fabricator::setCount('goblins', 42);
+
+		$this->assertEquals(42, $result);
+	}
+
+	public function testSetCountSetsValue()
+	{
+		Fabricator::setCount('trolls', 3);
+		$result = Fabricator::getCount('trolls');
+
+		$this->assertEquals(3, $result);
+	}
+
+	public function testGetCountNewTableReturnsZero()
+	{
+		$result = Fabricator::getCount('gremlins');
+
+		$this->assertEquals(0, $result);
+	}
+
+	public function testUpCountIncrementsValue()
+	{
+		Fabricator::setCount('orcs', 12);
+		Fabricator::upCount('orcs');
+
+		$this->assertEquals(13, Fabricator::getCount('orcs'));
+	}
+
+	public function testUpCountReturnsValue()
+	{
+		Fabricator::setCount('hobgoblins', 12);
+		$result = Fabricator::upCount('hobgoblins');
+
+		$this->assertEquals(13, $result);
+	}
+
+	public function testUpCountNewTableReturnsOne()
+	{
+		$result = Fabricator::upCount('ogres');
+
+		$this->assertEquals(1, $result);
+	}
+
+	public function testDownCountDecrementsValue()
+	{
+		Fabricator::setCount('orcs', 12);
+		Fabricator::downCount('orcs');
+
+		$this->assertEquals(11, Fabricator::getCount('orcs'));
+	}
+
+	public function testDownCountReturnsValue()
+	{
+		Fabricator::setCount('hobgoblins', 12);
+		$result = Fabricator::downCount('hobgoblins');
+
+		$this->assertEquals(11, $result);
+	}
+
+	public function testDownCountNewTableReturnsNegativeOne()
+	{
+		$result = Fabricator::downCount('ogres');
+
+		$this->assertEquals(-1, $result);
+	}
+
+	public function testResetClearsValue()
+	{
+		Fabricator::setCount('giants', 1000);
+		Fabricator::resetCounts();
+
+		$this->assertEquals(0, Fabricator::getCount('giants'));
 	}
 }

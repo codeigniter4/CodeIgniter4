@@ -153,6 +153,9 @@ trait FeatureTestTrait
 		// instance get the right one.
 		Services::injectMock('request', $request);
 
+		// Make sure filters are reset between tests
+		Services::injectMock('filters', Services::filters(null, false));
+
 		$response = $this->app
 				->setRequest($request)
 				->run($routes, true);
@@ -283,7 +286,7 @@ trait FeatureTestTrait
 	protected function setupRequest(string $method, string $path = null): IncomingRequest
 	{
 		$config = config(App::class);
-		$uri    = new URI($config->baseURL . '/' . trim($path, '/ '));
+		$uri    = new URI(rtrim($config->baseURL, '/') . '/' . trim($path, '/ '));
 
 		$request      = new IncomingRequest($config, clone($uri), null, new UserAgent());
 		$request->uri = $uri;

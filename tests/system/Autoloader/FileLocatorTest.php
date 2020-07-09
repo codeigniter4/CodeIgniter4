@@ -131,6 +131,15 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testLocateFileNotFoundExistingNamespace()
+	{
+		$file = '\App\Views/unexistence-file.php';
+
+		$this->assertFalse($this->locator->locateFile($file, 'Views'));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testLocateFileNotFoundWithBadNamespace()
 	{
 		$file = '\Blogger\admin/posts.php';
@@ -180,6 +189,11 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 		$foundFiles = $this->locator->search('Views/Fake.html');
 
 		$this->assertArrayNotHasKey(0, $foundFiles);
+	}
+
+	public function testListNamespaceFilesEmptyPrefixAndPath()
+	{
+		$this->assertEmpty($this->locator->listNamespaceFiles('', ''));
 	}
 
 	//--------------------------------------------------------------------

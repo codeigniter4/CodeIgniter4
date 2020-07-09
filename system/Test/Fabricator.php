@@ -51,6 +51,13 @@ use Faker\Generator;
 class Fabricator
 {
 	/**
+	 * Array of counts for fabricated items
+	 *
+	 * @var array
+	 */
+	protected static $tableCounts = [];
+
+	/**
 	 * Locale-specific Faker instance
 	 *
 	 * @var \Faker\Generator
@@ -125,6 +132,11 @@ class Fabricator
 			$model = model($model, false);
 		}
 
+		if (! is_object($model))
+		{
+			throw new \InvalidArgumentException(lang('Fabricator.invalidModel'));
+		}
+
 		$this->model = $model;
 
 		// If no locale was specified then use the App default
@@ -152,20 +164,64 @@ class Fabricator
 		$this->setFormatters($formatters);
 	}
 
+	//--------------------------------------------------------------------
+
 	/**
-	 * Reset state to defaults
-	 *
-	 * @return $this
+	 * Reset internal counts
 	 */
-	public function reset(): self
+	public static function resetCounts()
 	{
-		$this->setFormatters();
+		self::$tableCounts = [];
+	}
 
-		$this->overrides = $this->tempOverrides = [];
-		$this->locale    = config('App')->defaultLocale;
-		$this->faker     = Factory::create($this->locale);
+	/**
+	 * Get the count for a specific table
+	 *
+	 * @param string $table Name of the target table
+	 *
+	 * @return integer
+	 */
+	public static function getCount(string $table): int
+	{
+		return empty(self::$tableCounts[$table]) ? 0 : self::$tableCounts[$table];
+	}
 
-		return $this;
+	/**
+	 * Set the count for a specific table
+	 *
+	 * @param string  $table Name of the target table
+	 * @param integer $count Count value
+	 *
+	 * @return integer  The new count value
+	 */
+	public static function setCount(string $table, int $count): int
+	{
+		self::$tableCounts[$table] = $count;
+		return $count;
+	}
+
+	/**
+	 * Increment the count for a table
+	 *
+	 * @param string $table Name of the target table
+	 *
+	 * @return integer  The new count value
+	 */
+	public static function upCount(string $table): int
+	{
+		return self::setCount($table, self::getCount($table) + 1);
+	}
+
+	/**
+	 * Decrement the count for a table
+	 *
+	 * @param string $table Name of the target table
+	 *
+	 * @return integer  The new count value
+	 */
+	public static function downCount(string $table): int
+	{
+		return self::setCount($table, self::getCount($table) - 1);
 	}
 
 	//--------------------------------------------------------------------
@@ -515,7 +571,11 @@ class Fabricator
 		// Iterate over new entities and insert each one, storing insert IDs
 		foreach ($this->make($count ?? 1) as $result)
 		{
-			$ids[] = $this->model->insert($result, true);
+			if ($id = $this->model->insert($result, true))
+			{
+				$ids[] = $id;
+				self::upCount($this->model->table);
+			}
 		}
 
 		// If the model defines a "withDeleted" method for handling soft deletes then use it

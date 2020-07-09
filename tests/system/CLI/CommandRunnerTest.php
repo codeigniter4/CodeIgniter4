@@ -99,7 +99,7 @@ class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->runner->index(['help']);
 		$result   = CITestStreamFilter::$buffer;
 		$commands = $this->runner->getCommands();
-		$command  = new $commands['help']['class']($this->logger, $this->runner);
+		$command  = new $commands['help']['class']($this->logger, service('commands'));
 
 		$this->assertEquals('Displays basic usage information.', $command->description);
 		$this->assertNull($command->notdescription);

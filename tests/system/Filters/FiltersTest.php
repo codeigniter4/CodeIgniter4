@@ -143,14 +143,29 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testProcessMethodProcessGlobalsWithExcept()
+	public function provideExcept()
+	{
+		return [
+			[
+				['admin/*'],
+			],
+			[
+				[],
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider provideExcept
+	 */
+	public function testProcessMethodProcessGlobalsWithExcept(array $except)
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
 			'globals' => [
 				'before' => [
-					'foo' => ['except' => ['admin/*']],
+					'foo' => ['except' => $except],
 					'bar'
 				],
 				'after'  => [

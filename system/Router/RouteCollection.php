@@ -1517,15 +1517,7 @@ class RouteCollection implements RouteCollectionInterface
 			return true;
 		}
 
-		foreach ($subdomains as $subdomain)
-		{
-			if ($subdomain === $this->currentSubdomain)
-			{
-				return true;
-			}
-		}
-
-		return false;
+		return in_array($this->currentSubdomain, $subdomains, true);
 	}
 
 	//--------------------------------------------------------------------
