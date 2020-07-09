@@ -55,7 +55,7 @@ class CreateSeeder extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $group = 'Database';
+	protected $group = 'Generators';
 
 	/**
 	 * The Command's name
