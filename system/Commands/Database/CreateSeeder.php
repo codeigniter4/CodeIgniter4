@@ -163,6 +163,7 @@ EOD;
 			return;
 		}
 
+		$ns = rtrim(str_replace('\\', DIRECTORY_SEPARATOR, $ns), '\\') . DIRECTORY_SEPARATOR;
 		CLI::write('Created file: ' . CLI::color(str_replace($homepath, $ns, $path), 'green'));
 	}
 }
