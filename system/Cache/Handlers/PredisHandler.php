@@ -57,8 +57,7 @@ class PredisHandler implements CacheInterface
 	/**
 	 * Default config
 	 *
-	 * @static
-	 * @var    array
+	 * @var array
 	 */
 	protected $config = [
 		'scheme'   => 'tcp',
@@ -71,7 +70,7 @@ class PredisHandler implements CacheInterface
 	/**
 	 * Predis connection
 	 *
-	 * @var Predis
+	 * @var \Predis\Client
 	 */
 	protected $redis;
 
@@ -80,8 +79,7 @@ class PredisHandler implements CacheInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param  type $config
-	 * @throws type
+	 * @param \Config\Cache $config
 	 */
 	public function __construct($config)
 	{
