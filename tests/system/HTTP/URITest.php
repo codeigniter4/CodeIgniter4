@@ -155,7 +155,7 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://' . $url, (string) $uri);
 		$url = '/';
 		$uri = new URI($url);
-		$this->assertEquals('http://' . $url, (string) $uri);
+		$this->assertEquals('http://', (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -968,6 +968,14 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$uri->setSilent()->setURI($url);
 
 		$this->assertTrue(true);
+	}
+
+	public function testCreateURIString()
+	{
+		$expected = 'https://example.com/';
+		$uri      = URI::createURIString('https', 'example.com/', '/');
+
+		$this->assertEquals($expected, $uri);
 	}
 
 }
