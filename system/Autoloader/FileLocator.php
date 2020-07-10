@@ -262,13 +262,13 @@ class FileLocator
 			}
 		}
 
-		// Remove any duplicates
-		$foundPaths = array_unique($foundPaths);
-
 		if (! $prioritizeApp && ! empty($appPaths))
 		{
-			$foundPaths = array_merge($foundPaths, array_unique($appPaths));
+			$foundPaths = array_merge($foundPaths, $appPaths);
 		}
+
+		// Remove any duplicates
+		$foundPaths = array_unique($foundPaths);
 
 		return $foundPaths;
 	}
