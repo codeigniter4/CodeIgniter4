@@ -338,7 +338,7 @@ class Language
 	 */
 	protected function requireFile(string $path): array
 	{
-		$files   = Services::locator()->search($path);
+		$files   = Services::locator()->search($path, 'php', false);
 		$strings = [];
 
 		foreach ($files as $file)
