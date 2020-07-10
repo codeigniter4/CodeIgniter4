@@ -294,8 +294,7 @@ class IncomingRequest extends Request
 	 */
 	public function isAJAX(): bool
 	{
-		return ( ! empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-				strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
+		return $this->hasHeader('X-Requested-With') && strtolower($this->getHeader('X-Requested-With')->getValue()) === 'xmlhttprequest';
 	}
 
 	//--------------------------------------------------------------------
@@ -312,11 +311,11 @@ class IncomingRequest extends Request
 		{
 			return true;
 		}
-		elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+		elseif ($this->hasHeader('X-Forwarded-Proto') && $this->getHeader('X-Forwarded-Proto')->getValue() === 'https')
 		{
 			return true;
 		}
-		elseif (! empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off')
+		elseif ($this->hasHeader('Front-End-Https') && ! empty($this->getHeader('Front-End-Https')->getValue()) && strtolower($this->getHeader('Front-End-Https')->getValue()) !== 'off')
 		{
 			return true;
 		}
