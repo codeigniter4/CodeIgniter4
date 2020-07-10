@@ -336,7 +336,14 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testWindow()
 	{
+		$height = new \ReflectionProperty(CLI::class, 'height');
+		$height->setAccessible(true);
+		$height->setValue(null);
 		$this->assertTrue(is_int(CLI::getHeight()));
+
+		$width = new \ReflectionProperty(CLI::class, 'width');
+		$width->setAccessible(true);
+		$width->setValue(null);
 		$this->assertTrue(is_int(CLI::getWidth()));
 	}
 
