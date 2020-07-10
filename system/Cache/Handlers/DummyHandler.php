@@ -43,7 +43,6 @@ use CodeIgniter\Cache\CacheInterface;
 /**
  * Dummy cache handler
  */
-
 class DummyHandler implements CacheInterface
 {
 
