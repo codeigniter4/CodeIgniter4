@@ -133,7 +133,7 @@ class FileHandler implements CacheInterface
 
 		if ($this->writeFile($this->path . $key, serialize($contents)))
 		{
-			chmod($this->path . $key, 0640);
+			chmod($this->path . $key, 0777);
 
 			return true;
 		}
