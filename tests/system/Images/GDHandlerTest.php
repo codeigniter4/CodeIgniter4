@@ -335,9 +335,24 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 			$this->handler->save($this->start . 'work/ci-logo.' . $type);
 			$this->assertTrue($this->root->hasChild('work/ci-logo.' . $type));
 
-			$this->assertEquals(
+			$this->assertNotEquals(
 				file_get_contents($this->origin . 'ci-logo.' . $type),
 				$this->root->getChild('work/ci-logo.' . $type)->getContent()
+			);
+		}
+	}
+
+	public function testImageCopyWithNoTargetAndMaxQuality()
+	{
+		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
+		{
+			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
+			$this->handler->save(null, 100);
+			$this->assertTrue(file_exists($this->origin . 'ci-logo.' . $type));
+
+			$this->assertEquals(
+				file_get_contents($this->origin . 'ci-logo.' . $type),
+				file_get_contents($this->origin . 'ci-logo.' . $type)
 			);
 		}
 	}
