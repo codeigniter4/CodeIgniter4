@@ -103,6 +103,7 @@ class Result extends BaseResult implements ResultInterface
 			$type                   = $this->resultID->columnType($i);
 			$retVal[$i]->type       = isset($data_types[$type]) ? $data_types[$type] : $type;
 			$retVal[$i]->max_length = null;
+			$retVal[$i]->length     = null;
 		}
 
 		return $retVal;
