@@ -49,6 +49,7 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('path', $uri->getSegment(1));
 		$this->assertEquals('to', $uri->getSegment(2));
 		$this->assertEquals('script', $uri->getSegment(3));
+		$this->assertEquals('', $uri->getSegment(4));
 
 		$this->assertEquals(3, $uri->getTotalSegments());
 	}
@@ -58,9 +59,8 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testSegmentOutOfRange()
 	{
 		$this->expectException(HTTPException::class);
-		$url = 'http://abc.com/a123/b/c';
-		$uri = new URI($url);
-		$uri->getSegment(22);
+		$uri = new URI('http://hostname/path/to/script');
+		$uri->getSegment(5);
 	}
 
 	//--------------------------------------------------------------------
