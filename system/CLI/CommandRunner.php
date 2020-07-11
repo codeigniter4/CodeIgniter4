@@ -41,7 +41,6 @@
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\Controller;
-use Config\Services;
 
 /**
  * Command runner
