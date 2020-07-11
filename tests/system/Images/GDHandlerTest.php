@@ -331,6 +331,12 @@ class GDHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
+			if ($type === 'webp' && ! function_exists('imagecreatefromwebp'))
+			{
+				$this->expectException(ImageException::class);
+				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
+			}
+
 			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
 			$this->handler->save($this->start . 'work/ci-logo.' . $type);
 			$this->assertTrue($this->root->hasChild('work/ci-logo.' . $type));
