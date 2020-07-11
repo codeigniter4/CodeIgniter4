@@ -557,7 +557,7 @@ class Session implements SessionInterface
 	public function push(string $key, array $data)
 	{
 		if ($this->has($key) && is_array($value = $this->get($key)))
-			   {
+		{
 			$this->set($key, array_merge($value, $data));
 		}
 	}
