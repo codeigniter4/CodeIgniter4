@@ -72,6 +72,11 @@ class Honeypot
 		{
 			throw HoneypotException::forNoHiddenValue();
 		}
+		
+		if (empty($this->config->container) || strpos($this->config->container, '%s') === false)
+		{
+			$this->config->container = '<div style="display:none">%s</div>';
+		}
 
 		if ($this->config->template === '')
 		{
@@ -124,7 +129,7 @@ class Honeypot
 
 		if ($this->config->hidden)
 		{
-			$template = '<div style="display:none">' . $template . '</div>';
+			$template = sprintf($this->config->container, $template);
 		}
 		return $template;
 	}

@@ -11,6 +11,14 @@ class Honeypot extends BaseConfig
 	 * @var boolean
 	 */
 	public $hidden = true;
+	
+	/**
+	 * Div wrapper of honeypot.
+	 * 
+	 * @var string 
+	 */
+        public $container = '<div style="display:none">%s</div>';
+	
 	/**
 	 * Honeypot Label Content
 	 *
