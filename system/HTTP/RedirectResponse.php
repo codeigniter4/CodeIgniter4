@@ -51,24 +51,24 @@ class RedirectResponse extends Response
 	 * Sets the URI to redirect to and, optionally, the HTTP status code to use.
 	 * If no code is provided it will be automatically determined.
 	 *
-	 * @param string       $uri    The URI to redirect to
-	 * @param integer|null $code   HTTP status code
+	 * @param string       $uri
+	 * @param integer|null $code
 	 * @param string       $method
 	 *
 	 * @return $this
 	 */
 	public function to(string $uri, int $code = null, string $method = 'auto')
 	{
-		// If it appears to be a relative URL, then convert to full URL
-		// for better security.
+		// If its a relative URL, convert to full URL for a better security.
 		if (strpos($uri, 'http') !== 0)
 		{
-			$url = current_url(true)->resolveRelativeURI($uri);
-			$uri = (string)$url;
+			$uri = current_url(true)->resolveRelativeURI($uri);
 		}
 
 		return $this->redirect($uri, $method, $code);
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the URI to redirect to but as a reverse-routed or named route
@@ -83,9 +83,7 @@ class RedirectResponse extends Response
 	 */
 	public function route(string $route, array $params = [], int $code = 302, string $method = 'auto')
 	{
-		$routes = Services::routes(true);
-
-		$route = $routes->reverseRoute($route, ...$params);
+		$route = Services::routes()->reverseRoute($route, ...$params);
 
 		if (! $route)
 		{
@@ -94,6 +92,8 @@ class RedirectResponse extends Response
 
 		return $this->redirect(site_url($route), $method, $code);
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Helper function to return to previous page.
@@ -108,40 +108,40 @@ class RedirectResponse extends Response
 	 */
 	public function back(int $code = null, string $method = 'auto')
 	{
-		$this->ensureSession();
-
 		return $this->redirect(previous_url(), $method, $code);
 	}
 
+	//--------------------------------------------------------------------
+
 	/**
 	 * Specifies that the current $_GET and $_POST arrays should be
-	 * packaged up with the response. It will then be available via
-	 * the 'old()' helper function.
+	 * packaged up with the response.
+	 * It will then be available via the 'old()' helper function.
 	 *
 	 * @return $this
 	 */
 	public function withInput()
 	{
-		$session = $this->ensureSession();
+		$session = Services::session();
 
-		$input = [
+		$session->setFlashdata('_ci_old_input', [
 			'get'  => $_GET ?? [],
-			'post' => $_POST ?? [],
-		];
-
-		$session->setFlashdata('_ci_old_input', $input);
+			'post' => $_POST ?? []
+		]);
 
 		// If the validator has any errors, transmit those back
-		// so they can be displayed when the validation is
-		// handled within a method different than displaying the form.
-		$validator = Services::validation();
-		if (! empty($validator->getErrors()))
+		// so they can be displayed when the validation is handled
+		// within a method different than displaying the form.
+		$validation = Services::validation();
+		if (! empty($validation->getErrors()))
 		{
-			$session->setFlashdata('_ci_validation_errors', serialize($validator->getErrors()));
+			$session->setFlashdata('_ci_validation_errors', serialize($validation->getErrors()));
 		}
 
 		return $this;
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Adds a key and message to the session as Flashdata.
@@ -153,12 +153,12 @@ class RedirectResponse extends Response
 	 */
 	public function with(string $key, $message)
 	{
-		$session = $this->ensureSession();
-
-		$session->setFlashdata($key, $message);
+		Services::session()->setFlashdata($key, $message);
 
 		return $this;
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Copies any cookies from the global Response instance
@@ -170,7 +170,7 @@ class RedirectResponse extends Response
 	 */
 	public function withCookies()
 	{
-		$cookies = service('response')->getCookies();
+		$cookies = Services::response()->getCookies();
 
 		if (empty($cookies))
 		{
@@ -185,6 +185,8 @@ class RedirectResponse extends Response
 		return $this;
 	}
 
+	//--------------------------------------------------------------------
+
 	/**
 	 * Copies any headers from the global Response instance
 	 * into this RedirectResponse. Useful when you've just
@@ -195,7 +197,7 @@ class RedirectResponse extends Response
 	 */
 	public function withHeaders()
 	{
-		$headers = service('response')->getHeaders();
+		$headers = Services::response()->getHeaders();
 
 		if (empty($headers))
 		{
@@ -208,15 +210,5 @@ class RedirectResponse extends Response
 		}
 
 		return $this;
-	}
-
-	/**
-	 * Ensures the session is loaded and started.
-	 *
-	 * @return \CodeIgniter\Session\Session
-	 */
-	protected function ensureSession()
-	{
-		return Services::session();
 	}
 }
