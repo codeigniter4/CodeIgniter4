@@ -11,14 +11,7 @@ class Honeypot extends BaseConfig
 	 * @var boolean
 	 */
 	public $hidden = true;
-	
-	/**
-	 * Div wrapper of honeypot.
-	 * 
-	 * @var string 
-	 */
-        public $container = '<div style="display:none">%s</div>';
-	
+
 	/**
 	 * Honeypot Label Content
 	 *
@@ -39,4 +32,11 @@ class Honeypot extends BaseConfig
 	 * @var string
 	 */
 	public $template = '<label>{label}</label><input type="text" name="{name}" value=""/>';
+
+	/**
+	 * Honeypot container
+	 *
+	 * @var string
+	 */
+	public $container = '<div style="display:none">{template}</div>';
 }
