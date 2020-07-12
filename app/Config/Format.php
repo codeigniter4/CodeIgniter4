@@ -52,7 +52,7 @@ class Format extends BaseConfig
 	|
 	*/
 	public $formatterOptions  = [
-		'application/json' => JSON_NUMERIC_CHECK,
+		'application/json' => null,
 		'application/xml'  => null,
 		'text/xml'         => null,
 	];	
