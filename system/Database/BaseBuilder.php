@@ -384,7 +384,7 @@ class BaseBuilder
 				 * This prevents NULL being escaped
 				 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1169
 				 */
-				if (strtoupper(mb_substr(trim($val), 0, 4)) === 'NULL')
+				if (mb_stripos(trim($val), 'NULL') === 0)
 				{
 					$escape = false;
 				}
