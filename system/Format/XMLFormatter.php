@@ -66,7 +66,8 @@ class XMLFormatter implements FormatterInterface
 			// @codeCoverageIgnoreEnd
 		}
 
-		$output = new \SimpleXMLElement('<?xml version="1.0"?><response></response>');
+		$options = $config->formatterOptions['application/xml'] ?? 0;
+		$output = new \SimpleXMLElement('<?xml version="1.0"?><response></response>',$options);
 
 		$this->arrayToXML((array)$data, $output);
 
