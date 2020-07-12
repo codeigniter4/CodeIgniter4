@@ -685,11 +685,14 @@ class BaseBuilder
 			}
 
 			$cond = ' ON ';
-			foreach ($conditions as $i => $condition)
+			$i    = 0;
+			foreach ($conditions as $condition)
 			{
-				$operator = $this->getOperator($condition);
+				$operator = $this->getOperator($conditions[$i]);
 				$cond    .= $joints[$i];
-				$cond    .= preg_match("/(\(*)?([\[\]\w\.'-]+)" . preg_quote($operator) . '(.*)/i', $condition, $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $condition;
+				$cond    .= preg_match("/(\(*)?([\[\]\w\.'-]+)" . preg_quote($operator) . '(.*)/i', $conditions[$i], $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $conditions[$i];
+
+				$i++;
 			}
 		}
 
