@@ -62,7 +62,7 @@ class RedirectResponse extends Response
 		// If its a relative URL, convert to full URL for a better security.
 		if (strpos($uri, 'http') !== 0)
 		{
-			$uri = current_url(true)->resolveRelativeURI($uri);
+			$uri = (string) current_url(true)->resolveRelativeURI($uri);
 		}
 
 		return $this->redirect($uri, $method, $code);
@@ -108,6 +108,8 @@ class RedirectResponse extends Response
 	 */
 	public function back(int $code = null, string $method = 'auto')
 	{
+		Services::session();
+		
 		return $this->redirect(previous_url(), $method, $code);
 	}
 
