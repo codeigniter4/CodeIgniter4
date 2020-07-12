@@ -95,7 +95,7 @@ class RedisHandler implements CacheInterface
 	/**
 	 * Class destructor
 	 *
-	 * Closes the connection to Memcache(d) if present.
+	 * Closes the connection to Redis if present.
 	 */
 	public function __destruct()
 	{
