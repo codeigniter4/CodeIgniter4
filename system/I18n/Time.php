@@ -592,7 +592,7 @@ class Time extends DateTime
 		{
 			if ($transition['time'] > $this->format('U'))
 			{
-				$daylightSaving = (bool) $transition['isdst'] ?: $daylightSaving;
+				$daylightSaving = (bool) $transition['isdst'] ?? $daylightSaving;
 			}
 		}
 		return $daylightSaving;
