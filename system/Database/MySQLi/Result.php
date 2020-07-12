@@ -131,7 +131,7 @@ class Result extends BaseResult implements ResultInterface
 			$retVal[$i]              = new \stdClass();
 			$retVal[$i]->name        = $data->name;
 			$retVal[$i]->type        = $data->type;
-			$retVal[$i]->typeName    = isset($data_types[$data->type]) ? $data_types[$data->type] : $data->type;
+			$retVal[$i]->typeName    = isset($data_types[$data->type]) ? $data_types[$data->type] : null;
 			$retVal[$i]->max_length  = $data->max_length;
 			$retVal[$i]->primary_key = (int) ($data->flags & 2);
 			$retVal[$i]->length      = $data->length;
