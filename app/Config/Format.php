@@ -39,7 +39,23 @@ class Format extends BaseConfig
 		'application/xml'  => \CodeIgniter\Format\XMLFormatter::class,
 		'text/xml'         => \CodeIgniter\Format\XMLFormatter::class,
 	];
-
+	
+	/*
+	|--------------------------------------------------------------------------
+	| Formatters Options
+	|--------------------------------------------------------------------------
+	|
+	| Additional Options to adjust default formatters behaviour.
+	| For each mime type, list the additional options that should be used. 
+	| Set to null by default
+	| Note this will  add to the default options not replace it.
+	|
+	*/
+	public $formatterOptions  = [
+		'application/json' => JSON_NUMERIC_CHECK,
+		'application/xml'  => null,
+		'text/xml'         => null,
+	];	
 	//--------------------------------------------------------------------
 
 	/**
