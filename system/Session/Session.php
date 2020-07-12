@@ -723,9 +723,9 @@ class Session implements SessionInterface
 	{
 		if (is_array($key))
 		{
-			for ($i = 0, $c = count($key); $i < $c; $i ++)
+			foreach ($key as $sessionKey)
 			{
-				if (! isset($_SESSION[$key[$i]]))
+				if (! isset($_SESSION[$sessionKey]))
 				{
 					return false;
 				}
