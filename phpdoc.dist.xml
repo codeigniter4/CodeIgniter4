@@ -11,9 +11,10 @@
         <directory>system</directory>
         <ignore>vendor/*</ignore>
         <ignore>tests/*</ignore>
-        <ignore>Kint/*</ignore>
+        <ignore>ThirdParty/*</ignore>
         <ignore>*.tpl.php</ignore>
         <ignore>*.js.php</ignore>
+        <ignore>bootstrap.php</ignore>
         <ignore>Validation/Views/*</ignore>
         <ignore>Pager/Views/</ignore>
     </files>
@@ -25,7 +26,7 @@
             <errors>api/{DATE}.errors.log</errors>
         </paths>
     </logging>
-    
+
     <transformations>
         <template name="responsive-twig" />
     </transformations>
