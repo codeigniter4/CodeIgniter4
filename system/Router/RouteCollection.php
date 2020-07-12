@@ -831,12 +831,11 @@ class RouteCollection implements RouteCollectionInterface
 		if (isset($options['except']))
 		{
 			$options['except'] = is_array($options['except']) ? $options['except'] : explode(',', $options['except']);
-			$c                 = count($methods);
-			for ($i = 0; $i < $c; $i ++)
+			foreach ($methods as &$method)
 			{
-				if (in_array($methods[$i], $options['except']))
+				if (in_array($method, $options['except']))
 				{
-					unset($methods[$i]);
+					unset($method);
 				}
 			}
 		}
@@ -946,12 +945,11 @@ class RouteCollection implements RouteCollectionInterface
 		if (isset($options['except']))
 		{
 			$options['except'] = is_array($options['except']) ? $options['except'] : explode(',', $options['except']);
-			$c                 = count($methods);
-			for ($i = 0; $i < $c; $i ++)
+			foreach ($methods as &$method)
 			{
-				if (in_array($methods[$i], $options['except']))
+				if (in_array($method, $options['except']))
 				{
-					unset($methods[$i]);
+					unset($method);
 				}
 			}
 		}
