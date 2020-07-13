@@ -677,6 +677,7 @@ class BaseBuilder
 					$pos            = $joints[$i][1] - strlen($joints[$i][0]);
 					$joints[$i]     = $joints[$i][0];
 				}
+				ksort($conditions);
 			}
 			else
 			{
@@ -685,7 +686,6 @@ class BaseBuilder
 			}
 
 			$cond = ' ON ';
-			ksort($conditions);
 			foreach ($conditions as $i => $condition)
 			{
 				$operator = $this->getOperator($condition);
