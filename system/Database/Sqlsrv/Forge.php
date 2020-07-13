@@ -413,7 +413,7 @@ class Forge extends \CodeIgniter\Database\Forge {
 			$sql .= ' IF EXISTS ';
 		}
 
-		$table = ' [' . $this->db->database . '].[' . $this->db->schema . '][' . $table . '] ';
+		$table = ' [' . $this->db->database . '].[' . $this->db->schema . '].[' . $table . '] ';
 
 		$sql .= $table;
 
