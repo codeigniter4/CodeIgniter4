@@ -327,13 +327,34 @@ class ImageMagickHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
 		{
+			if ($type === 'webp' && ! in_array('WEBP', \Imagick::queryFormats()))
+			{
+				$this->expectException(ImageException::class);
+				$this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
+			}
+
 			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
 			$this->handler->save($this->root . 'ci-logo.' . $type);
 			$this->assertTrue(file_exists($this->root . 'ci-logo.' . $type));
 
-			$this->assertEquals(
+			$this->assertNotEquals(
 				file_get_contents($this->origin . 'ci-logo.' . $type),
 				file_get_contents($this->root . 'ci-logo.' . $type)
+			);
+		}
+	}
+
+	public function testImageCopyWithNoTargetAndMaxQuality()
+	{
+		foreach (['gif', 'jpeg', 'png', 'webp'] as $type)
+		{
+			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
+			$this->handler->save(null, 100);
+			$this->assertTrue(file_exists($this->origin . 'ci-logo.' . $type));
+
+			$this->assertEquals(
+				file_get_contents($this->origin . 'ci-logo.' . $type),
+				file_get_contents($this->origin . 'ci-logo.' . $type)
 			);
 		}
 	}

@@ -197,7 +197,9 @@ class CLI
 		{
 			// If the command is being called from a controller
 			// we need to define STDOUT ourselves
+			// @codeCoverageIgnoreStart
 			define('STDOUT', 'php://output');
+			// @codeCoverageIgnoreEnd
 		}
 	}
 
@@ -249,7 +251,8 @@ class CLI
 	 * @param string|array $options    String to a default value, array to a list of options (the first option will be the default value)
 	 * @param string       $validation Validation rules
 	 *
-	 * @return             string                   The user input
+	 * @return string The user input
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public static function prompt(string $field, $options = null, string $validation = null): string
@@ -309,7 +312,8 @@ class CLI
 	 * @param string $value Input value
 	 * @param string $rules Validation rules
 	 *
-	 * @return             boolean
+	 * @return boolean
+	 *
 	 * @codeCoverageIgnore
 	 */
 	protected static function validate(string $field, string $value, string $rules): bool
@@ -488,7 +492,8 @@ class CLI
 	/**
 	 * Clears the screen of output
 	 *
-	 * @return             void
+	 * @return void
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public static function clearScreen()
@@ -759,8 +764,10 @@ class CLI
 			}
 			else
 			{
+				// @codeCoverageIgnoreStart
 				static::$height = (int) exec('tput lines');
 				static::$width  = (int) exec('tput cols');
+				// @codeCoverageIgnoreEnd
 			}
 		}
 	}
@@ -1139,8 +1146,8 @@ class CLI
 	 * For now, just echo the content, but look into a better
 	 * solution down the road.
 	 *
-	 * @param $handle
-	 * @param string $string
+	 * @param resource $handle
+	 * @param string   $string
 	 */
 	protected static function fwrite($handle, string $string)
 	{
@@ -1150,7 +1157,9 @@ class CLI
 			return;
 		}
 
+		// @codeCoverageIgnoreStart
 		echo $string;
+		// @codeCoverageIgnoreEnd
 	}
 }
 

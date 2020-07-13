@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * CodeIgniter
  *
@@ -41,7 +40,6 @@
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\Controller;
-use Config\Services;
 
 /**
  * Command runner
@@ -58,6 +56,9 @@ class CommandRunner extends Controller
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor
+	 */
 	public function __construct()
 	{
 		$this->commands = service('commands');

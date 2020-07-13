@@ -326,7 +326,7 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testIsAJAX()
 	{
-		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest';
+		$this->request->appendHeader('X-Requested-With', 'XMLHttpRequest');
 		$this->assertTrue($this->request->isAJAX());
 	}
 
@@ -340,13 +340,13 @@ class IncomingRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testIsSecureFrontEnd()
 	{
-		$_SERVER['HTTP_FRONT_END_HTTPS'] = 'on';
+		$this->request->appendHeader('Front-End-Https', 'on');
 		$this->assertTrue($this->request->isSecure());
 	}
 
 	public function testIsSecureForwarded()
 	{
-		$_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
+		$this->request->appendHeader('X-Forwarded-Proto', 'https');
 		$this->assertTrue($this->request->isSecure());
 	}
 

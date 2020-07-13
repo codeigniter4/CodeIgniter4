@@ -38,11 +38,11 @@
 
 namespace CodeIgniter\Test;
 
-use CodeIgniter\HTTP\URI;
-use CodeIgniter\HTTP\Request;
 use CodeIgniter\Events\Events;
-use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\UserAgent;
 use Config\App;
 use Config\Services;
 

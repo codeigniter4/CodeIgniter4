@@ -70,6 +70,7 @@ class CSRF implements FilterInterface
 	 * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
 	 *
 	 * @return mixed
+	 * @throws \CodeIgniter\Security\Exceptions\SecurityException
 	 */
 	public function before(RequestInterface $request)
 	{

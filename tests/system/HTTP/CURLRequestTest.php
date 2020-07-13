@@ -678,6 +678,53 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Hi there', $response->getBody());
 	}
 
+	/**
+	 * See: https://github.com/codeigniter4/CodeIgniter4/issues/3261
+	 */
+	public function testSendContinuedWithManyHeaders()
+	{
+		$request = $this->getRequest([
+			'base_uri' => 'http://www.foo.com/api/v1/',
+			'delay'    => 1000,
+		]);
+
+		$output = "HTTP/1.1 100 Continue
+Server: ddos-guard
+Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT\x0d\x0a\x0d\x0aHTTP/1.1 200 OK
+Server: ddos-guard
+Connection: keep-alive
+Keep-Alive: timeout=60
+Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
+Date: Tue, 07 Jul 2020 15:13:14 GMT
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: PHPSESSID=80pd3hlg38mvjnelpvokp9lad0; path=/
+Content-Type: application/xml; charset=utf-8
+Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>";
+
+		$request->setOutput($output);
+		$response = $request->get('answer');
+
+		$this->assertEquals('<title>Update success! config</title>', $response->getBody());
+
+		$responseHeaderKeys = [
+			'Cache-control',
+			'Content-Type',
+			'Server',
+			'Connection',
+			'Keep-Alive',
+			'Set-Cookie',
+			'Date',
+			'Expires',
+			'Pragma',
+			'Transfer-Encoding',
+		];
+		$this->assertEquals($responseHeaderKeys, array_keys($response->getHeaders()));
+
+		$this->assertEquals(200, $response->getStatusCode());
+	}
+
 	//--------------------------------------------------------------------
 	public function testSplitResponse()
 	{

@@ -67,8 +67,8 @@ class FileHandler implements CacheInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param  type $config
-	 * @throws type
+	 * @param  \Config\Cache $config
+	 * @throws CacheException
 	 */
 	public function __construct($config)
 	{
@@ -342,8 +342,8 @@ class FileHandler implements CacheInterface
 	/**
 	 * Writes a file to disk, or returns false if not successful.
 	 *
-	 * @param $path
-	 * @param $data
+	 * @param string $path
+	 * @param string $data
 	 * @param string $mode
 	 *
 	 * @return boolean
