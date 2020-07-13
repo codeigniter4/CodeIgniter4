@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -56,7 +57,6 @@ class Honeypot implements FilterInterface
 	 * @param \CodeIgniter\HTTP\RequestInterface $request
 	 *
 	 * @return void
-	 *
 	 * @throws \CodeIgniter\Honeypot\Exceptions\HoneypotException
 	 */
 	public function before(RequestInterface $request)
