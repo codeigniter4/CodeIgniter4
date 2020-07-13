@@ -447,13 +447,11 @@ if (! function_exists('force_https'))
 
 		$baseURL = config(App::class)->baseURL;
 
-		// If we already use 'https' then return immediately
 		if (strpos($baseURL, 'https://') === 0)
 		{
-			return;
+			$baseURL = (string) substr($baseURL, strlen('https://'));
 		}
-
-		if (strpos($baseURL, 'http://') === 0)
+		elseif (strpos($baseURL, 'http://') === 0)
 		{
 			$baseURL = (string) substr($baseURL, strlen('http://'));
 		}
