@@ -548,11 +548,11 @@ class Router implements RouterInterface
 			$this->params = $segments;
 		}
 
-		$defaultNameSpace = $this->collection->getDefaultNamespace();
+		$defaultNamespace = $this->collection->getDefaultNamespace();
 		$controllerName   = $this->controllerName();
 		if ($this->collection->getHTTPVerb() !== 'cli')
 		{
-			$controller  = '\\' . $defaultNameSpace;
+			$controller  = '\\' . $defaultNamespace;
 			$controller .= $this->directory ? str_replace('/', '\\', $this->directory) : '';
 			$controller .= $controllerName;
 			$controller  = strtolower($controller);
@@ -585,9 +585,9 @@ class Router implements RouterInterface
 
 		// Ensure the controller stores the fully-qualified class name
 		// We have to check for a length over 1, since by default it will be '\'
-		if (strpos($this->controller, '\\') === false && strlen($defaultNameSpace) > 1)
+		if (strpos($this->controller, '\\') === false && strlen($defaultNamespace) > 1)
 		{
-			$this->controller = '\\' . ltrim(str_replace('/', '\\', $defaultNameSpace . $this->directory . $controllerName), '\\');
+			$this->controller = '\\' . ltrim(str_replace('/', '\\', $defaultNamespace . $this->directory . $controllerName), '\\');
 		}
 	}
 
