@@ -40,6 +40,7 @@
 namespace CodeIgniter\Format;
 
 use CodeIgniter\Format\Exceptions\FormatException;
+use Config\Format;
 
 /**
  * JSON data formatter
@@ -56,6 +57,8 @@ class JSONFormatter implements FormatterInterface
 	 */
 	public function format($data)
 	{
+		$config  = new Format();
+		
 		$options = $config->formatterOptions['application/json'] ?? JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
 		$options = $options | JSON_PARTIAL_OUTPUT_ON_ERROR;
 
