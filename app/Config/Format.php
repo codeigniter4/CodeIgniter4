@@ -52,9 +52,9 @@ class Format extends BaseConfig
 	|
 	*/
 	public $formatterOptions  = [
-		'application/json' => JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ,
-		'application/xml'  => null,
-		'text/xml'         => null,
+		'application/json' => JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES,
+		'application/xml'  => 0,
+		'text/xml'         => 0,
 	];	
 	//--------------------------------------------------------------------
 
