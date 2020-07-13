@@ -19,6 +19,7 @@ class FiltersWithArgumentsTest extends \CodeIgniter\Test\CIUnitTestCase
 	protected function setUp(): void
 	{
 		parent::setUp();
+		Services::reset();
 
 		$this->request  = Services::request();
 		$this->response = Services::response();
