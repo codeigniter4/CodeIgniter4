@@ -406,7 +406,16 @@ class Forge extends \CodeIgniter\Database\Forge {
 	 */
 	protected function _dropTable(string $table, bool $if_exists, bool $cascade): string
 	{
-		$sql = parent::_dropTable($table, $if_exists, $cascade);
+		$sql = 'DROP TABLE';
+
+		if ($if_exists)
+		{
+			$sql .= ' IF EXISTS ';
+		}
+
+		$table = ' [' . $this->db->database . '].[' . $this->db->schema . '][' . $table . '] ';
+
+		$sql .= $table;
 
 		if ($cascade === true)
 		{
