@@ -51,14 +51,14 @@ class Image extends File
 	/**
 	 * The original image width in pixels.
 	 *
-	 * @var
+	 * @var integer|float
 	 */
 	public $origWidth;
 
 	/**
 	 * The original image height in pixels.
 	 *
-	 * @var
+	 * @var integer|float
 	 */
 	public $origHeight;
 
@@ -131,7 +131,7 @@ class Image extends File
 	 *
 	 * @param boolean $return
 	 *
-	 * @return mixed
+	 * @return array|boolean
 	 */
 	public function getProperties(bool $return = false)
 	{

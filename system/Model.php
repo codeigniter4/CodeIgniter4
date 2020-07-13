@@ -42,6 +42,7 @@ namespace CodeIgniter;
 use Closure;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
@@ -266,45 +267,60 @@ class Model
 	 */
 
 	/**
+	 * Whether to trigger the defined callbacks
+	 *
+	 * @var boolean
+	 */
+	protected $allowCallbacks = true;
+
+	/**
+	 * Used by allowCallbacks() to override the
+	 * model's allowCallbacks setting.
+	 *
+	 * @var boolean
+	 */
+	protected $tempAllowCallbacks;
+
+	/**
 	 * Callbacks for beforeInsert
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $beforeInsert = [];
 	/**
 	 * Callbacks for afterInsert
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $afterInsert = [];
 	/**
 	 * Callbacks for beforeUpdate
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $beforeUpdate = [];
 	/**
 	 * Callbacks for afterUpdate
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $afterUpdate = [];
 	/**
 	 * Callbacks for afterFind
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $afterFind = [];
 	/**
 	 * Callbacks for beforeDelete
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $beforeDelete = [];
 	/**
 	 * Callbacks for afterDelete
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $afterDelete = [];
 
@@ -338,6 +354,7 @@ class Model
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
+		$this->tempAllowCallbacks = $this->allowCallbacks;
 
 		if (is_null($validation))
 		{
@@ -555,8 +572,12 @@ class Model
 		else
 		{
 			$response = $this->insert($data, false);
-			// call insert directly if you want the ID or the record object
-			if ($response !== false)
+
+			if ($response instanceof BaseResult)
+			{
+				$response = $response->resultID !== false;
+			}
+			elseif ($response !== false)
 			{
 				$response = true;
 			}
@@ -584,7 +605,7 @@ class Model
 			$properties = $data->toRawArray($onlyChanged);
 
 			// Always grab the primary key otherwise updates will fail.
-			if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties))
+			if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties) && ! empty($data->{$primaryKey}))
 			{
 				$properties[$primaryKey] = $data->{$primaryKey};
 			}
@@ -658,7 +679,7 @@ class Model
 	 * @param array|object $data
 	 * @param boolean      $returnID Whether insert ID should be returned or not.
 	 *
-	 * @return integer|string|boolean
+	 * @return BaseResult|integer|string|false
 	 * @throws \ReflectionException
 	 */
 	public function insert($data = null, bool $returnID = true)
@@ -734,7 +755,7 @@ class Model
 				->insert();
 
 		// If insertion succeeded then save the insert ID
-		if ($result)
+		if ($result->resultID)
 		{
 			$this->insertID = $this->db->insertID();
 		}
@@ -912,7 +933,7 @@ class Model
 	 * @param integer|string|array|null $id    The rows primary key(s)
 	 * @param boolean                   $purge Allows overriding the soft deletes setting.
 	 *
-	 * @return mixed
+	 * @return BaseResult|boolean
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function delete($id = null, bool $purge = false)
@@ -1653,6 +1674,21 @@ class Model
 	}
 
 	/**
+	 * Sets $tempAllowCallbacks value so that we can temporarily override
+	 * the setting. Resets after the next trigger.
+	 *
+	 * @param boolean $val
+	 *
+	 * @return Model
+	 */
+	public function allowCallbacks(bool $val = true)
+	{
+		$this->tempAllowCallbacks = $val;
+
+		return $this;
+	}
+
+	/**
 	 * A simple event trigger for Model Events that allows additional
 	 * data manipulation within the model. Specifically intended for
 	 * usage by child models this can be used to format data,
@@ -1665,6 +1701,8 @@ class Model
 	 * data for callback methods (like an array of key/value pairs to insert
 	 * or update, an array of results, etc)
 	 *
+	 * If callbacks are not allowed then returns $eventData immediately.
+	 *
 	 * @param string $event
 	 * @param array  $eventData
 	 *
@@ -1673,6 +1711,14 @@ class Model
 	 */
 	protected function trigger(string $event, array $eventData)
 	{
+		$allowed                  = $this->tempAllowCallbacks;
+		$this->tempAllowCallbacks = $this->allowCallbacks;
+
+		if (! $allowed)
+		{
+			return $eventData;
+		}
+
 		// Ensure it's a valid event
 		if (! isset($this->{$event}) || empty($this->{$event}))
 		{

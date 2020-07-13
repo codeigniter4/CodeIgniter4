@@ -54,9 +54,9 @@ class CacheFactory
 	/**
 	 * Attempts to create the desired cache handler, based upon the
 	 *
-	 * @param $config
-	 * @param string $handler
-	 * @param string $backup
+	 * @param \Config\Cache $config
+	 * @param string|null   $handler
+	 * @param string|null   $backup
 	 *
 	 * @return \CodeIgniter\Cache\CacheInterface
 	 */

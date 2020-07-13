@@ -362,7 +362,7 @@ Escaping Data
 =============
 
 By default, all variable substitution is escaped to help prevent XSS attacks on your pages. CodeIgniter's ``esc`` method
-supports several different contexts, like general **html**, when it's in an HTML **attr*, in **css**, etc. If nothing
+supports several different contexts, like general **html**, when it's in an HTML **attr**, in **css**, etc. If nothing
 else is specified, the data will be assumed to be in an HTML context. You can specify the context used by using the **esc**
 filter::
 

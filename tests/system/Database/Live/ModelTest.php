@@ -409,7 +409,28 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testSaveUpdateRecordObject()
+	public function testSaveNewRecordArrayFail()
+	{
+		$this->setPrivateProperty($this->db, 'DBDebug', false);
+
+		$model = new JobModel();
+
+		$data = [
+			'name123'     => 'Apprentice',
+			'description' => 'That thing you do.',
+		];
+
+		$result = $model->protect(false)
+			  ->save($data);
+
+		$this->assertFalse($result);
+
+		$this->dontSeeInDatabase('job', ['name' => 'Apprentice']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSaveUpdateRecordArray()
 	{
 		$model = new JobModel();
 
@@ -428,7 +449,29 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testSaveUpdateRecordArray()
+	public function testSaveUpdateRecordArrayFail()
+	{
+		$this->setPrivateProperty($this->db, 'DBDebug', false);
+
+		$model = new JobModel();
+
+		$data = [
+			'id'          => 1,
+			'name123'     => 'Apprentice',
+			'description' => 'That thing you do.',
+		];
+
+		$result = $model->protect(false)
+						->save($data);
+
+		$this->assertFalse($result);
+
+		$this->dontSeeInDatabase('job', ['name' => 'Apprentice']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSaveUpdateRecordObject()
 	{
 		$model = new JobModel();
 
@@ -470,9 +513,26 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->seeInDatabase('job', ['name' => 'Developer']);
 
-		$model->delete(1);
+		$result = $model->delete(1);
+		$this->assertTrue($result->resultID !== false);
 
 		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDeleteFail()
+	{
+		$this->setPrivateProperty($this->db, 'DBDebug', false);
+
+		$model = new JobModel();
+
+		$this->seeInDatabase('job', ['name' => 'Developer']);
+
+		$result = $model->where('name123', 'Developer')->delete();
+		$this->assertFalse($result->resultID);
+
+		$this->seeInDatabase('job', ['name' => 'Developer']);
 	}
 
 	//--------------------------------------------------------------------
@@ -496,9 +556,26 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 
-		$model->delete(1);
+		$result = $model->delete(1);
+		$this->assertTrue($result);
 
 		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL' => null]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDeleteWithSoftDeleteFail()
+	{
+		$this->setPrivateProperty($this->db, 'DBDebug', false);
+
+		$model = new UserModel();
+
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+
+		$result = $model->where('name123', 'Derek Jones')->delete();
+		$this->assertFalse($result);
+
+		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 	}
 
 	//--------------------------------------------------------------------
@@ -1029,6 +1106,57 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testAllowCallbacksFalsePreventsTriggers()
+	{
+		$model = new EventModel();
+
+		$model->allowCallbacks(false)->find(1);
+
+		$this->assertFalse($model->hasToken('afterFind'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAllowCallbacksTrueFiresTriggers()
+	{
+		$model = new EventModel();
+		$this->setPrivateProperty($model, 'allowCallbacks', false);
+
+		$model->allowCallbacks(true)->find(1);
+
+		$this->assertTrue($model->hasToken('afterFind'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAllowCallbacksResetsAfterTrigger()
+	{
+		$model = new EventModel();
+
+		$model->allowCallbacks(false)->find(1);
+		$model->delete(1);
+
+		$this->assertFalse($model->hasToken('afterFind'));
+		$this->assertTrue($model->hasToken('afterDelete'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAllowCallbacksUsesModelProperty()
+	{
+		$model = new EventModel();
+		$this->setPrivateProperty($model, 'allowCallbacks', false);
+		$this->setPrivateProperty($model, 'tempAllowCallbacks', false); // Was already set by the constructor
+
+		$model->find(1);
+		$model->delete(1);
+
+		$this->assertFalse($model->hasToken('afterFind'));
+		$this->assertFalse($model->hasToken('afterDelete'));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testSetWorksWithInsert()
 	{
 		$model = new EventModel();
@@ -1120,11 +1248,38 @@ class ModelTest extends CIDatabaseTestCase
 			'deleted' => 0,
 		];
 
-		$id = $model->insert($data);
-		$model->update([1, 2], ['name' => 'Foo Bar']);
+		$id     = $model->insert($data);
+		$result = $model->update([1, 2], ['name' => 'Foo Bar']);
+
+		$this->assertTrue($result);
 
 		$this->seeInDatabase('user', ['id' => 1, 'name' => 'Foo Bar']);
 		$this->seeInDatabase('user', ['id' => 2, 'name' => 'Foo Bar']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUpdateResultFail()
+	{
+		$this->setPrivateProperty($this->db, 'DBDebug', false);
+
+		$model = new EventModel();
+
+		$data = [
+			'name'    => 'Foo',
+			'email'   => 'foo@example.com',
+			'country' => 'US',
+			'deleted' => 0,
+		];
+
+		$id = $model->insert($data);
+
+		$this->setPrivateProperty($model, 'allowedFields', ['name123']);
+		$result = $model->update(1, ['name123' => 'Foo Bar 1']);
+
+		$this->assertFalse($result);
+
+		$this->dontSeeInDatabase('user', ['id' => 1, 'name' => 'Foo Bar 1']);
 	}
 
 	//--------------------------------------------------------------------
@@ -1452,6 +1607,52 @@ class ModelTest extends CIDatabaseTestCase
 		$lastInsertId = $model->getInsertID();
 
 		$this->seeInDatabase('job', ['id' => $lastInsertId]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testInsertResult()
+	{
+		$model = new JobModel();
+
+		$data = [
+			'name'        => 'Apprentice',
+			'description' => 'That thing you do.',
+		];
+
+		$result = $model->protect(false)
+			  ->insert($data, false);
+
+		$this->assertTrue($result->resultID !== false);
+
+		$lastInsertId = $model->getInsertID();
+
+		$this->seeInDatabase('job', ['id' => $lastInsertId]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testInsertResultFail()
+	{
+		$this->setPrivateProperty($this->db, 'DBDebug', false);
+
+		$model = new JobModel();
+
+		$data = [
+			'name123'     => 'Apprentice',
+			'description' => 'That thing you do.',
+		];
+
+		$result = $model->protect(false)
+			  ->insert($data, false);
+
+		$this->assertFalse($result->resultID);
+
+		$lastInsertId = $model->getInsertID();
+
+		$this->assertEquals(0, $lastInsertId);
+
+		$this->dontSeeInDatabase('job', ['id' => $lastInsertId]);
 	}
 
 	//--------------------------------------------------------------------

@@ -448,10 +448,9 @@ class CURLRequest extends Request
 
 		$output = $this->sendRequest($curl_options);
 
-		$continueStr = "HTTP/1.1 100 Continue\x0d\x0a\x0d\x0a";
-		if (strpos($output, $continueStr) === 0)
+		if (strpos($output, 'HTTP/1.1 100 Continue') === 0)
 		{
-			$output = substr($output, strlen($continueStr));
+			$output = substr($output, strpos($output, "\r\n\r\n") + 4);
 		}
 
 		// Split out our headers and body

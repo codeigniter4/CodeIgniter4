@@ -49,8 +49,8 @@ class GDHandler extends BaseHandler
 	/**
 	 * Constructor.
 	 *
-	 * @param  type $config
-	 * @throws type
+	 * @param  \Config\Images|null $config
+	 * @throws ImageException
 	 */
 	public function __construct($config = null)
 	{
@@ -184,7 +184,7 @@ class GDHandler extends BaseHandler
 	/**
 	 * Resizes the image.
 	 *
-	 * @return boolean|\CodeIgniter\Images\Handlers\GDHandler
+	 * @return \CodeIgniter\Images\Handlers\GDHandler
 	 */
 	public function _resize()
 	{
@@ -196,7 +196,7 @@ class GDHandler extends BaseHandler
 	/**
 	 * Crops the image.
 	 *
-	 * @return boolean|\CodeIgniter\Images\Handlers\GDHandler
+	 * @return \CodeIgniter\Images\Handlers\GDHandler
 	 */
 	public function _crop()
 	{
@@ -210,7 +210,7 @@ class GDHandler extends BaseHandler
 	 *
 	 * @param string $action
 	 *
-	 * @return $this|bool
+	 * @return $this
 	 */
 	protected function process(string $action)
 	{
@@ -278,17 +278,25 @@ class GDHandler extends BaseHandler
 	 */
 	public function save(string $target = null, int $quality = 90): bool
 	{
-		$target = empty($target) ? $this->image()->getPathname() : $target;
+		$original = $target;
+		$target   = empty($target) ? $this->image()->getPathname() : $target;
 
 		// If no new resource has been created, then we're
 		// simply copy the existing one.
-		if (empty($this->resource))
+		if (empty($this->resource) && $quality === 100)
 		{
+			if ($original === null)
+			{
+				return true;
+			}
+
 			$name = basename($target);
 			$path = pathinfo($target, PATHINFO_DIRNAME);
 
 			return $this->image()->copy($path, $name);
 		}
+
+		$this->ensureResource();
 
 		switch ($this->image()->imageType)
 		{
@@ -404,8 +412,8 @@ class GDHandler extends BaseHandler
 	 * @param string  $path      Image path
 	 * @param integer $imageType Image type
 	 *
-	 * @return resource
-	 * @throws type ImageException
+	 * @return resource|boolean
+	 * @throws ImageException
 	 */
 	protected function getImageResource(string $path, int $imageType)
 	{
@@ -549,6 +557,8 @@ class GDHandler extends BaseHandler
 	 * @param string  $text
 	 * @param array   $options
 	 * @param boolean $isShadow Whether we are drawing the dropshadow or actual text
+	 *
+	 * @return void
 	 */
 	protected function textOverlay(string $text, array $options = [], bool $isShadow = false)
 	{

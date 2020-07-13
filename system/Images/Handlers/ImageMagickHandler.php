@@ -60,7 +60,7 @@ class ImageMagickHandler extends BaseHandler
 	/**
 	 * Stores image resource in memory.
 	 *
-	 * @var
+	 * @var string
 	 */
 	protected $resource;
 
@@ -69,8 +69,8 @@ class ImageMagickHandler extends BaseHandler
 	/**
 	 * Constructor.
 	 *
-	 * @param  type $config
-	 * @throws type
+	 * @param  \Config\Images $config
+	 * @throws ImageException
 	 */
 	public function __construct($config = null)
 	{
@@ -299,17 +299,25 @@ class ImageMagickHandler extends BaseHandler
 	 */
 	public function save(string $target = null, int $quality = 90): bool
 	{
-		$target = empty($target) ? $this->image() : $target;
+		$original = $target;
+		$target   = empty($target) ? $this->image()->getPathname() : $target;
 
 		// If no new resource has been created, then we're
 		// simply copy the existing one.
-		if (empty($this->resource))
+		if (empty($this->resource) && $quality === 100)
 		{
+			if ($original === null)
+			{
+				return true;
+			}
+
 			$name = basename($target);
 			$path = pathinfo($target, PATHINFO_DIRNAME);
 
 			return $this->image()->copy($path, $name);
 		}
+
+		$this->ensureResource();
 
 		// Copy the file through ImageMagick so that it has
 		// a chance to convert file format.
@@ -496,7 +504,7 @@ class ImageMagickHandler extends BaseHandler
 	/**
 	 * Return the width of an image.
 	 *
-	 * @return type
+	 * @return integer
 	 */
 	public function _getWidth()
 	{
@@ -506,7 +514,7 @@ class ImageMagickHandler extends BaseHandler
 	/**
 	 * Return the height of an image.
 	 *
-	 * @return type
+	 * @return integer
 	 */
 	public function _getHeight()
 	{

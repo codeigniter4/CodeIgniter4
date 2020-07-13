@@ -175,21 +175,32 @@ class CLI
 	 */
 	public static function init()
 	{
-		// Readline is an extension for PHP that makes interactivity with PHP
-		// much more bash-like.
-		// http://www.php.net/manual/en/readline.installation.php
-		static::$readline_support = extension_loaded('readline');
+		if (is_cli())
+		{
+			// Readline is an extension for PHP that makes interactivity with PHP
+			// much more bash-like.
+			// http://www.php.net/manual/en/readline.installation.php
+			static::$readline_support = extension_loaded('readline');
 
-		// clear segments & options to keep testing clean
-		static::$segments = [];
-		static::$options  = [];
+			// clear segments & options to keep testing clean
+			static::$segments = [];
+			static::$options  = [];
 
-		// Check our stream resource for color support
-		static::$isColored = static::hasColorSupport(STDOUT);
+			// Check our stream resource for color support
+			static::$isColored = static::hasColorSupport(STDOUT);
 
-		static::parseCommandLine();
+			static::parseCommandLine();
 
-		static::$initialized = true;
+			static::$initialized = true;
+		}
+		else
+		{
+			// If the command is being called from a controller
+			// we need to define STDOUT ourselves
+			// @codeCoverageIgnoreStart
+			define('STDOUT', 'php://output');
+			// @codeCoverageIgnoreEnd
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -240,7 +251,8 @@ class CLI
 	 * @param string|array $options    String to a default value, array to a list of options (the first option will be the default value)
 	 * @param string       $validation Validation rules
 	 *
-	 * @return             string                   The user input
+	 * @return string The user input
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public static function prompt(string $field, $options = null, string $validation = null): string
@@ -275,7 +287,7 @@ class CLI
 			$default = $options[0];
 		}
 
-		fwrite(STDOUT, $field . $extra_output . ': ');
+		static::fwrite(STDOUT, $field . $extra_output . ': ');
 
 		// Read the input from keyboard.
 		$input = trim(static::input()) ?: $default;
@@ -300,13 +312,16 @@ class CLI
 	 * @param string $value Input value
 	 * @param string $rules Validation rules
 	 *
-	 * @return             boolean
+	 * @return boolean
+	 *
 	 * @codeCoverageIgnore
 	 */
 	protected static function validate(string $field, string $value, string $rules): bool
 	{
+		$label      = $field;
+		$field      = 'temp';
 		$validation = \Config\Services::validation(null, false);
-		$validation->setRule($field, null, $rules);
+		$validation->setRule($field, $label, $rules);
 		$validation->run([$field => $value]);
 
 		if ($validation->hasError($field))
@@ -338,7 +353,7 @@ class CLI
 
 		static::$lastWrite = null;
 
-		fwrite(STDOUT, $text);
+		static::fwrite(STDOUT, $text);
 	}
 
 	/**
@@ -361,7 +376,7 @@ class CLI
 			static::$lastWrite = 'write';
 		}
 
-		fwrite(STDOUT, $text . PHP_EOL);
+		static::fwrite(STDOUT, $text . PHP_EOL);
 	}
 
 	//--------------------------------------------------------------------
@@ -375,12 +390,19 @@ class CLI
 	 */
 	public static function error(string $text, string $foreground = 'light_red', string $background = null)
 	{
+		// Check color support for STDERR
+		$stdout            = static::$isColored;
+		static::$isColored = static::hasColorSupport(STDERR);
+
 		if ($foreground || $background)
 		{
 			$text = static::color($text, $foreground, $background);
 		}
 
-		fwrite(STDERR, $text . PHP_EOL);
+		static::fwrite(STDERR, $text . PHP_EOL);
+
+		// return STDOUT color support
+		static::$isColored = $stdout;
 	}
 
 	//--------------------------------------------------------------------
@@ -412,7 +434,7 @@ class CLI
 
 			while ($time > 0)
 			{
-				fwrite(STDOUT, $time . '... ');
+				static::fwrite(STDOUT, $time . '... ');
 				sleep(1);
 				$time --;
 			}
@@ -470,7 +492,8 @@ class CLI
 	/**
 	 * Clears the screen of output
 	 *
-	 * @return             void
+	 * @return void
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public static function clearScreen()
@@ -479,7 +502,7 @@ class CLI
 		// can handle CSI sequences. For lower than Win10 we just shove in 40 new lines.
 		static::isWindows() && ! static::streamSupports('sapi_windows_vt100_support', STDOUT)
 			? static::newLine(40)
-			: fwrite(STDOUT, "\033[H\033[2J");
+			: static::fwrite(STDOUT, "\033[H\033[2J");
 	}
 
 	//--------------------------------------------------------------------
@@ -741,8 +764,10 @@ class CLI
 			}
 			else
 			{
+				// @codeCoverageIgnoreStart
 				static::$height = (int) exec('tput lines');
 				static::$width  = (int) exec('tput cols');
+				// @codeCoverageIgnoreEnd
 			}
 		}
 	}
@@ -763,7 +788,7 @@ class CLI
 		// restore cursor position when progress is continuing.
 		if ($inProgress !== false && $inProgress <= $thisStep)
 		{
-			fwrite(STDOUT, "\033[1A");
+			static::fwrite(STDOUT, "\033[1A");
 		}
 		$inProgress = $thisStep;
 
@@ -777,13 +802,13 @@ class CLI
 			$step    = (int) round($percent / 10);
 
 			// Write the progress bar
-			fwrite(STDOUT, "[\033[32m" . str_repeat('#', $step) . str_repeat('.', 10 - $step) . "\033[0m]");
+			static::fwrite(STDOUT, "[\033[32m" . str_repeat('#', $step) . str_repeat('.', 10 - $step) . "\033[0m]");
 			// Textual representation...
-			fwrite(STDOUT, sprintf(' %3d%% Complete', $percent) . PHP_EOL);
+			static::fwrite(STDOUT, sprintf(' %3d%% Complete', $percent) . PHP_EOL);
 		}
 		else
 		{
-			fwrite(STDOUT, "\007");
+			static::fwrite(STDOUT, "\007");
 		}
 	}
 
@@ -1112,6 +1137,30 @@ class CLI
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * While the library is intended for use on CLI commands,
+	 * commands can be called from controllers and elsewhere
+	 * so we need a way to allow them to still work.
+	 *
+	 * For now, just echo the content, but look into a better
+	 * solution down the road.
+	 *
+	 * @param resource $handle
+	 * @param string   $string
+	 */
+	protected static function fwrite($handle, string $string)
+	{
+		if (is_cli())
+		{
+			fwrite($handle, $string);
+			return;
+		}
+
+		// @codeCoverageIgnoreStart
+		echo $string;
+		// @codeCoverageIgnoreEnd
+	}
 }
 
 // Ensure the class is initialized. Done outside of code coverage

@@ -38,11 +38,11 @@
 
 namespace CodeIgniter\Test;
 
-use CodeIgniter\HTTP\URI;
-use CodeIgniter\HTTP\Request;
 use CodeIgniter\Events\Events;
-use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\UserAgent;
 use Config\App;
 use Config\Services;
 
@@ -152,6 +152,9 @@ trait FeatureTestTrait
 		// Make sure any other classes that might call the request
 		// instance get the right one.
 		Services::injectMock('request', $request);
+
+		// Make sure filters are reset between tests
+		Services::injectMock('filters', Services::filters(null, false));
 
 		$response = $this->app
 				->setRequest($request)

@@ -62,8 +62,8 @@ writable/uploads/*
 
 writable/debugbar/*
 
-writable/*.db
-writable/*.sqlite
+writable/**/*.db
+writable/**/*.sqlite
 
 php_errors.log
 
@@ -71,9 +71,6 @@ php_errors.log
 # User Guide Temp Files
 #-------------------------
 user_guide_src/build/*
-user_guide_src/cilexer/build/*
-user_guide_src/cilexer/dist/*
-user_guide_src/cilexer/pycilexer.egg-info/*
 
 #-------------------------
 # Test Files

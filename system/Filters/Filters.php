@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -38,7 +39,6 @@
 
 namespace CodeIgniter\Filters;
 
-use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -63,7 +63,7 @@ class Filters
 	/**
 	 * The original config file
 	 *
-	 * @var BaseConfig
+	 * @var \Config\Filters
 	 */
 	protected $config;
 
@@ -101,14 +101,14 @@ class Filters
 	/**
 	 * Constructor.
 	 *
-	 * @param type              $config
+	 * @param \Config\Filters   $config
 	 * @param RequestInterface  $request
 	 * @param ResponseInterface $response
 	 */
 	public function __construct($config, RequestInterface $request, ResponseInterface $response)
 	{
 		$this->config  = $config;
-		$this->request = & $request;
+		$this->request = &$request;
 		$this->setResponse($response);
 	}
 
@@ -119,7 +119,7 @@ class Filters
 	 */
 	public function setResponse(ResponseInterface $response)
 	{
-		$this->response = & $response;
+		$this->response = &$response;
 	}
 
 	//--------------------------------------------------------------------
@@ -354,6 +354,8 @@ class Filters
 	/**
 	 * Returns the arguments for a specified key, or all.
 	 *
+	 * @param string|null $key
+	 *
 	 * @return mixed
 	 */
 	public function getArguments(string $key = null)
@@ -369,8 +371,9 @@ class Filters
 	/**
 	 * Add any applicable (not excluded) global filter settings to the mix.
 	 *
-	 * @param  string $uri
-	 * @return type
+	 * @param string $uri
+	 *
+	 * @return void
 	 */
 	protected function processGlobals(string $uri = null)
 	{
@@ -386,6 +389,7 @@ class Filters
 			'before',
 			'after',
 		];
+
 		foreach ($sets as $set)
 		{
 			if (isset($this->config->globals[$set]))
@@ -411,6 +415,7 @@ class Filters
 					{
 						$alias = $rules; // simple name of filter to apply
 					}
+
 					if ($keep)
 					{
 						$this->filters[$set][] = $alias;
@@ -425,7 +430,7 @@ class Filters
 	/**
 	 * Add any method-specific flters to the mix.
 	 *
-	 * @return type
+	 * @return void
 	 */
 	protected function processMethods()
 	{
@@ -449,8 +454,9 @@ class Filters
 	/**
 	 * Add any applicable configured filters to the mix.
 	 *
-	 * @param  string $uri
-	 * @return type
+	 * @param string $uri
+	 *
+	 * @return void
 	 */
 	protected function processFilters(string $uri = null)
 	{
@@ -473,6 +479,7 @@ class Filters
 					$this->filters['before'][] = $alias;
 				}
 			}
+
 			if (isset($settings['after']))
 			{
 				$path = $settings['after'];
@@ -487,9 +494,10 @@ class Filters
 	/**
 	 * Check paths for match for URI
 	 *
-	 * @param  string $uri   URI to test against
-	 * @param  mixed  $paths The path patterns to test
-	 * @return boolean		True if any of the paths apply to the URI
+	 * @param string $uri   URI to test against
+	 * @param mixed  $paths The path patterns to test
+	 *
+	 * @return boolean True if any of the paths apply to the URI
 	 */
 	private function pathApplies(string $uri, $paths)
 	{
@@ -518,6 +526,7 @@ class Filters
 				return true;
 			}
 		}
+
 		return false;
 	}
 
