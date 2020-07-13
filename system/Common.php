@@ -451,7 +451,7 @@ if (! function_exists('force_https'))
 		{
 			$baseURL = (string) substr($baseURL, strlen('https://'));
 		}
-		else if (strpos($baseURL, 'http://') === 0)
+		elseif (strpos($baseURL, 'http://') === 0)
 		{
 			$baseURL = (string) substr($baseURL, strlen('http://'));
 		}
