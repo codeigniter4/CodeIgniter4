@@ -148,9 +148,13 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
 	public function testSetsDefaultValuesEncryption()
 	{
-		$dotenv = new DotEnv($this->fixturesFolder, '.env');
+		$dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
 		$dotenv->load();
 		$config = new \Encryption();
 
@@ -161,10 +165,6 @@ class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
 	public function testSetsDefaultValuesHex2Bin()
 	{
 		$dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
