@@ -128,9 +128,16 @@ a more friendly manner. For example::
 	// Get a hex-encoded representation of the key:
 	$encoded = bin2hex(Encryption::createKey(32));
 
-	// Put the same value in your config with hex2bin(),
+	// Put the same value with hex2bin(),
 	// so that it is still passed as binary to the library:
-	$key = hex2bin(<your hex-encoded key>);
+	$key = hex2bin('your-hex-encoded-key');
+
+	// In the Encryption config class you can use a special 'hex2bin:'
+	// prefix so that the value is still passed as binary to the library:
+	public $key = 'hex2bin:your-hex-encoded-key';
+
+	// You can also use the same prefix in your .env file
+	encryption.key = hex2bin:your-hex-encoded-key
 
 You might find the same technique useful for the results
 of encryption::

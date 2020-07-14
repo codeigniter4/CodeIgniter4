@@ -92,6 +92,12 @@ class BaseConfig
 		foreach ($properties as $property)
 		{
 			$this->initEnvValue($this->$property, $property, $prefix, $shortPrefix);
+
+			// Handle hex2bin prefix
+			if ($shortPrefix === 'encryption' && $property === 'key' && substr($this->$property, 0, 8) === 'hex2bin:')
+			{
+				$this->$property = hex2bin(substr($this->$property, 8));
+			}
 		}
 
 		if (defined('ENVIRONMENT') && ENVIRONMENT !== 'testing')
