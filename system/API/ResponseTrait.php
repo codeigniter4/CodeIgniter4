@@ -102,6 +102,49 @@ trait ResponseTrait
 	 */
 	protected $format = 'json';
 
+	/**
+	 * Key for status
+	 * @var string
+	 */
+	protected $responseKeyStatus = 'status';
+
+
+	/**
+	 * Key for error
+	 * @var string
+	 */
+	protected $responseKeyError = 'error';
+
+
+	/**
+	 * Key for data
+	 * @var string
+	 */
+	protected $responseKeyData = 'messages';
+
+	//--------------------------------------------------------------------
+	
+	/**
+	 * Override respond array keys.
+	 * @param string|null $status
+	 * @param string|null $error
+	 * @param string|null $data
+	 * @return $this
+	 */
+	public function configureResponseKeys(?string $status = null, ?string $error = null, ?string $data = null) : self
+	{
+		if(!empty($status))
+			$this->responseKeyStatus = $status;
+
+		if(!empty($error))
+			$this->responseKeyError = $error;
+
+		if(!empty($data))
+			$this->responseKeyData = $data;
+
+		return $this;
+	}
+
 	//--------------------------------------------------------------------
 
 	/**
