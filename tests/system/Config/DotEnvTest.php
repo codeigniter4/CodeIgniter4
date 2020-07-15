@@ -58,7 +58,7 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testLoadsHex2Bin()
 	{
-		$dotenv = new DotEnv($this->fixturesFolder);
+		$dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
 		$dotenv->load();
 
 		$value = getenv('encryption.key');
