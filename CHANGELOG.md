@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/codeigniter4/CodeIgniter4/tree/HEAD)
+## [v4.0.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.0.4)
 
-[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.0.3...HEAD)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.0.3...v4.0.4)
 
 **Implemented enhancements:**
 
