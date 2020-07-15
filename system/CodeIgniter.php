@@ -43,7 +43,6 @@ use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
-use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\Response;
@@ -1004,11 +1003,6 @@ class CodeIgniter
 			ob_end_clean();
 		}
 
-		if ($returned instanceof DownloadResponse)
-		{
-			$this->response = $returned;
-			return;
-		}
 		// If the controller returned a response object,
 		// we need to grab the body from it so it can
 		// be added to anything else that might have been
