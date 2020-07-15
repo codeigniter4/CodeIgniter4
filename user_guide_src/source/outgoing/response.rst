@@ -92,17 +92,17 @@ Example::
 
 	$data = 'Here is some text!';
 	$name = 'mytext.txt';
-	return $response->download($name, $data);
+	return $response->download($name, $data)->getBody();
 
 If you want to download an existing file from your server you'll need to
 pass ``null`` explicitly for the second parameter::
 
 	// Contents of photo.jpg will be automatically read
-	return $response->download('/path/to/photo.jpg', null);
+	return $response->download('/path/to/photo.jpg', null)->getBody();
 
 Use the optional ``setFileName()`` method to change the filename as it is sent to the client's browser::
 
-	return $response->download('awkwardEncryptedFileName.fakeExt', null)->setFileName('expenses.csv');
+	return $response->download('awkwardEncryptedFileName.fakeExt', null)->setFileName('expenses.csv')->getBody();
 
 .. note:: The response object MUST be returned for the download to be sent to the client. This allows the response
     to be passed through all **after** filters before being sent to the client.
