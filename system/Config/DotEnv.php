@@ -183,7 +183,7 @@ class DotEnv
 		$value = $this->resolveNestedVariables($value);
 
 		// Handle hex2bin prefix
-		if ($name === 'encryption.key' && substr($value, 0, 8) === 'hex2bin:')
+              if ($name === 'encryption.key' && strpos($value, 'hex2bin:') === 0)
 		{
 			$value = hex2bin(substr($value, 8));
 		}
