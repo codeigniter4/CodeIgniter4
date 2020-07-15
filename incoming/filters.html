@@ -350,9 +350,10 @@
 <li><a class="reference internal" href="#globals" id="id6">$globals</a></li>
 <li><a class="reference internal" href="#methods" id="id7">$methods</a></li>
 <li><a class="reference internal" href="#filters" id="id8">$filters</a></li>
+<li><a class="reference internal" href="#filter-arguments" id="id9">Filter arguments</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#provided-filters" id="id9">Provided Filters</a></li>
+<li><a class="reference internal" href="#provided-filters" id="id10">Provided Filters</a></li>
 </ul>
 </div>
 <p>Controller Filters allow you to perform actions either before or after the controllers execute. Unlike <a class="reference internal" href="../extending/events.html"><span class="doc">events</span></a>,
@@ -381,14 +382,14 @@ but may leave the methods empty if they are not needed. A skeleton filter class 
 
 <span class="k">class</span> <span class="nc">MyFilter</span> <span class="k">implements</span> <span class="nx">FilterInterface</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nv">$arguments</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="c1">// Do something here</span>
     <span class="p">}</span>
 
     <span class="c1">//--------------------------------------------------------------------</span>
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">after</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">after</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">,</span> <span class="nv">$arguments</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="c1">// Do something here</span>
     <span class="p">}</span>
@@ -402,7 +403,7 @@ to make changes that will still be present when the controller executes.</p>
 <p>Since before filters are executed prior to your controller being executed, you may at times want to stop the
 actions in the controller from happening. You can do this by passing back anything that is not the request object.
 This is typically used to perform redirects, like in this example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nv">$arguments</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nv">$auth</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;auth&#39;</span><span class="p">);</span>
 
@@ -520,9 +521,17 @@ a list of URI patterns that filter should apply to:</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="filter-arguments">
+<h3><a class="toc-backref" href="#id9">Filter arguments</a><a class="headerlink" href="#filter-arguments" title="Permalink to this headline">¶</a></h3>
+<p>When configuring filters, additional arguments may be passed to a filter when setting up the route:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;users/delete/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;admin-auth:dual,noreturn&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>In this example, the array <code class="docutils literal notranslate"><span class="pre">['dual',</span> <span class="pre">'noreturn']</span></code> will be passed in <code class="docutils literal notranslate"><span class="pre">$arguments</span></code> to the filter’s <code class="docutils literal notranslate"><span class="pre">before()</span></code> and <code class="docutils literal notranslate"><span class="pre">after()</span></code> implementation methods.</p>
+</div>
 </div>
 <div class="section" id="provided-filters">
-<h2><a class="toc-backref" href="#id9">Provided Filters</a><a class="headerlink" href="#provided-filters" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">Provided Filters</a><a class="headerlink" href="#provided-filters" title="Permalink to this headline">¶</a></h2>
 <p>Three filters are bundled with CodeIgniter4: Honeypot, Security, and DebugToolbar.</p>
 </div>
 </div>

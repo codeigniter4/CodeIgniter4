@@ -401,10 +401,11 @@ along the lines of:</p>
 <span class="sd">         * to implement rate limiting for your application.</span>
 <span class="sd">         *</span>
 <span class="sd">         * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request</span>
+<span class="sd">         * @param array|null                                         $arguments</span>
 <span class="sd">         *</span>
 <span class="sd">         * @return mixed</span>
 <span class="sd">         */</span>
-        <span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">)</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nv">$arguments</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
         <span class="p">{</span>
                 <span class="nv">$throttler</span> <span class="o">=</span> <span class="nx">Services</span><span class="o">::</span><span class="na">throttler</span><span class="p">();</span>
 
@@ -424,10 +425,11 @@ along the lines of:</p>
 <span class="sd">         *</span>
 <span class="sd">         * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request</span>
 <span class="sd">         * @param ResponseInterface|\CodeIgniter\HTTP\Response       $response</span>
+<span class="sd">         * @param array|null                                         $arguments</span>
 <span class="sd">         *</span>
 <span class="sd">         * @return mixed</span>
 <span class="sd">         */</span>
-        <span class="k">public</span> <span class="k">function</span> <span class="nf">after</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">)</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">after</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">,</span> <span class="nv">$arguments</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
         <span class="p">{</span>
         <span class="p">}</span>
 <span class="p">}</span>
