@@ -471,9 +471,16 @@ a more friendly manner. For example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Get a hex-encoded representation of the key:</span>
 <span class="nv">$encoded</span> <span class="o">=</span> <span class="nb">bin2hex</span><span class="p">(</span><span class="nx">Encryption</span><span class="o">::</span><span class="na">createKey</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
 
-<span class="c1">// Put the same value in your config with hex2bin(),</span>
+<span class="c1">// Put the same value with hex2bin(),</span>
 <span class="c1">// so that it is still passed as binary to the library:</span>
-<span class="nv">$key</span> <span class="o">=</span> <span class="nb">hex2bin</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">your</span> <span class="nx">hex</span><span class="o">-</span><span class="nx">encoded</span> <span class="nb">key</span><span class="o">&gt;</span><span class="p">);</span>
+<span class="nv">$key</span> <span class="o">=</span> <span class="nb">hex2bin</span><span class="p">(</span><span class="s1">&#39;your-hex-encoded-key&#39;</span><span class="p">);</span>
+
+<span class="c1">// In the Encryption config class you can use a special &#39;hex2bin:&#39;</span>
+<span class="c1">// prefix so that the value is still passed as binary to the library:</span>
+<span class="k">public</span> <span class="nv">$key</span> <span class="o">=</span> <span class="s1">&#39;hex2bin:your-hex-encoded-key&#39;</span><span class="p">;</span>
+
+<span class="c1">// You can also use the same prefix in your .env file</span>
+<span class="nx">encryption</span><span class="o">.</span><span class="nb">key</span> <span class="o">=</span> <span class="nb">hex2bin</span><span class="o">:</span><span class="nx">your</span><span class="o">-</span><span class="nx">hex</span><span class="o">-</span><span class="nx">encoded</span><span class="o">-</span><span class="nb">key</span>
 </pre></div>
 </div>
 <p>You might find the same technique useful for the results
