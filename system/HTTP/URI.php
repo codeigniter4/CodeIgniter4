@@ -160,6 +160,13 @@ class URI
 	 */
 	protected $silent = false;
 
+	/**
+	 * If true, will use raw query string.
+	 *
+	 * @var boolean
+	 */
+	protected $rawQueryString = false;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -190,6 +197,23 @@ class URI
 	public function setSilent(bool $silent = true)
 	{
 		$this->silent = $silent;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * If $raw == true, then will use parseStr() method
+	 * instead of native parse_str() function.
+	 *
+	 * @param boolean $raw
+	 *
+	 * @return URI
+	 */
+	public function useRawQueryString(bool $raw = true)
+	{
+		$this->rawQueryString = $raw;
 
 		return $this;
 	}
@@ -803,7 +827,14 @@ class URI
 			$query = substr($query, 1);
 		}
 
-		parse_str($query, $this->query);
+		if ($this->rawQueryString)
+		{
+			$this->query = $this->parseStr($query);
+		}
+		else
+		{
+			parse_str($query, $this->query);
+		}
 
 		return $this;
 	}
@@ -1188,6 +1219,40 @@ class URI
 		}
 
 		return $output;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * This is equivalent to the native PHP parse_str() function.
+	 * This version allows the dot to be used as a key of the query string.
+	 *
+	 * @param string $query
+	 *
+	 * @return array
+	 */
+	protected function parseStr(string $query): array
+	{
+		$return = [];
+		$query  = explode('&', $query);
+
+		$params = array_map(function (string $chunk) {
+			return preg_replace_callback('/^(?<key>[^&=]+?)(?:\[[^&=]*\])?=(?<value>[^&=]+)/', function (array $match) {
+				return str_replace($match['key'], bin2hex($match['key']), $match[0]);
+			}, urldecode($chunk));
+		}, $query);
+
+		$params = implode('&', $params);
+		parse_str($params, $params);
+
+		foreach ($params as $key => $value)
+		{
+			$return[hex2bin($key)] = $value;
+		}
+
+		$query = $params = null;
+
+		return $return;
 	}
 
 	//--------------------------------------------------------------------

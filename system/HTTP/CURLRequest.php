@@ -130,7 +130,7 @@ class CURLRequest extends Request
 		parent::__construct($config);
 
 		$this->response = $response;
-		$this->baseURI  = $uri;
+		$this->baseURI  = $uri->useRawQueryString();
 
 		$this->parseOptions($options);
 	}
