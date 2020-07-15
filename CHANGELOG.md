@@ -1,6 +1,6 @@
 # Changelog
 
-## [v4.0.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.0.4)
+## [v4.0.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.0.4) (2020-07-15)
 
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.0.3...v4.0.4)
 
