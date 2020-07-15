@@ -94,7 +94,7 @@ class BaseConfig
 			$this->initEnvValue($this->$property, $property, $prefix, $shortPrefix);
 
 			// Handle hex2bin prefix
-			if ($shortPrefix === 'encryption' && $property === 'key' && substr($this->$property, 0, 8) === 'hex2bin:')
+                      if ($shortPrefix === 'encryption' && $property === 'key' && strpos($this->$property, 'hex2bin:') === 0)
 			{
 				$this->$property = hex2bin(substr($this->$property, 8));
 			}
