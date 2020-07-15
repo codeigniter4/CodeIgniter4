@@ -196,7 +196,7 @@ class Filters
 				}
 				elseif ($position === 'after')
 				{
-					$result = $class->after($this->request, $this->response);
+					$result = $class->after($this->request, $this->response, $this->arguments[$alias] ?? null);
 
 					if ($result instanceof ResponseInterface)
 					{
