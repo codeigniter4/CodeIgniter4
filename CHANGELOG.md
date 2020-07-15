@@ -92,7 +92,7 @@
 - Bug: init of $data arrays in controllers [\#2933](https://github.com/codeigniter4/CodeIgniter4/issues/2933)
 - Bug: Translation key separated by dot [\#2932](https://github.com/codeigniter4/CodeIgniter4/issues/2932)
 - Bug: Model Instantiation [\#2924](https://github.com/codeigniter4/CodeIgniter4/issues/2924)
-- `错误：Model [\#2923](https://github.com/codeigniter4/CodeIgniter4/issues/2923)
+- Model [\#2923](https://github.com/codeigniter4/CodeIgniter4/issues/2923)
 - Bug: CURLRequest baseURI option in user guide [\#2922](https://github.com/codeigniter4/CodeIgniter4/issues/2922)
 - Bug: Not bug, but Fix Documentation, please [\#2920](https://github.com/codeigniter4/CodeIgniter4/issues/2920)
 - Bug: Postgresql API call delete use -\>connID-\>affected\_rows after Model::delete\(\) got error [\#2918](https://github.com/codeigniter4/CodeIgniter4/issues/2918)
