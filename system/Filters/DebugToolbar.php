@@ -48,14 +48,16 @@ use Config\Services;
  */
 class DebugToolbar implements FilterInterface
 {
+
 	/**
 	 * We don't need to do anything here.
 	 *
 	 * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
+	 * @param array|null                                         $arguments
 	 *
 	 * @return void
 	 */
-	public function before(RequestInterface $request)
+	public function before(RequestInterface $request, $arguments = null)
 	{
 	}
 
@@ -67,10 +69,11 @@ class DebugToolbar implements FilterInterface
 	 *
 	 * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
 	 * @param ResponseInterface|\CodeIgniter\HTTP\Response       $response
+	 * @param array|null                                         $arguments
 	 *
 	 * @return void
 	 */
-	public function after(RequestInterface $request, ResponseInterface $response)
+	public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
 	{
 		Services::toolbar()->prepare($request, $response);
 	}
