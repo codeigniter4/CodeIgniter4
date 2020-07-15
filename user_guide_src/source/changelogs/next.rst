@@ -8,5 +8,4 @@ Release Date: Not released
 Enhancements
 ------------
 
-- Two new functions were added to RedirectResponse, ``withHeaders()`` and ``withCookies()`` that copy the current
-    cookies and headers from the global Response instance.
+-
