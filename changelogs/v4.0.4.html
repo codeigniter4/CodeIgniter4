@@ -354,15 +354,16 @@
 - New command, <code class="docutils literal notranslate"><span class="pre">make:seeder</span></code> to generate a <a class="reference internal" href="../dbmgmt/seeds.html"><span class="doc">Database Seed class</span></a> skeleton file.
 - Colors now available on the CLI within Windows, as well as other Windows-related CLI improvements.
 - New helper <a class="reference internal" href="../helpers/url_helper.html"><span class="doc">mb_url_title</span></a> that functions like <code class="docutils literal notranslate"><span class="pre">url_title</span></code> but automatically escapes and extended URL characters.
-- <a class="reference internal" href="../libraries/images.html"><span class="doc">Image library</span></a> now supports <code class="docutils literal notranslate"><span class="pre">webp`</span> <span class="pre">images.</span>
-<span class="pre">-</span> <span class="pre">Added</span> <span class="pre">Unicode</span> <span class="pre">support</span> <span class="pre">for</span> <span class="pre">regular</span> <span class="pre">expressions</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">Router.</span>
-<span class="pre">-</span> <span class="pre">Added</span> <span class="pre">support</span> <span class="pre">for</span> <span class="pre">removing</span> <span class="pre">hidden</span> <span class="pre">folders</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">:doc:`delete_files</span> <span class="pre">&lt;/helpers/files&gt;`</span> <span class="pre">helper</span>
-<span class="pre">-</span> <span class="pre">``fetchGlobal</span></code> in the Request class now supports applying filters to arrays of data, not just the first item.
+- <a class="reference internal" href="../libraries/images.html"><span class="doc">Image library</span></a> now supports <code class="docutils literal notranslate"><span class="pre">webp</span></code> images.
+- Added Unicode support for regular expressions in the Router.
+- Added support for removing hidden folders in the <span class="xref std std-doc">delete_files</span> helper
+- <code class="docutils literal notranslate"><span class="pre">fetchGlobal</span></code> in the Request class now supports applying filters to arrays of data, not just the first item.
 - <code class="docutils literal notranslate"><span class="pre">file</span></code> validation now works with arrays of files.
-- URI class now supports a <code class="docutils literal notranslate"><span class="pre">setSilent()</span></code> method that will disable the throwing of Exceptions
-- new argument to <code class="docutils literal notranslate"><span class="pre">URI::getSegment()</span></code> that allows us to change the default value returned if nothing exists.
+- URI class now supports a <code class="docutils literal notranslate"><span class="pre">setSilent()</span></code> method that will disable the throwing of Exceptions.
+- New argument to <code class="docutils literal notranslate"><span class="pre">URI::getSegment()</span></code> that allows us to change the default value returned if nothing exists.
 - Implemented a <code class="docutils literal notranslate"><span class="pre">withResource()</span></code> in Image so that you can use method chaining instead of using the provided getResource() (used in tests). To just compress your image.
-- Cookies and headers can be copied from the global Response object when doing a redirect using the new <code class="docutils literal notranslate"><span class="pre">withCookies()</span></code> and <code class="docutils literal notranslate"><span class="pre">withHeaders()</span></code> methods.</p>
+- Cookies and headers can be copied from the global Response object when doing a redirect using the new <code class="docutils literal notranslate"><span class="pre">withCookies()</span></code> and <code class="docutils literal notranslate"><span class="pre">withHeaders()</span></code> methods.
+- Support for special prefix “hex2bin:” which can be used with <code class="docutils literal notranslate"><span class="pre">$key</span></code> parameter in <a class="reference internal" href="../libraries/encryption.html"><span class="doc">Encryption class</span></a> or in .env file.</p>
 <p>Bugs Fixed:</p>
 <ul class="simple">
 <li>Fixed location for the SQLite3 database which by default will be now located in a <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder instead of the <code class="docutils literal notranslate"><span class="pre">public</span></code> folder.</li>
