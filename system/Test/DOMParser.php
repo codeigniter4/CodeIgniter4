@@ -143,7 +143,7 @@ class DOMParser
 		if (is_null($element))
 		{
 			$content = $this->dom->saveHTML();
-			return strpos($content, $search) !== false;
+			return mb_strpos($content, $search) !== false;
 		}
 
 		$result = $this->doXPath($search, $element);
