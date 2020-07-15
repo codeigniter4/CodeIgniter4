@@ -19,15 +19,16 @@ Enhancements:
 - New command, ``make:seeder`` to generate a :doc:`Database Seed class </dbmgmt/seeds>` skeleton file.
 - Colors now available on the CLI within Windows, as well as other Windows-related CLI improvements.
 - New helper :doc:`mb_url_title </helpers/url_helper>` that functions like ``url_title`` but automatically escapes and extended URL characters.
-- :doc:`Image library </libraries/images>` now supports ``webp` images.
+- :doc:`Image library </libraries/images>` now supports ``webp`` images.
 - Added Unicode support for regular expressions in the Router.
 - Added support for removing hidden folders in the :doc:`delete_files </helpers/files>` helper
 - ``fetchGlobal`` in the Request class now supports applying filters to arrays of data, not just the first item.
 - ``file`` validation now works with arrays of files.
-- URI class now supports a ``setSilent()`` method that will disable the throwing of Exceptions
-- new argument to ``URI::getSegment()`` that allows us to change the default value returned if nothing exists.
+- URI class now supports a ``setSilent()`` method that will disable the throwing of Exceptions.
+- New argument to ``URI::getSegment()`` that allows us to change the default value returned if nothing exists.
 - Implemented a ``withResource()`` in Image so that you can use method chaining instead of using the provided getResource() (used in tests). To just compress your image.
 - Cookies and headers can be copied from the global Response object when doing a redirect using the new ``withCookies()`` and ``withHeaders()`` methods.
+- Support for special prefix "hex2bin:" which can be used with ``$key`` parameter in :doc:`Encryption class</libraries/encryption>` or in .env file.
 
 
 Bugs Fixed:
