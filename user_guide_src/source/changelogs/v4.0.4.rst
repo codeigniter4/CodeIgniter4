@@ -6,6 +6,7 @@ Release Date: July 15, 2020
 **4.0.4 release of CodeIgniter4**
 
 Enhancements:
+
 - The location for the SQLite3 database has changed and by default will be now located in a ``writable`` folder instead of the ``public`` folder.
 - New CLI command: ``cache:clear`` that will destroy all data within the current cache engine.
 - Thanks to samsonasik, we have several libraries brought up to 100% test coverage.
