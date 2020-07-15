@@ -11,6 +11,7 @@
 
 **Fixed bugs:**
 
+- Bug: Setting Encryption Service Key in app/Config/Encyption.php [\#3297](https://github.com/codeigniter4/CodeIgniter4/issues/3297)
 - Bug: CodeIgniter\I18n -\> Class 'Locale' not found [\#3294](https://github.com/codeigniter4/CodeIgniter4/issues/3294)
 - bug cURL - Parse header and Body [\#3261](https://github.com/codeigniter4/CodeIgniter4/issues/3261)
 - Bug: Forced HTTPS wrong redirect [\#3260](https://github.com/codeigniter4/CodeIgniter4/issues/3260)
@@ -141,7 +142,13 @@
 
 **Merged pull requests:**
 
+- Changelog update [\#3322](https://github.com/codeigniter4/CodeIgniter4/pull/3322) ([michalsn](https://github.com/michalsn))
+- Changelog for 4.0.4 update [\#3321](https://github.com/codeigniter4/CodeIgniter4/pull/3321) ([michalsn](https://github.com/michalsn))
+- Fix protocol version for DownloadResponse [\#3320](https://github.com/codeigniter4/CodeIgniter4/pull/3320) ([michalsn](https://github.com/michalsn))
+- Add Honeypot::$container to env file [\#3318](https://github.com/codeigniter4/CodeIgniter4/pull/3318) ([paulbalandan](https://github.com/paulbalandan))
+- Pass filter arguments to after\(\) and before\(\) methods [\#3316](https://github.com/codeigniter4/CodeIgniter4/pull/3316) ([tangix](https://github.com/tangix))
 - count on \Config\Services [\#3308](https://github.com/codeigniter4/CodeIgniter4/pull/3308) ([mostafakhudair](https://github.com/mostafakhudair))
+- Add hex2bin prefix handling for encryption key [\#3307](https://github.com/codeigniter4/CodeIgniter4/pull/3307) ([michalsn](https://github.com/michalsn))
 - add break; in foreach at Time::getDst\(\) when daylightSaving set [\#3305](https://github.com/codeigniter4/CodeIgniter4/pull/3305) ([samsonasik](https://github.com/samsonasik))
 - New command: cache:clear [\#3304](https://github.com/codeigniter4/CodeIgniter4/pull/3304) ([lonnieezell](https://github.com/lonnieezell))
 - force\_https didn’t force https [\#3302](https://github.com/codeigniter4/CodeIgniter4/pull/3302) ([colethorsen](https://github.com/colethorsen))
