@@ -61,6 +61,13 @@ class FileTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($size, $file->getSizeByUnit('mb'));
 	}
 
+	public function testGetSizeReturnsBytes()
+	{
+		$file = new File(SYSTEMPATH . 'Common.php');
+		$size = filesize(SYSTEMPATH . 'Common.php');
+		$this->assertEquals($size, $file->getSizeByUnit('b'));
+	}
+
 	public function testThrowsExceptionIfNotAFile()
 	{
 		$this->expectException('CodeIgniter\Files\Exceptions\FileNotFoundException');

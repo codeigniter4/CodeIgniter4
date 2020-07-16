@@ -72,6 +72,22 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$response->assertSee('Hello Mars');
 	}
 
+	public function testCallPostWithBody()
+	{
+		$this->withRoutes([
+			[
+				'post',
+				'home',
+				function () {
+					return 'Hello ' . service('request')->getPost('foo') . '!';
+				},
+			],
+		]);
+		$response = $this->post('home', ['foo' => 'Mars']);
+
+		$response->assertSee('Hello Mars!');
+	}
+
 	public function testCallPut()
 	{
 		$this->withRoutes([
@@ -155,6 +171,27 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$response->assertSessionMissing('popcorn');
 	}
 
+	public function testWithSessionNull()
+	{
+		$_SESSION = [
+			'fruit'    => 'apple',
+			'greeting' => 'hello',
+		];
+
+		$response = $this->withRoutes([
+			[
+				'get',
+				'home',
+				function () {
+					return 'Home';
+				},
+			],
+		])->withSession()->get('home');
+
+		$response->assertSessionHas('fruit', 'apple');
+		$response->assertSessionMissing('popcorn');
+	}
+
 	public function testReturns()
 	{
 		$this->withRoutes([
@@ -181,7 +218,7 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$response->assertEmpty($response->response->getBody());
 	}
 
-	public function testEchoes()
+	public function testEchoesWithParams()
 	{
 		$this->withRoutes([
 			[
@@ -190,9 +227,23 @@ class FeatureTestCaseTest extends FeatureTestCase
 				'\Tests\Support\Controllers\Popcorn::canyon',
 			],
 		]);
-		ob_start();
-		$response = $this->get('home');
-		$response->assertSee('Hello-o-o');
+
+		$response = $this->get('home', ['foo' => 'bar']);
+		$response->assertSee('Hello-o-o bar');
+	}
+
+	public function testEchoesWithQuery()
+	{
+		$this->withRoutes([
+			[
+				'get',
+				'home',
+				'\Tests\Support\Controllers\Popcorn::canyon',
+			],
+		]);
+
+		$response = $this->get('home?foo=bar');
+		$response->assertSee('Hello-o-o bar');
 	}
 
 	public function testCallZeroAsPathGot404()
@@ -244,5 +295,22 @@ class FeatureTestCaseTest extends FeatureTestCase
 			],
 		]);
 		$this->get($httpGet);
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3072
+	 */
+	public function testIsOkWithRedirects()
+	{
+		$this->withRoutes([
+			[
+				'get',
+				'home',
+				'\Tests\Support\Controllers\Popcorn::goaway',
+			],
+		]);
+		$response = $this->get('home');
+		$this->assertTrue($response->isRedirect());
+		$this->assertTrue($response->isOK());
 	}
 }

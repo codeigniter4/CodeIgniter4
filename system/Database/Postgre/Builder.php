@@ -405,4 +405,29 @@ class Builder extends BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * JOIN
+	 *
+	 * Generates the JOIN portion of the query
+	 *
+	 * @param string  $table
+	 * @param string  $cond   The join condition
+	 * @param string  $type   The type of join
+	 * @param boolean $escape Whether not to try to escape identifiers
+	 *
+	 * @return BaseBuilder
+	 */
+	public function join(string $table, string $cond, string $type = '', bool $escape = null)
+	{
+		if (! in_array('FULL OUTER', $this->joinTypes, true))
+		{
+			$this->joinTypes = array_merge($this->joinTypes, ['FULL OUTER']);
+		}
+
+		return parent::join($table, $cond, $type, $escape);
+	}
+
+	//--------------------------------------------------------------------
+
 }

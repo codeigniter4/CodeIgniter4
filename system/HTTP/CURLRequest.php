@@ -448,10 +448,9 @@ class CURLRequest extends Request
 
 		$output = $this->sendRequest($curl_options);
 
-		$continueStr = "HTTP/1.1 100 Continue\x0d\x0a\x0d\x0a";
-		if (strpos($output, $continueStr) === 0)
+		if (strpos($output, 'HTTP/1.1 100 Continue') === 0)
 		{
-			$output = substr($output, strlen($continueStr));
+			$output = substr($output, strpos($output, "\r\n\r\n") + 4);
 		}
 
 		// Split out our headers and body
@@ -493,6 +492,7 @@ class CURLRequest extends Request
 			$this->populateHeaders();
 			// Otherwise, it will corrupt the request
 			$this->removeHeader('Host');
+			$this->removeHeader('Accept-Encoding');
 		}
 
 		$headers = $this->getHeaders();
@@ -542,7 +542,7 @@ class CURLRequest extends Request
 		if ($method === 'PUT' || $method === 'POST')
 		{
 			// See http://tools.ietf.org/html/rfc7230#section-3.3.2
-			if (is_null($this->getHeader('content-length')))
+			if (is_null($this->getHeader('content-length')) && ! isset($this->config['multipart']))
 			{
 				$this->setHeader('Content-Length', '0');
 			}

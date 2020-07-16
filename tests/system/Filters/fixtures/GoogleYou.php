@@ -8,14 +8,14 @@ use CodeIgniter\HTTP\ResponseInterface;
 class GoogleYou implements FilterInterface
 {
 
-	public function before(RequestInterface $request)
+	public function before(RequestInterface $request, $arguments = null)
 	{
 		$response      = Services::response();
 		$response->csp = 'http://google.com';
 		return $response;
 	}
 
-	public function after(RequestInterface $request, ResponseInterface $response)
+	public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
 	{
 	}
 

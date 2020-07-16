@@ -329,4 +329,11 @@ class ServicesTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\Typography\Typography::class, $result);
 	}
 
+	public function testServiceInstance()
+	{
+		rename(COMPOSER_PATH, COMPOSER_PATH . '.backup');
+		$this->assertInstanceOf(\Config\Services::class, new \Config\Services());
+		rename(COMPOSER_PATH . '.backup', COMPOSER_PATH);
+	}
+
 }

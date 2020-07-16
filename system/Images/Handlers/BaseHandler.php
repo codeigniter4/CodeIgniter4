@@ -41,6 +41,7 @@ namespace CodeIgniter\Images\Handlers;
 use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Image;
 use CodeIgniter\Images\ImageHandlerInterface;
+use Config\Images;
 
 /**
  * Base image handling implementation
@@ -86,7 +87,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * File permission mask.
 	 *
-	 * @var type
+	 * @var integer
 	 */
 	protected $filePermissions = 0644;
 
@@ -143,11 +144,11 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param type $config
+	 * @param \Config\Images|null $config
 	 */
 	public function __construct($config = null)
 	{
-		$this->config = $config;
+		$this->config = $config ?? new Images();
 	}
 
 	//--------------------------------------------------------------------
@@ -181,26 +182,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * Make the image resource object if needed
 	 */
-	protected function ensureResource()
-	{
-		if ($this->resource === null)
-		{
-			$path = $this->image()->getPathname();
-			// if valid image type, make corresponding image resource
-			switch ($this->image()->imageType)
-			{
-				case IMAGETYPE_GIF:
-					$this->resource = imagecreatefromgif($path);
-					break;
-				case IMAGETYPE_JPEG:
-					$this->resource = imagecreatefromjpeg($path);
-					break;
-				case IMAGETYPE_PNG:
-					$this->resource = imagecreatefrompng($path);
-					break;
-			}
-		}
-	}
+	protected abstract function ensureResource();
 
 	//--------------------------------------------------------------------
 
@@ -218,9 +200,9 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * Verifies that a file has been supplied and it is an image.
 	 *
 	 * @return Image  The image instance
-	 * @throws type ImageException
+	 * @throws ImageException
 	 */
-	protected function image(): ?Image
+	protected function image(): Image
 	{
 		if ($this->verified)
 		{
@@ -269,6 +251,21 @@ abstract class BaseHandler implements ImageHandlerInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Load the temporary image used during the image processing.
+	 * Some functions e.g. save() will only copy and not compress
+	 * your image otherwise.
+	 *
+	 * @return $this
+	 */
+	public function withResource()
+	{
+		$this->ensureResource();
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Resize the image
 	 *
 	 * @param integer $width
@@ -312,7 +309,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @param boolean      $maintainRatio
 	 * @param string       $masterDim
 	 *
-	 * @return mixed
+	 * @return $this
 	 */
 	public function crop(int $width = null, int $height = null, int $x = null, int $y = null, bool $maintainRatio = false, string $masterDim = 'auto')
 	{
@@ -358,7 +355,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @param float $angle
 	 *
-	 * @return mixed
+	 * @return $this
 	 */
 	public function rotate(float $angle)
 	{
@@ -400,7 +397,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @param integer $green
 	 * @param integer $blue
 	 *
-	 * @return mixed
+	 * @return $this
 	 */
 	public function flatten(int $red = 255, int $green = 255, int $blue = 255)
 	{
@@ -419,8 +416,8 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @param integer $green
 	 * @param integer $blue
 	 *
-	 * @return   mixed
-	 * @internal param int $angle
+	 * @return   $this
+	 * @internal
 	 */
 	protected abstract function _flatten(int $red = 255, int $green = 255, int $blue = 255);
 
@@ -464,7 +461,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @param string $direction
 	 *
-	 * @return mixed
+	 * @return $this
 	 */
 	protected abstract function _flip(string $direction);
 
@@ -560,7 +557,6 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * EXIF data is only supported fr JPEG & TIFF formats.
 	 *
 	 * @param string|null $key    If specified, will only return this piece of EXIF data.
-	 *
 	 * @param boolean     $silent If true, will not throw our own exceptions.
 	 *
 	 * @return mixed
@@ -610,7 +606,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @param integer $height
 	 * @param string  $position
 	 *
-	 * @return boolean
+	 * @return $this
 	 */
 	public function fit(int $width, int $height = null, string $position = 'center')
 	{
@@ -635,10 +631,10 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * Calculate image aspect ratio.
 	 *
-	 * @param $width
-	 * @param null       $height
-	 * @param $origWidth
-	 * @param $origHeight
+	 * @param integer|float      $width
+	 * @param integer|float|null $height
+	 * @param integer|float      $origWidth
+	 * @param integer|float      $origHeight
 	 *
 	 * @return array
 	 */
@@ -679,11 +675,11 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * Based on the position, will determine the correct x/y coords to
 	 * crop the desired portion from the image.
 	 *
-	 * @param $width
-	 * @param $height
-	 * @param $origWidth
-	 * @param $origHeight
-	 * @param $position
+	 * @param integer|float $width
+	 * @param integer|float $height
+	 * @param integer|float $origWidth
+	 * @param integer|float $origHeight
+	 * @param string        $position
 	 *
 	 * @return array
 	 */
@@ -756,10 +752,10 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *    $image->resize(100, 200, true)
 	 *          ->save($target);
 	 *
-	 * @param string  $target
-	 * @param integer $quality
+	 * @param string|null $target
+	 * @param integer     $quality
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
 	public abstract function save(string $target = null, int $quality = 90);
 
@@ -870,7 +866,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * accessor for testing; not part of interface
 	 *
-	 * @return type
+	 * @return integer
 	 */
 	public function getHeight()
 	{

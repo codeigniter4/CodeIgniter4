@@ -1,24 +1,31 @@
 <?php namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\Email\Email;
+use CodeIgniter\Events\Events;
 
 class MockEmail extends Email
 {
 	/**
-	 * Record of mock emails sent.
+	 * Value to return from mocked send().
 	 *
-	 * @var array
+	 * @var boolean
 	 */
-	public $archive = [];
+	public $returnValue = true;
 
 	public function send($autoClear = true)
 	{
-		if ($autoClear)
+		if ($this->returnValue)
 		{
-			$this->clear();
+			$this->setArchiveValues();
+
+			if ($autoClear)
+			{
+				$this->clear();
+			}
+
+			Events::trigger('email', $this->archive);
 		}
 
-		$this->archive = get_object_vars($this);
-		return true;
+		return $this->returnValue;
 	}
 }

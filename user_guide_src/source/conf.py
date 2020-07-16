@@ -24,7 +24,7 @@ copyright = '2019-2020 CodeIgniter Foundation'
 version = '4.0'
 
 # The full version, including alpha/beta/rc tags.
-release = '4.0.3'
+release = '4.0.4'
 
 # -- General configuration ---------------------------------------------------
 

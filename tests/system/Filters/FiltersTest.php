@@ -12,6 +12,7 @@ require_once __DIR__ . '/fixtures/GoogleCurious.php';
 require_once __DIR__ . '/fixtures/InvalidClass.php';
 require_once __DIR__ . '/fixtures/Multiple1.php';
 require_once __DIR__ . '/fixtures/Multiple2.php';
+require_once __DIR__ . '/fixtures/Role.php';
 
 /**
  * @backupGlobals enabled
@@ -25,6 +26,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 	protected function setUp(): void
 	{
 		parent::setUp();
+		Services::reset();
 
 		$this->request  = Services::request();
 		$this->response = Services::response();
@@ -143,14 +145,29 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testProcessMethodProcessGlobalsWithExcept()
+	public function provideExcept()
+	{
+		return [
+			[
+				['admin/*'],
+			],
+			[
+				[],
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider provideExcept
+	 */
+	public function testProcessMethodProcessGlobalsWithExcept(array $except)
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
 			'globals' => [
 				'before' => [
-					'foo' => ['except' => ['admin/*']],
+					'foo' => ['except' => $except],
 					'bar'
 				],
 				'after'  => [
@@ -608,17 +625,54 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 			],
 		];
 
-		$filters = new Filters((object) $config, $this->request, $this->response);
+		$filters = new Filters((object)$config, $this->request, $this->response);
 
 		$filters = $filters->initialize('admin/foo/bar');
 
 		$filters->enableFilter('role:admin , super', 'before');
+		$filters->enableFilter('role:admin , super', 'after');
 
 		$found = $filters->getFilters();
 
 		$this->assertTrue(in_array('role', $found['before']));
 		$this->assertEquals(['admin', 'super'], $filters->getArguments('role'));
 		$this->assertEquals(['role' => ['admin', 'super']], $filters->getArguments());
+
+		$response = $filters->run('admin/foo/bar', 'before');
+		$this->assertEquals('admin;super', $response);
+
+		$response = $filters->run('admin/foo/bar', 'after');
+		$this->assertEquals('admin;super', $response->getBody());
+	}
+
+	public function testEnableFilterWithNoArguments()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config = [
+			'aliases' => ['role' => 'CodeIgniter\Filters\fixtures\Role'],
+			'globals' => [
+				'before' => [],
+				'after'  => [],
+			],
+		];
+
+		$filters = new Filters((object)$config, $this->request, $this->response);
+
+		$filters = $filters->initialize('admin/foo/bar');
+
+		$filters->enableFilter('role', 'before');
+		$filters->enableFilter('role', 'after');
+
+		$found = $filters->getFilters();
+
+		$this->assertTrue(in_array('role', $found['before']));
+
+		$response = $filters->run('admin/foo/bar', 'before');
+		$this->assertEquals('Is null', $response);
+
+		$response = $filters->run('admin/foo/bar', 'after');
+		$this->assertEquals('Is null', $response->getBody());
 	}
 
 	public function testEnableNonFilter()

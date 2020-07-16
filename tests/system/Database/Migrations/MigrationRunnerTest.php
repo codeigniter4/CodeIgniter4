@@ -37,7 +37,10 @@ class MigrationRunnerTest extends CIDatabaseTestCase
 		$db = $this->getPrivateProperty($runner, 'db');
 
 		$this->assertInstanceOf(BaseConnection::class, $db);
-		$this->assertEquals($dbConfig->tests['database'], $this->getPrivateProperty($db, 'database'));
+		$this->assertEquals(
+			($dbConfig->tests['DBDriver'] === 'SQLite3' ? WRITEPATH : '' ) . $dbConfig->tests['database'],
+			$this->getPrivateProperty($db, 'database')
+		);
 		$this->assertEquals($dbConfig->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
 	}
 

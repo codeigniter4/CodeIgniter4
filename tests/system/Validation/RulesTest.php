@@ -4,6 +4,7 @@ namespace CodeIgniter\Validation;
 
 use CodeIgniter\Test\CIDatabaseTestCase;
 use Config\Database;
+use CodeIgniter\Validation\Rules;
 
 class RulesTest extends CIDatabaseTestCase
 {
@@ -282,6 +283,66 @@ class RulesTest extends CIDatabaseTestCase
 			[
 				['foo' => 'permit_empty|required'],
 				['foo' => 0.0],
+				true,
+			],
+			[
+				['foo' => 'permit_empty|required_with[bar]'],
+				['foo' => ''],
+				true,
+			],
+			[
+				['foo' => 'permit_empty|required_with[bar]'],
+				['foo' => 0],
+				true,
+			],
+			[
+				[
+					'foo' => 'permit_empty|required_with[bar]',
+				],
+				[
+					'foo' => 0.0,
+					'bar' => 1,
+				],
+				true,
+			],
+			[
+				[
+					'foo' => 'permit_empty|required_with[bar]',
+				],
+				[
+					'foo' => '',
+					'bar' => 1,
+				],
+				false,
+			],
+			[
+				['foo' => 'permit_empty|required_without[bar]'],
+				['foo' => ''],
+				false,
+			],
+			[
+				['foo' => 'permit_empty|required_without[bar]'],
+				['foo' => 0],
+				true,
+			],
+			[
+				[
+					'foo' => 'permit_empty|required_without[bar]',
+				],
+				[
+					'foo' => 0.0,
+					'bar' => 1,
+				],
+				true,
+			],
+			[
+				[
+					'foo' => 'permit_empty|required_without[bar]',
+				],
+				[
+					'foo' => '',
+					'bar' => 1,
+				],
 				true,
 			],
 		];
@@ -605,6 +666,186 @@ class RulesTest extends CIDatabaseTestCase
 		]);
 
 		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group DatabaseLive
+	 */
+	public function testIsUniqueIgnoresParamsPlaceholders()
+	{
+		$this->hasInDatabase('user', [
+			'name'    => 'Derek',
+			'email'   => 'derek@world.co.uk',
+			'country' => 'GB',
+		]);
+
+		$db  = Database::connect();
+		$row = $db->table('user')
+				  ->limit(1)
+				  ->get()
+				  ->getRow();
+
+		$data = [
+			'id'    => $row->id,
+			'email' => 'derek@world.co.uk',
+		];
+
+		$this->validation->setRules([
+			'email' => 'is_unique[user.email,id,{id}]',
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group DatabaseLive
+	 */
+	public function testIsUniqueByManualRun()
+	{
+		$db = Database::connect();
+		$db->table('user')
+				   ->insert([
+					   'name'    => 'Developer A',
+					   'email'   => 'deva@example.com',
+					   'country' => 'Elbonia',
+				   ]);
+
+		$this->assertFalse((new Rules())->is_unique('deva@example.com', 'user.email,id,{id}', []));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group DatabaseLive
+	 */
+	public function testIsNotUniqueFalse()
+	{
+		$db = Database::connect();
+		$db->table('user')
+		   ->insert([
+			   'name'    => 'Derek Travis',
+			   'email'   => 'derek@world.com',
+			   'country' => 'Elbonia',
+		   ]);
+
+		$data = [
+			'email' => 'derek1@world.com',
+		];
+
+		$this->validation->setRules([
+			'email' => 'is_not_unique[user.email]',
+		]);
+
+		$this->assertFalse($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group DatabaseLive
+	 */
+	public function testIsNotUniqueTrue()
+	{
+		$db = Database::connect();
+		$db->table('user')
+		   ->insert([
+			   'name'    => 'Derek Travis',
+			   'email'   => 'derek@world.com',
+			   'country' => 'Elbonia',
+		   ]);
+
+		$data = [
+			'email' => 'derek@world.com',
+		];
+
+		$this->validation->setRules([
+			'email' => 'is_not_unique[user.email]',
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group DatabaseLive
+	 */
+	public function testIsNotUniqueIgnoresParams()
+	{
+		$db   = Database::connect();
+		$user = $db->table('user')
+				   ->insert([
+					   'name'    => 'Developer A',
+					   'email'   => 'deva@example.com',
+					   'country' => 'Elbonia',
+				   ]);
+		$row  = $db->table('user')
+				   ->limit(1)
+				   ->get()
+				   ->getRow();
+
+		$data = [
+			'email' => 'derek@world.co.uk',
+		];
+
+		$this->validation->setRules([
+			'email' => "is_not_unique[user.email,id,{$row->id}]",
+		]);
+
+		$this->assertFalse($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group DatabaseLive
+	 */
+	public function testIsNotUniqueIgnoresParamsPlaceholders()
+	{
+		$this->hasInDatabase('user', [
+			'name'    => 'Derek',
+			'email'   => 'derek@world.co.uk',
+			'country' => 'GB',
+		]);
+
+		$db  = Database::connect();
+		$row = $db->table('user')
+				  ->limit(1)
+				  ->get()
+				  ->getRow();
+
+		$data = [
+			'id'    => $row->id,
+			'email' => 'derek@world.co.uk',
+		];
+
+		$this->validation->setRules([
+			'email' => 'is_not_unique[user.email,id,{id}]',
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group DatabaseLive
+	 */
+	public function testIsNotUniqueByManualRun()
+	{
+		$db = Database::connect();
+		$db->table('user')
+				   ->insert([
+					   'name'    => 'Developer A',
+					   'email'   => 'deva@example.com',
+					   'country' => 'Elbonia',
+				   ]);
+
+		$this->assertTrue((new Rules())->is_not_unique('deva@example.com', 'user.email,id,{id}', []));
 	}
 
 	//--------------------------------------------------------------------

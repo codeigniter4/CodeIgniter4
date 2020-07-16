@@ -1,8 +1,11 @@
 <?php
+namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Test\CIUnitTestCase;
 
-class UserAgent_test extends \CodeIgniter\Test\CIUnitTestCase {
+class UserAgentTest extends CIUnitTestCase
+{
 
 	protected $_user_agent = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; en-us) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27';
 	protected $_mobile_ua  = 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_1 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8B117 Safari/6531.22.7';
@@ -106,4 +109,10 @@ class UserAgent_test extends \CodeIgniter\Test\CIUnitTestCase {
 		$this->assertFalse($this->agent->isMobile());
 	}
 
+	public function testEmptyUserAgentVariable()
+	{
+		unset($_SERVER['HTTP_USER_AGENT']);
+		$agent = new UserAgent();
+		$this->assertEmpty((string) $agent);
+	}
 }

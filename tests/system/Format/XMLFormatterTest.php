@@ -33,7 +33,7 @@ EOH;
 
 		$expected = <<<EOH
 <?xml version="1.0"?>
-<response><foo><0>bar</0></foo></response>
+<response><foo><item0>bar</item0></foo></response>
 
 EOH;
 
@@ -48,7 +48,7 @@ EOH;
 
 		$expected = <<<EOH
 <?xml version="1.0"?>
-<response><item0><0>foo</0></item0></response>
+<response><item0><item0>foo</item0></item0></response>
 
 EOH;
 
@@ -60,7 +60,7 @@ EOH;
 		$data     = ['Something'];
 		$expected = <<<EOH
 <?xml version="1.0"?>
-<response><0>Something</0></response>
+<response><item0>Something</item0></response>
 
 EOH;
 

@@ -213,4 +213,38 @@ class RedirectResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		Config::reset();
 	}
+
+	public function testWithCookies()
+	{
+		$_SESSION = [];
+
+		$baseResponse = service('response');
+		$baseResponse->setCookie('foo', 'bar');
+
+		$response = new RedirectResponse(new App());
+		$this->assertFalse($response->hasCookie('foo', 'bar'));
+
+		$response = $response->withCookies();
+
+		$this->assertTrue($response->hasCookie('foo', 'bar'));
+	}
+
+	public function testWithHeaders()
+	{
+		$_SESSION = [];
+
+		$baseResponse = service('response');
+		$baseResponse->setHeader('foo', 'bar');
+
+		$response = new RedirectResponse(new App());
+		$this->assertFalse($response->hasHeader('foo'));
+
+		$response = $response->withHeaders();
+
+		foreach ($baseResponse->getHeaders() as $name => $header)
+		{
+			$this->assertTrue($response->hasHeader($name));
+			$this->assertEquals($header->getValue(), $response->getHeader($name)->getValue());
+		}
+	}
 }

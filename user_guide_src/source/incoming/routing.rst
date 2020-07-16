@@ -97,7 +97,7 @@ and the “productLookup” method::
 A URL with “product” as the first segment, and a number in the second will be remapped to the “\Catalog” class
 and the “productLookupByID” method passing in the match as a variable to the method::
 
-    $routes->add('product/(:num)', 'Catalog::productLookupByID/$1';
+    $routes->add('product/(:num)', 'Catalog::productLookupByID/$1');
 
 .. important:: While the ``add()`` method is convenient, it is recommended to always use the HTTP-verb-based
     routes, described below, as it is more secure. It will also provide a slight performance increase, since
@@ -336,7 +336,7 @@ You can alter the behavior of specific routes by supplying a filter to run befor
 
     $routes->add('admin',' AdminController::index', ['filter' => 'admin-auth']);
 
-The value for the filter must match one of the aliases defined within ``app/Config/Filters.php``. You may also supply parameters to be passed to the filter's ``before()`` and ``after()`` methods::
+The value for the filter must match one of the aliases defined within ``app/Config/Filters.php``. You may also supply arguments to be passed to the filter's ``before()`` and ``after()`` methods::
 
     $routes->add('users/delete/(:segment)', 'AdminController::index', ['filter' => 'admin-auth:dual,noreturn']);
 

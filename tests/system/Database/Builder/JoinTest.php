@@ -1,6 +1,7 @@
 <?php namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
 use CodeIgniter\Test\Mock\MockConnection;
 
 class JoinTest extends \CodeIgniter\Test\CIUnitTestCase
@@ -69,4 +70,18 @@ class JoinTest extends \CodeIgniter\Test\CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testFullOuterJoin()
+	{
+		$builder = new PostgreBuilder('jobs', $this->db);
+		$builder->testMode();
+		$builder->join('users as u', 'users.id = jobs.id', 'full outer');
+
+		$expectedSQL = 'SELECT * FROM "jobs" FULL OUTER JOIN "users" as "u" ON "users"."id" = "jobs"."id"';
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
+
+	//--------------------------------------------------------------------
+
 }

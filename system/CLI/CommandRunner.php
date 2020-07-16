@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * CodeIgniter
  *
@@ -41,7 +40,6 @@
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\Controller;
-use Config\Services;
 
 /**
  * Command runner
@@ -50,20 +48,21 @@ class CommandRunner extends Controller
 {
 
 	/**
-	 * Stores the info about found Commands.
+	 * The Command Manager
 	 *
-	 * @var array
+	 * @var Commands
 	 */
-	protected $commands = [];
-
-	/**
-	 * Message logger.
-	 *
-	 * @var \CodeIgniter\Log\Logger
-	 */
-	protected $logger;
+	protected $commands;
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Constructor
+	 */
+	public function __construct()
+	{
+		$this->commands = service('commands');
+	}
 
 	/**
 	 * We map all un-routed CLI methods through this function
@@ -100,103 +99,13 @@ class CommandRunner extends Controller
 	{
 		$command = array_shift($params);
 
-		$this->createCommandList();
-
 		if (is_null($command))
 		{
 			$command = 'list';
 		}
 
-		return $this->runCommand($command, $params);
+		return service('commands')->run($command, $params);
 	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Actually runs the command.
-	 *
-	 * @param string $command
-	 * @param array  $params
-	 *
-	 * @return mixed
-	 */
-	protected function runCommand(string $command, array $params)
-	{
-		if (! isset($this->commands[$command]))
-		{
-			CLI::error(lang('CLI.commandNotFound', [$command]));
-			CLI::newLine();
-			return;
-		}
-
-		// The file would have already been loaded during the
-		// createCommandList function...
-		$className = $this->commands[$command]['class'];
-		$class     = new $className($this->logger, $this);
-
-		return $class->run($params);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Scans all Commands directories and prepares a list
-	 * of each command with it's group and file.
-	 *
-	 * @throws \ReflectionException
-	 */
-	protected function createCommandList()
-	{
-		$files = Services::locator()->listFiles('Commands/');
-
-		// If no matching command files were found, bail
-		if (empty($files))
-		{
-			// This should never happen in unit testing.
-			// if it does, we have far bigger problems!
-			// @codeCoverageIgnoreStart
-			return;
-			// @codeCoverageIgnoreEnd
-		}
-
-		// Loop over each file checking to see if a command with that
-		// alias exists in the class. If so, return it. Otherwise, try the next.
-		foreach ($files as $file)
-		{
-			$className = Services::locator()->findQualifiedNameFromPath($file);
-			if (empty($className) || ! class_exists($className))
-			{
-				continue;
-			}
-
-			$class = new \ReflectionClass($className);
-
-			if (! $class->isInstantiable() || ! $class->isSubclassOf(BaseCommand::class))
-			{
-				continue;
-			}
-
-			$class = new $className($this->logger, $this);
-
-			// Store it!
-			if ($class->group !== null)
-			{
-				$this->commands[$class->name] = [
-					'class'       => $className,
-					'file'        => $file,
-					'group'       => $class->group,
-					'description' => $class->description,
-				];
-			}
-
-			$class = null;
-			unset($class);
-		}
-
-		asort($this->commands);
-	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Allows access to the current commands that have been found.
@@ -205,8 +114,6 @@ class CommandRunner extends Controller
 	 */
 	public function getCommands(): array
 	{
-		return $this->commands;
+		return $this->commands->getCommands();
 	}
-
-	//--------------------------------------------------------------------
 }

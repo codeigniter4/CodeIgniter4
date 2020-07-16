@@ -47,6 +47,22 @@ class HoneypotTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testAttachHoneypotAndContainer()
+	{
+		$this->response->setBody('<form></form>');
+		$this->honeypot->attachHoneypot($this->response);
+		$expected = '<form><div style="display:none"><label>Fill This Field</label><input type="text" name="honeypot" value=""/></div></form>';
+		$this->assertEquals($expected, $this->response->getBody());
+
+		$this->config->container = '<div class="hidden">{template}</div>';
+		$this->response->setBody('<form></form>');
+		$this->honeypot->attachHoneypot($this->response);
+		$expected = '<form><div class="hidden"><label>Fill This Field</label><input type="text" name="honeypot" value=""/></div></form>';
+		$this->assertEquals($expected, $this->response->getBody());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testHasntContent()
 	{
 		unset($_POST[$this->config->name]);

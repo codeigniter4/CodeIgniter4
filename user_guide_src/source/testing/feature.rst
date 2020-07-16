@@ -14,8 +14,9 @@ and more.
 The Test Class
 ==============
 
-Feature testing requires that all of your test classes extend the ``CodeIgniter\Test\FeatureTestCase`` class. Since this
-extends `CIDatabaseTestCase <database.html>`_ you must always ensure that ``parent::setUp()`` and ``parent::tearDown()``
+Feature testing requires that all of your test classes extend the ``CodeIgniter\Test\FeatureTestCase``
+class or use the ``CodeIgniter\Test\FeatureTestTrait``. Since these testing tools extend
+`CIDatabaseTestCase <database.html>`_ you must always ensure that ``parent::setUp()`` and ``parent::tearDown()``
 are called before you take your actions.
 ::
 
@@ -25,12 +26,12 @@ are called before you take your actions.
 
     class TestFoo extends FeatureTestCase
     {
-        public function setUp()
+        public function setUp(): void
         {
             parent::setUp();
         }
 
-        public function tearDown()
+        public function tearDown(): void
         {
             parent::tearDown();
         }
@@ -87,8 +88,8 @@ Setting Session Values
 ----------------------
 
 You can set custom session values to use during a single test with the ``withSession()`` method. This takes an array
-of key/value pairs that should exist within the $_SESSION variable when this request is made. This is handy for testing
-authentication and more.
+of key/value pairs that should exist within the $_SESSION variable when this request is made, or ``null` to indicate
+that the current values of ``$_SESSION`` should be used. This is handy for testing authentication and more.
 ::
 
     $values = [
@@ -97,6 +98,12 @@ authentication and more.
 
     $result = $this->withSession($values)
         ->get('admin');
+    
+    // Or...
+    
+    $_SESSION['logged_in'] = 123;
+    
+    $result = $this->withSession()->get('admin');
 
 Bypassing Events
 ----------------
@@ -154,6 +161,14 @@ Asserts that the Response is an instance of RedirectResponse.
 ::
 
     $this->assertRedirect();
+
+**getRedirectUrl()**
+
+Returns the URL set for a RedirectResponse, or null for failure.
+::
+
+    $url = $result->getRedirectUrl();
+    $this->assertEquals(site_url('foo/bar'), $url);
 
 **assertStatus(int $code)**
 

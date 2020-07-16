@@ -192,7 +192,7 @@ class ResourcePresenter extends Controller
 		{
 			if (class_exists($this->modelName))
 			{
-				$this->model = new $this->modelName;
+				$this->model = model($this->modelName);
 			}
 		}
 

@@ -148,7 +148,9 @@
       clear: left;
       display: inline-block;
       float: left;
-      margin: 6px 3px 6px 0; }
+      margin: 6px 3px 6px 0; 
+      width: 16px !important;
+    }
     #debug-bar .ci-label .badge {
       border-radius: 12px;
       -moz-border-radius: 12px;
@@ -593,3 +595,15 @@
 
 .debug-bar-noverflow {
   overflow: hidden; }
+
+#debug-bar td[data-debugbar-route] form {
+  display: none; }
+#debug-bar td[data-debugbar-route]:hover form {
+  display: block; }
+#debug-bar td[data-debugbar-route]:hover > div {
+  display: none; }
+#debug-bar td[data-debugbar-route] input[type=text] {
+  padding: 2px; }
+#toolbarContainer.dark td[data-debugbar-route] input[type=text] {
+  background: #000;
+  color: #fff; }

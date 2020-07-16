@@ -84,22 +84,38 @@ class FileRules
 	 */
 	public function uploaded(string $blank = null, string $name): bool
 	{
-		$file = $this->request->getFile($name);
-
-		if (is_null($file))
+		if (! ($files = $this->request->getFileMultiple($name)))
 		{
-			return false;
+			$files = [$this->request->getFile($name)];
 		}
 
-		if (ENVIRONMENT === 'testing')
+		foreach ($files as $file)
 		{
-			return $file->getError() === 0;
+			if (is_null($file))
+			{
+				return false;
+			}
+
+			if (ENVIRONMENT === 'testing')
+			{
+				if ($file->getError() !== 0)
+				{
+					return false;
+				}
+			}
+			else
+			{
+				// Note: cannot unit test this; no way to over-ride ENVIRONMENT?
+				// @codeCoverageIgnoreStart
+				if (! $file->isValid())
+				{
+					return false;
+				}
+				// @codeCoverageIgnoreEnd
+			}
 		}
 
-		// Note: cannot unit test this; no way to over-ride ENVIRONMENT?
-		// @codeCoverageIgnoreStart
-		return $file->isValid();
-		// @codeCoverageIgnoreEnd
+		return true;
 	}
 
 	//--------------------------------------------------------------------
@@ -134,6 +150,11 @@ class FileRules
 			if ($file->getError() === UPLOAD_ERR_NO_FILE)
 			{
 				return true;
+			}
+
+			if ($file->getError() === UPLOAD_ERR_INI_SIZE)
+			{
+				return false;
 			}
 
 			if ($file->getSize() / 1024 > $params[0])

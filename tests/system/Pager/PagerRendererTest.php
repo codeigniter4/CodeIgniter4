@@ -461,7 +461,7 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 			'uri'         => $this->uri,
 			'pageCount'   => 5,
 			'currentPage' => 1,
-			'total'       => 100
+			'total'       => 100,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -478,7 +478,7 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 			'uri'         => $this->uri,
 			'pageCount'   => 5,
 			'currentPage' => 5,
-			'total'       => 100
+			'total'       => 100,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -497,7 +497,7 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 			'uri'         => $uri,
 			'pageCount'   => 10,
 			'currentPage' => 3,
-			'total'       => 100
+			'total'       => 100,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -505,6 +505,24 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNotNull($pager->getPreviousPage());
 		$this->assertTrue($pager->hasPreviousPage());
 		$this->assertEquals('http://example.com/foo?page=2', $pager->getPreviousPage());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetPreviousPageWithSegmentHigherThanZero()
+	{
+		$uri = $this->uri;
+
+		$details = [
+			'uri'         => $uri,
+			'pageCount'   => 10,
+			'currentPage' => 3,
+			'total'       => 100,
+			'segment'     => 2,
+		];
+
+		$pager = new PagerRenderer($details);
+		$this->assertEquals('http://example.com/foo/2', $pager->getPreviousPage());
 	}
 
 	//--------------------------------------------------------------------
@@ -517,7 +535,7 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 			'uri'         => $uri,
 			'pageCount'   => 10,
 			'currentPage' => 3,
-			'total'       => 100
+			'total'       => 100,
 		];
 
 		$pager = new PagerRenderer($details);
@@ -525,5 +543,21 @@ class PagerRendererTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertNotNull($pager->getNextPage());
 		$this->assertTrue($pager->hasNextPage());
 		$this->assertEquals('http://example.com/foo?page=4', $pager->getNextPage());
+	}
+
+	public function testGetNextPageWithSegmentHigherThanZero()
+	{
+		$uri = $this->uri;
+
+		$details = [
+			'uri'         => $uri,
+			'pageCount'   => 10,
+			'currentPage' => 3,
+			'total'       => 100,
+			'segment'     => 2,
+		];
+
+		$pager = new PagerRenderer($details);
+		$this->assertEquals('http://example.com/foo/4', $pager->getNextPage());
 	}
 }

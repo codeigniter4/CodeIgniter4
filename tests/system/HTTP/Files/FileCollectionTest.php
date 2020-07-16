@@ -740,32 +740,27 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 			'my-form' => [
 				'name'     => [
 					'details' => [
-						'avatars' =>
-							'fileA.txt',
+						'avatars' => 'fileA.txt',
 					],
 				],
 				'type'     => [
 					'details' => [
-						'avatars' =>
-							'text/plain',
+						'avatars' => 'text/plain',
 					],
 				],
 				'size'     => [
 					'details' => [
-						'avatars' =>
-							243,
+						'avatars' => 243,
 					],
 				],
 				'tmp_name' => [
 					'details' => [
-						'avatars' =>
-							'/tmp/fileA.txt',
+						'avatars' => '/tmp/fileA.txt',
 					],
 				],
 				'error'    => [
 					'details' => [
-						'avatars' =>
-							0,
+						'avatars' => 0,
 					],
 				],
 			],
@@ -830,14 +825,10 @@ class FileCollectionTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_FILES = [
 			'userfile' => [
-				'name'     =>
-					'fileA.txt',
-				'type'     =>
-					'text/csv',
-				'size'     =>
-					'248',
-				'tmp_name' =>
-					'/tmp/fileA.txt',
+				'name'     => 'fileA.txt',
+				'type'     => 'text/csv',
+				'size'     => '248',
+				'tmp_name' => '/tmp/fileA.txt',
 				'error'    => 0,
 			],
 		];

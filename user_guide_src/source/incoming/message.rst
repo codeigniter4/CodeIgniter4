@@ -69,7 +69,7 @@ Class Reference
         This is used by the :doc:`IncomingRequest Class </incoming/incomingrequest>` to make
         the current request's headers available.
 
-                The headers are any SERVER data that starts with ``HTTP_``, like ``HTTP_HOST``. Each message
+        The headers are any SERVER data that starts with ``HTTP_``, like ``HTTP_HOST``. Each message
         is converted from it's standard uppercase and underscore format to a ucwords and dash format.
         The preceding ``HTTP_`` is removed from the string. So ``HTTP_ACCEPT_LANGUAGE`` becomes
         ``Accept-Language``.

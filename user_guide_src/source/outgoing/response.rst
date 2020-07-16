@@ -95,14 +95,14 @@ Example::
 	return $response->download($name, $data);
 
 If you want to download an existing file from your server you'll need to
-do the following::
+pass ``null`` explicitly for the second parameter::
 
 	// Contents of photo.jpg will be automatically read
-	return $response->download('/path/to/photo.jpg', NULL);
+	return $response->download('/path/to/photo.jpg', null);
 
 Use the optional ``setFileName()`` method to change the filename as it is sent to the client's browser::
 
-	return $response->download('awkwardEncryptedFileName.fakeExt')->setFileName('expenses.csv');
+	return $response->download('awkwardEncryptedFileName.fakeExt', null)->setFileName('expenses.csv');
 
 .. note:: The response object MUST be returned for the download to be sent to the client. This allows the response
     to be passed through all **after** filters before being sent to the client.
@@ -525,3 +525,11 @@ The methods provided by the parent class that are available are:
 		Example::
 
 			$cookie = $response->getCookie($name);
+
+    .. php:method:: getCookies()
+
+        :rtype array
+
+        Returns all cookies currently set within the Response instance.
+        These are any cookies that you have specifically specified to set during the current
+        request only.
