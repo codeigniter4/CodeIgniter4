@@ -603,7 +603,7 @@ class URI
 
 		if ($path !== '')
 		{
-			$uri .= substr($uri, -1, 1) !== '/' ? '/' . ltrim($path, '/') : $path;
+			$uri .= substr($uri, -1, 1) !== '/' ? '/' . ltrim($path, '/') : ltrim($path, '/');
 		}
 
 		if ($query)

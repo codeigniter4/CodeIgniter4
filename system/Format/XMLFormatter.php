@@ -40,6 +40,7 @@
 namespace CodeIgniter\Format;
 
 use CodeIgniter\Format\Exceptions\FormatException;
+use Config\Format;
 
 /**
  * XML data formatter
@@ -56,6 +57,8 @@ class XMLFormatter implements FormatterInterface
 	 */
 	public function format($data)
 	{
+		$config  = new Format();
+		
 		// SimpleXML is installed but default
 		// but best to check, and then provide a fallback.
 		if (! extension_loaded('simplexml'))
@@ -66,7 +69,8 @@ class XMLFormatter implements FormatterInterface
 			// @codeCoverageIgnoreEnd
 		}
 
-		$output = new \SimpleXMLElement('<?xml version="1.0"?><response></response>');
+		$options = $config->formatterOptions['application/xml'] ?? 0;
+		$output = new \SimpleXMLElement('<?xml version="1.0"?><response></response>', $options);
 
 		$this->arrayToXML((array)$data, $output);
 

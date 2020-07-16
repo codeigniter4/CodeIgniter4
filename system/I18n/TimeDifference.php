@@ -52,7 +52,7 @@ class TimeDifference
 	/**
 	 * The timestamp of the "current" time.
 	 *
-	 * @var integer
+	 * @var \IntlCalendar
 	 */
 	protected $currentTime;
 
@@ -291,28 +291,28 @@ class TimeDifference
 			$phrase = lang('Time.years', [abs($years)], $locale);
 			$before = $years < 0;
 		}
-		else if ($months !== 0)
+		elseif ($months !== 0)
 		{
 			$phrase = lang('Time.months', [abs($months)], $locale);
 			$before = $months < 0;
 		}
-		else if ($days !== 0 && (abs($days) >= 7))
+		elseif ($days !== 0 && (abs($days) >= 7))
 		{
 			$weeks  = ceil($days / 7);
 			$phrase = lang('Time.weeks', [abs($weeks)], $locale);
 			$before = $days < 0;
 		}
-		else if ($days !== 0)
+		elseif ($days !== 0)
 		{
 			$phrase = lang('Time.days', [abs($days)], $locale);
 			$before = $days < 0;
 		}
-		else if ($hours !== 0)
+		elseif ($hours !== 0)
 		{
 			$phrase = lang('Time.hours', [abs($hours)], $locale);
 			$before = $hours < 0;
 		}
-		else if ($minutes !== 0)
+		elseif ($minutes !== 0)
 		{
 			$phrase = lang('Time.minutes', [abs($minutes)], $locale);
 			$before = $minutes < 0;
@@ -330,7 +330,7 @@ class TimeDifference
 	/**
 	 * Allow property-like access to our calculated values.
 	 *
-	 * @param $name
+	 * @param string $name
 	 *
 	 * @return mixed
 	 */
@@ -350,7 +350,7 @@ class TimeDifference
 	/**
 	 * Allow property-like checking for our calculated values.
 	 *
-	 * @param $name
+	 * @param string $name
 	 *
 	 * @return boolean
 	 */
