@@ -148,7 +148,9 @@
       clear: left;
       display: inline-block;
       float: left;
-      margin: 6px 3px 6px 0; }
+      margin: 6px 3px 6px 0; 
+      width: 16px !important;
+    }
     #debug-bar .ci-label .badge {
       border-radius: 12px;
       -moz-border-radius: 12px;
