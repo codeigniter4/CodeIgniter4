@@ -1,0 +1,52 @@
+# When changes are pushed to the develop branch,
+# build the current version of the docs and
+# deploy to gh-pages so that our development
+# docs are always up to date.
+name: "Update development docs"
+
+on:
+  push:
+    branches:
+      - 'develop'
+    paths:
+      - 'user_guide_src/**'
+
+jobs:
+  build:
+    if: (github.repository == 'codeigniter4/CodeIgniter4')
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    # Build the current docs
+    - uses: ammaraskar/sphinx-action@master
+      with:
+        docs-folder: "user_guide_src/"
+
+    # Create an artifact of the html output
+    - uses: actions/upload-artifact@v2
+      with:
+        name: HTML Documentation
+        path: user_guide_src/build/html/
+
+    # Commit changes to the gh-pages branch
+    - name: Commit documentation changes
+      run: |
+        git clone https://github.com/codeigniter4/CodeIgniter4.git --branch gh-pages --single-branch gh-pages
+        cp -r user_guide_src/build/html/* gh-pages/
+        cd gh-pages
+        git config --local user.email "action@github.com"
+        git config --local user.name "${GITHUB_ACTOR}"
+        git add .
+        git commit -m "Update documentation" -a || true
+        # The above command will fail if no changes were present, so we ignore
+        # that.
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        branch: gh-pages
+        directory: gh-pages
+        github_token: ${{ secrets.ACCESS_TOKEN }}

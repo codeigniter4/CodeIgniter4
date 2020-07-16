@@ -220,6 +220,12 @@ and add the next piece of code.
 
     <?php endif ?>
 
+
+.. note:: We are again using using **esc()** to help prevent XSS attacks.
+    But this time we also passed "url" as a second parameter. That's because
+    attack patterns are different depending on the context in which the output
+    is used. You can read more about it :doc:`here </general/common_functions>`.
+
 Here, each news item is looped and displayed to the user. You can see we
 wrote our template in PHP mixed with HTML. If you prefer to use a template
 language, you can use CodeIgniter's :doc:`View
@@ -260,11 +266,6 @@ The only thing left to do is create the corresponding view at
 
     <h2><?= esc($news['title']); ?></h2>
     <?= esc($news['body']); ?>
-
-.. note:: We are again using using **esc()** to help prevent XSS attacks.
-    But this time we also passed "url" as a second parameter. That's because
-    attack patterns are different depending on the context in which the output
-    is used. You can read more about it :doc:`here </general/common_functions>`.
 
 Routing
 -------------------------------------------------------

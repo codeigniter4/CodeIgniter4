@@ -65,7 +65,7 @@ The following functions are available:
         img($imageProperties);
         // <img src="http://site.com/index.php/images/picture.jpg" alt="Me, demonstrating how to eat 4 slices of pizza at one time" class="post_images" width="200" height="200" title="That was quite a night" rel="lightbox" />
 
-.. php:function:: link_tag([$href = ''[, $rel = 'stylesheet'[, $type = 'text/css'[, $title = ''[, $media = ''[, $indexPage = false]]]]]])
+.. php:function:: link_tag([$href = ''[, $rel = 'stylesheet'[, $type = 'text/css'[, $title = ''[, $media = ''[, $indexPage = false[, $hreflang = '']]]]]]])
 
     :param  string  $href:      The source of the link file
     :param  string  $rel:       Relation type
@@ -73,6 +73,7 @@ The following functions are available:
     :param  string  $title:     Link title
     :param  string  $media:     Media type
     :param  bool    $indexPage: Whether to treat $src as a routed URI string
+    :param  string  $hreflang:  Hreflang type
     :returns:   HTML link tag
     :rtype: string
 

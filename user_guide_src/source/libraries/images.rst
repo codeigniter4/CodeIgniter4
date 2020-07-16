@@ -98,9 +98,18 @@ only applies to JPEG images and will be ignored otherwise::
 
 	$image = \Config\Services::image()
 		->withFile('/path/to/image/mypic.jpg')
+		// processing methods
 		->save('/path/to/image/my_low_quality_pic.jpg', 10);
 
 .. note:: Higher quality will result in larger file sizes. See also https://www.php.net/manual/en/function.imagejpeg.php
+
+If you are only interested in changing the image quality without doing any processing.
+You will need to include the image resource or you will end up with an exact copy::
+
+	$image = \Config\Services::image()
+		->withFile('/path/to/image/mypic.jpg')
+		->withResource()
+		->save('/path/to/image/my_low_quality_pic.jpg', 10);
 
 Processing Methods
 ==================
@@ -324,4 +333,3 @@ The possible options that are recognized are as follows:
 
 .. note:: The ImageMagick driver does not recognize full server path for fontPath. Instead, simply provide the
 		name of one of the installed system fonts that you wish to use, i.e. Calibri.
-

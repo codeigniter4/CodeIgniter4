@@ -78,17 +78,7 @@ class DotEnv
 	{
 		$vars = $this->parse();
 
-		if ($vars === null)
-		{
-			return false;
-		}
-
-		foreach ($vars as $name => $value)
-		{
-			$this->setVariable($name, $value);
-		}
-
-		return true; // for success
+		return ($vars === null ? false : true);
 	}
 
 	//--------------------------------------------------------------------
@@ -129,6 +119,7 @@ class DotEnv
 			{
 				list($name, $value) = $this->normaliseVariable($line);
 				$vars[$name]        = $value;
+				$this->setVariable($name, $value);
 			}
 		}
 
@@ -190,6 +181,12 @@ class DotEnv
 		$value = $this->sanitizeValue($value);
 
 		$value = $this->resolveNestedVariables($value);
+
+		// Handle hex2bin prefix
+              if ($name === 'encryption.key' && strpos($value, 'hex2bin:') === 0)
+		{
+			$value = hex2bin(substr($value, 8));
+		}
 
 		return [
 			$name,

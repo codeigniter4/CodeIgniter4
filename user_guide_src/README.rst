@@ -28,9 +28,13 @@ or ``python3``.
 	python3 --version
 	Python 3.6.9
 
+	# For Windows using the Python Launcher
+	py -3 --version
+	Python 3.8.1
+
 If you're not on 3.5+, go ahead and install the latest 3.x version from
 `Python.org <https://www.python.org/downloads/>`_. Linux users should use their
-operative systems built in Package Managers to update.
+operating systems' built-in Package Managers to update.
 
 pip
 ---
@@ -50,14 +54,18 @@ Please take note that it should say ``python 3.x`` at the very end.
 	pip3 --version
 	pip 9.0.1 from /usr/lib/python3/dist-packages (python 3.6)
 
+	# For Windows using the Python Launcher
+	py -3 -m pip --version
+	pip 20.0.2 from C:\Users\<username>\AppData\Local\Programs\Python\Python38\lib\site-packages\pip (python 3.8)
+
 Linux
 ^^^^^
 
 `Installing pip/setuptools/wheel with Linux Package Managers
 <https://packaging.python.org/guides/installing-using-linux-tools/>`_
 
-Other
-^^^^^
+Others
+^^^^^^
 
 pip is already installed if you are using Python 3.5+ downloaded from
 `Python.org <https://www.python.org/downloads/>`_.
@@ -74,6 +82,9 @@ window as Python won't find all applications we just installed othervise.
 	pip install -r user_guide_src/requirements.txt
 
 	pip3 install -r user_guide_src/requirements.txt
+
+	# For Windows using the Python Launcher
+	py -3 -m pip install -r user_guide_src/requirements.txt
 
 It's time to wrap things up and generate the documentation.
 

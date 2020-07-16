@@ -51,7 +51,7 @@ class Popcorn extends Controller
 
 	public function canyon()
 	{
-		echo 'Hello-o-o';
+		echo 'Hello-o-o ' . $this->request->getGet('foo');
 	}
 
 	public function cat()

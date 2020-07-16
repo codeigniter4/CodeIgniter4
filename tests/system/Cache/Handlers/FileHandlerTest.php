@@ -89,12 +89,12 @@ class FileHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testGet()
 	{
-		$this->fileHandler->save(self::$key1, 'value', 1);
+		$this->fileHandler->save(self::$key1, 'value', 2);
 
 		$this->assertSame('value', $this->fileHandler->get(self::$key1));
 		$this->assertNull($this->fileHandler->get(self::$dummy));
 
-		\CodeIgniter\CLI\CLI::wait(2);
+		\CodeIgniter\CLI\CLI::wait(3);
 		$this->assertNull($this->fileHandler->get(self::$key1));
 	}
 

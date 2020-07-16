@@ -94,7 +94,7 @@ class CLI
 		'black'        => '0;30',
 		'dark_gray'    => '1;30',
 		'blue'         => '0;34',
-		'dark_blue'    => '1;34',
+		'dark_blue'    => '0;34',
 		'light_blue'   => '1;34',
 		'green'        => '0;32',
 		'light_green'  => '1;32',
@@ -104,8 +104,8 @@ class CLI
 		'light_red'    => '1;31',
 		'purple'       => '0;35',
 		'light_purple' => '1;35',
-		'light_yellow' => '0;33',
-		'yellow'       => '1;33',
+		'yellow'       => '0;33',
+		'light_yellow' => '1;33',
 		'light_gray'   => '0;37',
 		'white'        => '1;37',
 	];
@@ -147,6 +147,27 @@ class CLI
 	 */
 	protected static $lastWrite;
 
+	/**
+	 * Height of the CLI window
+	 *
+	 * @var integer
+	 */
+	protected static $height;
+
+	/**
+	 * Width of the CLI window
+	 *
+	 * @var integer
+	 */
+	protected static $width;
+
+	/**
+	 * Whether the current stream supports colored output.
+	 *
+	 * @var boolean
+	 */
+	protected static $isColored = false;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -154,18 +175,32 @@ class CLI
 	 */
 	public static function init()
 	{
-		// Readline is an extension for PHP that makes interactivity with PHP
-		// much more bash-like.
-		// http://www.php.net/manual/en/readline.installation.php
-		static::$readline_support = extension_loaded('readline');
+		if (is_cli())
+		{
+			// Readline is an extension for PHP that makes interactivity with PHP
+			// much more bash-like.
+			// http://www.php.net/manual/en/readline.installation.php
+			static::$readline_support = extension_loaded('readline');
 
-		// clear segments & options to keep testing clean
-		static::$segments = [];
-		static::$options  = [];
+			// clear segments & options to keep testing clean
+			static::$segments = [];
+			static::$options  = [];
 
-		static::parseCommandLine();
+			// Check our stream resource for color support
+			static::$isColored = static::hasColorSupport(STDOUT);
 
-		static::$initialized = true;
+			static::parseCommandLine();
+
+			static::$initialized = true;
+		}
+		else
+		{
+			// If the command is being called from a controller
+			// we need to define STDOUT ourselves
+			// @codeCoverageIgnoreStart
+			define('STDOUT', 'php://output');
+			// @codeCoverageIgnoreEnd
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -216,7 +251,8 @@ class CLI
 	 * @param string|array $options    String to a default value, array to a list of options (the first option will be the default value)
 	 * @param string       $validation Validation rules
 	 *
-	 * @return             string                   The user input
+	 * @return string The user input
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public static function prompt(string $field, $options = null, string $validation = null): string
@@ -251,7 +287,7 @@ class CLI
 			$default = $options[0];
 		}
 
-		fwrite(STDOUT, $field . $extra_output . ': ');
+		static::fwrite(STDOUT, $field . $extra_output . ': ');
 
 		// Read the input from keyboard.
 		$input = trim(static::input()) ?: $default;
@@ -276,13 +312,16 @@ class CLI
 	 * @param string $value Input value
 	 * @param string $rules Validation rules
 	 *
-	 * @return             boolean
+	 * @return boolean
+	 *
 	 * @codeCoverageIgnore
 	 */
 	protected static function validate(string $field, string $value, string $rules): bool
 	{
+		$label      = $field;
+		$field      = 'temp';
 		$validation = \Config\Services::validation(null, false);
-		$validation->setRule($field, null, $rules);
+		$validation->setRule($field, $label, $rules);
 		$validation->run([$field => $value]);
 
 		if ($validation->hasError($field))
@@ -314,7 +353,7 @@ class CLI
 
 		static::$lastWrite = null;
 
-		fwrite(STDOUT, $text);
+		static::fwrite(STDOUT, $text);
 	}
 
 	/**
@@ -337,7 +376,7 @@ class CLI
 			static::$lastWrite = 'write';
 		}
 
-		fwrite(STDOUT, $text . PHP_EOL);
+		static::fwrite(STDOUT, $text . PHP_EOL);
 	}
 
 	//--------------------------------------------------------------------
@@ -351,12 +390,19 @@ class CLI
 	 */
 	public static function error(string $text, string $foreground = 'light_red', string $background = null)
 	{
+		// Check color support for STDERR
+		$stdout            = static::$isColored;
+		static::$isColored = static::hasColorSupport(STDERR);
+
 		if ($foreground || $background)
 		{
 			$text = static::color($text, $foreground, $background);
 		}
 
-		fwrite(STDERR, $text . PHP_EOL);
+		static::fwrite(STDERR, $text . PHP_EOL);
+
+		// return STDOUT color support
+		static::$isColored = $stdout;
 	}
 
 	//--------------------------------------------------------------------
@@ -388,7 +434,7 @@ class CLI
 
 			while ($time > 0)
 			{
-				fwrite(STDOUT, $time . '... ');
+				static::fwrite(STDOUT, $time . '... ');
 				sleep(1);
 				$time --;
 			}
@@ -446,18 +492,17 @@ class CLI
 	/**
 	 * Clears the screen of output
 	 *
-	 * @return             void
+	 * @return void
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public static function clearScreen()
 	{
-		static::isWindows()
-
-				// Windows is a bit crap at this, but their terminal is tiny so shove this in
-						? static::newLine(40)
-
-				// Anything with a flair of Unix will handle these magic characters
-						: fwrite(STDOUT, chr(27) . '[H' . chr(27) . '[2J');
+		// Unix systems, and Windows with VT100 Terminal support (i.e. Win10)
+		// can handle CSI sequences. For lower than Win10 we just shove in 40 new lines.
+		static::isWindows() && ! static::streamSupports('sapi_windows_vt100_support', STDOUT)
+			? static::newLine(40)
+			: static::fwrite(STDOUT, "\033[H\033[2J");
 	}
 
 	//--------------------------------------------------------------------
@@ -475,11 +520,9 @@ class CLI
 	 */
 	public static function color(string $text, string $foreground, string $background = null, string $format = null): string
 	{
-		if (static::isWindows() && ! isset($_SERVER['ANSICON']))
+		if (! static::$isColored)
 		{
-			// @codeCoverageIgnoreStart
 			return $text;
-			// @codeCoverageIgnoreEnd
 		}
 
 		if (! array_key_exists($foreground, static::$foreground_colors))
@@ -504,7 +547,37 @@ class CLI
 			$string .= "\033[4m";
 		}
 
-		return $string . ($text . "\033[0m");
+		// Detect if color method was already in use with this text
+		if (strpos($text, "\033[0m") !== false)
+		{
+			// Split the text into parts so that we can see
+			// if any part missing the color definition
+			$chunks = mb_split("\\033\[0m", $text);
+			// Reset text
+			$text = '';
+
+			foreach ($chunks as $chunk)
+			{
+				if ($chunk === '')
+				{
+					continue;
+				}
+
+				// If chunk doesn't have colors defined we need to add them
+				if (strpos($chunk, "\033[") === false)
+				{
+					$chunk = static::color($chunk, $foreground, $background, $format);
+					// Add color reset before chunk and clear end of the string
+					$text .= rtrim("\033[0m" . $chunk, "\033[0m");
+				}
+				else
+				{
+					$text .= $chunk;
+				}
+			}
+		}
+
+		return $string . $text . "\033[0m";
 	}
 
 	//--------------------------------------------------------------------
@@ -523,6 +596,7 @@ class CLI
 		{
 			return 0;
 		}
+
 		foreach (static::$foreground_colors as $color)
 		{
 			$string = strtr($string, ["\033[" . $color . 'm' => '']);
@@ -541,9 +615,74 @@ class CLI
 	//--------------------------------------------------------------------
 
 	/**
+	 * Checks whether the current stream resource supports or
+	 * refers to a valid terminal type device.
+	 *
+	 * @param string   $function
+	 * @param resource $resource
+	 *
+	 * @return boolean
+	 */
+	public static function streamSupports(string $function, $resource): bool
+	{
+		if (ENVIRONMENT === 'testing')
+		{
+			// In the current setup of the tests we cannot fully check
+			// if the stream supports the function since we are using
+			// filtered streams.
+			return function_exists($function);
+		}
+
+		// @codeCoverageIgnoreStart
+		return function_exists($function) && @$function($resource);
+		// @codeCoverageIgnoreEnd
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns true if the stream resource supports colors.
+	 *
+	 * This is tricky on Windows, because Cygwin, Msys2 etc. emulate pseudo
+	 * terminals via named pipes, so we can only check the environment.
+	 *
+	 * Reference: https://github.com/composer/xdebug-handler/blob/master/src/Process.php
+	 *
+	 * @param resource $resource
+	 *
+	 * @return boolean
+	 */
+	public static function hasColorSupport($resource): bool
+	{
+		// Follow https://no-color.org/
+		if (isset($_SERVER['NO_COLOR']) || getenv('NO_COLOR') !== false)
+		{
+			return false;
+		}
+
+		if (getenv('TERM_PROGRAM') === 'Hyper')
+		{
+			return true;
+		}
+
+		if (static::isWindows())
+		{
+			// @codeCoverageIgnoreStart
+			return static::streamSupports('sapi_windows_vt100_support', $resource)
+				|| isset($_SERVER['ANSICON'])
+				|| getenv('ANSICON') !== false
+				|| getenv('ConEmuANSI') === 'ON'
+				|| getenv('TERM') === 'xterm';
+			// @codeCoverageIgnoreEnd
+		}
+
+		return static::streamSupports('stream_isatty', $resource);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Attempts to determine the width of the viewable CLI window.
-	 * This only works on *nix-based systems, so return a sane default
-	 * for Windows environments.
 	 *
 	 * @param integer $default
 	 *
@@ -551,22 +690,18 @@ class CLI
 	 */
 	public static function getWidth(int $default = 80): int
 	{
-		if (static::isWindows() || (int) shell_exec('tput cols') === 0)
+		if (\is_null(static::$width))
 		{
-			// @codeCoverageIgnoreStart
-			return $default;
-			// @codeCoverageIgnoreEnd
+			static::generateDimensions();
 		}
 
-		return (int) shell_exec('tput cols');
+		return static::$width ?: $default;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
 	 * Attempts to determine the height of the viewable CLI window.
-	 * This only works on *nix-based systems, so return a sane default
-	 * for Windows environments.
 	 *
 	 * @param integer $default
 	 *
@@ -574,14 +709,67 @@ class CLI
 	 */
 	public static function getHeight(int $default = 32): int
 	{
-		if (static::isWindows())
+		if (\is_null(static::$height))
 		{
-			// @codeCoverageIgnoreStart
-			return $default;
-			// @codeCoverageIgnoreEnd
+			static::generateDimensions();
 		}
 
-		return (int) shell_exec('tput lines');
+		return static::$height ?: $default;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Populates the CLI's dimensions.
+	 *
+	 * @return void
+	 */
+	public static function generateDimensions()
+	{
+		if (static::isWindows())
+		{
+			// Shells such as `Cygwin` and `Git bash` returns incorrect values
+			// when executing `mode CON`, so we use `tput` instead
+			// @codeCoverageIgnoreStart
+			if (($shell = getenv('SHELL')) && preg_match('/(?:bash|zsh)(?:\.exe)?$/', $shell) || getenv('TERM'))
+			{
+				static::$height = (int) exec('tput lines');
+				static::$width  = (int) exec('tput cols');
+			}
+			else
+			{
+				$return = -1;
+				$output = [];
+				exec('mode CON', $output, $return);
+
+				if ($return === 0 && $output)
+				{
+					// Look for the next lines ending in ": <number>"
+					// Searching for "Columns:" or "Lines:" will fail on non-English locales
+					if (preg_match('/:\s*(\d+)\n[^:]+:\s*(\d+)\n/', implode("\n", $output), $matches))
+					{
+						static::$height = (int) $matches[1];
+						static::$width  = (int) $matches[2];
+					}
+				}
+			}
+			// @codeCoverageIgnoreEnd
+		}
+		else
+		{
+			if (($size = exec('stty size')) && preg_match('/(\d+)\s+(\d+)/', $size, $matches))
+			{
+				static::$height = (int) $matches[1];
+				static::$width  = (int) $matches[2];
+			}
+			else
+			{
+				// @codeCoverageIgnoreStart
+				static::$height = (int) exec('tput lines');
+				static::$width  = (int) exec('tput cols');
+				// @codeCoverageIgnoreEnd
+			}
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -600,7 +788,7 @@ class CLI
 		// restore cursor position when progress is continuing.
 		if ($inProgress !== false && $inProgress <= $thisStep)
 		{
-			fwrite(STDOUT, "\033[1A");
+			static::fwrite(STDOUT, "\033[1A");
 		}
 		$inProgress = $thisStep;
 
@@ -614,13 +802,13 @@ class CLI
 			$step    = (int) round($percent / 10);
 
 			// Write the progress bar
-			fwrite(STDOUT, "[\033[32m" . str_repeat('#', $step) . str_repeat('.', 10 - $step) . "\033[0m]");
+			static::fwrite(STDOUT, "[\033[32m" . str_repeat('#', $step) . str_repeat('.', 10 - $step) . "\033[0m]");
 			// Textual representation...
-			fwrite(STDOUT, sprintf(' %3d%% Complete', $percent) . PHP_EOL);
+			static::fwrite(STDOUT, sprintf(' %3d%% Complete', $percent) . PHP_EOL);
 		}
 		else
 		{
-			fwrite(STDOUT, "\007");
+			static::fwrite(STDOUT, "\007");
 		}
 	}
 
@@ -660,7 +848,7 @@ class CLI
 
 		$max = $max - $pad_left;
 
-		$lines = wordwrap($string, $max);
+		$lines = wordwrap($string, $max, PHP_EOL);
 
 		if ($pad_left > 0)
 		{
@@ -705,7 +893,7 @@ class CLI
 		{
 			// If there's no '-' at the beginning of the argument
 			// then add it to our segments.
-			if (mb_strpos($_SERVER['argv'][$i], '-') === false)
+			if (mb_strpos($_SERVER['argv'][$i], '-') !== 0)
 			{
 				static::$segments[] = $_SERVER['argv'][$i];
 				continue;
@@ -949,6 +1137,30 @@ class CLI
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * While the library is intended for use on CLI commands,
+	 * commands can be called from controllers and elsewhere
+	 * so we need a way to allow them to still work.
+	 *
+	 * For now, just echo the content, but look into a better
+	 * solution down the road.
+	 *
+	 * @param resource $handle
+	 * @param string   $string
+	 */
+	protected static function fwrite($handle, string $string)
+	{
+		if (is_cli())
+		{
+			fwrite($handle, $string);
+			return;
+		}
+
+		// @codeCoverageIgnoreStart
+		echo $string;
+		// @codeCoverageIgnoreEnd
+	}
 }
 
 // Ensure the class is initialized. Done outside of code coverage

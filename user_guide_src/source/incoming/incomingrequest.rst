@@ -240,7 +240,7 @@ and uses best practices to minimize any security risks.
     $files = $request->getFiles();
 
     // Grab the file by name given in HTML form
-    if ($files->hasFile('uploadedFile')
+    if ($files->hasFile('uploadedFile'))
     {
         $file = $files->getFile('uploadedfile');
 
@@ -433,6 +433,7 @@ The methods provided by the parent classes that are available are:
 			your configured ``$config['cookie_prefix']`` value.
 
 	.. php:method:: getServer([$index = null[, $filter = null[, $flags = null]]])
+		:noindex:
 
 		:param	mixed	$index: Value name
 		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.

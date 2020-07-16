@@ -137,6 +137,38 @@ class ForgeTest extends CIDatabaseTestCase
 		$this->assertTrue($exist);
 	}
 
+	public function testCreateTableApplyBigInt()
+	{
+		$this->forge->dropTable('forge_test_table', true);
+
+		$this->forge->addField([
+			'id' => [
+				'type'           => 'BIGINT',
+				'unsigned'       => true,
+				'auto_increment' => true,
+			],
+		]);
+
+		$this->forge->addPrimaryKey('id');
+		$this->forge->createTable('forge_test_table', true);
+
+		$fieldsData = $this->db->getFieldData('forge_test_table');
+		if ($this->db->DBDriver === 'MySQLi')
+		{
+			$this->assertEquals(strtolower($fieldsData[0]->type), 'bigint');
+		}
+		elseif ($this->db->DBDriver === 'Postgre')
+		{
+			$this->assertEquals(strtolower($fieldsData[0]->type), 'bigint');
+		}
+		elseif ($this->db->DBDriver === 'SQLite3')
+		{
+			$this->assertEquals(strtolower($fieldsData[0]->type), 'integer');
+		}
+
+		$this->forge->dropTable('forge_test_table', true);
+	}
+
 	public function testCreateTableWithAttributes()
 	{
 		if ($this->db->DBDriver === 'SQLite3')

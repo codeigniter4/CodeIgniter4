@@ -420,6 +420,16 @@ class Request extends Message implements RequestInterface
 			$value = $this->globals[$method][$index] ?? null;
 		}
 
+		if (is_array($value) && ($filter !== null || $flags !== null))
+		{
+			// Iterate over array and append filter and flags
+			array_walk_recursive($value, function (&$val) use ($filter, $flags) {
+				$val = filter_var($val, $filter, $flags);
+			});
+
+			return $value;
+		}
+
 		// Cannot filter these types of data automatically...
 		if (is_array($value) || is_object($value) || is_null($value))
 		{

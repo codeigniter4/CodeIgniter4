@@ -299,10 +299,16 @@ Miscellaneous Functions
 		// Set a flash message
 		return redirect()->back()->with('foo', 'message');
 
-	When passing a URI into the function, it is treated as a reverse-route request, not a relative/full URI, treating
-        it the same as using redirect()->route()::
+		// Copies all cookies from global response instance
+		return redirect()->back()->withCookies();
 
-                // Go to a named/reverse-routed URI
+		// Copies all headers from the global response instance
+		return redirect()->back()->withHeaders();
+
+	When passing a URI into the function, it is treated as a reverse-route request, not a relative/full URI,
+	treating it the same as using redirect()->route()::
+
+		// Go to a named/reverse-routed URI
 		return redirect('named_route');
 
 .. php:function:: remove_invisible_characters($str[, $urlEncoded = TRUE])
@@ -325,8 +331,8 @@ Miscellaneous Functions
 	:param   string   $method: The named route alias, or name of the controller/method to match.
 	:param   mixed   $params: One or more parameters to be passed to be matched in the route.
 
-	Generates a relative URI for you based on either a named route alias, or a controller::method
-	combination. Will take parameters into effect, if provided.
+	Generates a URI relative to the domain name (not **baseUrl**) for you based on either a named route alias,
+	or a controller::method combination. Will take parameters into effect, if provided.
 
 	For full details, see the :doc:`/incoming/routing` page.
 

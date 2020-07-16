@@ -57,6 +57,7 @@ use Config\Services;
  */
 class CSRF implements FilterInterface
 {
+
 	/**
 	 * Do whatever processing this filter needs to do.
 	 * By default it should not return anything during
@@ -68,10 +69,12 @@ class CSRF implements FilterInterface
 	 * redirects, etc.
 	 *
 	 * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
+	 * @param array|null                                         $arguments
 	 *
 	 * @return mixed
+	 * @throws \CodeIgniter\Security\Exceptions\SecurityException
 	 */
-	public function before(RequestInterface $request)
+	public function before(RequestInterface $request, $arguments = null)
 	{
 		if ($request->isCLI())
 		{
@@ -102,10 +105,11 @@ class CSRF implements FilterInterface
 	 *
 	 * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
 	 * @param ResponseInterface|\CodeIgniter\HTTP\Response       $response
+	 * @param array|null                                         $arguments
 	 *
 	 * @return mixed
 	 */
-	public function after(RequestInterface $request, ResponseInterface $response)
+	public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
 	{
 	}
 

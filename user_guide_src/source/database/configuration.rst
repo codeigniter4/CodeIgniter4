@@ -38,6 +38,9 @@ prototype::
 The name of the class property is the connection name, and can be used
 while connecting to specify a group name.
 
+.. note:: The default location of the SQLite3 database is in the ``writable`` folder.
+	If you want to change the location, you must set the full path to the new folder.
+
 Some database drivers (such as PDO, PostgreSQL, Oracle, ODBC) might
 require a full DSN string to be provided. If that is the case, you
 should use the 'DSN' configuration setting, as if you're using the

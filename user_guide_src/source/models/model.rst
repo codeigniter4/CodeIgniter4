@@ -218,6 +218,10 @@ this model will never validate.
 These arrays allow you to specify callback methods that will be run on the data at the
 time specified in the property name.
 
+**$allowCallbacks**
+
+Whether the callbacks defined above should be used.
+
 Working With Data
 =================
 
@@ -480,6 +484,41 @@ be applied. If you have custom error message that you want to use, place them in
         ];
     }
 
+The other way to set the validation rules to fields by functions,
+
+.. php:function:: setValidationRule($field, $fieldRules)
+
+    :param  string  $field:
+    :param  array   $fieldRules:
+
+    This function will set the field validation rules.
+
+    Usage example::
+
+        $fieldName = 'username';
+        $fieldRules = 'required|alpha_numeric_space|min_length[3]';
+        
+        $model->setValidationRule($fieldName, $fieldRules);
+
+.. php:function:: setValidationRules($validationRules)
+
+    :param  array   $validationRules:
+
+    This function will set the validation rules.
+
+    Usage example::
+
+        $validationRules = [
+            'username' => 'required|alpha_numeric_space|min_length[3]',
+            'email' => [
+                'rules'  => 'required|valid_email|is_unique[users.email]',
+                'errors' => [
+                    'required' => 'We really need your email.',
+                ],
+            ],
+        ];
+        $model->setValidationRules($validationRules);
+
 The other way to set the validation message to fields by functions,
 
 .. php:function:: setValidationMessage($field, $fieldMessages)
@@ -518,7 +557,7 @@ the model will return boolean **false**. You can use the ``errors()`` method to 
 
     if ($model->save($data) === false)
     {
-        return view('updateUser', ['errors' => $model->errors()];
+        return view('updateUser', ['errors' => $model->errors()]);
     }
 
 This returns an array with the field names and their associated errors that can be used to either show all of the
@@ -714,6 +753,15 @@ use the same callback in multiple events::
 
     protected $beforeInsert = ['hashPassword'];
     protected $beforeUpdate = ['hashPassword'];
+
+Additionally, each model may allow (default) or deny callbacks class-wide by setting its $allowCallbacks property::
+
+	protected $allowCallbacks = false;
+
+You may also change this setting temporarily for a single model call sing the ``allowCallbacks()`` method::
+
+	$model->allowCallbacks(false)->find(1); // No callbacks triggered
+	$model->find(1);                        // Callbacks subject to original property value
 
 Event Parameters
 ----------------
