@@ -78,8 +78,8 @@ driver   Preferred handler (OpenSSL)
 
 You can replace the config file's settings by passing a configuration
 object of your own to the ``Services`` call. The ``$config`` variable must be
-an instance of either the `Config\\Encryption` class or an object
-that extends `CodeIgniter\\Config\\BaseConfig`.
+an instance of either the ``Config\Encryption`` class or an object
+that extends ``CodeIgniter\Config\BaseConfig``.
 ::
 
     $config         = new \Config\Encryption();
@@ -109,10 +109,10 @@ you can use the Encryption library's ``createKey()`` method.
 	// $key will be assigned a 32-byte (256-bit) random key
 	$key = Encryption::createKey(32);
 
-The key can be stored in *app/Config/Encryption.php*, or you can design
+The key can be stored in ``app/Config/Encryption.php``, or you can design
 a storage mechanism of your own and pass the key dynamically when encrypting/decrypting.
 
-To save your key to your *app/Config/Encryption.php*, open the file
+To save your key to your ``app/Config/Encryption.php``, open the file
 and set::
 
 	public $key = 'YOUR KEY';
@@ -132,18 +132,36 @@ a more friendly manner. For example::
 	// so that it is still passed as binary to the library:
 	$key = hex2bin('your-hex-encoded-key');
 
-	// In the Encryption config class you can use a special 'hex2bin:'
-	// prefix so that the value is still passed as binary to the library:
-	public $key = 'hex2bin:your-hex-encoded-key';
-
-	// You can also use the same prefix in your .env file
-	encryption.key = hex2bin:your-hex-encoded-key
-
 You might find the same technique useful for the results
 of encryption::
 
 	// Encrypt some text & make the results text
 	$encoded = base64_encode($encrypter->encrypt($plaintext));
+
+Using Prefixes in Storing Keys
+------------------------------
+
+You may take advantage of two special prefixes in storing your
+encryption keys: ``hex2bin:`` and ``base64:``. When these prefixes
+immediately precede the value of your key, ``Encryption`` will
+intelligently parse the key and still pass a binary string to
+the library.
+::
+
+	// In Encryption, you may use
+	public $key = 'hex2bin:<your-hex-encoded-key>'
+
+	// or
+	public $key = 'base64:<your-base64-encoded-key>'
+
+Similarly, you can use these prefixes in your ``.env`` file, too!
+::
+
+	// For hex2bin
+	encryption.key = hex2bin:<your-hex-encoded-key>
+
+	// or
+	encryption.key = base64:<your-base64-encoded-key>
 
 Encryption Handler Notes
 ========================
@@ -179,14 +197,14 @@ Instead of (or in addition to) using ``Services`` as described in :ref:`usage`,
 you can create an "Encrypter" directly, or change the settings of an existing instance.
 ::
 
-    // create an Encrypter instance
-    $encryption = new \Encryption\Encryption();
+    // create an Encryption instance
+    $encryption = new CodeIgniter\Encryption\Encryption();
 
     // reconfigure an instance with different settings
     $encrypter = $encryption->initialize($config);
 
-Remember, that ``$config`` must me an instance of either a `Config\Encryption` class
-or an object that extends `CodeIgniter\Config\BaseConfig`.
+Remember, that ``$config`` must be an instance of either a ``Config\Encryption`` class
+or an object that extends ``CodeIgniter\Config\BaseConfig``.
 
 
 ***************
@@ -195,17 +213,17 @@ Class Reference
 
 .. php:class:: CodeIgniter\\Encryption\\Encryption
 
-	.. php:staticmethod:: createKey($length)
+	.. php:staticmethod:: createKey([$length = 32])
 
 		:param	int	$length: Output length
-		:returns:	A pseudo-random cryptographic key with the specified length, or FALSE on failure
+		:returns:	A pseudo-random cryptographic key with the specified length, or ``false`` on failure
 		:rtype:	string
 
 		Creates a cryptographic key by fetching random data from
-		the operating system's sources (i.e. /dev/urandom).
+		the operating system's sources (*i.e.* ``/dev/urandom``).
 
 
-	.. php:method:: initialize($config)
+	.. php:method:: initialize([BaseConfig $config = null])
 
 		:param	BaseConfig	$config: Configuration parameters
 		:returns:	CodeIgniter\\Encryption\\EncrypterInterface instance
@@ -222,7 +240,7 @@ Class Reference
 
 .. php:interface:: CodeIgniter\\Encryption\\EncrypterInterface
 
-	.. php:method:: encrypt($data, $params = null)
+	.. php:method:: encrypt($data[, $params = null])
 
 		:param	string	$data: Data to encrypt
 		:param		$params: Configuration parameters (key)
@@ -242,7 +260,7 @@ Class Reference
 			$ciphertext = $encrypter->encrypt('My secret message', ['key' => 'New secret key']);
 			$ciphertext = $encrypter->encrypt('My secret message', 'New secret key');
 
-	.. php:method:: decrypt($data, $params = null)
+	.. php:method:: decrypt($data[, $params = null])
 
 		:param	string	$data: Data to decrypt
 		:param		$params: Configuration parameters (key)
