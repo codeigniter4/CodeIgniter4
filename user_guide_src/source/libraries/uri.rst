@@ -207,8 +207,8 @@ you can use the ``stripQuery()`` and ``keepQuery()`` methods to change the actua
     $uri->keepQuery('foo');
 
 .. note:: By default ``setQuery()`` and ``setQueryArray()`` methods uses native ``parse_str()`` function to prepare data. 
-If you want to use more liberal rules (which allow key names to contain dots), you can use a special method 
-``useRawQueryString()`` beforehand.
+	If you want to use more liberal rules (which allow key names to contain dots), you can use a special method 
+	``useRawQueryString()`` beforehand.
 
 Fragment
 --------
