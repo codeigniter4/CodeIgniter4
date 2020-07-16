@@ -471,7 +471,8 @@ class CURLRequest extends Request
 		{	
 			$break = strpos($output, $break_string, $first_carriage_return + strlen($break_string));
 
-		} else 
+		} 
+		else 
 		{
 			$break = strpos($output, "\r\n\r\n");
 
