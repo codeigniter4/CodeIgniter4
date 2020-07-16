@@ -76,7 +76,7 @@ class DOMParser
 	 */
 	public function getBody(): string
 	{
-		return $this->dom->saveHTML();
+		return $this->dom->saveHTML($this->dom->documentElement);
 	}
 
 	/**
@@ -142,8 +142,8 @@ class DOMParser
 		// If Element is null, we're just scanning for text
 		if (is_null($element))
 		{
-			$content = $this->dom->saveHTML();
-			return mb_strpos($content, $search) !== false;
+			$content = $this->dom->saveHTML($this->dom->documentElement);
+			return strpos($content, $search) !== false;
 		}
 
 		$result = $this->doXPath($search, $element);
