@@ -11,6 +11,10 @@
 
 **Fixed bugs:**
 
+- Bug: Fix protocol version for DownloadResponse [\#3320](https://github.com/codeigniter4/CodeIgniter4/pull/3320)
+- Bug: Add Honeypot::$container to env file [\#3318](https://github.com/codeigniter4/CodeIgniter4/pull/3318)
+- Bug: Add multibyte support on DOMParser::see() [\#3324](https://github.com/codeigniter4/CodeIgniter4/pull/3324)
+- Bug: Image width debug-bar has conflict [\#3323](https://github.com/codeigniter4/CodeIgniter4/pull/3323)
 - Bug: Setting Encryption Service Key in app/Config/Encyption.php [\#3297](https://github.com/codeigniter4/CodeIgniter4/issues/3297)
 - Bug: CodeIgniter\I18n -\> Class 'Locale' not found [\#3294](https://github.com/codeigniter4/CodeIgniter4/issues/3294)
 - bug cURL - Parse header and Body [\#3261](https://github.com/codeigniter4/CodeIgniter4/issues/3261)
