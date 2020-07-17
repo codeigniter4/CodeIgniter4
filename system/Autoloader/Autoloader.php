@@ -210,7 +210,7 @@ class Autoloader
 	 *
 	 * If a prefix param is set, returns only paths to the given prefix.
 	 *
-	 * @var string|null $prefix
+	 * @param string|null $prefix
 	 *
 	 * @return array
 	 */
