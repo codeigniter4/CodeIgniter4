@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &mdash; CodeIgniter 4.0.4 documentation</title>
+  <title>Upgrading from 4.0.x to 4.0.4 &mdash; CodeIgniter 4.0.4 documentation</title>
   
 
   
@@ -39,8 +39,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Manual Installation" href="installing_manual.html" />
-    <link rel="prev" title="PSR Compliance" href="../intro/psr.html" /> 
+    <link rel="next" title="Upgrading from 3.x to 4.x" href="upgrade_4xx.html" />
+    <link rel="prev" title="Upgrading From a Previous Version" href="upgrading.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -94,11 +94,11 @@
 </li>
 </ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
 </ul>
@@ -317,7 +317,11 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Installation</li>
+          <li><a href="index.html">Installation</a> &raquo;</li>
+        
+          <li><a href="upgrading.html">Upgrading From a Previous Version</a> &raquo;</li>
+        
+      <li>Upgrading from 4.0.x to 4.0.4</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -334,41 +338,21 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>CodeIgniter4 can be installed in a number of different ways: manually,
-using <a class="reference external" href="https://getcomposer.org">Composer</a>, or using
-<a class="reference external" href="https://git-scm.com/">Git</a>.
-Which is right for you?</p>
-<ul class="simple">
-<li>If you would like the simple “download &amp; go” install that CodeIgniter3
-is known for, choose the manual installation.</li>
-<li>If you plan to add third party packages to your project, or want to keep
-CodeIgniter up to date easily, we recommend the Composer installation.</li>
-</ul>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installing_composer.html">Composer Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="running.html">Running Your App</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_404.html">Upgrading from 4.0.x to 4.0.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_4xx.html">    Upgrading from 3.x to 4.x</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
-</ul>
+  <div class="section" id="upgrading-from-4-0-x-to-4-0-4">
+<h1>Upgrading from 4.0.x to 4.0.4<a class="headerlink" href="#upgrading-from-4-0-x-to-4-0-4" title="Permalink to this headline">¶</a></h1>
+<p>CodeIgniter 4.0.4 fixes a bug in the implementation of <a class="reference internal" href="../incoming/filters.html"><span class="doc">Controller Filters</span></a>, breaking
+code implementing the <code class="docutils literal notranslate"><span class="pre">FilterInterface</span></code>.</p>
+<p><strong>Update FilterInterface declarations</strong></p>
+<p>The method signatures for <code class="docutils literal notranslate"><span class="pre">after()</span></code> and <code class="docutils literal notranslate"><span class="pre">before()</span></code> must be updated to include <code class="docutils literal notranslate"><span class="pre">$arguments</span></code>. The function
+definitions should be changed from:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">)</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">after</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">)</span>
+</pre></div>
 </div>
-<p>However you choose to install and run CodeIgniter4, the
-<a class="reference external" href="https://codeigniter4.github.io/userguide/">user guide</a> is accessible online.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Before using CodeIgniter 4, make sure that your server meets the
-<a class="reference internal" href="../intro/requirements.html"><span class="doc">requirements</span></a>, in particular the PHP
-version and the PHP extensions that are needed.
-You may find that you have to uncomment the <code class="docutils literal notranslate"><span class="pre">php.ini</span></code> “extension”
-lines to enable “curl” and “intl”, for instance.</p>
+<p>to:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nv">$arguments</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">after</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">,</span> <span class="nv">$arguments</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+</pre></div>
 </div>
 </div>
 
@@ -380,10 +364,10 @@ lines to enable “curl” and “intl”, for instance.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="installing_manual.html" class="btn btn-neutral float-right" title="Manual Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="upgrade_4xx.html" class="btn btn-neutral float-right" title="Upgrading from 3.x to 4.x" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../intro/psr.html" class="btn btn-neutral float-left" title="PSR Compliance" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="upgrading.html" class="btn btn-neutral float-left" title="Upgrading From a Previous Version" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
