@@ -838,7 +838,7 @@ if (! function_exists('excerpt'))
 	{
 		if (isset($phrase))
 		{
-			$phrasePos = strpos(strtolower($text), strtolower($phrase));
+			$phrasePos = stripos($text, $phrase);
 			$phraseLen = strlen($phrase);
 		}
 		elseif (! isset($phrase))
