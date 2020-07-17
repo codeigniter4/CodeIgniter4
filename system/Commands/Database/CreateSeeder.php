@@ -97,14 +97,14 @@ class CreateSeeder extends BaseCommand
 	];
 
 	/**
-	 * Creates a new migration file with the current timestamp.
+	 * Creates a new seeder file.
 	 *
 	 * @param array $params
 	 */
 	public function run(array $params = [])
 	{
 		helper('inflector');
-		
+
 		$name = array_shift($params);
 
 		if (empty($name))

@@ -103,7 +103,7 @@ class Routes extends BaseCommand
 	 *
 	 * @param array $params
 	 */
-	public function run(array $params)
+	public function run(array $params = [])
 	{
 		$collection = Services::routes(true);
 		$methods    = [

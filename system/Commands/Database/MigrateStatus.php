@@ -99,7 +99,7 @@ class MigrateStatus extends BaseCommand
 	/**
 	 * Namespaces to ignore when looking for migrations.
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $ignoredNamespaces = [
 		'CodeIgniter',
