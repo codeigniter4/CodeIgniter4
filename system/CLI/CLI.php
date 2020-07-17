@@ -1148,18 +1148,20 @@ class CLI
 	 *
 	 * @param resource $handle
 	 * @param string   $string
+	 *
+	 * @return void
 	 */
 	protected static function fwrite($handle, string $string)
 	{
-		if (is_cli())
+		if (! is_cli())
 		{
-			fwrite($handle, $string);
+			// @codeCoverageIgnoreStart
+			echo $string;
 			return;
+			// @codeCoverageIgnoreEnd
 		}
 
-		// @codeCoverageIgnoreStart
-		echo $string;
-		// @codeCoverageIgnoreEnd
+		fwrite($handle, $string);
 	}
 }
 
