@@ -447,37 +447,24 @@ class CURLRequest extends Request
 		}
 
 		$output = $this->sendRequest($curl_options);
+		
+		// Set the string we want to break our response from
+		$breakString = "\r\n\r\n";
 
 		if (strpos($output, 'HTTP/1.1 100 Continue') === 0)
 		{
 			$output = substr($output, strpos($output, "\r\n\r\n") + 4);
 		}
 		
-		// Set the string we want to break our response from
-		$break_string = "\r\n\r\n";
-		$second_carriage_return = false;
-		
-		// If auth is digest and we have headers in the curl response
-		if(isset($this->config['auth'][2]) && $this->config['auth'][2] === 'digest' && $curl_options[CURLOPT_HEADER] === true)
+		// If request and response have Digest
+		if (isset($this->config['auth'][2]) && $this->config['auth'][2] === 'digest' && strpos($output, 'WWW-Authenticate: Digest') !== false)
 		{
-				// check if we have one or two carriage return
-				// we can have two because of digest auth double call
-				$first_carriage_return = strpos($output, $break_string);
-				$second_carriage_return = strpos($output, $break_string, $first_carriage_return + strlen($break_string));
-		} 
-
-		// Split out our headers and body at the right carriage return
-		if($second_carriage_return !== false)
-		{	
-			$break = strpos($output, $break_string, $first_carriage_return + strlen($break_string));
-
-		} 
-		else 
-		{
-			$break = strpos($output, "\r\n\r\n");
-
+				$output = substr($output, strpos($output, $breakString) + 4);
 		}
 
+		// Split out our headers and body
+		$break = strpos($output, $breakString);
+		
 		if ($break !== false)
 		{
 			// Our headers
