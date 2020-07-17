@@ -37,7 +37,7 @@
  * @filesource
  */
 
-namespace CodeIgniter\Commands\HouseKeeping;
+namespace CodeIgniter\Commands\Housekeeping;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
