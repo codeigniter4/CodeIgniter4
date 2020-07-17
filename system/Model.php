@@ -260,10 +260,11 @@ class Model
 	/*
 	 * Callbacks. Each array should contain the method
 	 * names (within the model) that should be called
-	 * when those events are triggered. With the exception
-	 * of 'afterFind', all methods are passed the same
-	 * items that are given to the update/insert method.
-	 * 'afterFind' will also include the results that were found.
+	 * when those events are triggered. "Update" and "delete"
+	 * methods are passed the same items that are given to
+	 * their respecitve method.
+	 * "Find" methods receive the ID searched for (if present), and
+	 * 'afterFind' additionally receives the results that were found.
 	 */
 
 	/**
@@ -305,6 +306,12 @@ class Model
 	 * @var array
 	 */
 	protected $afterUpdate = [];
+	/**
+	 * Callbacks for beforeFind
+	 *
+	 * @var array
+	 */
+	protected $beforeFind = [];
 	/**
 	 * Callbacks for afterFind
 	 *
@@ -379,6 +386,13 @@ class Model
 	 */
 	public function find($id = null)
 	{
+		// Call the before event and check for a return
+		$eventData = $this->trigger('beforeFind', ['id' => $id, 'method' => 'find']);
+		if (! empty($eventData['returnData']))
+		{
+			return $eventData['data'];
+		}
+
 		$builder = $this->builder();
 
 		if ($this->tempUseSoftDeletes === true)
@@ -451,6 +465,13 @@ class Model
 	 */
 	public function findAll(int $limit = 0, int $offset = 0)
 	{
+		// Call the before event and check for a return
+		$eventData = $this->trigger('beforeFind', ['method' => 'findAll', 'limit' => $limit, 'offset' => $offset]);
+		if (! empty($eventData['returnData']))
+		{
+			return $eventData['data'];
+		}
+
 		$builder = $this->builder();
 
 		if ($this->tempUseSoftDeletes === true)
@@ -481,6 +502,13 @@ class Model
 	 */
 	public function first()
 	{
+		// Call the before event and check for a return
+		$eventData = $this->trigger('beforeFind', ['method' => 'first']);
+		if (! empty($eventData['returnData']))
+		{
+			return $eventData['data'];
+		}
+
 		$builder = $this->builder();
 
 		if ($this->tempUseSoftDeletes === true)
@@ -1672,7 +1700,7 @@ class Model
 
 	/**
 	 * Sets $tempAllowCallbacks value so that we can temporarily override
-	 * the setting. Resets after the next trigger.
+	 * the setting. Resets after the next method that uses triggers.
 	 *
 	 * @param boolean $val
 	 *
@@ -1708,14 +1736,6 @@ class Model
 	 */
 	protected function trigger(string $event, array $eventData)
 	{
-		$allowed                  = $this->tempAllowCallbacks;
-		$this->tempAllowCallbacks = $this->allowCallbacks;
-
-		if (! $allowed)
-		{
-			return $eventData;
-		}
-
 		// Ensure it's a valid event
 		if (! isset($this->{$event}) || empty($this->{$event}))
 		{
