@@ -1,13 +1,7 @@
 <?php namespace CodeIgniter\Commands;
 
-use CodeIgniter\CLI\CLI;
-use CodeIgniter\CLI\CommandRunner;
-use CodeIgniter\Config\Config;
-use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
-use CodeIgniter\Test\Mock\MockAppConfig;
-use Config\Services;
 
 class ClearCacheTest extends CIUnitTestCase
 {
