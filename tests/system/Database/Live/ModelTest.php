@@ -1682,9 +1682,9 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testSetTable()
 	{
-		$model = new JobModel();
+		$model = new SecondaryModel();
 
-		$model->setTable('db_job');
+		$model->setTable('job');
 
 		$data = [
 			'name'        => 'Apprentice',
