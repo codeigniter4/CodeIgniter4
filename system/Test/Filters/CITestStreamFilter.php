@@ -44,25 +44,25 @@ namespace CodeIgniter\Test\Filters;
  * Used to capture output during unit testing, so that it can
  * be used in assertions.
  */
-
 class CITestStreamFilter extends \php_user_filter
 {
 
 	/**
 	 * Buffer to capture stream content.
 	 *
-	 * @var type
+	 * @var string
 	 */
 	public static $buffer = '';
 
 	/**
 	 * Output filtering - catch it all.
 	 *
-	 * @param  type $in
-	 * @param  type $out
-	 * @param  type $consumed
-	 * @param  type $closing
-	 * @return type
+	 * @param resource $in
+	 * @param resource $out
+	 * @param integer  $consumed
+	 * @param boolean  $closing
+	 *
+	 * @return integer
 	 */
 	public function filter($in, $out, &$consumed, $closing)
 	{
@@ -73,7 +73,6 @@ class CITestStreamFilter extends \php_user_filter
 		}
 		return PSFS_PASS_ON;
 	}
-
 }
 
 // @codeCoverageIgnoreStart
