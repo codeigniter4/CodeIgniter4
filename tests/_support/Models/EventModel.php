@@ -23,8 +23,13 @@ class EventModel extends Model
 	protected $afterInsert  = ['afterInsertMethod'];
 	protected $beforeUpdate = ['beforeUpdateMethod'];
 	protected $afterUpdate  = ['afterUpdateMethod'];
-	protected $afterFind    = ['afterFindMethod'];
+	protected $beforeDelete = ['beforeDeleteMethod'];
 	protected $afterDelete  = ['afterDeleteMethod'];
+	protected $beforeFind   = ['beforeFindMethod'];
+	protected $afterFind    = ['afterFindMethod'];
+
+	// Testing directive to set $returnData on beforeFind event
+	public $beforeFindReturnData = false;
 
 	// Holds stuff for testing events
 	protected $tokens = [];
@@ -57,9 +62,9 @@ class EventModel extends Model
 		return $data;
 	}
 
-	protected function afterFindMethod(array $data)
+	protected function beforeDeleteMethod(array $data)
 	{
-		$this->tokens[] = 'afterFind';
+		$this->tokens[] = 'beforeDelete';
 
 		return $data;
 	}
@@ -67,6 +72,26 @@ class EventModel extends Model
 	protected function afterDeleteMethod(array $data)
 	{
 		$this->tokens[] = 'afterDelete';
+
+		return $data;
+	}
+
+	protected function beforeFindMethod(array $data)
+	{
+		$this->tokens[] = 'beforeFind';
+
+		if ($this->beforeFindReturnData)
+		{
+			$data['data']       = 'foobar';
+			$data['returnData'] = true;
+		}
+
+		return $data;
+	}
+
+	protected function afterFindMethod(array $data)
+	{
+		$this->tokens[] = 'afterFind';
 
 		return $data;
 	}
