@@ -12,7 +12,7 @@ class AppInfo extends BaseCommand
 	protected $name        = 'app:info';
 	protected $description = 'Displays basic application information.';
 
-	public function run(array $params)
+	public function run(array $params = [])
 	{
 		CLI::write('CI Version: ' . CLI::color(CodeIgniter::CI_VERSION, 'red'));
 	}
