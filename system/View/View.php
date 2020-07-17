@@ -242,10 +242,16 @@ class View implements RendererInterface
 			$this->data = $this->tempData;
 		}
 
+		// Save current vars
+		$renderVars = $this->renderVars;
+
 		ob_start();
 		include($this->renderVars['file']); // PHP will be processed
 		$output = ob_get_contents();
 		@ob_end_clean();
+
+		// Get back current vars
+		$this->renderVars = $renderVars;
 
 		// When using layouts, the data has already been stored
 		// in $this->sections, and no other valid output
@@ -254,7 +260,11 @@ class View implements RendererInterface
 		{
 			$layoutView   = $this->layout;
 			$this->layout = null;
-			$output       = $this->render($layoutView, $options, $saveData);
+			// Save current vars
+			$renderVars = $this->renderVars;
+			$output     = $this->render($layoutView, $options, $saveData);
+			// Get back current vars
+			$this->renderVars = $renderVars;
 		}
 
 		$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
