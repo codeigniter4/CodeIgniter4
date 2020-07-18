@@ -112,6 +112,12 @@ Controller should take into account the maximum parameters::
         echo $seg3; // false in first and second, 789 in third
     }
 
+If matching multiple segments is not the intended behavior, ``(:segment)`` should be used when defining the 
+routes. With the examples URLs from above::
+
+	$routes->add('product/(:segment)', 'Catalog::productLookup/$1');
+
+will only match product/123 and generate 404 errors for other example.
 
 .. important:: While the ``add()`` method is convenient, it is recommended to always use the HTTP-verb-based
     routes, described below, as it is more secure. It will also provide a slight performance increase, since
