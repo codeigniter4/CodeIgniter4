@@ -99,6 +99,20 @@ and the “productLookupByID” method passing in the match as a variable to the
 
     $routes->add('product/(:num)', 'Catalog::productLookupByID/$1');
 
+Note that a single ``(:any)`` will match multiple segments in the URL if present. For example the route::
+
+	$routes->add('product/(:any)', 'Catalog::productLookup/$1');
+
+will match product/123, product/123/456, product/123/456/789 and so on. The implementation in the 
+Controller should take into account the maximum parameters::
+
+    public function productLookup($seg1 = false, $seg2 = false, $seg3 = false) {
+        echo $seg1; // Will be 123 in all examples
+        echo $seg2; // false in first, 456 in second and third example
+        echo $seg3; // false in first and second, 789 in third
+    }
+
+
 .. important:: While the ``add()`` method is convenient, it is recommended to always use the HTTP-verb-based
     routes, described below, as it is more secure. It will also provide a slight performance increase, since
     only routes that match the current request method are stored, resulting in fewer routes to scan through
