@@ -251,4 +251,16 @@ class CLIRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Determines if this request was made from the command line (CLI).
+	 *
+	 * @return boolean
+	 */
+	public function isCLI(): bool
+	{
+		return is_cli();
+	}
+
+	//--------------------------------------------------------------------
 }
