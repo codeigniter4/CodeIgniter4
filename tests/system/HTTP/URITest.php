@@ -406,10 +406,24 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$url = 'http://example.com/path';
 		$uri = new URI($url);
 
-		$expected = 'http://example.com/path?key=value';
+		$expected = 'http://example.com/path?key=value&second_key=value.2';
 
-		$uri->setQuery('?key=value');
-		$this->assertEquals('key=value', $uri->getQuery());
+		$uri->setQuery('?key=value&second.key=value.2');
+		$this->assertEquals('key=value&second_key=value.2', $uri->getQuery());
+		$this->assertEquals($expected, (string) $uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetQuerySetsValueWithUseRawQueryString()
+	{
+		$url = 'http://example.com/path';
+		$uri = new URI($url);
+
+		$expected = 'http://example.com/path?key=value&second.key=value.2';
+
+		$uri->useRawQueryString()->setQuery('?key=value&second.key=value.2');
+		$this->assertEquals('key=value&second.key=value.2', $uri->getQuery());
 		$this->assertEquals($expected, (string) $uri);
 	}
 
@@ -420,10 +434,24 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$url = 'http://example.com/path';
 		$uri = new URI($url);
 
-		$expected = 'http://example.com/path?key=value';
+		$expected = 'http://example.com/path?key=value&second_key=value.2';
 
-		$uri->setQueryArray(['key' => 'value']);
-		$this->assertEquals('key=value', $uri->getQuery());
+		$uri->setQueryArray(['key' => 'value', 'second.key' => 'value.2']);
+		$this->assertEquals('key=value&second_key=value.2', $uri->getQuery());
+		$this->assertEquals($expected, (string) $uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetQueryArraySetsValueWithUseRawQueryString()
+	{
+		$url = 'http://example.com/path';
+		$uri = new URI($url);
+
+		$expected = 'http://example.com/path?key=value&second.key=value.2';
+
+		$uri->useRawQueryString()->setQueryArray(['key' => 'value', 'second.key' => 'value.2']);
+		$this->assertEquals('key=value&second.key=value.2', $uri->getQuery());
 		$this->assertEquals($expected, (string) $uri);
 	}
 

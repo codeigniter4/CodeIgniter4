@@ -641,14 +641,17 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$request = $this->getRequest([
 			'base_uri' => 'http://www.foo.com/api/v1/',
-			'query'    => ['name' => 'Henry'],
+			'query'    => [
+				'name' => 'Henry',
+				'd.t'  => 'value',
+			],
 		]);
 
 		$request->get('products');
 
 		$options = $request->curl_options;
 
-		$this->assertEquals('http://www.foo.com/api/v1/products?name=Henry', $options[CURLOPT_URL]);
+		$this->assertEquals('http://www.foo.com/api/v1/products?name=Henry&d.t=value', $options[CURLOPT_URL]);
 	}
 
 	//--------------------------------------------------------------------
