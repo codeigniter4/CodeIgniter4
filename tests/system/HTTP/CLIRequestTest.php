@@ -1,6 +1,8 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
@@ -9,11 +11,11 @@ use Config\App;
  *
  * @backupGlobals enabled
  */
-class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
+class CLIRequestTest extends CIUnitTestCase
 {
 
 	/**
-	 * @var \CodeIgniter\HTTP\Request
+	 * @var \CodeIgniter\HTTP\CLIRequest
 	 */
 	protected $request;
 
@@ -630,4 +632,10 @@ class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('CLI', $this->request->getMethod(true));
 	}
 
+	//---------------------------------------------------------------------
+
+	public function testMethodIsCliReturnsAlwaysTrue()
+	{
+		$this->assertTrue($this->request->isCLI());
+	}
 }
