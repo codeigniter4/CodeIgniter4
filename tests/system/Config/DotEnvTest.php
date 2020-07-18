@@ -59,12 +59,13 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testLoadsHex2Bin()
 	{
-		putenv('encryption.key');
-
 		$dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
 		$dotenv->load();
 
-		$value = getenv('encryption.key');
+		$m = new \ReflectionMethod($dotenv, 'getVariable');
+		$m->setAccessible(true);
+
+		$value = $m->invoke($dotenv, 'encryption.key');
 
 		$this->assertTrue(! empty($value));
 		$this->assertEquals('f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6', bin2hex($value));
@@ -76,12 +77,13 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testLoadsBase64()
 	{
-		putenv('encryption.key');
-
 		$dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');
 		$dotenv->load();
 
-		$value = getenv('encryption.key');
+		$m = new \ReflectionMethod($dotenv, 'getVariable');
+		$m->setAccessible(true);
+
+		$value = $m->invoke($dotenv, 'encryption.key');
 
 		$this->assertFalse(empty($value));
 		$this->assertEquals('L40bKo6b8Nu541LeVeZ1i5RXfGgnkar42CPTfukhGhw=', base64_encode($value));
