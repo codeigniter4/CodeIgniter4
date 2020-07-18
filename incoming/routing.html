@@ -480,6 +480,25 @@ and the “productLookupByID” method passing in the match as a variable to the
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;product/(:num)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookupByID/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>Note that a single <code class="docutils literal notranslate"><span class="pre">(:any)</span></code> will match multiple segments in the URL if present. For example the route:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;product/(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookup/$1&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>will match product/123, product/123/456, product/123/456/789 and so on. The implementation in the
+Controller should take into account the maximum parameters:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">productLookup</span><span class="p">(</span><span class="nv">$seg1</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nv">$seg2</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nv">$seg3</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="nv">$seg1</span><span class="p">;</span> <span class="c1">// Will be 123 in all examples</span>
+    <span class="k">echo</span> <span class="nv">$seg2</span><span class="p">;</span> <span class="c1">// false in first, 456 in second and third example</span>
+    <span class="k">echo</span> <span class="nv">$seg3</span><span class="p">;</span> <span class="c1">// false in first and second, 789 in third</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If matching multiple segments is not the intended behavior, <code class="docutils literal notranslate"><span class="pre">(:segment)</span></code> should be used when defining the
+routes. With the examples URLs from above:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;product/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookup/$1&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>will only match product/123 and generate 404 errors for other example.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p class="last">While the <code class="docutils literal notranslate"><span class="pre">add()</span></code> method is convenient, it is recommended to always use the HTTP-verb-based
