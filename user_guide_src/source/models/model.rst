@@ -720,7 +720,7 @@ Model Events
 There are several points within the model's execution that you can specify multiple callback methods to run.
 These methods can be used to normalize data, hash passwords, save related entities, and much more. The following
 points in the model's execution can be affected, each through a class property: **$beforeInsert**, **$afterInsert**,
-**$beforeUpdate**, **afterUpdate**, **afterFind**, and **afterDelete**.
+**$beforeUpdate**, **$afterUpdate**, **$afterFind**, and **$afterDelete**.
 
 Defining Callbacks
 ------------------
@@ -790,11 +790,9 @@ afterFind         Varies by find* method. See the following:
                   **limit** = the number of rows to find.
                   **offset** = the number of rows to skip during the search.
 - first()         **data** = the resulting row found during the search, or null if none found.
-beforeDelete      Varies by delete* method. See the following:
-- delete()        **id** = primary key of row being deleted.
+beforeDelete      **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
-afterDelete       Varies by delete* method. See the following:
-- delete()        **id** = primary key of row being deleted.
+afterDelete       **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
                   **result** = the result of the delete() call on the Query Builder.
                   **data** = unused.
