@@ -372,17 +372,18 @@ been deprecated as of PHP 7.2.</p>
 <li><a class="reference internal" href="#default-behavior" id="id4">Default Behavior</a></li>
 <li><a class="reference internal" href="#setting-your-encryption-key" id="id5">Setting Your Encryption Key</a><ul>
 <li><a class="reference internal" href="#encoding-keys-or-results" id="id6">Encoding Keys or Results</a></li>
+<li><a class="reference internal" href="#using-prefixes-in-storing-keys" id="id7">Using Prefixes in Storing Keys</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#encryption-handler-notes" id="id7">Encryption Handler Notes</a><ul>
-<li><a class="reference internal" href="#openssl-notes" id="id8">OpenSSL Notes</a></li>
+<li><a class="reference internal" href="#encryption-handler-notes" id="id8">Encryption Handler Notes</a><ul>
+<li><a class="reference internal" href="#openssl-notes" id="id9">OpenSSL Notes</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#message-length" id="id9">Message Length</a></li>
-<li><a class="reference internal" href="#using-the-encryption-service-directly" id="id10">Using the Encryption Service Directly</a></li>
+<li><a class="reference internal" href="#message-length" id="id10">Message Length</a></li>
+<li><a class="reference internal" href="#using-the-encryption-service-directly" id="id11">Using the Encryption Service Directly</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#class-reference" id="id11">Class Reference</a></li>
+<li><a class="reference internal" href="#class-reference" id="id12">Class Reference</a></li>
 </ul>
 </div>
 <div class="custom-index container"></div><div class="section" id="using-the-encryption-library">
@@ -429,8 +430,8 @@ You don’t need to worry about it.</p>
 </table>
 <p>You can replace the config file’s settings by passing a configuration
 object of your own to the <code class="docutils literal notranslate"><span class="pre">Services</span></code> call. The <code class="docutils literal notranslate"><span class="pre">$config</span></code> variable must be
-an instance of either the <cite>Config\Encryption</cite> class or an object
-that extends <cite>CodeIgniter\Config\BaseConfig</cite>.</p>
+an instance of either the <code class="docutils literal notranslate"><span class="pre">Config\Encryption</span></code> class or an object
+that extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\BaseConfig</span></code>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$config</span>         <span class="o">=</span> <span class="k">new</span> <span class="nx">\Config\Encryption</span><span class="p">();</span>
 <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">key</span>    <span class="o">=</span> <span class="s1">&#39;aBigsecret_ofAtleast32Characters&#39;</span><span class="p">;</span>
 <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">driver</span> <span class="o">=</span> <span class="s1">&#39;OpenSSL&#39;</span><span class="p">;</span>
@@ -455,9 +456,9 @@ you can use the Encryption library’s <code class="docutils literal notranslate
 <span class="nv">$key</span> <span class="o">=</span> <span class="nx">Encryption</span><span class="o">::</span><span class="na">createKey</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The key can be stored in <em>app/Config/Encryption.php</em>, or you can design
+<p>The key can be stored in <code class="docutils literal notranslate"><span class="pre">app/Config/Encryption.php</span></code>, or you can design
 a storage mechanism of your own and pass the key dynamically when encrypting/decrypting.</p>
-<p>To save your key to your <em>app/Config/Encryption.php</em>, open the file
+<p>To save your key to your <code class="docutils literal notranslate"><span class="pre">app/Config/Encryption.php</span></code>, open the file
 and set:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$key</span> <span class="o">=</span> <span class="s1">&#39;YOUR KEY&#39;</span><span class="p">;</span>
 </pre></div>
@@ -474,13 +475,6 @@ a more friendly manner. For example:</p>
 <span class="c1">// Put the same value with hex2bin(),</span>
 <span class="c1">// so that it is still passed as binary to the library:</span>
 <span class="nv">$key</span> <span class="o">=</span> <span class="nb">hex2bin</span><span class="p">(</span><span class="s1">&#39;your-hex-encoded-key&#39;</span><span class="p">);</span>
-
-<span class="c1">// In the Encryption config class you can use a special &#39;hex2bin:&#39;</span>
-<span class="c1">// prefix so that the value is still passed as binary to the library:</span>
-<span class="k">public</span> <span class="nv">$key</span> <span class="o">=</span> <span class="s1">&#39;hex2bin:your-hex-encoded-key&#39;</span><span class="p">;</span>
-
-<span class="c1">// You can also use the same prefix in your .env file</span>
-<span class="nx">encryption</span><span class="o">.</span><span class="nb">key</span> <span class="o">=</span> <span class="nb">hex2bin</span><span class="o">:</span><span class="nx">your</span><span class="o">-</span><span class="nx">hex</span><span class="o">-</span><span class="nx">encoded</span><span class="o">-</span><span class="nb">key</span>
 </pre></div>
 </div>
 <p>You might find the same technique useful for the results
@@ -490,11 +484,34 @@ of encryption:</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="using-prefixes-in-storing-keys">
+<h4><a class="toc-backref" href="#id7">Using Prefixes in Storing Keys</a><a class="headerlink" href="#using-prefixes-in-storing-keys" title="Permalink to this headline">¶</a></h4>
+<p>You may take advantage of two special prefixes in storing your
+encryption keys: <code class="docutils literal notranslate"><span class="pre">hex2bin:</span></code> and <code class="docutils literal notranslate"><span class="pre">base64:</span></code>. When these prefixes
+immediately precede the value of your key, <code class="docutils literal notranslate"><span class="pre">Encryption</span></code> will
+intelligently parse the key and still pass a binary string to
+the library.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In Encryption, you may use</span>
+<span class="k">public</span> <span class="nv">$key</span> <span class="o">=</span> <span class="s1">&#39;hex2bin:&lt;your-hex-encoded-key&gt;&#39;</span>
+
+<span class="c1">// or</span>
+<span class="k">public</span> <span class="nv">$key</span> <span class="o">=</span> <span class="s1">&#39;base64:&lt;your-base64-encoded-key&gt;&#39;</span>
+</pre></div>
+</div>
+<p>Similarly, you can use these prefixes in your <code class="docutils literal notranslate"><span class="pre">.env</span></code> file, too!</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// For hex2bin</span>
+<span class="nx">encryption</span><span class="o">.</span><span class="nb">key</span> <span class="o">=</span> <span class="nb">hex2bin</span><span class="o">:&lt;</span><span class="nx">your</span><span class="o">-</span><span class="nx">hex</span><span class="o">-</span><span class="nx">encoded</span><span class="o">-</span><span class="nb">key</span><span class="o">&gt;</span>
+
+<span class="c1">// or</span>
+<span class="nx">encryption</span><span class="o">.</span><span class="nb">key</span> <span class="o">=</span> <span class="nx">base64</span><span class="o">:&lt;</span><span class="nx">your</span><span class="o">-</span><span class="nx">base64</span><span class="o">-</span><span class="nx">encoded</span><span class="o">-</span><span class="nb">key</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="encryption-handler-notes">
-<h3><a class="toc-backref" href="#id7">Encryption Handler Notes</a><a class="headerlink" href="#encryption-handler-notes" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8">Encryption Handler Notes</a><a class="headerlink" href="#encryption-handler-notes" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="openssl-notes">
-<h4><a class="toc-backref" href="#id8">OpenSSL Notes</a><a class="headerlink" href="#openssl-notes" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id9">OpenSSL Notes</a><a class="headerlink" href="#openssl-notes" title="Permalink to this headline">¶</a></h4>
 <p>The <a class="reference external" href="https://www.php.net/openssl">OpenSSL</a> extension has been a standard part of PHP for a long time.</p>
 <p>CodeIgniter’s OpenSSL handler uses the AES-256-CTR cipher.</p>
 <p>The <em>key</em> your configuration provides is used to derive two other keys, one for
@@ -503,7 +520,7 @@ as an <a class="reference external" href="https://en.wikipedia.org/wiki/HKDF">HM
 </div>
 </div>
 <div class="section" id="message-length">
-<h3><a class="toc-backref" href="#id9">Message Length</a><a class="headerlink" href="#message-length" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10">Message Length</a><a class="headerlink" href="#message-length" title="Permalink to this headline">¶</a></h3>
 <p>An encrypted string is usually longer than the original, plain-text string (depending on the cipher).</p>
 <p>This is influenced by the cipher algorithm itself, the initialization vector (IV)
 prepended to the cipher-text, and the HMAC authentication message that is also prepended.
@@ -513,28 +530,28 @@ for storage and transmission regardless of the character-set in use.</p>
 Cookies, for example, can only hold 4K of information.</p>
 </div>
 <div class="section" id="using-the-encryption-service-directly">
-<h3><a class="toc-backref" href="#id10">Using the Encryption Service Directly</a><a class="headerlink" href="#using-the-encryption-service-directly" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11">Using the Encryption Service Directly</a><a class="headerlink" href="#using-the-encryption-service-directly" title="Permalink to this headline">¶</a></h3>
 <p>Instead of (or in addition to) using <code class="docutils literal notranslate"><span class="pre">Services</span></code> as described in <a class="reference internal" href="#usage"><span class="std std-ref">Using the Encryption Library</span></a>,
 you can create an “Encrypter” directly, or change the settings of an existing instance.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// create an Encrypter instance</span>
-<span class="nv">$encryption</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Encryption\Encryption</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// create an Encryption instance</span>
+<span class="nv">$encryption</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CodeIgniter\Encryption\Encryption</span><span class="p">();</span>
 
 <span class="c1">// reconfigure an instance with different settings</span>
 <span class="nv">$encrypter</span> <span class="o">=</span> <span class="nv">$encryption</span><span class="o">-&gt;</span><span class="na">initialize</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Remember, that <code class="docutils literal notranslate"><span class="pre">$config</span></code> must me an instance of either a <cite>ConfigEncryption</cite> class
-or an object that extends <cite>CodeIgniterConfigBaseConfig</cite>.</p>
+<p>Remember, that <code class="docutils literal notranslate"><span class="pre">$config</span></code> must be an instance of either a <code class="docutils literal notranslate"><span class="pre">Config\Encryption</span></code> class
+or an object that extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\BaseConfig</span></code>.</p>
 </div>
 </div>
 <div class="section" id="class-reference">
-<h2><a class="toc-backref" href="#id11">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id12">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt>
 <code class="descname">CodeIgniter\Encryption\Encryption</code></dt>
 <dd><dl class="staticmethod">
 <dt id="createKey">
-<em class="property">static </em><code class="descname">createKey</code><span class="sig-paren">(</span><em>$length</em><span class="sig-paren">)</span><a class="headerlink" href="#createKey" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">createKey</code><span class="sig-paren">(</span><span class="optional">[</span><em>$length = 32</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createKey" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -544,7 +561,7 @@ or an object that extends <cite>CodeIgniterConfigBaseConfig</cite>.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A pseudo-random cryptographic key with the specified length, or FALSE on failure</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A pseudo-random cryptographic key with the specified length, or <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
@@ -553,12 +570,12 @@ or an object that extends <cite>CodeIgniterConfigBaseConfig</cite>.</p>
 </tbody>
 </table>
 <p>Creates a cryptographic key by fetching random data from
-the operating system’s sources (i.e. /dev/urandom).</p>
+the operating system’s sources (<em>i.e.</em> <code class="docutils literal notranslate"><span class="pre">/dev/urandom</span></code>).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="initialize">
-<code class="descname">initialize</code><span class="sig-paren">(</span><em>$config</em><span class="sig-paren">)</span><a class="headerlink" href="#initialize" title="Permalink to this definition">¶</a></dt>
+<code class="descname">initialize</code><span class="sig-paren">(</span><span class="optional">[</span><em>BaseConfig $config = null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#initialize" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -594,7 +611,7 @@ the operating system’s sources (i.e. /dev/urandom).</p>
 <code class="descname">CodeIgniter\Encryption\EncrypterInterface</code></dt>
 <dd><dl class="method">
 <dt id="encrypt">
-<code class="descname">encrypt</code><span class="sig-paren">(</span><em>$data</em>, <em>$params = null</em><span class="sig-paren">)</span><a class="headerlink" href="#encrypt" title="Permalink to this definition">¶</a></dt>
+<code class="descname">encrypt</code><span class="sig-paren">(</span><em>$data</em><span class="optional">[</span>, <em>$params = null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#encrypt" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -630,7 +647,7 @@ is an array; or the starting key may be passed as a string.</p>
 
 <dl class="method">
 <dt id="decrypt">
-<code class="descname">decrypt</code><span class="sig-paren">(</span><em>$data</em>, <em>$params = null</em><span class="sig-paren">)</span><a class="headerlink" href="#decrypt" title="Permalink to this definition">¶</a></dt>
+<code class="descname">decrypt</code><span class="sig-paren">(</span><em>$data</em><span class="optional">[</span>, <em>$params = null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#decrypt" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -692,7 +709,7 @@ is an array; or the starting key may be passed as a string.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Jul 18, 2020.
+        Last updated on Jul 19, 2020.
       </span>
 
     </p>
