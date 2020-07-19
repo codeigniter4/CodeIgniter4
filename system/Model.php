@@ -1265,7 +1265,7 @@ class Model
 			throw DataException::forInvalidAllowedFields(get_class($this));
 		}
 
-		if (is_array($data) && count($data))
+		if (is_array($data) && $data)
 		{
 			foreach ($data as $key => $val)
 			{
