@@ -88,21 +88,18 @@ if (! function_exists('_array_search_dot'))
 		if ($currentIndex === '*')
 		{
 			// If $array has more than 1 item, we have to loop over each.
-			if (is_array($array))
+			foreach ($array as $value)
 			{
-				foreach ($array as $value)
+				$answer = _array_search_dot($indexes, $value);
+
+				if ($answer !== null)
 				{
-					$answer = _array_search_dot($indexes, $value);
-
-					if ($answer !== null)
-					{
-						return $answer;
-					}
+					return $answer;
 				}
-
-				// Still here after searching all child nodes?
-				return null;
 			}
+
+			// Still here after searching all child nodes?
+			return null;
 		}
 
 		// If this is the last index, make sure to return it now,
