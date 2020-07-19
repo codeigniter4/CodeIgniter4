@@ -1068,7 +1068,7 @@ parameter is a Closure that will be called for each row of data.</p>
 <p>There are several points within the model’s execution that you can specify multiple callback methods to run.
 These methods can be used to normalize data, hash passwords, save related entities, and much more. The following
 points in the model’s execution can be affected, each through a class property: <strong>$beforeInsert</strong>, <strong>$afterInsert</strong>,
-<strong>$beforeUpdate</strong>, <strong>afterUpdate</strong>, <strong>afterFind</strong>, and <strong>afterDelete</strong>.</p>
+<strong>$beforeUpdate</strong>, <strong>$afterUpdate</strong>, <strong>$afterFind</strong>, and <strong>$afterDelete</strong>.</p>
 <div class="section" id="defining-callbacks">
 <h3><a class="toc-backref" href="#id19">Defining Callbacks</a><a class="headerlink" href="#defining-callbacks" title="Permalink to this headline">¶</a></h3>
 <p>You specify the callbacks by first creating a new class method in your model to use. This class will always
@@ -1167,22 +1167,10 @@ insert method, it is first converted to an array.</td>
 <td><strong>data</strong> = the resulting row found during the search, or null if none found.</td>
 </tr>
 <tr class="row-even"><td>beforeDelete</td>
-<td>Varies by delete* method. See the following:</td>
-</tr>
-<tr class="row-odd"><td><ul class="first last simple">
-<li>delete()</li>
-</ul>
-</td>
 <td><strong>id</strong> = primary key of row being deleted.
 <strong>purge</strong> = boolean whether soft-delete rows should be hard deleted.</td>
 </tr>
-<tr class="row-even"><td>afterDelete</td>
-<td>Varies by delete* method. See the following:</td>
-</tr>
-<tr class="row-odd"><td><ul class="first last simple">
-<li>delete()</li>
-</ul>
-</td>
+<tr class="row-odd"><td>afterDelete</td>
 <td><strong>id</strong> = primary key of row being deleted.
 <strong>purge</strong> = boolean whether soft-delete rows should be hard deleted.
 <strong>result</strong> = the result of the delete() call on the Query Builder.
