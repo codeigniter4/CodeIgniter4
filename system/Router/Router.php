@@ -397,15 +397,15 @@ class Router implements RouterInterface
 	{
 		$routes = $this->collection->getRoutes($this->collection->getHTTPVerb());
 
-		$uri = $uri === '/'
-			? $uri
-			: ltrim($uri, '/ ');
-
 		// Don't waste any time
 		if (empty($routes))
 		{
 			return false;
 		}
+
+		$uri = $uri === '/'
+			? $uri
+			: ltrim($uri, '/ ');
 
 		// Loop through the route array looking for wildcards
 		foreach ($routes as $key => $val)
