@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Config;
 
 use org\bovigo\vfs\vfsStream;
@@ -27,7 +28,7 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 		chmod($path, 0644);
 	}
 
-	public function tearDown(): void
+	protected function tearDown(): void
 	{
 		parent::tearDown();
 
@@ -61,11 +62,31 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 		$dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
 		$dotenv->load();
 
-		$value = getenv('encryption.key');
+		$m = new \ReflectionMethod($dotenv, 'getVariable');
+		$m->setAccessible(true);
+
+		$value = $m->invoke($dotenv, 'encryption.key');
 
 		$this->assertTrue(! empty($value));
 		$this->assertEquals('f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6', bin2hex($value));
 		$this->assertEquals('hex2bin:f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6', getenv('different.key'));
+		$this->assertEquals('OpenSSL', getenv('encryption.driver'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testLoadsBase64()
+	{
+		$dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');
+		$dotenv->load();
+
+		$m = new \ReflectionMethod($dotenv, 'getVariable');
+		$m->setAccessible(true);
+
+		$value = $m->invoke($dotenv, 'encryption.key');
+
+		$this->assertFalse(empty($value));
+		$this->assertEquals('L40bKo6b8Nu541LeVeZ1i5RXfGgnkar42CPTfukhGhw=', base64_encode($value));
 		$this->assertEquals('OpenSSL', getenv('encryption.driver'));
 	}
 

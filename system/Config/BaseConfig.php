@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * CodeIgniter
  *
@@ -70,7 +69,7 @@ class BaseConfig
 	/**
 	 * The modules configuration.
 	 *
-	 * @var type
+	 * @var \Config\Modules
 	 */
 	protected static $moduleConfig;
 
@@ -93,10 +92,18 @@ class BaseConfig
 		{
 			$this->initEnvValue($this->$property, $property, $prefix, $shortPrefix);
 
-			// Handle hex2bin prefix
-                      if ($shortPrefix === 'encryption' && $property === 'key' && strpos($this->$property, 'hex2bin:') === 0)
+			if ($shortPrefix === 'encryption' && $property === 'key')
 			{
-				$this->$property = hex2bin(substr($this->$property, 8));
+				// Handle hex2bin prefix
+				if (strpos($this->$property, 'hex2bin:') === 0)
+				{
+					$this->$property = hex2bin(substr($this->$property, 8));
+				}
+				// Handle base64 prefix
+				elseif (strpos($this->$property, 'base64:') === 0)
+				{
+					$this->$property = base64_decode(substr($this->$property, 7), true);
+				}
 			}
 		}
 
@@ -219,7 +226,9 @@ class BaseConfig
 			// ignore non-applicable registrars
 			if (! method_exists($callable, $shortName))
 			{
+				// @codeCoverageIgnoreStart
 				continue;
+				// @codeCoverageIgnoreEnd
 			}
 
 			$properties = $callable::$shortName();
