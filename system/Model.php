@@ -1265,14 +1265,11 @@ class Model
 			throw DataException::forInvalidAllowedFields(get_class($this));
 		}
 
-		if (is_array($data) && count($data))
+		foreach ($data as $key => $val)
 		{
-			foreach ($data as $key => $val)
+			if (! in_array($key, $this->allowedFields))
 			{
-				if (! in_array($key, $this->allowedFields))
-				{
-					unset($data[$key]);
-				}
+				unset($data[$key]);
 			}
 		}
 
