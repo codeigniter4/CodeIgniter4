@@ -57,15 +57,21 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
 	public function testLoadsHex2Bin()
 	{
 		$dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
 		$dotenv->load();
 
-		$m = new \ReflectionMethod($dotenv, 'getVariable');
-		$m->setAccessible(true);
+		$value = getenv('encryption.key', true);
 
-		$value = $m->invoke($dotenv, 'encryption.key');
+		if ('\\' === DIRECTORY_SEPARATOR)
+		{
+			$value = sapi_windows_cp_conv(65001, 1252, $value);
+		}
 
 		$this->assertTrue(! empty($value));
 		$this->assertEquals('f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6', bin2hex($value));
@@ -75,15 +81,21 @@ class DotEnvTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
 	public function testLoadsBase64()
 	{
 		$dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');
 		$dotenv->load();
 
-		$m = new \ReflectionMethod($dotenv, 'getVariable');
-		$m->setAccessible(true);
+		$value = getenv('encryption.key', true);
 
-		$value = $m->invoke($dotenv, 'encryption.key');
+		if ('\\' === DIRECTORY_SEPARATOR)
+		{
+			$value = sapi_windows_cp_conv(65001, 1252, $value);
+		}
 
 		$this->assertFalse(empty($value));
 		$this->assertEquals('L40bKo6b8Nu541LeVeZ1i5RXfGgnkar42CPTfukhGhw=', base64_encode($value));

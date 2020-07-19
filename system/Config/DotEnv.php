@@ -196,6 +196,21 @@ class DotEnv
 			{
 				$value = base64_decode(substr($value, 7), true);
 			}
+
+			if ('\\' === DIRECTORY_SEPARATOR)
+			{
+				/**
+				 * Convert binary string to UTF-8 codepage before passing to environment
+				 * to preserve interoperability.
+				 *
+				 * @see https://bugs.php.net/bug.php?id=79875
+				 */
+				// @codeCoverageIgnoreStart
+				$ansi  = sapi_windows_cp_get('ansi');
+				$utf8  = sapi_windows_cp_get('utf-8');
+				$value = sapi_windows_cp_conv($ansi, $utf8, $value);
+				// @codeCoverageIgnoreEnd
+			}
 		}
 
 		return [

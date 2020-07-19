@@ -94,8 +94,27 @@ class BaseConfig
 
 			if ($shortPrefix === 'encryption' && $property === 'key')
 			{
+				// Handle values from .env already parsed by DotEnv
+				if (strpos($this->$property, 'hex2bin:') === false && strpos($this->$property, 'base64:') === false)
+				{
+					if ('\\' === DIRECTORY_SEPARATOR)
+					{
+						/**
+						 * Windows requires binary strings to be converted to UTF-8 codepage
+						 * before being stored in environment. Since DotEnv already did the conversion
+						 * and we need the original binary string, we'll just reverse the process here.
+						 *
+						 * @see https://bugs.php.net/bug.php?id=79875
+						 */
+						// @codeCoverageIgnoreStart
+						$ansi            = sapi_windows_cp_get('ansi');
+						$utf8            = sapi_windows_cp_get('utf-8');
+						$this->$property = sapi_windows_cp_conv($utf8, $ansi, $this->$property);
+						// @codeCoverageIgnoreEnd
+					}
+				}
 				// Handle hex2bin prefix
-				if (strpos($this->$property, 'hex2bin:') === 0)
+				elseif (strpos($this->$property, 'hex2bin:') === 0)
 				{
 					$this->$property = hex2bin(substr($this->$property, 8));
 				}
