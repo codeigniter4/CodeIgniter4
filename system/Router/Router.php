@@ -397,15 +397,15 @@ class Router implements RouterInterface
 	{
 		$routes = $this->collection->getRoutes($this->collection->getHTTPVerb());
 
-		$uri = $uri === '/'
-			? $uri
-			: ltrim($uri, '/ ');
-
 		// Don't waste any time
 		if (empty($routes))
 		{
 			return false;
 		}
+
+		$uri = $uri === '/'
+			? $uri
+			: ltrim($uri, '/ ');
 
 		// Loop through the route array looking for wildcards
 		foreach ($routes as $key => $val)
@@ -548,11 +548,13 @@ class Router implements RouterInterface
 			$this->params = $segments;
 		}
 
+		$defaultNamespace = $this->collection->getDefaultNamespace();
+		$controllerName   = $this->controllerName();
 		if ($this->collection->getHTTPVerb() !== 'cli')
 		{
-			$controller  = '\\' . $this->collection->getDefaultNamespace();
+			$controller  = '\\' . $defaultNamespace;
 			$controller .= $this->directory ? str_replace('/', '\\', $this->directory) : '';
-			$controller .= $this->controllerName();
+			$controller .= $controllerName;
 			$controller  = strtolower($controller);
 			$methodName  = strtolower($this->methodName());
 
@@ -575,7 +577,7 @@ class Router implements RouterInterface
 		}
 
 		// Load the file so that it's available for CodeIgniter.
-		$file = APPPATH . 'Controllers/' . $this->directory . $this->controllerName() . '.php';
+		$file = APPPATH . 'Controllers/' . $this->directory . $controllerName . '.php';
 		if (is_file($file))
 		{
 			include_once $file;
@@ -583,9 +585,9 @@ class Router implements RouterInterface
 
 		// Ensure the controller stores the fully-qualified class name
 		// We have to check for a length over 1, since by default it will be '\'
-		if (strpos($this->controller, '\\') === false && strlen($this->collection->getDefaultNamespace()) > 1)
+		if (strpos($this->controller, '\\') === false && strlen($defaultNamespace) > 1)
 		{
-			$this->controller = '\\' . ltrim(str_replace('/', '\\', $this->collection->getDefaultNamespace() . $this->directory . $this->controllerName()), '\\');
+			$this->controller = '\\' . ltrim(str_replace('/', '\\', $defaultNamespace . $this->directory . $controllerName), '\\');
 		}
 	}
 

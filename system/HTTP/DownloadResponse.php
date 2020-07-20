@@ -484,7 +484,7 @@ class DownloadResponse extends Message implements ResponseInterface
 		}
 
 		// HTTP Status
-		header(sprintf('HTTP/%s %s %s', $this->protocolVersion, $this->getStatusCode(), $this->getReason()), true,
+		header(sprintf('HTTP/%s %s %s', $this->getProtocolVersion(), $this->getStatusCode(), $this->getReason()), true,
 				$this->getStatusCode());
 
 		// Send all of our headers

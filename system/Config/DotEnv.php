@@ -77,7 +77,7 @@ class DotEnv
 	public function load(): bool
 	{
 		$vars = $this->parse();
-		
+
 		return ($vars === null ? false : true);
 	}
 
@@ -142,10 +142,12 @@ class DotEnv
 		{
 			putenv("$name=$value");
 		}
+
 		if (empty($_ENV[$name]))
 		{
 			$_ENV[$name] = $value;
 		}
+
 		if (empty($_SERVER[$name]))
 		{
 			$_SERVER[$name] = $value;
@@ -165,7 +167,7 @@ class DotEnv
 	 */
 	public function normaliseVariable(string $name, string $value = ''): array
 	{
-		// Split our compound string into it's parts.
+		// Split our compound string into its parts.
 		if (strpos($name, '=') !== false)
 		{
 			list($name, $value) = explode('=', $name, 2);
@@ -181,6 +183,20 @@ class DotEnv
 		$value = $this->sanitizeValue($value);
 
 		$value = $this->resolveNestedVariables($value);
+
+		if ($name === 'encryption.key')
+		{
+			// Handle hex2bin prefix
+			if (strpos($value, 'hex2bin:') === 0)
+			{
+				$value = hex2bin(substr($value, 8));
+			}
+			// Handle base64 prefix
+			elseif (strpos($value, 'base64:') === 0)
+			{
+				$value = base64_decode(substr($value, 7), true);
+			}
+		}
 
 		return [
 			$name,

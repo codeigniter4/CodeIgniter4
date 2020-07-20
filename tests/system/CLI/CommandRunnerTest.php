@@ -125,4 +125,13 @@ class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('Command "bogus" not found', $result);
 	}
 
+	public function testRemapEmptyFirstParams()
+	{
+		$this->runner->_remap('anyvalue', null, 'list');
+		$result = CITestStreamFilter::$buffer;
+
+		// make sure the result looks like a command list
+		$this->assertStringContainsString('Lists the available commands.', $result);
+	}
+
 }
