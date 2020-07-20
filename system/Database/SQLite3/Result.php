@@ -95,10 +95,8 @@ class Result extends BaseResult implements ResultInterface
 		];
 
 		$retVal = [];
-		//To insure correct column types are returned a fetch must be done at least one
-		//this does a fetch regardless as all CI result queries do dataSeek calls before
-		//calling fetch arrays, thus this will be save to not mess with any other result calls
-                $tmpArr = $this->resultID->fetchArray(SQLITE3_NUM );  
+		// To ensure that the correct column types are returned, we must perform a fetch
+                $this->resultID->fetchArray(SQLITE3_NUM);  
 		
 		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
 		{
@@ -110,7 +108,6 @@ class Result extends BaseResult implements ResultInterface
 			$retVal[$i]->max_length = null;
 			$retVal[$i]->length     = null;
 		}
-                unset($tmpArr);
 		$this->resultID->reset();
 		
 		return $retVal;
