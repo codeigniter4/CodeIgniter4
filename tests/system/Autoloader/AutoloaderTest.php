@@ -64,7 +64,7 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		// $auto_loader->register();
 		// look for Home controller, as that should be in base repo
 		$actual   = $auto_loader->loadClass('App\Controllers\Home');
-		$expected = APPPATH . 'Controllers/Home.php';
+		$expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
 		$this->assertSame($expected, $actual);
 	}
 
@@ -78,7 +78,7 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		$auto_loader->register();
 		// look for Home controller, as that should be in base repo
 		$actual   = $auto_loader->loadClass('App\Controllers\Home');
-		$expected = APPPATH . 'Controllers/Home.php';
+		$expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
 		$this->assertSame($expected, $actual);
 	}
 
@@ -87,11 +87,11 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testExistingFile()
 	{
 		$actual   = $this->loader->loadClass('App\Controllers\Home');
-		$expected = APPPATH . 'Controllers/Home.php';
+		$expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
 		$this->assertSame($expected, $actual);
 
 		$actual   = $this->loader->loadClass('CodeIgniter\Helpers\array_helper');
-		$expected = SYSTEMPATH . 'Helpers/array_helper.php';
+		$expected = SYSTEMPATH . 'Helpers' . DIRECTORY_SEPARATOR . 'array_helper.php';
 		$this->assertSame($expected, $actual);
 	}
 
@@ -100,7 +100,7 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testMatchesWithPreceedingSlash()
 	{
 		$actual   = $this->loader->loadClass('\App\Controllers\Home');
-		$expected = APPPATH . 'Controllers/Home.php';
+		$expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
 		$this->assertSame($expected, $actual);
 	}
 
@@ -109,7 +109,7 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testMatchesWithFileExtension()
 	{
 		$actual   = $this->loader->loadClass('\App\Controllers\Home.php');
-		$expected = APPPATH . 'Controllers/Home.php';
+		$expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
 		$this->assertSame($expected, $actual);
 	}
 
@@ -155,7 +155,7 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->loader->addNamespace('My\App', __DIR__);
 
 		$actual   = $this->loader->loadClass('My\App\App');
-		$expected = APPPATH . 'Config/App.php';
+		$expected = APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'App.php';
 		$this->assertSame($expected, $actual);
 
 		$actual   = $this->loader->loadClass('My\App\AutoloaderTest');

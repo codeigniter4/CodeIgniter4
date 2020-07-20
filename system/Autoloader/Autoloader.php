@@ -287,12 +287,11 @@ class Autoloader
 		{
 			foreach ($directories as $directory)
 			{
-				$directory = rtrim($directory, '/');
+				$directory = rtrim($directory, '\\/');
 
 				if (strpos($class, $namespace) === 0)
 				{
-					$filePath = $directory . str_replace('\\', '/',
-							substr($class, strlen($namespace))) . '.php';
+					$filePath = $directory . str_replace('\\', DIRECTORY_SEPARATOR, substr($class, strlen($namespace))) . '.php';
 					$filename = $this->requireFile($filePath);
 
 					if ($filename)
