@@ -455,4 +455,41 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('https://example.com', Services::response()->getHeader('Location')->getValue());
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * @dataProvider dirtyPathsProvider
+	 */
+	public function testCleanPathActuallyCleaningThePaths($input, $expected)
+	{
+		$this->assertEquals($expected, clean_path($input));
+	}
+
+	public function dirtyPathsProvider()
+	{
+		$ds = DIRECTORY_SEPARATOR;
+
+		return [
+			[
+				ROOTPATH . 'spark',
+				'ROOTPATH' . $ds . 'spark',
+			],
+			[
+				APPPATH . 'Config' . $ds . 'App.php',
+				'APPPATH' . $ds . 'Config' . $ds . 'App.php',
+			],
+			[
+				SYSTEMPATH . 'CodeIgniter.php',
+				'SYSTEMPATH' . $ds . 'CodeIgniter.php',
+			],
+			[
+				VENDORPATH . 'autoload.php',
+				'VENDORPATH' . $ds . 'autoload.php',
+			],
+			[
+				FCPATH . 'index.php',
+				'FCPATH' . $ds . 'index.php',
+			],
+		];
+	}
 }
