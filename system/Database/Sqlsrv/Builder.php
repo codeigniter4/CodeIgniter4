@@ -442,13 +442,25 @@ class Builder extends BaseBuilder {
 
 		$sql = (! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
 
+		// SQL Server can't work with select * if group by is specified
+		if (empty($this->QBSelect) && ! empty($this->QBGroupBy))
+		{
+			if (is_array($this->QBGroupBy))
+			{
+				foreach ($this->QBGroupBy as $field)
+				{
+					$this->QBSelect[] = $field['field'];
+				}
+			}
+		}
+
 		if (empty($this->QBSelect))
 		{
 			$sql .= '*';
 		}
 		else
 		{
-			// Cycle through the "select" portion of the query and prep each column name.
+				// Cycle through the "select" portion of the query and prep each column name.
 			// The reason we protect identifiers here rather than in the select() function
 			// is because until the user calls the from() function we don't know if there are aliases
 			foreach ($this->QBSelect as $key => $val)
