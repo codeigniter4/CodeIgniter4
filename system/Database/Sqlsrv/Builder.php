@@ -287,18 +287,12 @@ class Builder extends BaseBuilder {
 		{
 			if ('PRIMARY' === $key->type)
 			{
-				$keyFields = [
-					...$keyFields,
-					...$key->fields,
-				];
+				$keyFields = array_merge($keyFields, $key->fields);
 			}
 
 			if ('UNIQUE' === $key->type)
 			{
-				$keyFields = [
-					...$keyFields,
-					...$key->fields,
-				];
+				$keyFields = array_merge($keyFields, $key->fields);
 			}
 		}
 
