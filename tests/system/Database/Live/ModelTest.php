@@ -1084,24 +1084,47 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testFindEvent()
-	{
-		$model = new EventModel();
-
-		$model->find(1);
-
-		$this->assertTrue($model->hasToken('afterFind'));
-	}
-
-	//--------------------------------------------------------------------
-
 	public function testDeleteEvent()
 	{
 		$model = new EventModel();
 
 		$model->delete(1);
 
+		$this->assertTrue($model->hasToken('beforeDelete'));
 		$this->assertTrue($model->hasToken('afterDelete'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testFindEvent()
+	{
+		$model = new EventModel();
+
+		$model->find(1);
+
+		$this->assertTrue($model->hasToken('beforeFind'));
+		$this->assertTrue($model->hasToken('afterFind'));
+	}
+
+	public function testBeforeFindReturnsData()
+	{
+		$model                       = new EventModel();
+		$model->beforeFindReturnData = true;
+
+		$result = $model->find(1);
+
+		$this->assertTrue($model->hasToken('beforeFind'));
+		$this->assertEquals($result, 'foobar');
+	}
+
+	public function testBeforeFindReturnDataPreventsAfterFind()
+	{
+		$model                       = new EventModel();
+		$model->beforeFindReturnData = true;
+
+		$model->find(1);
+
+		$this->assertFalse($model->hasToken('afterFind'));
 	}
 
 	//--------------------------------------------------------------------
@@ -1659,9 +1682,9 @@ class ModelTest extends CIDatabaseTestCase
 
 	public function testSetTable()
 	{
-		$model = new JobModel();
+		$model = new SecondaryModel();
 
-		$model->setTable('db_job');
+		$model->setTable('job');
 
 		$data = [
 			'name'        => 'Apprentice',
