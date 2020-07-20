@@ -365,9 +365,10 @@
 <li><a class="reference internal" href="#defining-callbacks" id="id19">Defining Callbacks</a></li>
 <li><a class="reference internal" href="#specifying-callbacks-to-run" id="id20">Specifying Callbacks To Run</a></li>
 <li><a class="reference internal" href="#event-parameters" id="id21">Event Parameters</a></li>
+<li><a class="reference internal" href="#modifying-find-data" id="id22">Modifying Find* Data</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#manual-model-creation" id="id22">Manual Model Creation</a></li>
+<li><a class="reference internal" href="#manual-model-creation" id="id23">Manual Model Creation</a></li>
 </ul>
 </div>
 <div class="section" id="models">
@@ -1166,7 +1167,16 @@ insert method, it is first converted to an array.</td>
 </td>
 <td><strong>data</strong> = the resulting row found during the search, or null if none found.</td>
 </tr>
-<tr class="row-even"><td>beforeDelete</td>
+<tr class="row-even"><td>beforeFind</td>
+<td>Same as <strong>afterFind</strong> but with the name of the calling <strong>$method</strong> instead of <strong>$data</strong>.</td>
+</tr>
+<tr class="row-odd"><td>beforeDelete</td>
+<td>Varies by delete* method. See the following:</td>
+</tr>
+<tr class="row-even"><td><ul class="first last simple">
+<li>delete()</li>
+</ul>
+</td>
 <td><strong>id</strong> = primary key of row being deleted.
 <strong>purge</strong> = boolean whether soft-delete rows should be hard deleted.</td>
 </tr>
@@ -1179,9 +1189,30 @@ insert method, it is first converted to an array.</td>
 </tbody>
 </table>
 </div>
+<div class="section" id="modifying-find-data">
+<h3><a class="toc-backref" href="#id22">Modifying Find* Data</a><a class="headerlink" href="#modifying-find-data" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">beforeFind</span></code> and <code class="docutils literal notranslate"><span class="pre">afterFind</span></code> methods can both return a modified set of data to override the normal response
+from the model. For <code class="docutils literal notranslate"><span class="pre">afterFind</span></code> any changes made to <code class="docutils literal notranslate"><span class="pre">data</span></code> in the return array will automatically be passed back
+to the calling context. In order for <code class="docutils literal notranslate"><span class="pre">beforeFind</span></code> to intercept the find workflow it must also return an additional
+boolean, <code class="docutils literal notranslate"><span class="pre">returnData</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="nv">$beforeFind</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;checkCache&#39;</span><span class="p">];</span>
+<span class="o">...</span>
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">checkCache</span><span class="p">(</span><span class="k">array</span> <span class="nv">$data</span><span class="p">)</span>
+    <span class="p">{</span>
+            <span class="c1">// Check if the requested item is already in our cache</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nv">$item</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getCachedItem</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]]))</span>
+            <span class="p">{</span>
+                    <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>       <span class="o">=</span> <span class="nv">$item</span><span class="p">;</span>
+                    <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;returnData&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+
+                    <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="manual-model-creation">
-<h2><a class="toc-backref" href="#id22">Manual Model Creation</a><a class="headerlink" href="#manual-model-creation" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id23">Manual Model Creation</a><a class="headerlink" href="#manual-model-creation" title="Permalink to this headline">¶</a></h2>
 <p>You do not need to extend any special class to create a model for your application. All you need is to get an
 instance of the database connection and you’re good to go. This allows you to bypass the features CodeIgniter’s
 Model gives you out of the box, and create a fully custom experience.</p>
@@ -1226,7 +1257,7 @@ Model gives you out of the box, and create a fully custom experience.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Jul 19, 2020.
+        Last updated on Jul 20, 2020.
       </span>
 
     </p>
