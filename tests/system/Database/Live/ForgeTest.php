@@ -696,15 +696,15 @@ class ForgeTest extends CIDatabaseTestCase {
 		}
 		elseif ($this->db->DBDriver === 'Sqlsrv')
 		{
-			$this->assertEquals($keys['pk_db_forge_test_1']->name, 'pk_forge_test_1');
+			$this->assertEquals($keys['pk_db_forge_test_1']->name, 'pk_db_forge_test_1');
 			$this->assertEquals($keys['pk_db_forge_test_1']->fields, ['id']);
 			$this->assertEquals($keys['pk_db_forge_test_1']->type, 'PRIMARY');
 
-			$this->assertEquals($keys['db_forge_test_1_code_company']->name, 'forge_test_1_code_company');
+			$this->assertEquals($keys['db_forge_test_1_code_company']->name, 'db_forge_test_1_code_company');
 			$this->assertEquals($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
 			$this->assertEquals($keys['db_forge_test_1_code_company']->type, 'INDEX');
 
-			$this->assertEquals($keys['db_forge_test_1_code_active']->name, 'forge_test_1_code_active');
+			$this->assertEquals($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
 			$this->assertEquals($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
 			$this->assertEquals($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
 		}
