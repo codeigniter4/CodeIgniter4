@@ -112,6 +112,40 @@ if (! function_exists('cache'))
 	}
 }
 
+if (! function_exists('clean_path'))
+{
+	/**
+	 * A convenience method to clean paths for
+	 * a nicer looking output. Useful for exception
+	 * handling, error logging, etc.
+	 *
+	 * @param string $path
+	 *
+	 * @return string
+	 */
+	function clean_path(string $path): string
+	{
+		// Resolve relative paths
+		$path = realpath($path) ?: $path;
+
+		switch (true)
+		{
+			case strpos($path, APPPATH) === 0:
+				return 'APPPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(APPPATH));
+			case strpos($path, SYSTEMPATH) === 0:
+				return 'SYSTEMPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(SYSTEMPATH));
+			case strpos($path, FCPATH) === 0:
+				return 'FCPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(FCPATH));
+			case defined('VENDORPATH') && strpos($path, VENDORPATH) === 0:
+				return 'VENDORPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(VENDORPATH));
+			case strpos($path, ROOTPATH) === 0:
+				return 'ROOTPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(ROOTPATH));
+			default:
+				return $path;
+		}
+	}
+}
+
 if (! function_exists('command'))
 {
 	/**

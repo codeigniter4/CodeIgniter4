@@ -790,7 +790,9 @@ afterFind         Varies by find* method. See the following:
                   **limit** = the number of rows to find.
                   **offset** = the number of rows to skip during the search.
 - first()         **data** = the resulting row found during the search, or null if none found.
-beforeDelete      **id** = primary key of row being deleted.
+beforeFind        Same as **afterFind** but with the name of the calling **$method** instead of **$data**.
+beforeDelete      Varies by delete* method. See the following:
+- delete()        **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
 afterDelete       **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
@@ -798,6 +800,26 @@ afterDelete       **id** = primary key of row being deleted.
                   **data** = unused.
 ================ =========================================================================================================
 
+Modifying Find* Data
+--------------------
+
+The ``beforeFind`` and ``afterFind`` methods can both return a modified set of data to override the normal response
+from the model. For ``afterFind`` any changes made to ``data`` in the return array will automatically be passed back
+to the calling context. In order for ``beforeFind`` to intercept the find workflow it must also return an additional
+boolean, ``returnData``::
+
+    protected $beforeFind = ['checkCache'];
+    ...
+	protected function checkCache(array $data)
+	{
+		// Check if the requested item is already in our cache
+		if (isset($data['id']) && $item = $this->getCachedItem($data['id']]))
+		{
+			$data['data']       = $item;
+			$data['returnData'] = true;
+
+			return $data;
+	...
 
 Manual Model Creation
 =====================

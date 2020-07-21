@@ -260,10 +260,11 @@ class Model
 	/*
 	 * Callbacks. Each array should contain the method
 	 * names (within the model) that should be called
-	 * when those events are triggered. With the exception
-	 * of 'afterFind', all methods are passed the same
-	 * items that are given to the update/insert method.
-	 * 'afterFind' will also include the results that were found.
+	 * when those events are triggered. "Update" and "delete"
+	 * methods are passed the same items that are given to
+	 * their respecitve method.
+	 * "Find" methods receive the ID searched for (if present), and
+	 * 'afterFind' additionally receives the results that were found.
 	 */
 
 	/**
@@ -305,6 +306,12 @@ class Model
 	 * @var array
 	 */
 	protected $afterUpdate = [];
+	/**
+	 * Callbacks for beforeFind
+	 *
+	 * @var array
+	 */
+	protected $beforeFind = [];
 	/**
 	 * Callbacks for afterFind
 	 *
@@ -379,6 +386,15 @@ class Model
 	 */
 	public function find($id = null)
 	{
+		if ($this->tempAllowCallbacks)
+		{
+			// Call the before event and check for a return
+			$eventData = $this->trigger('beforeFind', ['id' => $id, 'method' => 'find']);
+			if (! empty($eventData['returnData']))
+			{
+				return $eventData['data'];
+			}
+		}
 		$builder = $this->builder();
 
 		if ($this->tempUseSoftDeletes === true)
@@ -406,10 +422,18 @@ class Model
 			$row = $row->getResult($this->tempReturnType);
 		}
 
-		$eventData = $this->trigger('afterFind', ['id' => $id, 'data' => $row]);
+		$eventData = [
+			'id'   => $id,
+			'data' => $row,
+		];
+		if ($this->tempAllowCallbacks)
+		{
+			$eventData = $this->trigger('afterFind', $eventData);
+		}
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
+		$this->tempAllowCallbacks = $this->allowCallbacks;
 
 		return $eventData['data'];
 	}
@@ -451,6 +475,16 @@ class Model
 	 */
 	public function findAll(int $limit = 0, int $offset = 0)
 	{
+		if ($this->tempAllowCallbacks)
+		{
+			// Call the before event and check for a return
+			$eventData = $this->trigger('beforeFind', ['method' => 'findAll', 'limit' => $limit, 'offset' => $offset]);
+			if (! empty($eventData['returnData']))
+			{
+				return $eventData['data'];
+			}
+		}
+
 		$builder = $this->builder();
 
 		if ($this->tempUseSoftDeletes === true)
@@ -463,10 +497,19 @@ class Model
 
 		$row = $row->getResult($this->tempReturnType);
 
-		$eventData = $this->trigger('afterFind', ['data' => $row, 'limit' => $limit, 'offset' => $offset]);
+		$eventData = [
+			'data'   => $row,
+			'limit'  => $limit,
+			'offset' => $offset,
+		];
+		if ($this->tempAllowCallbacks)
+		{
+			$eventData = $this->trigger('afterFind', $eventData);
+		}
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
+		$this->tempAllowCallbacks = $this->allowCallbacks;
 
 		return $eventData['data'];
 	}
@@ -481,6 +524,16 @@ class Model
 	 */
 	public function first()
 	{
+		if ($this->tempAllowCallbacks)
+		{
+			// Call the before event and check for a return
+			$eventData = $this->trigger('beforeFind', ['method' => 'first']);
+			if (! empty($eventData['returnData']))
+			{
+				return $eventData['data'];
+			}
+		}
+
 		$builder = $this->builder();
 
 		if ($this->tempUseSoftDeletes === true)
@@ -507,10 +560,15 @@ class Model
 
 		$row = $row->getFirstRow($this->tempReturnType);
 
-		$eventData = $this->trigger('afterFind', ['data' => $row]);
+		$eventData = ['data' => $row];
+		if ($this->tempAllowCallbacks)
+		{
+			$eventData = $this->trigger('afterFind', $eventData);
+		}
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
+		$this->tempAllowCallbacks = $this->allowCallbacks;
 
 		return $eventData['data'];
 	}
@@ -747,7 +805,11 @@ class Model
 			$data[$this->updatedField] = $date;
 		}
 
-		$eventData = $this->trigger('beforeInsert', ['data' => $data]);
+		$eventData = ['data' => $data];
+		if ($this->tempAllowCallbacks)
+		{
+			$eventData = $this->trigger('beforeInsert', $eventData);
+		}
 
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $this->builder()
@@ -760,8 +822,17 @@ class Model
 			$this->insertID = $this->db->insertID();
 		}
 
-		// Trigger afterInsert events with the inserted data and new ID
-		$this->trigger('afterInsert', ['id' => $this->insertID, 'data' => $eventData['data'], 'result' => $result]);
+		$eventData = [
+			'id'     => $this->insertID,
+			'data'   => $eventData['data'],
+			'result' => $result,
+		];
+		if ($this->tempAllowCallbacks)
+		{
+			// Trigger afterInsert events with the inserted data and new ID
+			$this->trigger('afterInsert', $eventData);
+		}
+		$this->tempAllowCallbacks = $this->allowCallbacks;
 
 		// If insertion failed, get out of here
 		if (! $result)
@@ -874,7 +945,14 @@ class Model
 			$data[$this->updatedField] = $this->setDate();
 		}
 
-		$eventData = $this->trigger('beforeUpdate', ['id' => $id, 'data' => $data]);
+		$eventData = [
+			'id'   => $id,
+			'data' => $data,
+		];
+		if ($this->tempAllowCallbacks)
+		{
+			$eventData = $this->trigger('beforeUpdate', $eventData);
+		}
 
 		$builder = $this->builder();
 
@@ -888,7 +966,16 @@ class Model
 				->set($eventData['data'], '', $escape)
 				->update();
 
-		$this->trigger('afterUpdate', ['id' => $id, 'data' => $eventData['data'], 'result' => $result]);
+		$eventData = [
+			'id'     => $id,
+			'data'   => $eventData['data'],
+			'result' => $result,
+		];
+		if ($this->tempAllowCallbacks)
+		{
+			$this->trigger('afterUpdate', $eventData);
+		}
+		$this->tempAllowCallbacks = $this->allowCallbacks;
 
 		return $result;
 	}
@@ -949,7 +1036,14 @@ class Model
 			$builder = $builder->whereIn($this->primaryKey, $id);
 		}
 
-		$this->trigger('beforeDelete', ['id' => $id, 'purge' => $purge]);
+		$eventData = [
+			'id'    => $id,
+			'purge' => $purge,
+		];
+		if ($this->tempAllowCallbacks)
+		{
+			$this->trigger('beforeDelete', $eventData);
+		}
 
 		if ($this->useSoftDeletes && ! $purge)
 		{
@@ -977,7 +1071,17 @@ class Model
 			$result = $builder->delete();
 		}
 
-		$this->trigger('afterDelete', ['id' => $id, 'purge' => $purge, 'result' => $result, 'data' => null]);
+		$eventData = [
+			'id'     => $id,
+			'purge'  => $purge,
+			'result' => $result,
+			'data'   => null,
+		];
+		if ($this->tempAllowCallbacks)
+		{
+			$this->trigger('afterDelete', $eventData);
+		}
+		$this->tempAllowCallbacks = $this->allowCallbacks;
 
 		return $result;
 	}
@@ -1672,7 +1776,7 @@ class Model
 
 	/**
 	 * Sets $tempAllowCallbacks value so that we can temporarily override
-	 * the setting. Resets after the next trigger.
+	 * the setting. Resets after the next method that uses triggers.
 	 *
 	 * @param boolean $val
 	 *
@@ -1708,14 +1812,6 @@ class Model
 	 */
 	protected function trigger(string $event, array $eventData)
 	{
-		$allowed                  = $this->tempAllowCallbacks;
-		$this->tempAllowCallbacks = $this->allowCallbacks;
-
-		if (! $allowed)
-		{
-			return $eventData;
-		}
-
 		// Ensure it's a valid event
 		if (! isset($this->{$event}) || empty($this->{$event}))
 		{
