@@ -495,8 +495,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$retVal = [];
 		for ($i = 0, $c = count($query); $i < $c; $i++)
 		{
-			$retVal[$i]              = new \stdClass();
-			$retVal[$i]->name        = $query[$i]->Field;
+			$retVal[$i]       = new \stdClass();
+			$retVal[$i]->name = $query[$i]->Field;
 
 			sscanf($query[$i]->Type, '%[a-z](%d)', $retVal[$i]->type, $retVal[$i]->max_length);
 
