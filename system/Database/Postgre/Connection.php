@@ -333,7 +333,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$retVal[$i]             = new \stdClass();
 			$retVal[$i]->name       = $query[$i]->column_name;
 			$retVal[$i]->type       = $query[$i]->data_type;
-			$retVal[$i]->type_name  = $query[$i]->data_type;
 			$retVal[$i]->default    = $query[$i]->column_default;
 			$retVal[$i]->max_length = $query[$i]->character_maximum_length > 0 ? $query[$i]->character_maximum_length : $query[$i]->numeric_precision;
 		}
