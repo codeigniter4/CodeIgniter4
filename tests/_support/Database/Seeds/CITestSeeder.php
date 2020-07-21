@@ -66,7 +66,7 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 					'value' => 'test',
 				],
 			],
-			type_test' => [
+			'type_test'      => [
 				[
 					 'id' 			=> 1,
 					 'type_varchar' 	=> 'test',
