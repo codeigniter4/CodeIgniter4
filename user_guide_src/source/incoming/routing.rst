@@ -27,7 +27,7 @@ above it instead has a product ID. To overcome this, CodeIgniter allows you to r
 Setting your own routing rules
 ==============================
 
-Routing rules are defined in the **app/config/Routes.php** file. In it you'll see that
+Routing rules are defined in the **app/Config/Routes.php** file. In it you'll see that
 it creates an instance of the RouteCollection class that permits you to specify your own routing criteria.
 Routes can be specified using placeholders or Regular Expressions.
 
