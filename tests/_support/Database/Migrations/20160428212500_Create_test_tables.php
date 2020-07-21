@@ -92,10 +92,12 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('misc', true);
 		
-		//Database Type test table
-		//missing types : 
-		//TINYINT,MEDIUMINT,BIT,YEAR,BINARY , VARBINARY, TINYTEXT,LONGTEXT,YEAR,JSON,Spatial data types
-		$this->forge->addField([
+		if (($this->db->DBDriver === 'SQLite3') || ($this->db->DBDriver === 'MySQLi')) 
+		{
+		  //Database Type test table
+		  //missing types : 
+		  //TINYINT,MEDIUMINT,BIT,YEAR,BINARY , VARBINARY, TINYTEXT,LONGTEXT,YEAR,JSON,Spatial data types
+		  $this->forge->addField([
 			'id'    => [
 				'type'          => 'BIGINT',
 				'constraint'    => 20,
@@ -160,9 +162,10 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 			'type_blob'   => [
 				'type'       => 'BLOB',
 			],
-		]);
-		$this->forge->addKey('id', true);
-		$this->forge->createTable('type_test', true);		
+		   ]);
+		   $this->forge->addKey('id', true);
+		   $this->forge->createTable('type_test', true);	
+		}	
 
 		// Empty Table
 		$this->forge->addField([
