@@ -453,25 +453,27 @@ class CURLRequest extends Request
 
 		if (strpos($output, 'HTTP/1.1 100 Continue') === 0)
 		{
-			$output = substr($output, strpos($output, "\r\n\r\n") + 4);
+			$output = substr($output, strpos($output, $breakString) + 4);
 		}
 		
-		// If request and response have Digest
+		 // If request and response have Digest
 		if (isset($this->config['auth'][2]) && $this->config['auth'][2] === 'digest' && strpos($output, 'WWW-Authenticate: Digest') !== false)
 		{
-				$output = substr($output, strpos($output, $breakString) + 4);
+				$output = substr($output, strpos($output, $breakString) + 5);
 		}
+
 
 		// Split out our headers and body
 		$break = strpos($output, $breakString);
+
 		
 		if ($break !== false)
 		{
 			// Our headers
 			$headers = explode("\n", substr($output, 0, $break));
-
+			
 			$this->setResponseHeaders($headers);
-
+			
 			// Our body
 			$body = substr($output, $break + 4);
 			$this->response->setBody($body);
