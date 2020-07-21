@@ -459,7 +459,7 @@ class CURLRequest extends Request
 		 // If request and response have Digest
 		if (isset($this->config['auth'][2]) && $this->config['auth'][2] === 'digest' && strpos($output, 'WWW-Authenticate: Digest') !== false)
 		{
-				$output = substr($output, strpos($output, $breakString) + 5);
+				$output = substr($output, strpos($output, $breakString) + 4);
 		}
 
 
