@@ -97,6 +97,10 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 			 $data['type_test'][0]['type_time']      = '15:22:00';
 			 $data['type_test'][0]['type_datetime']  = '2020/06/18 05:12:24';
 			 $data['type_test'][0]['type_timestamp'] = '2019/07/18 21:53:21';
+		} 
+		else if ($this->db->DBDriver === 'Postgre') 
+		{
+			$data['type_test'][0]['type_time']      = '15:22:00';
 		}			
 
 		foreach ($data as $table => $dummy_data)
