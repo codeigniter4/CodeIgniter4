@@ -517,7 +517,7 @@ class GDHandler extends BaseHandler
 		if ($options['vAlign'] === 'middle')
 		{
 			// Don't apply padding when you're in the middle of the image.
-			$yAxis += ($this->image()->origHeight / 2) + ($fontheight / 2) - $options['padding'];
+			$yAxis += ($this->image()->origHeight / 2) + ($fontheight / 2) - $options['padding'] - $fontheight - $options['shadowOffset'];
 		}
 		elseif ($options['vAlign'] === 'bottom')
 		{
