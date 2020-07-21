@@ -69,8 +69,8 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 		];
                 if (($this->db->DBDriver === 'SQLite3') || ($this->db->DBDriver === 'MySQLi')) 
 		{
-			$data['type_test'] = [
-					 'id' 				=> 1,
+			$data['type_test'][0] = [
+					 'id' 			=> 1,
 					 'type_varchar' 	=> 'test',
 					 'type_char' 		=> 'test',
 					 'type_enum' 		=> 'appel',
@@ -84,20 +84,20 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 					 'type_double' 		=> 23.22,
 					 'type_decimal' 	=> 123123.2234,
 					 'type_numeric' 	=> 123.23,
-					 'type_blob' 	=> 'test blob',
+					 'type_blob' 		=> 'test blob',
 			];
 			if ($this->db->DBDriver === 'SQLite3') 
 			{
-				 $data['type_test']['type_date']      = '2020/01/11';
-				 $data['type_test']['type_time']      = '15:22:00';
-				 $data['type_test']['type_datetime']  = '2020/06/18 05:12:24';
-				 $data['type_test']['type_timestamp'] = '2019/07/18 21:53:21';
+				 $data['type_test'][0]['type_date']      = '2020/01/11';
+				 $data['type_test'][0]['type_time']      = '15:22:00';
+				 $data['type_test'][0]['type_datetime']  = '2020/06/18 05:12:24';
+				 $data['type_test'][0]['type_timestamp'] = '2019/07/18 21:53:21';
 			 
 			} else  if ($this->db->DBDriver === 'MySQLi') {
-				 $data['type_test']['type_date']      = '2020-01-11T22:11:00.000+02:00';
-				 $data['type_test']['type_time']      = '2020-07-18T15:22:00.000+02:00';
-				 $data['type_test']['type_datetime']  = '2020-06-18T05:12:24.000+02:00';
-				 $data['type_test']['type_timestamp'] = '2019-07-18T21:53:21.000+02:00';
+				 $data['type_test'][0]['type_date']      = '2020-01-11T22:11:00.000+02:00';
+				 $data['type_test'][0]['type_time']      = '2020-07-18T15:22:00.000+02:00';
+				 $data['type_test'][0]['type_datetime']  = '2020-06-18T05:12:24.000+02:00';
+				 $data['type_test'][0]['type_timestamp'] = '2019-07-18T21:53:21.000+02:00';
 			}			
 		}		
 
