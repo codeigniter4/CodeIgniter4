@@ -91,6 +91,78 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		]);
 		$this->forge->addKey('id', true);
 		$this->forge->createTable('misc', true);
+		
+		//Database Type test table
+		//missing types : 
+		//TINYINT,MEDIUMINT,BIT,YEAR,BINARY , VARBINARY, TINYTEXT,LONGTEXT,YEAR,JSON,Spatial data types
+		$this->forge->addField([
+			'id'    => [
+				'type'          => 'BIGINT',
+				'constraint'    => 20,
+				$unique_or_auto => true,
+			],
+			'type_varchar'   => [
+				'type'       => 'VARCHAR',
+				'constraint' => 40,
+			],
+			'type_char'   => [
+				'type'       => 'CHAR',
+				'constraint' => 10,
+			],
+			'type_enum'   => [
+				'type'       => 'ENUM',
+				'constraint' => ['appel','pears','bananas'],
+			],
+			'type_set'   => [
+				'type'       => 'SET',
+				'constraint' => ['one','two'],
+			],
+			'type_text' => ['type' => 'TEXT'
+			],
+			'type_mediumtext' => ['type' => 'MEDIUMTEXT'
+			],
+			'type_smallint'   => [
+				'type'       => 'SMALLINT',
+			],
+			'type_intger'   => [
+				'type'       => 'INTEGER',
+			],
+			'type_float'   => [
+				'type'       => 'FLOAT',
+			],
+			'type_real'   => [
+				'type'       => 'REAL',
+			],
+			'type_double'   => [
+				'type'       => 'DOUBLE',
+			],
+			'type_decimal'   => [
+				'type'       => 'DECIMAL',
+				'constraint' => '18,4',
+			],
+			'type_numeric'   => [
+				'type'       => 'NUMERIC',
+				'constraint' => '18,2',
+			],
+			'type_date'   => [
+				'type'       => 'DATE',
+			],
+			'type_time'   => [
+				'type'       => 'TIME',
+			],
+			
+			'type_datetime'   => [
+				'type'       => 'DATETIME',
+			],
+			'type_timestamp'   => [
+				'type'       => 'TIMESTAMP',
+			],
+			'type_blob'   => [
+				'type'       => 'BLOB',
+			],
+		]);
+		$this->forge->addKey('id', true);
+		$this->forge->createTable('type_test', true);		
 
 		// Empty Table
 		$this->forge->addField([
