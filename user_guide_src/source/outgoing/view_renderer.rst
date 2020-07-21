@@ -107,7 +107,7 @@ Class Reference
 
 .. php:class:: CodeIgniter\\View\\View
 
-	.. php:method:: render($view[, $options[, $saveData=false]]])
+	.. php:method:: render($view[, $options[, $saveData=false]])
                 :noindex:
 
 		:param  string  $view: File name of the view source
@@ -120,7 +120,7 @@ Class Reference
 
 			echo $view->render('myview');
 
-	.. php:method:: renderString($view[, $options[, $saveData=false]]])
+	.. php:method:: renderString($view[, $options[, $saveData=false]])
                 :noindex:
 
 		:param  string  $view: Contents of the view to render, for instance content retrieved from a database
