@@ -106,65 +106,85 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 			'type_varchar'   => [
 				'type'       => 'VARCHAR',
 				'constraint' => 40,
+				'null'       => true,
 			],
 			'type_char'   => [
 				'type'       => 'CHAR',
 				'constraint' => 10,
+				'null'       => true,
 			],
 			'type_enum'   => [
 				'type'       => 'ENUM',
 				'constraint' => ['appel','pears','bananas'],
+				'null'       => true,
 			],
 			'type_set'   => [
 				'type'       => 'SET',
 				'constraint' => ['one','two'],
+				'null'       => true,
 			],
-			'type_text' => ['type' => 'TEXT'
+			'type_text' => [
+			    'type' => 'TEXT',
+			    'null'       => true,
 			],
-			'type_mediumtext' => ['type' => 'MEDIUMTEXT'
+			'type_mediumtext' => [
+			    'type' => 'MEDIUMTEXT',
+				'null'       => true,
 			],
 			'type_smallint'   => [
 				'type'       => 'SMALLINT',
+				'null'       => true,
 			],
-			'type_intger'   => [
+			'type_integer'   => [
 				'type'       => 'INTEGER',
+				'null'       => true,
 			],
 			'type_float'   => [
 				'type'       => 'FLOAT',
+				'null'       => true,
 			],
 			'type_real'   => [
 				'type'       => 'REAL',
+				'null'       => true,
 			],
 			'type_double'   => [
 				'type'       => 'DOUBLE',
+				'null'       => true,
 			],
 			'type_decimal'   => [
 				'type'       => 'DECIMAL',
 				'constraint' => '18,4',
+				'null'       => true,
 			],
 			'type_numeric'   => [
 				'type'       => 'NUMERIC',
 				'constraint' => '18,2',
+				'null'       => true,
 			],
 			'type_date'   => [
 				'type'       => 'DATE',
+				'null'       => true,
 			],
 			'type_time'   => [
 				'type'       => 'TIME',
+				'null'       => true,
 			],
 			
 			'type_datetime'   => [
 				'type'       => 'DATETIME',
+				'null'       => true,
 			],
 			'type_timestamp'   => [
 				'type'       => 'TIMESTAMP',
+				'null'       => true,
 			],
 			'type_blob'   => [
 				'type'       => 'BLOB',
+				'null'       => true,
 			],
 		   ]);
 		   $this->forge->addKey('id', true);
-		   $this->forge->createTable('type_test', true);	
+		   $this->forge->createTable('type_test', true);
 		}	
 
 		// Empty Table
