@@ -95,7 +95,6 @@ class Result extends BaseResult implements ResultInterface
 		];
 
 		$retVal = [];
-		// To ensure that the correct column types are returned, we must perform a fetch
                 $this->resultID->fetchArray(SQLITE3_NUM);  
 		
 		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
