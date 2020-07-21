@@ -528,7 +528,7 @@ The methods provided by the parent class that are available are:
 
     .. php:method:: getCookies()
 
-        :rtype array
+        :rtype: array
 
         Returns all cookies currently set within the Response instance.
         These are any cookies that you have specifically specified to set during the current
