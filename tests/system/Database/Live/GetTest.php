@@ -96,11 +96,14 @@ class GetTest extends CIDatabaseTestCase
 		$this->assertEquals('id', $jobs[0]->name);
 		$this->assertEquals('name', $jobs[1]->name);
 		
-		if ($this->db->DBDriver === 'SQLite3')
+		if (($this->db->DBDriver === 'SQLite3') || ($this->db->DBDriver === 'MySQLi')) 
 		{
+		   if ($this->db->DBDriver === 'SQLite3')
+		   {
 			$this->assertEquals('integer', $jobs[0]->type_name);
 			$this->assertEquals('text', $jobs[1]->type_name);
-		}
+		   }
+		}	
 	}
 
 	//--------------------------------------------------------------------
