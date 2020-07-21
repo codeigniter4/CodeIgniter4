@@ -95,6 +95,10 @@ class GetTest extends CIDatabaseTestCase
 
 		$this->assertEquals('id', $jobs[0]->name);
 		$this->assertEquals('name', $jobs[1]->name);
+
+		$type_test = $this->db->table('type_test')
+						 ->get()
+						 ->getFieldData();
 		
 		if ($this->db->DBDriver === 'SQLite3')
 		{
