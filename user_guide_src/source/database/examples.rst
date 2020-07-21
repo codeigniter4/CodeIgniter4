@@ -16,8 +16,8 @@ your :doc:`configuration <configuration>` settings::
 
 Once loaded the class is ready to be used as described below.
 
-Note: If all your pages require database access you can connect
-automatically. See the :doc:`connecting <connecting>` page for details.
+.. note:: If all your pages require database access you can connect
+	automatically. See the :doc:`connecting <connecting>` page for details.
 
 Standard Query With Multiple Results (Object Version)
 =====================================================
