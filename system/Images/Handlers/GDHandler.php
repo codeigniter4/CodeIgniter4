@@ -517,7 +517,7 @@ class GDHandler extends BaseHandler
 		if ($options['vAlign'] === 'middle')
 		{
 			// Don't apply padding when you're in the middle of the image.
-			$yAxis += ($this->image()->origHeight / 2) + ($fontheight / 2) - $options['padding'];
+			$yAxis += ($this->image()->origHeight / 2) + ($fontheight / 2) - $options['padding'] - $fontheight - $options['shadowOffset'];
 		}
 		elseif ($options['vAlign'] === 'bottom')
 		{
@@ -575,6 +575,13 @@ class GDHandler extends BaseHandler
 		imagealphablending($src, true);
 
 		$color = $isShadow ? $options['shadowColor'] : $options['color'];
+
+		// shorthand hex, #f00
+		if (strlen($color) === 3)
+		{
+			$color = implode('', array_map('str_repeat', str_split($color), [2, 2, 2]));
+		}
+
 		$color = str_split(substr($color, 0, 6), 2);
 		$color = imagecolorclosestalpha($src, hexdec($color[0]), hexdec($color[1]), hexdec($color[2]), $opacity);
 
