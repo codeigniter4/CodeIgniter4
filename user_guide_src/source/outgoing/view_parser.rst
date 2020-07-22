@@ -696,7 +696,7 @@ Class Reference
 
 .. php:class:: CodeIgniter\\View\\Parser
 
-	.. php:method:: render($view[, $options[, $saveData=false]]])
+	.. php:method:: render($view[, $options[, $saveData=false]])
 
 		:param  string  $view: File name of the view source
 		:param  array   $options: Array of options, as key/value pairs
@@ -720,7 +720,7 @@ Class Reference
 		Any conditional substitutions are performed first, then remaining
 		substitutions are performed for each data pair.
 
-	.. php:method:: renderString($template[, $options[, $saveData=false]]])
+	.. php:method:: renderString($template[, $options[, $saveData=false]])
 
 		:param  string  $template: View source provided as a string
     		:param  array   $options: Array of options, as key/value pairs
