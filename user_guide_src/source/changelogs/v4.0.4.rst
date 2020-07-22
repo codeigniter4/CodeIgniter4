@@ -22,7 +22,7 @@ Enhancements:
 - New helper :doc:`mb_url_title </helpers/url_helper>` that functions like ``url_title`` but automatically escapes and extended URL characters.
 - :doc:`Image library </libraries/images>` now supports ``webp`` images.
 - Added Unicode support for regular expressions in the Router.
-- Added support for removing hidden folders in the :doc:`delete_files </helpers/files>` helper
+- Added support for removing hidden folders in the :doc:`delete_files </helpers/filesystem_helper>` helper
 - ``fetchGlobal`` in the Request class now supports applying filters to arrays of data, not just the first item.
 - ``file`` validation now works with arrays of files.
 - URI class now supports a ``setSilent()`` method that will disable the throwing of Exceptions.
