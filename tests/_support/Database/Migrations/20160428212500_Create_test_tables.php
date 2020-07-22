@@ -97,7 +97,7 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		//TINYINT,MEDIUMINT,BIT,YEAR,BINARY , VARBINARY, TINYTEXT,LONGTEXT,YEAR,JSON,Spatial data types
 		$data_type_fields = [
 			'id'	=> [
-				'type'       	=> 'BIGINT',
+				'type'       	=> 'INTEGER', //must be interger else SQLite3 error on not null for autoinc field 
 				'constraint' 	=> 20,
 				$unique_or_auto => true,
 			],
@@ -149,6 +149,11 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 			     'type'      	=> 'TIMESTAMP',
 			     'null'      	=> true,
 			],
+		    'type_bigint'	=> [
+				'type'       	=> 'BIGINT',
+				'null'       	=> true,
+			],
+			
 		];
 		if ($this->db->DBDriver !== 'Postgre') 
 		{

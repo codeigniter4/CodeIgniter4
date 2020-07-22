@@ -86,6 +86,7 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 					 'type_time'		=> '2020-07-18T15:22:00.000+02:00',
 					 'type_datetime'	=> '2020-06-18T05:12:24.000+02:00',
 					 'type_timestamp'	=> '2019-07-18T21:53:21.000+02:00',
+					 'type_bigint'		=> 2342342,					 
 				],				
 			],
 		];
