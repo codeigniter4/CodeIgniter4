@@ -1,0 +1,11 @@
+Version 4.0.5
+====================================================
+
+Release Date: Not released
+
+**4.0.5 release of CodeIgniter4**
+
+Enhancements
+------------
+
+- Fixed a bug in ``Entity`` class where declaring class parameters was preventing data propagation to the ``attributes`` array.

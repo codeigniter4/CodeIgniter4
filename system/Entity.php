@@ -124,7 +124,7 @@ class Entity implements \JsonSerializable
 
 		foreach ($data as $key => $value)
 		{
-			$this->$key = $value;
+			$this->__set($key, $value);
 		}
 
 		return $this;
