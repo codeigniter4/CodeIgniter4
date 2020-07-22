@@ -68,7 +68,6 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 			],
 			'type_test'      => [
 				[
-					 'id' 			=> 1,
 					 'type_varchar' 	=> 'test',
 					 'type_char' 		=> 'test',
 					 'type_enum' 		=> 'appel',
@@ -101,6 +100,13 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 		else if ($this->db->DBDriver === 'Postgre') 
 		{
 			$data['type_test'][0]['type_time']      = '15:22:00';
+			unset($data['type_test'][0]['type_enum']);
+			unset($data['type_test'][0]['type_set']);
+			unset($data['type_test'][0]['type_mediumtext']);
+			unset($data['type_test'][0]['type_real']);
+			unset($data['type_test'][0]['type_double']);
+			unset($data['type_test'][0]['type_decimal']);
+			unset($data['type_test'][0]['type_blob']);
 		}			
 
 		foreach ($data as $table => $dummy_data)
