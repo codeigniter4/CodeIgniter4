@@ -97,10 +97,10 @@ class GetTest extends CIDatabaseTestCase
 		$this->assertEquals('name', $jobs[1]->name);
 
 		$type_test = $this->db->table('type_test')
-						 ->get()
-						 ->getFieldData();
+							  ->get()
+							  ->getFieldData();
 		
-				if ($this->db->DBDriver === 'SQLite3')
+		if ($this->db->DBDriver === 'SQLite3')
 		{
 			$this->assertEquals('integer', $type_test[0]->type_name); //INTEGER AUTO INC
 			$this->assertEquals('text', $type_test[1]->type_name);  //VARCHAR
@@ -161,7 +161,7 @@ class GetTest extends CIDatabaseTestCase
 			$this->assertEquals('timestamp', $type_test[10]->type_name);  //DATETIME
 			$this->assertEquals('timestamp', $type_test[11]->type_name);  //TIMESTAMP
 			$this->assertEquals('int8', $type_test[12]->type_name); //BIGINT
-		}	
+		}
 	}
 
 	//--------------------------------------------------------------------
