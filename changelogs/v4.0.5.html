@@ -38,7 +38,9 @@
 
     
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Version 4.0.4" href="v4.0.4.html" />
+    <link rel="prev" title="Version 4.0" href="next.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -315,6 +317,8 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
+          <li><a href="index.html">Change Logs</a> &raquo;</li>
+        
       <li>Version 4.0.5</li>
     
     
@@ -336,12 +340,11 @@
 <h1>Version 4.0.5<a class="headerlink" href="#version-4-0-5" title="Permalink to this headline">¶</a></h1>
 <p>Release Date: Not released</p>
 <p><strong>4.0.5 release of CodeIgniter4</strong></p>
-<div class="section" id="enhancements">
-<h2>Enhancements<a class="headerlink" href="#enhancements" title="Permalink to this headline">¶</a></h2>
+<p>Bugs Fixed:</p>
 <ul class="simple">
 <li>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Entity</span></code> class where declaring class parameters was preventing data propagation to the <code class="docutils literal notranslate"><span class="pre">attributes</span></code> array.</li>
+<li>Handling for the environment variable <code class="docutils literal notranslate"><span class="pre">encryption.key</span></code> has changed. Previously, explicit function calls, like <code class="docutils literal notranslate"><span class="pre">getenv('encryption.key')</span></code> or <code class="docutils literal notranslate"><span class="pre">env('encryption.key')</span></code> where the value has the special prefix <code class="docutils literal notranslate"><span class="pre">hex2bin:</span></code> returns an automatically converted binary string. This is now changed to just return the character string with the prefix. This change was due to incompatibility with handling binary strings in environment variables on Windows platforms. However, accessing <code class="docutils literal notranslate"><span class="pre">$key</span></code> using <code class="docutils literal notranslate"><span class="pre">Encryption</span></code> class config remains unchanged and still returns a binary string.</li>
 </ul>
-</div>
 </div>
 
 
@@ -349,6 +352,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="v4.0.4.html" class="btn btn-neutral float-right" title="Version 4.0.4" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="next.html" class="btn btn-neutral float-left" title="Version 4.0" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
