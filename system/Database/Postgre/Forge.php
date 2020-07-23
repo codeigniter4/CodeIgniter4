@@ -60,6 +60,13 @@ class Forge extends \CodeIgniter\Database\Forge
 	protected $dropConstraintStr = 'ALTER TABLE %s DROP CONSTRAINT %s';
 
 	/**
+	 * DROP DATABASE statement
+	 *
+	 * @var string
+	 */
+	protected $dropDatabaseStr = 'DROP DATABASE %s';
+	
+	/**
 	 * UNSIGNED support
 	 *
 	 * @var array
@@ -163,17 +170,52 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Process column
 	 *
-	 * @param  array $field
+	 * @param array $field
+	 * @param string $table
+	 *
 	 * @return string
 	 */
-	protected function _processColumn(array $field): string
+	protected function _processColumn(array $field,string $table): string
 	{
-		return $this->db->escapeIdentifiers($field['name'])
-				. ' ' . $field['type'] . $field['length']
-				. $field['default']
-				. $field['null']
-				. $field['auto_increment']
-				. $field['unique'];
+	    if ((strtoupper($field['type']) == 'ENUM') ||	(strtoupper($field['type']) == 'SET') ) 
+		{
+			 return $this->db->escapeIdentifiers($field['name'])
+					 . ' ' . trim($table).'_'.trim($field['name']).'_'.$field['type'];
+		} 
+		else 
+		{
+			return $this->db->escapeIdentifiers($field['name'])
+					. ' ' . $field['type'] . $field['length']
+					. $field['default']
+					. $field['null']
+					. $field['auto_increment']
+					. $field['unique'];
+		}			
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Pre - Create or Alter Table statements to be run
+	 *
+	 * @param string  $table         Table name
+	 * @param array   $fields        List of Fields
+	 * @return array
+	 */
+	protected function _preCreateAlterStatements(string $table,array $fields)
+	{
+		  $result = array();
+		  foreach($fields as $field) 
+		  {
+				if ((strtoupper($field['type']) == 'ENUM') ||	(strtoupper($field['type']) == 'SET') ) 
+				{
+					 $result[] = 'CREATE TYPE ' . trim($table).'_'.trim($field['name']).'_'.$field['type']
+								 . ' AS ENUM '.$field['length']; //constraint types stored in length field with processing of fields
+				} 
+			  
+		  }
+  
+		  return  $result;
 	}
 
 	//--------------------------------------------------------------------
@@ -197,6 +239,18 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		switch (strtoupper($attributes['TYPE']))
 		{
+			case 'MEDIUMTEXT':
+				$attributes['TYPE']     = 'TEXT';
+				$attributes['UNSIGNED'] = false;
+				break;
+			case 'DOUBLE':
+				$attributes['TYPE']     = 'DECIMAL';
+				$attributes['UNSIGNED'] = false;
+				break;
+			case 'BLOB':
+				$attributes['TYPE']     = 'BYTEA';
+				$attributes['UNSIGNED'] = false;
+				break;
 			case 'TINYINT':
 				$attributes['TYPE']     = 'SMALLINT';
 				$attributes['UNSIGNED'] = false;

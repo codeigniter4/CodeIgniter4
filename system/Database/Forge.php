@@ -531,6 +531,12 @@ class Forge
 				return false;
 			}
 		}
+		$preStatements = $this->_preCreateAlterStatements($table,$this->_processFields(true));
+		foreach($preStatements as $statement) 
+		{
+			 //Run without concern of result as with indexes below
+			 $this->db->query($statement); 
+		}
 
 		if (($result = $this->db->query($sql)) !== false)
 		{
@@ -552,6 +558,20 @@ class Forge
 		$this->reset();
 
 		return $result;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Pre - Create or Alter Table statements to be run
+	 *
+	 * @param string  $table         Table name
+	 * @param array   $fields        List of Fields
+	 * @return array
+	 */
+	protected function _preCreateAlterStatements(string $table,array $fields)
+	{
+		  return array();
 	}
 
 	//--------------------------------------------------------------------
@@ -585,7 +605,7 @@ class Forge
 		for ($i = 0, $c = count($columns); $i < $c; $i++)
 		{
 			$columns[$i] = ($columns[$i]['_literal'] !== false) ? "\n\t" . $columns[$i]['_literal']
-				: "\n\t" . $this->_processColumn($columns[$i]);
+				: "\n\t" . $this->_processColumn($columns[$i],$table);
 		}
 
 		$columns = implode(',', $columns);
@@ -801,6 +821,11 @@ class Forge
 
 			return false;
 		}
+		$preStatements = $this->_preCreateAlterStatements($table,$this->_processFields());
+		foreach($preStatements as $statement) 
+		{
+			 $this->db->query($statement); 
+		}
 
 		for ($i = 0, $c = count($sqls); $i < $c; $i++)
 		{
@@ -877,6 +902,11 @@ class Forge
 
 			return false;
 		}
+		$preStatements = $this->_preCreateAlterStatements($table,$this->_processFields());
+		foreach($preStatements as $statement) 
+		{
+			 $this->db->query($statement); 
+		}
 
 		if ($sqls !== null)
 		{
@@ -928,7 +958,7 @@ class Forge
 		foreach ($fields as $data)
 		{
 			$sqls[] = $sql
-					  . ($data['_literal'] !== false ? $data['_literal'] : $this->_processColumn($data));
+					  . ($data['_literal'] !== false ? $data['_literal'] : $this->_processColumn($data,$table));
 		}
 
 		return $sqls;
@@ -1040,10 +1070,11 @@ class Forge
 	 * Process column
 	 *
 	 * @param array $field
+	 * @param string $table
 	 *
 	 * @return string
 	 */
-	protected function _processColumn(array $field): string
+	protected function _processColumn(array $field,string $table): string
 	{
 		return $this->db->escapeIdentifiers($field['name'])
 			   . ' ' . $field['type'] . $field['length']

@@ -186,10 +186,11 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * Process column
 	 *
 	 * @param array $field
+	 * @param string $table
 	 *
 	 * @return string
 	 */
-	protected function _processColumn(array $field): string
+	protected function _processColumn(array $field,string $table): string
 	{
 		if ($field['type'] === 'TEXT' && strpos($field['length'], "('") === 0)
 		{

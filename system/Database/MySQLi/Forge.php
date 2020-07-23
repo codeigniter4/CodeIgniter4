@@ -195,7 +195,7 @@ class Forge extends \CodeIgniter\Database\Forge
 					$field[$i]['_literal'] = empty($data['new_name']) ? "\n\tMODIFY " : "\n\tCHANGE ";
 				}
 
-				$field[$i] = $field[$i]['_literal'] . $this->_processColumn($field[$i]);
+				$field[$i] = $field[$i]['_literal'] . $this->_processColumn($field[$i],$table);
 			}
 		}
 
@@ -207,10 +207,12 @@ class Forge extends \CodeIgniter\Database\Forge
 	/**
 	 * Process column
 	 *
-	 * @param  array $field
+	 * @param array $field
+	 * @param string $table
+	 *
 	 * @return string
 	 */
-	protected function _processColumn(array $field): string
+	protected function _processColumn(array $field,string $table): string
 	{
 		$extra_clause = isset($field['after']) ? ' AFTER ' . $this->db->escapeIdentifiers($field['after']) : '';
 
