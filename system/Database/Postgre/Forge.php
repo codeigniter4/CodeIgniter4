@@ -214,7 +214,7 @@ class Forge extends \CodeIgniter\Database\Forge
 		  $result = array();
 		  foreach($fields as $field) 
 		  {
-				if ((strtoupper($field['type']) == 'ENUM') ||	(strtoupper($field['type']) == 'SET') ) 
+				if (isset($field['type']) && ((strtoupper($field['type']) == 'ENUM') ||	(strtoupper($field['type']) == 'SET')) ) 
 				{
 					 $result[] = 'CREATE TYPE ' . trim($table).'_'.trim($field['name']).'_'.$field['type']
 								 . ' AS ENUM '.$field['length']; //constraint types stored in length field with processing of fields
@@ -339,7 +339,6 @@ class Forge extends \CodeIgniter\Database\Forge
 		 $result = array();
 		 foreach($this->dropDatabaseEnums as $enum_entry)
 		 {
-			 					//log_message('error', print_r($enum_entry,true));
 			 $result[] = 'DROP TYPE IF EXISTS '.$enum_entry;
 		 }
 		  return $result;

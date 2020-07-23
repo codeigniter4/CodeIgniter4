@@ -161,8 +161,8 @@ class GetTest extends CIDatabaseTestCase
 			$this->assertEquals('timestamp', $type_test[10]->type_name);  //DATETIME
 			$this->assertEquals('timestamp', $type_test[11]->type_name);  //TIMESTAMP
 			$this->assertEquals('int8', $type_test[12]->type_name); //BIGINT
-			$this->assertEquals('type_test_type_enum_enum', $type_test[13]->type_name);  //ENUM
-			$this->assertEquals('type_test_type_set_set', $type_test[14]->type_name);  //SET
+			$this->assertEquals($this->db->DBPrefix.'type_test_type_enum_enum', $type_test[13]->type_name);  //ENUM
+			$this->assertEquals($this->db->DBPrefix.'type_test_type_set_set', $type_test[14]->type_name);  //SET
 			$this->assertEquals('text', $type_test[15]->type_name);  //MEDIUMTEXT
 			$this->assertEquals('float4', $type_test[16]->type_name);  //REAL
 			$this->assertEquals('numeric', $type_test[17]->type_name);  //DOUBLE
