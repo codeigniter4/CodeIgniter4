@@ -184,20 +184,6 @@ class DotEnv
 
 		$value = $this->resolveNestedVariables($value);
 
-		if ($name === 'encryption.key')
-		{
-			// Handle hex2bin prefix
-			if (strpos($value, 'hex2bin:') === 0)
-			{
-				$value = hex2bin(substr($value, 8));
-			}
-			// Handle base64 prefix
-			elseif (strpos($value, 'base64:') === 0)
-			{
-				$value = base64_decode(substr($value, 7), true);
-			}
-		}
-
 		return [
 			$name,
 			$value,
