@@ -1344,18 +1344,15 @@ class RouteCollection implements RouteCollectionInterface
 		// the appropriate places.
 		foreach ($matches[0] as $index => $pattern)
 		{
-			// Ensure that the param we're inserting matches
-			// the expected param type.
-			$pos = strpos($from, $pattern);
-
-			if (preg_match('#^' . $pattern . '$#u', $params[$index]))
-			{
-				$from = substr_replace($from, $params[$index], $pos, strlen($pattern));
-			}
-			else
+			if (! preg_match('#^' . $pattern . '$#u', $params[$index]))
 			{
 				throw RouterException::forInvalidParameterType();
 			}
+
+			// Ensure that the param we're inserting matches
+			// the expected param type.
+			$pos  = strpos($from, $pattern);
+			$from = substr_replace($from, $params[$index], $pos, strlen($pattern));
 		}
 
 		return '/' . ltrim($from, '/');
