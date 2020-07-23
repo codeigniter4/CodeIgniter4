@@ -65,7 +65,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @var string
 	 */
 	protected $dropDatabaseStr = 'DROP DATABASE %s';
-	
+
 	/**
 	 * UNSIGNED support
 	 *
@@ -90,6 +90,13 @@ class Forge extends \CodeIgniter\Database\Forge
 	 */
 	protected $_null = 'NULL';
 
+	/**
+	 * DROP ENUM and SET types when drop table is done
+	 *
+	 * @var array
+	 */
+	private $dropDatabaseEnums = array();
+	
 	//--------------------------------------------------------------------
 
 	/**
@@ -300,6 +307,15 @@ class Forge extends \CodeIgniter\Database\Forge
 	 */
 	protected function _dropTable(string $table, bool $if_exists, bool $cascade): string
 	{
+		$this->dropDatabaseEnums = array();
+		$enumlist = $this->db->query('select udt_name from INFORMATION_SCHEMA.COLUMNS where table_name = \''.$table.'\' and data_type = \'USER-DEFINED\'');
+		if ($enumlist !== false) 
+		{
+			foreach($enumlist->getResultArray( ) as $entry)
+			{
+				$this->dropDatabaseEnums[] = $entry['udt_name'];
+			}
+		}
 		$sql = parent::_dropTable($table, $if_exists, $cascade);
 
 		if ($cascade === true)
@@ -309,6 +325,25 @@ class Forge extends \CodeIgniter\Database\Forge
 
 		return $sql;
 	}
+	
+	//--------------------------------------------------------------------
+
+	/**
+	 * Post - Drop Table statements to be run
+	 *
+	 * @param string  $table         Table name
+	 * @return array
+	 */
+	protected function _postDropTableStatements(string $table)
+	{
+		 $result = array();
+		 foreach($this->dropDatabaseEnums as $enum_entry)
+		 {
+			 					//log_message('error', print_r($enum_entry,true));
+			 $result[] = 'DROP TYPE IF EXISTS '.$enum_entry;
+		 }
+		  return $result;
+	}	
 
 	//--------------------------------------------------------------------
 

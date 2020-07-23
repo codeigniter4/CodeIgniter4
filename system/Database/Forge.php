@@ -563,6 +563,19 @@ class Forge
 	//--------------------------------------------------------------------
 
 	/**
+	 * Post - Drop Table statements to be run
+	 *
+	 * @param string  $table         Table name
+	 * @return array
+	 */
+	protected function _postDropTableStatements(string $table)
+	{
+		  return array();
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Pre - Create or Alter Table statements to be run
 	 *
 	 * @param string  $table         Table name
@@ -704,6 +717,12 @@ class Forge
 			{
 				unset($this->db->dataCache['table_names'][$key]);
 			}
+		}
+		$preStatements = $this->_postDropTableStatements($tableName);
+		foreach($preStatements as $statement) 
+		{
+			 //Run without concern of result as with indexes below
+			 $this->db->query($statement); 
 		}
 
 		return $query;
