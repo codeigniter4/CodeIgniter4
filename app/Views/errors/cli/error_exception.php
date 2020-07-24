@@ -56,7 +56,7 @@ if (defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE)
 				case is_object($value):
 					return 'Object(' . get_class($value) . ')';
 				case is_array($value):
-					return '[]';
+					return count($value) ? '[...]' : '[]';
 				case is_null($value):
 					return 'null'; // return the lowercased version
 				default:
