@@ -154,7 +154,7 @@ class Filters
 
 			if ($position === 'before')
 			{
-				$result = $class->before($this->request, $this->arguments[$alias] ?? null);
+				$result = $class->before($this->request, $this->argumentsClass[$className] ?? null);
 
 				if ($result instanceof RequestInterface)
 				{
@@ -180,7 +180,7 @@ class Filters
 			}
 			elseif ($position === 'after')
 			{
-				$result = $class->after($this->request, $this->response, $this->arguments[$alias] ?? null);
+				$result = $class->after($this->request, $this->response, $this->argumentsClass[$className] ?? null);
 
 				if ($result instanceof ResponseInterface)
 				{
@@ -285,6 +285,10 @@ class Filters
 	/**
 	 * Ensures that a specific filter is on and enabled for the current request.
 	 *
+	 * Filters can have "arguments". This is done by placing a colon immediately
+	 * after the filter name, followed by a comma-separated list of arguments that
+	 * are passed to the filter when executed.
+	 *
 	 * @param string $name
 	 * @param string $when
 	 *
@@ -292,24 +296,48 @@ class Filters
 	 */
 	public function enableFilter(string $name, string $when = 'before')
 	{
+		// Get parameters and clean name
+		if (strpos($name, ':') !== false)
+		{
+			list($name, $params) = explode(':', $name);
+
+			$params = explode(',', $params);
+			array_walk($params, function (&$item) {
+				$item = trim($item);
+			});
+
+			$this->arguments[$name] = $params;
+		}
+
 		if (! array_key_exists($name, $this->config->aliases))
 		{
 			throw FilterException::forNoAlias($name);
 		}
 
-		if (! isset($this->filters[$when][$name]))
+		if (is_array($this->config->aliases[$name]))
 		{
-			$this->filters[$when][] = $name;
+			$classNames = $this->config->aliases[$name];
+		}
+		else
+		{
+			$classNames = [$this->config->aliases[$name]];
 		}
 
-		if (! in_array($this->config->aliases, $this->filtersClass[$when]))
+		foreach ($classNames as $className)
 		{
-			$this->filtersClass[$when][] = $this->config->aliases[$name];
+			$this->filtersClass[$when][]      = $className;
+			$this->argumentsClass[$className] = $this->arguments[$name] ?? null;
+		}
+
+		if (! isset($this->filters[$when][$name]))
+		{
+			$this->filters[$when][]    = $name;
+			$this->filtersClass[$when] = array_merge($this->filtersClass[$when], $classNames);
 		}
 
 		return $this;
-    }
-    
+	}
+
 	/**
 	 * Returns the arguments for a specified key, or all.
 	 *
