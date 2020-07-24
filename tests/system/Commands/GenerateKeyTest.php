@@ -45,9 +45,11 @@ class GenerateKeyTest extends CIUnitTestCase
 		if (file_exists($this->envPath))
 		{
 			unlink($this->envPath);
+			rename($this->backupEnvPath, $this->envPath);
 		}
 
-		rename($this->backupEnvPath, $this->envPath);
+		putenv('encryption.key');
+		unset($_ENV['encryption.key'], $_SERVER['encryption.key']);
 	}
 
 	/**
@@ -72,6 +74,10 @@ class GenerateKeyTest extends CIUnitTestCase
 		$this->assertStringContainsString('base64:', $this->getBuffer());
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState  disabled
+	 */
 	public function testGenerateKeyCreatesNewKey()
 	{
 		// use the 'force' option to bypass CLI::prompt
