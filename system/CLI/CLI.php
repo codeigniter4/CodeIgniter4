@@ -899,7 +899,7 @@ class CLI
 				continue;
 			}
 
-			$arg   = str_replace('-', '', $_SERVER['argv'][$i]);
+			$arg   = ltrim($_SERVER['argv'][$i], '-');
 			$value = null;
 
 			// if there is a following segment, and it doesn't start with a dash, it's a value.
