@@ -206,27 +206,18 @@ class Commands
 	 */
 	protected function getCommandAlternatives(string $name, array $collection): array
 	{
-		$threshold    = 1000;
 		$alternatives = [];
 
 		foreach ($collection as $commandName => $attributes)
 		{
-			$exists = isset($alternatives[$commandName]);
-			$lev    = levenshtein($name, $commandName);
+			$lev = levenshtein($name, $commandName);
 
 			if ($lev <= strlen($commandName) / 3 || strpos($commandName, $name) !== false)
 			{
-				$alternatives[$commandName] = $exists ? $alternatives[$commandName] + $lev : $lev;
-			}
-			elseif ($exists)
-			{
-				$alternatives[$commandName] += $threshold;
+				$alternatives[$commandName] = $lev;
 			}
 		}
 
-		$alternatives = array_filter($alternatives, function ($lev) use ($threshold) {
-			return $lev < 2 * $threshold;
-		});
 		ksort($alternatives, SORT_NATURAL | SORT_FLAG_CASE);
 
 		return array_keys($alternatives);
