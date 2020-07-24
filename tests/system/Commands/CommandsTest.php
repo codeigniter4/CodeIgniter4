@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\CLI\CLI;
@@ -25,15 +26,13 @@ class CommandsTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		CITestStreamFilter::$buffer = '';
 		$this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
+		$this->stream_filter        = stream_filter_append(STDERR, 'CITestStreamFilter');
 
 		$this->env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
 		$this->env->load();
 
 		// Set environment values that would otherwise stop the framework from functioning during tests.
-		if (! isset($_SERVER['app.baseURL']))
-		{
-			$_SERVER['app.baseURL'] = 'http://example.com';
-		}
+		$_SERVER['app.baseURL'] = $_SERVER['app.baseURL'] ?? 'http://example.com';
 
 		$_SERVER['argv'] = [
 			'spark',
@@ -96,34 +95,18 @@ class CommandsTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testCommandCall()
 	{
-		$this->error_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
 		$this->runner->index(['app:info']);
 		$commands = $this->runner->getCommands();
 		$command  = new $commands['app:info']['class']($this->logger, service('commands'));
 
 		$command->bomb();
 		$result = CITestStreamFilter::$buffer;
-		stream_filter_remove($this->error_filter);
 
 		$this->assertStringContainsString('Invalid background color:', $result);
 	}
 
-	public function testNonexistantCommand()
-	{
-		// catch errors too
-		$this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
-
-		$this->runner->index(['app:oops']);
-		$result = CITestStreamFilter::$buffer;
-
-		$this->assertStringContainsString('not found', $result);
-	}
-
 	public function testAbstractCommand()
 	{
-		// catch errors too
-		$this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
-
 		$this->runner->index(['app:pablo']);
 		$result = CITestStreamFilter::$buffer;
 
@@ -150,4 +133,31 @@ class CommandsTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertStringContainsString('\\TestController::index', $result);
 	}
 
+	public function testInexistentCommandWithNoAlternatives()
+	{
+		$this->runner->index(['app:oops']);
+		$result = CITestStreamFilter::$buffer;
+
+		$this->assertStringContainsString('Command "app:oops" not found', $result);
+	}
+
+	public function testInexistentCommandsButWithOneAlternative()
+	{
+		$this->runner->index(['namespace']);
+		$result = CITestStreamFilter::$buffer;
+
+		$this->assertStringContainsString('Command "namespace" not found.', $result);
+		$this->assertStringContainsString('Did you mean this?', $result);
+		$this->assertStringContainsString('namespaces', $result);
+	}
+
+	public function testInexistentCommandsButWithManyAlternatives()
+	{
+		$this->runner->index(['clear']);
+		$result = CITestStreamFilter::$buffer;
+
+		$this->assertStringContainsString('Command "clear" not found.', $result);
+		$this->assertStringContainsString('Did you mean one of these?', $result);
+		$this->assertStringContainsString(':clear', $result);
+	}
 }
