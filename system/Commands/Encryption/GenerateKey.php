@@ -97,7 +97,7 @@ class GenerateKey extends BaseCommand
 	 */
 	public function run(array $params)
 	{
-		$encoding = array_key_exists('-encoding', $params) ? $params['-encoding'] : CLI::getOption('encoding');
+		$encoding = array_key_exists('encoding', $params) ? $params['encoding'] : CLI::getOption('encoding');
 		if ($encoding === null || ! in_array($encoding, ['hex', 'base64'], true))
 		{
 			// @codeCoverageIgnoreStart
@@ -106,7 +106,7 @@ class GenerateKey extends BaseCommand
 		}
 
 		$encodedKey = $this->generateRandomKey($encoding);
-		if (array_key_exists('-show', $params) || (bool) CLI::getOption('show'))
+		if (array_key_exists('show', $params) || (bool) CLI::getOption('show'))
 		{
 			CLI::write($encodedKey, 'yellow');
 			CLI::newLine();
@@ -176,7 +176,7 @@ class GenerateKey extends BaseCommand
 
 	protected function confirmOverwrite(array $params): bool
 	{
-		return (array_key_exists('-force', $params) || CLI::getOption('force')) || CLI::prompt('Overwrite existing key?', ['n', 'y']) === 'y';
+		return (array_key_exists('force', $params) || CLI::getOption('force')) || CLI::prompt('Overwrite existing key?', ['n', 'y']) === 'y';
 	}
 
 	/**

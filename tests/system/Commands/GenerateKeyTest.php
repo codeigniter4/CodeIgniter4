@@ -63,18 +63,15 @@ class GenerateKeyTest extends CIUnitTestCase
 	 */
 	protected function getBuffer(): string
 	{
-		$result                     = CITestStreamFilter::$buffer;
-		CITestStreamFilter::$buffer = '';
-
-		return $result;
+		return CITestStreamFilter::$buffer;
 	}
 
 	public function testGenerateKeyShowsEncodedKey()
 	{
-		$this->runner->index(['key:generate', '-encoding' => 'hex', '-show' => null]);
+		$this->runner->index(['key:generate', 'encoding' => 'hex', 'show' => null]);
 		$this->assertStringContainsString('hex2bin:', $this->getBuffer());
 
-		$this->runner->index(['key:generate', '-encoding' => 'base64', '-show' => null]);
+		$this->runner->index(['key:generate', 'encoding' => 'base64', 'show' => null]);
 		$this->assertStringContainsString('base64:', $this->getBuffer());
 	}
 
@@ -85,7 +82,7 @@ class GenerateKeyTest extends CIUnitTestCase
 	public function testGenerateKeyCreatesNewKey()
 	{
 		// use the 'force' option to bypass CLI::prompt
-		$this->runner->index(['key:generate', '-encoding' => 'hex', '-force' => null]);
+		$this->runner->index(['key:generate', 'encoding' => 'hex', 'force' => null]);
 		$this->assertStringContainsString('successfully set.', $this->getBuffer());
 		$this->assertStringContainsString(env('encryption.key'), file_get_contents($this->envPath));
 	}
