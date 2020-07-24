@@ -1205,7 +1205,8 @@ class Time extends DateTime
 		else if ($hours !== 0)
 		{
 			// Display the actual time instead of a regular phrase.
-			return $this->format('g:i a');
+			$phrase = lang('Time.hours', [abs($hours)]);
+			$before = $hours < 0;
 		}
 		else if ($minutes !== 0)
 		{
