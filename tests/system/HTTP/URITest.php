@@ -49,6 +49,7 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('path', $uri->getSegment(1));
 		$this->assertEquals('to', $uri->getSegment(2));
 		$this->assertEquals('script', $uri->getSegment(3));
+		$this->assertEquals('', $uri->getSegment(4));
 
 		$this->assertEquals(3, $uri->getTotalSegments());
 	}
@@ -58,9 +59,8 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testSegmentOutOfRange()
 	{
 		$this->expectException(HTTPException::class);
-		$url = 'http://abc.com/a123/b/c';
-		$uri = new URI($url);
-		$uri->getSegment(22);
+		$uri = new URI('http://hostname/path/to/script');
+		$uri->getSegment(5);
 	}
 
 	//--------------------------------------------------------------------
@@ -70,6 +70,55 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$url = 'http://abc.com/a123/b/c';
 		$uri = new URI($url);
 		$this->assertEquals('', $uri->setSilent()->getSegment(22));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSegmentOutOfRangeWithDefaultValue()
+	{
+		$this->expectException(HTTPException::class);
+		$url = 'http://abc.com/a123/b/c';
+		$uri = new URI($url);
+		$uri->getSegment(22, 'something');
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSegmentOutOfRangeWithSilentAndDefaultValue()
+	{
+		$url = 'http://abc.com/a123/b/c';
+		$uri = new URI($url);
+		$this->assertEquals('something', $uri->setSilent()->getSegment(22, 'something'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSegmentsWithDefaultValueAndSilent()
+	{
+		$uri = new URI('http://hostname/path/to');
+		$uri->setSilent();
+
+		$this->assertEquals(['path', 'to'], $uri->getSegments());
+		$this->assertEquals('path', $uri->getSegment(1));
+		$this->assertEquals('to', $uri->getSegment(2, 'different'));
+		$this->assertEquals('script', $uri->getSegment(3, 'script'));
+		$this->assertEquals('', $uri->getSegment(3));
+
+		$this->assertEquals(2, $uri->getTotalSegments());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSegmentOutOfRangeWithDefaultValuesAndSilent()
+	{
+		$uri = new URI('http://hostname/path/to/script');
+		$uri->setSilent();
+
+		$this->assertEquals('', $uri->getSegment(22));
+		$this->assertEquals('something', $uri->getSegment(33, 'something'));
+
+		$this->assertEquals(3, $uri->getTotalSegments());
+		$this->assertEquals(['path', 'to', 'script'], $uri->getSegments());
 	}
 
 	//--------------------------------------------------------------------
@@ -106,7 +155,7 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://' . $url, (string) $uri);
 		$url = '/';
 		$uri = new URI($url);
-		$this->assertEquals('http://' . $url, (string) $uri);
+		$this->assertEquals('http://', (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -357,10 +406,24 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$url = 'http://example.com/path';
 		$uri = new URI($url);
 
-		$expected = 'http://example.com/path?key=value';
+		$expected = 'http://example.com/path?key=value&second_key=value.2';
 
-		$uri->setQuery('?key=value');
-		$this->assertEquals('key=value', $uri->getQuery());
+		$uri->setQuery('?key=value&second.key=value.2');
+		$this->assertEquals('key=value&second_key=value.2', $uri->getQuery());
+		$this->assertEquals($expected, (string) $uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetQuerySetsValueWithUseRawQueryString()
+	{
+		$url = 'http://example.com/path';
+		$uri = new URI($url);
+
+		$expected = 'http://example.com/path?key=value&second.key=value.2';
+
+		$uri->useRawQueryString()->setQuery('?key=value&second.key=value.2');
+		$this->assertEquals('key=value&second.key=value.2', $uri->getQuery());
 		$this->assertEquals($expected, (string) $uri);
 	}
 
@@ -371,10 +434,24 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$url = 'http://example.com/path';
 		$uri = new URI($url);
 
-		$expected = 'http://example.com/path?key=value';
+		$expected = 'http://example.com/path?key=value&second_key=value.2';
 
-		$uri->setQueryArray(['key' => 'value']);
-		$this->assertEquals('key=value', $uri->getQuery());
+		$uri->setQueryArray(['key' => 'value', 'second.key' => 'value.2']);
+		$this->assertEquals('key=value&second_key=value.2', $uri->getQuery());
+		$this->assertEquals($expected, (string) $uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetQueryArraySetsValueWithUseRawQueryString()
+	{
+		$url = 'http://example.com/path';
+		$uri = new URI($url);
+
+		$expected = 'http://example.com/path?key=value&second.key=value.2';
+
+		$uri->useRawQueryString()->setQueryArray(['key' => 'value', 'second.key' => 'value.2']);
+		$this->assertEquals('key=value&second.key=value.2', $uri->getQuery());
 		$this->assertEquals($expected, (string) $uri);
 	}
 
@@ -919,6 +996,14 @@ class URITest extends \CodeIgniter\Test\CIUnitTestCase
 		$uri->setSilent()->setURI($url);
 
 		$this->assertTrue(true);
+	}
+
+	public function testCreateURIString()
+	{
+		$expected = 'https://example.com/';
+		$uri      = URI::createURIString('https', 'example.com/', '/');
+
+		$this->assertEquals($expected, $uri);
 	}
 
 }

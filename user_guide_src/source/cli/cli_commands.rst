@@ -37,6 +37,22 @@ for the information it needs to run correctly::
     > php spark migrate:version
     > Version?
 
+Calling Commands
+================
+
+Commands can also be ran from within your own code. This is most often done within a controller for cronjob tasks,
+but they can be used at any time. You do this by using the ``command()`` function. This function is always available.
+
+::
+
+    echo command('migrate:create TestMigration');
+
+The only argument is string that is the command called and any parameters. This appears exactly as you would call
+it from the command line.
+
+All output from the command that is ran is captured when not run from the command line. It is returned from the command
+so that you can choose to display it or not.
+
 ******************
 Using Help Command
 ******************

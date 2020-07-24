@@ -13,6 +13,8 @@ class ConnectTest extends CIDatabaseTestCase
 
 	protected $group2;
 
+	protected $tests;
+
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -21,6 +23,7 @@ class ConnectTest extends CIDatabaseTestCase
 
 		$this->group1 = $config->default;
 		$this->group2 = $config->default;
+		$this->tests  = $config->tests;
 
 		$this->group1['DBDriver'] = 'MySQLi';
 		$this->group2['DBDriver'] = 'Postgre';
@@ -72,5 +75,19 @@ class ConnectTest extends CIDatabaseTestCase
 		$db1 = Database::connect('default');
 		$this->assertNotInstanceOf(\CodeIgniter\Database\SQLite3\Connection::class, $db1);
 		$this->assertEquals('MySQLi', $this->getPrivateProperty($db1, 'DBDriver'));
+	}
+
+	public function testConnectWithFailover()
+	{
+		$this->tests['failover'][] = $this->tests;
+
+		unset($this->tests['failover'][0]['failover']);
+
+		$this->tests['username'] = 'wrong';
+
+		$db1 = Database::connect($this->tests);
+
+		$this->assertEquals($this->tests['failover'][0]['DBDriver'], $this->getPrivateProperty($db1, 'DBDriver'));
+		$this->assertTrue(count($db1->listTables()) >= 0);
 	}
 }

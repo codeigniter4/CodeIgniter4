@@ -39,7 +39,7 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\RedirectResponse;
-use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\ResponseInterface;
 use Config\Format;
 use PHPUnit\Framework\TestCase;
 
@@ -52,7 +52,7 @@ class FeatureResponse extends TestCase
 	/**
 	 * The response.
 	 *
-	 * @var \CodeIgniter\HTTP\Response
+	 * @var \CodeIgniter\HTTP\ResponseInterface
 	 */
 	public $response;
 
@@ -66,9 +66,9 @@ class FeatureResponse extends TestCase
 	/**
 	 * Constructor.
 	 *
-	 * @param Response $response
+	 * @param ResponseInterface $response
 	 */
-	public function __construct(Response $response = null)
+	public function __construct(ResponseInterface $response = null)
 	{
 		$this->response = $response;
 
@@ -91,15 +91,17 @@ class FeatureResponse extends TestCase
 	 */
 	public function isOK(): bool
 	{
+		$status = $this->response->getStatusCode();
+
 		// Only 200 and 300 range status codes
 		// are considered valid.
-		if ($this->response->getStatusCode() >= 400 || $this->response->getStatusCode() < 200)
+		if ($status >= 400 || $status < 200)
 		{
 			return false;
 		}
 
-		// Empty bodies are not considered valid.
-		if (empty($this->response->getBody()))
+		// Empty bodies are not considered valid, unless in redirects
+		if ($status < 300 && empty($this->response->getBody()))
 		{
 			return false;
 		}
@@ -125,6 +127,30 @@ class FeatureResponse extends TestCase
 	public function assertRedirect()
 	{
 		$this->assertTrue($this->isRedirect(), 'Response is not a RedirectResponse.');
+	}
+
+	/**
+	 * Returns the URL set for redirection.
+	 *
+	 * @return string|null
+	 */
+	public function getRedirectUrl(): ?string
+	{
+		if (! $this->isRedirect())
+		{
+			return null;
+		}
+
+		if ($this->response->hasHeader('Location'))
+		{
+			return $this->response->getHeaderLine('Location');
+		}
+		elseif ($this->response->hasHeader('Refresh'))
+		{
+			return str_replace('0;url=', '', $this->response->getHeaderLine('Refresh'));
+		}
+
+		return null;
 	}
 
 	/**

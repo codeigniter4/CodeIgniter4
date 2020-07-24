@@ -103,7 +103,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			$hostname = ($persistent === true) ? 'p:' . $this->hostname : $this->hostname;
 			$port     = empty($this->port) ? null : $this->port;
-			$socket   = null;
+			$socket   = '';
 		}
 
 		$client_flags = ($this->compress === true) ? MYSQLI_CLIENT_COMPRESS : 0;
@@ -222,7 +222,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$msg = str_replace($this->username, '****', $msg);
 			$msg = str_replace($this->password, '****', $msg);
 
-			throw new \mysqli_sql_exception($msg, $e->getCode(), $e);
+			throw new DatabaseException($msg, $e->getCode(), $e);
 		}
 
 		return false;

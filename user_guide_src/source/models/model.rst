@@ -218,6 +218,10 @@ this model will never validate.
 These arrays allow you to specify callback methods that will be run on the data at the
 time specified in the property name.
 
+**$allowCallbacks**
+
+Whether the callbacks defined above should be used.
+
 Working With Data
 =================
 
@@ -553,7 +557,7 @@ the model will return boolean **false**. You can use the ``errors()`` method to 
 
     if ($model->save($data) === false)
     {
-        return view('updateUser', ['errors' => $model->errors()];
+        return view('updateUser', ['errors' => $model->errors()]);
     }
 
 This returns an array with the field names and their associated errors that can be used to either show all of the
@@ -716,7 +720,7 @@ Model Events
 There are several points within the model's execution that you can specify multiple callback methods to run.
 These methods can be used to normalize data, hash passwords, save related entities, and much more. The following
 points in the model's execution can be affected, each through a class property: **$beforeInsert**, **$afterInsert**,
-**$beforeUpdate**, **afterUpdate**, **afterFind**, and **afterDelete**.
+**$beforeUpdate**, **$afterUpdate**, **$afterFind**, and **$afterDelete**.
 
 Defining Callbacks
 ------------------
@@ -750,6 +754,15 @@ use the same callback in multiple events::
     protected $beforeInsert = ['hashPassword'];
     protected $beforeUpdate = ['hashPassword'];
 
+Additionally, each model may allow (default) or deny callbacks class-wide by setting its $allowCallbacks property::
+
+	protected $allowCallbacks = false;
+
+You may also change this setting temporarily for a single model call sing the ``allowCallbacks()`` method::
+
+	$model->allowCallbacks(false)->find(1); // No callbacks triggered
+	$model->find(1);                        // Callbacks subject to original property value
+
 Event Parameters
 ----------------
 
@@ -777,16 +790,36 @@ afterFind         Varies by find* method. See the following:
                   **limit** = the number of rows to find.
                   **offset** = the number of rows to skip during the search.
 - first()         **data** = the resulting row found during the search, or null if none found.
+beforeFind        Same as **afterFind** but with the name of the calling **$method** instead of **$data**.
 beforeDelete      Varies by delete* method. See the following:
 - delete()        **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
-afterDelete       Varies by delete* method. See the following:
-- delete()        **id** = primary key of row being deleted.
+afterDelete       **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
                   **result** = the result of the delete() call on the Query Builder.
                   **data** = unused.
 ================ =========================================================================================================
 
+Modifying Find* Data
+--------------------
+
+The ``beforeFind`` and ``afterFind`` methods can both return a modified set of data to override the normal response
+from the model. For ``afterFind`` any changes made to ``data`` in the return array will automatically be passed back
+to the calling context. In order for ``beforeFind`` to intercept the find workflow it must also return an additional
+boolean, ``returnData``::
+
+    protected $beforeFind = ['checkCache'];
+    ...
+	protected function checkCache(array $data)
+	{
+		// Check if the requested item is already in our cache
+		if (isset($data['id']) && $item = $this->getCachedItem($data['id']]))
+		{
+			$data['data']       = $item;
+			$data['returnData'] = true;
+
+			return $data;
+	...
 
 Manual Model Creation
 =====================

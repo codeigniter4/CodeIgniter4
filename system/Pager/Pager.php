@@ -202,7 +202,10 @@ class Pager implements PagerInterface
 	 */
 	public function store(string $group, int $page, int $perPage = null, int $total, int $segment = 0)
 	{
-		$this->segment[$group] = $segment;
+		if ($segment)
+		{
+			$this->setSegment($segment, $group);
+		}
 
 		$this->ensureGroup($group, $perPage);
 
@@ -217,6 +220,23 @@ class Pager implements PagerInterface
 		$this->groups[$group]['perPage']     = $perPage;
 		$this->groups[$group]['total']       = $total;
 		$this->groups[$group]['pageCount']   = $pageCount;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets segment for a group.
+	 *
+	 * @param integer $number
+	 * @param string  $group
+	 *
+	 * @return mixed
+	 */
+	public function setSegment(int $number, string $group = 'default')
+	{
+		$this->segment[$group] = $number;
 
 		return $this;
 	}
@@ -269,7 +289,7 @@ class Pager implements PagerInterface
 	{
 		$this->ensureGroup($group);
 
-		return $this->groups[$group]['currentPage'];
+		return $this->groups[$group]['currentPage'] ?: 1;
 	}
 
 	//--------------------------------------------------------------------
@@ -539,7 +559,7 @@ class Pager implements PagerInterface
 		{
 			try
 			{
-				$this->groups[$group]['currentPage'] = $this->groups[$group]['uri']->getSegment($this->segment[$group]);
+				$this->groups[$group]['currentPage'] = (int) $this->groups[$group]['uri']->setSilent(false)->getSegment($this->segment[$group]);
 			}
 			catch (\CodeIgniter\HTTP\Exceptions\HTTPException $e)
 			{

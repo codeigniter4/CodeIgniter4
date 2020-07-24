@@ -1,0 +1,59 @@
+Version 4.0.4
+====================================================
+
+Release Date: July 15, 2020
+
+**4.0.4 release of CodeIgniter4**
+
+Enhancements:
+
+- The location for the SQLite3 database has changed and by default will be now located in a ``writable`` folder instead of the ``public`` folder.
+- New CLI command: ``cache:clear`` that will destroy all data within the current cache engine.
+- Thanks to samsonasik, we have several libraries brought up to 100% test coverage.
+- A few small performance increases. Every ounce matters!
+- ``getFieldData()`` in the database results class now returns column type and length.
+- Default .htaccess file updated to work better with extended characters.
+- New Testing Feature: :doc:`Fabricator </testing/fabricator>` makes creating mock classes simple and repeatable in your tests.
+- Model class can now have the callbacks overridden at runtime. Useful for testing.
+- A number of improvements to :doc:`Feature Tests </testing/feature>` in general.
+- New :doc:`command() helper function </cli/cli_commands>` to programatically run your CLI commands. Useful for testing and cron jobs.
+- New command, ``make:seeder`` to generate a :doc:`Database Seed class </dbmgmt/seeds>` skeleton file.
+- Colors now available on the CLI within Windows, as well as other Windows-related CLI improvements.
+- New helper :doc:`mb_url_title </helpers/url_helper>` that functions like ``url_title`` but automatically escapes and extended URL characters.
+- :doc:`Image library </libraries/images>` now supports ``webp`` images.
+- Added Unicode support for regular expressions in the Router.
+- Added support for removing hidden folders in the :doc:`delete_files </helpers/filesystem_helper>` helper
+- ``fetchGlobal`` in the Request class now supports applying filters to arrays of data, not just the first item.
+- ``file`` validation now works with arrays of files.
+- URI class now supports a ``setSilent()`` method that will disable the throwing of Exceptions.
+- New argument to ``URI::getSegment()`` that allows us to change the default value returned if nothing exists.
+- Implemented a ``withResource()`` in Image so that you can use method chaining instead of using the provided getResource() (used in tests). To just compress your image.
+- Cookies and headers can be copied from the global Response object when doing a redirect using the new ``withCookies()`` and ``withHeaders()`` methods.
+- Support for special prefix "hex2bin:" which can be used with ``$key`` parameter in :doc:`Encryption class</libraries/encryption>` or in .env file.
+
+
+Bugs Fixed:
+
+- Fixed location for the SQLite3 database which by default will be now located in a ``writable`` folder instead of the ``public`` folder.
+- Fixed bug where ``force_https`` could add ``https://`` a second time.
+- Fixed a bug with CurlRequest that could result in incorrect "100 Continue" headers.
+- Image::save() bug fixed when ``$target`` parameter was ``null``
+- fixes for ``set_checkbox()`` and ``set_radio()`` when the $default parameter is set to ``true``
+- fix for result object handling in Model class .
+- fixed escape character SQLite database
+- fix for inserts on Postgres and Entities when the primary key was null
+- CLI scripts can now correctly recognize dashes within arguments.
+- CURLRequest now properly sets content length with multipart data
+- Misc. stability improvements for the ImageMagick handler
+- setting validation errors within a config file should now work
+- Unicode characters are not escaped when saving JSON from Entities.
+- redirecting with a custom HTTP code should work correctly now
+- Time::setTimezone now working correctly
+- added full outer join support for Postgres
+- some cast items in the Entity (like array, json) were not being set correctly during a ``fill()`` process.
+- Fixed bug in Image GD handler that would try to compress images twice in certain cases
+- Ensure get translation output logic work on selected locale, dashed locale, and fallback "en"
+- Fix is_unique/is_not_unique validation called on POST/PUT via API in Postgresql
+- Added ``$arguments`` parameter to after() and before() in FilterInterface. This is a breaking change, so all code implementing the FilterInterface must be updated
+- Fixed a bug where filter arguments were not passed to after()
+

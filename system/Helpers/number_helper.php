@@ -214,7 +214,7 @@ if (! function_exists('format_number'))
 	function format_number(float $num, int $precision = 1, string $locale = null, array $options = []): string
 	{
 		// Locale is either passed in here, negotiated with client, or grabbed from our config file.
-		$locale = $locale ?? \CodeIgniter\Config\Services::request()->getLocale();
+		$locale = $locale ?? \Config\Services::request()->getLocale();
 
 		// Type can be any of the NumberFormatter options, but provide a default.
 		$type = (int) ($options['type'] ?? NumberFormatter::DECIMAL);

@@ -120,6 +120,7 @@ if (! class_exists(Config\Autoload::class, false))
 {
 	require_once SYSTEMPATH . 'Config/AutoloadConfig.php';
 	require_once APPPATH . 'Config/Autoload.php';
+	require_once SYSTEMPATH . 'Modules/Modules.php';
 	require_once APPPATH . 'Config/Modules.php';
 }
 

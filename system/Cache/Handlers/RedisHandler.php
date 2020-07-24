@@ -58,8 +58,7 @@ class RedisHandler implements CacheInterface
 	/**
 	 * Default config
 	 *
-	 * @static
-	 * @var    array
+	 * @var array
 	 */
 	protected $config = [
 		'host'     => '127.0.0.1',
@@ -72,7 +71,7 @@ class RedisHandler implements CacheInterface
 	/**
 	 * Redis connection
 	 *
-	 * @var Redis
+	 * @var \Redis
 	 */
 	protected $redis;
 
@@ -81,24 +80,22 @@ class RedisHandler implements CacheInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param  type $config
-	 * @throws type
+	 * @param \Config\Cache $config
 	 */
 	public function __construct($config)
 	{
-		$config       = (array)$config;
-		$this->prefix = $config['prefix'] ?? '';
+		$this->prefix = $config->prefix ?: '';
 
 		if (! empty($config))
 		{
-			$this->config = array_merge($this->config, $config['redis']);
+			$this->config = array_merge($this->config, $config->redis);
 		}
 	}
 
 	/**
 	 * Class destructor
 	 *
-	 * Closes the connection to Memcache(d) if present.
+	 * Closes the connection to Redis if present.
 	 */
 	public function __destruct()
 	{
@@ -241,7 +238,7 @@ class RedisHandler implements CacheInterface
 	 *
 	 * @param string $key Cache item name
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
 	public function delete(string $key)
 	{
@@ -289,7 +286,7 @@ class RedisHandler implements CacheInterface
 	/**
 	 * Will delete all items in the entire cache.
 	 *
-	 * @return mixed
+	 * @return boolean
 	 */
 	public function clean()
 	{

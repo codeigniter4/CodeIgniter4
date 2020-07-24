@@ -80,6 +80,13 @@ Email properties. Then save the file and it will be used automatically.
 You will NOT need to use the ``$email->initialize()`` method if
 you set your preferences in the config file.
 
+Reviewing Preferences
+---------------------
+
+The settings used for the last successful send are available from the
+instance property ``$archive``. This is helpful for testing and debugging
+to determine that actual values at the time of the ``send()`` call.
+
 Email Preferences
 =================
 

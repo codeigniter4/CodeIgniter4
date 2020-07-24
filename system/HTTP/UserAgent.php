@@ -51,7 +51,7 @@ class UserAgent
 	 *
 	 * @var string
 	 */
-	protected $agent;
+	protected $agent = '';
 
 	/**
 	 * Flag for if the user-agent belongs to a browser
@@ -130,14 +130,11 @@ class UserAgent
 	 *
 	 * Sets the User Agent and runs the compilation routine
 	 *
-	 * @param null $config
+	 * @param null|\Config\UserAgents $config
 	 */
-	public function __construct($config = null)
+	public function __construct(UserAgents $config = null)
 	{
-		if (is_null($config))
-		{
-			$this->config = new UserAgents();
-		}
+		$this->config = $config ?? new UserAgents();
 
 		if (isset($_SERVER['HTTP_USER_AGENT']))
 		{

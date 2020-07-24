@@ -223,7 +223,7 @@ class CLIRequest extends Request
 		{
 			// If there's no '-' at the beginning of the argument
 			// then add it to our segments.
-			if (! $options_found && strpos($argv[$i], '-') === false)
+			if (! $options_found && strpos($argv[$i], '-') !== 0)
 			{
 				$this->segments[] = filter_var($argv[$i], FILTER_SANITIZE_STRING);
 				continue;
@@ -248,6 +248,18 @@ class CLIRequest extends Request
 
 			$this->options[$arg] = $value;
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Determines if this request was made from the command line (CLI).
+	 *
+	 * @return boolean
+	 */
+	public function isCLI(): bool
+	{
+		return is_cli();
 	}
 
 	//--------------------------------------------------------------------

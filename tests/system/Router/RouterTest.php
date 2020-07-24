@@ -531,4 +531,45 @@ class RouterTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Home', $router->controllerName());
 		$this->assertEquals('index', $router->methodName());
 	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3169
+	 */
+	public function testRegularExpressionWithUnicode()
+	{
+		$this->collection->get('news/([a-z0-9\x{0980}-\x{09ff}-]+)', 'News::view/$1');
+
+		$router = new Router($this->collection, $this->request);
+
+		$router->handle('news/a0%E0%A6%80%E0%A7%BF-');
+		$this->assertEquals('\News', $router->controllerName());
+		$this->assertEquals('view', $router->methodName());
+
+		$expected = [
+			'a0ঀ৿-',
+		];
+		$this->assertEquals($expected, $router->params());
+	}
+
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3169
+	 */
+	public function testRegularExpressionPlaceholderWithUnicode()
+	{
+		$this->collection->addPlaceholder('custom', '[a-z0-9\x{0980}-\x{09ff}-]+');
+		$this->collection->get('news/(:custom)', 'News::view/$1');
+
+		$router = new Router($this->collection, $this->request);
+
+		$router->handle('news/a0%E0%A6%80%E0%A7%BF-');
+		$this->assertEquals('\News', $router->controllerName());
+		$this->assertEquals('view', $router->methodName());
+
+		$expected = [
+			'a0ঀ৿-',
+		];
+		$this->assertEquals($expected, $router->params());
+	}
 }

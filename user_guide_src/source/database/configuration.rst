@@ -8,7 +8,7 @@ Database Configuration
 
 CodeIgniter has a config file that lets you store your database
 connection values (username, password, database name, etc.). The config
-file is located at app/Config/Database.php. You can also set
+file is located at **app/Config/Database.php**. You can also set
 database connection values in the .env file. See below for more details.
 
 The config settings are stored in a class property that is an array with this
@@ -37,6 +37,9 @@ prototype::
 
 The name of the class property is the connection name, and can be used
 while connecting to specify a group name.
+
+.. note:: The default location of the SQLite3 database is in the ``writable`` folder.
+	If you want to change the location, you must set the full path to the new folder.
 
 Some database drivers (such as PDO, PostgreSQL, Oracle, ODBC) might
 require a full DSN string to be provided. If that is the case, you

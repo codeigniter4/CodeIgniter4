@@ -112,6 +112,68 @@ if (! function_exists('cache'))
 	}
 }
 
+if (! function_exists('clean_path'))
+{
+	/**
+	 * A convenience method to clean paths for
+	 * a nicer looking output. Useful for exception
+	 * handling, error logging, etc.
+	 *
+	 * @param string $path
+	 *
+	 * @return string
+	 */
+	function clean_path(string $path): string
+	{
+		// Resolve relative paths
+		$path = realpath($path) ?: $path;
+
+		switch (true)
+		{
+			case strpos($path, APPPATH) === 0:
+				return 'APPPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(APPPATH));
+			case strpos($path, SYSTEMPATH) === 0:
+				return 'SYSTEMPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(SYSTEMPATH));
+			case strpos($path, FCPATH) === 0:
+				return 'FCPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(FCPATH));
+			case defined('VENDORPATH') && strpos($path, VENDORPATH) === 0:
+				return 'VENDORPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(VENDORPATH));
+			case strpos($path, ROOTPATH) === 0:
+				return 'ROOTPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(ROOTPATH));
+			default:
+				return $path;
+		}
+	}
+}
+
+if (! function_exists('command'))
+{
+	/**
+	 * Runs a single command.
+	 * Input expected in a single string as would
+	 * be used on the command line itself:
+	 *
+	 *  > command('migrate:create SomeMigration');
+	 *
+	 * @param string $command
+	 *
+	 * @return false|string
+	 */
+	function command(string $command)
+	{
+		$runner = service('commands');
+
+		$params  = explode(' ', $command);
+		$command = array_shift($params);
+
+		ob_start();
+		$runner->run($command, $params);
+		$output = ob_get_clean();
+
+		return $output;
+	}
+}
+
 if (! function_exists('config'))
 {
 	/**
@@ -270,11 +332,7 @@ if (! function_exists('env'))
 	 */
 	function env(string $key, $default = null)
 	{
-		$value = getenv($key);
-		if ($value === false)
-		{
-			$value = $_ENV[$key] ?? $_SERVER[$key] ?? false;
-		}
+		$value = $_ENV[$key] ?? $_SERVER[$key] ?? getenv($key);
 
 		// Not found? Return the default value
 		if ($value === false)
@@ -400,7 +458,7 @@ if (! function_exists('force_https'))
 			$response = Services::response(null, true);
 		}
 
-		if (ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure()))
+		if ((ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure())) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'test'))
 		{
 			// @codeCoverageIgnoreStart
 			return;
@@ -419,7 +477,11 @@ if (! function_exists('force_https'))
 
 		$baseURL = config(App::class)->baseURL;
 
-		if (strpos($baseURL, 'http://') === 0)
+		if (strpos($baseURL, 'https://') === 0)
+		{
+			$baseURL = (string) substr($baseURL, strlen('https://'));
+		}
+		elseif (strpos($baseURL, 'http://') === 0)
 		{
 			$baseURL = (string) substr($baseURL, strlen('http://'));
 		}

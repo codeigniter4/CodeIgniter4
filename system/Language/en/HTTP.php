@@ -31,23 +31,23 @@ return [
    'emptySupportedNegotiations' => 'You must provide an array of supported values to all Negotiations.',
 
 	// RedirectResponse
-   'invalidRoute'               => '{0, string} route cannot be found while reverse-routing.',
+   'invalidRoute'               => '{0} route cannot be found while reverse-routing.',
 
 	// DownloadResponse
-   'cannotSetBinary'            => 'When setting filepath can not set binary.',
-   'cannotSetFilepath'          => 'When setting binary can not set filepath: {0}',
+   'cannotSetBinary'            => 'When setting filepath cannot set binary.',
+   'cannotSetFilepath'          => 'When setting binary cannot set filepath: {0}',
    'notFoundDownloadSource'     => 'Not found download body source.',
-   'cannotSetCache'             => 'It does not supported caching for downloading.',
-   'cannotSetStatusCode'        => 'It does not supported change status code for downloading. code: {0}, reason: {1}',
+   'cannotSetCache'             => 'It does not support caching for downloading.',
+   'cannotSetStatusCode'        => 'It does not support change status code for downloading. code: {0}, reason: {1}',
 
 	// Response
    'missingResponseStatus'      => 'HTTP Response is missing a status code',
-   'invalidStatusCode'          => '{0, string} is not a valid HTTP return status code',
+   'invalidStatusCode'          => '{0} is not a valid HTTP return status code',
    'unknownStatusCode'          => 'Unknown HTTP status code provided with no message: {0}',
 
 	// URI
    'cannotParseURI'             => 'Unable to parse URI: {0}',
-   'segmentOutOfRange'          => 'Request URI segment is our of range: {0}',
+   'segmentOutOfRange'          => 'Request URI segment is out of range: {0}',
    'invalidPort'                => 'Ports must be between 0 and 65535. Given: {0}',
    'malformedQueryString'       => 'Query strings may not include URI fragments.',
 

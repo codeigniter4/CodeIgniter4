@@ -111,7 +111,7 @@ if (! function_exists('base_url'))
 		// We should be using the configured baseURL that the user set;
 		// otherwise get rid of the path, because we have
 		// no way of knowing the intent...
-		$config = \CodeIgniter\Config\Services::request()->config;
+		$config = \Config\Services::request()->config;
 
 		// If baseUrl does not have a trailing slash it won't resolve
 		// correctly for users hosting in a subfolder.
@@ -130,7 +130,7 @@ if (! function_exists('base_url'))
 
 		// If the scheme wasn't provided, check to
 		// see if it was a secure request
-		if (empty($protocol) && \CodeIgniter\Config\Services::request()->isSecure())
+		if (empty($protocol) && \Config\Services::request()->isSecure())
 		{
 			$protocol = 'https';
 		}
@@ -160,25 +160,21 @@ if (! function_exists('current_url'))
 	 */
 	function current_url(bool $returnObject = false)
 	{
-		$uri = clone service('request')->uri;
+		$uri = clone \Config\Services::request()->uri;
 
 		// If hosted in a sub-folder, we will have additional
 		// segments that show up prior to the URI path we just
 		// grabbed from the request, so add it on if necessary.
-		$baseUri = new \CodeIgniter\HTTP\URI(config('App')->baseURL);
+		$baseUri = new \CodeIgniter\HTTP\URI(config(\Config\App::class)->baseURL);
 
 		if (! empty($baseUri->getPath()))
 		{
-			$path = rtrim($baseUri->getPath(), '/ ') . '/' . $uri->getPath();
-
-			$uri->setPath($path);
+			$uri->setPath(rtrim($baseUri->getPath(), '/ ') . '/' . $uri->getPath());
 		}
 
 		// Since we're basing off of the IncomingRequest URI,
 		// we are guaranteed to have a host based on our own configs.
-		return $returnObject
-			? $uri
-			: (string)$uri->setQuery('');
+		return $returnObject ? $uri : (string) $uri->setQuery('');
 	}
 }
 
@@ -201,7 +197,7 @@ if (! function_exists('previous_url'))
 		// Grab from the session first, if we have it,
 		// since it's more reliable and safer.
 		// Otherwise, grab a sanitized version from $_SERVER.
-		$referer = $_SESSION['_ci_previous_url'] ?? \CodeIgniter\Config\Services::request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL);
+		$referer = $_SESSION['_ci_previous_url'] ?? \Config\Services::request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL);
 
 		$referer = $referer ?? site_url('/');
 
@@ -222,7 +218,7 @@ if (! function_exists('uri_string'))
 	 */
 	function uri_string(): string
 	{
-		return \CodeIgniter\Config\Services::request()->uri->getPath();
+		return \Config\Services::request()->uri->getPath();
 	}
 }
 
@@ -610,6 +606,30 @@ if (! function_exists('url_title'))
 		}
 
 		return trim(trim($str, $separator));
+	}
+}
+
+// ------------------------------------------------------------------------
+
+if (! function_exists('mb_url_title'))
+{
+	/**
+	 * Create URL Title that takes into account accented characters
+	 *
+	 * Takes a "title" string as input and creates a
+	 * human-friendly URL string with a "separator" string
+	 * as the word separator.
+	 *
+	 * @param  string  $str       Input string
+	 * @param  string  $separator Word separator (usually '-' or '_')
+	 * @param  boolean $lowercase Whether to transform the output string to lowercase
+	 * @return string
+	 */
+	function mb_url_title(string $str, string $separator = '-', bool $lowercase = false): string
+	{
+		helper('text');
+
+		return url_title(convert_accented_characters($str), $separator, $lowercase);
 	}
 }
 

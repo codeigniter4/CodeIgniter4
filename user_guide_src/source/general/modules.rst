@@ -20,11 +20,11 @@ that CodeIgniter uses. While any code can use the PSR4 autoloader and namespaces
 modules is to namespace your code and add it to **app/Config/Autoload.php**, in the ``psr4`` section.
 
 For example, let's say we want to keep a simple blog module that we can re-use between applications. We might create
-folder with our company name, Acme, to store all of our modules within. We will put it right alongside our **application**
+folder with our company name, Acme, to store all of our modules within. We will put it right alongside our **app**
 directory in the main project root::
 
     /acme        // New modules directory
-    /application
+    /app
     /public
     /system
     /tests

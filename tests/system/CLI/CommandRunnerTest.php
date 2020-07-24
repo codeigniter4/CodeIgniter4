@@ -99,7 +99,7 @@ class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->runner->index(['help']);
 		$result   = CITestStreamFilter::$buffer;
 		$commands = $this->runner->getCommands();
-		$command  = new $commands['help']['class']($this->logger, $this->runner);
+		$command  = new $commands['help']['class']($this->logger, service('commands'));
 
 		$this->assertEquals('Displays basic usage information.', $command->description);
 		$this->assertNull($command->notdescription);
@@ -123,6 +123,15 @@ class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
 
 		// make sure the result looks like a command list
 		$this->assertStringContainsString('Command "bogus" not found', $result);
+	}
+
+	public function testRemapEmptyFirstParams()
+	{
+		$this->runner->_remap('anyvalue', null, 'list');
+		$result = CITestStreamFilter::$buffer;
+
+		// make sure the result looks like a command list
+		$this->assertStringContainsString('Lists the available commands.', $result);
 	}
 
 }

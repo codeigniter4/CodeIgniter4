@@ -67,7 +67,7 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$output = 'Howdy Stranger.';
 
 		$response = $this->request->setOutput($output)
-				->send('get', 'http://example.com');
+			->send('get', 'http://example.com');
 
 		$this->assertInstanceOf('CodeIgniter\\HTTP\\Response', $response);
 		$this->assertEquals($output, $response->getBody());
@@ -176,6 +176,7 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_SERVER['HTTP_HOST']            = 'site1.com';
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
+		$_SERVER['HTTP_ACCEPT_ENCODING'] = 'gzip, deflate, br';
 
 		$options = [
 			'base_uri' => 'http://www.foo.com/api/v1/',
@@ -187,6 +188,8 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('en-US', $request->getHeader('Accept-Language')->getValue());
 		// but we skip Host header - since it would corrupt the request
 		$this->assertNull($request->getHeader('Host'));
+		// and Accept-Encoding
+		$this->assertNull($request->getHeader('Accept-Encoding'));
 	}
 
 	/**
@@ -196,16 +199,21 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_SERVER['HTTP_HOST']            = 'site1.com';
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
+		$_SERVER['HTTP_ACCEPT_ENCODING'] = 'gzip, deflate, br';
 
 		$options = [
 			'base_uri' => 'http://www.foo.com/api/v1/',
-			'headers'  => ['Host' => 'www.foo.com'],
+			'headers'  => [
+				'Host'            => 'www.foo.com',
+				'Accept-Encoding' => '',
+			],
 		];
 		$request = $this->getRequest($options);
 		$request->get('example');
 		// if headers for the request are defined we use them
 		$this->assertNull($request->getHeader('Accept-Language'));
 		$this->assertEquals('www.foo.com', $request->getHeader('Host')->getValue());
+		$this->assertEquals('', $request->getHeader('Accept-Encoding')->getValue());
 	}
 
 	//--------------------------------------------------------------------
@@ -365,7 +373,26 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testAuthDigestOption()
 	{
-		$this->request->request('get', 'http://example.com', [
+		$output = "HTTP/1.1 401 Unauthorized
+		Server: ddos-guard
+		Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
+		WWW-Authenticate: Digest\x0d\x0a\x0d\x0aHTTP/1.1 200 OK
+		Server: ddos-guard
+		Connection: keep-alive
+		Keep-Alive: timeout=60
+		Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
+		Date: Tue, 07 Jul 2020 15:13:14 GMT
+		Expires: Thu, 19 Nov 1981 08:52:00 GMT
+		Cache-Control: no-store, no-cache, must-revalidate
+		Pragma: no-cache
+		Set-Cookie: PHPSESSID=80pd3hlg38mvjnelpvokp9lad0; path=/
+		Content-Type: application/xml; charset=utf-8
+		Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>";
+
+
+		$this->request->setOutput($output);
+
+		$response = $this->request->request('get', 'http://example.com', [
 			'auth' => [
 				'username',
 				'password',
@@ -374,6 +401,9 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		]);
 
 		$options = $this->request->curl_options;
+
+		$this->assertEquals('<title>Update success! config</title>', $response->getBody());
+		$this->assertEquals(200, $response->getStatusCode());
 
 		$this->assertArrayHasKey(CURLOPT_USERPWD, $options);
 		$this->assertEquals('username:password', $options[CURLOPT_USERPWD]);
@@ -399,9 +429,31 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testSetAuthDigest()
 	{
-		$this->request->setAuth('username', 'password', 'digest')->get('http://example.com');
+
+		$output = "HTTP/1.1 401 Unauthorized
+		Server: ddos-guard
+		Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
+		WWW-Authenticate: Digest\x0d\x0a\x0d\x0aHTTP/1.1 200 OK
+		Server: ddos-guard
+		Connection: keep-alive
+		Keep-Alive: timeout=60
+		Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
+		Date: Tue, 07 Jul 2020 15:13:14 GMT
+		Expires: Thu, 19 Nov 1981 08:52:00 GMT
+		Cache-Control: no-store, no-cache, must-revalidate
+		Pragma: no-cache
+		Set-Cookie: PHPSESSID=80pd3hlg38mvjnelpvokp9lad0; path=/
+		Content-Type: application/xml; charset=utf-8
+		Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>";
+
+		$this->request->setOutput($output);
+
+		$response = $this->request->setAuth('username', 'password', 'digest')->get('http://example.com');
 
 		$options = $this->request->curl_options;
+
+		$this->assertEquals('<title>Update success! config</title>', $response->getBody());
+		$this->assertEquals(200, $response->getStatusCode());
 
 		$this->assertArrayHasKey(CURLOPT_USERPWD, $options);
 		$this->assertEquals('username:password', $options[CURLOPT_USERPWD]);
@@ -633,14 +685,17 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$request = $this->getRequest([
 			'base_uri' => 'http://www.foo.com/api/v1/',
-			'query'    => ['name' => 'Henry'],
+			'query'    => [
+				'name' => 'Henry',
+				'd.t'  => 'value',
+			],
 		]);
 
 		$request->get('products');
 
 		$options = $request->curl_options;
 
-		$this->assertEquals('http://www.foo.com/api/v1/products?name=Henry', $options[CURLOPT_URL]);
+		$this->assertEquals('http://www.foo.com/api/v1/products?name=Henry&d.t=value', $options[CURLOPT_URL]);
 	}
 
 	//--------------------------------------------------------------------
@@ -668,6 +723,53 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$request->setOutput("HTTP/1.1 100 Continue\x0d\x0a\x0d\x0aHi there");
 		$response = $request->get('answer');
 		$this->assertEquals('Hi there', $response->getBody());
+	}
+
+	/**
+	 * See: https://github.com/codeigniter4/CodeIgniter4/issues/3261
+	 */
+	public function testSendContinuedWithManyHeaders()
+	{
+		$request = $this->getRequest([
+			'base_uri' => 'http://www.foo.com/api/v1/',
+			'delay'    => 1000,
+		]);
+
+		$output = "HTTP/1.1 100 Continue
+Server: ddos-guard
+Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT\x0d\x0a\x0d\x0aHTTP/1.1 200 OK
+Server: ddos-guard
+Connection: keep-alive
+Keep-Alive: timeout=60
+Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
+Date: Tue, 07 Jul 2020 15:13:14 GMT
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: PHPSESSID=80pd3hlg38mvjnelpvokp9lad0; path=/
+Content-Type: application/xml; charset=utf-8
+Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>";
+
+		$request->setOutput($output);
+		$response = $request->get('answer');
+
+		$this->assertEquals('<title>Update success! config</title>', $response->getBody());
+
+		$responseHeaderKeys = [
+			'Cache-control',
+			'Content-Type',
+			'Server',
+			'Connection',
+			'Keep-Alive',
+			'Set-Cookie',
+			'Date',
+			'Expires',
+			'Pragma',
+			'Transfer-Encoding',
+		];
+		$this->assertEquals($responseHeaderKeys, array_keys($response->getHeaders()));
+
+		$this->assertEquals(200, $response->getStatusCode());
 	}
 
 	//--------------------------------------------------------------------
@@ -869,5 +971,4 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertArrayHasKey(CURLOPT_COOKIEFILE, $options);
 		$this->assertEquals($holder, $options[CURLOPT_COOKIEFILE]);
 	}
-
 }

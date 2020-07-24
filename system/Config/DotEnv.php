@@ -78,17 +78,7 @@ class DotEnv
 	{
 		$vars = $this->parse();
 
-		if ($vars === null)
-		{
-			return false;
-		}
-
-		foreach ($vars as $name => $value)
-		{
-			$this->setVariable($name, $value);
-		}
-
-		return true; // for success
+		return ($vars === null ? false : true);
 	}
 
 	//--------------------------------------------------------------------
@@ -129,6 +119,7 @@ class DotEnv
 			{
 				list($name, $value) = $this->normaliseVariable($line);
 				$vars[$name]        = $value;
+				$this->setVariable($name, $value);
 			}
 		}
 
@@ -151,10 +142,12 @@ class DotEnv
 		{
 			putenv("$name=$value");
 		}
+
 		if (empty($_ENV[$name]))
 		{
 			$_ENV[$name] = $value;
 		}
+
 		if (empty($_SERVER[$name]))
 		{
 			$_SERVER[$name] = $value;
@@ -174,7 +167,7 @@ class DotEnv
 	 */
 	public function normaliseVariable(string $name, string $value = ''): array
 	{
-		// Split our compound string into it's parts.
+		// Split our compound string into its parts.
 		if (strpos($name, '=') !== false)
 		{
 			list($name, $value) = explode('=', $name, 2);

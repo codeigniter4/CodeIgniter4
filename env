@@ -84,10 +84,18 @@
 # contentsecuritypolicy.upgradeInsecureRequests = false
 
 #--------------------------------------------------------------------
+# ENCRYPTION
+#--------------------------------------------------------------------
+
+# encryption.key = 
+# encryption.driver = OpenSSL
+
+#--------------------------------------------------------------------
 # HONEYPOT
 #--------------------------------------------------------------------
 
-#  honeypot.hidden = 'true'
-#  honeypot.label = 'Fill This Field'
-#  honeypot.name = 'honeypot'
-#  honeypot.template = '<label>{label}</label><input type="text" name="{name}" value=""/>'
+# honeypot.hidden = 'true'
+# honeypot.label = 'Fill This Field'
+# honeypot.name = 'honeypot'
+# honeypot.template = '<label>{label}</label><input type="text" name="{name}" value=""/>'
+# honeypot.container = '<div style="display:none">{template}</div>'

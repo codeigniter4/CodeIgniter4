@@ -10,6 +10,7 @@ The following sections should get you quickly testing your applications.
 
     Getting Started <overview>
     Database <database>
+    Generating Data <fabricator>
     Controller Testing <controllers>
     HTTP Testing <feature>
     benchmark

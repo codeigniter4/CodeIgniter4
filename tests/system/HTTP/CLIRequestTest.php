@@ -1,6 +1,8 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
@@ -9,11 +11,11 @@ use Config\App;
  *
  * @backupGlobals enabled
  */
-class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
+class CLIRequestTest extends CIUnitTestCase
 {
 
 	/**
-	 * @var \CodeIgniter\HTTP\Request
+	 * @var \CodeIgniter\HTTP\CLIRequest
 	 */
 	protected $request;
 
@@ -164,7 +166,7 @@ class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->request = new CLIRequest(new App());
 
 		$expectedOptions = '-foo bar -baz "queue some stuff"';
-		$expectedPath    = 'users/21';
+		$expectedPath    = 'users/21/pro-file';
 		$this->assertEquals($expectedOptions, $this->request->getOptionString());
 		$this->assertEquals($expectedPath, $this->request->getPath());
 	}
@@ -630,4 +632,10 @@ class CLIRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('CLI', $this->request->getMethod(true));
 	}
 
+	//---------------------------------------------------------------------
+
+	public function testMethodIsCliReturnsAlwaysTrue()
+	{
+		$this->assertTrue($this->request->isCLI());
+	}
 }

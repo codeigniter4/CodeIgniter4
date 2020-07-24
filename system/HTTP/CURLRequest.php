@@ -130,7 +130,7 @@ class CURLRequest extends Request
 		parent::__construct($config);
 
 		$this->response = $response;
-		$this->baseURI  = $uri;
+		$this->baseURI  = $uri->useRawQueryString();
 
 		$this->parseOptions($options);
 	}
@@ -447,23 +447,33 @@ class CURLRequest extends Request
 		}
 
 		$output = $this->sendRequest($curl_options);
+		
+		// Set the string we want to break our response from
+		$breakString = "\r\n\r\n";
 
-		$continueStr = "HTTP/1.1 100 Continue\x0d\x0a\x0d\x0a";
-		if (strpos($output, $continueStr) === 0)
+		if (strpos($output, 'HTTP/1.1 100 Continue') === 0)
 		{
-			$output = substr($output, strlen($continueStr));
+			$output = substr($output, strpos($output, $breakString) + 4);
+		}
+		
+		 // If request and response have Digest
+		if (isset($this->config['auth'][2]) && $this->config['auth'][2] === 'digest' && strpos($output, 'WWW-Authenticate: Digest') !== false)
+		{
+				$output = substr($output, strpos($output, $breakString) + 4);
 		}
 
-		// Split out our headers and body
-		$break = strpos($output, "\r\n\r\n");
 
+		// Split out our headers and body
+		$break = strpos($output, $breakString);
+
+		
 		if ($break !== false)
 		{
 			// Our headers
 			$headers = explode("\n", substr($output, 0, $break));
-
+			
 			$this->setResponseHeaders($headers);
-
+			
 			// Our body
 			$body = substr($output, $break + 4);
 			$this->response->setBody($body);
@@ -493,6 +503,7 @@ class CURLRequest extends Request
 			$this->populateHeaders();
 			// Otherwise, it will corrupt the request
 			$this->removeHeader('Host');
+			$this->removeHeader('Accept-Encoding');
 		}
 
 		$headers = $this->getHeaders();
@@ -542,7 +553,7 @@ class CURLRequest extends Request
 		if ($method === 'PUT' || $method === 'POST')
 		{
 			// See http://tools.ietf.org/html/rfc7230#section-3.3.2
-			if (is_null($this->getHeader('content-length')))
+			if (is_null($this->getHeader('content-length')) && ! isset($this->config['multipart']))
 			{
 				$this->setHeader('Content-Length', '0');
 			}
