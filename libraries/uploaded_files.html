@@ -499,7 +499,7 @@ move the file to a new location.</p>
 <p>You can check that a file was actually uploaded via HTTP with no errors by calling the <code class="docutils literal notranslate"><span class="pre">isValid()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">())</span>
 <span class="p">{</span>
-        <span class="k">throw</span> <span class="k">new</span> <span class="nx">RuntimeException</span><span class="p">(</span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getErrorString</span><span class="p">()</span><span class="o">.</span><span class="s1">&#39;(&#39;</span><span class="o">.</span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getError</span><span class="p">()</span><span class="o">.</span><span class="s1">&#39;)&#39;</span><span class="p">);</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">\RuntimeException</span><span class="p">(</span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getErrorString</span><span class="p">()</span><span class="o">.</span><span class="s1">&#39;(&#39;</span><span class="o">.</span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getError</span><span class="p">()</span><span class="o">.</span><span class="s1">&#39;)&#39;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -630,7 +630,7 @@ passing it as the second parameter:</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Jul 23, 2020.
+        Last updated on Jul 24, 2020.
       </span>
 
     </p>
