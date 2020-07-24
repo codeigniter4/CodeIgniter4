@@ -45,6 +45,10 @@ class GenerateKeyTest extends CIUnitTestCase
 		if (file_exists($this->envPath))
 		{
 			unlink($this->envPath);
+		}
+
+		if (file_exists($this->backupEnvPath))
+		{
 			rename($this->backupEnvPath, $this->envPath);
 		}
 
