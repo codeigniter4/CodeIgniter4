@@ -799,6 +799,17 @@ class EntityTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals(json_encode($entity->toArray()), json_encode($entity));
 	}
 
+	/**
+	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3251
+	 */
+	public function testmutateDateEmpty()
+	{
+		$entity = $this->getCastEntity();
+
+		$entity->eighth = '';
+		$this->assertEquals('', $entity->eighth);
+	}
+
 	protected function getEntity()
 	{
 		return new class extends Entity

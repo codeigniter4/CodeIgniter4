@@ -495,7 +495,7 @@ class Entity implements \JsonSerializable
 			return Time::createFromTimestamp($value);
 		}
 
-		if (is_string($value))
+		if (is_string($value) && ! empty($value))
 		{
 			return Time::parse($value);
 		}
