@@ -163,8 +163,31 @@ if (! function_exists('command'))
 	{
 		$runner = service('commands');
 
-		$params  = explode(' ', $command);
-		$command = array_shift($params);
+		$args    = explode(' ', $command);
+		$command = array_shift($args);
+
+		$params = [];
+		for ($i = 0, $c = count($args); $i < $c; $i++)
+		{
+			$arg = $args[$i];
+
+			if (mb_strpos($arg, '-') !== 0)
+			{
+				$params[] = $arg;
+				continue;
+			}
+
+			$arg   = ltrim($arg, '-');
+			$value = null;
+
+			if (isset($args[$i + 1]) && mb_strpos($args[$i + 1], '-') !== 0)
+			{
+				$value = $args[$i + 1];
+				$i++;
+			}
+
+			$params[$arg] = $value;
+		}
 
 		ob_start();
 		$runner->run($command, $params);
