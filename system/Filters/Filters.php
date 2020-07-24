@@ -325,7 +325,6 @@ class Filters
 
 		foreach ($classNames as $className)
 		{
-			$this->filtersClass[$when][]      = $className;
 			$this->argumentsClass[$className] = $this->arguments[$name] ?? null;
 		}
 
