@@ -166,14 +166,25 @@ if (! function_exists('command'))
 		$args    = explode(' ', $command);
 		$command = array_shift($args);
 
-		$params = [];
-		for ($i = 0, $c = count($args); $i < $c; $i++)
-		{
-			$arg = $args[$i];
+		$params      = [];
+		$optionValue = false;
 
-			if (mb_strpos($arg, '-') !== 0)
+		foreach ($args as $i => $arg)
+		{
+			// add to segments if not starting with '-'
+			// and not an option value
+			if (mb_strpos($arg, '-') !== 0 && ! $optionValue)
 			{
 				$params[] = $arg;
+				continue;
+			}
+
+			// if this was an option value, it was already
+			// included in the previous iteration, so
+			// reset the process
+			if (mb_strpos($arg, '-') !== 0)
+			{
+				$optionValue = false;
 				continue;
 			}
 
@@ -182,8 +193,8 @@ if (! function_exists('command'))
 
 			if (isset($args[$i + 1]) && mb_strpos($args[$i + 1], '-') !== 0)
 			{
-				$value = $args[$i + 1];
-				$i++;
+				$value       = $args[$i + 1];
+				$optionValue = true;
 			}
 
 			$params[$arg] = $value;

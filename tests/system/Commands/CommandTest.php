@@ -155,13 +155,31 @@ class CommandTest extends \CodeIgniter\Test\CIUnitTestCase
 			[
 				'reveal seg1 seg2 -opt1 -opt2',
 				[
-			'seg1', 'seg2', 'opt1' => null, 'opt2' => null
+					'seg1',
+					'seg2',
+					'opt1' => null,
+					'opt2' => null,
 				],
 			],
 			[
 				'reveal seg1 seg2 -opt1 val1 seg3',
 				[
-			'seg1', 'seg2', 'opt1' => 'val1', 'seg3'
+					'seg1',
+					'seg2',
+					'opt1' => 'val1',
+					'seg3',
+				],
+			],
+			[
+				'reveal as df -gh -jk -qw 12 zx cv',
+				[
+					'as',
+					'df',
+					'gh' => null,
+					'jk' => null,
+					'qw' => 12,
+					'zx',
+					'cv',
 				],
 			],
 		];
