@@ -410,6 +410,9 @@ class Router implements RouterInterface
 		// Loop through the route array looking for wildcards
 		foreach ($routes as $key => $val)
 		{
+			// Reset localeSegment
+			$localeSegment = null;
+
 			$key = $key === '/'
 				? $key
 				: ltrim($key, '/ ');
@@ -442,7 +445,6 @@ class Router implements RouterInterface
 					// The following may be inefficient, but doesn't upset NetBeans :-/
 					$temp                 = (explode('/', $uri));
 					$this->detectedLocale = $temp[$localeSegment];
-					unset($localeSegment);
 				}
 
 				// Are we using Closures? If so, then we need
