@@ -1260,4 +1260,18 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/index.php/path/string/to/13', url_to('myController::goto', 'string', 13));
 	}
 
+	public function testUrlToWithEmptyString()
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+
+		$this->assertEquals('http://example.com/index.php', url_to(''));
+	}
+
+	public function testUrlToWithSlash()
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+
+		$this->assertEquals('http://example.com/index.php', url_to('/'));
+	}
+
 }
