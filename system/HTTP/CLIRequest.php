@@ -231,7 +231,7 @@ class CLIRequest extends Request
 				continue;
 			}
 
-			$arg   = ltrim($arg, '-');
+			$arg   = filter_var(ltrim($arg, '-'), FILTER_SANITIZE_STRING);
 			$value = null;
 
 			if (isset($args[$i + 1]) && mb_strpos($args[$i + 1], '-') !== 0)
