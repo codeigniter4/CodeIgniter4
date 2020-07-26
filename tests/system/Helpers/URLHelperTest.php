@@ -1250,4 +1250,14 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
 	}
 
+	public function testCreateAbsoluteUrlWithUrlTo()
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+
+		$routes = service('routes');
+		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
+
+		$this->assertEquals('http://example.com/path/string/to/13', url_to('myController::goto', 'string', 13));
+	}
+
 }

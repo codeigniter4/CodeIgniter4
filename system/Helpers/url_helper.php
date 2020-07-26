@@ -634,3 +634,25 @@ if (! function_exists('mb_url_title'))
 }
 
 //--------------------------------------------------------------------
+
+if (! function_exists('url_to'))
+{
+	/**
+	 * Get the full, absolute URL to a controller method
+	 * (with additional arguments)
+	 *
+	 * @param string $controller
+	 * @param mixed  ...$args
+	 *
+	 * @return string
+	 */
+	function url_to(string $controller, ...$args): string
+	{
+		if (! class_exists($controller))
+		{
+			$controller = service('routes')->getDefaultNamespace() . $controller;
+		}
+
+		return base_url(route_to($controller, ...$args));
+	}
+}

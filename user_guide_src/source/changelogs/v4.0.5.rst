@@ -5,6 +5,10 @@ Release Date: Not released
 
 **4.0.5 release of CodeIgniter4**
 
+Enhancements:
+
+- New URL helper function ``url_to()`` which creates absolute URLs based on controllers.
+
 Bugs Fixed:
 
 - Fixed a bug in ``Entity`` class where declaring class parameters was preventing data propagation to the ``attributes`` array.
