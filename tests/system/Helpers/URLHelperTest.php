@@ -1257,7 +1257,7 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$routes = service('routes');
 		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
 
-		$this->assertEquals('http://example.com/path/string/to/13', url_to('myController::goto', 'string', 13));
+		$this->assertEquals('http://example.com/index.php/path/string/to/13', url_to('myController::goto', 'string', 13));
 	}
 
 }

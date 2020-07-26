@@ -655,6 +655,6 @@ if (! function_exists('url_to'))
 			$controller = service('routes')->getDefaultNamespace() . $controller;
 		}
 
-		return base_url(route_to($controller, ...$args));
+		return site_url(route_to($controller, ...$args));
 	}
 }
