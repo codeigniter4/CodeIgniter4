@@ -1250,39 +1250,43 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
 	}
 
-	public function testCreateAbsoluteUrlWithUrlTo()
-	{
-		$_SERVER['HTTP_HOST'] = 'example.com';
-
-		$routes = service('routes');
-		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
-
-		$this->assertEquals('http://example.com/index.php/path/string/to/13', url_to('myController::goto', 'string', 13));
-	}
-
-	public function testUrlToWithNamedRoutes()
+	/**
+	 * @dataProvider urlToProvider
+	 */
+	public function testUrlTo(string $expected, string $input, ...$args)
 	{
 		$_SERVER['HTTP_HOST'] = 'example.com';
 
 		$routes = service('routes');
 		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2', ['as' => 'gotoPage']);
+		$routes->add('route/(:any)/to/(:num)', 'myOtherController::goto/$1/$2');
 
-		$this->assertEquals('http://example.com/index.php/path/string/to/13', url_to('gotoPage', 'string', 13));
-	}
-
-	/**
-	 * @dataProvider urlToProvider
-	 */
-	public function testUrlToMakesHomeUrl($input)
-	{
-		$this->assertEquals('http://example.com/index.php', url_to($input));
+		$this->assertEquals($expected, url_to($input, ...$args));
 	}
 
 	public function urlToProvider()
 	{
 		return [
-			[''],
-			['/'],
+			[
+				'http://example.com/index.php',
+				'',
+			],
+			[
+				'http://example.com/index.php',
+				'/',
+			],
+			[
+				'http://example.com/index.php/path/string/to/13',
+				'gotoPage',
+				'string',
+				13,
+			],
+			[
+				'http://example.com/index.php/route/string/to/13',
+				'myOtherController::goto',
+				'string',
+				13,
+			],
 		];
 	}
 

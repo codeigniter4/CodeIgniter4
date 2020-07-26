@@ -648,6 +648,11 @@ if (! function_exists('url_to'))
 	 */
 	function url_to(string $controller, ...$args): string
 	{
+		if (empty($controller))
+		{
+			return site_url();
+		}
+
 		if (strpos($controller, '::') !== false)
 		{
 			$class = explode('::', $controller)[0];
