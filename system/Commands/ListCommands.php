@@ -111,7 +111,7 @@ class ListCommands extends BaseCommand
 	 *
 	 * @param array $params
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
 		$commands = $this->commands->getCommands();
 

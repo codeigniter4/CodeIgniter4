@@ -104,7 +104,7 @@ class Help extends BaseCommand
 	 *
 	 * @param array $params
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
 		$command = array_shift($params);
 		if (is_null($command))

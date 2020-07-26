@@ -48,7 +48,7 @@ class ClearCache extends BaseCommand
 	 *
 	 * @param array $params
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
 		$config = config('Cache');
 

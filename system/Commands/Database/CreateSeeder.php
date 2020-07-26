@@ -101,7 +101,7 @@ class CreateSeeder extends BaseCommand
 	 *
 	 * @param array $params
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
 		helper('inflector');
 

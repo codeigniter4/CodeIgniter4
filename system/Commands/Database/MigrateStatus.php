@@ -116,7 +116,7 @@ class MigrateStatus extends BaseCommand
 	 *
 	 * @param array $params
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
 		$runner = Services::migrations();
 

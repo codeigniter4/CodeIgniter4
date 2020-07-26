@@ -126,7 +126,7 @@ class Serve extends BaseCommand
 	 *
 	 * @return void
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
 		// Valid PHP Version?
 		if (phpversion() < $this->minPHPVersion)
@@ -164,5 +164,4 @@ class Serve extends BaseCommand
 			$this->run($params);
 		}
 	}
-
 }
