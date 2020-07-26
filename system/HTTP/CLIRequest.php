@@ -210,40 +210,34 @@ class CLIRequest extends Request
 	 */
 	protected function parseCommand()
 	{
-		// Since we're building the options ourselves,
-		// we stop adding it to the segments array once
-		// we have found the first dash.
-		$options_found = false;
+		$args = $this->getServer('argv');
+		array_shift($args); // Scrap index.php
 
-		$argc = $this->getServer('argc', FILTER_SANITIZE_NUMBER_INT);
-		$argv = $this->getServer('argv');
+		$optionValue = false;
 
-		// We start at 1 since we never want to include index.php
-		for ($i = 1; $i < $argc; $i ++)
+		foreach ($args as $i => $arg)
 		{
-			// If there's no '-' at the beginning of the argument
-			// then add it to our segments.
-			if (! $options_found && strpos($argv[$i], '-') !== 0)
+			if (mb_strpos($arg, '-') !== 0)
 			{
-				$this->segments[] = filter_var($argv[$i], FILTER_SANITIZE_STRING);
+				if ($optionValue)
+				{
+					$optionValue = false;
+				}
+				else
+				{
+					$this->segments[] = filter_var($arg, FILTER_SANITIZE_STRING);
+				}
+
 				continue;
 			}
 
-			$options_found = true;
-
-			if (strpos($argv[$i], '-') !== 0)
-			{
-				continue;
-			}
-
-			$arg   = filter_var(str_replace('-', '', $argv[$i]), FILTER_SANITIZE_STRING);
+			$arg   = ltrim($arg, '-');
 			$value = null;
 
-			// If the next item starts with a dash it's a value
-			if (isset($argv[$i + 1]) && strpos($argv[$i + 1], '-') !== 0)
+			if (isset($args[$i + 1]) && mb_strpos($args[$i + 1], '-') !== 0)
 			{
-				$value = filter_var($argv[$i + 1], FILTER_SANITIZE_STRING);
-				$i ++;
+				$value       = filter_var($args[$i + 1], FILTER_SANITIZE_STRING);
+				$optionValue = true;
 			}
 
 			$this->options[$arg] = $value;
