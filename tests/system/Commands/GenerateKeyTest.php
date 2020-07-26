@@ -68,7 +68,7 @@ class GenerateKeyTest extends CIUnitTestCase
 
 	public function testGenerateKeyShowsEncodedKey()
 	{
-		$this->runner->index(['key:generate', 'encoding' => 'hex', 'show' => null]);
+		$this->runner->index(['key:generate', 'show' => null]);
 		$this->assertStringContainsString('hex2bin:', $this->getBuffer());
 
 		$this->runner->index(['key:generate', 'encoding' => 'base64', 'show' => null]);
@@ -81,9 +81,14 @@ class GenerateKeyTest extends CIUnitTestCase
 	 */
 	public function testGenerateKeyCreatesNewKey()
 	{
-		// use the 'force' option to bypass CLI::prompt
-		$this->runner->index(['key:generate', 'encoding' => 'hex', 'force' => null]);
+		$this->runner->index(['key:generate']);
 		$this->assertStringContainsString('successfully set.', $this->getBuffer());
 		$this->assertStringContainsString(env('encryption.key'), file_get_contents($this->envPath));
+		$this->assertStringContainsString('hex2bin:', file_get_contents($this->envPath));
+
+		$this->runner->index(['key:generate', 'force' => null, 'encoding' => 'base64']);
+		$this->assertStringContainsString('successfully set.', $this->getBuffer());
+		$this->assertStringContainsString(env('encryption.key'), file_get_contents($this->envPath));
+		$this->assertStringContainsString('base64:', file_get_contents($this->envPath));
 	}
 }

@@ -75,7 +75,7 @@ class GenerateKey extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $description = 'Generates a new encryption key.';
+	protected $description = 'Generates a new encryption key and writes it in an `.env` file.';
 
 	/**
 	 * The command's options
@@ -83,9 +83,10 @@ class GenerateKey extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-encoding' => 'Encoding to use (either hex or base64)',
-		'-force'    => 'Force overwrite existing key.',
-		'-show'     => 'Shows the generated key in the terminal rather than storing in the .env file.',
+		'-encoding' => 'Encoding to use (either hex or base64). Defaults to hex.',
+		'-force'    => 'Force overwrite existing key in `.env` file.',
+		'-length'   => 'The length of the random string that should be returned in bytes. Defaults to 32.',
+		'-show'     => 'Shows the generated key in the terminal instead of storing in the `.env` file.',
 	];
 
 	/**
@@ -97,15 +98,26 @@ class GenerateKey extends BaseCommand
 	 */
 	public function run(array $params)
 	{
-		$encoding = array_key_exists('encoding', $params) ? $params['encoding'] : CLI::getOption('encoding');
-		if ($encoding === null || ! in_array($encoding, ['hex', 'base64'], true))
+		$encoding = $params['encoding'] ?? CLI::getOption('encoding');
+		if (in_array($encoding, [null, true], true))
+		{
+			$encoding = 'hex';
+		}
+		elseif (! in_array($encoding, ['hex', 'base64'], true))
 		{
 			// @codeCoverageIgnoreStart
 			$encoding = CLI::prompt('Please provide a valid encoding to use.', ['hex', 'base64'], 'required');
 			// @codeCoverageIgnoreEnd
 		}
 
-		$encodedKey = $this->generateRandomKey($encoding);
+		$length = $params['length'] ?? CLI::getOption('length');
+		if (in_array($length, [null, true], true))
+		{
+			$length = 32;
+		}
+
+		$encodedKey = $this->generateRandomKey($encoding, $length);
+
 		if (array_key_exists('show', $params) || (bool) CLI::getOption('show'))
 		{
 			CLI::write($encodedKey, 'yellow');
@@ -135,13 +147,14 @@ class GenerateKey extends BaseCommand
 	/**
 	 * Generates a key and encodes it.
 	 *
-	 * @param string $encoding
+	 * @param string  $encoding
+	 * @param integer $length
 	 *
 	 * @return string
 	 */
-	protected function generateRandomKey(string $encoding): string
+	protected function generateRandomKey(string $encoding, int $length): string
 	{
-		$key = Encryption::createKey();
+		$key = Encryption::createKey($length);
 
 		if ($encoding === 'hex')
 		{
@@ -174,6 +187,13 @@ class GenerateKey extends BaseCommand
 		return $this->writeNewEncryptionKeyToFile($currentKey, $key);
 	}
 
+	/**
+	 * Checks whether to overwrite existing encryption key.
+	 *
+	 * @param array $params
+	 *
+	 * @return boolean
+	 */
 	protected function confirmOverwrite(array $params): bool
 	{
 		return (array_key_exists('force', $params) || CLI::getOption('force')) || CLI::prompt('Overwrite existing key?', ['n', 'y']) === 'y';
