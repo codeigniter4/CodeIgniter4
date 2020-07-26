@@ -644,13 +644,15 @@ if (! function_exists('url_to'))
 	 * @param string $controller
 	 * @param mixed  ...$args
 	 *
+	 * @throws \CodeIgniter\Router\Exceptions\RouterException
+	 *
 	 * @return string
 	 */
 	function url_to(string $controller, ...$args): string
 	{
-		if (empty($controller))
+		if (! $route = route_to($controller, ...$args))
 		{
-			return site_url();
+			throw new \CodeIgniter\Router\Exceptions\RouterException(lang('HTTP.invalidRoute', [$controller]));
 		}
 
 		if (strpos($controller, '::') !== false)
@@ -663,6 +665,6 @@ if (! function_exists('url_to'))
 			}
 		}
 
-		return site_url(route_to($controller, ...$args));
+		return site_url($route);
 	}
 }

@@ -1264,17 +1264,19 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($expected, url_to($input, ...$args));
 	}
 
+	/**
+	 * @dataProvider urlToMissingRoutesProvider
+	 */
+	public function testUrlToThrowsOnEmptyOrMissingRoute(string $route)
+	{
+		$this->expectException(\CodeIgniter\Router\Exceptions\RouterException::class);
+
+		url_to($route);
+	}
+
 	public function urlToProvider()
 	{
 		return [
-			[
-				'http://example.com/index.php',
-				'',
-			],
-			[
-				'http://example.com/index.php',
-				'/',
-			],
 			[
 				'http://example.com/index.php/path/string/to/13',
 				'gotoPage',
@@ -1286,6 +1288,18 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				'myOtherController::goto',
 				'string',
 				13,
+			],
+		];
+	}
+
+	public function urlToMissingRoutesProvider()
+	{
+		return [
+			[
+				'',
+			],
+			[
+				'Nope::doesNotExist',
 			],
 		];
 	}
