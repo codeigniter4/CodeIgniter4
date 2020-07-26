@@ -109,11 +109,11 @@ trait FeatureTestTrait
 	 *  'Authorization' => 'Token'
 	 * ])
 	 * 
-	 * @param array|null Array of headers
+	 * @param array Array of headers
 	 * 
 	 * @return $this
 	 */
-	public function withHeaders(array $headers = null)
+	public function withHeaders(array $headers = [])
 	{
 		$this->headers = $headers;
 
@@ -331,9 +331,9 @@ trait FeatureTestTrait
 	 */
 	protected function setupHeaders(Request $request)
 	{
-		if(!empty($this->headers))
+		if (! empty($this->headers))
 		{
-			foreach($this->headers as $name => $value)
+			foreach ($this->headers as $name => $value)
 			{
 				$request->setHeader($name, $value);
 			}
