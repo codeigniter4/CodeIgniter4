@@ -648,11 +648,14 @@ if (! function_exists('url_to'))
 	 */
 	function url_to(string $controller, ...$args): string
 	{
-		$class = explode('::', $controller)[0];
-
-		if (! class_exists($class))
+		if (strpos($controller, '::') !== false)
 		{
-			$controller = service('routes')->getDefaultNamespace() . $controller;
+			$class = explode('::', $controller)[0];
+
+			if (! class_exists($class))
+			{
+				$controller = service('routes')->getDefaultNamespace() . $controller;
+			}
 		}
 
 		return site_url(route_to($controller, ...$args));

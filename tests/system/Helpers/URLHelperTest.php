@@ -1260,6 +1260,16 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/index.php/path/string/to/13', url_to('myController::goto', 'string', 13));
 	}
 
+	public function testUrlToWithNamedRoutes()
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+
+		$routes = service('routes');
+		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2', ['as' => 'gotoPage']);
+
+		$this->assertEquals('http://example.com/index.php/path/string/to/13', url_to('gotoPage', 'string', 13));
+	}
+
 	/**
 	 * @dataProvider urlToProvider
 	 */
