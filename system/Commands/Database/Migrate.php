@@ -102,7 +102,7 @@ class Migrate extends BaseCommand
 	 *
 	 * @param array $params
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
 		$runner = Services::migrations();
 		$runner->clearCliMessages();
