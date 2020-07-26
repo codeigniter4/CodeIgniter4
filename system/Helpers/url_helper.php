@@ -648,7 +648,9 @@ if (! function_exists('url_to'))
 	 */
 	function url_to(string $controller, ...$args): string
 	{
-		if (! class_exists($controller))
+		$class = explode('::', $controller)[0];
+
+		if (! class_exists($class))
 		{
 			$controller = service('routes')->getDefaultNamespace() . $controller;
 		}
