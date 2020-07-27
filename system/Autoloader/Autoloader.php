@@ -280,7 +280,16 @@ class Autoloader
 	{
 		if (strpos($class, '\\') === false)
 		{
-			$class = 'Config\\' . $class;
+			$class    = 'Config\\' . $class;
+			$filePath = APPPATH . str_replace('\\', '/', $class) . '.php';
+			$filename = $this->requireFile($filePath);
+
+			if ($filename)
+			{
+				return $filename;
+			}
+
+			return false;
 		}
 
 		foreach ($this->prefixes as $namespace => $directories)
