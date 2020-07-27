@@ -99,12 +99,11 @@ class Encryption
 	 */
 	public function __construct(BaseConfig $config = null)
 	{
-		if (empty($config))
-		{
-			$config = new \Config\Encryption();
-		}
-		$this->driver = $config->driver;
+		$config = $config ?? new \Config\Encryption();
+
 		$this->key    = $config->key;
+		$this->driver = $config->driver;
+		$this->digest = $config->digest;
 
 		// determine what is installed
 		$this->handlers = [
@@ -132,10 +131,11 @@ class Encryption
 	public function initialize(BaseConfig $config = null)
 	{
 		// override config?
-		if (! empty($config))
+		if ($config)
 		{
-			$this->driver = $config->driver;
 			$this->key    = $config->key;
+			$this->driver = $config->driver;
+			$this->digest = $config->digest;
 		}
 
 		// Insist on a driver
