@@ -319,7 +319,7 @@ if (! function_exists('form_textarea'))
 			unset($defaults['cols']);
 		}
 
-		return '<textarea ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . '>'
+		return '<textarea ' . parse_form_attributes($data, $defaults) . ltrim(stringify_attributes($extra)) . '>'
 				. htmlspecialchars($val)
 				. "</textarea>\n";
 	}
