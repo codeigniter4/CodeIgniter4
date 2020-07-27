@@ -137,14 +137,14 @@ class Request extends Message implements RequestInterface
 
 			if ($spoof)
 			{
-				for ($i = 0, $c = count($proxy_ips); $i < $c; $i ++)
+				foreach ($proxy_ips as $proxy_ip)
 				{
 					// Check if we have an IP address or a subnet
-					if (strpos($proxy_ips[$i], '/') === false)
+					if (strpos($proxy_ip, '/') === false)
 					{
 						// An IP address (and not a subnet) is specified.
 						// We can compare right away.
-						if ($proxy_ips[$i] === $this->ipAddress)
+						if ($proxy_ip === $this->ipAddress)
 						{
 							$this->ipAddress = $spoof;
 							break;
@@ -157,7 +157,7 @@ class Request extends Message implements RequestInterface
 					isset($separator) || $separator = $this->isValidIP($this->ipAddress, 'ipv6') ? ':' : '.';
 
 					// If the proxy entry doesn't match the IP protocol - skip it
-					if (strpos($proxy_ips[$i], $separator) === false)
+					if (strpos($proxy_ip, $separator) === false)
 					{
 						continue;
 					}
@@ -189,7 +189,7 @@ class Request extends Message implements RequestInterface
 					}
 
 					// Split the netmask length off the network address
-					sscanf($proxy_ips[$i], '%[^/]/%d', $netaddr, $masklen);
+					sscanf($proxy_ip, '%[^/]/%d', $netaddr, $masklen);
 
 					// Again, an IPv6 address is most likely in a compressed form
 					if ($separator === ':')

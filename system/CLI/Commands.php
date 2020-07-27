@@ -87,7 +87,23 @@ class Commands
 
 		if (! isset($this->commands[$command]))
 		{
-			CLI::error(lang('CLI.commandNotFound', [$command]));
+			$message = lang('CLI.commandNotFound', [$command]);
+
+			if ($alternatives = $this->getCommandAlternatives($command, $this->commands))
+			{
+				if (count($alternatives) === 1)
+				{
+					$message .= "\n\n" . lang('CLI.altCommandSingular') . "\n    ";
+				}
+				else
+				{
+					$message .= "\n\n" . lang('CLI.altCommandPlural') . "\n    ";
+				}
+
+				$message .= implode("\n    ", $alternatives);
+			}
+
+			CLI::error($message);
 			CLI::newLine();
 			return;
 		}
@@ -177,5 +193,33 @@ class Commands
 		}
 
 		asort($this->commands);
+	}
+
+	/**
+	 * Finds alternative of `$name` among collection
+	 * of commands.
+	 *
+	 * @param string $name
+	 * @param array  $collection
+	 *
+	 * @return array
+	 */
+	protected function getCommandAlternatives(string $name, array $collection): array
+	{
+		$alternatives = [];
+
+		foreach ($collection as $commandName => $attributes)
+		{
+			$lev = levenshtein($name, $commandName);
+
+			if ($lev <= strlen($commandName) / 3 || strpos($commandName, $name) !== false)
+			{
+				$alternatives[$commandName] = $lev;
+			}
+		}
+
+		ksort($alternatives, SORT_NATURAL | SORT_FLAG_CASE);
+
+		return array_keys($alternatives);
 	}
 }

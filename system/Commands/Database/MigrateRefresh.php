@@ -105,7 +105,7 @@ class MigrateRefresh extends BaseCommand
 	 *
 	 * @param array $params
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
 		$params = ['-b' => 0];
 

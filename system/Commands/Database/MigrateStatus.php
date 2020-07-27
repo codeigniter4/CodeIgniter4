@@ -99,7 +99,7 @@ class MigrateStatus extends BaseCommand
 	/**
 	 * Namespaces to ignore when looking for migrations.
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $ignoredNamespaces = [
 		'CodeIgniter',
@@ -116,7 +116,7 @@ class MigrateStatus extends BaseCommand
 	 *
 	 * @param array $params
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
 		$runner = Services::migrations();
 

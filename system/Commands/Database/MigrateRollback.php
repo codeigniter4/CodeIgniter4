@@ -105,7 +105,7 @@ class MigrateRollback extends BaseCommand
 	 *
 	 * @param array $params
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
 		if (ENVIRONMENT === 'production')
 		{

@@ -102,7 +102,7 @@ class Seed extends BaseCommand
 	 *
 	 * @param array $params
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
 		$seeder = new Seeder(new \Config\Database());
 

@@ -104,7 +104,7 @@ class CreateMigration extends BaseCommand
 	 *
 	 * @param array $params
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
 		$config = new App();
 

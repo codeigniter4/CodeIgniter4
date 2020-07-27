@@ -284,14 +284,18 @@ class CLITest extends \CodeIgniter\Test\CIUnitTestCase
 			'pvalue',
 			'd2',
 			'da-sh',
+			'-fix',
+			'-opt-in',
+			'sure',
 		];
-		$_SERVER['argc'] = 8;
+		$_SERVER['argc'] = 11;
 		CLI::init();
 		$this->assertEquals(null, CLI::getSegment(7));
 		$this->assertEquals('b', CLI::getSegment(1));
 		$this->assertEquals('c', CLI::getSegment(2));
 		$this->assertEquals('d', CLI::getSegment(3));
 		$this->assertEquals(['b', 'c', 'd', 'd2', 'da-sh'], CLI::getSegments());
+		$this->assertEquals(['parm' => 'pvalue', 'fix' => null, 'opt-in' => 'sure'], CLI::getOptions());
 	}
 
 	public function testParseCommandOption()

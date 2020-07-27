@@ -67,7 +67,7 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		$output = 'Howdy Stranger.';
 
 		$response = $this->request->setOutput($output)
-				->send('get', 'http://example.com');
+			->send('get', 'http://example.com');
 
 		$this->assertInstanceOf('CodeIgniter\\HTTP\\Response', $response);
 		$this->assertEquals($output, $response->getBody());
@@ -373,7 +373,26 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testAuthDigestOption()
 	{
-		$this->request->request('get', 'http://example.com', [
+		$output = "HTTP/1.1 401 Unauthorized
+		Server: ddos-guard
+		Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
+		WWW-Authenticate: Digest\x0d\x0a\x0d\x0aHTTP/1.1 200 OK
+		Server: ddos-guard
+		Connection: keep-alive
+		Keep-Alive: timeout=60
+		Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
+		Date: Tue, 07 Jul 2020 15:13:14 GMT
+		Expires: Thu, 19 Nov 1981 08:52:00 GMT
+		Cache-Control: no-store, no-cache, must-revalidate
+		Pragma: no-cache
+		Set-Cookie: PHPSESSID=80pd3hlg38mvjnelpvokp9lad0; path=/
+		Content-Type: application/xml; charset=utf-8
+		Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>";
+
+
+		$this->request->setOutput($output);
+
+		$response = $this->request->request('get', 'http://example.com', [
 			'auth' => [
 				'username',
 				'password',
@@ -382,6 +401,9 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		]);
 
 		$options = $this->request->curl_options;
+
+		$this->assertEquals('<title>Update success! config</title>', $response->getBody());
+		$this->assertEquals(200, $response->getStatusCode());
 
 		$this->assertArrayHasKey(CURLOPT_USERPWD, $options);
 		$this->assertEquals('username:password', $options[CURLOPT_USERPWD]);
@@ -407,9 +429,31 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testSetAuthDigest()
 	{
-		$this->request->setAuth('username', 'password', 'digest')->get('http://example.com');
+
+		$output = "HTTP/1.1 401 Unauthorized
+		Server: ddos-guard
+		Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
+		WWW-Authenticate: Digest\x0d\x0a\x0d\x0aHTTP/1.1 200 OK
+		Server: ddos-guard
+		Connection: keep-alive
+		Keep-Alive: timeout=60
+		Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
+		Date: Tue, 07 Jul 2020 15:13:14 GMT
+		Expires: Thu, 19 Nov 1981 08:52:00 GMT
+		Cache-Control: no-store, no-cache, must-revalidate
+		Pragma: no-cache
+		Set-Cookie: PHPSESSID=80pd3hlg38mvjnelpvokp9lad0; path=/
+		Content-Type: application/xml; charset=utf-8
+		Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>";
+
+		$this->request->setOutput($output);
+
+		$response = $this->request->setAuth('username', 'password', 'digest')->get('http://example.com');
 
 		$options = $this->request->curl_options;
+
+		$this->assertEquals('<title>Update success! config</title>', $response->getBody());
+		$this->assertEquals(200, $response->getStatusCode());
 
 		$this->assertArrayHasKey(CURLOPT_USERPWD, $options);
 		$this->assertEquals('username:password', $options[CURLOPT_USERPWD]);
@@ -927,5 +971,4 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 		$this->assertArrayHasKey(CURLOPT_COOKIEFILE, $options);
 		$this->assertEquals($holder, $options[CURLOPT_COOKIEFILE]);
 	}
-
 }

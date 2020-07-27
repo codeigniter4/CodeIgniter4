@@ -102,7 +102,7 @@ class CreateMigration extends BaseCommand
 	 *
 	 * @param array $params
 	 */
-	public function run(array $params = [])
+	public function run(array $params)
 	{
 		helper('inflector');
 		$name = array_shift($params);
