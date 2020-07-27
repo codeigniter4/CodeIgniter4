@@ -1276,15 +1276,21 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function urlToProvider()
 	{
+		if (config('App')->indexPage != '') {
+			$page = config('App')->indexPage . '/';
+		} else {
+			$page = '';
+		}
+
 		return [
 			[
-				'http://example.com/index.php/path/string/to/13',
+				"http://example.com/{$page}path/string/to/13",
 				'gotoPage',
 				'string',
 				13,
 			],
 			[
-				'http://example.com/index.php/route/string/to/13',
+				"http://example.com/{$page}route/string/to/13",
 				'myOtherController::goto',
 				'string',
 				13,

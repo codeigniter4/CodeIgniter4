@@ -650,11 +650,6 @@ if (! function_exists('url_to'))
 	 */
 	function url_to(string $controller, ...$args): string
 	{
-		if (! $route = route_to($controller, ...$args))
-		{
-			throw new \CodeIgniter\Router\Exceptions\RouterException(lang('HTTP.invalidRoute', [$controller]));
-		}
-
 		if (strpos($controller, '::') !== false)
 		{
 			$class = explode('::', $controller)[0];
@@ -663,6 +658,11 @@ if (! function_exists('url_to'))
 			{
 				$controller = service('routes')->getDefaultNamespace() . $controller;
 			}
+		}
+
+		if (! $route = route_to($controller, ...$args))
+		{
+			throw new \CodeIgniter\Router\Exceptions\RouterException(lang('HTTP.invalidRoute', [$controller]));
 		}
 
 		return site_url($route);
