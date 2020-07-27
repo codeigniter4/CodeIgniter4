@@ -83,10 +83,10 @@ class GenerateKey extends BaseCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-encoding' => 'Encoding to use (either hex or base64). Defaults to hex.',
-		'-force'    => 'Force overwrite existing key in `.env` file.',
-		'-length'   => 'The length of the random string that should be returned in bytes. Defaults to 32.',
-		'-show'     => 'Shows the generated key in the terminal instead of storing in the `.env` file.',
+		'-force'  => 'Force overwrite existing key in `.env` file.',
+		'-length' => 'The length of the random string that should be returned in bytes. Defaults to 32.',
+		'-prefix' => 'Prefix to prepend to encoded key (either hex2bin or base64). Defaults to hex2bin.',
+		'-show'   => 'Shows the generated key in the terminal instead of storing in the `.env` file.',
 	];
 
 	/**
@@ -98,15 +98,15 @@ class GenerateKey extends BaseCommand
 	 */
 	public function run(array $params)
 	{
-		$encoding = $params['encoding'] ?? CLI::getOption('encoding');
-		if (in_array($encoding, [null, true], true))
+		$prefix = $params['prefix'] ?? CLI::getOption('prefix');
+		if (in_array($prefix, [null, true], true))
 		{
-			$encoding = 'hex';
+			$prefix = 'hex2bin';
 		}
-		elseif (! in_array($encoding, ['hex', 'base64'], true))
+		elseif (! in_array($prefix, ['hex2bin', 'base64'], true))
 		{
 			// @codeCoverageIgnoreStart
-			$encoding = CLI::prompt('Please provide a valid encoding to use.', ['hex', 'base64'], 'required');
+			$prefix = CLI::prompt('Please provide a valid prefix to use.', ['hex2bin', 'base64'], 'required');
 			// @codeCoverageIgnoreEnd
 		}
 
@@ -116,7 +116,7 @@ class GenerateKey extends BaseCommand
 			$length = 32;
 		}
 
-		$encodedKey = $this->generateRandomKey($encoding, $length);
+		$encodedKey = $this->generateRandomKey($prefix, $length);
 
 		if (array_key_exists('show', $params) || (bool) CLI::getOption('show'))
 		{
@@ -127,11 +127,9 @@ class GenerateKey extends BaseCommand
 
 		if (! $this->setNewEncryptionKey($encodedKey, $params))
 		{
-			// @codeCoverageIgnoreStart
-			CLI::error('Error in creating new encryption key.');
+			CLI::write('Error in setting new encryption key to .env file.', 'light_gray', 'red');
 			CLI::newLine();
 			return;
-			// @codeCoverageIgnoreEnd
 		}
 
 		// force DotEnv to reload the new env vars
@@ -147,16 +145,16 @@ class GenerateKey extends BaseCommand
 	/**
 	 * Generates a key and encodes it.
 	 *
-	 * @param string  $encoding
+	 * @param string  $prefix
 	 * @param integer $length
 	 *
 	 * @return string
 	 */
-	protected function generateRandomKey(string $encoding, int $length): string
+	protected function generateRandomKey(string $prefix, int $length): string
 	{
 		$key = Encryption::createKey($length);
 
-		if ($encoding === 'hex')
+		if ($prefix === 'hex2bin')
 		{
 			return 'hex2bin:' . bin2hex($key);
 		}
@@ -208,11 +206,20 @@ class GenerateKey extends BaseCommand
 	 */
 	protected function writeNewEncryptionKeyToFile(string $oldKey, string $newKey): bool
 	{
+		$baseEnv = ROOTPATH . 'env';
 		$envFile = ROOTPATH . '.env';
 
 		if (! file_exists($envFile))
 		{
-			copy(ROOTPATH . 'env', $envFile);
+			if (! file_exists($baseEnv))
+			{
+				CLI::write('Both default shipped `env` file and custom `.env` are missing.', 'yellow');
+				CLI::write('Here\'s your new key instead: ' . CLI::color($newKey, 'yellow'));
+				CLI::newLine();
+				return false;
+			}
+
+			copy($baseEnv, $envFile);
 		}
 
 		$ret = file_put_contents($envFile, preg_replace(

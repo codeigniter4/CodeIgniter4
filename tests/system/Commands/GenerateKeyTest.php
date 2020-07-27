@@ -2,21 +2,14 @@
 
 namespace CodeIgniter\Commands;
 
-use CodeIgniter\CLI\CommandRunner;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\CIUnitTestCase;
-use Config\Services;
 
 class GenerateKeyTest extends CIUnitTestCase
 {
 	private $streamFilter;
 	private $envPath;
 	private $backupEnvPath;
-
-	/**
-	 * @var CommandRunner
-	 */
-	private $runner;
 
 	protected function setUp(): void
 	{
@@ -26,9 +19,6 @@ class GenerateKeyTest extends CIUnitTestCase
 		$this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
 		$this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
 
-		$this->runner = new CommandRunner();
-		$this->runner->initController(Services::request(), Services::response(), Services::logger());
-
 		$this->envPath       = ROOTPATH . '.env';
 		$this->backupEnvPath = ROOTPATH . '.env.backup';
 
@@ -36,6 +26,8 @@ class GenerateKeyTest extends CIUnitTestCase
 		{
 			rename($this->envPath, $this->backupEnvPath);
 		}
+
+		$this->resetEnvironment();
 	}
 
 	protected function tearDown(): void
@@ -52,8 +44,7 @@ class GenerateKeyTest extends CIUnitTestCase
 			rename($this->backupEnvPath, $this->envPath);
 		}
 
-		putenv('encryption.key');
-		unset($_ENV['encryption.key'], $_SERVER['encryption.key']);
+		$this->resetEnvironment();
 	}
 
 	/**
@@ -66,13 +57,22 @@ class GenerateKeyTest extends CIUnitTestCase
 		return CITestStreamFilter::$buffer;
 	}
 
+	protected function resetEnvironment()
+	{
+		putenv('encryption.key');
+		unset($_ENV['encryption.key'], $_SERVER['encryption.key']);
+	}
+
 	public function testGenerateKeyShowsEncodedKey()
 	{
-		$this->runner->index(['key:generate', 'show' => null]);
+		command('key:generate -show');
 		$this->assertStringContainsString('hex2bin:', $this->getBuffer());
 
-		$this->runner->index(['key:generate', 'encoding' => 'base64', 'show' => null]);
+		command('key:generate -prefix base64 -show');
 		$this->assertStringContainsString('base64:', $this->getBuffer());
+
+		command('key:generate -prefix hex2bin -show');
+		$this->assertStringContainsString('hex2bin:', $this->getBuffer());
 	}
 
 	/**
@@ -81,14 +81,29 @@ class GenerateKeyTest extends CIUnitTestCase
 	 */
 	public function testGenerateKeyCreatesNewKey()
 	{
-		$this->runner->index(['key:generate']);
+		command('key:generate');
 		$this->assertStringContainsString('successfully set.', $this->getBuffer());
 		$this->assertStringContainsString(env('encryption.key'), file_get_contents($this->envPath));
 		$this->assertStringContainsString('hex2bin:', file_get_contents($this->envPath));
 
-		$this->runner->index(['key:generate', 'force' => null, 'encoding' => 'base64']);
+		command('key:generate -prefix base64 -force');
 		$this->assertStringContainsString('successfully set.', $this->getBuffer());
 		$this->assertStringContainsString(env('encryption.key'), file_get_contents($this->envPath));
 		$this->assertStringContainsString('base64:', file_get_contents($this->envPath));
+
+		command('key:generate -prefix hex2bin -force');
+		$this->assertStringContainsString('successfully set.', $this->getBuffer());
+		$this->assertStringContainsString(env('encryption.key'), file_get_contents($this->envPath));
+		$this->assertStringContainsString('hex2bin:', file_get_contents($this->envPath));
+	}
+
+	public function testDefaultShippedEnvIsMissing()
+	{
+		rename(ROOTPATH . 'env', ROOTPATH . 'lostenv');
+		command('key:generate');
+		rename(ROOTPATH . 'lostenv', ROOTPATH . 'env');
+
+		$this->assertStringContainsString('Both default shipped', $this->getBuffer());
+		$this->assertStringContainsString('Error in setting', $this->getBuffer());
 	}
 }
