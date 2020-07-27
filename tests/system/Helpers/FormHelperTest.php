@@ -311,7 +311,8 @@ EOH;
 	}
 
 	// ------------------------------------------------------------------------
-	public function testFormTextarea()
+	public function testForm
+		()
 	{
 		$expected = <<<EOH
 <textarea name="notes" cols="40" rows="10" >Notes</textarea>\n
@@ -331,6 +332,29 @@ EOH;
 
 EOH;
 		$this->assertEquals($expected, form_textarea($data));
+	}
+
+	// ------------------------------------------------------------------------
+	public function testFormTextareaExtraRowsColsArray()
+	{
+		$extra     = [
+			'cols' => '30',
+			'rows'  => '5',
+		];
+		$expected = <<<EOH
+<textarea name="notes" cols="30" rows="5" >Notes</textarea>\n
+EOH;
+		$this->assertEquals($expected, form_textarea('notes', 'Notes', $extra));
+	}
+
+	// ------------------------------------------------------------------------
+	public function testFormTextareaExtraRowsColsString()
+	{
+		$extra = 'cols="30" rows="5"';
+		$expected = <<<EOH
+<textarea name="notes" cols="30" rows="5" >Notes</textarea>\n
+EOH;
+		$this->assertEquals($expected, form_textarea('notes', 'Notes', $extra));
 	}
 
 	// ------------------------------------------------------------------------
