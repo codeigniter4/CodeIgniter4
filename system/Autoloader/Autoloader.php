@@ -280,14 +280,14 @@ class Autoloader
 	{
 		if (strpos($class, '\\') === false)
 		{
-			return false;
+			$class = 'Config\\' . $class;
 		}
 
 		foreach ($this->prefixes as $namespace => $directories)
 		{
 			foreach ($directories as $directory)
 			{
-				$directory = rtrim($directory, DIRECTORY_SEPARATOR);
+				$directory = rtrim($directory, '\\/');
 
 				if (strpos($class, $namespace) === 0)
 				{
