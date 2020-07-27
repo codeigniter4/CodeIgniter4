@@ -662,7 +662,9 @@ if (! function_exists('url_to'))
 
 		if (! $route = route_to($controller, ...$args))
 		{
-			throw new \CodeIgniter\Router\Exceptions\RouterException(lang('HTTP.invalidRoute', [$controller]));
+			$explode = explode('::', $controller);
+
+			throw new \CodeIgniter\Router\Exceptions\RouterException(lang('HTTP.controllerNotFound', [$explode[0], $explode[1]]));
 		}
 
 		return site_url($route);
