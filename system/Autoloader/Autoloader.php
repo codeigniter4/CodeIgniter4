@@ -287,7 +287,7 @@ class Autoloader
 		{
 			foreach ($directories as $directory)
 			{
-				$directory = rtrim($directory, '\\/');
+				$directory = rtrim($directory, DIRECTORY_SEPARATOR);
 
 				if (strpos($class, $namespace) === 0)
 				{
