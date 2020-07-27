@@ -281,7 +281,7 @@ class Autoloader
 		if (strpos($class, '\\') === false)
 		{
 			$class    = 'Config\\' . $class;
-			$filePath = APPPATH . str_replace('\\', '/', $class) . '.php';
+			$filePath = APPPATH . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
 			$filename = $this->requireFile($filePath);
 
 			if ($filename)
@@ -341,7 +341,7 @@ class Autoloader
 			APPPATH . 'Models/',
 		];
 
-		$class = str_replace('\\', '/', $class) . '.php';
+		$class = str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
 
 		foreach ($paths as $path)
 		{
