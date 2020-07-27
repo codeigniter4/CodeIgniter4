@@ -1276,9 +1276,12 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function urlToProvider()
 	{
-		if (config('App')->indexPage != '') {
+		if (config('App')->indexPage !== '')
+		{
 			$page = config('App')->indexPage . '/';
-		} else {
+		}
+		else
+		{
 			$page = '';
 		}
 
