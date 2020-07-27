@@ -361,7 +361,7 @@ The following functions are available:
 
         $url = prep_url('example.com');
 
-.. php:function:: url_to([$controller[, ...$args]])
+.. php:function:: url_to($controller[, ...$args])
 
     :param  string  $controller: The controller class and method
     :param  mixed   ...$args: Additional arguments to be injected into the route
