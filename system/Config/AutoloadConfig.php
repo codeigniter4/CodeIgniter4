@@ -63,7 +63,7 @@ class AutoloadConfig
 	 */
 	protected $corePsr4 = [
 		'CodeIgniter' => SYSTEMPATH,
-		'App'         => APPPATH // To ensure filters, etc still found,
+		'App'         => APPPATH, // To ensure filters, etc still found,
 	];
 
 	/**
@@ -87,7 +87,7 @@ class AutoloadConfig
 		'Psr\Log\LoggerTrait'              => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerTrait.php',
 		'Psr\Log\LogLevel'                 => SYSTEMPATH . 'ThirdParty/PSR/Log/LogLevel.php',
 		'Psr\Log\NullLogger'               => SYSTEMPATH . 'ThirdParty/PSR/Log/NullLogger.php',
-		'Laminas\Escaper\Escaper'          => SYSTEMPATH . 'ThirdParty/Escaper/Escaper.php'
+		'Laminas\Escaper\Escaper'          => SYSTEMPATH . 'ThirdParty/Escaper/Escaper.php',
 	];
 
 	//--------------------------------------------------------------------
@@ -102,12 +102,12 @@ class AutoloadConfig
 	{
 		if (isset($_SERVER['CI_ENVIRONMENT']) && $_SERVER['CI_ENVIRONMENT'] === 'testing')
 		{
-			$this->psr4['Tests\Support'] = SUPPORTPATH;
+			$this->psr4['Tests\Support']                  = SUPPORTPATH;
 			$this->classmap['CodeIgniter\Log\TestLogger'] = SYSTEMPATH . 'Test/TestLogger.php';
 			$this->classmap['CIDatabaseTestCase']         = SYSTEMPATH . 'Test/CIDatabaseTestCase.php';
 		}
 
-		$this->psr4 = array_merge($this->corePsr4, $this->psr4);
-	 	$this->classmap = array_merge($this->coreClassmap, $this->classmap);
+		$this->psr4     = array_merge($this->corePsr4, $this->psr4);
+		$this->classmap = array_merge($this->coreClassmap, $this->classmap);
 	}
 }

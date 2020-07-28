@@ -311,12 +311,12 @@ if (! function_exists('form_textarea'))
 		}
 
 		// Unsets default rows and cols if defined in extra field as array or string.
-		if ((is_array($extra) && array_key_exists('rows', $extra)) || (is_string($extra) && strpos(strtolower(preg_replace('/\s+/', '', $extra)), 'rows=') !== FALSE))
+		if ((is_array($extra) && array_key_exists('rows', $extra)) || (is_string($extra) && strpos(strtolower(preg_replace('/\s+/', '', $extra)), 'rows=') !== false))
 		{
 			unset($defaults['rows']);
 		}
 
-		if ((is_array($extra) && array_key_exists('cols', $extra)) || (is_string($extra) && strpos(strtolower(preg_replace('/\s+/', '', $extra)), 'cols=') !== FALSE))
+		if ((is_array($extra) && array_key_exists('cols', $extra)) || (is_string($extra) && strpos(strtolower(preg_replace('/\s+/', '', $extra)), 'cols=') !== false))
 		{
 			unset($defaults['cols']);
 		}

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -103,14 +104,14 @@ trait FeatureTestTrait
 
 	/**
 	 * Set request's headers
-	 * 
-	 * Example of use 
+	 *
+	 * Example of use
 	 * withHeaders([
 	 *  'Authorization' => 'Token'
 	 * ])
-	 * 
+	 *
 	 * @param array Array of headers
-	 * 
+	 *
 	 * @return $this
 	 */
 	public function withHeaders(array $headers = [])
@@ -324,9 +325,9 @@ trait FeatureTestTrait
 
 	/**
 	 * Setup the custom request's headers
-	 * 
+	 *
 	 * @param \CodeIgniter\HTTP\Request $request
-	 * 
+	 *
 	 * @return \CodeIgniter\HTTP\IncomingRequest
 	 */
 	protected function setupHeaders(Request $request)

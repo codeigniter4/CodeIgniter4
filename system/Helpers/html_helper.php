@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -51,8 +52,9 @@ if (! function_exists('ul'))
 	 * Generates an HTML unordered list from an single or
 	 * multi-dimensional array.
 	 *
-	 * @param  array $list
-	 * @param  mixed $attributes HTML attributes string, array, object
+	 * @param array $list
+	 * @param mixed $attributes HTML attributes string, array, object
+	 *
 	 * @return string
 	 */
 	function ul(array $list, $attributes = ''): string
@@ -70,8 +72,9 @@ if (! function_exists('ol'))
 	 *
 	 * Generates an HTML ordered list from an single or multi-dimensional array.
 	 *
-	 * @param  array $list
-	 * @param  mixed $attributes HTML attributes string, array, object
+	 * @param array $list
+	 * @param mixed $attributes HTML attributes string, array, object
+	 *
 	 * @return string
 	 */
 	function ol(array $list, $attributes = ''): string
@@ -89,10 +92,11 @@ if (! function_exists('_list'))
 	 *
 	 * Generates an HTML ordered list from an single or multi-dimensional array.
 	 *
-	 * @param  string  $type
-	 * @param  mixed   $list
-	 * @param  mixed   $attributes string, array, object
-	 * @param  integer $depth
+	 * @param string  $type
+	 * @param mixed   $list
+	 * @param mixed   $attributes string, array, object
+	 * @param integer $depth
+	 *
 	 * @return string
 	 */
 	function _list(string $type = 'ul', $list = [], $attributes = '', int $depth = 0): string
@@ -141,9 +145,10 @@ if (! function_exists('img'))
 	 *
 	 * Generates an image element
 	 *
-	 * @param  mixed   $src
-	 * @param  boolean $indexPage
-	 * @param  mixed   $attributes
+	 * @param mixed   $src
+	 * @param boolean $indexPage
+	 * @param mixed   $attributes
+	 *
 	 * @return string
 	 */
 	function img($src = '', bool $indexPage = false, $attributes = ''): string
@@ -203,7 +208,8 @@ if (! function_exists('doctype'))
 	 * xhtml-frame, html4-strict, html4-trans, and html4-frame.
 	 * All values are saved in the doctypes config file.
 	 *
-	 * @param  string $type The doctype to be generated
+	 * @param string $type The doctype to be generated
+	 *
 	 * @return string
 	 */
 	function doctype(string $type = 'html5'): string
@@ -223,8 +229,9 @@ if (! function_exists('script_tag'))
 	 *
 	 * Generates link to a JS file
 	 *
-	 * @param  mixed   $src       Script source or an array
-	 * @param  boolean $indexPage Should indexPage be added to the JS path
+	 * @param mixed   $src       Script source or an array
+	 * @param boolean $indexPage Should indexPage be added to the JS path
+	 *
 	 * @return string
 	 */
 	function script_tag($src = '', bool $indexPage = false): string
@@ -267,13 +274,14 @@ if (! function_exists('link_tag'))
 	 *
 	 * Generates link to a CSS file
 	 *
-	 * @param  mixed   $href      Stylesheet href or an array
-	 * @param  string  $rel
-	 * @param  string  $type
-	 * @param  string  $title
-	 * @param  string  $media
-	 * @param  boolean $indexPage should indexPage be added to the CSS path.
-     	 * @param  string  $hreflang
+	 * @param mixed   $href      Stylesheet href or an array
+	 * @param string  $rel
+	 * @param string  $type
+	 * @param string  $title
+	 * @param string  $media
+	 * @param boolean $indexPage should indexPage be added to the CSS path.
+	 * @param string  $hreflang
+	 *
 	 * @return string
 	 */
 	function link_tag($href = '', string $rel = 'stylesheet', string $type = 'text/css', string $title = '', string $media = '', bool $indexPage = false, string $hreflang = ''): string
@@ -287,7 +295,7 @@ if (! function_exists('link_tag'))
 			$type      = $href['type'] ?? $type;
 			$title     = $href['title'] ?? $title;
 			$media     = $href['media'] ?? $media;
-            		$hreflang  = $href['hreflang'] ?? '';
+			$hreflang  = $href['hreflang'] ?? '';
 			$indexPage = $href['indexPage'] ?? $indexPage;
 			$href      = $href['href'] ?? '';
 		}
@@ -310,14 +318,14 @@ if (! function_exists('link_tag'))
 
 		if ($hreflang !== '')
 		{
-		    $link .= 'hreflang="' . $hreflang .'" ';
+			$link .= 'hreflang="' . $hreflang . '" ';
 		}
 
 		$link .= 'rel="' . $rel . '" ';
 
-		if (! in_array($rel, ['alternate','canonical']))
+		if (! in_array($rel, ['alternate', 'canonical']))
 		{
-		    $link .= 'type="' . $type . '" ';
+			$link .= 'type="' . $type . '" ';
 		}
 
 		if ($media !== '')
@@ -344,11 +352,12 @@ if (! function_exists('video'))
 	 * Generates a video element to embed videos. The video element can
 	 * contain one or more video sources
 	 *
-	 * @param  mixed   $src                Either a source string or an array of sources
-	 * @param  string  $unsupportedMessage The message to display if the media tag is not supported by the browser
-	 * @param  string  $attributes         HTML attributes
-	 * @param  array   $tracks
-	 * @param  boolean $indexPage
+	 * @param mixed   $src                Either a source string or an array of sources
+	 * @param string  $unsupportedMessage The message to display if the media tag is not supported by the browser
+	 * @param string  $attributes         HTML attributes
+	 * @param array   $tracks
+	 * @param boolean $indexPage
+	 *
 	 * @return string
 	 */
 	function video($src, string $unsupportedMessage = '', string $attributes = '', array $tracks = [], bool $indexPage = false): string
@@ -524,10 +533,11 @@ if (! function_exists('source'))
 	 * Generates a source element that specifies multiple media resources
 	 * for either audio or video element
 	 *
-	 * @param  string  $src        The path of the media resource
-	 * @param  string  $type       The MIME-type of the resource with optional codecs parameters
-	 * @param  string  $attributes HTML attributes
-	 * @param  boolean $indexPage
+	 * @param string  $src        The path of the media resource
+	 * @param string  $type       The MIME-type of the resource with optional codecs parameters
+	 * @param string  $attributes HTML attributes
+	 * @param boolean $indexPage
+	 *
 	 * @return string
 	 */
 	function source(string $src, string $type = 'unknown', string $attributes = '', bool $indexPage = false): string
@@ -566,10 +576,11 @@ if (! function_exists('track'))
 	 * Generates a track element to specify timed tracks. The tracks are
 	 * formatted in WebVTT format.
 	 *
-	 * @param  string $src         The path of the .VTT file
-	 * @param  string $kind
-	 * @param  string $srcLanguage
-	 * @param  string $label
+	 * @param string $src         The path of the .VTT file
+	 * @param string $kind
+	 * @param string $srcLanguage
+	 * @param string $label
+	 *
 	 * @return string
 	 */
 	function track(string $src, string $kind, string $srcLanguage, string $label): string
@@ -642,10 +653,11 @@ if (! function_exists('param'))
 	 * Generates a param element that defines parameters
 	 * for the object element.
 	 *
-	 * @param  string $name       The name of the parameter
-	 * @param  string $value      The value of the parameter
-	 * @param  string $type       The MIME-type
-	 * @param  string $attributes HTML attributes
+	 * @param string $name       The name of the parameter
+	 * @param string $value      The value of the parameter
+	 * @param string $type       The MIME-type
+	 * @param string $attributes HTML attributes
+	 *
 	 * @return string
 	 */
 	function param(string $name, string $value, string $type = 'ref', string $attributes = ''): string
@@ -666,10 +678,11 @@ if (! function_exists('embed'))
 	 *
 	 * Generates an embed element
 	 *
-	 * @param  string  $src        The path of the resource to embed
-	 * @param  string  $type       MIME-type
-	 * @param  string  $attributes HTML attributes
-	 * @param  boolean $indexPage
+	 * @param string  $src        The path of the resource to embed
+	 * @param string  $type       MIME-type
+	 * @param string  $attributes HTML attributes
+	 * @param boolean $indexPage
+	 *
 	 * @return string
 	 */
 	function embed(string $src, string $type = 'unknown', string $attributes = '', bool $indexPage = false): string
