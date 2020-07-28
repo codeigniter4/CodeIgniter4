@@ -87,8 +87,9 @@
 # ENCRYPTION
 #--------------------------------------------------------------------
 
-# encryption.key = 
+# encryption.key =
 # encryption.driver = OpenSSL
+# encryption.digest = SHA512
 
 #--------------------------------------------------------------------
 # HONEYPOT
