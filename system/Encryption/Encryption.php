@@ -135,7 +135,7 @@ class Encryption
 		{
 			$this->key    = $config->key;
 			$this->driver = $config->driver;
-			$this->digest = $config->digest;
+                      $this->digest = $config->digest ?? 'SHA512';
 		}
 
 		// Insist on a driver
