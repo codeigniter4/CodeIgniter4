@@ -186,6 +186,25 @@ class AutoloaderTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testloadClassConfigFound()
+	{
+		$this->loader->addNamespace('Config', APPPATH . 'Config');
+		$this->assertSame(
+			APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Modules.php',
+			$this->loader->loadClass('Modules')
+		);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testloadClassConfigNotFound()
+	{
+		$this->loader->addNamespace('Config', APPPATH . 'Config');
+		$this->assertFalse($this->loader->loadClass('NotFound'));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testLoadLegacy()
 	{
 		// should not be able to find a folder
