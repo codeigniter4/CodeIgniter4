@@ -311,8 +311,7 @@ EOH;
 	}
 
 	// ------------------------------------------------------------------------
-	public function testForm
-		()
+	public function testFormTextarea()
 	{
 		$expected = <<<EOH
 <textarea name="notes" cols="40" rows="10">Notes</textarea>\n
