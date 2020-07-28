@@ -336,9 +336,9 @@ EOH;
 	// ------------------------------------------------------------------------
 	public function testFormTextareaExtraRowsColsArray()
 	{
-		$extra     = [
+		$extra    = [
 			'cols' => '30',
-			'rows'  => '5',
+			'rows' => '5',
 		];
 		$expected = <<<EOH
 <textarea name="notes" cols="30" rows="5">Notes</textarea>\n
@@ -349,7 +349,7 @@ EOH;
 	// ------------------------------------------------------------------------
 	public function testFormTextareaExtraRowsColsString()
 	{
-		$extra = 'cols="30" rows="5"';
+		$extra    = 'cols="30" rows="5"';
 		$expected = <<<EOH
 <textarea name="notes" cols="30" rows="5">Notes</textarea>\n
 EOH;
