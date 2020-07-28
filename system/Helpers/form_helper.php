@@ -316,7 +316,8 @@ if (! function_exists('form_textarea'))
 			unset($defaults['rows']);
 		}
 
-		if ((is_array($extra) && array_key_exists('cols', $extra)) || (is_string($extra) && strpos(strtolower(preg_replace('/\s+/', '', $extra)), 'cols=') !== FALSE)) {
+		if ((is_array($extra) && array_key_exists('cols', $extra)) || (is_string($extra) && strpos(strtolower(preg_replace('/\s+/', '', $extra)), 'cols=') !== FALSE))
+		{
 			unset($defaults['cols']);
 		}
 
