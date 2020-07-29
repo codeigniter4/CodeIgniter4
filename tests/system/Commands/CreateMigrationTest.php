@@ -19,6 +19,11 @@ class CreateMigrationTest extends CIUnitTestCase
 	protected function tearDown(): void
 	{
 		stream_filter_remove($this->streamFilter);
+
+		$result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
+		$file   = trim(substr($result, 14));
+		$file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $file);
+		file_exists($file) && unlink($file);
 	}
 
 	protected function getBuffer(): string

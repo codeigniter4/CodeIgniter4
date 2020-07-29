@@ -76,6 +76,13 @@ abstract class GeneratorCommand extends BaseCommand
 	];
 
 	/**
+	 * The params array for easy access by other methods.
+	 *
+	 * @var array
+	 */
+	protected $params = [];
+
+	/**
 	 * Constructor.
 	 *
 	 * @param \Psr\Log\LoggerInterface  $logger
@@ -96,6 +103,8 @@ abstract class GeneratorCommand extends BaseCommand
 	 */
 	public function run(array $params)
 	{
+		$this->params = $params;
+
 		// First, we'll get the fully qualified class name from the input,
 		// pascalizing it if not yet done. Then we will try to get the file
 		// path from this.

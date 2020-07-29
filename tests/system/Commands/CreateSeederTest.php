@@ -19,6 +19,11 @@ class CreateSeederTest extends CIUnitTestCase
 	protected function tearDown(): void
 	{
 		stream_filter_remove($this->streamFilter);
+
+		$result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
+		$file   = trim(substr($result, 14));
+		$file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $file);
+		file_exists($file) && unlink($file);
 	}
 
 	protected function getBuffer(): string
@@ -30,18 +35,19 @@ class CreateSeederTest extends CIUnitTestCase
 	{
 		command('make:seeder testSeeder');
 
-		$ds = DIRECTORY_SEPARATOR;
 		$this->assertStringContainsString('Created file: ', $this->getBuffer());
-		$this->assertStringContainsString("APPPATH{$ds}Database{$ds}Seeds{$ds}TestSeeder.php", $this->getBuffer());
+		$this->assertStringContainsString('TestSeeder.php', $this->getBuffer());
 	}
 
 	public function testCreateSeederFailsOnDuplicateFile()
 	{
 		command('make:seeder seedOne');
 		$this->assertStringContainsString('Created file: ', $this->getBuffer());
+		CITestStreamFilter::$buffer = '';
 
 		command('make:seeder seedOne');
 		$this->assertStringContainsString('SeedOne.php already exists.', $this->getBuffer());
+		CITestStreamFilter::$buffer = '';
 
 		command('make:seeder seedOne -force');
 		$this->assertStringContainsString('Created file: ', $this->getBuffer());
