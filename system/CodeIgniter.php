@@ -359,7 +359,7 @@ class CodeIgniter
 	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
 	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 */
-	protected function handleRequest(RouteCollectionInterface $routes = null, $cacheConfig, bool $returnResponse = false)
+	protected function handleRequest(RouteCollectionInterface $routes = null, Cache $cacheConfig, bool $returnResponse = false)
 	{
 		$routeFilter = $this->tryToRouteIt($routes);
 
