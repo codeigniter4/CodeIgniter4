@@ -807,7 +807,8 @@ class RouteCollection implements RouteCollectionInterface
 		// resources are sent to, we need to have a new name
 		// to store the values in.
 		$new_name = ucfirst($name);
-
+		// 1.replace / as \
+        $new_name = str_replace("/","\\",$new_name);
 		// If a new controller is specified, then we replace the
 		// $name value with the name of the new controller.
 		if (isset($options['controller']))
@@ -921,7 +922,8 @@ class RouteCollection implements RouteCollectionInterface
 		// resources are sent to, we need to have a new name
 		// to store the values in.
 		$newName = ucfirst($name);
-
+		// 1.replace / as \
+        $newName = str_replace("/","\\",$newName);
 		// If a new controller is specified, then we replace the
 		// $name value with the name of the new controller.
 		if (isset($options['controller']))
