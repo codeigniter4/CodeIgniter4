@@ -15,12 +15,15 @@
  */
 
 return [
-   'commandNotFound'    => 'Command "{0}" not found.',
-   'altCommandSingular' => 'Did you mean this?',
-   'altCommandPlural'   => 'Did you mean one of these?',
-   'helpUsage'          => 'Usage:',
-   'helpDescription'    => 'Description:',
-   'helpOptions'        => 'Options:',
-   'helpArguments'      => 'Arguments:',
-   'invalidColor'       => 'Invalid {0} color: {1}.',
+   'commandNotFound'     => 'Command "{0}" not found.',
+   'altCommandSingular'  => 'Did you mean this?',
+   'altCommandPlural'    => 'Did you mean one of these?',
+   'generateFileExists'  => '{0} already exists.',
+   'generateFileSuccess' => 'Created file: ',
+   'generateFileError'   => 'Error in creating file: ',
+   'helpUsage'           => 'Usage:',
+   'helpDescription'     => 'Description:',
+   'helpOptions'         => 'Options:',
+   'helpArguments'       => 'Arguments:',
+   'invalidColor'        => 'Invalid {0} color: {1}.',
 ];

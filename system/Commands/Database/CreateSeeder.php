@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -38,25 +39,11 @@
 
 namespace CodeIgniter\Commands\Database;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Config\Services;
+use CodeIgniter\CLI\GeneratorCommand;
 
-/**
- * Creates a new seeder file.
- *
- * @package CodeIgniter\Commands
- */
-class CreateSeeder extends BaseCommand
+class CreateSeeder extends GeneratorCommand
 {
-	/**
-	 * The group the command is lumped under
-	 * when listing commands.
-	 *
-	 * @var string
-	 */
-	protected $group = 'Generators';
-
 	/**
 	 * The Command's name
 	 *
@@ -76,7 +63,7 @@ class CreateSeeder extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $usage = 'make:seeder [seeder_name] [options]';
+	protected $usage = 'make:seeder [name] [options]';
 
 	/**
 	 * the Command's Arguments
@@ -84,68 +71,57 @@ class CreateSeeder extends BaseCommand
 	 * @var array
 	 */
 	protected $arguments = [
-		'seeder_name' => 'The seeder file name',
+		'name' => 'The seeder file name',
 	];
 
 	/**
-	 * the Command's Options
-	 *
-	 * @var array
-	 */
-	protected $options = [
-		'-n' => 'Set seeder namespace',
-	];
-
-	/**
-	 * Creates a new seeder file.
+	 * Gets the class name from input.
 	 *
 	 * @param array $params
+	 *
+	 * @return string
 	 */
-	public function run(array $params)
+	protected function getClassName(array $params): string
 	{
-		helper('inflector');
-
-		$name = array_shift($params);
-
-		if (empty($name))
+		$class = parent::getClassName($params);
+		if (empty($class))
 		{
-			$name = CLI::prompt(lang('Seed.nameFile'), null, 'required');
+			// @codeCoverageIgnoreStart
+			$class = CLI::prompt(lang('Migrations.nameSeeder'), null, 'required');
+			// @codeCoverageIgnoreEnd
 		}
 
-		$ns       = $params['-n'] ?? CLI::getOption('n');
-		$homepath = APPPATH;
+		return $class;
+	}
 
-		if (! empty($ns))
-		{
-			// Get all namespaces
-			$namespaces = Services::autoloader()->getNamespace();
+	/**
+	 * Gets the qualified class name.
+	 *
+	 * @param string $rootNamespace
+	 * @param string $class
+	 *
+	 * @return string
+	 */
+	protected function getNamespacedClass(string $rootNamespace, string $class): string
+	{
+		return $rootNamespace . '\\Database\\Seeds\\' . $class;
+	}
 
-			foreach ($namespaces as $namespace => $path)
-			{
-				if ($namespace === $ns)
-				{
-					$homepath = realpath(reset($path)) . DIRECTORY_SEPARATOR;
-					break;
-				}
-			}
-		}
-		else
-		{
-			$ns = defined('APP_NAMESPACE') ? APP_NAMESPACE : 'App';
-		}
+	/**
+	 * Gets the template for this class.
+	 *
+	 * @return string
+	 */
+	protected function getTemplate(): string
+	{
+		return <<<EOD
+<?php
 
-		// full path
-		$path = $homepath . 'Database/Seeds/' . $name . '.php';
-
-		// Class name should be pascal case now (camel case with upper first letter)
-		$name = pascalize($name);
-
-		$template = <<<EOD
-<?php namespace $ns\Database\Seeds;
+namespace {namespace};
 
 use CodeIgniter\Database\Seeder;
 
-class {name} extends Seeder
+class {class} extends Seeder
 {
 	public function run()
 	{
@@ -154,16 +130,5 @@ class {name} extends Seeder
 }
 
 EOD;
-		$template = str_replace('{name}', $name, $template);
-
-		helper('filesystem');
-		if (! write_file($path, $template))
-		{
-			CLI::error(lang('Seed.writeError', [$path]));
-			return;
-		}
-
-		$ns = rtrim(str_replace('\\', DIRECTORY_SEPARATOR, $ns), '\\') . DIRECTORY_SEPARATOR;
-		CLI::write('Created file: ' . CLI::color(str_replace($homepath, $ns, $path), 'green'));
 	}
 }
