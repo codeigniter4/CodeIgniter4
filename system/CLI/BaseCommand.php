@@ -150,7 +150,7 @@ abstract class BaseCommand
 	{
 		// The CommandRunner will grab the first element
 		// for the command name.
-		array_unshift($params, $command);
+		array_push($params, $command);
 
 		return $this->commands->run($command, $params);
 	}
