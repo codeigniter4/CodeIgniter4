@@ -179,16 +179,7 @@ class RedirectResponse extends Response
 
 		foreach ($cookies as $cookie)
 		{
-			$this->setCookie(
-				$cookie['name'],
-				$cookie['value'],
-				$cookie['expires'],
-				$cookie['domain'],
-				$cookie['path'],
-				'', // prefix
-				$cookie['secure'],
-				$cookie['httponly']
-			);
+			$this->cookies[] = $cookie;
 		}
 
 		return $this;
