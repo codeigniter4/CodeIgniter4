@@ -389,7 +389,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 		Content-Type: application/xml; charset=utf-8
 		Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>";
 
-
 		$this->request->setOutput($output);
 
 		$response = $this->request->request('get', 'http://example.com', [
@@ -429,7 +428,6 @@ class CURLRequestTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	public function testSetAuthDigest()
 	{
-
 		$output = "HTTP/1.1 401 Unauthorized
 		Server: ddos-guard
 		Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT

@@ -447,7 +447,7 @@ class CURLRequest extends Request
 		}
 
 		$output = $this->sendRequest($curl_options);
-		
+
 		// Set the string we want to break our response from
 		$breakString = "\r\n\r\n";
 
@@ -455,25 +455,23 @@ class CURLRequest extends Request
 		{
 			$output = substr($output, strpos($output, $breakString) + 4);
 		}
-		
+
 		 // If request and response have Digest
 		if (isset($this->config['auth'][2]) && $this->config['auth'][2] === 'digest' && strpos($output, 'WWW-Authenticate: Digest') !== false)
 		{
 				$output = substr($output, strpos($output, $breakString) + 4);
 		}
 
-
 		// Split out our headers and body
 		$break = strpos($output, $breakString);
 
-		
 		if ($break !== false)
 		{
 			// Our headers
 			$headers = explode("\n", substr($output, 0, $break));
-			
+
 			$this->setResponseHeaders($headers);
-			
+
 			// Our body
 			$body = substr($output, $break + 4);
 			$this->response->setBody($body);

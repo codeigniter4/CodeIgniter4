@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -50,7 +51,8 @@ if (! function_exists('singular'))
 	 *
 	 * Takes a plural word and makes it singular
 	 *
-	 * @param  string $string Input string
+	 * @param string $string Input string
+	 *
 	 * @return string
 	 */
 	function singular(string $string): string
@@ -116,7 +118,8 @@ if (! function_exists('plural'))
 	 *
 	 * Takes a singular word and makes it plural
 	 *
-	 * @param  string $string Input string
+	 * @param string $string Input string
+	 *
 	 * @return string
 	 */
 	function plural(string $string): string
@@ -174,8 +177,9 @@ if (! function_exists('counted'))
 	 * Takes a number and a word to return the plural or not
 	 * E.g. 0 cats, 1 cat, 2 cats, ...
 	 *
-	 * @param  integer $count  Number of items
-	 * @param  string  $string Input string
+	 * @param integer $count  Number of items
+	 * @param string  $string Input string
+	 *
 	 * @return string
 	 */
 	function counted(int $count, string $string): string
@@ -216,7 +220,8 @@ if (! function_exists('pascalize'))
 	 * underscores and converts them to Pascal case,
 	 * which is camel case with an uppercase first letter.
 	 *
-	 * @param  string $string Input string
+	 * @param string $string Input string
+	 *
 	 * @return string
 	 */
 	function pascalize(string $string): string
@@ -234,7 +239,8 @@ if (! function_exists('underscore'))
 	 *
 	 * Takes multiple words separated by spaces and underscores them
 	 *
-	 * @param  string $string Input string
+	 * @param string $string Input string
+	 *
 	 * @return string
 	 */
 	function underscore(string $string): string
@@ -255,8 +261,9 @@ if (! function_exists('humanize'))
 	 * Takes multiple words separated by the separator,
 	 * camelizes and changes them to spaces
 	 *
-	 * @param  string $string    Input string
-	 * @param  string $separator Input separator
+	 * @param string $string    Input string
+	 * @param string $separator Input separator
+	 *
 	 * @return string
 	 */
 	function humanize(string $string, string $separator = '_'): string
@@ -277,7 +284,8 @@ if (! function_exists('is_pluralizable'))
 	/**
 	 * Checks if the given word has a plural version.
 	 *
-	 * @param  string $word Word to check
+	 * @param string $word Word to check
+	 *
 	 * @return boolean
 	 */
 	function is_pluralizable(string $word): bool
@@ -344,7 +352,8 @@ if (! function_exists('dasherize'))
 	/**
 	 * Replaces underscores with dashes in the string.
 	 *
-	 * @param  string $string Input string
+	 * @param string $string Input string
+	 *
 	 * @return string
 	 */
 	function dasherize(string $string): string
@@ -362,8 +371,8 @@ if (! function_exists('ordinal'))
 	 * number to denote the position in an ordered
 	 * sequence such as 1st, 2nd, 3rd, 4th.
 	 *
-	 * @param  integer $integer The integer to determine
-	 *  the suffix
+	 * @param integer $integer The integer to determine the suffix
+	 *
 	 * @return string
 	 */
 	function ordinal(int $integer): string
@@ -394,7 +403,8 @@ if (! function_exists('ordinalize'))
 	 * to denote the position in an ordered sequence
 	 * such as 1st, 2nd, 3rd, 4th.
 	 *
-	 * @param  integer $integer The integer to ordinalize
+	 * @param integer $integer The integer to ordinalize
+	 *
 	 * @return string
 	 */
 	function ordinalize(int $integer): string

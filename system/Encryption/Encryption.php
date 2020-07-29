@@ -103,7 +103,7 @@ class Encryption
 
 		$this->key    = $config->key;
 		$this->driver = $config->driver;
-              $this->digest = $config->digest ?? 'SHA512';
+		$this->digest = $config->digest ?? 'SHA512';
 
 		// determine what is installed
 		$this->handlers = [
@@ -135,7 +135,7 @@ class Encryption
 		{
 			$this->key    = $config->key;
 			$this->driver = $config->driver;
-                      $this->digest = $config->digest ?? 'SHA512';
+			$this->digest = $config->digest ?? 'SHA512';
 		}
 
 		// Insist on a driver
