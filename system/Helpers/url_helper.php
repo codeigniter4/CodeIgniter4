@@ -590,7 +590,7 @@ if (! function_exists('url_title'))
 
 		$trans = [
 			'&.+?;'                   => '',
-			'[^\w\d _-]'              => '',
+			'[^\w\d\pL\pM _-]'              => '',
 			'\s+'                     => $separator,
 			'(' . $q_separator . ')+' => $separator,
 		];
