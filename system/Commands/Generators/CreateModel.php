@@ -75,7 +75,7 @@ class CreateModel extends BaseCommand
 	 *
 	 * @var String
 	 */
-	protected $usage = 'make:model [model_name] [options]';
+	protected $usage = 'make:model [name] [options]';
 
 	/**
 	 * The Command's arguments
@@ -83,7 +83,7 @@ class CreateModel extends BaseCommand
 	 * @var Array
 	 */
 	protected $arguments = [
-		'model_name' => 'The model file name',
+		'name' => 'The model file name',
 	];
 
 	/**

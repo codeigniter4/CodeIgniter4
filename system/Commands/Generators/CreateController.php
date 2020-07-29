@@ -75,7 +75,7 @@ class CreateController extends BaseCommand
 	 *
 	 * @var String
 	 */
-	protected $usage = 'make:controller [controller_name] [options]';
+	protected $usage = 'make:controller [name] [options]';
 
 	/**
 	 * The Command's arguments
@@ -83,7 +83,7 @@ class CreateController extends BaseCommand
 	 * @var Array
 	 */
 	protected $arguments = [
-		'controller_name' => 'The controller file name',
+		'name' => 'The controller file name',
 	];
 
 	/**

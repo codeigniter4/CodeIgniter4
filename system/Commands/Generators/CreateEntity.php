@@ -75,7 +75,7 @@ class CreateEntity extends BaseCommand
 	 *
 	 * @var String
 	 */
-	protected $usage = 'make:entity [entity_name] [options]';
+	protected $usage = 'make:entity [name] [options]';
 
 	/**
 	 * The Command's arguments
@@ -83,7 +83,7 @@ class CreateEntity extends BaseCommand
 	 * @var Array
 	 */
 	protected $arguments = [
-		'entity_name' => 'The entity file name',
+		'name' => 'The entity file name',
 	];
 
 	/**
