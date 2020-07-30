@@ -52,4 +52,33 @@ class CreateMigrationTest extends CIUnitTestCase
 
 		chmod(APPPATH . 'Database/Migrations', 0755);
 	}
+
+	public function testCreateMigrationFailOnUndefinedNamespace()
+	{
+		try
+		{
+			command('migrate:create migrateTwo -n CodeIgnite');
+		}
+		catch (\Throwable $e)
+		{
+			ob_end_clean();
+			$this->assertInstanceOf('RuntimeException', $e);
+			$this->assertEquals('Namespace "CodeIgnite" is not defined.', $e->getMessage());
+		}
+	}
+
+	public function testCreateMigrationOnOtherNamespace()
+	{
+		command('migrate:create migrateThree -n CodeIgniter');
+		$this->assertStringContainsString('Created file:', $this->getBuffer());
+		$this->assertStringContainsString('SYSTEMPATH', $this->getBuffer());
+
+		// cleanup
+		$result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
+		$file   = trim(substr($result, 14));
+		$file   = str_replace('SYSTEMPATH' . DIRECTORY_SEPARATOR, SYSTEMPATH, $file);
+		$dir    = dirname($file);
+		file_exists($file) && unlink($file);
+		rmdir($dir);
+	}
 }

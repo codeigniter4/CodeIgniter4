@@ -80,9 +80,9 @@ class CreateSessionMigration extends GeneratorCommand
 		'-t' => 'Set table name',
 	];
 
-	protected function getClassName(array $params): string
+	protected function getClassName(): string
 	{
-		$tableName = $params['t'] ?? CLI::getOption('t') ?? 'ci_sessions';
+		$tableName = $this->params['t'] ?? CLI::getOption('t') ?? 'ci_sessions';
 		return "Migration_create_{$tableName}_table";
 	}
 
@@ -93,8 +93,7 @@ class CreateSessionMigration extends GeneratorCommand
 
 	protected function modifyBasename(string $filename): string
 	{
-		preg_match('/^(.*)Create(.*)Table\.php$/', $filename, $match);
-		return str_replace($match[1], date('Ymdhis_'), $filename);
+		return str_replace('Migration', gmdate(config('Migrations')->timestampFormat), $filename);
 	}
 
 	protected function getTemplate(): string

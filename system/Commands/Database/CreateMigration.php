@@ -82,13 +82,11 @@ class CreateMigration extends GeneratorCommand
 	/**
 	 * Gets the class name from input.
 	 *
-	 * @param array $params
-	 *
 	 * @return string
 	 */
-	protected function getClassName(array $params): string
+	protected function getClassName(): string
 	{
-		$class = parent::getClassName($params);
+		$class = parent::getClassName();
 		if (empty($class))
 		{
 			// @codeCoverageIgnoreStart

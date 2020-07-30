@@ -42,6 +42,11 @@ namespace CodeIgniter\Commands\Database;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorCommand;
 
+/**
+ * Creates a new seeder file
+ *
+ * @package CodeIgniter\Commands
+ */
 class CreateSeeder extends GeneratorCommand
 {
 	/**
@@ -77,13 +82,11 @@ class CreateSeeder extends GeneratorCommand
 	/**
 	 * Gets the class name from input.
 	 *
-	 * @param array $params
-	 *
 	 * @return string
 	 */
-	protected function getClassName(array $params): string
+	protected function getClassName(): string
 	{
-		$class = parent::getClassName($params);
+		$class = parent::getClassName();
 		if (empty($class))
 		{
 			// @codeCoverageIgnoreStart

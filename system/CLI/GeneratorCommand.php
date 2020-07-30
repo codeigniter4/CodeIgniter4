@@ -39,6 +39,7 @@
 
 namespace CodeIgniter\CLI;
 
+use Config\Services;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -72,6 +73,7 @@ abstract class GeneratorCommand extends BaseCommand
 	 * @var array
 	 */
 	private $defaultOptions = [
+		'-n'     => 'Set root namespace. Defaults to APP_NAMESPACE.',
 		'-force' => 'Force overwrite existing files.',
 	];
 
@@ -109,7 +111,7 @@ abstract class GeneratorCommand extends BaseCommand
 		// pascalizing it if not yet done. Then we will try to get the file
 		// path from this.
 		helper('inflector');
-		$class = $this->qualifyClassName(pascalize($this->getClassName($params)));
+		$class = $this->qualifyClassName(pascalize($this->getClassName()));
 		$path  = $this->buildPath($class);
 
 		// Next, overwriting files unknowingly is a serious annoyance. So we'll check
@@ -119,6 +121,13 @@ abstract class GeneratorCommand extends BaseCommand
 			CLI::error(lang('CLI.generateFileExists', [clean_path($path)]), 'light_gray', 'red');
 			CLI::newLine();
 			return;
+		}
+
+		// Next, check if the directory to save the file is existing.
+		$dir = dirname($path);
+		if (! is_dir($dir))
+		{
+			mkdir($dir, 0755, true);
 		}
 
 		// Lastly, we'll build the class based on the details we have. We'll be getting our
@@ -139,13 +148,11 @@ abstract class GeneratorCommand extends BaseCommand
 	 * Gets the class name from input. This can be overridden
 	 * if name is really required by providing a prompt.
 	 *
-	 * @param array $params
-	 *
 	 * @return string
 	 */
-	protected function getClassName(array $params): string
+	protected function getClassName(): string
 	{
-		$name = $params[0] ?? CLI::getSegment(0);
+		$name = $this->params[0] ?? CLI::getSegment(0);
 		return $name ?? '';
 	}
 
@@ -159,7 +166,7 @@ abstract class GeneratorCommand extends BaseCommand
 	protected function qualifyClassName(string $class): string
 	{
 		$class  = ltrim($class, '\\/');
-		$rootNS = APP_NAMESPACE;
+		$rootNS = $this->getRootNamespace();
 
 		if (strncmp($class, $rootNS, strlen($rootNS)) === 0)
 		{
@@ -169,6 +176,17 @@ abstract class GeneratorCommand extends BaseCommand
 		$class = str_replace('/', '\\', $class);
 
 		return $this->qualifyClassName($this->getNamespacedClass($rootNS, $class));
+	}
+
+	/**
+	 * Gets the root namespace from input.
+	 *
+	 * @return string
+	 */
+	protected function getRootNamespace(): string
+	{
+		$rootNamespace = $this->params['n'] ?? CLI::getOption('n') ?? APP_NAMESPACE;
+		return trim(str_replace('/', '\\', $rootNamespace), '\\');
 	}
 
 	/**
@@ -190,9 +208,18 @@ abstract class GeneratorCommand extends BaseCommand
 	 */
 	protected function buildPath(string $class): string
 	{
-		$name = trim(str_replace(APP_NAMESPACE, '', $class), '\\');
-		$path = APPPATH . str_replace('\\', DIRECTORY_SEPARATOR, $name) . '.php';
+		$root = $this->getRootNamespace();
+		$name = trim(str_replace($root, '', $class), '\\');
 
+		// Check if the namespace is actually defined and we are not just typing gibberish.
+		$base = Services::autoloader()->getNamespace($root);
+		if (! $base = reset($base))
+		{
+			throw new \RuntimeException(lang('CLI.namespaceNotDefined', [$root]));
+		}
+		$base = realpath($base) ?: $base;
+
+		$path     = $base . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $name) . '.php';
 		$filename = $this->modifyBasename(basename($path));
 		return implode(DIRECTORY_SEPARATOR, array_slice(explode(DIRECTORY_SEPARATOR, $path), 0, -1)) . DIRECTORY_SEPARATOR . $filename;
 	}
