@@ -73,7 +73,7 @@ class ListCommands extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $description = 'List of available commands.';
+	protected $description = 'Lists the available commands.';
 
 	/**
 	 * the Command's usage
