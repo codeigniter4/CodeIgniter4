@@ -41,6 +41,8 @@ namespace CodeIgniter\CLI;
 
 use CodeIgniter\Log\Logger;
 use Config\Services;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * Class Commands
@@ -72,7 +74,7 @@ class Commands
 	 */
 	public function __construct($logger = null)
 	{
-		$this->logger = $logger ?? service('logger');
+		$this->logger = $logger ?? Services::logger();
 	}
 
 	/**
@@ -163,7 +165,7 @@ class Commands
 
 			try
 			{
-				$class = new \ReflectionClass($className);
+				$class = new ReflectionClass($className);
 
 				if (! $class->isInstantiable() || ! $class->isSubclassOf(BaseCommand::class))
 				{
@@ -173,12 +175,13 @@ class Commands
 				$class = new $className($this->logger, $this);
 
 				// Store it!
-				if ($class->group !== null)
+				if (! is_null($class->group))
 				{
 					$this->commands[$class->name] = [
 						'class'       => $className,
 						'file'        => $file,
 						'group'       => $class->group,
+						'name'	      => $class->name,
 						'description' => $class->description,
 					];
 				}
@@ -186,7 +189,7 @@ class Commands
 				$class = null;
 				unset($class);
 			}
-			catch (\ReflectionException $e)
+			catch (ReflectionException $e)
 			{
 				$this->logger->error($e->getMessage());
 			}
