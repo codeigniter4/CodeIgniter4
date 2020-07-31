@@ -87,6 +87,32 @@ The settings used for the last successful send are available from the
 instance property ``$archive``. This is helpful for testing and debugging
 to determine that actual values at the time of the ``send()`` call.
 
+SSL versus TLS for SMTP Protocol
+================================
+
+To protect the username, password and email content while communicating with the SMTP server,
+encryption on the channel should be used used. Two different standards are widely deployed and
+it is important to understand the differences when trying to troubleshoot email sending
+issues.
+
+Most SMTP servers allow connections on ports 465 or 587 when submitting emails. (The
+original port 25 is seldom used because of many ISPs have blocking rules in place and
+since the communication is entirely in clear-text).
+
+The key difference is that port 465 expects the communication channel to be secured using TLS
+from the start as per RFC8314. A connection to port 587 allows clear-text connection and later
+will upgrade the channel to use encryption using the ``STARTTLS`` SMTP command.
+
+Upgrading a connection on port 465 may or may not be supported by the server, so the
+``STARTTLS`` SMTP command may fail if the server does not allow it. If you set the port to 465,
+you should try to leave the ``SMTPCrypto`` setting blank since the communication is
+secured using TLS from the start and the ``STARTTLS`` is not needed.
+
+If your configuration requires you to connect to port 587, you should most likely set
+``SMTPCrypto`` to ``tls`` as this will implement the ``STARTTLS`` command while communicating
+with the SMTP server to switch from clear-text to an encrypted channel. The initial communication
+will be made in clear-text and the channel will be upgraded to TLS with the ``STARTTLS`` command.
+
 Email Preferences
 =================
 
@@ -102,10 +128,14 @@ Preference          Default Value          Options                      Descript
 **SMTPHost**        No Default             None                         SMTP Server Address.
 **SMTPUser**        No Default             None                         SMTP Username.
 **SMTPPass**        No Default             None                         SMTP Password.
-**SMTPPort**        25                     None                         SMTP Port.
+**SMTPPort**        25                     None                         SMTP Port. (If set to 465, TLS will be used for the connection
+                                                                        regardless of SMTPCrypto setting.)
 **SMTPTimeout**     5                      None                         SMTP Timeout (in seconds).
 **SMTPKeepAlive**   FALSE                  TRUE or FALSE (boolean)      Enable persistent SMTP connections.
-**SMTPCrypto**      No Default             tls or ssl                   SMTP Encryption
+**SMTPCrypto**      No Default             tls or ssl                   SMTP Encryption. Setting this to "ssl" will create a secure
+                                                                        channel to the server using SSL and "tls" will issue a
+                                                                        ``STARTTLS`` command to the server. Connection on port 465 should
+                                                                        set this to blank.
 **wordWrap**        TRUE                   TRUE or FALSE (boolean)      Enable word-wrap.
 **wrapChars**       76                                                  Character count to wrap at.
 **mailType**        text                   text or html                 Type of mail. If you send HTML email you must send it as a complete web

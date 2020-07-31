@@ -1862,7 +1862,20 @@ class Email
 		{
 			return true;
 		}
-		$ssl               = ($this->SMTPCrypto === 'ssl') ? 'ssl://' : '';
+
+		if ($this->SMTPPort === 465)
+		{
+			$ssl = 'tls://';
+		}
+		elseif ($this->SMTPCrypto === 'ssl')
+		{
+			$ssl = 'ssl://';
+		}
+		else
+		{
+			$ssl = '';
+		}
+
 		$this->SMTPConnect = fsockopen(
 				$ssl . $this->SMTPHost, $this->SMTPPort, $errno, $errstr, $this->SMTPTimeout
 		);
@@ -1877,7 +1890,8 @@ class Email
 		{
 			$this->sendCommand('hello');
 			$this->sendCommand('starttls');
-			$crypto = stream_socket_enable_crypto($this->SMTPConnect, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+			$crypto = stream_socket_enable_crypto($this->SMTPConnect, true, STREAM_CRYPTO_METHOD_TLSv1_0_CLIENT |
+				STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT | STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT);
 			if ($crypto !== true)
 			{
 				$this->setErrorMessage(lang('Email.SMTPError', $this->getSMTPData()));
