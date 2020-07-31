@@ -181,7 +181,6 @@ class Commands
 						'class'       => $className,
 						'file'        => $file,
 						'group'       => $class->group,
-						'name'	      => $class->name,
 						'description' => $class->description,
 					];
 				}
