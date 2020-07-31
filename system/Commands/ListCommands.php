@@ -137,8 +137,10 @@ class ListCommands extends BaseCommand
 					 . $command['description']
 				);
 			}
+			
+			end($groups);
 
-			if ($group !== array_key_last($groups))
+			if ($group !== key($groups))
 			{
 				CLI::newLine();
 			}
