@@ -91,7 +91,7 @@ SSL versus TLS for SMTP Protocol
 ================================
 
 To protect the username, password and email content while communicating with the SMTP server,
-encryption on the channel should be used used. Two different standards are widely deployed and
+encryption on the channel should be used. Two different standards are widely deployed and
 it is important to understand the differences when trying to troubleshoot email sending
 issues.
 
@@ -100,7 +100,8 @@ original port 25 is seldom used because of many ISPs have blocking rules in plac
 since the communication is entirely in clear-text).
 
 The key difference is that port 465 expects the communication channel to be secured using TLS
-from the start as per RFC8314. A connection to port 587 allows clear-text connection and later
+from the start as per `RFC 8314 <https://tools.ietf.org/html/rfc8314>`_.
+A connection to port 587 allows clear-text connection and later
 will upgrade the channel to use encryption using the ``STARTTLS`` SMTP command.
 
 Upgrading a connection on port 465 may or may not be supported by the server, so the
