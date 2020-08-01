@@ -83,7 +83,7 @@ Folders in your project after set up:
 
 - app, public, tests, writable
 - vendor/codeigniter4/framework/system
-- vendor/codeigniter4/framework/app & public (compare with yours after updating)
+- vendor/codeigniter4/framework/app & public (compare with yours after updating when using `--prefer-source`)
 
 Latest Dev
 -------------------------------------------------------
