@@ -858,13 +858,47 @@ class Model
 	 */
 	public function insertBatch(array $set = null, bool $escape = null, int $batchSize = 100, bool $testing = false)
 	{
-		if (is_array($set) && $this->skipValidation === false)
+		if (is_array($set))
 		{
-			foreach ($set as $row)
+			foreach ($set as &$row)
 			{
-				if ($this->cleanRules()->validate($row) === false)
+				// If $data is using a custom class with public or protected
+				// properties representing the table elements, we need to grab
+				// them as an array.
+				if (is_object($row) && ! $row instanceof stdClass)
+				{
+					$row = static::classToArray($row, $this->primaryKey, $this->dateFormat, false);
+				}
+
+				// If it's still a stdClass, go ahead and convert to
+				// an array so doProtectFields and other model methods
+				// don't have to do special checks.
+				if (is_object($row))
+				{
+					$row = (array) $row;
+				}
+
+				// Validate every row..
+				if ($this->skipValidation === false && $this->cleanRules()->validate($row) === false)
 				{
 					return false;
+				}
+
+				// Must be called first so we don't
+				// strip out created_at values.
+				$row = $this->doProtectFields($row);
+
+				// Set created_at and updated_at with same time
+				$date = $this->setDate();
+
+				if ($this->useTimestamps && ! empty($this->createdField) && ! array_key_exists($this->createdField, $row))
+				{
+					$row[$this->createdField] = $date;
+				}
+
+				if ($this->useTimestamps && ! empty($this->updatedField) && ! array_key_exists($this->updatedField, $row))
+				{
+					$row[$this->updatedField] = $date;
 				}
 			}
 		}
