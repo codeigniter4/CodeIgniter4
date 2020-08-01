@@ -39,27 +39,16 @@
 
 namespace CodeIgniter\Commands\Sessions;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Config\App;
+use CodeIgniter\CLI\GeneratorCommand;
 
 /**
  * Creates a migration file for database sessions.
  *
  * @package CodeIgniter\Commands
  */
-
-class CreateMigration extends BaseCommand
+class CreateSessionMigration extends GeneratorCommand
 {
-
-	/**
-	 * The group the command is lumped under
-	 * when listing commands.
-	 *
-	 * @var string
-	 */
-	protected $group = 'CodeIgniter';
-
 	/**
 	 * The Command's name
 	 *
@@ -75,62 +64,47 @@ class CreateMigration extends BaseCommand
 	protected $description = 'Generates the migration file for database sessions.';
 
 	/**
-	 * the Command's usage
+	 * The Command's usage
 	 *
 	 * @var string
 	 */
-	protected $usage = 'session:migration';
+	protected $usage = 'session:migration [options]';
 
 	/**
-	 * the Command's Arguments
-	 *
-	 * @var array
-	 */
-	protected $arguments = [];
-
-	/**
-	 * the Command's Options
+	 * The Command's Options
 	 *
 	 * @var array
 	 */
 	protected $options = [
-		'-n' => 'Set migration namespace',
 		'-g' => 'Set database group',
 		'-t' => 'Set table name',
 	];
 
-	/**
-	 * Creates a new migration file with the current timestamp.
-	 *
-	 * @param array $params
-	 */
-	public function run(array $params)
+	protected function getClassName(): string
 	{
-		$config = new App();
-
-		$tableName = CLI::getOption('t') ?? 'ci_sessions';
-
-		$path = APPPATH . 'Database/Migrations/' . date('YmdHis_') . 'create_' . $tableName . '_table' . '.php';
-
-		$data = [
-			'namespace' => CLI::getOption('n') ?? APP_NAMESPACE ?? 'App',
-			'DBGroup'   => CLI::getOption('g'),
-			'tableName' => $tableName,
-			'matchIP'   => $config->sessionMatchIP ?? false,
-		];
-
-		$template = view('\CodeIgniter\Commands\Sessions\Views\migration.tpl.php', $data, ['debug' => false]);
-		$template = str_replace('@php', '<?php', $template);
-
-		// Write the file out.
-		helper('filesystem');
-		if (! write_file($path, $template))
-		{
-			CLI::error(lang('Migrations.writeError', [$path]));
-			return;
-		}
-
-		CLI::write('Created file: ' . CLI::color(str_replace(APPPATH, 'APPPATH/', $path), 'green'));
+		$tableName = $this->params['t'] ?? CLI::getOption('t') ?? 'ci_sessions';
+		return "Migration_create_{$tableName}_table";
 	}
 
+	protected function getNamespacedClass(string $rootNamespace, string $class): string
+	{
+		return $rootNamespace . '\\Database\\Migrations\\' . $class;
+	}
+
+	protected function modifyBasename(string $filename): string
+	{
+		return str_replace('Migration', gmdate(config('Migrations')->timestampFormat), $filename);
+	}
+
+	protected function getTemplate(): string
+	{
+		$data = [
+			'DBGroup'   => $this->params['g'] ?? CLI::getOption('g'),
+			'tableName' => $this->params['t'] ?? CLI::getOption('t') ?? 'ci_sessions',
+			'matchIP'   => config('App')->sessionMatchIP ?? false,
+		];
+
+		$string = view('\CodeIgniter\Commands\Sessions\Views\migration.tpl.php', $data, ['debug' => false]);
+		return str_replace('@php', '?php', $string);
+	}
 }
