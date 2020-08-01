@@ -165,9 +165,9 @@ class CodeIgniter
 	/**
 	 * Constructor.
 	 *
-	 * @param type $config
+	 * @param \Config\App $config
 	 */
-	public function __construct($config)
+	public function __construct(\Config\App $config)
 	{
 		$this->startTime = microtime(true);
 		$this->config    = $config;
@@ -272,8 +272,8 @@ class CodeIgniter
 	 * tries to route the response, loads the controller and generally
 	 * makes all of the pieces work together.
 	 *
-	 * @param \CodeIgniter\Router\RouteCollectionInterface $routes
-	 * @param boolean                                      $returnResponse
+	 * @param \CodeIgniter\Router\RouteCollectionInterface|null $routes
+	 * @param boolean                                           $returnResponse
 	 *
 	 * @return boolean|\CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
 	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
@@ -352,14 +352,14 @@ class CodeIgniter
 	/**
 	 * Handles the main request logic and fires the controller.
 	 *
-	 * @param \CodeIgniter\Router\RouteCollectionInterface $routes
-	 * @param $cacheConfig
-	 * @param boolean                                      $returnResponse
+	 * @param \CodeIgniter\Router\RouteCollectionInterface|null $routes
+	 * @param Cache                                             $cacheConfig
+	 * @param boolean                                           $returnResponse
 	 *
 	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
 	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
 	 */
-	protected function handleRequest(RouteCollectionInterface $routes = null, $cacheConfig, bool $returnResponse = false)
+	protected function handleRequest(RouteCollectionInterface $routes = null, Cache $cacheConfig, bool $returnResponse = false)
 	{
 		$routeFilter = $this->tryToRouteIt($routes);
 
@@ -767,7 +767,7 @@ class CodeIgniter
 	 * match a route against the current URI. If the route is a
 	 * "redirect route", will also handle the redirect.
 	 *
-	 * @param RouteCollectionInterface $routes An collection interface to use in place
+	 * @param RouteCollectionInterface|null $routes An collection interface to use in place
 	 *                                         of the config file.
 	 *
 	 * @return string
@@ -775,7 +775,7 @@ class CodeIgniter
 	 */
 	protected function tryToRouteIt(RouteCollectionInterface $routes = null)
 	{
-		if (empty($routes) || ! $routes instanceof RouteCollectionInterface)
+		if ($routes === null)
 		{
 			require APPPATH . 'Config/Routes.php';
 		}
@@ -948,11 +948,11 @@ class CodeIgniter
 				$this->controller = $override[0];
 				$this->method     = $override[1];
 
-				unset($override);
-
 				$controller = $this->createController();
 				$this->runController($controller);
 			}
+
+			unset($override);
 
 			$cacheConfig = new Cache();
 			$this->gatherOutput($cacheConfig);
@@ -991,10 +991,10 @@ class CodeIgniter
 	 * Gathers the script output from the buffer, replaces some execution
 	 * time tag in the output and displays the debug toolbar, if required.
 	 *
-	 * @param null $cacheConfig
-	 * @param null $returned
+	 * @param Cache|null $cacheConfig
+	 * @param mixed|null $returned
 	 */
-	protected function gatherOutput($cacheConfig = null, $returned = null)
+	protected function gatherOutput(Cache $cacheConfig = null, $returned = null)
 	{
 		$this->output = ob_get_contents();
 		// If buffering is not null.
