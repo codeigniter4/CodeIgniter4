@@ -56,7 +56,7 @@ class ConsoleTest extends CIUnitTestCase
 		$console = new \CodeIgniter\CLI\Console($this->app);
 		$console->showHeader();
 		$result = CITestStreamFilter::$buffer;
-		$this->assertTrue(strpos($result, sprintf('CodeIgniter v%s Command Line Tool', CodeIgniter::CI_VERSION) > 0);
+		$this->assertTrue(strpos($result, sprintf('CodeIgniter v%s Command Line Tool', CodeIgniter::CI_VERSION)) > 0);
 	}
 
 	public function testRun()
