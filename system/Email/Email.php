@@ -1863,6 +1863,7 @@ class Email
 			return true;
 		}
 
+		$ssl = '';
 		if ($this->SMTPPort === 465)
 		{
 			$ssl = 'tls://';
@@ -1870,10 +1871,6 @@ class Email
 		elseif ($this->SMTPCrypto === 'ssl')
 		{
 			$ssl = 'ssl://';
-		}
-		else
-		{
-			$ssl = '';
 		}
 
 		$this->SMTPConnect = fsockopen(
