@@ -1962,6 +1962,42 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testInsertBatchNewEntityWithDateTime()
+	{
+		$entity    = new class extends Entity{
+			protected $id;
+			protected $name;
+			protected $email;
+			protected $country;
+			protected $deleted;
+			protected $created_at;
+			protected $updated_at;
+
+			protected $_options = [
+				'datamap' => [],
+				'dates'   => [
+					'created_at',
+					'updated_at',
+					'deleted_at',
+				],
+				'casts'   => [],
+			];
+		};
+		$testModel = new UserModel();
+
+		$entity->name       = 'Mark';
+		$entity->email      = 'mark@example.com';
+		$entity->country    = 'India';
+		$entity->deleted    = 0;
+		$entity->created_at = new Time('now');
+
+		$this->setPrivateProperty($testModel, 'useTimestamps', true);
+
+		$this->assertEquals(2, $testModel->insertBatch([$entity, $entity]));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testSaveNewEntityWithDateTime()
 	{
 		$entity    = new class extends Entity{
