@@ -652,21 +652,6 @@ if (! function_exists('url_to'))
 	{
 		if (! $route = route_to($controller, ...$args))
 		{
-			if (strpos($controller, '::') !== false)
-			{
-				$class = explode('::', $controller)[0];
-
-				if (! class_exists($class))
-				{
-					$controller = service('routes')->getDefaultNamespace() . $controller;
-				}
-			}
-
-			if ($route = route_to($controller, ...$args))
-			{
-				return site_url($route);
-			}
-
 			$explode = explode('::', $controller);
 
 			if (isset($explode[1]))
