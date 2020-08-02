@@ -39,6 +39,7 @@
 
 namespace CodeIgniter\CLI;
 
+use Exception;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -158,17 +159,106 @@ abstract class BaseCommand
 	//--------------------------------------------------------------------
 
 	/**
-	 * A simple method to display an error with line/file,
-	 * in child commands.
+	 * A simple method to display an error with line/file, in child commands.
 	 *
-	 * @param \Exception $e
+	 * @param Exception $e
 	 */
-	protected function showError(\Exception $e)
+	protected function showError(Exception $e)
 	{
-		CLI::newLine();
-		CLI::error($e->getMessage());
-		CLI::write($e->getFile() . ' - ' . $e->getLine());
-		CLI::newLine();
+		CLI::error("Error: {$e->getMessage()}");
+		CLI::write("File : {$e->getFile()} on line {$e->getLine()}");
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Show Help includes (Usage, Arguments, Description, Options).
+	 */
+	public function showHelp()
+	{
+		CLI::write(lang('CLI.helpUsage'), 'yellow');
+		if (! empty($this->usage))
+		{
+			$usage = $this->usage;
+		}
+		else
+		{
+			$usage = $this->name;
+
+			if (! empty($this->arguments))
+			{
+				$usage .= ' [arguments]';
+			}
+		}
+		CLI::write($this->setPad($usage, 0, 0, 2));
+
+		if (! empty($this->description))
+		{
+			CLI::newLine();
+			CLI::write(lang('CLI.helpDescription'), 'yellow');
+			CLI::write($this->setPad($this->description, 0, 0, 2));
+		}
+
+		if (! empty($this->arguments))
+		{
+			CLI::newLine();
+			CLI::write(lang('CLI.helpArguments'), 'yellow');
+			$length = max(array_map('strlen', array_keys($this->arguments)));
+			foreach ($this->arguments as $argument => $description)
+			{
+				CLI::write(CLI::color($this->setPad($argument, $length, 2, 2), 'green') . $description);
+			}
+		}
+
+		if (! empty($this->options))
+		{
+			CLI::newLine();
+			CLI::write(lang('CLI.helpOptions'), 'yellow');
+			$length = max(array_map('strlen', array_keys($this->options)));
+			foreach ($this->options as $option => $description)
+			{
+				CLI::write(CLI::color($this->setPad($option, $length, 2, 2), 'green') . $description);
+			}
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Pads our string out so that all titles are the same length to nicely line up descriptions.
+	 *
+	 * @param string  $item
+	 * @param integer $max
+	 * @param integer $extra  // How many extra spaces to add at the end
+	 * @param integer $indent
+	 *
+	 * @return string
+	 */
+	protected function setPad(string $item, int $max, int $extra = 2, int $indent = 0): string
+	{
+		$max += $extra + $indent;
+
+		return str_pad(str_repeat(' ', $indent) . $item, $max);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Get pad for $key => $value array output
+	 *
+	 * @param array   $array
+	 * @param integer $pad
+	 *
+	 * @return integer
+	 */
+	public function getPad(array $array, int $pad): int
+	{
+		$max = 0;
+		foreach ($array as $key => $value)
+		{
+			$max = max($max, strlen($key));
+		}
+		return $max + $pad;
 	}
 
 	//--------------------------------------------------------------------
@@ -203,67 +293,4 @@ abstract class BaseCommand
 	{
 		return isset($this->$key);
 	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * show Help include (usage,arguments,description,options)
-	 */
-	public function showHelp()
-	{
-		// 4 spaces instead of tab
-		$tab = '   ';
-		CLI::write(lang('CLI.helpDescription'), 'yellow');
-		CLI::write($tab . $this->description);
-		CLI::newLine();
-
-		CLI::write(lang('CLI.helpUsage'), 'yellow');
-		$usage = empty($this->usage) ? $this->name . ' [arguments]' : $this->usage;
-		CLI::write($tab . $usage);
-		CLI::newLine();
-
-		$pad = max($this->getPad($this->options, 6), $this->getPad($this->arguments, 6));
-
-		if (! empty($this->arguments))
-		{
-			CLI::write(lang('CLI.helpArguments'), 'yellow');
-			foreach ($this->arguments as $argument => $description)
-			{
-				CLI::write($tab . CLI::color(str_pad($argument, $pad), 'green') . $description, 'yellow');
-			}
-			CLI::newLine();
-		}
-
-		if (! empty($this->options))
-		{
-			CLI::write(lang('CLI.helpOptions'), 'yellow');
-			foreach ($this->options as $option => $description)
-			{
-				CLI::write($tab . CLI::color(str_pad($option, $pad), 'green') . $description, 'yellow');
-			}
-			CLI::newLine();
-		}
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Get pad for $key => $value array output
-	 *
-	 * @param array   $array
-	 * @param integer $pad
-	 *
-	 * @return integer
-	 */
-	public function getPad(array $array, int $pad): int
-	{
-		$max = 0;
-		foreach ($array as $key => $value)
-		{
-			$max = max($max, strlen($key));
-		}
-		return $max + $pad;
-	}
-
-	//--------------------------------------------------------------------
 }
