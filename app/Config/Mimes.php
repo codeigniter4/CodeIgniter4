@@ -453,6 +453,7 @@ class Mimes
 		],
 		'svg'   => [
 			'image/svg+xml',
+			'image/svg',
 			'application/xml',
 			'text/xml',
 		],
