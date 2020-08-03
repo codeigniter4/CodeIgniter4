@@ -360,3 +360,25 @@ The following functions are available:
     Pass the URL string to the function like this::
 
         $url = prep_url('example.com');
+
+.. php:function:: url_to($controller[, ...$args])
+
+    :param  string  $controller: The controller class and method
+    :param  mixed   ...$args: Additional arguments to be injected into the route
+    :returns: Absolute URL
+    :rtype: string
+
+    Builds an absolute URL to a controller method in your app. Example::
+
+        echo url_to('Home::index');
+
+    You can also add arguments to the route.
+    Here is an example::
+
+        echo url_to('Page::index', 'home');
+
+    The above example would return something like:
+    *http://example.com/page/home*
+
+    This is useful because you can still change your routes after putting links
+    into your views.

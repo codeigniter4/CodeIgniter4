@@ -1250,4 +1250,67 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $config));
 	}
 
+	/**
+	 * @dataProvider urlToProvider
+	 */
+	public function testUrlTo(string $expected, string $input, ...$args)
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+
+		$routes = service('routes');
+		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2', ['as' => 'gotoPage']);
+		$routes->add('route/(:any)/to/(:num)', 'myOtherController::goto/$1/$2');
+
+		$this->assertEquals($expected, url_to($input, ...$args));
+	}
+
+	/**
+	 * @dataProvider urlToMissingRoutesProvider
+	 */
+	public function testUrlToThrowsOnEmptyOrMissingRoute(string $route)
+	{
+		$this->expectException(\CodeIgniter\Router\Exceptions\RouterException::class);
+
+		url_to($route);
+	}
+
+	public function urlToProvider()
+	{
+		if (config('App')->indexPage !== '')
+		{
+			$page = config('App')->indexPage . '/';
+		}
+		else
+		{
+			$page = '';
+		}
+
+		return [
+			[
+				"http://example.com/{$page}path/string/to/13",
+				'gotoPage',
+				'string',
+				13,
+			],
+			[
+				"http://example.com/{$page}route/string/to/13",
+				'myOtherController::goto',
+				'string',
+				13,
+			],
+		];
+	}
+
+	public function urlToMissingRoutesProvider()
+	{
+		return [
+			[
+				'',
+			],
+			[
+				'Nope::doesNotExist',
+			],
+		];
+	}
+
 }
