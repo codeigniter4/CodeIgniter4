@@ -905,6 +905,42 @@ is missing from a URL.</p>
 </div>
 </dd></dl>
 
+<dl class="function">
+<dt id="url_to">
+<code class="descname">url_to</code><span class="sig-paren">(</span><em>$controller</em><span class="optional">[</span>, <em>...$args</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#url_to" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$controller</strong> (<em>string</em>) – The controller class and method</li>
+<li><strong>...$args</strong> (<em>mixed</em>) – Additional arguments to be injected into the route</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Absolute URL</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Builds an absolute URL to a controller method in your app. Example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">url_to</span><span class="p">(</span><span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You can also add arguments to the route.
+Here is an example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">url_to</span><span class="p">(</span><span class="s1">&#39;Page::index&#39;</span><span class="p">,</span> <span class="s1">&#39;home&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The above example would return something like:
+<em>http://example.com/page/home</em></p>
+<p>This is useful because you can still change your routes after putting links
+into your views.</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -931,7 +967,7 @@ is missing from a URL.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Aug 01, 2020.
+        Last updated on Aug 03, 2020.
       </span>
 
     </p>
