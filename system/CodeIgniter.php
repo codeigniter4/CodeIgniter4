@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -41,6 +42,7 @@ namespace CodeIgniter;
 use Closure;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
+use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\DownloadResponse;
@@ -180,19 +182,26 @@ class CodeIgniter
 	 */
 	public function initialize()
 	{
-		// Set default locale on the server
-		locale_set_default($this->config->defaultLocale ?? 'en');
-
-		// Set default timezone on the server
-		date_default_timezone_set($this->config->appTimezone ?? 'UTC');
-
 		// Define environment variables
 		$this->detectEnvironment();
 		$this->bootstrapEnvironment();
 
 		// Setup Exception Handling
-		Services::exceptions()
-				->initialize();
+		Services::exceptions()->initialize();
+
+		// Run this check for manual installations
+		if (! is_file(COMPOSER_PATH))
+		{
+			// @codeCoverageIgnoreStart
+			$this->resolvePlatformExtensions();
+			// @codeCoverageIgnoreEnd
+		}
+
+		// Set default locale on the server
+		locale_set_default($this->config->defaultLocale ?? 'en');
+
+		// Set default timezone on the server
+		date_default_timezone_set($this->config->appTimezone ?? 'UTC');
 
 		$this->initializeKint();
 
@@ -201,6 +210,41 @@ class CodeIgniter
 			// @codeCoverageIgnoreStart
 			\Kint::$enabled_mode = false;
 			// @codeCoverageIgnoreEnd
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Checks system for missing required PHP extensions.
+	 *
+	 * @return void
+	 * @throws FrameworkException
+	 *
+	 * @codeCoverageIgnore
+	 */
+	protected function resolvePlatformExtensions()
+	{
+		$requiredExtensions = [
+			'curl',
+			'intl',
+			'json',
+			'mbstring',
+			'xml',
+		];
+		$missingExtensions  = [];
+
+		foreach ($requiredExtensions as $extension)
+		{
+			if (! extension_loaded($extension))
+			{
+				$missingExtensions[] = $extension;
+			}
+		}
+
+		if ($missingExtensions)
+		{
+			throw FrameworkException::forMissingExtension(implode(', ', $missingExtensions));
 		}
 	}
 
