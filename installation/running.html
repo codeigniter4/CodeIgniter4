@@ -397,19 +397,19 @@ all unix-type systems (include OS X) will typically keep the file at <strong>/et
 <p>The local development server can be customized with three command line options:</p>
 <ul>
 <li><p class="first">You can use the <code class="docutils literal notranslate"><span class="pre">--host</span></code> CLI option to specify a different host to run the application at:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span> <span class="o">--</span><span class="nx">host</span><span class="o">=</span><span class="nx">example</span><span class="o">.</span><span class="nx">dev</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span> <span class="o">--</span><span class="nx">host</span> <span class="nx">example</span><span class="o">.</span><span class="nx">dev</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">By default, the server runs on port 8080 but you might have more than one site running, or already have
 another application using that port. You can use the <code class="docutils literal notranslate"><span class="pre">--port</span></code> CLI option to specify a different one:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span> <span class="o">--</span><span class="nx">port</span><span class="o">=</span><span class="mi">8081</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span> <span class="o">--</span><span class="nx">port</span> <span class="mi">8081</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">You can also specify a specific version of PHP to use, with the <code class="docutils literal notranslate"><span class="pre">--php</span></code> CLI option, with its value
 set to the path of the PHP executable you want to use:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span> <span class="o">--</span><span class="nx">php</span><span class="o">=/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">php7</span><span class="o">.</span><span class="mf">6.5</span><span class="o">.</span><span class="mi">4</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span> <span class="o">--</span><span class="nx">php</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">php7</span><span class="o">.</span><span class="mf">6.5</span><span class="o">.</span><span class="mi">4</span>
 </pre></div>
 </div>
 </li>
@@ -566,7 +566,7 @@ it at <code class="docutils literal notranslate"><span class="pre">http://localh
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Aug 03, 2020.
+        Last updated on Aug 04, 2020.
       </span>
 
     </p>
