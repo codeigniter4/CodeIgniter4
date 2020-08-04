@@ -41,7 +41,6 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
-use Config\App;
 use Config\Format;
 
 /**
@@ -204,6 +203,13 @@ class Response extends Message implements ResponseInterface
 	protected $cookieHTTPOnly = false;
 
 	/**
+	 * Cookie SameSite setting
+	 *
+	 * @var string
+	 */
+	protected $cookieSameSite = '';
+
+	/**
 	 * Stores all cookies that were set in the response.
 	 *
 	 * @var array
@@ -247,6 +253,7 @@ class Response extends Message implements ResponseInterface
 		$this->cookiePath     = $config->cookiePath;
 		$this->cookieSecure   = $config->cookieSecure;
 		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
+		$this->cookieSameSite = $config->cookieSameSite;
 
 		// Default to an HTML Content-Type. Devs can override if needed.
 		$this->setContentType('text/html');
@@ -818,6 +825,7 @@ class Response extends Message implements ResponseInterface
 	 * @param string       $prefix   Cookie name prefix
 	 * @param boolean      $secure   Whether to only transfer cookies via SSL
 	 * @param boolean      $httponly Whether only make the cookie accessible via HTTP (no javascript)
+	 * @param string       $samesite SameSite setting for the cookie
 	 *
 	 * @return $this
 	 */
@@ -829,13 +837,14 @@ class Response extends Message implements ResponseInterface
 		$path = '/',
 		$prefix = '',
 		$secure = false,
-		$httponly = false
+		$httponly = false,
+		$samesite = ''
 	)
 	{
 		if (is_array($name))
 		{
 			// always leave 'name' in last place, as the loop will break otherwise, due to $$item
-			foreach (['value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name'] as $item)
+			foreach (['samesite', 'value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name'] as $item)
 			{
 				if (isset($name[$item]))
 				{
@@ -869,6 +878,11 @@ class Response extends Message implements ResponseInterface
 			$httponly = $this->cookieHTTPOnly;
 		}
 
+		if ($samesite === '' && $this->cookieSameSite !== '')
+		{
+			$samesite = $this->cookieSameSite;
+		}
+
 		if (! is_numeric($expire))
 		{
 			$expire = time() - 86500;
@@ -878,7 +892,7 @@ class Response extends Message implements ResponseInterface
 			$expire = ($expire > 0) ? time() + $expire : 0;
 		}
 
-		$this->cookies[] = [
+		$cookie = [
 			'name'     => $prefix . $name,
 			'value'    => $value,
 			'expires'  => $expire,
@@ -887,6 +901,16 @@ class Response extends Message implements ResponseInterface
 			'secure'   => $secure,
 			'httponly' => $httponly,
 		];
+
+		if ($samesite !== '')
+		{
+			if (in_array(strtolower($samesite), ['none', 'lax', 'strict']))
+			{
+				$cookie['samesite'] = $samesite;
+			}
+		}
+
+		$this->cookies[] = $cookie;
 
 		return $this;
 	}
@@ -1036,10 +1060,33 @@ class Response extends Message implements ResponseInterface
 
 		foreach ($this->cookies as $params)
 		{
-			// PHP cannot unpack array with string keys
-			$params = array_values($params);
+			if (PHP_VERSION_ID < 70300)
+			{
+				// For PHP 7.2 we need to use the hacky method of setting SameSite in the path
+				if (isset($params['samesite']))
+				{
+					if (in_array(strtolower($params['samesite']), ['none', 'lax', 'strict']))
+					{
+						$params['path'] = '; samesite=' . $params['samesite'];
+					}
+					unset($params['samesite']);
+				}
 
-			setcookie(...$params);
+				// PHP cannot unpack array with string keys
+				$params = array_values($params);
+				setcookie(...$params);
+			}
+			else
+			{
+				// PHP 7.3 and later have a signature for setcookie() with options array as third argument
+				// and SameSite is possible to set there
+				$name  = $params['name'];
+				$value = $params['value'];
+				unset($params['name']);
+				unset($params['value']);
+
+				setcookie($name, $value, $params);
+			}
 		}
 	}
 

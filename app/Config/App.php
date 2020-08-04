@@ -199,6 +199,13 @@ class App extends BaseConfig
 	| 'cookiePath'     = Typically will be a forward slash
 	| 'cookieSecure'   = Cookie will only be set if a secure HTTPS connection exists.
 	| 'cookieHTTPOnly' = Cookie will only be accessible via HTTP(S) (no javascript)
+	| 'cookieSameSite' = Configure cookie SameSite setting. Defaults to '' to not set
+	|                    samesite on the cookie. Other options are 'None', 'Strict' and 'Lax'.
+	|                    If set to 'None', cookieSecure must also be set.
+	|                    NOTE:
+	|                    On PHP 7.2, this function is implemented using the "hack" to add
+	|                    '; samesite=None' to cookie path setting, see (for example)
+	|                    https://stackoverflow.com/questions/39750906/php-setcookie-samesite-strict
 	|
 	| Note: These settings (with the exception of 'cookie_prefix' and
 	|       'cookie_httponly') will also affect sessions.
@@ -209,6 +216,7 @@ class App extends BaseConfig
 	public $cookiePath     = '/';
 	public $cookieSecure   = false;
 	public $cookieHTTPOnly = false;
+	public $cookieSameSite = '';
 
 	/*
 	|--------------------------------------------------------------------------
@@ -242,6 +250,9 @@ class App extends BaseConfig
 	| CSRFExpire      = The number in seconds the token should expire.
 	| CSRFRegenerate  = Regenerate token on every submission
 	| CSRFRedirect    = Redirect to previous page with error on failure
+	| CSRFSameSite    = Setting for the SameSite CSRF cookie token. Default setting
+	|                   'Lax' as recommended in:
+	|                   https://portswigger.net/web-security/csrf/samesite-cookies
 	*/
 	public $CSRFTokenName  = 'csrf_test_name';
 	public $CSRFHeaderName = 'X-CSRF-TOKEN';
@@ -249,6 +260,7 @@ class App extends BaseConfig
 	public $CSRFExpire     = 7200;
 	public $CSRFRegenerate = true;
 	public $CSRFRedirect   = true;
+	public $CSRFSameSite   = 'Lax';
 
 	/*
 	|--------------------------------------------------------------------------

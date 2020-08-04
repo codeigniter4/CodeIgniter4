@@ -39,6 +39,7 @@ class MockSession extends Session
 	protected function startSession()
 	{
 		//        session_start();
+		$this->setCookie();
 	}
 
 	//--------------------------------------------------------------------
@@ -49,15 +50,48 @@ class MockSession extends Session
 	 */
 	protected function setCookie()
 	{
-		$this->cookies[] = [
-			$this->sessionCookieName,
-			session_id(),
-			(empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration),
-			$this->cookiePath,
-			$this->cookieDomain,
-			$this->cookieSecure,
-			true,
-		];
+		if (PHP_VERSION_ID < 70300)
+		{
+			// In PHP < 7.3.0, there is a "hacky" way to set the samesite parameter
+
+			$sameSite = '';
+			if (in_array(strtolower($this->cookieSameSite), ['none', 'lax', 'strict']))
+			{
+				$sameSite = '; samesite=' . $this->cookieSameSite;
+			}
+
+			$this->cookies[] = [
+				$this->sessionCookieName,
+				session_id(),
+				(empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration),
+				$this->cookiePath . $sameSite,
+				$this->cookieDomain,
+				$this->cookieSecure,
+				true,
+			];
+		}
+		else
+		{
+			// PHP 7.3 adds another function signature allowing setting of samesite
+			$params = [
+				'lifetime' => $this->sessionExpiration,
+				'path'     => $this->cookiePath,
+				'domain'   => $this->cookieDomain,
+				'secure'   => $this->cookieSecure,
+				'httponly' => true,
+			];
+
+			if (in_array(strtolower($this->cookieSameSite), ['none', 'lax', 'strict']))
+			{
+				$params['samesite'] = $this->cookieSameSite;
+			}
+
+			$this->cookies[] = [
+				$this->sessionCookieName,
+				session_id(),
+				$params,
+			];
+		}
 	}
 
 	//--------------------------------------------------------------------

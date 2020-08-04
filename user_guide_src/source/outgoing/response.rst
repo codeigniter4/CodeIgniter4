@@ -396,7 +396,7 @@ The methods provided by the parent class that are available are:
 		followed by the response body. For the main application response, you do not need to call
 		this as it is handled automatically by CodeIgniter.
 
-	.. php:method:: setCookie($name = ''[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = FALSE[, $httponly = FALSE]]]]]]])
+	.. php:method:: setCookie($name = ''[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = FALSE[, $httponly = FALSE[, $samesite = '']]]]]]]])
 
 		:param	mixed	$name: Cookie name or an array of parameters
 		:param	string	$value: Cookie value
@@ -406,6 +406,8 @@ The methods provided by the parent class that are available are:
 		:param	string	$prefix: Cookie name prefix
 		:param	bool	$secure: Whether to only transfer the cookie through HTTPS
 		:param	bool	$httponly: Whether to only make the cookie accessible for HTTP requests (no JavaScript)
+		:param	string	$samesite: The value for the SameSite cookie parameter. Leave blank to not set any SameSite value
+
 		:rtype:	void
 
 		Sets a cookie containing the values you specify. There are two ways to
@@ -425,7 +427,8 @@ The methods provided by the parent class that are available are:
 				'path'   => '/',
 				'prefix' => 'myprefix_',
 				'secure' => TRUE,
-                                'httponly' => FALSE
+				'httponly' => FALSE,
+				'samesite' => ''
 			];
 
 			$response->setCookie($cookie);
@@ -452,12 +455,16 @@ The methods provided by the parent class that are available are:
 		The secure boolean is only needed if you want to make it a secure cookie
 		by setting it to TRUE.
 
+		The SameSite value controls how cookies are shared between domains and sub-domains.
+		Allowed values are 'None', 'Lax' and 'Strict'. If set to '', no SameSite value is set
+		on the cookie.
+
 		**Discrete Parameters**
 
 		If you prefer, you can set the cookie by passing data using individual
 		parameters::
 
-			$response->setCookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httponly);
+			$response->setCookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httponly, $samesite);
 
 	.. php:method:: deleteCookie($name = ''[, $domain = ''[, $path = '/'[, $prefix = '']]])
 

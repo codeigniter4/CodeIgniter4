@@ -126,6 +126,13 @@ class Security
 	protected $cookieSecure = false;
 
 	/**
+	 * SameSite setting of the CSRF cookie
+	 *
+	 * @var string
+	 */
+	protected $CSRFSameSite = '';
+
+	/**
 	 * List of sanitize filename strings
 	 *
 	 * @var array
@@ -184,6 +191,7 @@ class Security
 		$this->CSRFHeaderName = $config->CSRFHeaderName;
 		$this->CSRFCookieName = $config->CSRFCookieName;
 		$this->CSRFRegenerate = $config->CSRFRegenerate;
+		$this->CSRFSameSite   = $config->CSRFSameSite;
 
 		if (isset($config->cookiePrefix))
 		{
@@ -283,9 +291,48 @@ class Security
 			return false;
 		}
 
-		setcookie(
-				$this->CSRFCookieName, $this->CSRFHash, $expire, $this->cookiePath, $this->cookieDomain, $secure_cookie, true                // Enforce HTTP only cookie for security
-		);
+		if (PHP_VERSION_ID < 70300)
+		{
+			// In PHP < 7.3.0, there is a "hacky" way to set the samesite parameter
+
+			$sameSite = '';
+			if (in_array(strtolower($this->CSRFSameSite), ['none', 'lax', 'strict']))
+			{
+				$sameSite = '; samesite=' . $this->CSRFSameSite;
+			}
+
+			setcookie(
+				$this->CSRFCookieName,
+				$this->CSRFHash,
+				$expire,
+				$this->cookiePath . $sameSite,
+				$this->cookieDomain,
+				$secure_cookie,
+				true                // Enforce HTTP only cookie for security
+			);
+		}
+		else
+		{
+			// PHP 7.3 adds another function signature allowing setting of samesite
+			$params = [
+				'expires'  => $expire,
+				'path'     => $this->cookiePath,
+				'domain'   => $this->cookieDomain,
+				'secure'   => $secure_cookie,
+				'httponly' => true,// Enforce HTTP only cookie for security
+			];
+
+			if (in_array(strtolower($this->CSRFSameSite), ['none', 'lax', 'strict']))
+			{
+				$params['samesite'] = $this->CSRFSameSite;
+			}
+
+			setcookie(
+				$this->CSRFCookieName,
+				$this->CSRFHash,
+				$params
+					);
+		}
 
 		log_message('info', 'CSRF cookie sent');
 

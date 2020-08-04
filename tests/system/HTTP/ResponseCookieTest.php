@@ -235,4 +235,37 @@ class ResponseCookieTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals($cookie['expires'], '', 'Expires should be an empty string');
 	}
 
+	public function testCookieNoneSameSite()
+	{
+		$config   = new App();
+		$response = new Response($config);
+		$response->setCookie([
+			'name'     => 'bar',
+			'value'    => 'foo',
+			'samesite' => '',
+		]);
+
+		$allCookies = $response->getCookie();
+		$this->assertEquals(1, count($allCookies));
+		$this->assertIsArray($allCookies[0]);
+		$this->assertArrayNotHasKey('samesite', $allCookies[0]);
+	}
+
+	public function testCookieLaxSameSite()
+	{
+		$config   = new App();
+		$response = new Response($config);
+		$response->setCookie([
+			'name'     => 'bar',
+			'value'    => 'foo',
+			'samesite' => 'Lax',
+		]);
+
+		$allCookies = $response->getCookie();
+		$this->assertEquals(1, count($allCookies));
+		$this->assertIsArray($allCookies[0]);
+		$this->assertArrayHasKey('samesite', $allCookies[0]);
+		$this->assertEquals('Lax', $allCookies[0]['samesite']);
+	}
+
 }

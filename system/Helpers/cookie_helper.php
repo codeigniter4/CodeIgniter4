@@ -62,16 +62,27 @@ if (! function_exists('set_cookie'))
 	 * @param boolean      $secure   True makes the cookie secure
 	 * @param boolean      $httpOnly True makes the cookie accessible via
 	 *                                 http(s) only (no javascript)
+	 * @param string       $sameSite The cookie SameSite value
 	 *
 	 * @see (\Config\Services::response())->setCookie()
 	 * @see \CodeIgniter\HTTP\Response::setCookie()
 	 */
-	function set_cookie($name, string $value = '', string $expire = '', string $domain = '', string $path = '/', string $prefix = '', bool $secure = false, bool $httpOnly = false)
+	function set_cookie(
+		$name,
+		string $value = '',
+		string $expire = '',
+		string $domain = '',
+		string $path = '/',
+		string $prefix = '',
+		bool $secure = false,
+		bool $httpOnly = false,
+		string $sameSite = ''
+	)
 	{
 		// The following line shows as a syntax error in NetBeans IDE
 		//(\Config\Services::response())->setcookie
 		$response = \Config\Services::response();
-		$response->setcookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httpOnly);
+		$response->setcookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httpOnly, $sameSite);
 	}
 }
 
