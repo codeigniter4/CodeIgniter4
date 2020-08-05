@@ -253,7 +253,7 @@ class Response extends Message implements ResponseInterface
 		$this->cookiePath     = $config->cookiePath;
 		$this->cookieSecure   = $config->cookieSecure;
 		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
-		$this->cookieSameSite = $config->cookieSameSite;
+              $this->cookieSameSite = $config->cookieSameSite ?? '';
 
 		// Default to an HTML Content-Type. Devs can override if needed.
 		$this->setContentType('text/html');
