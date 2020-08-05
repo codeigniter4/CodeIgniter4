@@ -37,7 +37,7 @@
  * @filesource
  */
 
-namespace CodeIgniter\Commands\Database;
+namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorCommand;
@@ -68,7 +68,7 @@ class CreateMigration extends GeneratorCommand
 	 *
 	 * @var string
 	 */
-	protected $usage = 'migrate:create [name] [options]';
+	protected $usage = 'migrate:create <name> [options]';
 
 	/**
 	 * The Command's Arguments

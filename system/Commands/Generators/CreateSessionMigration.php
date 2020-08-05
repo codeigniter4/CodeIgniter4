@@ -37,7 +37,7 @@
  * @filesource
  */
 
-namespace CodeIgniter\Commands\Sessions;
+namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorCommand;
@@ -104,7 +104,7 @@ class CreateSessionMigration extends GeneratorCommand
 			'matchIP'   => config('App')->sessionMatchIP ?? false,
 		];
 
-		$string = view('\CodeIgniter\Commands\Sessions\Views\migration.tpl.php', $data, ['debug' => false]);
+		$string = view('\CodeIgniter\Commands\Generators\Views\migration.tpl.php', $data, ['debug' => false]);
 		return str_replace('@php', '?php', $string);
 	}
 }

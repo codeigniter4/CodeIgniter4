@@ -37,7 +37,7 @@
  * @filesource
  */
 
-namespace CodeIgniter\Commands\Database;
+namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorCommand;
@@ -68,7 +68,7 @@ class CreateSeeder extends GeneratorCommand
 	 *
 	 * @var string
 	 */
-	protected $usage = 'make:seeder [name] [options]';
+	protected $usage = 'make:seeder <name> [options]';
 
 	/**
 	 * the Command's Arguments
