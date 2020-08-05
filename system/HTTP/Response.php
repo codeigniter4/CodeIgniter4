@@ -247,13 +247,13 @@ class Response extends Message implements ResponseInterface
 		// We need CSP object even if not enabled to avoid calls to non existing methods
 		$this->CSP = new ContentSecurityPolicy(new \Config\ContentSecurityPolicy());
 
-		$this->CSPEnabled     = $config->CSPEnabled;
-		$this->cookiePrefix   = $config->cookiePrefix;
-		$this->cookieDomain   = $config->cookieDomain;
-		$this->cookiePath     = $config->cookiePath;
-		$this->cookieSecure   = $config->cookieSecure;
-		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
-              $this->cookieSameSite = $config->cookieSameSite ?? '';
+		$this->CSPEnabled           = $config->CSPEnabled;
+		$this->cookiePrefix         = $config->cookiePrefix;
+		$this->cookieDomain         = $config->cookieDomain;
+		$this->cookiePath           = $config->cookiePath;
+		$this->cookieSecure         = $config->cookieSecure;
+		$this->cookieHTTPOnly       = $config->cookieHTTPOnly;
+			  $this->cookieSameSite = $config->cookieSameSite ?? '';
 
 		// Default to an HTML Content-Type. Devs can override if needed.
 		$this->setContentType('text/html');
@@ -1067,7 +1067,7 @@ class Response extends Message implements ResponseInterface
 				{
 					if (in_array(strtolower($params['samesite']), ['none', 'lax', 'strict']))
 					{
-						$params['path'] = '; samesite=' . $params['samesite'];
+						$params['path'] .= '; samesite=' . $params['samesite'];
 					}
 					unset($params['samesite']);
 				}
