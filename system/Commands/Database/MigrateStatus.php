@@ -78,7 +78,7 @@ class MigrateStatus extends BaseCommand
 	 *
 	 * @var string
 	 */
-	protected $usage = 'migrate:status [Options]';
+	protected $usage = 'migrate:status [options]';
 
 	/**
 	 * the Command's Arguments
@@ -120,7 +120,7 @@ class MigrateStatus extends BaseCommand
 	{
 		$runner = Services::migrations();
 
-		$group = $params['-g'] ?? CLI::getOption('g');
+		$group = $params['g'] ?? CLI::getOption('g');
 
 		if (! is_null($group))
 		{

@@ -107,17 +107,17 @@ class MigrateRefresh extends BaseCommand
 	 */
 	public function run(array $params)
 	{
-		$params = ['-b' => 0];
+		$params = ['b' => 0];
 
 		if (ENVIRONMENT === 'production')
 		{
-			$force = $params['-f'] ?? CLI::getOption('f');
+			$force = array_key_exists('f', $params) || CLI::getOption('f');
 			if (is_null($force) && CLI::prompt(lang('Migrations.refreshConfirm'), ['y', 'n']) === 'n')
 			{
 				return;
 			}
 
-			$params['-f'] = '';
+			$params['f'] = null;
 		}
 
 		$this->call('migrate:rollback', $params);
