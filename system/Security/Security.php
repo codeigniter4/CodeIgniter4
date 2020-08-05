@@ -191,7 +191,7 @@ class Security
 		$this->CSRFHeaderName = $config->CSRFHeaderName;
 		$this->CSRFCookieName = $config->CSRFCookieName;
 		$this->CSRFRegenerate = $config->CSRFRegenerate;
-		$this->CSRFSameSite   = $config->CSRFSameSite;
+              $this->CSRFSameSite   = $config->CSRFSameSite ?? 'Lax';
 
 		if (isset($config->cookiePrefix))
 		{
