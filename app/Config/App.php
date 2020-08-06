@@ -199,8 +199,8 @@ class App extends BaseConfig
 	| 'cookiePath'     = Typically will be a forward slash
 	| 'cookieSecure'   = Cookie will only be set if a secure HTTPS connection exists.
 	| 'cookieHTTPOnly' = Cookie will only be accessible via HTTP(S) (no javascript)
-	| 'cookieSameSite' = Configure cookie SameSite setting. Defaults to '' to not set
-	|                    samesite on the cookie. Other options are 'None', 'Strict' and 'Lax'.
+	| 'cookieSameSite' = Configure cookie SameSite setting. Defaults to 'Lax' for compatibility
+	|                    with modern browsers. Other options are 'None', 'Strict' and 'Lax'.
 	|                    If set to 'None', cookieSecure must also be set.
 	|                    NOTE:
 	|                    On PHP 7.2, this function is implemented using the "hack" to add
@@ -216,7 +216,7 @@ class App extends BaseConfig
 	public $cookiePath     = '/';
 	public $cookieSecure   = false;
 	public $cookieHTTPOnly = false;
-	public $cookieSameSite = '';
+	public $cookieSameSite = 'Lax';
 
 	/*
 	|--------------------------------------------------------------------------

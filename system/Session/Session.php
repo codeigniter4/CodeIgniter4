@@ -1097,7 +1097,7 @@ class Session implements SessionInterface
 				$this->sessionCookieName,
 				session_id(),
 				$params
-					);
+			);
 		}
 	}
 
