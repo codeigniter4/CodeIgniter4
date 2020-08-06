@@ -612,9 +612,9 @@ specific text:</p>
 <p><strong>assertSeeInField(string $field, string $value=null)</strong></p>
 <p>Asserts that an input tag exists with the name and value:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that an input exists named &#39;user&#39; with the value &#39;John Snow&#39;</span>
-<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeInField</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;John Snow&#39;</span><span class="p">);</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertSeeInField</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;John Snow&#39;</span><span class="p">);</span>
 <span class="c1">// Check a multi-dimensional input</span>
-<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeInField</span><span class="p">(</span><span class="s1">&#39;user[name]&#39;</span><span class="p">,</span> <span class="s1">&#39;John Snow&#39;</span><span class="p">);</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertSeeInField</span><span class="p">(</span><span class="s1">&#39;user[name]&#39;</span><span class="p">,</span> <span class="s1">&#39;John Snow&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -689,7 +689,7 @@ method to do the comparison.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Aug 04, 2020.
+        Last updated on Aug 06, 2020.
       </span>
 
     </p>
