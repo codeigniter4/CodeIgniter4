@@ -1031,13 +1031,48 @@ class Model
 	 */
 	public function updateBatch(array $set = null, string $index = null, int $batchSize = 100, bool $returnSQL = false)
 	{
-		if (is_array($set) && $this->skipValidation === false)
+		if (is_array($set))
 		{
-			foreach ($set as $row)
+			foreach ($set as &$row)
 			{
-				if ($this->cleanRules(true)->validate($row) === false)
+				// If $data is using a custom class with public or protected
+				// properties representing the table elements, we need to grab
+				// them as an array.
+				if (is_object($row) && ! $row instanceof stdClass)
+				{
+					$row = static::classToArray($row, $this->primaryKey, $this->dateFormat);
+				}
+
+				// If it's still a stdClass, go ahead and convert to
+				// an array so doProtectFields and other model methods
+				// don't have to do special checks.
+				if (is_object($row))
+				{
+					$row = (array) $row;
+				}
+
+				// Validate data before saving.
+				if ($this->skipValidation === false && $this->cleanRules(true)->validate($row) === false)
 				{
 					return false;
+				}
+
+				// Save updateIndex for later
+				$updateIndex = $row[$index] ?? null;
+
+				// Must be called first so we don't
+				// strip out updated_at values.
+				$row = $this->doProtectFields($row);
+
+				// Restore updateIndex value in case it was wiped out
+				if ($updateIndex !== null)
+				{
+					$row[$index] = $updateIndex;
+				}
+
+				if ($this->useTimestamps && ! empty($this->updatedField) && ! array_key_exists($this->updatedField, $row))
+				{
+					$row[$this->updatedField] = $this->setDate();
 				}
 			}
 		}
