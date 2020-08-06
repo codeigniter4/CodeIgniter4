@@ -902,12 +902,9 @@ class Response extends Message implements ResponseInterface
 			'httponly' => $httponly,
 		];
 
-		if ($samesite !== '')
+		if ($samesite !== '' && in_array(strtolower($samesite), ['none', 'lax', 'strict']))
 		{
-			if (in_array(strtolower($samesite), ['none', 'lax', 'strict']))
-			{
-				$cookie['samesite'] = $samesite;
-			}
+			$cookie['samesite'] = $samesite;
 		}
 
 		$this->cookies[] = $cookie;
@@ -1063,12 +1060,9 @@ class Response extends Message implements ResponseInterface
 			if (PHP_VERSION_ID < 70300)
 			{
 				// For PHP 7.2 we need to use the hacky method of setting SameSite in the path
-				if (isset($params['samesite']))
+				if (isset($params['samesite']) && in_array(strtolower($params['samesite']), ['none', 'lax', 'strict']))
 				{
-					if (in_array(strtolower($params['samesite']), ['none', 'lax', 'strict']))
-					{
-						$params['path'] .= '; samesite=' . $params['samesite'];
-					}
+					$params['path'] .= '; samesite=' . $params['samesite'];
 					unset($params['samesite']);
 				}
 
