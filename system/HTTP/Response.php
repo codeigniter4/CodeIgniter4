@@ -1082,8 +1082,7 @@ class Response extends Message implements ResponseInterface
 				// and SameSite is possible to set there
 				$name  = $params['name'];
 				$value = $params['value'];
-				unset($params['name']);
-				unset($params['value']);
+				unset($params['name'], $params['value']);
 
 				setcookie($name, $value, $params);
 			}
