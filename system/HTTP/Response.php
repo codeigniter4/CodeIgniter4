@@ -248,7 +248,7 @@ class Response extends Message implements ResponseInterface
 		$this->CSP = new ContentSecurityPolicy(new \Config\ContentSecurityPolicy());
 
 		$this->CSPEnabled     = $config->CSPEnabled;
-		$this->cookiePrefix    = $config->cookiePrefix;
+		$this->cookiePrefix   = $config->cookiePrefix;
 		$this->cookieDomain   = $config->cookieDomain;
 		$this->cookiePath     = $config->cookiePath;
 		$this->cookieSecure   = $config->cookieSecure;
