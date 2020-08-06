@@ -902,12 +902,9 @@ class Response extends Message implements ResponseInterface
 			'httponly' => $httponly,
 		];
 
-		if ($samesite !== '')
+		if ($samesite !== '' && in_array(strtolower($samesite), ['none', 'lax', 'strict']))
 		{
-			if (in_array(strtolower($samesite), ['none', 'lax', 'strict']))
-			{
-				$cookie['samesite'] = $samesite;
-			}
+			$cookie['samesite'] = $samesite;
 		}
 
 		$this->cookies[] = $cookie;
