@@ -386,6 +386,12 @@ trusted dependencies that we bundle, being composer-installed.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">update</span>
 </pre></div>
 </div>
+<p>If you want to compare the latest framework source structure for non-system directory (app, public, etc), you can update with <cite>–prefer-source</cite>:</p>
+<blockquote>
+<div>composer update codeigniter4/framework –prefer-source</div></blockquote>
+<p>If <cite>–prefer-source</cite> doesn’t automatically update to pull latest framework source structure, you can remove first:</p>
+<blockquote>
+<div>rm -rf vendor/codeigniter4/framework &amp;&amp; composer update codeigniter4/framework –prefer-source</div></blockquote>
 <p>If you used the “–no-dev” option when you created the project, it
 would be appropriate to do so here too, i.e. <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span> <span class="pre">--no-dev</span></code>.</p>
 <p>Read the upgrade instructions, and check designated  <code class="docutils literal notranslate"><span class="pre">app/Config</span></code> folders for affected changes.</p>
@@ -404,7 +410,7 @@ would be appropriate to do so here too, i.e. <code class="docutils literal notra
 <ul class="simple">
 <li>app, public, tests, writable</li>
 <li>vendor/codeigniter4/framework/system</li>
-<li>vendor/codeigniter4/framework/app &amp; public (compare with yours after updating)</li>
+<li>vendor/codeigniter4/framework/app &amp; public (compare with yours after updating when using <cite>–prefer-source</cite>)</li>
 </ul>
 </div>
 <div class="section" id="latest-dev">
@@ -437,7 +443,7 @@ existing project using Composer.</p>
 <p>Develop your app inside the <code class="docutils literal notranslate"><span class="pre">app</span></code> folder, and the <code class="docutils literal notranslate"><span class="pre">public</span></code> folder
 will be your document root.</p>
 <p>In your project root:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="k">require</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">framework</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="k">require</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">framework</span> <span class="o">--</span><span class="nx">prefer</span><span class="o">-</span><span class="nx">source</span>
 </pre></div>
 </div>
 <p>As with the earlier two composer install methods, you can omit installing
@@ -454,7 +460,7 @@ to your project root</p>
 <div class="section" id="id1">
 <h3>Upgrading<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>Whenever there is a new release, then from the command line in your project root:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">update</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">update</span> <span class="o">--</span><span class="nx">prefer</span><span class="o">-</span><span class="nx">source</span>
 </pre></div>
 </div>
 <p>Read the upgrade instructions, and check designated
@@ -472,7 +478,7 @@ to your project root</p>
 <h3>Structure<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>Folders in your project after set up:</p>
 <ul class="simple">
-<li>app, public, tests, writable</li>
+<li>app, public, tests, writable (when using <cite>–prefer-source</cite>)</li>
 <li>vendor/codeigniter4/framework/system</li>
 </ul>
 </div>
