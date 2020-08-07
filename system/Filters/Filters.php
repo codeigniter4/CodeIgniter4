@@ -42,6 +42,7 @@ namespace CodeIgniter\Filters;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Config\Services;
 
 /**
  * Filters
@@ -110,7 +111,40 @@ class Filters
 		$this->config  = $config;
 		$this->request = &$request;
 		$this->setResponse($response);
+		if ($this->config->discoverFilters)
+		{
+			$this->discoverFilters();
+		}		
 	}
+	
+	//--------------------------------------------------------------------
+
+	/**
+	 * If discoverFilters is enabled in Config then system will try to auto
+	 * Discovery custom filters files in Namespaces and allow access to 
+	 * The config object via the variable $customfilters as with the routes file
+	 * Sample : 
+	 * $customfilters->aliases['custom-auth'] = \Acme\Blob\Filters\BlobAuth::class;
+	 */	
+	private function discoverFilters()
+	{
+		$locater = Services::locator();
+		
+		$customfilters = $this->config;
+		
+		$files = $locater->search('Config/Filters.php');
+
+		foreach ($files as $file)
+		{
+			// Don't include our main file again...
+			if ($file === APPPATH . 'Config/Filters.php')
+			{
+				continue;
+			}
+
+			include $file;
+		}
+	}	
 
 	/**
 	 * Set the response explicity.
