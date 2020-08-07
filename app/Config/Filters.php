@@ -4,6 +4,9 @@ use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
+	//Enable or Disable Auto Discovery of custom Filters
+	public $discoverFilters = false;	
+	
 	// Makes reading things below nicer,
 	// and simpler to change out script that's used.
 	public $aliases = [
