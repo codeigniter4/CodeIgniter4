@@ -36,6 +36,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testProcessMethodDetectsCLI()
 	{
 		$config  = [
+			'discoverFilters' => false, 
 			'methods' => [
 				'cli' => ['foo'],
 			],
@@ -57,6 +58,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'discoverFilters' => false,
 			'methods' => [
 				'get' => ['foo'],
 			],
@@ -78,6 +80,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'discoverFilters' => false, 
 			'methods' => [
 				'post' => ['foo'],
 				'get'  => ['bar'],
@@ -98,6 +101,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'DELETE';
 
 		$config  = [
+			'discoverFilters' => false,
 			'methods' => [
 				'post' => ['foo'],
 				'get'  => ['bar'],
@@ -120,6 +124,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'discoverFilters' => false,
 			'globals' => [
 				'before' => [
 					'foo' => ['bar'], // not excluded
@@ -165,6 +170,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'discoverFilters' => false,
 			'globals' => [
 				'before' => [
 					'foo' => ['except' => $except],
@@ -195,6 +201,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'discoverFilters' => false,
 			'filters' => [
 				'foo' => [
 					'before' => ['admin/*'],
@@ -220,6 +227,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'discoverFilters' => false,
 			'filters' => [
 				'foo' => [
 					'before' => ['admin/*'],
@@ -247,6 +255,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'discoverFilters' => false,
 			'globals' => [
 				'before' => [
 					'foog' => ['except' => ['admin/*']],
@@ -326,6 +335,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'discoverFilters' => false,
 			'aliases' => [],
 			'globals' => [
 				'before' => ['invalid'],
@@ -348,6 +358,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'discoverFilters' => false,
 			'aliases' => ['invalid' => 'CodeIgniter\Filters\fixtures\InvalidClass'],
 			'globals' => [
 				'before' => ['invalid'],
@@ -370,6 +381,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'discoverFilters' => false,
 			'aliases' => ['google' => 'CodeIgniter\Filters\fixtures\GoogleMe'],
 			'globals' => [
 				'before' => ['google'],
@@ -392,6 +404,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'discoverFilters' => false,
 			'aliases' => ['google' => 'CodeIgniter\Filters\fixtures\GoogleMe'],
 			'globals' => [
 				'before' => [],
@@ -414,6 +427,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'discoverFilters' => false,
 			'aliases' => ['banana' => 'CodeIgniter\Filters\fixtures\GoogleYou'],
 			'globals' => [
 				'before' => ['banana'],
@@ -434,6 +448,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'discoverFilters' => false,
 			'aliases' => [
 				'nowhere' => 'CodeIgniter\Filters\fixtures\GoogleEmpty',
 				'banana'  => 'CodeIgniter\Filters\fixtures\GoogleCurious',
@@ -462,6 +477,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'discoverFilters' => false,
 			'globals' => [
 				'before' => [
 					'foo' => ['except' => 'admin/*'],
@@ -490,6 +506,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'discoverFilters' => false,
 			'globals' => [
 				'before' => [
 					'foo' => ['except' => 'george/*'],
@@ -519,6 +536,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'discoverFilters' => false,
 			'globals' => [
 				'before' => [
 					'bar'
@@ -547,6 +565,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'discoverFilters' => false,
 			'globals' => [
 				'before' => [
 					'bar'
@@ -578,6 +597,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'discoverFilters' => false,
 			'aliases' => ['google' => 'CodeIgniter\Filters\fixtures\GoogleMe'],
 			'globals' => [
 				'before' => ['google'],
@@ -600,7 +620,9 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$config = [];
+		$config = [
+			'discoverFilters' => false,
+		];
 
 		$filters = new Filters((object) $config, $this->request, $this->response);
 
@@ -615,7 +637,9 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$config = [];
+		$config = [
+			'discoverFilters' => false,
+		];
 
 		$filters = new Filters((object) $config, $this->request, $this->response);
 
@@ -632,6 +656,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'discoverFilters' => false,
 			'aliases' => ['google' => 'CodeIgniter\Filters\fixtures\GoogleMe'],
 			'globals' => [
 				'before' => [],
@@ -655,6 +680,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'discoverFilters' => false,
 			'aliases' => ['role' => 'CodeIgniter\Filters\fixtures\Role'],
 			'globals' => [
 				'before' => [],
@@ -687,6 +713,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'discoverFilters' => false,
 			'aliases' => ['role' => 'CodeIgniter\Filters\fixtures\Role'],
 			'globals' => [
 				'before' => [],
@@ -719,6 +746,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'discoverFilters' => false,
 			'aliases' => ['google' => 'CodeIgniter\Filters\fixtures\GoogleMe'],
 			'globals' => [
 				'before' => [],
@@ -741,6 +769,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config  = [
+			'discoverFilters' => false,
 			'globals' => [
 				'before' => [
 					'foo' => ['except' => 'Admin/*'],
@@ -783,6 +812,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'discoverFilters' => false,
 			'filters' => [
 				'frak' => [
 					'before' => ['admin*'],
@@ -813,6 +843,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'discoverFilters' => false,
 			'globals' => [
 				'before' => [
 					'foo' => ['except' => 'admin*'],
@@ -850,6 +881,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'discoverFilters' => false,
 			'globals' => [
 				'before' => [
 					'foo' => ['except' => 'admin*'],
@@ -893,6 +925,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$config = [
+			'discoverFilters' => false,
 			'globals' => [
 				'before' => [
 					'foo' => ['except' => 'admin*'],
@@ -930,6 +963,7 @@ class FiltersTest extends \CodeIgniter\Test\CIUnitTestCase
 	public function testFilterAlitasMultiple()
 	{
 		$config  = [
+			'discoverFilters' => false,
 			'aliases' => [
 				'multipeTest' => [
 					'CodeIgniter\Filters\fixtures\Multiple1',
