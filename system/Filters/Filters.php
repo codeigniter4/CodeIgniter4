@@ -111,7 +111,7 @@ class Filters
 		$this->config  = $config;
 		$this->request = &$request;
 		$this->setResponse($response);
-		if ($this->config->discoverFilters)
+		if ((!is_array($this->config)) && ($this->config->discoverFilters))
 		{
 			$this->discoverFilters();
 		}		
