@@ -880,10 +880,10 @@ if (! function_exists('excerpt'))
 	}
 
 	//--------------------------------------------------------------------
-	if (! function_exists('is_not_string'))
+	if (! function_exists('rm_string'))
 {
 	/**
-	 * Is Not String.
+	 * Remove String.
 	 *
 	 * Allows to removed specific keyword or fields from string
 	 *
@@ -894,7 +894,7 @@ if (! function_exists('excerpt'))
 	 * @return string
 	 *
 	 */
-	function is_not_string(string $str, array $fields, string $replace = null): string
+	function rm_string(string $str, array $fields, string $replace = null): string
 	{
 		$string = $str;
 		if ($replace !== null) {
