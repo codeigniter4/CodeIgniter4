@@ -99,6 +99,13 @@ class Model
 	protected $primaryKey = 'id';
 
 	/**
+	 * Primary key is autoincrement
+	 *
+	 * @var boolean
+	 */
+	protected $useAutoIncrement = true;
+
+	/**
 	 * Last insert ID
 	 *
 	 * @var integer
@@ -721,11 +728,11 @@ class Model
 	/**
 	 * Returns last insert ID or 0.
 	 *
-	 * @return integer
+	 * @return integer|string
 	 */
-	public function getInsertID(): int
+	public function getInsertID()
 	{
-		return $this->insertID;
+		return is_numeric($this->insertID) ? (int) $this->insertID : $this->insertID;
 	}
 
 	//--------------------------------------------------------------------
@@ -819,7 +826,21 @@ class Model
 		// If insertion succeeded then save the insert ID
 		if ($result->resultID)
 		{
-			$this->insertID = $this->db->insertID();
+			if (! $this->useAutoIncrement)
+			{
+				if (empty($data[$this->primaryKey]))
+				{
+					$this->insertID = null;
+				}
+				else
+				{
+					$this->insertID = $data[$this->primaryKey];
+				}
+			}
+			else
+			{
+				$this->insertID = $this->db->insertID();
+			}
 		}
 
 		$eventData = [
