@@ -305,9 +305,9 @@ Asserts that an anchor tag is found with matching **$text** as the body of the t
 Asserts that an input tag exists with the name and value::
 
     // Check that an input exists named 'user' with the value 'John Snow'
-    $results->seeInField('user', 'John Snow');
+    $results->assertSeeInField('user', 'John Snow');
     // Check a multi-dimensional input
-    $results->seeInField('user[name]', 'John Snow');
+    $results->assertSeeInField('user[name]', 'John Snow');
 
 
 
