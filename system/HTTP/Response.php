@@ -838,7 +838,7 @@ class Response extends Message implements ResponseInterface
 		$prefix = '',
 		$secure = false,
 		$httponly = false,
-		$samesite = ''
+		$samesite = null
 	)
 	{
 		if (is_array($name))
