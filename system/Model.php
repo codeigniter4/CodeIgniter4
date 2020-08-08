@@ -99,7 +99,7 @@ class Model
 	protected $primaryKey = 'id';
 
 	/**
-	 * Primary key is autoincrement
+	 * Primary key uses auto increment.
 	 *
 	 * @var boolean
 	 */
@@ -626,11 +626,34 @@ class Model
 			return true;
 		}
 
-		if (is_object($data) && isset($data->{$this->primaryKey}))
+		$makeUpdate = $this->useAutoIncrement;
+
+		// When useAutoIncrement feature is disabled check
+		// in the database if given record already exists
+		if (! $this->useAutoIncrement)
+		{
+			$count = 0;
+
+			if (is_object($data) && isset($data->{$this->primaryKey}))
+			{
+				$count = $this->where($this->primaryKey, $data->{$this->primaryKey})->countAllResults();
+			}
+			elseif (is_array($data) && ! empty($data[$this->primaryKey]))
+			{
+				$count = $this->where($this->primaryKey, $data[$this->primaryKey])->countAllResults();
+			}
+
+			if ($count === 1)
+			{
+				$makeUpdate = true;
+			}
+		}
+
+		if ($makeUpdate && is_object($data) && isset($data->{$this->primaryKey}))
 		{
 			$response = $this->update($data->{$this->primaryKey}, $data);
 		}
-		elseif (is_array($data) && ! empty($data[$this->primaryKey]))
+		elseif ($makeUpdate && is_array($data) && ! empty($data[$this->primaryKey]))
 		{
 			$response = $this->update($data[$this->primaryKey], $data);
 		}
@@ -818,6 +841,13 @@ class Model
 			$eventData = $this->trigger('beforeInsert', $eventData);
 		}
 
+		// Require non empty primaryKey when
+		// not using auto-increment feature
+		if (! $this->useAutoIncrement && empty($eventData['data'][$this->primaryKey]))
+		{
+			throw DataException::forEmptyPrimaryKey('insert');
+		}
+
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $this->builder()
 				->set($eventData['data'], '', $escape)
@@ -828,14 +858,7 @@ class Model
 		{
 			if (! $this->useAutoIncrement)
 			{
-				if (empty($data[$this->primaryKey]))
-				{
-					$this->insertID = null;
-				}
-				else
-				{
-					$this->insertID = $data[$this->primaryKey];
-				}
+				$this->insertID = $eventData['data'][$this->primaryKey];
 			}
 			else
 			{
@@ -908,6 +931,13 @@ class Model
 				// Must be called first so we don't
 				// strip out created_at values.
 				$row = $this->doProtectFields($row);
+
+				// Require non empty primaryKey when
+				// not using auto-increment feature
+				if (! $this->useAutoIncrement && empty($row[$this->primaryKey]))
+				{
+					throw DataException::forEmptyPrimaryKey('insertBatch');
+				}
 
 				// Set created_at and updated_at with same time
 				$date = $this->setDate();

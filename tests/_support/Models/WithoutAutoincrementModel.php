@@ -2,18 +2,16 @@
 
 use CodeIgniter\Model;
 
-class WithoutAutoincrementModel extends Model
+class WithoutAutoIncrementModel extends Model
 {
-	protected $table = 'without_autoincrement';
+	protected $table = 'without_auto_increment';
+
+	protected $primaryKey = 'key';
 
 	protected $allowedFields = [
 		'key',
 		'value',
 	];
 
-	protected $returnType = 'object';
-
-	protected $useSoftDeletes = false;
-	
-	protected $hasAutoincrement = false;
+	protected $useAutoIncrement = false;
 }

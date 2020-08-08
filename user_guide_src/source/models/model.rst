@@ -109,6 +109,8 @@ what table to use and how we can find the required records::
         protected $table      = 'users';
         protected $primaryKey = 'id';
 
+        protected $useAutoIncrement = true;
+
         protected $returnType     = 'array';
         protected $useSoftDeletes = true;
 
@@ -138,6 +140,16 @@ is used with methods like ``find()`` to know what column to match the specified 
 
 .. note:: All Models must have a primaryKey specified to allow all of the features to work
     as expected.
+
+**$useAutoIncrement**
+
+Specifies if the table uses an auto-increment feature for ``$primaryKey``. If set to ``false``
+then you are responsible for providing primary key value for every record in the table. This 
+feature may be handy when we want to implement 1:1 relation or use UUIDs for our model.
+
+.. note:: If you set ``$useAutoIncrement`` to ``false`` then make sure to set your primary
+    key in the database to ``unique``. This way you will make sure that all Model's features
+    will work the same as before.
 
 **$returnType**
 

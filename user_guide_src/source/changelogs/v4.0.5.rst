@@ -8,6 +8,7 @@ Release Date: Not released
 Enhancements:
 
 - New URL helper function ``url_to()`` which creates absolute URLs based on controllers.
+- New Model option: ``$useAutoIncrement`` which when set to ``false`` allows you to provide your own primary key for each record in the table. Handy when we want to implement 1:1 relation or use UUIDs for our model.
 
 Bugs Fixed:
 
