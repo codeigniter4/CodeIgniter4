@@ -74,4 +74,7 @@ return [
    'uploadErrNoTmpDir'          => 'File could not be uploaded: missing temporary directory.',
    'uploadErrExtension'         => 'File upload was stopped by a PHP extension.',
    'uploadErrUnknown'           => 'The file "%s" was not uploaded due to an unknown error.',
+
+	// SameSite setting
+   'invalidSameSiteSetting'     => 'SameSite setting must None, Lax or Strict',
 ];

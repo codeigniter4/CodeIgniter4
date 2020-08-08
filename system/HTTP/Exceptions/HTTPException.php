@@ -261,4 +261,16 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 		return new static(lang('HTTP.moveFailed', [$source, $target, $error]));
 	}
 
+	/**
+	 * For Uploaded file move
+	 *
+	 * @param string|null $path
+	 *
+	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 */
+	public static function forInvalidSameSiteSetting(string $path = null)
+	{
+		return new static(lang('HTTP.invalidSameSiteSetting'));
+	}
+
 }
