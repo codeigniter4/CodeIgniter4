@@ -148,8 +148,8 @@ then you are responsible for providing primary key value for every record in the
 feature may be handy when we want to implement 1:1 relation or use UUIDs for our model.
 
 .. note:: If you set ``$useAutoIncrement`` to ``false`` then make sure to set your primary
-    key in the database to ``unique``. This way you will make sure that all Model's features
-    will work the same as before.
+    key in the database to ``unique``. This way you will make sure that all of Model's features
+    will still work the same as before.
 
 **$returnType**
 

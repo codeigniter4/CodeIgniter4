@@ -30,8 +30,8 @@ class DataException extends \RuntimeException implements ExceptionInterface
 	}
 
 	/**
-	 * Used by Model's insert/update methods when there isn't
-	 * primaryKey defined and Model has option useAutoIncrement
+	 * Used by Model's insert/update methods when there is no
+	 * primary key defined and Model has option `useAutoIncrement`
 	 * set to false.
 	 *
 	 * @param string $mode

@@ -99,7 +99,7 @@ class Model
 	protected $primaryKey = 'id';
 
 	/**
-	 * Primary key uses auto increment.
+	 * Whether primary key uses auto increment.
 	 *
 	 * @var boolean
 	 */

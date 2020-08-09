@@ -2307,7 +2307,7 @@ class ModelTest extends CIDatabaseTestCase
 	public function testUseAutoIncrementSetToFalseInsertException()
 	{
 		$this->expectException(DataException::class);
-		$this->expectExceptionMessage('There is no primaryKey defined when trying to make insert');
+		$this->expectExceptionMessage('There is no primary key defined when trying to make insert');
 
 		$model = new WithoutAutoIncrementModel();
 
