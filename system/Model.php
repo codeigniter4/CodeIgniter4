@@ -626,11 +626,9 @@ class Model
 			return true;
 		}
 
-		$makeUpdate = $this->useAutoIncrement;
-
 		// When useAutoIncrement feature is disabled check
 		// in the database if given record already exists
-		if (! $this->useAutoIncrement)
+		if (! $makeUpdate = $this->useAutoIncrement)
 		{
 			$count = 0;
 

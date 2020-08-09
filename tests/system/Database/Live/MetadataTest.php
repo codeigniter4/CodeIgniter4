@@ -33,6 +33,7 @@ class MetadataTest extends CIDatabaseTestCase
 			$prefix . 'empty',
 			$prefix . 'secondary',
 			$prefix . 'stringifypkey',
+			$prefix . 'without_auto_increment',
 		];
 	}
 
