@@ -880,34 +880,29 @@ if (! function_exists('excerpt'))
 	}
 
 	//--------------------------------------------------------------------
-	if (! function_exists('rm_string'))
+	if (! function_exists('replace_string'))
 {
 	/**
 	 * Remove String.
 	 *
 	 * Allows to removed specific keyword or fields from string
 	 *
-	 * @param string  $str      Given String
-	 * @param array  $fields    Given value that will be replace
+	 * @param string  $string Given String
+	 * @param array  $values    Given value that will be replace
 	 * @param integer $replace   Matches any of the patterns are replaced with the replacement string.
 	 *
 	 * @return string
 	 *
 	 */
-	function rm_string(string $str, array $fields, string $replace = null): string
+	function replace_string(string $string, array $values, string $replace = ''): string
 	{
-		$string = $str;
-		if ($replace !== null) {
-			$replace = $replace;
-		} else {
-			$replace = "";
-		}
-		foreach ($fields as $value) {
-		$string = preg_replace("~{$value}~s", $replace, $string);
+		foreach ($values as $value)
+		{
+			$string = preg_replace("~{$value}~s", $replace, $string);
 		}
 		return $string;
 	}
-}
 
-	//--------------------------------------------------------------------
+	
 }
+//--------------------------------------------------------------------
