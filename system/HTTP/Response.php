@@ -207,7 +207,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @var string
 	 */
-	protected $cookieSameSite = '';
+	protected $cookieSameSite = 'Lax';
 
 	/**
 	 * Stores all cookies that were set in the response.
@@ -253,7 +253,12 @@ class Response extends Message implements ResponseInterface
 		$this->cookiePath     = $config->cookiePath;
 		$this->cookieSecure   = $config->cookieSecure;
 		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
-		$this->cookieSameSite = $config->cookieSameSite ?? 'Lax';
+		$this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
+
+		if (! in_array(strtolower($this->cookieSameSite), ['none', 'lax', 'strict']))
+		{
+			throw HTTPException::forInvalidSameSiteSetting($this->cookieSameSite);
+		}
 
 		// Default to an HTML Content-Type. Devs can override if needed.
 		$this->setContentType('text/html');
@@ -878,9 +883,14 @@ class Response extends Message implements ResponseInterface
 			$httponly = $this->cookieHTTPOnly;
 		}
 
-		if ($samesite === '' && $this->cookieSameSite !== '')
+		if (is_null($samesite) && $this->cookieSameSite !== '')
 		{
 			$samesite = $this->cookieSameSite;
+		}
+
+		if (! in_array(strtolower($samesite), ['none', 'lax', 'strict']))
+		{
+			throw HTTPException::forInvalidSameSiteSetting($samesite);
 		}
 
 		if (! is_numeric($expire))
@@ -900,12 +910,8 @@ class Response extends Message implements ResponseInterface
 			'domain'   => $domain,
 			'secure'   => $secure,
 			'httponly' => $httponly,
+			'samesite' => $samesite,
 		];
-
-		if ($samesite !== '' && in_array(strtolower($samesite), ['none', 'lax', 'strict']))
-		{
-			$cookie['samesite'] = $samesite;
-		}
 
 		$this->cookies[] = $cookie;
 

@@ -472,7 +472,7 @@ Preference           Default         Description
 **cookieDomain**     ''              The domain for which the session is applicable
 **cookiePath**       /               The path to which the session is applicable
 **cookieSecure**     FALSE           Whether to create the session cookie only on encrypted (HTTPS) connections
-**cookieSameSite**   ''              The SameSite setting for the session cookie
+**cookieSameSite**   Lax             The SameSite setting for the session cookie
 ==================== =============== ===========================================================================
 
 .. note:: The 'cookieHTTPOnly' setting doesn't have an effect on sessions.

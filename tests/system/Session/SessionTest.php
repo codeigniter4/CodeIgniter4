@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Session;
 
+use CodeIgniter\Session\Exceptions\SessionException;
 use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
@@ -37,7 +38,7 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 			'cookiePrefix'             => '',
 			'cookiePath'               => '/',
 			'cookieSecure'             => false,
-			'cookieSameSite'           => '',
+			'cookieSameSite'           => 'Lax',
 		];
 
 		$config = array_merge($defaults, $options);
@@ -588,48 +589,13 @@ class SessionTest extends \CodeIgniter\Test\CIUnitTestCase
 		}
 	}
 
-	public function testNoSameSite()
-	{
-		$session = $this->getInstance();
-		$session->start();
-
-		if (PHP_VERSION_ID < 70300)
-		{
-			$cookies = $session->cookies;
-			$this->assertCount(1, $cookies);
-			$this->assertCount(7, $cookies[0]);
-			$this->assertEquals('/', $cookies[0][3]);
-		}
-		else
-		{
-			$cookies = $session->cookies;
-			$this->assertCount(1, $cookies);
-			$this->assertCount(3, $cookies[0]);
-			$this->assertIsArray($cookies[0][2]);
-			$this->assertArrayNotHasKey('samesite', $cookies[0][2]);
-		}
-	}
-
 	public function testInvalidSameSite()
 	{
-		$session = $this->getInstance(['cookieSameSite' => 'invalid']);
-		$session->start();
+		$this->expectException(SessionException::class);
+		$this->expectExceptionMessage(lang('HTTP.invalidSameSiteSetting', ['Invalid']));
 
-		if (PHP_VERSION_ID < 70300)
-		{
-			$cookies = $session->cookies;
-			$this->assertCount(1, $cookies);
-			$this->assertCount(7, $cookies[0]);
-			$this->assertEquals('/', $cookies[0][3]);
-		}
-		else
-		{
-			$cookies = $session->cookies;
-			$this->assertCount(1, $cookies);
-			$this->assertCount(3, $cookies[0]);
-			$this->assertIsArray($cookies[0][2]);
-			$this->assertArrayNotHasKey('samesite', $cookies[0][2]);
-		}
+		$session = $this->getInstance(['cookieSameSite' => 'Invalid']);
+		$session->start();
 	}
 
 }

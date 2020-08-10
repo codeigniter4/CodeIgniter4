@@ -130,7 +130,7 @@ class Security
 	 *
 	 * @var string
 	 */
-	protected $CSRFSameSite = '';
+	protected $CSRFSameSite = 'Lax';
 
 	/**
 	 * List of sanitize filename strings
@@ -186,16 +186,21 @@ class Security
 	public function __construct($config)
 	{
 		// Store our CSRF-related settings
-		$this->CSRFExpire         = $config->CSRFExpire;
-		$this->CSRFTokenName      = $config->CSRFTokenName;
-		$this->CSRFHeaderName     = $config->CSRFHeaderName;
-		$this->CSRFCookieName     = $config->CSRFCookieName;
-		$this->CSRFRegenerate     = $config->CSRFRegenerate;
-			  $this->CSRFSameSite = $config->CSRFSameSite ?? 'Lax';
+		$this->CSRFExpire     = $config->CSRFExpire;
+		$this->CSRFTokenName  = $config->CSRFTokenName;
+		$this->CSRFHeaderName = $config->CSRFHeaderName;
+		$this->CSRFCookieName = $config->CSRFCookieName;
+		$this->CSRFRegenerate = $config->CSRFRegenerate;
+		$this->CSRFSameSite   = $config->CSRFSameSite ?? $this->CSRFSameSite;
 
 		if (isset($config->cookiePrefix))
 		{
 			$this->CSRFCookieName = $config->cookiePrefix . $this->CSRFCookieName;
+		}
+
+		if (! in_array(strtolower($this->CSRFSameSite), ['none', 'lax', 'strict']))
+		{
+			throw SecurityException::forInvalidSameSiteSetting($this->cookieSameSite);
 		}
 
 		// Store cookie-related settings
@@ -295,11 +300,7 @@ class Security
 		{
 			// In PHP < 7.3.0, there is a "hacky" way to set the samesite parameter
 
-			$sameSite = '';
-			if (in_array(strtolower($this->CSRFSameSite), ['none', 'lax', 'strict']))
-			{
-				$sameSite = '; samesite=' . $this->CSRFSameSite;
-			}
+			$sameSite = '; samesite=' . $this->CSRFSameSite;
 
 			setcookie(
 				$this->CSRFCookieName,
@@ -320,12 +321,8 @@ class Security
 				'domain'   => $this->cookieDomain,
 				'secure'   => $secure_cookie,
 				'httponly' => true,// Enforce HTTP only cookie for security
+				'samesite' => $this->CSRFSameSite,
 			];
-
-			if (in_array(strtolower($this->CSRFSameSite), ['none', 'lax', 'strict']))
-			{
-				$params['samesite'] = $this->CSRFSameSite;
-			}
 
 			setcookie(
 				$this->CSRFCookieName,

@@ -41,7 +41,7 @@ class ResponseTraitTest extends \CodeIgniter\Test\CIUnitTestCase
 			'cookieSecure'     => false,
 			'cookieHTTPOnly'   => false,
 			'proxyIPs'         => [],
-			'cookieSameSite'   => '',
+			'cookieSameSite'   => 'Lax',
 		];
 
 		$config = array_merge($config, $userConfig);
@@ -478,7 +478,7 @@ EOH;
 			'cookieSecure'     => false,
 			'cookieHTTPOnly'   => false,
 			'proxyIPs'         => [],
-			'cookieSameSite'   => '',
+			'cookieSameSite'   => 'Lax',
 		];
 
 		$request  = new MockIncomingRequest((object) $config, new URI($config['baseURL']), null, new UserAgent());

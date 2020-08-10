@@ -262,15 +262,15 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	}
 
 	/**
-	 * For Uploaded file move
+	 * For Invalid SameSite attribute setting
 	 *
-	 * @param string|null $path
+	 * @param string $samesite
 	 *
 	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
 	 */
-	public static function forInvalidSameSiteSetting(string $path = null)
+	public static function forInvalidSameSiteSetting(string $samesite)
 	{
-		return new static(lang('HTTP.invalidSameSiteSetting'));
+		return new static(lang('HTTP.invalidSameSiteSetting', [$samesite]));
 	}
 
 }

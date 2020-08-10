@@ -35,7 +35,7 @@
 # app.cookiePath = '/'
 # app.cookieSecure = false
 # app.cookieHTTPOnly = false
-# app.cookieSameSite = ''
+# app.cookieSameSite = 'Lax'
 
 # app.CSRFProtection  = false
 # app.CSRFTokenName   = 'csrf_test_name'

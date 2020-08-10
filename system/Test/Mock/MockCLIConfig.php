@@ -11,7 +11,7 @@ class MockCLIConfig extends \Config\App
 	public $cookiePath     = '/';
 	public $cookieSecure   = false;
 	public $cookieHTTPOnly = false;
-	public $cookieSameSite = '';
+	public $cookieSameSite = 'Lax';
 
 	public $proxyIPs = '';
 

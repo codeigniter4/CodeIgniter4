@@ -76,5 +76,5 @@ return [
    'uploadErrUnknown'           => 'The file "%s" was not uploaded due to an unknown error.',
 
 	// SameSite setting
-   'invalidSameSiteSetting'     => 'SameSite setting must None, Lax or Strict',
+   'invalidSameSiteSetting'     => 'SameSite setting must None, Lax or Strict. Given: {0}',
 ];

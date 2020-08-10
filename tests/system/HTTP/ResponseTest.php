@@ -552,4 +552,15 @@ class ResponseTest extends \CodeIgniter\Test\CIUnitTestCase
 		$this->assertEquals('Happy days', $actual);
 	}
 
+	public function testInvalidSameSiteCookie()
+	{
+		$config                 = new App();
+		$config->cookieSameSite = 'Invalid';
+
+		$this->expectException(HTTPException::class);
+		$this->expectExceptionMessage(lang('HTTP.invalidSameSiteSetting', ['Invalid']));
+
+		$response = new Response($config);
+	}
+
 }

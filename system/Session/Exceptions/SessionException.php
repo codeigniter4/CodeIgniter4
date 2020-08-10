@@ -29,4 +29,16 @@ class SessionException extends FrameworkException implements ExceptionInterface
 	{
 		return new static(lang('Session.invalidSavePathFormat', [$path]));
 	}
+
+	/**
+	 * For Invalid SameSite attribute setting
+	 *
+	 * @param string $samesite
+	 *
+	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 */
+	public static function forInvalidSameSiteSetting(string $samesite)
+	{
+		return new static(lang('Session.invalidSameSiteSetting', [$samesite]));
+	}
 }

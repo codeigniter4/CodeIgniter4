@@ -396,7 +396,7 @@ The methods provided by the parent class that are available are:
 		followed by the response body. For the main application response, you do not need to call
 		this as it is handled automatically by CodeIgniter.
 
-	.. php:method:: setCookie($name = ''[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = FALSE[, $httponly = FALSE[, $samesite = '']]]]]]]])
+	.. php:method:: setCookie($name = ''[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = FALSE[, $httponly = FALSE[, $samesite = null]]]]]]]])
 
 		:param	mixed	$name: Cookie name or an array of parameters
 		:param	string	$value: Cookie value
@@ -406,7 +406,7 @@ The methods provided by the parent class that are available are:
 		:param	string	$prefix: Cookie name prefix
 		:param	bool	$secure: Whether to only transfer the cookie through HTTPS
 		:param	bool	$httponly: Whether to only make the cookie accessible for HTTP requests (no JavaScript)
-		:param	string	$samesite: The value for the SameSite cookie parameter. Leave blank to not set any SameSite value
+		:param	string	$samesite: The value for the SameSite cookie parameter. If set to `null`, the default value from `config/App.php` will be used
 
 		:rtype:	void
 
@@ -428,7 +428,7 @@ The methods provided by the parent class that are available are:
 				'prefix' => 'myprefix_',
 				'secure' => TRUE,
 				'httponly' => FALSE,
-				'samesite' => ''
+				'samesite' => 'Lax'
 			];
 
 			$response->setCookie($cookie);
@@ -456,8 +456,7 @@ The methods provided by the parent class that are available are:
 		by setting it to TRUE.
 
 		The SameSite value controls how cookies are shared between domains and sub-domains.
-		Allowed values are 'None', 'Lax' and 'Strict'. If set to '', no SameSite value is set
-		on the cookie.
+		Allowed values are 'None', 'Lax' and 'Strict'. If set to `null`, the default from `config/App.php` is used.
 
 		**Discrete Parameters**
 

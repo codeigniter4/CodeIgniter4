@@ -390,7 +390,7 @@ class CommonFunctionsTest extends \CodeIgniter\Test\CIUnitTestCase
 			'cookiePrefix'             => '',
 			'cookiePath'               => '/',
 			'cookieSecure'             => false,
-			'cookieSameSite'           => '',
+			'cookieSameSite'           => 'Lax',
 		];
 
 		$config = (object) $defaults;

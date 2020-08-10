@@ -38,6 +38,7 @@
 
 namespace CodeIgniter\Session;
 
+use CodeIgniter\Session\Exceptions\SessionException;
 use Psr\Log\LoggerAwareTrait;
 
 /**
@@ -151,7 +152,7 @@ class Session implements SessionInterface
 	 *
 	 * @var string
 	 */
-	protected $cookieSameSite = '';
+	protected $cookieSameSite = 'Lax';
 
 	/**
 	 * sid regex expression
@@ -193,6 +194,11 @@ class Session implements SessionInterface
 		$this->cookiePath     = $config->cookiePath;
 		$this->cookieSecure   = $config->cookieSecure;
 		$this->cookieSameSite = $config->cookieSameSite;
+
+		if (! in_array(strtolower($this->cookieSameSite), ['none', 'lax', 'strict']))
+		{
+			throw SessionException::forInvalidSameSiteSetting($this->cookieSameSite);
+		}
 
 		helper('array');
 	}
@@ -315,12 +321,7 @@ class Session implements SessionInterface
 		if (PHP_VERSION_ID < 70300)
 		{
 			// In PHP < 7.3.0, there is a "hacky" way to set the SameSite parameter
-
-			$sameSite = '';
-			if (in_array(strtolower($this->cookieSameSite), ['none', 'lax', 'strict']))
-			{
-				$sameSite = '; samesite=' . $this->cookieSameSite;
-			}
+			$sameSite = '; samesite=' . $this->cookieSameSite;
 
 			session_set_cookie_params(
 				$this->sessionExpiration,
@@ -332,21 +333,17 @@ class Session implements SessionInterface
 		}
 		else
 		{
-			// PHP 7.3 adds another function signature allowing setting of samesite
+			// PHP 7.3 adds support for setting samesite in session_set_cookie_params()
 			$params = [
 				'lifetime' => $this->sessionExpiration,
 				'path'     => $this->cookiePath,
 				'domain'   => $this->cookieDomain,
 				'secure'   => $this->cookieSecure,
 				'httponly' => true, // HTTP only; Yes, this is intentional and not configurable for security reasons.
+				'samesite' => $this->cookieSameSite,
 			];
 
-			if (in_array(strtolower($this->cookieSameSite), ['none', 'lax', 'strict']))
-			{
-				$params['samesite'] = $this->cookieSameSite;
-				ini_set('session.cookie_samesite', $this->cookieSameSite);
-			}
-
+			ini_set('session.cookie_samesite', $this->cookieSameSite);
 			session_set_cookie_params($params);
 		}
 
@@ -1061,11 +1058,7 @@ class Session implements SessionInterface
 		{
 			// In PHP < 7.3.0, there is a "hacky" way to set the samesite parameter
 
-			$sameSite = '';
-			if (in_array(strtolower($this->cookieSameSite), ['none', 'lax', 'strict']))
-			{
-				$sameSite = '; samesite=' . $this->cookieSameSite;
-			}
+			$sameSite = '; samesite=' . $this->cookieSameSite;
 
 			setcookie(
 				$this->sessionCookieName,
@@ -1086,12 +1079,8 @@ class Session implements SessionInterface
 				'domain'   => $this->cookieDomain,
 				'secure'   => $this->cookieSecure,
 				'httponly' => true,
+				'samesite' => $this->cookieSameSite,
 			];
-
-			if (in_array(strtolower($this->cookieSameSite), ['none', 'lax', 'strict']))
-			{
-				$params['samesite'] = $this->cookieSameSite;
-			}
 
 			setcookie(
 				$this->sessionCookieName,
