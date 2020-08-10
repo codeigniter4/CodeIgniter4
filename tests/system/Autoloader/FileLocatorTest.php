@@ -65,17 +65,6 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testLocateFileWorksInApplicationDirectoryWithoutFolder()
-	{
-		$file = 'bootstrap';
-
-		$expected = SYSTEMPATH . 'bootstrap.php';
-
-		$this->assertEquals($expected, $this->locator->locateFile($file));
-	}
-
-	//--------------------------------------------------------------------
-
 	public function testLocateFileWorksInNestedApplicationDirectory()
 	{
 		$file = 'Controllers/Home';
