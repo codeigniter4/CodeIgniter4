@@ -35,15 +35,6 @@ class CommandTest extends \CodeIgniter\Test\CIUnitTestCase
 		return CITestStreamFilter::$buffer;
 	}
 
-	public function testHelpCommand()
-	{
-		command('help');
-
-		// make sure the result looks like a command list
-		$this->assertStringContainsString('Displays basic usage information.', $this->getBuffer());
-		$this->assertStringContainsString('command_name', $this->getBuffer());
-	}
-
 	public function testListCommands()
 	{
 		command('list');
