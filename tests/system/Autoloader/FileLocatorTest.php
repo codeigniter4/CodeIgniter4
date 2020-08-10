@@ -65,6 +65,17 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testLocateFileWorksInApplicationDirectoryWithoutFolder()
+	{
+		$file = 'Common';
+
+		$expected = APPPATH . 'Common.php';
+
+		$this->assertEquals($expected, $this->locator->locateFile($file));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testLocateFileWorksInNestedApplicationDirectory()
 	{
 		$file = 'Controllers/Home';
