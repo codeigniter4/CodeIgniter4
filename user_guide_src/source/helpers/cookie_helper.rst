@@ -34,7 +34,7 @@ The following functions are available:
 	:param	string	$prefix: Cookie name prefix
 	:param	bool	$secure: Whether to only send the cookie through HTTPS
 	:param	bool	$httpOnly: Whether to hide the cookie from JavaScript
-	:param	string	$sameSite: The value for the SameSite cookie parameter. Leave blank to not set any SameSite value
+	:param	string	$sameSite: The value for the SameSite cookie parameter. If null, the default from `config/App.php` is used
 	:rtype:	void
 
 	This helper function gives you friendlier syntax to set browser

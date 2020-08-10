@@ -76,7 +76,7 @@ if (! function_exists('set_cookie'))
 		string $prefix = '',
 		bool $secure = false,
 		bool $httpOnly = false,
-		string $sameSite = ''
+		string $sameSite = null
 	)
 	{
 		// The following line shows as a syntax error in NetBeans IDE
