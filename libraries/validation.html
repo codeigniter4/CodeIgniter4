@@ -1244,84 +1244,89 @@ column and value to ignore, useful when updating records to ignore itself.</td>
 <td>Fails if field is shorter than the parameter value.</td>
 <td>min_length[3]</td>
 </tr>
-<tr class="row-even"><td>numeric</td>
+<tr class="row-even"><td>not_in_list</td>
+<td>Yes</td>
+<td>Fails if field is within a predetermined list.</td>
+<td>not_in_list[red,blue,green]</td>
+</tr>
+<tr class="row-odd"><td>numeric</td>
 <td>No</td>
 <td>Fails if field contains anything other than numeric characters.</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>regex_match</td>
+<tr class="row-even"><td>regex_match</td>
 <td>Yes</td>
 <td>Fails if field does not match the regular expression.</td>
 <td>regex_match[/regex/]</td>
 </tr>
-<tr class="row-even"><td>permit_empty</td>
+<tr class="row-odd"><td>permit_empty</td>
 <td>No</td>
 <td>Allows the field to receive an empty array, empty string, null or false.</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>required</td>
+<tr class="row-even"><td>required</td>
 <td>No</td>
 <td>Fails if the field is an empty array, empty string, null or false.</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-even"><td>required_with</td>
+<tr class="row-odd"><td>required_with</td>
 <td>Yes</td>
 <td>The field is required when any of the other required fields are present in the data.</td>
 <td>required_with[field1,field2]</td>
 </tr>
-<tr class="row-odd"><td>required_without</td>
+<tr class="row-even"><td>required_without</td>
 <td>Yes</td>
 <td>The field is required when all of the other fields are present in the data but not required.</td>
 <td>required_without[field1,field2]</td>
 </tr>
-<tr class="row-even"><td>string</td>
+<tr class="row-odd"><td>string</td>
 <td>No</td>
 <td>A generic alternative to the alpha* rules that confirms the element is a string</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>timezone</td>
+<tr class="row-even"><td>timezone</td>
 <td>No</td>
 <td>Fails if field does match a timezone per <code class="docutils literal notranslate"><span class="pre">timezone_identifiers_list</span></code></td>
 <td>&#160;</td>
 </tr>
-<tr class="row-even"><td>valid_base64</td>
+<tr class="row-odd"><td>valid_base64</td>
 <td>No</td>
 <td>Fails if field contains anything other than valid Base64 characters.</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>valid_json</td>
+<tr class="row-even"><td>valid_json</td>
 <td>No</td>
 <td>Fails if field does not contain a valid JSON string.</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-even"><td>valid_email</td>
+<tr class="row-odd"><td>valid_email</td>
 <td>No</td>
 <td>Fails if field does not contain a valid email address.</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>valid_emails</td>
+<tr class="row-even"><td>valid_emails</td>
 <td>No</td>
 <td>Fails if any value provided in a comma separated list is not a valid email.</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-even"><td>valid_ip</td>
+<tr class="row-odd"><td>valid_ip</td>
 <td>No</td>
 <td>Fails if the supplied IP is not valid. Accepts an optional parameter of ‘ipv4’ or
 ‘ipv6’ to specify an IP format.</td>
 <td>valid_ip[ipv6]</td>
 </tr>
-<tr class="row-odd"><td>valid_url</td>
+<tr class="row-even"><td>valid_url</td>
 <td>No</td>
 <td>Fails if field does not contain a valid URL.</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-even"><td>valid_date</td>
+<tr class="row-odd"><td>valid_date</td>
 <td>No</td>
 <td>Fails if field does not contain a valid date. Accepts an optional parameter
 to matches a date format.</td>
 <td>valid_date[d/m/Y]</td>
 </tr>
-<tr class="row-odd"><td>valid_cc_number</td>
+<tr class="row-even"><td>valid_cc_number</td>
 <td>Yes</td>
 <td>Verifies that the credit card number matches the format used by the specified provider.
 Current supported providers are: American Express (amex), China Unionpay (unionpay),
