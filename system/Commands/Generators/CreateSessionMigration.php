@@ -104,7 +104,7 @@ class CreateSessionMigration extends GeneratorCommand
 			'matchIP'   => config('App')->sessionMatchIP ?? false,
 		];
 
-		$string = view('\CodeIgniter\Commands\Generators\Views\migration.tpl.php', $data, ['debug' => false]);
-		return str_replace('@php', '?php', $string);
+		$template = view('\\CodeIgniter\\Commands\\Generators\\Views\\migration.tpl', $data, ['debug' => false]);
+		return str_replace('@php', '?php', $template);
 	}
 }
