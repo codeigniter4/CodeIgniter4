@@ -25,6 +25,8 @@ return [
    'invalidColor'        => 'Invalid {0} color: {1}.',
 
    // Generators
+   'generateClassName'   => 'Name of class',
+   'generateParentClass' => 'Name of parent class to extend from',
    'generateFileExists'  => '{0} already exists.',
    'generateFileSuccess' => 'Created file: ',
    'generateFileError'   => 'Error in creating file: ',
