@@ -87,26 +87,8 @@ class Commands
 	{
 		$this->discoverCommands();
 
-		if (! isset($this->commands[$command]))
+		if (! $this->verifyCommand($command, $this->commands))
 		{
-			$message = lang('CLI.commandNotFound', [$command]);
-
-			if ($alternatives = $this->getCommandAlternatives($command, $this->commands))
-			{
-				if (count($alternatives) === 1)
-				{
-					$message .= "\n\n" . lang('CLI.altCommandSingular') . "\n    ";
-				}
-				else
-				{
-					$message .= "\n\n" . lang('CLI.altCommandPlural') . "\n    ";
-				}
-
-				$message .= implode("\n    ", $alternatives);
-			}
-
-			CLI::error($message);
-			CLI::newLine();
 			return;
 		}
 
@@ -195,6 +177,44 @@ class Commands
 		}
 
 		asort($this->commands);
+	}
+
+	/**
+	 * Verifies if the command being sought is found
+	 * in the commands list.
+	 *
+	 * @param string $command
+	 * @param array  $commands
+	 *
+	 * @return boolean
+	 */
+	public function verifyCommand(string $command, array $commands): bool
+	{
+		if (isset($commands[$command]))
+		{
+			return true;
+		}
+
+		$message = lang('CLI.commandNotFound', [$command]);
+
+		if ($alternatives = $this->getCommandAlternatives($command, $commands))
+		{
+			if (count($alternatives) === 1)
+			{
+				$message .= "\n\n" . lang('CLI.altCommandSingular') . "\n    ";
+			}
+			else
+			{
+				$message .= "\n\n" . lang('CLI.altCommandPlural') . "\n    ";
+			}
+
+			$message .= implode("\n    ", $alternatives);
+		}
+
+		CLI::error($message);
+		CLI::newLine();
+
+		return false;
 	}
 
 	/**
