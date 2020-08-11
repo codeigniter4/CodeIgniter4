@@ -485,7 +485,7 @@ class FileLocator
 	 */
 	protected function legacyLocate(string $file, string $folder = null)
 	{
-		$path = APPPATH . (empty($folder) ? $file : $folder . '/' . $file);
+		$path = realpath(APPPATH . (empty($folder) ? $file : $folder . '/' . $file));
 
 		if (is_file($path))
 		{
