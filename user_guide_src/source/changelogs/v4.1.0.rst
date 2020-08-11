@@ -8,3 +8,4 @@ Release Date: Not released
 Removed:
 
 - `Autoloader::loadLegacy()` method was previously used for migration of non-namespaced classes in transition to CodeIgniter v4. Since `4.1.0`, this support was removed.
+- Deprecated `Model::fillPlaceholders(array $rules, array $data)` method, use `fillPlaceholders(array $rules, array $data)` from Validation instead.
