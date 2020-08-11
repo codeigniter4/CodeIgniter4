@@ -37,74 +37,55 @@
  * @filesource
  */
 
-namespace CodeIgniter\Commands\Database;
+namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorCommand;
 
 /**
- * Creates a new migration file.
+ * Creates a migration file for database sessions.
  *
  * @package CodeIgniter\Commands
  */
-class CreateMigration extends GeneratorCommand
+class CreateSessionMigration extends GeneratorCommand
 {
 	/**
 	 * The Command's name
 	 *
 	 * @var string
 	 */
-	protected $name = 'migrate:create';
+	protected $name = 'session:migration';
 
 	/**
-	 * The Command's short description
+	 * the Command's short description
 	 *
 	 * @var string
 	 */
-	protected $description = 'Creates a new migration file.';
+	protected $description = 'Generates the migration file for database sessions.';
 
 	/**
 	 * The Command's usage
 	 *
 	 * @var string
 	 */
-	protected $usage = 'migrate:create [name] [options]';
+	protected $usage = 'session:migration [options]';
 
 	/**
-	 * The Command's Arguments
+	 * The Command's Options
 	 *
 	 * @var array
 	 */
-	protected $arguments = [
-		'name' => 'The migration file name',
+	protected $options = [
+		'-g' => 'Set database group',
+		'-t' => 'Set table name',
 	];
 
-	/**
-	 * Gets the class name from input.
-	 *
-	 * @return string
-	 */
 	protected function getClassName(): string
 	{
-		$class = parent::getClassName();
-		if (empty($class))
-		{
-			// @codeCoverageIgnoreStart
-			$class = CLI::prompt(lang('Migrations.nameMigration'), null, 'required');
-			// @codeCoverageIgnoreEnd
-		}
-
-		return $class;
+		$tableName = $this->params['t'] ?? CLI::getOption('t') ?? 'ci_sessions';
+		return "Migration_create_{$tableName}_table";
 	}
 
-	/**
-	 * Gets the qualified class name.
-	 *
-	 * @param string $rootNamespace
-	 * @param string $class
-	 *
-	 * @return string
-	 */
 	protected function getNamespacedClass(string $rootNamespace, string $class): string
 	{
 		return $rootNamespace . '\\Database\\Migrations\\' . $class;
@@ -112,38 +93,18 @@ class CreateMigration extends GeneratorCommand
 
 	protected function modifyBasename(string $filename): string
 	{
-		return gmdate(config('Migrations')->timestampFormat) . $filename;
+		return str_replace('Migration', gmdate(config('Migrations')->timestampFormat), $filename);
 	}
 
-	/**
-	 * Gets the template for this class.
-	 *
-	 * @return string
-	 */
 	protected function getTemplate(): string
 	{
-		return <<<EOD
-<?php
+		$data = [
+			'DBGroup'   => $this->params['g'] ?? CLI::getOption('g'),
+			'tableName' => $this->params['t'] ?? CLI::getOption('t') ?? 'ci_sessions',
+			'matchIP'   => config('App')->sessionMatchIP ?? false,
+		];
 
-namespace {namespace};
-
-use CodeIgniter\Database\Migration;
-
-class {class} extends Migration
-{
-	public function up()
-	{
-		//
-	}
-
-	//--------------------------------------------------------------------
-
-	public function down()
-	{
-		//
-	}
-}
-
-EOD;
+		$template = view('\\CodeIgniter\\Commands\\Generators\\Views\\migration.tpl.php', $data, ['debug' => false]);
+		return str_replace('@php', '?php', $template);
 	}
 }

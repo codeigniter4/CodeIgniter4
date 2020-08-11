@@ -37,74 +37,101 @@
  * @filesource
  */
 
-namespace CodeIgniter\Commands\Sessions;
+namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorCommand;
 
 /**
- * Creates a migration file for database sessions.
+ * Creates a new seeder file
  *
  * @package CodeIgniter\Commands
  */
-class CreateSessionMigration extends GeneratorCommand
+class CreateSeeder extends GeneratorCommand
 {
 	/**
 	 * The Command's name
 	 *
 	 * @var string
 	 */
-	protected $name = 'session:migration';
+	protected $name = 'make:seeder';
 
 	/**
 	 * the Command's short description
 	 *
 	 * @var string
 	 */
-	protected $description = 'Generates the migration file for database sessions.';
+	protected $description = 'Creates a new seeder file.';
 
 	/**
-	 * The Command's usage
+	 * the Command's usage
 	 *
 	 * @var string
 	 */
-	protected $usage = 'session:migration [options]';
+	protected $usage = 'make:seeder <name> [options]';
 
 	/**
-	 * The Command's Options
+	 * the Command's Arguments
 	 *
 	 * @var array
 	 */
-	protected $options = [
-		'-g' => 'Set database group',
-		'-t' => 'Set table name',
+	protected $arguments = [
+		'name' => 'The seeder file name',
 	];
 
+	/**
+	 * Gets the class name from input.
+	 *
+	 * @return string
+	 */
 	protected function getClassName(): string
 	{
-		$tableName = $this->params['t'] ?? CLI::getOption('t') ?? 'ci_sessions';
-		return "Migration_create_{$tableName}_table";
+		$class = parent::getClassName();
+		if (empty($class))
+		{
+			// @codeCoverageIgnoreStart
+			$class = CLI::prompt(lang('Migrations.nameSeeder'), null, 'required');
+			// @codeCoverageIgnoreEnd
+		}
+
+		return $class;
 	}
 
+	/**
+	 * Gets the qualified class name.
+	 *
+	 * @param string $rootNamespace
+	 * @param string $class
+	 *
+	 * @return string
+	 */
 	protected function getNamespacedClass(string $rootNamespace, string $class): string
 	{
-		return $rootNamespace . '\\Database\\Migrations\\' . $class;
+		return $rootNamespace . '\\Database\\Seeds\\' . $class;
 	}
 
-	protected function modifyBasename(string $filename): string
-	{
-		return str_replace('Migration', gmdate(config('Migrations')->timestampFormat), $filename);
-	}
-
+	/**
+	 * Gets the template for this class.
+	 *
+	 * @return string
+	 */
 	protected function getTemplate(): string
 	{
-		$data = [
-			'DBGroup'   => $this->params['g'] ?? CLI::getOption('g'),
-			'tableName' => $this->params['t'] ?? CLI::getOption('t') ?? 'ci_sessions',
-			'matchIP'   => config('App')->sessionMatchIP ?? false,
-		];
+		return <<<EOD
+<?php
 
-		$string = view('\CodeIgniter\Commands\Sessions\Views\migration.tpl.php', $data, ['debug' => false]);
-		return str_replace('@php', '?php', $string);
+namespace {namespace};
+
+use CodeIgniter\Database\Seeder;
+
+class {class} extends Seeder
+{
+	public function run()
+	{
+		//
+	}
+}
+
+EOD;
 	}
 }
