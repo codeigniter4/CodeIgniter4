@@ -1,0 +1,10 @@
+Version 4.1.0
+====================================================
+
+Release Date: Not released
+
+**4.1.0 release of CodeIgniter4**
+
+Removed:
+
+- `Autoloader::loadLegacy()` method was previously used for migration non-namespaced classes transition to CodeIgniter v4. Since `4.1.0`, this support removed.
