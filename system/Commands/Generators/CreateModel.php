@@ -82,6 +82,7 @@ class CreateModel extends GeneratorCommand
 	protected $options = [
 		'-dbgroup' => 'Database group to use. Defaults to "default".',
 		'-entity'  => 'Use an Entity as return type.',
+		'-table'   => 'Supply a different table name. Defaults to the pluralized name.',
 	];
 
 	protected function getClassName(): string
@@ -135,13 +136,20 @@ class CreateModel extends GeneratorCommand
 		}
 		$template = str_replace('{return}', $entity, $template);
 
-		// transform class name to lowercased plural for table name
-		$table = str_replace($this->getNamespace($class) . '\\', '', $class);
+		$table = $this->params['table'] ?? CLI::getOption('table');
+		if (! is_string($table))
+		{
+			$table = str_replace($this->getNamespace($class) . '\\', '', $class);
+		}
+
 		if ($pos = strripos($table, 'Model'))
 		{
 			$table = substr($table, 0, $pos);
 		}
+
+		// transform class name to lowercased plural for table name
 		$table = strtolower(plural($table));
+
 		return str_replace('{table}', $table, $template);
 	}
 }

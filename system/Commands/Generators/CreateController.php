@@ -83,7 +83,7 @@ class CreateController extends GeneratorCommand
 	 * @var array
 	 */
 	protected $options = [
-		'-base'    => 'Extends from BaseController instead of CodeIgniter\\Controller.',
+		'-bare'    => 'Extends from CodeIgniter\\Controller instead of BaseController',
 		'-restful' => 'Extends from a RESTful resource. Options are \'controller\' or \'presenter\'.',
 	];
 
@@ -106,14 +106,16 @@ class CreateController extends GeneratorCommand
 
 	protected function getTemplate(): string
 	{
-		$base = $this->params['base'] ?? CLI::getOption('base');
-		$rest = $this->params['restful'] ?? CLI::getOption('restful');
+		$bare = array_key_exists('bare', $this->params) || CLI::getOption('bare');
+		$rest = array_key_exists('restful', $this->params)
+			? $this->params['restful'] ?? true
+			: CLI::getOption('restful');
 
 		[
 			$useStatement,
 			$extends,
 			$restfulMethods,
-		] = $this->getParentClass($base, $rest);
+		] = $this->getParentClass($bare, $rest);
 
 		$template = view('CodeIgniter\\Commands\\Generators\\Views\\controller.tpl.php', [], ['debug' => false]);
 		$template = str_replace([
@@ -136,25 +138,25 @@ class CreateController extends GeneratorCommand
 	/**
 	 * Gets the appropriate parent class to extend.
 	 *
-	 * @param boolean|null        $base
+	 * @param boolean|null        $bare
 	 * @param string|boolean|null $rest
 	 *
 	 * @return array
 	 */
-	private function getParentClass(?bool $base, $rest): array
+	protected function getParentClass(?bool $bare, $rest): array
 	{
 		$restfulMethods = '';
 
-		if (! $base && ! $rest)
-		{
-			$useStatement = 'use CodeIgniter\\Controller;';
-			$extends      = 'extends Controller';
-		}
-		elseif ($base)
+		if (! $bare && ! $rest)
 		{
 			$appNamespace = trim(APP_NAMESPACE, '\\');
 			$useStatement = "use {$appNamespace}\\Controllers\\BaseController;";
 			$extends      = 'extends BaseController';
+		}
+		elseif ($bare)
+		{
+			$useStatement = 'use CodeIgniter\\Controller;';
+			$extends      = 'extends Controller';
 		}
 		else
 		{
@@ -168,7 +170,7 @@ class CreateController extends GeneratorCommand
 			}
 			else
 			{
-				$type = CLI::prompt(lang('CLI.generateParentClass'), ['controller', 'presenter'], 'required');
+				$type = CLI::prompt(lang('CLI.generateParentClass'), ['controller', 'presenter'], 'required'); // @codeCoverageIgnore
 			}
 
 			$restfulMethods = $this->getAdditionalRestfulMethods();
@@ -185,16 +187,16 @@ class CreateController extends GeneratorCommand
 		];
 	}
 
-	private function getAdditionalRestfulMethods(): string
+	protected function getAdditionalRestfulMethods(): string
 	{
-		return <<<EOF
+		return <<<'EOF'
 
 	/**
 	 * Return the properties of a resource object
 	 *
 	 * @return array
 	 */
-	public function show(\$id = null)
+	public function show($id = null)
 	{
 		//
 	}
@@ -224,7 +226,7 @@ class CreateController extends GeneratorCommand
 	 *
 	 * @return array
 	 */
-	public function edit(\$id = null)
+	public function edit($id = null)
 	{
 		//
 	}
@@ -234,7 +236,7 @@ class CreateController extends GeneratorCommand
 	 *
 	 * @return array
 	 */
-	public function update(\$id = null)
+	public function update($id = null)
 	{
 		//
 	}
@@ -244,7 +246,7 @@ class CreateController extends GeneratorCommand
 	 *
 	 * @return array
 	 */
-	public function delete(\$id = null)
+	public function delete($id = null)
 	{
 		//
 	}

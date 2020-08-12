@@ -94,6 +94,7 @@ class CreateEntity extends GeneratorCommand
 	protected function getTemplate(): string
 	{
 		$template = view('CodeIgniter\\Commands\\Generators\\Views\\entity.tpl.php', [], ['debug' => false]);
+
 		return str_replace('<@php', '<?php', $template);
 	}
 }

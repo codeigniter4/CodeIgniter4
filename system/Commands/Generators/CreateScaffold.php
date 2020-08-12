@@ -83,10 +83,10 @@ class CreateScaffold extends BaseCommand
 	];
 
 	protected $options = [
-		'-base'    => 'Add the \'-base\' option to controller scaffold.',
+		'-bare'    => 'Add the \'-bare\' option to controller scaffold.',
 		'-restful' => 'Add the \'-restful\' option to controller scaffold.',
-		'-dbgroup' => 'Add the \'-dbgroup\' option to model and session migration scaffold.',
-		'-t'       => 'Add the \'-t\' option for the session migration scaffold.',
+		'-dbgroup' => 'Add the \'-dbgroup\' option to model scaffold.',
+		'-table'   => 'Add the \'-table\' option to the model scaffold.',
 		'-n'       => 'Set root namespace. Defaults to APP_NAMESPACE.',
 		'-force'   => 'Force overwrite existing files.',
 	];
@@ -94,12 +94,16 @@ class CreateScaffold extends BaseCommand
 	public function run(array $params)
 	{
 		// Resolve options
-		$base         = $params['base'] ?? CLI::getOption('base');
-		$rest         = $params['restful'] ?? CLI::getOption('restful');
-		$group        = $params['dbgroup'] ?? CLI::getOption('dbgroup');
-		$tableSession = $params['t'] ?? CLI::getOption('t') ?? 'ci_sessions';
-		$namespace    = $params['n'] ?? CLI::getOption('n');
-		$force        = array_key_exists('force', $params) ?? CLI::getOption('force');
+		$bare       = array_key_exists('bare', $params) || CLI::getOption('bare');
+		$rest       = array_key_exists('restful', $params)
+						? ($params['restful'] ?? true)
+						: CLI::getOption('restful');
+		$group      = array_key_exists('dbgroup', $params)
+						? ($params['dbgroup'] ?? 'default')
+						: CLI::getOption('dbgroup');
+		$tableModel = $params['table'] ?? CLI::getOption('table');
+		$namespace  = $params['n'] ?? CLI::getOption('n');
+		$force      = array_key_exists('force', $params) || CLI::getOption('force');
 
 		// Sets additional options
 		$genOptions = ['n' => $namespace];
@@ -109,22 +113,19 @@ class CreateScaffold extends BaseCommand
 		}
 
 		$controllerOpts = [];
-		if ($base)
+		if ($bare)
 		{
-			$controllerOpts['base'] = $base;
+			$controllerOpts['bare'] = null;
 		}
 		elseif ($rest)
 		{
 			$controllerOpts['restful'] = $rest;
 		}
 
-		$modelOpts   = [
+		$modelOpts = [
 			'dbgroup' => $group,
 			'entity'  => null,
-		];
-		$sessionOpts = [
-			'g' => $group,
-			't' => $tableSession,
+			'table'   => $tableModel,
 		];
 
 		// Call those commands!
@@ -134,6 +135,5 @@ class CreateScaffold extends BaseCommand
 		$this->call('make:entity', array_merge([$class], $genOptions));
 		$this->call('migrate:create', array_merge([$class], $genOptions));
 		$this->call('make:seeder', array_merge([$class], $genOptions));
-		$this->call('session:migration', array_merge([$class], $sessionOpts, $genOptions));
 	}
 }
