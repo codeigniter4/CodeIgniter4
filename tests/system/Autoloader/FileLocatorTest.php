@@ -42,6 +42,17 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testLocateFileAsConfigClass()
+	{
+		$file = 'Toolbar';
+
+		$expected = APPPATH . 'Config/Toolbar.php';
+
+		$this->assertEquals($expected, $this->locator->locateFile($file));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testLocateFileReplacesFolderName()
 	{
 		$file = '\App\Views/errors/html/error_404.php';
