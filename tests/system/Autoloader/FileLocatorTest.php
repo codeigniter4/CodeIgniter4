@@ -34,55 +34,10 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testLocateFileWorksWithLegacyStructure()
+	public function testLocateFileCannotFindNonNamespacedFile()
 	{
 		$file = 'Controllers/Home';
-
-		$expected = APPPATH . 'Controllers/Home.php';
-
-		$this->assertEquals($expected, $this->locator->locateFile($file));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testLocateFileWithLegacyStructureNotFound()
-	{
-		$file = 'Unknown';
-
 		$this->assertFalse($this->locator->locateFile($file));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testLocateFileWorksInApplicationDirectory()
-	{
-		$file = 'welcome_message';
-
-		$expected = APPPATH . 'Views/welcome_message.php';
-
-		$this->assertEquals($expected, $this->locator->locateFile($file, 'Views'));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testLocateFileWorksInApplicationDirectoryWithoutFolder()
-	{
-		$file = 'Common';
-
-		$expected = APPPATH . 'Common.php';
-
-		$this->assertEquals($expected, $this->locator->locateFile($file));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testLocateFileWorksInNestedApplicationDirectory()
-	{
-		$file = 'Controllers/Home';
-
-		$expected = APPPATH . 'Controllers/Home.php';
-
-		$this->assertEquals($expected, $this->locator->locateFile($file, 'Controllers'));
 	}
 
 	//--------------------------------------------------------------------
@@ -92,17 +47,6 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 		$file = '\App\Views/errors/html/error_404.php';
 
 		$expected = APPPATH . 'Views/errors/html/error_404.php';
-
-		$this->assertEquals($expected, $this->locator->locateFile($file, 'Views'));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testLocateFileReplacesFolderNameLegacy()
-	{
-		$file = 'Views/welcome_message.php';
-
-		$expected = APPPATH . 'Views/welcome_message.php';
 
 		$this->assertEquals($expected, $this->locator->locateFile($file, 'Views'));
 	}

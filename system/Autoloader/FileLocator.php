@@ -90,10 +90,10 @@ class FileLocator
 			$file = substr($file, strlen($folder . '/'));
 		}
 
-		// Is not namespaced? Try the application folder.
+		// Is not namespaced? Returns false immediately
 		if (strpos($file, '\\') === false)
 		{
-			return $this->legacyLocate($file, $folder);
+			return false;
 		}
 
 		// Standardize slashes to handle nested directories.
@@ -470,28 +470,5 @@ class FileLocator
 		}
 
 		return $files;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Checks the app folder to see if the file can be found.
-	 * Only for use with filenames that DO NOT include namespacing.
-	 *
-	 * @param string      $file
-	 * @param string|null $folder
-	 *
-	 * @return string|false The path to the file, or false if not found.
-	 */
-	protected function legacyLocate(string $file, string $folder = null)
-	{
-		$path = realpath(APPPATH . (empty($folder) ? $file : $folder . '/' . $file));
-
-		if (is_file($path))
-		{
-			return $path;
-		}
-
-		return false;
 	}
 }

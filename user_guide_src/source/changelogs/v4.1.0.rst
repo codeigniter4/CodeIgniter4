@@ -1,0 +1,10 @@
+Version 4.1.0
+====================================================
+
+Release Date: Not released
+
+**4.1.0 release of CodeIgniter4**
+
+Removed:
+
+- `FileLocator::legacyLocate()` method was previously used for ability to locate PSR-4 namespaced files and non-namespaced files. Since `4.1.0`, this support was removed.
