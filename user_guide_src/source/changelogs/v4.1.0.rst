@@ -7,8 +7,15 @@ Release Date: Not released
 
 Removed:
 
-- `FileLocator::legacyLocate()` method was previously used for ability to locate PSR-4 namespaced files and non-namespaced files. Since `4.1.0`, this support will only works for Config class, eg:
+- `FileLocator::legacyLocate()` method was previously used for ability to locate PSR-4 namespaced files and non-namespaced files. Since `4.1.0`, this non-namespaced support will only works for Config class, eg:
 
 ```php
-config('Toolbar'); // will locate APPPATH . 'Config/Toolbar.php'
+config('Toolbar'); // will get APPPATH . 'Config/Toolbar.php'
+```
+
+or
+
+```php
+$fileLocator = service('locator');
+$fileLocator->locateFile('Toolbar'); // will get APPPATH . 'Config/Toolbar.php'
 ```
