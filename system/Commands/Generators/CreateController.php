@@ -106,6 +106,14 @@ class CreateController extends GeneratorCommand
 
 	protected function getTemplate(): string
 	{
+		$template = view('CodeIgniter\\Commands\\Generators\\Views\\controller.tpl.php', [], ['debug' => false]);
+		$template = str_replace('<@php', '<?php', $template);
+
+		return $template;
+	}
+
+	protected function setReplacements(string $template, string $class): string
+	{
 		$bare = array_key_exists('bare', $this->params) || CLI::getOption('bare');
 		$rest = array_key_exists('restful', $this->params)
 			? $this->params['restful'] ?? true
@@ -117,17 +125,15 @@ class CreateController extends GeneratorCommand
 			$restfulMethods,
 		] = $this->getParentClass($bare, $rest);
 
-		$template = view('CodeIgniter\\Commands\\Generators\\Views\\controller.tpl.php', [], ['debug' => false]);
+		$template = parent::setReplacements($template, $class);
 		$template = str_replace([
 			'{useStatement}',
 			'{extends}',
 			'{restfulMethods}',
-			'<@php',
 		], [
 			$useStatement,
 			$extends,
 			$restfulMethods,
-			'<?php',
 		],
 			$template
 		);
