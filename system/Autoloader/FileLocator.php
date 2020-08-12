@@ -90,10 +90,10 @@ class FileLocator
 			$file = substr($file, strlen($folder . '/'));
 		}
 
-		// Is not namespaced? Returns false immediately
+		// Is not namespaced? assume a Config class
 		if (strpos($file, '\\') === false)
 		{
-			return false;
+			return $this->autoloader->loadClass($file);
 		}
 
 		// Standardize slashes to handle nested directories.
