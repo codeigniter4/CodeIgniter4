@@ -376,7 +376,7 @@ class Autoloader
 
 		if (is_file($file))
 		{
-			$requiredFiles[$file] = $file;
+			$requiredFiles[$file] = true;
 			require_once $file;
 
 			return $file;
