@@ -43,6 +43,11 @@ class CreateScaffoldTest extends CIUnitTestCase
 		command('make:scaffold people');
 		$this->assertStringContainsString('Created file: ', $this->getBuffer());
 
+		$dir       = '\\' . DIRECTORY_SEPARATOR;
+		$migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\.php";
+		preg_match('/' . $migration . '/u', $this->getBuffer(), $matches);
+		$matches[0] = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $matches[0]);
+
 		$paths = [
 			'Controllers',
 			'Models',
@@ -53,7 +58,7 @@ class CreateScaffoldTest extends CIUnitTestCase
 		{
 			$this->assertFileExists(APPPATH . $path . '/People.php');
 		}
-		$this->assertFileExists(APPPATH . 'Database/Migrations/' . gmdate(config('Migrations')->timestampFormat) . 'People.php');
+		$this->assertFileExists($matches[0]);
 		$this->assertFileExists(APPPATH . 'Database/Seeds/People.php');
 
 		// cleanup
@@ -61,15 +66,57 @@ class CreateScaffoldTest extends CIUnitTestCase
 		{
 			unlink(APPPATH . $path . '/People.php');
 		}
-		unlink(APPPATH . 'Database/Migrations/' . gmdate(config('Migrations')->timestampFormat) . 'People.php');
+		unlink($matches[0]);
 		unlink(APPPATH . 'Database/Seeds/People.php');
+		rmdir(APPPATH . 'Entities');
+	}
+
+	public function testCreateScaffoldWithOneOptionPassed()
+	{
+		command('make:scaffold fixer -bare');
+
+		$dir       = '\\' . DIRECTORY_SEPARATOR;
+		$migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\.php";
+		preg_match('/' . $migration . '/u', $this->getBuffer(), $matches);
+		$matches[0] = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $matches[0]);
+
+		$this->assertStringContainsString('Created file: ', $this->getBuffer());
+
+		// File existence check
+		$paths = [
+			'Controllers',
+			'Models',
+			'Entities',
+		];
+		foreach ($paths as $path)
+		{
+			$this->assertFileExists(APPPATH . $path . '/Fixer.php');
+		}
+		$this->assertFileExists($matches[0]);
+		$this->assertFileExists(APPPATH . 'Database/Seeds/Fixer.php');
+
+		// Options check
+		$this->assertStringContainsString('extends Controller', $this->getFileContents(APPPATH . 'Controllers/Fixer.php'));
+
+		// cleanup
+		foreach ($paths as $path)
+		{
+			unlink(APPPATH . $path . '/Fixer.php');
+		}
+		unlink($matches[0]);
+		unlink(APPPATH . 'Database/Seeds/Fixer.php');
 		rmdir(APPPATH . 'Entities');
 	}
 
 	public function testCreateScaffoldCanPassManyOptionsToCommands()
 	{
-		command('make:scaffold user -bare');
 		command('make:scaffold user -restful -dbgroup testing -force -table utilisateur');
+
+		$dir       = '\\' . DIRECTORY_SEPARATOR;
+		$migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\.php";
+		preg_match('/' . $migration . '/u', $this->getBuffer(), $matches);
+		$matches[0] = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $matches[0]);
+
 		$this->assertStringContainsString('Created file: ', $this->getBuffer());
 
 		// File existence check
@@ -82,7 +129,7 @@ class CreateScaffoldTest extends CIUnitTestCase
 		{
 			$this->assertFileExists(APPPATH . $path . '/User.php');
 		}
-		$this->assertFileExists(APPPATH . 'Database/Migrations/' . gmdate(config('Migrations')->timestampFormat) . 'User.php');
+		$this->assertFileExists($matches[0]);
 		$this->assertFileExists(APPPATH . 'Database/Seeds/User.php');
 
 		// Options check
@@ -95,7 +142,7 @@ class CreateScaffoldTest extends CIUnitTestCase
 		{
 			unlink(APPPATH . $path . '/User.php');
 		}
-		unlink(APPPATH . 'Database/Migrations/' . gmdate(config('Migrations')->timestampFormat) . 'User.php');
+		unlink($matches[0]);
 		unlink(APPPATH . 'Database/Seeds/User.php');
 		rmdir(APPPATH . 'Entities');
 	}
