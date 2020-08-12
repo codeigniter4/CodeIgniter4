@@ -42,7 +42,16 @@ class FileLocatorTest extends \CodeIgniter\Test\CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testLocateFileAsConfigClass()
+	public function testLocateFileAsConfigClassNotFound()
+	{
+		$file = 'Unknown';
+
+		$this->assertFalse($this->locator->locateFile($file));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testLocateFileAsConfigClassFound()
 	{
 		$file = 'Toolbar';
 
