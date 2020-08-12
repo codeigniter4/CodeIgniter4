@@ -366,10 +366,17 @@ class Autoloader
 	 */
 	protected function requireFile(string $file)
 	{
+		static $requiredFiles = [];
+
 		$file = $this->sanitizeFilename($file);
+		if (isset($requiredFiles[$file]))
+		{
+			return $file;
+		}
 
 		if (is_file($file))
 		{
+			$requiredFiles[$file] = $file;
 			require_once $file;
 
 			return $file;
