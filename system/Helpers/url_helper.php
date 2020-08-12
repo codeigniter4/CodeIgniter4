@@ -590,7 +590,7 @@ if (! function_exists('url_title'))
 
 		$trans = [
 			'&.+?;'                   => '',
-			'[^\w\d\pL\pM _-]'              => '',
+			'[^\w\d\pL\pM _-]'        => '',
 			'\s+'                     => $separator,
 			'(' . $q_separator . ')+' => $separator,
 		];
@@ -664,5 +664,29 @@ if (! function_exists('url_to'))
 		}
 
 		return site_url($route);
+	}
+}
+
+if (! function_exists('url_is'))
+{
+	/**
+	 * Determines if current url path contains
+	 * the given path. It may contain a wildcard (*)
+	 * which will allow any valid character.
+	 *
+	 * Example:
+	 *   if (url_is('admin*)) ...
+	 *
+	 * @param string $path
+	 *
+	 * @return boolean
+	 */
+	function url_is(string $path): bool
+	{
+		// Setup our regex to allow wildcards
+		$path        = '/' . ltrim(str_replace('*', '(\S)+', $path), '/ ');
+		$currentPath = service('request')->uri->getPath();
+
+		return (bool)preg_match("|^{$path}$|", $currentPath, $matches);
 	}
 }

@@ -382,3 +382,23 @@ The following functions are available:
 
     This is useful because you can still change your routes after putting links
     into your views.
+
+.. php:function:: url_is($path)
+
+    :param string $path: The path to check the current URI path against.
+    :rtype: boolean
+
+    Compares the current URL's path against the given path to see if they match. Example::
+
+        if (url_is('admin')) { ... }
+
+    This would match ``http://example.com/admin``. You can use the ``*`` wildcard to match
+    any other applicable characters in the URL::
+
+        if (url_is('admin*')) { ... }
+
+    This would match any of the following:
+
+    - /admin
+    - /admin/users
+    - /admin/users/schools/classmates/...
