@@ -8,6 +8,7 @@ Release Date: Not released
 Enhancements:
 
 - New URL helper function ``url_to()`` which creates absolute URLs based on controllers.
+- New URL helper function ``url_is()`` which allows you to check the current URL to see if matches the given string.
 
 Bugs Fixed:
 
