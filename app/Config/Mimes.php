@@ -510,7 +510,11 @@ class Mimes
 
 		$proposed_extension = trim(strtolower($proposed_extension));
 
-		if (! is_null($proposed_extension) && array_key_exists($proposed_extension, static::$mimes) && in_array($type, is_string(static::$mimes[$proposed_extension]) ? [static::$mimes[$proposed_extension]] : static::$mimes[$proposed_extension]))
+		if (! is_null($proposed_extension)
+			&& array_key_exists($proposed_extension, static::$mimes)
+			&& in_array($type, is_string(static::$mimes[$proposed_extension])
+				? [static::$mimes[$proposed_extension]]
+				: static::$mimes[$proposed_extension]))
 		{
 			return $proposed_extension;
 		}

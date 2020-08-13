@@ -28,6 +28,11 @@
 			"CodeIgniter\\": "system/"
 		}
 	},
+	"autoload-dev": {
+		"psr-4": {
+			"CodeIgniter4\\": "vendor/codeigniter4/codeigniter4-standard/CodeIgniter4/"
+		}
+	},
 	"scripts": {
 		"post-update-cmd": [
 			"@composer dump-autoload",

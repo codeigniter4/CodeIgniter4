@@ -1,0 +1,31 @@
+name: "Coding Style Check"
+
+on:
+  pull_request:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - 'app'
+      - 'system'
+
+jobs:
+  build:
+    name: PHP ${{ matrix.php-versions }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-versions: ['7.4']
+    steps:
+      - name: Setup PHP Action
+        uses: shivammathur/setup-php@1.8.2
+        with:
+          extensions: intl
+          php-version: "${{ matrix.php-versions }}"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: "Install dependencies"
+        run: "composer install"
+      - name: "CS Check"
+        run: "vendor/bin/phpcs"
