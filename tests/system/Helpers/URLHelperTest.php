@@ -1341,6 +1341,16 @@ class URLHelperTest extends \CodeIgniter\Test\CIUnitTestCase
 				'foo*',
 				false,
 			],
+			[
+				'foo/',
+				'foo*',
+				true,
+			],
+			[
+				'foo/',
+				'foo',
+				true,
+			],
 		];
 	}
 

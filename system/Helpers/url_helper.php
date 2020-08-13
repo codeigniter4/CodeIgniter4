@@ -684,8 +684,8 @@ if (! function_exists('url_is'))
 	function url_is(string $path): bool
 	{
 		// Setup our regex to allow wildcards
-		$path        = '/' . ltrim(str_replace('*', '(\S)+', $path), '/ ');
-		$currentPath = service('request')->uri->getPath();
+		$path        = '/' . trim(str_replace('*', '(\S)*', $path), '/ ');
+		$currentPath = rtrim(service('request')->uri->getPath(), '/ ');
 
 		return (bool)preg_match("|^{$path}$|", $currentPath, $matches);
 	}

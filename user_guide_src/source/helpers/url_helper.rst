@@ -400,5 +400,6 @@ The following functions are available:
     This would match any of the following:
 
     - /admin
+    - /admin/
     - /admin/users
     - /admin/users/schools/classmates/...
