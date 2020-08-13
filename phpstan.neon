@@ -1,0 +1,12 @@
+includes:
+        - vendor/phpstan/phpstan/conf/bleedingEdge.neon
+
+parameters:
+    bootstrapFiles:
+        - qa-bootstrap.php
+    inferPrivatePropertyTypeFromConstructor: true
+    checkMissingIterableValueType: false
+    excludes_analyse:
+        - app/Config/*
+        - app/Database/*
+        - app/Views/*
