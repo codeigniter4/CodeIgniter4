@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v2
       - name: "Install dependencies"
         run: "composer install"
-      - name: "CS Check app"
+      - name: "Static analysis Check app"
         run: "vendor/bin/phpstan analyze --level=0 app"
-      - name: "CS Check app"
+      - name: "CStatic analysis Check system"
         run: "vendor/bin/phpstan analyze --level=0 system"
