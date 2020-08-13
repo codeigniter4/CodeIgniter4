@@ -941,6 +941,41 @@ Here is an example:</p>
 into your views.</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="url_is">
+<code class="descname">url_is</code><span class="sig-paren">(</span><em>$path</em><span class="sig-paren">)</span><a class="headerlink" href="#url_is" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$path</strong> (<em>string</em>) – The path to check the current URI path against.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">boolean</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compares the current URL’s path against the given path to see if they match. Example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">url_is</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">))</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>This would match <code class="docutils literal notranslate"><span class="pre">http://example.com/admin</span></code>. You can use the <code class="docutils literal notranslate"><span class="pre">*</span></code> wildcard to match
+any other applicable characters in the URL:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">url_is</span><span class="p">(</span><span class="s1">&#39;admin*&#39;</span><span class="p">))</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>This would match any of the following:</p>
+<ul class="simple">
+<li>/admin</li>
+<li>/admin/</li>
+<li>/admin/users</li>
+<li>/admin/users/schools/classmates/…</li>
+</ul>
+</dd></dl>
+
 </div>
 </div>
 
@@ -967,7 +1002,7 @@ into your views.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Aug 11, 2020.
+        Last updated on Aug 13, 2020.
       </span>
 
     </p>
