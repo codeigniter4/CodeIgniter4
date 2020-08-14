@@ -169,6 +169,11 @@ if (! function_exists('command'))
 		$length = strlen($command);
 		$cursor = 0;
 
+		/**
+		 * Adopted from Symfony's `StringInput::tokenize()` with few changes.
+		 *
+		 * @see https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Console/Input/StringInput.php
+		 */
 		while ($cursor < $length)
 		{
 			if (preg_match('/\s+/A', $command, $match, null, $cursor))
