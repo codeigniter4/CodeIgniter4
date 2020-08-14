@@ -4,25 +4,22 @@ on:
   pull_request:
   push:
     branches:
-      - 'master'
+      - 'develop'
+      - '4.1'
     paths:
       - 'app'
       - 'system'
 
 jobs:
   build:
-    name: PHP ${{ matrix.php-versions }}
+    name: Run Check
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        php-versions: ['7.4']
     steps:
       - name: Setup PHP Action
-        uses: shivammathur/setup-php@1.8.2
+        uses: shivammathur/setup-php@v2
         with:
           extensions: intl
-          php-version: "${{ matrix.php-versions }}"
+          php-version: "7.4"
       - name: Checkout
         uses: actions/checkout@v2
       - name: "Install dependencies"
