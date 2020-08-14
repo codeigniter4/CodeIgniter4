@@ -10,3 +10,5 @@ parameters:
         - app/Config/*
         - app/Database/*
         - app/Views/*
+    ignoreErrors:
+        - '#Unsafe usage of new static\(\)*#'
