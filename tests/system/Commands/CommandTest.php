@@ -173,6 +173,23 @@ class CommandTest extends \CodeIgniter\Test\CIUnitTestCase
 					'cv',
 				],
 			],
+			[
+				'reveal as -df "some stuff" -jk 12 -sd "Some longer stuff" -fg \'using single quotes\'',
+				[
+					'as',
+					'df' => 'some stuff',
+					'jk' => 12,
+					'sd' => 'Some longer stuff',
+					'fg' => 'using single quotes',
+				],
+			],
+			[
+				'reveal as -df "using mixed \'quotes\'\" here\""',
+				[
+					'as',
+					'df' => 'using mixed \'quotes\'" here"'
+				],
+			],
 		];
 	}
 }
