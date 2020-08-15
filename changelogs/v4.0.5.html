@@ -343,6 +343,7 @@
 <p>Enhancements:</p>
 <ul class="simple">
 <li>New URL helper function <code class="docutils literal notranslate"><span class="pre">url_to()</span></code> which creates absolute URLs based on controllers.</li>
+<li>New Model option: <code class="docutils literal notranslate"><span class="pre">$useAutoIncrement</span></code> which when set to <code class="docutils literal notranslate"><span class="pre">false</span></code> allows you to provide your own primary key for each record in the table. Handy when we want to implement 1:1 relation or use UUIDs for our model.</li>
 <li>New URL helper function <code class="docutils literal notranslate"><span class="pre">url_is()</span></code> which allows you to check the current URL to see if matches the given string.</li>
 </ul>
 <p>Bugs Fixed:</p>
@@ -375,7 +376,7 @@
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Aug 13, 2020.
+        Last updated on Aug 15, 2020.
       </span>
 
     </p>

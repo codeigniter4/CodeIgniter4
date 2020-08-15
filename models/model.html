@@ -462,6 +462,8 @@ what table to use and how we can find the required records:</p>
     <span class="k">protected</span> <span class="nv">$table</span>      <span class="o">=</span> <span class="s1">&#39;users&#39;</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$primaryKey</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span><span class="p">;</span>
 
+    <span class="k">protected</span> <span class="nv">$useAutoIncrement</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+
     <span class="k">protected</span> <span class="nv">$returnType</span>     <span class="o">=</span> <span class="s1">&#39;array&#39;</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$useSoftDeletes</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 
@@ -490,6 +492,16 @@ is used with methods like <code class="docutils literal notranslate"><span class
 <p class="first admonition-title">Note</p>
 <p class="last">All Models must have a primaryKey specified to allow all of the features to work
 as expected.</p>
+</div>
+<p><strong>$useAutoIncrement</strong></p>
+<p>Specifies if the table uses an auto-increment feature for <code class="docutils literal notranslate"><span class="pre">$primaryKey</span></code>. If set to <code class="docutils literal notranslate"><span class="pre">false</span></code>
+then you are responsible for providing primary key value for every record in the table. This
+feature may be handy when we want to implement 1:1 relation or use UUIDs for our model.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you set <code class="docutils literal notranslate"><span class="pre">$useAutoIncrement</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code> then make sure to set your primary
+key in the database to <code class="docutils literal notranslate"><span class="pre">unique</span></code>. This way you will make sure that all of Model’s features
+will still work the same as before.</p>
 </div>
 <p><strong>$returnType</strong></p>
 <p>The Model’s CRUD methods will take a step of work away from you and automatically return
@@ -1257,7 +1269,7 @@ Model gives you out of the box, and create a fully custom experience.</p>
         
         &copy; Copyright 2019-2020 CodeIgniter Foundation
       <span class="lastupdated">
-        Last updated on Aug 13, 2020.
+        Last updated on Aug 15, 2020.
       </span>
 
     </p>
