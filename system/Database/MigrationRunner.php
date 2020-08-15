@@ -892,7 +892,7 @@ class MigrationRunner
 		if ($batch < 0)
 		{
 			$batches = $this->getBatches();
-			$batch   = $batches[count($batches) - 1 + $targetBatch] ?? 0;
+			$batch   = $batches[count($batches) - 1] ?? 0;
 		}
 
 		$migration = $this->db->table($this->table)
