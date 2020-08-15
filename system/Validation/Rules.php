@@ -61,6 +61,11 @@ class Rules
 	 */
 	public function differs(string $str = null, string $field, array $data): bool
 	{
+		if (strpos($field, '.') !== false)
+		{
+			return $str !== dot_array_search($field, $data);
+		}
+
 		return array_key_exists($field, $data) && $str !== $data[$field];
 	}
 
@@ -279,6 +284,11 @@ class Rules
 	 */
 	public function matches(string $str = null, string $field, array $data): bool
 	{
+		if (strpos($field, '.') !== false)
+		{
+			return $str === dot_array_search($field, $data);
+		}
+
 		return array_key_exists($field, $data) && $str === $data[$field];
 	}
 
